@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		19C00714F09A1D3937F9AAE7 /* Pods_BookwittyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */; };
+		2D1D0880B4A8EB8C8A6AD1A8 /* Pods_Bookwitty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */; };
 		59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */; };
 		59FBBC4F1E1D074400FC84E5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FBBC4E1E1D074400FC84E5 /* ViewController.swift */; };
 		59FBBC521E1D074400FC84E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59FBBC501E1D074400FC84E5 /* Main.storyboard */; };
@@ -26,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bookwitty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FBBC491E1D074400FC84E5 /* Bookwitty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookwitty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59FBBC4E1E1D074400FC84E5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -36,6 +39,11 @@
 		59FBBC5D1E1D074400FC84E5 /* BookwittyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BookwittyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FBBC611E1D074400FC84E5 /* BookwittyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookwittyTests.swift; sourceTree = "<group>"; };
 		59FBBC631E1D074400FC84E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		61D0EE3946D28FF160292FF2 /* Pods-Bookwitty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookwitty.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bookwitty/Pods-Bookwitty.release.xcconfig"; sourceTree = "<group>"; };
+		818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BookwittyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B75E5B87D9559EBD71824DD7 /* Pods-Bookwitty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookwitty.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bookwitty/Pods-Bookwitty.debug.xcconfig"; sourceTree = "<group>"; };
+		CB5E98B3C54E0B0AD22F5CB4 /* Pods-BookwittyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookwittyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests.release.xcconfig"; sourceTree = "<group>"; };
+		F51280CA021D07F160F13471 /* Pods-BookwittyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookwittyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D1D0880B4A8EB8C8A6AD1A8 /* Pods_Bookwitty.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,18 +59,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19C00714F09A1D3937F9AAE7 /* Pods_BookwittyTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C423FDC175E8B1F93C4EB6B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */,
+				818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		59FBBC401E1D074400FC84E5 = {
 			isa = PBXGroup;
 			children = (
 				59FBBC4B1E1D074400FC84E5 /* Bookwitty */,
 				59FBBC601E1D074400FC84E5 /* BookwittyTests */,
 				59FBBC4A1E1D074400FC84E5 /* Products */,
+				B797387E3B3EFE129204BBBA /* Pods */,
+				4C423FDC175E8B1F93C4EB6B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -96,6 +117,17 @@
 			path = BookwittyTests;
 			sourceTree = "<group>";
 		};
+		B797387E3B3EFE129204BBBA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B75E5B87D9559EBD71824DD7 /* Pods-Bookwitty.debug.xcconfig */,
+				61D0EE3946D28FF160292FF2 /* Pods-Bookwitty.release.xcconfig */,
+				F51280CA021D07F160F13471 /* Pods-BookwittyTests.debug.xcconfig */,
+				CB5E98B3C54E0B0AD22F5CB4 /* Pods-BookwittyTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -103,9 +135,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 59FBBC661E1D074400FC84E5 /* Build configuration list for PBXNativeTarget "Bookwitty" */;
 			buildPhases = (
+				0A7413EDC5C9477156895F61 /* [CP] Check Pods Manifest.lock */,
 				59FBBC451E1D074400FC84E5 /* Sources */,
 				59FBBC461E1D074400FC84E5 /* Frameworks */,
 				59FBBC471E1D074400FC84E5 /* Resources */,
+				549223EAAC9E610D39F0D427 /* [CP] Embed Pods Frameworks */,
+				6383E0DEEC0AC02413F163F2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -120,9 +155,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 59FBBC691E1D074400FC84E5 /* Build configuration list for PBXNativeTarget "BookwittyTests" */;
 			buildPhases = (
+				98C98C0862C11E61BC7C5AC2 /* [CP] Check Pods Manifest.lock */,
 				59FBBC591E1D074400FC84E5 /* Sources */,
 				59FBBC5A1E1D074400FC84E5 /* Frameworks */,
 				59FBBC5B1E1D074400FC84E5 /* Resources */,
+				3B455A10EB26F4FE187018DE /* [CP] Embed Pods Frameworks */,
+				555627425C0117AC3CA53440 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -195,6 +233,99 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0A7413EDC5C9477156895F61 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		3B455A10EB26F4FE187018DE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		549223EAAC9E610D39F0D427 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bookwitty/Pods-Bookwitty-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		555627425C0117AC3CA53440 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6383E0DEEC0AC02413F163F2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bookwitty/Pods-Bookwitty-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		98C98C0862C11E61BC7C5AC2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		59FBBC451E1D074400FC84E5 /* Sources */ = {
@@ -339,6 +470,7 @@
 		};
 		59FBBC671E1D074400FC84E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B75E5B87D9559EBD71824DD7 /* Pods-Bookwitty.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 65T23W9U79;
@@ -352,6 +484,7 @@
 		};
 		59FBBC681E1D074400FC84E5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 61D0EE3946D28FF160292FF2 /* Pods-Bookwitty.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 65T23W9U79;
@@ -365,8 +498,9 @@
 		};
 		59FBBC6A1E1D074400FC84E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F51280CA021D07F160F13471 /* Pods-BookwittyTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 65T23W9U79;
 				INFOPLIST_FILE = BookwittyTests/Info.plist;
@@ -380,8 +514,9 @@
 		};
 		59FBBC6B1E1D074400FC84E5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CB5E98B3C54E0B0AD22F5CB4 /* Pods-BookwittyTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 65T23W9U79;
 				INFOPLIST_FILE = BookwittyTests/Info.plist;
@@ -412,6 +547,7 @@
 				59FBBC681E1D074400FC84E5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		59FBBC691E1D074400FC84E5 /* Build configuration list for PBXNativeTarget "BookwittyTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +556,7 @@
 				59FBBC6B1E1D074400FC84E5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
