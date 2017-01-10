@@ -97,6 +97,13 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		59057FCE1E2530900036AAF3 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		59B65FD11E251FE80093FF44 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +149,7 @@
 				59057FC51E252C500036AAF3 /* ViewModels */,
 				59057FCB1E252FC30036AAF3 /* Models */,
 				59057FC81E252E710036AAF3 /* Networking */,
+				59057FCE1E2530900036AAF3 /* Utilities */,
 				59FBBC501E1D074400FC84E5 /* Main.storyboard */,
 				59FBBC551E1D074400FC84E5 /* LaunchScreen.storyboard */,
 				59FBBC581E1D074400FC84E5 /* Info.plist */,
