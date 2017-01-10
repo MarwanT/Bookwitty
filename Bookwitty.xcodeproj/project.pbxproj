@@ -120,6 +120,29 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
+		59057FD71E2533010036AAF3 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				59057FD81E2533010036AAF3 /* Nodes */,
+				59057FDA1E2533010036AAF3 /* Views */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		59057FD81E2533010036AAF3 /* Nodes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Nodes;
+			sourceTree = "<group>";
+		};
+		59057FDA1E2533010036AAF3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		59B65FD11E251FE80093FF44 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -162,6 +185,7 @@
 				59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */,
 				59B65FD11E251FE80093FF44 /* Assets */,
 				59057FD11E25317B0036AAF3 /* Themes */,
+				59057FD71E2533010036AAF3 /* Components */,
 				59057FD41E2532420036AAF3 /* Storyboards */,
 				59B65FD41E2524D60093FF44 /* ViewControllers */,
 				59057FC51E252C500036AAF3 /* ViewModels */,
