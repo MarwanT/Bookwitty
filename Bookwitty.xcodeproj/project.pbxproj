@@ -82,6 +82,14 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		59057FC81E252E710036AAF3 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Networking;
+			path = Bookwitty/Networking;
+			sourceTree = SOURCE_ROOT;
+		};
 		59B65FD11E251FE80093FF44 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +133,7 @@
 				59B65FD11E251FE80093FF44 /* Assets */,
 				59B65FD41E2524D60093FF44 /* ViewControllers */,
 				59057FC51E252C500036AAF3 /* ViewModels */,
+				59057FC81E252E710036AAF3 /* Networking */,
 				59FBBC501E1D074400FC84E5 /* Main.storyboard */,
 				59FBBC551E1D074400FC84E5 /* LaunchScreen.storyboard */,
 				59FBBC581E1D074400FC84E5 /* Info.plist */,
