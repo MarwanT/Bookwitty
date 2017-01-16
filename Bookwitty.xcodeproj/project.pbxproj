@@ -12,6 +12,7 @@
 		59057FE01E25340A0036AAF3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59057FDE1E25340A0036AAF3 /* LaunchScreen.storyboard */; };
 		59057FE11E25340A0036AAF3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59057FDF1E25340A0036AAF3 /* Main.storyboard */; };
 		595A649C1E2CCB8900655067 /* BookwittyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649B1E2CCB8900655067 /* BookwittyAPI.swift */; };
+		595A649E1E2CF4EA00655067 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649D1E2CF4EA00655067 /* String.swift */; };
 		59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59B65FD21E251FE80093FF44 /* Assets.xcassets */; };
 		59B65FD81E2524D60093FF44 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B65FD61E2524D60093FF44 /* ViewController.swift */; };
 		59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */; };
@@ -33,6 +34,7 @@
 		59057FDE1E25340A0036AAF3 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		59057FDF1E25340A0036AAF3 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		595A649B1E2CCB8900655067 /* BookwittyAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyAPI.swift; sourceTree = "<group>"; };
+		595A649D1E2CF4EA00655067 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		59B65FD21E251FE80093FF44 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		59B65FD61E2524D60093FF44 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		59FBBC491E1D074400FC84E5 /* Bookwitty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookwitty.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +105,7 @@
 		59057FCE1E2530900036AAF3 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				595A649D1E2CF4EA00655067 /* String.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 			files = (
 				59B65FD81E2524D60093FF44 /* ViewController.swift in Sources */,
 				595A649C1E2CCB8900655067 /* BookwittyAPI.swift in Sources */,
+				595A649E1E2CF4EA00655067 /* String.swift in Sources */,
 				59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
