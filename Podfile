@@ -6,6 +6,7 @@ target 'Bookwitty' do
   use_frameworks!
 
   # Pods for Bookwitty
+  pod 'Moya', '8.0.0'
 
   target 'BookwittyTests' do
     inherit! :search_paths
