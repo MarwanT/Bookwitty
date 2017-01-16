@@ -120,3 +120,16 @@ public func absoluteString(for target: TargetType) -> String {
   }
   return  target.baseURL.appendingPathComponent(target.path).absoluteString
 }
+
+// MARK: - Request API
+
+public func apiRequest(target: BookwittyAPI, completion: @escaping BookwittyAPICompletion) -> Cancellable {
+  return APIProvider.sharedProvider.request(target, completion: { (result) in
+    switch result {
+    case .success(let response):
+      completion(response.data, response.statusCode, response.response, nil)
+    case .failure(let error):
+      completion(nil, nil, nil, error)
+    }
+  })
+}
