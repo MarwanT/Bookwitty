@@ -10,6 +10,7 @@ import Foundation
 import Moya
 
 public typealias BookwittyAPIError = MoyaError
+public typealias BookwittyAPICompletion = (_ data: Data?,_ statusCode: Int?,_ response: URLResponse?,_ error: BookwittyAPIError?) -> ()
 
 /**
  An endpoint is a semi-internal data structure that Moya uses to reason about the network request that will ultimately be made. An endpoint stores the following data: 
