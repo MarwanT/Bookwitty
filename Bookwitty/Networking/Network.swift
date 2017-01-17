@@ -32,7 +32,7 @@ public typealias BookwittyAPICompletion = (_ data: Data?,_ statusCode: Int?,_ re
 public struct APIProvider {
   //-----------------------------------------
   /// mapping from **Target** to **Endpoint**
-  private static var endpointClosure = { (target: BookwittyAPI) -> Endpoint<BookwittyAPI> in
+  private static func endpointClosure(target: BookwittyAPI) -> Endpoint<BookwittyAPI> {
     // Create Endpoint
     var endpoint: Endpoint<BookwittyAPI> = Endpoint<BookwittyAPI>(
       url: absoluteString(for: target),
