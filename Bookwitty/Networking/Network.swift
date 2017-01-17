@@ -46,13 +46,21 @@ public struct APIProvider {
     
     // Add Header Fields to Endpoint
     var headerParameters = [String : String]()
+    headerParameters["Content-Type"] = "application/vnd.api+json"
     switch target{
     default:
       headerParameters["Authorization"] = "Bearer token_value"
       break
     }
-    headerParameters["Content-Type"] = "application/vnd.api+json"
     
+    // Add required header fields for target
+    if let targetHeaders = target.headerParameters {
+      for (key, value) in targetHeaders {
+        headerParameters[key] = value
+      }
+    }
+    
+    // Add header fields to Endpoint
     if headerParameters.count > 0 {
       endpoint = endpoint.adding(newHTTPHeaderFields: headerParameters)
     }
