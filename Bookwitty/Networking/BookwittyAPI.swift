@@ -80,6 +80,16 @@ extension BookwittyAPI: TargetType {
   public var validate: Bool {
     return false
   }
+  
+  public var headerParameters: [String:String]? {
+    switch (Environment.current, self.method) {
+    case (.mock, .get):
+      return ["Prefer": "status=200"]
+    default:
+      return nil
+    }
+  }
+
 }
 
 // MARK: - Global Helpers
