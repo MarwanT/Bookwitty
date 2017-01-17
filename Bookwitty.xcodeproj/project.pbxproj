@@ -242,6 +242,7 @@
 				59FBBC471E1D074400FC84E5 /* Resources */,
 				549223EAAC9E610D39F0D427 /* [CP] Embed Pods Frameworks */,
 				6383E0DEEC0AC02413F163F2 /* [CP] Copy Pods Resources */,
+				59C921011E2E7E3200EF6AC2 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -395,6 +396,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		59C921011E2E7E3200EF6AC2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 081c5e21d59aa6200fc7d8e23cced187b13e06e6 2c467c9075ea0dc7d53865b3e685faa2a7ad4875b1f4dd9f25c21ed6913f566b";
 		};
 		6383E0DEEC0AC02413F163F2 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
