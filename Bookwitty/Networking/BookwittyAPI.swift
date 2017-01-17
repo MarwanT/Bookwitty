@@ -20,7 +20,7 @@ public enum BookwittyAPI {
 
 extension BookwittyAPI: TargetType {
   public var baseURL: URL {
-    return URL(string: "https://private-7bb9fa-dannyhajj.apiary-mock.com/api")!
+    return Environment.current.baseURL
   }
   
   public var path: String {
