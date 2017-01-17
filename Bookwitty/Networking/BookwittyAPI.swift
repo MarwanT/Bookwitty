@@ -16,7 +16,13 @@ public enum BookwittyAPI {
   case AllAddresses
 }
 
-// MARK: Target Type
+// MARK: - Target Type
+
+extension TargetType {
+  var headerParameters: [String:String]? {
+    return nil
+  }
+}
 
 extension BookwittyAPI: TargetType {
   public var baseURL: URL {
