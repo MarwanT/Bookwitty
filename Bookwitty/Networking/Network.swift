@@ -71,12 +71,11 @@ public struct APIProvider {
   
   //---------------------------------------------
   /// mapping from **Endpoint** to **URLRequest**
-  private static var requestClosure = { (endpoint: Endpoint<BookwittyAPI>, done: MoyaProvider.RequestResultClosure) in
+  private static func requestClosure(endpoint: Endpoint<BookwittyAPI>, done: MoyaProvider<BookwittyAPI>.RequestResultClosure) {
     var request = endpoint.urlRequest!
     request.httpShouldHandleCookies = false
     done(.success(request))
   }
-  
   
   private struct SharedProvider {
     static var instance = SharedProvider.shouldStubResponses ? APIProvider.StubbedProvider() : APIProvider.DefaultProvider()
