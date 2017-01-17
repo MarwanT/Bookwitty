@@ -13,7 +13,7 @@ import Moya
 // MARK: - Enum Declaration
 
 public enum BookwittyAPI {
-
+  case AllAddresses
 }
 
 // MARK: Target Type
@@ -28,21 +28,23 @@ extension BookwittyAPI: TargetType {
     var path = ""
     
     switch self {
-    default:
-      return apiVersion + path
+    case .AllAddresses:
+      path = "/user/addresses"
     }
+    
+    return apiVersion + path
   }
   
   public var method: Moya.Method {
     switch self {
-    default:
+    case .AllAddresses:
       return .get
     }
   }
   
   public var parameters: [String: Any]? {
     switch self {
-    default:
+    case .AllAddresses:
       return nil
     }
   }
