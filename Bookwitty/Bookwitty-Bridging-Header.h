@@ -9,5 +9,6 @@
 #ifndef Bookwitty_Bridging_Header_h
 #define Bookwitty_Bridging_Header_h
 
+#import <Google/Analytics.h>
 
 #endif /* Bookwitty_Bridging_Header_h */
