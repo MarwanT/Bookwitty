@@ -15,4 +15,8 @@ public class GeneralSettings {
   public struct Keys {
     public static let SendUsageData = "SendUsageData"
   }
+  
+  public static let sharedInstance: GeneralSettings = GeneralSettings()
+  private init() {
+  }
 }
