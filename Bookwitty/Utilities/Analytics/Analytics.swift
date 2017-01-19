@@ -10,4 +10,7 @@ import Foundation
 
 public final class Analytics {
 
+  public static let sharedInstance: Analytics = Analytics()
+  private init() {
+  }
 }
