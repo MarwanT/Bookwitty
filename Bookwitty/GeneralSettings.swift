@@ -9,4 +9,7 @@
 import Foundation
 
 public class GeneralSettings {
+  public struct Notifications {
+    public static let sendUsageDataValueChanged: Notification.Name = Notification.Name(rawValue: "GeneralSettingsSendUsageDataValueChangedNotification")
+  }
 }
