@@ -26,7 +26,22 @@ public final class Analytics {
   public static let sharedInstance: Analytics = Analytics()
   private init() {
     self.initializeGoogleAnalytics()
+    
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(self.sendUsageDataValueChanged(notification:)) ,
+      name: GeneralSettings.Notifications.sendUsageDataValueChanged,
+      object: nil)
   }
+  
+  deinit{
+    NotificationCenter.default.removeObserver(self)
+  }
+  
+  @objc func sendUsageDataValueChanged(notification: NSNotification) {
+    GAI.sharedInstance().optOut = !self.enabled
+  }
+  
   func send(event: Event) {
     self.sendGoogleAnalytics(event: event)
   }
