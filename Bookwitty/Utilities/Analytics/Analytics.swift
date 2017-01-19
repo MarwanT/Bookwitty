@@ -19,4 +19,9 @@ public final class Analytics {
   public static let sharedInstance: Analytics = Analytics()
   private init() {
   }
+  func send(event: Event) {
+  }
+  
+  func send(screenName: String) {
+  }
 }
