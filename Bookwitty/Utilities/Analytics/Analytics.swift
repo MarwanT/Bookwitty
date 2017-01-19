@@ -12,13 +12,6 @@ public final class Analytics {
 
   fileprivate let dispatchInterval: TimeInterval = 20
   
-  struct Event {
-    var category: String
-    var action: String
-    var name: String
-    var value: Double
-  }
-  
   var enabled: Bool {
     return GeneralSettings.sharedInstance.shouldSendUsageData
   }

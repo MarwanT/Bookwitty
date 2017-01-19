@@ -9,6 +9,13 @@
 import Foundation
 
 extension Analytics {
+  struct Event {
+    var category: String
+    var action: String
+    var name: String
+    var value: Double
+  }
+  
   struct Category {
   }
   
