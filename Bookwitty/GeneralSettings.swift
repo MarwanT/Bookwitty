@@ -30,6 +30,9 @@ public class GeneralSettings {
   public var shouldSendUsageData: Bool {
     didSet {
       defaults.set(self.shouldSendUsageData, forKey: Keys.SendUsageData)
+      NotificationCenter.default.post(
+        name: GeneralSettings.Notifications.sendUsageDataValueChanged,
+        object: self.shouldSendUsageData)
     }
   }
 }
