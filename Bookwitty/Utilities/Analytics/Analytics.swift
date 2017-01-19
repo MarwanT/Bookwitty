@@ -31,6 +31,7 @@ public final class Analytics {
   }
   
   func send(screenName: String) {
+    self.sendGoogleAnalytics(screenName: screenName)
   }
 }
 
@@ -55,4 +56,17 @@ extension Analytics {
       GAI.sharedInstance().logger.logLevel = GAILogLevel.none
     }
   }
+  
+  fileprivate func sendGoogleAnalytics(screenName: String) {
+    
+    guard GAI.sharedInstance().defaultTracker != nil else {
+      return
+    }
+    
+    GAI.sharedInstance().defaultTracker.set(kGAIScreenName, value: screenName)
+    let gADictionary: NSMutableDictionary = GAIDictionaryBuilder.createScreenView().build()
+    
+    GAI.sharedInstance().defaultTracker.send(gADictionary as [NSObject : AnyObject])
+  }
+  
 }
