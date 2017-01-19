@@ -18,6 +18,10 @@
 		596FAD741E2E53AC0064F967 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596FAD731E2E53AC0064F967 /* Environment.swift */; };
 		59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59B65FD21E251FE80093FF44 /* Assets.xcassets */; };
 		59B65FD81E2524D60093FF44 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B65FD61E2524D60093FF44 /* ViewController.swift */; };
+		59BAC6991E2FCD1A0063F573 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59BAC6981E2FCD1A0063F573 /* GoogleService-Info.plist */; };
+		59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD55751E302EB800D3B805 /* Analytics+Constants.swift */; };
+		59BD55781E302EB800D3B805 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD55761E302EB800D3B805 /* Analytics.swift */; };
+		59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD55791E309BFC00D3B805 /* GeneralSettings.swift */; };
 		59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +39,7 @@
 		2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bookwitty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59057FDE1E25340A0036AAF3 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		59057FDF1E25340A0036AAF3 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		590B3F1C1E2FCA5900542671 /* Bookwitty-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bookwitty-Bridging-Header.h"; sourceTree = "<group>"; };
 		595A649B1E2CCB8900655067 /* BookwittyAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyAPI.swift; sourceTree = "<group>"; };
 		595A649D1E2CF4EA00655067 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		595A649F1E2D0C4D00655067 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -42,6 +47,10 @@
 		596FAD731E2E53AC0064F967 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		59B65FD21E251FE80093FF44 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		59B65FD61E2524D60093FF44 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		59BAC6981E2FCD1A0063F573 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		59BD55751E302EB800D3B805 /* Analytics+Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+Constants.swift"; sourceTree = "<group>"; };
+		59BD55761E302EB800D3B805 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
+		59BD55791E309BFC00D3B805 /* GeneralSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralSettings.swift; sourceTree = "<group>"; };
 		59FBBC491E1D074400FC84E5 /* Bookwitty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookwitty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59FBBC581E1D074400FC84E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -111,6 +120,7 @@
 		59057FCE1E2530900036AAF3 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				59BD55741E302EB800D3B805 /* Analytics */,
 				595A649D1E2CF4EA00655067 /* String.swift */,
 			);
 			path = Utilities;
@@ -171,6 +181,15 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		59BD55741E302EB800D3B805 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				59BD55761E302EB800D3B805 /* Analytics.swift */,
+				59BD55751E302EB800D3B805 /* Analytics+Constants.swift */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
 		59FBBC401E1D074400FC84E5 = {
 			isa = PBXGroup;
 			children = (
@@ -205,6 +224,9 @@
 				59057FC81E252E710036AAF3 /* Networking */,
 				59057FCE1E2530900036AAF3 /* Utilities */,
 				59FBBC581E1D074400FC84E5 /* Info.plist */,
+				59BAC6981E2FCD1A0063F573 /* GoogleService-Info.plist */,
+				590B3F1C1E2FCA5900542671 /* Bookwitty-Bridging-Header.h */,
+				59BD55791E309BFC00D3B805 /* GeneralSettings.swift */,
 			);
 			path = Bookwitty;
 			sourceTree = "<group>";
@@ -322,6 +344,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				59057FE11E25340A0036AAF3 /* Main.storyboard in Resources */,
+				59BAC6991E2FCD1A0063F573 /* GoogleService-Info.plist in Resources */,
 				59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */,
 				59057FE01E25340A0036AAF3 /* LaunchScreen.storyboard in Resources */,
 			);
@@ -448,7 +471,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				59B65FD81E2524D60093FF44 /* ViewController.swift in Sources */,
+				59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */,
 				596FAD741E2E53AC0064F967 /* Environment.swift in Sources */,
+				59BD55781E302EB800D3B805 /* Analytics.swift in Sources */,
+				59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */,
 				595A64A01E2D0C4D00655067 /* Network.swift in Sources */,
 				595A649C1E2CCB8900655067 /* BookwittyAPI.swift in Sources */,
 				595A649E1E2CF4EA00655067 /* String.swift in Sources */,
@@ -578,6 +604,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bookwitty.Bookwitty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bookwitty/Bookwitty-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -592,6 +619,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bookwitty.Bookwitty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bookwitty/Bookwitty-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -607,6 +635,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.keeward.BookwittyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bookwitty/Bookwitty-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bookwitty.app/Bookwitty";
 			};
@@ -623,6 +652,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.keeward.BookwittyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bookwitty/Bookwitty-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bookwitty.app/Bookwitty";
 			};

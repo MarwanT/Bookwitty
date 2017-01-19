@@ -9,6 +9,7 @@ target 'Bookwitty' do
   pod 'Moya', '8.0.0'
   pod 'Fabric', '1.6.11'
   pod 'Crashlytics', '3.8.3'
+  pod 'Google/Analytics', '3.0.3'
 
   target 'BookwittyTests' do
     inherit! :search_paths
