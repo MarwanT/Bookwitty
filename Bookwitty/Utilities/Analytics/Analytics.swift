@@ -28,6 +28,7 @@ public final class Analytics {
     self.initializeGoogleAnalytics()
   }
   func send(event: Event) {
+    self.sendGoogleAnalytics(event: event)
   }
   
   func send(screenName: String) {
@@ -69,4 +70,17 @@ extension Analytics {
     GAI.sharedInstance().defaultTracker.send(gADictionary as [NSObject : AnyObject])
   }
   
+  fileprivate func sendGoogleAnalytics(event: Event) {
+    guard GAI.sharedInstance().defaultTracker != nil else {
+      return
+    }
+    
+    let gACategory: String = event.category
+    let gAAction: String = event.action
+    let gALabel: String = event.name
+    let gADictionaryBuilder: GAIDictionaryBuilder = GAIDictionaryBuilder.createEvent(withCategory: gACategory, action: gAAction, label: gALabel, value: NSNumber(value: event.value))
+    let gADictionary: NSMutableDictionary = gADictionaryBuilder.build()
+    
+    GAI.sharedInstance().defaultTracker.send(gADictionary as [NSObject : AnyObject])
+  }
 }
