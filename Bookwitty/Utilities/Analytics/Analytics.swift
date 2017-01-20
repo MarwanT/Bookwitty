@@ -17,7 +17,7 @@ public final class Analytics {
     return GeneralSettings.sharedInstance.shouldSendUsageData
   }
   
-  public static let sharedInstance: Analytics = Analytics()
+  public static let shared: Analytics = Analytics()
   private init() {
     self.initializeGoogleAnalytics()
     
