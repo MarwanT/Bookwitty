@@ -41,7 +41,7 @@ public final class Analytics {
     
     // Facebook don't have a built in OptOut option.
     if self.enabled {
-      sendFacebookAnalyticsEvent(event: event)
+      sendFacebook(event: event)
     }
   }
   
@@ -102,7 +102,7 @@ extension Analytics {
 // MARK: - Facebook Analytics
 
 extension Analytics {
-  fileprivate func sendFacebookAnalyticsEvent(event: Event) {
+  fileprivate func sendFacebook(event: Event) {
     var eventName: String = event.category
     
     if !event.action.isEmpty {
