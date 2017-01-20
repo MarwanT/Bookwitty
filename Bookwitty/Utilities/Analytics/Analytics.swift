@@ -37,7 +37,7 @@ public final class Analytics {
   }
   
   func send(event: Event) {
-    self.sendGoogleAnalytics(event: event)
+    self.sendGoogle(event: event)
     
     // Facebook don't have a built in OptOut option.
     if self.enabled {
@@ -84,7 +84,7 @@ extension Analytics {
     GAI.sharedInstance().defaultTracker.send(gADictionary as [NSObject : AnyObject])
   }
   
-  fileprivate func sendGoogleAnalytics(event: Event) {
+  fileprivate func sendGoogle(event: Event) {
     guard GAI.sharedInstance().defaultTracker != nil else {
       return
     }
