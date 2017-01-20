@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FacebookCore
 
 public final class Analytics {
 
@@ -37,6 +38,11 @@ public final class Analytics {
   
   func send(event: Event) {
     self.sendGoogleAnalytics(event: event)
+    
+    // Facebook don't have a built in OptOut option.
+    if self.enabled {
+      sendFacebookAnalyticsEvent(event: event)
+    }
   }
   
   func send(screenName: String) {
@@ -90,5 +96,23 @@ extension Analytics {
     let gADictionary: NSMutableDictionary = gADictionaryBuilder.build()
     
     GAI.sharedInstance().defaultTracker.send(gADictionary as [NSObject : AnyObject])
+  }
+}
+
+// MARK: - Facebook Analytics
+
+extension Analytics {
+  fileprivate func sendFacebookAnalyticsEvent(event: Event) {
+    var eventName: String = event.category
+    
+    if !event.action.isEmpty {
+      eventName += "-" + event.action
+    }
+    
+    if !event.name.isEmpty {
+      eventName += "-" + event.name
+    }
+    
+    AppEventsLogger.log(eventName)
   }
 }
