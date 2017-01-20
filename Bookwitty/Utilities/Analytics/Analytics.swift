@@ -54,8 +54,7 @@ internal final class Analytics {
 
 extension Analytics {
   private var trackingIdentifier: String {
-    // TODO: Retrieve the value from cocoapods keys
-    return "TRACKING_IDENTIFIER"
+    return AppKeys.shared.googleAnalyticsIdentifier
   }
   
   fileprivate func initializeGoogleAnalytics() {
