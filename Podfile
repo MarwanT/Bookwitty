@@ -10,6 +10,9 @@ target 'Bookwitty' do
   pod 'Fabric', '1.6.11'
   pod 'Crashlytics', '3.8.3'
   pod 'Google/Analytics', '3.0.3'
+  pod 'FacebookCore', '0.2.0'
+  pod 'FacebookLogin', '0.2.0'
+  pod 'FacebookShare', '0.2.0'
 
   target 'BookwittyTests' do
     inherit! :search_paths
