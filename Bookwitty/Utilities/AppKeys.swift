@@ -12,6 +12,8 @@ import Keys
 internal final class AppKeys {
   let googleAnalyticsIdentifier: String
   
+  static let shared = AppKeys()
+  
   private init(googleAnalyticsIdentifier: String) {
     self.googleAnalyticsIdentifier = googleAnalyticsIdentifier
   }
