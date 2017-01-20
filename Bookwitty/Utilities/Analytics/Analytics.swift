@@ -9,7 +9,7 @@
 import Foundation
 import FacebookCore
 
-public final class Analytics {
+internal final class Analytics {
 
   fileprivate let dispatchInterval: TimeInterval = 20
   
@@ -17,7 +17,7 @@ public final class Analytics {
     return GeneralSettings.sharedInstance.shouldSendUsageData
   }
   
-  public static let shared: Analytics = Analytics()
+  static let shared: Analytics = Analytics()
   private init() {
     self.initializeGoogleAnalytics()
     
