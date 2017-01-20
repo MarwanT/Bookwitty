@@ -46,7 +46,7 @@ public final class Analytics {
   }
   
   func send(screenName: String) {
-    self.sendGoogleAnalytics(screenName: screenName)
+    self.sendGoogle(screenName: screenName)
   }
 }
 
@@ -72,7 +72,7 @@ extension Analytics {
     }
   }
   
-  fileprivate func sendGoogleAnalytics(screenName: String) {
+  fileprivate func sendGoogle(screenName: String) {
     
     guard GAI.sharedInstance().defaultTracker != nil else {
       return
