@@ -9,7 +9,7 @@
 import Foundation
 import FacebookCore
 
-public final class Analytics {
+internal final class Analytics {
 
   fileprivate let dispatchInterval: TimeInterval = 20
   
@@ -17,7 +17,7 @@ public final class Analytics {
     return GeneralSettings.sharedInstance.shouldSendUsageData
   }
   
-  public static let sharedInstance: Analytics = Analytics()
+  static let shared: Analytics = Analytics()
   private init() {
     self.initializeGoogleAnalytics()
     
@@ -37,16 +37,16 @@ public final class Analytics {
   }
   
   func send(event: Event) {
-    self.sendGoogleAnalytics(event: event)
+    self.sendGoogle(event: event)
     
     // Facebook don't have a built in OptOut option.
     if self.enabled {
-      sendFacebookAnalyticsEvent(event: event)
+      sendFacebook(event: event)
     }
   }
   
   func send(screenName: String) {
-    self.sendGoogleAnalytics(screenName: screenName)
+    self.sendGoogle(screenName: screenName)
   }
 }
 
@@ -72,7 +72,7 @@ extension Analytics {
     }
   }
   
-  fileprivate func sendGoogleAnalytics(screenName: String) {
+  fileprivate func sendGoogle(screenName: String) {
     
     guard GAI.sharedInstance().defaultTracker != nil else {
       return
@@ -84,7 +84,7 @@ extension Analytics {
     GAI.sharedInstance().defaultTracker.send(gADictionary as [NSObject : AnyObject])
   }
   
-  fileprivate func sendGoogleAnalytics(event: Event) {
+  fileprivate func sendGoogle(event: Event) {
     guard GAI.sharedInstance().defaultTracker != nil else {
       return
     }
@@ -102,7 +102,7 @@ extension Analytics {
 // MARK: - Facebook Analytics
 
 extension Analytics {
-  fileprivate func sendFacebookAnalyticsEvent(event: Event) {
+  fileprivate func sendFacebook(event: Event) {
     var eventName: String = event.category
     
     if !event.action.isEmpty {
