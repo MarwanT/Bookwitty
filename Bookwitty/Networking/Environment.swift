@@ -8,23 +8,25 @@
 
 import Foundation
 
-public enum Environment: String {
-  case localDevice = "localDevice"
-  case mock = "mock"
-  case preproduction = "preproduction"
-  case production = "production"
-  
-  public private(set) static var current: Environment = mock
-  
-  public static func initialize() {
-    // TODO: Set the current environment through cocoa keys
-    current = Environment(rawValue: AppKeys.shared.environmentString) ?? .mock
+struct Environment {
+  enum EnvironmentType: String {
+    case mockLocal = "mockLocal"
+    case mockServer = "mockServer"
+    case development = "development"
+    case staging = "staging"
+    case production = "production"
   }
   
-  var baseURL: URL {
-    switch self {
-    case .localDevice, .mock, .preproduction, .production:
-      return URL(string: AppKeys.shared.bookwittyServerBaseURLAbsoluteString)!
+  static let current = Environment()
+  
+  let type: EnvironmentType
+  let baseURL: URL
+  
+  private init() {
+    type = EnvironmentType(rawValue: AppKeys.shared.environmentString) ?? .mockServer
+    switch type {
+    default:
+      baseURL = URL(string: AppKeys.shared.bookwittyServerBaseURLAbsoluteString)!
     }
   }
 }

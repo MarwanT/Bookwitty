@@ -63,8 +63,8 @@ extension Analytics {
     GAI.sharedInstance().dispatchInterval = self.dispatchInterval
     GAI.sharedInstance().optOut = !self.enabled
     
-    switch Environment.current {
-    case .localDevice, .mock, .preproduction:
+    switch Environment.current.type {
+    case .mockLocal, .mockServer, .development,.staging:
       GAI.sharedInstance().logger.logLevel = GAILogLevel.verbose
     default:
       GAI.sharedInstance().logger.logLevel = GAILogLevel.none
