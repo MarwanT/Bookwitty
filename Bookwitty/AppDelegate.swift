@@ -19,6 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
+    
+    applyTheme()
+    
     Fabric.with([Crashlytics.self])
     SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
     return true
@@ -50,6 +53,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
     let handled = SDKApplicationDelegate.shared.application(app, open: url, options: options)
     return handled
+  }
+}
+
+extension AppDelegate: Themeable {
+  func applyTheme() {
+    ThemeManager.shared.currentTheme.initialize()
   }
 }
 
