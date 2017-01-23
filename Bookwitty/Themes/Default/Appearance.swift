@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol Themeable {
+  func applyTheme()
+}
+
 protocol ThemeColor {
   func colorNumber1() -> UIColor
   func colorNumber2() -> UIColor
