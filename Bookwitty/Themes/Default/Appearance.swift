@@ -42,3 +42,17 @@ protocol ThemeColor {
 protocol Theme: ThemeColor {
   func initialize()
 }
+
+class ThemeManager {
+  static let shared = ThemeManager()
+  
+  var currentTheme: Theme! {
+    didSet{
+      // TODO: Send notification for updating the layout throughout the app
+    }
+  }
+  
+  private init() {
+    currentTheme = DefaultTheme()
+  }
+}
