@@ -54,7 +54,7 @@ internal final class Analytics {
 
 extension Analytics {
   private var trackingIdentifier: String {
-    return AppKeys.shared.googleAnalyticsIdentifier
+    return Environment.current.googleAnalyticsIdentifier
   }
   
   fileprivate func initializeGoogleAnalytics() {

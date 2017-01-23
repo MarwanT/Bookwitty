@@ -21,12 +21,14 @@ struct Environment {
   
   let type: EnvironmentType
   let baseURL: URL
+  let googleAnalyticsIdentifier: String
   
   private init() {
     type = EnvironmentType(rawValue: AppKeys.shared.environmentString) ?? .mockServer
     switch type {
     default:
       baseURL = URL(string: AppKeys.shared.bookwittyServerBaseURLAbsoluteString)!
+      googleAnalyticsIdentifier = AppKeys.shared.googleAnalyticsIdentifier
     }
   }
 }
