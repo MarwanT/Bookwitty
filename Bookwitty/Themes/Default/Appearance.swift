@@ -34,3 +34,7 @@ protocol ThemeColor {
   func colorNumber23() -> UIColor
 }
 
+
+protocol Theme: ThemeColor {
+  func initialize()
+}
