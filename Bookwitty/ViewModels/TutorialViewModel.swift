@@ -10,6 +10,6 @@ import Foundation
 
 typealias TutorialPageData = (title: String?, description: String?, image: UIImage, color: UIColor?)
 
-struct TutorialViewModel {
+final class TutorialViewModel {
   var tutorialPageData: [TutorialPageData] = [TutorialPageData]()
 }
