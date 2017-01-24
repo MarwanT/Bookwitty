@@ -18,7 +18,7 @@ class TutorialViewController: UIPageViewController {
     
     dataSource = self
     
-    orderedViewControllers.append(contentsOf: instructionsViewControllers())
+    orderedViewControllers.append(contentsOf: tutorialPagesViewControllers())
     
     if let firstViewController = orderedViewControllers.first {
       setViewControllers(
@@ -28,11 +28,11 @@ class TutorialViewController: UIPageViewController {
     }
   }
   
-  /// Generate instructions view controllers based on provided data
-  private func instructionsViewControllers() -> [UIViewController] {
+  /// Generate tutorial pages view controllers based on provided data
+  private func tutorialPagesViewControllers() -> [UIViewController] {
     var viewControllersArray = [UIViewController]()
     
-    let instructionsData = viewModel.instructionsData
+    let instructionsData = viewModel.tutorialPageData
     guard instructionsData.count > 0 else {
       return viewControllersArray
     }
