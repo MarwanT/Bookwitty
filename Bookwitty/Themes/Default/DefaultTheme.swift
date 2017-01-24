@@ -106,6 +106,12 @@ extension DefaultTheme {
 // MARK: - Buttons
 extension DefaultTheme {
   func stylePrimaryButton(button: UIButton) {
+    button.setTitleColor(colorNumber23(), for: .normal)
+    button.setTitleColor(colorNumber23(), for: UIControlState.highlighted)
+    button.setBackgroundImage(UIImage(color: colorNumber19()), for: .normal)
+    button.setBackgroundImage(UIImage(color: colorNumber19Highlighted()), for: .highlighted)
+    button.clipsToBounds = true
+    button.layer.cornerRadius = 4
   }
   
   func styleSecondaryButton(button: UIButton) {
