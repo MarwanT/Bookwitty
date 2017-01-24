@@ -34,7 +34,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="559"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AlO-cT-R8d" userLabel="Register Button">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AlO-cT-R8d" userLabel="Register Button">
                                 <rect key="frame" x="20" y="599" width="157.5" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="8ya-8q-dRL"/>
@@ -44,7 +44,7 @@
                                     <action selector="registerButtonTap:" destination="DlM-6e-0pf" eventType="touchUpInside" id="7Ux-tf-wTM"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cgH-mu-QcI" userLabel="Sign-in Button">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cgH-mu-QcI" userLabel="Sign-in Button">
                                 <rect key="frame" x="197.5" y="599" width="153.5" height="48"/>
                                 <state key="normal" title="Sign-in"/>
                                 <connections>
@@ -99,6 +99,10 @@
         <scene sceneID="vnC-lY-bxi">
             <objects>
                 <viewController id="dW4-Vx-Ggv" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9Mh-VM-emW"/>
+                        <viewControllerLayoutGuide type="bottom" id="uNx-4N-fPR"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="oYD-Va-GtC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
