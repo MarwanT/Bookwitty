@@ -40,10 +40,16 @@
                                     <constraint firstAttribute="height" constant="48" id="8ya-8q-dRL"/>
                                 </constraints>
                                 <state key="normal" title="Register"/>
+                                <connections>
+                                    <action selector="registerButtonTap:" destination="DlM-6e-0pf" eventType="touchUpInside" id="7Ux-tf-wTM"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cgH-mu-QcI" userLabel="Sign-in Button">
                                 <rect key="frame" x="197.5" y="599" width="153.5" height="48"/>
                                 <state key="normal" title="Sign-in"/>
+                                <connections>
+                                    <action selector="signInButtonTap:" destination="DlM-6e-0pf" eventType="touchUpInside" id="slm-0f-rpN"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

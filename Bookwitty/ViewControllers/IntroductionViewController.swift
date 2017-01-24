@@ -18,4 +18,11 @@ class IntroductionViewController: UIViewController {
     
     // Do any additional setup after loading the view.
   }
+  
+  // MARK: - Actions
+  @IBAction func registerButtonTap(_ sender: UIButton) {
+  }
+  
+  @IBAction func signInButtonTap(_ sender: UIButton) {
+  }
 }
