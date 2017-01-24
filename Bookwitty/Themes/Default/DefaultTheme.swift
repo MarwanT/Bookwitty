@@ -10,7 +10,15 @@ import Foundation
 
 final class DefaultTheme: Theme {
   func initialize() {
-    // TODO: Initialize navigation bar and other stuff
+    // Initialize navigation bar and other stuff
+    
+    let appearance = UINavigationBar.appearance()
+    appearance.barTintColor = self.colorNumber23()
+    appearance.tintColor = self.colorNumber23()
+    appearance.isTranslucent = false
+    appearance.titleTextAttributes = [
+      NSForegroundColorAttributeName : self.colorNumber20()
+    ]
   }
 }
 
