@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias TutorialPageData = (title: String?, description: String?, iamge: UIImage)
+typealias TutorialPageData = (title: String?, description: String?, image: UIImage, color: UIColor?)
 
 struct TutorialViewModel {
   var tutorialPageData: [TutorialPageData] = [TutorialPageData]()
