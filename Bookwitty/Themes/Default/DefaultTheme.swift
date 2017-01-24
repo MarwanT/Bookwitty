@@ -107,4 +107,7 @@ extension DefaultTheme {
 extension DefaultTheme {
   func stylePrimaryButton(button: UIButton) {
   }
+  
+  func styleSecondaryButton(button: UIButton) {
+  }
 }
