@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FLKAutoLayout
 
 class IntroductionViewController: UIViewController {
   let viewModel = IntroductionViewModel()
@@ -21,6 +22,7 @@ class IntroductionViewController: UIViewController {
     let tutorialViewController = storyboard!.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
     tutorialViewController.viewModel.tutorialPageData = viewModel.tutorialData
     let tutorialChildView = add(asChildViewController: tutorialViewController, toView: tutorialContainer)
+    tutorialChildView.alignTop("0", leading: "0", bottom: "0", trailing: "0", toView: tutorialChildView.superview!)
   }
   
   // MARK: - Actions
