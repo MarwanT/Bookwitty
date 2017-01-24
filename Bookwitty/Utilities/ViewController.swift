@@ -25,4 +25,15 @@ extension UIViewController {
     
     return childView
   }
+  
+  func remove(asChildViewController viewController: UIViewController) {
+    // Notify Child View Controller
+    viewController.willMove(toParentViewController: nil)
+    
+    // Remove Child View From Superview
+    viewController.view.removeFromSuperview()
+    
+    // Notify Child View Controller
+    viewController.removeFromParentViewController()
+  }
 }
