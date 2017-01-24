@@ -19,6 +19,7 @@
 		595A64A21E2D66E900655067 /* BookwittyAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A64A11E2D66E900655067 /* BookwittyAPITests.swift */; };
 		596FAD741E2E53AC0064F967 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596FAD731E2E53AC0064F967 /* Environment.swift */; };
 		5999EDE11E375EFF00B35562 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999EDE01E375EFF00B35562 /* PageViewController.swift */; };
+		5999EDE31E37621100B35562 /* IntroductionInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999EDE21E37621100B35562 /* IntroductionInformationViewController.swift */; };
 		59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59B65FD21E251FE80093FF44 /* Assets.xcassets */; };
 		59B65FD81E2524D60093FF44 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B65FD61E2524D60093FF44 /* ViewController.swift */; };
 		59BAC6991E2FCD1A0063F573 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59BAC6981E2FCD1A0063F573 /* GoogleService-Info.plist */; };
@@ -54,6 +55,7 @@
 		595A64A11E2D66E900655067 /* BookwittyAPITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyAPITests.swift; sourceTree = "<group>"; };
 		596FAD731E2E53AC0064F967 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		5999EDE01E375EFF00B35562 /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		5999EDE21E37621100B35562 /* IntroductionInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductionInformationViewController.swift; sourceTree = "<group>"; };
 		59B65FD21E251FE80093FF44 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		59B65FD61E2524D60093FF44 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		59BAC6981E2FCD1A0063F573 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 			children = (
 				59B65FD61E2524D60093FF44 /* ViewController.swift */,
 				5999EDE01E375EFF00B35562 /* PageViewController.swift */,
+				5999EDE21E37621100B35562 /* IntroductionInformationViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -509,6 +512,7 @@
 				595A64A01E2D0C4D00655067 /* Network.swift in Sources */,
 				595A649C1E2CCB8900655067 /* BookwittyAPI.swift in Sources */,
 				595A649E1E2CF4EA00655067 /* String.swift in Sources */,
+				5999EDE31E37621100B35562 /* IntroductionInformationViewController.swift in Sources */,
 				59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */,
 				59D6021B1E32597B00271315 /* AppKeys.swift in Sources */,
 			);
