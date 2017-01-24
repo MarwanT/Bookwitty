@@ -97,4 +97,8 @@ extension DefaultTheme {
   func colorNumber23() -> UIColor {
     return UIColor.bwWhite
   }
+  
+  func colorNumber19Highlighted() -> UIColor {
+    return UIColor.bwRubyHighlighted
+  }
 }
