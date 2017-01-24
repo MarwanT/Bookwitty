@@ -40,8 +40,11 @@ protocol ThemeColor {
   func colorNumber19Highlighted() -> UIColor
 }
 
+protocol ThemeButtonsStyle {
+  func stylePrimaryButton(button: UIButton)
+}
 
-protocol Theme: ThemeColor {
+protocol Theme: ThemeColor, ThemeButtonsStyle {
   func initialize()
 }
 

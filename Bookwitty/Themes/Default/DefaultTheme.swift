@@ -102,3 +102,9 @@ extension DefaultTheme {
     return UIColor.bwRubyHighlighted
   }
 }
+
+// MARK: - Buttons
+extension DefaultTheme {
+  func stylePrimaryButton(button: UIButton) {
+  }
+}
