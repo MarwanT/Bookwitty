@@ -14,6 +14,7 @@
 		593769D71E3689FB00F23226 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593769D51E3689FB00F23226 /* Appearance.swift */; };
 		593769D81E3689FB00F23226 /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593769D61E3689FB00F23226 /* DefaultTheme.swift */; };
 		5947C2A41E37A594003BF12A /* IntroductionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5947C2A31E37A594003BF12A /* IntroductionViewController.swift */; };
+		5947C2A61E37B01D003BF12A /* IntroductionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5947C2A51E37B01D003BF12A /* IntroductionViewModel.swift */; };
 		5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5947C2A71E37B3D1003BF12A /* ViewController.swift */; };
 		595A649C1E2CCB8900655067 /* BookwittyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649B1E2CCB8900655067 /* BookwittyAPI.swift */; };
 		595A649E1E2CF4EA00655067 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649D1E2CF4EA00655067 /* String.swift */; };
@@ -52,6 +53,7 @@
 		593769D51E3689FB00F23226 /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Appearance.swift; path = Default/Appearance.swift; sourceTree = "<group>"; };
 		593769D61E3689FB00F23226 /* DefaultTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
 		5947C2A31E37A594003BF12A /* IntroductionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductionViewController.swift; sourceTree = "<group>"; };
+		5947C2A51E37B01D003BF12A /* IntroductionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductionViewModel.swift; sourceTree = "<group>"; };
 		5947C2A71E37B3D1003BF12A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		595A649B1E2CCB8900655067 /* BookwittyAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyAPI.swift; sourceTree = "<group>"; };
 		595A649D1E2CF4EA00655067 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				5999EDE41E37846200B35562 /* TutorialViewModel.swift */,
+				5947C2A51E37B01D003BF12A /* IntroductionViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -520,6 +523,7 @@
 				595A64A01E2D0C4D00655067 /* Network.swift in Sources */,
 				595A649C1E2CCB8900655067 /* BookwittyAPI.swift in Sources */,
 				595A649E1E2CF4EA00655067 /* String.swift in Sources */,
+				5947C2A61E37B01D003BF12A /* IntroductionViewModel.swift in Sources */,
 				5999EDE31E37621100B35562 /* TutorialPageViewController.swift in Sources */,
 				59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */,
 				59D6021B1E32597B00271315 /* AppKeys.swift in Sources */,
