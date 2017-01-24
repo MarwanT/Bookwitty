@@ -18,7 +18,7 @@
 		595A64A01E2D0C4D00655067 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649F1E2D0C4D00655067 /* Network.swift */; };
 		595A64A21E2D66E900655067 /* BookwittyAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A64A11E2D66E900655067 /* BookwittyAPITests.swift */; };
 		596FAD741E2E53AC0064F967 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596FAD731E2E53AC0064F967 /* Environment.swift */; };
-		5999EDE11E375EFF00B35562 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999EDE01E375EFF00B35562 /* PageViewController.swift */; };
+		5999EDE11E375EFF00B35562 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999EDE01E375EFF00B35562 /* TutorialViewController.swift */; };
 		5999EDE31E37621100B35562 /* IntroductionInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999EDE21E37621100B35562 /* IntroductionInformationViewController.swift */; };
 		5999EDE51E37846200B35562 /* PageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999EDE41E37846200B35562 /* PageViewModel.swift */; };
 		59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59B65FD21E251FE80093FF44 /* Assets.xcassets */; };
@@ -54,7 +54,7 @@
 		595A649F1E2D0C4D00655067 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		595A64A11E2D66E900655067 /* BookwittyAPITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyAPITests.swift; sourceTree = "<group>"; };
 		596FAD731E2E53AC0064F967 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
-		5999EDE01E375EFF00B35562 /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		5999EDE01E375EFF00B35562 /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		5999EDE21E37621100B35562 /* IntroductionInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductionInformationViewController.swift; sourceTree = "<group>"; };
 		5999EDE41E37846200B35562 /* PageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewModel.swift; sourceTree = "<group>"; };
 		59B65FD21E251FE80093FF44 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -194,7 +194,7 @@
 		59B65FD41E2524D60093FF44 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				5999EDE01E375EFF00B35562 /* PageViewController.swift */,
+				5999EDE01E375EFF00B35562 /* TutorialViewController.swift */,
 				5999EDE21E37621100B35562 /* IntroductionInformationViewController.swift */,
 			);
 			path = ViewControllers;
@@ -504,7 +504,7 @@
 				596FAD741E2E53AC0064F967 /* Environment.swift in Sources */,
 				59BD55781E302EB800D3B805 /* Analytics.swift in Sources */,
 				59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */,
-				5999EDE11E375EFF00B35562 /* PageViewController.swift in Sources */,
+				5999EDE11E375EFF00B35562 /* TutorialViewController.swift in Sources */,
 				5999EDE51E37846200B35562 /* PageViewModel.swift in Sources */,
 				59D6021E1E36363400271315 /* Font.swift in Sources */,
 				593769D71E3689FB00F23226 /* Appearance.swift in Sources */,

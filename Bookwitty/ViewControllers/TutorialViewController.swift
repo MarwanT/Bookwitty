@@ -1,5 +1,5 @@
 //
-//  PageViewController.swift
+//  TutorialViewController.swift
 //  Bookwitty
 //
 //  Created by Marwan  on 1/24/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PageViewController: UIPageViewController {
+class TutorialViewController: UIPageViewController {
   let viewModel = PageViewModel()
   
   fileprivate var orderedViewControllers: [UIViewController] = [UIViewController]()
@@ -53,7 +53,7 @@ class PageViewController: UIPageViewController {
   }
 }
 
-extension PageViewController: UIPageViewControllerDataSource {
+extension TutorialViewController: UIPageViewControllerDataSource {
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
     guard let currentViewControllerIndex = orderedViewControllers.index(of: viewController) else {
       return nil
