@@ -8,31 +8,27 @@
 
 import Foundation
 
-public enum Environment {
-  case localDevice
-  case mock
-  case preproduction
-  case production
-  
-  public private(set) static var current: Environment = .mock
-  
-  public static func initialize() {
-    // TODO: Set the current environment through cocoa keys
-    current = .mock
+struct Environment {
+  enum EnvironmentType: String {
+    case mockLocal = "mockLocal"
+    case mockServer = "mockServer"
+    case development = "development"
+    case staging = "staging"
+    case production = "production"
   }
   
-  var baseURL: URL {
-    switch self {
-    case .localDevice:
-      return URL(string: "https://private-7bb9fa-dannyhajj.apiary-mock.com/api")!
-    case .mock:
-      return URL(string: "https://private-7bb9fa-dannyhajj.apiary-mock.com/api")!
-    case .preproduction:
-      // TODO: Set the correct Preproduction base URL
-      return URL(string: "https://private-7bb9fa-dannyhajj.apiary-mock.com/api")!
-    case .production:
-      // TODO: Set the correct Production base URL
-      return URL(string: "https://private-7bb9fa-dannyhajj.apiary-mock.com/api")!
+  static let current = Environment()
+  
+  let type: EnvironmentType
+  let baseURL: URL
+  let googleAnalyticsIdentifier: String
+  
+  private init() {
+    type = EnvironmentType(rawValue: AppKeys.shared.environmentString) ?? .mockServer
+    switch type {
+    default:
+      baseURL = URL(string: AppKeys.shared.bookwittyServerBaseURLAbsoluteString)!
+      googleAnalyticsIdentifier = AppKeys.shared.googleAnalyticsIdentifier
     }
   }
 }

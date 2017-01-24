@@ -82,8 +82,8 @@ extension BookwittyAPI: TargetType {
   }
   
   public var headerParameters: [String:String]? {
-    switch (Environment.current, self.method) {
-    case (.mock, .get):
+    switch (Environment.current.type, self.method) {
+    case (.mockServer, .get):
       return ["Prefer": "status=200"]
     default:
       return nil
