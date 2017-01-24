@@ -115,5 +115,13 @@ extension DefaultTheme {
   }
   
   func styleSecondaryButton(button: UIButton) {
+    button.setTitleColor(colorNumber19(), for: .normal)
+    button.setTitleColor(colorNumber19Highlighted(), for: .highlighted)
+    button.setBackgroundImage(UIImage(color: colorNumber23()), for: .normal)
+    button.setBackgroundImage(UIImage(color: colorNumber23()), for: .highlighted)
+    button.clipsToBounds = true
+    button.layer.cornerRadius = 4
+    button.layer.borderWidth = 2
+    button.layer.borderColor = colorNumber19().cgColor
   }
 }
