@@ -70,7 +70,7 @@
                     <connections>
                         <outlet property="registerButton" destination="AlO-cT-R8d" id="rk2-Vk-xvl"/>
                         <outlet property="signInButton" destination="cgH-mu-QcI" id="9O9-Oh-gAM"/>
-                        <outlet property="tutorialContainerButton" destination="XkX-Oq-6YC" id="rcZ-08-ehY"/>
+                        <outlet property="tutorialContainer" destination="XkX-Oq-6YC" id="ebL-GF-Mte"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jhk-tT-XPr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -94,6 +94,19 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fpV-Qe-cYa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="937" y="-582"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="vnC-lY-bxi">
+            <objects>
+                <viewController id="dW4-Vx-Ggv" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oYD-Va-GtC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VCd-dq-xvf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
 </document>
