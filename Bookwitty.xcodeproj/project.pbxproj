@@ -21,6 +21,7 @@
 		595A64A01E2D0C4D00655067 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649F1E2D0C4D00655067 /* Network.swift */; };
 		595A64A21E2D66E900655067 /* BookwittyAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A64A11E2D66E900655067 /* BookwittyAPITests.swift */; };
 		596FAD741E2E53AC0064F967 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596FAD731E2E53AC0064F967 /* Environment.swift */; };
+		597B8E2D1E37F6BC00C7811B /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597B8E2C1E37F6BC00C7811B /* Image.swift */; };
 		5999EDE11E375EFF00B35562 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999EDE01E375EFF00B35562 /* TutorialViewController.swift */; };
 		5999EDE31E37621100B35562 /* TutorialPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999EDE21E37621100B35562 /* TutorialPageViewController.swift */; };
 		5999EDE51E37846200B35562 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999EDE41E37846200B35562 /* TutorialViewModel.swift */; };
@@ -60,6 +61,7 @@
 		595A649F1E2D0C4D00655067 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		595A64A11E2D66E900655067 /* BookwittyAPITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyAPITests.swift; sourceTree = "<group>"; };
 		596FAD731E2E53AC0064F967 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		597B8E2C1E37F6BC00C7811B /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		5999EDE01E375EFF00B35562 /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		5999EDE21E37621100B35562 /* TutorialPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialPageViewController.swift; sourceTree = "<group>"; };
 		5999EDE41E37846200B35562 /* TutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				595A649D1E2CF4EA00655067 /* String.swift */,
 				59D6021A1E32597B00271315 /* AppKeys.swift */,
 				5947C2A71E37B3D1003BF12A /* ViewController.swift */,
+				597B8E2C1E37F6BC00C7811B /* Image.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -517,6 +520,7 @@
 				5999EDE11E375EFF00B35562 /* TutorialViewController.swift in Sources */,
 				5947C2A41E37A594003BF12A /* IntroductionViewController.swift in Sources */,
 				5999EDE51E37846200B35562 /* TutorialViewModel.swift in Sources */,
+				597B8E2D1E37F6BC00C7811B /* Image.swift in Sources */,
 				59D6021E1E36363400271315 /* Font.swift in Sources */,
 				593769D71E3689FB00F23226 /* Appearance.swift in Sources */,
 				593769D81E3689FB00F23226 /* DefaultTheme.swift in Sources */,
