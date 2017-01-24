@@ -9,6 +9,7 @@
 import UIKit
 
 class PageViewController: UIPageViewController {
+  let viewModel = PageViewModel()
   
   fileprivate var orderedViewControllers: [UIViewController] = [UIViewController]()
   
@@ -16,7 +17,35 @@ class PageViewController: UIPageViewController {
     super.viewDidLoad()
     
     dataSource = self
+    
+    orderedViewControllers.append(contentsOf: instructionsViewControllers())
+    
+    if let firstViewController = orderedViewControllers.first {
+      setViewControllers(
+        [firstViewController],
+        direction: UIPageViewControllerNavigationDirection.forward,
+        animated: true, completion: nil)
+    }
   }
+  
+  /// Generate instructions view controllers based on provided data
+  private func instructionsViewControllers() -> [UIViewController] {
+    var viewControllersArray = [UIViewController]()
+    
+    let instructionsData = viewModel.instructionsData
+    guard instructionsData.count > 0 else {
+      return viewControllersArray
+    }
+    
+    for data in instructionsData {
+      let instructionViewController = storyboard!.instantiateViewController(withIdentifier: "IntroductionInformationViewController")
+      // TODO: Send data to instruction VC
+      viewControllersArray.append(instructionViewController)
+    }
+    
+    return viewControllersArray
+  }
+  
   
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
