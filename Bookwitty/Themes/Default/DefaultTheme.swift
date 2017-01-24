@@ -19,6 +19,10 @@ final class DefaultTheme: Theme {
     appearance.titleTextAttributes = [
       NSForegroundColorAttributeName : self.colorNumber20()
     ]
+    
+    let pageControlAppearance = UIPageControl.appearance()
+    pageControlAppearance.currentPageIndicatorTintColor = self.colorNumber15()
+    pageControlAppearance.pageIndicatorTintColor = self.colorNumber18()
   }
 }
 
