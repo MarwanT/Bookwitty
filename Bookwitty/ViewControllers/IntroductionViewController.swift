@@ -9,6 +9,10 @@
 import UIKit
 
 class IntroductionViewController: UIViewController {
+  @IBOutlet weak var registerButton: UIButton!
+  @IBOutlet weak var signInButton: UIButton!
+  @IBOutlet weak var tutorialContainerButton: UIView!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     

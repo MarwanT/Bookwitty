@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -28,8 +29,43 @@
                     <view key="view" contentMode="scaleToFill" id="1Nd-PG-3lK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XkX-Oq-6YC" userLabel="Tutorial Container View">
+                                <rect key="frame" x="0.0" y="20" width="375" height="559"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AlO-cT-R8d" userLabel="Register Button">
+                                <rect key="frame" x="20" y="599" width="157.5" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="8ya-8q-dRL"/>
+                                </constraints>
+                                <state key="normal" title="Register"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cgH-mu-QcI" userLabel="Sign-in Button">
+                                <rect key="frame" x="197.5" y="599" width="153.5" height="48"/>
+                                <state key="normal" title="Sign-in"/>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="AlO-cT-R8d" firstAttribute="leading" secondItem="1Nd-PG-3lK" secondAttribute="leading" constant="20" id="28M-5Y-jxt"/>
+                            <constraint firstItem="cgH-mu-QcI" firstAttribute="height" secondItem="AlO-cT-R8d" secondAttribute="height" id="2eJ-FZ-6Rj"/>
+                            <constraint firstItem="XkX-Oq-6YC" firstAttribute="bottom" secondItem="AlO-cT-R8d" secondAttribute="top" constant="-20" id="C7S-9w-sxk"/>
+                            <constraint firstItem="cgH-mu-QcI" firstAttribute="trailing" secondItem="1Nd-PG-3lK" secondAttribute="trailing" constant="-24" id="Dmj-yf-Up4"/>
+                            <constraint firstItem="atB-Sc-hUZ" firstAttribute="top" secondItem="AlO-cT-R8d" secondAttribute="bottom" constant="20" id="bNu-Wp-bHH"/>
+                            <constraint firstItem="XkX-Oq-6YC" firstAttribute="trailing" secondItem="1Nd-PG-3lK" secondAttribute="trailing" id="bbG-s0-jN7"/>
+                            <constraint firstItem="AlO-cT-R8d" firstAttribute="trailing" secondItem="1Nd-PG-3lK" secondAttribute="centerX" constant="-10" id="cCH-Zh-O83"/>
+                            <constraint firstItem="cgH-mu-QcI" firstAttribute="bottom" secondItem="AlO-cT-R8d" secondAttribute="bottom" id="gER-eE-kzv"/>
+                            <constraint firstItem="cgH-mu-QcI" firstAttribute="leading" secondItem="1Nd-PG-3lK" secondAttribute="centerX" constant="10" id="iPh-T0-l0u"/>
+                            <constraint firstItem="XkX-Oq-6YC" firstAttribute="leading" secondItem="1Nd-PG-3lK" secondAttribute="leading" id="jrk-7x-Sss"/>
+                            <constraint firstItem="XkX-Oq-6YC" firstAttribute="top" secondItem="ZaB-ZV-23l" secondAttribute="bottom" id="wul-pL-NCZ"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="registerButton" destination="AlO-cT-R8d" id="rk2-Vk-xvl"/>
+                        <outlet property="signInButton" destination="cgH-mu-QcI" id="9O9-Oh-gAM"/>
+                        <outlet property="tutorialContainerButton" destination="XkX-Oq-6YC" id="rcZ-08-ehY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jhk-tT-XPr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
