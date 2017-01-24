@@ -20,7 +20,7 @@
         <!--Introduction Information View Controller-->
         <scene sceneID="K6P-9x-0vQ">
             <objects>
-                <viewController id="N0g-I6-Mdp" customClass="IntroductionInformationViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="IntroductionInformationViewController" id="N0g-I6-Mdp" customClass="IntroductionInformationViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ohW-I9-DmB"/>
                         <viewControllerLayoutGuide type="bottom" id="Ls4-JR-Vqa"/>
