@@ -20,7 +20,7 @@
 		596FAD741E2E53AC0064F967 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596FAD731E2E53AC0064F967 /* Environment.swift */; };
 		5999EDE11E375EFF00B35562 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999EDE01E375EFF00B35562 /* TutorialViewController.swift */; };
 		5999EDE31E37621100B35562 /* IntroductionInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999EDE21E37621100B35562 /* IntroductionInformationViewController.swift */; };
-		5999EDE51E37846200B35562 /* PageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999EDE41E37846200B35562 /* PageViewModel.swift */; };
+		5999EDE51E37846200B35562 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999EDE41E37846200B35562 /* TutorialViewModel.swift */; };
 		59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59B65FD21E251FE80093FF44 /* Assets.xcassets */; };
 		59BAC6991E2FCD1A0063F573 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59BAC6981E2FCD1A0063F573 /* GoogleService-Info.plist */; };
 		59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD55751E302EB800D3B805 /* Analytics+Constants.swift */; };
@@ -56,7 +56,7 @@
 		596FAD731E2E53AC0064F967 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		5999EDE01E375EFF00B35562 /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		5999EDE21E37621100B35562 /* IntroductionInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductionInformationViewController.swift; sourceTree = "<group>"; };
-		5999EDE41E37846200B35562 /* PageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewModel.swift; sourceTree = "<group>"; };
+		5999EDE41E37846200B35562 /* TutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
 		59B65FD21E251FE80093FF44 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		59BAC6981E2FCD1A0063F573 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		59BD55751E302EB800D3B805 /* Analytics+Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+Constants.swift"; sourceTree = "<group>"; };
@@ -109,7 +109,7 @@
 		59057FC51E252C500036AAF3 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				5999EDE41E37846200B35562 /* PageViewModel.swift */,
+				5999EDE41E37846200B35562 /* TutorialViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -505,7 +505,7 @@
 				59BD55781E302EB800D3B805 /* Analytics.swift in Sources */,
 				59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */,
 				5999EDE11E375EFF00B35562 /* TutorialViewController.swift in Sources */,
-				5999EDE51E37846200B35562 /* PageViewModel.swift in Sources */,
+				5999EDE51E37846200B35562 /* TutorialViewModel.swift in Sources */,
 				59D6021E1E36363400271315 /* Font.swift in Sources */,
 				593769D71E3689FB00F23226 /* Appearance.swift in Sources */,
 				593769D81E3689FB00F23226 /* DefaultTheme.swift in Sources */,

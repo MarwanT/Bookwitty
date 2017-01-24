@@ -9,7 +9,7 @@
 import UIKit
 
 class TutorialViewController: UIPageViewController {
-  let viewModel = PageViewModel()
+  let viewModel = TutorialViewModel()
   
   fileprivate var orderedViewControllers: [UIViewController] = [UIViewController]()
   

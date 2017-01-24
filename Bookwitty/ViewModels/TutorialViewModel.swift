@@ -10,6 +10,6 @@ import Foundation
 
 typealias InstructionData = (title: String?, description: String?, iamge: UIImage)
 
-struct PageViewModel {
+struct TutorialViewModel {
   var instructionsData: [InstructionData] = [InstructionData]()
 }
