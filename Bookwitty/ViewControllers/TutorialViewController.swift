@@ -38,7 +38,7 @@ class TutorialViewController: UIPageViewController {
     }
     
     for data in instructionsData {
-      let instructionViewController = storyboard!.instantiateViewController(withIdentifier: "IntroductionInformationViewController")
+      let instructionViewController = storyboard!.instantiateViewController(withIdentifier: "TutorialPageViewController")
       // TODO: Send data to instruction VC
       viewControllersArray.append(instructionViewController)
     }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IntroductionInformationViewController: UIPageViewController {
+class TutorialPageViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
