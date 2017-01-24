@@ -9,6 +9,8 @@
 import UIKit
 
 class IntroductionViewController: UIViewController {
+  let viewModel = IntroductionViewModel()
+  
   @IBOutlet weak var registerButton: UIButton!
   @IBOutlet weak var signInButton: UIButton!
   @IBOutlet weak var tutorialContainer: UIView!
@@ -16,7 +18,9 @@ class IntroductionViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    // Do any additional setup after loading the view.
+    let tutorialViewController = storyboard!.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
+    tutorialViewController.viewModel.tutorialPageData = viewModel.tutorialData
+    let tutorialChildView = add(asChildViewController: tutorialViewController, toView: tutorialContainer)
   }
   
   // MARK: - Actions
