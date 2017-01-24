@@ -23,6 +23,8 @@ class IntroductionViewController: UIViewController {
     tutorialViewController.viewModel.tutorialPageData = viewModel.tutorialData
     let tutorialChildView = add(asChildViewController: tutorialViewController, toView: tutorialContainer)
     tutorialChildView.alignTop("0", leading: "0", bottom: "0", trailing: "0", toView: tutorialChildView.superview!)
+    
+    applyTheme()
   }
   
   // MARK: - Actions
@@ -30,5 +32,12 @@ class IntroductionViewController: UIViewController {
   }
   
   @IBAction func signInButtonTap(_ sender: UIButton) {
+  }
+}
+
+extension IntroductionViewController: Themeable {
+  func applyTheme() {
+    ThemeManager.shared.currentTheme.stylePrimaryButton(button: signInButton)
+    ThemeManager.shared.currentTheme.styleSecondaryButton(button: registerButton)
   }
 }
