@@ -9,6 +9,7 @@
 import UIKit
 
 class TutorialPageViewController: UIViewController {
+  var tutorialPageData: TutorialPageData?
   
   override func viewDidLoad() {
     super.viewDidLoad()
