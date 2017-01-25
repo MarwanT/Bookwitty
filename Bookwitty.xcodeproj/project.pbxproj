@@ -22,6 +22,10 @@
 		595A64A21E2D66E900655067 /* BookwittyAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A64A11E2D66E900655067 /* BookwittyAPITests.swift */; };
 		596FAD741E2E53AC0064F967 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596FAD731E2E53AC0064F967 /* Environment.swift */; };
 		597B8E2D1E37F6BC00C7811B /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597B8E2C1E37F6BC00C7811B /* Image.swift */; };
+		597B8E361E3954B200C7811B /* Georgia.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 597B8E301E3954B200C7811B /* Georgia.ttf */; };
+		597B8E371E3954B200C7811B /* Ubuntu-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 597B8E321E3954B200C7811B /* Ubuntu-Medium.ttf */; };
+		597B8E381E3954B200C7811B /* Ubuntu-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 597B8E331E3954B200C7811B /* Ubuntu-Regular.ttf */; };
+		597B8E391E3954B200C7811B /* Volkhov-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 597B8E351E3954B200C7811B /* Volkhov-Regular.ttf */; };
 		5999EDE11E375EFF00B35562 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999EDE01E375EFF00B35562 /* TutorialViewController.swift */; };
 		5999EDE31E37621100B35562 /* TutorialPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999EDE21E37621100B35562 /* TutorialPageViewController.swift */; };
 		5999EDE51E37846200B35562 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999EDE41E37846200B35562 /* TutorialViewModel.swift */; };
@@ -63,6 +67,10 @@
 		595A64A11E2D66E900655067 /* BookwittyAPITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyAPITests.swift; sourceTree = "<group>"; };
 		596FAD731E2E53AC0064F967 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		597B8E2C1E37F6BC00C7811B /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		597B8E301E3954B200C7811B /* Georgia.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Georgia.ttf; sourceTree = "<group>"; };
+		597B8E321E3954B200C7811B /* Ubuntu-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Medium.ttf"; sourceTree = "<group>"; };
+		597B8E331E3954B200C7811B /* Ubuntu-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Regular.ttf"; sourceTree = "<group>"; };
+		597B8E351E3954B200C7811B /* Volkhov-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Volkhov-Regular.ttf"; sourceTree = "<group>"; };
 		5999EDE01E375EFF00B35562 /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		5999EDE21E37621100B35562 /* TutorialPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialPageViewController.swift; sourceTree = "<group>"; };
 		5999EDE41E37846200B35562 /* TutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
@@ -197,10 +205,46 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		597B8E2E1E3954B200C7811B /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				597B8E2F1E3954B200C7811B /* Georgia */,
+				597B8E311E3954B200C7811B /* Ubuntu */,
+				597B8E341E3954B200C7811B /* Volkhov */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		597B8E2F1E3954B200C7811B /* Georgia */ = {
+			isa = PBXGroup;
+			children = (
+				597B8E301E3954B200C7811B /* Georgia.ttf */,
+			);
+			path = Georgia;
+			sourceTree = "<group>";
+		};
+		597B8E311E3954B200C7811B /* Ubuntu */ = {
+			isa = PBXGroup;
+			children = (
+				597B8E321E3954B200C7811B /* Ubuntu-Medium.ttf */,
+				597B8E331E3954B200C7811B /* Ubuntu-Regular.ttf */,
+			);
+			path = Ubuntu;
+			sourceTree = "<group>";
+		};
+		597B8E341E3954B200C7811B /* Volkhov */ = {
+			isa = PBXGroup;
+			children = (
+				597B8E351E3954B200C7811B /* Volkhov-Regular.ttf */,
+			);
+			path = Volkhov;
+			sourceTree = "<group>";
+		};
 		59B65FD11E251FE80093FF44 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
 				59B65FD21E251FE80093FF44 /* Assets.xcassets */,
+				597B8E2E1E3954B200C7811B /* Font */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -389,8 +433,12 @@
 			files = (
 				59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */,
 				59BAC6991E2FCD1A0063F573 /* GoogleService-Info.plist in Resources */,
+				597B8E371E3954B200C7811B /* Ubuntu-Medium.ttf in Resources */,
 				59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */,
 				59057FE01E25340A0036AAF3 /* LaunchScreen.storyboard in Resources */,
+				597B8E381E3954B200C7811B /* Ubuntu-Regular.ttf in Resources */,
+				597B8E361E3954B200C7811B /* Georgia.ttf in Resources */,
+				597B8E391E3954B200C7811B /* Volkhov-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
