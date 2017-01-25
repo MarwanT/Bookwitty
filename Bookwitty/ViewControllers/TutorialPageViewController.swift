@@ -9,6 +9,11 @@
 import UIKit
 
 class TutorialPageViewController: UIViewController {
+  @IBOutlet weak var imageView: UIImageView!
+  @IBOutlet weak var stackView: UIStackView!
+  @IBOutlet weak var titleLabel: UILabel!
+  @IBOutlet weak var descriptionLabel: UILabel!
+  
   var tutorialPageData: TutorialPageData?
   
   override func viewDidLoad() {
@@ -17,8 +22,5 @@ class TutorialPageViewController: UIViewController {
     // Do any additional setup after loading the view.
   }
   
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
   }
 }
