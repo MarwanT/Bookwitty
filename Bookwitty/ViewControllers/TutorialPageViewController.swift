@@ -9,15 +9,26 @@
 import UIKit
 
 class TutorialPageViewController: UIViewController {
+  @IBOutlet weak var imageView: UIImageView!
+  @IBOutlet weak var stackView: UIStackView!
+  @IBOutlet weak var titleLabel: UILabel!
+  @IBOutlet weak var descriptionLabel: UILabel!
+  
+  var tutorialPageData: TutorialPageData?
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    // Do any additional setup after loading the view.
+    stackView.isLayoutMarginsRelativeArrangement = true
+    stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+    
+    fillContent()
   }
   
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
+  private func fillContent() {
+    titleLabel.text = tutorialPageData?.title
+    descriptionLabel.text = tutorialPageData?.description
+    imageView.image = tutorialPageData?.image
+    imageView.backgroundColor = tutorialPageData?.color
   }
 }

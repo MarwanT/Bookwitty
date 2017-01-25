@@ -36,10 +36,23 @@ protocol ThemeColor {
   func colorNumber21() -> UIColor
   func colorNumber22() -> UIColor
   func colorNumber23() -> UIColor
+  
+  func colorNumber19Highlighted() -> UIColor
+  
+  func defaultPrimaryButtonColor() -> UIColor
+  func defaultPrimaryButtonHighlightedColor() -> UIColor
+  func defaultSecondaryButtonColor() -> UIColor
+  func defaultSecondaryButtonHighlightedColor() -> UIColor
 }
 
+protocol ThemeButtonsStyle {
+  func stylePrimaryButton(button: UIButton)
+  func styleSecondaryButton(button: UIButton)
+  func stylePrimaryButton(button: UIButton, withColor color: UIColor, highlightedColor: UIColor)
+  func styleSecondaryButton(button: UIButton, withColor color: UIColor, highlightedColor: UIColor)
+}
 
-protocol Theme: ThemeColor {
+protocol Theme: ThemeColor, ThemeButtonsStyle {
   func initialize()
 }
 

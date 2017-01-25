@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol TutorialViewControllerDelegate {
+  func tutorialViewController(_ tutorialViewController: TutorialViewController, didSelectPageAtIndex index: Int)
+}
+
 class TutorialViewController: UIPageViewController {
   let viewModel = TutorialViewModel()
+  
+  var tutorialDelegate: TutorialViewControllerDelegate? = nil
   
   fileprivate var orderedViewControllers: [UIViewController] = [UIViewController]()
   
@@ -17,6 +23,7 @@ class TutorialViewController: UIPageViewController {
     super.viewDidLoad()
     
     dataSource = self
+    delegate = self
     
     orderedViewControllers.append(contentsOf: tutorialPagesViewControllers())
     
@@ -25,6 +32,7 @@ class TutorialViewController: UIPageViewController {
         [firstViewController],
         direction: UIPageViewControllerNavigationDirection.forward,
         animated: true, completion: nil)
+      tutorialDelegate?.tutorialViewController(self, didSelectPageAtIndex: currentViewControllerIndex)
     }
   }
   
@@ -38,8 +46,8 @@ class TutorialViewController: UIPageViewController {
     }
     
     for data in instructionsData {
-      let instructionViewController = storyboard!.instantiateViewController(withIdentifier: "TutorialPageViewController")
-      // TODO: Send data to instruction VC
+      let instructionViewController = storyboard!.instantiateViewController(withIdentifier: "TutorialPageViewController") as! TutorialPageViewController
+      instructionViewController.tutorialPageData = data
       viewControllersArray.append(instructionViewController)
     }
     
@@ -47,11 +55,19 @@ class TutorialViewController: UIPageViewController {
   }
   
   
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
+  // MARK: Helper Methods
+  
+  fileprivate var currentViewControllerIndex: Int {
+    guard let currentViewController = viewControllers?.first,
+      let currentViewControllerIndex = orderedViewControllers.index(of: currentViewController) else {
+        return 0
+    }
+    return currentViewControllerIndex
   }
 }
+
+
+// MARK: - UIPageViewControllerDataSource
 
 extension TutorialViewController: UIPageViewControllerDataSource {
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
@@ -81,10 +97,22 @@ extension TutorialViewController: UIPageViewControllerDataSource {
   }
   
   func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-    guard let currentViewController = viewControllers?.first,
-      let currentViewControllerIndex = orderedViewControllers.index(of: currentViewController) else {
-        return 0
-    }
     return currentViewControllerIndex
+  }
+}
+
+
+// MARK: - UIPageViewControllerDelegate
+
+extension TutorialViewController: UIPageViewControllerDelegate {
+  func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+    guard let previousViewController = previousViewControllers.first,
+      let previousViewControllersIndex = orderedViewControllers.index(of: previousViewController) else {
+      return
+    }
+    
+    let selectedViewControllerIndex = completed ? currentViewControllerIndex : previousViewControllersIndex
+    
+    tutorialDelegate?.tutorialViewController(self, didSelectPageAtIndex: selectedViewControllerIndex)
   }
 }

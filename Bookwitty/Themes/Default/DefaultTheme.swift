@@ -97,4 +97,62 @@ extension DefaultTheme {
   func colorNumber23() -> UIColor {
     return UIColor.bwWhite
   }
+  
+  func colorNumber19Highlighted() -> UIColor {
+    return UIColor.bwRubyHighlighted
+  }
+  
+  
+  
+  func defaultPrimaryButtonColor() -> UIColor {
+    return colorNumber19()
+  }
+  
+  func defaultPrimaryButtonHighlightedColor() -> UIColor {
+    return colorNumber19Highlighted()
+  }
+  
+  func defaultSecondaryButtonColor() -> UIColor {
+    return colorNumber19()
+  }
+  
+  func defaultSecondaryButtonHighlightedColor() -> UIColor {
+    return colorNumber19Highlighted()
+  }
+}
+
+// MARK: - Buttons
+extension DefaultTheme {
+  func stylePrimaryButton(button: UIButton) {
+    stylePrimaryButton(
+      button: button,
+      withColor: defaultPrimaryButtonColor(),
+      highlightedColor: defaultPrimaryButtonHighlightedColor())
+  }
+  
+  func styleSecondaryButton(button: UIButton) {
+    styleSecondaryButton(
+      button: button,
+      withColor: defaultSecondaryButtonColor(),
+      highlightedColor: defaultSecondaryButtonHighlightedColor())
+  }
+  
+  func stylePrimaryButton(button: UIButton, withColor color: UIColor, highlightedColor: UIColor) {
+    button.setTitleColor(colorNumber23(), for: .normal)
+    button.setTitleColor(colorNumber23(), for: UIControlState.highlighted)
+    button.setBackgroundImage(UIImage(color: color), for: .normal)
+    button.setBackgroundImage(UIImage(color: highlightedColor), for: .highlighted)
+    button.clipsToBounds = true
+    button.layer.cornerRadius = 4
+  }
+  
+  func styleSecondaryButton(button: UIButton, withColor color: UIColor, highlightedColor: UIColor) {
+    button.setTitleColor(color, for: .normal)
+    button.setTitleColor(highlightedColor, for: .highlighted)
+    button.backgroundColor = colorNumber23()
+    button.clipsToBounds = true
+    button.layer.cornerRadius = 4
+    button.layer.borderWidth = 2
+    button.layer.borderColor = color.cgColor
+  }
 }

@@ -123,4 +123,9 @@ extension UIColor {
   static var bwWhite: UIColor {
     return UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
   }
+  
+  /// #cb002f
+  static var bwRubyHighlighted: UIColor {
+    return UIColor(red: 203/255, green: 0, blue: 47/255, alpha: 1)
+  }
 }
