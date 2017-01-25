@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol TutorialViewControllerDelegate {
+  func tutorialViewController(_ tutorialViewController: TutorialViewController, didSelectPageAtIndex index: Int)
+}
+
 class TutorialViewController: UIPageViewController {
   let viewModel = TutorialViewModel()
+  
+  var tutorialDelegate: TutorialViewControllerDelegate? = nil
   
   fileprivate var orderedViewControllers: [UIViewController] = [UIViewController]()
   
