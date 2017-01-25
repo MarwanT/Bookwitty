@@ -101,6 +101,16 @@ extension DefaultTheme {
   func colorNumber19Highlighted() -> UIColor {
     return UIColor.bwRubyHighlighted
   }
+  
+  
+  
+  func defaultPrimaryButtonColor() -> UIColor {
+    return colorNumber19()
+  }
+  
+  func defaultPrimaryButtonHighlightedColor() -> UIColor {
+    return colorNumber19Highlighted()
+  }
 }
 
 // MARK: - Buttons
