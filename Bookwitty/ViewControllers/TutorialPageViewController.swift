@@ -22,7 +22,13 @@ class TutorialPageViewController: UIViewController {
     stackView.isLayoutMarginsRelativeArrangement = true
     stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
     
+    fillContent()
   }
   
+  private func fillContent() {
+    titleLabel.text = tutorialPageData?.title
+    descriptionLabel.text = tutorialPageData?.description
+    imageView.image = tutorialPageData?.image
+    imageView.backgroundColor = tutorialPageData?.color
   }
 }
