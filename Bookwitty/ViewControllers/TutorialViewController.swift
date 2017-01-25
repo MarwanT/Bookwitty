@@ -23,6 +23,7 @@ class TutorialViewController: UIPageViewController {
     super.viewDidLoad()
     
     dataSource = self
+    delegate = self
     
     orderedViewControllers.append(contentsOf: tutorialPagesViewControllers())
     
@@ -31,6 +32,7 @@ class TutorialViewController: UIPageViewController {
         [firstViewController],
         direction: UIPageViewControllerNavigationDirection.forward,
         animated: true, completion: nil)
+      tutorialDelegate?.tutorialViewController(self, didSelectPageAtIndex: currentViewControllerIndex)
     }
   }
   
@@ -64,6 +66,9 @@ class TutorialViewController: UIPageViewController {
   }
 }
 
+
+// MARK: - UIPageViewControllerDataSource
+
 extension TutorialViewController: UIPageViewControllerDataSource {
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
     guard let currentViewControllerIndex = orderedViewControllers.index(of: viewController) else {
@@ -93,5 +98,21 @@ extension TutorialViewController: UIPageViewControllerDataSource {
   
   func presentationIndex(for pageViewController: UIPageViewController) -> Int {
     return currentViewControllerIndex
+  }
+}
+
+
+// MARK: - UIPageViewControllerDelegate
+
+extension TutorialViewController: UIPageViewControllerDelegate {
+  func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+    guard let previousViewController = previousViewControllers.first,
+      let previousViewControllersIndex = orderedViewControllers.index(of: previousViewController) else {
+      return
+    }
+    
+    let selectedViewControllerIndex = completed ? currentViewControllerIndex : previousViewControllersIndex
+    
+    tutorialDelegate?.tutorialViewController(self, didSelectPageAtIndex: selectedViewControllerIndex)
   }
 }
