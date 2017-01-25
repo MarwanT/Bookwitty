@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct IntroductionViewModel {
+final class IntroductionViewModel {
   let tutorialData: [TutorialPageData] = [
     (title: "Empower Your Curiosity", description: nil, image: UIImage(), color: ThemeManager.shared.currentTheme.colorNumber4()),
     (title: "Discover Ideas & People", description: "Whatever you want to dig deeper in a topic, explore new ideas or discuss with people, you're sure to find articles and reading lists about subjects you like", image: UIImage(), color: ThemeManager.shared.currentTheme.colorNumber6()),
