@@ -16,4 +16,8 @@ struct IntroductionViewModel {
     (title: "For The Love Of Books", description: "Whatever you want to dig deeper in a topic, explore new ideas or discuss with people, you're sure to find articles and reading lists about subjects you like", image: UIImage(), color: ThemeManager.shared.currentTheme.colorNumber13()),
     (title: "Join The Fun", description: "Whatever you want to dig deeper in a topic, explore new ideas or discuss with people, you're sure to find articles and reading lists about subjects you like", image: UIImage(), color: ThemeManager.shared.currentTheme.colorNumber19()),
   ]
+  
+  func colorForIndex(index: Int) -> UIColor? {
+    return tutorialData[index].color
+  }
 }

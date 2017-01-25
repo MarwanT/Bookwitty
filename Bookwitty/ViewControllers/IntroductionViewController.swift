@@ -19,13 +19,15 @@ class IntroductionViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    // Apply theme here for it will be changed by the
+    // selected tutorial view controller page later
+    applyTheme()
+    
     let tutorialViewController = storyboard!.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
     tutorialViewController.tutorialDelegate = self
     tutorialViewController.viewModel.tutorialPageData = viewModel.tutorialData
     let tutorialChildView = add(asChildViewController: tutorialViewController, toView: tutorialContainer)
     tutorialChildView.alignTop("0", leading: "0", bottom: "0", trailing: "0", toView: tutorialChildView.superview!)
-    
-    applyTheme()
   }
   
   
@@ -40,6 +42,11 @@ class IntroductionViewController: UIViewController {
 
 extension IntroductionViewController: TutorialViewControllerDelegate {
   func tutorialViewController(_ tutorialViewController: TutorialViewController, didSelectPageAtIndex index: Int) {
+    guard let buttonsColor = viewModel.colorForIndex(index: index) else {
+      return
+    }
+    
+    changeButtonsColors(withColor: buttonsColor)
   }
 }
 
@@ -47,5 +54,15 @@ extension IntroductionViewController: Themeable {
   func applyTheme() {
     ThemeManager.shared.currentTheme.stylePrimaryButton(button: signInButton)
     ThemeManager.shared.currentTheme.styleSecondaryButton(button: registerButton)
+  }
+  
+  func changeButtonsColors(withColor color: UIColor) {
+    ThemeManager.shared.currentTheme.stylePrimaryButton(
+      button: self.signInButton,
+      withColor: color,
+      highlightedColor: color)
+    ThemeManager.shared.currentTheme.styleSecondaryButton(
+      button: self.registerButton, withColor: color,
+      highlightedColor: color)
   }
 }
