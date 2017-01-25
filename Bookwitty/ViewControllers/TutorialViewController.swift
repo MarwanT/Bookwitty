@@ -47,9 +47,14 @@ class TutorialViewController: UIPageViewController {
   }
   
   
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
+  // MARK: Helper Methods
+  
+  fileprivate var currentViewControllerIndex: Int {
+    guard let currentViewController = viewControllers?.first,
+      let currentViewControllerIndex = orderedViewControllers.index(of: currentViewController) else {
+        return 0
+    }
+    return currentViewControllerIndex
   }
 }
 
@@ -81,10 +86,6 @@ extension TutorialViewController: UIPageViewControllerDataSource {
   }
   
   func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-    guard let currentViewController = viewControllers?.first,
-      let currentViewControllerIndex = orderedViewControllers.index(of: currentViewController) else {
-        return 0
-    }
     return currentViewControllerIndex
   }
 }
