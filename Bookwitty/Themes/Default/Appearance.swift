@@ -48,6 +48,8 @@ protocol ThemeColor {
 protocol ThemeButtonsStyle {
   func stylePrimaryButton(button: UIButton)
   func styleSecondaryButton(button: UIButton)
+  func stylePrimaryButton(button: UIButton, withColor color: UIColor, highlightedColor: UIColor)
+  func styleSecondaryButton(button: UIButton, withColor color: UIColor, highlightedColor: UIColor)
 }
 
 protocol Theme: ThemeColor, ThemeButtonsStyle {
