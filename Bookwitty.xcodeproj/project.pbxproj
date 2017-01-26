@@ -38,6 +38,7 @@
 		59D6021E1E36363400271315 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D6021D1E36363400271315 /* Font.swift */; };
 		59D602201E36387A00271315 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D6021F1E36387A00271315 /* Color.swift */; };
 		59DA47571E3A65A600BA90A5 /* Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47561E3A65A600BA90A5 /* Storyboard.swift */; };
+		59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47491E3A329C00BA90A5 /* FontBook.swift */; };
 		59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +84,7 @@
 		59D6021D1E36363400271315 /* Font.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		59D6021F1E36387A00271315 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		59DA47561E3A65A600BA90A5 /* Storyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storyboard.swift; sourceTree = "<group>"; };
+		59DA47491E3A329C00BA90A5 /* FontBook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontBook.swift; sourceTree = "<group>"; };
 		59FBBC491E1D074400FC84E5 /* Bookwitty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookwitty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59FBBC581E1D074400FC84E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				59D6021D1E36363400271315 /* Font.swift */,
+				59DA47491E3A329C00BA90A5 /* FontBook.swift */,
 				59D6021F1E36387A00271315 /* Color.swift */,
 				593769D61E3689FB00F23226 /* DefaultTheme.swift */,
 			);
@@ -567,6 +570,7 @@
 				59D602201E36387A00271315 /* Color.swift in Sources */,
 				596FAD741E2E53AC0064F967 /* Environment.swift in Sources */,
 				59BD55781E302EB800D3B805 /* Analytics.swift in Sources */,
+				59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */,
 				59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */,
 				5999EDE11E375EFF00B35562 /* TutorialViewController.swift in Sources */,
 				5947C2A41E37A594003BF12A /* IntroductionViewController.swift in Sources */,
