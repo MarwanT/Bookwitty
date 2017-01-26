@@ -10,7 +10,7 @@
 		19C00714F09A1D3937F9AAE7 /* Pods_BookwittyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */; };
 		2D1D0880B4A8EB8C8A6AD1A8 /* Pods_Bookwitty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */; };
 		59057FE01E25340A0036AAF3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59057FDE1E25340A0036AAF3 /* LaunchScreen.storyboard */; };
-		59057FE11E25340A0036AAF3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59057FDF1E25340A0036AAF3 /* Main.storyboard */; };
+		59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59057FDF1E25340A0036AAF3 /* Introduction.storyboard */; };
 		593769D71E3689FB00F23226 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593769D51E3689FB00F23226 /* Appearance.swift */; };
 		593769D81E3689FB00F23226 /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593769D61E3689FB00F23226 /* DefaultTheme.swift */; };
 		5947C2A41E37A594003BF12A /* IntroductionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5947C2A31E37A594003BF12A /* IntroductionViewController.swift */; };
@@ -49,7 +49,7 @@
 /* Begin PBXFileReference section */
 		2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bookwitty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59057FDE1E25340A0036AAF3 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		59057FDF1E25340A0036AAF3 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		59057FDF1E25340A0036AAF3 /* Introduction.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Introduction.storyboard; sourceTree = "<group>"; };
 		590B3F1C1E2FCA5900542671 /* Bookwitty-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bookwitty-Bridging-Header.h"; sourceTree = "<group>"; };
 		593769D51E3689FB00F23226 /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Appearance.swift; path = Default/Appearance.swift; sourceTree = "<group>"; };
 		593769D61E3689FB00F23226 /* DefaultTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
@@ -166,7 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				59057FDE1E25340A0036AAF3 /* LaunchScreen.storyboard */,
-				59057FDF1E25340A0036AAF3 /* Main.storyboard */,
+				59057FDF1E25340A0036AAF3 /* Introduction.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -384,7 +384,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59057FE11E25340A0036AAF3 /* Main.storyboard in Resources */,
+				59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */,
 				59BAC6991E2FCD1A0063F573 /* GoogleService-Info.plist in Resources */,
 				59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */,
 				59057FE01E25340A0036AAF3 /* LaunchScreen.storyboard in Resources */,
