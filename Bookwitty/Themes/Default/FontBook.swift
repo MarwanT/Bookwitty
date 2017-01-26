@@ -19,6 +19,54 @@ enum FontDynamicType: String {
   case labelHighlight = "labelHighlight"
   case label = "label"
   case captions = "captions"
+  
+  var font: UIFont {
+    let contentSize = UIApplication.shared.preferredContentSizeCategory
+    let selectedSize = pointSize(forContentSize: contentSize)
+    let selectedWeight = weight(forContentSize: contentSize)
+    return fontForDynamicType(fontDynamicType: self, weight: selectedWeight, size: selectedSize)
+  }
+  
+  private func pointSize(forContentSize contentSize: UIContentSizeCategory) -> CGFloat {
+    return FontDynamicType.fontSizeTable[self.rawValue]![contentSize]!
+  }
+  
+  private func weight(forContentSize contentSize: UIContentSizeCategory) -> Font.Weight {
+    return FontDynamicType.fontWeightTable[self.rawValue]![contentSize]!
+  }
+  
+  private func fontForDynamicType(fontDynamicType: FontDynamicType, weight: Font.Weight, size: CGFloat) -> UIFont {
+    var selectedFont = Font.georgiaRegular
+    
+    switch (fontDynamicType, weight) {
+    case (FontDynamicType.headlineLarge, _):
+      selectedFont = Font.volkhov
+    case (FontDynamicType.headlineMenium, _):
+      selectedFont = Font.volkhov
+    case (FontDynamicType.headlineSmall, _):
+      selectedFont = Font.volkhov
+    case (FontDynamicType.headlineXSmall, _):
+      selectedFont = Font.volkhov
+    case (FontDynamicType.body, _):
+      selectedFont = Font.georgiaRegular
+    case (FontDynamicType.titleLarge, _):
+      selectedFont = Font.ubuntuMedium
+    case (FontDynamicType.titleMedium, _):
+      selectedFont = Font.ubuntuMedium
+    case (FontDynamicType.titleSmall, _):
+      selectedFont = Font.ubuntuRegular
+    case (FontDynamicType.labelHighlight, _):
+      selectedFont = Font.ubuntuMedium
+    case (FontDynamicType.label, _):
+      selectedFont = Font.ubuntuRegular
+    case (FontDynamicType.captions, _):
+      selectedFont = Font.ubuntuRegular
+    default:
+      selectedFont = Font.georgiaRegular
+    }
+    
+    return UIFont(name: selectedFont.rawValue, size: size)!
+  }
 }
 
 
