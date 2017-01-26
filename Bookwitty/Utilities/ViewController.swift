@@ -37,3 +37,9 @@ extension UIViewController {
     viewController.removeFromParentViewController()
   }
 }
+
+extension UIViewController {
+  public static var storyboardIdentifier: String {
+    return self.description().components(separatedBy: ".").dropFirst().joined(separator: ".")
+  }
+}
