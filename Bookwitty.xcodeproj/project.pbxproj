@@ -40,6 +40,7 @@
 		59DA47631E3B7A9B00BA90A5 /* IntroductionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47601E3B7A9B00BA90A5 /* IntroductionViewController.swift */; };
 		59DA47641E3B7A9B00BA90A5 /* TutorialPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47611E3B7A9B00BA90A5 /* TutorialPageViewController.swift */; };
 		59DA47651E3B7A9B00BA90A5 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47621E3B7A9B00BA90A5 /* TutorialViewController.swift */; };
+		59DA47671E3B84ED00BA90A5 /* Access.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59DA47661E3B84ED00BA90A5 /* Access.storyboard */; };
 		59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +88,7 @@
 		59DA47601E3B7A9B00BA90A5 /* IntroductionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductionViewController.swift; sourceTree = "<group>"; };
 		59DA47611E3B7A9B00BA90A5 /* TutorialPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialPageViewController.swift; sourceTree = "<group>"; };
 		59DA47621E3B7A9B00BA90A5 /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
+		59DA47661E3B84ED00BA90A5 /* Access.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Access.storyboard; sourceTree = "<group>"; };
 		59FBBC491E1D074400FC84E5 /* Bookwitty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookwitty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59FBBC581E1D074400FC84E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 			children = (
 				59057FDE1E25340A0036AAF3 /* LaunchScreen.storyboard */,
 				59057FDF1E25340A0036AAF3 /* Introduction.storyboard */,
+				59DA47661E3B84ED00BA90A5 /* Access.storyboard */,
 				59DA47561E3A65A600BA90A5 /* Storyboard.swift */,
 			);
 			path = Storyboards;
@@ -257,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				59DA475F1E3B7A9B00BA90A5 /* Introduction */,
+				59DA47681E3B874B00BA90A5 /* Access */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -453,6 +457,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59DA47671E3B84ED00BA90A5 /* Access.storyboard in Resources */,
 				59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */,
 				59BAC6991E2FCD1A0063F573 /* GoogleService-Info.plist in Resources */,
 				597B8E371E3954B200C7811B /* Ubuntu-Medium.ttf in Resources */,
