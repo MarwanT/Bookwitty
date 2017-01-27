@@ -17,6 +17,9 @@ final class IntroductionViewModel {
     (title: "Join The Fun", description: "Whatever you want to dig deeper in a topic, explore new ideas or discuss with people, you're sure to find articles and reading lists about subjects you like", image: UIImage(), color: ThemeManager.shared.currentTheme.colorNumber19()),
   ]
   
+  let signInButtonTitle: String = localizedString(key: "sign_in", defaultValue: "Sign-in")
+  let registerButtonTitle: String = localizedString(key: "register", defaultValue: "Register")
+  
   func colorForIndex(index: Int) -> UIColor? {
     return tutorialData[index].color
   }

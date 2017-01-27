@@ -23,6 +23,8 @@ class IntroductionViewController: UIViewController {
     // selected tutorial view controller page later
     applyTheme()
     
+    applyLocalization()
+    
     let tutorialViewController = Storyboard.Introduction.instantiate(TutorialViewController.self)
     tutorialViewController.tutorialDelegate = self
     tutorialViewController.viewModel.tutorialPageData = viewModel.tutorialData
@@ -64,5 +66,12 @@ extension IntroductionViewController: Themeable {
     ThemeManager.shared.currentTheme.styleSecondaryButton(
       button: self.registerButton, withColor: color,
       highlightedColor: color)
+  }
+}
+
+extension IntroductionViewController: Localizable {
+  func applyLocalization() {
+    signInButton.setTitle(viewModel.signInButtonTitle, for: .normal)
+    registerButton.setTitle(viewModel.registerButtonTitle, for: .normal)
   }
 }
