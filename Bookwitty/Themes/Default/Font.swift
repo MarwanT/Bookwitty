@@ -9,9 +9,15 @@
 import Foundation
 
 enum Font: String {
-  case georgia = "GEORGIA_FONT_NAME"
-  case ubuntu = "UBUNTU_FONT_NAME"
-  case volkhov = "VOLKHOV_FONT_NAME"
+  case georgiaRegular = "Georgia"
+  case ubuntuRegular = "Ubuntu"
+  case ubuntuMedium = "Ubuntu-Medium"
+  case volkhov = "Volkhov-Regular"
+  
+  enum Weight {
+    case regular
+    case Medium
+  }
   
   func of(style: UIFontTextStyle) -> UIFont {
     let preferred = UIFont.preferredFont(forTextStyle: style).pointSize
