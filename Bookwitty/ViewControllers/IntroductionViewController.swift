@@ -23,7 +23,7 @@ class IntroductionViewController: UIViewController {
     // selected tutorial view controller page later
     applyTheme()
     
-    let tutorialViewController = storyboard!.instantiateViewController(withIdentifier: "TutorialViewController") as! TutorialViewController
+    let tutorialViewController = Storyboard.Introduction.instantiate(TutorialViewController.self)
     tutorialViewController.tutorialDelegate = self
     tutorialViewController.viewModel.tutorialPageData = viewModel.tutorialData
     let tutorialChildView = add(asChildViewController: tutorialViewController, toView: tutorialContainer)

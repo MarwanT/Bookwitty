@@ -46,7 +46,7 @@ class TutorialViewController: UIPageViewController {
     }
     
     for data in instructionsData {
-      let instructionViewController = storyboard!.instantiateViewController(withIdentifier: "TutorialPageViewController") as! TutorialPageViewController
+      let instructionViewController = Storyboard.Introduction.instantiate(TutorialPageViewController.self)
       instructionViewController.tutorialPageData = data
       viewControllersArray.append(instructionViewController)
     }
