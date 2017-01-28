@@ -9,4 +9,6 @@
 import UIKit
 
 class InputField: UIView {
+  @IBOutlet weak var descriptionLabel: UILabel!
+  @IBOutlet weak var textField: UITextField!
 }
