@@ -77,6 +77,9 @@ class InputField: UIView {
     textField.placeholder = configuration.textFieldPlaceholder
     textField.text = configuration.textFieldDefaultText
     textField.returnKeyType = configuration.returnKeyType
+    if let textFieldRightImageView = textField.rightView as? UIImageView {
+      textFieldRightImageView.image = configuration.invalidationIcon
+    }
   }
   
   func refreshViewForStatus() {
@@ -118,9 +121,6 @@ extension InputField: Themeable {
     configuration.desriptionLabelDefaultTextColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
     configuration.desriptionLabelInvalidTextColor = ThemeManager.shared.currentTheme.colorNumber19()
     
-    if let textFieldRightImageView = textField.rightView as? UIImageView {
-      textFieldRightImageView.image = configuration.invalidationIcon
-    }
   }
 }
 
