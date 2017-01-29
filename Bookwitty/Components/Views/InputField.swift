@@ -118,9 +118,6 @@ extension InputField: Themeable {
   func applyTheme() {
     ThemeManager.shared.currentTheme.styleLabel(label: descriptionLabel)
     ThemeManager.shared.currentTheme.styleTextField(textField: textField)
-    configuration.desriptionLabelDefaultTextColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
-    configuration.desriptionLabelInvalidTextColor = ThemeManager.shared.currentTheme.colorNumber19()
-    
   }
 }
 
