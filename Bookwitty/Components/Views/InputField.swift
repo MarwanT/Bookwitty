@@ -36,6 +36,7 @@ class InputField: UIView {
   override func awakeFromNib() {
     super.awakeFromNib()
     setupLayout()
+    initializeContent()
   }
   
   override func awakeAfter(using aDecoder: NSCoder) -> Any? {
@@ -47,5 +48,11 @@ class InputField: UIView {
     // TODO: Remove this later | Only for visualization purposes
     textFieldRightView.backgroundColor = UIColor.red
     textField.rightView = textFieldRightView
+  }
+  
+  private func initializeContent() {
+    descriptionLabel.text = configuration.descriptionLabelText
+    textField.placeholder = configuration.textFieldPlaceholder
+    textField.text = configuration.textFieldDefaultText
   }
 }
