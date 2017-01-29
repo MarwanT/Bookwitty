@@ -35,9 +35,17 @@ class InputField: UIView {
   
   override func awakeFromNib() {
     super.awakeFromNib()
+    setupLayout()
   }
   
   override func awakeAfter(using aDecoder: NSCoder) -> Any? {
     return viewForNibNameIfNeeded(nibName: InputField.defaultNib)
+  }
+  
+  private func setupLayout() {
+    let textFieldRightView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+    // TODO: Remove this later | Only for visualization purposes
+    textFieldRightView.backgroundColor = UIColor.red
+    textField.rightView = textFieldRightView
   }
 }
