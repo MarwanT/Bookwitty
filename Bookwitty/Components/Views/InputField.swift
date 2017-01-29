@@ -17,6 +17,7 @@ struct InputFieldConfiguration {
   var textFieldInvalidTextColor: UIColor = UIColor.red
   var textFieldDefaultText: String? = nil
   var invalidationIcon: UIImage? = nil
+  var invalidationErrorMessage: String? = "Invalid Field"
 }
 
 class InputField: UIView {
@@ -40,6 +41,15 @@ class InputField: UIView {
       refreshViewForStatus()
     }
   }
+  var validationBlock: ((_ text: String?) -> Bool)? = nil
+  var isValid: Bool {
+    if let textField = textField,
+      let valid = validationBlock?(textField.text) {
+      return valid
+    } else {
+      return true
+    }
+  }
   
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -58,6 +68,7 @@ class InputField: UIView {
     // TODO: Remove this later | Only for visualization purposes
     textFieldRightView.backgroundColor = UIColor.red
     textField.rightView = textFieldRightView
+    textField.delegate = self
   }
   
   private func initializeContent() {
@@ -84,6 +95,18 @@ class InputField: UIView {
       }
     }
   }
+  
+  func validateField() -> (isValid: Bool, value: String?, errorMessage: String?) {
+    self.resignFirstResponder()
+    let valid = isValid
+    switch (valid, textField.text?.isEmpty ?? true) {
+    case (true, _):
+      status = .valid
+    case (false, _):
+      status = .inValid
+    }
+    return (isValid, textField.text, configuration.invalidationErrorMessage)
+  }
 }
 
 extension InputField: Themeable {
@@ -96,5 +119,12 @@ extension InputField: Themeable {
     if let textFieldRightImageView = textField.rightView as? UIImageView {
       textFieldRightImageView.image = configuration.invalidationIcon
     }
+  }
+}
+
+extension InputField: UITextFieldDelegate {
+  func textFieldDidBeginEditing(_ textField: UITextField) {
+    // Reset status upon starting editing
+    status = .valid
   }
 }
