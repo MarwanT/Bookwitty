@@ -9,16 +9,29 @@
 import UIKit
 
 struct InputFieldConfiguration {
-  var descriptionLabelText: String? = nil
-  var desriptionLabelDefaultTextColor: UIColor = UIColor.black
-  var desriptionLabelInvalidTextColor: UIColor = UIColor.red
-  var textFieldPlaceholder: String? = nil
-  var textFieldDefaultTextColor: UIColor = UIColor.black
-  var textFieldInvalidTextColor: UIColor = UIColor.red
-  var textFieldDefaultText: String? = nil
-  var invalidationIcon: UIImage? = nil
-  var invalidationErrorMessage: String? = "Invalid Field"
-  var returnKeyType: UIReturnKeyType = UIReturnKeyType.default
+  var descriptionLabelText: String?
+  var desriptionLabelDefaultTextColor: UIColor
+  var desriptionLabelInvalidTextColor: UIColor
+  var textFieldPlaceholder: String?
+  var textFieldDefaultTextColor: UIColor
+  var textFieldInvalidTextColor: UIColor
+  var textFieldDefaultText: String?
+  var invalidationIcon: UIImage?
+  var invalidationErrorMessage: String?
+  var returnKeyType: UIReturnKeyType
+  
+  init(descriptionLabelText: String? = nil, desriptionLabelDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor(), desriptionLabelInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.colorNumber19(), textFieldPlaceholder: String? = nil, textFieldDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor(), textFieldInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.colorNumber19(), textFieldDefaultText: String? = nil, invalidationIcon: UIImage? = nil, invalidationErrorMessage: String? = "Invalid Field", returnKeyType: UIReturnKeyType = UIReturnKeyType.default) {
+    self.descriptionLabelText = descriptionLabelText
+    self.desriptionLabelDefaultTextColor = desriptionLabelDefaultTextColor
+    self.desriptionLabelInvalidTextColor = desriptionLabelInvalidTextColor
+    self.textFieldPlaceholder = textFieldPlaceholder
+    self.textFieldDefaultTextColor = textFieldDefaultTextColor
+    self.textFieldInvalidTextColor = textFieldInvalidTextColor
+    self.textFieldDefaultText = textFieldDefaultText
+    self.invalidationIcon = invalidationIcon
+    self.invalidationErrorMessage = invalidationErrorMessage
+    self.returnKeyType = returnKeyType
+  }
 }
 
 class InputField: UIView {
