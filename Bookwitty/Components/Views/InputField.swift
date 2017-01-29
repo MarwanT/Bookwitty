@@ -18,6 +18,7 @@ struct InputFieldConfiguration {
   var textFieldDefaultText: String? = nil
   var invalidationIcon: UIImage? = nil
   var invalidationErrorMessage: String? = "Invalid Field"
+  var returnKeyType: UIReturnKeyType = UIReturnKeyType.default
 }
 
 class InputField: UIView {
@@ -75,6 +76,7 @@ class InputField: UIView {
     descriptionLabel.text = configuration.descriptionLabelText
     textField.placeholder = configuration.textFieldPlaceholder
     textField.text = configuration.textFieldDefaultText
+    textField.returnKeyType = configuration.returnKeyType
   }
   
   func refreshViewForStatus() {
