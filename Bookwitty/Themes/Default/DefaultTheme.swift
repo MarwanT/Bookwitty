@@ -119,6 +119,12 @@ extension DefaultTheme {
   func defaultSecondaryButtonHighlightedColor() -> UIColor {
     return colorNumber19Highlighted()
   }
+  
+  
+  
+  func defaultTextColor() -> UIColor {
+    return colorNumber20()
+  }
 }
 
 // MARK: - Buttons

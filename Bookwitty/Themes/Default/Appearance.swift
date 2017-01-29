@@ -43,6 +43,8 @@ protocol ThemeColor {
   func defaultPrimaryButtonHighlightedColor() -> UIColor
   func defaultSecondaryButtonColor() -> UIColor
   func defaultSecondaryButtonHighlightedColor() -> UIColor
+  
+  func defaultTextColor() -> UIColor
 }
 
 protocol ThemeButtonsStyle {
