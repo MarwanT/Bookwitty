@@ -55,7 +55,11 @@ protocol ThemeButtonsStyle {
   func styleSecondaryButton(button: UIButton, withColor color: UIColor, highlightedColor: UIColor)
 }
 
-protocol Theme: ThemeColor, ThemeButtonsStyle {
+protocol ThemeLabelsStyle {
+  func styleLabel(label: UILabel)
+}
+
+protocol Theme: ThemeColor, ThemeButtonsStyle, ThemeLabelsStyle {
   func initialize()
 }
 

@@ -166,3 +166,11 @@ extension DefaultTheme {
     button.layer.borderColor = color.cgColor
   }
 }
+
+// MARK: - Labels
+extension DefaultTheme {
+  func styleLabel(label: UILabel) {
+    label.font = FontDynamicType.label.font
+    label.textColor = defaultTextColor()
+  }
+}
