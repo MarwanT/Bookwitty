@@ -38,6 +38,7 @@ class InputField: UIView {
     setupLayout()
     initializeContent()
     applyTheme()
+    refreshViewForStatus()
   }
   
   override func awakeAfter(using aDecoder: NSCoder) -> Any? {
@@ -55,6 +56,25 @@ class InputField: UIView {
     descriptionLabel.text = configuration.descriptionLabelText
     textField.placeholder = configuration.textFieldPlaceholder
     textField.text = configuration.textFieldDefaultText
+  }
+  
+  func refreshViewForStatus() {
+    UIView.animate(withDuration: 0.55) { 
+      switch self.status {
+      case .empty:
+        self.descriptionLabel.textColor = self.configuration.desriptionLabelDefaultTextColor
+        self.textField.textColor = self.configuration.textFieldDefaultTextColor
+        self.textField.rightViewMode = UITextFieldViewMode.never
+      case .valid:
+        self.descriptionLabel.textColor = self.configuration.desriptionLabelDefaultTextColor
+        self.textField.textColor = self.configuration.textFieldDefaultTextColor
+        self.textField.rightViewMode = UITextFieldViewMode.never
+      case .inValid:
+        self.descriptionLabel.textColor = self.configuration.desriptionLabelInvalidTextColor
+        self.textField.textColor = self.configuration.textFieldInvalidTextColor
+        self.textField.rightViewMode = UITextFieldViewMode.always
+      }
+    }
   }
 }
 
