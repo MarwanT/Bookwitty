@@ -125,6 +125,10 @@ extension DefaultTheme {
   func defaultTextColor() -> UIColor {
     return colorNumber20()
   }
+  
+  func defaultGrayedTextColor() -> UIColor {
+    return colorNumber15()
+  }
 }
 
 // MARK: - Buttons
