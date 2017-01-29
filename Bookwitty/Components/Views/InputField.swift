@@ -35,7 +35,11 @@ class InputField: UIView {
     }
   }
   
-  var status: Status = .empty 
+  var status: Status = .empty {
+    didSet {
+      refreshViewForStatus()
+    }
+  }
   
   override func awakeFromNib() {
     super.awakeFromNib()
