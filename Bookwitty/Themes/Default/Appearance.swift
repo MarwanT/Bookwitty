@@ -59,7 +59,11 @@ protocol ThemeLabelsStyle {
   func styleLabel(label: UILabel)
 }
 
-protocol Theme: ThemeColor, ThemeButtonsStyle, ThemeLabelsStyle {
+protocol ThemeTextFieldsStyle {
+  func styleTextField(textField: UITextField)
+}
+
+protocol Theme: ThemeColor, ThemeButtonsStyle, ThemeLabelsStyle, ThemeTextFieldsStyle {
   func initialize()
 }
 

@@ -174,3 +174,12 @@ extension DefaultTheme {
     label.textColor = defaultTextColor()
   }
 }
+
+// MARK: - Text Fields
+extension DefaultTheme {
+  func styleTextField(textField: UITextField) {
+    textField.font = FontDynamicType.titleMedium.font
+    textField.textColor = defaultTextColor()
+    textField.borderStyle = UITextBorderStyle.none
+  }
+}
