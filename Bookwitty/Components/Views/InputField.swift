@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol InputFieldDelegate {
+  func inputFieldShouldReturn(inputField: InputField) -> Bool
+}
+
 struct InputFieldConfiguration {
   var descriptionLabelText: String?
   var desriptionLabelDefaultTextColor: UIColor
@@ -43,6 +47,8 @@ class InputField: UIView {
   
   @IBOutlet weak var descriptionLabel: UILabel!
   @IBOutlet weak var textField: UITextField!
+  
+  var delegate: InputFieldDelegate?
   
   var configuration: InputFieldConfiguration = InputFieldConfiguration() {
     didSet {
@@ -138,5 +144,9 @@ extension InputField: UITextFieldDelegate {
   func textFieldDidBeginEditing(_ textField: UITextField) {
     // Reset status upon starting editing
     status = .valid
+  }
+  
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    return delegate?.inputFieldShouldReturn(inputField: self) ?? true
   }
 }
