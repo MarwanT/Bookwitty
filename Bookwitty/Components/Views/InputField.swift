@@ -20,10 +20,18 @@ struct InputFieldConfiguration {
 }
 
 class InputField: UIView {
+  enum Status {
+    case empty
+    case valid
+    case inValid
+  }
+  
   @IBOutlet weak var descriptionLabel: UILabel!
   @IBOutlet weak var textField: UITextField!
   
   var configuration: InputFieldConfiguration = InputFieldConfiguration()
+  
+  var status: Status = .empty 
   
   override func awakeFromNib() {
     super.awakeFromNib()
