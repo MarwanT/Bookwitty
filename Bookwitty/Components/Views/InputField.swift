@@ -29,7 +29,11 @@ class InputField: UIView {
   @IBOutlet weak var descriptionLabel: UILabel!
   @IBOutlet weak var textField: UITextField!
   
-  var configuration: InputFieldConfiguration = InputFieldConfiguration()
+  var configuration: InputFieldConfiguration = InputFieldConfiguration() {
+    didSet {
+      initializeContent()
+    }
+  }
   
   var status: Status = .empty 
   
