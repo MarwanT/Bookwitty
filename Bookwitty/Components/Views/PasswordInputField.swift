@@ -27,6 +27,27 @@ class PasswordInputField: InputField {
     textField.rightViewMode = UITextFieldViewMode.always
   }
   
+  override func refreshViewForStatus() {
+    UIView.animate(withDuration: 0.55) {
+      switch self.status {
+      case .empty:
+        self.descriptionLabel.textColor = self.configuration.desriptionLabelDefaultTextColor
+        self.textField.textColor = self.configuration.textFieldDefaultTextColor
+        self.textField.rightView = self.showHidePasswordButton
+      case .valid:
+        self.descriptionLabel.textColor = self.configuration.desriptionLabelDefaultTextColor
+        self.textField.textColor = self.configuration.textFieldDefaultTextColor
+        self.textField.rightView = self.showHidePasswordButton
+      case .inValid:
+        self.descriptionLabel.textColor = self.configuration.desriptionLabelInvalidTextColor
+        self.textField.textColor = self.configuration.textFieldInvalidTextColor
+        self.textField.rightView = self.showHidePasswordButton
+      }
+    }
+  }
+  
   func showHidePasswordButtonTouchUpInside(sender: UIButton) {
+    showHidePasswordButton.isSelected = !showHidePasswordButton.isSelected
+    textField.isSecureTextEntry = !showHidePasswordButton.isSelected
   }
 }
