@@ -11,6 +11,16 @@ import UIKit
 class InformativeInputField: InputField {
   var indicatorImageView: UIImageView!
   
+  var text: String? {
+    get {
+      return textField.text
+    }
+    
+    set {
+      textField.text = newValue
+    }
+  }
+  
   override func setupLayout() {
     super.setupLayout()
     
