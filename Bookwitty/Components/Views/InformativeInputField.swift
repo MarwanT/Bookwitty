@@ -21,6 +21,15 @@ class InformativeInputField: InputField {
     
     textField.rightViewMode = UITextFieldViewMode.always
     textField.isEnabled = false
+    
+    // Add transparent view above the text field to capture taps
+    let overlayTapView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    addSubview(overlayTapView)
+    overlayTapView.alignTop("0", leading: "0", bottom: "0", trailing: "0", toView: textField)
+    
+    // Add Tap Gesture Recognizer
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.textFieldTap(sender:)))
+    overlayTapView.addGestureRecognizer(tapGesture)
   }
   
   override func refreshViewForStatus() {
@@ -40,5 +49,8 @@ class InformativeInputField: InputField {
         self.textField.rightView = self.invalidationImageView
       }
     }
+  }
+  
+  func textFieldTap(sender: Any?) {
   }
 }
