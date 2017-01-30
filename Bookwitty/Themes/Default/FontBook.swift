@@ -61,8 +61,6 @@ enum FontDynamicType: String {
       selectedFont = Font.ubuntuRegular
     case (FontDynamicType.navigationLabel, _):
       selectedFont = Font.ubuntuMedium
-    default:
-      selectedFont = Font.georgiaRegular
     }
     
     return UIFont(name: selectedFont.rawValue, size: size)!
