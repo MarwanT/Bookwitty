@@ -70,5 +70,7 @@ class InformativeInputField: InputField {
   func textFieldTap(sender: Any?) {
     self.textField.becomeFirstResponder()
     self.textField.resignFirstResponder()
+    
+    informativeInputFieldDelegate?.informativeInputFieldDidTapField(informativeInputField: self)
   }
 }
