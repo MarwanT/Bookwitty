@@ -150,7 +150,7 @@ class InputField: UIView {
   }
   
   func validateField() -> (isValid: Bool, value: String?, errorMessage: String?) {
-    self.resignFirstResponder()
+    self.textField.resignFirstResponder()
     let valid = isValid
     switch (valid, textField.text?.isEmpty ?? true) {
     case (true, _):
