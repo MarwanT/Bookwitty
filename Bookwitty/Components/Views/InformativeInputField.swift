@@ -20,6 +20,7 @@ class InformativeInputField: InputField {
     indicatorImageView.backgroundColor = UIColor.bwAliceBlue
     
     textField.rightViewMode = UITextFieldViewMode.always
+    textField.isEnabled = false
   }
   
   override func refreshViewForStatus() {
