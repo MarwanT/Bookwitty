@@ -54,6 +54,8 @@ class InputField: UIView {
   let descriptionLabel: UILabel! = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
   let textField: UITextField! = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
   
+  let invalidationImageView: UIImageView! = UIImageView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+  
   var delegate: InputFieldDelegate?
   
   var configuration: InputFieldConfiguration = InputFieldConfiguration() {
@@ -109,10 +111,12 @@ class InputField: UIView {
     textField.constrainTopSpace(toView: descriptionLabel, predicate: "10")
     self.alignBottomEdge(withView: textField, predicate: "0")
     
-    let textFieldRightView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
     // TODO: Remove this later | Only for visualization purposes
-    textFieldRightView.backgroundColor = UIColor.red
-    textField.rightView = textFieldRightView
+    invalidationImageView.frame = CGRect(
+      x: 0, y: 0, width: configuration.rightSideViewWidth,
+      height: configuration.rightSideViewHeight)
+    invalidationImageView.backgroundColor = UIColor.red
+    textField.rightView = invalidationImageView
     textField.delegate = self
   }
   
