@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FLKAutoLayout
 
 protocol InputFieldDelegate {
   func inputFieldShouldReturn(inputField: InputField) -> Bool
@@ -45,8 +46,8 @@ class InputField: UIView {
     case inValid
   }
   
-  @IBOutlet weak var descriptionLabel: UILabel!
-  @IBOutlet weak var textField: UITextField!
+  let descriptionLabel: UILabel! = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+  let textField: UITextField! = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
   
   var delegate: InputFieldDelegate?
   
@@ -71,19 +72,38 @@ class InputField: UIView {
     }
   }
   
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    awakeSelf()
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+    awakeSelf()
+  }
+  
   override func awakeFromNib() {
     super.awakeFromNib()
+    awakeSelf()
+  }
+  
+  func awakeSelf() {
     setupLayout()
     initializeContent()
     applyTheme()
     refreshViewForStatus()
   }
   
-  override func awakeAfter(using aDecoder: NSCoder) -> Any? {
-    return viewForNibNameIfNeeded(nibName: InputField.defaultNib)
-  }
-  
   private func setupLayout() {
+    // Setup basic layout
+    self.addSubview(descriptionLabel)
+    self.addSubview(textField)
+    descriptionLabel.alignLeading("0", trailing: "0", toView: self)
+    descriptionLabel.alignTopEdge(withView: self, predicate: "0")
+    textField.alignLeading("0", trailing: "0", toView: descriptionLabel)
+    textField.constrainTopSpace(toView: descriptionLabel, predicate: "10")
+    self.alignBottomEdge(withView: textField, predicate: "0")
+    
     let textFieldRightView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
     // TODO: Remove this later | Only for visualization purposes
     textFieldRightView.backgroundColor = UIColor.red
