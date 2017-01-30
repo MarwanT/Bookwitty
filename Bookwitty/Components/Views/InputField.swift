@@ -94,7 +94,7 @@ class InputField: UIView {
     refreshViewForStatus()
   }
   
-  private func setupLayout() {
+  func setupLayout() {
     // Setup basic layout
     self.addSubview(descriptionLabel)
     self.addSubview(textField)
