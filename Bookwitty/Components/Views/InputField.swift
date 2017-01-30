@@ -24,8 +24,11 @@ struct InputFieldConfiguration {
   var invalidationIcon: UIImage?
   var invalidationErrorMessage: String?
   var returnKeyType: UIReturnKeyType
+  var rightSideViewHeight: CGFloat
+  var rightSideViewWidth: CGFloat
+
   
-  init(descriptionLabelText: String? = nil, desriptionLabelDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor(), desriptionLabelInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.colorNumber19(), textFieldPlaceholder: String? = nil, textFieldDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor(), textFieldInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.colorNumber19(), textFieldDefaultText: String? = nil, invalidationIcon: UIImage? = nil, invalidationErrorMessage: String? = "Invalid Field", returnKeyType: UIReturnKeyType = UIReturnKeyType.default) {
+  init(descriptionLabelText: String? = nil, desriptionLabelDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor(), desriptionLabelInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.colorNumber19(), textFieldPlaceholder: String? = nil, textFieldDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor(), textFieldInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.colorNumber19(), textFieldDefaultText: String? = nil, invalidationIcon: UIImage? = nil, invalidationErrorMessage: String? = "Invalid Field", returnKeyType: UIReturnKeyType = UIReturnKeyType.default, rightSideViewWidth: CGFloat = 44 , rightSideViewHeight: CGFloat = 44) {
     self.descriptionLabelText = descriptionLabelText
     self.desriptionLabelDefaultTextColor = desriptionLabelDefaultTextColor
     self.desriptionLabelInvalidTextColor = desriptionLabelInvalidTextColor
@@ -36,6 +39,8 @@ struct InputFieldConfiguration {
     self.invalidationIcon = invalidationIcon
     self.invalidationErrorMessage = invalidationErrorMessage
     self.returnKeyType = returnKeyType
+    self.rightSideViewWidth = rightSideViewWidth
+    self.rightSideViewHeight = rightSideViewHeight
   }
 }
 
