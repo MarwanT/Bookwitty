@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol InformativeInputFieldDelegate {
+  func informativeInputFieldDidTapField(informativeInputField: InformativeInputField)
+}
+
 class InformativeInputField: InputField {
   var indicatorImageView: UIImageView!
+  
+  var informativeInputFieldDelegate: InformativeInputFieldDelegate?
   
   var text: String? {
     get {
