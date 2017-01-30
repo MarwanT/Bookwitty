@@ -15,7 +15,9 @@ class PasswordInputField: InputField {
     super.setupLayout()
     
     showHidePasswordButton = UIButton(type: UIButtonType.custom)
-    showHidePasswordButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+    showHidePasswordButton.frame = CGRect(
+      x: 0, y: 0, width: configuration.rightSideViewWidth,
+      height: configuration.rightSideViewHeight)
     // TODO: Set proper images here when available
     showHidePasswordButton.setBackgroundImage(UIImage(color: UIColor.blue), for: UIControlState.normal)
     showHidePasswordButton.setBackgroundImage(UIImage(color: UIColor.green), for: UIControlState.selected)
