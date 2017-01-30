@@ -10,7 +10,6 @@ import UIKit
 
 class PasswordInputField: InputField {
   var showHidePasswordButton: UIButton!
-  var invalidationImageView: UIImageView!
   
   override func setupLayout() {
     super.setupLayout()
