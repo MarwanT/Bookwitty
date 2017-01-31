@@ -17,6 +17,9 @@ class SignInViewController: UIViewController {
   @IBOutlet weak var informationLabel: UILabel!
   @IBOutlet var separators: [UIView]!
   
+  @IBOutlet weak var scrollViewBottomToLabelTopConstraint: NSLayoutConstraint!
+  @IBOutlet weak var scrollViewBottomToSuperviewBottomConstraint: NSLayoutConstraint!
+  
   let viewModel: SignInViewModel = SignInViewModel()
   
   override func viewDidLoad() {

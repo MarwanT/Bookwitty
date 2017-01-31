@@ -101,6 +101,7 @@
                             <constraint firstItem="icG-US-vNT" firstAttribute="top" secondItem="gGw-xY-8LN" secondAttribute="bottom" id="88b-eI-pbc"/>
                             <constraint firstItem="X5F-eo-NzB" firstAttribute="trailing" secondItem="gUT-Uy-A5b" secondAttribute="trailing" constant="-20" id="9NP-gm-Ulc"/>
                             <constraint firstItem="X5F-eo-NzB" firstAttribute="top" secondItem="icG-US-vNT" secondAttribute="bottom" id="ELn-Gw-1vh"/>
+                            <constraint firstItem="icG-US-vNT" firstAttribute="bottom" secondItem="Kez-nw-7iT" secondAttribute="top" id="Hcw-qh-4yI"/>
                             <constraint firstItem="h1r-FX-WUr" firstAttribute="leading" secondItem="gUT-Uy-A5b" secondAttribute="leading" constant="20" id="LGX-Ra-xkS"/>
                             <constraint firstItem="h1r-FX-WUr" firstAttribute="top" secondItem="X5F-eo-NzB" secondAttribute="bottom" constant="20" id="cw5-ZE-cUa"/>
                             <constraint firstItem="h1r-FX-WUr" firstAttribute="trailing" secondItem="gUT-Uy-A5b" secondAttribute="trailing" constant="-20" id="gfy-Vx-R3M"/>
@@ -109,11 +110,18 @@
                             <constraint firstItem="X5F-eo-NzB" firstAttribute="leading" secondItem="gUT-Uy-A5b" secondAttribute="leading" constant="20" id="srK-hb-WF8"/>
                             <constraint firstItem="icG-US-vNT" firstAttribute="leading" secondItem="gUT-Uy-A5b" secondAttribute="leading" id="yHW-qb-Sf0"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Hcw-qh-4yI"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="emailField" destination="654-el-WVd" id="cyi-ou-WbN"/>
                         <outlet property="informationLabel" destination="X5F-eo-NzB" id="rH5-4b-pZw"/>
                         <outlet property="passwordField" destination="2MS-dN-n76" id="jxs-Dn-pN4"/>
+                        <outlet property="scrollViewBottomToLabelTopConstraint" destination="ELn-Gw-1vh" id="kQq-Es-ZTI"/>
+                        <outlet property="scrollViewBottomToSuperviewBottomConstraint" destination="Hcw-qh-4yI" id="VcN-A7-eR7"/>
                         <outlet property="signInButton" destination="h1r-FX-WUr" id="FMq-uM-oBn"/>
                         <outlet property="stackView" destination="Dh8-kZ-JBa" id="ejN-os-EDg"/>
                         <outlet property="stackViewBackgroundView" destination="gP5-6X-Oaa" id="O8j-X3-4qy"/>
