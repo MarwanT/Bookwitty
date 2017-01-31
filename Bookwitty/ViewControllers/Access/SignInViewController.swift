@@ -78,6 +78,7 @@ extension SignInViewController: Themeable {
     self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
     signInButton.setTitle("Signin", for: .normal)
     ThemeManager.shared.currentTheme.stylePrimaryButton(button: signInButton)
+    stackViewBackgroundView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
   }
 }
 
