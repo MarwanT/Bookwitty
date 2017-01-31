@@ -22,6 +22,8 @@ class SignInViewController: UIViewController {
   
   /// Do the required setup
   private func awakeSelf() {
+    title = "Signin"
+    
     emailField.configuration = InputFieldConfiguration(
       descriptionLabelText: "Email", textFieldPlaceholder: "Enter your email",
       invalidationErrorMessage: "Oooops your email seems to be invalid",
