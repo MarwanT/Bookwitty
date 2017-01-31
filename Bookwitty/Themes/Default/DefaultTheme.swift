@@ -129,6 +129,11 @@ extension DefaultTheme {
   func defaultGrayedTextColor() -> UIColor {
     return colorNumber15()
   }
+  
+  
+  func defaultSeparatorColor() -> UIColor {
+    return colorNumber18()
+  }
 }
 
 // MARK: - Buttons
