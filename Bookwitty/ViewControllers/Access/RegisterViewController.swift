@@ -30,5 +30,33 @@ class RegisterViewController: UIViewController {
   /// Do the required setup
   private func awakeSelf() {
     title = viewModel.viewControllerTitle
+
+    firstNameField.configuration = InputFieldConfiguration(
+      descriptionLabelText: viewModel.firstNameDescriptionLabelText,
+      textFieldPlaceholder: viewModel.firstNameTextFieldPlaceholderText,
+      invalidationErrorMessage: viewModel.firstNameInvalidationErrorMessage,
+      returnKeyType: UIReturnKeyType.continue)
+
+    lastNameField.configuration = InputFieldConfiguration(
+      descriptionLabelText: viewModel.lastNameDescriptionLabelText,
+      textFieldPlaceholder: viewModel.lastNameTextFieldPlaceholderText,
+      invalidationErrorMessage: viewModel.lastNameInvalidationErrorMessage,
+      returnKeyType: UIReturnKeyType.continue)
+
+    emailField.configuration = InputFieldConfiguration(
+      descriptionLabelText: viewModel.emailDescriptionLabelText,
+      textFieldPlaceholder: viewModel.emailTextFieldPlaceholderText,
+      invalidationErrorMessage: viewModel.emailInvalidationErrorMessage,
+      returnKeyType: UIReturnKeyType.continue)
+
+    passwordField.configuration = InputFieldConfiguration(
+      descriptionLabelText: viewModel.passwordDescriptionLabelText,
+      textFieldPlaceholder: viewModel.passwordTextFieldPlaceholderText,
+      invalidationErrorMessage: viewModel.passwordInvalidationErrorMessage,
+      returnKeyType: UIReturnKeyType.done)
+
+    countryField.configuration = InputFieldConfiguration(
+      textFieldPlaceholder: viewModel.countryTextFieldPlaceholderText,
+      returnKeyType: UIReturnKeyType.default)
   }
 }
