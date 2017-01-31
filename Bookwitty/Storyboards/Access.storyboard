@@ -133,5 +133,23 @@
             </objects>
             <point key="canvasLocation" x="-38" y="149"/>
         </scene>
+        <!--Register View Controller-->
+        <scene sceneID="9Vj-ta-Qrr">
+            <objects>
+                <viewController storyboardIdentifier="RegisterViewController" id="rPE-6K-dWg" customClass="RegisterViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DQt-gX-vCB"/>
+                        <viewControllerLayoutGuide type="bottom" id="jJy-JC-mq7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="IxC-wb-xde">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gVH-oK-8Xd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="661" y="149"/>
+        </scene>
     </scenes>
 </document>
