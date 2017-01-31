@@ -164,6 +164,10 @@ class InputField: UIView {
   override func becomeFirstResponder() -> Bool {
     return self.textField.becomeFirstResponder()
   }
+  
+  override func resignFirstResponder() -> Bool {
+    return self.textField.resignFirstResponder()
+  }
 }
 
 extension InputField: Themeable {
