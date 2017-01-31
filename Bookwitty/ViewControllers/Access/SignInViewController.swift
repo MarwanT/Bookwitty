@@ -48,8 +48,7 @@ class SignInViewController: UIViewController {
   }
   
   func emailValidation(email: String?) -> Bool {
-    // TODO: Add email validation logic
-    return true
+    return email?.isValidEmail() ?? false
   }
   
   func passwordValidation(password: String?) -> Bool {
