@@ -108,7 +108,7 @@ class InputField: UIView {
     descriptionLabel.alignLeading("0", trailing: "0", toView: self)
     descriptionLabel.alignTopEdge(withView: self, predicate: "0")
     textField.alignLeading("0", trailing: "0", toView: descriptionLabel)
-    textField.constrainTopSpace(toView: descriptionLabel, predicate: "10")
+    textField.constrainTopSpace(toView: descriptionLabel, predicate: "0")
     self.alignBottomEdge(withView: textField, predicate: "0")
     
     // TODO: Remove this later | Only for visualization purposes
