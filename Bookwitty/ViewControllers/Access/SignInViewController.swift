@@ -15,8 +15,9 @@ class SignInViewController: UIViewController {
   @IBOutlet weak var passwordField: PasswordInputField!
   @IBOutlet weak var signInButton: UIButton!
   @IBOutlet weak var informationLabel: UILabel!
-  
   @IBOutlet var separators: [UIView]!
+  
+  let viewModel: SignInViewModel = SignInViewModel()
   
   override func viewDidLoad() {
     super.viewDidLoad()
