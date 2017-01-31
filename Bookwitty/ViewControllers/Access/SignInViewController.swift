@@ -11,9 +11,12 @@ import UIKit
 class SignInViewController: UIViewController {
   @IBOutlet weak var stackView: UIStackView!
   @IBOutlet weak var emailField: InputField!
+  @IBOutlet weak var stackViewBackgroundView: UIView!
   @IBOutlet weak var passwordField: PasswordInputField!
   @IBOutlet weak var signInButton: UIButton!
   @IBOutlet weak var informationLabel: UILabel!
+  
+  @IBOutlet var separators: [UIView]!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -35,7 +38,7 @@ class SignInViewController: UIViewController {
       returnKeyType: UIReturnKeyType.done)
     
     emailField.validationBlock = emailValidation
-    passwordField.validationBlock =  passwordValidation
+    passwordField.validationBlock = passwordValidation
   }
   
   func emailValidation(email: String?) -> Bool {
@@ -46,6 +49,10 @@ class SignInViewController: UIViewController {
   func passwordValidation(password: String?) -> Bool {
     // TODO: Add password validation logic
     return false
+  }
+  
+  
+  @IBAction func signInButtonTouchUpInside(_ sender: Any) {
   }
 }
 
