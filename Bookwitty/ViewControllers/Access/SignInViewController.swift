@@ -27,15 +27,17 @@ class SignInViewController: UIViewController {
   
   /// Do the required setup
   private func awakeSelf() {
-    title = "Signin"
+    title = viewModel.signInButtonTitle
     
     emailField.configuration = InputFieldConfiguration(
-      descriptionLabelText: "Email", textFieldPlaceholder: "Enter your email",
-      invalidationErrorMessage: "Oooops your email seems to be invalid",
+      descriptionLabelText: viewModel.emailDescriptionLabelText,
+      textFieldPlaceholder: viewModel.emailTextFieldPlaceholderText,
+      invalidationErrorMessage: viewModel.emailInvalidationErrorMessage,
       returnKeyType: UIReturnKeyType.continue)
     passwordField.configuration = InputFieldConfiguration(
-      descriptionLabelText: "Password", textFieldPlaceholder: "Enter your password",
-      invalidationErrorMessage: "Oooops your password seems to be invalid",
+      descriptionLabelText: viewModel.passwordDescriptionLabelText,
+      textFieldPlaceholder: viewModel.passwordTextFieldPlaceholderText,
+      invalidationErrorMessage: viewModel.passwordInvalidationErrorMessage,
       returnKeyType: UIReturnKeyType.done)
     
     emailField.validationBlock = emailValidation
@@ -77,7 +79,7 @@ extension SignInViewController: Themeable {
   func applyTheme() {
     stackView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
     self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
-    signInButton.setTitle("Signin", for: .normal)
+    signInButton.setTitle(viewModel.signInButtonTitle, for: .normal)
     ThemeManager.shared.currentTheme.stylePrimaryButton(button: signInButton)
     stackViewBackgroundView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
     
