@@ -48,6 +48,12 @@ class InformativeInputField: InputField {
     overlayTapView.addGestureRecognizer(tapGesture)
   }
   
+  override func becomeFirstResponder() -> Bool {
+    self.textField.becomeFirstResponder()
+    self.textField.resignFirstResponder()
+    return true
+  }
+  
   override func refreshViewForStatus() {
     UIView.animate(withDuration: 0.55) {
       switch self.status {
