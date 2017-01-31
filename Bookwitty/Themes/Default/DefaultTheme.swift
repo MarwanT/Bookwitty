@@ -119,6 +119,21 @@ extension DefaultTheme {
   func defaultSecondaryButtonHighlightedColor() -> UIColor {
     return colorNumber19Highlighted()
   }
+  
+  
+  
+  func defaultTextColor() -> UIColor {
+    return colorNumber20()
+  }
+  
+  func defaultGrayedTextColor() -> UIColor {
+    return colorNumber15()
+  }
+  
+  
+  func defaultSeparatorColor() -> UIColor {
+    return colorNumber18()
+  }
 }
 
 // MARK: - Buttons
@@ -154,5 +169,22 @@ extension DefaultTheme {
     button.layer.cornerRadius = 4
     button.layer.borderWidth = 2
     button.layer.borderColor = color.cgColor
+  }
+}
+
+// MARK: - Labels
+extension DefaultTheme {
+  func styleLabel(label: UILabel) {
+    label.font = FontDynamicType.label.font
+    label.textColor = defaultTextColor()
+  }
+}
+
+// MARK: - Text Fields
+extension DefaultTheme {
+  func styleTextField(textField: UITextField) {
+    textField.font = FontDynamicType.titleMedium.font
+    textField.textColor = defaultTextColor()
+    textField.borderStyle = UITextBorderStyle.none
   }
 }

@@ -43,6 +43,11 @@ protocol ThemeColor {
   func defaultPrimaryButtonHighlightedColor() -> UIColor
   func defaultSecondaryButtonColor() -> UIColor
   func defaultSecondaryButtonHighlightedColor() -> UIColor
+  
+  func defaultTextColor() -> UIColor
+  func defaultGrayedTextColor() -> UIColor
+  
+  func defaultSeparatorColor() -> UIColor
 }
 
 protocol ThemeButtonsStyle {
@@ -52,7 +57,15 @@ protocol ThemeButtonsStyle {
   func styleSecondaryButton(button: UIButton, withColor color: UIColor, highlightedColor: UIColor)
 }
 
-protocol Theme: ThemeColor, ThemeButtonsStyle {
+protocol ThemeLabelsStyle {
+  func styleLabel(label: UILabel)
+}
+
+protocol ThemeTextFieldsStyle {
+  func styleTextField(textField: UITextField)
+}
+
+protocol Theme: ThemeColor, ThemeButtonsStyle, ThemeLabelsStyle, ThemeTextFieldsStyle {
   func initialize()
 }
 
