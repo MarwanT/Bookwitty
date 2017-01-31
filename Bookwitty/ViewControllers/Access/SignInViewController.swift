@@ -39,6 +39,9 @@ class SignInViewController: UIViewController {
     
     emailField.validationBlock = emailValidation
     passwordField.validationBlock = passwordValidation
+
+    emailField.delegate = self
+    passwordField.delegate = self
     
     stackView.isLayoutMarginsRelativeArrangement = true
     stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
@@ -65,5 +68,18 @@ extension SignInViewController: Themeable {
     self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
     signInButton.setTitle("Signin", for: .normal)
     ThemeManager.shared.currentTheme.stylePrimaryButton(button: signInButton)
+  }
+}
+
+extension SignInViewController: InputFieldDelegate {
+  func inputFieldShouldReturn(inputField: InputField) -> Bool {
+    switch inputField {
+    case emailField:
+      return passwordField.becomeFirstResponder()
+    case passwordField:
+      return passwordField.resignFirstResponder()
+    default:
+      return true
+    }
   }
 }
