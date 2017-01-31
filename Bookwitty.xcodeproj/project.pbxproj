@@ -18,8 +18,7 @@
 		595A649E1E2CF4EA00655067 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649D1E2CF4EA00655067 /* String.swift */; };
 		595A64A01E2D0C4D00655067 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649F1E2D0C4D00655067 /* Network.swift */; };
 		595A64A21E2D66E900655067 /* BookwittyAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A64A11E2D66E900655067 /* BookwittyAPITests.swift */; };
-		595C4F051E3F5E3900BE3942 /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595C4F031E3F5E3900BE3942 /* InputField.swift */; };
-		595C4F061E3F5E3900BE3942 /* InputField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 595C4F041E3F5E3900BE3942 /* InputField.xib */; };
+		595C4F0D1E3F8C0200BE3942 /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595C4F0C1E3F8C0200BE3942 /* InputField.swift */; };
 		596FAD741E2E53AC0064F967 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596FAD731E2E53AC0064F967 /* Environment.swift */; };
 		597B8E2D1E37F6BC00C7811B /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597B8E2C1E37F6BC00C7811B /* Image.swift */; };
 		597B8E361E3954B200C7811B /* Georgia.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 597B8E301E3954B200C7811B /* Georgia.ttf */; };
@@ -70,8 +69,7 @@
 		595A649D1E2CF4EA00655067 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		595A649F1E2D0C4D00655067 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		595A64A11E2D66E900655067 /* BookwittyAPITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyAPITests.swift; sourceTree = "<group>"; };
-		595C4F031E3F5E3900BE3942 /* InputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
-		595C4F041E3F5E3900BE3942 /* InputField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputField.xib; sourceTree = "<group>"; };
+		595C4F0C1E3F8C0200BE3942 /* InputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
 		596FAD731E2E53AC0064F967 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		597B8E2C1E37F6BC00C7811B /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		597B8E301E3954B200C7811B /* Georgia.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Georgia.ttf; sourceTree = "<group>"; };
@@ -217,18 +215,9 @@
 		59057FDA1E2533010036AAF3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				595C4F021E3F5E3900BE3942 /* InputField */,
+				595C4F0C1E3F8C0200BE3942 /* InputField.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		595C4F021E3F5E3900BE3942 /* InputField */ = {
-			isa = PBXGroup;
-			children = (
-				595C4F031E3F5E3900BE3942 /* InputField.swift */,
-				595C4F041E3F5E3900BE3942 /* InputField.xib */,
-			);
-			path = InputField;
 			sourceTree = "<group>";
 		};
 		597B8E2E1E3954B200C7811B /* Font */ = {
@@ -485,7 +474,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				59DA47671E3B84ED00BA90A5 /* Access.storyboard in Resources */,
-				595C4F061E3F5E3900BE3942 /* InputField.xib in Resources */,
 				59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */,
 				59BAC6991E2FCD1A0063F573 /* GoogleService-Info.plist in Resources */,
 				597B8E371E3954B200C7811B /* Ubuntu-Medium.ttf in Resources */,
@@ -619,12 +607,12 @@
 			files = (
 				59903FED1E3B9D90006043EF /* View.swift in Sources */,
 				59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */,
-				595C4F051E3F5E3900BE3942 /* InputField.swift in Sources */,
 				5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */,
 				59DA47631E3B7A9B00BA90A5 /* IntroductionViewController.swift in Sources */,
 				59DA47591E3AA8E100BA90A5 /* Localization.swift in Sources */,
 				59D602201E36387A00271315 /* Color.swift in Sources */,
 				596FAD741E2E53AC0064F967 /* Environment.swift in Sources */,
+				595C4F0D1E3F8C0200BE3942 /* InputField.swift in Sources */,
 				59BD55781E302EB800D3B805 /* Analytics.swift in Sources */,
 				59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */,
 				59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */,
