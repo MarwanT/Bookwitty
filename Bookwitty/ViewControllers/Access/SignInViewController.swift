@@ -18,6 +18,7 @@ class SignInViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     awakeSelf()
+    applyTheme()
   }
   
   /// Do the required setup
@@ -45,5 +46,14 @@ class SignInViewController: UIViewController {
   func passwordValidation(password: String?) -> Bool {
     // TODO: Add password validation logic
     return false
+  }
+}
+
+extension SignInViewController: Themeable {
+  func applyTheme() {
+    stackView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
+    self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
+    signInButton.setTitle("Signin", for: .normal)
+    ThemeManager.shared.currentTheme.stylePrimaryButton(button: signInButton)
   }
 }
