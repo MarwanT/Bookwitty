@@ -32,10 +32,16 @@ class SignInViewController: UIViewController {
       returnKeyType: UIReturnKeyType.done)
     
     emailField.validationBlock = emailValidation
+    passwordField.validationBlock =  passwordValidation
   }
   
   func emailValidation(email: String?) -> Bool {
     // TODO: Add email validation logic
     return true
+  }
+  
+  func passwordValidation(password: String?) -> Bool {
+    // TODO: Add password validation logic
+    return false
   }
 }
