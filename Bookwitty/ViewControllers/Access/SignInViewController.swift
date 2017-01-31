@@ -39,6 +39,9 @@ class SignInViewController: UIViewController {
     
     emailField.validationBlock = emailValidation
     passwordField.validationBlock = passwordValidation
+    
+    stackView.isLayoutMarginsRelativeArrangement = true
+    stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
   }
   
   func emailValidation(email: String?) -> Bool {
