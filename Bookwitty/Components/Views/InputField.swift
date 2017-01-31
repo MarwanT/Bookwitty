@@ -24,8 +24,11 @@ struct InputFieldConfiguration {
   var invalidationIcon: UIImage?
   var invalidationErrorMessage: String?
   var returnKeyType: UIReturnKeyType
+  var rightSideViewHeight: CGFloat
+  var rightSideViewWidth: CGFloat
+
   
-  init(descriptionLabelText: String? = nil, desriptionLabelDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor(), desriptionLabelInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.colorNumber19(), textFieldPlaceholder: String? = nil, textFieldDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor(), textFieldInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.colorNumber19(), textFieldDefaultText: String? = nil, invalidationIcon: UIImage? = nil, invalidationErrorMessage: String? = "Invalid Field", returnKeyType: UIReturnKeyType = UIReturnKeyType.default) {
+  init(descriptionLabelText: String? = nil, desriptionLabelDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor(), desriptionLabelInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.colorNumber19(), textFieldPlaceholder: String? = nil, textFieldDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor(), textFieldInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.colorNumber19(), textFieldDefaultText: String? = nil, invalidationIcon: UIImage? = nil, invalidationErrorMessage: String? = "Invalid Field", returnKeyType: UIReturnKeyType = UIReturnKeyType.default, rightSideViewWidth: CGFloat = 44 , rightSideViewHeight: CGFloat = 44) {
     self.descriptionLabelText = descriptionLabelText
     self.desriptionLabelDefaultTextColor = desriptionLabelDefaultTextColor
     self.desriptionLabelInvalidTextColor = desriptionLabelInvalidTextColor
@@ -36,6 +39,8 @@ struct InputFieldConfiguration {
     self.invalidationIcon = invalidationIcon
     self.invalidationErrorMessage = invalidationErrorMessage
     self.returnKeyType = returnKeyType
+    self.rightSideViewWidth = rightSideViewWidth
+    self.rightSideViewHeight = rightSideViewHeight
   }
 }
 
@@ -48,6 +53,8 @@ class InputField: UIView {
   
   let descriptionLabel: UILabel! = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
   let textField: UITextField! = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+  
+  let invalidationImageView: UIImageView! = UIImageView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
   
   var delegate: InputFieldDelegate?
   
@@ -94,7 +101,7 @@ class InputField: UIView {
     refreshViewForStatus()
   }
   
-  private func setupLayout() {
+  func setupLayout() {
     // Setup basic layout
     self.addSubview(descriptionLabel)
     self.addSubview(textField)
@@ -104,10 +111,12 @@ class InputField: UIView {
     textField.constrainTopSpace(toView: descriptionLabel, predicate: "10")
     self.alignBottomEdge(withView: textField, predicate: "0")
     
-    let textFieldRightView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
     // TODO: Remove this later | Only for visualization purposes
-    textFieldRightView.backgroundColor = UIColor.red
-    textField.rightView = textFieldRightView
+    invalidationImageView.frame = CGRect(
+      x: 0, y: 0, width: configuration.rightSideViewWidth,
+      height: configuration.rightSideViewHeight)
+    invalidationImageView.backgroundColor = UIColor.red
+    textField.rightView = invalidationImageView
     textField.delegate = self
   }
   
@@ -141,7 +150,7 @@ class InputField: UIView {
   }
   
   func validateField() -> (isValid: Bool, value: String?, errorMessage: String?) {
-    self.resignFirstResponder()
+    self.textField.resignFirstResponder()
     let valid = isValid
     switch (valid, textField.text?.isEmpty ?? true) {
     case (true, _):
