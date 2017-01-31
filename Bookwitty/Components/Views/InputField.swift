@@ -160,6 +160,10 @@ class InputField: UIView {
     }
     return (isValid, textField.text, configuration.invalidationErrorMessage)
   }
+  
+  override func becomeFirstResponder() -> Bool {
+    return self.textField.becomeFirstResponder()
+  }
 }
 
 extension InputField: Themeable {
