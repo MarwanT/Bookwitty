@@ -17,6 +17,18 @@ class SignInViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view.
+    awakeSelf()
+  }
+  
+  /// Do the required setup
+  private func awakeSelf() {
+    emailField.configuration = InputFieldConfiguration(
+      descriptionLabelText: "Email", textFieldPlaceholder: "Enter your email",
+      invalidationErrorMessage: "Oooops your email seems to be invalid",
+      returnKeyType: UIReturnKeyType.continue)
+    passwordField.configuration = InputFieldConfiguration(
+      descriptionLabelText: "Password", textFieldPlaceholder: "Enter your password",
+      invalidationErrorMessage: "Oooops your password seems to be invalid",
+      returnKeyType: UIReturnKeyType.done)
   }
 }
