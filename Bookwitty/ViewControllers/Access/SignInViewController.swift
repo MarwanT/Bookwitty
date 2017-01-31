@@ -30,5 +30,12 @@ class SignInViewController: UIViewController {
       descriptionLabelText: "Password", textFieldPlaceholder: "Enter your password",
       invalidationErrorMessage: "Oooops your password seems to be invalid",
       returnKeyType: UIReturnKeyType.done)
+    
+    emailField.validationBlock = emailValidation
+  }
+  
+  func emailValidation(email: String?) -> Bool {
+    // TODO: Add email validation logic
+    return true
   }
 }
