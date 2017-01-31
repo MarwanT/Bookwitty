@@ -61,6 +61,14 @@ class SignInViewController: UIViewController {
   
   
   @IBAction func signInButtonTouchUpInside(_ sender: Any) {
+    let emailValidationResult = emailField.validateField()
+    let passwordValidationResult = passwordField.validateField()
+    
+    if emailValidationResult.isValid && passwordValidationResult.isValid {
+      // TODO: Proceed with Sign proceedures
+    } else {
+      // TODO: Display error message
+    }
   }
 }
 
