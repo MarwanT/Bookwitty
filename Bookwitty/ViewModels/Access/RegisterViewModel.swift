@@ -9,5 +9,5 @@
 import Foundation
 
 final class RegisterViewModel {
-
+  let viewControllerTitle: String = localizedString(key: "sign_up", defaultValue: "Sign up")
 }

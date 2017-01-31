@@ -10,4 +10,14 @@ import UIKit
 
 class RegisterViewController: UIViewController {
   let viewModel: RegisterViewModel = RegisterViewModel()
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    awakeSelf()
+  }
+
+  /// Do the required setup
+  private func awakeSelf() {
+    title = viewModel.viewControllerTitle
+  }
 }
