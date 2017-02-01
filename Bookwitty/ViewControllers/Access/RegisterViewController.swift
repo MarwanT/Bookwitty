@@ -73,6 +73,9 @@ class RegisterViewController: UIViewController {
     firstNameField.delegate = self
     lastNameField.delegate = self
 
+    stackView.isLayoutMarginsRelativeArrangement = true
+    stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+
     NotificationCenter.default.addObserver(
       self,
       selector: #selector(SignInViewController.keyboardWillShow(_:)),
