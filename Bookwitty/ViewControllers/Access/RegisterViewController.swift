@@ -209,3 +209,14 @@ extension RegisterViewController: InputFieldDelegate {
     }
   }
 }
+
+enum AttributedLinkReference: String {
+ case termsOfUse
+ case privacyPolicy
+
+  var url: URL {
+    get {
+      return URL(string: "bookwittyapp://" + self.rawValue)!
+    }
+  }
+}
