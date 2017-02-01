@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EMCCountryPickerController
 
 class RegisterViewController: UIViewController {
   @IBOutlet weak var stackView: UIStackView!
@@ -65,7 +66,7 @@ class RegisterViewController: UIViewController {
       textFieldPlaceholder: viewModel.countryTextFieldPlaceholderText,
       returnKeyType: UIReturnKeyType.default)
 
-    countryField.text = viewModel.loadDeviceDefaultCountry()?.name ?? ""
+    countryField.text = viewModel.country?.name ?? ""
 
     emailField.validationBlock = emailValidation
     passwordField.validationBlock = passwordValidation
@@ -149,7 +150,23 @@ class RegisterViewController: UIViewController {
 
 extension RegisterViewController: InformativeInputFieldDelegate {
   func informativeInputFieldDidTapField(informativeInputField: InformativeInputField) {
-    //TODO: Open country selection
+    let countryPickerViewController: EMCCountryPickerController = EMCCountryPickerController()
+    countryPickerViewController.countryDelegate = self
+    countryPickerViewController.flagSize = 44
+    
+    self.navigationController?.pushViewController(countryPickerViewController, animated: true)
+  }
+}
+
+extension RegisterViewController:  EMCCountryDelegate {
+  func countryController(_ sender: Any?, didSelect chosenCountry: EMCCountry?) {
+    if let chosenCountry = chosenCountry {
+      let countryName: String = chosenCountry.countryName(with: Locale.current)
+      let countryCode: String = chosenCountry.countryCode
+      viewModel.country = (countryCode, countryName)
+      countryField.text = viewModel.country?.name ?? ""
+    }
+    _ = self.navigationController?.popToViewController(self, animated: true)
   }
 }
 
