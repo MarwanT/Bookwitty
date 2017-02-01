@@ -29,5 +29,6 @@ final class RegisterViewModel {
   let lastNameTextFieldPlaceholderText: String = localizedString(key: "last_name_text_field_placeholder", defaultValue: "Enter your last name")
   let lastNameInvalidationErrorMessage: String = localizedString(key: "last_name_invalidation_error_message", defaultValue: "Oooops your email seems to be empty")
 
-  let countryTextFieldPlaceholderText: String = localizedString(key: "country", defaultValue: "Country")
+  let countryDescriptionLabelText: String = localizedString(key: "country", defaultValue: "Country")
+  let countryTextFieldPlaceholderText: String = localizedString(key: "country_text_field_placeholder", defaultValue: "Country")
 }

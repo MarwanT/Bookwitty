@@ -60,6 +60,7 @@ class RegisterViewController: UIViewController {
       returnKeyType: UIReturnKeyType.done)
 
     countryField.configuration = InputFieldConfiguration(
+      descriptionLabelText: viewModel.countryDescriptionLabelText,
       textFieldPlaceholder: viewModel.countryTextFieldPlaceholderText,
       returnKeyType: UIReturnKeyType.default)
 
