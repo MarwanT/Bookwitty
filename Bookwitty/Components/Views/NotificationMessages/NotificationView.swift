@@ -22,4 +22,47 @@ class NotificationView: MessageView {
   @IBOutlet weak var stackView: UIStackView!
   
   var stylingConfiguration = StylingConfiguration()
+  
+  var notificationMessages: [String]? = nil {
+    didSet {
+      refreshLayout()
+    }
+  }
+  
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    refreshLayout()
+  }
+  
+  func refreshLayout() {
+    guard let stackView = stackView, let notificationMessages = notificationMessages else {
+      return
+    }
+    
+    backgroundColor = stylingConfiguration.backgroundColor
+    stackView.layoutMargins = stylingConfiguration.layoutMargin
+    stackView.isLayoutMarginsRelativeArrangement = true
+    
+    for notificationMessage in notificationMessages {
+      let imageView = UIImageView(image: stylingConfiguration.image)
+      imageView.tintColor = stylingConfiguration.imageTintColor
+      imageView.backgroundColor = UIColor.orange
+      imageView.constrainWidth("30")
+      imageView.constrainHeight("30")
+  
+      let textLabel = UILabel(frame: CGRect.zero)
+      ThemeManager.shared.currentTheme.styleLabel(label: textLabel)
+      textLabel.textColor = stylingConfiguration.textColor
+      textLabel.text = notificationMessage
+      textLabel.numberOfLines = 0
+      textLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
+      let horizontalStackView = UIStackView(arrangedSubviews: [imageView, textLabel])
+      horizontalStackView.axis = UILayoutConstraintAxis.horizontal
+      horizontalStackView.spacing = 10
+      horizontalStackView.alignment = UIStackViewAlignment.top
+      stackView.addArrangedSubview(horizontalStackView)
+      textLabel.sizeToFit()
+      self.layoutIfNeeded()
+    }
+  }
 }
