@@ -231,6 +231,9 @@
                                     <constraint firstAttribute="height" constant="44" id="Bdw-sB-pEw"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="continueButtonTouchUpInside:" destination="rPE-6K-dWg" eventType="touchUpInside" id="SQ0-IO-00w"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

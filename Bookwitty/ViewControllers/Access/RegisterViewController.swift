@@ -66,6 +66,19 @@ class RegisterViewController: UIViewController {
 
   }
 
+  @IBAction func continueButtonTouchUpInside(_ sender: Any) {
+    let emailValidationResult = emailField.validateField()
+    let passwordValidationResult = passwordField.validateField()
+    let firstNameValidationResult = firstNameField.validateField()
+    let lastNameValidationResult = lastNameField.validateField()
+    if(!emailValidationResult.isValid || !passwordValidationResult.isValid
+      || !firstNameValidationResult.isValid || !lastNameValidationResult.isValid) {
+      // TODO: Display error message
+    } else {
+      // TODO: Proceed all good
+    }
+  }
+
   func emailValidation(email: String?) -> Bool {
     return email?.isValidEmail() ?? false
   }
