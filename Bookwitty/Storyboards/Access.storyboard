@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="RSO-OY-1rR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="RSO-OY-1rR">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -132,6 +133,180 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TPR-nW-nNp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-38" y="149"/>
+        </scene>
+        <!--Register View Controller-->
+        <scene sceneID="9Vj-ta-Qrr">
+            <objects>
+                <viewController storyboardIdentifier="RegisterViewController" id="rPE-6K-dWg" customClass="RegisterViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DQt-gX-vCB"/>
+                        <viewControllerLayoutGuide type="bottom" id="jJy-JC-mq7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="IxC-wb-xde">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZjL-En-ybs">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="562.5"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xhg-sU-c3s" userLabel="Stack View Background">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="645"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8fT-Im-Fmg">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="644"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="THh-ma-Llj" userLabel="First Name Field" customClass="InputField" customModule="Bookwitty" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="128" placeholder="YES" id="9Bt-TB-msB"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vs9-9c-IS0" userLabel="Separator">
+                                                        <rect key="frame" x="0.0" y="128" width="375" height="1"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="1" id="Naj-oI-GSu"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7vU-LM-K87" userLabel="Last Name Field" customClass="InputField" customModule="Bookwitty" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="129" width="375" height="128"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="128" placeholder="YES" id="CDy-4X-5Za"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FlI-y5-szb" userLabel="Separator">
+                                                        <rect key="frame" x="0.0" y="257" width="375" height="1"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="1" id="Nsn-5M-gd2"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jaj-6U-TkO" userLabel="Email Field" customClass="InputField" customModule="Bookwitty" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="258" width="375" height="128"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="128" placeholder="YES" id="8cK-zS-iwT"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DdO-2H-2lL" userLabel="Separator">
+                                                        <rect key="frame" x="0.0" y="386" width="375" height="1"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="1" id="12m-MI-orG"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7wf-oX-VRI" userLabel="Password Field" customClass="PasswordInputField" customModule="Bookwitty" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="387" width="375" height="128"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="128" placeholder="YES" id="Taf-jS-lKg"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vCv-qY-bgA" userLabel="Separator">
+                                                        <rect key="frame" x="0.0" y="515" width="375" height="1"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="1" id="M6K-e1-UHd"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FpU-74-T2n" userLabel="Country Field" customClass="InformativeInputField" customModule="Bookwitty" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="516" width="375" height="128"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="128" placeholder="YES" id="dsd-nA-3kp"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                            </stackView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vpk-1U-qWl" userLabel="Long Separator View">
+                                                <rect key="frame" x="0.0" y="644" width="375" height="1"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="kvt-QQ-Thr"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="Vpk-1U-qWl" secondAttribute="trailing" id="5os-7p-oFJ"/>
+                                            <constraint firstItem="Vpk-1U-qWl" firstAttribute="top" secondItem="8fT-Im-Fmg" secondAttribute="bottom" id="I4A-BA-hxm"/>
+                                            <constraint firstItem="Vpk-1U-qWl" firstAttribute="leading" secondItem="xhg-sU-c3s" secondAttribute="leading" id="Q8a-Sz-3kY"/>
+                                            <constraint firstItem="8fT-Im-Fmg" firstAttribute="top" secondItem="xhg-sU-c3s" secondAttribute="top" id="QTx-wl-e4w"/>
+                                            <constraint firstAttribute="bottom" secondItem="Vpk-1U-qWl" secondAttribute="bottom" id="mQJ-A0-OmK"/>
+                                            <constraint firstAttribute="trailing" secondItem="8fT-Im-Fmg" secondAttribute="trailing" id="uMn-PD-Ex4"/>
+                                            <constraint firstItem="8fT-Im-Fmg" firstAttribute="leading" secondItem="xhg-sU-c3s" secondAttribute="leading" id="uvo-Jc-NSe"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="xhg-sU-c3s" firstAttribute="top" secondItem="ZjL-En-ybs" secondAttribute="top" id="OHJ-Io-4TA"/>
+                                    <constraint firstItem="xhg-sU-c3s" firstAttribute="width" secondItem="ZjL-En-ybs" secondAttribute="width" id="S6S-4M-dxn"/>
+                                    <constraint firstItem="xhg-sU-c3s" firstAttribute="leading" secondItem="ZjL-En-ybs" secondAttribute="leading" id="S7D-mq-u78"/>
+                                    <constraint firstAttribute="bottom" secondItem="xhg-sU-c3s" secondAttribute="bottom" id="UCP-KE-HRO"/>
+                                    <constraint firstAttribute="trailing" secondItem="xhg-sU-c3s" secondAttribute="trailing" id="cmz-jl-eFu"/>
+                                </constraints>
+                            </scrollView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xOV-DI-7aZ" userLabel="Terms Label">
+                                <rect key="frame" x="20" y="562.5" width="335" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y56-bB-NU4">
+                                <rect key="frame" x="20" y="603" width="335" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Bdw-sB-pEw"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="continueButtonTouchUpInside:" destination="rPE-6K-dWg" eventType="touchUpInside" id="SQ0-IO-00w"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="y56-bB-NU4" firstAttribute="top" secondItem="xOV-DI-7aZ" secondAttribute="bottom" constant="20" id="0KU-bd-2gO"/>
+                            <constraint firstItem="ZjL-En-ybs" firstAttribute="leading" secondItem="IxC-wb-xde" secondAttribute="leading" id="2FW-XG-aG4"/>
+                            <constraint firstAttribute="trailing" secondItem="y56-bB-NU4" secondAttribute="trailing" constant="20" id="3xb-Z8-L0e"/>
+                            <constraint firstItem="xOV-DI-7aZ" firstAttribute="top" secondItem="ZjL-En-ybs" secondAttribute="bottom" id="8vx-Lz-d41"/>
+                            <constraint firstItem="xOV-DI-7aZ" firstAttribute="leading" secondItem="IxC-wb-xde" secondAttribute="leading" constant="20" id="AKy-PV-8JX"/>
+                            <constraint firstItem="ZjL-En-ybs" firstAttribute="bottom" secondItem="jJy-JC-mq7" secondAttribute="top" id="Sv0-M8-Ot4"/>
+                            <constraint firstItem="y56-bB-NU4" firstAttribute="leading" secondItem="IxC-wb-xde" secondAttribute="leading" constant="20" id="miL-4c-OqT"/>
+                            <constraint firstAttribute="trailing" secondItem="ZjL-En-ybs" secondAttribute="trailing" id="n2o-yE-rPm"/>
+                            <constraint firstItem="ZjL-En-ybs" firstAttribute="top" secondItem="IxC-wb-xde" secondAttribute="topMargin" id="pZP-gW-yqf"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="y56-bB-NU4" secondAttribute="bottom" constant="20" id="vu2-nU-cNN"/>
+                            <constraint firstAttribute="trailing" secondItem="xOV-DI-7aZ" secondAttribute="trailing" constant="20" id="wZv-td-AeB"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Sv0-M8-Ot4"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="continueButton" destination="y56-bB-NU4" id="YkJ-CI-mQp"/>
+                        <outlet property="countryField" destination="FpU-74-T2n" id="YW4-WE-wYs"/>
+                        <outlet property="emailField" destination="jaj-6U-TkO" id="U2k-Js-r9b"/>
+                        <outlet property="firstNameField" destination="THh-ma-Llj" id="zve-Rx-Gfv"/>
+                        <outlet property="lastNameField" destination="7vU-LM-K87" id="MEv-fR-ijt"/>
+                        <outlet property="passwordField" destination="7wf-oX-VRI" id="EzV-Dw-mzT"/>
+                        <outlet property="scrollViewBottomToLabelTopConstraint" destination="8vx-Lz-d41" id="7Od-Va-IEw"/>
+                        <outlet property="scrollViewBottomToSuperviewBottomConstraint" destination="Sv0-M8-Ot4" id="MCV-YI-Sws"/>
+                        <outlet property="stackView" destination="8fT-Im-Fmg" id="GUl-uV-8Sh"/>
+                        <outlet property="stackViewBackgroundView" destination="xhg-sU-c3s" id="PsE-Qm-5SA"/>
+                        <outlet property="termsLabel" destination="xOV-DI-7aZ" id="4JF-in-OPG"/>
+                        <outletCollection property="separators" destination="Vpk-1U-qWl" collectionClass="NSMutableArray" id="fr3-dq-gyt"/>
+                        <outletCollection property="separators" destination="DdO-2H-2lL" collectionClass="NSMutableArray" id="KN9-2j-Frh"/>
+                        <outletCollection property="separators" destination="FlI-y5-szb" collectionClass="NSMutableArray" id="nYd-f0-bU0"/>
+                        <outletCollection property="separators" destination="vCv-qY-bgA" collectionClass="NSMutableArray" id="5cB-Ka-xhv"/>
+                        <outletCollection property="separators" destination="vs9-9c-IS0" collectionClass="NSMutableArray" id="955-Ap-fdZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gVH-oK-8Xd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1198" y="149"/>
         </scene>
     </scenes>
 </document>

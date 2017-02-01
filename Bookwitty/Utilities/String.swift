@@ -18,4 +18,14 @@ extension String {
     let predicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
     return predicate.evaluate(with: self)
   }
+
+  func isValidPassword() -> Bool {
+    let minimumNumberOfCharacters = 6
+    return self.characters.count > minimumNumberOfCharacters
+  }
+
+  func isValidText() -> Bool {
+    let count: Int = self.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).characters.count
+    return !(count == 0)
+  }
 }

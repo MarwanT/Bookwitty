@@ -50,6 +50,9 @@
 		59DA47671E3B84ED00BA90A5 /* Access.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59DA47661E3B84ED00BA90A5 /* Access.storyboard */; };
 		59DA476A1E3B876900BA90A5 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47691E3B876900BA90A5 /* SignInViewController.swift */; };
 		59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */; };
+		F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41D529F1E40EB060021A4AE /* RegisterViewController.swift */; };
+		F41D52A21E40EB780021A4AE /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41D52A11E40EB780021A4AE /* RegisterViewModel.swift */; };
+		F420AD9D1E41D2E600C78AEB /* BookwittyUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420AD9C1E41D2E600C78AEB /* BookwittyUtilityTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +117,9 @@
 		818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BookwittyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B75E5B87D9559EBD71824DD7 /* Pods-Bookwitty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookwitty.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bookwitty/Pods-Bookwitty.debug.xcconfig"; sourceTree = "<group>"; };
 		CB5E98B3C54E0B0AD22F5CB4 /* Pods-BookwittyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookwittyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests.release.xcconfig"; sourceTree = "<group>"; };
+		F41D529F1E40EB060021A4AE /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		F41D52A11E40EB780021A4AE /* RegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
+		F420AD9C1E41D2E600C78AEB /* BookwittyUtilityTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyUtilityTests.swift; sourceTree = "<group>"; };
 		F51280CA021D07F160F13471 /* Pods-BookwittyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookwittyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -310,6 +316,7 @@
 			isa = PBXGroup;
 			children = (
 				59D27D0E1E40D2EE00468C29 /* SignInViewModel.swift */,
+				F41D52A11E40EB780021A4AE /* RegisterViewModel.swift */,
 			);
 			name = Access;
 			path = Bookwitty/ViewModels/Access;
@@ -349,6 +356,7 @@
 			isa = PBXGroup;
 			children = (
 				59DA47691E3B876900BA90A5 /* SignInViewController.swift */,
+				F41D529F1E40EB060021A4AE /* RegisterViewController.swift */,
 			);
 			path = Access;
 			sourceTree = "<group>";
@@ -399,6 +407,7 @@
 			children = (
 				59FBBC631E1D074400FC84E5 /* Info.plist */,
 				595A64A11E2D66E900655067 /* BookwittyAPITests.swift */,
+				F420AD9C1E41D2E600C78AEB /* BookwittyUtilityTests.swift */,
 			);
 			path = BookwittyTests;
 			sourceTree = "<group>";
@@ -657,10 +666,12 @@
 				595C4F111E3F9DA400BE3942 /* InformativeInputField.swift in Sources */,
 				59DA47641E3B7A9B00BA90A5 /* TutorialPageViewController.swift in Sources */,
 				59DA47571E3A65A600BA90A5 /* Storyboard.swift in Sources */,
+				F41D52A21E40EB780021A4AE /* RegisterViewModel.swift in Sources */,
 				59D6021E1E36363400271315 /* Font.swift in Sources */,
 				593769D71E3689FB00F23226 /* Appearance.swift in Sources */,
 				5967E45A1E410A850067093F /* NotificationView.swift in Sources */,
 				593769D81E3689FB00F23226 /* DefaultTheme.swift in Sources */,
+				F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */,
 				595A64A01E2D0C4D00655067 /* Network.swift in Sources */,
 				595A649C1E2CCB8900655067 /* BookwittyAPI.swift in Sources */,
 				595A649E1E2CF4EA00655067 /* String.swift in Sources */,
@@ -677,6 +688,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				595A64A21E2D66E900655067 /* BookwittyAPITests.swift in Sources */,
+				F420AD9D1E41D2E600C78AEB /* BookwittyUtilityTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
