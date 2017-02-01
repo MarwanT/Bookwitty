@@ -75,7 +75,9 @@ class NotificationView: MessageView {
 
 extension NotificationView {
   static func show(notificationMessages: [NotificationMessage]) {
-    let view: NotificationView = try! SwiftMessages.viewFromNib()
+    guard let view: NotificationView  = try? SwiftMessages.viewFromNib() else {
+      return
+    }
     view.notificationMessages = notificationMessages
     view.configureDropShadow()
     var config = SwiftMessages.defaultConfig
