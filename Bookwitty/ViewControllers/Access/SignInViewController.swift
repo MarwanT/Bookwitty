@@ -71,11 +71,7 @@ class SignInViewController: UIViewController {
   }
   
   func passwordValidation(password: String?) -> Bool {
-    let minimumNumberOfCharacters = 6
-    guard let password = password, !password.isEmpty else {
-      return false
-    }
-    return password.characters.count > minimumNumberOfCharacters
+    return password?.isValidPassword() ?? false
   }
   
   

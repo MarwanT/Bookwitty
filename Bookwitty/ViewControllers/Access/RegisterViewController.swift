@@ -58,5 +58,24 @@ class RegisterViewController: UIViewController {
     countryField.configuration = InputFieldConfiguration(
       textFieldPlaceholder: viewModel.countryTextFieldPlaceholderText,
       returnKeyType: UIReturnKeyType.default)
+
+    emailField.validationBlock = emailValidation
+    passwordField.validationBlock = passwordValidation
+    firstNameField.validationBlock = notEmptyValidation
+    lastNameField.validationBlock = notEmptyValidation
+
   }
+
+  func emailValidation(email: String?) -> Bool {
+    return email?.isValidEmail() ?? false
+  }
+
+  func passwordValidation(password: String?) -> Bool {
+    return password?.isValidPassword() ?? false
+  }
+
+  func notEmptyValidation(text: String?) -> Bool {
+    return text?.isValidText() ?? false
+  }
+  
 }
