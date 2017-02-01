@@ -150,7 +150,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="562.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xhg-sU-c3s" userLabel="Stack View Background">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="641"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1025"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8fT-Im-Fmg">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="640"/>
@@ -193,7 +193,7 @@
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vpk-1U-qWl" userLabel="Long Separator View">
-                                                <rect key="frame" x="0.0" y="640" width="375" height="1"/>
+                                                <rect key="frame" x="0.0" y="1024" width="375" height="1"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="kvt-QQ-Thr"/>
