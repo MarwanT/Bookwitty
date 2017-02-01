@@ -20,6 +20,9 @@ class RegisterViewController: UIViewController {
   @IBOutlet weak var termsLabel: UILabel!
   @IBOutlet var separators: [UIView]!
 
+  @IBOutlet weak var scrollViewBottomToLabelTopConstraint: NSLayoutConstraint!
+  @IBOutlet weak var scrollViewBottomToSuperviewBottomConstraint: NSLayoutConstraint!
+
   let viewModel: RegisterViewModel = RegisterViewModel()
 
   override func viewDidLoad() {

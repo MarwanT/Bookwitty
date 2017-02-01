@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="RSO-OY-1rR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="RSO-OY-1rR">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -243,12 +244,18 @@
                             <constraint firstAttribute="trailing" secondItem="y56-bB-NU4" secondAttribute="trailing" constant="20" id="3xb-Z8-L0e"/>
                             <constraint firstItem="xOV-DI-7aZ" firstAttribute="top" secondItem="ZjL-En-ybs" secondAttribute="bottom" id="8vx-Lz-d41"/>
                             <constraint firstItem="xOV-DI-7aZ" firstAttribute="leading" secondItem="IxC-wb-xde" secondAttribute="leading" constant="20" id="AKy-PV-8JX"/>
+                            <constraint firstItem="ZjL-En-ybs" firstAttribute="bottom" secondItem="jJy-JC-mq7" secondAttribute="top" id="Sv0-M8-Ot4"/>
                             <constraint firstItem="y56-bB-NU4" firstAttribute="leading" secondItem="IxC-wb-xde" secondAttribute="leading" constant="20" id="miL-4c-OqT"/>
                             <constraint firstAttribute="trailing" secondItem="ZjL-En-ybs" secondAttribute="trailing" id="n2o-yE-rPm"/>
                             <constraint firstItem="ZjL-En-ybs" firstAttribute="top" secondItem="IxC-wb-xde" secondAttribute="topMargin" id="pZP-gW-yqf"/>
                             <constraint firstAttribute="bottomMargin" secondItem="y56-bB-NU4" secondAttribute="bottom" constant="20" id="vu2-nU-cNN"/>
                             <constraint firstAttribute="trailing" secondItem="xOV-DI-7aZ" secondAttribute="trailing" constant="20" id="wZv-td-AeB"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Sv0-M8-Ot4"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="continueButton" destination="y56-bB-NU4" id="YkJ-CI-mQp"/>
@@ -257,15 +264,17 @@
                         <outlet property="firstNameField" destination="THh-ma-Llj" id="zve-Rx-Gfv"/>
                         <outlet property="lastNameField" destination="7vU-LM-K87" id="MEv-fR-ijt"/>
                         <outlet property="passwordField" destination="7wf-oX-VRI" id="EzV-Dw-mzT"/>
+                        <outlet property="scrollViewBottomToLabelTopConstraint" destination="8vx-Lz-d41" id="7Od-Va-IEw"/>
+                        <outlet property="scrollViewBottomToSuperviewBottomConstraint" destination="Sv0-M8-Ot4" id="MCV-YI-Sws"/>
                         <outlet property="stackView" destination="8fT-Im-Fmg" id="GUl-uV-8Sh"/>
                         <outlet property="stackViewBackgroundView" destination="xhg-sU-c3s" id="PsE-Qm-5SA"/>
                         <outlet property="termsLabel" destination="xOV-DI-7aZ" id="4JF-in-OPG"/>
-                        <outletCollection property="separators" destination="Vpk-1U-qWl" id="fr3-dq-gyt"/>
+                        <outletCollection property="separators" destination="Vpk-1U-qWl" collectionClass="NSMutableArray" id="fr3-dq-gyt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gVH-oK-8Xd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="661" y="149"/>
+            <point key="canvasLocation" x="1198" y="149"/>
         </scene>
     </scenes>
 </document>
