@@ -36,6 +36,9 @@ class RegisterViewController: UIViewController {
   private func setupAttributedTexts() {
     //Set Attributed Styled up Text
     termsLabel.attributedText = viewModel.styledTermsOfUseAndPrivacyPolicyText()
+    //Attributed Label Links Styling
+    termsLabel.linkAttributes = ThemeManager.shared.currentTheme.styleTextLinkAttributes()
+
   }
 
   /// Do the required setup
