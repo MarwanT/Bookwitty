@@ -33,4 +33,25 @@ final class RegisterViewModel {
   let countryTextFieldPlaceholderText: String = localizedString(key: "country_text_field_placeholder", defaultValue: "Country")
 
   let termsOfUseAndPrivacyPolicyLabelText: String = localizedString(key: "terms_of_use_and_privacy_policy", defaultValue: "By tapping Sign up, you agree to the\nTerms of Use and Privacy Policy")
+
+  var country: (code: String, name: String)?
+
+  init() {
+      self.country = loadDeviceDefaultCountry()
+  }
+
+  func loadDeviceDefaultCountry() -> (code: String, name: String)? {
+    let countryLocale = Locale.current as NSLocale
+
+    guard let code = countryLocale.object(forKey: .countryCode) as? String else {
+      return nil
+    }
+
+    if let name = countryLocale.displayName(forKey: .countryCode, value: code) {
+      return (code: code, name: name)
+    }
+
+    return nil
+  }
+
 }

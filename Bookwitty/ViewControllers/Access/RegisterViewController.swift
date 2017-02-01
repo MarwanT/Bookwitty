@@ -65,6 +65,8 @@ class RegisterViewController: UIViewController {
       textFieldPlaceholder: viewModel.countryTextFieldPlaceholderText,
       returnKeyType: UIReturnKeyType.default)
 
+    countryField.text = viewModel.loadDeviceDefaultCountry()?.name ?? ""
+
     emailField.validationBlock = emailValidation
     passwordField.validationBlock = passwordValidation
     firstNameField.validationBlock = notEmptyValidation
