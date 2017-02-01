@@ -71,7 +71,21 @@ class RegisterViewController: UIViewController {
     passwordField.delegate = self
     firstNameField.delegate = self
     lastNameField.delegate = self
+
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(SignInViewController.keyboardWillShow(_:)),
+      name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(SignInViewController.keyboardWillHide(_:)),
+      name: NSNotification.Name.UIKeyboardWillHide, object: nil)
   }
+
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+
 
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
     let emailValidationResult = emailField.validateField()
@@ -96,6 +110,29 @@ class RegisterViewController: UIViewController {
 
   func notEmptyValidation(text: String?) -> Bool {
     return text?.isValidText() ?? false
+  }
+
+  // MARK: - Keyboard Handling
+  func keyboardWillShow(_ notification: NSNotification) {
+
+    if let value = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+      let frame = value.cgRectValue
+      scrollViewBottomToSuperviewBottomConstraint.constant = -frame.height
+    }
+
+    self.view.removeConstraint(scrollViewBottomToLabelTopConstraint)
+    self.view.addConstraint(scrollViewBottomToSuperviewBottomConstraint)
+    UIView.animate(withDuration: 0.44) {
+      self.view.layoutIfNeeded()
+    }
+  }
+
+  func keyboardWillHide(_ notification: NSNotification) {
+    self.view.removeConstraint(scrollViewBottomToSuperviewBottomConstraint)
+    self.view.addConstraint(scrollViewBottomToLabelTopConstraint)
+    UIView.animate(withDuration: 0.44) {
+      self.view.layoutIfNeeded()
+    }
   }
 }
 
