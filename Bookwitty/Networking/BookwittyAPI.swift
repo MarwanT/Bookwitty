@@ -13,6 +13,7 @@ import Moya
 // MARK: - Enum Declaration
 
 public enum BookwittyAPI {
+  case OAuth(username: String, password: String)
   case AllAddresses
   case Register(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String?, countryISO3166: String, password: String)
 }
@@ -35,6 +36,8 @@ extension BookwittyAPI: TargetType {
     var path = ""
     
     switch self {
+    case .OAuth:
+      path = "/oauth"
     case .AllAddresses:
       path = "/user/addresses"
     case .Register:
@@ -46,6 +49,8 @@ extension BookwittyAPI: TargetType {
   
   public var method: Moya.Method {
     switch self {
+    case .OAuth:
+      return .post
     case .AllAddresses:
       return .get
     case .Register:
@@ -55,6 +60,15 @@ extension BookwittyAPI: TargetType {
   
   public var parameters: [String: Any]? {
     switch self {
+    case .OAuth(let username, let password):
+      return [
+        "client_id": AppKeys.shared.apiKey,
+        "client_secret": AppKeys.shared.apiSecret,
+        "username": username,
+        "password":  password,
+        "grant_type": "password",
+        "scopes": "openid email profile"
+      ]
     case .AllAddresses:
       return nil
     case .Register(let firstName, let lastName, let email, let dateOfBirth, let country, let password):
