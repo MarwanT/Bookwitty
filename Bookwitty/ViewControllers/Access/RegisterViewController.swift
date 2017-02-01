@@ -64,6 +64,10 @@ class RegisterViewController: UIViewController {
     firstNameField.validationBlock = notEmptyValidation
     lastNameField.validationBlock = notEmptyValidation
 
+    emailField.delegate = self
+    passwordField.delegate = self
+    firstNameField.delegate = self
+    lastNameField.delegate = self
   }
 
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
@@ -90,5 +94,21 @@ class RegisterViewController: UIViewController {
   func notEmptyValidation(text: String?) -> Bool {
     return text?.isValidText() ?? false
   }
-  
+}
+
+extension RegisterViewController: InputFieldDelegate {
+  func inputFieldShouldReturn(inputField: InputField) -> Bool {
+    switch inputField {
+    case firstNameField:
+      return lastNameField.becomeFirstResponder()
+    case lastNameField:
+      return emailField.becomeFirstResponder()
+    case emailField:
+      return passwordField.becomeFirstResponder()
+    case passwordField:
+      return passwordField.resignFirstResponder()
+    default:
+      return true
+    }
+  }
 }
