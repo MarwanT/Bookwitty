@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import TTTAttributedLabel
 
 protocol Themeable {
   func applyTheme()
@@ -68,7 +69,11 @@ protocol ThemeTextFieldsStyle {
   func styleTextField(textField: UITextField)
 }
 
-protocol Theme: ThemeColor, ThemeButtonsStyle, ThemeLabelsStyle, ThemeTextFieldsStyle {
+protocol ThemeAttributedTextStyle {
+  func styleTextLinkAttributes() -> [AnyHashable : Any]
+}
+
+protocol Theme: ThemeColor, ThemeButtonsStyle, ThemeLabelsStyle, ThemeTextFieldsStyle, ThemeAttributedTextStyle {
   func initialize()
 }
 

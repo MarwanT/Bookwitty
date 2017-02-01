@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import TTTAttributedLabel
 
 final class DefaultTheme: Theme {
   func initialize() {
@@ -193,5 +194,15 @@ extension DefaultTheme {
     textField.font = FontDynamicType.titleMedium.font
     textField.textColor = defaultTextColor()
     textField.borderStyle = UITextBorderStyle.none
+  }
+}
+
+// MARK - TTT Attributed Labels
+extension DefaultTheme {
+  func styleTextLinkAttributes() -> [AnyHashable : Any] {
+    return [
+      NSUnderlineStyleAttributeName : NSUnderlineStyle.styleNone.rawValue,
+      NSForegroundColorAttributeName : ThemeManager.shared.currentTheme.colorNumber19()
+    ]
   }
 }
