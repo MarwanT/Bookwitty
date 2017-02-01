@@ -128,4 +128,9 @@ extension UIColor {
   static var bwRubyHighlighted: UIColor {
     return UIColor(red: 203/255, green: 0, blue: 47/255, alpha: 1)
   }
+  
+  /// Style Guide #24 Error Color : #a20009
+  static var bwSangria: UIColor {
+    return UIColor(red: 162/255, green: 0, blue: 9/255, alpha: 1)
+  }
 }
