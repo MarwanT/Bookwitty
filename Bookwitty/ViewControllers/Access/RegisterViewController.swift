@@ -34,6 +34,7 @@ class RegisterViewController: UIViewController {
   /// Do the required setup
   private func awakeSelf() {
     title = viewModel.viewControllerTitle
+    termsLabel.text = viewModel.termsOfUseAndPrivacyPolicyLabelText
 
     firstNameField.configuration = InputFieldConfiguration(
       descriptionLabelText: viewModel.firstNameDescriptionLabelText,
