@@ -8,6 +8,8 @@ target 'Bookwitty' do
   plugin 'cocoapods-keys', {
     :project => "Bookwitty",
     :keys => [
+      "BookwittyAPIClientKey",
+      "BookwittyAPIClientSecret",
       "BookwittyEnvironment",
       "BookwittyServerBaseURL",
       "BookwittyGoogleAnalyticsIdentifier"
