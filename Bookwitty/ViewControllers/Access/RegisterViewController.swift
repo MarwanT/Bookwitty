@@ -39,6 +39,15 @@ class RegisterViewController: UIViewController {
     //Attributed Label Links Styling
     termsLabel.linkAttributes = ThemeManager.shared.currentTheme.styleTextLinkAttributes()
 
+    let termsOfUseRange: NSRange = (termsLabel.attributedText.string as NSString).range(of: viewModel.termsOfUseText)
+    let privacyPolicyRange: NSRange = (termsLabel.attributedText.string as NSString).range(of: viewModel.privacyPolicyText)
+
+    //Add click link identifiers
+    termsLabel.addLink(to: AttributedLinkReference.termsOfUse.url, with: termsOfUseRange)
+    termsLabel.addLink(to: AttributedLinkReference.privacyPolicy.url, with: privacyPolicyRange)
+
+    //Set Delegates
+    termsLabel.delegate = self
   }
 
   /// Do the required setup
@@ -177,6 +186,23 @@ extension RegisterViewController:  EMCCountryDelegate {
       countryField.text = viewModel.country?.name ?? ""
     }
     _ = self.navigationController?.popToViewController(self, animated: true)
+  }
+}
+
+extension RegisterViewController: TTTAttributedLabelDelegate {
+  func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+    guard let host = url.host else {
+      return
+    }
+
+    switch host {
+    case AttributedLinkReference.termsOfUse.rawValue:
+      //TODO: call terms-of-use action
+    case AttributedLinkReference.privacyPolicy.rawValue:
+      //TODO: call privacy-policy action
+    default:
+      break
+    }
   }
 }
 
