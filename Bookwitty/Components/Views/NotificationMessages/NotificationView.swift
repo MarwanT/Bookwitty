@@ -66,3 +66,21 @@ class NotificationView: MessageView {
     }
   }
 }
+
+extension NotificationView {
+  static func show(notificationMessages: [String]) {
+    let view: NotificationView = try! SwiftMessages.viewFromNib()
+    view.notificationMessages = notificationMessages
+    view.configureDropShadow()
+    var config = SwiftMessages.defaultConfig
+    config.presentationContext = .window(windowLevel: UIWindowLevelStatusBar)
+    config.duration = .seconds(seconds: 5)
+    config.presentationStyle = .top
+    config.dimMode = .none
+    SwiftMessages.show(config: config, view: view)
+  }
+  
+  static func hide() {
+    SwiftMessages.hide()
+  }
+}
