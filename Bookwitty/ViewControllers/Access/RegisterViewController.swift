@@ -197,12 +197,20 @@ extension RegisterViewController: TTTAttributedLabelDelegate {
 
     switch host {
     case AttributedLinkReference.termsOfUse.rawValue:
-      //TODO: call terms-of-use action
+      termsOfUseAction()
     case AttributedLinkReference.privacyPolicy.rawValue:
-      //TODO: call privacy-policy action
+      privacyPolicyAction()
     default:
       break
     }
+  }
+
+  func termsOfUseAction() {
+    //TODO: Implement terms of use action
+  }
+
+  func privacyPolicyAction() {
+    //TODO: Implement privacy policy action
   }
 }
 
