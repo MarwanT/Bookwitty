@@ -77,6 +77,8 @@ class RegisterViewController: UIViewController {
     firstNameField.delegate = self
     lastNameField.delegate = self
 
+    countryField.informativeInputFieldDelegate = self
+
     stackView.isLayoutMarginsRelativeArrangement = true
     stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
     stackView.spacing = 10
@@ -142,6 +144,12 @@ class RegisterViewController: UIViewController {
     UIView.animate(withDuration: 0.44) {
       self.view.layoutIfNeeded()
     }
+  }
+}
+
+extension RegisterViewController: InformativeInputFieldDelegate {
+  func informativeInputFieldDidTapField(informativeInputField: InformativeInputField) {
+    //TODO: Open country selection
   }
 }
 
