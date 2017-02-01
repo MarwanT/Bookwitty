@@ -21,6 +21,8 @@
 		595C4F0D1E3F8C0200BE3942 /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595C4F0C1E3F8C0200BE3942 /* InputField.swift */; };
 		595C4F0F1E3F8C9200BE3942 /* PasswordInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595C4F0E1E3F8C9200BE3942 /* PasswordInputField.swift */; };
 		595C4F111E3F9DA400BE3942 /* InformativeInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595C4F101E3F9DA400BE3942 /* InformativeInputField.swift */; };
+		5967E4581E4107EF0067093F /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5967E4571E4107EF0067093F /* NotificationView.xib */; };
+		5967E45A1E410A850067093F /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5967E4591E410A850067093F /* NotificationView.swift */; };
 		596FAD741E2E53AC0064F967 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596FAD731E2E53AC0064F967 /* Environment.swift */; };
 		597B8E2D1E37F6BC00C7811B /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597B8E2C1E37F6BC00C7811B /* Image.swift */; };
 		597B8E361E3954B200C7811B /* Georgia.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 597B8E301E3954B200C7811B /* Georgia.ttf */; };
@@ -75,6 +77,8 @@
 		595C4F0C1E3F8C0200BE3942 /* InputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
 		595C4F0E1E3F8C9200BE3942 /* PasswordInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordInputField.swift; sourceTree = "<group>"; };
 		595C4F101E3F9DA400BE3942 /* InformativeInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformativeInputField.swift; sourceTree = "<group>"; };
+		5967E4571E4107EF0067093F /* NotificationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationView.xib; sourceTree = "<group>"; };
+		5967E4591E410A850067093F /* NotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		596FAD731E2E53AC0064F967 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		597B8E2C1E37F6BC00C7811B /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		597B8E301E3954B200C7811B /* Georgia.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Georgia.ttf; sourceTree = "<group>"; };
@@ -222,11 +226,22 @@
 		59057FDA1E2533010036AAF3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5967E4561E4105020067093F /* NotificationView */,
 				595C4F0C1E3F8C0200BE3942 /* InputField.swift */,
 				595C4F0E1E3F8C9200BE3942 /* PasswordInputField.swift */,
 				595C4F101E3F9DA400BE3942 /* InformativeInputField.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		5967E4561E4105020067093F /* NotificationView */ = {
+			isa = PBXGroup;
+			children = (
+				5967E4591E410A850067093F /* NotificationView.swift */,
+				5967E4571E4107EF0067093F /* NotificationView.xib */,
+			);
+			name = NotificationView;
+			path = NotificationMessages;
 			sourceTree = "<group>";
 		};
 		597B8E2E1E3954B200C7811B /* Font */ = {
@@ -493,6 +508,7 @@
 			files = (
 				59DA47671E3B84ED00BA90A5 /* Access.storyboard in Resources */,
 				59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */,
+				5967E4581E4107EF0067093F /* NotificationView.xib in Resources */,
 				59BAC6991E2FCD1A0063F573 /* GoogleService-Info.plist in Resources */,
 				597B8E371E3954B200C7811B /* Ubuntu-Medium.ttf in Resources */,
 				59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */,
@@ -643,6 +659,7 @@
 				59DA47571E3A65A600BA90A5 /* Storyboard.swift in Sources */,
 				59D6021E1E36363400271315 /* Font.swift in Sources */,
 				593769D71E3689FB00F23226 /* Appearance.swift in Sources */,
+				5967E45A1E410A850067093F /* NotificationView.swift in Sources */,
 				593769D81E3689FB00F23226 /* DefaultTheme.swift in Sources */,
 				595A64A01E2D0C4D00655067 /* Network.swift in Sources */,
 				595A649C1E2CCB8900655067 /* BookwittyAPI.swift in Sources */,
@@ -773,7 +790,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B75E5B87D9559EBD71824DD7 /* Pods-Bookwitty.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 65T23W9U79;
@@ -790,7 +807,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 61D0EE3946D28FF160292FF2 /* Pods-Bookwitty.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 65T23W9U79;
@@ -805,7 +822,7 @@
 		};
 		59FBBC6A1E1D074400FC84E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F51280CA021D07F160F13471 /* Pods-BookwittyTests.debug.xcconfig */;
+			baseConfigurationReference = B75E5B87D9559EBD71824DD7 /* Pods-Bookwitty.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -822,7 +839,7 @@
 		};
 		59FBBC6B1E1D074400FC84E5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CB5E98B3C54E0B0AD22F5CB4 /* Pods-BookwittyTests.release.xcconfig */;
+			baseConfigurationReference = B75E5B87D9559EBD71824DD7 /* Pods-Bookwitty.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
