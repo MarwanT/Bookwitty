@@ -28,6 +28,7 @@ class RegisterViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     awakeSelf()
+    applyTheme()
   }
 
   /// Do the required setup
@@ -132,6 +133,19 @@ class RegisterViewController: UIViewController {
     self.view.addConstraint(scrollViewBottomToLabelTopConstraint)
     UIView.animate(withDuration: 0.44) {
       self.view.layoutIfNeeded()
+    }
+  }
+}
+
+extension RegisterViewController: Themeable {
+  func applyTheme() {
+    self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
+    continueButton.setTitle(viewModel.continueButtonTitle, for: .normal)
+    ThemeManager.shared.currentTheme.stylePrimaryButton(button: continueButton)
+    stackViewBackgroundView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
+
+    for separator in separators {
+      separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     }
   }
 }

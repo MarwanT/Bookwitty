@@ -11,6 +11,8 @@ import Foundation
 final class RegisterViewModel {
   let viewControllerTitle: String = localizedString(key: "sign_up", defaultValue: "Sign up")
 
+  let continueButtonTitle: String = localizedString(key: "continue", defaultValue: "Continue")
+
   let emailDescriptionLabelText: String = localizedString(key: "email", defaultValue: "Email")
   let emailTextFieldPlaceholderText: String = localizedString(key: "email_text_field_placeholder", defaultValue: "Enter your email")
   let emailInvalidationErrorMessage: String = localizedString(key: "email_invalidation_error_message", defaultValue: "Oooops your email seems to be invalid")
