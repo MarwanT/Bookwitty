@@ -23,6 +23,8 @@ class NotificationView: MessageView {
     let layoutMargin: UIEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
   }
   
+  fileprivate var customId: String? = nil
+  
   @IBOutlet weak var stackView: UIStackView!
   
   var stylingConfiguration = StylingConfiguration()
@@ -86,5 +88,29 @@ extension NotificationView {
   
   static func hide() {
     SwiftMessages.hide()
+  }
+}
+
+
+// MARK: - Identifiable
+
+extension NotificationView {
+  override var id: String {
+    get {
+      return customId ?? generatedID
+    }
+    set {
+      customId = newValue
+    }
+  }
+  
+  private var generatedID: String {
+    var text = ""
+    if let notificationMessages = notificationMessages {
+      for notificationMessage in notificationMessages {
+        text += notificationMessage.text
+      }
+    }
+    return text
   }
 }
