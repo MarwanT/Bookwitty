@@ -10,6 +10,10 @@ import UIKit
 import SwiftMessages
 import FLKAutoLayout
 
+struct NotificationMessage {
+  let text: String
+}
+
 class NotificationView: MessageView {
   struct StylingConfiguration {
     let backgroundColor: UIColor = ThemeManager.shared.currentTheme.defaultErrorColor()
@@ -23,7 +27,7 @@ class NotificationView: MessageView {
   
   var stylingConfiguration = StylingConfiguration()
   
-  var notificationMessages: [String]? = nil {
+  var notificationMessages: [NotificationMessage]? = nil {
     didSet {
       refreshLayout()
     }
@@ -53,7 +57,7 @@ class NotificationView: MessageView {
       let textLabel = UILabel(frame: CGRect.zero)
       ThemeManager.shared.currentTheme.styleLabel(label: textLabel)
       textLabel.textColor = stylingConfiguration.textColor
-      textLabel.text = notificationMessage
+      textLabel.text = notificationMessage.text
       textLabel.numberOfLines = 0
       textLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
       let horizontalStackView = UIStackView(arrangedSubviews: [imageView, textLabel])
@@ -68,7 +72,7 @@ class NotificationView: MessageView {
 }
 
 extension NotificationView {
-  static func show(notificationMessages: [String]) {
+  static func show(notificationMessages: [NotificationMessage]) {
     let view: NotificationView = try! SwiftMessages.viewFromNib()
     view.notificationMessages = notificationMessages
     view.configureDropShadow()
