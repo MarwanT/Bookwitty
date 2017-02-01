@@ -59,6 +59,7 @@ PODS:
     - Alamofire (~> 4.2.0)
     - Result (~> 3.1.0)
   - Result (3.1.0)
+  - SwiftMessages (3.1.4)
 
 DEPENDENCIES:
   - Crashlytics (= 3.8.3)
@@ -70,6 +71,7 @@ DEPENDENCIES:
   - Google/Analytics (= 3.0.3)
   - Keys (from `Pods/CocoaPodsKeys`)
   - Moya (= 8.0.0)
+  - SwiftMessages (= 3.1.4)
 
 EXTERNAL SOURCES:
   Keys:
@@ -98,7 +100,8 @@ SPEC CHECKSUMS:
   Keys: 9c35bf00f612ee1d48556f4a4b9b4551e224e90f
   Moya: 850a166ab8241bd1c1cea6dbe012e3a2ad62944a
   Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
+  SwiftMessages: 08386e74abe1b32fa8ac2075edb4043c56db709d
 
-PODFILE CHECKSUM: 5cdf06540d5e261934d283c429de619cb2dfb2d5
+PODFILE CHECKSUM: ffdf8a03c87578c7cbb7874d5dff7a995a97875f
 
 COCOAPODS: 1.1.1

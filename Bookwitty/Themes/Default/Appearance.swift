@@ -36,6 +36,7 @@ protocol ThemeColor {
   func colorNumber21() -> UIColor
   func colorNumber22() -> UIColor
   func colorNumber23() -> UIColor
+  func colorNumber24() -> UIColor
   
   func colorNumber19Highlighted() -> UIColor
   
@@ -48,6 +49,8 @@ protocol ThemeColor {
   func defaultGrayedTextColor() -> UIColor
   
   func defaultSeparatorColor() -> UIColor
+  
+  func defaultErrorColor() -> UIColor
 }
 
 protocol ThemeButtonsStyle {

@@ -97,6 +97,9 @@ extension DefaultTheme {
   func colorNumber23() -> UIColor {
     return UIColor.bwWhite
   }
+  func colorNumber24() -> UIColor {
+    return UIColor.bwSangria
+  }
   
   func colorNumber19Highlighted() -> UIColor {
     return UIColor.bwRubyHighlighted
@@ -133,6 +136,10 @@ extension DefaultTheme {
   
   func defaultSeparatorColor() -> UIColor {
     return colorNumber18()
+  }
+  
+  func defaultErrorColor() -> UIColor {
+    return colorNumber24()
   }
 }
 
