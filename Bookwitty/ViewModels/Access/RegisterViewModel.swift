@@ -32,7 +32,10 @@ final class RegisterViewModel {
   let countryDescriptionLabelText: String = localizedString(key: "country", defaultValue: "Country")
   let countryTextFieldPlaceholderText: String = localizedString(key: "country_text_field_placeholder", defaultValue: "Country")
 
-  let termsOfUseAndPrivacyPolicyLabelText: String = localizedString(key: "terms_of_use_and_privacy_policy", defaultValue: "By tapping Sign up, you agree to the\nTerms of Use and Privacy Policy")
+  let termsOfUseText: String = localizedString(key: "terms_of_use", defaultValue: "Terms of Use")
+  let privacyPolicyText: String = localizedString(key: "privacy_policy", defaultValue: "Privacy Policy")
+  let andText: String = localizedString(key: "and", defaultValue: "and")
+  let termsOfUseAndPrivacyPolicyLabelText: String = localizedString(key: "terms_of_use_and_privacy_policy", defaultValue: "By tapping Sign up, you agree to the")
 
   var country: (code: String, name: String)?
 
