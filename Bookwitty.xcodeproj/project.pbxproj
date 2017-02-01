@@ -52,6 +52,7 @@
 		59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */; };
 		F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41D529F1E40EB060021A4AE /* RegisterViewController.swift */; };
 		F41D52A21E40EB780021A4AE /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41D52A11E40EB780021A4AE /* RegisterViewModel.swift */; };
+		F420AD9D1E41D2E600C78AEB /* BookwittyUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420AD9C1E41D2E600C78AEB /* BookwittyUtilityTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +119,7 @@
 		CB5E98B3C54E0B0AD22F5CB4 /* Pods-BookwittyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookwittyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests.release.xcconfig"; sourceTree = "<group>"; };
 		F41D529F1E40EB060021A4AE /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		F41D52A11E40EB780021A4AE /* RegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
+		F420AD9C1E41D2E600C78AEB /* BookwittyUtilityTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyUtilityTests.swift; sourceTree = "<group>"; };
 		F51280CA021D07F160F13471 /* Pods-BookwittyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookwittyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -405,6 +407,7 @@
 			children = (
 				59FBBC631E1D074400FC84E5 /* Info.plist */,
 				595A64A11E2D66E900655067 /* BookwittyAPITests.swift */,
+				F420AD9C1E41D2E600C78AEB /* BookwittyUtilityTests.swift */,
 			);
 			path = BookwittyTests;
 			sourceTree = "<group>";
@@ -685,6 +688,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				595A64A21E2D66E900655067 /* BookwittyAPITests.swift in Sources */,
+				F420AD9D1E41D2E600C78AEB /* BookwittyUtilityTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
