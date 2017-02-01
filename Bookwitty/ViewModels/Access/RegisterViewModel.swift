@@ -57,4 +57,13 @@ final class RegisterViewModel {
     return nil
   }
 
+  func styledTermsOfUseAndPrivacyPolicyText() -> NSMutableAttributedString {
+    let builder = AttributedStringBuilder(fontDynamicType: FontDynamicType.label)
+    return builder.append(text: termsOfUseAndPrivacyPolicyLabelText)
+      .append(text: "\n")
+      .append(text: termsOfUseText)
+      .append(text:  " " + andText + " ")
+      .append(text: privacyPolicyText)
+      .attributedString
+  }
 }

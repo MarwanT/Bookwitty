@@ -33,10 +33,16 @@ class RegisterViewController: UIViewController {
     applyTheme()
   }
 
+  private func setupAttributedTexts() {
+    //Set Attributed Styled up Text
+    termsLabel.attributedText = viewModel.styledTermsOfUseAndPrivacyPolicyText()
+  }
+
   /// Do the required setup
   private func awakeSelf() {
     title = viewModel.viewControllerTitle
-    termsLabel.text = viewModel.termsOfUseAndPrivacyPolicyLabelText
+
+    setupAttributedTexts()
 
     firstNameField.configuration = InputFieldConfiguration(
       descriptionLabelText: viewModel.firstNameDescriptionLabelText,
