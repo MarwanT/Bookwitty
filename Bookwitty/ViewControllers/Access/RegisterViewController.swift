@@ -8,6 +8,7 @@
 
 import UIKit
 import EMCCountryPickerController
+import TTTAttributedLabel
 
 class RegisterViewController: UIViewController {
   @IBOutlet weak var stackView: UIStackView!
@@ -18,7 +19,7 @@ class RegisterViewController: UIViewController {
   @IBOutlet weak var passwordField: PasswordInputField!
   @IBOutlet weak var countryField: InformativeInputField!
   @IBOutlet weak var continueButton: UIButton!
-  @IBOutlet weak var termsLabel: UILabel!
+  @IBOutlet weak var termsLabel: TTTAttributedLabel!
   @IBOutlet var separators: [UIView]!
 
   @IBOutlet weak var scrollViewBottomToLabelTopConstraint: NSLayoutConstraint!
