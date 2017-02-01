@@ -79,6 +79,7 @@ class RegisterViewController: UIViewController {
 
     stackView.isLayoutMarginsRelativeArrangement = true
     stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+    stackView.spacing = 10
 
     NotificationCenter.default.addObserver(
       self,
