@@ -14,6 +14,7 @@ import Moya
 
 public enum BookwittyAPI {
   case OAuth(username: String, password: String)
+  case RefreshToken
   case AllAddresses
   case Register(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String?, countryISO3166: String, password: String)
 }
@@ -36,7 +37,7 @@ extension BookwittyAPI: TargetType {
     var path = ""
     
     switch self {
-    case .OAuth:
+    case .OAuth, .RefreshToken:
       path = "/oauth"
     case .AllAddresses:
       path = "/user/addresses"
@@ -49,7 +50,7 @@ extension BookwittyAPI: TargetType {
   
   public var method: Moya.Method {
     switch self {
-    case .OAuth:
+    case .OAuth, .RefreshToken:
       return .post
     case .AllAddresses:
       return .get
@@ -67,6 +68,14 @@ extension BookwittyAPI: TargetType {
         "username": username,
         "password":  password,
         "grant_type": "password",
+        "scopes": "openid email profile"
+      ]
+    case .RefreshToken:
+      return [
+        "client_id": AppKeys.shared.apiKey,
+        "client_secret": AppKeys.shared.apiSecret,
+        "refresh_token": AccessToken().refresh!,
+        "grant_type": "refresh_token",
         "scopes": "openid email profile"
       ]
     case .AllAddresses:
