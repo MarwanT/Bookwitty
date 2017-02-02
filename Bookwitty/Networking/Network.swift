@@ -81,11 +81,15 @@ public struct APIProvider {
       httpHeaderFields: nil)
     
     // Add Header Fields to Endpoint
-    var headerParameters = [String : String]()
-    headerParameters["Content-Type"] = "application/vnd.api+json"
+    var headerParameters = [String : String]();
     switch target{
+    case .OAuth, .Register:
+      break
     default:
-      headerParameters["Authorization"] = "Bearer token_value"
+      let token = AccessToken()
+      if token.isValid {
+        headerParameters["Authorization"] = "Bearer \(token.token!)"
+      }
       break
     }
     
