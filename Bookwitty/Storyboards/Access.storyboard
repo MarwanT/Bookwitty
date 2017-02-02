@@ -248,8 +248,8 @@
                                     <constraint firstAttribute="trailing" secondItem="xhg-sU-c3s" secondAttribute="trailing" id="cmz-jl-eFu"/>
                                 </constraints>
                             </scrollView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xOV-DI-7aZ" userLabel="Terms Label">
-                                <rect key="frame" x="20" y="562.5" width="335" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xOV-DI-7aZ" userLabel="Terms Label" customClass="TTTAttributedLabel">
+                                <rect key="frame" x="20" y="562" width="335" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -296,7 +296,7 @@
                         <outlet property="scrollViewBottomToSuperviewBottomConstraint" destination="Sv0-M8-Ot4" id="MCV-YI-Sws"/>
                         <outlet property="stackView" destination="8fT-Im-Fmg" id="GUl-uV-8Sh"/>
                         <outlet property="stackViewBackgroundView" destination="xhg-sU-c3s" id="PsE-Qm-5SA"/>
-                        <outlet property="termsLabel" destination="xOV-DI-7aZ" id="4JF-in-OPG"/>
+                        <outlet property="termsLabel" destination="xOV-DI-7aZ" id="lNN-ic-f8w"/>
                         <outletCollection property="separators" destination="Vpk-1U-qWl" collectionClass="NSMutableArray" id="fr3-dq-gyt"/>
                         <outletCollection property="separators" destination="DdO-2H-2lL" collectionClass="NSMutableArray" id="KN9-2j-Frh"/>
                         <outletCollection property="separators" destination="FlI-y5-szb" collectionClass="NSMutableArray" id="nYd-f0-bU0"/>

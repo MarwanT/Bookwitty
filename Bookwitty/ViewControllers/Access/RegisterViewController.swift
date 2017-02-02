@@ -8,6 +8,7 @@
 
 import UIKit
 import EMCCountryPickerController
+import TTTAttributedLabel
 
 class RegisterViewController: UIViewController {
   @IBOutlet weak var stackView: UIStackView!
@@ -18,7 +19,7 @@ class RegisterViewController: UIViewController {
   @IBOutlet weak var passwordField: PasswordInputField!
   @IBOutlet weak var countryField: InformativeInputField!
   @IBOutlet weak var continueButton: UIButton!
-  @IBOutlet weak var termsLabel: UILabel!
+  @IBOutlet weak var termsLabel: TTTAttributedLabel!
   @IBOutlet var separators: [UIView]!
 
   @IBOutlet weak var scrollViewBottomToLabelTopConstraint: NSLayoutConstraint!
@@ -32,10 +33,28 @@ class RegisterViewController: UIViewController {
     applyTheme()
   }
 
+  private func setupAttributedTexts() {
+    //Set Attributed Styled up Text
+    termsLabel.attributedText = viewModel.styledTermsOfUseAndPrivacyPolicyText()
+    //Attributed Label Links Styling
+    termsLabel.linkAttributes = ThemeManager.shared.currentTheme.styleTextLinkAttributes()
+
+    let termsOfUseRange: NSRange = (termsLabel.attributedText.string as NSString).range(of: viewModel.termsOfUseText)
+    let privacyPolicyRange: NSRange = (termsLabel.attributedText.string as NSString).range(of: viewModel.privacyPolicyText)
+
+    //Add click link identifiers
+    termsLabel.addLink(to: AttributedLinkReference.termsOfUse.url, with: termsOfUseRange)
+    termsLabel.addLink(to: AttributedLinkReference.privacyPolicy.url, with: privacyPolicyRange)
+
+    //Set Delegates
+    termsLabel.delegate = self
+  }
+
   /// Do the required setup
   private func awakeSelf() {
     title = viewModel.viewControllerTitle
-    termsLabel.text = viewModel.termsOfUseAndPrivacyPolicyLabelText
+
+    setupAttributedTexts()
 
     firstNameField.configuration = InputFieldConfiguration(
       descriptionLabelText: viewModel.firstNameDescriptionLabelText,
@@ -170,6 +189,31 @@ extension RegisterViewController:  EMCCountryDelegate {
   }
 }
 
+extension RegisterViewController: TTTAttributedLabelDelegate {
+  func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+    guard let host = url.host else {
+      return
+    }
+
+    switch host {
+    case AttributedLinkReference.termsOfUse.rawValue:
+      termsOfUseAction()
+    case AttributedLinkReference.privacyPolicy.rawValue:
+      privacyPolicyAction()
+    default:
+      break
+    }
+  }
+
+  func termsOfUseAction() {
+    //TODO: Implement terms of use action
+  }
+
+  func privacyPolicyAction() {
+    //TODO: Implement privacy policy action
+  }
+}
+
 extension RegisterViewController: Themeable {
   func applyTheme() {
     self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
@@ -196,6 +240,17 @@ extension RegisterViewController: InputFieldDelegate {
       return passwordField.resignFirstResponder()
     default:
       return true
+    }
+  }
+}
+
+enum AttributedLinkReference: String {
+ case termsOfUse
+ case privacyPolicy
+
+  var url: URL {
+    get {
+      return URL(string: "bookwittyapp://" + self.rawValue)!
     }
   }
 }
