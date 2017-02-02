@@ -33,12 +33,13 @@ extension BookwittyAPI: TargetType {
   }
   
   public var path: String {
-    let apiVersion = "/v1"
+    var apiVersion = "/v1"
     var path = ""
     
     switch self {
     case .OAuth, .RefreshToken:
-      path = "/oauth"
+      apiVersion = ""
+      path = "/oauth/token"
     case .AllAddresses:
       path = "/user/addresses"
     case .Register:
