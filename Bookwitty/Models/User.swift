@@ -20,6 +20,14 @@ class User {
   var updatedAt: String? = nil
   var badges: [String: Any]? = nil
   var preferences: [String: Any]? = nil
+  //TODO: add cart model
+  //TODO: add orders array model
+  //TODO: add affiliate profiles array model
+  //TODO: add tapffiliate profiles array model
+  //TODO: add addresses model array
+  //TODO: add payment methods model array
+  //TODO: add pen names methods model array
+  //TODO: add primary address model
 
   //TODO: override Spine's resourceType with type: 'users'
   //TODO: override fields and map user's properties
