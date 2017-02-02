@@ -175,6 +175,24 @@ public func apiRequest(target: BookwittyAPI, completion: @escaping BookwittyAPIC
   })
 }
 
+public func signedAPIRequest(target: BookwittyAPI, completion: @escaping BookwittyAPICompletion) -> Cancellable? {
+  let apiRequest = createAPIRequest(target: target, completion: completion)
+  
+  let accessToken = AccessToken()
+  
+  if !accessToken.isValid {
+    return refreshAccessToken(completion: { (success) in
+      if success {
+        _ = apiRequest()
+      } else {
+        completion(nil, 500, nil, BookwittyAPIError.refreshToken)
+      }
+    })
+  }
+  
+  return apiRequest()
+}
+
 public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -> Cancellable? {
   var accessToken = AccessToken()
   accessToken.isUpdating = true
