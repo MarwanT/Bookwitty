@@ -186,6 +186,11 @@ extension DefaultTheme {
     label.font = FontDynamicType.label.font
     label.textColor = defaultTextColor()
   }
+
+  func styleCaption(label: UILabel, color: UIColor) {
+    label.font = FontDynamicType.captions.font
+    label.textColor = color
+  }
 }
 
 // MARK: - Text Fields
