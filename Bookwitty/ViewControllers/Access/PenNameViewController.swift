@@ -9,5 +9,6 @@
 import UIKit
 
 class PenNameViewController: UIViewController {
+  @IBOutlet weak var circularView: UIView!
 
 }
