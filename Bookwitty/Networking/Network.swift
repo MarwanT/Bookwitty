@@ -9,8 +9,38 @@
 import Foundation
 import Moya
 
-public typealias BookwittyAPIError = MoyaError
+
+public enum BookwittyAPIError: Swift.Error {
+  case imageMapping(MoyaError)
+  case jsonMapping(MoyaError)
+  case stringMapping(MoyaError)
+  case statusCode(MoyaError)
+  case underlying(MoyaError)
+  case requestMapping(MoyaError)
+  case refreshToken
+  case undefined
+  
+  init(moyaError: MoyaError) {
+    switch moyaError {
+    case .imageMapping:
+      self = .imageMapping(moyaError)
+    case .jsonMapping:
+      self = .jsonMapping(moyaError)
+    case .requestMapping:
+      self = .requestMapping(moyaError)
+    case .statusCode:
+      self = .statusCode(moyaError)
+    case .stringMapping:
+      self = .stringMapping(moyaError)
+    case .underlying:
+      self = .underlying(moyaError)
+    }
+  }
+}
+
 public typealias BookwittyAPICompletion = (_ data: Data?,_ statusCode: Int?,_ response: URLResponse?,_ error: BookwittyAPIError?) -> ()
+
+
 
 /**
  An endpoint is a semi-internal data structure that Moya uses to reason about the network request that will ultimately be made. An endpoint stores the following data: 
@@ -136,7 +166,7 @@ public func apiRequest(target: BookwittyAPI, completion: @escaping BookwittyAPIC
     case .success(let response):
       completion(response.data, response.statusCode, response.response, nil)
     case .failure(let error):
-      completion(nil, nil, nil, error)
+      completion(nil, nil, nil, BookwittyAPIError(moyaError: error))
     }
   })
 }
