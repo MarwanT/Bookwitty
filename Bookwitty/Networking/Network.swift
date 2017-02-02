@@ -160,6 +160,10 @@ public func absoluteString(for target: TargetType) -> String {
 
 // MARK: - Request API
 
+public func createAPIRequest(target: BookwittyAPI, completion: @escaping BookwittyAPICompletion) -> (() -> Cancellable) {
+  return { return apiRequest(target: target, completion: completion) }
+}
+
 public func apiRequest(target: BookwittyAPI, completion: @escaping BookwittyAPICompletion) -> Cancellable {
   return APIProvider.sharedProvider.request(target, completion: { (result) in
     switch result {
