@@ -133,7 +133,13 @@ class RegisterViewController: UIViewController {
       let lastName = lastNameValidationResult.value!
       let country = viewModel.country!.code
 
-      viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password)
+      viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, completionBlock: { (success: Bool) in
+        if(success) {
+          //TODO: action
+        } else {
+          //TODO: show error
+        }
+      })
     }
   }
 
