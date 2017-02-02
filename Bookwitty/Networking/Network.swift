@@ -9,8 +9,42 @@
 import Foundation
 import Moya
 
-public typealias BookwittyAPIError = MoyaError
+
+public enum BookwittyAPIError: Swift.Error {
+  case imageMapping(MoyaError)
+  case jsonMapping(MoyaError)
+  case stringMapping(MoyaError)
+  case statusCode(MoyaError)
+  case underlying(MoyaError)
+  case requestMapping(MoyaError)
+  case refreshToken
+  case undefined
+  
+  init(moyaError: MoyaError) {
+    switch moyaError {
+    case .imageMapping:
+      self = .imageMapping(moyaError)
+    case .jsonMapping:
+      self = .jsonMapping(moyaError)
+    case .requestMapping:
+      self = .requestMapping(moyaError)
+    case .statusCode:
+      self = .statusCode(moyaError)
+    case .stringMapping:
+      self = .stringMapping(moyaError)
+    case .underlying:
+      self = .underlying(moyaError)
+    }
+  }
+}
+
 public typealias BookwittyAPICompletion = (_ data: Data?,_ statusCode: Int?,_ response: URLResponse?,_ error: BookwittyAPIError?) -> ()
+
+
+
+private typealias APIOperation = (target: BookwittyAPI, completion: BookwittyAPICompletion)
+private var operationQueue: [APIOperation] = [APIOperation]()
+
 
 /**
  An endpoint is a semi-internal data structure that Moya uses to reason about the network request that will ultimately be made. An endpoint stores the following data: 
@@ -29,7 +63,9 @@ public typealias BookwittyAPICompletion = (_ data: Data?,_ statusCode: Int?,_ re
  * When creating a provider, you may specify a mapping from **Endpoint** to **URLRequest**.
  */
 
+
 public struct APIProvider {
+  
   //-----------------------------------------
   /// mapping from **Target** to **Endpoint**
   private static func endpointClosure(target: BookwittyAPI) -> Endpoint<BookwittyAPI> {
@@ -45,11 +81,15 @@ public struct APIProvider {
       httpHeaderFields: nil)
     
     // Add Header Fields to Endpoint
-    var headerParameters = [String : String]()
-    headerParameters["Content-Type"] = "application/vnd.api+json"
+    var headerParameters = [String : String]();
     switch target{
+    case .OAuth, .Register:
+      break
     default:
-      headerParameters["Authorization"] = "Bearer token_value"
+      let token = AccessToken()
+      if token.isValid {
+        headerParameters["Authorization"] = "Bearer \(token.token!)"
+      }
       break
     }
     
@@ -130,13 +170,101 @@ public func absoluteString(for target: TargetType) -> String {
 
 // MARK: - Request API
 
+public func createAPIRequest(target: BookwittyAPI, completion: @escaping BookwittyAPICompletion) -> (() -> Cancellable) {
+  return { return apiRequest(target: target, completion: completion) }
+}
+
 public func apiRequest(target: BookwittyAPI, completion: @escaping BookwittyAPICompletion) -> Cancellable {
   return APIProvider.sharedProvider.request(target, completion: { (result) in
     switch result {
     case .success(let response):
       completion(response.data, response.statusCode, response.response, nil)
     case .failure(let error):
-      completion(nil, nil, nil, error)
+      completion(nil, nil, nil, BookwittyAPIError(moyaError: error))
     }
   })
+}
+
+public func signedAPIRequest(target: BookwittyAPI, completion: @escaping BookwittyAPICompletion) -> Cancellable? {
+  let apiRequest = createAPIRequest(target: target, completion: completion)
+  
+  let accessToken = AccessToken()
+  
+  if (accessToken.updating) {
+    operationQueue.append((target: target, completion: completion))
+    return nil
+  }
+  
+  if !accessToken.isValid {
+    return refreshAccessToken(completion: { (success) in
+      if success {
+        _ = apiRequest()
+      } else {
+        completion(nil, 500, nil, BookwittyAPIError.refreshToken)
+      }
+      
+      executePendingOperations(success: success)
+    })
+  }
+  
+  return apiRequest()
+}
+
+public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -> Cancellable? {
+  var accessToken = AccessToken()
+  accessToken.isUpdating = true
+  
+  guard accessToken.refresh != nil else {
+    NotificationCenter.default.post(name: AppNotification.Name.failToRefreshToken, object: nil)
+    completion(false)
+    return nil
+  }
+  
+  return APIProvider.sharedProvider.request(.RefreshToken, completion: { (result) in
+    var success = true
+    defer {
+      completion(success)
+    }
+    
+    switch result {
+    case .success(let response):
+      accessToken.isUpdating = false
+      
+      if response.statusCode == 400 {
+        NotificationCenter.default.post(name: AppNotification.Name.failToRefreshToken, object: nil)
+        success = false
+        return
+      }
+      
+      do {
+        guard let accessTokenDictionary = try JSONSerialization.jsonObject(with: response.data, options: JSONSerialization.ReadingOptions.allowFragments) as? NSDictionary else {
+          success = false
+          return
+        }
+        accessToken.readFromDictionary(dictionary: accessTokenDictionary)
+      } catch {
+        print("Error casting token data as dictionary")
+        return
+      }
+      
+    case .failure(let error):
+      print("Error Refreshing token: \(error)")
+      success = false
+      return
+    }
+  })
+}
+
+private func executePendingOperations(success: Bool) {
+  let opQueue = operationQueue
+  operationQueue.removeAll(keepingCapacity: false)
+  if success {
+    for op in opQueue {
+      _ = signedAPIRequest(target: op.target, completion: op.completion)
+    }
+  } else {
+    for op in opQueue {
+      op.completion(nil, 500, nil, BookwittyAPIError.refreshToken)
+    }
+  }
 }

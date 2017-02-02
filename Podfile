@@ -8,6 +8,8 @@ target 'Bookwitty' do
   plugin 'cocoapods-keys', {
     :project => "Bookwitty",
     :keys => [
+      "BookwittyAPIClientKey",
+      "BookwittyAPIClientSecret",
       "BookwittyEnvironment",
       "BookwittyServerBaseURL",
       "BookwittyGoogleAnalyticsIdentifier"
@@ -26,7 +28,8 @@ target 'Bookwitty' do
   pod 'SwiftMessages', '3.1.4'
   pod 'EMCCountryPickerController', '1.3.3'
   pod 'TTTAttributedLabel', '2.0.0'
-  
+  pod 'SwiftyJSON', '3.1.4'
+
   target 'BookwittyTests' do
     inherit! :search_paths
     # Pods for testing

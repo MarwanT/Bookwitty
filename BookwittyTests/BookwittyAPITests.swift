@@ -42,6 +42,25 @@ class BookwittyAPITests: XCTestCase {
     }
   }
   
+  func testOAuthAPIRequest() {
+    let excep = expectation(description: "...")
+    
+    _ = apiRequest(target: BookwittyAPI.OAuth(username: "USERNAME", password: "PASSWORD")) {
+      (data, statusCode, response, error) in
+      
+      XCTAssertEqual(statusCode, 200)
+      XCTAssertNotNil(data)
+      XCTAssertNotNil(response)
+      XCTAssertNil(error)
+      
+      excep.fulfill()
+    }
+    
+    waitForExpectations(timeout: 10) { error in
+      // ...
+    }
+  }
+  
   func testPerformanceExample() {
     // This is an example of a performance test case.
     self.measure {
