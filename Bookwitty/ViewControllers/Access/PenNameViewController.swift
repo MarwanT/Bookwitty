@@ -31,6 +31,29 @@ class PenNameViewController: UIViewController {
     penNameLabel.text = viewModel.penNameTitleText
     noteLabel.text = viewModel.penNameNoteText
     penNameInputField.textField.text  = "Shafic Hariri"
+
+    penNameInputField.configuration = InputFieldConfiguration(
+      textFieldPlaceholder: viewModel.penNameTextFieldPlaceholderText,
+      invalidationErrorMessage: viewModel.penNameInvalidationErrorMessage,
+      returnKeyType: UIReturnKeyType.continue)
+
+    penNameInputField.validationBlock = notEmptyValidation
+
+    penNameInputField.delegate = self
+  }
+
+  func notEmptyValidation(text: String?) -> Bool {
+    return text?.isValidText() ?? false
+  }
+}
+
+extension PenNameViewController: InputFieldDelegate {
+  func inputFieldShouldReturn(inputField: InputField) -> Bool {
+    switch inputField {
+    case penNameInputField:
+      return penNameInputField.resignFirstResponder()
+    default: return true
+    }
   }
 }
 
