@@ -22,6 +22,9 @@ extension PenNameViewController: Themeable {
   func applyTheme() {
     circularView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber11()
     makeViewCircular(view: circularView, borderColor: ThemeManager.shared.currentTheme.colorNumber18(), borderWidth: 1.0)
+
+    plusImageView.image = UIImage(named: "plus-icon")
+    plusImageView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
   }
 
   func makeViewCircular(view: UIView,borderColor: UIColor, borderWidth: CGFloat) {
