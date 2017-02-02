@@ -11,6 +11,10 @@ import UIKit
 class PenNameViewController: UIViewController {
   @IBOutlet weak var circularView: UIView!
   @IBOutlet weak var plusImageView: UIImageView!
+  @IBOutlet weak var penNameLabel: UILabel!
+  @IBOutlet weak var noteLabel: UILabel!
+  @IBOutlet weak var penNameInputField: InputField!
+  @IBOutlet weak var continueButton: UIButton!
 
   override func viewDidLoad() {
     super.viewDidLoad()

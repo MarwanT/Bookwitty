@@ -399,6 +399,10 @@
                     </view>
                     <connections>
                         <outlet property="circularView" destination="JzI-kI-vUS" id="J00-77-Ai4"/>
+                        <outlet property="continueButton" destination="DF6-JY-1Yh" id="8Mj-vB-zMP"/>
+                        <outlet property="noteLabel" destination="OZg-0c-tp4" id="x8c-pL-t6n"/>
+                        <outlet property="penNameInputField" destination="zaG-Ys-Sfi" id="JZH-t8-Z3m"/>
+                        <outlet property="penNameLabel" destination="Fv5-vg-VfX" id="UXD-d8-dla"/>
                         <outlet property="plusImageView" destination="iKi-mB-A8s" id="vXe-h6-h4M"/>
                     </connections>
                 </viewController>
