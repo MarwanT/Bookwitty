@@ -31,6 +31,14 @@ extension PenNameViewController: Themeable {
 
     plusImageView.image = UIImage(named: "plus-icon")
     plusImageView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
+
+    self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
+    ThemeManager.shared.currentTheme.stylePrimaryButton(button: continueButton)
+    ThemeManager.shared.currentTheme.styleLabel(label: penNameLabel)
+    //TODO: replace caption with caption2 style
+    ThemeManager.shared.currentTheme.styleCaption(label: noteLabel,
+                                                color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+    penNameInputField.textField.textAlignment = .center
   }
 
   func makeViewCircular(view: UIView,borderColor: UIColor, borderWidth: CGFloat) {
