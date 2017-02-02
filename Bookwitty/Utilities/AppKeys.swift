@@ -18,7 +18,7 @@ internal final class AppKeys {
   
   private init(keys: BookwittyKeys) {
     self.environmentString = keys.bookwittyEnvironment
-    self.bookwittyServerBaseURLAbsoluteString = keys.bookwittyGoogleAnalyticsIdentifier
+    self.bookwittyServerBaseURLAbsoluteString = keys.bookwittyServerBaseURL
     self.googleAnalyticsIdentifier = keys.bookwittyGoogleAnalyticsIdentifier
   }
   
