@@ -67,4 +67,8 @@ final class RegisterViewModel {
       .applyParagraphStyling(alignment: NSTextAlignment.center)
       .attributedString
   }
+
+  func registerUserWithData(firstName: String, lastName: String, email: String, country: String, password: String) {
+
+  }
 }
