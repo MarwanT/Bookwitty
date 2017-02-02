@@ -8,6 +8,7 @@ PODS:
   - Bolts/Tasks (1.8.4)
   - Crashlytics (3.8.3):
     - Fabric (~> 1.6.3)
+  - EMCCountryPickerController (1.3.3)
   - Fabric (1.6.11)
   - FacebookCore (0.2.0):
     - Bolts (~> 1.8)
@@ -61,9 +62,11 @@ PODS:
   - Result (3.1.0)
   - SwiftMessages (3.1.4)
   - SwiftyJSON (3.1.4)
+  - TTTAttributedLabel (2.0.0)
 
 DEPENDENCIES:
   - Crashlytics (= 3.8.3)
+  - EMCCountryPickerController (= 1.3.3)
   - Fabric (= 1.6.11)
   - FacebookCore (= 0.2.0)
   - FacebookLogin (= 0.2.0)
@@ -74,6 +77,7 @@ DEPENDENCIES:
   - Moya (= 8.0.0)
   - SwiftMessages (= 3.1.4)
   - SwiftyJSON (= 3.1.4)
+  - TTTAttributedLabel (= 2.0.0)
 
 EXTERNAL SOURCES:
   Keys:
@@ -83,13 +87,14 @@ SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
+  EMCCountryPickerController: ff6836b71d605ba8cfe5f087d2ceec51d89f3e46
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
   FacebookLogin: c9d606504735780a9e3002465a615512e0a691a5
   FacebookShare: 8e9ee8ea06505e6a1d3d719b0cc63e840fb8aaeb
-  FBSDKCoreKit: 894b2b6eda6a4c8c4204e92e59cc355709ef045c
-  FBSDKLoginKit: 83ca4d8f12a2022570af9fd6aacf27f6b425b99f
-  FBSDKShareKit: 5953758366278430dc322d5cdc906db361ed7f81
+  FBSDKCoreKit: 15fef8804a4629f98c6f4e55e81a76c9d725d85e
+  FBSDKLoginKit: 6773073e970b2b15fb12e451ce7f11da0532b880
+  FBSDKShareKit: 0b8d6cc3f103c75297eb3c62caec284a2ccf1b9e
   FirebaseAnalytics: 9c67af0ebeb8d2146c9b4ea2616439affa947b58
   FirebaseCore: 46afaf2c2e0419ea7d3acfb08cf26a461a75fe85
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
@@ -104,7 +109,8 @@ SPEC CHECKSUMS:
   Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
   SwiftMessages: 08386e74abe1b32fa8ac2075edb4043c56db709d
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
 
-PODFILE CHECKSUM: 4954ea68d8ab727955a624e3c2b9868e66329f02
+PODFILE CHECKSUM: 8bc3314175f278e915dd9fb7aaa8f304e367586e
 
 COCOAPODS: 1.1.1
