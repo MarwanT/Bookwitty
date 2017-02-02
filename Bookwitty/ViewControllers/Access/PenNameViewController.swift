@@ -20,7 +20,17 @@ class PenNameViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    awakeSelf()
     applyTheme()
+  }
+
+  /// Do the required setup
+  private func awakeSelf() {
+    self.title = viewModel.viewControllerTitle
+    continueButton.setTitle(viewModel.continueButtonTitle, for: .normal)
+    penNameLabel.text = viewModel.penNameTitleText
+    noteLabel.text = viewModel.penNameNoteText
+    penNameInputField.textField.text  = "Shafic Hariri"
   }
 }
 
