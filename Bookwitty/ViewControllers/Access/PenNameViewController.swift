@@ -10,6 +10,7 @@ import UIKit
 
 class PenNameViewController: UIViewController {
   @IBOutlet weak var circularView: UIView!
+  @IBOutlet weak var plusImageView: UIImageView!
 
   override func viewDidLoad() {
     super.viewDidLoad()

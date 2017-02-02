@@ -324,10 +324,21 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JzI-kI-vUS" userLabel="Circular View">
                                 <rect key="frame" x="112.5" y="40" width="150" height="150"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iKi-mB-A8s">
+                                        <rect key="frame" x="52.5" y="53" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="iKi-mB-A8s" secondAttribute="height" multiplier="1:1" id="hgh-kz-qXp"/>
+                                            <constraint firstAttribute="height" constant="44" id="i5T-3z-6ql"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="LCS-kJ-tgL"/>
+                                    <constraint firstItem="iKi-mB-A8s" firstAttribute="centerY" secondItem="JzI-kI-vUS" secondAttribute="centerY" id="MXR-di-XOb"/>
                                     <constraint firstAttribute="width" secondItem="JzI-kI-vUS" secondAttribute="height" multiplier="1:1" id="suk-qV-pRy"/>
+                                    <constraint firstItem="iKi-mB-A8s" firstAttribute="centerX" secondItem="JzI-kI-vUS" secondAttribute="centerX" id="yay-eN-9J8"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -339,6 +350,7 @@
                     </view>
                     <connections>
                         <outlet property="circularView" destination="JzI-kI-vUS" id="J00-77-Ai4"/>
+                        <outlet property="plusImageView" destination="iKi-mB-A8s" id="vXe-h6-h4M"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p6e-44-9QR" userLabel="First Responder" sceneMemberID="firstResponder"/>
