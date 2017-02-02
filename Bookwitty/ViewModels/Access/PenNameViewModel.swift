@@ -9,5 +9,13 @@
 import Foundation
 
 final class PenNameViewModel {
+  let viewControllerTitle: String = localizedString(key: "pen_name", defaultValue: "Choose a Pen Name")
 
+  let continueButtonTitle: String = localizedString(key: "continue", defaultValue: "Continue")
+
+  let penNameTextFieldPlaceholderText: String = localizedString(key: "email_text_field_pen_name", defaultValue: "Enter your pen name")
+  let penNameInvalidationErrorMessage: String = localizedString(key: "pen_name_invalidation_error_message", defaultValue: "Oooops pen name can not be empty")
+
+  let penNameTitleText: String = localizedString(key: "pen_name_title", defaultValue: "Pen Name")
+  let penNameNoteText: String = localizedString(key: "pen_name_note", defaultValue: "Don't worry, you can always change it later")
 }
