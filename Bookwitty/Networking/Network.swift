@@ -174,3 +174,48 @@ public func apiRequest(target: BookwittyAPI, completion: @escaping BookwittyAPIC
     }
   })
 }
+
+public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -> Cancellable? {
+  var accessToken = AccessToken()
+  accessToken.isUpdating = true
+  
+  guard accessToken.refresh != nil else {
+    NotificationCenter.default.post(name: AppNotification.Name.failToRefreshToken, object: nil)
+    completion(false)
+    return nil
+  }
+  
+  return APIProvider.sharedProvider.request(.RefreshToken, completion: { (result) in
+    var success = true
+    defer {
+      completion(success)
+    }
+    
+    switch result {
+    case .success(let response):
+      accessToken.isUpdating = false
+      
+      if response.statusCode == 400 {
+        NotificationCenter.default.post(name: AppNotification.Name.failToRefreshToken, object: nil)
+        success = false
+        return
+      }
+      
+      do {
+        guard let accessTokenDictionary = try JSONSerialization.jsonObject(with: response.data, options: JSONSerialization.ReadingOptions.allowFragments) as? NSDictionary else {
+          success = false
+          return
+        }
+        accessToken.readFromDictionary(dictionary: accessTokenDictionary)
+      } catch {
+        print("Error casting token data as dictionary")
+        return
+      }
+      
+    case .failure(let error):
+      print("Error Refreshing token: \(error)")
+      success = false
+      return
+    }
+  })
+}
