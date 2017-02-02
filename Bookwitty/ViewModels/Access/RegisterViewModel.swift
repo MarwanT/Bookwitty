@@ -64,6 +64,7 @@ final class RegisterViewModel {
       .append(text: termsOfUseText)
       .append(text:  " " + andText + " ")
       .append(text: privacyPolicyText)
+      .applyParagraphStyling(alignment: NSTextAlignment.center)
       .attributedString
   }
 }
