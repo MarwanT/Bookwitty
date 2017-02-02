@@ -838,7 +838,7 @@
 		};
 		59FBBC6A1E1D074400FC84E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B75E5B87D9559EBD71824DD7 /* Pods-Bookwitty.debug.xcconfig */;
+			baseConfigurationReference = F51280CA021D07F160F13471 /* Pods-BookwittyTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -855,7 +855,7 @@
 		};
 		59FBBC6B1E1D074400FC84E5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B75E5B87D9559EBD71824DD7 /* Pods-Bookwitty.debug.xcconfig */;
+			baseConfigurationReference = CB5E98B3C54E0B0AD22F5CB4 /* Pods-BookwittyTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";

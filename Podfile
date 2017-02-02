@@ -30,6 +30,7 @@ target 'Bookwitty' do
   target 'BookwittyTests' do
     inherit! :search_paths
     # Pods for testing
+    pod 'Google/Analytics', '3.0.3'
   end
 
 end
