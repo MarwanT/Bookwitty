@@ -14,6 +14,7 @@ import Moya
 
 public enum BookwittyAPI {
   case AllAddresses
+  case Register(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String?, countryISO3166: String, password: String)
 }
 
 // MARK: - Target Type
@@ -36,6 +37,8 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .AllAddresses:
       path = "/user/addresses"
+    case .Register:
+      path = "/users"
     }
     
     return apiVersion + path
@@ -45,6 +48,8 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .AllAddresses:
       return .get
+    case .Register:
+      return .post
     }
   }
   
@@ -52,6 +57,19 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .AllAddresses:
       return nil
+    case .Register(let firstName, let lastName, let email, let dateOfBirth, let country, let password):
+      var params: [String : String] = [:]
+
+      params["first-name"] = firstName
+      params["last-name"] = lastName
+      params["email"] = email
+      params["country"] = country
+      params["password"] = password
+      if let dateOfBirth = dateOfBirth {
+        params["date-of-birth"] = dateOfBirth
+      }
+
+      return params
     }
   }
   
@@ -85,6 +103,8 @@ extension BookwittyAPI: TargetType {
     switch (Environment.current.type, self.method) {
     case (.mockServer, .get):
       return ["Prefer": "status=200"]
+    case (.mockServer, .post):
+      return ["Prefer": "status=201"]
     default:
       return nil
     }
