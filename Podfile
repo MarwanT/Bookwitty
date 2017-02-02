@@ -30,6 +30,7 @@ target 'Bookwitty' do
   pod 'TTTAttributedLabel', '2.0.0'
   pod 'SwiftyJSON', '3.1.4'
   pod 'ALCameraViewController'
+  pod 'Spine', :git => 'https://github.com/wvteijlingen/Spine.git'
 
   target 'BookwittyTests' do
     inherit! :search_paths
