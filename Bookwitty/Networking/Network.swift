@@ -42,6 +42,10 @@ public typealias BookwittyAPICompletion = (_ data: Data?,_ statusCode: Int?,_ re
 
 
 
+private typealias APIOperation = (target: BookwittyAPI, completion: BookwittyAPICompletion)
+private var operationQueue: [APIOperation] = [APIOperation]()
+
+
 /**
  An endpoint is a semi-internal data structure that Moya uses to reason about the network request that will ultimately be made. An endpoint stores the following data: 
  * The url.
@@ -59,7 +63,9 @@ public typealias BookwittyAPICompletion = (_ data: Data?,_ statusCode: Int?,_ re
  * When creating a provider, you may specify a mapping from **Endpoint** to **URLRequest**.
  */
 
+
 public struct APIProvider {
+  
   //-----------------------------------------
   /// mapping from **Target** to **Endpoint**
   private static func endpointClosure(target: BookwittyAPI) -> Endpoint<BookwittyAPI> {
@@ -180,6 +186,11 @@ public func signedAPIRequest(target: BookwittyAPI, completion: @escaping Bookwit
   
   let accessToken = AccessToken()
   
+  if (accessToken.updating) {
+    operationQueue.append((target: target, completion: completion))
+    return nil
+  }
+  
   if !accessToken.isValid {
     return refreshAccessToken(completion: { (success) in
       if success {
@@ -187,6 +198,8 @@ public func signedAPIRequest(target: BookwittyAPI, completion: @escaping Bookwit
       } else {
         completion(nil, 500, nil, BookwittyAPIError.refreshToken)
       }
+      
+      executePendingOperations(success: success)
     })
   }
   
@@ -236,4 +249,18 @@ public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -
       return
     }
   })
+}
+
+private func executePendingOperations(success: Bool) {
+  let opQueue = operationQueue
+  operationQueue.removeAll(keepingCapacity: false)
+  if success {
+    for op in opQueue {
+      _ = signedAPIRequest(target: op.target, completion: op.completion)
+    }
+  } else {
+    for op in opQueue {
+      op.completion(nil, 500, nil, BookwittyAPIError.refreshToken)
+    }
+  }
 }
