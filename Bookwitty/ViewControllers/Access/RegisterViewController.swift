@@ -127,7 +127,19 @@ class RegisterViewController: UIViewController {
       || !firstNameValidationResult.isValid || !lastNameValidationResult.isValid) {
       // TODO: Display error message
     } else {
-      // TODO: Proceed all good
+      let email = emailValidationResult.value!
+      let password = passwordValidationResult.value!
+      let firstName = firstNameValidationResult.value!
+      let lastName = lastNameValidationResult.value!
+      let country = viewModel.country!.code
+
+      viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, completionBlock: { (success: Bool) in
+        if(success) {
+          //TODO: action
+        } else {
+          //TODO: show error
+        }
+      })
     }
   }
 

@@ -40,7 +40,7 @@ final class RegisterViewModel {
   var country: (code: String, name: String)?
 
   init() {
-      self.country = loadDeviceDefaultCountry()
+    self.country = loadDeviceDefaultCountry()
   }
 
   func loadDeviceDefaultCountry() -> (code: String, name: String)? {
@@ -66,5 +66,19 @@ final class RegisterViewModel {
       .append(text: privacyPolicyText)
       .applyParagraphStyling(alignment: NSTextAlignment.center)
       .attributedString
+  }
+
+  func registerUserWithData(firstName: String, lastName: String, email: String, country: String, password: String, completionBlock: @escaping (_ success: Bool)->()) {
+
+    _ = apiRequest(target: BookwittyAPI.Register(firstName: firstName, lastName: lastName, email: email, dateOfBirthISO8601: nil, countryISO3166: country, password: password)) {
+      (data, statusCode, response, error) in
+      if let _ = data, statusCode == 201 {
+        //TODO: Parse user
+        completionBlock(true)
+      } else {
+        //TODO: show error
+        completionBlock(false)
+      }
+    }
   }
 }
