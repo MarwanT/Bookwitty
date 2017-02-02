@@ -16,6 +16,8 @@ class PenNameViewController: UIViewController {
   @IBOutlet weak var penNameInputField: InputField!
   @IBOutlet weak var continueButton: UIButton!
 
+  let viewModel: PenNameViewModel = PenNameViewModel()
+
   override func viewDidLoad() {
     super.viewDidLoad()
     applyTheme()
