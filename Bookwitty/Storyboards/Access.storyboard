@@ -341,10 +341,59 @@
                                     <constraint firstItem="iKi-mB-A8s" firstAttribute="centerX" secondItem="JzI-kI-vUS" secondAttribute="centerX" id="yay-eN-9J8"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1JL-oh-BZV">
+                                <rect key="frame" x="0.0" y="250" width="375" height="417"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fv5-vg-VfX" userLabel="Pen Name Label">
+                                        <rect key="frame" x="166" y="0.0" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zaG-Ys-Sfi" userLabel="Pen Name Input Field" customClass="InputField" customModule="Bookwitty" customModuleProvider="target">
+                                        <rect key="frame" x="47" y="41" width="280" height="48"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="280" id="IEm-99-dgo"/>
+                                            <constraint firstAttribute="height" constant="48" id="xfl-5V-6Aj"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OZg-0c-tp4" userLabel="Note Label">
+                                        <rect key="frame" x="166" y="109" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DF6-JY-1Yh" userLabel="Contine Button">
+                                        <rect key="frame" x="47" y="160" width="280" height="48"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="280" id="UYG-z4-dnm"/>
+                                            <constraint firstAttribute="height" constant="48" id="bbe-lS-vS2"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="zaG-Ys-Sfi" firstAttribute="centerX" secondItem="1JL-oh-BZV" secondAttribute="centerX" id="0om-QC-942"/>
+                                    <constraint firstItem="OZg-0c-tp4" firstAttribute="centerX" secondItem="1JL-oh-BZV" secondAttribute="centerX" id="6r2-fy-1aC"/>
+                                    <constraint firstItem="Fv5-vg-VfX" firstAttribute="centerX" secondItem="1JL-oh-BZV" secondAttribute="centerX" id="AxF-0C-xWX"/>
+                                    <constraint firstItem="DF6-JY-1Yh" firstAttribute="top" secondItem="OZg-0c-tp4" secondAttribute="bottom" constant="30" id="ShA-Wb-7Ua"/>
+                                    <constraint firstItem="Fv5-vg-VfX" firstAttribute="top" secondItem="1JL-oh-BZV" secondAttribute="top" id="Zxo-82-fBv"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="DF6-JY-1Yh" secondAttribute="bottom" constant="10" id="cbK-Y6-UGZ"/>
+                                    <constraint firstItem="DF6-JY-1Yh" firstAttribute="centerX" secondItem="1JL-oh-BZV" secondAttribute="centerX" id="eFw-bc-o4l"/>
+                                    <constraint firstItem="OZg-0c-tp4" firstAttribute="top" secondItem="zaG-Ys-Sfi" secondAttribute="bottom" constant="20" id="grV-ky-tDK"/>
+                                    <constraint firstItem="zaG-Ys-Sfi" firstAttribute="top" secondItem="Fv5-vg-VfX" secondAttribute="bottom" constant="20" id="y17-Ab-50j"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="1JL-oh-BZV" firstAttribute="top" secondItem="JzI-kI-vUS" secondAttribute="bottom" constant="60" id="2Tj-OM-5hV"/>
                             <constraint firstItem="JzI-kI-vUS" firstAttribute="centerX" secondItem="ZPa-7X-GHg" secondAttribute="centerXWithinMargins" id="DPc-cA-r0n"/>
+                            <constraint firstItem="1JL-oh-BZV" firstAttribute="leading" secondItem="ZPa-7X-GHg" secondAttribute="leading" id="JvL-aQ-MG6"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="1JL-oh-BZV" secondAttribute="bottom" id="Lok-m3-or3"/>
+                            <constraint firstAttribute="trailing" secondItem="1JL-oh-BZV" secondAttribute="trailing" id="N3k-El-3oZ"/>
                             <constraint firstItem="JzI-kI-vUS" firstAttribute="top" secondItem="ZPa-7X-GHg" secondAttribute="topMargin" constant="40" id="bdi-WO-anf"/>
                         </constraints>
                     </view>
