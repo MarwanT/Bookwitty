@@ -351,7 +351,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zaG-Ys-Sfi" userLabel="Pen Name Input Field" customClass="InputField" customModule="Bookwitty" customModuleProvider="target">
-                                        <rect key="frame" x="47" y="41" width="280" height="48"/>
+                                        <rect key="frame" x="47" y="31" width="280" height="48"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="280" id="IEm-99-dgo"/>
@@ -359,13 +359,13 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OZg-0c-tp4" userLabel="Note Label">
-                                        <rect key="frame" x="166" y="109" width="42" height="21"/>
+                                        <rect key="frame" x="166" y="89" width="42" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DF6-JY-1Yh" userLabel="Contine Button">
-                                        <rect key="frame" x="47" y="160" width="280" height="48"/>
+                                        <rect key="frame" x="47" y="140" width="280" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="280" id="UYG-z4-dnm"/>
                                             <constraint firstAttribute="height" constant="48" id="bbe-lS-vS2"/>
@@ -373,7 +373,7 @@
                                         <state key="normal" title="Button"/>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="zaG-Ys-Sfi" firstAttribute="centerX" secondItem="1JL-oh-BZV" secondAttribute="centerX" id="0om-QC-942"/>
                                     <constraint firstItem="OZg-0c-tp4" firstAttribute="centerX" secondItem="1JL-oh-BZV" secondAttribute="centerX" id="6r2-fy-1aC"/>
@@ -382,8 +382,8 @@
                                     <constraint firstItem="Fv5-vg-VfX" firstAttribute="top" secondItem="1JL-oh-BZV" secondAttribute="top" id="Zxo-82-fBv"/>
                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="DF6-JY-1Yh" secondAttribute="bottom" constant="10" id="cbK-Y6-UGZ"/>
                                     <constraint firstItem="DF6-JY-1Yh" firstAttribute="centerX" secondItem="1JL-oh-BZV" secondAttribute="centerX" id="eFw-bc-o4l"/>
-                                    <constraint firstItem="OZg-0c-tp4" firstAttribute="top" secondItem="zaG-Ys-Sfi" secondAttribute="bottom" constant="20" id="grV-ky-tDK"/>
-                                    <constraint firstItem="zaG-Ys-Sfi" firstAttribute="top" secondItem="Fv5-vg-VfX" secondAttribute="bottom" constant="20" id="y17-Ab-50j"/>
+                                    <constraint firstItem="OZg-0c-tp4" firstAttribute="top" secondItem="zaG-Ys-Sfi" secondAttribute="bottom" constant="10" id="grV-ky-tDK"/>
+                                    <constraint firstItem="zaG-Ys-Sfi" firstAttribute="top" secondItem="Fv5-vg-VfX" secondAttribute="bottom" constant="10" id="y17-Ab-50j"/>
                                 </constraints>
                             </view>
                         </subviews>
