@@ -93,10 +93,12 @@ class SignInViewController: UIViewController {
     let passwordValidationResult = passwordField.validateField()
     
     if emailValidationResult.isValid && passwordValidationResult.isValid {
+      showNetworkActivity()
       viewModel.signIn(
         username: emailValidationResult.value!,
         password: passwordValidationResult.value!,
         completion: { (success, error) in
+          self.hideNetworkActivity()
           self.showAlertWith(
             title: "Your Sign in Key",
             message: "\(AccessToken().token!)")
@@ -138,6 +140,17 @@ class SignInViewController: UIViewController {
   }
   
   
+  // MARK: - Network indicator handling
+  
+  private func showNetworkActivity() {
+    UIApplication.shared.isNetworkActivityIndicatorVisible = true
+  }
+  
+  private func hideNetworkActivity() {
+    UIApplication.shared.isNetworkActivityIndicatorVisible = false
+  }
+  
+  
   // MARK: - Helper methods
   
   func showAlertWith(title: String, message: String) {
@@ -146,6 +159,9 @@ class SignInViewController: UIViewController {
     self.present(alert, animated: true, completion: nil)
   }
 }
+
+
+// MARK: - Themeable
 
 extension SignInViewController: Themeable {
   func applyTheme() {
