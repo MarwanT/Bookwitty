@@ -84,12 +84,15 @@ public struct APIProvider {
     var headerParameters = [String : String]();
     switch target{
     case .OAuth, .Register:
-      break
+      headerParameters["Content-Type"] = "application/json";
+      headerParameters["Accept"] = "application/json"
     default:
       let token = AccessToken()
       if token.isValid {
         headerParameters["Authorization"] = "Bearer \(token.token!)"
       }
+      headerParameters["Content-Type"] = "application/vnd.api+json";
+      headerParameters["Accept"] = "application/vnd.api+json"
       break
     }
     
