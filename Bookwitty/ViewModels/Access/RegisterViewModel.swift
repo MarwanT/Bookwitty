@@ -40,6 +40,9 @@ final class RegisterViewModel {
   let andText: String = localizedString(key: "and", defaultValue: "and")
   let termsOfUseAndPrivacyPolicyLabelText: String = localizedString(key: "terms_of_use_and_privacy_policy", defaultValue: "By tapping Sign up, you agree to the")
 
+  let ooopsText: String = localizedString(key: "ooops", defaultValue: "Ooops")
+  let somethingWentWrongText: String = localizedString(key: "some_thing_wrong_error", defaultValue: "Something went wrong")
+
   var country: (code: String, name: String)?
 
   init() {
