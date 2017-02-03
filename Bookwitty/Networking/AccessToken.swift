@@ -119,4 +119,8 @@ public struct AccessToken {
     defaults.removeObject(forKey: Keys.refreshTokenKey.rawValue)
     defaults.removeObject(forKey: Keys.accessTokenIsUpdating.rawValue)
   }
+  
+  public static func resetAccessTokenFlags() {
+    UserDefaults.standard.set(false, forKey: Keys.accessTokenIsUpdating.rawValue)
+  }
 }
