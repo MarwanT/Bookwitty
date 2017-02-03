@@ -107,6 +107,9 @@ class SignInViewController: UIViewController {
   // MARK: - Keyboard Handling
   
   func keyboardWillShow(_ notification: NSNotification) {
+    // Hide notification view if visible
+    NotificationView.hide()
+    
     if let value = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
       let frame = value.cgRectValue
       scrollViewBottomToSuperviewBottomConstraint.constant = -frame.height
