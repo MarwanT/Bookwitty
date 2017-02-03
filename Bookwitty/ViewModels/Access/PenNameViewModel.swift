@@ -25,4 +25,9 @@ final class PenNameViewModel {
   let removeProfilePhotoText: String = localizedString(key: "remove_profile_photo", defaultValue: "Clear profile photo")
   let cancelText: String = localizedString(key: "cancel", defaultValue: "Cancel")
 
+  private(set) var user: User!
+
+  func initializeWith(user: User) {
+    self.user = user
+  }
 }

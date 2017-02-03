@@ -144,13 +144,11 @@ class RegisterViewController: UIViewController {
       let country = viewModel.country!.code
 
       viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, completionBlock: { (success: Bool, user: User?) in
-        if(success) {
-          //TODO: action
+        if let user = user, success {
+          self.pushPenNameViewController(user: user)
         } else {
           //TODO: show error
         }
-        //This is here for testing purposes only - Remove later on
-        self.pushPenNameViewController()
       })
     }
   }
@@ -191,8 +189,10 @@ class RegisterViewController: UIViewController {
   }
 
   // MARK: - Actions
-  func pushPenNameViewController() {
+  func pushPenNameViewController(user: User) {
     let penNameViewController = Storyboard.Access.instantiate(PenNameViewController.self)
+    penNameViewController.viewModel.initializeWith(user: user)
+    
     self.navigationController?.pushViewController(penNameViewController, animated: true)
   }
 }
