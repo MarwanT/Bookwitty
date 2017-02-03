@@ -17,6 +17,12 @@ private extension Date {
 }
 
 // TODO: Save token in keychain
+
+/**
+ TODO: REVISE THIS WHOLE CLASS AND IMPLEMENT A BETTER APPROACH
+ Based on previous experiences we might be facing multi-threads access problems
+ */
+
 public struct AccessToken {
   enum Keys: String {
     case accessTokenKey = "AccessTokenKey"
