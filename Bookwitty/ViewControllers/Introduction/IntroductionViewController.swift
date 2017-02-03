@@ -36,9 +36,13 @@ class IntroductionViewController: UIViewController {
   // MARK: - Actions
   
   @IBAction func registerButtonTap(_ sender: UIButton) {
+    let signInViewController = Storyboard.Access.instantiate(RegisterViewController.self)
+    self.navigationController?.pushViewController(signInViewController, animated: true)
   }
   
   @IBAction func signInButtonTap(_ sender: UIButton) {
+    let signInViewController = Storyboard.Access.instantiate(SignInViewController.self)
+    self.navigationController?.pushViewController(signInViewController, animated: true)
   }
 }
 
