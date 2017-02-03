@@ -7,14 +7,16 @@
 //
 
 import UIKit
+import ALCameraViewController
 
 class PenNameViewController: UIViewController {
-  @IBOutlet weak var circularView: UIView!
+  @IBOutlet weak var profileContainerView: UIView!
   @IBOutlet weak var plusImageView: UIImageView!
   @IBOutlet weak var penNameLabel: UILabel!
   @IBOutlet weak var noteLabel: UILabel!
   @IBOutlet weak var penNameInputField: InputField!
   @IBOutlet weak var continueButton: UIButton!
+  @IBOutlet weak var profileImageView: UIImageView!
 
   @IBOutlet weak var topViewToTopConstraint: NSLayoutConstraint!
   let topViewToTopSpace: CGFloat = 40
@@ -45,8 +47,8 @@ class PenNameViewController: UIViewController {
 
     //Make Cicular View tappable
     let tap = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnCircularView(_:)))
-    circularView.addGestureRecognizer(tap)
-    circularView.isUserInteractionEnabled = true
+    profileContainerView.addGestureRecognizer(tap)
+    profileContainerView.isUserInteractionEnabled = true
 
     //Handle keyboard changes 
     NotificationCenter.default.addObserver(
@@ -70,7 +72,7 @@ class PenNameViewController: UIViewController {
   func didTapOnCircularView(_ sender: UITapGestureRecognizer) {
     //Hide keyboard if visible
     _ = penNameInputField.resignFirstResponder()
-    //TODO: action dialog to pick image or camera
+    showPhotoPickerActionSheet()
   }
 
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
@@ -80,10 +82,9 @@ class PenNameViewController: UIViewController {
   }
 
   // MARK: - Keyboard Handling
-
   func keyboardWillShow(_ notification: NSNotification) {
-    topViewToTopConstraint.constant = -circularView.frame.height/2
-    circularView.alpha = 0.2
+    topViewToTopConstraint.constant = -profileContainerView.frame.height/2
+    profileContainerView.alpha = 0.2
     UIView.animate(withDuration: 0.44) {
       self.view.layoutIfNeeded()
     }
@@ -91,10 +92,64 @@ class PenNameViewController: UIViewController {
 
   func keyboardWillHide(_ notification: NSNotification) {
     topViewToTopConstraint.constant = topViewToTopSpace
-    circularView.alpha = 1
+    profileContainerView.alpha = 1
     UIView.animate(withDuration: 0.44) {
       self.view.layoutIfNeeded()
     }
+  }
+
+  func showPhotoPickerActionSheet() {
+    let hasProfilePicture = self.profileImageView.image != nil
+
+    let alertController = UIAlertController(title: viewModel.imagePickerTitle, message: nil, preferredStyle: .actionSheet)
+    let chooseFromLibraryButton = UIAlertAction(title: viewModel.chooseFromLibraryText, style: .default, handler: { (action) -> Void in
+      self.openLibrary()
+    })
+    let  takeAPhotoButton = UIAlertAction(title: viewModel.takeProfilePhotoText, style: .default, handler: { (action) -> Void in
+      self.openCamera()
+    })
+    let  removePhotoButton = UIAlertAction(title: viewModel.removeProfilePhotoText, style: .default, handler: { (action) -> Void in
+      self.profileImageView.image = nil
+      self.plusImageView.alpha = 1
+    })
+
+    let cancelButton = UIAlertAction(title: viewModel.cancelText, style: .cancel, handler: nil)
+
+    alertController.addAction(chooseFromLibraryButton)
+    alertController.addAction(takeAPhotoButton)
+    if(hasProfilePicture) {
+      alertController.addAction(removePhotoButton)
+    }
+    alertController.addAction(cancelButton)
+
+    self.show(alertController, sender: self)
+  }
+
+  func openCamera() {
+    let croppingEnabled = true
+    let libraryEnabled = false
+    let cameraViewController = CameraViewController(croppingEnabled: croppingEnabled, allowsLibraryAccess: libraryEnabled) { [weak self] image, asset in
+      if let image = image {
+        self?.profileImageView.image = image
+        self?.plusImageView.alpha = 0
+      }
+      self?.dismiss(animated: true, completion: nil)
+    }
+    cameraViewController.view.backgroundColor = UIColor.white
+    present(cameraViewController, animated: true, completion: nil)
+  }
+
+  func openLibrary() {
+    let croppingEnabled = true
+    let libraryViewController = CameraViewController.imagePickerViewController(croppingEnabled: croppingEnabled) { image, asset in
+      if let image = image {
+        self.profileImageView.image = image
+        self.plusImageView.alpha = 0
+      }
+      self.dismiss(animated: true, completion: nil)
+    }
+    libraryViewController.view.backgroundColor = UIColor.white
+    present(libraryViewController, animated: true, completion: nil)
   }
 }
 
@@ -110,8 +165,8 @@ extension PenNameViewController: InputFieldDelegate {
 
 extension PenNameViewController: Themeable {
   func applyTheme() {
-    circularView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber11()
-    makeViewCircular(view: circularView, borderColor: ThemeManager.shared.currentTheme.colorNumber18(), borderWidth: 1.0)
+    profileImageView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber11()
+    makeViewCircular(view: profileImageView, borderColor: ThemeManager.shared.currentTheme.colorNumber18(), borderWidth: 1.0)
 
     plusImageView.image = UIImage(named: "plus-icon")
     plusImageView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()

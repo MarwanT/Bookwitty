@@ -29,6 +29,7 @@ target 'Bookwitty' do
   pod 'EMCCountryPickerController', '1.3.3'
   pod 'TTTAttributedLabel', '2.0.0'
   pod 'SwiftyJSON', '3.1.4'
+  pod 'ALCameraViewController'
 
   target 'BookwittyTests' do
     inherit! :search_paths
