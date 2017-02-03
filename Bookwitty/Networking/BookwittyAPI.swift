@@ -17,6 +17,7 @@ public enum BookwittyAPI {
   case RefreshToken
   case AllAddresses
   case Register(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String?, countryISO3166: String, password: String)
+  case User
 }
 
 // MARK: - Target Type
@@ -46,6 +47,8 @@ extension BookwittyAPI: TargetType {
       path = "/user/addresses"
     case .Register:
       path = "/users"
+    case .User:
+      path = "/user"
     }
     
     return apiBasePath + apiVersion + path
@@ -55,7 +58,7 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .OAuth, .RefreshToken:
       return .post
-    case .AllAddresses:
+    case .AllAddresses, .User:
       return .get
     case .Register:
       return .post
@@ -81,7 +84,7 @@ extension BookwittyAPI: TargetType {
         "grant_type": "refresh_token",
         "scopes": "openid email profile"
       ]
-    case .AllAddresses:
+    case .AllAddresses, .User:
       return nil
     case .Register(let firstName, let lastName, let email, let dateOfBirth, let country, let password):
       var params: [String : String] = [:]
