@@ -147,7 +147,7 @@ class RegisterViewController: UIViewController {
         if let user = user, success {
           self.pushPenNameViewController(user: user)
         } else {
-          //TODO: show error
+          self.showAlertErrorWith(title: self.viewModel.ooopsText, message: self.viewModel.somethingWentWrongText)
         }
       })
     }

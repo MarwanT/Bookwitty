@@ -86,8 +86,6 @@ final class RegisterViewModel {
       if let data = data, statusCode == 201 {
         user = User.parseData(data: data)
         success = user != nil
-      } else {
-        //TODO: show error
       }
     }
   }
