@@ -407,6 +407,7 @@
                         <outlet property="penNameInputField" destination="zaG-Ys-Sfi" id="JZH-t8-Z3m"/>
                         <outlet property="penNameLabel" destination="Fv5-vg-VfX" id="UXD-d8-dla"/>
                         <outlet property="plusImageView" destination="iKi-mB-A8s" id="vXe-h6-h4M"/>
+                        <outlet property="topViewToTopConstraint" destination="bdi-WO-anf" id="aUG-Mm-mPy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p6e-44-9QR" userLabel="First Responder" sceneMemberID="firstResponder"/>
