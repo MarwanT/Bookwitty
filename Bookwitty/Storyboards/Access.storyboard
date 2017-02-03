@@ -371,6 +371,9 @@
                                             <constraint firstAttribute="height" constant="48" id="bbe-lS-vS2"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="continueButtonTouchUpInside:" destination="MZS-KT-Jco" eventType="touchUpInside" id="YpJ-mn-arc"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

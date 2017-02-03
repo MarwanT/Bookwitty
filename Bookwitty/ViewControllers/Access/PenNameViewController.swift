@@ -45,6 +45,10 @@ class PenNameViewController: UIViewController {
   func notEmptyValidation(text: String?) -> Bool {
     return text?.isValidText() ?? false
   }
+
+  @IBAction func continueButtonTouchUpInside(_ sender: Any) {
+    //TODO: validate and action
+  }
 }
 
 extension PenNameViewController: InputFieldDelegate {
