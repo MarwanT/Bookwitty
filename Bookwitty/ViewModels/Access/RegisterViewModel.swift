@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Spine
 
 final class RegisterViewModel {
   let viewControllerTitle: String = localizedString(key: "sign_up", defaultValue: "Sign up")
@@ -68,16 +69,20 @@ final class RegisterViewModel {
       .attributedString
   }
 
-  func registerUserWithData(firstName: String, lastName: String, email: String, country: String, password: String, completionBlock: @escaping (_ success: Bool)->()) {
-
+  func registerUserWithData(firstName: String, lastName: String, email: String, country: String, password: String, completionBlock: @escaping (_ success: Bool, _ user: User?)->()) {
     _ = apiRequest(target: BookwittyAPI.Register(firstName: firstName, lastName: lastName, email: email, dateOfBirthISO8601: nil, countryISO3166: country, password: password)) {
       (data, statusCode, response, error) in
-      if let _ = data, statusCode == 201 {
-        //TODO: Parse user
-        completionBlock(true)
+      var success: Bool = false
+      var user: User? = nil
+      defer {
+        completionBlock(success, user)
+      }
+
+      if let data = data, statusCode == 201 {
+        user = User.parseData(data: data)
+        success = user != nil
       } else {
         //TODO: show error
-        completionBlock(false)
       }
     }
   }
