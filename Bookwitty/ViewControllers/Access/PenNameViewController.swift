@@ -30,16 +30,16 @@ class PenNameViewController: UIViewController {
 
   /// Do the required setup
   private func awakeSelf() {
-    self.title = viewModel.viewControllerTitle
-    continueButton.setTitle(viewModel.continueButtonTitle, for: .normal)
-    penNameLabel.text = viewModel.penNameTitleText
-    noteLabel.text = viewModel.penNameNoteText
-    penNameInputField.textField.text  = "Shafic Hariri"
-
     penNameInputField.configuration = InputFieldConfiguration(
       textFieldPlaceholder: viewModel.penNameTextFieldPlaceholderText,
       invalidationErrorMessage: viewModel.penNameInvalidationErrorMessage,
       returnKeyType: UIReturnKeyType.done)
+    
+    self.title = viewModel.viewControllerTitle
+    continueButton.setTitle(viewModel.continueButtonTitle, for: .normal)
+    penNameLabel.text = viewModel.penNameTitleText
+    noteLabel.text = viewModel.penNameNoteText
+    penNameInputField.textField.text  = viewModel.penDisplayName()
 
     penNameInputField.validationBlock = notEmptyValidation
 
