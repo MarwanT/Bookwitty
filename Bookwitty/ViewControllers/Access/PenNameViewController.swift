@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ALCameraViewController
 
 class PenNameViewController: UIViewController {
   @IBOutlet weak var circularView: UIView!
@@ -99,10 +100,10 @@ class PenNameViewController: UIViewController {
   func showPhotoPickerActionSheet() {
     let alertController = UIAlertController(title: viewModel.imagePickerTitle, message: nil, preferredStyle: .actionSheet)
     let sendButton = UIAlertAction(title: viewModel.chooseFromLibraryText, style: .default, handler: { (action) -> Void in
-      //TODO: Open Choose from library
+      self.openLibrary()
     })
     let  deleteButton = UIAlertAction(title: viewModel.takeProfilePhotoText, style: .default, handler: { (action) -> Void in
-      //TODO: Open take a photo
+      self.openCamera()
     })
     let cancelButton = UIAlertAction(title: viewModel.cancelText, style: .cancel, handler: nil)
 
@@ -111,6 +112,27 @@ class PenNameViewController: UIViewController {
     alertController.addAction(cancelButton)
 
     self.show(alertController, sender: self)
+  }
+
+  func openCamera() {
+    let croppingEnabled = true
+    let libraryEnabled = false
+    let cameraViewController = CameraViewController(croppingEnabled: croppingEnabled, allowsLibraryAccess: libraryEnabled) { [weak self] image, asset in
+      //TODO: set imageView.image = image with the new image
+      self?.dismiss(animated: true, completion: nil)
+    }
+    cameraViewController.view.backgroundColor = UIColor.white
+    present(cameraViewController, animated: true, completion: nil)
+  }
+
+  func openLibrary() {
+    let croppingEnabled = true
+    let libraryViewController = CameraViewController.imagePickerViewController(croppingEnabled: croppingEnabled) { image, asset in
+      //TODO: set imageView.image = image with the new image
+      self.dismiss(animated: true, completion: nil)
+    }
+    libraryViewController.view.backgroundColor = UIColor.white
+    present(libraryViewController, animated: true, completion: nil)
   }
 }
 
