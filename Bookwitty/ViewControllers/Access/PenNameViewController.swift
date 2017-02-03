@@ -99,6 +99,8 @@ class PenNameViewController: UIViewController {
   }
 
   func showPhotoPickerActionSheet() {
+    let hasProfilePicture = self.profileImageView.image != nil
+
     let alertController = UIAlertController(title: viewModel.imagePickerTitle, message: nil, preferredStyle: .actionSheet)
     let sendButton = UIAlertAction(title: viewModel.chooseFromLibraryText, style: .default, handler: { (action) -> Void in
       self.openLibrary()
@@ -106,10 +108,18 @@ class PenNameViewController: UIViewController {
     let  deleteButton = UIAlertAction(title: viewModel.takeProfilePhotoText, style: .default, handler: { (action) -> Void in
       self.openCamera()
     })
+    let  removePhotoButton = UIAlertAction(title: viewModel.removeProfilePhotoText, style: .default, handler: { (action) -> Void in
+      self.profileImageView.image = nil
+      self.plusImageView.alpha = 1
+    })
+
     let cancelButton = UIAlertAction(title: viewModel.cancelText, style: .cancel, handler: nil)
 
     alertController.addAction(sendButton)
     alertController.addAction(deleteButton)
+    if(hasProfilePicture) {
+      alertController.addAction(removePhotoButton)
+    }
     alertController.addAction(cancelButton)
 
     self.show(alertController, sender: self)
