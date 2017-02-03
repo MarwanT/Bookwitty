@@ -68,10 +68,14 @@ class PenNameViewController: UIViewController {
   }
 
   func didTapOnCircularView(_ sender: UITapGestureRecognizer) {
+    //Hide keyboard if visible
+    _ = penNameInputField.resignFirstResponder()
     //TODO: action dialog to pick image or camera
   }
 
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
+    //Hide keyboard if visible
+    _ = penNameInputField.resignFirstResponder()
     //TODO: validate and action
   }
 
