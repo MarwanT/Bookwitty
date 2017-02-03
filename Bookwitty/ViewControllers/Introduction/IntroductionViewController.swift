@@ -32,13 +32,22 @@ class IntroductionViewController: UIViewController {
     tutorialChildView.alignTop("0", leading: "0", bottom: "0", trailing: "0", toView: tutorialChildView.superview!)
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.navigationController?.setNavigationBarHidden(true, animated: true)
+  }
+  
   
   // MARK: - Actions
   
   @IBAction func registerButtonTap(_ sender: UIButton) {
+    let signInViewController = Storyboard.Access.instantiate(RegisterViewController.self)
+    self.navigationController?.pushViewController(signInViewController, animated: true)
   }
   
   @IBAction func signInButtonTap(_ sender: UIButton) {
+    let signInViewController = Storyboard.Access.instantiate(SignInViewController.self)
+    self.navigationController?.pushViewController(signInViewController, animated: true)
   }
 }
 

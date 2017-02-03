@@ -7,9 +7,9 @@
 //
 
 import Foundation
+import Spine
 
-class User {
-  //TODO: Conform to Spine's Resource
+class User: Resource {
   var firstName: String? = nil
   var lastName: String? = nil
   var dateOfBirth: String? = nil
@@ -29,6 +29,43 @@ class User {
   //TODO: add pen names methods model array
   //TODO: add primary address model
 
-  //TODO: override Spine's resourceType with type: 'users'
-  //TODO: override fields and map user's properties
+  override class var resourceType: ResourceType {
+    return "users"
+  }
+
+  override class var fields: [Field] {
+    return fieldsFromDictionary([
+      "firstName": Attribute().serializeAs("first-name"),
+      "lastName": Attribute().serializeAs("last-name"),
+      "email": Attribute().serializeAs("email"),
+      "dateOfBirth": Attribute().serializeAs("date-of-birth"),
+      "country": Attribute().serializeAs("country"),
+      ])
+  }
+
+}
+
+// MARK: - Parser
+extension User {
+  class func parseData(data: Data?) -> User? {
+    guard let data = data else {
+      return nil
+    }
+
+    let serializer: Serializer = Serializer()
+    serializer.registerResource(User.self)
+    serializer.keyFormatter = DasherizedKeyFormatter()
+
+    do {
+      let document = try serializer.deserializeData(data)
+      if let user = document.data?.first as? User {
+        return user
+      } else {
+        print("Could not parse data to user model")
+      }
+    } catch let error as NSError {
+      print(error)
+    }
+    return nil
+  }
 }

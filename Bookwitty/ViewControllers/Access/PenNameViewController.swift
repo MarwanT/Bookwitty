@@ -30,16 +30,16 @@ class PenNameViewController: UIViewController {
 
   /// Do the required setup
   private func awakeSelf() {
-    self.title = viewModel.viewControllerTitle
-    continueButton.setTitle(viewModel.continueButtonTitle, for: .normal)
-    penNameLabel.text = viewModel.penNameTitleText
-    noteLabel.text = viewModel.penNameNoteText
-    penNameInputField.textField.text  = "Shafic Hariri"
-
     penNameInputField.configuration = InputFieldConfiguration(
       textFieldPlaceholder: viewModel.penNameTextFieldPlaceholderText,
       invalidationErrorMessage: viewModel.penNameInvalidationErrorMessage,
       returnKeyType: UIReturnKeyType.done)
+    
+    self.title = viewModel.viewControllerTitle
+    continueButton.setTitle(viewModel.continueButtonTitle, for: .normal)
+    penNameLabel.text = viewModel.penNameTitleText
+    noteLabel.text = viewModel.penNameNoteText
+    penNameInputField.textField.text  = viewModel.penDisplayName()
 
     penNameInputField.validationBlock = notEmptyValidation
 
@@ -122,7 +122,7 @@ class PenNameViewController: UIViewController {
     }
     alertController.addAction(cancelButton)
 
-    self.show(alertController, sender: self)
+    navigationController?.present(alertController, animated: true, completion: nil)
   }
 
   func openCamera() {
@@ -135,8 +135,7 @@ class PenNameViewController: UIViewController {
       }
       self?.dismiss(animated: true, completion: nil)
     }
-    cameraViewController.view.backgroundColor = UIColor.white
-    present(cameraViewController, animated: true, completion: nil)
+    navigationController?.present(cameraViewController, animated: true, completion: nil)
   }
 
   func openLibrary() {
@@ -148,8 +147,7 @@ class PenNameViewController: UIViewController {
       }
       self.dismiss(animated: true, completion: nil)
     }
-    libraryViewController.view.backgroundColor = UIColor.white
-    present(libraryViewController, animated: true, completion: nil)
+    navigationController?.present(libraryViewController, animated: true, completion: nil)
   }
 }
 
@@ -168,7 +166,7 @@ extension PenNameViewController: Themeable {
     profileImageView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber11()
     makeViewCircular(view: profileImageView, borderColor: ThemeManager.shared.currentTheme.colorNumber18(), borderWidth: 1.0)
 
-    plusImageView.image = UIImage(named: "plus-icon")
+    plusImageView.image = #imageLiteral(resourceName: "plus")
     plusImageView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
 
     self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()

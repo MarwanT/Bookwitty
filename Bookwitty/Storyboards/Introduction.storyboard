@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="DlM-6e-0pf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="GJt-r2-smH">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -19,6 +19,22 @@
             </objects>
             <point key="canvasLocation" x="937" y="137"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="f26-2K-UOI">
+            <objects>
+                <navigationController id="GJt-r2-smH" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="t13-H6-fRX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="DlM-6e-0pf" kind="relationship" relationship="rootViewController" id="cFR-Jg-Mrw"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o7P-Wb-y5F" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-863" y="135"/>
+        </scene>
         <!--Introduction View Controller-->
         <scene sceneID="yzw-8l-Mvb">
             <objects>
@@ -32,7 +48,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XkX-Oq-6YC" userLabel="Tutorial Container View">
-                                <rect key="frame" x="0.0" y="20" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="515"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AlO-cT-R8d" userLabel="Register Button">
@@ -68,6 +84,7 @@
                             <constraint firstItem="XkX-Oq-6YC" firstAttribute="top" secondItem="ZaB-ZV-23l" secondAttribute="bottom" id="wul-pL-NCZ"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="FBv-BB-eOY"/>
                     <connections>
                         <outlet property="registerButton" destination="AlO-cT-R8d" id="rk2-Vk-xvl"/>
                         <outlet property="signInButton" destination="cgH-mu-QcI" id="9O9-Oh-gAM"/>

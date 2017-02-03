@@ -32,6 +32,16 @@ class RegisterViewController: UIViewController {
     awakeSelf()
     applyTheme()
   }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+      self.navigationController?.setNavigationBarHidden(false, animated: true)
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    self.view.endEditing(true)
+  }
 
   private func setupAttributedTexts() {
     //Set Attributed Styled up Text
@@ -87,10 +97,10 @@ class RegisterViewController: UIViewController {
 
     countryField.text = viewModel.country?.name ?? ""
 
-    emailField.validationBlock = emailValidation
-    passwordField.validationBlock = passwordValidation
-    firstNameField.validationBlock = notEmptyValidation
-    lastNameField.validationBlock = notEmptyValidation
+    emailField.validationBlock = emailValidation()
+    passwordField.validationBlock = passwordValidation()
+    firstNameField.validationBlock = notEmptyValidation()
+    lastNameField.validationBlock = notEmptyValidation()
 
     emailField.delegate = self
     passwordField.delegate = self
@@ -123,36 +133,53 @@ class RegisterViewController: UIViewController {
     let passwordValidationResult = passwordField.validateField()
     let firstNameValidationResult = firstNameField.validateField()
     let lastNameValidationResult = lastNameField.validateField()
-    if(!emailValidationResult.isValid || !passwordValidationResult.isValid
-      || !firstNameValidationResult.isValid || !lastNameValidationResult.isValid) {
-      // TODO: Display error message
-    } else {
+    if(emailValidationResult.isValid && passwordValidationResult.isValid
+      && firstNameValidationResult.isValid && lastNameValidationResult.isValid) {
       let email = emailValidationResult.value!
       let password = passwordValidationResult.value!
       let firstName = firstNameValidationResult.value!
       let lastName = lastNameValidationResult.value!
       let country = viewModel.country!.code
 
-      viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, completionBlock: { (success: Bool) in
-        if(success) {
-          //TODO: action
+      viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, completionBlock: { (success: Bool, user: User?) in
+        if let user = user, success {
+          self.pushPenNameViewController(user: user)
         } else {
-          //TODO: show error
+          self.showAlertErrorWith(title: self.viewModel.ooopsText, message: self.viewModel.somethingWentWrongText)
         }
       })
+    } else {
+      NotificationView.show(notificationMessages:
+        [
+          NotificationMessage(text: viewModel.registerErrorInFieldsNotification)
+        ]
+      )
+
     }
   }
 
-  func emailValidation(email: String?) -> Bool {
-    return email?.isValidEmail() ?? false
+  func showAlertErrorWith(title: String, message: String) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    alert.addAction(UIAlertAction(title: viewModel.okText, style: UIAlertActionStyle.default, handler: nil))
+    self.present(alert, animated: true, completion: nil)
   }
 
-  func passwordValidation(password: String?) -> Bool {
-    return password?.isValidPassword() ?? false
+  func emailValidation() -> (_ email: String?) -> Bool {
+    return { (email) -> Bool in
+      return email?.isValidEmail() ?? false
+    }
   }
 
-  func notEmptyValidation(text: String?) -> Bool {
-    return text?.isValidText() ?? false
+  func passwordValidation() -> (_ password: String?) -> Bool {
+    return { (password) -> Bool in
+      return password?.isValidPassword() ?? false
+    }
+  }
+
+  func notEmptyValidation() -> (_ text: String?) -> Bool {
+    return { (text) -> Bool in
+      return text?.isValidText() ?? false
+    }
   }
 
   // MARK: - Keyboard Handling
@@ -176,6 +203,14 @@ class RegisterViewController: UIViewController {
     UIView.animate(withDuration: 0.44) {
       self.view.layoutIfNeeded()
     }
+  }
+
+  // MARK: - Actions
+  func pushPenNameViewController(user: User) {
+    let penNameViewController = Storyboard.Access.instantiate(PenNameViewController.self)
+    penNameViewController.viewModel.initializeWith(user: user)
+    
+    self.navigationController?.pushViewController(penNameViewController, animated: true)
   }
 }
 

@@ -14,10 +14,9 @@ class SignInViewController: UIViewController {
   @IBOutlet weak var stackViewBackgroundView: UIView!
   @IBOutlet weak var passwordField: PasswordInputField!
   @IBOutlet weak var signInButton: UIButton!
-  @IBOutlet weak var informationLabel: UILabel!
   @IBOutlet var separators: [UIView]!
   
-  @IBOutlet weak var scrollViewBottomToLabelTopConstraint: NSLayoutConstraint!
+  @IBOutlet weak var scrollViewBottomToButtonTopConstraint: NSLayoutConstraint!
   @IBOutlet weak var scrollViewBottomToSuperviewBottomConstraint: NSLayoutConstraint!
   
   let viewModel: SignInViewModel = SignInViewModel()
@@ -26,6 +25,16 @@ class SignInViewController: UIViewController {
     super.viewDidLoad()
     awakeSelf()
     applyTheme()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.navigationController?.setNavigationBarHidden(false, animated: true)
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    self.view.endEditing(true)
   }
   
   /// Do the required setup
@@ -43,8 +52,8 @@ class SignInViewController: UIViewController {
       invalidationErrorMessage: viewModel.passwordInvalidationErrorMessage,
       returnKeyType: UIReturnKeyType.done)
     
-    emailField.validationBlock = emailValidation
-    passwordField.validationBlock = passwordValidation
+    emailField.validationBlock = emailValidation()
+    passwordField.validationBlock = passwordValidation()
 
     emailField.delegate = self
     passwordField.delegate = self
@@ -66,12 +75,16 @@ class SignInViewController: UIViewController {
     NotificationCenter.default.removeObserver(self)
   }
   
-  func emailValidation(email: String?) -> Bool {
-    return email?.isValidEmail() ?? false
+  func emailValidation() -> (String?) -> Bool {
+    return { (email: String?) -> Bool in
+      email?.isValidEmail() ?? false
+    }
   }
   
-  func passwordValidation(password: String?) -> Bool {
-    return password?.isValidPassword() ?? false
+  func passwordValidation() -> (String?) -> Bool {
+    return { (password: String?) -> Bool in
+      return password?.isValidPassword() ?? false
+    }
   }
   
   
@@ -80,9 +93,22 @@ class SignInViewController: UIViewController {
     let passwordValidationResult = passwordField.validateField()
     
     if emailValidationResult.isValid && passwordValidationResult.isValid {
-      // TODO: Proceed with Sign proceedures
+      showNetworkActivity()
+      viewModel.signIn(
+        username: emailValidationResult.value!,
+        password: passwordValidationResult.value!,
+        completion: { (success, error) in
+          self.hideNetworkActivity()
+          self.showAlertWith(
+            title: "Your Sign in Key",
+            message: "\(AccessToken().token!)")
+      })
     } else {
-      // TODO: Display error message
+      NotificationView.show(notificationMessages:
+        [
+          NotificationMessage(text: viewModel.signInErrorInFieldsNotification)
+        ]
+      )
     }
   }
   
@@ -90,12 +116,15 @@ class SignInViewController: UIViewController {
   // MARK: - Keyboard Handling
   
   func keyboardWillShow(_ notification: NSNotification) {
+    // Hide notification view if visible
+    NotificationView.hide()
+    
     if let value = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
       let frame = value.cgRectValue
       scrollViewBottomToSuperviewBottomConstraint.constant = -frame.height
     }
     
-    self.view.removeConstraint(scrollViewBottomToLabelTopConstraint)
+    self.view.removeConstraint(scrollViewBottomToButtonTopConstraint)
     self.view.addConstraint(scrollViewBottomToSuperviewBottomConstraint)
     UIView.animate(withDuration: 0.44) {
       self.view.layoutIfNeeded()
@@ -104,12 +133,35 @@ class SignInViewController: UIViewController {
   
   func keyboardWillHide(_ notification: NSNotification) {
     self.view.removeConstraint(scrollViewBottomToSuperviewBottomConstraint)
-    self.view.addConstraint(scrollViewBottomToLabelTopConstraint)
+    self.view.addConstraint(scrollViewBottomToButtonTopConstraint)
     UIView.animate(withDuration: 0.44) { 
       self.view.layoutIfNeeded()
     }
   }
+  
+  
+  // MARK: - Network indicator handling
+  
+  private func showNetworkActivity() {
+    UIApplication.shared.isNetworkActivityIndicatorVisible = true
+  }
+  
+  private func hideNetworkActivity() {
+    UIApplication.shared.isNetworkActivityIndicatorVisible = false
+  }
+  
+  
+  // MARK: - Helper methods
+  
+  func showAlertWith(title: String, message: String) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    alert.addAction(UIAlertAction(title: viewModel.okText, style: UIAlertActionStyle.default, handler: nil))
+    self.present(alert, animated: true, completion: nil)
+  }
 }
+
+
+// MARK: - Themeable
 
 extension SignInViewController: Themeable {
   func applyTheme() {
