@@ -47,6 +47,20 @@ class PenNameViewController: UIViewController {
     let tap = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnCircularView(_:)))
     circularView.addGestureRecognizer(tap)
     circularView.isUserInteractionEnabled = true
+
+    //Handle keyboard changes 
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(PenNameViewController.keyboardWillShow(_:)),
+      name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(PenNameViewController.keyboardWillHide(_:)),
+      name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+  }
+
+  deinit {
+    NotificationCenter.default.removeObserver(self)
   }
 
   func notEmptyValidation(text: String?) -> Bool {
@@ -59,6 +73,24 @@ class PenNameViewController: UIViewController {
 
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
     //TODO: validate and action
+  }
+
+  // MARK: - Keyboard Handling
+
+  func keyboardWillShow(_ notification: NSNotification) {
+    topViewToTopConstraint.constant = -circularView.frame.height/2
+    circularView.alpha = 0.2
+    UIView.animate(withDuration: 0.44) {
+      self.view.layoutIfNeeded()
+    }
+  }
+
+  func keyboardWillHide(_ notification: NSNotification) {
+    topViewToTopConstraint.constant = topViewToTopSpace
+    circularView.alpha = 1
+    UIView.animate(withDuration: 0.44) {
+      self.view.layoutIfNeeded()
+    }
   }
 }
 
