@@ -18,7 +18,7 @@ final class DefaultTheme: Theme {
     appearance.tintColor = self.colorNumber20()
     appearance.isTranslucent = false
     appearance.titleTextAttributes = [
-      NSForegroundColorAttributeName : self.colorNumber20()
+      NSForegroundColorAttributeName : self.defaultTextColor()
     ]
     
     let pageControlAppearance = UIPageControl.appearance()
