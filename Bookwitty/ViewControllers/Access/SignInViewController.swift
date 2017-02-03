@@ -52,8 +52,8 @@ class SignInViewController: UIViewController {
       invalidationErrorMessage: viewModel.passwordInvalidationErrorMessage,
       returnKeyType: UIReturnKeyType.done)
     
-    emailField.validationBlock = emailValidation
-    passwordField.validationBlock = passwordValidation
+    emailField.validationBlock = emailValidation()
+    passwordField.validationBlock = passwordValidation()
 
     emailField.delegate = self
     passwordField.delegate = self
@@ -75,12 +75,16 @@ class SignInViewController: UIViewController {
     NotificationCenter.default.removeObserver(self)
   }
   
-  func emailValidation(email: String?) -> Bool {
-    return email?.isValidEmail() ?? false
+  func emailValidation() -> (String?) -> Bool {
+    return { (email: String?) -> Bool in
+      email?.isValidEmail() ?? false
+    }
   }
   
-  func passwordValidation(password: String?) -> Bool {
-    return password?.isValidPassword() ?? false
+  func passwordValidation() -> (String?) -> Bool {
+    return { (password: String?) -> Bool in
+      return password?.isValidPassword() ?? false
+    }
   }
   
   
