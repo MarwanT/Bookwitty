@@ -18,11 +18,11 @@ class PasswordInputField: InputField {
     showHidePasswordButton.frame = CGRect(
       x: 0, y: 0, width: configuration.rightSideViewWidth,
       height: configuration.rightSideViewHeight)
-    // TODO: Set proper images here when available
-    showHidePasswordButton.setBackgroundImage(UIImage(color: UIColor.blue), for: UIControlState.normal)
-    showHidePasswordButton.setBackgroundImage(UIImage(color: UIColor.green), for: UIControlState.selected)
+    showHidePasswordButton.setBackgroundImage(#imageLiteral(resourceName: "show"), for: UIControlState.normal)
+    showHidePasswordButton.setBackgroundImage(#imageLiteral(resourceName: "hide"), for: UIControlState.selected)
     showHidePasswordButton.addTarget(self, action: #selector(self.showHidePasswordButtonTouchUpInside(sender:)), for: UIControlEvents.touchUpInside)
     showHidePasswordButton.isSelected = false
+    showHidePasswordButton.tintColor = ThemeManager.shared.currentTheme.colorNumber18()
     
     textField.isSecureTextEntry = true
     textField.rightViewMode = UITextFieldViewMode.always
@@ -50,5 +50,11 @@ class PasswordInputField: InputField {
   func showHidePasswordButtonTouchUpInside(sender: UIButton) {
     showHidePasswordButton.isSelected = !showHidePasswordButton.isSelected
     textField.isSecureTextEntry = !showHidePasswordButton.isSelected
+    
+    if textField.isSecureTextEntry {
+      showHidePasswordButton.tintColor = ThemeManager.shared.currentTheme.colorNumber18()
+    } else {
+      showHidePasswordButton.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
+    }
   }
 }
