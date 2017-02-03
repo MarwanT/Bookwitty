@@ -74,7 +74,7 @@ class InformativeInputField: InputField {
       case .inValid:
         self.descriptionLabel.textColor = self.configuration.desriptionLabelInvalidTextColor
         self.textField.textColor = self.configuration.textFieldInvalidTextColor
-        self.textField.rightView = self.invalidationImageView
+        self.textField.rightView = self.invalidationButton
       }
     }
   }

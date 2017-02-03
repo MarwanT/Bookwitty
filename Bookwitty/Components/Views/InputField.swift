@@ -28,7 +28,7 @@ struct InputFieldConfiguration {
   var rightSideViewWidth: CGFloat
 
   
-  init(descriptionLabelText: String? = nil, desriptionLabelDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor(), desriptionLabelInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.colorNumber19(), textFieldPlaceholder: String? = nil, textFieldDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor(), textFieldInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.colorNumber19(), textFieldDefaultText: String? = nil, invalidationIcon: UIImage? = nil, invalidationErrorMessage: String? = "Invalid Field", returnKeyType: UIReturnKeyType = UIReturnKeyType.default, rightSideViewWidth: CGFloat = 44 , rightSideViewHeight: CGFloat = 44) {
+  init(descriptionLabelText: String? = nil, desriptionLabelDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor(), desriptionLabelInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.defaultErrorColor(), textFieldPlaceholder: String? = nil, textFieldDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor(), textFieldInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.defaultErrorColor(), textFieldDefaultText: String? = nil, invalidationIcon: UIImage? = nil, invalidationErrorMessage: String? = "Invalid Field", returnKeyType: UIReturnKeyType = UIReturnKeyType.default, rightSideViewWidth: CGFloat = 44 , rightSideViewHeight: CGFloat = 44) {
     self.descriptionLabelText = descriptionLabelText
     self.desriptionLabelDefaultTextColor = desriptionLabelDefaultTextColor
     self.desriptionLabelInvalidTextColor = desriptionLabelInvalidTextColor
@@ -54,7 +54,7 @@ class InputField: UIView {
   let descriptionLabel: UILabel! = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
   let textField: UITextField! = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
   
-  let invalidationImageView: UIImageView! = UIImageView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+  let invalidationButton: UIButton! = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
   
   var delegate: InputFieldDelegate?
   
@@ -113,11 +113,13 @@ class InputField: UIView {
     self.alignBottomEdge(withView: textField, predicate: "0")
     
     // TODO: Remove this later | Only for visualization purposes
-    invalidationImageView.frame = CGRect(
+    invalidationButton.frame = CGRect(
       x: 0, y: 0, width: configuration.rightSideViewWidth,
       height: configuration.rightSideViewHeight)
-    invalidationImageView.backgroundColor = UIColor.red
-    textField.rightView = invalidationImageView
+    invalidationButton.setBackgroundImage(#imageLiteral(resourceName: "exclamation"), for: .normal)
+    invalidationButton.setBackgroundImage(#imageLiteral(resourceName: "exclamation"), for: .highlighted)
+    invalidationButton.tintColor = ThemeManager.shared.currentTheme.defaultErrorColor()
+    textField.rightView = invalidationButton
     textField.delegate = self
   }
   
