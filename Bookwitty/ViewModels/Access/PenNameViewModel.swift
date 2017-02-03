@@ -18,4 +18,10 @@ final class PenNameViewModel {
 
   let penNameTitleText: String = localizedString(key: "pen_name_title", defaultValue: "Pen Name")
   let penNameNoteText: String = localizedString(key: "pen_name_note", defaultValue: "Don't worry, you can always change it later")
+
+  let imagePickerTitle: String = localizedString(key: "image_picker_title", defaultValue: "Profile Picture")
+  let takeProfilePhotoText: String = localizedString(key: "take_Profile_photo", defaultValue: "Take profile photo")
+  let chooseFromLibraryText: String = localizedString(key: "choose_from_library", defaultValue: "Choose photo from library")
+  let cancelText: String = localizedString(key: "cancel", defaultValue: "Cancel")
+
 }
