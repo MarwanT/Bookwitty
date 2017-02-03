@@ -42,18 +42,16 @@ class BookwittyAPITests: XCTestCase {
     }
   }
   
-  func testOAuthAPIRequest() {
+  func testSignInAPIRequest() {
     let excep = expectation(description: "...")
     
-    _ = apiRequest(target: BookwittyAPI.OAuth(username: "USERNAME", password: "PASSWORD")) {
-      (data, statusCode, response, error) in
-      
-      XCTAssertEqual(statusCode, 200)
-      XCTAssertNotNil(data)
-      XCTAssertNotNil(response)
-      XCTAssertNil(error)
-      
-      excep.fulfill()
+    _ = User.signIn(
+      withUsername: "danny.hajj@keeward.com", password: "qwerty1234") {
+        (success, error) in
+        XCTAssertTrue(success)
+        XCTAssertNil(error)
+        
+        excep.fulfill()
     }
     
     waitForExpectations(timeout: 10) { error in
