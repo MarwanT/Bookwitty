@@ -313,7 +313,7 @@
         <!--Pen Name View Controller-->
         <scene sceneID="CPu-CH-bfX">
             <objects>
-                <viewController id="MZS-KT-Jco" customClass="PenNameViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PenNameViewController" id="MZS-KT-Jco" customClass="PenNameViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bhb-uv-Zq0"/>
                         <viewControllerLayoutGuide type="bottom" id="IaW-d1-BOS"/>
