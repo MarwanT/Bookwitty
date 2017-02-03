@@ -17,12 +17,18 @@ private extension Date {
 }
 
 // TODO: Save token in keychain
+
+/**
+ TODO: REVISE THIS WHOLE CLASS AND IMPLEMENT A BETTER APPROACH
+ Based on previous experiences we might be facing multi-threads access problems
+ */
+
 public struct AccessToken {
-  enum DefaultsKeys: String {
-    case AccessTokenKey = "AccessTokenKey"
-    case AccessTokenExpiry = "AccessTokenExpiry"
-    case RefreshTokenKey = "RefreshTokenKey"
-    case AccessTokenIsUpdating = "IsUpdating"
+  enum Keys: String {
+    case accessTokenKey = "AccessTokenKey"
+    case accessTokenExpiry = "AccessTokenExpiry"
+    case refreshTokenKey = "RefreshTokenKey"
+    case accessTokenIsUpdating = "IsUpdating"
   }
   
   // MARK: - Initializers
@@ -39,46 +45,47 @@ public struct AccessToken {
     refresh = json["refresh_token"].stringValue
     let expiresIn = json["expires_in"].doubleValue as TimeInterval
     expiry = Date(timeIntervalSinceNow: expiresIn)
+    print("Token: \(token)")
   }
   
   // MARK: - Properties
   
   public var token: String? {
     get {
-      let key = defaults.string(forKey: DefaultsKeys.AccessTokenKey.rawValue)
+      let key = defaults.string(forKey: Keys.accessTokenKey.rawValue)
       return key
     }
     set(newToken) {
-      defaults.set(newToken, forKey: DefaultsKeys.AccessTokenKey.rawValue)
+      defaults.set(newToken, forKey: Keys.accessTokenKey.rawValue)
     }
   }
   
   public var expiry: Date? {
     get {
-      return defaults.object(forKey: DefaultsKeys.AccessTokenExpiry.rawValue) as? Date
+      return defaults.object(forKey: Keys.accessTokenExpiry.rawValue) as? Date
     }
     set(newExpiry) {
-      defaults.set(newExpiry, forKey: DefaultsKeys.AccessTokenExpiry.rawValue)
+      defaults.set(newExpiry, forKey: Keys.accessTokenExpiry.rawValue)
     }
   }
   
   public var refresh: String? {
     get {
-      let key = defaults.string(forKey: DefaultsKeys.RefreshTokenKey.rawValue)
+      let key = defaults.string(forKey: Keys.refreshTokenKey.rawValue)
       return key
     }
     set(newToken) {
-      defaults.set(newToken, forKey: DefaultsKeys.RefreshTokenKey.rawValue)
+      defaults.set(newToken, forKey: Keys.refreshTokenKey.rawValue)
     }
   }
   
   public var isUpdating: Bool? {
     get {
-      let key = defaults.bool(forKey: DefaultsKeys.AccessTokenIsUpdating.rawValue)
+      let key = defaults.bool(forKey: Keys.accessTokenIsUpdating.rawValue)
       return key
     }
     set(newToken) {
-      defaults.set(newToken, forKey: DefaultsKeys.AccessTokenIsUpdating.rawValue)
+      defaults.set(newToken, forKey: Keys.accessTokenIsUpdating.rawValue)
     }
   }
   
@@ -113,9 +120,13 @@ public struct AccessToken {
   }
   
   public func deleteToken() {
-    defaults.removeObject(forKey: DefaultsKeys.AccessTokenKey.rawValue)
-    defaults.removeObject(forKey: DefaultsKeys.AccessTokenExpiry.rawValue)
-    defaults.removeObject(forKey: DefaultsKeys.RefreshTokenKey.rawValue)
-    defaults.removeObject(forKey: DefaultsKeys.AccessTokenIsUpdating.rawValue)
+    defaults.removeObject(forKey: Keys.accessTokenKey.rawValue)
+    defaults.removeObject(forKey: Keys.accessTokenExpiry.rawValue)
+    defaults.removeObject(forKey: Keys.refreshTokenKey.rawValue)
+    defaults.removeObject(forKey: Keys.accessTokenIsUpdating.rawValue)
+  }
+  
+  public static func resetAccessTokenFlags() {
+    UserDefaults.standard.set(false, forKey: Keys.accessTokenIsUpdating.rawValue)
   }
 }

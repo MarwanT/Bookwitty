@@ -22,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     applyTheme()
     
+    AccessToken.resetAccessTokenFlags()
+    
     Fabric.with([Crashlytics.self])
     SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
     return true
