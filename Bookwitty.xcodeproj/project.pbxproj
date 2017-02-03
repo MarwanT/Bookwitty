@@ -60,6 +60,7 @@
 		F420B6A21E43C570001F34CD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420B6A11E43C570001F34CD /* User.swift */; };
 		F420B6A41E43D01A001F34CD /* PenNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420B6A31E43D01A001F34CD /* PenNameViewController.swift */; };
 		F420B6A61E43D05E001F34CD /* PenNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420B6A51E43D05E001F34CD /* PenNameViewModel.swift */; };
+		F488D2791E44EB46003A7BD4 /* PenName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F488D2781E44EB46003A7BD4 /* PenName.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,6 +135,7 @@
 		F420B6A11E43C570001F34CD /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F420B6A31E43D01A001F34CD /* PenNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameViewController.swift; sourceTree = "<group>"; };
 		F420B6A51E43D05E001F34CD /* PenNameViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameViewModel.swift; sourceTree = "<group>"; };
+		F488D2781E44EB46003A7BD4 /* PenName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenName.swift; sourceTree = "<group>"; };
 		F51280CA021D07F160F13471 /* Pods-BookwittyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookwittyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -192,6 +194,7 @@
 			children = (
 				594F4EAD1E440A4900A947FA /* API */,
 				F420B6A11E43C570001F34CD /* User.swift */,
+				F488D2781E44EB46003A7BD4 /* PenName.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -705,6 +708,7 @@
 				594F4EAF1E440A4900A947FA /* User+API.swift in Sources */,
 				F420B6A21E43C570001F34CD /* User.swift in Sources */,
 				F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */,
+				F488D2791E44EB46003A7BD4 /* PenName.swift in Sources */,
 				595A64A01E2D0C4D00655067 /* Network.swift in Sources */,
 				594F4EA81E423B8600A947FA /* AppNotifications.swift in Sources */,
 				F420B6A61E43D05E001F34CD /* PenNameViewModel.swift in Sources */,
