@@ -166,7 +166,7 @@ extension PenNameViewController: Themeable {
     profileImageView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber11()
     makeViewCircular(view: profileImageView, borderColor: ThemeManager.shared.currentTheme.colorNumber18(), borderWidth: 1.0)
 
-    plusImageView.image = UIImage(named: "plus-icon")
+    plusImageView.image = #imageLiteral(resourceName: "plus")
     plusImageView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
 
     self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
