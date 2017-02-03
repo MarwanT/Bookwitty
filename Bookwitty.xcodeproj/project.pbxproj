@@ -16,6 +16,7 @@
 		5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5947C2A71E37B3D1003BF12A /* ViewController.swift */; };
 		594F4EA61E42255200A947FA /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA51E42255200A947FA /* AccessToken.swift */; };
 		594F4EA81E423B8600A947FA /* AppNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA71E423B8600A947FA /* AppNotifications.swift */; };
+		594F4EAF1E440A4900A947FA /* User+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EAE1E440A4900A947FA /* User+API.swift */; };
 		595A649C1E2CCB8900655067 /* BookwittyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649B1E2CCB8900655067 /* BookwittyAPI.swift */; };
 		595A649E1E2CF4EA00655067 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649D1E2CF4EA00655067 /* String.swift */; };
 		595A64A01E2D0C4D00655067 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649F1E2D0C4D00655067 /* Network.swift */; };
@@ -81,6 +82,7 @@
 		5947C2A71E37B3D1003BF12A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		594F4EA51E42255200A947FA /* AccessToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
 		594F4EA71E423B8600A947FA /* AppNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNotifications.swift; sourceTree = "<group>"; };
+		594F4EAE1E440A4900A947FA /* User+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+API.swift"; sourceTree = "<group>"; };
 		595A649B1E2CCB8900655067 /* BookwittyAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyAPI.swift; sourceTree = "<group>"; };
 		595A649D1E2CF4EA00655067 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		595A649F1E2D0C4D00655067 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 		59057FCB1E252FC30036AAF3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				594F4EAD1E440A4900A947FA /* API */,
 				F420B6A11E43C570001F34CD /* User.swift */,
 			);
 			path = Models;
@@ -254,6 +257,14 @@
 				595C4F101E3F9DA400BE3942 /* InformativeInputField.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		594F4EAD1E440A4900A947FA /* API */ = {
+			isa = PBXGroup;
+			children = (
+				594F4EAE1E440A4900A947FA /* User+API.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		5967E4561E4105020067093F /* NotificationView */ = {
@@ -691,6 +702,7 @@
 				F420B6A41E43D01A001F34CD /* PenNameViewController.swift in Sources */,
 				5967E45A1E410A850067093F /* NotificationView.swift in Sources */,
 				593769D81E3689FB00F23226 /* DefaultTheme.swift in Sources */,
+				594F4EAF1E440A4900A947FA /* User+API.swift in Sources */,
 				F420B6A21E43C570001F34CD /* User.swift in Sources */,
 				F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */,
 				595A64A01E2D0C4D00655067 /* Network.swift in Sources */,
