@@ -37,6 +37,11 @@ class RegisterViewController: UIViewController {
     super.viewWillAppear(animated)
       self.navigationController?.setNavigationBarHidden(false, animated: true)
   }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    self.view.endEditing(true)
+  }
 
   private func setupAttributedTexts() {
     //Set Attributed Styled up Text
