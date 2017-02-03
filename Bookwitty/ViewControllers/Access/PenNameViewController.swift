@@ -122,7 +122,7 @@ class PenNameViewController: UIViewController {
     }
     alertController.addAction(cancelButton)
 
-    self.show(alertController, sender: self)
+    navigationController?.present(alertController, animated: true, completion: nil)
   }
 
   func openCamera() {
@@ -135,8 +135,7 @@ class PenNameViewController: UIViewController {
       }
       self?.dismiss(animated: true, completion: nil)
     }
-    cameraViewController.view.backgroundColor = UIColor.white
-    present(cameraViewController, animated: true, completion: nil)
+    navigationController?.present(cameraViewController, animated: true, completion: nil)
   }
 
   func openLibrary() {
@@ -148,8 +147,7 @@ class PenNameViewController: UIViewController {
       }
       self.dismiss(animated: true, completion: nil)
     }
-    libraryViewController.view.backgroundColor = UIColor.white
-    present(libraryViewController, animated: true, completion: nil)
+    navigationController?.present(libraryViewController, animated: true, completion: nil)
   }
 }
 
