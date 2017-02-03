@@ -37,7 +37,7 @@ class PenNameViewController: UIViewController {
     penNameInputField.configuration = InputFieldConfiguration(
       textFieldPlaceholder: viewModel.penNameTextFieldPlaceholderText,
       invalidationErrorMessage: viewModel.penNameInvalidationErrorMessage,
-      returnKeyType: UIReturnKeyType.continue)
+      returnKeyType: UIReturnKeyType.done)
 
     penNameInputField.validationBlock = notEmptyValidation
 
