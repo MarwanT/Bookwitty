@@ -40,10 +40,19 @@ class PenNameViewController: UIViewController {
     penNameInputField.validationBlock = notEmptyValidation
 
     penNameInputField.delegate = self
+
+    //Make Cicular View tappable
+    let tap = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnCircularView(_:)))
+    circularView.addGestureRecognizer(tap)
+    circularView.isUserInteractionEnabled = true
   }
 
   func notEmptyValidation(text: String?) -> Bool {
     return text?.isValidText() ?? false
+  }
+
+  func didTapOnCircularView(_ sender: UITapGestureRecognizer) {
+    //TODO: action dialog to pick image or camera
   }
 
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
