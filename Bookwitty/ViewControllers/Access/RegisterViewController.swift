@@ -133,10 +133,8 @@ class RegisterViewController: UIViewController {
     let passwordValidationResult = passwordField.validateField()
     let firstNameValidationResult = firstNameField.validateField()
     let lastNameValidationResult = lastNameField.validateField()
-    if(!emailValidationResult.isValid || !passwordValidationResult.isValid
-      || !firstNameValidationResult.isValid || !lastNameValidationResult.isValid) {
-      // TODO: Display error message
-    } else {
+    if(emailValidationResult.isValid && passwordValidationResult.isValid
+      && firstNameValidationResult.isValid && lastNameValidationResult.isValid) {
       let email = emailValidationResult.value!
       let password = passwordValidationResult.value!
       let firstName = firstNameValidationResult.value!
