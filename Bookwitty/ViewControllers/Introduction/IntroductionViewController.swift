@@ -32,6 +32,11 @@ class IntroductionViewController: UIViewController {
     tutorialChildView.alignTop("0", leading: "0", bottom: "0", trailing: "0", toView: tutorialChildView.superview!)
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.navigationController?.setNavigationBarHidden(true, animated: true)
+  }
+  
   
   // MARK: - Actions
   

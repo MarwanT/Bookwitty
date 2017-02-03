@@ -28,6 +28,11 @@ class SignInViewController: UIViewController {
     applyTheme()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.navigationController?.setNavigationBarHidden(false, animated: true)
+  }
+  
   /// Do the required setup
   private func awakeSelf() {
     title = viewModel.signInButtonTitle
