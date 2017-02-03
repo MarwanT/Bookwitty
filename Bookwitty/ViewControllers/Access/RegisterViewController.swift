@@ -97,10 +97,10 @@ class RegisterViewController: UIViewController {
 
     countryField.text = viewModel.country?.name ?? ""
 
-    emailField.validationBlock = emailValidation
-    passwordField.validationBlock = passwordValidation
-    firstNameField.validationBlock = notEmptyValidation
-    lastNameField.validationBlock = notEmptyValidation
+    emailField.validationBlock = emailValidation()
+    passwordField.validationBlock = passwordValidation()
+    firstNameField.validationBlock = notEmptyValidation()
+    lastNameField.validationBlock = notEmptyValidation()
 
     emailField.delegate = self
     passwordField.delegate = self
@@ -164,16 +164,22 @@ class RegisterViewController: UIViewController {
     self.present(alert, animated: true, completion: nil)
   }
 
-  func emailValidation(email: String?) -> Bool {
-    return email?.isValidEmail() ?? false
+  func emailValidation() -> (_ email: String?) -> Bool {
+    return { (email) -> Bool in
+      return email?.isValidEmail() ?? false
+    }
   }
 
-  func passwordValidation(password: String?) -> Bool {
-    return password?.isValidPassword() ?? false
+  func passwordValidation() -> (_ password: String?) -> Bool {
+    return { (password) -> Bool in
+      return password?.isValidPassword() ?? false
+    }
   }
 
-  func notEmptyValidation(text: String?) -> Bool {
-    return text?.isValidText() ?? false
+  func notEmptyValidation() -> (_ text: String?) -> Bool {
+    return { (text) -> Bool in
+      return text?.isValidText() ?? false
+    }
   }
 
   // MARK: - Keyboard Handling
