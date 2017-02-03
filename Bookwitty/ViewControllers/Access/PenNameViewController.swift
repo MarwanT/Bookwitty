@@ -102,10 +102,10 @@ class PenNameViewController: UIViewController {
     let hasProfilePicture = self.profileImageView.image != nil
 
     let alertController = UIAlertController(title: viewModel.imagePickerTitle, message: nil, preferredStyle: .actionSheet)
-    let sendButton = UIAlertAction(title: viewModel.chooseFromLibraryText, style: .default, handler: { (action) -> Void in
+    let chooseFromLibraryButton = UIAlertAction(title: viewModel.chooseFromLibraryText, style: .default, handler: { (action) -> Void in
       self.openLibrary()
     })
-    let  deleteButton = UIAlertAction(title: viewModel.takeProfilePhotoText, style: .default, handler: { (action) -> Void in
+    let  takeAPhotoButton = UIAlertAction(title: viewModel.takeProfilePhotoText, style: .default, handler: { (action) -> Void in
       self.openCamera()
     })
     let  removePhotoButton = UIAlertAction(title: viewModel.removeProfilePhotoText, style: .default, handler: { (action) -> Void in
@@ -115,8 +115,8 @@ class PenNameViewController: UIViewController {
 
     let cancelButton = UIAlertAction(title: viewModel.cancelText, style: .cancel, handler: nil)
 
-    alertController.addAction(sendButton)
-    alertController.addAction(deleteButton)
+    alertController.addAction(chooseFromLibraryButton)
+    alertController.addAction(takeAPhotoButton)
     if(hasProfilePicture) {
       alertController.addAction(removePhotoButton)
     }
