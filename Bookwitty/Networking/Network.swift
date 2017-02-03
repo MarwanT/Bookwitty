@@ -224,7 +224,7 @@ public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -
   }
   
   return APIProvider.sharedProvider.request(.RefreshToken, completion: { (result) in
-    var success = true
+    var success = false
     defer {
       completion(success)
     }
@@ -235,25 +235,20 @@ public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -
       
       if response.statusCode == 400 {
         NotificationCenter.default.post(name: AppNotification.Name.failToRefreshToken, object: nil)
-        success = false
         return
       }
       
       do {
         guard let accessTokenDictionary = try JSONSerialization.jsonObject(with: response.data, options: JSONSerialization.ReadingOptions.allowFragments) as? NSDictionary else {
-          success = false
           return
         }
         accessToken.readFromDictionary(dictionary: accessTokenDictionary)
+        success = true
       } catch {
         print("Error casting token data as dictionary")
-        return
       }
-      
     case .failure(let error):
       print("Error Refreshing token: \(error)")
-      success = false
-      return
     }
   })
 }
