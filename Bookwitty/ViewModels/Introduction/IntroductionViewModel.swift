@@ -14,23 +14,23 @@ final class IntroductionViewModel {
      description: localizedString(
       key: "tutorial_first_page_description",
       defaultValue: " "),
-     image: UIImage(),
+     image: #imageLiteral(resourceName: "Illustrtion"),
      color: ThemeManager.shared.currentTheme.colorNumber4()),
     (title: localizedString(key: "tutorial_second_page_title", defaultValue: "Discover Ideas & People"),
      description: localizedString(key: "tutorial_second_page_description", defaultValue: "Whatever you want to dig deeper in a topic, explore new ideas or discuss with people, you're sure to find articles and reading lists about subjects you like"),
-     image: UIImage(),
+     image: #imageLiteral(resourceName: "Illustrtion"),
      color: ThemeManager.shared.currentTheme.colorNumber6()),
     (title: localizedString(key: "tutorial_third_page_title", defaultValue: "Share Your Own Ideas"),
      description: localizedString(key: "tutorial_second_page_description", defaultValue: "Whatever you want to dig deeper in a topic, explore new ideas or discuss with people, you're sure to find articles and reading lists about subjects you like"),
-     image: UIImage(),
+     image: #imageLiteral(resourceName: "Illustrtion"),
      color: ThemeManager.shared.currentTheme.colorNumber6()),
     (title: localizedString(key: "tutorial_forth_page_title", defaultValue: "For The Love Of Books"),
      description: localizedString(key: "tutorial_forth_page_description", defaultValue: "Whatever you want to dig deeper in a topic, explore new ideas or discuss with people, you're sure to find articles and reading lists about subjects you like"),
-     image: UIImage(),
+     image: #imageLiteral(resourceName: "Illustrtion"),
      color: ThemeManager.shared.currentTheme.colorNumber6()),
     (title: localizedString(key: "tutorial_fifth_page_title", defaultValue: "Join The Fun"),
      description: localizedString(key: "tutorial_fifth_page_description", defaultValue: "Whatever you want to dig deeper in a topic, explore new ideas or discuss with people, you're sure to find articles and reading lists about subjects you like"),
-     image: UIImage(),
+     image: #imageLiteral(resourceName: "Illustrtion"),
      color: ThemeManager.shared.currentTheme.colorNumber6())
   ]
   
