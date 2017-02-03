@@ -153,6 +153,12 @@ class RegisterViewController: UIViewController {
     }
   }
 
+  func showAlertErrorWith(title: String, message: String) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    alert.addAction(UIAlertAction(title: viewModel.okText, style: UIAlertActionStyle.default, handler: nil))
+    self.present(alert, animated: true, completion: nil)
+  }
+
   func emailValidation(email: String?) -> Bool {
     return email?.isValidEmail() ?? false
   }
