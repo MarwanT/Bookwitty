@@ -14,10 +14,9 @@ class SignInViewController: UIViewController {
   @IBOutlet weak var stackViewBackgroundView: UIView!
   @IBOutlet weak var passwordField: PasswordInputField!
   @IBOutlet weak var signInButton: UIButton!
-  @IBOutlet weak var informationLabel: UILabel!
   @IBOutlet var separators: [UIView]!
   
-  @IBOutlet weak var scrollViewBottomToLabelTopConstraint: NSLayoutConstraint!
+  @IBOutlet weak var scrollViewBottomToButtonTopConstraint: NSLayoutConstraint!
   @IBOutlet weak var scrollViewBottomToSuperviewBottomConstraint: NSLayoutConstraint!
   
   let viewModel: SignInViewModel = SignInViewModel()
@@ -100,7 +99,7 @@ class SignInViewController: UIViewController {
       scrollViewBottomToSuperviewBottomConstraint.constant = -frame.height
     }
     
-    self.view.removeConstraint(scrollViewBottomToLabelTopConstraint)
+    self.view.removeConstraint(scrollViewBottomToButtonTopConstraint)
     self.view.addConstraint(scrollViewBottomToSuperviewBottomConstraint)
     UIView.animate(withDuration: 0.44) {
       self.view.layoutIfNeeded()
@@ -109,7 +108,7 @@ class SignInViewController: UIViewController {
   
   func keyboardWillHide(_ notification: NSNotification) {
     self.view.removeConstraint(scrollViewBottomToSuperviewBottomConstraint)
-    self.view.addConstraint(scrollViewBottomToLabelTopConstraint)
+    self.view.addConstraint(scrollViewBottomToButtonTopConstraint)
     UIView.animate(withDuration: 0.44) { 
       self.view.layoutIfNeeded()
     }
