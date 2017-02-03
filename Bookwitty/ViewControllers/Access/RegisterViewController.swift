@@ -105,11 +105,11 @@ class RegisterViewController: UIViewController {
 
     NotificationCenter.default.addObserver(
       self,
-      selector: #selector(SignInViewController.keyboardWillShow(_:)),
+      selector: #selector(RegisterViewController.keyboardWillShow(_:)),
       name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     NotificationCenter.default.addObserver(
       self,
-      selector: #selector(SignInViewController.keyboardWillHide(_:)),
+      selector: #selector(RegisterViewController.keyboardWillHide(_:)),
       name: NSNotification.Name.UIKeyboardWillHide, object: nil)
   }
 
