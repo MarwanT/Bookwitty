@@ -18,6 +18,8 @@ public enum BookwittyAPIError: Swift.Error {
   case underlying(MoyaError)
   case requestMapping(MoyaError)
   case refreshToken
+  case invalidStatusCode
+  case failToRetrieveDictionary
   case undefined
   
   init(moyaError: MoyaError) {
