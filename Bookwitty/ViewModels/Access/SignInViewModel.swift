@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Moya
 
 final class SignInViewModel {
   let signInButtonTitle: String = localizedString(key: "sign_in", defaultValue: "Sign-in")
@@ -20,4 +21,19 @@ final class SignInViewModel {
   
   let viewControllerTitle: String = localizedString(key: "sign_in", defaultValue: "Sign-in")
   let signInErrorInFieldsNotification = localizedString(key: "invalid_fields_notification_message", defaultValue: "Please fill the required fields")
+  
+  private var signInRequest: Cancellable? = nil
+  
+  
+  func signIn(username: String, password: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?)-> Void ) {
+    if let signInRequest = signInRequest {
+      signInRequest.cancel()
+    }
+    
+    signInRequest = User.signIn(withUsername: username, password: password, completion: {
+      (success, error) in
+      self.signInRequest = nil
+      completion(success, error)
+    })
+  }
 }
