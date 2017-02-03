@@ -10,7 +10,7 @@ import UIKit
 import ALCameraViewController
 
 class PenNameViewController: UIViewController {
-  @IBOutlet weak var circularView: UIView!
+  @IBOutlet weak var profileContainerView: UIView!
   @IBOutlet weak var plusImageView: UIImageView!
   @IBOutlet weak var penNameLabel: UILabel!
   @IBOutlet weak var noteLabel: UILabel!
@@ -47,8 +47,8 @@ class PenNameViewController: UIViewController {
 
     //Make Cicular View tappable
     let tap = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnCircularView(_:)))
-    circularView.addGestureRecognizer(tap)
-    circularView.isUserInteractionEnabled = true
+    profileContainerView.addGestureRecognizer(tap)
+    profileContainerView.isUserInteractionEnabled = true
 
     //Handle keyboard changes 
     NotificationCenter.default.addObserver(
@@ -83,8 +83,8 @@ class PenNameViewController: UIViewController {
 
   // MARK: - Keyboard Handling
   func keyboardWillShow(_ notification: NSNotification) {
-    topViewToTopConstraint.constant = -circularView.frame.height/2
-    circularView.alpha = 0.2
+    topViewToTopConstraint.constant = -profileContainerView.frame.height/2
+    profileContainerView.alpha = 0.2
     UIView.animate(withDuration: 0.44) {
       self.view.layoutIfNeeded()
     }
@@ -92,7 +92,7 @@ class PenNameViewController: UIViewController {
 
   func keyboardWillHide(_ notification: NSNotification) {
     topViewToTopConstraint.constant = topViewToTopSpace
-    circularView.alpha = 1
+    profileContainerView.alpha = 1
     UIView.animate(withDuration: 0.44) {
       self.view.layoutIfNeeded()
     }
@@ -155,8 +155,8 @@ extension PenNameViewController: InputFieldDelegate {
 
 extension PenNameViewController: Themeable {
   func applyTheme() {
-    circularView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber11()
-    makeViewCircular(view: circularView, borderColor: ThemeManager.shared.currentTheme.colorNumber18(), borderWidth: 1.0)
+    profileImageView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber11()
+    makeViewCircular(view: profileImageView, borderColor: ThemeManager.shared.currentTheme.colorNumber18(), borderWidth: 1.0)
 
     plusImageView.image = UIImage(named: "plus-icon")
     plusImageView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()

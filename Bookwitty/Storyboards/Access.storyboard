@@ -322,7 +322,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JzI-kI-vUS" userLabel="Circular View">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JzI-kI-vUS" userLabel="Profile Container View">
                                 <rect key="frame" x="112.5" y="40" width="150" height="150"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6iX-oN-fFD">
@@ -409,12 +409,12 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="circularView" destination="JzI-kI-vUS" id="J00-77-Ai4"/>
                         <outlet property="continueButton" destination="DF6-JY-1Yh" id="8Mj-vB-zMP"/>
                         <outlet property="noteLabel" destination="OZg-0c-tp4" id="x8c-pL-t6n"/>
                         <outlet property="penNameInputField" destination="zaG-Ys-Sfi" id="JZH-t8-Z3m"/>
                         <outlet property="penNameLabel" destination="Fv5-vg-VfX" id="UXD-d8-dla"/>
                         <outlet property="plusImageView" destination="iKi-mB-A8s" id="vXe-h6-h4M"/>
+                        <outlet property="profileContainerView" destination="JzI-kI-vUS" id="exB-oQ-ntV"/>
                         <outlet property="profileImageView" destination="6iX-oN-fFD" id="q8a-wT-2bE"/>
                         <outlet property="topViewToTopConstraint" destination="bdi-WO-anf" id="aUG-Mm-mPy"/>
                     </connections>
