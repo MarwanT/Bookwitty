@@ -23,6 +23,10 @@
 			</dict>
 		</array>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Application needs permission to access your camera to be able to take a photo</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Application needs permission to access your photo library to be able to pick a photo</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
