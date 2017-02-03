@@ -119,7 +119,10 @@ class PenNameViewController: UIViewController {
     let croppingEnabled = true
     let libraryEnabled = false
     let cameraViewController = CameraViewController(croppingEnabled: croppingEnabled, allowsLibraryAccess: libraryEnabled) { [weak self] image, asset in
-      //TODO: set imageView.image = image with the new image
+      if let image = image {
+        self?.profileImageView.image = image
+        self?.plusImageView.alpha = 0
+      }
       self?.dismiss(animated: true, completion: nil)
     }
     cameraViewController.view.backgroundColor = UIColor.white
@@ -129,7 +132,10 @@ class PenNameViewController: UIViewController {
   func openLibrary() {
     let croppingEnabled = true
     let libraryViewController = CameraViewController.imagePickerViewController(croppingEnabled: croppingEnabled) { image, asset in
-      //TODO: set imageView.image = image with the new image
+      if let image = image {
+        self.profileImageView.image = image
+        self.plusImageView.alpha = 0
+      }
       self.dismiss(animated: true, completion: nil)
     }
     libraryViewController.view.backgroundColor = UIColor.white
