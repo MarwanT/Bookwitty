@@ -9,7 +9,7 @@
 import UIKit
 import FLKAutoLayout
 
-protocol InputFieldDelegate {
+protocol InputFieldDelegate: class {
   func inputFieldShouldReturn(inputField: InputField) -> Bool
 }
 
@@ -56,7 +56,7 @@ class InputField: UIView {
   
   let invalidationButton: UIButton! = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
   
-  var delegate: InputFieldDelegate?
+  weak var delegate: InputFieldDelegate?
   
   var configuration: InputFieldConfiguration = InputFieldConfiguration() {
     didSet {
