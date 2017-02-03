@@ -325,6 +325,10 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JzI-kI-vUS" userLabel="Circular View">
                                 <rect key="frame" x="112.5" y="40" width="150" height="150"/>
                                 <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6iX-oN-fFD">
+                                        <rect key="frame" x="-0.5" y="0.0" width="150" height="150"/>
+                                        <color key="backgroundColor" red="1" green="0.56093499820000003" blue="0.75360141889999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iKi-mB-A8s">
                                         <rect key="frame" x="52.5" y="53" width="44" height="44"/>
                                         <constraints>
@@ -333,10 +337,14 @@
                                         </constraints>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="6iX-oN-fFD" firstAttribute="centerX" secondItem="JzI-kI-vUS" secondAttribute="centerX" id="2hO-oI-uT4"/>
+                                    <constraint firstItem="6iX-oN-fFD" firstAttribute="height" secondItem="JzI-kI-vUS" secondAttribute="height" id="C4D-nQ-JDF"/>
                                     <constraint firstAttribute="height" constant="150" id="LCS-kJ-tgL"/>
                                     <constraint firstItem="iKi-mB-A8s" firstAttribute="centerY" secondItem="JzI-kI-vUS" secondAttribute="centerY" id="MXR-di-XOb"/>
+                                    <constraint firstItem="6iX-oN-fFD" firstAttribute="width" secondItem="JzI-kI-vUS" secondAttribute="width" id="TtF-xw-8rD"/>
+                                    <constraint firstItem="6iX-oN-fFD" firstAttribute="centerY" secondItem="JzI-kI-vUS" secondAttribute="centerY" id="UUy-CO-1LB"/>
                                     <constraint firstAttribute="width" secondItem="JzI-kI-vUS" secondAttribute="height" multiplier="1:1" id="suk-qV-pRy"/>
                                     <constraint firstItem="iKi-mB-A8s" firstAttribute="centerX" secondItem="JzI-kI-vUS" secondAttribute="centerX" id="yay-eN-9J8"/>
                                 </constraints>
@@ -407,6 +415,7 @@
                         <outlet property="penNameInputField" destination="zaG-Ys-Sfi" id="JZH-t8-Z3m"/>
                         <outlet property="penNameLabel" destination="Fv5-vg-VfX" id="UXD-d8-dla"/>
                         <outlet property="plusImageView" destination="iKi-mB-A8s" id="vXe-h6-h4M"/>
+                        <outlet property="profileImageView" destination="6iX-oN-fFD" id="q8a-wT-2bE"/>
                         <outlet property="topViewToTopConstraint" destination="bdi-WO-anf" id="aUG-Mm-mPy"/>
                     </connections>
                 </viewController>
