@@ -91,7 +91,11 @@ class SignInViewController: UIViewController {
     if emailValidationResult.isValid && passwordValidationResult.isValid {
       // TODO: Proceed with Sign proceedures
     } else {
-      // TODO: Display error message
+      NotificationView.show(notificationMessages:
+        [
+          NotificationMessage(text: viewModel.signInErrorInFieldsNotification)
+        ]
+      )
     }
   }
   

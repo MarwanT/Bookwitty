@@ -19,4 +19,5 @@ final class SignInViewModel {
   let passwordInvalidationErrorMessage: String = localizedString(key: "password_invalidation_error_message", defaultValue: "Oooops your password seems to be invalid")
   
   let viewControllerTitle: String = localizedString(key: "sign_in", defaultValue: "Sign-in")
+  let signInErrorInFieldsNotification = localizedString(key: "invalid_fields_notification_message", defaultValue: "Please fill the required fields")
 }
