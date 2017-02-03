@@ -1,11 +1,14 @@
 PODS:
   - Alamofire (4.2.0)
+  - ALCameraViewController (1.2.7)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
+  - BrightFutures (5.1.0):
+    - Result (~> 3.0)
   - Crashlytics (3.8.3):
     - Fabric (~> 1.6.3)
   - EMCCountryPickerController (1.3.3)
@@ -60,11 +63,15 @@ PODS:
     - Alamofire (~> 4.2.0)
     - Result (~> 3.1.0)
   - Result (3.1.0)
+  - Spine (0.3):
+    - BrightFutures (~> 5.0)
+    - SwiftyJSON (~> 3.1.4)
   - SwiftMessages (3.1.4)
   - SwiftyJSON (3.1.4)
   - TTTAttributedLabel (2.0.0)
 
 DEPENDENCIES:
+  - ALCameraViewController
   - Crashlytics (= 3.8.3)
   - EMCCountryPickerController (= 1.3.3)
   - Fabric (= 1.6.11)
@@ -75,6 +82,7 @@ DEPENDENCIES:
   - Google/Analytics (= 3.0.3)
   - Keys (from `Pods/CocoaPodsKeys`)
   - Moya (= 8.0.0)
+  - Spine (from `https://github.com/wvteijlingen/Spine.git`)
   - SwiftMessages (= 3.1.4)
   - SwiftyJSON (= 3.1.4)
   - TTTAttributedLabel (= 2.0.0)
@@ -82,10 +90,19 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   Keys:
     :path: Pods/CocoaPodsKeys
+  Spine:
+    :git: https://github.com/wvteijlingen/Spine.git
+
+CHECKOUT OPTIONS:
+  Spine:
+    :commit: ee1ad2be3f54657ff754ed01a8ebf248424be0cd
+    :git: https://github.com/wvteijlingen/Spine.git
 
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
+  ALCameraViewController: 4a513b8d5ecfdb3f34c50b1d469c373aae1ec7b4
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  BrightFutures: 62aafb1a63520eda91c9286bf4be33e58e043938
   Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
   EMCCountryPickerController: ff6836b71d605ba8cfe5f087d2ceec51d89f3e46
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
@@ -107,10 +124,11 @@ SPEC CHECKSUMS:
   Keys: 9c35bf00f612ee1d48556f4a4b9b4551e224e90f
   Moya: 850a166ab8241bd1c1cea6dbe012e3a2ad62944a
   Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
+  Spine: 9a5076f732897dc67c0303b4b3d871cfee903efa
   SwiftMessages: 08386e74abe1b32fa8ac2075edb4043c56db709d
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
 
-PODFILE CHECKSUM: 8bc3314175f278e915dd9fb7aaa8f304e367586e
+PODFILE CHECKSUM: c20e4c81fc6d1e0cbf8f5c270ce6f269ef73937b
 
 COCOAPODS: 1.1.1
