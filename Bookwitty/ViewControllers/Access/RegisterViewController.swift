@@ -148,6 +148,13 @@ class RegisterViewController: UIViewController {
           self.showAlertErrorWith(title: self.viewModel.ooopsText, message: self.viewModel.somethingWentWrongText)
         }
       })
+    } else {
+      NotificationView.show(notificationMessages:
+        [
+          NotificationMessage(text: viewModel.registerErrorInFieldsNotification)
+        ]
+      )
+
     }
   }
 
