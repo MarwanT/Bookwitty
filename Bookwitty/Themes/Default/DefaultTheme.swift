@@ -15,7 +15,7 @@ final class DefaultTheme: Theme {
     
     let appearance = UINavigationBar.appearance()
     appearance.barTintColor = self.colorNumber23()
-    appearance.tintColor = self.colorNumber23()
+    appearance.tintColor = self.colorNumber20()
     appearance.isTranslucent = false
     appearance.titleTextAttributes = [
       NSForegroundColorAttributeName : self.colorNumber20()
