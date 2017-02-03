@@ -144,6 +144,8 @@ class RegisterViewController: UIViewController {
         } else {
           //TODO: show error
         }
+        //This is here for testing purposes only - Remove later on
+        self.pushPenNameViewController()
       })
     }
   }
@@ -181,6 +183,12 @@ class RegisterViewController: UIViewController {
     UIView.animate(withDuration: 0.44) {
       self.view.layoutIfNeeded()
     }
+  }
+
+  // MARK: - Actions
+  func pushPenNameViewController() {
+    let penNameViewController = Storyboard.Access.instantiate(PenNameViewController.self)
+    self.navigationController?.pushViewController(penNameViewController, animated: true)
   }
 }
 
