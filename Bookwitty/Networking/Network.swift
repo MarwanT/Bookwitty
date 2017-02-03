@@ -18,6 +18,8 @@ public enum BookwittyAPIError: Swift.Error {
   case underlying(MoyaError)
   case requestMapping(MoyaError)
   case refreshToken
+  case invalidStatusCode
+  case failToRetrieveDictionary
   case undefined
   
   init(moyaError: MoyaError) {
@@ -84,12 +86,15 @@ public struct APIProvider {
     var headerParameters = [String : String]();
     switch target{
     case .OAuth, .Register:
-      break
+      headerParameters["Content-Type"] = "application/json";
+      headerParameters["Accept"] = "application/json"
     default:
       let token = AccessToken()
       if token.isValid {
         headerParameters["Authorization"] = "Bearer \(token.token!)"
       }
+      headerParameters["Content-Type"] = "application/vnd.api+json";
+      headerParameters["Accept"] = "application/vnd.api+json"
       break
     }
     
@@ -221,7 +226,7 @@ public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -
   }
   
   return APIProvider.sharedProvider.request(.RefreshToken, completion: { (result) in
-    var success = true
+    var success = false
     defer {
       completion(success)
     }
@@ -232,25 +237,20 @@ public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -
       
       if response.statusCode == 400 {
         NotificationCenter.default.post(name: AppNotification.Name.failToRefreshToken, object: nil)
-        success = false
         return
       }
       
       do {
         guard let accessTokenDictionary = try JSONSerialization.jsonObject(with: response.data, options: JSONSerialization.ReadingOptions.allowFragments) as? NSDictionary else {
-          success = false
           return
         }
         accessToken.readFromDictionary(dictionary: accessTokenDictionary)
+        success = true
       } catch {
         print("Error casting token data as dictionary")
-        return
       }
-      
     case .failure(let error):
       print("Error Refreshing token: \(error)")
-      success = false
-      return
     }
   })
 }

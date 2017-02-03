@@ -33,11 +33,13 @@ extension BookwittyAPI: TargetType {
   }
   
   public var path: String {
+    var apiBasePath = "/api"
     var apiVersion = "/v1"
     var path = ""
     
     switch self {
     case .OAuth, .RefreshToken:
+      apiBasePath = ""
       apiVersion = ""
       path = "/oauth/token"
     case .AllAddresses:
@@ -46,7 +48,7 @@ extension BookwittyAPI: TargetType {
       path = "/users"
     }
     
-    return apiVersion + path
+    return apiBasePath + apiVersion + path
   }
   
   public var method: Moya.Method {
