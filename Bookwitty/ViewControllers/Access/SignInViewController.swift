@@ -93,7 +93,14 @@ class SignInViewController: UIViewController {
     let passwordValidationResult = passwordField.validateField()
     
     if emailValidationResult.isValid && passwordValidationResult.isValid {
-      // TODO: Proceed with Sign proceedures
+      viewModel.signIn(
+        username: emailValidationResult.value!,
+        password: passwordValidationResult.value!,
+        completion: { (success, error) in
+          self.showAlertWith(
+            title: "Your Sign in Key",
+            message: "\(AccessToken().token!)")
+      })
     } else {
       NotificationView.show(notificationMessages:
         [
@@ -128,6 +135,15 @@ class SignInViewController: UIViewController {
     UIView.animate(withDuration: 0.44) { 
       self.view.layoutIfNeeded()
     }
+  }
+  
+  
+  // MARK: - Helper methods
+  
+  func showAlertWith(title: String, message: String) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    alert.addAction(UIAlertAction(title: viewModel.okText, style: UIAlertActionStyle.default, handler: nil))
+    self.present(alert, animated: true, completion: nil)
   }
 }
 
