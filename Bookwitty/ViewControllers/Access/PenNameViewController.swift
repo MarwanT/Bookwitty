@@ -70,7 +70,7 @@ class PenNameViewController: UIViewController {
   func didTapOnCircularView(_ sender: UITapGestureRecognizer) {
     //Hide keyboard if visible
     _ = penNameInputField.resignFirstResponder()
-    //TODO: action dialog to pick image or camera
+    showPhotoPickerActionSheet()
   }
 
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
@@ -80,7 +80,6 @@ class PenNameViewController: UIViewController {
   }
 
   // MARK: - Keyboard Handling
-
   func keyboardWillShow(_ notification: NSNotification) {
     topViewToTopConstraint.constant = -circularView.frame.height/2
     circularView.alpha = 0.2
@@ -95,6 +94,23 @@ class PenNameViewController: UIViewController {
     UIView.animate(withDuration: 0.44) {
       self.view.layoutIfNeeded()
     }
+  }
+
+  func showPhotoPickerActionSheet() {
+    let alertController = UIAlertController(title: viewModel.imagePickerTitle, message: nil, preferredStyle: .actionSheet)
+    let sendButton = UIAlertAction(title: viewModel.chooseFromLibraryText, style: .default, handler: { (action) -> Void in
+      //TODO: Open Choose from library
+    })
+    let  deleteButton = UIAlertAction(title: viewModel.takeProfilePhotoText, style: .default, handler: { (action) -> Void in
+      //TODO: Open take a photo
+    })
+    let cancelButton = UIAlertAction(title: viewModel.cancelText, style: .cancel, handler: nil)
+
+    alertController.addAction(sendButton)
+    alertController.addAction(deleteButton)
+    alertController.addAction(cancelButton)
+
+    self.show(alertController, sender: self)
   }
 }
 
