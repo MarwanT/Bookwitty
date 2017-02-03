@@ -19,8 +19,9 @@ class NotificationView: MessageView {
     let backgroundColor: UIColor = ThemeManager.shared.currentTheme.defaultErrorColor()
     let textColor: UIColor = ThemeManager.shared.currentTheme.colorNumber23()
     let imageTintColor: UIColor = ThemeManager.shared.currentTheme.colorNumber23()
-    let image: UIImage? = nil
+    let image: UIImage? = #imageLiteral(resourceName: "exclamation")
     let layoutMargin: UIEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+    let imageHeight: CGFloat = 44
   }
   
   fileprivate var customId: String? = nil
@@ -52,9 +53,9 @@ class NotificationView: MessageView {
     for notificationMessage in notificationMessages {
       let imageView = UIImageView(image: stylingConfiguration.image)
       imageView.tintColor = stylingConfiguration.imageTintColor
-      imageView.backgroundColor = UIColor.orange
-      imageView.constrainWidth("30")
-      imageView.constrainHeight("30")
+      imageView.contentMode = UIViewContentMode.scaleToFill
+      imageView.constrainWidth("\(stylingConfiguration.imageHeight)")
+      imageView.constrainHeight("\(stylingConfiguration.imageHeight)")
   
       let textLabel = UILabel(frame: CGRect.zero)
       ThemeManager.shared.currentTheme.styleLabel(label: textLabel)
@@ -62,9 +63,10 @@ class NotificationView: MessageView {
       textLabel.text = notificationMessage.text
       textLabel.numberOfLines = 0
       textLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
+      textLabel.constrainHeight(">=\(stylingConfiguration.imageHeight)")
       let horizontalStackView = UIStackView(arrangedSubviews: [imageView, textLabel])
       horizontalStackView.axis = UILayoutConstraintAxis.horizontal
-      horizontalStackView.spacing = 10
+      horizontalStackView.spacing = 0
       horizontalStackView.alignment = UIStackViewAlignment.top
       stackView.addArrangedSubview(horizontalStackView)
       textLabel.sizeToFit()
