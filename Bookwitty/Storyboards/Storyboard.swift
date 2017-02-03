@@ -10,6 +10,7 @@ import UIKit
 
 enum Storyboard: String {
   case Introduction
+  case Access
   
   public func instantiate<VC: UIViewController>(_ viewController: VC.Type,
                    inBundle bundle: Bundle? = nil) -> VC {
