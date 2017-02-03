@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol InformativeInputFieldDelegate {
+protocol InformativeInputFieldDelegate: class {
   func informativeInputFieldDidTapField(informativeInputField: InformativeInputField)
 }
 
 class InformativeInputField: InputField {
   var indicatorButton: UIButton!
   
-  var informativeInputFieldDelegate: InformativeInputFieldDelegate?
+  weak var informativeInputFieldDelegate: InformativeInputFieldDelegate?
   
   var text: String? {
     get {
