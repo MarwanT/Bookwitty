@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import Spine
 
-class PenName {
+class PenName: Resource {
   var name: String?
   var biography: String?
   var avatarUrl: String?
@@ -22,6 +23,32 @@ class PenName {
   var linkedinUrl: String?
   var wordpressUrl: String?
   var websiteUrl: String?
-  var followersCount: Int?
-  var followingCount: Int?
+  var followersCount: NSNumber?
+  var followingCount: NSNumber?
+
+  override class var resourceType: ResourceType {
+    return "pen-names"
+  }
+
+  override class var fields: [Field] {
+    return fieldsFromDictionary([
+      "name": Attribute().serializeAs("name"),
+      "biography": Attribute().serializeAs("biography"),
+      "avatarUrl": Attribute().serializeAs("avatar-url"),
+      "facebookUrl": Attribute().serializeAs("facebook-url"),
+      "tumblrUrl": Attribute().serializeAs("tumblr-url"),
+      "googlePlusUrl": Attribute().serializeAs("google-plus"),
+      "twitterUrl": Attribute().serializeAs("twitter-url"),
+      "instagramUrl": Attribute().serializeAs("instagram-url"),
+      "pinterestUrl": Attribute().serializeAs("pinterest-url"),
+      "youtubeUrl": Attribute().serializeAs("youtube-url"),
+      "linkedinUrl": Attribute().serializeAs("linkedin-url"),
+      "wordpressUrl": Attribute().serializeAs("wordpress-url"),
+      "websiteUrl": Attribute().serializeAs("website-url"),
+      "followersCount": Attribute().serializeAs("followers-count"),
+      "followingCount": Attribute().serializeAs("following-count")
+      ])
+  }
+}
+
 }
