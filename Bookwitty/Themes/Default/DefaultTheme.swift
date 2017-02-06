@@ -18,6 +18,7 @@ final class DefaultTheme: Theme {
     appearance.tintColor = self.colorNumber20()
     appearance.isTranslucent = false
     appearance.titleTextAttributes = [
+      NSFontAttributeName: FontDynamicType.subheadline.font,
       NSForegroundColorAttributeName : self.defaultTextColor()
     ]
     
@@ -161,6 +162,7 @@ extension DefaultTheme {
   }
   
   func stylePrimaryButton(button: UIButton, withColor color: UIColor, highlightedColor: UIColor) {
+    button.titleLabel?.font = FontDynamicType.subheadline.font
     button.setTitleColor(colorNumber23(), for: .normal)
     button.setTitleColor(colorNumber23(), for: UIControlState.highlighted)
     button.setBackgroundImage(UIImage(color: color), for: .normal)
@@ -170,6 +172,7 @@ extension DefaultTheme {
   }
   
   func styleSecondaryButton(button: UIButton, withColor color: UIColor, highlightedColor: UIColor) {
+    button.titleLabel?.font = FontDynamicType.subheadline.font
     button.setTitleColor(color, for: .normal)
     button.setTitleColor(highlightedColor, for: .highlighted)
     button.backgroundColor = colorNumber23()
@@ -182,8 +185,8 @@ extension DefaultTheme {
 
 // MARK: - Labels
 extension DefaultTheme {
-  func styleLabel(label: UILabel) {
-    label.font = FontDynamicType.label.font
+  func styleCallout(label: UILabel) {
+    label.font = FontDynamicType.callout.font
     label.textColor = defaultTextColor()
   }
   
@@ -194,6 +197,11 @@ extension DefaultTheme {
   
   func styleCaption2(label: UILabel) {
     label.font = FontDynamicType.caption2.font
+    label.textColor = defaultTextColor()
+  }
+  
+  func styleLabel(label: UILabel) {
+    label.font = FontDynamicType.label.font
     label.textColor = defaultTextColor()
   }
 }

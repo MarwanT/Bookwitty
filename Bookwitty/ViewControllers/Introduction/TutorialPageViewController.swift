@@ -19,6 +19,8 @@ class TutorialPageViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    applyTheme()
+    
     stackView.isLayoutMarginsRelativeArrangement = true
     stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
     
@@ -30,5 +32,25 @@ class TutorialPageViewController: UIViewController {
     descriptionLabel.text = tutorialPageData?.description
     imageView.image = tutorialPageData?.image
     imageView.backgroundColor = tutorialPageData?.color
+    
+    if let descriptionText = descriptionLabel.text {
+      let paragraStyle = NSMutableParagraphStyle()
+      paragraStyle.lineSpacing = 5
+      paragraStyle.alignment = .center
+      let attrString = NSMutableAttributedString(
+        string: descriptionText,
+        attributes: [
+          NSParagraphStyleAttributeName : paragraStyle
+        ])
+      descriptionLabel.attributedText = attrString
+    }
+  }
+}
+
+extension TutorialPageViewController: Themeable {
+  func applyTheme() {
+    ThemeManager.shared.currentTheme.styleCallout(label: titleLabel)
+    ThemeManager.shared.currentTheme.styleCaption1(label: descriptionLabel)
+    stackView.spacing = 10
   }
 }

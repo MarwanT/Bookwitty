@@ -57,7 +57,10 @@ extension IntroductionViewController: TutorialViewControllerDelegate {
       return
     }
     
-    changeButtonsColors(withColor: buttonsColor)
+    UIView.animate(withDuration: 0.34) {
+      self.changeButtonsColors(withColor: buttonsColor)
+      self.view.backgroundColor = buttonsColor
+    }
   }
 }
 

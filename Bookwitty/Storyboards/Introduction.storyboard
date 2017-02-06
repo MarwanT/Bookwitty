@@ -23,7 +23,7 @@
         <scene sceneID="f26-2K-UOI">
             <objects>
                 <navigationController id="GJt-r2-smH" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="t13-H6-fRX">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="t13-H6-fRX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -47,6 +47,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GpC-w4-2S7" userLabel="Background View">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XkX-Oq-6YC" userLabel="Tutorial Container View">
                                 <rect key="frame" x="0.0" y="64" width="375" height="515"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -75,11 +79,15 @@
                             <constraint firstItem="cgH-mu-QcI" firstAttribute="height" secondItem="AlO-cT-R8d" secondAttribute="height" id="2eJ-FZ-6Rj"/>
                             <constraint firstItem="XkX-Oq-6YC" firstAttribute="bottom" secondItem="AlO-cT-R8d" secondAttribute="top" constant="-20" id="C7S-9w-sxk"/>
                             <constraint firstItem="cgH-mu-QcI" firstAttribute="trailing" secondItem="1Nd-PG-3lK" secondAttribute="trailing" constant="-24" id="Dmj-yf-Up4"/>
+                            <constraint firstItem="GpC-w4-2S7" firstAttribute="top" secondItem="ZaB-ZV-23l" secondAttribute="bottom" id="FgQ-hI-qps"/>
+                            <constraint firstItem="GpC-w4-2S7" firstAttribute="leading" secondItem="1Nd-PG-3lK" secondAttribute="leading" id="GLe-R4-CiM"/>
                             <constraint firstItem="atB-Sc-hUZ" firstAttribute="top" secondItem="AlO-cT-R8d" secondAttribute="bottom" constant="20" id="bNu-Wp-bHH"/>
                             <constraint firstItem="XkX-Oq-6YC" firstAttribute="trailing" secondItem="1Nd-PG-3lK" secondAttribute="trailing" id="bbG-s0-jN7"/>
                             <constraint firstItem="AlO-cT-R8d" firstAttribute="trailing" secondItem="1Nd-PG-3lK" secondAttribute="centerX" constant="-10" id="cCH-Zh-O83"/>
                             <constraint firstItem="cgH-mu-QcI" firstAttribute="bottom" secondItem="AlO-cT-R8d" secondAttribute="bottom" id="gER-eE-kzv"/>
+                            <constraint firstItem="GpC-w4-2S7" firstAttribute="trailing" secondItem="1Nd-PG-3lK" secondAttribute="trailing" id="geP-Ml-uv4"/>
                             <constraint firstItem="cgH-mu-QcI" firstAttribute="leading" secondItem="1Nd-PG-3lK" secondAttribute="centerX" constant="10" id="iPh-T0-l0u"/>
+                            <constraint firstItem="atB-Sc-hUZ" firstAttribute="top" secondItem="GpC-w4-2S7" secondAttribute="bottom" id="jpR-Vn-X9E"/>
                             <constraint firstItem="XkX-Oq-6YC" firstAttribute="leading" secondItem="1Nd-PG-3lK" secondAttribute="leading" id="jrk-7x-Sss"/>
                             <constraint firstItem="XkX-Oq-6YC" firstAttribute="top" secondItem="ZaB-ZV-23l" secondAttribute="bottom" id="wul-pL-NCZ"/>
                         </constraints>
