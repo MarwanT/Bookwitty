@@ -10,13 +10,14 @@ import Foundation
 import Spine
 
 protocol Parsable {
-  associatedtype AbstractType
+  associatedtype AbstractType: Resource
   static func type() -> AbstractType.Type
   static func parseData(data: Data?) -> AbstractType?
   static func parseDataArray(data: Data?) -> Array<AbstractType>?
+  func serializeData() -> Data?
 }
 
-extension Parsable {
+extension Parsable where Self: Resource {
   //Mark: - Default Parsing Implementation
   static func parseData(data: Data?) -> AbstractType? {
     guard let data = data else {
@@ -40,6 +41,17 @@ extension Parsable {
   }
 
   static func parseDataArray(data: Data?) -> Array<AbstractType>? {
+    return nil
+  }
+
+  func serializeData() -> Data? {
+      let serializer = Parser.sharedInstance.serializer
+    do {
+      return try serializer.serializeLinkData(self)
+    } catch let error as NSError {
+      print("Error serializng \(self) model")
+      print(error)
+    }
     return nil
   }
 }
