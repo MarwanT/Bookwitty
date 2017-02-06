@@ -185,8 +185,8 @@ extension DefaultTheme {
 
 // MARK: - Labels
 extension DefaultTheme {
-  func styleLabel(label: UILabel) {
-    label.font = FontDynamicType.label.font
+  func styleCallout(label: UILabel) {
+    label.font = FontDynamicType.callout.font
     label.textColor = defaultTextColor()
   }
   
@@ -197,6 +197,11 @@ extension DefaultTheme {
   
   func styleCaption2(label: UILabel) {
     label.font = FontDynamicType.caption2.font
+    label.textColor = defaultTextColor()
+  }
+  
+  func styleLabel(label: UILabel) {
+    label.font = FontDynamicType.label.font
     label.textColor = defaultTextColor()
   }
 }
