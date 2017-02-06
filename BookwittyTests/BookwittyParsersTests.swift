@@ -32,5 +32,19 @@ class BookwittyParsersTests: XCTestCase {
     XCTAssertEqual(penName!.followersCount!,235, "PenName followers was not 235")
     XCTAssertEqual(penName!.followingCount!,35.324, "PenName following was not 35.324")
   }
+
+  func testSerializePenModel() {
+    let penName: PenName = PenName()
+    penName.name = "shafic"
+    penName.followersCount = 5
+    penName.id = "abcdef01-2345-6789-abcd-abcdef012345"
+
+
+    let data: Data? = penName.serializeData()
+    XCTAssertNotNil(data, "Serializing PenName model failed")
+    let strData: String? = String(data: data!, encoding: .utf8)
+    XCTAssertNotNil(strData, "Stringlazing serialized PenName model failed")
+    
+  }
 }
 
