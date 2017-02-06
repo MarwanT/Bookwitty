@@ -186,10 +186,15 @@ extension DefaultTheme {
     label.font = FontDynamicType.label.font
     label.textColor = defaultTextColor()
   }
-
-  func styleCaption(label: UILabel, color: UIColor) {
-    label.textColor = color
+  
+  func styleCaption1(label: UILabel) {
+    label.font = FontDynamicType.caption1.font
+    label.textColor = defaultTextColor()
+  }
+  
+  func styleCaption2(label: UILabel) {
     label.font = FontDynamicType.caption2.font
+    label.textColor = defaultTextColor()
   }
 }
 
