@@ -161,6 +161,7 @@ extension DefaultTheme {
   }
   
   func stylePrimaryButton(button: UIButton, withColor color: UIColor, highlightedColor: UIColor) {
+    button.titleLabel?.font = FontDynamicType.subheadline.font
     button.setTitleColor(colorNumber23(), for: .normal)
     button.setTitleColor(colorNumber23(), for: UIControlState.highlighted)
     button.setBackgroundImage(UIImage(color: color), for: .normal)
@@ -170,6 +171,7 @@ extension DefaultTheme {
   }
   
   func styleSecondaryButton(button: UIButton, withColor color: UIColor, highlightedColor: UIColor) {
+    button.titleLabel?.font = FontDynamicType.subheadline.font
     button.setTitleColor(color, for: .normal)
     button.setTitleColor(highlightedColor, for: .highlighted)
     button.backgroundColor = colorNumber23()
