@@ -175,7 +175,7 @@ class InputField: UIView {
 
 extension InputField: Themeable {
   func applyTheme() {
-    ThemeManager.shared.currentTheme.styleLabel(label: descriptionLabel)
+    ThemeManager.shared.currentTheme.styleCaption2(label: descriptionLabel)
     ThemeManager.shared.currentTheme.styleTextField(textField: textField)
   }
 }
