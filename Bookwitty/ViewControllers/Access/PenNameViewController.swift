@@ -172,10 +172,10 @@ extension PenNameViewController: Themeable {
     self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
     ThemeManager.shared.currentTheme.stylePrimaryButton(button: continueButton)
     ThemeManager.shared.currentTheme.styleLabel(label: penNameLabel)
-    //TODO: replace caption with caption2 style
-    ThemeManager.shared.currentTheme.styleCaption(label: noteLabel,
-                                                color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+    ThemeManager.shared.currentTheme.styleCaption2(label: noteLabel)
     penNameInputField.textField.textAlignment = .center
+    
+    noteLabel.textColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
   }
 
   func makeViewCircular(view: UIView,borderColor: UIColor, borderWidth: CGFloat) {

@@ -63,7 +63,8 @@ protocol ThemeButtonsStyle {
 
 protocol ThemeLabelsStyle {
   func styleLabel(label: UILabel)
-  func styleCaption(label: UILabel, color: UIColor)
+  func styleCaption1(label: UILabel)
+  func styleCaption2(label: UILabel)
 }
 
 protocol ThemeTextFieldsStyle {

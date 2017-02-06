@@ -186,17 +186,22 @@ extension DefaultTheme {
     label.font = FontDynamicType.label.font
     label.textColor = defaultTextColor()
   }
-
-  func styleCaption(label: UILabel, color: UIColor) {
-    label.font = FontDynamicType.captions.font
-    label.textColor = color
+  
+  func styleCaption1(label: UILabel) {
+    label.font = FontDynamicType.caption1.font
+    label.textColor = defaultTextColor()
+  }
+  
+  func styleCaption2(label: UILabel) {
+    label.font = FontDynamicType.caption2.font
+    label.textColor = defaultTextColor()
   }
 }
 
 // MARK: - Text Fields
 extension DefaultTheme {
   func styleTextField(textField: UITextField) {
-    textField.font = FontDynamicType.titleMedium.font
+    textField.font = FontDynamicType.subheadline.font
     textField.textColor = defaultTextColor()
     textField.borderStyle = UITextBorderStyle.none
   }
