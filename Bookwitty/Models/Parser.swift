@@ -9,6 +9,13 @@
 import Foundation
 import Spine
 
+protocol Parsable {
+  associatedtype AbstractType
+  static func type() -> AbstractType.Type
+  static func parseData(data: Data?) -> AbstractType?
+  static func parseDataArray(data: Data?) -> Array<AbstractType>?
+}
+
 class Parser {
   static let sharedInstance = Parser()
   let serializer: Serializer = Serializer()
