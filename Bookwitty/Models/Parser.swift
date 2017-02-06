@@ -16,6 +16,34 @@ protocol Parsable {
   static func parseDataArray(data: Data?) -> Array<AbstractType>?
 }
 
+extension Parsable {
+  //Mark: - Default Parsing Implementation
+  static func parseData(data: Data?) -> AbstractType? {
+    guard let data = data else {
+      return nil
+    }
+
+    let serializer = Parser.sharedInstance.serializer
+    
+    do {
+      let document = try serializer.deserializeData(data)
+      if let parsableModel = document.data?.first as? AbstractType {
+        return parsableModel
+      } else {
+        print("Could not parse data to \(type()) model")
+      }
+    } catch let error as NSError {
+      print("Error parsing \(type()) model")
+      print(error)
+    }
+    return nil
+  }
+
+  static func parseDataArray(data: Data?) -> Array<AbstractType>? {
+    return nil
+  }
+}
+
 class Parser {
   static let sharedInstance = Parser()
   let serializer: Serializer = Serializer()
