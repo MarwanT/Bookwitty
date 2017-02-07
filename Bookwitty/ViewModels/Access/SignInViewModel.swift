@@ -31,7 +31,7 @@ final class SignInViewModel {
       signInRequest.cancel()
     }
     
-    signInRequest = User.signIn(withUsername: username, password: password, completion: {
+    signInRequest = UserAPI.signIn(withUsername: username, password: password, completion: {
       (success, error) in
       self.signInRequest = nil
       completion(success, error)

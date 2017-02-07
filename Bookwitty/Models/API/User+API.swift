@@ -9,43 +9,44 @@
 import Foundation
 import Moya
 
-extension User {
-  public class func signIn(withUsername username: String, password: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+
+struct UserAPI {
+  public static func signIn(withUsername username: String, password: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     return apiRequest(
-      target: BookwittyAPI.OAuth(username: username, password: password)) {
-        (data, statusCode, response, error) in
-        // Ensure the completion block is always called
-        var success: Bool = false
-        var completionError: BookwittyAPIError? = error
-        defer {
-          completion(success, error)
-        }
-        
-        // If status code is not available then break
-        guard let statusCode = statusCode else {
-          completionError = BookwittyAPIError.invalidStatusCode
+    target: BookwittyAPI.OAuth(username: username, password: password)) {
+      (data, statusCode, response, error) in
+      // Ensure the completion block is always called
+      var success: Bool = false
+      var completionError: BookwittyAPIError? = error
+      defer {
+        completion(success, error)
+      }
+      
+      // If status code is not available then break
+      guard let statusCode = statusCode else {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+      
+      // If status code != success then break
+      if statusCode != 200 {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+      
+      // Retrieve Dictionary from data
+      do {
+        guard let data = data, let dictionary = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as? NSDictionary else {
           return
         }
-        
-        // If status code != success then break
-        if statusCode != 200 {
-          completionError = BookwittyAPIError.invalidStatusCode
-          return
-        }
-        
-        // Retrieve Dictionary from data
-        do {
-          guard let data = data, let dictionary = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as? NSDictionary else {
-            return
-          }
-          // Save token
-          var accessToken = AccessToken()
-          accessToken.readFromDictionary(dictionary: dictionary)
-          success = true
-          completionError = nil
-        } catch {
-          completionError = BookwittyAPIError.failToRetrieveDictionary
-        }
+        // Save token
+        var accessToken = AccessToken()
+        accessToken.readFromDictionary(dictionary: dictionary)
+        success = true
+        completionError = nil
+      } catch {
+        completionError = BookwittyAPIError.failToRetrieveDictionary
+      }
     }
   }
 }
