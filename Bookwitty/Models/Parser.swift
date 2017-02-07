@@ -14,7 +14,7 @@ protocol Parsable {
   static func type() -> AbstractType.Type
   static func parseData(data: Data?) -> AbstractType?
   static func parseDataArray(data: Data?) -> Array<AbstractType>?
-  func serializeData() -> Data?
+  func serializeData(options: SerializationOptions) -> [String : Any]?
 }
 
 extension Parsable where Self: Resource {
@@ -44,15 +44,17 @@ extension Parsable where Self: Resource {
     return nil
   }
 
-  func serializeData() -> Data? {
+  func serializeData(options: SerializationOptions) -> [String : Any]? {
       let serializer = Parser.sharedInstance.serializer
     do {
-      return try serializer.serializeLinkData(self)
+      let data = try serializer.serializeResources([self], options: options)
+      let dictionary = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Any]
+      return dictionary
     } catch let error as NSError {
       print("Error serializng \(self) model")
       print(error)
     }
-    return nil
+    return [:]
   }
 }
 
