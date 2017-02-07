@@ -85,7 +85,7 @@ public struct APIProvider {
     // Add Header Fields to Endpoint
     var headerParameters = [String : String]();
     switch target{
-    case .OAuth, .Register:
+    case .oAuth, .register:
       headerParameters["Content-Type"] = "application/json";
       headerParameters["Accept"] = "application/json"
     default:
@@ -225,7 +225,7 @@ public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -
     return nil
   }
   
-  return APIProvider.sharedProvider.request(.RefreshToken, completion: { (result) in
+  return APIProvider.sharedProvider.request(.refreshToken, completion: { (result) in
     var success = false
     defer {
       completion(success)

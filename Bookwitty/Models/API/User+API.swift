@@ -13,7 +13,7 @@ import Moya
 struct UserAPI {
   public static func signIn(withUsername username: String, password: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     return apiRequest(
-    target: BookwittyAPI.OAuth(username: username, password: password)) {
+    target: BookwittyAPI.oAuth(username: username, password: password)) {
       (data, statusCode, response, error) in
       // Ensure the completion block is always called
       var success: Bool = false
