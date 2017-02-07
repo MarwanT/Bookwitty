@@ -28,6 +28,9 @@ xcuserdata
 *.moved-aside
 *.xcuserstate
 
+## Scripts
+*.command
+
 ## Obj-C/Swift specific
 *.hmap
 *.ipa

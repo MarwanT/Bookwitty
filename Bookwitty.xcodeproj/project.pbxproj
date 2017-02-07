@@ -9,12 +9,57 @@
 /* Begin PBXBuildFile section */
 		19C00714F09A1D3937F9AAE7 /* Pods_BookwittyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */; };
 		2D1D0880B4A8EB8C8A6AD1A8 /* Pods_Bookwitty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */; };
+		59057FE01E25340A0036AAF3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59057FDE1E25340A0036AAF3 /* LaunchScreen.storyboard */; };
+		59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59057FDF1E25340A0036AAF3 /* Introduction.storyboard */; };
+		593769D71E3689FB00F23226 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593769D51E3689FB00F23226 /* Appearance.swift */; };
+		593769D81E3689FB00F23226 /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593769D61E3689FB00F23226 /* DefaultTheme.swift */; };
+		5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5947C2A71E37B3D1003BF12A /* ViewController.swift */; };
+		594F4EA61E42255200A947FA /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA51E42255200A947FA /* AccessToken.swift */; };
+		594F4EA81E423B8600A947FA /* AppNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA71E423B8600A947FA /* AppNotifications.swift */; };
+		594F4EAF1E440A4900A947FA /* User+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EAE1E440A4900A947FA /* User+API.swift */; };
+		595A649C1E2CCB8900655067 /* BookwittyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649B1E2CCB8900655067 /* BookwittyAPI.swift */; };
+		595A649E1E2CF4EA00655067 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649D1E2CF4EA00655067 /* String.swift */; };
+		595A64A01E2D0C4D00655067 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649F1E2D0C4D00655067 /* Network.swift */; };
+		595A64A21E2D66E900655067 /* BookwittyAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A64A11E2D66E900655067 /* BookwittyAPITests.swift */; };
+		595C4F0D1E3F8C0200BE3942 /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595C4F0C1E3F8C0200BE3942 /* InputField.swift */; };
+		595C4F0F1E3F8C9200BE3942 /* PasswordInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595C4F0E1E3F8C9200BE3942 /* PasswordInputField.swift */; };
+		595C4F111E3F9DA400BE3942 /* InformativeInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595C4F101E3F9DA400BE3942 /* InformativeInputField.swift */; };
+		5967E4581E4107EF0067093F /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5967E4571E4107EF0067093F /* NotificationView.xib */; };
+		5967E45A1E410A850067093F /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5967E4591E410A850067093F /* NotificationView.swift */; };
+		596FAD741E2E53AC0064F967 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596FAD731E2E53AC0064F967 /* Environment.swift */; };
+		597B8E2D1E37F6BC00C7811B /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597B8E2C1E37F6BC00C7811B /* Image.swift */; };
+		597B8E361E3954B200C7811B /* Georgia.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 597B8E301E3954B200C7811B /* Georgia.ttf */; };
+		597B8E371E3954B200C7811B /* Ubuntu-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 597B8E321E3954B200C7811B /* Ubuntu-Medium.ttf */; };
+		597B8E381E3954B200C7811B /* Ubuntu-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 597B8E331E3954B200C7811B /* Ubuntu-Regular.ttf */; };
+		597B8E391E3954B200C7811B /* Volkhov-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 597B8E351E3954B200C7811B /* Volkhov-Regular.ttf */; };
+		59903FED1E3B9D90006043EF /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59903FEC1E3B9D90006043EF /* View.swift */; };
+		59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59B65FD21E251FE80093FF44 /* Assets.xcassets */; };
+		59BAC6991E2FCD1A0063F573 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59BAC6981E2FCD1A0063F573 /* GoogleService-Info.plist */; };
+		59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD55751E302EB800D3B805 /* Analytics+Constants.swift */; };
+		59BD55781E302EB800D3B805 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD55761E302EB800D3B805 /* Analytics.swift */; };
+		59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD55791E309BFC00D3B805 /* GeneralSettings.swift */; };
+		59D27D0F1E40D2EE00468C29 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D27D0E1E40D2EE00468C29 /* SignInViewModel.swift */; };
+		59D6021B1E32597B00271315 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D6021A1E32597B00271315 /* AppKeys.swift */; };
+		59D6021E1E36363400271315 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D6021D1E36363400271315 /* Font.swift */; };
+		59D602201E36387A00271315 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D6021F1E36387A00271315 /* Color.swift */; };
+		59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47491E3A329C00BA90A5 /* FontBook.swift */; };
+		59DA47571E3A65A600BA90A5 /* Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47561E3A65A600BA90A5 /* Storyboard.swift */; };
+		59DA47591E3AA8E100BA90A5 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47581E3AA8E100BA90A5 /* Localization.swift */; };
+		59DA475D1E3B7A8F00BA90A5 /* IntroductionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA475B1E3B7A8F00BA90A5 /* IntroductionViewModel.swift */; };
+		59DA475E1E3B7A8F00BA90A5 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA475C1E3B7A8F00BA90A5 /* TutorialViewModel.swift */; };
+		59DA47631E3B7A9B00BA90A5 /* IntroductionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47601E3B7A9B00BA90A5 /* IntroductionViewController.swift */; };
+		59DA47641E3B7A9B00BA90A5 /* TutorialPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47611E3B7A9B00BA90A5 /* TutorialPageViewController.swift */; };
+		59DA47651E3B7A9B00BA90A5 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47621E3B7A9B00BA90A5 /* TutorialViewController.swift */; };
+		59DA47671E3B84ED00BA90A5 /* Access.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59DA47661E3B84ED00BA90A5 /* Access.storyboard */; };
+		59DA476A1E3B876900BA90A5 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47691E3B876900BA90A5 /* SignInViewController.swift */; };
 		59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */; };
-		59FBBC4F1E1D074400FC84E5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FBBC4E1E1D074400FC84E5 /* ViewController.swift */; };
-		59FBBC521E1D074400FC84E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59FBBC501E1D074400FC84E5 /* Main.storyboard */; };
-		59FBBC541E1D074400FC84E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59FBBC531E1D074400FC84E5 /* Assets.xcassets */; };
-		59FBBC571E1D074400FC84E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59FBBC551E1D074400FC84E5 /* LaunchScreen.storyboard */; };
-		59FBBC621E1D074400FC84E5 /* BookwittyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FBBC611E1D074400FC84E5 /* BookwittyTests.swift */; };
+		F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41D529F1E40EB060021A4AE /* RegisterViewController.swift */; };
+		F41D52A21E40EB780021A4AE /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41D52A11E40EB780021A4AE /* RegisterViewModel.swift */; };
+		F420AD9D1E41D2E600C78AEB /* BookwittyUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420AD9C1E41D2E600C78AEB /* BookwittyUtilityTests.swift */; };
+		F420AD9F1E4231E000C78AEB /* AttributedStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420AD9E1E4231E000C78AEB /* AttributedStringBuilder.swift */; };
+		F420B6A21E43C570001F34CD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420B6A11E43C570001F34CD /* User.swift */; };
+		F420B6A41E43D01A001F34CD /* PenNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420B6A31E43D01A001F34CD /* PenNameViewController.swift */; };
+		F420B6A61E43D05E001F34CD /* PenNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420B6A51E43D05E001F34CD /* PenNameViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,20 +74,66 @@
 
 /* Begin PBXFileReference section */
 		2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bookwitty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		59057FDE1E25340A0036AAF3 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		59057FDF1E25340A0036AAF3 /* Introduction.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Introduction.storyboard; sourceTree = "<group>"; };
+		590B3F1C1E2FCA5900542671 /* Bookwitty-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bookwitty-Bridging-Header.h"; sourceTree = "<group>"; };
+		593769D51E3689FB00F23226 /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Appearance.swift; path = Default/Appearance.swift; sourceTree = "<group>"; };
+		593769D61E3689FB00F23226 /* DefaultTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
+		5947C2A71E37B3D1003BF12A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		594F4EA51E42255200A947FA /* AccessToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
+		594F4EA71E423B8600A947FA /* AppNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNotifications.swift; sourceTree = "<group>"; };
+		594F4EAE1E440A4900A947FA /* User+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+API.swift"; sourceTree = "<group>"; };
+		595A649B1E2CCB8900655067 /* BookwittyAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyAPI.swift; sourceTree = "<group>"; };
+		595A649D1E2CF4EA00655067 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		595A649F1E2D0C4D00655067 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		595A64A11E2D66E900655067 /* BookwittyAPITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyAPITests.swift; sourceTree = "<group>"; };
+		595C4F0C1E3F8C0200BE3942 /* InputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
+		595C4F0E1E3F8C9200BE3942 /* PasswordInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordInputField.swift; sourceTree = "<group>"; };
+		595C4F101E3F9DA400BE3942 /* InformativeInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformativeInputField.swift; sourceTree = "<group>"; };
+		5967E4571E4107EF0067093F /* NotificationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationView.xib; sourceTree = "<group>"; };
+		5967E4591E410A850067093F /* NotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
+		596FAD731E2E53AC0064F967 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		597B8E2C1E37F6BC00C7811B /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		597B8E301E3954B200C7811B /* Georgia.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Georgia.ttf; sourceTree = "<group>"; };
+		597B8E321E3954B200C7811B /* Ubuntu-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Medium.ttf"; sourceTree = "<group>"; };
+		597B8E331E3954B200C7811B /* Ubuntu-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Regular.ttf"; sourceTree = "<group>"; };
+		597B8E351E3954B200C7811B /* Volkhov-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Volkhov-Regular.ttf"; sourceTree = "<group>"; };
+		59903FEC1E3B9D90006043EF /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		59B65FD21E251FE80093FF44 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		59BAC6981E2FCD1A0063F573 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		59BD55751E302EB800D3B805 /* Analytics+Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+Constants.swift"; sourceTree = "<group>"; };
+		59BD55761E302EB800D3B805 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
+		59BD55791E309BFC00D3B805 /* GeneralSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralSettings.swift; sourceTree = "<group>"; };
+		59D27D0E1E40D2EE00468C29 /* SignInViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
+		59D6021A1E32597B00271315 /* AppKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
+		59D6021D1E36363400271315 /* Font.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		59D6021F1E36387A00271315 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		59DA47491E3A329C00BA90A5 /* FontBook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontBook.swift; sourceTree = "<group>"; };
+		59DA47561E3A65A600BA90A5 /* Storyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storyboard.swift; sourceTree = "<group>"; };
+		59DA47581E3AA8E100BA90A5 /* Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
+		59DA475B1E3B7A8F00BA90A5 /* IntroductionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductionViewModel.swift; sourceTree = "<group>"; };
+		59DA475C1E3B7A8F00BA90A5 /* TutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
+		59DA47601E3B7A9B00BA90A5 /* IntroductionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductionViewController.swift; sourceTree = "<group>"; };
+		59DA47611E3B7A9B00BA90A5 /* TutorialPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialPageViewController.swift; sourceTree = "<group>"; };
+		59DA47621E3B7A9B00BA90A5 /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
+		59DA47661E3B84ED00BA90A5 /* Access.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Access.storyboard; sourceTree = "<group>"; };
+		59DA47691E3B876900BA90A5 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		59FBBC491E1D074400FC84E5 /* Bookwitty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookwitty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		59FBBC4E1E1D074400FC84E5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		59FBBC511E1D074400FC84E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		59FBBC531E1D074400FC84E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		59FBBC561E1D074400FC84E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		59FBBC581E1D074400FC84E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59FBBC5D1E1D074400FC84E5 /* BookwittyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BookwittyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		59FBBC611E1D074400FC84E5 /* BookwittyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookwittyTests.swift; sourceTree = "<group>"; };
 		59FBBC631E1D074400FC84E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		61D0EE3946D28FF160292FF2 /* Pods-Bookwitty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookwitty.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bookwitty/Pods-Bookwitty.release.xcconfig"; sourceTree = "<group>"; };
 		818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BookwittyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B75E5B87D9559EBD71824DD7 /* Pods-Bookwitty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookwitty.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bookwitty/Pods-Bookwitty.debug.xcconfig"; sourceTree = "<group>"; };
 		CB5E98B3C54E0B0AD22F5CB4 /* Pods-BookwittyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookwittyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests.release.xcconfig"; sourceTree = "<group>"; };
+		F41D529F1E40EB060021A4AE /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		F41D52A11E40EB780021A4AE /* RegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
+		F420AD9C1E41D2E600C78AEB /* BookwittyUtilityTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyUtilityTests.swift; sourceTree = "<group>"; };
+		F420AD9E1E4231E000C78AEB /* AttributedStringBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedStringBuilder.swift; sourceTree = "<group>"; };
+		F420B6A11E43C570001F34CD /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		F420B6A31E43D01A001F34CD /* PenNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameViewController.swift; sourceTree = "<group>"; };
+		F420B6A51E43D05E001F34CD /* PenNameViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameViewModel.swift; sourceTree = "<group>"; };
 		F51280CA021D07F160F13471 /* Pods-BookwittyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookwittyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -75,6 +166,230 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		59057FC51E252C500036AAF3 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				59DA475A1E3B7A8F00BA90A5 /* Introduction */,
+				59D27D0D1E40D2C400468C29 /* Access */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		59057FC81E252E710036AAF3 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				596FAD731E2E53AC0064F967 /* Environment.swift */,
+				595A649B1E2CCB8900655067 /* BookwittyAPI.swift */,
+				595A649F1E2D0C4D00655067 /* Network.swift */,
+				594F4EA51E42255200A947FA /* AccessToken.swift */,
+			);
+			name = Networking;
+			path = Bookwitty/Networking;
+			sourceTree = SOURCE_ROOT;
+		};
+		59057FCB1E252FC30036AAF3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				594F4EAD1E440A4900A947FA /* API */,
+				F420B6A11E43C570001F34CD /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		59057FCE1E2530900036AAF3 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				59BD55741E302EB800D3B805 /* Analytics */,
+				595A649D1E2CF4EA00655067 /* String.swift */,
+				59D6021A1E32597B00271315 /* AppKeys.swift */,
+				5947C2A71E37B3D1003BF12A /* ViewController.swift */,
+				F420AD9E1E4231E000C78AEB /* AttributedStringBuilder.swift */,
+				597B8E2C1E37F6BC00C7811B /* Image.swift */,
+				59DA47581E3AA8E100BA90A5 /* Localization.swift */,
+				59903FEC1E3B9D90006043EF /* View.swift */,
+				594F4EA71E423B8600A947FA /* AppNotifications.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		59057FD11E25317B0036AAF3 /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				593769D51E3689FB00F23226 /* Appearance.swift */,
+				59D6021C1E36339900271315 /* Default */,
+			);
+			path = Themes;
+			sourceTree = "<group>";
+		};
+		59057FD41E2532420036AAF3 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				59057FDE1E25340A0036AAF3 /* LaunchScreen.storyboard */,
+				59057FDF1E25340A0036AAF3 /* Introduction.storyboard */,
+				59DA47661E3B84ED00BA90A5 /* Access.storyboard */,
+				59DA47561E3A65A600BA90A5 /* Storyboard.swift */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		59057FD71E2533010036AAF3 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				59057FD81E2533010036AAF3 /* Nodes */,
+				59057FDA1E2533010036AAF3 /* Views */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		59057FD81E2533010036AAF3 /* Nodes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Nodes;
+			sourceTree = "<group>";
+		};
+		59057FDA1E2533010036AAF3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5967E4561E4105020067093F /* NotificationView */,
+				595C4F0C1E3F8C0200BE3942 /* InputField.swift */,
+				595C4F0E1E3F8C9200BE3942 /* PasswordInputField.swift */,
+				595C4F101E3F9DA400BE3942 /* InformativeInputField.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		594F4EAD1E440A4900A947FA /* API */ = {
+			isa = PBXGroup;
+			children = (
+				594F4EAE1E440A4900A947FA /* User+API.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		5967E4561E4105020067093F /* NotificationView */ = {
+			isa = PBXGroup;
+			children = (
+				5967E4591E410A850067093F /* NotificationView.swift */,
+				5967E4571E4107EF0067093F /* NotificationView.xib */,
+			);
+			name = NotificationView;
+			path = NotificationMessages;
+			sourceTree = "<group>";
+		};
+		597B8E2E1E3954B200C7811B /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				597B8E2F1E3954B200C7811B /* Georgia */,
+				597B8E311E3954B200C7811B /* Ubuntu */,
+				597B8E341E3954B200C7811B /* Volkhov */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		597B8E2F1E3954B200C7811B /* Georgia */ = {
+			isa = PBXGroup;
+			children = (
+				597B8E301E3954B200C7811B /* Georgia.ttf */,
+			);
+			path = Georgia;
+			sourceTree = "<group>";
+		};
+		597B8E311E3954B200C7811B /* Ubuntu */ = {
+			isa = PBXGroup;
+			children = (
+				597B8E321E3954B200C7811B /* Ubuntu-Medium.ttf */,
+				597B8E331E3954B200C7811B /* Ubuntu-Regular.ttf */,
+			);
+			path = Ubuntu;
+			sourceTree = "<group>";
+		};
+		597B8E341E3954B200C7811B /* Volkhov */ = {
+			isa = PBXGroup;
+			children = (
+				597B8E351E3954B200C7811B /* Volkhov-Regular.ttf */,
+			);
+			path = Volkhov;
+			sourceTree = "<group>";
+		};
+		59B65FD11E251FE80093FF44 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				59B65FD21E251FE80093FF44 /* Assets.xcassets */,
+				597B8E2E1E3954B200C7811B /* Font */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		59B65FD41E2524D60093FF44 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				59DA475F1E3B7A9B00BA90A5 /* Introduction */,
+				59DA47681E3B874B00BA90A5 /* Access */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		59BD55741E302EB800D3B805 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				59BD55761E302EB800D3B805 /* Analytics.swift */,
+				59BD55751E302EB800D3B805 /* Analytics+Constants.swift */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
+		59D27D0D1E40D2C400468C29 /* Access */ = {
+			isa = PBXGroup;
+			children = (
+				59D27D0E1E40D2EE00468C29 /* SignInViewModel.swift */,
+				F41D52A11E40EB780021A4AE /* RegisterViewModel.swift */,
+				F420B6A51E43D05E001F34CD /* PenNameViewModel.swift */,
+			);
+			name = Access;
+			path = Bookwitty/ViewModels/Access;
+			sourceTree = SOURCE_ROOT;
+		};
+		59D6021C1E36339900271315 /* Default */ = {
+			isa = PBXGroup;
+			children = (
+				59D6021D1E36363400271315 /* Font.swift */,
+				59DA47491E3A329C00BA90A5 /* FontBook.swift */,
+				59D6021F1E36387A00271315 /* Color.swift */,
+				593769D61E3689FB00F23226 /* DefaultTheme.swift */,
+			);
+			path = Default;
+			sourceTree = "<group>";
+		};
+		59DA475A1E3B7A8F00BA90A5 /* Introduction */ = {
+			isa = PBXGroup;
+			children = (
+				59DA475B1E3B7A8F00BA90A5 /* IntroductionViewModel.swift */,
+				59DA475C1E3B7A8F00BA90A5 /* TutorialViewModel.swift */,
+			);
+			path = Introduction;
+			sourceTree = "<group>";
+		};
+		59DA475F1E3B7A9B00BA90A5 /* Introduction */ = {
+			isa = PBXGroup;
+			children = (
+				59DA47601E3B7A9B00BA90A5 /* IntroductionViewController.swift */,
+				59DA47611E3B7A9B00BA90A5 /* TutorialPageViewController.swift */,
+				59DA47621E3B7A9B00BA90A5 /* TutorialViewController.swift */,
+			);
+			path = Introduction;
+			sourceTree = "<group>";
+		};
+		59DA47681E3B874B00BA90A5 /* Access */ = {
+			isa = PBXGroup;
+			children = (
+				59DA47691E3B876900BA90A5 /* SignInViewController.swift */,
+				F41D529F1E40EB060021A4AE /* RegisterViewController.swift */,
+				F420B6A31E43D01A001F34CD /* PenNameViewController.swift */,
+			);
+			path = Access;
+			sourceTree = "<group>";
+		};
 		59FBBC401E1D074400FC84E5 = {
 			isa = PBXGroup;
 			children = (
@@ -99,11 +414,19 @@
 			isa = PBXGroup;
 			children = (
 				59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */,
-				59FBBC4E1E1D074400FC84E5 /* ViewController.swift */,
-				59FBBC501E1D074400FC84E5 /* Main.storyboard */,
-				59FBBC531E1D074400FC84E5 /* Assets.xcassets */,
-				59FBBC551E1D074400FC84E5 /* LaunchScreen.storyboard */,
+				59B65FD11E251FE80093FF44 /* Assets */,
+				59057FD11E25317B0036AAF3 /* Themes */,
+				59057FD71E2533010036AAF3 /* Components */,
+				59057FD41E2532420036AAF3 /* Storyboards */,
+				59B65FD41E2524D60093FF44 /* ViewControllers */,
+				59057FC51E252C500036AAF3 /* ViewModels */,
+				59057FCB1E252FC30036AAF3 /* Models */,
+				59057FC81E252E710036AAF3 /* Networking */,
+				59057FCE1E2530900036AAF3 /* Utilities */,
 				59FBBC581E1D074400FC84E5 /* Info.plist */,
+				59BAC6981E2FCD1A0063F573 /* GoogleService-Info.plist */,
+				590B3F1C1E2FCA5900542671 /* Bookwitty-Bridging-Header.h */,
+				59BD55791E309BFC00D3B805 /* GeneralSettings.swift */,
 			);
 			path = Bookwitty;
 			sourceTree = "<group>";
@@ -111,8 +434,9 @@
 		59FBBC601E1D074400FC84E5 /* BookwittyTests */ = {
 			isa = PBXGroup;
 			children = (
-				59FBBC611E1D074400FC84E5 /* BookwittyTests.swift */,
 				59FBBC631E1D074400FC84E5 /* Info.plist */,
+				595A64A11E2D66E900655067 /* BookwittyAPITests.swift */,
+				F420AD9C1E41D2E600C78AEB /* BookwittyUtilityTests.swift */,
 			);
 			path = BookwittyTests;
 			sourceTree = "<group>";
@@ -141,6 +465,7 @@
 				59FBBC471E1D074400FC84E5 /* Resources */,
 				549223EAAC9E610D39F0D427 /* [CP] Embed Pods Frameworks */,
 				6383E0DEEC0AC02413F163F2 /* [CP] Copy Pods Resources */,
+				59C921011E2E7E3200EF6AC2 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -179,7 +504,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Keeward;
 				TargetAttributes = {
 					59FBBC481E1D074400FC84E5 = {
@@ -219,9 +544,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59FBBC571E1D074400FC84E5 /* LaunchScreen.storyboard in Resources */,
-				59FBBC541E1D074400FC84E5 /* Assets.xcassets in Resources */,
-				59FBBC521E1D074400FC84E5 /* Main.storyboard in Resources */,
+				59DA47671E3B84ED00BA90A5 /* Access.storyboard in Resources */,
+				59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */,
+				5967E4581E4107EF0067093F /* NotificationView.xib in Resources */,
+				59BAC6991E2FCD1A0063F573 /* GoogleService-Info.plist in Resources */,
+				597B8E371E3954B200C7811B /* Ubuntu-Medium.ttf in Resources */,
+				59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */,
+				59057FE01E25340A0036AAF3 /* LaunchScreen.storyboard in Resources */,
+				597B8E381E3954B200C7811B /* Ubuntu-Regular.ttf in Resources */,
+				597B8E361E3954B200C7811B /* Georgia.ttf in Resources */,
+				597B8E391E3954B200C7811B /* Volkhov-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,6 +627,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		59C921011E2E7E3200EF6AC2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 081c5e21d59aa6200fc7d8e23cced187b13e06e6 2c467c9075ea0dc7d53865b3e685faa2a7ad4875b1f4dd9f25c21ed6913f566b";
+		};
 		6383E0DEEC0AC02413F163F2 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -332,8 +677,45 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59FBBC4F1E1D074400FC84E5 /* ViewController.swift in Sources */,
+				59903FED1E3B9D90006043EF /* View.swift in Sources */,
+				595C4F0F1E3F8C9200BE3942 /* PasswordInputField.swift in Sources */,
+				59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */,
+				5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */,
+				F420AD9F1E4231E000C78AEB /* AttributedStringBuilder.swift in Sources */,
+				59DA47631E3B7A9B00BA90A5 /* IntroductionViewController.swift in Sources */,
+				59D27D0F1E40D2EE00468C29 /* SignInViewModel.swift in Sources */,
+				59DA47591E3AA8E100BA90A5 /* Localization.swift in Sources */,
+				59D602201E36387A00271315 /* Color.swift in Sources */,
+				596FAD741E2E53AC0064F967 /* Environment.swift in Sources */,
+				595C4F0D1E3F8C0200BE3942 /* InputField.swift in Sources */,
+				59BD55781E302EB800D3B805 /* Analytics.swift in Sources */,
+				59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */,
+				59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */,
+				59DA475E1E3B7A8F00BA90A5 /* TutorialViewModel.swift in Sources */,
+				597B8E2D1E37F6BC00C7811B /* Image.swift in Sources */,
+				595C4F111E3F9DA400BE3942 /* InformativeInputField.swift in Sources */,
+				59DA47641E3B7A9B00BA90A5 /* TutorialPageViewController.swift in Sources */,
+				59DA47571E3A65A600BA90A5 /* Storyboard.swift in Sources */,
+				F41D52A21E40EB780021A4AE /* RegisterViewModel.swift in Sources */,
+				59D6021E1E36363400271315 /* Font.swift in Sources */,
+				593769D71E3689FB00F23226 /* Appearance.swift in Sources */,
+				F420B6A41E43D01A001F34CD /* PenNameViewController.swift in Sources */,
+				5967E45A1E410A850067093F /* NotificationView.swift in Sources */,
+				593769D81E3689FB00F23226 /* DefaultTheme.swift in Sources */,
+				594F4EAF1E440A4900A947FA /* User+API.swift in Sources */,
+				F420B6A21E43C570001F34CD /* User.swift in Sources */,
+				F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */,
+				595A64A01E2D0C4D00655067 /* Network.swift in Sources */,
+				594F4EA81E423B8600A947FA /* AppNotifications.swift in Sources */,
+				F420B6A61E43D05E001F34CD /* PenNameViewModel.swift in Sources */,
+				595A649C1E2CCB8900655067 /* BookwittyAPI.swift in Sources */,
+				595A649E1E2CF4EA00655067 /* String.swift in Sources */,
+				59DA47651E3B7A9B00BA90A5 /* TutorialViewController.swift in Sources */,
+				59DA476A1E3B876900BA90A5 /* SignInViewController.swift in Sources */,
+				59DA475D1E3B7A8F00BA90A5 /* IntroductionViewModel.swift in Sources */,
 				59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */,
+				59D6021B1E32597B00271315 /* AppKeys.swift in Sources */,
+				594F4EA61E42255200A947FA /* AccessToken.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,7 +723,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59FBBC621E1D074400FC84E5 /* BookwittyTests.swift in Sources */,
+				595A64A21E2D66E900655067 /* BookwittyAPITests.swift in Sources */,
+				F420AD9D1E41D2E600C78AEB /* BookwittyUtilityTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,25 +737,6 @@
 			targetProxy = 59FBBC5E1E1D074400FC84E5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		59FBBC501E1D074400FC84E5 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				59FBBC511E1D074400FC84E5 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		59FBBC551E1D074400FC84E5 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				59FBBC561E1D074400FC84E5 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		59FBBC641E1D074400FC84E5 /* Debug */ = {
@@ -393,6 +757,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -443,6 +808,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -472,12 +838,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B75E5B87D9559EBD71824DD7 /* Pods-Bookwitty.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 65T23W9U79;
 				INFOPLIST_FILE = Bookwitty/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bookwitty.Bookwitty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bookwitty/Bookwitty-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -486,12 +855,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 61D0EE3946D28FF160292FF2 /* Pods-Bookwitty.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 65T23W9U79;
 				INFOPLIST_FILE = Bookwitty/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bookwitty.Bookwitty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bookwitty/Bookwitty-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -507,6 +879,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.keeward.BookwittyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bookwitty/Bookwitty-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bookwitty.app/Bookwitty";
 			};
@@ -523,6 +896,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.keeward.BookwittyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bookwitty/Bookwitty-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bookwitty.app/Bookwitty";
 			};
