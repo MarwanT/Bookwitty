@@ -40,18 +40,19 @@ protocol ThemeColor {
   func colorNumber24() -> UIColor
   
   func colorNumber19Highlighted() -> UIColor
+  func colorNumber22Highlighted() -> UIColor
   
-  func defaultPrimaryButtonColor() -> UIColor
-  func defaultPrimaryButtonHighlightedColor() -> UIColor
-  func defaultSecondaryButtonColor() -> UIColor
-  func defaultSecondaryButtonHighlightedColor() -> UIColor
+  func defaultErrorColor() -> UIColor
+  
+  func defaultButtonColor() -> UIColor
+  func defaultButtonHighlightedColor() -> UIColor
+  func defaultEcommerceButtonColor() -> UIColor
+  func defaultEcommerceButtonHighlightedColor() -> UIColor
   
   func defaultTextColor() -> UIColor
   func defaultGrayedTextColor() -> UIColor
   
   func defaultSeparatorColor() -> UIColor
-  
-  func defaultErrorColor() -> UIColor
 }
 
 protocol ThemeButtonsStyle {

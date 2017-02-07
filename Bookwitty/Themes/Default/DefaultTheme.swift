@@ -10,6 +10,7 @@ import Foundation
 import TTTAttributedLabel
 
 final class DefaultTheme: Theme {
+
   func initialize() {
     // Initialize navigation bar and other stuff
     
@@ -107,24 +108,27 @@ extension DefaultTheme {
     return UIColor.bwRubyHighlighted
   }
   
+  func colorNumber22Highlighted() -> UIColor {
+    return UIColor.bwRubyHighlighted
+  }
   
   
-  func defaultPrimaryButtonColor() -> UIColor {
+  
+  func defaultButtonColor() -> UIColor {
     return colorNumber19()
   }
   
-  func defaultPrimaryButtonHighlightedColor() -> UIColor {
+  func defaultButtonHighlightedColor() -> UIColor {
     return colorNumber19Highlighted()
   }
   
-  func defaultSecondaryButtonColor() -> UIColor {
-    return colorNumber19()
+  func defaultEcommerceButtonColor() -> UIColor {
+    return colorNumber22()
   }
   
-  func defaultSecondaryButtonHighlightedColor() -> UIColor {
-    return colorNumber19Highlighted()
+  func defaultEcommerceButtonHighlightedColor() -> UIColor {
+    return colorNumber22Highlighted()
   }
-  
   
   
   func defaultTextColor() -> UIColor {
@@ -150,15 +154,15 @@ extension DefaultTheme {
   func stylePrimaryButton(button: UIButton) {
     stylePrimaryButton(
       button: button,
-      withColor: defaultPrimaryButtonColor(),
-      highlightedColor: defaultPrimaryButtonHighlightedColor())
+      withColor: defaultButtonColor(),
+      highlightedColor: defaultButtonHighlightedColor())
   }
   
   func styleSecondaryButton(button: UIButton) {
     styleSecondaryButton(
       button: button,
-      withColor: defaultSecondaryButtonColor(),
-      highlightedColor: defaultSecondaryButtonHighlightedColor())
+      withColor: defaultButtonColor(),
+      highlightedColor: defaultButtonHighlightedColor())
   }
   
   func stylePrimaryButton(button: UIButton, withColor color: UIColor, highlightedColor: UIColor) {

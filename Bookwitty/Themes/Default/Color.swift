@@ -124,9 +124,14 @@ extension UIColor {
     return UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
   }
   
-  /// #cb002f
+  /// Style Guide #19|Highlighted : #cb002f
   static var bwRubyHighlighted: UIColor {
     return UIColor(red: 203/255, green: 0, blue: 47/255, alpha: 1)
+  }
+  
+  /// Style Guide #22|Highlighted : #ff5800
+  static var bwOrangeHighlighted: UIColor {
+    return UIColor(red: 255/255, green: 88/255, blue: 0, alpha: 1)
   }
   
   /// Style Guide #24 Error Color : #a20009
