@@ -50,3 +50,19 @@ struct UserAPI {
     }
   }
 }
+
+//MARK: - Moya Needed parameters
+extension UserAPI {
+  static func registerPostBody(firstName: String?, lastName: String?, email: String?, dateOfBirth: String?, country: String?, password: String?) -> [String : Any]? {
+    //Create Body
+    let user = User()
+    user.firstName = firstName
+    user.lastName = lastName
+    user.email = email
+    user.dateOfBirth = dateOfBirth
+    user.country = country
+    user.password = password
+    //Serialize Body to conform to JSONAPI
+    return user.serializeData(options: [.OmitNullValues])
+  }
+}
