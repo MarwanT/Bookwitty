@@ -76,7 +76,7 @@ final class RegisterViewModel {
   }
 
   func registerUserWithData(firstName: String, lastName: String, email: String, country: String, password: String, completionBlock: @escaping (_ success: Bool, _ user: User?)->()) {
-    _ = apiRequest(target: BookwittyAPI.Register(firstName: firstName, lastName: lastName, email: email, dateOfBirthISO8601: nil, countryISO3166: country, password: password)) {
+    _ = apiRequest(target: BookwittyAPI.register(firstName: firstName, lastName: lastName, email: email, dateOfBirthISO8601: nil, countryISO3166: country, password: password)) {
       (data, statusCode, response, error) in
       var success: Bool = false
       var user: User? = nil
