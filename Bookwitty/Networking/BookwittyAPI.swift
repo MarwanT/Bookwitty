@@ -87,18 +87,7 @@ extension BookwittyAPI: TargetType {
     case .allAddresses, .user:
       return nil
     case .register(let firstName, let lastName, let email, let dateOfBirth, let country, let password):
-      var params: [String : String] = [:]
-
-      params["first-name"] = firstName
-      params["last-name"] = lastName
-      params["email"] = email
-      params["country"] = country
-      params["password"] = password
-      if let dateOfBirth = dateOfBirth {
-        params["date-of-birth"] = dateOfBirth
-      }
-
-      return params
+      return UserAPI.registerPostBody(firstName: firstName, lastName: lastName, email: email, dateOfBirth: dateOfBirth, country: country, password: password)
     }
   }
   
