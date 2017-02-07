@@ -46,7 +46,7 @@ extension BookwittyAPI: TargetType {
     case .allAddresses:
       path = "/user/addresses"
     case .register:
-      path = "/users"
+      path = "/user"
     case .user:
       path = "/user"
     }
