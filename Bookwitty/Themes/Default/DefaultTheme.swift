@@ -151,6 +151,45 @@ extension DefaultTheme {
 
 // MARK: - Buttons
 extension DefaultTheme {
+  func cardExternalMargin() -> CGFloat {
+    return 10
+  }
+  
+  func witItButtonMargin() -> CGFloat {
+    return 12
+  }
+  
+  func cardInternalMargin() -> CGFloat {
+    return 15
+  }
+  
+  func titleMargin() -> CGFloat {
+    return 15
+  }
+  
+  func generalExternalMargin() -> CGFloat {
+    return 19
+  }
+  
+  func contentSpacing() -> CGFloat {
+    return 20
+  }
+  
+  func reviewsSectionSpacing() -> CGFloat {
+    return 25
+  }
+  
+  func booksVerticalSpacing() -> CGFloat {
+    return 30
+  }
+  
+  func sectionSpacing() -> CGFloat {
+    return 40
+  }
+}
+
+// MARK: - Buttons
+extension DefaultTheme {
   func stylePrimaryButton(button: UIButton) {
     stylePrimaryButton(
       button: button,
