@@ -46,26 +46,8 @@ class User: Resource {
 }
 
 // MARK: - Parser
-extension User {
-  class func parseData(data: Data?) -> User? {
-    guard let data = data else {
-      return nil
-    }
-
-    let serializer: Serializer = Serializer()
-    serializer.registerResource(User.self)
-    serializer.keyFormatter = DasherizedKeyFormatter()
-
-    do {
-      let document = try serializer.deserializeData(data)
-      if let user = document.data?.first as? User {
-        return user
-      } else {
-        print("Could not parse data to user model")
-      }
-    } catch let error as NSError {
-      print(error)
-    }
-    return nil
+extension User: Parsable {
+  static func type() -> User.Type {
+    return User.self
   }
 }

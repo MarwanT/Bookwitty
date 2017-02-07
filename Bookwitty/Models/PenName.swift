@@ -52,26 +52,8 @@ class PenName: Resource {
 }
 
 // MARK: - Parser
-extension PenName {
-  class func parseData(data: Data?) -> PenName? {
-    guard let data = data else {
-      return nil
-    }
-
-    let serializer: Serializer = Serializer()
-    serializer.registerResource(PenName.self)
-    serializer.keyFormatter = DasherizedKeyFormatter()
-
-    do {
-      let document = try serializer.deserializeData(data)
-      if let penName = document.data?.first as? PenName {
-        return penName
-      } else {
-        print("Could not parse data to user model")
-      }
-    } catch let error as NSError {
-      print(error)
-    }
-    return nil
+extension PenName: Parsable {
+  static func type() -> PenName.Type {
+    return PenName.self
   }
 }
