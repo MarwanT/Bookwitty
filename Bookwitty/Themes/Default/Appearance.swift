@@ -40,18 +40,31 @@ protocol ThemeColor {
   func colorNumber24() -> UIColor
   
   func colorNumber19Highlighted() -> UIColor
+  func colorNumber22Highlighted() -> UIColor
   
-  func defaultPrimaryButtonColor() -> UIColor
-  func defaultPrimaryButtonHighlightedColor() -> UIColor
-  func defaultSecondaryButtonColor() -> UIColor
-  func defaultSecondaryButtonHighlightedColor() -> UIColor
+  func defaultErrorColor() -> UIColor
+  
+  func defaultButtonColor() -> UIColor
+  func defaultButtonHighlightedColor() -> UIColor
+  func defaultEcommerceButtonColor() -> UIColor
+  func defaultEcommerceButtonHighlightedColor() -> UIColor
   
   func defaultTextColor() -> UIColor
   func defaultGrayedTextColor() -> UIColor
   
   func defaultSeparatorColor() -> UIColor
-  
-  func defaultErrorColor() -> UIColor
+}
+
+protocol ThemeSpacing {
+  func cardExternalMargin() -> CGFloat
+  func witItButtonMargin() -> CGFloat
+  func cardInternalMargin() -> CGFloat
+  func titleMargin() -> CGFloat
+  func generalExternalMargin() -> CGFloat
+  func contentSpacing() -> CGFloat
+  func reviewsSectionSpacing() -> CGFloat
+  func booksVerticalSpacing() -> CGFloat
+  func sectionSpacing() -> CGFloat
 }
 
 protocol ThemeButtonsStyle {
@@ -76,7 +89,7 @@ protocol ThemeAttributedTextStyle {
   func styleTextLinkAttributes() -> [AnyHashable : Any]
 }
 
-protocol Theme: ThemeColor, ThemeButtonsStyle, ThemeLabelsStyle, ThemeTextFieldsStyle, ThemeAttributedTextStyle {
+protocol Theme: ThemeSpacing, ThemeColor, ThemeButtonsStyle, ThemeLabelsStyle, ThemeTextFieldsStyle, ThemeAttributedTextStyle {
   func initialize()
 }
 
