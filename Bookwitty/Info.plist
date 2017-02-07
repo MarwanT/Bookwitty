@@ -2,31 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Volkhov-Regular.ttf</string>
-		<string>Ubuntu-Regular.ttf</string>
-		<string>Ubuntu-Medium.ttf</string>
-		<string>Georgia.ttf</string>
-	</array>
-	<key>Fabric</key>
-	<dict>
-		<key>APIKey</key>
-		<string>081c5e21d59aa6200fc7d8e23cced187b13e06e6</string>
-		<key>Kits</key>
-		<array>
-			<dict>
-				<key>KitInfo</key>
-				<dict/>
-				<key>KitName</key>
-				<string>Crashlytics</string>
-			</dict>
-		</array>
-	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>Application needs permission to access your camera to be able to take a photo</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Application needs permission to access your photo library to be able to pick a photo</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -52,6 +27,20 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>081c5e21d59aa6200fc7d8e23cced187b13e06e6</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+	</dict>
 	<key>FacebookAppID</key>
 	<string>178046856011078</string>
 	<key>FacebookDisplayName</key>
@@ -65,6 +54,17 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Application needs permission to access your camera to be able to take a photo</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Application needs permission to access your photo library to be able to pick a photo</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Volkhov-Regular.ttf</string>
+		<string>Ubuntu-Regular.ttf</string>
+		<string>Ubuntu-Medium.ttf</string>
+		<string>Georgia.ttf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
