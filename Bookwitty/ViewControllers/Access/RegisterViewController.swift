@@ -141,7 +141,7 @@ class RegisterViewController: UIViewController {
       let lastName = lastNameValidationResult.value!
       let country = viewModel.country!.code
 
-      viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, completionBlock: { (success: Bool, user: User?) in
+      viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, completionBlock: { (success: Bool, user: User?, error: BookwittyAPIError?) in
         if let user = user, success {
           self.pushPenNameViewController(user: user)
         } else {
