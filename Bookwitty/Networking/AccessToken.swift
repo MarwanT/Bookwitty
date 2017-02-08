@@ -34,9 +34,10 @@ public struct AccessToken {
   // MARK: - Initializers
   
   public let defaults: UserDefaults
+  public static let shared: AccessToken = AccessToken()
   
-  public init() {
-    self.defaults = UserDefaults.standard
+  private init() {
+    defaults = UserDefaults.standard
   }
   
   public mutating func readFromDictionary(dictionary: NSDictionary) {

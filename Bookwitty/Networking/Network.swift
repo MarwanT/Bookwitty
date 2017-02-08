@@ -89,7 +89,7 @@ public struct APIProvider {
       headerParameters["Content-Type"] = "application/json";
       headerParameters["Accept"] = "application/json"
     default:
-      let token = AccessToken()
+      let token = AccessToken.shared
       if token.isValid {
         headerParameters["Authorization"] = "Bearer \(token.token!)"
       }
@@ -193,7 +193,7 @@ public func apiRequest(target: BookwittyAPI, completion: @escaping BookwittyAPIC
 public func signedAPIRequest(target: BookwittyAPI, completion: @escaping BookwittyAPICompletion) -> Cancellable? {
   let apiRequest = createAPIRequest(target: target, completion: completion)
   
-  let accessToken = AccessToken()
+  let accessToken = AccessToken.shared
   
   if (accessToken.updating) {
     operationQueue.append((target: target, completion: completion))
@@ -216,7 +216,7 @@ public func signedAPIRequest(target: BookwittyAPI, completion: @escaping Bookwit
 }
 
 public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -> Cancellable? {
-  var accessToken = AccessToken()
+  let accessToken = AccessToken.shared
   accessToken.isUpdating = true
   
   guard accessToken.refresh != nil else {

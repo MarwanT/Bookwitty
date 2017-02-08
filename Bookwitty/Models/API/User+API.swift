@@ -40,7 +40,7 @@ struct UserAPI {
           return
         }
         // Save token
-        var accessToken = AccessToken()
+        var accessToken = AccessToken.shared
         accessToken.readFromDictionary(dictionary: dictionary)
         success = true
         completionError = nil
