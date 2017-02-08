@@ -14,7 +14,7 @@ import Moya
 
 public enum BookwittyAPI {
   case oAuth(username: String, password: String)
-  case refreshToken
+  case refreshToken(refreshToken: String)
   case allAddresses
   case register(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String?, countryISO3166: String, password: String)
   case user
@@ -76,11 +76,11 @@ extension BookwittyAPI: TargetType {
         "grant_type": "password",
         "scopes": "openid email profile"
       ]
-    case .refreshToken:
+    case .refreshToken(let refreshToken):
       return [
         "client_id": AppKeys.shared.apiKey,
         "client_secret": AppKeys.shared.apiSecret,
-        "refresh_token": AccessToken.shared.refreshToken!,
+        "refresh_token": refreshToken,
         "grant_type": "refresh_token",
         "scopes": "openid email profile"
       ]

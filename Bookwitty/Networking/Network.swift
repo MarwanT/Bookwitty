@@ -224,8 +224,11 @@ public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -
     return nil
   }
   
-  return APIProvider.sharedProvider.request(.refreshToken, completion: { (result) in
   accessToken.updating = true
+  
+  return APIProvider.sharedProvider.request(
+    .refreshToken(refreshToken: refreshToken),
+    completion: { (result) in
     var success = false
     defer {
       accessToken.updating = false
