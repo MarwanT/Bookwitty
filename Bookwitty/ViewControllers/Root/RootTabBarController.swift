@@ -14,6 +14,13 @@ class RootTabBarController: UITabBarController {
     super.viewDidLoad()
     //Set Default select tab index
     self.selectedIndex = 0
+
+    let placeholderVc1 = UIViewController()
+    let placeholderVc2 = UIViewController()
+
+    //Set The View controller
+    self.viewControllers = [UINavigationController(rootViewController: placeholderVc1),
+                            UINavigationController(rootViewController: placeholderVc2)]
   }
 
 }
