@@ -12,8 +12,6 @@ class RootTabBarController: UITabBarController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    //Hide top navigation bar - Each tab will have its own.
-    self.navigationController?.navigationBar.isHidden = true
     //Set Default select tab index
     self.selectedIndex = 0
   }
