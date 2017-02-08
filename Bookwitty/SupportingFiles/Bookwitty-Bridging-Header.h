@@ -10,5 +10,6 @@
 #define Bookwitty_Bridging_Header_h
 
 #import <Google/Analytics.h>
+#import <AsyncDisplayKit/AsyncDisplayKit.h>
 
 #endif /* Bookwitty_Bridging_Header_h */
