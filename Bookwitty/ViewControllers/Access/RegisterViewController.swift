@@ -144,6 +144,12 @@ class RegisterViewController: UIViewController {
       viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, completionBlock: { (success: Bool, user: User?, error: BookwittyAPIError?) in
         if let user = user, success {
           self.pushPenNameViewController(user: user)
+        } else if let error = error {
+          switch(error) {
+          case BookwittyAPIError.emailAlreadyExists:
+            self.showAlertErrorWith(title: self.viewModel.ooopsText, message: self.viewModel.emailAlreadyExistsErrorText)
+          default: break
+          }
         } else {
           self.showAlertErrorWith(title: self.viewModel.ooopsText, message: self.viewModel.somethingWentWrongText)
         }

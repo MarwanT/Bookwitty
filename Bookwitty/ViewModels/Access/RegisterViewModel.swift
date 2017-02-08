@@ -42,6 +42,7 @@ final class RegisterViewModel {
 
   let ooopsText: String = localizedString(key: "ooops", defaultValue: "Ooops")
   let somethingWentWrongText: String = localizedString(key: "some_thing_wrong_error", defaultValue: "Something went wrong")
+  let emailAlreadyExistsErrorText: String = localizedString(key: "email_already_exists_error", defaultValue: "The email address you have entered is already registered!")
   let registerErrorInFieldsNotification = localizedString(key: "invalid_fields_notification_message", defaultValue: "Please fill the required fields")
 
   var country: (code: String, name: String)?
