@@ -80,7 +80,7 @@ extension BookwittyAPI: TargetType {
       return [
         "client_id": AppKeys.shared.apiKey,
         "client_secret": AppKeys.shared.apiSecret,
-        "refresh_token": AccessToken.shared.refresh!,
+        "refresh_token": AccessToken.shared.refreshToken!,
         "grant_type": "refresh_token",
         "scopes": "openid email profile"
       ]

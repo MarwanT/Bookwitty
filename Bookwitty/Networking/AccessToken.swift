@@ -16,118 +16,92 @@ private extension Date {
   }
 }
 
-// TODO: Save token in keychain
 
-/**
- TODO: REVISE THIS WHOLE CLASS AND IMPLEMENT A BETTER APPROACH
- Based on previous experiences we might be facing multi-threads access problems
- */
-
-public struct AccessToken {
+class AccessToken {
   enum Keys: String {
-    case accessTokenKey = "AccessTokenKey"
-    case accessTokenExpiry = "AccessTokenExpiry"
-    case refreshTokenKey = "RefreshTokenKey"
-    case accessTokenIsUpdating = "IsUpdating"
+    case token = "AccessToken.Keys.token"
+    case expiryDate = "AccessToken.Keys.expiryDate"
+    case refreshToken = "AccessToken.Keys.refreshToken"
+    case updating = "AccessToken.Keys.updating"
   }
   
-  // MARK: - Initializers
+  private let defaults: UserDefaults
   
-  public let defaults: UserDefaults
   public static let shared: AccessToken = AccessToken()
   
   private init() {
     defaults = UserDefaults.standard
   }
   
-  public mutating func readFromDictionary(dictionary: NSDictionary) {
+  public func save(dictionary: NSDictionary) {
     let json = JSON(dictionary)
-    token = json["access_token"].stringValue
-    refresh = json["refresh_token"].stringValue
+    
+    let token = json["access_token"].stringValue
+    let refresh = json["refresh_token"].stringValue
     let expiresIn = json["expires_in"].doubleValue as TimeInterval
-    expiry = Date(timeIntervalSinceNow: expiresIn)
-    print("Token: \(token)")
-  }
-  
-  // MARK: - Properties
-  
-  public var token: String? {
-    get {
-      let key = defaults.string(forKey: Keys.accessTokenKey.rawValue)
-      return key
-    }
-    set(newToken) {
-      defaults.set(newToken, forKey: Keys.accessTokenKey.rawValue)
-    }
-  }
-  
-  public var expiry: Date? {
-    get {
-      return defaults.object(forKey: Keys.accessTokenExpiry.rawValue) as? Date
-    }
-    set(newExpiry) {
-      defaults.set(newExpiry, forKey: Keys.accessTokenExpiry.rawValue)
-    }
-  }
-  
-  public var refresh: String? {
-    get {
-      let key = defaults.string(forKey: Keys.refreshTokenKey.rawValue)
-      return key
-    }
-    set(newToken) {
-      defaults.set(newToken, forKey: Keys.refreshTokenKey.rawValue)
-    }
-  }
-  
-  public var isUpdating: Bool? {
-    get {
-      let key = defaults.bool(forKey: Keys.accessTokenIsUpdating.rawValue)
-      return key
-    }
-    set(newToken) {
-      defaults.set(newToken, forKey: Keys.accessTokenIsUpdating.rawValue)
-    }
-  }
-  
-  public var expired: Bool {
-    if let expiry = expiry {
-      return expiry.isInPast
-    }
-    return true
-  }
-  
-  public var isValid: Bool {
-    if let token = token, let refresh = refresh {
-      return (token.characters.count > 0) && (refresh.characters.count > 0) && !expired
-    }
+    let expiry = Date(timeIntervalSinceNow: expiresIn)
     
-    return false
+    defaults.set(token, forKey: Keys.token.rawValue)
+    defaults.set(refresh, forKey: Keys.token.rawValue)
+    defaults.set(expiry, forKey: Keys.expiryDate.rawValue)
+    defaults.set(false, forKey: Keys.updating.rawValue)
   }
   
-  public var hasToken: Bool {
-    if let token = token, let refresh = refresh {
-      return (token.characters.count > 0) && (refresh.characters.count > 0)
+  // MARK: - Properties APIs
+  
+  var token: String? {
+    return defaults.string(forKey: Keys.token.rawValue)
+  }
+  
+  var expiryDate: Date? {
+    return defaults.object(forKey: Keys.expiryDate.rawValue) as? Date
+  }
+  
+  var refreshToken: String? {
+    return defaults.string(forKey: Keys.refreshToken.rawValue)
+  }
+  
+  var updating: Bool? {
+    get {
+      return defaults.bool(forKey: Keys.updating.rawValue)
     }
-    
-    return false
+    set {
+      defaults.set(newValue ?? false, forKey: Keys.updating.rawValue)
+    }
   }
   
-  public var updating: Bool {
-    if let updating = isUpdating {
+  
+  // MARK: - Helpers
+  
+  private var isExpired: Bool {
+    guard let expiryDate = expiryDate else {
+      return true
+    }
+    return expiryDate.isInPast
+  }
+  
+  private var hasTokens: Bool {
+    guard let token = token, let refreshToken = refreshToken else {
+      return false
+    }
+    return (token.characters.count > 0) && (refreshToken.characters.count > 0)
+  }
+  
+  var isValid: Bool {
+    return hasTokens && !isExpired
+  }
+  
+  var isUpdating: Bool {
+    if let updating = updating {
       return updating
     }
     return false
   }
   
-  public func deleteToken() {
-    defaults.removeObject(forKey: Keys.accessTokenKey.rawValue)
-    defaults.removeObject(forKey: Keys.accessTokenExpiry.rawValue)
-    defaults.removeObject(forKey: Keys.refreshTokenKey.rawValue)
-    defaults.removeObject(forKey: Keys.accessTokenIsUpdating.rawValue)
-  }
-  
-  public static func resetAccessTokenFlags() {
-    UserDefaults.standard.set(false, forKey: Keys.accessTokenIsUpdating.rawValue)
+  func deleteToken() {
+    defaults.removeObject(forKey: Keys.token.rawValue)
+    defaults.removeObject(forKey: Keys.expiryDate.rawValue)
+    defaults.removeObject(forKey: Keys.refreshToken.rawValue)
+    defaults.removeObject(forKey: Keys.updating.rawValue)
   }
 }

@@ -89,9 +89,9 @@ public struct APIProvider {
       headerParameters["Content-Type"] = "application/json";
       headerParameters["Accept"] = "application/json"
     default:
-      let token = AccessToken.shared
-      if token.isValid {
-        headerParameters["Authorization"] = "Bearer \(token.token!)"
+      let accessToken = AccessToken.shared
+      if let token = accessToken.token, accessToken.isValid {
+        headerParameters["Authorization"] = "Bearer \(token)"
       }
       headerParameters["Content-Type"] = "application/vnd.api+json";
       headerParameters["Accept"] = "application/vnd.api+json"
@@ -195,7 +195,7 @@ public func signedAPIRequest(target: BookwittyAPI, completion: @escaping Bookwit
   
   let accessToken = AccessToken.shared
   
-  if (accessToken.updating) {
+  if (accessToken.isUpdating) {
     operationQueue.append((target: target, completion: completion))
     return nil
   }
@@ -217,24 +217,23 @@ public func signedAPIRequest(target: BookwittyAPI, completion: @escaping Bookwit
 
 public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -> Cancellable? {
   let accessToken = AccessToken.shared
-  accessToken.isUpdating = true
   
-  guard accessToken.refresh != nil else {
+  guard let refreshToken = accessToken.refreshToken else {
     NotificationCenter.default.post(name: AppNotification.Name.failToRefreshToken, object: nil)
     completion(false)
     return nil
   }
   
   return APIProvider.sharedProvider.request(.refreshToken, completion: { (result) in
+  accessToken.updating = true
     var success = false
     defer {
+      accessToken.updating = false
       completion(success)
     }
     
     switch result {
     case .success(let response):
-      accessToken.isUpdating = false
-      
       if response.statusCode == 400 {
         NotificationCenter.default.post(name: AppNotification.Name.failToRefreshToken, object: nil)
         return
@@ -244,7 +243,7 @@ public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -
         guard let accessTokenDictionary = try JSONSerialization.jsonObject(with: response.data, options: JSONSerialization.ReadingOptions.allowFragments) as? NSDictionary else {
           return
         }
-        accessToken.readFromDictionary(dictionary: accessTokenDictionary)
+        accessToken.save(dictionary: accessTokenDictionary)
         success = true
       } catch {
         print("Error casting token data as dictionary")

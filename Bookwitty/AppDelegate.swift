@@ -22,7 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     applyTheme()
     
-    AccessToken.resetAccessTokenFlags()
+    // Reset flag when application starts
+    AccessToken.shared.updating = false
     
     Fabric.with([Crashlytics.self])
     SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
