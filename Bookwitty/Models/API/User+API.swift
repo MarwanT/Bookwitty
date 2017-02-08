@@ -49,6 +49,41 @@ struct UserAPI {
       }
     }
   }
+
+
+  public static func registerUser(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String? = nil, countryISO3166: String, password: String, completionBlock: @escaping (_ success: Bool, _ user: User?, _ error: BookwittyAPIError?)->()) -> Cancellable {
+
+    let successStatusCode = 201
+    let emailAlreadyUsedStatusCode = 409
+
+    return apiRequest(target: BookwittyAPI.register(firstName: firstName, lastName: lastName, email: email, dateOfBirthISO8601: dateOfBirthISO8601, countryISO3166: countryISO3166, password: password)) {
+      (data, statusCode, response, error) in
+      var success: Bool = false
+      var user: User? = nil
+      var error: BookwittyAPIError? = error
+      defer {
+        completionBlock(success, user, error)
+      }
+
+      if statusCode == emailAlreadyUsedStatusCode {
+        error = BookwittyAPIError.emailAlreadyExists
+        return
+      }
+
+      // If status code != success then break
+      if statusCode != successStatusCode {
+        error = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      if let data = data {
+        user = User.parseData(data: data)
+        success = user != nil
+      } else {
+        error = BookwittyAPIError.failToParseData
+      }
+    }
+  }
 }
 
 //MARK: - Moya Needed parameters
