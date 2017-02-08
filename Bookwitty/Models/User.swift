@@ -40,6 +40,7 @@ class User: Resource {
       "email": Attribute().serializeAs("email"),
       "dateOfBirth": Attribute().serializeAs("date-of-birth"),
       "country": Attribute().serializeAs("country"),
+      "password": Attribute().serializeAs("password"),
       ])
   }
 
