@@ -1,0 +1,5252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>A.name</key>
+	<string>The Arts</string>
+	<key>A.B.name</key>
+	<string>The arts: general issues</string>
+	<key>A.B.A.name</key>
+	<string>Theory of art</string>
+	<key>A.B.C.name</key>
+	<string>Conservation, restoration &amp; care of artworks</string>
+	<key>A.B.K.name</key>
+	<string>Forgery, falsification &amp; theft of artworks</string>
+	<key>A.B.Q.name</key>
+	<string>Art: financial aspects</string>
+	<key>A.F.name</key>
+	<string>Fine arts: art forms</string>
+	<key>A.F.C.name</key>
+	<string>Painting &amp; paintings</string>
+	<key>A.F.C.C.name</key>
+	<string>Paintings &amp; painting in watercolours</string>
+	<key>A.F.C.L.name</key>
+	<string>Paintings &amp; painting in oils</string>
+	<key>A.F.F.name</key>
+	<string>Drawing &amp; drawings</string>
+	<key>A.F.H.name</key>
+	<string>Prints &amp; printmaking</string>
+	<key>A.F.J.name</key>
+	<string>Other graphic art forms</string>
+	<key>A.F.K.name</key>
+	<string>Non-graphic art forms</string>
+	<key>A.F.K.B.name</key>
+	<string>Sculpture</string>
+	<key>A.F.K.C.name</key>
+	<string>Carvings: artworks</string>
+	<key>A.F.K.G.name</key>
+	<string>Precious metal, precious stones &amp; jewellery: artworks &amp; design</string>
+	<key>A.F.K..name</key>
+	<string>Installation art</string>
+	<key>A.F.K.P.name</key>
+	<string>Performance art</string>
+	<key>A.F.K.V.name</key>
+	<string>Electronic, holographic &amp; video art</string>
+	<key>A.F.P.name</key>
+	<string>Ceramic &amp; glass: artworks</string>
+	<key>A.F.T.name</key>
+	<string>Decorative arts</string>
+	<key>A.F.W.name</key>
+	<string>Textile artworks</string>
+	<key>A.G.name</key>
+	<string>Fine arts: treatments &amp; subjects</string>
+	<key>A.G.A.name</key>
+	<string>History of art</string>
+	<key>A.G.B.name</key>
+	<string>Individual artists, art monographs</string>
+	<key>A.G.C.name</key>
+	<string>Exhibition catalogues &amp; specific collections</string>
+	<key>A.G.H.name</key>
+	<string>Human figures depicted in art</string>
+	<key>A.G.H.F.name</key>
+	<string>Portraits in art</string>
+	<key>A.G.H..name</key>
+	<string>Nudes depicted in art</string>
+	<key>A.G.H.X.name</key>
+	<string>Erotic art</string>
+	<key>A.G.K.name</key>
+	<string>Small-scale, secular &amp; domestic scenes in art</string>
+	<key>A.G..name</key>
+	<string>Animals &amp; nature in art (still life, landscapes &amp; seascapes, etc)</string>
+	<key>A.G..B.name</key>
+	<string>Botanical art</string>
+	<key>A.G.P.name</key>
+	<string>Man-made objects depicted in art (cityscapes, machines, etc)</string>
+	<key>A.G.R.name</key>
+	<string>Religious art</string>
+	<key>A.G.Z.name</key>
+	<string>Art techniques &amp; principles</string>
+	<key>A.J.name</key>
+	<string>Photography &amp; photographs</string>
+	<key>A.J.C.name</key>
+	<string>Photographs: collections</string>
+	<key>A.J.C.D.name</key>
+	<string>Individual photographers</string>
+	<key>A.J.C.P.name</key>
+	<string>Portraiture</string>
+	<key>A.J.C.X.name</key>
+	<string>Erotic &amp; nude photography</string>
+	<key>A.J.F.name</key>
+	<string>Photojournalism</string>
+	<key>A.J.T.name</key>
+	<string>Photographic equipment &amp; techniques: general</string>
+	<key>A.J.T.A.name</key>
+	<string>Camera-specific manuals</string>
+	<key>A.J.T.F.name</key>
+	<string>Photography: specific techniques</string>
+	<key>A.J.T.V.name</key>
+	<string>Video photography</string>
+	<key>A.K.name</key>
+	<string>Industrial / commercial art &amp; design</string>
+	<key>A.K.B.name</key>
+	<string>Individual designers</string>
+	<key>A.K.C.name</key>
+	<string>Graphic design</string>
+	<key>A.K.D.name</key>
+	<string>Typography &amp; lettering</string>
+	<key>A.K.H.name</key>
+	<string>Book design</string>
+	<key>A.K.L.name</key>
+	<string>Illustration &amp; commercial art</string>
+	<key>A.K.L.B.name</key>
+	<string>Illustration</string>
+	<key>A.K.L.C.name</key>
+	<string>Comic book &amp; cartoon art</string>
+	<key>A.K.L.C.1.name</key>
+	<string>Graphic novel &amp; Manga artwork</string>
+	<key>A.K.L.F.name</key>
+	<string>Computer game art</string>
+	<key>A.K.L.P.name</key>
+	<string>Poster art</string>
+	<key>A.K.P.name</key>
+	<string>Product design</string>
+	<key>A.K.R.name</key>
+	<string>Furniture design</string>
+	<key>A.K.T.name</key>
+	<string>Fashion &amp; textiles</string>
+	<key>A.M.name</key>
+	<string>Architecture</string>
+	<key>A.M.A.name</key>
+	<string>Theory of architecture</string>
+	<key>A.M.B.name</key>
+	<string>Individual architects &amp; architectural firms</string>
+	<key>A.M.C.name</key>
+	<string>Architectural structure &amp; design</string>
+	<key>A.M.C.R.name</key>
+	<string>Environmentally-friendly (‘green’) architecture &amp; design</string>
+	<key>A.M.D.name</key>
+	<string>Architecture: professional practice</string>
+	<key>A.M.G.name</key>
+	<string>Architecture: public buildings</string>
+	<key>A.M.K.name</key>
+	<string>Architecture: residential buildings, domestic buildings</string>
+	<key>A.M.K.L.name</key>
+	<string>Architecture: castles &amp; fortifications</string>
+	<key>A.M..name</key>
+	<string>Architecture: religious buildings</string>
+	<key>A.M.R.name</key>
+	<string>Architecture: interior design</string>
+	<key>A.M.V.name</key>
+	<string>Landscape art &amp; architecture</string>
+	<key>A.M.V.D.name</key>
+	<string>City &amp; town planning: architectural aspects</string>
+	<key>A.M.X.name</key>
+	<string>History of architecture</string>
+	<key>A.T.name</key>
+	<string>Performing arts</string>
+	<key>A.T.C.name</key>
+	<string>Individual actors &amp; performers</string>
+	<key>A.T.D.name</key>
+	<string>Theatre studies</string>
+	<key>A.T.D.C.name</key>
+	<string>Acting techniques</string>
+	<key>A.T.D.F.name</key>
+	<string>Theatre direction &amp; production</string>
+	<key>A.T.D.H.name</key>
+	<string>Theatre: technical &amp; background skills</string>
+	<key>A.T.D.S.name</key>
+	<string>Theatre management</string>
+	<key>A.T.F.name</key>
+	<string>Films, cinema</string>
+	<key>A.T.F.A.name</key>
+	<string>Film history, theory &amp; criticism</string>
+	<key>A.T.F.B.name</key>
+	<string>Individual film directors, film-makers</string>
+	<key>A.T.F.D.name</key>
+	<string>Film scripts &amp; screenplays</string>
+	<key>A.T.F.G.name</key>
+	<string>Film guides &amp; reviews</string>
+	<key>A.T.F..name</key>
+	<string>Film: styles &amp; genres</string>
+	<key>A.T.F.R.name</key>
+	<string>Documentary films</string>
+	<key>A.T.F.V.name</key>
+	<string>Animated films</string>
+	<key>A.T.F.X.name</key>
+	<string>Film production: technical &amp; background skills</string>
+	<key>A.T.J.name</key>
+	<string>Television</string>
+	<key>A.T.J.D.name</key>
+	<string>Television scripts &amp; screenplays</string>
+	<key>A.T.J.S.name</key>
+	<string>Television drama</string>
+	<key>A.T.J.X.name</key>
+	<string>Television production: technical &amp; background skills</string>
+	<key>A.T.L.name</key>
+	<string>Radio</string>
+	<key>A.T.L.D.name</key>
+	<string>Radio scripts</string>
+	<key>A.T.Q.name</key>
+	<string>Dance</string>
+	<key>A.T.Q.C.name</key>
+	<string>Choreography</string>
+	<key>A.T.Q.L.name</key>
+	<string>Ballet</string>
+	<key>A.T.Q.R.name</key>
+	<string>Ballroom dancing</string>
+	<key>A.T.Q.T.name</key>
+	<string>Contemporary dance</string>
+	<key>A.T.Q.Z.name</key>
+	<string>Folk dancing</string>
+	<key>A.T.X.name</key>
+	<string>Other performing arts</string>
+	<key>A.T.X.M.name</key>
+	<string>Puppetry, miniature &amp; toy theatre</string>
+	<key>A.T.X.P.name</key>
+	<string>Pageants, parades, festivals</string>
+	<key>A.T.X.Z.name</key>
+	<string>Animal spectacles, performing animals</string>
+	<key>A.T.X.Z.1.name</key>
+	<string>Bullfighting</string>
+	<key>A.V.name</key>
+	<string>Music</string>
+	<key>A.V.A.name</key>
+	<string>Theory of music &amp; musicology</string>
+	<key>A.V.C.name</key>
+	<string>Music reviews &amp; criticism</string>
+	<key>A.V.D.name</key>
+	<string>Discographies &amp; buyer’s guides</string>
+	<key>A.V.L.name</key>
+	<string>Music: styles &amp; genres</string>
+	<key>A.V.L.A.name</key>
+	<string>Art music, orchestral &amp; formal music</string>
+	<key>A.V.L.C.name</key>
+	<string>Choral music</string>
+	<key>A.V.L.F.name</key>
+	<string>Opera</string>
+	<key>A.V.L.K.name</key>
+	<string>Sacred &amp; religious music</string>
+	<key>A.V.L.M.name</key>
+	<string>Music of film &amp; stage</string>
+	<key>A.V.L.P.name</key>
+	<string>Popular music</string>
+	<key>A.V.L.T.name</key>
+	<string>Traditional &amp; folk music</string>
+	<key>A.V.L.W.name</key>
+	<string>‘World music’ &amp; regional styles</string>
+	<key>A.V.L.X.name</key>
+	<string>Electronic music</string>
+	<key>A.V.M.name</key>
+	<string>History of music</string>
+	<key>A.V..name</key>
+	<string>Composers &amp; songwriters</string>
+	<key>A.V.P.name</key>
+	<string>Musicians, singers, bands &amp; groups</string>
+	<key>A.V.Q.name</key>
+	<string>Musical scores, lyrics &amp; libretti</string>
+	<key>A.V.Q.S.name</key>
+	<string>Songbooks</string>
+	<key>A.V.R.name</key>
+	<string>Musical instruments</string>
+	<key>A.V.R.G.name</key>
+	<string>Keyboard instruments</string>
+	<key>A.V.R.J.name</key>
+	<string>Percussion instruments</string>
+	<key>A.V.R.L.name</key>
+	<string>String instruments</string>
+	<key>A.V.R.L.1.name</key>
+	<string>Guitar</string>
+	<key>A.V.R.L.2.name</key>
+	<string>Plucked instruments</string>
+	<key>A.V.R..name</key>
+	<string>Wind instruments</string>
+	<key>A.V.R.Q.name</key>
+	<string>Mechanical musical instruments</string>
+	<key>A.V.R.S.name</key>
+	<string>Electronic musical instruments</string>
+	<key>A.V.S.name</key>
+	<string>Techniques of music / music tutorials</string>
+	<key>A.V.S.A.name</key>
+	<string>Singing: techniques</string>
+	<key>A.V.X.name</key>
+	<string>Music recording &amp; reproduction</string>
+	<key>C.name</key>
+	<string>Language &amp; Linguistics</string>
+	<key>C.B.name</key>
+	<string>Language: reference &amp; general</string>
+	<key>C.B.D.name</key>
+	<string>Dictionaries</string>
+	<key>C.B.D.X.name</key>
+	<string>Bilingual &amp; multilingual dictionaries</string>
+	<key>C.B.F.name</key>
+	<string>Thesauri</string>
+	<key>C.B.G.name</key>
+	<string>Usage &amp; grammar guides</string>
+	<key>C.B.P.name</key>
+	<string>Speaking in public: advice &amp; guides</string>
+	<key>C.B.V.name</key>
+	<string>Creative writing &amp; creative writing guides</string>
+	<key>C.B.V.S.name</key>
+	<string>Screenwriting techniques</string>
+	<key>C.B.W.name</key>
+	<string>Writing &amp; editing guides</string>
+	<key>C.B.X.name</key>
+	<string>Language: history &amp; general works</string>
+	<key>C.F.name</key>
+	<string>Linguistics</string>
+	<key>C.F.A.name</key>
+	<string>Philosophy of language</string>
+	<key>C.F.B.name</key>
+	<string>Sociolinguistics</string>
+	<key>C.F.C.name</key>
+	<string>Literacy</string>
+	<key>C.F.D.name</key>
+	<string>Psycholinguistics</string>
+	<key>C.F.D.C.name</key>
+	<string>Language acquisition</string>
+	<key>C.F.D.M.name</key>
+	<string>Bilingualism &amp; multilingualism</string>
+	<key>C.F.F.name</key>
+	<string>Historical &amp; comparative linguistics</string>
+	<key>C.F.F.D.name</key>
+	<string>Dialect, slang &amp; jargon</string>
+	<key>C.F.G.name</key>
+	<string>Semantics, discourse analysis, stylistics</string>
+	<key>C.F.H.name</key>
+	<string>Phonetics, phonology</string>
+	<key>C.F.K.name</key>
+	<string>Grammar, syntax &amp; morphology</string>
+	<key>C.F.L.name</key>
+	<string>Palaeography (study &amp; history of writing)</string>
+	<key>C.F.L.A.name</key>
+	<string>Writing systems, alphabets</string>
+	<key>C.F.M.name</key>
+	<string>Lexicography</string>
+	<key>C.F.P.name</key>
+	<string>Translation &amp; interpretation</string>
+	<key>C.F.X.name</key>
+	<string>Computational linguistics</string>
+	<key>C.F.Z.name</key>
+	<string>Sign languages, Braille &amp; other linguistic communication</string>
+	<key>C.J.name</key>
+	<string>Language teaching &amp; learning</string>
+	<key>C.J.A.name</key>
+	<string>Language teaching theory &amp; methods</string>
+	<key>C.J.B.name</key>
+	<string>Language teaching &amp; learning material &amp; coursework</string>
+	<key>C.J.B.G.name</key>
+	<string>Language learning: grammar, vocabulary &amp; pronunciation</string>
+	<key>C.J.B.R.name</key>
+	<string>Language readers</string>
+	<key>C.J.B.T.name</key>
+	<string>Language self-study texts</string>
+	<key>C.J.C.name</key>
+	<string>Language learning: specific skills</string>
+	<key>C.J.C.K.name</key>
+	<string>Language learning: speaking skills</string>
+	<key>C.J.C.L.name</key>
+	<string>Language learning: listening skills</string>
+	<key>C.J.C.R.name</key>
+	<string>Language learning: reading skills</string>
+	<key>C.J.C.W.name</key>
+	<string>Language learning: writing skills</string>
+	<key>C.J.P.name</key>
+	<string>Language learning for specific purposes</string>
+	<key>C.J.P.D.name</key>
+	<string>Language learning for business</string>
+	<key>C.J.P.G.name</key>
+	<string>Language learning for technical &amp; scientific purposes</string>
+	<key>D.name</key>
+	<string>Biography, Literature &amp; Literary studies</string>
+	<key>D.B.name</key>
+	<string>Ancient, classical &amp; medieval texts</string>
+	<key>D.B.S.name</key>
+	<string>Sagas &amp; epics</string>
+	<key>D.B.S.G.name</key>
+	<string>Ancient Greek &amp; Roman legends</string>
+	<key>D.B.S..name</key>
+	<string>Icelandic &amp; Old Norse sagas</string>
+	<key>D.C.name</key>
+	<string>Poetry</string>
+	<key>D.C.A.name</key>
+	<string>Classic &amp; pre-20th century poetry</string>
+	<key>D.C.C.name</key>
+	<string>Modern &amp; contemporary poetry (c 1900 onwards)</string>
+	<key>D.C.F.name</key>
+	<string>Poetry by individual poets</string>
+	<key>D.C.Q.name</key>
+	<string>Poetry anthologies (various poets)</string>
+	<key>D.D.name</key>
+	<string>Plays, playscripts</string>
+	<key>D.D.A.name</key>
+	<string>Classic &amp; pre-20th century plays</string>
+	<key>D.D.C.name</key>
+	<string>Modern &amp; contemporary plays (c 1900 onwards)</string>
+	<key>D..name</key>
+	<string>Biography &amp; non-fiction prose</string>
+	<key>D..B.name</key>
+	<string>Biography: general</string>
+	<key>D..B.A.name</key>
+	<string>Autobiography: general</string>
+	<key>D..B.B.name</key>
+	<string>Biography: business &amp; industry</string>
+	<key>D..B.B.1.name</key>
+	<string>Autobiography: business &amp; industry</string>
+	<key>D..B.F.name</key>
+	<string>Biography: arts &amp; entertainment</string>
+	<key>D..B.F.1.name</key>
+	<string>Autobiography: arts &amp; entertainment</string>
+	<key>D..B.H.name</key>
+	<string>Biography: historical, political &amp; military</string>
+	<key>D..B.H.1.name</key>
+	<string>Autobiography: historical, political &amp; military</string>
+	<key>D..B.L.name</key>
+	<string>Biography: literary</string>
+	<key>D..B.L.1.name</key>
+	<string>Autobiography: literary</string>
+	<key>D..B.R.name</key>
+	<string>Biography: royalty</string>
+	<key>D..B.R.1.name</key>
+	<string>Autobiography: royalty</string>
+	<key>D..B.S.name</key>
+	<string>Biography: sport</string>
+	<key>D..B.S.1.name</key>
+	<string>Autobiography: sport</string>
+	<key>D..B.T.name</key>
+	<string>Biography: science, technology &amp; medicine</string>
+	<key>D..B.T.1.name</key>
+	<string>Autobiography: science, technology &amp; medicine</string>
+	<key>D..B.X.name</key>
+	<string>Biography: religious &amp; spiritual</string>
+	<key>D..B.X.1.name</key>
+	<string>Autobiography: religious &amp; spiritual</string>
+	<key>D..B.Z.name</key>
+	<string>Collected biographies</string>
+	<key>D..C.name</key>
+	<string>Memoirs</string>
+	<key>D..D.name</key>
+	<string>Diaries, letters &amp; journals</string>
+	<key>D..G.name</key>
+	<string>Animal life stories</string>
+	<key>D..L.name</key>
+	<string>Literary essays</string>
+	<key>D..P.name</key>
+	<string>Reportage &amp; collected journalism</string>
+	<key>D..S.name</key>
+	<string>Speeches</string>
+	<key>D..T.name</key>
+	<string>Anthologies: general</string>
+	<key>D..X.name</key>
+	<string>True stories: general</string>
+	<key>D..X.C.name</key>
+	<string>True crime</string>
+	<key>D..X.H.name</key>
+	<string>True stories: discovery / historical / scientific</string>
+	<key>D..X.M.name</key>
+	<string>True war &amp; combat stories</string>
+	<key>D..X.P.name</key>
+	<string>True stories of heroism, endurance &amp; survival</string>
+	<key>D..X.Z.name</key>
+	<string>Erotic confessions &amp; true stories</string>
+	<key>D.S.name</key>
+	<string>Literature: history &amp; criticism</string>
+	<key>D.S.A.name</key>
+	<string>Literary theory</string>
+	<key>D.S.B.name</key>
+	<string>Literary studies: general</string>
+	<key>D.S.B.B.name</key>
+	<string>Literary studies: ancient, classical &amp; medieval</string>
+	<key>D.S.B.C.name</key>
+	<string>Literary studies: c 1400 to c 1600</string>
+	<key>D.S.B.D.name</key>
+	<string>Literary studies: c 1600 to c 1800</string>
+	<key>D.S.B.F.name</key>
+	<string>Literary studies: c 1800 to c 1900</string>
+	<key>D.S.B.H.name</key>
+	<string>Literary studies: c 1900 to c 2000</string>
+	<key>D.S.B.H.5.name</key>
+	<string>Literary studies: post-colonial literature</string>
+	<key>D.S.B.J.name</key>
+	<string>Literary studies: from c 2000</string>
+	<key>D.S.C.name</key>
+	<string>Literary studies: poetry &amp; poets</string>
+	<key>D.S.G.name</key>
+	<string>Literary studies: plays &amp; playwrights</string>
+	<key>D.S.K.name</key>
+	<string>Literary studies: fiction, novelists &amp; prose writers</string>
+	<key>D.S.R.name</key>
+	<string>Literary reference works</string>
+	<key>D.S.R.C.name</key>
+	<string>Literary companions, book reviews &amp; guides</string>
+	<key>D.S.1.name</key>
+	<string>Children’s &amp; teenage literature studies: general</string>
+	<key>D.S.1.C.name</key>
+	<string>Children’s &amp; teenage book reviews &amp; guides</string>
+	<key>F.name</key>
+	<string>Fiction &amp; Related items</string>
+	<key>F.B.name</key>
+	<string>Fiction: general &amp; literary</string>
+	<key>F.B.A.name</key>
+	<string>Modern &amp; contemporary fiction</string>
+	<key>F.B.C.name</key>
+	<string>Classic fiction</string>
+	<key>F.C.name</key>
+	<string>Biographical fiction</string>
+	<key>F.D.name</key>
+	<string>Speculative fiction</string>
+	<key>F.D.B.name</key>
+	<string>Dystopian &amp; utopian fiction</string>
+	<key>F.D.K.name</key>
+	<string>Alternative history fiction</string>
+	<key>F.F.name</key>
+	<string>Crime &amp; mystery fiction</string>
+	<key>F.F.C.name</key>
+	<string>Classic crime fiction</string>
+	<key>F.F.H.name</key>
+	<string>Historical mysteries</string>
+	<key>F.F.J.name</key>
+	<string>Crime &amp; mystery: cosy mystery</string>
+	<key>F.F.K.name</key>
+	<string>Comic (humorous) crime &amp; mystery</string>
+	<key>F.F.L.name</key>
+	<string>Crime &amp; mystery: hard-boiled crime, noir fiction</string>
+	<key>F.F.P.name</key>
+	<string>Crime &amp; mystery: police procedural</string>
+	<key>F.F.S.name</key>
+	<string>Crime &amp; mystery: women sleuths</string>
+	<key>F.G.name</key>
+	<string>Sports fiction</string>
+	<key>F.H.name</key>
+	<string>Thriller / suspense fiction</string>
+	<key>F.H.D.name</key>
+	<string>Espionage &amp; spy thriller</string>
+	<key>F.H.K.name</key>
+	<string>Technothriller</string>
+	<key>F.H.P.name</key>
+	<string>Political / legal thriller</string>
+	<key>F.H.Q.name</key>
+	<string>Esoteric thriller</string>
+	<key>F.H.X.name</key>
+	<string>Psychological thriller</string>
+	<key>F.J.name</key>
+	<string>Adventure fiction</string>
+	<key>F.J.H.name</key>
+	<string>Historical adventure fiction</string>
+	<key>F.J.M.name</key>
+	<string>War &amp; combat fiction</string>
+	<key>F.J.M.C.name</key>
+	<string>Napoleonic War fiction</string>
+	<key>F.J.M.F.name</key>
+	<string>First World War fiction</string>
+	<key>F.J.M.S.name</key>
+	<string>Second World War fiction</string>
+	<key>F.J.M.V.name</key>
+	<string>Vietnam War fiction</string>
+	<key>F.J.W.name</key>
+	<string>Adventure fiction: Westerns</string>
+	<key>F.K.name</key>
+	<string>Horror &amp; supernatural fiction</string>
+	<key>F.K.C.name</key>
+	<string>Classic horror &amp; ghost stories</string>
+	<key>F.K.M.name</key>
+	<string>Contemporary horror</string>
+	<key>F.K.W.name</key>
+	<string>Occult fiction</string>
+	<key>F.L.name</key>
+	<string>Science fiction</string>
+	<key>F.L.C.name</key>
+	<string>Classic science fiction</string>
+	<key>F.L.G.name</key>
+	<string>Science fiction: time travel</string>
+	<key>F.L.M.name</key>
+	<string>Science fiction: Steampunk</string>
+	<key>F.L.P.name</key>
+	<string>Science fiction: near-future</string>
+	<key>F.L.Q.name</key>
+	<string>Science fiction: apocalyptic &amp; post-apocalyptic</string>
+	<key>F.L.R.name</key>
+	<string>Science fiction: military</string>
+	<key>F.L.S.name</key>
+	<string>Science fiction: Space opera</string>
+	<key>F.L.U.name</key>
+	<string>Science fiction: aliens / UFOs</string>
+	<key>F.M.name</key>
+	<string>Fantasy</string>
+	<key>F.M.B.name</key>
+	<string>Epic fantasy</string>
+	<key>F.M.H.name</key>
+	<string>Historical fantasy</string>
+	<key>F.M.K.name</key>
+	<string>Comic (humorous) fantasy</string>
+	<key>F.M.M.name</key>
+	<string>Magical realism</string>
+	<key>F.M.R.name</key>
+	<string>Fantasy romance, dark romance</string>
+	<key>F.M.X.name</key>
+	<string>Urban fantasy</string>
+	<key>F..name</key>
+	<string>Myth &amp; legend told as fiction</string>
+	<key>F.P.name</key>
+	<string>Erotic fiction</string>
+	<key>F.Q.name</key>
+	<string>Contemporary lifestyle fiction</string>
+	<key>F.R.name</key>
+	<string>Romance</string>
+	<key>F.R.D.name</key>
+	<string>Adult &amp; contemporary romance</string>
+	<key>F.R.H.name</key>
+	<string>Historical romance</string>
+	<key>F.R.M.name</key>
+	<string>Romantic suspense</string>
+	<key>F.R.X.name</key>
+	<string>Erotic romance</string>
+	<key>F.S.name</key>
+	<string>Family life fiction</string>
+	<key>F.T.name</key>
+	<string>Generational sagas</string>
+	<key>F.U.name</key>
+	<string>Humorous fiction</string>
+	<key>F.U.P.name</key>
+	<string>Satirical fiction &amp; parodies</string>
+	<key>F.V.name</key>
+	<string>Historical fiction</string>
+	<key>F.W.name</key>
+	<string>Religious &amp; spiritual fiction</string>
+	<key>F.X.name</key>
+	<string>Fiction: narrative themes</string>
+	<key>F.X.B.name</key>
+	<string>Narrative theme: Coming of age</string>
+	<key>F.X.M.name</key>
+	<string>Narrative theme: Interior life</string>
+	<key>F.X.P.name</key>
+	<string>Narrative theme: Politics</string>
+	<key>F.X.S.name</key>
+	<string>Narrative theme: Social issues</string>
+	<key>F.1.name</key>
+	<string>Fiction: special features</string>
+	<key>F.1.B.name</key>
+	<string>Short stories</string>
+	<key>F.1.H.name</key>
+	<string>Fiction: pastiche</string>
+	<key>F.1.M.name</key>
+	<string>Fiction: mashup</string>
+	<key>F.1.T.name</key>
+	<string>Fiction in translation</string>
+	<key>F.Z.name</key>
+	<string>Fiction companions</string>
+	<key>G.name</key>
+	<string>Reference, Information &amp; Interdisciplinary subjects</string>
+	<key>G.B.name</key>
+	<string>Encyclopaedias &amp; reference works</string>
+	<key>G.B.A.name</key>
+	<string>General encyclopaedias</string>
+	<key>G.B.C.name</key>
+	<string>Reference works</string>
+	<key>G.B.C.B.name</key>
+	<string>Dictionaries of biography (Who’s Who)</string>
+	<key>G.B.C.Q.name</key>
+	<string>Dictionaries of quotations</string>
+	<key>G.B.C.R.name</key>
+	<string>Bibliographies, catalogues</string>
+	<key>G.B.C.S.name</key>
+	<string>Serials, periodicals, abstracts, indexes</string>
+	<key>G.B.C.T.name</key>
+	<string>Directories</string>
+	<key>G.B.C.1.name</key>
+	<string>Yearbooks, annuals, almanacs</string>
+	<key>G.L.name</key>
+	<string>Library &amp; information sciences / Museology</string>
+	<key>G.L.C.name</key>
+	<string>Library, archive &amp; information management</string>
+	<key>G.L.C.A.name</key>
+	<string>Information retrieval &amp; access</string>
+	<key>G.L.F.name</key>
+	<string>IT, Internet &amp; electronic resources in libraries</string>
+	<key>G.L.H.name</key>
+	<string>Acquisitions &amp; collection development</string>
+	<key>G.L.K.name</key>
+	<string>Bibliographic &amp; subject control</string>
+	<key>G.L.M.name</key>
+	<string>Library &amp; information services</string>
+	<key>G.L.P.name</key>
+	<string>Archiving, preservation &amp; digitisation</string>
+	<key>G.L.Z.name</key>
+	<string>Museology &amp; heritage studies</string>
+	<key>G.P.name</key>
+	<string>Research &amp; information: general</string>
+	<key>G.P.F.name</key>
+	<string>Information theory</string>
+	<key>G.P.F.C.name</key>
+	<string>Cybernetics &amp; systems theory</string>
+	<key>G.P.H.name</key>
+	<string>Data analysis: general</string>
+	<key>G.P.J.name</key>
+	<string>Coding theory &amp; cryptology</string>
+	<key>G.P.Q.name</key>
+	<string>Decision theory: general</string>
+	<key>G.P.Q.D.name</key>
+	<string>Risk assessment</string>
+	<key>G.P.S.name</key>
+	<string>Research methods: general</string>
+	<key>G.T.name</key>
+	<string>Interdisciplinary studies</string>
+	<key>G.T.B.name</key>
+	<string>History of scholarship (principally social sciences &amp; humanities)</string>
+	<key>G.T.C.name</key>
+	<string>Communication studies</string>
+	<key>G.T.D.name</key>
+	<string>Semiotics / semiology</string>
+	<key>G.T.K.name</key>
+	<string>Cognitive studies</string>
+	<key>G.T.M.name</key>
+	<string>Regional studies</string>
+	<key>G.T.P.name</key>
+	<string>Development studies</string>
+	<key>G.T.Q.name</key>
+	<string>Globalization</string>
+	<key>G.T.T.name</key>
+	<string>Flags, emblems, symbols, logos</string>
+	<key>G.T.U.name</key>
+	<string>Peace studies &amp; conflict resolution</string>
+	<key>G.T.V.name</key>
+	<string>Institutions &amp; learned societies: general</string>
+	<key>G.T.Z.name</key>
+	<string>General studies</string>
+	<key>J.name</key>
+	<string>Society &amp; Social Sciences</string>
+	<key>J.B.name</key>
+	<string>Society &amp; culture: general</string>
+	<key>J.B.C.name</key>
+	<string>Cultural &amp; media studies</string>
+	<key>J.B.C.C.name</key>
+	<string>Cultural studies</string>
+	<key>J.B.C.C.1.name</key>
+	<string>Popular culture</string>
+	<key>J.B.C.C.2.name</key>
+	<string>Material culture</string>
+	<key>J.B.C.C.3.name</key>
+	<string>Cultural studies: fashion &amp; society</string>
+	<key>J.B.C.C.4.name</key>
+	<string>Cultural studies: food &amp; society</string>
+	<key>J.B.C.C.9.name</key>
+	<string>History of ideas</string>
+	<key>J.B.C.T.name</key>
+	<string>Media studies</string>
+	<key>J.B.C.T.1.name</key>
+	<string>Media studies: Internet, digital media &amp; society</string>
+	<key>J.B.C.T.2.name</key>
+	<string>Media studies: TV &amp; society</string>
+	<key>J.B.C.T.3.name</key>
+	<string>Media studies: advertising &amp; society</string>
+	<key>J.B.F.name</key>
+	<string>Social &amp; ethical issues</string>
+	<key>J.B.F.A.name</key>
+	<string>Social discrimination &amp; equal treatment</string>
+	<key>J.B.F.C.name</key>
+	<string>Poverty &amp; unemployment</string>
+	<key>J.B.F.D.name</key>
+	<string>Housing &amp; homelessness</string>
+	<key>J.B.F.F.name</key>
+	<string>Social impact of disasters</string>
+	<key>J.B.F.G.name</key>
+	<string>Refugees &amp; political asylum</string>
+	<key>J.B.F.H.name</key>
+	<string>Migration, immigration &amp; emigration</string>
+	<key>J.B.F.K.name</key>
+	<string>Violence in society</string>
+	<key>J.B.F.K.1.name</key>
+	<string>Child abuse</string>
+	<key>J.B.F.K.2.name</key>
+	<string>Sexual abuse &amp; harassment</string>
+	<key>J.B.F.K.3.name</key>
+	<string>Domestic violence</string>
+	<key>J.B.F.M.name</key>
+	<string>Disability: social aspects</string>
+	<key>J.B.F..name</key>
+	<string>Illness &amp; addiction: social aspects</string>
+	<key>J.B.F.Q.name</key>
+	<string>Social mobility</string>
+	<key>J.B.F.S.name</key>
+	<string>Consumerism</string>
+	<key>J.B.F.U.name</key>
+	<string>Animals &amp; society</string>
+	<key>J.B.F.V.name</key>
+	<string>Ethical issues &amp; debates</string>
+	<key>J.B.F.V.1.name</key>
+	<string>Ethical issues: abortion &amp; birth control</string>
+	<key>J.B.F.V.2.name</key>
+	<string>Ethical issues: capital punishment</string>
+	<key>J.B.F.V.3.name</key>
+	<string>Ethical issues: censorship</string>
+	<key>J.B.F.V.4.name</key>
+	<string>Ethical issues: euthanasia &amp; right to die</string>
+	<key>J.B.F.V.5.name</key>
+	<string>Ethical issues: scientific, technological &amp; medical developments</string>
+	<key>J.B.F.W.name</key>
+	<string>Sex, sexuality, relationships &amp; society: general</string>
+	<key>J.B.F.X.name</key>
+	<string>Social attitudes</string>
+	<key>J.B.F.Z.name</key>
+	<string>Social forecasting, future studies</string>
+	<key>J.B.G.name</key>
+	<string>Popular beliefs &amp; controversial knowledge</string>
+	<key>J.B.G.B.name</key>
+	<string>Folklore, myths &amp; legends</string>
+	<key>J.B.S.name</key>
+	<string>Social groups</string>
+	<key>J.B.S.A.name</key>
+	<string>Social classes</string>
+	<key>J.B.S.C.name</key>
+	<string>Rural communities</string>
+	<key>J.B.S.D.name</key>
+	<string>Urban communities</string>
+	<key>J.B.S.F.name</key>
+	<string>Gender studies, gender groups</string>
+	<key>J.B.S.F.1.name</key>
+	<string>Gender studies: women &amp; girls</string>
+	<key>J.B.S.F.1.1.name</key>
+	<string>Feminism &amp; feminist theory</string>
+	<key>J.B.S.F.2.name</key>
+	<string>Gender studies: men &amp; boys</string>
+	<key>J.B.S.J.name</key>
+	<string>Gay &amp; Lesbian studies</string>
+	<key>J.B.S.L.name</key>
+	<string>Ethnic studies</string>
+	<key>J.B.S.L.1.name</key>
+	<string>Ethnic minorities &amp; multicultural studies</string>
+	<key>J.B.S.L.1.1.name</key>
+	<string>Indigenous peoples</string>
+	<key>J.B.S.P.name</key>
+	<string>Age groups</string>
+	<key>J.B.S.P.1.name</key>
+	<string>Age groups: children</string>
+	<key>J.B.S.P.2.name</key>
+	<string>Age groups: adolescents</string>
+	<key>J.B.S.P.3.name</key>
+	<string>Age groups: adults</string>
+	<key>J.B.S.P.4.name</key>
+	<string>Age groups: the elderly</string>
+	<key>J.B.S.R.name</key>
+	<string>Social groups: religious groups &amp; communities</string>
+	<key>J.B.S.W.name</key>
+	<string>Social groups: alternative lifestyles</string>
+	<key>J.B.S.X.name</key>
+	<string>Secret societies</string>
+	<key>J.B.S.1.name</key>
+	<string>Social groups: clubs &amp; societies</string>
+	<key>J.H.name</key>
+	<string>Sociology &amp; anthropology</string>
+	<key>J.H.B.name</key>
+	<string>Sociology</string>
+	<key>J.H.B.A.name</key>
+	<string>Social theory</string>
+	<key>J.H.B.C.name</key>
+	<string>Social research &amp; statistics</string>
+	<key>J.H.B.D.name</key>
+	<string>Population &amp; demography</string>
+	<key>J.H.B.K.name</key>
+	<string>Sociology: family &amp; relationships</string>
+	<key>J.H.B.L.name</key>
+	<string>Sociology: work &amp; labour</string>
+	<key>J.H.B.S.name</key>
+	<string>Sociology: sport &amp; leisure</string>
+	<key>J.H.B.Z.name</key>
+	<string>Sociology: death &amp; dying</string>
+	<key>J.H.M.name</key>
+	<string>Anthropology</string>
+	<key>J.H.M.C.name</key>
+	<string>Social &amp; cultural anthropology</string>
+	<key>J.K.name</key>
+	<string>Social services &amp; welfare, criminology</string>
+	<key>J.K.S.name</key>
+	<string>Social welfare &amp; social services</string>
+	<key>J.K.S.B.name</key>
+	<string>Welfare &amp; benefit systems</string>
+	<key>J.K.S.B.1.name</key>
+	<string>Child welfare</string>
+	<key>J.K.S.F.name</key>
+	<string>Adoption &amp; fostering</string>
+	<key>J.K.S.G.name</key>
+	<string>Care of the elderly</string>
+	<key>J.K.S.M.name</key>
+	<string>Care of the mentally ill</string>
+	<key>J.K.S..name</key>
+	<string>Social work</string>
+	<key>J.K.S..1.name</key>
+	<string>Charities, voluntary services &amp; philanthropy</string>
+	<key>J.K.S..2.name</key>
+	<string>Social counselling &amp; advice services</string>
+	<key>J.K.S.R.name</key>
+	<string>Aid &amp; relief programmes</string>
+	<key>J.K.S.W.name</key>
+	<string>Emergency services</string>
+	<key>J.K.S.W.1.name</key>
+	<string>Police &amp; security services</string>
+	<key>J.K.S.W.2.name</key>
+	<string>Fire services</string>
+	<key>J.K.S.W.3.name</key>
+	<string>Ambulance &amp; rescue services</string>
+	<key>J.K.V.name</key>
+	<string>Crime &amp; criminology</string>
+	<key>J.K.V.C.name</key>
+	<string>Causes &amp; prevention of crime</string>
+	<key>J.K.V.F.name</key>
+	<string>Criminal investigation &amp; detection</string>
+	<key>J.K.V.F.1.name</key>
+	<string>Forensic science</string>
+	<key>J.K.V.G.name</key>
+	<string>Drugs trade / drug trafficking</string>
+	<key>J.K.V.J.name</key>
+	<string>Street crime / gun crime</string>
+	<key>J.K.V.K.name</key>
+	<string>Corporate crime</string>
+	<key>J.K.V.M.name</key>
+	<string>Organized crime</string>
+	<key>J.K.V.P.name</key>
+	<string>Penology &amp; punishment</string>
+	<key>J.K.V.Q.name</key>
+	<string>Offenders</string>
+	<key>J.K.V.Q.1.name</key>
+	<string>Rehabilitation of offenders</string>
+	<key>J.K.V.Q.2.name</key>
+	<string>Juvenile offenders</string>
+	<key>J.K.V.S.name</key>
+	<string>Probation services</string>
+	<key>J.M.name</key>
+	<string>Psychology</string>
+	<key>J.M.A.name</key>
+	<string>Psychological theory &amp; schools of thought</string>
+	<key>J.M.A.F.name</key>
+	<string>Psychoanalytical theory (Freudian psychology)</string>
+	<key>J.M.A.J.name</key>
+	<string>Analytical &amp; Jungian psychology</string>
+	<key>J.M.A.L.name</key>
+	<string>Behavioural theory (Behaviourism)</string>
+	<key>J.M.A..name</key>
+	<string>Humanistic psychology</string>
+	<key>J.M.A.Q.name</key>
+	<string>Cognitivism, cognitive theory</string>
+	<key>J.M.B.name</key>
+	<string>Psychological methodology</string>
+	<key>J.M.B.T.name</key>
+	<string>Psychological testing &amp; measurement</string>
+	<key>J.M.C.name</key>
+	<string>Child, developmental &amp; lifespan psychology</string>
+	<key>J.M.D.name</key>
+	<string>Psychology of ageing</string>
+	<key>J.M.F.name</key>
+	<string>Family psychology</string>
+	<key>J.M.G.name</key>
+	<string>Psychology of gender</string>
+	<key>J.M.H.name</key>
+	<string>Social, group or collective psychology</string>
+	<key>J.M.J.name</key>
+	<string>Occupational &amp; industrial psychology</string>
+	<key>J.M.K.name</key>
+	<string>Criminal or forensic psychology</string>
+	<key>J.M.L.name</key>
+	<string>Experimental psychology</string>
+	<key>J.M.M.name</key>
+	<string>Physiological &amp; neuro-psychology, biopsychology</string>
+	<key>J.M.P.name</key>
+	<string>Abnormal psychology</string>
+	<key>J.M.Q.name</key>
+	<string>Psychology: emotions</string>
+	<key>J.M.R.name</key>
+	<string>Cognition &amp; cognitive psychology</string>
+	<key>J.M.S.name</key>
+	<string>Psychology: the self, ego, identity, personality</string>
+	<key>J.M.T.name</key>
+	<string>Psychology: states of consciousness</string>
+	<key>J.M.U.name</key>
+	<string>Psychology: sexual behaviour</string>
+	<key>J.M.X.name</key>
+	<string>Parapsychological studies</string>
+	<key>J..name</key>
+	<string>Education</string>
+	<key>J..A.name</key>
+	<string>Philosophy &amp; theory of education</string>
+	<key>J..A.M.name</key>
+	<string>Moral &amp; social purpose of education</string>
+	<key>J..B.name</key>
+	<string>History of education</string>
+	<key>J..C.name</key>
+	<string>Educational psychology</string>
+	<key>J..D.name</key>
+	<string>Educational systems &amp; structures</string>
+	<key>J..D.G.name</key>
+	<string>Curriculum planning &amp; development</string>
+	<key>J..D.H.name</key>
+	<string>Education: examinations &amp; assessment</string>
+	<key>J..F.name</key>
+	<string>Educational strategies &amp; policy</string>
+	<key>J..H.name</key>
+	<string>Home schooling</string>
+	<key>J..K.name</key>
+	<string>Educational administration &amp; organization</string>
+	<key>J..K.G.name</key>
+	<string>Funding of education &amp; student finance</string>
+	<key>J..K.H.name</key>
+	<string>Teaching staff</string>
+	<key>J..L.name</key>
+	<string>Schools</string>
+	<key>J..L.A.name</key>
+	<string>Pre-school &amp; kindergarten</string>
+	<key>J..L.B.name</key>
+	<string>Primary &amp; middle schools</string>
+	<key>J..L.C.name</key>
+	<string>Secondary schools</string>
+	<key>J..L.P.name</key>
+	<string>Independent schools, private education</string>
+	<key>J..L.R.name</key>
+	<string>Faith (religious) schools</string>
+	<key>J..M.name</key>
+	<string>Higher &amp; further education, tertiary education</string>
+	<key>J..M.T.name</key>
+	<string>Teacher training</string>
+	<key>J..P.name</key>
+	<string>Adult education, continuous learning</string>
+	<key>J..Q.name</key>
+	<string>Open learning, distance education</string>
+	<key>J..R.name</key>
+	<string>Careers guidance</string>
+	<key>J..R.V.name</key>
+	<string>Industrial or vocational training</string>
+	<key>J..S.name</key>
+	<string>Teaching of students with special educational needs</string>
+	<key>J..S.C.name</key>
+	<string>Teaching of students with physical impairment or disability</string>
+	<key>J..S.G.name</key>
+	<string>Teaching of students with learning difficulties</string>
+	<key>J..T.name</key>
+	<string>Teaching skills &amp; techniques</string>
+	<key>J..U.name</key>
+	<string>Teaching of a specific subject</string>
+	<key>J..U.M.name</key>
+	<string>Teachers’ classroom resources &amp; material</string>
+	<key>J..V.name</key>
+	<string>Educational equipment &amp; technology, computer-aided learning (CAL)</string>
+	<key>J..W.name</key>
+	<string>Extra-curricular activities</string>
+	<key>J..Z.name</key>
+	<string>Study &amp; learning skills: general</string>
+	<key>J.P.name</key>
+	<string>Politics &amp; government</string>
+	<key>J.P.A.name</key>
+	<string>Political science &amp; theory</string>
+	<key>J.P.B.name</key>
+	<string>Comparative politics</string>
+	<key>J.P.F.name</key>
+	<string>Political ideologies</string>
+	<key>J.P.F.B.name</key>
+	<string>Anarchism</string>
+	<key>J.P.F.C.name</key>
+	<string>Marxism &amp; Communism</string>
+	<key>J.P.F.F.name</key>
+	<string>Socialism &amp; left-of-centre democratic ideologies</string>
+	<key>J.P.F.K.name</key>
+	<string>Liberalism &amp; centre democratic ideologies</string>
+	<key>J.P.F.M.name</key>
+	<string>Conservatism &amp; right-of-centre democratic ideologies</string>
+	<key>J.P.F..name</key>
+	<string>Nationalism</string>
+	<key>J.P.F.Q.name</key>
+	<string>Fascism &amp; Nazism</string>
+	<key>J.P.F.R.name</key>
+	<string>Religious &amp; theocratic ideologies</string>
+	<key>J.P.H.name</key>
+	<string>Political structure &amp; processes</string>
+	<key>J.P.H.C.name</key>
+	<string>Constitution: government &amp; the state</string>
+	<key>J.P.H.F.name</key>
+	<string>Elections &amp; referenda</string>
+	<key>J.P.H.L.name</key>
+	<string>Political leaders &amp; leadership</string>
+	<key>J.P.H.V.name</key>
+	<string>Political structures: democracy</string>
+	<key>J.P.H.X.name</key>
+	<string>Political structures: totalitarianism &amp; dictatorship</string>
+	<key>J.P.L.name</key>
+	<string>Political parties</string>
+	<key>J.P.P.name</key>
+	<string>Public administration</string>
+	<key>J.P.Q.name</key>
+	<string>Central / national / federal government</string>
+	<key>J.P.Q.B.name</key>
+	<string>Central / national / federal government policies</string>
+	<key>J.P.R.name</key>
+	<string>Regional / local / state government</string>
+	<key>J.P.R.B.name</key>
+	<string>Regional / local / state government policies</string>
+	<key>J.P.S.name</key>
+	<string>International relations</string>
+	<key>J.P.S.D.name</key>
+	<string>Diplomacy</string>
+	<key>J.P.S.F.name</key>
+	<string>Arms negotiation &amp; control</string>
+	<key>J.P.S.H.name</key>
+	<string>Espionage &amp; secret services</string>
+	<key>J.P.S.L.name</key>
+	<string>Geopolitics</string>
+	<key>J.P.S..name</key>
+	<string>International institutions</string>
+	<key>J.P.V.name</key>
+	<string>Political control &amp; freedoms</string>
+	<key>J.P.V.C.name</key>
+	<string>Civics &amp; citizenship</string>
+	<key>J.P.V.H.name</key>
+	<string>Human rights, civil rights</string>
+	<key>J.P.V.R.name</key>
+	<string>Political oppression &amp; persecution</string>
+	<key>J.P.W.name</key>
+	<string>Political activism</string>
+	<key>J.P.W.A.name</key>
+	<string>Public opinion &amp; polls</string>
+	<key>J.P.W.C.name</key>
+	<string>Political campaigning &amp; advertising</string>
+	<key>J.P.W.G.name</key>
+	<string>Pressure groups &amp; protest movements</string>
+	<key>J.P.W.H.name</key>
+	<string>Non-governmental organizations (NGOs)</string>
+	<key>J.P.W.L.name</key>
+	<string>Terrorism, armed struggle</string>
+	<key>J.P.W.Q.name</key>
+	<string>Revolutionary groups &amp; movements</string>
+	<key>J.P.W.S.name</key>
+	<string>Armed conflict</string>
+	<key>J.P.Z.name</key>
+	<string>Political corruption</string>
+	<key>J.W.name</key>
+	<string>Warfare &amp; defence</string>
+	<key>J.W.A.name</key>
+	<string>Theory of warfare &amp; military science</string>
+	<key>J.W.C.name</key>
+	<string>Military forces &amp; sectors</string>
+	<key>J.W.C.D.name</key>
+	<string>Land forces &amp; warfare</string>
+	<key>J.W.C.G.name</key>
+	<string>Irregular or guerrilla forces &amp; warfare</string>
+	<key>J.W.C.K.name</key>
+	<string>Naval forces &amp; warfare</string>
+	<key>J.W.C.M.name</key>
+	<string>Air forces &amp; warfare</string>
+	<key>J.W.C.S.name</key>
+	<string>Special &amp; elite forces</string>
+	<key>J.W.J.name</key>
+	<string>Military administration</string>
+	<key>J.W.K.name</key>
+	<string>Military &amp; defence strategy</string>
+	<key>J.W.K.F.name</key>
+	<string>Military intelligence</string>
+	<key>J.W.L.name</key>
+	<string>War &amp; defence operations</string>
+	<key>J.W.L.F.name</key>
+	<string>Battles &amp; campaigns</string>
+	<key>J.W.L.P.name</key>
+	<string>Peacekeeping operations</string>
+	<key>J.W.M.name</key>
+	<string>Weapons &amp; equipment</string>
+	<key>J.W.M.C.name</key>
+	<string>Chemical &amp; biological weapons</string>
+	<key>J.W.M..name</key>
+	<string>Nuclear weapons</string>
+	<key>J.W.M.V.name</key>
+	<string>Military vehicles</string>
+	<key>J.W.T.name</key>
+	<string>Military institutions, memorials</string>
+	<key>J.W.X.name</key>
+	<string>Other warfare &amp; defence issues</string>
+	<key>J.W.X.F.name</key>
+	<string>Arms trade</string>
+	<key>J.W.X.K.name</key>
+	<string>War crimes</string>
+	<key>J.W.X..name</key>
+	<string>Mercenaries</string>
+	<key>J.W.X.R.name</key>
+	<string>Prisoners of war</string>
+	<key>J.W.X.T.name</key>
+	<string>Mutiny</string>
+	<key>J.W.X.V.name</key>
+	<string>Military veterans</string>
+	<key>J.W.X.Z.name</key>
+	<string>Combat / defence skills &amp; manuals</string>
+	<key>K.name</key>
+	<string>Economics, Finance, Business &amp; Management</string>
+	<key>K.C.name</key>
+	<string>Economics</string>
+	<key>K.C.A.name</key>
+	<string>Economic theory &amp; philosophy</string>
+	<key>K.C.B.name</key>
+	<string>Macroeconomics</string>
+	<key>K.C.B.M.name</key>
+	<string>Monetary economics</string>
+	<key>K.C.C.name</key>
+	<string>Microeconomics</string>
+	<key>K.C.D.name</key>
+	<string>Economics of industrial organisation</string>
+	<key>K.C.F.name</key>
+	<string>Labour economics</string>
+	<key>K.C.G.name</key>
+	<string>Economic growth</string>
+	<key>K.C.H.name</key>
+	<string>Econometrics &amp; economic statistics</string>
+	<key>K.C.J.name</key>
+	<string>Economic forecasting</string>
+	<key>K.C.K.name</key>
+	<string>Behavioural economics</string>
+	<key>K.C.L.name</key>
+	<string>International economics</string>
+	<key>K.C.M.name</key>
+	<string>Development economics &amp; emerging economies</string>
+	<key>K.C.P.name</key>
+	<string>Political economy</string>
+	<key>K.C.S.name</key>
+	<string>Economic systems &amp; structures</string>
+	<key>K.C.V.name</key>
+	<string>Economics of specific sectors</string>
+	<key>K.C.V.D.name</key>
+	<string>Agricultural economics</string>
+	<key>K.C.V.G.name</key>
+	<string>Environmental economics</string>
+	<key>K.C.V.J.name</key>
+	<string>Health economics</string>
+	<key>K.C.V.K.name</key>
+	<string>Welfare economics</string>
+	<key>K.C.V.S.name</key>
+	<string>Urban economics</string>
+	<key>K.C.X.name</key>
+	<string>Economic &amp; financial crises &amp; disasters</string>
+	<key>K.C.1.name</key>
+	<string>Popular economics</string>
+	<key>K.C.Z.name</key>
+	<string>Economic history</string>
+	<key>K.F.name</key>
+	<string>Finance &amp; accounting</string>
+	<key>K.F.C.name</key>
+	<string>Accounting</string>
+	<key>K.F.C.C.name</key>
+	<string>Cost accounting</string>
+	<key>K.F.C.F.name</key>
+	<string>Financial accounting</string>
+	<key>K.F.C.M.name</key>
+	<string>Management accounting &amp; bookkeeping</string>
+	<key>K.F.C.P.name</key>
+	<string>Public finance accounting</string>
+	<key>K.F.C.R.name</key>
+	<string>Financial reporting, financial statements</string>
+	<key>K.F.C.X.name</key>
+	<string>Accounting: study &amp; revision guides</string>
+	<key>K.F.F.name</key>
+	<string>Finance</string>
+	<key>K.F.F.D.name</key>
+	<string>Public finance &amp; taxation</string>
+	<key>K.F.F.H.name</key>
+	<string>Corporate finance</string>
+	<key>K.F.F.K.name</key>
+	<string>Banking</string>
+	<key>K.F.F.L.name</key>
+	<string>Credit &amp; credit institutions</string>
+	<key>K.F.F.M.name</key>
+	<string>Investment &amp; securities</string>
+	<key>K.F.F..name</key>
+	<string>Insurance &amp; actuarial studies</string>
+	<key>K.F.F.P.name</key>
+	<string>Pensions</string>
+	<key>K.F.F.R.name</key>
+	<string>Property &amp; real estate</string>
+	<key>K.F.F.X.name</key>
+	<string>Banking &amp; finance: study &amp; revision guides</string>
+	<key>K.J.name</key>
+	<string>Business &amp; Management</string>
+	<key>K.J.B.name</key>
+	<string>Business studies: general</string>
+	<key>K.J.B.X.name</key>
+	<string>Business &amp; management: study &amp; revision guides</string>
+	<key>K.J.C.name</key>
+	<string>Business strategy</string>
+	<key>K.J.D.name</key>
+	<string>Business innovation</string>
+	<key>K.J.D.D.name</key>
+	<string>Disruptive innovation</string>
+	<key>K.J.E.name</key>
+	<string>E-commerce: business aspects</string>
+	<key>K.J.F.name</key>
+	<string>Business competition</string>
+	<key>K.J.G.name</key>
+	<string>Business ethics &amp; social responsibility</string>
+	<key>K.J.H.name</key>
+	<string>Entrepreneurship</string>
+	<key>K.J.J.name</key>
+	<string>Business &amp; the environment; ‘green’ approaches to business</string>
+	<key>K.J.K.name</key>
+	<string>International business</string>
+	<key>K.J.L.name</key>
+	<string>Consultancy &amp; grants for businesses</string>
+	<key>K.J.M.name</key>
+	<string>Management &amp; management techniques</string>
+	<key>K.J.M.B.name</key>
+	<string>Management: leadership &amp; motivation</string>
+	<key>K.J.M.D.name</key>
+	<string>Management decision making</string>
+	<key>K.J.M.K.name</key>
+	<string>Knowledge management</string>
+	<key>K.J.M.P.name</key>
+	<string>Project management</string>
+	<key>K.J.M.Q.name</key>
+	<string>Quality Assurance (QA) &amp; Total Quality Management (TQM)</string>
+	<key>K.J.M.T.name</key>
+	<string>Time management</string>
+	<key>K.J.M.V.name</key>
+	<string>Management of specific areas</string>
+	<key>K.J.M.V.1.name</key>
+	<string>Budgeting &amp; financial management</string>
+	<key>K.J.M.V.2.name</key>
+	<string>Personnel &amp; human resources management</string>
+	<key>K.J.M.V.4.name</key>
+	<string>Management of real estate, property &amp; plant</string>
+	<key>K.J.M.V.5.name</key>
+	<string>Production &amp; quality control management</string>
+	<key>K.J.M.V.6.name</key>
+	<string>Research &amp; development management</string>
+	<key>K.J.M.V.7.name</key>
+	<string>Sales &amp; marketing management</string>
+	<key>K.J.M.V.8.name</key>
+	<string>Purchasing &amp; supply management</string>
+	<key>K.J.M.V.9.name</key>
+	<string>Distribution &amp; logistics management</string>
+	<key>K.J..name</key>
+	<string>Business negotiation</string>
+	<key>K.J.P.name</key>
+	<string>Business communication &amp; presentation</string>
+	<key>K.J.Q.name</key>
+	<string>Business mathematics &amp; systems</string>
+	<key>K.J.R.name</key>
+	<string>Corporate governance: role &amp; responsibilities of boards &amp; directors</string>
+	<key>K.J.S.name</key>
+	<string>Sales &amp; marketing</string>
+	<key>K.J.S.A.name</key>
+	<string>Advertising</string>
+	<key>K.J.S.C.name</key>
+	<string>Brands &amp; branding</string>
+	<key>K.J.S.G.name</key>
+	<string>Web-marketing</string>
+	<key>K.J.S.M.name</key>
+	<string>Market research</string>
+	<key>K.J.S.P.name</key>
+	<string>Public relations</string>
+	<key>K.J.S.U.name</key>
+	<string>Customer services</string>
+	<key>K.J.T.name</key>
+	<string>Operational research</string>
+	<key>K.J.U.name</key>
+	<string>Organizational theory &amp; behaviour</string>
+	<key>K.J.V.name</key>
+	<string>Ownership &amp; organization of enterprises</string>
+	<key>K.J.V.B.name</key>
+	<string>Takeovers, mergers &amp; buy-outs</string>
+	<key>K.J.V.D.name</key>
+	<string>Privatization</string>
+	<key>K.J.V.F.name</key>
+	<string>Franchises</string>
+	<key>K.J.V.G.name</key>
+	<string>Multinationals</string>
+	<key>K.J.V..name</key>
+	<string>Public ownership / nationalization</string>
+	<key>K.J.V.P.name</key>
+	<string>Monopolies</string>
+	<key>K.J.V.S.name</key>
+	<string>Small businesses &amp; self-employed</string>
+	<key>K.J.V.T.name</key>
+	<string>Outsourcing</string>
+	<key>K.J.V.V.name</key>
+	<string>Joint ventures</string>
+	<key>K.J.V.W.name</key>
+	<string>Employee-ownership &amp; co-operatives</string>
+	<key>K.J.V.X.name</key>
+	<string>Non-profitmaking organizations</string>
+	<key>K.J.W.name</key>
+	<string>Office &amp; workplace</string>
+	<key>K.J.W.B.name</key>
+	<string>Office management</string>
+	<key>K.J.W.F.name</key>
+	<string>Office systems &amp; equipment</string>
+	<key>K.J.W.S.name</key>
+	<string>Secretarial, clerical &amp; office skills</string>
+	<key>K.J.W.X.name</key>
+	<string>Working patterns &amp; practices</string>
+	<key>K.J.Z.name</key>
+	<string>History of specific companies / corporate history</string>
+	<key>K..name</key>
+	<string>Industry &amp; industrial studies</string>
+	<key>K..A.name</key>
+	<string>Agribusiness &amp; primary industries</string>
+	<key>K..B.name</key>
+	<string>Energy industries &amp; utilities</string>
+	<key>K..D.name</key>
+	<string>Manufacturing industries</string>
+	<key>K..G.name</key>
+	<string>Transport industries</string>
+	<key>K..J.name</key>
+	<string>Construction &amp; heavy industry</string>
+	<key>K..P.name</key>
+	<string>Retail &amp; wholesale industries</string>
+	<key>K..S.name</key>
+	<string>Hospitality &amp; service industries</string>
+	<key>K..T.name</key>
+	<string>Media, entertainment, information &amp; communication industries</string>
+	<key>K..T.C.name</key>
+	<string>Cinema, TV &amp; Radio industries</string>
+	<key>K..T.F.name</key>
+	<string>Music industry</string>
+	<key>K..T.P.name</key>
+	<string>Publishing industry, book trade, the press &amp; journalism</string>
+	<key>K..T.X.name</key>
+	<string>Information technology industries</string>
+	<key>K..V.name</key>
+	<string>Civil service &amp; public sector</string>
+	<key>K..X.name</key>
+	<string>Industrial relations, health &amp; safety</string>
+	<key>K..X.C.name</key>
+	<string>Health &amp; safety issues</string>
+	<key>K..X..name</key>
+	<string>Industrial arbitration &amp; negotiation</string>
+	<key>K..X.U.name</key>
+	<string>Trade unions</string>
+	<key>L.name</key>
+	<string>Law</string>
+	<key>L.A.name</key>
+	<string>Jurisprudence &amp; general issues</string>
+	<key>L.A.B.name</key>
+	<string>Methods, theory &amp; philosophy of law</string>
+	<key>L.A.F.name</key>
+	<string>Systems of law</string>
+	<key>L.A.F.C.name</key>
+	<string>Systems of law: common law</string>
+	<key>L.A.F.D.name</key>
+	<string>Systems of law: civil codes / civil law</string>
+	<key>L.A.F.R.name</key>
+	<string>Systems of law: Roman law</string>
+	<key>L.A.F.S.name</key>
+	<string>Systems of law: Islamic law</string>
+	<key>L.A.F.T.name</key>
+	<string>Systems of law: Jewish Law</string>
+	<key>L.A.F.X.name</key>
+	<string>Systems of law: ecclesiastical (canon) law</string>
+	<key>L.A.M.name</key>
+	<string>Comparative law</string>
+	<key>L.A.Q.name</key>
+	<string>Law &amp; society, sociology of law</string>
+	<key>L.A.Q.G.name</key>
+	<string>Law &amp; society, gender issues</string>
+	<key>L.A.R.name</key>
+	<string>Legal aspects of criminology</string>
+	<key>L.A.S.name</key>
+	<string>Legal skills &amp; practice</string>
+	<key>L.A.S.D.name</key>
+	<string>Legal skills: advocacy</string>
+	<key>L.A.S.P.name</key>
+	<string>Legal practice: paralegals &amp; paralegalism</string>
+	<key>L.A.T.name</key>
+	<string>Legal profession: general</string>
+	<key>L.A.T.C.name</key>
+	<string>Legal ethics &amp; professional conduct</string>
+	<key>L.A.1.name</key>
+	<string>Law as it applies to other professions &amp; disciplines</string>
+	<key>L.A.Z.name</key>
+	<string>Legal history</string>
+	<key>L.B.name</key>
+	<string>International law</string>
+	<key>L.B.B.name</key>
+	<string>Public international law</string>
+	<key>L.B.B.C.name</key>
+	<string>Public international law: treaties &amp; other sources</string>
+	<key>L.B.B.C.1.name</key>
+	<string>Public International law: customary law</string>
+	<key>L.B.B.D.name</key>
+	<string>Public international law: diplomatic law</string>
+	<key>L.B.B.F.name</key>
+	<string>Public international law: jurisdiction &amp; immunities</string>
+	<key>L.B.B.J.name</key>
+	<string>Public international law: territory &amp; statehood</string>
+	<key>L.B.B.K.name</key>
+	<string>Public international law: law of the sea</string>
+	<key>L.B.B.L.name</key>
+	<string>Public International law: health</string>
+	<key>L.B.B.M.name</key>
+	<string>Public international law: economic &amp; trade</string>
+	<key>L.B.B.M.1.name</key>
+	<string>Public international law, economic &amp; trade: tariffs</string>
+	<key>L.B.B.M.3.name</key>
+	<string>Public international law, economic &amp; trade: investment treaties &amp; disputes</string>
+	<key>L.B.B.M.5.name</key>
+	<string>Public international law: energy &amp; natural resources</string>
+	<key>L.B.B.M.7.name</key>
+	<string>Public international law, economic &amp; trade: corporations</string>
+	<key>L.B.B.P.name</key>
+	<string>Public international law: environment</string>
+	<key>L.B.B.P.1.name</key>
+	<string>Public international law, environment: agricultural law</string>
+	<key>L.B.B.Q.name</key>
+	<string>Public international law: administration</string>
+	<key>L.B.B.R.name</key>
+	<string>Public international law: human rights</string>
+	<key>L.B.B.R.1.name</key>
+	<string>Public international law, human rights: labour &amp; social</string>
+	<key>L.B.B.S.name</key>
+	<string>Public international law: humanitarian law</string>
+	<key>L.B.B.U.name</key>
+	<string>Public international law: international organisations &amp; institutions</string>
+	<key>L.B.B.V.name</key>
+	<string>Public international law: responsibility of states &amp; other entities</string>
+	<key>L.B.B.Z.name</key>
+	<string>Public international law: criminal law</string>
+	<key>L.B.D.name</key>
+	<string>International law: transport, communications &amp; commerce</string>
+	<key>L.B.D.A.name</key>
+	<string>International law, transport: space &amp; aerospace law</string>
+	<key>L.B.D.K.name</key>
+	<string>International law: transnational commerce &amp; international sale of goods law</string>
+	<key>L.B.D.M.name</key>
+	<string>International law, transport &amp; commerce: maritime law</string>
+	<key>L.B.D.T.name</key>
+	<string>International law: communications, telecommunications &amp; media</string>
+	<key>L.B.G.name</key>
+	<string>Private international law &amp; conflict of laws</string>
+	<key>L.B.H.name</key>
+	<string>International law: international disputes &amp; civil procedure</string>
+	<key>L.B.H.G.name</key>
+	<string>International law: courts &amp; procedures</string>
+	<key>L.B.H.T.name</key>
+	<string>International law: arbitration</string>
+	<key>L.B.J.name</key>
+	<string>International law: intellectual property</string>
+	<key>L.B.K.name</key>
+	<string>International law: sports</string>
+	<key>L.B.L.name</key>
+	<string>International law reports</string>
+	<key>L..name</key>
+	<string>Laws of specific jurisdictions &amp; specific areas of law</string>
+	<key>L..A.name</key>
+	<string>Legal systems: general</string>
+	<key>L..A.A.name</key>
+	<string>Legal systems: courts &amp; procedure</string>
+	<key>L..A.A.1.name</key>
+	<string>Legal systems: judicial powers</string>
+	<key>L..A.A.2.name</key>
+	<string>Legal systems: law of contempt</string>
+	<key>L..A.C.name</key>
+	<string>Legal systems: civil procedure, litigation &amp; dispute resolution</string>
+	<key>L..A.C.1.name</key>
+	<string>Civil remedies</string>
+	<key>L..A.C.1.2.name</key>
+	<string>Restitution</string>
+	<key>L..A.C.1.4.name</key>
+	<string>Damages &amp; compensation</string>
+	<key>L..A.C.1.6.name</key>
+	<string>Injunctions &amp; other orders</string>
+	<key>L..A.C.3.name</key>
+	<string>Civil procedure: law of evidence</string>
+	<key>L..A.C.4.name</key>
+	<string>Civil procedure: investigation &amp; specific proceedings</string>
+	<key>L..A.C.5.name</key>
+	<string>Arbitration, mediation &amp; alternative dispute resolution</string>
+	<key>L..A.F.name</key>
+	<string>Legal systems: costs &amp; funding</string>
+	<key>L..A.L.name</key>
+	<string>Legal systems: regulation of legal profession</string>
+	<key>L..B.name</key>
+	<string>Private or civil law: general</string>
+	<key>L..B.A.name</key>
+	<string>Legal entity (natural &amp; legal persons)</string>
+	<key>L..B.B.name</key>
+	<string>Civil registration system</string>
+	<key>L..C.name</key>
+	<string>Company, commercial &amp; competition law: general</string>
+	<key>L..C.B.name</key>
+	<string>Commercial law</string>
+	<key>L..C.B.1.name</key>
+	<string>Franchising law</string>
+	<key>L..C.B.2.name</key>
+	<string>E-commerce law</string>
+	<key>L..C.B.3.name</key>
+	<string>Sale of goods law</string>
+	<key>L..C.B.4.name</key>
+	<string>Outsourcing law</string>
+	<key>L..C.B.5.name</key>
+	<string>Shipping law</string>
+	<key>L..C.B.6.name</key>
+	<string>Aviation law</string>
+	<key>L..C.B.7.name</key>
+	<string>Catering, restaurants &amp; crafts law</string>
+	<key>L..C.C.name</key>
+	<string>Regulatory compliance</string>
+	<key>L..C.D.name</key>
+	<string>Company law</string>
+	<key>L..C.D.1.name</key>
+	<string>Mergers &amp; acquisitions law</string>
+	<key>L..C.E.name</key>
+	<string>Registry &amp; proceedings law</string>
+	<key>L..C.F.name</key>
+	<string>Partnership &amp; cooperative law</string>
+	<key>L..C.G.name</key>
+	<string>Transformation law, change of corporate form</string>
+	<key>L..C.H.name</key>
+	<string>Competition law / Antitrust law</string>
+	<key>L..C.J.name</key>
+	<string>Contract law</string>
+	<key>L..C.K.name</key>
+	<string>Company &amp; business offences</string>
+	<key>L..C.L.name</key>
+	<string>Agency law</string>
+	<key>L..C..name</key>
+	<string>Procurement law</string>
+	<key>L..C.Q.name</key>
+	<string>Construction &amp; engineering law</string>
+	<key>L..C.Q.1.name</key>
+	<string>Private construction &amp; engineering law</string>
+	<key>L..C.Q.2.name</key>
+	<string>Public construction law</string>
+	<key>L..C.R.name</key>
+	<string>Energy &amp; natural resources law</string>
+	<key>L..D.name</key>
+	<string>Constitutional &amp; administrative law: general</string>
+	<key>L..D.A.name</key>
+	<string>Citizenship &amp; nationality law</string>
+	<key>L..D.A.1.name</key>
+	<string>Immigration law</string>
+	<key>L..D.A.3.name</key>
+	<string>Asylum law</string>
+	<key>L..D.B.name</key>
+	<string>Administrative jurisdiction &amp; public administration</string>
+	<key>L..D.B.1.name</key>
+	<string>Administrative law, general</string>
+	<key>L..D.B.2.name</key>
+	<string>Administrative procedure &amp; courts</string>
+	<key>L..D.B.3.name</key>
+	<string>State &amp; public properties &amp; assets</string>
+	<key>L..D.B.4.name</key>
+	<string>Sanctioning power of the administration</string>
+	<key>L..D.B.5.name</key>
+	<string>Compulsory expropriation, compulsory purchase, eminent domain</string>
+	<key>L..D.B.6.name</key>
+	<string>Making of rules &amp; administrative acts</string>
+	<key>L..D.B.7.name</key>
+	<string>Regulation of public services</string>
+	<key>L..D.B.8.name</key>
+	<string>Law of science &amp; research, university college law</string>
+	<key>L..D.C.name</key>
+	<string>Human rights &amp; civil liberties</string>
+	<key>L..D.C.1.name</key>
+	<string>Constitutional law &amp; human rights</string>
+	<key>L..D.C.2.name</key>
+	<string>Privacy law</string>
+	<key>L..D.C.4.name</key>
+	<string>Freedom of expression law</string>
+	<key>L..D.C.5.name</key>
+	<string>History of constitution &amp; comparative constitutional law</string>
+	<key>L..D.E.name</key>
+	<string>Civil Servants law</string>
+	<key>L..D.F.name</key>
+	<string>Freedom of information law</string>
+	<key>L..D.G.name</key>
+	<string>Religious law &amp; concordats</string>
+	<key>L..D.H.name</key>
+	<string>Government powers</string>
+	<key>L..D.J.name</key>
+	<string>State liability &amp; compensation law</string>
+	<key>L..D.K.name</key>
+	<string>Military &amp; defence law &amp; civilian service law</string>
+	<key>L..D.L.name</key>
+	<string>Safety &amp; police law, regulatory &amp; weapons law</string>
+	<key>L..D.M.name</key>
+	<string>Judicial review</string>
+	<key>L..D.P.name</key>
+	<string>Parliamentary &amp; legislative practice</string>
+	<key>L..D.S.name</key>
+	<string>Election law</string>
+	<key>L..D.U.name</key>
+	<string>Local government law</string>
+	<key>L..D.V.name</key>
+	<string>Regional government law</string>
+	<key>L..D.X.name</key>
+	<string>Constitution</string>
+	<key>L..E.name</key>
+	<string>Economic administrative law &amp; public commercial law</string>
+	<key>L..E.A.name</key>
+	<string>Financial administration &amp; public finance law</string>
+	<key>L..E.B.name</key>
+	<string>Foreign economics &amp; customs law</string>
+	<key>L..E.C.name</key>
+	<string>Law of allowances &amp; subsidies</string>
+	<key>L..E.F.name</key>
+	<string>Public procurement, services &amp; supplies</string>
+	<key>L..F.name</key>
+	<string>Criminal law: procedure &amp; offences</string>
+	<key>L..F.B.name</key>
+	<string>Criminal justice law</string>
+	<key>L..F.G.name</key>
+	<string>Criminal law: offences against the government</string>
+	<key>L..F.G.1.name</key>
+	<string>Offences against the State, against public administration &amp; the administration of justice</string>
+	<key>L..F.G.2.name</key>
+	<string>Offences against land use &amp; city planning, monument, land &amp; environment protection</string>
+	<key>L..F.J.name</key>
+	<string>Criminal law: offences against the person</string>
+	<key>L..F.J.1.name</key>
+	<string>Harassment &amp; stalking</string>
+	<key>L..F.J.2.name</key>
+	<string>Gender violence</string>
+	<key>L..F.L.name</key>
+	<string>Criminal law: offences against property</string>
+	<key>L..F..name</key>
+	<string>Fraud</string>
+	<key>L..F.Q.name</key>
+	<string>Juvenile criminal law</string>
+	<key>L..F.R.name</key>
+	<string>Offences against public health, safety, order</string>
+	<key>L..F.S.name</key>
+	<string>Criminal law: additional penalty law</string>
+	<key>L..F.T.name</key>
+	<string>Road traffic law, motoring offences</string>
+	<key>L..F.U.name</key>
+	<string>Criminal law: fiscal offences</string>
+	<key>L..F.V.name</key>
+	<string>Criminal law: terrorism law</string>
+	<key>L..F.W.name</key>
+	<string>Corruption</string>
+	<key>L..F.X.name</key>
+	<string>Criminal procedure</string>
+	<key>L..F.X.1.name</key>
+	<string>Sentencing &amp; punishment</string>
+	<key>L..F.X.3.name</key>
+	<string>Criminal procedure: law of evidence</string>
+	<key>L..F.X.3.1.name</key>
+	<string>Criminal procedure: investigation &amp; specific proceedings</string>
+	<key>L..F.X.5.name</key>
+	<string>Police law &amp; police procedures</string>
+	<key>L..F.X.5.1.name</key>
+	<string>Police law: preliminary injunction</string>
+	<key>L..F.X.7.name</key>
+	<string>Prison law</string>
+	<key>L..F.1.name</key>
+	<string>Jury trials</string>
+	<key>L..H.name</key>
+	<string>Employment &amp; labour law: general</string>
+	<key>L..H.D.name</key>
+	<string>Discrimination in employment &amp; harassment law</string>
+	<key>L..H.H.name</key>
+	<string>Occupational health &amp; safety law, working time law</string>
+	<key>L..H.J.name</key>
+	<string>Labour rules violations &amp; penalties</string>
+	<key>L..H.R.name</key>
+	<string>Industrial relations &amp; trade unions law</string>
+	<key>L..H.U.name</key>
+	<string>Employment contracts</string>
+	<key>L..H.W.name</key>
+	<string>Law of professional training</string>
+	<key>L..H.X.name</key>
+	<string>Employment &amp; labour law: procedure, dispute resolution</string>
+	<key>L..J.name</key>
+	<string>Entertainment &amp; media law</string>
+	<key>L..J.D.name</key>
+	<string>Defamation law, slander &amp; libel</string>
+	<key>L..J.S.name</key>
+	<string>Sport &amp; the law</string>
+	<key>L..J.X.name</key>
+	<string>Advertising, marketing &amp; sponsorship law</string>
+	<key>L..K.name</key>
+	<string>Environment, transport &amp; planning law: general</string>
+	<key>L..K.F.name</key>
+	<string>Agricultural law</string>
+	<key>L..K.G.name</key>
+	<string>Animal law</string>
+	<key>L..K.J.name</key>
+	<string>Environment law</string>
+	<key>L..K.K.name</key>
+	<string>Disaster control &amp; fire protection law</string>
+	<key>L..K..name</key>
+	<string>Nature conservation law</string>
+	<key>L..K.P.name</key>
+	<string>Water &amp; wastewater law</string>
+	<key>L..K.T.name</key>
+	<string>Transport law</string>
+	<key>L..K.V.name</key>
+	<string>Ways &amp; highways law</string>
+	<key>L..K.W.name</key>
+	<string>Planning law</string>
+	<key>L..K.X.name</key>
+	<string>Protection of historic buildings &amp; cultural assets</string>
+	<key>L..L.name</key>
+	<string>Law: equity &amp; trusts, foundations</string>
+	<key>L..M.name</key>
+	<string>Family law</string>
+	<key>L..M.B.name</key>
+	<string>Family law: marriage, separation &amp; divorce</string>
+	<key>L..M.C.name</key>
+	<string>Family law: cohabitation</string>
+	<key>L..M.F.name</key>
+	<string>Family law: same-sex partnership</string>
+	<key>L..M.I.name</key>
+	<string>Family law: financial statement between spouses</string>
+	<key>L..M.K.name</key>
+	<string>Family law: children</string>
+	<key>L..P.name</key>
+	<string>Financial law: general</string>
+	<key>L..P.A.name</key>
+	<string>Accounting &amp; auditing law</string>
+	<key>L..P.B.name</key>
+	<string>Banking law</string>
+	<key>L..P.C.name</key>
+	<string>Bankruptcy &amp; insolvency</string>
+	<key>L..P.C.1.name</key>
+	<string>Bankruptcy law: extrajudicial procedures</string>
+	<key>L..P.D.name</key>
+	<string>Capital markets &amp; securities law &amp; regulation</string>
+	<key>L..P.F.name</key>
+	<string>Financial services law &amp; regulation</string>
+	<key>L..P..name</key>
+	<string>Insurance law</string>
+	<key>L..P.P.name</key>
+	<string>Pensions, old-age provisions &amp; private compensation</string>
+	<key>L..Q.name</key>
+	<string>IT &amp; Communications law / Postal laws &amp; regulations</string>
+	<key>L..Q.D.name</key>
+	<string>Data protection law</string>
+	<key>L..Q.E.name</key>
+	<string>Computer crime, cybercrime</string>
+	<key>L..R.name</key>
+	<string>Intellectual property law</string>
+	<key>L..R.C.name</key>
+	<string>Copyright law</string>
+	<key>L..R.D.name</key>
+	<string>Patents law</string>
+	<key>L..R.F.name</key>
+	<string>Trademarks law</string>
+	<key>L..R.L.name</key>
+	<string>Designs law</string>
+	<key>L..R.V.name</key>
+	<string>Confidential information law</string>
+	<key>L..S.name</key>
+	<string>Property law: general</string>
+	<key>L..S.H.name</key>
+	<string>Land &amp; real estate law</string>
+	<key>L..S.H.1.name</key>
+	<string>Ownership &amp; mortgage law</string>
+	<key>L..S.H.3.name</key>
+	<string>Landlord &amp; tenant law</string>
+	<key>L..S.H.5.name</key>
+	<string>Conveyancing law</string>
+	<key>L..S.H.7.name</key>
+	<string>Rating &amp; valuation law</string>
+	<key>L..S.H.9.name</key>
+	<string>Housing law</string>
+	<key>L..S.P.name</key>
+	<string>Personal property law</string>
+	<key>L..T.name</key>
+	<string>Social law &amp; Medical law</string>
+	<key>L..T.C.name</key>
+	<string>Charity law</string>
+	<key>L..T.D.name</key>
+	<string>Education law</string>
+	<key>L..T.H.name</key>
+	<string>Social security &amp; welfare law</string>
+	<key>L..T.H.1.name</key>
+	<string>Social insurance law</string>
+	<key>L..T.J.name</key>
+	<string>Public health &amp; safety law</string>
+	<key>L..T.M.name</key>
+	<string>Medical &amp; healthcare law</string>
+	<key>L..T.M.1.name</key>
+	<string>Mental health law</string>
+	<key>L..T.M.2.name</key>
+	<string>Regulation of medicines &amp; medical devices</string>
+	<key>L..T..name</key>
+	<string>Pharmaceutical law</string>
+	<key>L..T.Q.name</key>
+	<string>Disability &amp; the law</string>
+	<key>L..T.S.name</key>
+	<string>Law &amp; the elderly</string>
+	<key>L..T.U.name</key>
+	<string>Consumer protection law</string>
+	<key>L..T.V.name</key>
+	<string>Food law</string>
+	<key>L..T.X.name</key>
+	<string>Licensing, gaming &amp; club law</string>
+	<key>L..U.name</key>
+	<string>Taxation &amp; duties law</string>
+	<key>L..U.C.name</key>
+	<string>Corporate &amp; business tax</string>
+	<key>L..U.D.name</key>
+	<string>Local taxation, charges, public prices, excise duties</string>
+	<key>L..U.P.name</key>
+	<string>Personal tax</string>
+	<key>L..U.S.name</key>
+	<string>Sales tax &amp; tariffs &amp; customs duties</string>
+	<key>L..U.T.name</key>
+	<string>Trusts &amp; estates taxation, gift tax</string>
+	<key>L..U.U.name</key>
+	<string>Real estate tax, property valuation</string>
+	<key>L..U.V.name</key>
+	<string>Excise taxes</string>
+	<key>L..U.W.name</key>
+	<string>Other transaction taxes</string>
+	<key>L..U.X.name</key>
+	<string>International taxation law</string>
+	<key>L..U.1.name</key>
+	<string>Taxation procedure</string>
+	<key>L..V.name</key>
+	<string>Law of torts, damages &amp; compensation</string>
+	<key>L..V.C.name</key>
+	<string>Negligence</string>
+	<key>L..V.F.name</key>
+	<string>Nuisance</string>
+	<key>L..V.J.name</key>
+	<string>Personal injury</string>
+	<key>L..W.name</key>
+	<string>Law: wills, probate, succession</string>
+	<key>L..Z.name</key>
+	<string>Primary sources of law</string>
+	<key>L..Z.C.name</key>
+	<string>Sources of law: case law, precedent</string>
+	<key>L..Z.L.name</key>
+	<string>Sources of law: legislation</string>
+	<key>L.W.name</key>
+	<string>Shariah law</string>
+	<key>L.W.F.name</key>
+	<string>Shariah law: four Schools of Fiqh</string>
+	<key>L.W.F.A.name</key>
+	<string>Shariah law: Al-Shafi’i School of Fiqh</string>
+	<key>L.W.F.B.name</key>
+	<string>Shariah law: Al-Hanbali School of Fiqh</string>
+	<key>L.W.F.C.name</key>
+	<string>Shariah law: Al-Maaliki School of Fiqh</string>
+	<key>L.W.F.D.name</key>
+	<string>Shariah law: Al-Hanafi School of Fiqh</string>
+	<key>L.W.K.name</key>
+	<string>Shariah law: key topics &amp; practice</string>
+	<key>L.W.K.F.name</key>
+	<string>Shariah law: family relations</string>
+	<key>L.W.K.G.name</key>
+	<string>Shariah law: crime &amp; punishment</string>
+	<key>L.W.K.H.name</key>
+	<string>Shariah law: inheritance &amp; disposal of property</string>
+	<key>L.W.K.L.name</key>
+	<string>Shariah law: economics &amp; finance</string>
+	<key>L.W.K.M.name</key>
+	<string>Shariah law: dietary</string>
+	<key>L.W.K..name</key>
+	<string>Shariah law: alcohol &amp; gambling</string>
+	<key>L.W.K.P.name</key>
+	<string>Shariah law: customs &amp; behaviour</string>
+	<key>L.W.K.R.name</key>
+	<string>Shariah law: administration of justice (including penalties &amp; apostasy)</string>
+	<key>L.W.K.T.name</key>
+	<string>Shariah law: Islamic rituals</string>
+	<key>L.W.K.T.1.name</key>
+	<string>Shariah law: Islamic rituals: purification</string>
+	<key>L.W.K.T.2.name</key>
+	<string>Shariah law: Islamic rituals: jihad</string>
+	<key>L.W.K.T.3.name</key>
+	<string>Shariah law: Islamic rituals: prayer &amp; funeral prayer</string>
+	<key>L.W.K.T.4.name</key>
+	<string>Shariah law: Islamic rituals: zakat (alms)</string>
+	<key>L.W.K.T.5.name</key>
+	<string>Shariah law: Islamic rituals: fasting</string>
+	<key>L.W.K.T.6.name</key>
+	<string>Shariah law: Islamic rituals: pilgrimage</string>
+	<key>L.X.name</key>
+	<string>Law: study &amp; revision guides</string>
+	<key>M.name</key>
+	<string>Medicine &amp; Nursing</string>
+	<key>M.B.name</key>
+	<string>Medicine: general issues</string>
+	<key>M.B.D.name</key>
+	<string>Medical profession</string>
+	<key>M.B.D.C.name</key>
+	<string>Medical ethics &amp; professional conduct</string>
+	<key>M.B.D.P.name</key>
+	<string>Doctor/patient relationship</string>
+	<key>M.B.D.S.name</key>
+	<string>Patient safety</string>
+	<key>M.B.F.name</key>
+	<string>Medical &amp; health informatics</string>
+	<key>M.B.G.name</key>
+	<string>Medical equipment &amp; techniques</string>
+	<key>M.B.G.L.name</key>
+	<string>Medical laboratory testing &amp; techniques</string>
+	<key>M.B.G.R.name</key>
+	<string>Medical research</string>
+	<key>M.B.G.R.1.name</key>
+	<string>Clinical trials</string>
+	<key>M.B.G.T.name</key>
+	<string>Telemedicine</string>
+	<key>M.B..name</key>
+	<string>Public health &amp; preventive medicine</string>
+	<key>M.B..C.name</key>
+	<string>Medical screening</string>
+	<key>M.B..H.name</key>
+	<string>Personal &amp; public health</string>
+	<key>M.B..H.1.name</key>
+	<string>Hygiene</string>
+	<key>M.B..H.2.name</key>
+	<string>Environmental factors</string>
+	<key>M.B..H.3.name</key>
+	<string>Dietetics &amp; nutrition</string>
+	<key>M.B..H.4.name</key>
+	<string>Birth control, contraception, family planning</string>
+	<key>M.B..H.9.name</key>
+	<string>Health psychology</string>
+	<key>M.B..S.name</key>
+	<string>Epidemiology &amp; medical statistics</string>
+	<key>M.B.P.name</key>
+	<string>Health systems &amp; services</string>
+	<key>M.B.P.A.name</key>
+	<string>Primary care medicine, primary health care</string>
+	<key>M.B.P.C.name</key>
+	<string>General practice</string>
+	<key>M.B.P.K.name</key>
+	<string>Mental health services</string>
+	<key>M.B.P.M.name</key>
+	<string>Medical administration &amp; management</string>
+	<key>M.B.P.R.name</key>
+	<string>Medical insurance</string>
+	<key>M.B.Q.name</key>
+	<string>Medicolegal issues</string>
+	<key>M.B.S.name</key>
+	<string>Medical sociology</string>
+	<key>M.B.X.name</key>
+	<string>History of medicine</string>
+	<key>M.F.name</key>
+	<string>Pre-clinical medicine: basic sciences</string>
+	<key>M.F.C.name</key>
+	<string>Anatomy</string>
+	<key>M.F.C.C.name</key>
+	<string>Cytology</string>
+	<key>M.F.C.H.name</key>
+	<string>Histology</string>
+	<key>M.F.C.R.name</key>
+	<string>Regional anatomy</string>
+	<key>M.F.C.X.name</key>
+	<string>Dissection</string>
+	<key>M.F.G.name</key>
+	<string>Physiology</string>
+	<key>M.F.G.C.name</key>
+	<string>Cellular physiology</string>
+	<key>M.F.G.G.name</key>
+	<string>Regional physiology</string>
+	<key>M.F.G.M.name</key>
+	<string>Metabolism</string>
+	<key>M.F.G.V.name</key>
+	<string>Biomechanics, human kinetics</string>
+	<key>M.F.K.name</key>
+	<string>Human reproduction, growth &amp; development</string>
+	<key>M.F.K.C.name</key>
+	<string>Reproductive medicine</string>
+	<key>M.F.K.C.1.name</key>
+	<string>Infertility &amp; fertilization</string>
+	<key>M.F.K.C.3.name</key>
+	<string>Embryology</string>
+	<key>M.F.K.H.name</key>
+	<string>Human growth &amp; development</string>
+	<key>M.F.K.H.3.name</key>
+	<string>Maturation &amp; ageing</string>
+	<key>M.F..name</key>
+	<string>Medical genetics</string>
+	<key>M.J.name</key>
+	<string>Clinical &amp; internal medicine</string>
+	<key>M.J.A.name</key>
+	<string>Medical diagnosis</string>
+	<key>M.J.A.D.name</key>
+	<string>Examination of patients</string>
+	<key>M.J.C.name</key>
+	<string>Diseases &amp; disorders</string>
+	<key>M.J.C.G.name</key>
+	<string>Congenital diseases &amp; disorders</string>
+	<key>M.J.C.G.1.name</key>
+	<string>Hereditary diseases &amp; disorders</string>
+	<key>M.J.C.J.name</key>
+	<string>Infectious &amp; contagious diseases</string>
+	<key>M.J.C.J.1.name</key>
+	<string>Venereal diseases</string>
+	<key>M.J.C.J.2.name</key>
+	<string>HIV / AIDS</string>
+	<key>M.J.C.J.3.name</key>
+	<string>Hospital infections</string>
+	<key>M.J.C.L.name</key>
+	<string>Oncology</string>
+	<key>M.J.C.L.1.name</key>
+	<string>Radiotherapy</string>
+	<key>M.J.C.L.2.name</key>
+	<string>Chemotherapy</string>
+	<key>M.J.C.M.name</key>
+	<string>Immunology</string>
+	<key>M.J.C.M.1.name</key>
+	<string>Allergies</string>
+	<key>M.J.D.name</key>
+	<string>Cardiovascular medicine</string>
+	<key>M.J.E.name</key>
+	<string>Musculoskeletal medicine</string>
+	<key>M.J.F.name</key>
+	<string>Haematology</string>
+	<key>M.J.G.name</key>
+	<string>Endocrinology</string>
+	<key>M.J.G.D.name</key>
+	<string>Diabetes</string>
+	<key>M.J.H.name</key>
+	<string>Gastroenterology</string>
+	<key>M.J.J.name</key>
+	<string>Hepatology</string>
+	<key>M.J.K.name</key>
+	<string>Dermatology</string>
+	<key>M.J.L.name</key>
+	<string>Respiratory medicine</string>
+	<key>M.J.M.name</key>
+	<string>Rheumatology</string>
+	<key>M.J.P.name</key>
+	<string>Otorhinolaryngology (ENT)</string>
+	<key>M.J.P.D.name</key>
+	<string>Audiology &amp; otology</string>
+	<key>M.J.Q.name</key>
+	<string>Ophthalmology</string>
+	<key>M.J.R.name</key>
+	<string>Renal medicine &amp; nephrology</string>
+	<key>M.J.R.D.name</key>
+	<string>Haemodialysis</string>
+	<key>M.J.S.name</key>
+	<string>Urology &amp; urogenital medicine</string>
+	<key>M.K.name</key>
+	<string>Medical specialties, branches of medicine</string>
+	<key>M.K.A.name</key>
+	<string>Anaesthetics</string>
+	<key>M.K.A.L.name</key>
+	<string>Pain &amp; pain management</string>
+	<key>M.K.B.name</key>
+	<string>Palliative medicine</string>
+	<key>M.K.C.name</key>
+	<string>Gynaecology &amp; obstetrics</string>
+	<key>M.K.C.M.name</key>
+	<string>Materno-fetal medicine</string>
+	<key>M.K.D.name</key>
+	<string>Paediatric medicine</string>
+	<key>M.K.D..name</key>
+	<string>Neonatal medicine</string>
+	<key>M.K.E.name</key>
+	<string>Dentistry</string>
+	<key>M.K.E.P.name</key>
+	<string>Oral &amp; maxillofacial surgery</string>
+	<key>M.K.F.name</key>
+	<string>Pathology</string>
+	<key>M.K.F.C.name</key>
+	<string>Cytopathology</string>
+	<key>M.K.F.H.name</key>
+	<string>Histopathology</string>
+	<key>M.K.F.M.name</key>
+	<string>Medical microbiology &amp; virology</string>
+	<key>M.K.F.P.name</key>
+	<string>Medical parasitology</string>
+	<key>M.K.G.name</key>
+	<string>Pharmacology</string>
+	<key>M.K.G.T.name</key>
+	<string>Medical toxicology</string>
+	<key>M.K.G.W.name</key>
+	<string>Psychopharmacology</string>
+	<key>M.K.H.name</key>
+	<string>Regenerative medicine</string>
+	<key>M.K.H.C.name</key>
+	<string>Stem cells</string>
+	<key>M.K.J.name</key>
+	<string>Neurology &amp; clinical neurophysiology</string>
+	<key>M.K.J.A.name</key>
+	<string>Autism &amp; Asperger’s Syndrome</string>
+	<key>M.K.J.D.name</key>
+	<string>Alzheimer’s &amp; dementia</string>
+	<key>M.K.L.name</key>
+	<string>Psychiatry</string>
+	<key>M.K.M.name</key>
+	<string>Clinical psychology</string>
+	<key>M.K.M.T.name</key>
+	<string>Psychotherapy</string>
+	<key>M.K.M.T.1.name</key>
+	<string>Psychotherapy: general</string>
+	<key>M.K.M.T.2.name</key>
+	<string>Psychotherapy: group</string>
+	<key>M.K.M.T.3.name</key>
+	<string>Psychotherapy: child &amp; adolescent</string>
+	<key>M.K.M.T.4.name</key>
+	<string>Psychotherapy: couples &amp; families</string>
+	<key>M.K.M.T.5.name</key>
+	<string>Psychotherapy: counselling</string>
+	<key>M.K.M.T.6.name</key>
+	<string>Cognitive behavioural therapy</string>
+	<key>M.K..name</key>
+	<string>Geriatric medicine</string>
+	<key>M.K.P.name</key>
+	<string>Accident &amp; emergency medicine</string>
+	<key>M.K.P.B.name</key>
+	<string>Trauma &amp; shock</string>
+	<key>M.K.P.D.name</key>
+	<string>Burns</string>
+	<key>M.K.P.L.name</key>
+	<string>Intensive care medicine</string>
+	<key>M.K.R.name</key>
+	<string>Nuclear medicine</string>
+	<key>M.K.S.name</key>
+	<string>Medical imaging</string>
+	<key>M.K.S.F.name</key>
+	<string>Ultrasonics</string>
+	<key>M.K.S.G.name</key>
+	<string>Nuclear magnetic resonance (NMR / MRI)</string>
+	<key>M.K.S.H.name</key>
+	<string>Radiology</string>
+	<key>M.K.S.J.name</key>
+	<string>Tomography</string>
+	<key>M.K.T.name</key>
+	<string>Forensic medicine</string>
+	<key>M.K.V.name</key>
+	<string>Environmental medicine</string>
+	<key>M.K.V.B.name</key>
+	<string>Aviation &amp; space medicine</string>
+	<key>M.K.V.D.name</key>
+	<string>Diving &amp; hyperbaric medicine</string>
+	<key>M.K.V.P.name</key>
+	<string>Occupational medicine</string>
+	<key>M.K.V.T.name</key>
+	<string>Tropical medicine</string>
+	<key>M.K.W.name</key>
+	<string>Sports injuries &amp; medicine</string>
+	<key>M.K.Z.name</key>
+	<string>Therapy &amp; therapeutics</string>
+	<key>M.K.Z.D.name</key>
+	<string>Eating disorders &amp; therapy</string>
+	<key>M.K.Z.F.name</key>
+	<string>Obesity: treatment &amp; therapy</string>
+	<key>M.K.Z.L.name</key>
+	<string>Speech &amp; language disorders &amp; therapy</string>
+	<key>M.K.Z.R.name</key>
+	<string>Addiction &amp; therapy</string>
+	<key>M.K.Z.S.name</key>
+	<string>Sleep disorders &amp; therapy</string>
+	<key>M.K.Z.V.name</key>
+	<string>Gene therapy</string>
+	<key>M..name</key>
+	<string>Surgery</string>
+	<key>M..B.name</key>
+	<string>Surgical techniques</string>
+	<key>M..C.name</key>
+	<string>General surgery</string>
+	<key>M..D.name</key>
+	<string>Abdominal surgery</string>
+	<key>M..G.name</key>
+	<string>Gastrointestinal &amp; colorectal surgery</string>
+	<key>M..H.name</key>
+	<string>Cardiothoracic surgery</string>
+	<key>M..J.name</key>
+	<string>Vascular surgery</string>
+	<key>M..K.name</key>
+	<string>Surgical oncology</string>
+	<key>M..L.name</key>
+	<string>Critical care surgery</string>
+	<key>M...name</key>
+	<string>Neurosurgery</string>
+	<key>M..P.name</key>
+	<string>Plastic &amp; reconstructive surgery</string>
+	<key>M..P.C.name</key>
+	<string>Cosmetic surgery</string>
+	<key>M..Q.name</key>
+	<string>Transplant surgery</string>
+	<key>M..S.name</key>
+	<string>Surgical orthopaedics &amp; fractures</string>
+	<key>M..Z.name</key>
+	<string>Peri-operative care</string>
+	<key>M.Q.name</key>
+	<string>Nursing &amp; ancillary services</string>
+	<key>M.Q.C.name</key>
+	<string>Nursing</string>
+	<key>M.Q.C.A.name</key>
+	<string>Nursing fundamentals &amp; skills</string>
+	<key>M.Q.C.B.name</key>
+	<string>Nursing research &amp; theory</string>
+	<key>M.Q.C.H.name</key>
+	<string>Nurse/patient relationship</string>
+	<key>M.Q.C.L.name</key>
+	<string>Nursing specialties</string>
+	<key>M.Q.C.L.1.name</key>
+	<string>Accident &amp; emergency nursing</string>
+	<key>M.Q.C.L.2.name</key>
+	<string>Intensive care nursing</string>
+	<key>M.Q.C.L.3.name</key>
+	<string>Paediatric nursing</string>
+	<key>M.Q.C.L.4.name</key>
+	<string>Geriatric nursing</string>
+	<key>M.Q.C.L.5.name</key>
+	<string>Psychiatric nursing</string>
+	<key>M.Q.C.L.6.name</key>
+	<string>Surgical nursing</string>
+	<key>M.Q.C.L.9.name</key>
+	<string>Terminal care nursing</string>
+	<key>M.Q.C.M.name</key>
+	<string>Nursing pharmacology</string>
+	<key>M.Q.C.W.name</key>
+	<string>Nursing sociology</string>
+	<key>M.Q.C.X.name</key>
+	<string>Community nursing</string>
+	<key>M.Q.C.Z.name</key>
+	<string>Nursing management &amp; leadership</string>
+	<key>M.Q.D.name</key>
+	<string>Midwifery</string>
+	<key>M.Q.D.B.name</key>
+	<string>Birthing methods</string>
+	<key>M.Q.F.name</key>
+	<string>First aid &amp; paramedical services</string>
+	<key>M.Q.H.name</key>
+	<string>Radiography</string>
+	<key>M.Q.K.name</key>
+	<string>Chiropody &amp; podiatry</string>
+	<key>M.Q.P.name</key>
+	<string>Pharmacy / dispensing</string>
+	<key>M.Q.R.name</key>
+	<string>Optometry / opticians</string>
+	<key>M.Q.S.name</key>
+	<string>Physiotherapy</string>
+	<key>M.Q.T.name</key>
+	<string>Occupational therapy</string>
+	<key>M.Q.T.C.name</key>
+	<string>Creative therapy (eg art, music, drama)</string>
+	<key>M.Q.U.name</key>
+	<string>Medical counselling</string>
+	<key>M.Q.V.name</key>
+	<string>Rehabilitation</string>
+	<key>M.Q.V.B.name</key>
+	<string>Rehabilitation: brain &amp; spinal injuries</string>
+	<key>M.Q.W.name</key>
+	<string>Biomedical engineering</string>
+	<key>M.Q.W.B.name</key>
+	<string>Orthotics</string>
+	<key>M.Q.W.P.name</key>
+	<string>Prosthetics</string>
+	<key>M.Q.Z.name</key>
+	<string>Mortuary practice</string>
+	<key>M.R.name</key>
+	<string>Medical study &amp; revision guides &amp; reference material</string>
+	<key>M.R.G.name</key>
+	<string>Medical study &amp; revision guides</string>
+	<key>M.R.G.D.name</key>
+	<string>Medical revision aids: MRCP</string>
+	<key>M.R.G.K.name</key>
+	<string>Medical revision aids: MRCS</string>
+	<key>M.R.G.L.name</key>
+	<string>Medical revision aids: PLAB</string>
+	<key>M.R.T.name</key>
+	<string>Medical charts, colour atlases</string>
+	<key>M.X.name</key>
+	<string>Complementary medicine</string>
+	<key>M.X.H.name</key>
+	<string>Chiropractic &amp; osteopathy</string>
+	<key>M.Z.name</key>
+	<string>Veterinary medicine</string>
+	<key>M.Z.C.name</key>
+	<string>Veterinary medicine: small animals (pets)</string>
+	<key>M.Z.D.name</key>
+	<string>Veterinary medicine: large animals (domestic / farm)</string>
+	<key>M.Z.D.H.name</key>
+	<string>Equine veterinary medicine</string>
+	<key>M.Z.F.name</key>
+	<string>Veterinary medicine: laboratory animals</string>
+	<key>M.Z.G.name</key>
+	<string>Veterinary medicine: exotic &amp; zoo animals</string>
+	<key>M.Z.H.name</key>
+	<string>Veterinary anatomy &amp; physiology</string>
+	<key>M.Z.K.name</key>
+	<string>Veterinary pathology &amp; histology</string>
+	<key>M.Z.L.name</key>
+	<string>Veterinary nutrition</string>
+	<key>M.Z.M.name</key>
+	<string>Veterinary medicine: infectious diseases &amp; therapeutics</string>
+	<key>M.Z.M.P.name</key>
+	<string>Veterinary bacteriology, virology, parasitology</string>
+	<key>M.Z.P.name</key>
+	<string>Veterinary pharmacology</string>
+	<key>M.Z.R.name</key>
+	<string>Veterinary radiology</string>
+	<key>M.Z.S.name</key>
+	<string>Veterinary surgery</string>
+	<key>M.Z.S..name</key>
+	<string>Veterinary anaesthetics</string>
+	<key>M.Z.T.name</key>
+	<string>Veterinary dentistry</string>
+	<key>M.Z.V.name</key>
+	<string>Veterinary nursing</string>
+	<key>M.Z.X.name</key>
+	<string>Complementary medicine for animals</string>
+	<key>name</key>
+	<string>History &amp; Archaeology</string>
+	<key>H.name</key>
+	<string>History</string>
+	<key>H.A.name</key>
+	<string>History: theory &amp; methods</string>
+	<key>H.A.H.name</key>
+	<string>Historiography</string>
+	<key>H.A.P.name</key>
+	<string>Historical research: source documents</string>
+	<key>H.B.name</key>
+	<string>General &amp; world history</string>
+	<key>H.C.name</key>
+	<string>Ancient history</string>
+	<key>H.D.name</key>
+	<string>European history</string>
+	<key>H.D.A.name</key>
+	<string>European history: the Romans</string>
+	<key>H.D.C.name</key>
+	<string>European history: the Celts</string>
+	<key>H.D.E.name</key>
+	<string>European history: the Vikings</string>
+	<key>H.D.G.name</key>
+	<string>European history: the Normans</string>
+	<key>H.D.J.name</key>
+	<string>European history: medieval period, middle ages</string>
+	<key>H.D.L.name</key>
+	<string>European history: Renaissance</string>
+	<key>H.D..name</key>
+	<string>European history: Reformation</string>
+	<key>H.F.name</key>
+	<string>Asian history</string>
+	<key>H.G.name</key>
+	<string>Middle Eastern history</string>
+	<key>H.H.name</key>
+	<string>African history</string>
+	<key>H.H.A.name</key>
+	<string>African history: pre-colonial period</string>
+	<key>H.K.name</key>
+	<string>History of the Americas</string>
+	<key>H.K.A.name</key>
+	<string>History of the Americas: pre-Columbian period</string>
+	<key>H.M.name</key>
+	<string>Australasian &amp; Pacific history</string>
+	<key>H.Q.name</key>
+	<string>History of other lands</string>
+	<key>H.T.name</key>
+	<string>History: specific events &amp; topics</string>
+	<key>H.T.B.name</key>
+	<string>Social &amp; cultural history</string>
+	<key>H.T.D.name</key>
+	<string>Oral history</string>
+	<key>H.T.F.name</key>
+	<string>History: plagues, diseases etc</string>
+	<key>H.T.G.name</key>
+	<string>Genealogy, heraldry, names &amp; honours</string>
+	<key>H.T.K.name</key>
+	<string>Industrialisation &amp; industrial history</string>
+	<key>H.T.M.name</key>
+	<string>Maritime history</string>
+	<key>H.T.P.name</key>
+	<string>Historical geography</string>
+	<key>H.T.P.1.name</key>
+	<string>Historical maps &amp; atlases</string>
+	<key>H.T.Q.name</key>
+	<string>Colonialism &amp; imperialism</string>
+	<key>H.T.R.name</key>
+	<string>National liberation &amp; independence, post-colonialism</string>
+	<key>H.T.S.name</key>
+	<string>Slavery &amp; abolition of slavery</string>
+	<key>H.T.T.name</key>
+	<string>Invasion &amp; occupation</string>
+	<key>H.T.V.name</key>
+	<string>Revolutions, uprisings, rebellions</string>
+	<key>H.T.W.name</key>
+	<string>The Cold War</string>
+	<key>H.T.Z.name</key>
+	<string>Genocide &amp; ethnic cleansing</string>
+	<key>H.T.Z.1.name</key>
+	<string>The Holocaust</string>
+	<key>H.W.name</key>
+	<string>Military history</string>
+	<key>H.W.A.name</key>
+	<string>Ancient warfare</string>
+	<key>H.W.F.name</key>
+	<string>Early modern warfare (including gunpowder warfare)</string>
+	<key>H.W.L.name</key>
+	<string>Modern warfare</string>
+	<key>H.W.R.name</key>
+	<string>Specific wars &amp; campaigns</string>
+	<key>H.W.R.1.name</key>
+	<string>Specific battles</string>
+	<key>H.W.R.3.name</key>
+	<string>Civil wars</string>
+	<key>H.W.R.5.name</key>
+	<string>First World War</string>
+	<key>H.W.R.7.name</key>
+	<string>Second World War</string>
+	<key>H.W.R.9.name</key>
+	<string>Military history: post-WW2 conflicts</string>
+	<key>K.name-ffeb47286f1c41c7bdfa0c083f0205d0</key>
+	<string>Archaeology</string>
+	<key>K.A.name</key>
+	<string>Archaeological theory</string>
+	<key>K.D.name</key>
+	<string>Archaeology by period / region</string>
+	<key>K.L.name</key>
+	<string>Landscape archaeology</string>
+	<key>K.P.name</key>
+	<string>Environmental archaeology</string>
+	<key>K.R.name</key>
+	<string>Underwater archaeology</string>
+	<key>K.T.name</key>
+	<string>Industrial archaeology</string>
+	<key>K.V.name</key>
+	<string>Battlefield archaeology</string>
+	<key>K.X.name</key>
+	<string>Archaeological science, methodology &amp; techniques</string>
+	<key>P.name</key>
+	<string>Mathematics &amp; Science</string>
+	<key>P.B.name</key>
+	<string>Mathematics</string>
+	<key>P.B.B.name</key>
+	<string>Philosophy of mathematics</string>
+	<key>P.B.C.name</key>
+	<string>Mathematical foundations</string>
+	<key>P.B.C.D.name</key>
+	<string>Mathematical logic</string>
+	<key>P.B.C.H.name</key>
+	<string>Set theory</string>
+	<key>P.B.C..name</key>
+	<string>Number systems</string>
+	<key>P.B.D.name</key>
+	<string>Discrete mathematics</string>
+	<key>P.B.F.name</key>
+	<string>Algebra</string>
+	<key>P.B.G.name</key>
+	<string>Groups &amp; group theory</string>
+	<key>P.B.H.name</key>
+	<string>Number theory</string>
+	<key>P.B.J.name</key>
+	<string>Pre-calculus</string>
+	<key>P.B.K.name</key>
+	<string>Calculus &amp; mathematical analysis</string>
+	<key>P.B.K.A.name</key>
+	<string>Calculus</string>
+	<key>P.B.K.B.name</key>
+	<string>Real analysis, real variables</string>
+	<key>P.B.K.D.name</key>
+	<string>Complex analysis, complex variables</string>
+	<key>P.B.K.F.name</key>
+	<string>Functional analysis &amp; transforms</string>
+	<key>P.B.K.J.name</key>
+	<string>Differential calculus &amp; equations</string>
+	<key>P.B.K.L.name</key>
+	<string>Integral calculus &amp; equations</string>
+	<key>P.B.K.Q.name</key>
+	<string>Calculus of variations</string>
+	<key>P.B.K.S.name</key>
+	<string>Numerical analysis</string>
+	<key>P.B.M.name</key>
+	<string>Geometry</string>
+	<key>P.B.M.B.name</key>
+	<string>Trigonometry</string>
+	<key>P.B.M.H.name</key>
+	<string>Euclidean geometry</string>
+	<key>P.B.M.L.name</key>
+	<string>Non-Euclidean geometry</string>
+	<key>P.B.M.P.name</key>
+	<string>Differential &amp; Riemannian geometry</string>
+	<key>P.B.M.S.name</key>
+	<string>Analytic geometry</string>
+	<key>P.B.M.W.name</key>
+	<string>Algebraic geometry</string>
+	<key>P.B.M.X.name</key>
+	<string>Fractal geometry</string>
+	<key>P.B.P.name</key>
+	<string>Topology</string>
+	<key>P.B.P.D.name</key>
+	<string>Algebraic topology</string>
+	<key>P.B.P.H.name</key>
+	<string>Analytic topology</string>
+	<key>P.B.T.name</key>
+	<string>Probability &amp; statistics</string>
+	<key>P.B.T.B.name</key>
+	<string>Bayesian inference</string>
+	<key>P.B.U.name</key>
+	<string>Optimization</string>
+	<key>P.B.U.D.name</key>
+	<string>Game theory</string>
+	<key>P.B.U.H.name</key>
+	<string>Linear programming</string>
+	<key>P.B.V.name</key>
+	<string>Combinatorics &amp; graph theory</string>
+	<key>P.B.W.name</key>
+	<string>Applied mathematics</string>
+	<key>P.B.W.H.name</key>
+	<string>Mathematical modelling</string>
+	<key>P.B.W.L.name</key>
+	<string>Stochastics</string>
+	<key>P.B.W.R.name</key>
+	<string>Nonlinear science</string>
+	<key>P.B.W.S.name</key>
+	<string>Chaos theory</string>
+	<key>P.B.W.X.name</key>
+	<string>Fuzzy set theory</string>
+	<key>P.B.X.name</key>
+	<string>History of mathematics</string>
+	<key>P.D.name</key>
+	<string>Science: general issues</string>
+	<key>P.D.A.name</key>
+	<string>Philosophy of science</string>
+	<key>P.D.C.name</key>
+	<string>Scientific nomenclature &amp; classification</string>
+	<key>P.D.D.name</key>
+	<string>Scientific standards, measurement etc</string>
+	<key>P.D.E.name</key>
+	<string>Maths for scientists</string>
+	<key>P.D.G.name</key>
+	<string>Industrial applications of scientific research &amp; technological innovation</string>
+	<key>P.D.J.name</key>
+	<string>Regulation of science &amp; experimentation</string>
+	<key>P.D.K.name</key>
+	<string>Science funding &amp; policy</string>
+	<key>P.D.M.name</key>
+	<string>Scientific research</string>
+	<key>P.D..name</key>
+	<string>Scientific equipment, experiments &amp; techniques</string>
+	<key>P.D.R.name</key>
+	<string>Impact of science &amp; technology on society</string>
+	<key>P.D.T.name</key>
+	<string>Nanosciences</string>
+	<key>P.D.X.name</key>
+	<string>History of science</string>
+	<key>P.D.Z.name</key>
+	<string>Popular science</string>
+	<key>P.G.name</key>
+	<string>Astronomy, space &amp; time</string>
+	<key>P.G.C.name</key>
+	<string>Theoretical &amp; mathematical astronomy</string>
+	<key>P.G.G.name</key>
+	<string>Astronomical observation: observatories, equipment &amp; methods</string>
+	<key>P.G.K.name</key>
+	<string>Cosmology &amp; the universe</string>
+	<key>P.G.M.name</key>
+	<string>Galaxies &amp; stars</string>
+	<key>P.G.S.name</key>
+	<string>Solar system: the Sun &amp; planets</string>
+	<key>P.G.T.name</key>
+	<string>Astronomical charts &amp; atlases</string>
+	<key>P.G.Z.name</key>
+	<string>Time (chronology), time systems &amp; standards</string>
+	<key>P.H.name</key>
+	<string>Physics</string>
+	<key>P.H.D.name</key>
+	<string>Classical mechanics</string>
+	<key>P.H.D.B.name</key>
+	<string>Elementary mechanics</string>
+	<key>P.H.D.D.name</key>
+	<string>Analytical mechanics</string>
+	<key>P.H.D.F.name</key>
+	<string>Fluid mechanics</string>
+	<key>P.H.D.S.name</key>
+	<string>Wave mechanics (vibration &amp; acoustics)</string>
+	<key>P.H.D.T.name</key>
+	<string>Dynamics &amp; statics</string>
+	<key>P.H.D.V.name</key>
+	<string>Gravity</string>
+	<key>P.H.D.1.name</key>
+	<string>Energy</string>
+	<key>P.H.F.name</key>
+	<string>Materials / States of matter</string>
+	<key>P.H.F.B.name</key>
+	<string>Low temperature physics</string>
+	<key>P.H.F.C.name</key>
+	<string>Condensed matter physics (liquid state &amp; solid state physics)</string>
+	<key>P.H.F.C.1.name</key>
+	<string>Soft matter physics</string>
+	<key>P.H.F.C.2.name</key>
+	<string>Mesoscopic physics</string>
+	<key>P.H.F.G.name</key>
+	<string>Physics of gases</string>
+	<key>P.H.F.P.name</key>
+	<string>Plasma physics</string>
+	<key>P.H.H.name</key>
+	<string>Thermodynamics &amp; heat</string>
+	<key>P.H.J.name</key>
+	<string>Optical physics</string>
+	<key>P.H.J.L.name</key>
+	<string>Laser physics</string>
+	<key>P.H.K.name</key>
+	<string>Electricity, electromagnetism &amp; magnetism</string>
+	<key>P.H.M.name</key>
+	<string>Atomic &amp; molecular physics</string>
+	<key>P.H..name</key>
+	<string>Nuclear physics</string>
+	<key>P.H.P.name</key>
+	<string>Particle &amp; high-energy physics</string>
+	<key>P.H.Q.name</key>
+	<string>Quantum physics (quantum mechanics &amp; quantum field theory)</string>
+	<key>P.H.R.name</key>
+	<string>Relativity physics</string>
+	<key>P.H.S.name</key>
+	<string>Statistical physics</string>
+	<key>P.H.U.name</key>
+	<string>Mathematical physics</string>
+	<key>P.H.V.name</key>
+	<string>Applied physics</string>
+	<key>P.H.V.B.name</key>
+	<string>Astrophysics</string>
+	<key>P.H.V.D.name</key>
+	<string>Medical physics</string>
+	<key>P.H.V.G.name</key>
+	<string>Geophysics</string>
+	<key>P.H.V.J.name</key>
+	<string>Atmospheric physics</string>
+	<key>P.H.V..name</key>
+	<string>Biophysics</string>
+	<key>P.H.V.Q.name</key>
+	<string>Chemical physics</string>
+	<key>P.H.V.S.name</key>
+	<string>Cryogenics</string>
+	<key>P..name</key>
+	<string>Chemistry</string>
+	<key>P..B.name</key>
+	<string>Medicinal chemistry</string>
+	<key>P..C.name</key>
+	<string>Environmental chemistry</string>
+	<key>P..D.name</key>
+	<string>Food chemistry</string>
+	<key>P..F.name</key>
+	<string>Analytical chemistry</string>
+	<key>P..F.C.name</key>
+	<string>Chromatography</string>
+	<key>P..F.R.name</key>
+	<string>Magnetic resonance</string>
+	<key>P..F.S.name</key>
+	<string>Spectrum analysis, spectrochemistry, mass spectrometry</string>
+	<key>P..K.name</key>
+	<string>Inorganic chemistry</string>
+	<key>P...name</key>
+	<string>Organic chemistry</string>
+	<key>P...D.name</key>
+	<string>Organometallic chemistry</string>
+	<key>P...P.name</key>
+	<string>Polymer chemistry</string>
+	<key>P..R.name</key>
+	<string>Physical chemistry</string>
+	<key>P..R.A.name</key>
+	<string>Computational chemistry</string>
+	<key>P..R.C.name</key>
+	<string>Colloid chemistry</string>
+	<key>P..R.D.name</key>
+	<string>Catalysis</string>
+	<key>P..R.D.1.name</key>
+	<string>Bio-catalysis</string>
+	<key>P..R.H.name</key>
+	<string>Electrochemistry &amp; magnetochemistry</string>
+	<key>P..R.L.name</key>
+	<string>Nuclear chemistry, photochemistry &amp; radiation</string>
+	<key>P..R.P.name</key>
+	<string>Quantum &amp; theoretical chemistry</string>
+	<key>P..R.R.name</key>
+	<string>Physical organic chemistry</string>
+	<key>P..R.S.name</key>
+	<string>Solid state chemistry</string>
+	<key>P..R.W.name</key>
+	<string>Thermochemistry &amp; chemical thermodynamics</string>
+	<key>P..R.X.name</key>
+	<string>Surface chemistry &amp; adsorption</string>
+	<key>P..T.name</key>
+	<string>Crystallography</string>
+	<key>P..V.name</key>
+	<string>Mineralogy &amp; gems</string>
+	<key>P.S.name</key>
+	<string>Biology, life sciences</string>
+	<key>P.S.A.name</key>
+	<string>Life sciences: general issues</string>
+	<key>P.S.A.B.name</key>
+	<string>Taxonomy &amp; systematics</string>
+	<key>P.S.A.D.name</key>
+	<string>Bio-ethics</string>
+	<key>P.S.A.F.name</key>
+	<string>Ecological science, the Biosphere</string>
+	<key>P.S.A.G.name</key>
+	<string>Xenobiotics</string>
+	<key>P.S.A.J.name</key>
+	<string>Evolution</string>
+	<key>P.S.A.K.name</key>
+	<string>Genetics (non-medical)</string>
+	<key>P.S.A..name</key>
+	<string>Neurosciences</string>
+	<key>P.S.A..1.name</key>
+	<string>Cellular &amp; molecular neuroscience</string>
+	<key>P.S.A..2.name</key>
+	<string>Developmental neuroscience</string>
+	<key>P.S.A..3.name</key>
+	<string>Neuroimaging &amp; neuroanatomy</string>
+	<key>P.S.A..4.name</key>
+	<string>Sensory &amp; motor systems</string>
+	<key>P.S.A..5.name</key>
+	<string>Cognitive &amp; behavioural neuroscience</string>
+	<key>P.S.A.X.name</key>
+	<string>Computational biology / bioinformatics</string>
+	<key>P.S.B.name</key>
+	<string>Biochemistry</string>
+	<key>P.S.C.name</key>
+	<string>Developmental biology</string>
+	<key>P.S.D.name</key>
+	<string>Molecular biology</string>
+	<key>P.S.E.name</key>
+	<string>Chemical biology</string>
+	<key>P.S.F.name</key>
+	<string>Cellular biology (cytology)</string>
+	<key>P.S.G.name</key>
+	<string>Microbiology (non-medical)</string>
+	<key>P.S.G..name</key>
+	<string>Protozoa</string>
+	<key>P.S.P.name</key>
+	<string>Hydrobiology</string>
+	<key>P.S.P.F.name</key>
+	<string>Freshwater biology</string>
+	<key>P.S.P.M.name</key>
+	<string>Marine biology</string>
+	<key>P.S.Q.name</key>
+	<string>Mycology, fungi (non-medical)</string>
+	<key>P.S.T.name</key>
+	<string>Botany &amp; plant sciences</string>
+	<key>P.S.T.B.name</key>
+	<string>Plant biology</string>
+	<key>P.S.V.name</key>
+	<string>Zoology &amp; animal sciences</string>
+	<key>P.S.V.A.name</key>
+	<string>Zoology: insects (entomology) &amp; other invertebrates</string>
+	<key>P.S.V.C.name</key>
+	<string>Zoology: fishes (ichthyology)</string>
+	<key>P.S.V.F.name</key>
+	<string>Zoology: amphibians &amp; reptiles (herpetology)</string>
+	<key>P.S.V.J.name</key>
+	<string>Zoology: birds (ornithology)</string>
+	<key>P.S.V.M.name</key>
+	<string>Zoology: mammals</string>
+	<key>P.S.V.M.1.name</key>
+	<string>Zoology: marsupials &amp; monotremes</string>
+	<key>P.S.V.M.2.name</key>
+	<string>Zoology: marine &amp; freshwater mammals</string>
+	<key>P.S.V.M.3.name</key>
+	<string>Zoology: primates (primatology)</string>
+	<key>P.S.X.name</key>
+	<string>Human biology</string>
+	<key>P.S.X.E.name</key>
+	<string>Early man</string>
+	<key>Q.name</key>
+	<string>Philosophy &amp; Religion</string>
+	<key>Q.D.name</key>
+	<string>Philosophy</string>
+	<key>Q.D.H.name</key>
+	<string>History of philosophy, philosophical traditions</string>
+	<key>Q.D.H.A.name</key>
+	<string>Ancient philosophy</string>
+	<key>Q.D.H.C.name</key>
+	<string>East Asian &amp; Indian philosophy</string>
+	<key>Q.D.H.F.name</key>
+	<string>Medieval philosophy</string>
+	<key>Q.D.H.K.name</key>
+	<string>Islamic &amp; Arab philosophy</string>
+	<key>Q.D.H.M.name</key>
+	<string>Western philosophy: Enlightenment</string>
+	<key>Q.D.H.R.name</key>
+	<string>Modern philosophy: since c 1800</string>
+	<key>Q.D.H.R.1.name</key>
+	<string>Idealism</string>
+	<key>Q.D.H.R.3.name</key>
+	<string>Pragmatism</string>
+	<key>Q.D.H.R.5.name</key>
+	<string>Phenomenology &amp; Existentialism</string>
+	<key>Q.D.H.R.7.name</key>
+	<string>Structuralism &amp; Post-structuralism</string>
+	<key>Q.D.H.R.9.name</key>
+	<string>Analytical philosophy &amp; Logical Positivism</string>
+	<key>Q.D.T.name</key>
+	<string>Topics in philosophy</string>
+	<key>Q.D.T.J.name</key>
+	<string>Philosophy: metaphysics &amp; ontology</string>
+	<key>Q.D.T.K.name</key>
+	<string>Philosophy: epistemology &amp; theory of knowledge</string>
+	<key>Q.D.T.L.name</key>
+	<string>Philosophy: logic</string>
+	<key>Q.D.T.M.name</key>
+	<string>Philosophy of mind</string>
+	<key>Q.D.T..name</key>
+	<string>Philosophy: aesthetics</string>
+	<key>Q.D.T.Q.name</key>
+	<string>Ethics &amp; moral philosophy</string>
+	<key>Q.D.T.S.name</key>
+	<string>Social &amp; political philosophy</string>
+	<key>Q.D.X.name</key>
+	<string>Popular philosophy</string>
+	<key>Q.R.name</key>
+	<string>Religion &amp; beliefs</string>
+	<key>Q.R.A.name</key>
+	<string>Religion: general</string>
+	<key>Q.R.A.B.name</key>
+	<string>Philosophy of religion</string>
+	<key>Q.R.A.B.1.name</key>
+	<string>Nature &amp; existence of God</string>
+	<key>Q.R.A.C.name</key>
+	<string>Comparative religion</string>
+	<key>Q.R.A.F.name</key>
+	<string>Interfaith relations</string>
+	<key>Q.R.A.M.name</key>
+	<string>Religious issues &amp; debates</string>
+	<key>Q.R.A.M.1.name</key>
+	<string>Religious ethics</string>
+	<key>Q.R.A.M.2.name</key>
+	<string>Religion &amp; politics</string>
+	<key>Q.R.A.M.3.name</key>
+	<string>Religion &amp; science</string>
+	<key>Q.R.A.M.6.name</key>
+	<string>Religious fundamentalism</string>
+	<key>Q.R.A.M.7.name</key>
+	<string>Blasphemy, heresy, apostasy</string>
+	<key>Q.R.A.M.9.name</key>
+	<string>Religious intolerance, persecution &amp; conflict</string>
+	<key>Q.R.A.X.name</key>
+	<string>History of religion</string>
+	<key>Q.R.D.name</key>
+	<string>Hinduism</string>
+	<key>Q.R.D.B.name</key>
+	<string>Hinduism: branches &amp; groups</string>
+	<key>Q.R.D.F.name</key>
+	<string>Hindu sacred texts</string>
+	<key>Q.R.D.F.1.name</key>
+	<string>Hindu texts: Vedas, Upanishads</string>
+	<key>Q.R.D.F.2.name</key>
+	<string>Hindu texts: Bhagavad Gita</string>
+	<key>Q.R.D.P.name</key>
+	<string>Hindu life &amp; practice</string>
+	<key>Q.R.F.name</key>
+	<string>Buddhism</string>
+	<key>Q.R.F.B.name</key>
+	<string>Buddhism: branches &amp; groups</string>
+	<key>Q.R.F.B.1.name</key>
+	<string>Theravada Buddhism</string>
+	<key>Q.R.F.B.2.name</key>
+	<string>Mahayana Buddhism</string>
+	<key>Q.R.F.B.2.1.name</key>
+	<string>Tibetan Buddhism</string>
+	<key>Q.R.F.B.2.3.name</key>
+	<string>Zen Buddhism</string>
+	<key>Q.R.F.F.name</key>
+	<string>Buddhist sacred texts</string>
+	<key>Q.R.F.P.name</key>
+	<string>Buddhist life &amp; practice</string>
+	<key>Q.R.J.name</key>
+	<string>Judaism</string>
+	<key>Q.R.J.B.name</key>
+	<string>Judaism: branches &amp; groups</string>
+	<key>Q.R.J.B.1.name</key>
+	<string>Orthodox Judaism</string>
+	<key>Q.R.J.B.3.name</key>
+	<string>Liberal &amp; Reform Judaism</string>
+	<key>Q.R.J.F.name</key>
+	<string>Judaism: sacred texts</string>
+	<key>Q.R.J.F.1.name</key>
+	<string>Jewish texts: Tanakh, Torah</string>
+	<key>Q.R.J.F.5.name</key>
+	<string>Rabbinic literature</string>
+	<key>Q.R.J.P.name</key>
+	<string>Judaism: life &amp; practice</string>
+	<key>Q.R.M.name</key>
+	<string>Christianity</string>
+	<key>Q.R.M.B.name</key>
+	<string>Christian Churches, denominations, groups</string>
+	<key>Q.R.M.B.1.name</key>
+	<string>Roman Catholicism, Roman Catholic Church</string>
+	<key>Q.R.M.B.2.name</key>
+	<string>Orthodox &amp; Oriental Orthodox Churches</string>
+	<key>Q.R.M.B.3.name</key>
+	<string>Protestantism &amp; Protestant Churches</string>
+	<key>Q.R.M.B.3.1.name</key>
+	<string>Anglican &amp; Episcopalian Churches</string>
+	<key>Q.R.M.B.3.2.name</key>
+	<string>Baptist Churches</string>
+	<key>Q.R.M.B.3.3.name</key>
+	<string>Calvinist, Reformed &amp; Presbyterian Churches</string>
+	<key>Q.R.M.B.3.4.name</key>
+	<string>Lutheran Churches</string>
+	<key>Q.R.M.B.3.5.name</key>
+	<string>Methodist Churches</string>
+	<key>Q.R.M.B.3.6.name</key>
+	<string>Pentecostal Churches</string>
+	<key>Q.R.M.B.3.7.name</key>
+	<string>Quakers (Religious Society of Friends)</string>
+	<key>Q.R.M.B.3.9.name</key>
+	<string>Other Nonconformist &amp; Evangelical Churches</string>
+	<key>Q.R.M.B.5.name</key>
+	<string>Denominations of American origin</string>
+	<key>Q.R.M.B.8.name</key>
+	<string>Christian &amp; quasi-Christian cults &amp; sects</string>
+	<key>Q.R.M.B.9.name</key>
+	<string>Ecumenism</string>
+	<key>Q.R.M.F.name</key>
+	<string>Christianity: sacred texts</string>
+	<key>Q.R.M.F.1.name</key>
+	<string>Bibles</string>
+	<key>Q.R.M.F.1.2.name</key>
+	<string>Old Testaments</string>
+	<key>Q.R.M.F.1.3.name</key>
+	<string>New Testaments</string>
+	<key>Q.R.M.F.1.9.name</key>
+	<string>Bible readings, selections &amp; meditations</string>
+	<key>Q.R.M.P.name</key>
+	<string>Christian life &amp; practice</string>
+	<key>Q.R.M.P.1.name</key>
+	<string>Christian sacraments</string>
+	<key>Q.R.P.name</key>
+	<string>Islam</string>
+	<key>Q.R.P.B.name</key>
+	<string>Islam: branches &amp; groups</string>
+	<key>Q.R.P.B.1.name</key>
+	<string>Islamic groups: Sunni, Alsalaf</string>
+	<key>Q.R.P.B.2.name</key>
+	<string>Islamic groups: Khawarij, Kharijite</string>
+	<key>Q.R.P.B.3.name</key>
+	<string>Islamic groups: Shi’ah, Shi’ite</string>
+	<key>Q.R.P.B.4.name</key>
+	<string>Islamic groups: Sufis</string>
+	<key>Q.R.P.F.name</key>
+	<string>Islamic sacred texts</string>
+	<key>Q.R.P.F.1.name</key>
+	<string>The Koran (Qur’an)</string>
+	<key>Q.R.P.P.name</key>
+	<string>Islamic life &amp; practice</string>
+	<key>Q.R.R.name</key>
+	<string>Other World religions</string>
+	<key>Q.R.R.B.name</key>
+	<string>Baha’i</string>
+	<key>Q.R.R.C.name</key>
+	<string>Jainism</string>
+	<key>Q.R.R.D.name</key>
+	<string>Sikhism</string>
+	<key>Q.R.R.F.name</key>
+	<string>Zoroastrianism</string>
+	<key>Q.R.R.L.name</key>
+	<string>East Asian religions</string>
+	<key>Q.R.R.L.1.name</key>
+	<string>Confucianism</string>
+	<key>Q.R.R.L.3.name</key>
+	<string>Shintoism</string>
+	<key>Q.R.R.L.5.name</key>
+	<string>Taoism</string>
+	<key>Q.R.R.T.name</key>
+	<string>Tribal religions</string>
+	<key>Q.R.S.name</key>
+	<string>Ancient religions &amp; mythologies</string>
+	<key>Q.R.S.A.name</key>
+	<string>Ancient Egyptian religion &amp; mythology</string>
+	<key>Q.R.S.G.name</key>
+	<string>Ancient Greek religion &amp; mythology</string>
+	<key>Q.R.S.L.name</key>
+	<string>Roman religion &amp; mythology</string>
+	<key>Q.R.S.T.name</key>
+	<string>Celtic religion &amp; mythology</string>
+	<key>Q.R.S.W.name</key>
+	<string>Norse religion &amp; mythology</string>
+	<key>Q.R.V.name</key>
+	<string>Aspects of religion</string>
+	<key>Q.R.V.A.name</key>
+	<string>Sacred texts</string>
+	<key>Q.R.V.C.name</key>
+	<string>Criticism &amp; exegesis of sacred texts</string>
+	<key>Q.R.V.G.name</key>
+	<string>Theology</string>
+	<key>Q.R.V.H.name</key>
+	<string>Sermons</string>
+	<key>Q.R.V.J.name</key>
+	<string>Prayers &amp; liturgical material</string>
+	<key>Q.R.V.J.1.name</key>
+	<string>Worship, rites &amp; ceremonies</string>
+	<key>Q.R.V.J.2.name</key>
+	<string>Prayer &amp; prayerbooks</string>
+	<key>Q.R.V.J.3.name</key>
+	<string>Devotional material</string>
+	<key>Q.R.V.K.name</key>
+	<string>Spirituality &amp; religious experience</string>
+	<key>Q.R.V.K.2.name</key>
+	<string>Mysticism</string>
+	<key>Q.R.V.P.name</key>
+	<string>Religious life &amp; practice</string>
+	<key>Q.R.V.P.3.name</key>
+	<string>Religious instruction</string>
+	<key>Q.R.V.P.5.name</key>
+	<string>Religious counselling</string>
+	<key>Q.R.V.P.7.name</key>
+	<string>Religious aspects of sexuality, gender &amp; relationships</string>
+	<key>Q.R.V.S.name</key>
+	<string>Religious institutions &amp; organizations</string>
+	<key>Q.R.V.S.1.name</key>
+	<string>Religious &amp; spiritual figures</string>
+	<key>Q.R.V.S.2.name</key>
+	<string>Religious social &amp; pastoral thought &amp; activity</string>
+	<key>Q.R.V.S.3.name</key>
+	<string>Religious ministry</string>
+	<key>Q.R.V.S.4.name</key>
+	<string>Religious mission &amp; conversion</string>
+	<key>Q.R.V.S.5.name</key>
+	<string>Religious communities &amp; monasticism</string>
+	<key>Q.R.V.X.name</key>
+	<string>Personal religious testimony &amp; popular inspirational works</string>
+	<key>Q.R.1.name</key>
+	<string>Alternative belief systems</string>
+	<key>Q.R.1.A.name</key>
+	<string>Humanist &amp; secular alternatives to religion</string>
+	<key>Q.R.1.A.5.name</key>
+	<string>Agnosticism &amp; atheism</string>
+	<key>Q.R.1.C.name</key>
+	<string>Eclectic &amp; esoteric religions &amp; belief systems</string>
+	<key>Q.R.1.C.1.name</key>
+	<string>Gnosticism</string>
+	<key>Q.R.1.C.5.name</key>
+	<string>Theosophy &amp; Anthroposophy</string>
+	<key>Q.R.1.M.name</key>
+	<string>Contemporary non-Christian &amp; para-Christian cults &amp; sects</string>
+	<key>Q.R.1.M.2.name</key>
+	<string>Spiritualism</string>
+	<key>Q.R.1.X.name</key>
+	<string>Occult studies</string>
+	<key>Q.R.1.X.2.name</key>
+	<string>Magic, alchemy &amp; hermetic thought</string>
+	<key>Q.R.1.X.5.name</key>
+	<string>Witchcraft</string>
+	<key>Q.R.1.X.9.name</key>
+	<string>Satanism &amp; demonology</string>
+	<key>R.name</key>
+	<string>Earth Sciences, Geography, Environment, Planning</string>
+	<key>R.B.name</key>
+	<string>Earth sciences</string>
+	<key>R.B.C.name</key>
+	<string>Volcanology &amp; seismology</string>
+	<key>R.B.G.name</key>
+	<string>Geology &amp; the lithosphere</string>
+	<key>R.B.G.B.name</key>
+	<string>Soil science, sedimentology</string>
+	<key>R.B.G.D.name</key>
+	<string>Geological surface processes (geomorphology)</string>
+	<key>R.B.G.F.name</key>
+	<string>Historical geology</string>
+	<key>R.B.G.G.name</key>
+	<string>Petrology</string>
+	<key>R.B.G.H.name</key>
+	<string>Stratigraphy</string>
+	<key>R.B.G.K.name</key>
+	<string>Geochemistry</string>
+	<key>R.B.G.L.name</key>
+	<string>Economic geology</string>
+	<key>R.B.K.name</key>
+	<string>Hydrology &amp; the hydrosphere</string>
+	<key>R.B.K.C.name</key>
+	<string>Oceanography (seas)</string>
+	<key>R.B.K.F.name</key>
+	<string>Limnology (freshwater)</string>
+	<key>R.B.P.name</key>
+	<string>Meteorology &amp; climatology</string>
+	<key>R.B.X.name</key>
+	<string>Palaeontology</string>
+	<key>R.G.name</key>
+	<string>Geography</string>
+	<key>R.G.B.name</key>
+	<string>Physical geography &amp; topography</string>
+	<key>R.G.B.A.name</key>
+	<string>Arid zones, deserts</string>
+	<key>R.G.B.C.name</key>
+	<string>Plains &amp; grasslands</string>
+	<key>R.G.B.C.1.name</key>
+	<string>Prairies</string>
+	<key>R.G.B.C.2.name</key>
+	<string>Savanna</string>
+	<key>R.G.B.D.name</key>
+	<string>Tundra</string>
+	<key>R.G.B.F.name</key>
+	<string>Wetlands, swamps, fens</string>
+	<key>R.G.B.L.name</key>
+	<string>Forests &amp; woodland</string>
+	<key>R.G.B.L.1.name</key>
+	<string>Rainforest</string>
+	<key>R.G.B.L.2.name</key>
+	<string>Mixed forest</string>
+	<key>R.G.B.L.3.name</key>
+	<string>Broadleaf forest</string>
+	<key>R.G.B.L.4.name</key>
+	<string>Boreal, coniferous forest</string>
+	<key>R.G.B.P.name</key>
+	<string>Deltas, estuaries, coastal regions</string>
+	<key>R.G.B.R.name</key>
+	<string>Coral reefs</string>
+	<key>R.G.B.S.name</key>
+	<string>Mountains</string>
+	<key>R.G.C.name</key>
+	<string>Human geography</string>
+	<key>R.G.C.M.name</key>
+	<string>Economic geography</string>
+	<key>R.G.C.P.name</key>
+	<string>Political geography</string>
+	<key>R.G.L.name</key>
+	<string>Regional geography</string>
+	<key>R.G.M.name</key>
+	<string>Biogeography</string>
+	<key>R.G.R.name</key>
+	<string>Geographical discovery &amp; exploration</string>
+	<key>R.G.V.name</key>
+	<string>Cartography, map-making &amp; projections</string>
+	<key>R.G.W.name</key>
+	<string>Geographical information systems (GIS) &amp; remote sensing</string>
+	<key>R.G.X.name</key>
+	<string>Geographical reference works</string>
+	<key>R.G.X.B.name</key>
+	<string>World atlases / world maps</string>
+	<key>R.G.X.H.name</key>
+	<string>Geographical maps (specialist)</string>
+	<key>R.G.X.P.name</key>
+	<string>Place names &amp; gazetteers</string>
+	<key>R..name</key>
+	<string>The environment</string>
+	<key>R..A.name</key>
+	<string>Environmentalist thought &amp; ideology</string>
+	<key>R..B.name</key>
+	<string>Environmentalist, conservationist &amp; Green organizations</string>
+	<key>R..C.name</key>
+	<string>Applied ecology</string>
+	<key>R..C.B.name</key>
+	<string>Biodiversity</string>
+	<key>R..D.name</key>
+	<string>Environmental policy &amp; protocols</string>
+	<key>R..F.name</key>
+	<string>Environmental management</string>
+	<key>R..F.D.name</key>
+	<string>Drought &amp; water supply</string>
+	<key>R..F.F.name</key>
+	<string>Food security &amp; supply</string>
+	<key>R..F.1.name</key>
+	<string>Energy resources</string>
+	<key>R..H.name</key>
+	<string>Waste management</string>
+	<key>R..K.name</key>
+	<string>Conservation of the environment</string>
+	<key>R..K.H.name</key>
+	<string>Conservation of wildlife &amp; habitats</string>
+	<key>R..K.H.1.name</key>
+	<string>Endangered species &amp; extinction of species</string>
+	<key>R..P.name</key>
+	<string>Pollution &amp; threats to the environment</string>
+	<key>R..P.D.name</key>
+	<string>Deforestation</string>
+	<key>R..P.G.name</key>
+	<string>Climate change</string>
+	<key>R..Q.name</key>
+	<string>Nuclear issues</string>
+	<key>R..R.name</key>
+	<string>Natural disasters</string>
+	<key>R..T.name</key>
+	<string>Social impact of environmental issues</string>
+	<key>R..U.name</key>
+	<string>Sustainability</string>
+	<key>R.P.name</key>
+	<string>Regional &amp; area planning</string>
+	<key>R.P.C.name</key>
+	<string>Urban &amp; municipal planning</string>
+	<key>R.P.G.name</key>
+	<string>Rural planning</string>
+	<key>R.P.T.name</key>
+	<string>Transport planning &amp; policy</string>
+	<key>S.name</key>
+	<string>Sports &amp; Active outdoor recreation</string>
+	<key>S.C.name</key>
+	<string>Sport: general</string>
+	<key>S.C.B.name</key>
+	<string>Sporting events &amp; management</string>
+	<key>S.C.B.B.name</key>
+	<string>Olympic &amp; Paralympic games</string>
+	<key>S.C.B.G.name</key>
+	<string>Sports governing bodies</string>
+	<key>S.C.B.M.name</key>
+	<string>Sports management &amp; facilities</string>
+	<key>S.C.B.T.name</key>
+	<string>Sports teams &amp; clubs</string>
+	<key>S.C.B.V.name</key>
+	<string>Sporting venues</string>
+	<key>S.C.G.name</key>
+	<string>Sports training &amp; coaching</string>
+	<key>S.C.G.F.name</key>
+	<string>Sport science, physical education</string>
+	<key>S.C.G.P.name</key>
+	<string>Sports psychology</string>
+	<key>S.C.K.name</key>
+	<string>Drug abuse in sport</string>
+	<key>S.C.L.name</key>
+	<string>Disabled sports / Disability sports</string>
+	<key>S.C.X.name</key>
+	<string>History of sport</string>
+	<key>S.F.name</key>
+	<string>Ball sports / ball games</string>
+	<key>S.F.B.name</key>
+	<string>Football variants &amp; related games</string>
+	<key>S.F.B.C.name</key>
+	<string>Football (Soccer, Association football)</string>
+	<key>S.F.B.D.name</key>
+	<string>American football</string>
+	<key>S.F.B.F.name</key>
+	<string>Australian Rules football</string>
+	<key>S.F.B.H.name</key>
+	<string>Canadian Rules football</string>
+	<key>S.F.B.K.name</key>
+	<string>Gaelic football</string>
+	<key>S.F.B.T.name</key>
+	<string>Rugby Union</string>
+	<key>S.F.B.V.name</key>
+	<string>Rugby League</string>
+	<key>S.F.C.name</key>
+	<string>Baseball</string>
+	<key>S.F.D.name</key>
+	<string>Cricket</string>
+	<key>S.F.H.name</key>
+	<string>Golf</string>
+	<key>S.F.J.name</key>
+	<string>Hockey (field hockey)</string>
+	<key>S.F.K.name</key>
+	<string>Lacrosse</string>
+	<key>S.F.L.name</key>
+	<string>Hurling</string>
+	<key>S.F.M.name</key>
+	<string>Basketball</string>
+	<key>S.F..name</key>
+	<string>Netball</string>
+	<key>S.F.P.name</key>
+	<string>Volleyball</string>
+	<key>S.F.Q.name</key>
+	<string>Handball</string>
+	<key>S.F.T.name</key>
+	<string>Racket games</string>
+	<key>S.F.T.A.name</key>
+	<string>Tennis</string>
+	<key>S.F.T.B.name</key>
+	<string>Badminton</string>
+	<key>S.F.T.C.name</key>
+	<string>Squash &amp; rackets</string>
+	<key>S.F.T.D.name</key>
+	<string>Table tennis</string>
+	<key>S.F.V.name</key>
+	<string>Bowls, bowling, petanque</string>
+	<key>S.F.X.name</key>
+	<string>Snooker, billiards, pool</string>
+	<key>S.H.name</key>
+	<string>Athletics, gymnastics &amp; related sports</string>
+	<key>S.H.B.name</key>
+	<string>Track &amp; field sports, athletics</string>
+	<key>S.H.B.F.name</key>
+	<string>Marathon &amp; cross-country running</string>
+	<key>S.H.B.M.name</key>
+	<string>Multidiscipline sports</string>
+	<key>S.H.G.name</key>
+	<string>Gymnastics</string>
+	<key>S.H.P.name</key>
+	<string>Weightlifting</string>
+	<key>S.K.name</key>
+	<string>Equestrian &amp; animal sports</string>
+	<key>S.K.G.name</key>
+	<string>Horse racing</string>
+	<key>S.K.L.name</key>
+	<string>Riding, showjumping &amp; horsemanship</string>
+	<key>S.K.R.name</key>
+	<string>Dog racing</string>
+	<key>S.M.name</key>
+	<string>Vehicle sports</string>
+	<key>S.M.C.name</key>
+	<string>Air sports &amp; recreations</string>
+	<key>S.M.F.name</key>
+	<string>Motor sports</string>
+	<key>S.M.F.A.name</key>
+	<string>Car racing</string>
+	<key>S.M.F.C.name</key>
+	<string>Motor rallying / rally driving</string>
+	<key>S.M.F.F.name</key>
+	<string>Stock car &amp; hot rod racing</string>
+	<key>S.M.F.K.name</key>
+	<string>Motorcycle racing</string>
+	<key>S.M.Q.name</key>
+	<string>Cycle racing</string>
+	<key>S.M.Q.B.name</key>
+	<string>BMX cycling</string>
+	<key>S.M.X.name</key>
+	<string>Rollerblading, skateboarding, etc</string>
+	<key>S.P.name</key>
+	<string>Water sports &amp; recreations</string>
+	<key>S.P.C.name</key>
+	<string>Swimming &amp; diving</string>
+	<key>S.P.C.A.name</key>
+	<string>Sub-aqua swimming</string>
+	<key>S.P.G.name</key>
+	<string>Surfing, windsurfing, water skiing</string>
+	<key>S.P..name</key>
+	<string>Boating</string>
+	<key>S.P..D.name</key>
+	<string>Motor / power boating &amp; cruising</string>
+	<key>S.P..G.name</key>
+	<string>Sailing</string>
+	<key>S.P..K.name</key>
+	<string>Canoeing &amp; kayaking</string>
+	<key>S.P..L.name</key>
+	<string>Rowing &amp; sculling</string>
+	<key>S.R.name</key>
+	<string>Combat sports &amp; self-defence</string>
+	<key>S.R.B.name</key>
+	<string>Boxing</string>
+	<key>S.R.C.name</key>
+	<string>Wrestling</string>
+	<key>S.R.F.name</key>
+	<string>Fencing</string>
+	<key>S.R.M.name</key>
+	<string>East Asian martial arts</string>
+	<key>S.T.name</key>
+	<string>Winter sports</string>
+	<key>S.T.A.name</key>
+	<string>Skiing</string>
+	<key>S.T.C.name</key>
+	<string>Snowboarding</string>
+	<key>S.T.G.name</key>
+	<string>Ice-skating</string>
+	<key>S.T.K.name</key>
+	<string>Ice hockey</string>
+	<key>S.V.name</key>
+	<string>Field sports: fishing, hunting, shooting</string>
+	<key>S.V.F.name</key>
+	<string>Fishing, angling</string>
+	<key>S.V.H.name</key>
+	<string>Hunting or shooting animals &amp; game</string>
+	<key>S.V.R.name</key>
+	<string>Archery</string>
+	<key>S.V.S.name</key>
+	<string>Small firearms, guns &amp; other equipment</string>
+	<key>S.V.T.name</key>
+	<string>Target shooting</string>
+	<key>S.X.name</key>
+	<string>Other sports &amp; competitive activities</string>
+	<key>S.X.B.name</key>
+	<string>Bodybuilding</string>
+	<key>S.X.Q.name</key>
+	<string>Extreme sports</string>
+	<key>S.Z.name</key>
+	<string>Active outdoor pursuits</string>
+	<key>S.Z.C.name</key>
+	<string>Walking, hiking, trekking</string>
+	<key>S.Z.D.name</key>
+	<string>Cycling: general &amp; touring</string>
+	<key>S.Z.E.name</key>
+	<string>Running &amp; jogging</string>
+	<key>S.Z.G.name</key>
+	<string>Climbing &amp; mountaineering</string>
+	<key>S.Z.K.name</key>
+	<string>Orienteering</string>
+	<key>S.Z..name</key>
+	<string>Caving &amp; potholing</string>
+	<key>S.Z.R.name</key>
+	<string>Camping &amp; woodcraft</string>
+	<key>S.Z.V.name</key>
+	<string>Outdoor survival skills</string>
+	<key>T.name</key>
+	<string>Technology, Engineering, Agriculture</string>
+	<key>T.B.name</key>
+	<string>Technology: general issues</string>
+	<key>T.B.C.name</key>
+	<string>Engineering: general</string>
+	<key>T.B.D.name</key>
+	<string>Technical design</string>
+	<key>T.B.D.G.name</key>
+	<string>Ergonomics</string>
+	<key>T.B.G.name</key>
+	<string>Engineering graphics &amp; technical drawing</string>
+	<key>T.B.J.name</key>
+	<string>Maths for engineers</string>
+	<key>T.B.M.name</key>
+	<string>Instruments &amp; instrumentation engineering</string>
+	<key>T.B.M.M.name</key>
+	<string>Engineering measurement &amp; calibration</string>
+	<key>T.B..name</key>
+	<string>Nanotechnology</string>
+	<key>T.B.R.name</key>
+	<string>Intermediate technology</string>
+	<key>T.B.X.name</key>
+	<string>History of engineering &amp; technology</string>
+	<key>T.B.1.name</key>
+	<string>Inventions &amp; inventors</string>
+	<key>T.C.name</key>
+	<string>Biochemical engineering</string>
+	<key>T.C.B.name</key>
+	<string>Biotechnology</string>
+	<key>T.C.B.G.name</key>
+	<string>Genetic engineering</string>
+	<key>T.C.B.S.name</key>
+	<string>Biosensors</string>
+	<key>T.D.name</key>
+	<string>Industrial chemistry &amp; manufacturing technologies</string>
+	<key>T.D.C.name</key>
+	<string>Industrial chemistry &amp; chemical engineering</string>
+	<key>T.D.C.A.name</key>
+	<string>Agrichemicals</string>
+	<key>T.D.C.F.name</key>
+	<string>Fuels &amp; petrochemicals</string>
+	<key>T.D.C.J.name</key>
+	<string>Dyestuffs, pigments &amp; paint technology</string>
+	<key>T.D.C.P.name</key>
+	<string>Plastics &amp; polymers</string>
+	<key>T.D.C.Q.name</key>
+	<string>Ceramic &amp; glass technology</string>
+	<key>T.D.C.T.name</key>
+	<string>Food &amp; beverage technology</string>
+	<key>T.D.C.T.1.name</key>
+	<string>Food &amp; beverage safety</string>
+	<key>T.D.C.T.2.name</key>
+	<string>Food &amp; beverage processing &amp; engineering</string>
+	<key>T.D.C.W.name</key>
+	<string>Pharmaceutical chemistry &amp; technology</string>
+	<key>T.D.C.X.name</key>
+	<string>Process engineering technology &amp; techniques</string>
+	<key>T.D.P.name</key>
+	<string>Other manufacturing technologies</string>
+	<key>T.D.P.F.name</key>
+	<string>Textiles &amp; fibres</string>
+	<key>T.D.P.M.name</key>
+	<string>Metals technology / metallurgy</string>
+	<key>T.G.name</key>
+	<string>Mechanical engineering &amp; materials</string>
+	<key>T.G.B.name</key>
+	<string>Mechanical engineering</string>
+	<key>T.G.B.F.name</key>
+	<string>Tribology (friction &amp; lubrication)</string>
+	<key>T.G.B..name</key>
+	<string>Engines &amp; power transmission</string>
+	<key>T.G.M.name</key>
+	<string>Materials science</string>
+	<key>T.G.M.B.name</key>
+	<string>Engineering thermodynamics</string>
+	<key>T.G.M.D.name</key>
+	<string>Mechanics of solids</string>
+	<key>T.G.M.F.name</key>
+	<string>Mechanics of fluids</string>
+	<key>T.G.M.L.name</key>
+	<string>Engineering applications of bio-materials</string>
+	<key>T.G.M.M.name</key>
+	<string>Engineering applications of electronic, magnetic, optical materials</string>
+	<key>T.G.M.P.name</key>
+	<string>Engineering applications of polymers and composites</string>
+	<key>T.G.M.S.name</key>
+	<string>Engineering applications of surface coatings &amp; films</string>
+	<key>T.G.M.T.name</key>
+	<string>Testing of materials</string>
+	<key>T.G.P.name</key>
+	<string>Production engineering</string>
+	<key>T.G.P.C.name</key>
+	<string>Computer aided manufacture (CAM)</string>
+	<key>T.G.P.Q.name</key>
+	<string>Industrial quality control</string>
+	<key>T.G.P.R.name</key>
+	<string>Reliability engineering</string>
+	<key>T.G.X.name</key>
+	<string>Engineering skills &amp; trades</string>
+	<key>T.H.name</key>
+	<string>Energy technology &amp; engineering</string>
+	<key>T.H.F.name</key>
+	<string>Fossil fuel technologies</string>
+	<key>T.H.F.G.name</key>
+	<string>Gas technology</string>
+	<key>T.H.F.P.name</key>
+	<string>Petroleum technology</string>
+	<key>T.H.F.S.name</key>
+	<string>Solid fuel technology</string>
+	<key>T.H.K.name</key>
+	<string>Nuclear power &amp; engineering</string>
+	<key>T.H..name</key>
+	<string>Heat transfer processes</string>
+	<key>T.H.R.name</key>
+	<string>Electrical engineering</string>
+	<key>T.H.R.M.name</key>
+	<string>Electric motors</string>
+	<key>T.H.R.X.name</key>
+	<string>Electrician skills &amp; trades</string>
+	<key>T.H.V.name</key>
+	<string>Alternative &amp; renewable energy sources &amp; technology</string>
+	<key>T.H.V.B.name</key>
+	<string>Biofuels</string>
+	<key>T.H.V.S.name</key>
+	<string>Solar power</string>
+	<key>T.H.V.W.name</key>
+	<string>Wind power</string>
+	<key>T.H.1.name</key>
+	<string>Energy &amp; power generation &amp; distribution</string>
+	<key>T.H.1.C.name</key>
+	<string>Energy efficiency</string>
+	<key>T.J.name</key>
+	<string>Electronics &amp; communications engineering</string>
+	<key>T.J.F.name</key>
+	<string>Electronics engineering</string>
+	<key>T.J.F.C.name</key>
+	<string>Electronics: circuits &amp; components</string>
+	<key>T.J.F.D.name</key>
+	<string>Electronic devices &amp; materials</string>
+	<key>T.J.F.M.name</key>
+	<string>Automatic control engineering</string>
+	<key>T.J.F.M.1.name</key>
+	<string>Robotics</string>
+	<key>T.J.F..name</key>
+	<string>Microwave technology</string>
+	<key>T.J.K.name</key>
+	<string>Communications engineering / telecommunications</string>
+	<key>T.J.K.D.name</key>
+	<string>Radar technology</string>
+	<key>T.J.K.R.name</key>
+	<string>Radio technology</string>
+	<key>T.J.K.S.name</key>
+	<string>Satellite communication technology</string>
+	<key>T.J.K.T.name</key>
+	<string>Telephone technology</string>
+	<key>T.J.K.T.1.name</key>
+	<string>Mobile phone technology</string>
+	<key>T.J.K.V.name</key>
+	<string>Television technology</string>
+	<key>T.J.K.W.name</key>
+	<string>WAP (wireless) technology</string>
+	<key>T.J.S.name</key>
+	<string>Sensors</string>
+	<key>T..name</key>
+	<string>Civil engineering, surveying &amp; building</string>
+	<key>T..C.name</key>
+	<string>Structural engineering</string>
+	<key>T..C.B.name</key>
+	<string>Surveying, quantity surveying</string>
+	<key>T..C.C.name</key>
+	<string>Soil &amp; rock mechanics</string>
+	<key>T..C.E.name</key>
+	<string>Earthquake engineering</string>
+	<key>T..C.J.name</key>
+	<string>Bridges</string>
+	<key>T..F.name</key>
+	<string>Hydraulic engineering</string>
+	<key>T..F.L.name</key>
+	<string>Flood control</string>
+	<key>T..H.name</key>
+	<string>Highway &amp; traffic engineering</string>
+	<key>T..K.name</key>
+	<string>Building construction &amp; materials</string>
+	<key>T..K.F.name</key>
+	<string>Fire protection &amp; safety</string>
+	<key>T..K.H.name</key>
+	<string>Heating, lighting, ventilation</string>
+	<key>T..K.S.name</key>
+	<string>Security &amp; fire alarm systems</string>
+	<key>T..K.X.name</key>
+	<string>Conservation of buildings &amp; building materials</string>
+	<key>T..T.name</key>
+	<string>Building skills &amp; trades</string>
+	<key>T.Q.name</key>
+	<string>Environmental science, engineering &amp; technology</string>
+	<key>T.Q.D.name</key>
+	<string>Environmental monitoring</string>
+	<key>T.Q.K.name</key>
+	<string>Pollution control</string>
+	<key>T.Q.S.name</key>
+	<string>Sanitary &amp; municipal engineering</string>
+	<key>T.Q.S.R.name</key>
+	<string>Waste treatment &amp; disposal</string>
+	<key>T.Q.S.W.name</key>
+	<string>Water supply &amp; treatment</string>
+	<key>T.R.name</key>
+	<string>Transport technology &amp; trades</string>
+	<key>T.R.C.name</key>
+	<string>Automotive technology &amp; trades</string>
+	<key>T.R.C.S.name</key>
+	<string>Automotive (motor mechanic) skills</string>
+	<key>T.R.C.T.name</key>
+	<string>Road transport &amp; haulage trades</string>
+	<key>T.R.F.name</key>
+	<string>Railway technology, engineering &amp; trades</string>
+	<key>T.R.F.T.name</key>
+	<string>Railway trades</string>
+	<key>T.R.L.name</key>
+	<string>Shipbuilding technology, engineering &amp; trades</string>
+	<key>T.R.L.D.name</key>
+	<string>Ship design &amp; naval architecture</string>
+	<key>T.R.L..name</key>
+	<string>Navigation &amp; seamanship</string>
+	<key>T.R.L.T.name</key>
+	<string>Maritime &amp; nautical trades</string>
+	<key>T.R.P.name</key>
+	<string>Aerospace &amp; aviation technology</string>
+	<key>T.R.P.S.name</key>
+	<string>Aviation skills &amp; piloting</string>
+	<key>T.R.T.name</key>
+	<string>Intelligent &amp; automated transport system technology</string>
+	<key>T.T.name</key>
+	<string>Other technologies &amp; applied sciences</string>
+	<key>T.T.A.name</key>
+	<string>Acoustic &amp; sound engineering</string>
+	<key>T.T.B.name</key>
+	<string>Applied optics</string>
+	<key>T.T.B.F.name</key>
+	<string>Fibre optics</string>
+	<key>T.T.B.L.name</key>
+	<string>Laser technology &amp; holography</string>
+	<key>T.T.B.M.name</key>
+	<string>Imaging systems &amp; technology</string>
+	<key>T.T.B.S.name</key>
+	<string>Scanning systems &amp; technology</string>
+	<key>T.T.D.name</key>
+	<string>Space science</string>
+	<key>T.T.D.S.name</key>
+	<string>Astronautics</string>
+	<key>T.T.M.name</key>
+	<string>Military engineering</string>
+	<key>T.T.M.W.name</key>
+	<string>Ordnance, weapons technology</string>
+	<key>T.T.P.name</key>
+	<string>Explosives technology &amp; pyrotechnics</string>
+	<key>T.T.S.name</key>
+	<string>Marine engineering</string>
+	<key>T.T.U.name</key>
+	<string>Mining technology &amp; engineering</string>
+	<key>T.T.V.name</key>
+	<string>Other vocational technologies &amp; trades</string>
+	<key>T.T.V.C.name</key>
+	<string>Hotel &amp; catering trades</string>
+	<key>T.T.V.H.name</key>
+	<string>Hairdressing &amp; salon skills</string>
+	<key>T.T.V.R.name</key>
+	<string>Traditional trades &amp; skills</string>
+	<key>T.T.X.name</key>
+	<string>Taxidermy</string>
+	<key>T.V.name</key>
+	<string>Agriculture &amp; farming</string>
+	<key>T.V.B.name</key>
+	<string>Agricultural science</string>
+	<key>T.V.D.name</key>
+	<string>Agricultural engineering &amp; machinery</string>
+	<key>T.V.D.R.name</key>
+	<string>Irrigation</string>
+	<key>T.V.F.name</key>
+	<string>Sustainable agriculture</string>
+	<key>T.V.G.name</key>
+	<string>Organic farming</string>
+	<key>T.V.H.name</key>
+	<string>Animal husbandry</string>
+	<key>T.V.H.B.name</key>
+	<string>Animal breeding</string>
+	<key>T.V.H.F.name</key>
+	<string>Dairy farming</string>
+	<key>T.V.H.H.name</key>
+	<string>Apiculture (beekeeping)</string>
+	<key>T.V.H.P.name</key>
+	<string>Poultry farming</string>
+	<key>T.V.K.name</key>
+	<string>Agronomy &amp; crop production</string>
+	<key>T.V.M.name</key>
+	<string>Smallholdings</string>
+	<key>T.V.P.name</key>
+	<string>Pest control</string>
+	<key>T.V.Q.name</key>
+	<string>Tropical agriculture: practice &amp; techniques</string>
+	<key>T.V.R.name</key>
+	<string>Forestry &amp; silviculture: practice &amp; techniques</string>
+	<key>T.V.S.name</key>
+	<string>Commercial horticulture</string>
+	<key>T.V.S.W.name</key>
+	<string>Viticulture</string>
+	<key>T.V.T.name</key>
+	<string>Aquaculture &amp; fish-farming: practice &amp; techniques</string>
+	<key>U.name</key>
+	<string>Computing &amp; Information Technology</string>
+	<key>U.B.name</key>
+	<string>Information technology: general issues</string>
+	<key>U.B.H.name</key>
+	<string>Health &amp; safety aspects of IT</string>
+	<key>U.B.J.name</key>
+	<string>Ethical &amp; social aspects of IT</string>
+	<key>U.B.L.name</key>
+	<string>Legal aspects of IT</string>
+	<key>U.B.W.name</key>
+	<string>Internet: general works</string>
+	<key>U.D.name</key>
+	<string>Digital lifestyle</string>
+	<key>U.D.A.name</key>
+	<string>Personal organisation software &amp; apps</string>
+	<key>U.D.B.name</key>
+	<string>Internet guides &amp; online services</string>
+	<key>U.D.B.A.name</key>
+	<string>Online shopping &amp; auctions</string>
+	<key>U.D.B.D.name</key>
+	<string>Internet searching</string>
+	<key>U.D.B.G.name</key>
+	<string>Internet gambling</string>
+	<key>U.D.B.M.name</key>
+	<string>Online finance &amp; investing</string>
+	<key>U.D.B.R.name</key>
+	<string>Internet browsers</string>
+	<key>U.D.B.S.name</key>
+	<string>Social networking</string>
+	<key>U.D.B.V.name</key>
+	<string>Virtual worlds</string>
+	<key>U.D.F.name</key>
+	<string>Email: consumer / user guides</string>
+	<key>U.D.H.name</key>
+	<string>E-book readers, tablets &amp; other portable devices: consumer / user guides</string>
+	<key>U.D.M.name</key>
+	<string>Digital music: consumer / user guides</string>
+	<key>U.D.Q.name</key>
+	<string>Digital video: consumer / user guides</string>
+	<key>U.D.T.name</key>
+	<string>Mobile phones &amp; smartphones: consumer/user guides</string>
+	<key>U.D.V.name</key>
+	<string>Digital TV &amp; media centres: consumer / user guides</string>
+	<key>U.D.X.name</key>
+	<string>Computer games / online games: strategy guides</string>
+	<key>U.F.name</key>
+	<string>Business applications</string>
+	<key>U.F.B.name</key>
+	<string>Integrated software packages</string>
+	<key>U.F.C.name</key>
+	<string>Spreadsheet software</string>
+	<key>U.F.D.name</key>
+	<string>Word processing software</string>
+	<key>U.F.G.name</key>
+	<string>Presentation graphics software</string>
+	<key>U.F.K.name</key>
+	<string>Accounting software</string>
+	<key>U.F.L.name</key>
+	<string>Enterprise software</string>
+	<key>U.F.L.S.name</key>
+	<string>SAP (Systems, applications &amp; products in databases)</string>
+	<key>U.F.M.name</key>
+	<string>Mathematical &amp; statistical software</string>
+	<key>U.F.P.name</key>
+	<string>Project management software</string>
+	<key>U.F.S.name</key>
+	<string>Collaboration &amp; group software</string>
+	<key>U.G.name</key>
+	<string>Graphical &amp; digital media applications</string>
+	<key>U.G.B.name</key>
+	<string>Web graphics &amp; design</string>
+	<key>U.G.C.name</key>
+	<string>Computer-aided design (CAD)</string>
+	<key>U.G.D.name</key>
+	<string>Desktop publishing</string>
+	<key>U.G.G.name</key>
+	<string>Computer games design</string>
+	<key>U.G.K.name</key>
+	<string>3D graphics &amp; modelling</string>
+	<key>U.G.L.name</key>
+	<string>Illustration &amp; drawing software</string>
+	<key>U.G.M.name</key>
+	<string>Digital music: professional</string>
+	<key>U.G..name</key>
+	<string>Digital animation</string>
+	<key>U.G.P.name</key>
+	<string>Photo &amp; image editing</string>
+	<key>U.G.V.name</key>
+	<string>Digital video: professional</string>
+	<key>U.K.name</key>
+	<string>Computer hardware</string>
+	<key>U.K.C.name</key>
+	<string>Supercomputers</string>
+	<key>U.K.D.name</key>
+	<string>Mainframes &amp; minicomputers</string>
+	<key>U.K.F.name</key>
+	<string>Servers</string>
+	<key>U.K.G.name</key>
+	<string>Grid &amp; parallel computing</string>
+	<key>U.K.M.name</key>
+	<string>Embedded systems</string>
+	<key>U.K..name</key>
+	<string>Network hardware</string>
+	<key>U.K.P.name</key>
+	<string>Personal computers</string>
+	<key>U.K.P.C.name</key>
+	<string>PCs (IBM-compatible personal computers)</string>
+	<key>U.K.P.M.name</key>
+	<string>Macintosh</string>
+	<key>U.K.R.name</key>
+	<string>Maintenance &amp; repairs</string>
+	<key>U.K.S.name</key>
+	<string>Storage media &amp; peripherals</string>
+	<key>U.K.X.name</key>
+	<string>Utilities &amp; tools</string>
+	<key>U.L.name</key>
+	<string>Operating systems</string>
+	<key>U.L.D.name</key>
+	<string>Microsoft (Windows) operating systems</string>
+	<key>U.L.H.name</key>
+	<string>Apple (Mac OS) operating systems</string>
+	<key>U.L.J.name</key>
+	<string>Open source &amp; other operating systems</string>
+	<key>U.L.P.name</key>
+	<string>Handheld operating systems</string>
+	<key>U.L.Q.name</key>
+	<string>IBM mainframe operating systems</string>
+	<key>U.L.R.name</key>
+	<string>Real time operating systems</string>
+	<key>U.M.name</key>
+	<string>Computer programming / software engineering</string>
+	<key>U.M.A.name</key>
+	<string>Programming techniques</string>
+	<key>U.M.B.name</key>
+	<string>Algorithms &amp; data structures</string>
+	<key>U.M.C.name</key>
+	<string>Compilers &amp; interpreters</string>
+	<key>U.M.F.name</key>
+	<string>Agile programming</string>
+	<key>U.M.G.name</key>
+	<string>Aspect programming / AOP</string>
+	<key>U.M.H.name</key>
+	<string>Extreme programming</string>
+	<key>U.M.J.name</key>
+	<string>Functional programming</string>
+	<key>U.M.K.name</key>
+	<string>Games development &amp; programming</string>
+	<key>U.M.K.B.name</key>
+	<string>2D graphics: games programming</string>
+	<key>U.M.K.C.name</key>
+	<string>3D graphics: games programming</string>
+	<key>U.M.K.L.name</key>
+	<string>Level design: games programming</string>
+	<key>U.M.L.name</key>
+	<string>Graphics programming</string>
+	<key>U.M..name</key>
+	<string>Object-oriented programming (OOP)</string>
+	<key>U.M.P.name</key>
+	<string>Microsoft programming</string>
+	<key>U.M.P..name</key>
+	<string>.Net programming</string>
+	<key>U.M.P.W.name</key>
+	<string>Windows programming</string>
+	<key>U.M.Q.name</key>
+	<string>Macintosh programming</string>
+	<key>U.M.R.name</key>
+	<string>Network programming</string>
+	<key>U.M.S.name</key>
+	<string>Mobile &amp; handheld device programming / Apps programming</string>
+	<key>U.M.T.name</key>
+	<string>Database programming</string>
+	<key>U.M.W.name</key>
+	<string>Web programming</string>
+	<key>U.M.W.S.name</key>
+	<string>Web services</string>
+	<key>U.M.X.name</key>
+	<string>Programming &amp; scripting languages: general</string>
+	<key>U.M.Z.name</key>
+	<string>Software Engineering</string>
+	<key>U.M.Z.L.name</key>
+	<string>Unified Modeling Language (UML)</string>
+	<key>U.M.Z.T.name</key>
+	<string>Software testing &amp; verification</string>
+	<key>U.M.Z.W.name</key>
+	<string>Object oriented software engineering</string>
+	<key>U..name</key>
+	<string>Databases</string>
+	<key>U..A.name</key>
+	<string>Database design &amp; theory</string>
+	<key>U..A.R.name</key>
+	<string>Relational databases</string>
+	<key>U..C.name</key>
+	<string>Data capture &amp; analysis</string>
+	<key>U..D.name</key>
+	<string>Data warehousing</string>
+	<key>U..F.name</key>
+	<string>Data mining</string>
+	<key>U..H.name</key>
+	<string>Information retrieval</string>
+	<key>U..J.name</key>
+	<string>Object-oriented databases</string>
+	<key>U..K.name</key>
+	<string>Distributed databases</string>
+	<key>U...name</key>
+	<string>Databases &amp; the Web</string>
+	<key>U..S.name</key>
+	<string>Database software</string>
+	<key>U.Q.name</key>
+	<string>Computer certification</string>
+	<key>U.Q.F.name</key>
+	<string>Computer certification: Microsoft</string>
+	<key>U.Q.J.name</key>
+	<string>Computer certification: Cisco</string>
+	<key>U.Q.L.name</key>
+	<string>Computer certification: ECDL</string>
+	<key>U.Q.R.name</key>
+	<string>Computer certification: CompTia</string>
+	<key>U.Q.T.name</key>
+	<string>Computer certification: CLAiT</string>
+	<key>U.R.name</key>
+	<string>Computer security</string>
+	<key>U.R.D.name</key>
+	<string>Privacy &amp; data protection</string>
+	<key>U.R.H.name</key>
+	<string>Computer fraud &amp; hacking</string>
+	<key>U.R.J.name</key>
+	<string>Computer viruses, Trojans &amp; worms</string>
+	<key>U.R.Q.name</key>
+	<string>Firewalls</string>
+	<key>U.R.S.name</key>
+	<string>Spam</string>
+	<key>U.R.W.name</key>
+	<string>Spyware</string>
+	<key>U.R.1.name</key>
+	<string>Data encryption</string>
+	<key>U.T.name</key>
+	<string>Computer networking &amp; communications</string>
+	<key>U.T.C.name</key>
+	<string>Cloud computing</string>
+	<key>U.T.D.name</key>
+	<string>Client–Server networking</string>
+	<key>U.T.E.name</key>
+	<string>System administration</string>
+	<key>U.T.F.name</key>
+	<string>Network management</string>
+	<key>U.T.F.B.name</key>
+	<string>Computer systems back-up &amp; data recovery</string>
+	<key>U.T.G.name</key>
+	<string>Grid computing</string>
+	<key>U.T.M.name</key>
+	<string>Electronic mail (email): professional</string>
+	<key>U.T..name</key>
+	<string>Network security</string>
+	<key>U.T.P.name</key>
+	<string>Networking standards &amp; protocols</string>
+	<key>U.T.R.name</key>
+	<string>Distributed systems</string>
+	<key>U.T.S.name</key>
+	<string>Networking packages</string>
+	<key>U.T.V.name</key>
+	<string>Virtualisation</string>
+	<key>U.T.W.name</key>
+	<string>WAP networking &amp; applications</string>
+	<key>U.T.X.name</key>
+	<string>EDI (electronic data interchange)</string>
+	<key>U.X.name</key>
+	<string>Applied computing</string>
+	<key>U.X.A.name</key>
+	<string>Computer applications in the arts &amp; humanities</string>
+	<key>U.X.J.name</key>
+	<string>Computer applications in the social &amp; behavioural sciences</string>
+	<key>U.X.T.name</key>
+	<string>Computer applications in industry &amp; technology</string>
+	<key>U.1.name</key>
+	<string>Computer science</string>
+	<key>U.1.A.name</key>
+	<string>Mathematical theory of computation</string>
+	<key>U.1.A.M.name</key>
+	<string>Maths for computer scientists</string>
+	<key>U.1.D.name</key>
+	<string>Systems analysis &amp; design</string>
+	<key>U.1.F.name</key>
+	<string>Computer architecture &amp; logic design</string>
+	<key>U.1.F.L.name</key>
+	<string>Assembly languages</string>
+	<key>U.1.F.P.name</key>
+	<string>Parallel processing</string>
+	<key>U.1.M.name</key>
+	<string>Computer modelling &amp; simulation</string>
+	<key>U.1.Q.name</key>
+	<string>Artificial intelligence</string>
+	<key>U.1.Q.E.name</key>
+	<string>Expert systems / knowledge-based systems</string>
+	<key>U.1.Q.L.name</key>
+	<string>Natural language &amp; machine translation</string>
+	<key>U.1.Q.M.name</key>
+	<string>Machine learning</string>
+	<key>U.1.Q..name</key>
+	<string>Neural networks &amp; fuzzy systems</string>
+	<key>U.1.Q.P.name</key>
+	<string>Pattern recognition</string>
+	<key>U.1.Q.S.name</key>
+	<string>Speech recognition</string>
+	<key>U.1.Q.V.name</key>
+	<string>Computer vision</string>
+	<key>U.1.S.name</key>
+	<string>Signal processing</string>
+	<key>U.1.T.name</key>
+	<string>Image processing</string>
+	<key>U.1.U.name</key>
+	<string>Audio processing</string>
+	<key>U.1.V.name</key>
+	<string>Virtual reality</string>
+	<key>U.1.Z.name</key>
+	<string>Human–computer interaction</string>
+	<key>U.1.Z.F.name</key>
+	<string>Information visualization</string>
+	<key>U.1.Z.G.name</key>
+	<string>User interface design &amp; usability</string>
+	<key>U.1.Z.M.name</key>
+	<string>Information architecture</string>
+	<key>V.name</key>
+	<string>Health, Relationships &amp; Personal development</string>
+	<key>V.F.name</key>
+	<string>Family &amp; health</string>
+	<key>V.F.B.name</key>
+	<string>Personal safety</string>
+	<key>V.F.D.name</key>
+	<string>Popular medicine &amp; health</string>
+	<key>V.F.D.F.name</key>
+	<string>First aid for the home</string>
+	<key>V.F.D.J.name</key>
+	<string>Children’s health</string>
+	<key>V.F.D.M.name</key>
+	<string>Men’s health</string>
+	<key>V.F.D.W.name</key>
+	<string>Women’s health</string>
+	<key>V.F.G.name</key>
+	<string>Home nursing &amp; caring</string>
+	<key>V.F.J.name</key>
+	<string>Coping with personal problems</string>
+	<key>V.F.J.B.name</key>
+	<string>Coping with illness &amp; specific conditions</string>
+	<key>V.F.J.B.1.name</key>
+	<string>Coping with allergies, including food allergies</string>
+	<key>V.F.J.D.name</key>
+	<string>Coping with disability</string>
+	<key>V.F.J.G.name</key>
+	<string>Coping with ageing</string>
+	<key>V.F.J.J.name</key>
+	<string>Coping with eating disorders</string>
+	<key>V.F.J.K.name</key>
+	<string>Coping with drug &amp; alcohol problems</string>
+	<key>V.F.J.M.name</key>
+	<string>Coping with abuse</string>
+	<key>V.F.J.P.name</key>
+	<string>Coping with anxiety &amp; phobias</string>
+	<key>V.F.J.S.name</key>
+	<string>Coping with stress</string>
+	<key>V.F.J.X.name</key>
+	<string>Coping with death &amp; bereavement</string>
+	<key>V.F.L.name</key>
+	<string>Giving up smoking</string>
+	<key>V.F.M.name</key>
+	<string>Fitness &amp; diet</string>
+	<key>V.F.M.D.name</key>
+	<string>Diets &amp; dieting</string>
+	<key>V.F.M.G.name</key>
+	<string>Exercise &amp; workout books</string>
+	<key>V.F.M.G.1.name</key>
+	<string>Yoga for exercise</string>
+	<key>V.F.M.S.name</key>
+	<string>Massage</string>
+	<key>V.F.V.name</key>
+	<string>Family &amp; relationships: advice &amp; issues</string>
+	<key>V.F.V.C.name</key>
+	<string>Sex &amp; sexuality: advice &amp; issues</string>
+	<key>V.F.V.G.name</key>
+	<string>Dating, relationships, living together &amp; marriage: advice</string>
+	<key>V.F.V.J.name</key>
+	<string>Involuntary childlessness: advice &amp; issues</string>
+	<key>V.F.V.K.name</key>
+	<string>Adoption &amp; fostering: advice &amp; issues</string>
+	<key>V.F.V.S.name</key>
+	<string>Separation &amp; divorce: advice &amp; issues</string>
+	<key>V.F.V.X.name</key>
+	<string>Intergenerational relationships: advice &amp; issues</string>
+	<key>V.F.X.name</key>
+	<string>Parenting: advice &amp; issues</string>
+	<key>V.F.X.B.name</key>
+	<string>Pregnancy, birth &amp; baby care: advice &amp; issues</string>
+	<key>V.F.X.B.1.name</key>
+	<string>Baby names: guides for parents</string>
+	<key>V.F.X.C.name</key>
+	<string>Child care &amp; upbringing: advice for parents</string>
+	<key>V.F.X.C.1.name</key>
+	<string>Teenagers: advice for parents</string>
+	<key>V.S.name</key>
+	<string>Self-help &amp; personal development</string>
+	<key>V.S.B.name</key>
+	<string>Personal finance</string>
+	<key>V.S.C.name</key>
+	<string>Advice on careers &amp; achieving success</string>
+	<key>V.S.D.name</key>
+	<string>Law, citizenship &amp; rights for the lay person</string>
+	<key>V.S.F.name</key>
+	<string>Roadcraft &amp; driving</string>
+	<key>V.S.G.name</key>
+	<string>Consumer advice</string>
+	<key>V.S.H.name</key>
+	<string>Housing &amp; property for the individual: buying/selling &amp; legal aspects</string>
+	<key>V.S.K.name</key>
+	<string>Advice on education</string>
+	<key>V.S.L.name</key>
+	<string>Adult literacy guides &amp; handbooks</string>
+	<key>V.S..name</key>
+	<string>Adult numeracy guides &amp; handbooks</string>
+	<key>V.S.P.name</key>
+	<string>Popular psychology</string>
+	<key>V.S.P.M.name</key>
+	<string>Assertiveness, motivation &amp; self-esteem</string>
+	<key>V.S.P.T.name</key>
+	<string>Memory improvement &amp; thinking techniques</string>
+	<key>V.S.P.X.name</key>
+	<string>Neuro Linguistic Programming (NLP)</string>
+	<key>V.S.R.name</key>
+	<string>Retirement</string>
+	<key>V.S.W.name</key>
+	<string>Living &amp; working in other countries: practical advice</string>
+	<key>V.S.Z.name</key>
+	<string>Self-sufficiency &amp; ‘green’ lifestyle</string>
+	<key>V.X.name</key>
+	<string>Mind, body, spirit</string>
+	<key>V.X.A.name</key>
+	<string>Mind, body, spirit: thought &amp; practice</string>
+	<key>V.X.F.name</key>
+	<string>Fortune-telling &amp; divination</string>
+	<key>V.X.F.A.name</key>
+	<string>Astrology</string>
+	<key>V.X.F.A.1.name</key>
+	<string>Star signs &amp; horoscopes</string>
+	<key>V.X.F.C.name</key>
+	<string>Fortune-telling by cards (cartomancy)</string>
+	<key>V.X.F.C.1.name</key>
+	<string>Tarot</string>
+	<key>V.X.F.D.name</key>
+	<string>The I Ching</string>
+	<key>V.X.F.G.name</key>
+	<string>Graphology</string>
+	<key>V.X.F.J.name</key>
+	<string>Palmistry, phrenology &amp; physiognomy</string>
+	<key>V.X.F..name</key>
+	<string>Numerology</string>
+	<key>V.X.F.T.name</key>
+	<string>Clairvoyance &amp; precognition</string>
+	<key>V.X.H.name</key>
+	<string>Complementary therapies, healing &amp; health</string>
+	<key>V.X.H.A.name</key>
+	<string>Acupuncture</string>
+	<key>V.X.H.C.name</key>
+	<string>Aromatherapy &amp; essential oils</string>
+	<key>V.X.H.H.name</key>
+	<string>Homoeopathy</string>
+	<key>V.X.H.J.name</key>
+	<string>Reflexology</string>
+	<key>V.X.H.K.name</key>
+	<string>Reiki</string>
+	<key>V.X.H.T.name</key>
+	<string>Traditional medicine &amp; herbal remedies</string>
+	<key>V.X.K.name</key>
+	<string>Earth energies</string>
+	<key>V.X.M.name</key>
+	<string>Mind, body, spirit: meditation &amp; visualisation</string>
+	<key>V.X..name</key>
+	<string>Dreams &amp; their interpretation</string>
+	<key>V.X.P.name</key>
+	<string>Psychic powers &amp; psychic phenomena</string>
+	<key>V.X.P.C.name</key>
+	<string>Crystals &amp; colour-healing</string>
+	<key>V.X.P.H.name</key>
+	<string>Chakras, auras &amp; spiritual energy</string>
+	<key>V.X.P.J.name</key>
+	<string>Astral projection &amp; out-of-body experiences</string>
+	<key>V.X.P.R.name</key>
+	<string>The afterlife, reincarnation &amp; past lives</string>
+	<key>V.X.P.S.name</key>
+	<string>Spirit guides, angels &amp; channelling</string>
+	<key>V.X.Q.name</key>
+	<string>Unexplained phenomena / the paranormal</string>
+	<key>V.X.Q.B.name</key>
+	<string>UFOs &amp; extraterrestrial beings</string>
+	<key>V.X.Q.G.name</key>
+	<string>Ghosts &amp; poltergeists</string>
+	<key>V.X.Q.M.name</key>
+	<string>Monsters &amp; legendary beings</string>
+	<key>V.X.V.name</key>
+	<string>Feng Shui</string>
+	<key>V.X.W.name</key>
+	<string>Mysticism, magic &amp; occult interests</string>
+	<key>V.X.W.K.name</key>
+	<string>Kabbalah: popular works</string>
+	<key>V.X.W.M.name</key>
+	<string>Magic, spells &amp; alchemy</string>
+	<key>V.X.W.S.name</key>
+	<string>Shamanism, paganism &amp; druidry</string>
+	<key>V.X.W.T.name</key>
+	<string>Witchcraft &amp; Wicca</string>
+	<key>W.name</key>
+	<string>Lifestyle, Hobbies &amp; Leisure</string>
+	<key>W.B.name</key>
+	<string>Cookery / food &amp; drink etc</string>
+	<key>W.B.A.name</key>
+	<string>General cookery &amp; recipes</string>
+	<key>W.B.B.name</key>
+	<string>TV / celebrity chef cookbooks</string>
+	<key>W.B.C.name</key>
+	<string>Cooking for one</string>
+	<key>W.B.D.name</key>
+	<string>Budget cookery</string>
+	<key>W.B.F.name</key>
+	<string>Quick &amp; easy cooking</string>
+	<key>W.B.H.name</key>
+	<string>Health &amp; wholefood cookery</string>
+	<key>W.B.H.S.name</key>
+	<string>Cookery for specific diets &amp; conditions</string>
+	<key>W.B.J.name</key>
+	<string>Vegetarian cookery</string>
+	<key>W.B.J.K.name</key>
+	<string>Vegan cookery</string>
+	<key>W.B..name</key>
+	<string>National &amp; regional cuisine</string>
+	<key>W.B.Q.name</key>
+	<string>Cooking for/with children</string>
+	<key>W.B.R.name</key>
+	<string>Cooking for parties</string>
+	<key>W.B.S.name</key>
+	<string>Cooking with specific gadgets</string>
+	<key>W.B.T.name</key>
+	<string>Cookery by ingredient</string>
+	<key>W.B.T.B.name</key>
+	<string>Cooking with meat &amp; game</string>
+	<key>W.B.T.C.name</key>
+	<string>Cooking with chicken &amp; other poultry</string>
+	<key>W.B.T.F.name</key>
+	<string>Cooking with fish &amp; seafood</string>
+	<key>W.B.T.H.name</key>
+	<string>Cooking with herbs &amp; spices</string>
+	<key>W.B.T.J.name</key>
+	<string>Cooking with rice &amp; grains</string>
+	<key>W.B.T.M.name</key>
+	<string>Cooking with fruit &amp; vegetables</string>
+	<key>W.B.T.P.name</key>
+	<string>Cooking with pasta</string>
+	<key>W.B.T.R.name</key>
+	<string>Cooking with dairy products</string>
+	<key>W.B.T.X.name</key>
+	<string>Cooking with chocolate</string>
+	<key>W.B.V.name</key>
+	<string>Cookery dishes &amp; courses</string>
+	<key>W.B.V.D.name</key>
+	<string>Cookery dishes &amp; courses: Soups &amp; starters</string>
+	<key>W.B.V.G.name</key>
+	<string>Cookery dishes &amp; courses: Salads &amp; vegetables</string>
+	<key>W.B.V.M.name</key>
+	<string>Cookery dishes &amp; courses: Main courses</string>
+	<key>W.B.V.Q.name</key>
+	<string>Cookery dishes &amp; courses: Desserts</string>
+	<key>W.B.V.S.name</key>
+	<string>Baking, bread &amp; cakes</string>
+	<key>W.B.V.S.1.name</key>
+	<string>Cakes &amp; cake decoration, icing &amp; sugarcraft</string>
+	<key>W.B.W.name</key>
+	<string>Cookery: Preserving &amp; freezing</string>
+	<key>W.B.X.name</key>
+	<string>Food &amp; drink: Beverages</string>
+	<key>W.B.X.D.name</key>
+	<string>Food &amp; drink: Alcoholic beverages</string>
+	<key>W.B.X.D.1.name</key>
+	<string>Food &amp; drink: Wines</string>
+	<key>W.B.X.D.2.name</key>
+	<string>Food &amp; drink: Beers</string>
+	<key>W.B.X.D.3.name</key>
+	<string>Food &amp; drink: Spirits &amp; cocktails</string>
+	<key>W.B.X..name</key>
+	<string>Food &amp; drink: Non-alcoholic beverages</string>
+	<key>W.B.Z.name</key>
+	<string>Cigars &amp; smoking</string>
+	<key>W.C.name</key>
+	<string>Antiques &amp; collectables</string>
+	<key>W.C.B.name</key>
+	<string>Antiques &amp; collectables: buyer’s guides</string>
+	<key>W.C.C.name</key>
+	<string>Care &amp; restoration of antiques</string>
+	<key>W.C.F.name</key>
+	<string>Collecting coins, banknotes, medals, seals (numismatics)</string>
+	<key>W.C.G.name</key>
+	<string>Collecting stamps, philately</string>
+	<key>W.C.J.name</key>
+	<string>Antique clocks, watches, musical boxes &amp; automata</string>
+	<key>W.C.K.name</key>
+	<string>Militaria, arms &amp; armour</string>
+	<key>W.C.L.name</key>
+	<string>Antique furniture / furniture collecting</string>
+	<key>W.C..name</key>
+	<string>Antiques &amp; collectables: ceramics &amp; glass</string>
+	<key>W.C.P.name</key>
+	<string>Antiques &amp; collectables: jewellery</string>
+	<key>W.C.R.name</key>
+	<string>Antiques &amp; collectables: gold, silver &amp; other metals (other than jewellery)</string>
+	<key>W.C.S.name</key>
+	<string>Antiques &amp; collectables: books, manuscripts, ephemera &amp; printed matter</string>
+	<key>W.C.T.name</key>
+	<string>Antiques &amp; collectables: sports memorabilia</string>
+	<key>W.C.U.name</key>
+	<string>Antiques &amp; collectables: pictures, prints &amp; maps</string>
+	<key>W.C.V.name</key>
+	<string>Antiques &amp; collectables: carpets, rugs &amp; textiles</string>
+	<key>W.C.W.name</key>
+	<string>Antiques &amp; collectables: toys, games, dolls &amp; models</string>
+	<key>W.C.X.name</key>
+	<string>Antiques &amp; collectables: scientific &amp; musical instruments</string>
+	<key>W.D.name</key>
+	<string>Hobbies, quizzes &amp; games</string>
+	<key>W.D.H.name</key>
+	<string>Hobbies</string>
+	<key>W.D.H.M.name</key>
+	<string>Model railways</string>
+	<key>W.D.H.R.name</key>
+	<string>Radio-controlled models</string>
+	<key>W.D.H.W.name</key>
+	<string>Role-playing, war games &amp; fantasy sports</string>
+	<key>W.D.J.name</key>
+	<string>3-D images &amp; optical illusions</string>
+	<key>W.D.K.name</key>
+	<string>Puzzles &amp; quizzes</string>
+	<key>W.D.K.C.name</key>
+	<string>Crosswords</string>
+	<key>W.D.K..name</key>
+	<string>Sudoku &amp; number puzzles</string>
+	<key>W.D.K.X.name</key>
+	<string>Trivia &amp; quiz question books</string>
+	<key>W.D.L.name</key>
+	<string>Computer Games</string>
+	<key>W.D.L.1.name</key>
+	<string>Console Games</string>
+	<key>W.D.L.2.name</key>
+	<string>Mobile Games</string>
+	<key>W.D.L.3.name</key>
+	<string>Massive Online Games</string>
+	<key>W.D.M.name</key>
+	<string>Indoor games</string>
+	<key>W.D.M.C.name</key>
+	<string>Card games</string>
+	<key>W.D.M.C.1.name</key>
+	<string>Card games: Bridge</string>
+	<key>W.D.M.C.2.name</key>
+	<string>Card games: Poker</string>
+	<key>W.D.M.G.name</key>
+	<string>Board games</string>
+	<key>W.D.M.G.1.name</key>
+	<string>Board games: Chess</string>
+	<key>W.D.P.name</key>
+	<string>Gambling: theories &amp; methods</string>
+	<key>W.F.name</key>
+	<string>Handicrafts, decorative arts &amp; crafts</string>
+	<key>W.F.A.name</key>
+	<string>Painting &amp; art manuals</string>
+	<key>W.F.B.name</key>
+	<string>Needlework &amp; fabric crafts</string>
+	<key>W.F.B.C.name</key>
+	<string>Embroidery crafts</string>
+	<key>W.F.B.L.name</key>
+	<string>Lace &amp; lacemaking</string>
+	<key>W.F.B.Q.name</key>
+	<string>Quiltmaking, patchwork &amp; applique</string>
+	<key>W.F.B.S.name</key>
+	<string>Knitting &amp; crochet</string>
+	<key>W.F.B.V.name</key>
+	<string>Fabric dyeing</string>
+	<key>W.F.C.name</key>
+	<string>Ropework, knots &amp; macrame</string>
+	<key>W.F.F.name</key>
+	<string>Rug &amp; carpetmaking</string>
+	<key>W.F.G.name</key>
+	<string>Spinning &amp; weaving</string>
+	<key>W.F.H.name</key>
+	<string>Toys: making &amp; decorating</string>
+	<key>W.F.J.name</key>
+	<string>Jewellery &amp; beadcraft</string>
+	<key>W.F.K.name</key>
+	<string>Decorative finishes &amp; surfaces</string>
+	<key>W.F..name</key>
+	<string>Pottery, ceramics &amp; glass crafts</string>
+	<key>W.F.P.name</key>
+	<string>Decorative metalwork</string>
+	<key>W.F.Q.name</key>
+	<string>Decorative woodwork</string>
+	<key>W.F.S.name</key>
+	<string>Carving &amp; modelling, moulding &amp; casting</string>
+	<key>W.F.T.name</key>
+	<string>Book &amp; paper crafts</string>
+	<key>W.F.T.M.name</key>
+	<string>Origami &amp; paper engineering</string>
+	<key>W.F.U.name</key>
+	<string>Calligraphy &amp; hand-lettering</string>
+	<key>W.F.V.name</key>
+	<string>Rural crafts</string>
+	<key>W.F.W.name</key>
+	<string>Flower arranging &amp; floral crafts</string>
+	<key>W.F.X.name</key>
+	<string>Adult colouring &amp; activity books</string>
+	<key>W.G.name</key>
+	<string>Transport: general interest</string>
+	<key>W.G.C.name</key>
+	<string>Road &amp; motor vehicles: general interest</string>
+	<key>W.G.C.B.name</key>
+	<string>Motor cars: general interest</string>
+	<key>W.G.C.F.name</key>
+	<string>Buses, trams &amp; commercial vehicles: general interest</string>
+	<key>W.G.C.K.name</key>
+	<string>Motorcycles: general interest</string>
+	<key>W.G.C.T.name</key>
+	<string>Tractors &amp; farm vehicles: general interest</string>
+	<key>W.G.C.V.name</key>
+	<string>Vehicle maintenance &amp; manuals</string>
+	<key>W.G.D.name</key>
+	<string>Bicycles &amp; non-motorised transport: general interest &amp; maintenance</string>
+	<key>W.G.F.name</key>
+	<string>Trains &amp; railways: general interest</string>
+	<key>W.G.G.name</key>
+	<string>Ships &amp; boats: general interest</string>
+	<key>W.G.G.V.name</key>
+	<string>Boatbuilding &amp; maintenance</string>
+	<key>W.G.M.name</key>
+	<string>Aircraft: general interest</string>
+	<key>W.H.name</key>
+	<string>Humour</string>
+	<key>W.H.G.name</key>
+	<string>TV tie-in humour</string>
+	<key>W.H.J.name</key>
+	<string>Jokes &amp; riddles</string>
+	<key>W.H.L.name</key>
+	<string>Slang &amp; dialect humour</string>
+	<key>W.H.P.name</key>
+	<string>Parodies &amp; spoofs: non-fiction</string>
+	<key>W.H.X.name</key>
+	<string>Humour collections &amp; anthologies</string>
+	<key>W.J.name</key>
+	<string>Lifestyle &amp; personal style guides</string>
+	<key>W.J.F.name</key>
+	<string>Fashion &amp; style guides</string>
+	<key>W.J.H.name</key>
+	<string>Cosmetics, hair &amp; beauty</string>
+	<key>W.J.K.name</key>
+	<string>Interior design, decor &amp; style guides</string>
+	<key>W.J.S.name</key>
+	<string>Shopping guides</string>
+	<key>W.J.W.name</key>
+	<string>Weddings, wedding planners</string>
+	<key>W.J.X.name</key>
+	<string>Parties, etiquette &amp; entertaining</string>
+	<key>W.J.X.C.name</key>
+	<string>Manners: guides &amp; advice</string>
+	<key>W.K.name</key>
+	<string>Home &amp; house maintenance</string>
+	<key>W.K.D.name</key>
+	<string>DIY: general</string>
+	<key>W.K.D.M.name</key>
+	<string>DIY: house maintenance manuals</string>
+	<key>W.K.D.W.name</key>
+	<string>DIY: carpentry &amp; woodworking</string>
+	<key>W.K.H.name</key>
+	<string>Household hints</string>
+	<key>W.K.R.name</key>
+	<string>Home renovation &amp; extension</string>
+	<key>W.K.U.name</key>
+	<string>Outdoor &amp; recreational areas: design &amp; maintenance</string>
+	<key>W.M.name</key>
+	<string>Gardening</string>
+	<key>W.M.B.name</key>
+	<string>Gardens (descriptions, history etc)</string>
+	<key>W.M.D.name</key>
+	<string>Garden design &amp; planning</string>
+	<key>W.M.F.name</key>
+	<string>Greenhouses, conservatories, patios</string>
+	<key>W.M.P.name</key>
+	<string>Gardening: plants &amp; cultivation: guides</string>
+	<key>W.M.Q.name</key>
+	<string>Specialized gardening methods</string>
+	<key>W.M.Q.B.name</key>
+	<string>Specialized gardening methods: Bonsai</string>
+	<key>W.M.Q.F.name</key>
+	<string>Organic gardening</string>
+	<key>W.M.Q.L.name</key>
+	<string>Landscape gardening</string>
+	<key>W.M.Q..name</key>
+	<string>Natural &amp; wild gardening</string>
+	<key>W.M.Q.P.name</key>
+	<string>Gardening with native plants</string>
+	<key>W.M.Q.R.name</key>
+	<string>Container gardening</string>
+	<key>W.M.Q.W.name</key>
+	<string>Water gardens, pools</string>
+	<key>W.M.T.name</key>
+	<string>Allotments</string>
+	<key>W..name</key>
+	<string>Nature &amp; the natural world: general interest</string>
+	<key>W..A.name</key>
+	<string>Dinosaurs &amp; the prehistoric world: general interest</string>
+	<key>W..C.name</key>
+	<string>Wildlife: general interest</string>
+	<key>W..C.B.name</key>
+	<string>Wildlife: birds &amp; birdwatching: general interest</string>
+	<key>W..C.F.name</key>
+	<string>Wildlife: mammals: general interest</string>
+	<key>W..C.K.name</key>
+	<string>Wildlife: reptiles &amp; amphibians: general interest</string>
+	<key>W..C..name</key>
+	<string>Wildlife: butterflies, other insects &amp; spiders: general interest</string>
+	<key>W..C.S.name</key>
+	<string>Wildlife: aquatic creatures: general interest</string>
+	<key>W..C.S.1.name</key>
+	<string>Sea life &amp; the seashore: general interest</string>
+	<key>W..C.S.2.name</key>
+	<string>Freshwater life: general interest</string>
+	<key>W..D.name</key>
+	<string>The countryside, country life: general interest</string>
+	<key>W..F.name</key>
+	<string>Farm &amp; working animals: general interest</string>
+	<key>W..G.name</key>
+	<string>Domestic animals &amp; pets</string>
+	<key>W..G.C.name</key>
+	<string>Cats as pets</string>
+	<key>W..G.D.name</key>
+	<string>Dogs as pets</string>
+	<key>W..G.D.1.name</key>
+	<string>Dog obedience &amp; training</string>
+	<key>W..G.F.name</key>
+	<string>Fishes as pets &amp; aquaria</string>
+	<key>W..G.H.name</key>
+	<string>Horses &amp; ponies: general interest</string>
+	<key>W..G.K.name</key>
+	<string>Birds, including cage birds, as pets</string>
+	<key>W..G.R.name</key>
+	<string>Rabbits &amp; rodents as pets</string>
+	<key>W..G.S.name</key>
+	<string>Reptiles &amp; amphibians as pets</string>
+	<key>W..G.X.name</key>
+	<string>Insects &amp; spiders as pets</string>
+	<key>W..H.name</key>
+	<string>Zoos &amp; wildlife parks: general interest</string>
+	<key>W..J.name</key>
+	<string>National parks &amp; nature reserves: general interest</string>
+	<key>W..P.name</key>
+	<string>Trees, wildflowers &amp; plants: general interest</string>
+	<key>W..R.name</key>
+	<string>Rocks, minerals &amp; fossils: general interest</string>
+	<key>W..W.name</key>
+	<string>The Earth: natural history: general interest</string>
+	<key>W..W.M.name</key>
+	<string>Weather: general interest</string>
+	<key>W..X.name</key>
+	<string>Popular astronomy &amp; space</string>
+	<key>W.Q.name</key>
+	<string>Local &amp; family history, nostalgia</string>
+	<key>W.Q.H.name</key>
+	<string>Local history</string>
+	<key>W.Q..name</key>
+	<string>Nostalgia: general</string>
+	<key>W.Q.P.name</key>
+	<string>Places in old photographs</string>
+	<key>W.Q.1.name</key>
+	<string>Family history, tracing ancestors</string>
+	<key>W.T.name</key>
+	<string>Travel &amp; holiday</string>
+	<key>W.T.D.name</key>
+	<string>Travel tips &amp; advice: general</string>
+	<key>W.T.H.name</key>
+	<string>Travel &amp; holiday guides</string>
+	<key>W.T.H.A.name</key>
+	<string>Travel guides: adventure holidays</string>
+	<key>W.T.H.B.name</key>
+	<string>Travel guides: business travel</string>
+	<key>W.T.H.C.name</key>
+	<string>Travel guides: Eco-tourism, ‘green’ tourism</string>
+	<key>W.T.H.D.name</key>
+	<string>Travel guides: food &amp; drink regions</string>
+	<key>W.T.H.F.name</key>
+	<string>Travel guides: holidays with children / family holidays</string>
+	<key>W.T.H.H.name</key>
+	<string>Travel guides: hotel &amp; holiday accommodation guides</string>
+	<key>W.T.H.H.1.name</key>
+	<string>Travel guides: caravan &amp; camp-site guides</string>
+	<key>W.T.H.M.name</key>
+	<string>Travel guides: museums, historic sites, galleries etc</string>
+	<key>W.T.H.R.name</key>
+	<string>Travel guides: restaurants, cafes, inns, bars</string>
+	<key>W.T.H.T.name</key>
+	<string>Travel guides: theme parks &amp; funfairs</string>
+	<key>W.T.H.X.name</key>
+	<string>Travel guides: cruises</string>
+	<key>W.T.K.name</key>
+	<string>Language phrasebooks</string>
+	<key>W.T.L.name</key>
+	<string>Travel writing</string>
+	<key>W.T.L.C.name</key>
+	<string>Classic travel writing</string>
+	<key>W.T.L.P.name</key>
+	<string>Expeditions: popular accounts</string>
+	<key>W.T.M.name</key>
+	<string>Places &amp; peoples: general &amp; pictorial works</string>
+	<key>W.T.R.name</key>
+	<string>Travel maps &amp; atlases</string>
+	<key>W.T.R.D.name</key>
+	<string>Road atlases &amp; maps</string>
+	<key>W.T.R.M.name</key>
+	<string>Travel maps</string>
+	<key>W.T.R.S.name</key>
+	<string>Street maps &amp; city plans</string>
+	<key>W.Z.name</key>
+	<string>Miscellaneous items</string>
+	<key>W.Z.G.name</key>
+	<string>Gift books</string>
+	<key>W.Z.S.name</key>
+	<string>Stationery items</string>
+	<key>W.Z.S..name</key>
+	<string>Blank stationery items</string>
+	<key>X.name</key>
+	<string>Graphic novels, Comic books, Cartoons</string>
+	<key>X.A.name</key>
+	<string>Graphic novel &amp; Comic book: types</string>
+	<key>X.A.B.name</key>
+	<string>European tradition graphic novels</string>
+	<key>X.A.D.name</key>
+	<string>European tradition comic books, Bandes dessinées</string>
+	<key>X.A.D.C.name</key>
+	<string>European comic books: general, classic, all ages</string>
+	<key>X.A.K.name</key>
+	<string>American / British style comic books &amp; graphic novels</string>
+	<key>X.A.K.C.name</key>
+	<string>American comic books: classic, Golden Age</string>
+	<key>X.A.M.name</key>
+	<string>Manga &amp; Asian style comics</string>
+	<key>X.A.M.C.name</key>
+	<string>Manga: Kodomo</string>
+	<key>X.A.M.F.name</key>
+	<string>Manga: Shôjo</string>
+	<key>X.A.M.G.name</key>
+	<string>Manga: Shonen</string>
+	<key>X.A.M.L.name</key>
+	<string>Manga: Seinen</string>
+	<key>X.A.M.R.name</key>
+	<string>Manga: Josei</string>
+	<key>X.A.M.T.name</key>
+	<string>Manga: Yaoi</string>
+	<key>X.A.M.X.name</key>
+	<string>Manga: adult (erotic, extreme violence)</string>
+	<key>X.Q.name</key>
+	<string>Graphic novel &amp; Comic book: genres</string>
+	<key>X.Q.A.name</key>
+	<string>Graphic novel / Comic book: memoirs, true stories &amp; non-fiction</string>
+	<key>X.Q.B.name</key>
+	<string>Graphic novel / Comic book: literary adaptations</string>
+	<key>X.Q.C.name</key>
+	<string>Graphic novel / Comic book: movie &amp; TV adaptations</string>
+	<key>X.Q.D.name</key>
+	<string>Graphic novel / Comic book: crime, mystery &amp; thrillers</string>
+	<key>X.Q.G.name</key>
+	<string>Graphic novel / Comic book: action &amp; adventure</string>
+	<key>X.Q.G.W.name</key>
+	<string>Graphic novel / Comic book: Westerns</string>
+	<key>X.Q.H.name</key>
+	<string>Graphic novel / Comic book: horror</string>
+	<key>X.Q.K.name</key>
+	<string>Graphic novel / Comic book: super-heroes &amp; super-villains</string>
+	<key>X.Q.L.name</key>
+	<string>Graphic novel / Comic book: science fiction</string>
+	<key>X.Q.M.name</key>
+	<string>Graphic novel / Comic book: fantasy, esoteric</string>
+	<key>X.Q.R.name</key>
+	<string>Graphic novel / Comic book: romance</string>
+	<key>X.Q.T.name</key>
+	<string>Graphic novel / Comic book: humorous</string>
+	<key>X.Q.V.name</key>
+	<string>Graphic novel / Comic book: historical</string>
+	<key>X.Q.X.name</key>
+	<string>Graphic novel / Comic book: adult (erotic, extreme violence)</string>
+	<key>X.R.name</key>
+	<string>Graphic novel &amp; comic books: guides &amp; reviews</string>
+	<key>X.R.M.name</key>
+	<string>Manga guides &amp; reviews</string>
+	<key>X.1.name</key>
+	<string>Strip cartoons</string>
+	<key>1.name</key>
+	<string>Children’s, Teenage &amp; Educational</string>
+	<key>1.B.name</key>
+	<string>Books for very young children, children’s picture books &amp; activity books</string>
+	<key>1.B.C.name</key>
+	<string>Children’s picture books</string>
+	<key>1.B.C.B.name</key>
+	<string>Baby books</string>
+	<key>1.B.C.H.name</key>
+	<string>Picture books: character books</string>
+	<key>1.B.C.S.name</key>
+	<string>Picture storybooks</string>
+	<key>1.B.C.S.1.name</key>
+	<string>Picture storybooks: Bedtime stories &amp; dreams</string>
+	<key>1.B.C.S.2.name</key>
+	<string>Picture storybooks: Imagination &amp; play</string>
+	<key>1.B.G.name</key>
+	<string>Children’s interactive &amp; activity books &amp; packs</string>
+	<key>1.B.G.H.name</key>
+	<string>Children’s activity books: hidden object</string>
+	<key>1.B.L.name</key>
+	<string>Early years / early learning concepts</string>
+	<key>1.B.L.A.name</key>
+	<string>Early years: letters &amp; words</string>
+	<key>1.B.L.B.name</key>
+	<string>Early years: verse, rhymes &amp; wordplay</string>
+	<key>1.B.L.C.name</key>
+	<string>Early years: numbers &amp; counting</string>
+	<key>1.B.L.D.name</key>
+	<string>Early years: colours</string>
+	<key>1.B.L.F.name</key>
+	<string>Early years: opposites</string>
+	<key>1.B.L.H.name</key>
+	<string>Early years: size, shapes &amp; patterns</string>
+	<key>1.B.L.J.name</key>
+	<string>Early years: time &amp; seasons</string>
+	<key>1.B.L.L.name</key>
+	<string>Early years: nature &amp; animals</string>
+	<key>1.B.L.M.name</key>
+	<string>Early years: daily routine</string>
+	<key>1.B.L..name</key>
+	<string>Early years: first experiences</string>
+	<key>1.B.L..1.name</key>
+	<string>Early years: the senses</string>
+	<key>1.B.L.P.name</key>
+	<string>Early years: people who help us</string>
+	<key>1.B.L.T.name</key>
+	<string>Early years: things that go</string>
+	<key>1.D.name</key>
+	<string>Children’s / Teenage poetry, anthologies, annuals</string>
+	<key>1.D.A.name</key>
+	<string>Children’s / Teenage: Annuals</string>
+	<key>1.D.C.name</key>
+	<string>Children’s / Teenage: Anthologies</string>
+	<key>1.D.P.name</key>
+	<string>Children’s / Teenage: Poetry</string>
+	<key>1.F.name</key>
+	<string>Children’s / Teenage fiction &amp; true stories</string>
+	<key>1.F.A.name</key>
+	<string>Children’s / Teenage fiction: Classic fiction</string>
+	<key>1.F.B.name</key>
+	<string>Children’s / Teenage fiction: General fiction</string>
+	<key>1.F.C.name</key>
+	<string>Children’s / Teenage fiction: Action &amp; adventure stories</string>
+	<key>1.F.C.A.name</key>
+	<string>Children’s / Teenage fiction: Interactive adventure stories</string>
+	<key>1.F.C.B.name</key>
+	<string>Children’s / Teenage fiction: Thrillers</string>
+	<key>1.F.C.F.name</key>
+	<string>Children’s / Teenage fiction: Crime &amp; mystery fiction</string>
+	<key>1.F.C.W.name</key>
+	<string>Children’s / Teenage fiction: Military &amp; war fiction</string>
+	<key>1.F.D.name</key>
+	<string>Children’s / Teenage fiction: Horror &amp; ghost stories, chillers</string>
+	<key>1.F.E.name</key>
+	<string>Children’s / Teenage fiction: Speculative, dystopian &amp; utopian fiction</string>
+	<key>1.F.G.name</key>
+	<string>Children’s / Teenage fiction: Science fiction</string>
+	<key>1.F.H.name</key>
+	<string>Children’s / Teenage fiction: Fantasy &amp; magical realism</string>
+	<key>1.F.H.R.name</key>
+	<string>Teenage fiction: Fantasy romance</string>
+	<key>1.F.J.name</key>
+	<string>Children’s / Teenage fiction: Traditional stories</string>
+	<key>1.F.K.name</key>
+	<string>Children’s / Teenage fiction: Religious fiction</string>
+	<key>1.F.M.name</key>
+	<string>Children’s / Teenage fiction: Romance &amp; relationships stories</string>
+	<key>1.F..name</key>
+	<string>Children’s / Teenage fiction: Family &amp; home stories</string>
+	<key>1.F.P.name</key>
+	<string>Children’s / Teenage fiction: Nature &amp; animal stories</string>
+	<key>1.F.Q.name</key>
+	<string>Children’s / Teenage fiction: Humorous stories</string>
+	<key>1.F.R.name</key>
+	<string>Children’s / Teenage fiction: Sporting stories</string>
+	<key>1.F.S.name</key>
+	<string>Children’s / Teenage fiction: School stories</string>
+	<key>1.F.T.name</key>
+	<string>Children’s / Teenage fiction: Historical fiction</string>
+	<key>1.F.U.name</key>
+	<string>Children’s / Teenage fiction: Short stories</string>
+	<key>1.F.V.name</key>
+	<string>Children’s / Teenage fiction: Stories in verse</string>
+	<key>1.F.X.name</key>
+	<string>Children’s / Teenage fiction: Biographical fiction</string>
+	<key>1.F.1.name</key>
+	<string>Children’s / Teenage: True stories told as fiction</string>
+	<key>1..name</key>
+	<string>Children’s / Teenage: general interest</string>
+	<key>1..A.name</key>
+	<string>Children’s / Teenage general interest: Art &amp; artists</string>
+	<key>1..B.name</key>
+	<string>Children’s / Teenage general interest: Biography &amp; autobiography</string>
+	<key>1..C.name</key>
+	<string>Children’s / Teenage general interest: Music</string>
+	<key>1..D.name</key>
+	<string>Children’s / Teenage general interest: Drama &amp; performing</string>
+	<key>1..D.B.name</key>
+	<string>Children’s / Teenage general interest: Dance, ballet</string>
+	<key>1..D.S.name</key>
+	<string>Children’s / Teenage general interest: Playscripts</string>
+	<key>1..F.name</key>
+	<string>Children’s / Teenage general interest: Television &amp; film</string>
+	<key>1..G.name</key>
+	<string>Children’s / Teenage general interest: General knowledge &amp; trivia</string>
+	<key>1..G.L.name</key>
+	<string>Children’s / Teenage general interest: Libraries, museums, schools</string>
+	<key>1..H.name</key>
+	<string>Children’s / Teenage general interest: History &amp; the past</string>
+	<key>1..H.A.name</key>
+	<string>Children’s / Teenage general interest: Adventurers &amp; outlaws</string>
+	<key>1..H.D.name</key>
+	<string>Children’s / Teenage general interest: Discovery &amp; exploration</string>
+	<key>1..H.P.name</key>
+	<string>Children’s / Teenage general interest: Lives of children in the past</string>
+	<key>1..J.name</key>
+	<string>Children’s / Teenage general interest: Warfare, battles, armed forces</string>
+	<key>1..K.name</key>
+	<string>Children’s / Teenage general interest: Work &amp; society</string>
+	<key>1..K.A.name</key>
+	<string>Children’s / Teenage general interest: Politics</string>
+	<key>1..K.C.name</key>
+	<string>Children’s / Teenage general interest: Law, police &amp; crime</string>
+	<key>1..L.name</key>
+	<string>Children’s / Teenage general interest: Literature, books &amp; writers</string>
+	<key>1..M.name</key>
+	<string>Children’s / Teenage general interest: Places &amp; peoples</string>
+	<key>1..M.C.name</key>
+	<string>Children’s / Teenage general interest: Countries, cultures &amp; national identity</string>
+	<key>1..M.F.name</key>
+	<string>Children’s / Teenage general interest: Girls &amp; women</string>
+	<key>1..M.H.name</key>
+	<string>Children’s / Teenage general interest: Boys &amp; men</string>
+	<key>1..M.K.name</key>
+	<string>Children’s / Teenage general interest: City &amp; town life</string>
+	<key>1..M.L.name</key>
+	<string>Children’s / Teenage general interest: Rural &amp; farm life</string>
+	<key>1..M.W.name</key>
+	<string>Children’s / Teenage general interest: Royalty</string>
+	<key>1...name</key>
+	<string>Children’s / Teenage general interest: Nature, animals, the natural world</string>
+	<key>1...A.name</key>
+	<string>Children’s / Teenage general interest: Dinosaurs &amp; prehistoric world</string>
+	<key>1...B.name</key>
+	<string>Children’s / Teenage general interest: Wildlife &amp; habitats</string>
+	<key>1...B.1.name</key>
+	<string>Children’s / Teenage general interest: Wildlife &amp; habitats: Oceans &amp; seas</string>
+	<key>1...B.2.name</key>
+	<string>Children’s / Teenage general interest: Wildlife &amp; habitats: Jungles &amp; tropical forests</string>
+	<key>1...B.3.name</key>
+	<string>Children’s / Teenage general interest: Wildlife &amp; habitats: Deserts</string>
+	<key>1...B.9.name</key>
+	<string>Children’s / Teenage general interest: Wildlife &amp; habitats: Ice, snow &amp; tundra</string>
+	<key>1...C.name</key>
+	<string>Children’s / Teenage general interest: Ecosystems</string>
+	<key>1...F.name</key>
+	<string>Children’s / Teenage general interest: Farm animals</string>
+	<key>1...H.name</key>
+	<string>Children’s / Teenage general interest: Pets &amp; pet care</string>
+	<key>1...H.1.name</key>
+	<string>Children’s / Teenage general interest: Pets &amp; pet care: dogs</string>
+	<key>1...H.2.name</key>
+	<string>Children’s / Teenage general interest: Pets &amp; pet care: cats</string>
+	<key>1...H.3.name</key>
+	<string>Children’s / Teenage general interest: Pets &amp; pet care: rabbits &amp; rodents</string>
+	<key>1...H.4.name</key>
+	<string>Children’s / Teenage general interest: Pets &amp; pet care: horses &amp; ponies</string>
+	<key>1...J.name</key>
+	<string>Children’s / Teenage general interest: Mammals</string>
+	<key>1...J.1.name</key>
+	<string>Children’s / Teenage general interest: Aquatic &amp; marine mammals</string>
+	<key>1...J.2.name</key>
+	<string>Children’s / Teenage general interest: Large land mammals</string>
+	<key>1...J.2.1.name</key>
+	<string>Children’s / Teenage general interest: Dogs &amp; wolves</string>
+	<key>1...J.2.2.name</key>
+	<string>Children’s / Teenage general interest: Cats</string>
+	<key>1...J.2.3.name</key>
+	<string>Children’s / Teenage general interest: Bears</string>
+	<key>1...J.2.4.name</key>
+	<string>Children’s / Teenage general interest: Ponies &amp; horses</string>
+	<key>1...J.2.5.name</key>
+	<string>Children’s / Teenage general interest: Cows &amp; cattle</string>
+	<key>1...J.2.9.name</key>
+	<string>Children’s / Teenage general interest: Apes &amp; monkeys</string>
+	<key>1...J.3.name</key>
+	<string>Children’s / Teenage general interest: Small land mammals</string>
+	<key>1...J.3.1.name</key>
+	<string>Children’s / Teenage general interest: Rodents &amp; rabbits</string>
+	<key>1...J.9.name</key>
+	<string>Children’s / Teenage general interest: Marsupials, platypuses &amp; echidnas</string>
+	<key>1...K.name</key>
+	<string>Children’s / Teenage general interest: Birds</string>
+	<key>1...L.name</key>
+	<string>Children’s / Teenage general interest: Insects, spiders, minibeasts</string>
+	<key>1...M.name</key>
+	<string>Children’s / Teenage general interest: Reptiles &amp; amphibians</string>
+	<key>1...S.name</key>
+	<string>Children’s / Teenage general interest: Fish &amp; marine life</string>
+	<key>1...T.name</key>
+	<string>Children’s / Teenage general interest: Plants &amp; trees</string>
+	<key>1...V.name</key>
+	<string>Children’s / Teenage general interest: Rocks, weather &amp; physical world</string>
+	<key>1...Z.name</key>
+	<string>Children’s / Teenage general interest: Space, stars &amp; the solar system</string>
+	<key>1..P.name</key>
+	<string>Children’s / Teenage general interest: Practical interests</string>
+	<key>1..P.C.name</key>
+	<string>Children’s / Teenage general interest: Cooking &amp; food</string>
+	<key>1..P.H.name</key>
+	<string>Children’s / Teenage general interest: Handicrafts</string>
+	<key>1..P.H.1.name</key>
+	<string>Children’s / Teenage general interest: Woodworking, model-making</string>
+	<key>1..P.H.2.name</key>
+	<string>Children’s / Teenage general interest: Needlecraft &amp; fabric crafts</string>
+	<key>1..P.J.name</key>
+	<string>Children’s / Teenage general interest: Clothing &amp; fashion</string>
+	<key>1..P.K.name</key>
+	<string>Children’s / Teenage general interest: Money</string>
+	<key>1..R.name</key>
+	<string>Children’s / Teenage general interest: Religion &amp; beliefs</string>
+	<key>1..R.D.name</key>
+	<string>Children’s / Teenage general interest: Hinduism</string>
+	<key>1..R.F.name</key>
+	<string>Children’s / Teenage general interest: Buddhism</string>
+	<key>1..R.J.name</key>
+	<string>Children’s / Teenage general interest: Judaism</string>
+	<key>1..R.M.name</key>
+	<string>Children’s / Teenage general interest: Christianity</string>
+	<key>1..R.P.name</key>
+	<string>Children’s / Teenage general interest: Islam</string>
+	<key>1..R.R.name</key>
+	<string>Children’s / Teenage general interest: other religions</string>
+	<key>1..R.X.name</key>
+	<string>Children’s / Teenage general interest: Religious texts, prayers &amp; devotional material</string>
+	<key>1..T.name</key>
+	<string>Children’s / Teenage general interest: Science &amp; technology</string>
+	<key>1..T.A.name</key>
+	<string>Children’s / Teenage general interest: Science: the human body</string>
+	<key>1..T.D.name</key>
+	<string>Children’s / Teenage general interest: Inventors, inventions &amp; experiments</string>
+	<key>1..T.G.name</key>
+	<string>Children’s / Teenage general interest: Machines &amp; how things work</string>
+	<key>1..T.P.name</key>
+	<string>Children’s / Teenage general interest: Buildings &amp; construction</string>
+	<key>1..T.R.name</key>
+	<string>Children’s / Teenage general interest: Transport &amp; vehicles</string>
+	<key>1..U.name</key>
+	<string>Children’s / Teenage general interest: Humour &amp; jokes</string>
+	<key>1..U.C.name</key>
+	<string>Children’s / Teenage general interest: Cartoons &amp; comic strips</string>
+	<key>1..V.name</key>
+	<string>Children’s / Teenage general interest: Hobbies, quizzes, toys &amp; games</string>
+	<key>1..V.D.name</key>
+	<string>Children’s / Teenage general interest: Toys, dolls &amp; puppets</string>
+	<key>1..V.P.name</key>
+	<string>Children’s / Teenage general interest: Puzzle books</string>
+	<key>1..V.U.name</key>
+	<string>Children’s / Teenage general interest: Computer game guides</string>
+	<key>1..W.name</key>
+	<string>Children’s / Teenage general interest: Sports &amp; outdoor recreation</string>
+	<key>1..W.D.name</key>
+	<string>Children’s / Teenage general interest: Ball games &amp; sports</string>
+	<key>1..W.D.1.name</key>
+	<string>Children’s / Teenage general interest: Ball games &amp; sports: Football (Soccer)</string>
+	<key>1..W.D.2.name</key>
+	<string>Children’s / Teenage general interest: Ball games &amp; sports: Football (American)</string>
+	<key>1..W.D.3.name</key>
+	<string>Children’s / Teenage general interest: Ball games &amp; sports: Baseball &amp; Softball</string>
+	<key>1..W.D.4.name</key>
+	<string>Children’s / Teenage general interest: Ball games &amp; sports: Basketball</string>
+	<key>1..W.D.8.name</key>
+	<string>Children’s/Teenage general interest: Ball games &amp; sports: Handball</string>
+	<key>1..W.G.name</key>
+	<string>Children’s / Teenage general interest: Athletics &amp; gymnastics</string>
+	<key>1..W.M.name</key>
+	<string>Children’s / Teenage general interest: Winter sports</string>
+	<key>1..W.W.name</key>
+	<string>Children’s / Teenage general interest: Swimming &amp; water sports</string>
+	<key>1..W.1.name</key>
+	<string>Children’s / Teenage general interest: Cycling, boarding &amp; skating</string>
+	<key>1..W.Z.name</key>
+	<string>Children’s / Teenage general interest: Sports teams &amp; clubs</string>
+	<key>1..X.name</key>
+	<string>Children’s / Teenage general interest: Mysteries &amp; the unexplained</string>
+	<key>1..X.B.name</key>
+	<string>Children’s / Teenage general interest: Monsters, dragons &amp; mythological beings</string>
+	<key>1..X.F.name</key>
+	<string>Children’s / Teenage general interest: UFOs &amp; extraterrestrial beings</string>
+	<key>1..X.W.name</key>
+	<string>Children’s / Teenage general interest: Witches &amp; ghosts</string>
+	<key>1.P.name</key>
+	<string>Educational material</string>
+	<key>1.P.A.name</key>
+	<string>Educational: Arts, general</string>
+	<key>1.P.A.B.name</key>
+	<string>Educational: Art &amp; design</string>
+	<key>1.P.A.D.name</key>
+	<string>Educational: Music</string>
+	<key>1.P.A.F.name</key>
+	<string>Educational: Drama &amp; performance arts</string>
+	<key>1.P.C.name</key>
+	<string>Educational: Language, literature &amp; literacy</string>
+	<key>1.P.C.A.name</key>
+	<string>Educational: first/native language</string>
+	<key>1.P.C.A.1.name</key>
+	<string>Educational: first/native language: basic literacy</string>
+	<key>1.P.C.A.2.name</key>
+	<string>Educational: first/native language: reading &amp; writing skills</string>
+	<key>1.P.C.A.2.1.name</key>
+	<string>Educational: first/native language: readers &amp; reading schemes</string>
+	<key>1.P.C.A.2.2.name</key>
+	<string>Educational: first/native language: handwriting skills</string>
+	<key>1.P.C.A.4.name</key>
+	<string>Educational: first/native language: grammar &amp; punctuation</string>
+	<key>1.P.C.A.5.name</key>
+	<string>Educational: first/native language: speaking skills</string>
+	<key>1.P.C.A.9.name</key>
+	<string>Educational: first/native language: literature studies</string>
+	<key>1.P.C.A.9.1.name</key>
+	<string>Educational: first/native language: school editions of literature texts</string>
+	<key>1.P.C.K.name</key>
+	<string>Educational: modern (non-native) languages</string>
+	<key>1.P.C.K.2.name</key>
+	<string>Educational: modern (non-native) languages: language learning</string>
+	<key>1.P.C.K.9.name</key>
+	<string>Educational: modern (non-native) languages: literature studies</string>
+	<key>1.P.C.K.9.1.name</key>
+	<string>Educational: modern (non-native) languages: school editions of literature texts</string>
+	<key>1.P.C.S.name</key>
+	<string>Educational: classical &amp; ancient languages</string>
+	<key>1.P.C.S.4.name</key>
+	<string>Educational: classical &amp; ancient languages: language learning</string>
+	<key>1.P.C.S.9.name</key>
+	<string>Educational: classical &amp; ancient languages: literature studies</string>
+	<key>1.P.C.S.9.1.name</key>
+	<string>Educational: classical &amp; ancient languages: school editions of classical texts</string>
+	<key>1.P.J.name</key>
+	<string>Educational: Humanities &amp; social sciences, general</string>
+	<key>1.P.J.H.name</key>
+	<string>Educational: History</string>
+	<key>1.P.J.J.name</key>
+	<string>Educational: Social sciences, social studies</string>
+	<key>1.P.J.J.1.name</key>
+	<string>Educational: Politics &amp; constitution</string>
+	<key>1.P.J.J.3.name</key>
+	<string>Educational: Citizenship &amp; social education</string>
+	<key>1.P.J.J.5.name</key>
+	<string>Educational: Psychology</string>
+	<key>1.P.J.L.name</key>
+	<string>Educational: Philosophy</string>
+	<key>1.P.J..name</key>
+	<string>Educational: Religious studies</string>
+	<key>1.P.J..1.name</key>
+	<string>Educational: Religious studies: Hinduism</string>
+	<key>1.P.J..2.name</key>
+	<string>Educational: Religious studies: Buddhism</string>
+	<key>1.P.J..3.name</key>
+	<string>Educational: Religious studies: Judaism</string>
+	<key>1.P.J..4.name</key>
+	<string>Educational: Religious studies: Christianity</string>
+	<key>1.P.J..5.name</key>
+	<string>Educational: Religious studies: Islam</string>
+	<key>1.P.J..9.name</key>
+	<string>Educational: Religious studies: other religions</string>
+	<key>1.P.J.T.name</key>
+	<string>Educational: Geography</string>
+	<key>1.P.J.V.name</key>
+	<string>Educational: Business studies &amp; economics</string>
+	<key>1.P.M.name</key>
+	<string>Educational: Mathematics, science &amp; technology, general</string>
+	<key>1.P.M.F.name</key>
+	<string>Educational: Mathematics &amp; numeracy</string>
+	<key>1.P.M.F.1.name</key>
+	<string>Educational: Mathematics &amp; numeracy: times tables</string>
+	<key>1.P.M.P.name</key>
+	<string>Educational: Sciences, general science</string>
+	<key>1.P.M.P.1.name</key>
+	<string>Educational: Biology</string>
+	<key>1.P.M.P.3.name</key>
+	<string>Educational: Chemistry</string>
+	<key>1.P.M.P.5.name</key>
+	<string>Educational: Physics</string>
+	<key>1.P.M.T.name</key>
+	<string>Educational: Technology</string>
+	<key>1.P.M.T.2.name</key>
+	<string>Educational: Design &amp; technology</string>
+	<key>1.P.M.T.4.name</key>
+	<string>Educational: Food technology, cooking skills</string>
+	<key>1.P.M.T.6.name</key>
+	<string>Educational: IT &amp; computing, ICT</string>
+	<key>1.P.W.name</key>
+	<string>Educational: Vocational &amp; other subjects</string>
+	<key>1.P.W.C.name</key>
+	<string>Educational: Vocational subjects</string>
+	<key>1.P.W.F.name</key>
+	<string>Educational: Physical education</string>
+	<key>1.P.W.L.name</key>
+	<string>Educational: General studies / study skills general</string>
+	<key>1.P.Z.name</key>
+	<string>Educational: study &amp; revision guides</string>
+	<key>1.R.name</key>
+	<string>Children’s / Teenage reference material</string>
+	<key>1.R.D.name</key>
+	<string>Children’s / Teenage reference: Dictionaries, school dictionaries</string>
+	<key>1.R.D.C.name</key>
+	<string>Children’s / Teenage reference: Picture dictionaries</string>
+	<key>1.R.D.L.name</key>
+	<string>Children’s / Teenage reference: Bilingual / multilingual dictionaries</string>
+	<key>1.R.E.name</key>
+	<string>Children’s / Teenage reference: Encyclopaedias, general reference</string>
+	<key>1.R.G.name</key>
+	<string>Children’s / Teenage reference: Subject-specific reference</string>
+	<key>1.R.W.name</key>
+	<string>Children’s / Teenage reference: Atlases &amp; maps</string>
+	<key>1.X.name</key>
+	<string>Children’s / Teenage: Personal &amp; social issues</string>
+	<key>1.X.A.name</key>
+	<string>Children’s / Teenage personal &amp; social issues: Body &amp; health</string>
+	<key>1.X.A.X.name</key>
+	<string>Children’s / Teenage personal &amp; social issues: Sex education &amp; the facts of life</string>
+	<key>1.X.D.name</key>
+	<string>Children’s / Teenage personal &amp; social issues: Self-awareness &amp; self-esteem</string>
+	<key>1.X.E.name</key>
+	<string>Children’s / Teenage personal &amp; social issues: Emotions</string>
+	<key>1.X.F.name</key>
+	<string>Children’s / Teenage personal &amp; social issues: Family issues</string>
+	<key>1.X.F.D.name</key>
+	<string>Children’s / Teenage personal &amp; social issues: divorce, separation, family break-up</string>
+	<key>1.X.G.name</key>
+	<string>Children’s / Teenage personal &amp; social issues: death &amp; bereavement</string>
+	<key>1.X.H.name</key>
+	<string>Children’s / Teenage personal &amp; social issues: Relationships (non-family)</string>
+	<key>1.X.H.B.name</key>
+	<string>Children’s / Teenage personal &amp; social issues: Friends &amp; friendship issues</string>
+	<key>1.X.H.L.name</key>
+	<string>Children’s / Teenage personal &amp; social issues: Sexuality &amp; relationships</string>
+	<key>1.X.H.1.name</key>
+	<string>Children’s / Teenage personal &amp; social issues: teenage pregnancy</string>
+	<key>1.X.J.name</key>
+	<string>Children’s / Teenage personal &amp; social issues: Drugs &amp; addiction</string>
+	<key>1.X.K.name</key>
+	<string>Children’s / Teenage personal &amp; social issues: Disability &amp; special needs</string>
+	<key>1.X..name</key>
+	<string>Children’s / Teenage personal &amp; social issues: Racism &amp; multiculturalism</string>
+	<key>1.X.Q.name</key>
+	<string>Children’s / Teenage personal &amp; social issues: Bullying, violence, abuse &amp; peer pressure</string>
+	<key>1.X.R.name</key>
+	<string>Children’s / Teenage personal &amp; social issues: personal safety</string>
+	<key>1.X.S.name</key>
+	<string>Children’s / Teenage personal &amp; social issues: runaways</string>
+	<key>1.X.T.name</key>
+	<string>Children’s / Teenage personal &amp; social issues: Truancy &amp; school problems</string>
+	<key>1.X.V.name</key>
+	<string>Teenage personal &amp; social issues: Advice on careers &amp; further education, leaving school</string>
+	<key>1.X.Z.name</key>
+	<string>Children’s / Teenage: Social issues</string>
+	<key>1.X.Z.G.name</key>
+	<string>Children’s / Teenage social issues: Environment &amp; green issues</string>
+	<key>1.X.Z.R.name</key>
+	<string>Children’s / Teenage social issues: Religious issues</string>
+	<key>1.X.Z.W.name</key>
+	<string>Children’s / Teenage social issues: War &amp; conflict issues</string>
+	<key>1.Z.name</key>
+	<string>Children’s / Teenage stationery &amp; miscellaneous items</string>
+	<key>1.Z.G.name</key>
+	<string>Children’s gift books</string>
+	<key>1.Z.S.name</key>
+	<string>Children’s stationery items</string>
+	<key>1.Z.S..name</key>
+	<string>Blank children’s stationery items</string>
+</dict>
+</plist>
