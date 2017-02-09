@@ -34,7 +34,6 @@
 		597B8E391E3954B200C7811B /* Volkhov-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 597B8E351E3954B200C7811B /* Volkhov-Regular.ttf */; };
 		59903FED1E3B9D90006043EF /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59903FEC1E3B9D90006043EF /* View.swift */; };
 		59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59B65FD21E251FE80093FF44 /* Assets.xcassets */; };
-		59BAC6991E2FCD1A0063F573 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59BAC6981E2FCD1A0063F573 /* GoogleService-Info.plist */; };
 		59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD55751E302EB800D3B805 /* Analytics+Constants.swift */; };
 		59BD55781E302EB800D3B805 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD55761E302EB800D3B805 /* Analytics.swift */; };
 		59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD55791E309BFC00D3B805 /* GeneralSettings.swift */; };
@@ -42,6 +41,8 @@
 		59D6021B1E32597B00271315 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D6021A1E32597B00271315 /* AppKeys.swift */; };
 		59D6021E1E36363400271315 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D6021D1E36363400271315 /* Font.swift */; };
 		59D602201E36387A00271315 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D6021F1E36387A00271315 /* Color.swift */; };
+		59D8FCA31E4C760F001C1EDB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59D8FCA11E4C760F001C1EDB /* GoogleService-Info.plist */; };
+		59D8FCA61E4C76E7001C1EDB /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59D8FCA51E4C76E7001C1EDB /* Info.plist */; };
 		59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47491E3A329C00BA90A5 /* FontBook.swift */; };
 		59DA47571E3A65A600BA90A5 /* Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47561E3A65A600BA90A5 /* Storyboard.swift */; };
 		59DA47591E3AA8E100BA90A5 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47581E3AA8E100BA90A5 /* Localization.swift */; };
@@ -80,7 +81,6 @@
 		2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bookwitty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59057FDE1E25340A0036AAF3 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		59057FDF1E25340A0036AAF3 /* Introduction.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Introduction.storyboard; sourceTree = "<group>"; };
-		590B3F1C1E2FCA5900542671 /* Bookwitty-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bookwitty-Bridging-Header.h"; sourceTree = "<group>"; };
 		593769D51E3689FB00F23226 /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Appearance.swift; path = Default/Appearance.swift; sourceTree = "<group>"; };
 		593769D61E3689FB00F23226 /* DefaultTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
 		5947C2A71E37B3D1003BF12A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -104,7 +104,6 @@
 		597B8E351E3954B200C7811B /* Volkhov-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Volkhov-Regular.ttf"; sourceTree = "<group>"; };
 		59903FEC1E3B9D90006043EF /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		59B65FD21E251FE80093FF44 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		59BAC6981E2FCD1A0063F573 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		59BD55751E302EB800D3B805 /* Analytics+Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+Constants.swift"; sourceTree = "<group>"; };
 		59BD55761E302EB800D3B805 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		59BD55791E309BFC00D3B805 /* GeneralSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralSettings.swift; sourceTree = "<group>"; };
@@ -112,6 +111,9 @@
 		59D6021A1E32597B00271315 /* AppKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
 		59D6021D1E36363400271315 /* Font.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		59D6021F1E36387A00271315 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		59D8FCA01E4C760F001C1EDB /* Bookwitty-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bookwitty-Bridging-Header.h"; sourceTree = "<group>"; };
+		59D8FCA11E4C760F001C1EDB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		59D8FCA51E4C76E7001C1EDB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Bookwitty/Info.plist; sourceTree = SOURCE_ROOT; };
 		59DA47491E3A329C00BA90A5 /* FontBook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontBook.swift; sourceTree = "<group>"; };
 		59DA47561E3A65A600BA90A5 /* Storyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storyboard.swift; sourceTree = "<group>"; };
 		59DA47581E3AA8E100BA90A5 /* Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
@@ -124,7 +126,6 @@
 		59DA47691E3B876900BA90A5 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		59FBBC491E1D074400FC84E5 /* Bookwitty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookwitty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		59FBBC581E1D074400FC84E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59FBBC5D1E1D074400FC84E5 /* BookwittyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BookwittyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FBBC631E1D074400FC84E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		61D0EE3946D28FF160292FF2 /* Pods-Bookwitty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookwitty.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bookwitty/Pods-Bookwitty.release.xcconfig"; sourceTree = "<group>"; };
@@ -372,6 +373,16 @@
 			path = Default;
 			sourceTree = "<group>";
 		};
+		59D8FC9F1E4C760F001C1EDB /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				59D8FCA01E4C760F001C1EDB /* Bookwitty-Bridging-Header.h */,
+				59D8FCA51E4C76E7001C1EDB /* Info.plist */,
+				59D8FCA11E4C760F001C1EDB /* GoogleService-Info.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
 		59DA475A1E3B7A8F00BA90A5 /* Introduction */ = {
 			isa = PBXGroup;
 			children = (
@@ -434,9 +445,7 @@
 				59057FCB1E252FC30036AAF3 /* Models */,
 				59057FC81E252E710036AAF3 /* Networking */,
 				59057FCE1E2530900036AAF3 /* Utilities */,
-				59FBBC581E1D074400FC84E5 /* Info.plist */,
-				59BAC6981E2FCD1A0063F573 /* GoogleService-Info.plist */,
-				590B3F1C1E2FCA5900542671 /* Bookwitty-Bridging-Header.h */,
+				59D8FC9F1E4C760F001C1EDB /* SupportingFiles */,
 				59BD55791E309BFC00D3B805 /* GeneralSettings.swift */,
 			);
 			path = Bookwitty;
@@ -567,11 +576,12 @@
 				59DA47671E3B84ED00BA90A5 /* Access.storyboard in Resources */,
 				59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */,
 				5967E4581E4107EF0067093F /* NotificationView.xib in Resources */,
-				59BAC6991E2FCD1A0063F573 /* GoogleService-Info.plist in Resources */,
 				597B8E371E3954B200C7811B /* Ubuntu-Medium.ttf in Resources */,
 				59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */,
 				59057FE01E25340A0036AAF3 /* LaunchScreen.storyboard in Resources */,
 				597B8E381E3954B200C7811B /* Ubuntu-Regular.ttf in Resources */,
+				59D8FCA31E4C760F001C1EDB /* GoogleService-Info.plist in Resources */,
+				59D8FCA61E4C76E7001C1EDB /* Info.plist in Resources */,
 				597B8E361E3954B200C7811B /* Georgia.ttf in Resources */,
 				597B8E391E3954B200C7811B /* Volkhov-Regular.ttf in Resources */,
 				F47188181E4B1EB50076F93C /* Root.storyboard in Resources */,
@@ -876,7 +886,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bookwitty.Bookwitty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Bookwitty/Bookwitty-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bookwitty/SupportingFiles/Bookwitty-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -896,7 +906,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bookwitty.Bookwitty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Bookwitty/Bookwitty-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bookwitty/SupportingFiles/Bookwitty-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -914,7 +924,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.keeward.BookwittyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Bookwitty/Bookwitty-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bookwitty/SupportingFiles/Bookwitty-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bookwitty.app/Bookwitty";
 			};
@@ -932,7 +942,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.keeward.BookwittyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Bookwitty/Bookwitty-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bookwitty/SupportingFiles/Bookwitty-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bookwitty.app/Bookwitty";
 			};
