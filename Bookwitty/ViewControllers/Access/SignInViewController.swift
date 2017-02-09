@@ -30,6 +30,7 @@ class SignInViewController: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.navigationController?.setNavigationBarHidden(false, animated: true)
+    navigationController?.navigationBar.backItem?.title = ""
   }
   
   override func viewWillDisappear(_ animated: Bool) {
