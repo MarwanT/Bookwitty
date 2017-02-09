@@ -60,6 +60,7 @@
 		F420B6A21E43C570001F34CD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420B6A11E43C570001F34CD /* User.swift */; };
 		F420B6A41E43D01A001F34CD /* PenNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420B6A31E43D01A001F34CD /* PenNameViewController.swift */; };
 		F420B6A61E43D05E001F34CD /* PenNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420B6A51E43D05E001F34CD /* PenNameViewModel.swift */; };
+		F47188181E4B1EB50076F93C /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47188171E4B1EB50076F93C /* Root.storyboard */; };
 		F488D2791E44EB46003A7BD4 /* PenName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F488D2781E44EB46003A7BD4 /* PenName.swift */; };
 		F488D27B1E44F559003A7BD4 /* BookwittyParsersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F488D27A1E44F559003A7BD4 /* BookwittyParsersTests.swift */; };
 		F49AE93E1E47CFEA0031B355 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49AE93D1E47CFEA0031B355 /* Parser.swift */; };
@@ -137,6 +138,7 @@
 		F420B6A11E43C570001F34CD /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F420B6A31E43D01A001F34CD /* PenNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameViewController.swift; sourceTree = "<group>"; };
 		F420B6A51E43D05E001F34CD /* PenNameViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameViewModel.swift; sourceTree = "<group>"; };
+		F47188171E4B1EB50076F93C /* Root.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Root.storyboard; sourceTree = "<group>"; };
 		F488D2781E44EB46003A7BD4 /* PenName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenName.swift; sourceTree = "<group>"; };
 		F488D27A1E44F559003A7BD4 /* BookwittyParsersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyParsersTests.swift; sourceTree = "<group>"; };
 		F49AE93D1E47CFEA0031B355 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				59057FDE1E25340A0036AAF3 /* LaunchScreen.storyboard */,
 				59057FDF1E25340A0036AAF3 /* Introduction.storyboard */,
 				59DA47661E3B84ED00BA90A5 /* Access.storyboard */,
+				F47188171E4B1EB50076F93C /* Root.storyboard */,
 				59DA47561E3A65A600BA90A5 /* Storyboard.swift */,
 			);
 			path = Storyboards;
@@ -571,6 +574,7 @@
 				597B8E381E3954B200C7811B /* Ubuntu-Regular.ttf in Resources */,
 				597B8E361E3954B200C7811B /* Georgia.ttf in Resources */,
 				597B8E391E3954B200C7811B /* Volkhov-Regular.ttf in Resources */,
+				F47188181E4B1EB50076F93C /* Root.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
