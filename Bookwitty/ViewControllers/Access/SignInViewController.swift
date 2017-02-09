@@ -101,7 +101,7 @@ class SignInViewController: UIViewController {
           self.hideNetworkActivity()
           self.showAlertWith(
             title: "Your Sign in Key",
-            message: "\(AccessToken().token!)")
+            message: "\(AccessToken.shared.token!)")
       })
     } else {
       NotificationView.show(notificationMessages:
