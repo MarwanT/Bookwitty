@@ -15,7 +15,7 @@ class RootTabBarController: UITabBarController {
     //Set Default select tab index
     self.selectedIndex = 0
 
-    let placeholderVc1 = UIViewController()
+    let placeholderVc1 = NewsFeedViewController()
     let placeholderVc2 = UIViewController()
 
     let feeds: UIImage = UIImage(data: UIImagePNGRepresentation(#imageLiteral(resourceName: "newsfeed"))!, scale: 4)!
