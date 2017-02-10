@@ -83,8 +83,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: 30,
       UIContentSizeCategory.medium: 29,
       UIContentSizeCategory.small: 28,
-      UIContentSizeCategory.extraSmall: 27,
-      UIContentSizeCategory.unspecified: 30
+      UIContentSizeCategory.extraSmall: 27
     ],
     FontDynamicType.title2.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: 30,
@@ -98,8 +97,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: 24,
       UIContentSizeCategory.medium: 23,
       UIContentSizeCategory.small: 22,
-      UIContentSizeCategory.extraSmall: 21,
-      UIContentSizeCategory.unspecified: 24
+      UIContentSizeCategory.extraSmall: 21
     ],
     FontDynamicType.title3.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: 26,
@@ -113,8 +111,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: 20,
       UIContentSizeCategory.medium: 18,
       UIContentSizeCategory.small: 16,
-      UIContentSizeCategory.extraSmall: 14,
-      UIContentSizeCategory.unspecified: 20
+      UIContentSizeCategory.extraSmall: 14
     ],
     FontDynamicType.body.rawValue: [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: 24,
@@ -128,8 +125,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: 18,
       UIContentSizeCategory.medium: 17,
       UIContentSizeCategory.small: 16,
-      UIContentSizeCategory.extraSmall: 15,
-      UIContentSizeCategory.unspecified: 18
+      UIContentSizeCategory.extraSmall: 15
     ],
     FontDynamicType.headline.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: 30,
@@ -143,8 +139,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: 24,
       UIContentSizeCategory.medium: 23,
       UIContentSizeCategory.small: 22,
-      UIContentSizeCategory.extraSmall: 21,
-      UIContentSizeCategory.unspecified: 24
+      UIContentSizeCategory.extraSmall: 21
     ],
     FontDynamicType.callout.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: 26,
@@ -158,8 +153,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: 20,
       UIContentSizeCategory.medium: 18,
       UIContentSizeCategory.small: 16,
-      UIContentSizeCategory.extraSmall: 14,
-      UIContentSizeCategory.unspecified: 20
+      UIContentSizeCategory.extraSmall: 14
     ],
     FontDynamicType.subheadline.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: 24,
@@ -173,8 +167,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: 18,
       UIContentSizeCategory.medium: 17,
       UIContentSizeCategory.small: 16,
-      UIContentSizeCategory.extraSmall: 15,
-      UIContentSizeCategory.unspecified: 18
+      UIContentSizeCategory.extraSmall: 15
     ],
     FontDynamicType.footnote.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: 22,
@@ -188,8 +181,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: 16,
       UIContentSizeCategory.medium: 15,
       UIContentSizeCategory.small: 14,
-      UIContentSizeCategory.extraSmall: 13,
-      UIContentSizeCategory.unspecified: 16
+      UIContentSizeCategory.extraSmall: 13
     ],
     FontDynamicType.caption1.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: 22,
@@ -203,8 +195,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: 16,
       UIContentSizeCategory.medium: 15,
       UIContentSizeCategory.small: 14,
-      UIContentSizeCategory.extraSmall: 13,
-      UIContentSizeCategory.unspecified: 16
+      UIContentSizeCategory.extraSmall: 13
     ],
     FontDynamicType.caption2.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: 20,
@@ -218,8 +209,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: 14,
       UIContentSizeCategory.medium: 13,
       UIContentSizeCategory.small: 12,
-      UIContentSizeCategory.extraSmall: 11,
-      UIContentSizeCategory.unspecified: 14
+      UIContentSizeCategory.extraSmall: 11
     ],
     FontDynamicType.label.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: 17,
@@ -233,8 +223,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: 11,
       UIContentSizeCategory.medium: 10,
       UIContentSizeCategory.small: 9,
-      UIContentSizeCategory.extraSmall: 8,
-      UIContentSizeCategory.unspecified: 11
+      UIContentSizeCategory.extraSmall: 8
     ]
   ]
   
@@ -253,8 +242,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: .regular,
       UIContentSizeCategory.medium: .regular,
       UIContentSizeCategory.small: .regular,
-      UIContentSizeCategory.extraSmall: .regular,
-      UIContentSizeCategory.unspecified: .regular
+      UIContentSizeCategory.extraSmall: .regular
     ],
     FontDynamicType.title2.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: .regular,
@@ -268,8 +256,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: .regular,
       UIContentSizeCategory.medium: .regular,
       UIContentSizeCategory.small: .regular,
-      UIContentSizeCategory.extraSmall: .regular,
-      UIContentSizeCategory.unspecified: .regular,
+      UIContentSizeCategory.extraSmall: .regular
     ],
     FontDynamicType.title3.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: .regular,
@@ -283,8 +270,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: .regular,
       UIContentSizeCategory.medium: .regular,
       UIContentSizeCategory.small: .regular,
-      UIContentSizeCategory.extraSmall: .regular,
-      UIContentSizeCategory.unspecified: .regular,
+      UIContentSizeCategory.extraSmall: .regular
     ],
     FontDynamicType.body.rawValue: [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: .regular,
@@ -298,8 +284,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: .regular,
       UIContentSizeCategory.medium: .regular,
       UIContentSizeCategory.small: .regular,
-      UIContentSizeCategory.extraSmall: .regular,
-      UIContentSizeCategory.unspecified: .regular,
+      UIContentSizeCategory.extraSmall: .regular
     ],
     FontDynamicType.headline.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: .regular,
@@ -313,8 +298,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: .regular,
       UIContentSizeCategory.medium: .regular,
       UIContentSizeCategory.small: .regular,
-      UIContentSizeCategory.extraSmall: .regular,
-      UIContentSizeCategory.unspecified: .regular,
+      UIContentSizeCategory.extraSmall: .regular
     ],
     FontDynamicType.callout.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: .regular,
@@ -328,8 +312,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: .regular,
       UIContentSizeCategory.medium: .regular,
       UIContentSizeCategory.small: .regular,
-      UIContentSizeCategory.extraSmall: .regular,
-      UIContentSizeCategory.unspecified: .regular,
+      UIContentSizeCategory.extraSmall: .regular
     ],
     FontDynamicType.subheadline.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: .regular,
@@ -343,8 +326,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: .regular,
       UIContentSizeCategory.medium: .regular,
       UIContentSizeCategory.small: .regular,
-      UIContentSizeCategory.extraSmall: .regular,
-      UIContentSizeCategory.unspecified: .regular,
+      UIContentSizeCategory.extraSmall: .regular
     ],
     FontDynamicType.footnote.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: .regular,
@@ -358,8 +340,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: .regular,
       UIContentSizeCategory.medium: .regular,
       UIContentSizeCategory.small: .regular,
-      UIContentSizeCategory.extraSmall: .regular,
-      UIContentSizeCategory.unspecified: .regular,
+      UIContentSizeCategory.extraSmall: .regular
     ],
     FontDynamicType.caption1.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: .regular,
@@ -373,8 +354,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: .regular,
       UIContentSizeCategory.medium: .regular,
       UIContentSizeCategory.small: .regular,
-      UIContentSizeCategory.extraSmall: .regular,
-      UIContentSizeCategory.unspecified: .regular,
+      UIContentSizeCategory.extraSmall: .regular
     ],
     FontDynamicType.caption2.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: .regular,
@@ -388,8 +368,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: .regular,
       UIContentSizeCategory.medium: .regular,
       UIContentSizeCategory.small: .regular,
-      UIContentSizeCategory.extraSmall: .regular,
-      UIContentSizeCategory.unspecified: .regular,
+      UIContentSizeCategory.extraSmall: .regular
     ],
     FontDynamicType.label.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: .regular,
@@ -403,8 +382,7 @@ extension FontDynamicType {
       UIContentSizeCategory.large: .regular,
       UIContentSizeCategory.medium: .regular,
       UIContentSizeCategory.small: .regular,
-      UIContentSizeCategory.extraSmall: .regular,
-      UIContentSizeCategory.unspecified: .regular,
+      UIContentSizeCategory.extraSmall: .regular
     ]
   ]
 }
