@@ -40,11 +40,8 @@ class BookwittyParsersTests: XCTestCase {
     penName.id = "abcdef01-2345-6789-abcd-abcdef012345"
 
 
-    let data: Data? = penName.serializeData()
+    let data: [String:Any]? = penName.serializeData(options: SerializationOptions.OmitNullValues)
     XCTAssertNotNil(data, "Serializing PenName model failed")
-    let strData: String? = String(data: data!, encoding: .utf8)
-    XCTAssertNotNil(strData, "Stringlazing serialized PenName model failed")
-    
   }
 }
 
