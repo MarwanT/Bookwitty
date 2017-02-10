@@ -8,4 +8,7 @@
 
 import Foundation
 class Category {
+  var key: String?
+  var value: String?
+  var subcategories: [Category]?
 }
