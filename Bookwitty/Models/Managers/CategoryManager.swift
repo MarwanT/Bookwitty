@@ -9,9 +9,32 @@
 import Foundation
 
 class CategoryManager {
+  var categories: [Category]? = nil
+  private var localID: String = "en"
   
   static let shared: CategoryManager = CategoryManager()
   private init() {
+    loadCategoriesFromJSON()
+  }
+  
+  private func loadCategoriesFromJSON() {
+    guard let url = Bundle.main.url(forResource: "Categories", withExtension: "json") else {
+      print("Fail to get categories file path")
+      return
+    }
+    
+    guard let data = try? Data(contentsOf: url),
+      let dictionary = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: Any] else {
+        print("Fail to load dictionary from categories file")
+        return
+    }
+    
+    guard let categoriesDictionary = dictionary?[localID] as? [String : Any] else {
+      print("Fail to load localized categories")
+      return
+    }
+    
+    categories = categoriesFromDictionary(fromDictionary: categoriesDictionary)
   }
   
   
