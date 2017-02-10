@@ -9,4 +9,8 @@
 import Foundation
 
 class CategoryManager {
+  
+  static let shared: CategoryManager = CategoryManager()
+  private init() {
+  }
 }
