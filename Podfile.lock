@@ -18,7 +18,7 @@ PODS:
     - Result (~> 3.0)
   - Crashlytics (3.8.3):
     - Fabric (~> 1.6.3)
-  - EMCCountryPickerController (1.3.3)
+  - EMCCountryPickerController (1.3.4)
   - Fabric (1.6.11)
   - FacebookCore (0.2.0):
     - Bolts (~> 1.8)
@@ -94,7 +94,7 @@ DEPENDENCIES:
   - ALCameraViewController
   - AsyncDisplayKit (= 2.0.2)
   - Crashlytics (= 3.8.3)
-  - EMCCountryPickerController (= 1.3.3)
+  - EMCCountryPickerController (from `https://github.com/Keeward/EMCCountryPickerController`, tag `1.4.0`)
   - Fabric (= 1.6.11)
   - FacebookCore (= 0.2.0)
   - FacebookLogin (= 0.2.0)
@@ -110,12 +110,18 @@ DEPENDENCIES:
   - TTTAttributedLabel (= 2.0.0)
 
 EXTERNAL SOURCES:
+  EMCCountryPickerController:
+    :git: https://github.com/Keeward/EMCCountryPickerController
+    :tag: 1.4.0
   Keys:
     :path: Pods/CocoaPodsKeys
   Spine:
     :git: https://github.com/wvteijlingen/Spine.git
 
 CHECKOUT OPTIONS:
+  EMCCountryPickerController:
+    :git: https://github.com/Keeward/EMCCountryPickerController
+    :tag: 1.4.0
   Spine:
     :commit: ee1ad2be3f54657ff754ed01a8ebf248424be0cd
     :git: https://github.com/wvteijlingen/Spine.git
@@ -127,7 +133,7 @@ SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   BrightFutures: 62aafb1a63520eda91c9286bf4be33e58e043938
   Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
-  EMCCountryPickerController: ff6836b71d605ba8cfe5f087d2ceec51d89f3e46
+  EMCCountryPickerController: 053b7e420dcb662c1436340cb856282af5a038be
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
   FacebookLogin: c9d606504735780a9e3002465a615512e0a691a5
@@ -155,6 +161,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
 
-PODFILE CHECKSUM: 67105a904c974e3363404a15dbadb6a705160e69
+PODFILE CHECKSUM: 93eb2334a11ef24fba15c6c5ad10238f9646a99b
 
 COCOAPODS: 1.2.0
