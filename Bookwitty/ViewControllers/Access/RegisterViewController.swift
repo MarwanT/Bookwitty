@@ -70,19 +70,24 @@ class RegisterViewController: UIViewController {
       descriptionLabelText: viewModel.firstNameDescriptionLabelText,
       textFieldPlaceholder: viewModel.firstNameTextFieldPlaceholderText,
       invalidationErrorMessage: viewModel.firstNameInvalidationErrorMessage,
-      returnKeyType: UIReturnKeyType.continue)
+      returnKeyType: UIReturnKeyType.continue,
+      autocorrectionType: .no)
 
     lastNameField.configuration = InputFieldConfiguration(
       descriptionLabelText: viewModel.lastNameDescriptionLabelText,
       textFieldPlaceholder: viewModel.lastNameTextFieldPlaceholderText,
       invalidationErrorMessage: viewModel.lastNameInvalidationErrorMessage,
-      returnKeyType: UIReturnKeyType.continue)
+      returnKeyType: UIReturnKeyType.continue,
+      autocorrectionType: .no)
 
     emailField.configuration = InputFieldConfiguration(
       descriptionLabelText: viewModel.emailDescriptionLabelText,
       textFieldPlaceholder: viewModel.emailTextFieldPlaceholderText,
       invalidationErrorMessage: viewModel.emailInvalidationErrorMessage,
-      returnKeyType: UIReturnKeyType.continue)
+      returnKeyType: UIReturnKeyType.continue,
+      keyboardType: .emailAddress,
+      autocorrectionType: .no,
+      autocapitalizationType: .none)
 
     passwordField.configuration = InputFieldConfiguration(
       descriptionLabelText: viewModel.passwordDescriptionLabelText,
