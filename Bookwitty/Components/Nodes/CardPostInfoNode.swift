@@ -26,6 +26,10 @@ class CardPostInfoNode: ASCellNode {
     userNameTextNode = ASTextNode()
     postDateTextNode = ASTextNode()
     super.init()
+    addSubnode(userNameTextNode)
+    addSubnode(postDateTextNode)
+    addSubnode(userProfileImageNode)
+    addSubnode(arrowDownImageNode)
   }
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     //Add the User Profile Image - Vertical Stack [Name - Date] - Image ArrowDown
