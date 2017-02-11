@@ -9,12 +9,16 @@
 import Foundation
 import AsyncDisplayKit
 
+typealias CardPostInfoNodeData = (name: String, imageUrl: String?, date: String)
+
 class CardPostInfoNode: ASCellNode {
   var userProfileImageNode: ASNetworkImageNode
   var arrowDownImageNode: ASImageNode
   var userNameTextNode: ASTextNode
   var postDateTextNode: ASTextNode
 
+
+  var data: CardPostInfoNodeData?
 
   private override init() {
     userProfileImageNode = ASNetworkImageNode()
