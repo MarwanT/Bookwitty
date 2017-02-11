@@ -18,6 +18,8 @@ class CardPostInfoNode: ASCellNode {
   var postDateTextNode: ASTextNode
 
   let userProfileImageDimension: CGFloat = 44.0
+  let downArrowWidth: CGFloat = 30.0
+  let downArrowHeight: CGFloat = 30.0
 
   var data: CardPostInfoNodeData?
 
@@ -43,6 +45,10 @@ class CardPostInfoNode: ASCellNode {
     userProfileImageNode.style.preferredSize = profileImageSize
     userProfileImageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(profileBorderWidth, profileBorderColor)
     userProfileImageNode.defaultImage = UIImage(color: ASDisplayNodeDefaultPlaceholderColor(), size: profileImageSize)
+
+    arrowDownImageNode.image = #imageLiteral(resourceName: "downArrow")
+    arrowDownImageNode.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
+    arrowDownImageNode.style.preferredSize = CGSize(width: downArrowWidth, height: downArrowHeight)
 
     userNameTextNode.maximumNumberOfLines = 1
     postDateTextNode.maximumNumberOfLines = 1
