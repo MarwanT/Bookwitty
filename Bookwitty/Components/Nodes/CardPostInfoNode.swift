@@ -17,6 +17,7 @@ class CardPostInfoNode: ASCellNode {
   var userNameTextNode: ASTextNode
   var postDateTextNode: ASTextNode
 
+  let userProfileImageDimension: CGFloat = 44.0
 
   var data: CardPostInfoNodeData?
 
@@ -36,6 +37,12 @@ class CardPostInfoNode: ASCellNode {
     self.init()
     self.data = data
 
+    let profileImageSize: CGSize = CGSize(width: userProfileImageDimension, height: userProfileImageDimension)
+    let profileBorderWidth: CGFloat = 0.0
+    let profileBorderColor: UIColor? = nil
+    userProfileImageNode.style.preferredSize = profileImageSize
+    userProfileImageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(profileBorderWidth, profileBorderColor)
+    userProfileImageNode.defaultImage = UIImage(color: ASDisplayNodeDefaultPlaceholderColor(), size: profileImageSize)
     loadData()
   }
 
