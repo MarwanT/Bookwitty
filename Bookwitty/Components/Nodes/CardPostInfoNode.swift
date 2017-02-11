@@ -31,6 +31,11 @@ class CardPostInfoNode: ASCellNode {
     addSubnode(userProfileImageNode)
     addSubnode(arrowDownImageNode)
   }
+
+  convenience init(data: CardPostInfoNodeData) {
+    self.init()
+    self.data = data
+  }
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     //Add the User Profile Image - Vertical Stack [Name - Date] - Image ArrowDown
     let verticalStack = ASStackLayoutSpec.vertical()
