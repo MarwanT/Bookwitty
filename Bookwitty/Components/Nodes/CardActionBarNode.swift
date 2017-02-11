@@ -15,6 +15,7 @@ class CardActionBarNode: ASCellNode {
   var commentButton: ASButtonNode
   var shareButton: ASButtonNode
 
+  let normal = ASControlState(rawValue: 0)
   let buttonHeight: CGFloat = 34.0
 
   private override init() {
@@ -22,9 +23,23 @@ class CardActionBarNode: ASCellNode {
     commentButton = ASButtonNode()
     shareButton = ASButtonNode()
     super.init()
+    initializeNode()
     addSubnode(witButton)
     addSubnode(commentButton)
     addSubnode(shareButton)
+  }
+
+  private func initializeNode() {
+    let imageTintColor: UIColor = ThemeManager.shared.currentTheme.colorNumber15()
+
+    //Note: Had a Problem with the selected and highlighted states of the button images
+    let commentImage: UIImage = UIImage(data: UIImagePNGRepresentation(#imageLiteral(resourceName: "comment"))!, scale: 3)!
+    commentButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
+    commentButton.setImage(commentImage, for: normal)
+
+    let shareImage: UIImage = UIImage(data: UIImagePNGRepresentation(#imageLiteral(resourceName: "shareOutside"))!, scale: 3)!
+    shareButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
+    shareButton.setImage(shareImage, for: normal)
   }
 
   private func spacer(flexGrow: CGFloat = 1.0) -> ASLayoutSpec {
