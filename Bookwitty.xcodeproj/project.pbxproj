@@ -44,7 +44,7 @@
 		59D8FCA31E4C760F001C1EDB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59D8FCA11E4C760F001C1EDB /* GoogleService-Info.plist */; };
 		59D8FCA61E4C76E7001C1EDB /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59D8FCA51E4C76E7001C1EDB /* Info.plist */; };
 		59D8FCB31E4C86CD001C1EDB /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D8FCB21E4C86CD001C1EDB /* Category.swift */; };
-		59D8FCB91E4CBF70001C1EDB /* Categories.json in Resources */ = {isa = PBXBuildFile; fileRef = 59D8FCB81E4CBF70001C1EDB /* Categories.json */; };
+		59D8FCB91E4CBF70001C1EDB /* Categories.en.json in Resources */ = {isa = PBXBuildFile; fileRef = 59D8FCB81E4CBF70001C1EDB /* Categories.en.json */; };
 		59D8FCBC1E4DA394001C1EDB /* CategoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D8FCBB1E4DA394001C1EDB /* CategoryManager.swift */; };
 		59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47491E3A329C00BA90A5 /* FontBook.swift */; };
 		59DA47571E3A65A600BA90A5 /* Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47561E3A65A600BA90A5 /* Storyboard.swift */; };
@@ -118,7 +118,7 @@
 		59D8FCA11E4C760F001C1EDB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		59D8FCA51E4C76E7001C1EDB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Bookwitty/Info.plist; sourceTree = SOURCE_ROOT; };
 		59D8FCB21E4C86CD001C1EDB /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
-		59D8FCB81E4CBF70001C1EDB /* Categories.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Categories.json; sourceTree = "<group>"; };
+		59D8FCB81E4CBF70001C1EDB /* Categories.en.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Categories.en.json; sourceTree = "<group>"; };
 		59D8FCBB1E4DA394001C1EDB /* CategoryManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryManager.swift; sourceTree = "<group>"; };
 		59DA47491E3A329C00BA90A5 /* FontBook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontBook.swift; sourceTree = "<group>"; };
 		59DA47561E3A65A600BA90A5 /* Storyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storyboard.swift; sourceTree = "<group>"; };
@@ -387,7 +387,7 @@
 				59D8FCA01E4C760F001C1EDB /* Bookwitty-Bridging-Header.h */,
 				59D8FCA51E4C76E7001C1EDB /* Info.plist */,
 				59D8FCA11E4C760F001C1EDB /* GoogleService-Info.plist */,
-				59D8FCB81E4CBF70001C1EDB /* Categories.json */,
+				59D8FCB81E4CBF70001C1EDB /* Categories.en.json */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -597,7 +597,7 @@
 				59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */,
 				59057FE01E25340A0036AAF3 /* LaunchScreen.storyboard in Resources */,
 				597B8E381E3954B200C7811B /* Ubuntu-Regular.ttf in Resources */,
-				59D8FCB91E4CBF70001C1EDB /* Categories.json in Resources */,
+				59D8FCB91E4CBF70001C1EDB /* Categories.en.json in Resources */,
 				59D8FCA31E4C760F001C1EDB /* GoogleService-Info.plist in Resources */,
 				59D8FCA61E4C76E7001C1EDB /* Info.plist in Resources */,
 				597B8E361E3954B200C7811B /* Georgia.ttf in Resources */,
