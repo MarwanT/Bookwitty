@@ -43,6 +43,10 @@ class CardPostInfoNode: ASCellNode {
     userProfileImageNode.style.preferredSize = profileImageSize
     userProfileImageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(profileBorderWidth, profileBorderColor)
     userProfileImageNode.defaultImage = UIImage(color: ASDisplayNodeDefaultPlaceholderColor(), size: profileImageSize)
+
+    userNameTextNode.maximumNumberOfLines = 1
+    postDateTextNode.maximumNumberOfLines = 1
+
     loadData()
   }
 
