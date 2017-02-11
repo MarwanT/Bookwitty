@@ -40,18 +40,22 @@ class SignInViewController: UIViewController {
   /// Do the required setup
   private func awakeSelf() {
     title = viewModel.signInButtonTitle
-    
+
     emailField.configuration = InputFieldConfiguration(
       descriptionLabelText: viewModel.emailDescriptionLabelText,
       textFieldPlaceholder: viewModel.emailTextFieldPlaceholderText,
       invalidationErrorMessage: viewModel.emailInvalidationErrorMessage,
-      returnKeyType: UIReturnKeyType.continue)
+      returnKeyType: UIReturnKeyType.continue,
+      keyboardType: .emailAddress,
+      autocorrectionType: .no,
+      autocapitalizationType: .none)
+
     passwordField.configuration = InputFieldConfiguration(
       descriptionLabelText: viewModel.passwordDescriptionLabelText,
       textFieldPlaceholder: viewModel.passwordTextFieldPlaceholderText,
       invalidationErrorMessage: viewModel.passwordInvalidationErrorMessage,
       returnKeyType: UIReturnKeyType.done)
-    
+
     emailField.validationBlock = emailValidation()
     passwordField.validationBlock = passwordValidation()
 
@@ -101,7 +105,7 @@ class SignInViewController: UIViewController {
           self.hideNetworkActivity()
           self.showAlertWith(
             title: "Your Sign in Key",
-            message: "\(AccessToken().token!)")
+            message: "\(AccessToken.shared.token!)")
       })
     } else {
       NotificationView.show(notificationMessages:
@@ -138,7 +142,6 @@ class SignInViewController: UIViewController {
       self.view.layoutIfNeeded()
     }
   }
-  
   
   // MARK: - Network indicator handling
   

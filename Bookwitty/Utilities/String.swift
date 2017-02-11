@@ -28,4 +28,8 @@ extension String {
     let count: Int = self.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).characters.count
     return !(count == 0)
   }
+
+  static func fromData(data: Data?) -> String? {
+   return String(data: data!, encoding: .utf8)
+  }
 }

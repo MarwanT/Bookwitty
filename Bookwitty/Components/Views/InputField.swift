@@ -26,9 +26,12 @@ struct InputFieldConfiguration {
   var returnKeyType: UIReturnKeyType
   var rightSideViewHeight: CGFloat
   var rightSideViewWidth: CGFloat
+  var keyboardType: UIKeyboardType
+  var autocorrectionType: UITextAutocorrectionType
+  var autocapitalizationType: UITextAutocapitalizationType
 
   
-  init(descriptionLabelText: String? = nil, desriptionLabelDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor(), desriptionLabelInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.defaultErrorColor(), textFieldPlaceholder: String? = nil, textFieldDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor(), textFieldInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.defaultErrorColor(), textFieldDefaultText: String? = nil, invalidationIcon: UIImage? = nil, invalidationErrorMessage: String? = "Invalid Field", returnKeyType: UIReturnKeyType = UIReturnKeyType.default, rightSideViewWidth: CGFloat = 44 , rightSideViewHeight: CGFloat = 44) {
+  init(descriptionLabelText: String? = nil, desriptionLabelDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor(), desriptionLabelInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.defaultErrorColor(), textFieldPlaceholder: String? = nil, textFieldDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor(), textFieldInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.defaultErrorColor(), textFieldDefaultText: String? = nil, invalidationIcon: UIImage? = nil, invalidationErrorMessage: String? = "Invalid Field", returnKeyType: UIReturnKeyType = UIReturnKeyType.default, rightSideViewWidth: CGFloat = 44 , rightSideViewHeight: CGFloat = 44, keyboardType: UIKeyboardType = .default, autocorrectionType: UITextAutocorrectionType = .default, autocapitalizationType: UITextAutocapitalizationType = UITextAutocapitalizationType.sentences) {
     self.descriptionLabelText = descriptionLabelText
     self.desriptionLabelDefaultTextColor = desriptionLabelDefaultTextColor
     self.desriptionLabelInvalidTextColor = desriptionLabelInvalidTextColor
@@ -41,6 +44,9 @@ struct InputFieldConfiguration {
     self.returnKeyType = returnKeyType
     self.rightSideViewWidth = rightSideViewWidth
     self.rightSideViewHeight = rightSideViewHeight
+    self.keyboardType = keyboardType
+    self.autocorrectionType = autocorrectionType
+    self.autocapitalizationType = autocapitalizationType
   }
 }
 
@@ -128,6 +134,9 @@ class InputField: UIView {
     textField.placeholder = configuration.textFieldPlaceholder
     textField.text = configuration.textFieldDefaultText
     textField.returnKeyType = configuration.returnKeyType
+    textField.keyboardType = configuration.keyboardType
+    textField.autocorrectionType = configuration.autocorrectionType
+    textField.autocapitalizationType = configuration.autocapitalizationType
     if let textFieldRightImageView = textField.rightView as? UIImageView {
       textFieldRightImageView.image = configuration.invalidationIcon
     }

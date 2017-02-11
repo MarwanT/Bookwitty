@@ -13,11 +13,11 @@ import Moya
 // MARK: - Enum Declaration
 
 public enum BookwittyAPI {
-  case OAuth(username: String, password: String)
-  case RefreshToken
-  case AllAddresses
-  case Register(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String?, countryISO3166: String, password: String)
-  case User
+  case oAuth(username: String, password: String)
+  case refreshToken(refreshToken: String)
+  case allAddresses
+  case register(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String?, countryISO3166: String, password: String)
+  case user
 }
 
 // MARK: - Target Type
@@ -39,15 +39,15 @@ extension BookwittyAPI: TargetType {
     var path = ""
     
     switch self {
-    case .OAuth, .RefreshToken:
+    case .oAuth, .refreshToken:
       apiBasePath = ""
       apiVersion = ""
       path = "/oauth/token"
-    case .AllAddresses:
+    case .allAddresses:
       path = "/user/addresses"
-    case .Register:
-      path = "/users"
-    case .User:
+    case .register:
+      path = "/user"
+    case .user:
       path = "/user"
     }
     
@@ -56,18 +56,18 @@ extension BookwittyAPI: TargetType {
   
   public var method: Moya.Method {
     switch self {
-    case .OAuth, .RefreshToken:
+    case .oAuth, .refreshToken:
       return .post
-    case .AllAddresses, .User:
+    case .allAddresses, .user:
       return .get
-    case .Register:
+    case .register:
       return .post
     }
   }
   
   public var parameters: [String: Any]? {
     switch self {
-    case .OAuth(let username, let password):
+    case .oAuth(let username, let password):
       return [
         "client_id": AppKeys.shared.apiKey,
         "client_secret": AppKeys.shared.apiSecret,
@@ -76,29 +76,18 @@ extension BookwittyAPI: TargetType {
         "grant_type": "password",
         "scopes": "openid email profile"
       ]
-    case .RefreshToken:
+    case .refreshToken(let refreshToken):
       return [
         "client_id": AppKeys.shared.apiKey,
         "client_secret": AppKeys.shared.apiSecret,
-        "refresh_token": AccessToken().refresh!,
+        "refresh_token": refreshToken,
         "grant_type": "refresh_token",
         "scopes": "openid email profile"
       ]
-    case .AllAddresses, .User:
+    case .allAddresses, .user:
       return nil
-    case .Register(let firstName, let lastName, let email, let dateOfBirth, let country, let password):
-      var params: [String : String] = [:]
-
-      params["first-name"] = firstName
-      params["last-name"] = lastName
-      params["email"] = email
-      params["country"] = country
-      params["password"] = password
-      if let dateOfBirth = dateOfBirth {
-        params["date-of-birth"] = dateOfBirth
-      }
-
-      return params
+    case .register(let firstName, let lastName, let email, let dateOfBirth, let country, let password):
+      return UserAPI.registerPostBody(firstName: firstName, lastName: lastName, email: email, dateOfBirth: dateOfBirth, country: country, password: password)
     }
   }
   

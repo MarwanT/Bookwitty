@@ -70,19 +70,24 @@ class RegisterViewController: UIViewController {
       descriptionLabelText: viewModel.firstNameDescriptionLabelText,
       textFieldPlaceholder: viewModel.firstNameTextFieldPlaceholderText,
       invalidationErrorMessage: viewModel.firstNameInvalidationErrorMessage,
-      returnKeyType: UIReturnKeyType.continue)
+      returnKeyType: UIReturnKeyType.continue,
+      autocorrectionType: .no)
 
     lastNameField.configuration = InputFieldConfiguration(
       descriptionLabelText: viewModel.lastNameDescriptionLabelText,
       textFieldPlaceholder: viewModel.lastNameTextFieldPlaceholderText,
       invalidationErrorMessage: viewModel.lastNameInvalidationErrorMessage,
-      returnKeyType: UIReturnKeyType.continue)
+      returnKeyType: UIReturnKeyType.continue,
+      autocorrectionType: .no)
 
     emailField.configuration = InputFieldConfiguration(
       descriptionLabelText: viewModel.emailDescriptionLabelText,
       textFieldPlaceholder: viewModel.emailTextFieldPlaceholderText,
       invalidationErrorMessage: viewModel.emailInvalidationErrorMessage,
-      returnKeyType: UIReturnKeyType.continue)
+      returnKeyType: UIReturnKeyType.continue,
+      keyboardType: .emailAddress,
+      autocorrectionType: .no,
+      autocapitalizationType: .none)
 
     passwordField.configuration = InputFieldConfiguration(
       descriptionLabelText: viewModel.passwordDescriptionLabelText,
@@ -141,9 +146,15 @@ class RegisterViewController: UIViewController {
       let lastName = lastNameValidationResult.value!
       let country = viewModel.country!.code
 
-      viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, completionBlock: { (success: Bool, user: User?) in
+      viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, completionBlock: { (success: Bool, user: User?, error: BookwittyAPIError?) in
         if let user = user, success {
           self.pushPenNameViewController(user: user)
+        } else if let error = error {
+          switch(error) {
+          case BookwittyAPIError.emailAlreadyExists:
+            self.showAlertErrorWith(title: self.viewModel.ooopsText, message: self.viewModel.emailAlreadyExistsErrorText)
+          default: break
+          }
         } else {
           self.showAlertErrorWith(title: self.viewModel.ooopsText, message: self.viewModel.somethingWentWrongText)
         }

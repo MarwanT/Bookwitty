@@ -60,6 +60,10 @@
 		F420B6A21E43C570001F34CD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420B6A11E43C570001F34CD /* User.swift */; };
 		F420B6A41E43D01A001F34CD /* PenNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420B6A31E43D01A001F34CD /* PenNameViewController.swift */; };
 		F420B6A61E43D05E001F34CD /* PenNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420B6A51E43D05E001F34CD /* PenNameViewModel.swift */; };
+		F47188181E4B1EB50076F93C /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47188171E4B1EB50076F93C /* Root.storyboard */; };
+		F488D2791E44EB46003A7BD4 /* PenName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F488D2781E44EB46003A7BD4 /* PenName.swift */; };
+		F488D27B1E44F559003A7BD4 /* BookwittyParsersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F488D27A1E44F559003A7BD4 /* BookwittyParsersTests.swift */; };
+		F49AE93E1E47CFEA0031B355 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49AE93D1E47CFEA0031B355 /* Parser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,6 +138,10 @@
 		F420B6A11E43C570001F34CD /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F420B6A31E43D01A001F34CD /* PenNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameViewController.swift; sourceTree = "<group>"; };
 		F420B6A51E43D05E001F34CD /* PenNameViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameViewModel.swift; sourceTree = "<group>"; };
+		F47188171E4B1EB50076F93C /* Root.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Root.storyboard; sourceTree = "<group>"; };
+		F488D2781E44EB46003A7BD4 /* PenName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenName.swift; sourceTree = "<group>"; };
+		F488D27A1E44F559003A7BD4 /* BookwittyParsersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyParsersTests.swift; sourceTree = "<group>"; };
+		F49AE93D1E47CFEA0031B355 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		F51280CA021D07F160F13471 /* Pods-BookwittyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookwittyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -190,8 +198,10 @@
 		59057FCB1E252FC30036AAF3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F49AE93C1E47CFD20031B355 /* Parser */,
 				594F4EAD1E440A4900A947FA /* API */,
 				F420B6A11E43C570001F34CD /* User.swift */,
+				F488D2781E44EB46003A7BD4 /* PenName.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -227,6 +237,7 @@
 				59057FDE1E25340A0036AAF3 /* LaunchScreen.storyboard */,
 				59057FDF1E25340A0036AAF3 /* Introduction.storyboard */,
 				59DA47661E3B84ED00BA90A5 /* Access.storyboard */,
+				F47188171E4B1EB50076F93C /* Root.storyboard */,
 				59DA47561E3A65A600BA90A5 /* Storyboard.swift */,
 			);
 			path = Storyboards;
@@ -436,6 +447,7 @@
 			children = (
 				59FBBC631E1D074400FC84E5 /* Info.plist */,
 				595A64A11E2D66E900655067 /* BookwittyAPITests.swift */,
+				F488D27A1E44F559003A7BD4 /* BookwittyParsersTests.swift */,
 				F420AD9C1E41D2E600C78AEB /* BookwittyUtilityTests.swift */,
 			);
 			path = BookwittyTests;
@@ -450,6 +462,14 @@
 				CB5E98B3C54E0B0AD22F5CB4 /* Pods-BookwittyTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		F49AE93C1E47CFD20031B355 /* Parser */ = {
+			isa = PBXGroup;
+			children = (
+				F49AE93D1E47CFEA0031B355 /* Parser.swift */,
+			);
+			name = Parser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -509,12 +529,12 @@
 				TargetAttributes = {
 					59FBBC481E1D074400FC84E5 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 65T23W9U79;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = MBZL7KPZ9H;
+						ProvisioningStyle = Manual;
 					};
 					59FBBC5C1E1D074400FC84E5 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 65T23W9U79;
+						DevelopmentTeam = MBZL7KPZ9H;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 59FBBC481E1D074400FC84E5;
 					};
@@ -554,6 +574,7 @@
 				597B8E381E3954B200C7811B /* Ubuntu-Regular.ttf in Resources */,
 				597B8E361E3954B200C7811B /* Georgia.ttf in Resources */,
 				597B8E391E3954B200C7811B /* Volkhov-Regular.ttf in Resources */,
+				F47188181E4B1EB50076F93C /* Root.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -687,6 +708,7 @@
 				59DA47591E3AA8E100BA90A5 /* Localization.swift in Sources */,
 				59D602201E36387A00271315 /* Color.swift in Sources */,
 				596FAD741E2E53AC0064F967 /* Environment.swift in Sources */,
+				F49AE93E1E47CFEA0031B355 /* Parser.swift in Sources */,
 				595C4F0D1E3F8C0200BE3942 /* InputField.swift in Sources */,
 				59BD55781E302EB800D3B805 /* Analytics.swift in Sources */,
 				59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */,
@@ -705,6 +727,7 @@
 				594F4EAF1E440A4900A947FA /* User+API.swift in Sources */,
 				F420B6A21E43C570001F34CD /* User.swift in Sources */,
 				F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */,
+				F488D2791E44EB46003A7BD4 /* PenName.swift in Sources */,
 				595A64A01E2D0C4D00655067 /* Network.swift in Sources */,
 				594F4EA81E423B8600A947FA /* AppNotifications.swift in Sources */,
 				F420B6A61E43D05E001F34CD /* PenNameViewModel.swift in Sources */,
@@ -723,6 +746,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F488D27B1E44F559003A7BD4 /* BookwittyParsersTests.swift in Sources */,
 				595A64A21E2D66E900655067 /* BookwittyAPITests.swift in Sources */,
 				F420AD9D1E41D2E600C78AEB /* BookwittyUtilityTests.swift in Sources */,
 			);
@@ -761,9 +785,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: BOOKS WITHOUT BORDERS, INC (MBZL7KPZ9H)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: BOOKS WITHOUT BORDERS, INC (MBZL7KPZ9H)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = MBZL7KPZ9H;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -780,7 +806,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -812,9 +838,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: BOOKS WITHOUT BORDERS, INC (MBZL7KPZ9H)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: BOOKS WITHOUT BORDERS, INC (MBZL7KPZ9H)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = MBZL7KPZ9H;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -825,7 +853,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -840,14 +868,17 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: BOOKS WITHOUT BORDERS, INC (MBZL7KPZ9H)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: BOOKS WITHOUT BORDERS, INC (MBZL7KPZ9H)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 65T23W9U79;
+				DEVELOPMENT_TEAM = MBZL7KPZ9H;
 				INFOPLIST_FILE = Bookwitty/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bookwitty.Bookwitty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bookwitty/Bookwitty-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -857,14 +888,17 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: BOOKS WITHOUT BORDERS, INC (MBZL7KPZ9H)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: BOOKS WITHOUT BORDERS, INC (MBZL7KPZ9H)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 65T23W9U79;
+				DEVELOPMENT_TEAM = MBZL7KPZ9H;
 				INFOPLIST_FILE = Bookwitty/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bookwitty.Bookwitty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bookwitty/Bookwitty-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -874,7 +908,8 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 65T23W9U79;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: BOOKS WITHOUT BORDERS, INC (MBZL7KPZ9H)";
+				DEVELOPMENT_TEAM = MBZL7KPZ9H;
 				INFOPLIST_FILE = BookwittyTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.keeward.BookwittyTests;
@@ -891,7 +926,8 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 65T23W9U79;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: BOOKS WITHOUT BORDERS, INC (MBZL7KPZ9H)";
+				DEVELOPMENT_TEAM = MBZL7KPZ9H;
 				INFOPLIST_FILE = BookwittyTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.keeward.BookwittyTests;

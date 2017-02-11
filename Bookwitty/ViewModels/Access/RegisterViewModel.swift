@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Spine
+import Moya
 
 final class RegisterViewModel {
   let viewControllerTitle: String = localizedString(key: "sign_up", defaultValue: "Sign up")
@@ -42,6 +42,7 @@ final class RegisterViewModel {
 
   let ooopsText: String = localizedString(key: "ooops", defaultValue: "Ooops")
   let somethingWentWrongText: String = localizedString(key: "some_thing_wrong_error", defaultValue: "Something went wrong")
+  let emailAlreadyExistsErrorText: String = localizedString(key: "email_already_exists_error", defaultValue: "The email address you have entered is already registered!")
   let registerErrorInFieldsNotification = localizedString(key: "invalid_fields_notification_message", defaultValue: "Please fill the required fields")
 
   var country: (code: String, name: String)?
@@ -75,19 +76,16 @@ final class RegisterViewModel {
       .attributedString
   }
 
-  func registerUserWithData(firstName: String, lastName: String, email: String, country: String, password: String, completionBlock: @escaping (_ success: Bool, _ user: User?)->()) {
-    _ = apiRequest(target: BookwittyAPI.Register(firstName: firstName, lastName: lastName, email: email, dateOfBirthISO8601: nil, countryISO3166: country, password: password)) {
-      (data, statusCode, response, error) in
-      var success: Bool = false
-      var user: User? = nil
-      defer {
-        completionBlock(success, user)
-      }
+  private var registerRequest: Cancellable? = nil
 
-      if let data = data, statusCode == 201 {
-        user = User.parseData(data: data)
-        success = user != nil
-      }
+  func registerUserWithData(firstName: String, lastName: String, email: String, country: String, password: String, completionBlock: @escaping (_ success: Bool, _ user: User?, _ error: BookwittyAPIError?)->()) {
+    if let registerRequest = self.registerRequest {
+      registerRequest.cancel()
     }
+
+    registerRequest = UserAPI.registerUser(firstName: firstName, lastName: lastName, email: email, dateOfBirthISO8601: nil, countryISO3166: country, password: password, completionBlock: { (success, user, error) in
+      self.registerRequest = nil
+      completionBlock(success, user, error)
+    })
   }
 }
