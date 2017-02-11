@@ -35,7 +35,28 @@ class CardPostInfoNode: ASCellNode {
   convenience init(data: CardPostInfoNodeData) {
     self.init()
     self.data = data
+
+    loadData()
   }
+
+  private func loadData() {
+    guard let data = data else {
+      return
+    }
+
+    if !data.name.isEmpty {
+      userNameTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote).append(text: data.name).attributedString
+    }
+
+    if !data.date.isEmpty {
+      postDateTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2).append(text: data.date).attributedString
+    }
+
+    if let imageUrl = data.imageUrl, !imageUrl.isEmpty {
+      userProfileImageNode.url = URL(string: imageUrl)
+    }
+  }
+
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     //Add the User Profile Image - Vertical Stack [Name - Date] - Image ArrowDown
     let verticalStack = ASStackLayoutSpec.vertical()
