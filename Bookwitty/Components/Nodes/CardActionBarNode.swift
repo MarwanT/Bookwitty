@@ -42,6 +42,10 @@ class CardActionBarNode: ASCellNode {
     shareButton.setImage(shareImage, for: normal)
 
     setupWitButtonStyling()
+
+    shareButton.addTarget(self, action: #selector(shareButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    commentButton.addTarget(self, action: #selector(commentButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    witButton.addTarget(self, action: #selector(witButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
 
   func setupWitButtonStyling() {
@@ -73,6 +77,16 @@ class CardActionBarNode: ASCellNode {
     }
   }
 
+  func witButtonTouchUpInside(_ sender: ASButtonNode?) {
+    //TODO: Delegate action and wait for delegate callback confromation to update ui.
+  }
+
+  func commentButtonTouchUpInside(_ sender: ASButtonNode?) {
+    //TODO: delegate action
+  }
+
+  func shareButtonTouchUpInside(_ sender: ASButtonNode?) {
+    //TODO: delegate action
   }
 
   private func spacer(flexGrow: CGFloat = 1.0) -> ASLayoutSpec {
