@@ -15,6 +15,12 @@ class BaseCardPostNode: ASCellNode {
   private(set) var actionBarNode: CardActionBarNode
   private(set) var backgroundNode: ASDisplayNode
 
+  var postInfoData: CardPostInfoNodeData? {
+    didSet {
+      infoNode.data = postInfoData
+    }
+  }
+
   override init() {
     infoNode = CardPostInfoNode()
     actionBarNode = CardActionBarNode(delegate: nil)
