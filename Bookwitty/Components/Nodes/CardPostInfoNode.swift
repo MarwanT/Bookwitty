@@ -9,7 +9,7 @@
 import Foundation
 import AsyncDisplayKit
 
-typealias CardPostInfoNodeData = (name: String, imageUrl: String?, date: String)
+typealias CardPostInfoNodeData = (name: String, date: String, imageUrl: String?)
 
 class CardPostInfoNode: ASDisplayNode {
   var userProfileImageNode: ASNetworkImageNode
@@ -21,9 +21,13 @@ class CardPostInfoNode: ASDisplayNode {
   let downArrowWidth: CGFloat = 30.0
   let downArrowHeight: CGFloat = 30.0
 
-  var data: CardPostInfoNodeData?
+  var data: CardPostInfoNodeData? {
+    didSet {
+      loadData()
+    }
+  }
 
-  private override init() {
+  override init() {
     userProfileImageNode = ASNetworkImageNode()
     arrowDownImageNode = ASImageNode()
     userNameTextNode = ASTextNode()
@@ -33,12 +37,10 @@ class CardPostInfoNode: ASDisplayNode {
     addSubnode(postDateTextNode)
     addSubnode(userProfileImageNode)
     addSubnode(arrowDownImageNode)
+    setupNode()
   }
 
-  convenience init(data: CardPostInfoNodeData) {
-    self.init()
-    self.data = data
-
+  private func setupNode() {
     let profileImageSize: CGSize = CGSize(width: userProfileImageDimension, height: userProfileImageDimension)
     let profileBorderWidth: CGFloat = 0.0
     let profileBorderColor: UIColor? = nil
@@ -52,8 +54,6 @@ class CardPostInfoNode: ASDisplayNode {
 
     userNameTextNode.maximumNumberOfLines = 1
     postDateTextNode.maximumNumberOfLines = 1
-
-    loadData()
   }
 
   private func loadData() {
