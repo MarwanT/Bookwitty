@@ -71,6 +71,7 @@
 		F420B6A61E43D05E001F34CD /* PenNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420B6A51E43D05E001F34CD /* PenNameViewModel.swift */; };
 		F42686771E4EF83C0085E581 /* CardPostInfoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */; };
 		F42686791E4F458A0085E581 /* CardActionBarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42686781E4F458A0085E581 /* CardActionBarNode.swift */; };
+		F426867B1E505CE60085E581 /* BaseCardPostNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426867A1E505CE60085E581 /* BaseCardPostNode.swift */; };
 		F434F7911E4E16CE001812BD /* CellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F434F7901E4E16CE001812BD /* CellNode.swift */; };
 		F461B25C1E4B73B0005EA5A8 /* NewsFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F461B25B1E4B73B0005EA5A8 /* NewsFeedViewController.swift */; };
 		F47188181E4B1EB50076F93C /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47188171E4B1EB50076F93C /* Root.storyboard */; };
@@ -162,6 +163,7 @@
 		F420B6A51E43D05E001F34CD /* PenNameViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameViewModel.swift; sourceTree = "<group>"; };
 		F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPostInfoNode.swift; sourceTree = "<group>"; };
 		F42686781E4F458A0085E581 /* CardActionBarNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardActionBarNode.swift; sourceTree = "<group>"; };
+		F426867A1E505CE60085E581 /* BaseCardPostNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCardPostNode.swift; sourceTree = "<group>"; };
 		F434F7901E4E16CE001812BD /* CellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellNode.swift; sourceTree = "<group>"; };
 		F461B25B1E4B73B0005EA5A8 /* NewsFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewsFeedViewController.swift; path = Bookwitty/ViewControllers/Root/NewsFeedViewController.swift; sourceTree = SOURCE_ROOT; };
 		F47188171E4B1EB50076F93C /* Root.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Root.storyboard; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 			children = (
 				F434F7901E4E16CE001812BD /* CellNode.swift */,
 				F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */,
+				F426867A1E505CE60085E581 /* BaseCardPostNode.swift */,
 				F42686781E4F458A0085E581 /* CardActionBarNode.swift */,
 			);
 			path = Nodes;
@@ -798,6 +801,7 @@
 				F461B25C1E4B73B0005EA5A8 /* NewsFeedViewController.swift in Sources */,
 				F42686791E4F458A0085E581 /* CardActionBarNode.swift in Sources */,
 				5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */,
+				F426867B1E505CE60085E581 /* BaseCardPostNode.swift in Sources */,
 				F420AD9F1E4231E000C78AEB /* AttributedStringBuilder.swift in Sources */,
 				59DA47631E3B7A9B00BA90A5 /* IntroductionViewController.swift in Sources */,
 				59D27D0F1E40D2EE00468C29 /* SignInViewModel.swift in Sources */,
