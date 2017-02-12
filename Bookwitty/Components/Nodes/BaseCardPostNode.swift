@@ -24,6 +24,7 @@ class BaseCardPostNode: ASCellNode {
   private(set) var infoNode: CardPostInfoNode
   private(set) var actionBarNode: CardActionBarNode
   private(set) var backgroundNode: ASDisplayNode
+  private(set) var separatorNode: ASDisplayNode
 
   var postInfoData: CardPostInfoNodeData? {
     didSet {
@@ -35,6 +36,7 @@ class BaseCardPostNode: ASCellNode {
     infoNode = CardPostInfoNode()
     actionBarNode = CardActionBarNode(delegate: nil)
     backgroundNode = ASDisplayNode()
+    separatorNode = ASDisplayNode()
     super.init()
     setupCellNode()
   }
@@ -42,6 +44,9 @@ class BaseCardPostNode: ASCellNode {
   private func setupCellNode() {
     manageNodes()
     setupCardTheme()
+    
+    separatorNode.style.height = ASDimensionMake(1)
+    separatorNode.style.flexGrow = 1
   }
 
   private func manageNodes() {
@@ -49,10 +54,13 @@ class BaseCardPostNode: ASCellNode {
 
     //Order is important: backgroundNode must be the first
     if(shouldShowInfoNode) {
-      addSubnodes(arrayOfNodes: [backgroundNode, infoNode, contentNode, actionBarNode])
+      addSubnodes(arrayOfNodes: [backgroundNode, infoNode, contentNode, separatorNode, actionBarNode])
     } else {
-      addSubnodes(arrayOfNodes: [backgroundNode, contentNode, actionBarNode])
+      addSubnodes(arrayOfNodes: [backgroundNode, contentNode, separatorNode, actionBarNode])
     }
+
+    separatorNode.isLayerBacked = true
+    backgroundNode.isLayerBacked = true
   }
 
   private func addSubnodes(arrayOfNodes: [ASDisplayNode]) {
@@ -67,6 +75,8 @@ class BaseCardPostNode: ASCellNode {
     backgroundNode.borderColor = ThemeManager.shared.currentTheme.colorNumber18().cgColor
     backgroundNode.cornerRadius = 4.0
     backgroundNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
+    //Separator
+    separatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
   }
 }
 
@@ -80,6 +90,7 @@ extension BaseCardPostNode {
     let infoNodeInset = ASInsetLayoutSpec(insets: infoInset(), child: infoNode)
     let actionBarNodeInset = ASInsetLayoutSpec(insets: actionBarInset(), child: actionBarNode)
     let backgroundNodeInset = ASInsetLayoutSpec(insets: backgroundInset, child: backgroundNode)
+    let separatorNodeInset = ASInsetLayoutSpec(insets: separatorInset(), child: separatorNode)
 
     let contentSideInsets = contentShouldExtendBorders ? 0 : defaultInset.left
     let contentTopInset = shouldShowInfoNode ? 0 : defaultInset.top
@@ -89,8 +100,8 @@ extension BaseCardPostNode {
     verticalStack.justifyContent = .center
     verticalStack.alignItems = .stretch
     verticalStack.children = shouldShowInfoNode
-      ? [infoNodeInset, contentInset, actionBarNodeInset]
-      : [contentInset, actionBarNodeInset]
+      ? [infoNodeInset, contentInset, separatorNodeInset, actionBarNodeInset]
+      : [contentInset, separatorNodeInset, actionBarNodeInset]
 
     //Note: If we used children or background properties instead of init -> Order would be important,
     //insetForVerticalLayout must be added before backgroundNode
@@ -139,6 +150,14 @@ extension BaseCardPostNode {
     return UIEdgeInsets(top: witItButtonMargin,
                         left: externalInset.left + internalMargin,
                         bottom: externalInset.bottom + witItButtonMargin,
+                        right: externalInset.right + internalMargin)
+  }
+
+  private func separatorInset() -> UIEdgeInsets {
+    let externalInset = self.externalInset()
+    return UIEdgeInsets(top: 0,
+                        left: externalInset.left + internalMargin,
+                        bottom: 0,
                         right: externalInset.right + internalMargin)
   }
 }
