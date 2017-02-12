@@ -30,10 +30,15 @@ class CardActionBarNode: ASCellNode {
     commentButton = ASButtonNode()
     shareButton = ASButtonNode()
     super.init()
-    initializeNode()
     addSubnode(witButton)
     addSubnode(commentButton)
     addSubnode(shareButton)
+  }
+
+  convenience init(delegate: CardActionBarNodeDelegate?) {
+    self.init()
+    self.initializeNode()
+    self.delegate = delegate
   }
 
   private func initializeNode() {
@@ -55,7 +60,7 @@ class CardActionBarNode: ASCellNode {
     witButton.addTarget(self, action: #selector(witButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
 
-  func setupWitButtonStyling() {
+  private func setupWitButtonStyling() {
     let buttonFont = FontDynamicType.subheadline.font
 
     let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultButtonColor())
@@ -76,7 +81,7 @@ class CardActionBarNode: ASCellNode {
     witButton.clipsToBounds = true
   }
 
-  func updateButtonStyle(selected: Bool) {
+  private func updateButtonStyle(selected: Bool) {
     if(selected) {
       witButton.borderWidth = 0
     } else {
