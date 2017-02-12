@@ -78,7 +78,14 @@ class CardActionBarNode: ASCellNode {
   }
 
   func witButtonTouchUpInside(_ sender: ASButtonNode?) {
+    guard let button = sender else { return }
     //TODO: Delegate action and wait for delegate callback confromation to update ui.
+    if (!button.isSelected) {
+      button.isSelected = true
+    } else {
+      button.isSelected = false
+    }
+    updateButtonStyle(selected: isSelected)
   }
 
   func commentButtonTouchUpInside(_ sender: ASButtonNode?) {
