@@ -9,5 +9,21 @@
 import Foundation
 
 final class CategoriesTableViewModel {
+  let categories: [Category]
   
+  init () {
+    categories = CategoryManager.shared.categories ?? [Category]()
+  }
+  
+  var numberOfSections: Int {
+    return categories.count > 0 ? 1 : 0
+  }
+  
+  func numberOfRowsForSection(section: Int) -> Int {
+    return categories.count
+  }
+  
+  func data(forCellAtIndexPath index: IndexPath) -> String {
+    return categories[index.row].value ?? "Discover"
+  }
 }
