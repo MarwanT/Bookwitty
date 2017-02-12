@@ -46,6 +46,10 @@ class BaseCardPostNode: ASCellNode {
   }
 
   private func setupCardTheme() {
-    //TODO: develop logic
+    backgroundNode.clipsToBounds = true
+    backgroundNode.borderWidth = 1.0
+    backgroundNode.borderColor = ThemeManager.shared.currentTheme.colorNumber18().cgColor
+    backgroundNode.cornerRadius = 4.0
+    backgroundNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
   }
 }
