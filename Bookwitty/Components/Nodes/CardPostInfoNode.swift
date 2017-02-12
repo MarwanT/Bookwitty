@@ -62,7 +62,8 @@ class CardPostInfoNode: ASCellNode {
     }
 
     if !data.name.isEmpty {
-      userNameTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote).append(text: data.name).attributedString
+      userNameTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
+        .append(text: data.name, color: ThemeManager.shared.currentTheme.colorNumber19()).attributedString
     }
 
     if !data.date.isEmpty {
