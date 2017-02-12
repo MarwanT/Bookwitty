@@ -23,6 +23,10 @@ class ArticleCardPostCellNode: BaseCardPostNode {
 }
 
 class ArticleCardContentNode: ASDisplayNode {
+  let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
+  let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+  
   var imageNode: ASNetworkImageNode
   var titleNode: ASTextNode
   var descriptionNode: ASTextNode
@@ -89,5 +93,67 @@ class ArticleCardContentNode: ASDisplayNode {
     titleNode.maximumNumberOfLines = 3
     descriptionNode.maximumNumberOfLines = 3
     commentsSummaryNode.maximumNumberOfLines = 1
+  }
+
+  private func commentsSummaryInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: contentSpacing,
+                        left: externalMargin + internalMargin,
+                        bottom: contentSpacing,
+                        right: externalMargin + internalMargin)
+  }
+
+  private func titleInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0,
+                        left: externalMargin + internalMargin,
+                        bottom: internalMargin,
+                        right: externalMargin + internalMargin)
+  }
+
+  private func descriptionInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0,
+                        left: externalMargin + internalMargin,
+                        bottom: 0,
+                        right: externalMargin + internalMargin)
+  }
+
+  private func imageInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0, left: 0, bottom: internalMargin , right: 0)
+  }
+
+  private func spacer(height: CGFloat) -> ASLayoutSpec {
+    return ASLayoutSpec().styled { (style) in
+      style.height = ASDimensionMake(height)
+    }
+  }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let imageSize = CGSize(width: constrainedSize.max.width, height: 150)
+    imageNode.style.preferredSize = imageSize
+    imageNode.defaultImage = UIImage(color: ASDisplayNodeDefaultPlaceholderColor(), size: imageSize)
+    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
+
+    let imageInsetLayoutSpec = ASInsetLayoutSpec(insets: imageInset(), child: imageNode)
+    let titleInsetLayoutSpec = ASInsetLayoutSpec(insets: titleInset(), child: titleNode)
+    let descriptionInsetLayoutSpec = ASInsetLayoutSpec(insets: descriptionInset(), child: descriptionNode)
+    let commentsSummaryInsetLayoutSpec = ASInsetLayoutSpec(insets: commentsSummaryInset(), child: commentsSummaryNode)
+
+    let nodesArray: [ASLayoutElement]
+    if (hasImage && hasComments) {
+      nodesArray = [imageInsetLayoutSpec, titleInsetLayoutSpec, descriptionInsetLayoutSpec, commentsSummaryInsetLayoutSpec]
+    } else if (hasImage) {
+      nodesArray = [imageInsetLayoutSpec, titleInsetLayoutSpec, descriptionInsetLayoutSpec, spacer(height: internalMargin)]
+    } else if (hasComments) {
+      nodesArray = [titleInsetLayoutSpec, descriptionInsetLayoutSpec, commentsSummaryInsetLayoutSpec]
+    } else {
+      nodesArray = [titleInsetLayoutSpec, descriptionInsetLayoutSpec, spacer(height: internalMargin)]
+    }
+
+    let verticalStack = ASStackLayoutSpec(direction: .vertical,
+                                          spacing: 0,
+                                          justifyContent: .start,
+                                          alignItems: .stretch,
+                                          children: nodesArray)
+
+    return verticalStack
   }
 }
