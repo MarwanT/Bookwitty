@@ -89,23 +89,30 @@ class CardActionBarNode: ASCellNode {
     }
   }
 
-  func witButtonTouchUpInside(_ sender: ASButtonNode?) {
-    guard let button = sender else { return }
-    //TODO: Delegate action and wait for delegate callback confromation to update ui.
-    if (!button.isSelected) {
-      button.isSelected = true
+  func toggleWitButton() {
+    if (!witButton.isSelected) {
+      witButton.isSelected = true
     } else {
-      button.isSelected = false
+      witButton.isSelected = false
     }
     updateButtonStyle(selected: isSelected)
   }
 
+  func witButtonTouchUpInside(_ sender: ASButtonNode?) {
+    guard let sender = sender else { return }
+    delegate?.witButtonTouchUpInside(sender: sender)
+    //TODO: Remove line and instead call toggleWitButton when Wit is successful
+    toggleWitButton()
+  }
+
   func commentButtonTouchUpInside(_ sender: ASButtonNode?) {
-    //TODO: delegate action
+    guard let sender = sender else { return }
+    delegate?.commentButtonTouchUpInside(sender: sender)
   }
 
   func shareButtonTouchUpInside(_ sender: ASButtonNode?) {
-    //TODO: delegate action
+    guard let sender = sender else { return }
+    delegate?.shareButtonTouchUpInside(sender: sender)
   }
 
   private func spacer(flexGrow: CGFloat = 1.0) -> ASLayoutSpec {
