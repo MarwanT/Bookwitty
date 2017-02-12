@@ -63,12 +63,11 @@ class CardActionBarNode: ASDisplayNode {
   private func setupWitButtonStyling() {
     let buttonFont = FontDynamicType.subheadline.font
 
-    let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultButtonColor())
-    let textColor = ThemeManager.shared.currentTheme.colorNumber23()
+    let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.colorNumber23())
+    let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()
 
-    let selectedBackgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
-    let selectedTextColor = ThemeManager.shared.currentTheme.defaultButtonColor()
-    let selectedButtonBackgroundImage = UIImage(color: selectedBackgroundColor)
+    let selectedTextColor = ThemeManager.shared.currentTheme.colorNumber23()
+    let selectedButtonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultButtonColor())
 
     witButton.setBackgroundImage(buttonBackgroundImage, for: normal)
     witButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
