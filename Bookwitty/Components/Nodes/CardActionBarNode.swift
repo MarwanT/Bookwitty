@@ -40,6 +40,39 @@ class CardActionBarNode: ASCellNode {
     let shareImage: UIImage = UIImage(data: UIImagePNGRepresentation(#imageLiteral(resourceName: "shareOutside"))!, scale: 3)!
     shareButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
     shareButton.setImage(shareImage, for: normal)
+
+    setupWitButtonStyling()
+  }
+
+  func setupWitButtonStyling() {
+    let buttonFont = FontDynamicType.subheadline.font
+
+    let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultButtonColor())
+    let textColor = ThemeManager.shared.currentTheme.colorNumber23()
+
+    let selectedBackgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
+    let selectedTextColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+    let selectedButtonBackgroundImage = UIImage(color: selectedBackgroundColor)
+
+    witButton.setBackgroundImage(buttonBackgroundImage, for: normal)
+    witButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
+
+    witButton.setTitle("Wit it", with: buttonFont, with: textColor, for: normal)
+    witButton.setTitle("Witted", with: buttonFont, with: selectedTextColor, for: .selected)
+
+    witButton.cornerRadius = 4
+    witButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
+    witButton.clipsToBounds = true
+  }
+
+  func updateButtonStyle(selected: Bool) {
+    if(selected) {
+      witButton.borderWidth = 0
+    } else {
+      witButton.borderWidth = 2
+    }
+  }
+
   }
 
   private func spacer(flexGrow: CGFloat = 1.0) -> ASLayoutSpec {
