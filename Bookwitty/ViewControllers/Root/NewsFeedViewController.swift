@@ -21,6 +21,8 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
   init() {
     flowLayout = UICollectionViewFlowLayout()
+    let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
+    flowLayout.sectionInset = UIEdgeInsets(top: externalMargin/2, left: 0, bottom: externalMargin/2, right: 0)
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
 
     super.init(node: collectionNode)
