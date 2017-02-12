@@ -11,7 +11,7 @@ import AsyncDisplayKit
 
 typealias CardPostInfoNodeData = (name: String, imageUrl: String?, date: String)
 
-class CardPostInfoNode: ASCellNode {
+class CardPostInfoNode: ASDisplayNode {
   var userProfileImageNode: ASNetworkImageNode
   var arrowDownImageNode: ASImageNode
   var userNameTextNode: ASTextNode

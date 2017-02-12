@@ -15,7 +15,7 @@ protocol CardActionBarNodeDelegate {
   func shareButtonTouchUpInside(sender: ASButtonNode)
 }
 
-class CardActionBarNode: ASCellNode {
+class CardActionBarNode: ASDisplayNode {
 
   var witButton: ASButtonNode
   var commentButton: ASButtonNode
