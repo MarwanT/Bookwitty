@@ -9,11 +9,18 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol CardActionBarNodeDelegate {
+  func witButtonTouchUpInside(sender: ASButtonNode)
+  func commentButtonTouchUpInside(sender: ASButtonNode)
+  func shareButtonTouchUpInside(sender: ASButtonNode)
+}
+
 class CardActionBarNode: ASCellNode {
 
   var witButton: ASButtonNode
   var commentButton: ASButtonNode
   var shareButton: ASButtonNode
+  var delegate: CardActionBarNodeDelegate? = nil
 
   let normal = ASControlState(rawValue: 0)
   let buttonHeight: CGFloat = 34.0
