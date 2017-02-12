@@ -29,11 +29,20 @@ class BaseCardPostNode: ASCellNode {
   }
 
   private func manageNodes() {
-    //TODO: develop logic
+    guard subnodes.count == 0 else { return }
+
+    //Order is important: backgroundNode must be the first
+    if(shouldShowInfoNode) {
+      addSubnodes(arrayOfNodes: [backgroundNode, infoNode, contentNode, actionBarNode])
+    } else {
+      addSubnodes(arrayOfNodes: [backgroundNode, contentNode, actionBarNode])
+    }
   }
 
   private func addSubnodes(arrayOfNodes: [ASDisplayNode]) {
-    //TODO: develop logic
+    arrayOfNodes.forEach { (node) in
+      addSubnode(node)
+    }
   }
 
   private func setupCardTheme() {
