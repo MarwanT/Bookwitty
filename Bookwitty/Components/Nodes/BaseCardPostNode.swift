@@ -9,6 +9,12 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol BaseCardPostNodeContentProvider {
+  var shouldShowInfoNode: Bool { get }
+  var contentShouldExtendBorders: Bool { get }
+  var contentNode: ASDisplayNode { get }
+}
+
 class BaseCardPostNode: ASCellNode {
 
   private(set) var infoNode: CardPostInfoNode
@@ -57,5 +63,20 @@ class BaseCardPostNode: ASCellNode {
     backgroundNode.borderColor = ThemeManager.shared.currentTheme.colorNumber18().cgColor
     backgroundNode.cornerRadius = 4.0
     backgroundNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
+  }
+}
+
+//MARK: - Default Content Card Setup
+extension BaseCardPostNode: BaseCardPostNodeContentProvider {
+  internal var shouldShowInfoNode: Bool {
+    return true
+  }
+
+  internal var contentShouldExtendBorders: Bool {
+    return false
+  }
+
+  internal var contentNode: ASDisplayNode {
+    return ASDisplayNode()
   }
 }
