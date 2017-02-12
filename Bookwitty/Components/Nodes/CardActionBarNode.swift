@@ -78,15 +78,8 @@ class CardActionBarNode: ASCellNode {
 
     witButton.cornerRadius = 4
     witButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
+    witButton.borderWidth = 2
     witButton.clipsToBounds = true
-  }
-
-  private func updateButtonStyle(selected: Bool) {
-    if(selected) {
-      witButton.borderWidth = 0
-    } else {
-      witButton.borderWidth = 2
-    }
   }
 
   func toggleWitButton() {
@@ -95,7 +88,6 @@ class CardActionBarNode: ASCellNode {
     } else {
       witButton.isSelected = false
     }
-    updateButtonStyle(selected: isSelected)
   }
 
   func witButtonTouchUpInside(_ sender: ASButtonNode?) {
