@@ -88,4 +88,65 @@ final class AccountViewModel {
     }
   }
 
+  /*
+   * General table view functions
+   */
+  func numberOfSections() -> Int {
+    return self.sectionTitles.count
+  }
+
+  func titleFor(section: Int) -> String {
+    guard section >= 0 && section < self.sectionTitles.count else { return "" }
+
+    return self.sectionTitles[section]
+  }
+
+  func numberOfRowsIn(section: Int) -> Int {
+    guard section >= 0 && section < self.sectionTitles.count else { return 0 }
+    
+    var numberOfRows = 0
+    switch section {
+    case Sections.UserInformation.rawValue:
+      //my orders, address book, payment methods, settings
+      numberOfRows = 4
+    case Sections.PenNames.rawValue:
+      //user.penNames.count * 3 (3 rows for each pen name)
+      numberOfRows = 3
+    case Sections.CreatePenNames.rawValue:
+      numberOfRows = 1
+    case Sections.CustomerService.rawValue:
+      numberOfRows = 2
+    default:
+      break
+    }
+    return numberOfRows
+  }
+
+  func values(forRowAt indexPath: IndexPath) -> (title: String, value: String, image: UIImage?) {
+    var title: String = ""
+    var value: String = ""
+    var image: UIImage? = nil
+    switch indexPath.section {
+    case Sections.UserInformation.rawValue:
+      title = valuesForUserInformation(atRow: indexPath.row)
+      value = ""
+    case Sections.PenNames.rawValue:
+    //let penNameIndex: Int = indexPath.row / 4
+      let penNameSubRow = indexPath.row % 4 //(will result in 0 ... 3)
+      let values = valuesForPenName(atRow: penNameSubRow)
+      title = values.title
+      value = values.value
+      if penNameSubRow == 0 {
+        image = UIImage(named: "exclamation")
+      }
+    case Sections.CreatePenNames.rawValue:
+      title = valuesForCreatePenName(atRow: indexPath.row)
+    case Sections.CustomerService.rawValue:
+      title = valuesForCustomerService(atRow: indexPath.row)
+    default:
+      break
+    }
+
+    return (title, value, image)
+  }
 }
