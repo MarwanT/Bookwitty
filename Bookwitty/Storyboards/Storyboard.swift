@@ -12,6 +12,7 @@ enum Storyboard: String {
   case Introduction
   case Access
   case Root
+  case Books
   
   public func instantiate<VC: UIViewController>(_ viewController: VC.Type,
                    inBundle bundle: Bundle? = nil) -> VC {
