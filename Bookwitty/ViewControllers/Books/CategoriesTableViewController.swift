@@ -15,6 +15,8 @@ protocol CategoriesTableViewDelegate: class {
 class CategoriesTableViewController: UITableViewController {
   let viewModel = CategoriesTableViewModel()
   
+  weak var delegate: CategoriesTableViewDelegate? = nil
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -25,6 +27,10 @@ class CategoriesTableViewController: UITableViewController {
     clearsSelectionOnViewWillAppear = true
     
     applyTheme()
+    
+    if delegate == nil {
+      delegate = self
+    }
   }
   
   
@@ -54,6 +60,11 @@ class CategoriesTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return 48
   }
+  
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let category = viewModel.category(forCellAtIndexPath: indexPath)
+    delegate?.categoriesTableViewDidSelectCategory(self, category: category)
+  }
 }
 
 extension CategoriesTableViewController: Themeable {
@@ -63,5 +74,11 @@ extension CategoriesTableViewController: Themeable {
     tableView.separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     tableView.separatorInset = UIEdgeInsets(
       top: 0, left: leftMargin, bottom: 0, right: 0)
+  }
+}
+
+extension CategoriesTableViewController: CategoriesTableViewDelegate {
+  func categoriesTableViewDidSelectCategory(_ viewController: CategoriesTableViewController, category: Category) {
+    // TODO: Implement default navigation
   }
 }

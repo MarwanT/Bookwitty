@@ -26,4 +26,8 @@ final class CategoriesTableViewModel {
   func data(forCellAtIndexPath index: IndexPath) -> String {
     return categories[index.row].value ?? "Discover"
   }
+  
+  func category(forCellAtIndexPath index: IndexPath) -> Category {
+    return categories[index.row]
+  }
 }
