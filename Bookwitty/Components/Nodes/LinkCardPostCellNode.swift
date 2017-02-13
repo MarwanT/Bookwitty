@@ -29,6 +29,45 @@ class LinkCardPostContentNode: ASDisplayNode {
   var descriptionNode: ASTextNode
   var commentsSummaryNode: ASTextNode
 
+  var articleTitle: String? {
+    didSet {
+      if let articleTitle = articleTitle {
+        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
+          .append(text: articleTitle, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+      }
+    }
+  }
+  var articleDescription: String? {
+    didSet {
+      if let articleDescription = articleDescription {
+        descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
+          .append(text: articleDescription, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+      }
+    }
+  }
+  var articleCommentsSummary: String? {
+    didSet {
+      if let articleCommentsSummary = articleCommentsSummary {
+        commentsSummaryNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+          .append(text: articleCommentsSummary, color: ThemeManager.shared.currentTheme.colorNumber15()).attributedString
+      }
+    }
+  }
+  var linkUrl: String? {
+    didSet {
+      if let linkUrl = linkUrl{
+        loadImageFromUrl(url: linkUrl)
+      }
+    }
+  }
+
+  private var imageUrl: String? {
+    didSet {
+      if let imageUrl = imageUrl {
+        imageNode.url = URL(string: imageUrl)
+      }
+    }
+  }
   override init() {
     imageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
@@ -39,5 +78,9 @@ class LinkCardPostContentNode: ASDisplayNode {
     addSubnode(titleNode)
     addSubnode(descriptionNode)
     addSubnode(commentsSummaryNode)
+  }
+
+  private func loadImageFromUrl(url: String) {
+    //TODO: implement action
   }
 }
