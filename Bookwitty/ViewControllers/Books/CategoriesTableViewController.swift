@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol CategoriesTableViewDelegate: class {
+  func categoriesTableViewDidSelectCategory(_ viewController: CategoriesTableViewController, category: Category)
+}
+
 class CategoriesTableViewController: UITableViewController {
   let viewModel = CategoriesTableViewModel()
   
