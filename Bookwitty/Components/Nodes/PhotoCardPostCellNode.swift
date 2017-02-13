@@ -23,9 +23,14 @@ class PhotoCardPostCellNode: BaseCardPostNode {
 
 class PhotoCardContentNode: ASDisplayNode {
   var imageNode: ASNetworkImageNode
+  var commentsSummaryNode: ASTextNode
+
   override init() {
     imageNode = ASNetworkImageNode()
+    commentsSummaryNode = ASTextNode()
     super.init()
     addSubnode(imageNode)
+    addSubnode(commentsSummaryNode)
   }
+
 }
