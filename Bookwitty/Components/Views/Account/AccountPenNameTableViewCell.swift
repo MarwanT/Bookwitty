@@ -10,6 +10,8 @@ import UIKit
 
 class AccountPenNameTableViewCell: UITableViewCell {
 
+  static let reuseIdentifier: String = "AccountPenNameTableViewCellReuseIdentifier"
+
   override func awakeFromNib() {
     super.awakeFromNib()
     // Initialization code
