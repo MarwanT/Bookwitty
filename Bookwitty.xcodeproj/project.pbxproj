@@ -16,6 +16,8 @@
 		594290031E4F737B0006B2F1 /* Books.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 594290021E4F737B0006B2F1 /* Books.storyboard */; };
 		594290061E4FEEC10006B2F1 /* CategoriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290051E4FEEC10006B2F1 /* CategoriesTableViewController.swift */; };
 		594290091E4FF0E30006B2F1 /* CategoriesTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290081E4FF0E30006B2F1 /* CategoriesTableViewModel.swift */; };
+		594290111E51B7C00006B2F1 /* DisclosureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5942900F1E51B7C00006B2F1 /* DisclosureTableViewCell.swift */; };
+		594290121E51B7C00006B2F1 /* DisclosureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 594290101E51B7C00006B2F1 /* DisclosureTableViewCell.xib */; };
 		5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5947C2A71E37B3D1003BF12A /* ViewController.swift */; };
 		594F4EA61E42255200A947FA /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA51E42255200A947FA /* AccessToken.swift */; };
 		594F4EA81E423B8600A947FA /* AppNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA71E423B8600A947FA /* AppNotifications.swift */; };
@@ -92,6 +94,8 @@
 		594290021E4F737B0006B2F1 /* Books.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Books.storyboard; sourceTree = "<group>"; };
 		594290051E4FEEC10006B2F1 /* CategoriesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesTableViewController.swift; sourceTree = "<group>"; };
 		594290081E4FF0E30006B2F1 /* CategoriesTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesTableViewModel.swift; sourceTree = "<group>"; };
+		5942900F1E51B7C00006B2F1 /* DisclosureTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisclosureTableViewCell.swift; sourceTree = "<group>"; };
+		594290101E51B7C00006B2F1 /* DisclosureTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisclosureTableViewCell.xib; sourceTree = "<group>"; };
 		5947C2A71E37B3D1003BF12A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		594F4EA51E42255200A947FA /* AccessToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
 		594F4EA71E423B8600A947FA /* AppNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNotifications.swift; sourceTree = "<group>"; };
@@ -279,6 +283,7 @@
 		59057FDA1E2533010036AAF3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5942900E1E51B7C00006B2F1 /* DisclosureTableViewCell */,
 				5967E4561E4105020067093F /* NotificationView */,
 				595C4F0C1E3F8C0200BE3942 /* InputField.swift */,
 				595C4F0E1E3F8C9200BE3942 /* PasswordInputField.swift */,
@@ -301,6 +306,15 @@
 				594290081E4FF0E30006B2F1 /* CategoriesTableViewModel.swift */,
 			);
 			path = Books;
+			sourceTree = "<group>";
+		};
+		5942900E1E51B7C00006B2F1 /* DisclosureTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				5942900F1E51B7C00006B2F1 /* DisclosureTableViewCell.swift */,
+				594290101E51B7C00006B2F1 /* DisclosureTableViewCell.xib */,
+			);
+			path = DisclosureTableViewCell;
 			sourceTree = "<group>";
 		};
 		594F4EAD1E440A4900A947FA /* API */ = {
@@ -626,6 +640,7 @@
 				59D8FCA31E4C760F001C1EDB /* GoogleService-Info.plist in Resources */,
 				59D8FCA61E4C76E7001C1EDB /* Info.plist in Resources */,
 				597B8E361E3954B200C7811B /* Georgia.ttf in Resources */,
+				594290121E51B7C00006B2F1 /* DisclosureTableViewCell.xib in Resources */,
 				594290031E4F737B0006B2F1 /* Books.storyboard in Resources */,
 				597B8E391E3954B200C7811B /* Volkhov-Regular.ttf in Resources */,
 				F47188181E4B1EB50076F93C /* Root.storyboard in Resources */,
@@ -795,6 +810,7 @@
 				59DA475D1E3B7A8F00BA90A5 /* IntroductionViewModel.swift in Sources */,
 				59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */,
 				59D6021B1E32597B00271315 /* AppKeys.swift in Sources */,
+				594290111E51B7C00006B2F1 /* DisclosureTableViewCell.swift in Sources */,
 				594F4EA61E42255200A947FA /* AccessToken.swift in Sources */,
 				59D8FCB31E4C86CD001C1EDB /* Category.swift in Sources */,
 			);
