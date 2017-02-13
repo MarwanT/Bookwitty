@@ -24,6 +24,22 @@ class PhotoCardPostCellNode: BaseCardPostNode {
 class PhotoCardContentNode: ASDisplayNode {
   var imageNode: ASNetworkImageNode
   var commentsSummaryNode: ASTextNode
+  
+  var articleCommentsSummary: String? {
+    didSet {
+      if let articleCommentsSummary = articleCommentsSummary {
+        commentsSummaryNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+          .append(text: articleCommentsSummary, color: ThemeManager.shared.currentTheme.colorNumber15()).attributedString
+      }
+    }
+  }
+  var imageUrl: String? {
+    didSet {
+      if let imageUrl = imageUrl {
+        imageNode.url = URL(string: imageUrl)
+      }
+    }
+  }
 
   override init() {
     imageNode = ASNetworkImageNode()
@@ -31,6 +47,11 @@ class PhotoCardContentNode: ASDisplayNode {
     super.init()
     addSubnode(imageNode)
     addSubnode(commentsSummaryNode)
+    setupNode()
+  }
+
+  private func setupNode() {
+    commentsSummaryNode.maximumNumberOfLines = 1
   }
 
 }
