@@ -24,6 +24,10 @@ class LinkCardPostCellNode: BaseCardPostNode {
 }
 
 class LinkCardPostContentNode: ASDisplayNode {
+  let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
+  let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+  let playIconSize = CGSize(width: 120, height: 120)
 
   var imageNode: ASNetworkImageNode
   var titleNode: ASTextNode
@@ -120,5 +124,78 @@ class LinkCardPostContentNode: ASDisplayNode {
         //TODO: implement action (Retry if needed)
         print(error.description)
     })
+  }
+
+  private func commentsSummaryInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: contentSpacing,
+                        left: externalMargin + internalMargin,
+                        bottom: contentSpacing,
+                        right: externalMargin + internalMargin)
+  }
+
+  private func titleInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0,
+                        left: externalMargin + internalMargin,
+                        bottom: internalMargin,
+                        right: externalMargin + internalMargin)
+  }
+
+  private func descriptionInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0,
+                        left: externalMargin + internalMargin,
+                        bottom: 0,
+                        right: externalMargin + internalMargin)
+  }
+
+  private func imageInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0, left: 0, bottom: internalMargin , right: 0)
+  }
+
+  private func spacer(height: CGFloat) -> ASLayoutSpec {
+    return ASLayoutSpec().styled { (style) in
+      style.height = ASDimensionMake(height)
+    }
+  }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let imageSize = CGSize(width: constrainedSize.max.width, height: 150)
+    imageNode.style.preferredSize = imageSize
+    imageNode.defaultImage = UIImage(color: ASDisplayNodeDefaultPlaceholderColor(), size: imageSize)
+    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
+
+    let imageInsetLayoutSpec = ASInsetLayoutSpec(insets: imageInset(), child: imageNode)
+
+    let titleInsetLayoutSpec = ASInsetLayoutSpec(insets: titleInset(), child: titleNode)
+    let descriptionInsetLayoutSpec = ASInsetLayoutSpec(insets: descriptionInset(), child: descriptionNode)
+    let commentsSummaryInsetLayoutSpec = ASInsetLayoutSpec(insets: commentsSummaryInset(), child: commentsSummaryNode)
+
+    //TODO: Clean adding logic, move top and bottom seraptors from insets to spacers between elements
+    let nodesArray: [ASLayoutElement]
+    if (hasImage && hasComments) {
+      nodesArray = [imageInsetLayoutSpec, titleInsetLayoutSpec, descriptionInsetLayoutSpec, commentsSummaryInsetLayoutSpec]
+    } else if (hasImage) {
+      nodesArray = [imageInsetLayoutSpec, titleInsetLayoutSpec, descriptionInsetLayoutSpec, spacer(height: internalMargin)]
+    } else if (hasComments) {
+      nodesArray = [titleInsetLayoutSpec, descriptionInsetLayoutSpec, commentsSummaryInsetLayoutSpec]
+    } else {
+      if (!articleTitle.isEmptyOrNil() && !articleDescription.isEmptyOrNil()) {
+        nodesArray = [titleInsetLayoutSpec, descriptionInsetLayoutSpec, spacer(height: internalMargin)]
+      } else if (!articleTitle.isEmptyOrNil()) {
+        nodesArray = [titleInsetLayoutSpec]
+      } else if (!articleDescription.isEmptyOrNil()) {
+        nodesArray = [descriptionInsetLayoutSpec, spacer(height: internalMargin)]
+      } else {
+        //Everything was null: Should Never be here
+        nodesArray = [spacer(height: internalMargin)]
+      }
+    }
+
+    let verticalStack = ASStackLayoutSpec(direction: .vertical,
+                                          spacing: 0,
+                                          justifyContent: .start,
+                                          alignItems: .stretch,
+                                          children: nodesArray)
+    
+    return verticalStack
   }
 }
