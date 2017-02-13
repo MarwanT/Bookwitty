@@ -27,5 +27,52 @@
             </objects>
             <point key="canvasLocation" x="20" y="87"/>
         </scene>
+        <!--Book Store View Controller-->
+        <scene sceneID="gFi-Mc-yyX">
+            <objects>
+                <viewController storyboardIdentifier="BookStoreViewController" id="F8W-Vo-muq" customClass="BookStoreViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BJK-0a-hEU"/>
+                        <viewControllerLayoutGuide type="bottom" id="QRF-Qm-R6A"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="A9r-Ox-Z4D">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdt-NZ-rSs">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="rhn-g5-XdI">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="200" placeholder="YES" id="by4-Gr-CSW"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="rhn-g5-XdI" firstAttribute="leading" secondItem="bdt-NZ-rSs" secondAttribute="leading" id="1zT-rc-dEb"/>
+                                    <constraint firstItem="rhn-g5-XdI" firstAttribute="top" secondItem="bdt-NZ-rSs" secondAttribute="top" id="5ep-eT-YbG"/>
+                                    <constraint firstItem="rhn-g5-XdI" firstAttribute="width" secondItem="bdt-NZ-rSs" secondAttribute="width" id="74t-UU-bAX"/>
+                                    <constraint firstItem="rhn-g5-XdI" firstAttribute="trailing" secondItem="bdt-NZ-rSs" secondAttribute="trailing" id="XIQ-bG-8Af"/>
+                                    <constraint firstAttribute="bottom" secondItem="rhn-g5-XdI" secondAttribute="bottom" id="tgF-bN-t4t"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="bdt-NZ-rSs" firstAttribute="top" secondItem="BJK-0a-hEU" secondAttribute="bottom" id="4fb-hy-wQ1"/>
+                            <constraint firstItem="QRF-Qm-R6A" firstAttribute="top" secondItem="bdt-NZ-rSs" secondAttribute="bottom" id="5xn-OE-K70"/>
+                            <constraint firstItem="bdt-NZ-rSs" firstAttribute="trailing" secondItem="A9r-Ox-Z4D" secondAttribute="trailing" id="D8u-Ks-mwK"/>
+                            <constraint firstItem="bdt-NZ-rSs" firstAttribute="leading" secondItem="A9r-Ox-Z4D" secondAttribute="leading" id="tOB-1f-Md4"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="stackView" destination="rhn-g5-XdI" id="cde-cH-bum"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dMX-5Q-nIB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1262" y="87"/>
+        </scene>
     </scenes>
 </document>
