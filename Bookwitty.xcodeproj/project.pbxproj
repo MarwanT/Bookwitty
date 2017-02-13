@@ -69,7 +69,13 @@
 		F420B6A21E43C570001F34CD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420B6A11E43C570001F34CD /* User.swift */; };
 		F420B6A41E43D01A001F34CD /* PenNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420B6A31E43D01A001F34CD /* PenNameViewController.swift */; };
 		F420B6A61E43D05E001F34CD /* PenNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420B6A51E43D05E001F34CD /* PenNameViewModel.swift */; };
+		F42686771E4EF83C0085E581 /* CardPostInfoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */; };
+		F42686791E4F458A0085E581 /* CardActionBarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42686781E4F458A0085E581 /* CardActionBarNode.swift */; };
+		F426867B1E505CE60085E581 /* BaseCardPostNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426867A1E505CE60085E581 /* BaseCardPostNode.swift */; };
+		F434F7911E4E16CE001812BD /* CellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F434F7901E4E16CE001812BD /* CellNode.swift */; };
+		F461B25C1E4B73B0005EA5A8 /* NewsFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F461B25B1E4B73B0005EA5A8 /* NewsFeedViewController.swift */; };
 		F47188181E4B1EB50076F93C /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47188171E4B1EB50076F93C /* Root.storyboard */; };
+		F48278BB1E4B21CA003D82F2 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48278BA1E4B21CA003D82F2 /* RootTabBarController.swift */; };
 		F488D2791E44EB46003A7BD4 /* PenName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F488D2781E44EB46003A7BD4 /* PenName.swift */; };
 		F488D27B1E44F559003A7BD4 /* BookwittyParsersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F488D27A1E44F559003A7BD4 /* BookwittyParsersTests.swift */; };
 		F49AE93E1E47CFEA0031B355 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49AE93D1E47CFEA0031B355 /* Parser.swift */; };
@@ -155,7 +161,13 @@
 		F420B6A11E43C570001F34CD /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F420B6A31E43D01A001F34CD /* PenNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameViewController.swift; sourceTree = "<group>"; };
 		F420B6A51E43D05E001F34CD /* PenNameViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameViewModel.swift; sourceTree = "<group>"; };
+		F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPostInfoNode.swift; sourceTree = "<group>"; };
+		F42686781E4F458A0085E581 /* CardActionBarNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardActionBarNode.swift; sourceTree = "<group>"; };
+		F426867A1E505CE60085E581 /* BaseCardPostNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCardPostNode.swift; sourceTree = "<group>"; };
+		F434F7901E4E16CE001812BD /* CellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellNode.swift; sourceTree = "<group>"; };
+		F461B25B1E4B73B0005EA5A8 /* NewsFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewsFeedViewController.swift; path = Bookwitty/ViewControllers/Root/NewsFeedViewController.swift; sourceTree = SOURCE_ROOT; };
 		F47188171E4B1EB50076F93C /* Root.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Root.storyboard; sourceTree = "<group>"; };
+		F48278BA1E4B21CA003D82F2 /* RootTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RootTabBarController.swift; path = Bookwitty/ViewControllers/Root/RootTabBarController.swift; sourceTree = SOURCE_ROOT; };
 		F488D2781E44EB46003A7BD4 /* PenName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenName.swift; sourceTree = "<group>"; };
 		F488D27A1E44F559003A7BD4 /* BookwittyParsersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyParsersTests.swift; sourceTree = "<group>"; };
 		F49AE93D1E47CFEA0031B355 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
@@ -276,6 +288,10 @@
 		59057FD81E2533010036AAF3 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				F434F7901E4E16CE001812BD /* CellNode.swift */,
+				F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */,
+				F426867A1E505CE60085E581 /* BaseCardPostNode.swift */,
+				F42686781E4F458A0085E581 /* CardActionBarNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -385,6 +401,7 @@
 				59DA475F1E3B7A9B00BA90A5 /* Introduction */,
 				59DA47681E3B874B00BA90A5 /* Access */,
 				594290041E4FEE8D0006B2F1 /* Books */,
+				F48278B91E4B214A003D82F2 /* Root */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -527,6 +544,16 @@
 				CB5E98B3C54E0B0AD22F5CB4 /* Pods-BookwittyTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		F48278B91E4B214A003D82F2 /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				F48278BA1E4B21CA003D82F2 /* RootTabBarController.swift */,
+				F461B25B1E4B73B0005EA5A8 /* NewsFeedViewController.swift */,
+			);
+			name = Root;
+			path = Access;
 			sourceTree = "<group>";
 		};
 		F49AE93C1E47CFD20031B355 /* Parser */ = {
@@ -768,9 +795,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				59903FED1E3B9D90006043EF /* View.swift in Sources */,
+				F42686771E4EF83C0085E581 /* CardPostInfoNode.swift in Sources */,
 				595C4F0F1E3F8C9200BE3942 /* PasswordInputField.swift in Sources */,
 				59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */,
+				F461B25C1E4B73B0005EA5A8 /* NewsFeedViewController.swift in Sources */,
+				F42686791E4F458A0085E581 /* CardActionBarNode.swift in Sources */,
 				5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */,
+				F426867B1E505CE60085E581 /* BaseCardPostNode.swift in Sources */,
 				F420AD9F1E4231E000C78AEB /* AttributedStringBuilder.swift in Sources */,
 				59DA47631E3B7A9B00BA90A5 /* IntroductionViewController.swift in Sources */,
 				59D27D0F1E40D2EE00468C29 /* SignInViewModel.swift in Sources */,
@@ -784,6 +815,7 @@
 				59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */,
 				59DA475E1E3B7A8F00BA90A5 /* TutorialViewModel.swift in Sources */,
 				597B8E2D1E37F6BC00C7811B /* Image.swift in Sources */,
+				F434F7911E4E16CE001812BD /* CellNode.swift in Sources */,
 				595C4F111E3F9DA400BE3942 /* InformativeInputField.swift in Sources */,
 				59DA47641E3B7A9B00BA90A5 /* TutorialPageViewController.swift in Sources */,
 				59DA47571E3A65A600BA90A5 /* Storyboard.swift in Sources */,
@@ -802,6 +834,7 @@
 				F488D2791E44EB46003A7BD4 /* PenName.swift in Sources */,
 				595A64A01E2D0C4D00655067 /* Network.swift in Sources */,
 				594F4EA81E423B8600A947FA /* AppNotifications.swift in Sources */,
+				F48278BB1E4B21CA003D82F2 /* RootTabBarController.swift in Sources */,
 				F420B6A61E43D05E001F34CD /* PenNameViewModel.swift in Sources */,
 				595A649C1E2CCB8900655067 /* BookwittyAPI.swift in Sources */,
 				595A649E1E2CF4EA00655067 /* String.swift in Sources */,

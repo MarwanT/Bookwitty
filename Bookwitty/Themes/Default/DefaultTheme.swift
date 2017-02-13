@@ -26,6 +26,9 @@ final class DefaultTheme: Theme {
     let pageControlAppearance = UIPageControl.appearance()
     pageControlAppearance.currentPageIndicatorTintColor = self.colorNumber15()
     pageControlAppearance.pageIndicatorTintColor = self.colorNumber18()
+
+    UITabBar.appearance().barTintColor = self.colorNumber23()
+    UITabBar.appearance().tintColor = self.colorNumber19()
   }
 }
 

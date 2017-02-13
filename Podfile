@@ -31,7 +31,8 @@ target 'Bookwitty' do
   pod 'SwiftyJSON', '3.1.4'
   pod 'ALCameraViewController'
   pod 'Spine', :git => 'https://github.com/wvteijlingen/Spine.git'
-
+  pod 'AsyncDisplayKit', '2.0.2'
+  
   target 'BookwittyTests' do
     inherit! :search_paths
     # Pods for testing
