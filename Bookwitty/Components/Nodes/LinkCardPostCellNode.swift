@@ -78,6 +78,13 @@ class LinkCardPostContentNode: ASDisplayNode {
     addSubnode(titleNode)
     addSubnode(descriptionNode)
     addSubnode(commentsSummaryNode)
+    setupNode()
+  }
+
+  private func setupNode() {
+    titleNode.maximumNumberOfLines = 3
+    descriptionNode.maximumNumberOfLines = 3
+    commentsSummaryNode.maximumNumberOfLines = 1
   }
 
   private func loadImageFromUrl(url: String) {
