@@ -45,13 +45,11 @@ class CardActionBarNode: ASDisplayNode {
     let imageTintColor: UIColor = ThemeManager.shared.currentTheme.colorNumber15()
 
     //Note: Had a Problem with the selected and highlighted states of the button images
-    let commentImage: UIImage = UIImage(data: UIImagePNGRepresentation(#imageLiteral(resourceName: "comment"))!, scale: 3)!
     commentButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
-    commentButton.setImage(commentImage, for: normal)
+    commentButton.setImage(#imageLiteral(resourceName: "comment"), for: normal)
 
-    let shareImage: UIImage = UIImage(data: UIImagePNGRepresentation(#imageLiteral(resourceName: "shareOutside"))!, scale: 3)!
     shareButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
-    shareButton.setImage(shareImage, for: normal)
+    shareButton.setImage(#imageLiteral(resourceName: "shareOutside"), for: normal)
 
     setupWitButtonStyling()
 
