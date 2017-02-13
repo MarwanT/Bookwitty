@@ -31,6 +31,7 @@ class VideoCardContentNode: ASDisplayNode {
   var titleNode: ASTextNode
   var descriptionNode: ASTextNode
   var commentsSummaryNode: ASTextNode
+  var playNode: ASImageNode
 
   var articleTitle: String? {
     didSet {
@@ -81,11 +82,13 @@ class VideoCardContentNode: ASDisplayNode {
     titleNode = ASTextNode()
     descriptionNode = ASTextNode()
     commentsSummaryNode = ASTextNode()
+    playNode = ASImageNode()
     super.init()
     addSubnode(imageNode)
     addSubnode(titleNode)
     addSubnode(descriptionNode)
     addSubnode(commentsSummaryNode)
+    addSubnode(playNode)
     setupNode()
   }
 
