@@ -22,6 +22,10 @@ class PhotoCardPostCellNode: BaseCardPostNode {
 }
 
 class PhotoCardContentNode: ASDisplayNode {
+  let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
+  let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+
   var imageNode: ASNetworkImageNode
   var commentsSummaryNode: ASTextNode
   
@@ -41,6 +45,12 @@ class PhotoCardContentNode: ASDisplayNode {
     }
   }
 
+  var hasComments: Bool {
+    get {
+      return !(articleCommentsSummary?.isEmpty ?? true)
+    }
+  }
+  
   override init() {
     imageNode = ASNetworkImageNode()
     commentsSummaryNode = ASTextNode()
@@ -54,4 +64,45 @@ class PhotoCardContentNode: ASDisplayNode {
     commentsSummaryNode.maximumNumberOfLines = 1
   }
 
+  private func commentsSummaryInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: contentSpacing,
+                        left: externalMargin + internalMargin,
+                        bottom: contentSpacing,
+                        right: externalMargin + internalMargin)
+  }
+
+  private func imageInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0, left: 0, bottom: 0 , right: 0)
+  }
+
+  private func spacer(height: CGFloat) -> ASLayoutSpec {
+    return ASLayoutSpec().styled { (style) in
+      style.height = ASDimensionMake(height)
+    }
+  }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let imageSize = CGSize(width: constrainedSize.max.width, height: 150)
+    imageNode.style.preferredSize = imageSize
+    imageNode.defaultImage = UIImage(color: ASDisplayNodeDefaultPlaceholderColor(), size: imageSize)
+    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
+
+    let imageInsetLayoutSpec = ASInsetLayoutSpec(insets: imageInset(), child: imageNode)
+    let commentsSummaryInsetLayoutSpec = ASInsetLayoutSpec(insets: commentsSummaryInset(), child: commentsSummaryNode)
+
+    let nodesArray: [ASLayoutElement]
+    if (hasComments) {
+      nodesArray = [imageInsetLayoutSpec, commentsSummaryInsetLayoutSpec]
+    } else {
+      nodesArray = [imageInsetLayoutSpec, spacer(height: internalMargin)]
+    }
+
+    let verticalStack = ASStackLayoutSpec(direction: .vertical,
+                                          spacing: 0,
+                                          justifyContent: .start,
+                                          alignItems: .stretch,
+                                          children: nodesArray)
+
+    return verticalStack
+  }
 }
