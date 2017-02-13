@@ -142,15 +142,19 @@ class VideoCardContentNode: ASDisplayNode {
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
 
     let imageInsetLayoutSpec = ASInsetLayoutSpec(insets: imageInset(), child: imageNode)
+    let videoNodeLayoutSpec = ASCenterLayoutSpec(centeringOptions: ASCenterLayoutSpecCenteringOptions.XY, sizingOptions: ASCenterLayoutSpecSizingOptions.minimumXY, child: playNode)
+    let overlayLayoutSpec = ASOverlayLayoutSpec.init(child: imageInsetLayoutSpec, overlay: videoNodeLayoutSpec)
+
+
     let titleInsetLayoutSpec = ASInsetLayoutSpec(insets: titleInset(), child: titleNode)
     let descriptionInsetLayoutSpec = ASInsetLayoutSpec(insets: descriptionInset(), child: descriptionNode)
     let commentsSummaryInsetLayoutSpec = ASInsetLayoutSpec(insets: commentsSummaryInset(), child: commentsSummaryNode)
 
     let nodesArray: [ASLayoutElement]
     if (hasImage && hasComments) {
-      nodesArray = [imageInsetLayoutSpec, titleInsetLayoutSpec, descriptionInsetLayoutSpec, commentsSummaryInsetLayoutSpec]
+      nodesArray = [overlayLayoutSpec, titleInsetLayoutSpec, descriptionInsetLayoutSpec, commentsSummaryInsetLayoutSpec]
     } else if (hasImage) {
-      nodesArray = [imageInsetLayoutSpec, titleInsetLayoutSpec, descriptionInsetLayoutSpec, spacer(height: internalMargin)]
+      nodesArray = [overlayLayoutSpec, titleInsetLayoutSpec, descriptionInsetLayoutSpec, spacer(height: internalMargin)]
     } else if (hasComments) {
       nodesArray = [titleInsetLayoutSpec, descriptionInsetLayoutSpec, commentsSummaryInsetLayoutSpec]
     } else {
