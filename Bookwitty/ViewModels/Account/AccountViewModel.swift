@@ -76,4 +76,16 @@ final class AccountViewModel {
     }
   }
 
+  //Customer Service
+  private func valuesForCustomerService(atRow row: Int) -> String {
+    switch row {
+    case 0:
+      return helpText
+    case 1:
+      return contactUsText
+    default:
+      return ""
+    }
+  }
+
 }
