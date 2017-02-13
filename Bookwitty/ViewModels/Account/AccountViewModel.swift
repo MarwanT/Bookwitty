@@ -23,4 +23,11 @@ final class AccountViewModel {
   let helpText: String = localizedString(key: "help", defaultValue: "Help")
   let contactUsText: String = localizedString(key: "contact_us", defaultValue: "Contact Us")
 
+  private enum Sections: Int {
+    case UserInformation = 0
+    case PenNames = 1
+    case CreatePenNames = 2
+    case CustomerService = 3
+  }
+
 }
