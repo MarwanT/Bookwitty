@@ -27,8 +27,19 @@ class Banner: UIView {
   }
   
   private func initialize() {
+    initializeViews()
     addSubviews()
     setConstraints()
+  }
+  
+  func initializeViews() {
+    clipsToBounds = true
+    titleLabel.numberOfLines = 0
+    descriptionLabel.numberOfLines = 0
+    imageView.contentMode = UIViewContentMode.scaleAspectFill
+    titleLabel.textAlignment = NSTextAlignment.center
+    descriptionLabel.textAlignment = NSTextAlignment.center
+    dimView.backgroundColor = UIColor.bwNero.withAlphaComponent(0.5)
   }
   
   private func addSubviews() {
