@@ -10,6 +10,7 @@
 		19C00714F09A1D3937F9AAE7 /* Pods_BookwittyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */; };
 		2D1D0880B4A8EB8C8A6AD1A8 /* Pods_Bookwitty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */; };
 		56399DBC1E51CF2D005192AC /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56399DBB1E51CF2D005192AC /* Account.storyboard */; };
+		56399DBF1E51D006005192AC /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56399DBE1E51D006005192AC /* AccountViewController.swift */; };
 		59057FE01E25340A0036AAF3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59057FDE1E25340A0036AAF3 /* LaunchScreen.storyboard */; };
 		59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59057FDF1E25340A0036AAF3 /* Introduction.storyboard */; };
 		593769D71E3689FB00F23226 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593769D51E3689FB00F23226 /* Appearance.swift */; };
@@ -99,6 +100,7 @@
 /* Begin PBXFileReference section */
 		2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bookwitty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		56399DBB1E51CF2D005192AC /* Account.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Account.storyboard; sourceTree = "<group>"; };
+		56399DBE1E51D006005192AC /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		59057FDE1E25340A0036AAF3 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		59057FDF1E25340A0036AAF3 /* Introduction.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Introduction.storyboard; sourceTree = "<group>"; };
 		593769D51E3689FB00F23226 /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Appearance.swift; path = Default/Appearance.swift; sourceTree = "<group>"; };
@@ -211,6 +213,14 @@
 				818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		56399DBD1E51CFF2005192AC /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				56399DBE1E51D006005192AC /* AccountViewController.swift */,
+			);
+			path = Account;
 			sourceTree = "<group>";
 		};
 		59057FC51E252C500036AAF3 /* ViewModels */ = {
@@ -413,6 +423,7 @@
 		59B65FD41E2524D60093FF44 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				56399DBD1E51CFF2005192AC /* Account */,
 				59DA475F1E3B7A9B00BA90A5 /* Introduction */,
 				59DA47681E3B874B00BA90A5 /* Access */,
 				594290041E4FEE8D0006B2F1 /* Books */,
@@ -813,6 +824,7 @@
 				59903FED1E3B9D90006043EF /* View.swift in Sources */,
 				F42686771E4EF83C0085E581 /* CardPostInfoNode.swift in Sources */,
 				595C4F0F1E3F8C9200BE3942 /* PasswordInputField.swift in Sources */,
+				56399DBF1E51D006005192AC /* AccountViewController.swift in Sources */,
 				59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */,
 				F461B25C1E4B73B0005EA5A8 /* NewsFeedViewController.swift in Sources */,
 				F42686791E4F458A0085E581 /* CardActionBarNode.swift in Sources */,
