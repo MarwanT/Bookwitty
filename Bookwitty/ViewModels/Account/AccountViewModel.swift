@@ -36,4 +36,20 @@ final class AccountViewModel {
     sectionTitles = ["", penNamesText, "", customerServiceText]
   }
 
+  //User Information
+  private func valuesForUserInformation(atRow row: Int) -> String {
+    switch row {
+    case 0:
+      return myOrdersText
+    case 1:
+      return addressBookText
+    case 2:
+      return paymentMethodsText
+    case 3:
+      return settingsText
+    default:
+      return ""
+    }
+  }
+
 }
