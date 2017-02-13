@@ -54,5 +54,7 @@ class CategoriesTableViewController: UITableViewController {
     cell.label.text = viewModel.data(forCellAtIndexPath: indexPath)
   }
   
-  
+  override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 48
+  }
 }
