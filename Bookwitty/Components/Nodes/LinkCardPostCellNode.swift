@@ -104,7 +104,18 @@ class LinkCardPostContentNode: ASDisplayNode {
   private func loadImageFromUrl(url: String) {
     let slp = SwiftLinkPreview()
     slp.preview(url, onSuccess: { [weak self] (response: SwiftLinkPreview.Response) in
-      //TODO: implement action
+      guard let weakSelf = self else { return }
+
+      let image = response[SwiftLinkResponseKey.image] as? String
+      if let image = image {
+        weakSelf.imageUrl = image
+      }
+      if weakSelf.articleTitle.isEmptyOrNil() {
+        weakSelf.articleTitle = response[SwiftLinkResponseKey.title] as? String
+      }
+      if weakSelf.articleDescription.isEmptyOrNil() {
+        weakSelf.articleDescription = response[SwiftLinkResponseKey.description] as? String
+      }
       }, onError: { (error: PreviewError) in
         //TODO: implement action (Retry if needed)
         print(error.description)
