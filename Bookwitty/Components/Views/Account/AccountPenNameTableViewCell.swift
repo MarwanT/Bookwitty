@@ -21,4 +21,13 @@ class AccountPenNameTableViewCell: UITableViewCell {
     super.awakeFromNib()
     // Initialization code
   }
+
+  private func initializeComponents() {
+    profileImageView.layer.masksToBounds = true
+    profileImageView.layer.cornerRadius = profileImageView.frame.width / 2.0
+
+    nameLabel.font = FontDynamicType.footnote.font
+
+    disclosureIndicator.image = #imageLiteral(resourceName: "rightArrow")
+  }
 }
