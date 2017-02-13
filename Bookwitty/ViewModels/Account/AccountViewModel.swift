@@ -66,4 +66,14 @@ final class AccountViewModel {
     }
   }
 
+  //Create Pen Names
+  private func valuesForCreatePenName(atRow row: Int) -> String {
+    switch row {
+    case 0:
+      return createNewPenNameText
+    default:
+      return ""
+    }
+  }
+
 }
