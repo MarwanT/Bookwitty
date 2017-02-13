@@ -22,6 +22,7 @@ class CategoriesTableViewController: UITableViewController {
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    applyTheme()
   }
   
   override func didReceiveMemoryWarning() {
@@ -56,5 +57,16 @@ class CategoriesTableViewController: UITableViewController {
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return 48
+  }
+}
+
+extension CategoriesTableViewController: Themeable {
+  func applyTheme() {
+    let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
+    
+    tableView.separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    tableView.separatorInset = UIEdgeInsets(
+      top: 0, left: leftMargin, bottom: 0, right: 0)
+    
   }
 }
