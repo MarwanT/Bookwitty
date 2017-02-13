@@ -26,6 +26,7 @@ class VideoCardContentNode: ASDisplayNode {
   let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+  let playIconSize = CGSize(width: 120, height: 120)
 
   var imageNode: ASNetworkImageNode
   var titleNode: ASTextNode
@@ -96,6 +97,11 @@ class VideoCardContentNode: ASDisplayNode {
     titleNode.maximumNumberOfLines = 3
     descriptionNode.maximumNumberOfLines = 3
     commentsSummaryNode.maximumNumberOfLines = 1
+
+    playNode.image = #imageLiteral(resourceName: "play")
+    playNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.colorNumber23().withAlphaComponent(0.9))
+    playNode.style.preferredSize = playIconSize
+
   }
 
   private func commentsSummaryInset() -> UIEdgeInsets {
