@@ -80,11 +80,7 @@ class CardActionBarNode: ASDisplayNode {
   }
 
   func toggleWitButton() {
-    if (!witButton.isSelected) {
-      witButton.isSelected = true
-    } else {
-      witButton.isSelected = false
-    }
+    witButton.isSelected = !witButton.isSelected
   }
 
   func witButtonTouchUpInside(_ sender: ASButtonNode?) {
