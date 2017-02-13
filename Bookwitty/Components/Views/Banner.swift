@@ -79,4 +79,33 @@ class Banner: UIView, Themeable {
     descriptionLabel.font = FontDynamicType.footnote.font
   }
   
+  
+  // MARK: - APIs
+  
+  var image: UIImage? {
+    get {
+      return imageView.image
+    }
+    set (image) {
+      imageView.image = image
+    }
+  }
+  
+  var title: String? {
+    get {
+      return titleLabel.text
+    }
+    set (title) {
+      titleLabel.text = title
+    }
+  }
+  
+  var subtitle: String? {
+    get {
+      return descriptionLabel.text
+    }
+    set (subtitle) {
+      descriptionLabel.text = subtitle
+    }
+  }
 }
