@@ -14,7 +14,8 @@ class CategoriesTableViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TableViewCell")
+    tableView.register(DisclosureTableViewCell.nib,
+                       forCellReuseIdentifier: DisclosureTableViewCell.identifier)
     
     // Uncomment the following line to preserve selection between presentations
     // self.clearsSelectionOnViewWillAppear = false
@@ -41,12 +42,16 @@ class CategoriesTableViewController: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath)
+    let cell = tableView.dequeueReusableCell(
+      withIdentifier: DisclosureTableViewCell.identifier, for: indexPath)
     return cell
   }
   
   override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-    cell.textLabel?.text = viewModel.data(forCellAtIndexPath: indexPath)
+    guard let cell = cell as? DisclosureTableViewCell else {
+      return
+    }
+    cell.label.text = viewModel.data(forCellAtIndexPath: indexPath)
   }
   
   
