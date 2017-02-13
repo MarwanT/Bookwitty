@@ -68,6 +68,19 @@ class LinkCardPostContentNode: ASDisplayNode {
       }
     }
   }
+
+  private var hasImage: Bool {
+    get {
+      return !(imageUrl?.isEmpty ?? true) || !(linkUrl?.isEmpty ?? true)
+    }
+  }
+
+  private var hasComments: Bool {
+    get {
+      return !(articleCommentsSummary?.isEmpty ?? true)
+    }
+  }
+
   override init() {
     imageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
