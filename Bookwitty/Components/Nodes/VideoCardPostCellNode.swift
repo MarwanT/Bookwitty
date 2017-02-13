@@ -108,6 +108,11 @@ class VideoCardContentNode: ASDisplayNode {
     playNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.colorNumber23().withAlphaComponent(0.9))
     playNode.style.preferredSize = playIconSize
 
+    imageNode.addTarget(self, action: #selector(videoImageTouchUpInside(_:)), forControlEvents: .touchUpInside)
+  }
+
+  func videoImageTouchUpInside(_ sender: ASImageNode?) {
+    delegate?.videoImageTouchUpInside(sender: imageNode)
   }
 
   private func commentsSummaryInset() -> UIEdgeInsets {
