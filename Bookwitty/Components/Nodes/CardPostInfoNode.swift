@@ -18,8 +18,7 @@ class CardPostInfoNode: ASDisplayNode {
   var postDateTextNode: ASTextNode
 
   private let userProfileImageDimension: CGFloat = 44.0
-  private let downArrowWidth: CGFloat = 30.0
-  private let downArrowHeight: CGFloat = 30.0
+  private let downArrowButtonSize: CGSize = CGSize(width: 30.0, height: 30.0)
 
   var data: CardPostInfoNodeData? {
     didSet {
@@ -50,7 +49,7 @@ class CardPostInfoNode: ASDisplayNode {
 
     arrowDownImageNode.image = #imageLiteral(resourceName: "downArrow")
     arrowDownImageNode.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
-    arrowDownImageNode.style.preferredSize = CGSize(width: downArrowWidth, height: downArrowHeight)
+    arrowDownImageNode.style.preferredSize = downArrowButtonSize
 
     userNameTextNode.maximumNumberOfLines = 1
     postDateTextNode.maximumNumberOfLines = 1
