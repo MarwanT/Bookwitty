@@ -22,8 +22,8 @@ class CardActionBarNode: ASDisplayNode {
   var shareButton: ASButtonNode
   var delegate: CardActionBarNodeDelegate? = nil
 
-  let normal = ASControlState(rawValue: 0)
-  let buttonHeight: CGFloat = 34.0
+  private let normal = ASControlState(rawValue: 0)
+  private let buttonHeight: CGFloat = 34.0
 
   private override init() {
     witButton = ASButtonNode()

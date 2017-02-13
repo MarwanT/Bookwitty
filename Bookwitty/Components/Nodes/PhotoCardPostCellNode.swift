@@ -22,9 +22,9 @@ class PhotoCardPostCellNode: BaseCardPostNode {
 }
 
 class PhotoCardContentNode: ASDisplayNode {
-  let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
-  let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
-  let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+  private let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
+  private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
 
   var imageNode: ASNetworkImageNode
   var commentsSummaryNode: ASTextNode

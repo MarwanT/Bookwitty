@@ -17,9 +17,9 @@ protocol BaseCardPostNodeContentProvider {
 
 class BaseCardPostNode: ASCellNode {
 
-  let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
-  let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
-  let witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
+  fileprivate let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
+  fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
 
   private(set) var infoNode: CardPostInfoNode
   private(set) var actionBarNode: CardActionBarNode
