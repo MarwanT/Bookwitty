@@ -24,6 +24,9 @@ class CardActionBarNode: ASDisplayNode {
 
   private let normal = ASControlState(rawValue: 0)
   private let buttonSize: CGSize = CGSize(width: 34.0, height: 34.0)
+  //MARK: - Localized Strings
+  private let witItTitle: String = localizedString(key: "wit_it", defaultValue: "Wit it")
+  private let wittedTitle: String = localizedString(key: "witted", defaultValue: "Witted")
 
   private override init() {
     witButton = ASButtonNode()
@@ -70,8 +73,8 @@ class CardActionBarNode: ASDisplayNode {
     witButton.setBackgroundImage(buttonBackgroundImage, for: normal)
     witButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
 
-    witButton.setTitle("Wit it", with: buttonFont, with: textColor, for: normal)
-    witButton.setTitle("Witted", with: buttonFont, with: selectedTextColor, for: .selected)
+    witButton.setTitle(witItTitle, with: buttonFont, with: textColor, for: normal)
+    witButton.setTitle(wittedTitle, with: buttonFont, with: selectedTextColor, for: .selected)
 
     witButton.cornerRadius = 4
     witButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
