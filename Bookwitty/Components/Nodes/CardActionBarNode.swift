@@ -10,13 +10,15 @@ import Foundation
 import AsyncDisplayKit
 
 protocol CardActionBarNodeDelegate {
-  func witButtonTouchUpInside(sender: ASButtonNode)
-  func commentButtonTouchUpInside(sender: ASButtonNode)
-  func shareButtonTouchUpInside(sender: ASButtonNode)
+  func cardActionBarNode(card: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode)
 }
 
 class CardActionBarNode: ASDisplayNode {
-
+  enum Action {
+    case wit
+    case comment
+    case share
+  }
   var witButton: ASButtonNode
   var commentButton: ASButtonNode
   var shareButton: ASButtonNode
@@ -88,19 +90,19 @@ class CardActionBarNode: ASDisplayNode {
 
   func witButtonTouchUpInside(_ sender: ASButtonNode?) {
     guard let sender = sender else { return }
-    delegate?.witButtonTouchUpInside(sender: sender)
+    delegate?.cardActionBarNode(card: self, didRequestAction: CardActionBarNode.Action.wit, forSender: sender)
     //TODO: Remove line and instead call toggleWitButton when Wit is successful
     toggleWitButton()
   }
 
   func commentButtonTouchUpInside(_ sender: ASButtonNode?) {
     guard let sender = sender else { return }
-    delegate?.commentButtonTouchUpInside(sender: sender)
+    delegate?.cardActionBarNode(card: self, didRequestAction: CardActionBarNode.Action.comment, forSender: sender)
   }
 
   func shareButtonTouchUpInside(_ sender: ASButtonNode?) {
     guard let sender = sender else { return }
-    delegate?.shareButtonTouchUpInside(sender: sender)
+    delegate?.cardActionBarNode(card: self, didRequestAction: CardActionBarNode.Action.share, forSender: sender)
   }
 
   private func spacer(flexGrow: CGFloat = 1.0) -> ASLayoutSpec {
