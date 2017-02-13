@@ -52,4 +52,18 @@ final class AccountViewModel {
     }
   }
 
+  //Pen Names
+  private func valuesForPenName(atRow row: Int) -> (title: String, value: String) {
+    switch row {
+    case 0:
+      return ("", "")
+    case 1:
+      return (interestsText, "")
+    case 2:
+      return (readingListsText, "")
+    default:
+      return ("", "")
+    }
+  }
+
 }
