@@ -30,4 +30,10 @@ final class AccountViewModel {
     case CustomerService = 3
   }
 
+  private let sectionTitles: [String]
+
+  init () {
+    sectionTitles = ["", penNamesText, "", customerServiceText]
+  }
+
 }
