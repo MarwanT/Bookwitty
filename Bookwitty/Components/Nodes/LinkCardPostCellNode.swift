@@ -23,6 +23,10 @@ class LinkCardPostCellNode: BaseCardPostNode {
   }
 }
 
+protocol LinkCardPostContentDelegate {
+  func linkImageTouchUpInside(sender: ASImageNode)
+}
+
 class LinkCardPostContentNode: ASDisplayNode {
   let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
@@ -33,6 +37,8 @@ class LinkCardPostContentNode: ASDisplayNode {
   var titleNode: ASTextNode
   var descriptionNode: ASTextNode
   var commentsSummaryNode: ASTextNode
+
+  var delegate: LinkCardPostContentDelegate?
 
   var articleTitle: String? {
     didSet {
@@ -103,6 +109,8 @@ class LinkCardPostContentNode: ASDisplayNode {
     titleNode.maximumNumberOfLines = 3
     descriptionNode.maximumNumberOfLines = 3
     commentsSummaryNode.maximumNumberOfLines = 1
+
+    imageNode.addTarget(self, action: #selector(videoImageTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
 
   private func loadImageFromUrl(url: String) {
@@ -124,6 +132,11 @@ class LinkCardPostContentNode: ASDisplayNode {
         //TODO: implement action (Retry if needed)
         print(error.description)
     })
+  }
+
+  @objc
+  private func videoImageTouchUpInside(_ sender: ASImageNode?) {
+    delegate?.linkImageTouchUpInside(sender: imageNode)
   }
 
   private func commentsSummaryInset() -> UIEdgeInsets {
