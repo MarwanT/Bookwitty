@@ -20,6 +20,7 @@ class AccountPenNameTableViewCell: UITableViewCell {
   override func awakeFromNib() {
     super.awakeFromNib()
     // Initialization code
+    self.initializeComponents()
   }
 
   private func initializeComponents() {
