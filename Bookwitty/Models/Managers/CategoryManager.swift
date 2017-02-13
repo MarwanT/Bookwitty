@@ -10,15 +10,33 @@ import Foundation
 
 class CategoryManager {
   var categories: [Category]? = nil
-  private var localID: String = "en"
   
   static let shared: CategoryManager = CategoryManager()
   private init() {
     loadCategoriesFromJSON()
   }
   
+  private func categoriesLanguage() -> String {
+    var language = "en"
+    guard let preferredLanguage = NSLocale.preferredLanguages.first else {
+      return language
+    }
+    
+    switch preferredLanguage {
+    // TODO: detect french language and assign it here when available
+    case "en":
+      language = preferredLanguage
+    default:
+      break
+    }
+    
+    return language
+  }
+  
   private func loadCategoriesFromJSON() {
-    guard let url = Bundle.main.url(forResource: "Categories", withExtension: "json") else {
+    let language = categoriesLanguage()
+    
+    guard let url = Bundle.main.url(forResource: "Categories." + language, withExtension: "json") else {
       print("Fail to get categories file path")
       return
     }
@@ -29,7 +47,7 @@ class CategoryManager {
         return
     }
     
-    guard let categoriesDictionary = dictionary?[localID] as? [String : Any] else {
+    guard let categoriesDictionary = dictionary?[language] as? [String : Any] else {
       print("Fail to load localized categories")
       return
     }
