@@ -9,6 +9,12 @@
 import UIKit
 
 class Banner: UIView {
+  let imageView = UIImageView(frame: CGRect.zero)
+  let labelsContainerView = UIView(frame: CGRect.zero)
+  let titleLabel = UILabel(frame: CGRect.zero)
+  let descriptionLabel = UILabel(frame: CGRect.zero)
+  let dimView: UIView = UIView(frame: CGRect.zero)
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     initialize()
@@ -20,5 +26,15 @@ class Banner: UIView {
   }
   
   private func initialize() {
+    addSubviews()
+  }
+  
+  private func addSubviews() {
+    labelsContainerView.addSubview(titleLabel)
+    labelsContainerView.addSubview(descriptionLabel)
+    self.addSubview(imageView)
+    self.addSubview(labelsContainerView)
+    
+    self.insertSubview(dimView, aboveSubview: imageView)
   }
 }
