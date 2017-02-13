@@ -22,6 +22,10 @@ class VideoCardPostCellNode: BaseCardPostNode {
   }
 }
 
+protocol VideoCardContentDelegate {
+  func videoImageTouchUpInside(sender: ASImageNode)
+}
+
 class VideoCardContentNode: ASDisplayNode {
   let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
@@ -33,6 +37,8 @@ class VideoCardContentNode: ASDisplayNode {
   var descriptionNode: ASTextNode
   var commentsSummaryNode: ASTextNode
   var playNode: ASImageNode
+
+  var delegate: VideoCardContentDelegate?
 
   var articleTitle: String? {
     didSet {
