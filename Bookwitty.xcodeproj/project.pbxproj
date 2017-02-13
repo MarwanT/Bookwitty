@@ -26,6 +26,7 @@
 		594290121E51B7C00006B2F1 /* DisclosureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 594290101E51B7C00006B2F1 /* DisclosureTableViewCell.xib */; };
 		594290141E51F2850006B2F1 /* BookStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290131E51F2850006B2F1 /* BookStoreViewController.swift */; };
 		594290161E51F4550006B2F1 /* BookStoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290151E51F4550006B2F1 /* BookStoreViewModel.swift */; };
+		594290181E522D980006B2F1 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290171E522D980006B2F1 /* Banner.swift */; };
 		5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5947C2A71E37B3D1003BF12A /* ViewController.swift */; };
 		594F4EA61E42255200A947FA /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA51E42255200A947FA /* AccessToken.swift */; };
 		594F4EA81E423B8600A947FA /* AppNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA71E423B8600A947FA /* AppNotifications.swift */; };
@@ -124,6 +125,7 @@
 		594290101E51B7C00006B2F1 /* DisclosureTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisclosureTableViewCell.xib; sourceTree = "<group>"; };
 		594290131E51F2850006B2F1 /* BookStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookStoreViewController.swift; sourceTree = "<group>"; };
 		594290151E51F4550006B2F1 /* BookStoreViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookStoreViewModel.swift; sourceTree = "<group>"; };
+		594290171E522D980006B2F1 /* Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		5947C2A71E37B3D1003BF12A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		594F4EA51E42255200A947FA /* AccessToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
 		594F4EA71E423B8600A947FA /* AppNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNotifications.swift; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 				595C4F0C1E3F8C0200BE3942 /* InputField.swift */,
 				595C4F0E1E3F8C9200BE3942 /* PasswordInputField.swift */,
 				595C4F101E3F9DA400BE3942 /* InformativeInputField.swift */,
+				594290171E522D980006B2F1 /* Banner.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -879,6 +882,7 @@
 				F42686791E4F458A0085E581 /* CardActionBarNode.swift in Sources */,
 				5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */,
 				F426867B1E505CE60085E581 /* BaseCardPostNode.swift in Sources */,
+				594290181E522D980006B2F1 /* Banner.swift in Sources */,
 				F420AD9F1E4231E000C78AEB /* AttributedStringBuilder.swift in Sources */,
 				59DA47631E3B7A9B00BA90A5 /* IntroductionViewController.swift in Sources */,
 				56399DC21E51D0F0005192AC /* AccountViewModel.swift in Sources */,
