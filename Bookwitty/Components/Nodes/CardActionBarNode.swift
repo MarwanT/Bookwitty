@@ -23,7 +23,7 @@ class CardActionBarNode: ASDisplayNode {
   var delegate: CardActionBarNodeDelegate? = nil
 
   private let normal = ASControlState(rawValue: 0)
-  private let buttonHeight: CGFloat = 34.0
+  private let buttonSize: CGSize = CGSize(width: 34.0, height: 34.0)
 
   private override init() {
     witButton = ASButtonNode()
@@ -114,11 +114,11 @@ class CardActionBarNode: ASDisplayNode {
     //Setup Dynamic width Wit Button
     witButton.titleNode.maximumNumberOfLines = 1
     witButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-    witButton.style.height = ASDimensionMake(buttonHeight)
+    witButton.style.height = ASDimensionMake(buttonSize.height)
 
     //Setup other buttons
-    commentButton.style.preferredSize = CGSize(width: buttonHeight, height: buttonHeight)
-    shareButton.style.preferredSize = CGSize(width: buttonHeight, height: buttonHeight)
+    commentButton.style.preferredSize = buttonSize
+    shareButton.style.preferredSize = buttonSize
 
     shareButton.style.spacingBefore = 50
 
