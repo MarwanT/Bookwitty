@@ -8,6 +8,7 @@
 
 import Foundation
 import AsyncDisplayKit
+import SwiftLinkPreview
 
 class LinkCardPostCellNode: BaseCardPostNode {
   
@@ -101,6 +102,12 @@ class LinkCardPostContentNode: ASDisplayNode {
   }
 
   private func loadImageFromUrl(url: String) {
-    //TODO: implement action
+    let slp = SwiftLinkPreview()
+    slp.preview(url, onSuccess: { [weak self] (response: SwiftLinkPreview.Response) in
+      //TODO: implement action
+      }, onError: { (error: PreviewError) in
+        //TODO: implement action (Retry if needed)
+        print(error.description)
+    })
   }
 }
