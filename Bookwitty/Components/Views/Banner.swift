@@ -9,7 +9,7 @@
 import UIKit
 import FLKAutoLayout
 
-class Banner: UIView {
+class Banner: UIView, Themeable {
   let imageView = UIImageView(frame: CGRect.zero)
   let labelsContainerView = UIView(frame: CGRect.zero)
   let titleLabel = UILabel(frame: CGRect.zero)
@@ -30,6 +30,7 @@ class Banner: UIView {
     initializeViews()
     addSubviews()
     setConstraints()
+    applyTheme()
   }
   
   func initializeViews() {
@@ -70,4 +71,12 @@ class Banner: UIView {
     
     dimView.alignTop("0", leading: "0", bottom: "0", trailing: "0", toView: imageView)
   }
+  
+  func applyTheme() {
+    titleLabel.textColor = ThemeManager.shared.currentTheme.colorNumber23()
+    descriptionLabel.textColor = ThemeManager.shared.currentTheme.colorNumber23()
+    titleLabel.font = FontDynamicType.title2.font
+    descriptionLabel.font = FontDynamicType.footnote.font
+  }
+  
 }
