@@ -10,14 +10,20 @@ import Foundation
 import AsyncDisplayKit
 
 class PhotoCardPostCellNode: BaseCardPostNode {
-  let node: ASDisplayNode
+  let node: PhotoCardContentNode
   override var shouldShowInfoNode: Bool { return true }
   override var contentShouldExtendBorders: Bool { return true }
   override var contentNode: ASDisplayNode { return node }
 
   override init() {
-    node = ASDisplayNode()
+    node = PhotoCardContentNode()
     super.init()
   }
 }
 
+class PhotoCardContentNode: ASDisplayNode {
+
+  override init() {
+    super.init()
+  }
+}
