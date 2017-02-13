@@ -11,7 +11,9 @@ import UIKit
 class AccountViewController: UIViewController {
 
   @IBOutlet weak var tableView: UITableView!
-  
+
+  fileprivate let viewModel = AccountViewModel()
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
