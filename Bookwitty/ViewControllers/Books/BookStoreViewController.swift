@@ -56,6 +56,17 @@ class BookStoreViewController: UIViewController {
     
     return true
   }
+  
+  func addSpacing(space: CGFloat) {
+    guard space > 0 else {
+      return
+    }
+    
+    let spacer = UIView(frame: CGRect.zero)
+    spacer.backgroundColor = UIColor.clear
+    spacer.constrainHeight("\(space)")
+    stackView.addArrangedSubview(spacer)
+  }
 }
 
 
