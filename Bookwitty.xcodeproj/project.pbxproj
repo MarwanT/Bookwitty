@@ -10,6 +10,8 @@
 		19C00714F09A1D3937F9AAE7 /* Pods_BookwittyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */; };
 		2D1D0880B4A8EB8C8A6AD1A8 /* Pods_Bookwitty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */; };
 		5613402E1E5221730085B8A5 /* AccountPenNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5613402D1E5221730085B8A5 /* AccountPenNameTableViewCell.swift */; };
+		56205DEB1E5324BC000CA4D7 /* TableViewSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56205DE91E5324BC000CA4D7 /* TableViewSectionHeaderView.swift */; };
+		56205DEC1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56205DEA1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib */; };
 		56399DBC1E51CF2D005192AC /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56399DBB1E51CF2D005192AC /* Account.storyboard */; };
 		56399DBF1E51D006005192AC /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56399DBE1E51D006005192AC /* AccountViewController.swift */; };
 		56399DC21E51D0F0005192AC /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56399DC11E51D0F0005192AC /* AccountViewModel.swift */; };
@@ -102,6 +104,8 @@
 /* Begin PBXFileReference section */
 		2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bookwitty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5613402D1E5221730085B8A5 /* AccountPenNameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountPenNameTableViewCell.swift; sourceTree = "<group>"; };
+		56205DE91E5324BC000CA4D7 /* TableViewSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewSectionHeaderView.swift; sourceTree = "<group>"; };
+		56205DEA1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewSectionHeaderView.xib; sourceTree = "<group>"; };
 		56399DBB1E51CF2D005192AC /* Account.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Account.storyboard; sourceTree = "<group>"; };
 		56399DBE1E51D006005192AC /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		56399DC11E51D0F0005192AC /* AccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
@@ -227,6 +231,15 @@
 			path = Account;
 			sourceTree = "<group>";
 		};
+		56205DE81E5324BC000CA4D7 /* TableViewSectionHeader */ = {
+			isa = PBXGroup;
+			children = (
+				56205DE91E5324BC000CA4D7 /* TableViewSectionHeaderView.swift */,
+				56205DEA1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib */,
+			);
+			path = TableViewSectionHeader;
+			sourceTree = "<group>";
+		};
 		56399DBD1E51CFF2005192AC /* Account */ = {
 			isa = PBXGroup;
 			children = (
@@ -345,6 +358,7 @@
 		59057FDA1E2533010036AAF3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				56205DE81E5324BC000CA4D7 /* TableViewSectionHeader */,
 				5942900E1E51B7C00006B2F1 /* DisclosureTableViewCell */,
 				5613402C1E5221570085B8A5 /* Account */,
 				5967E4561E4105020067093F /* NotificationView */,
@@ -715,6 +729,7 @@
 				59D8FCA31E4C760F001C1EDB /* GoogleService-Info.plist in Resources */,
 				59D8FCA61E4C76E7001C1EDB /* Info.plist in Resources */,
 				597B8E361E3954B200C7811B /* Georgia.ttf in Resources */,
+				56205DEC1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib in Resources */,
 				594290121E51B7C00006B2F1 /* DisclosureTableViewCell.xib in Resources */,
 				594290031E4F737B0006B2F1 /* Books.storyboard in Resources */,
 				597B8E391E3954B200C7811B /* Volkhov-Regular.ttf in Resources */,
@@ -866,6 +881,7 @@
 				595C4F0D1E3F8C0200BE3942 /* InputField.swift in Sources */,
 				59BD55781E302EB800D3B805 /* Analytics.swift in Sources */,
 				F422D8301E51CD9D00A32C2F /* LinkCardPostCellNode.swift in Sources */,
+				56205DEB1E5324BC000CA4D7 /* TableViewSectionHeaderView.swift in Sources */,
 				59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */,
 				59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */,
 				59DA475E1E3B7A8F00BA90A5 /* TutorialViewModel.swift in Sources */,
