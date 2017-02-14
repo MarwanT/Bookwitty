@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import TTTAttributedLabel
 
 class TableViewSectionHeaderView: UITableViewHeaderFooterView {
+  @IBOutlet weak var label: TTTAttributedLabel!
 
 }
 
