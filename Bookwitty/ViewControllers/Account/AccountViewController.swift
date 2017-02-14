@@ -7,10 +7,15 @@
 //
 
 import UIKit
+import TTTAttributedLabel
 
 class AccountViewController: UIViewController {
 
   @IBOutlet weak var tableView: UITableView!
+
+  @IBOutlet private weak var headerView: UIView!
+  @IBOutlet private weak var profileImageView: UIImageView!
+  @IBOutlet private weak var displayNameLabel: TTTAttributedLabel!
 
   fileprivate let viewModel = AccountViewModel()
 
@@ -21,11 +26,24 @@ class AccountViewController: UIViewController {
     self.title = self.viewModel.viewControllerTitle
     initializeComponents()
     applyTheme()
+    fillUserInformation()
   }
 
   private func initializeComponents() {
+    self.profileImageView.layer.masksToBounds = true
+    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.width / 2.0
+
+    self.headerView.layoutMargins.left = ThemeManager.shared.currentTheme.generalExternalMargin()
+    self.headerView.layoutMargins.right = ThemeManager.shared.currentTheme.generalExternalMargin()
+    self.displayNameLabel.font = FontDynamicType.subheadline.font
+
     tableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
     tableView.register(TableViewSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: TableViewSectionHeaderView.reuseIdentifier)
+  }
+
+  private func fillUserInformation() {
+    self.displayNameLabel.text = nil//Todo: grab the values from the vm when available
+    self.profileImageView.image = nil//Todo: grab the values from the vm when available
   }
 }
 
