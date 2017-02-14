@@ -14,7 +14,7 @@ class BookStoreViewController: UIViewController {
   
   let viewModel = BookStoreViewModel()
   
-  private let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
+  fileprivate let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
   
   override func viewDidLoad() {
     super.viewDidLoad()
