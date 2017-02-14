@@ -14,6 +14,7 @@ class TableViewSectionHeaderView: UITableViewHeaderFooterView {
   static let nib: UINib = UINib(nibName: "TableViewSectionHeaderView", bundle: nil)
 
   @IBOutlet weak var label: TTTAttributedLabel!
+  @IBOutlet var separators: [UIView]!
 
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -30,5 +31,7 @@ extension TableViewSectionHeaderView: Themeable {
 
     label.font = FontDynamicType.footnote.font
     label.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+
+    separators.forEach({ $0.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor() })
   }
 }
