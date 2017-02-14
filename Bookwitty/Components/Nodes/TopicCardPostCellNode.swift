@@ -23,7 +23,20 @@ class TopicCardPostCellNode: BaseCardPostNode {
 }
 
 class TopicCardPostContentNode: ASDisplayNode {
+  private var imageNode: ASNetworkImageNode
+  private var titleNode: ASTextNode
+  private var topicStatsNode: ASTextNode
+  private var descriptionNode: ASTextNode
+
   override init() {
+    imageNode = ASNetworkImageNode()
+    titleNode = ASTextNode()
+    topicStatsNode = ASTextNode()
+    descriptionNode = ASTextNode()
     super.init()
+    addSubnode(imageNode)
+    addSubnode(titleNode)
+    addSubnode(topicStatsNode)
+    addSubnode(descriptionNode)
   }
 }
