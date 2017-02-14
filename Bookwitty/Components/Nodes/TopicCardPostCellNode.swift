@@ -28,6 +28,39 @@ class TopicCardPostContentNode: ASDisplayNode {
   private var topicStatsNode: ASTextNode
   private var descriptionNode: ASTextNode
 
+
+  var articleTitle: String? {
+    didSet {
+      if let articleTitle = articleTitle {
+        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
+          .append(text: articleTitle, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+      }
+    }
+  }
+  var articleDescription: String? {
+    didSet {
+      if let articleDescription = articleDescription {
+        descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
+          .append(text: articleDescription, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+      }
+    }
+  }
+  var articleTopicStats: String? {
+    didSet {
+      if let articleTopicStats = articleTopicStats {
+        topicStatsNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
+          .append(text: articleTopicStats, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+      }
+    }
+  }
+  var imageUrl: String? {
+    didSet {
+      if let imageUrl = imageUrl {
+        imageNode.url = URL(string: imageUrl)
+      }
+    }
+  }
+
   override init() {
     imageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
