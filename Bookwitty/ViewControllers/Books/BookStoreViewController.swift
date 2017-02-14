@@ -14,6 +14,13 @@ class BookStoreViewController: UIViewController {
   
   let viewModel = BookStoreViewModel()
   
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    let didAddBanner = loadBannerSection()
+    let didAddFeaturedSection = loadFeaturedContentSection()
+  }
+  
   func loadBannerSection() -> Bool {
     let banner = Banner()
     banner.image = #imageLiteral(resourceName: "Illustrtion")
