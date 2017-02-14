@@ -29,6 +29,13 @@ class AccountViewController: UIViewController {
   }
 
   private func initializeComponents() {
+    self.profileImageView.layer.masksToBounds = true
+    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.width / 2.0
+
+    self.headerView.layoutMargins.left = ThemeManager.shared.currentTheme.generalExternalMargin()
+    self.headerView.layoutMargins.right = ThemeManager.shared.currentTheme.generalExternalMargin()
+    self.displayNameLabel.font = FontDynamicType.subheadline.font
+
     tableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
     tableView.register(TableViewSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: TableViewSectionHeaderView.reuseIdentifier)
   }
