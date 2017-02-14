@@ -28,6 +28,7 @@ class TopicCardPostContentNode: ASDisplayNode {
   private let imageHeight: CGFloat = 150.0
 
   private var imageNode: ASNetworkImageNode
+  private var subImageNode: ASNetworkImageNode
   private var titleNode: ASTextNode
   private var topicStatsNode: ASTextNode
   private var descriptionNode: ASTextNode
@@ -67,11 +68,13 @@ class TopicCardPostContentNode: ASDisplayNode {
 
   override init() {
     imageNode = ASNetworkImageNode()
+    subImageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
     topicStatsNode = ASTextNode()
     descriptionNode = ASTextNode()
     super.init()
     addSubnode(imageNode)
+    addSubnode(subImageNode)
     addSubnode(titleNode)
     addSubnode(topicStatsNode)
     addSubnode(descriptionNode)
