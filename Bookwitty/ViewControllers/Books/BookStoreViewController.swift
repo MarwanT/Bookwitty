@@ -37,6 +37,8 @@ class BookStoreViewController: UIViewController {
     
     let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
     collectionView.register(FeaturedContentCollectionViewCell.nib, forCellWithReuseIdentifier: FeaturedContentCollectionViewCell.reuseIdentifier)
+    collectionView.dataSource = self
+    collectionView.delegate = self
     collectionView.backgroundColor = UIColor.orange
     collectionView.contentInset = contentInset
     collectionView.showsHorizontalScrollIndicator = false
@@ -46,5 +48,30 @@ class BookStoreViewController: UIViewController {
     stackView.addArrangedSubview(collectionView)
     
     return true
+  }
+}
+
+
+
+extension BookStoreViewController: UICollectionViewDataSource {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return viewModel.featuredContentNumberOfItems
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeaturedContentCollectionViewCell.reuseIdentifier, for: indexPath) as? FeaturedContentCollectionViewCell else {
+      return UICollectionViewCell()
+    }
+    
+    let data = viewModel.dataForFeaturedContent(indexPath: indexPath)
+    cell.title = data.title
+    cell.image = data.image
+    return cell
+  }
+}
+
+extension BookStoreViewController: UICollectionViewDelegate {
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    // TODO: Handle featured content selection
   }
 }
