@@ -46,6 +46,21 @@ class AccountViewController: UIViewController {
     self.profileImageView.image = nil//Todo: grab the values from the vm when available
     self.profileImageView.tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
   }
+
+  fileprivate func dispatchSelectionAt(_ indexPath: IndexPath) {
+    switch indexPath.section {
+    case AccountViewModel.Sections.UserInformation.rawValue:
+      break
+    case AccountViewModel.Sections.PenNames.rawValue:
+      break
+    case AccountViewModel.Sections.CreatePenNames.rawValue:
+      break
+    case AccountViewModel.Sections.CustomerService.rawValue:
+      break
+    default:
+      break
+    }
+  }
 }
 
 extension AccountViewController: Themeable {
@@ -130,5 +145,6 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
+    dispatchSelectionAt(indexPath)
   }
 }
