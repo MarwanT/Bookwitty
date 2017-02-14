@@ -24,6 +24,7 @@ class AccountViewController: UIViewController {
 
   private func initializeComponents() {
     tableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
+    tableView.register(TableViewSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: TableViewSectionHeaderView.reuseIdentifier)
   }
 }
 
