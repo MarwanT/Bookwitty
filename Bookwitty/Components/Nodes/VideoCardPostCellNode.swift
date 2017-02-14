@@ -35,7 +35,6 @@ class VideoCardContentNode: ASDisplayNode {
   var imageNode: ASNetworkImageNode
   var titleNode: ASTextNode
   var descriptionNode: ASTextNode
-  var commentsSummaryNode: ASTextNode
   var playNode: ASImageNode
 
   var delegate: VideoCardContentDelegate?
@@ -56,14 +55,6 @@ class VideoCardContentNode: ASDisplayNode {
       }
     }
   }
-  var articleCommentsSummary: String? {
-    didSet {
-      if let articleCommentsSummary = articleCommentsSummary {
-        commentsSummaryNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
-          .append(text: articleCommentsSummary, color: ThemeManager.shared.currentTheme.colorNumber15()).attributedString
-      }
-    }
-  }
   var imageUrl: String? {
     didSet {
       if let imageUrl = imageUrl {
@@ -78,23 +69,15 @@ class VideoCardContentNode: ASDisplayNode {
     }
   }
 
-  var hasComments: Bool {
-    get {
-      return !(articleCommentsSummary?.isEmpty ?? true)
-    }
-  }
-
   override init() {
     imageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
     descriptionNode = ASTextNode()
-    commentsSummaryNode = ASTextNode()
     playNode = ASImageNode()
     super.init()
     addSubnode(imageNode)
     addSubnode(titleNode)
     addSubnode(descriptionNode)
-    addSubnode(commentsSummaryNode)
     addSubnode(playNode)
     setupNode()
   }
@@ -102,7 +85,6 @@ class VideoCardContentNode: ASDisplayNode {
   private func setupNode() {
     titleNode.maximumNumberOfLines = 3
     descriptionNode.maximumNumberOfLines = 3
-    commentsSummaryNode.maximumNumberOfLines = 1
 
     playNode.image = #imageLiteral(resourceName: "play")
     playNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.colorNumber23().withAlphaComponent(0.9))
@@ -113,13 +95,6 @@ class VideoCardContentNode: ASDisplayNode {
 
   func videoImageTouchUpInside(_ sender: ASImageNode?) {
     delegate?.videoImageTouchUpInside(sender: imageNode)
-  }
-
-  private func commentsSummaryInset() -> UIEdgeInsets {
-    return UIEdgeInsets(top: contentSpacing,
-                        left: externalMargin + internalMargin,
-                        bottom: contentSpacing,
-                        right: externalMargin + internalMargin)
   }
 
   private func titleInset() -> UIEdgeInsets {
@@ -159,17 +134,12 @@ class VideoCardContentNode: ASDisplayNode {
 
     let titleInsetLayoutSpec = ASInsetLayoutSpec(insets: titleInset(), child: titleNode)
     let descriptionInsetLayoutSpec = ASInsetLayoutSpec(insets: descriptionInset(), child: descriptionNode)
-    let commentsSummaryInsetLayoutSpec = ASInsetLayoutSpec(insets: commentsSummaryInset(), child: commentsSummaryNode)
 
     let nodesArray: [ASLayoutElement]
-    if (hasImage && hasComments) {
-      nodesArray = [overlayLayoutSpec, titleInsetLayoutSpec, descriptionInsetLayoutSpec, commentsSummaryInsetLayoutSpec]
-    } else if (hasImage) {
-      nodesArray = [overlayLayoutSpec, titleInsetLayoutSpec, descriptionInsetLayoutSpec, spacer(height: internalMargin)]
-    } else if (hasComments) {
-      nodesArray = [titleInsetLayoutSpec, descriptionInsetLayoutSpec, commentsSummaryInsetLayoutSpec]
+    if (hasImage) {
+      nodesArray = [overlayLayoutSpec, titleInsetLayoutSpec, descriptionInsetLayoutSpec]
     } else {
-      nodesArray = [titleInsetLayoutSpec, descriptionInsetLayoutSpec, spacer(height: internalMargin)]
+      nodesArray = [titleInsetLayoutSpec, descriptionInsetLayoutSpec]
     }
 
     let verticalStack = ASStackLayoutSpec(direction: .vertical,
