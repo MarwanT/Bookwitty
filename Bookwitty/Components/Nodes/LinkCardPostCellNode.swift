@@ -137,7 +137,7 @@ class LinkCardPostContentNode: ASDisplayNode {
   }
 
   private func imageInset() -> UIEdgeInsets {
-    return UIEdgeInsets(top: 0, left: 0, bottom: internalMargin , right: 0)
+    return UIEdgeInsets(top: 0, left: 0, bottom: 0 , right: 0)
   }
 
   private func spacer(height: CGFloat) -> ASLayoutSpec {
@@ -160,7 +160,7 @@ class LinkCardPostContentNode: ASDisplayNode {
     //TODO: Clean adding logic, move top and bottom seraptors from insets to spacers between elements
     let nodesArray: [ASLayoutElement]
     if (hasImage) {
-      nodesArray = [imageInsetLayoutSpec, titleInsetLayoutSpec, spacer(height: internalMargin), descriptionInsetLayoutSpec]
+      nodesArray = [imageInsetLayoutSpec, spacer(height: internalMargin), titleInsetLayoutSpec, spacer(height: internalMargin), descriptionInsetLayoutSpec]
     } else {
       if (!articleTitle.isEmptyOrNil() && !articleDescription.isEmptyOrNil()) {
         nodesArray = [titleInsetLayoutSpec, spacer(height: internalMargin), descriptionInsetLayoutSpec]
