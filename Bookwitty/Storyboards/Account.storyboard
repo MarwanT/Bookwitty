@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -32,20 +33,20 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="yty-kW-dyQ">
-                                                    <rect key="frame" x="19" y="9" width="42" height="42"/>
+                                                    <rect key="frame" x="8" y="9" width="42" height="42"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="42" id="80S-qW-j7m"/>
                                                         <constraint firstAttribute="width" constant="42" id="uru-sn-b3K"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dug-as-3mx" customClass="TTTAttributedLabel">
-                                                    <rect key="frame" x="80" y="30.5" width="226" height="0.0"/>
+                                                    <rect key="frame" x="69" y="30.5" width="248" height="0.0"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rightArrow" translatesAutoresizingMaskIntoConstraints="NO" id="vhc-Vy-2WM">
-                                                    <rect key="frame" x="311" y="6.5" width="45" height="45"/>
+                                                    <rect key="frame" x="322" y="6.5" width="45" height="45"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="45" id="0mH-zi-GIa"/>
                                                         <constraint firstAttribute="width" constant="45" id="EhJ-xc-HSU"/>
@@ -56,8 +57,8 @@
                                                 <constraint firstItem="vhc-Vy-2WM" firstAttribute="centerY" secondItem="As1-n2-LQh" secondAttribute="centerY" id="Nge-cP-LFh"/>
                                                 <constraint firstItem="vhc-Vy-2WM" firstAttribute="leading" secondItem="dug-as-3mx" secondAttribute="trailing" constant="5" id="PvW-I2-CC6"/>
                                                 <constraint firstItem="dug-as-3mx" firstAttribute="leading" secondItem="yty-kW-dyQ" secondAttribute="trailing" constant="19" id="XmV-Ip-rac"/>
-                                                <constraint firstItem="yty-kW-dyQ" firstAttribute="leading" secondItem="As1-n2-LQh" secondAttribute="leading" constant="19" id="cio-HN-bSv"/>
-                                                <constraint firstAttribute="trailing" secondItem="vhc-Vy-2WM" secondAttribute="trailing" constant="19" id="dMx-4p-MhO"/>
+                                                <constraint firstItem="yty-kW-dyQ" firstAttribute="leading" secondItem="As1-n2-LQh" secondAttribute="leadingMargin" id="cio-HN-bSv"/>
+                                                <constraint firstItem="vhc-Vy-2WM" firstAttribute="trailing" secondItem="As1-n2-LQh" secondAttribute="trailingMargin" id="dMx-4p-MhO"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dug-as-3mx" secondAttribute="trailing" constant="19" id="l2s-mI-aSD"/>
                                                 <constraint firstItem="yty-kW-dyQ" firstAttribute="centerY" secondItem="As1-n2-LQh" secondAttribute="centerY" id="rp1-Fc-1Ie"/>
                                                 <constraint firstItem="dug-as-3mx" firstAttribute="centerY" secondItem="As1-n2-LQh" secondAttribute="centerY" id="wIh-XT-WTj"/>
