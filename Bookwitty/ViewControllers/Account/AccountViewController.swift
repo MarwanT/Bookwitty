@@ -64,10 +64,6 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    if case AccountViewModel.Sections.PenNames.rawValue = indexPath.section, 0 == indexPath.row {
-      return 60.0
-    }
-
     return 45.0
   }
 
