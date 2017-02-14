@@ -81,6 +81,7 @@ class BookStoreViewController: UIViewController {
     bookwittySuggestsTableView.separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     bookwittySuggestsTableView.separatorInset = UIEdgeInsets(
       top: 0, left: leftMargin, bottom: 0, right: 0)
+    bookwittySuggestsTableView.dataSource = self
     bookwittySuggestsTableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
     stackView.addArrangedSubview(bookwittySuggestsTableView)
     bookwittySuggestsTableView.alignLeading("0", trailing: "0", toView: stackView)
@@ -143,3 +144,54 @@ extension BookStoreViewController: UICollectionViewDelegate {
     // TODO: Handle featured content selection
   }
 }
+
+
+// MARK: - Table ViewS Data Source
+
+extension BookStoreViewController: UITableViewDataSource {
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return viewModel.bookwittySuggestsNumberOfSections
+  }
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return viewModel.bookwittySuggestsNumberOfItems
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: DisclosureTableViewCell.identifier) as? DisclosureTableViewCell else {
+      return UITableViewCell()
+    }
+    
+    let data = viewModel.dataForBookwittySuggests(indexPath)
+    cell.label.text = data
+    return cell
+  }
+  
+  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    let containerView = UIView(frame: CGRect.zero)
+    
+    let tableHeaderLabel = UILabel(frame: CGRect.zero)
+    tableHeaderLabel.text = viewModel.bookwittySuggestsTitle
+    tableHeaderLabel.font = FontDynamicType.subheadline.font
+    tableHeaderLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    tableHeaderLabel.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+    containerView.addSubview(tableHeaderLabel)
+    tableHeaderLabel.alignTop("0", leading: "\(leftMargin)", bottom: "0", trailing: "0", toView: containerView)
+    
+    let separatorView = separatorViewInstance()
+    containerView.addSubview(separatorView)
+    separatorView.alignBottomEdge(withView: containerView, predicate: "0")
+    separatorView.alignLeading("\(leftMargin)", trailing: "0", toView: containerView)
+    
+    return containerView
+  }
+  
+  func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    return 45
+  }
+  
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 45
+  }
+}
+
