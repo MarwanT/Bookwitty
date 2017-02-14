@@ -26,6 +26,9 @@ class BookStoreViewController: UIViewController {
     addSeparator(leftMargin)
     let didAddViewAllCategoriesSection = loadViewAllCategories()
     addSeparator()
+    addSpacing(space: 10)
+    let didLoadBookwittySuggests = loadBookwittySuggest()
+    addSeparator()
   }
   
   func loadBannerSection() -> Bool {
