@@ -9,7 +9,7 @@
 import Foundation
 
 final class BookStoreViewModel {
-  
+  let viewAllCategoriesLabelText = localizedString(key: "view-all-categories", defaultValue: "View All Categories")
 }
 
 

@@ -19,6 +19,7 @@ class BookStoreViewController: UIViewController {
     
     let didAddBanner = loadBannerSection()
     let didAddFeaturedSection = loadFeaturedContentSection()
+    let didAddViewAllCategoriesSection = loadViewAllCategories()
   }
   
   func loadBannerSection() -> Bool {
@@ -57,6 +58,19 @@ class BookStoreViewController: UIViewController {
     return true
   }
   
+  func loadViewAllCategories() -> Bool {
+    let disclosureView = UIView.loadFromView(DisclosureView.self, owner: nil)
+    disclosureView.style = .highlighted
+    disclosureView.delegate = self
+    disclosureView.label.text = viewModel.viewAllCategoriesLabelText
+    
+    disclosureView.constrainHeight("45")
+    stackView.addArrangedSubview(disclosureView)
+    disclosureView.alignLeadingEdge(withView: stackView, predicate: "0")
+    disclosureView.alignTrailingEdge(withView: stackView, predicate: "0")
+    return true
+  }
+  
   func addSeparator(_ leftMargin: CGFloat = 0) {
     let separatorView = UIView(frame: CGRect.zero)
     separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
@@ -75,6 +89,12 @@ class BookStoreViewController: UIViewController {
     spacer.backgroundColor = UIColor.clear
     spacer.constrainHeight("\(space)")
     stackView.addArrangedSubview(spacer)
+  }
+}
+
+extension BookStoreViewController: DisclosureViewDelegate {
+  func disclosureViewTapped() {
+    print("View ALl categories")
   }
 }
 
