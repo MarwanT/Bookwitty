@@ -7,10 +7,15 @@
 //
 
 import UIKit
+import TTTAttributedLabel
 
 class AccountViewController: UIViewController {
 
   @IBOutlet weak var tableView: UITableView!
+
+  @IBOutlet private weak var headerView: UIView!
+  @IBOutlet private weak var profileImageView: UIImageView!
+  @IBOutlet private weak var displayNameLabel: TTTAttributedLabel!
 
   fileprivate let viewModel = AccountViewModel()
 
