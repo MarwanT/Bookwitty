@@ -31,6 +31,14 @@ class BookStoreViewController: UIViewController {
     addSeparator()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    // Add the table view height constraint constraint
+    bookwittySuggestsTableView.layoutIfNeeded()
+    bookwittySuggestsTableView.constrainHeight("\(bookwittySuggestsTableView.contentSize.height)")
+  }
+  
   func loadBannerSection() -> Bool {
     let banner = Banner()
     banner.image = #imageLiteral(resourceName: "Illustrtion")
