@@ -12,6 +12,8 @@ import FLKAutoLayout
 class BookStoreViewController: UIViewController {
   @IBOutlet weak var stackView: UIStackView!
   
+  let bookwittySuggestsTableView = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)
+  
   let viewModel = BookStoreViewModel()
   
   fileprivate let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
