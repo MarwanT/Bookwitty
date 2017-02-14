@@ -169,10 +169,10 @@ extension BaseCardPostNode {
 
   private func infoInset() -> UIEdgeInsets {
     let externalInset = self.externalInset()
-    return UIEdgeInsets(top: externalInset.top + internalMargin,
-                        left: externalInset.left + internalMargin,
-                        bottom: internalMargin,
-                        right: externalInset.right + internalMargin)
+    return UIEdgeInsets(top: externalInset.top,
+                        left: externalInset.left,
+                        bottom: 0,
+                        right: externalInset.right)
   }
 
   private func actionBarInset() -> UIEdgeInsets {
