@@ -82,6 +82,7 @@ class BookStoreViewController: UIViewController {
     bookwittySuggestsTableView.separatorInset = UIEdgeInsets(
       top: 0, left: leftMargin, bottom: 0, right: 0)
     bookwittySuggestsTableView.dataSource = self
+    bookwittySuggestsTableView.delegate = self
     bookwittySuggestsTableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
     stackView.addArrangedSubview(bookwittySuggestsTableView)
     bookwittySuggestsTableView.alignLeading("0", trailing: "0", toView: stackView)
@@ -195,3 +196,11 @@ extension BookStoreViewController: UITableViewDataSource {
   }
 }
 
+
+// MARK: - Table ViewS Delegate
+
+extension BookStoreViewController: UITableViewDelegate {
+  func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    return 0.01 // To remove the separator after the last cell
+  }
+}
