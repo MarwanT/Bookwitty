@@ -57,6 +57,15 @@ class BookStoreViewController: UIViewController {
     return true
   }
   
+  func addSeparator(_ leftMargin: CGFloat = 0) {
+    let separatorView = UIView(frame: CGRect.zero)
+    separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    separatorView.constrainHeight("1")
+    stackView.addArrangedSubview(separatorView)
+    separatorView.alignLeadingEdge(withView: stackView, predicate: "\(leftMargin)")
+    separatorView.alignTrailingEdge(withView: stackView, predicate: "0")
+  }
+  
   func addSpacing(space: CGFloat) {
     guard space > 0 else {
       return
