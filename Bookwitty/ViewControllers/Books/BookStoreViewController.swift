@@ -46,7 +46,7 @@ class BookStoreViewController: UIViewController {
     collectionView.register(FeaturedContentCollectionViewCell.nib, forCellWithReuseIdentifier: FeaturedContentCollectionViewCell.reuseIdentifier)
     collectionView.dataSource = self
     collectionView.delegate = self
-    collectionView.backgroundColor = UIColor.orange
+    collectionView.backgroundColor = UIColor.clear
     collectionView.contentInset = contentInset
     collectionView.showsHorizontalScrollIndicator = false
     collectionView.constrainHeight("\(itemSize.height + contentInset.top + contentInset.bottom)")
