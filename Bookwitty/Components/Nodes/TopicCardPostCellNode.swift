@@ -36,8 +36,7 @@ class TopicCardPostContentNode: ASDisplayNode {
   private var titleNode: ASTextNode
   private var topicStatsNode: ASTextNode
   private var descriptionNode: ASTextNode
-
-
+  
   var articleTitle: String? {
     didSet {
       if let articleTitle = articleTitle {
@@ -51,14 +50,6 @@ class TopicCardPostContentNode: ASDisplayNode {
       if let articleDescription = articleDescription {
         descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
           .append(text: articleDescription, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
-      }
-    }
-  }
-  var articleTopicStats: String? {
-    didSet {
-      if let articleTopicStats = articleTopicStats {
-        topicStatsNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
-          .append(text: articleTopicStats, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
       }
     }
   }
@@ -90,6 +81,41 @@ class TopicCardPostContentNode: ASDisplayNode {
     addSubnode(topicStatsNode)
     addSubnode(descriptionNode)
     setupNode()
+  }
+
+  func setTopicStatistics(numberOfPosts: String? = nil, numberOfBooks: String? = nil, numberOfFollowers: String? = nil) {
+    let separator =  " | "
+    var attrStringBuilder = AttributedStringBuilder(fontDynamicType: .footnote)
+    var addSeparator: Bool = false
+
+    if(isValid(numberOfPosts)) {
+      attrStringBuilder = attrStringBuilder
+        .append(text: numberOfPosts!)
+        .append(text: " " + postText, fontDynamicType: .caption2)
+      addSeparator = true
+    } else {
+      addSeparator = false
+    }
+
+    if(isValid(numberOfBooks)) {
+     attrStringBuilder = attrStringBuilder
+      .append(text: (addSeparator ? separator : ""), fontDynamicType: .caption2)
+      .append(text: numberOfBooks!)
+      .append(text: " " + booksText, fontDynamicType: .caption2)
+      addSeparator = true
+    } else {
+      addSeparator = false
+    }
+
+    if(isValid(numberOfFollowers)) {
+      attrStringBuilder = attrStringBuilder
+        .append(text: (addSeparator ? separator : ""), fontDynamicType: .caption2)
+        .append(text: numberOfFollowers!)
+        .append(text: " " + followerText, fontDynamicType: .caption2)
+    }
+
+    //Set the string value
+   descriptionNode.attributedText = attrStringBuilder.attributedString
   }
 
   private func setupNode() {
@@ -146,12 +172,14 @@ class TopicCardPostContentNode: ASDisplayNode {
       nodesArray.append(spacer(height: internalMargin))
       nodesArray.append(titleNodeInset)
     }
-    if(isValid(articleTopicStats)) {
+    if(isValid(topicStatsNode.attributedText?.string ?? "")) {
       nodesArray.append(spacer(height: internalMargin/2))
       nodesArray.append(topicStatsNodeInset)
     }
     if(isValid(articleDescription)) {
-      nodesArray.append(spacer(height: isValid(articleTopicStats) ? internalMargin/2 : internalMargin))
+      nodesArray.append(spacer(height: isValid(topicStatsNode.attributedText?.string ?? "")
+        ? internalMargin/2
+        : internalMargin))
       nodesArray.append(descriptionNodeInset)
     }
 
