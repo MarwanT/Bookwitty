@@ -11,3 +11,16 @@ import Foundation
 final class BookStoreViewModel {
   
 }
+
+
+// MARK: Featured Content
+
+extension BookStoreViewModel {
+  var featuredContentNumberOfItems: Int {
+    return 7
+  }
+  
+  func dataForFeaturedContent(indexPath: IndexPath) -> (title: String?, image: UIImage?) {
+    return ("Featuring Zouzou", #imageLiteral(resourceName: "Illustrtion"))
+  }
+}
