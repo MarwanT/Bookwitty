@@ -101,4 +101,41 @@ class TopicCardPostContentNode: ASDisplayNode {
                         right: internalMargin + externalMargin)
   }
 
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    var nodesArray: [ASLayoutElement] = []
+
+    let imageSize = CGSize(width: constrainedSize.max.width, height: imageHeight)
+    imageNode.style.preferredSize = imageSize
+    imageNode.defaultImage = UIImage(color: ASDisplayNodeDefaultPlaceholderColor(), size: imageSize)
+    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
+    //Add Image Node and space after it
+
+    let titleNodeInset = ASInsetLayoutSpec(insets: cardSidesInset(), child: titleNode)
+    let topicStatsNodeInset = ASInsetLayoutSpec(insets: cardSidesInset(), child: topicStatsNode)
+    let descriptionNodeInset = ASInsetLayoutSpec(insets: cardSidesInset(), child: descriptionNode)
+
+    if(isValid(imageUrl)) {
+      nodesArray.append(imageNode)
+    }
+    if(isValid(articleTitle)) {
+      nodesArray.append(spacer(height: internalMargin))
+      nodesArray.append(titleNodeInset)
+    }
+    if(isValid(articleTopicStats)) {
+      nodesArray.append(spacer(height: internalMargin/2))
+      nodesArray.append(topicStatsNodeInset)
+    }
+    if(isValid(articleDescription)) {
+      nodesArray.append(spacer(height: isValid(articleTopicStats) ? internalMargin/2 : internalMargin))
+      nodesArray.append(descriptionNodeInset)
+    }
+
+    let verticalStack = ASStackLayoutSpec(direction: .vertical,
+                                          spacing: 0,
+                                          justifyContent: .start,
+                                          alignItems: .stretch,
+                                          children: nodesArray)
+
+    return verticalStack
+  }
 }
