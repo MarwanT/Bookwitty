@@ -77,6 +77,16 @@ class BookStoreViewController: UIViewController {
     return true
   }
   
+  func loadBookwittySuggest() -> Bool {
+    bookwittySuggestsTableView.separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    bookwittySuggestsTableView.separatorInset = UIEdgeInsets(
+      top: 0, left: leftMargin, bottom: 0, right: 0)
+    bookwittySuggestsTableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
+    stackView.addArrangedSubview(bookwittySuggestsTableView)
+    bookwittySuggestsTableView.alignLeading("0", trailing: "0", toView: stackView)
+    return true
+  }
+  
   func addSeparator(_ leftMargin: CGFloat = 0) {
     let separatorView = separatorViewInstance()
     stackView.addArrangedSubview(separatorView)
