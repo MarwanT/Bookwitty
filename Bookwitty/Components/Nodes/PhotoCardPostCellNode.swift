@@ -27,16 +27,7 @@ class PhotoCardContentNode: ASDisplayNode {
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
 
   var imageNode: ASNetworkImageNode
-  var commentsSummaryNode: ASTextNode
-  
-  var articleCommentsSummary: String? {
-    didSet {
-      if let articleCommentsSummary = articleCommentsSummary {
-        commentsSummaryNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
-          .append(text: articleCommentsSummary, color: ThemeManager.shared.currentTheme.colorNumber15()).attributedString
-      }
-    }
-  }
+
   var imageUrl: String? {
     didSet {
       if let imageUrl = imageUrl {
@@ -44,31 +35,11 @@ class PhotoCardContentNode: ASDisplayNode {
       }
     }
   }
-
-  var hasComments: Bool {
-    get {
-      return !(articleCommentsSummary?.isEmpty ?? true)
-    }
-  }
   
   override init() {
     imageNode = ASNetworkImageNode()
-    commentsSummaryNode = ASTextNode()
     super.init()
     addSubnode(imageNode)
-    addSubnode(commentsSummaryNode)
-    setupNode()
-  }
-
-  private func setupNode() {
-    commentsSummaryNode.maximumNumberOfLines = 1
-  }
-
-  private func commentsSummaryInset() -> UIEdgeInsets {
-    return UIEdgeInsets(top: contentSpacing,
-                        left: externalMargin + internalMargin,
-                        bottom: contentSpacing,
-                        right: externalMargin + internalMargin)
   }
 
   private func imageInset() -> UIEdgeInsets {
@@ -88,14 +59,8 @@ class PhotoCardContentNode: ASDisplayNode {
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
 
     let imageInsetLayoutSpec = ASInsetLayoutSpec(insets: imageInset(), child: imageNode)
-    let commentsSummaryInsetLayoutSpec = ASInsetLayoutSpec(insets: commentsSummaryInset(), child: commentsSummaryNode)
 
-    let nodesArray: [ASLayoutElement]
-    if (hasComments) {
-      nodesArray = [imageInsetLayoutSpec, commentsSummaryInsetLayoutSpec]
-    } else {
-      nodesArray = [imageInsetLayoutSpec, spacer(height: internalMargin)]
-    }
+    let nodesArray: [ASLayoutElement] = [imageInsetLayoutSpec]
 
     let verticalStack = ASStackLayoutSpec(direction: .vertical,
                                           spacing: 0,
