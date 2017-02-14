@@ -121,6 +121,8 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
     switch section {
     case AccountViewModel.Sections.UserInformation.rawValue:
       return 0
+    case AccountViewModel.Sections.CreatePenNames.rawValue:
+      return 15.0
     default:
       return 45.0
     }
