@@ -106,6 +106,7 @@ class BookStoreViewController: UIViewController {
     selectionTableView.separatorInset = UIEdgeInsets(
       top: 0, left: leftMargin, bottom: 0, right: 0)
     selectionTableView.dataSource = self
+    selectionTableView.delegate = self
     stackView.addArrangedSubview(selectionTableView)
     selectionTableView.alignLeading("0", trailing: "0", toView: stackView)
     return true
