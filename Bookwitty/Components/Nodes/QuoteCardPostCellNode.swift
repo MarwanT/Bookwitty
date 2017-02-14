@@ -31,6 +31,31 @@ class QuoteCardPostContentNode: ASDisplayNode {
   private var nameTextNode: ASTextNode
   private var commentsSummaryNode: ASTextNode
 
+  var articleCommentsSummary: String? {
+    didSet {
+      if let articleCommentsSummary = articleCommentsSummary {
+        commentsSummaryNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+          .append(text: articleCommentsSummary, color: ThemeManager.shared.currentTheme.colorNumber15()).attributedString
+      }
+    }
+  }
+  var articleQuote: String? {
+    didSet {
+      if let articleQuote = articleQuote {
+        quoteTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
+          .append(text: articleQuote, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      }
+    }
+  }
+  var articleQuotePublisher: String? {
+    didSet {
+      if let articleQuotePublisher = articleQuotePublisher {
+        nameTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
+          .append(text: articleQuotePublisher, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      }
+    }
+  }
+
   override init() {
     quoteTextNode = ASTextNode()
     nameTextNode = ASTextNode()
