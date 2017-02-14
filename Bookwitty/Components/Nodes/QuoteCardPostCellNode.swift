@@ -36,5 +36,11 @@ class QuoteCardPostContentNode: ASDisplayNode {
     addSubnode(quoteTextNode)
     addSubnode(nameTextNode)
     addSubnode(commentsSummaryNode)
+    setupNode()
+  }
+
+  private func setupNode() {
+    quoteTextNode.maximumNumberOfLines = 3
+    nameTextNode.maximumNumberOfLines = 1
   }
 }
