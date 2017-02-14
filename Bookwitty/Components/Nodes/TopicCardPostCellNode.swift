@@ -23,6 +23,10 @@ class TopicCardPostCellNode: BaseCardPostNode {
 }
 
 class TopicCardPostContentNode: ASDisplayNode {
+  private let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
+  private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  private let imageHeight: CGFloat = 150.0
+
   private var imageNode: ASNetworkImageNode
   private var titleNode: ASTextNode
   private var topicStatsNode: ASTextNode
@@ -78,6 +82,23 @@ class TopicCardPostContentNode: ASDisplayNode {
     titleNode.maximumNumberOfLines = 4
     descriptionNode.maximumNumberOfLines = 3
     topicStatsNode.maximumNumberOfLines = 1
+  }
+
+  private func isValid(_ value: String?) -> Bool {
+    return !value.isEmptyOrNil()
+  }
+
+  private func spacer(height: CGFloat) -> ASLayoutSpec {
+    return ASLayoutSpec().styled { (style) in
+      style.height = ASDimensionMake(height)
+    }
+  }
+
+  private func cardSidesInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0,
+                        left: internalMargin + externalMargin,
+                        bottom: 0 ,
+                        right: internalMargin + externalMargin)
   }
 
 }
