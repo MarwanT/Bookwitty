@@ -13,6 +13,7 @@ class BookStoreViewController: UIViewController {
   @IBOutlet weak var stackView: UIStackView!
   
   let bookwittySuggestsTableView = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)
+  let selectionTableView = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)
   
   let viewModel = BookStoreViewModel()
   
