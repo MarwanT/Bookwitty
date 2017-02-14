@@ -133,6 +133,7 @@ extension BookStoreViewController: DisclosureViewDelegate {
 }
 
 
+// MARK: - Featured Content Collection View data source
 
 extension BookStoreViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -150,6 +151,9 @@ extension BookStoreViewController: UICollectionViewDataSource {
     return cell
   }
 }
+
+
+// MARK: Featured Content Collection View Delegate
 
 extension BookStoreViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
