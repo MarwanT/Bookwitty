@@ -41,3 +41,15 @@ extension BookStoreViewModel {
     return "Reading list \(indexPath.row)"
   }
 }
+
+// MARK: Bookwitty Selection
+
+extension BookStoreViewModel {
+  var selectionNumberOfSection: Int {
+    return 1
+  }
+  
+  var selectionNumberOfItems: Int {
+    return 1
+  }
+}

@@ -105,6 +105,7 @@ class BookStoreViewController: UIViewController {
     selectionTableView.separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     selectionTableView.separatorInset = UIEdgeInsets(
       top: 0, left: leftMargin, bottom: 0, right: 0)
+    selectionTableView.dataSource = self
     stackView.addArrangedSubview(selectionTableView)
     selectionTableView.alignLeading("0", trailing: "0", toView: stackView)
     return true
@@ -176,48 +177,72 @@ extension BookStoreViewController: UICollectionViewDelegate {
 
 extension BookStoreViewController: UITableViewDataSource {
   func numberOfSections(in tableView: UITableView) -> Int {
-    return viewModel.bookwittySuggestsNumberOfSections
+    if tableView == bookwittySuggestsTableView {
+      return viewModel.bookwittySuggestsNumberOfSections
+    } else {
+      return viewModel.selectionNumberOfSection
+    }
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return viewModel.bookwittySuggestsNumberOfItems
+    if tableView == bookwittySuggestsTableView {
+      return viewModel.bookwittySuggestsNumberOfItems
+    } else {
+      return viewModel.selectionNumberOfItems
+    }
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: DisclosureTableViewCell.identifier) as? DisclosureTableViewCell else {
+    if tableView == bookwittySuggestsTableView {
+      guard let cell = tableView.dequeueReusableCell(withIdentifier: DisclosureTableViewCell.identifier) as? DisclosureTableViewCell else {
+        return UITableViewCell()
+      }
+      
+      let data = viewModel.dataForBookwittySuggests(indexPath)
+      cell.label.text = data
+      return cell
+    } else {
       return UITableViewCell()
     }
-    
-    let data = viewModel.dataForBookwittySuggests(indexPath)
-    cell.label.text = data
-    return cell
   }
   
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    let containerView = UIView(frame: CGRect.zero)
-    
-    let tableHeaderLabel = UILabel(frame: CGRect.zero)
-    tableHeaderLabel.text = viewModel.bookwittySuggestsTitle
-    tableHeaderLabel.font = FontDynamicType.subheadline.font
-    tableHeaderLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
-    tableHeaderLabel.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
-    containerView.addSubview(tableHeaderLabel)
-    tableHeaderLabel.alignTop("0", leading: "\(leftMargin)", bottom: "0", trailing: "0", toView: containerView)
-    
-    let separatorView = separatorViewInstance()
-    containerView.addSubview(separatorView)
-    separatorView.alignBottomEdge(withView: containerView, predicate: "0")
-    separatorView.alignLeading("\(leftMargin)", trailing: "0", toView: containerView)
-    
-    return containerView
+    if tableView == bookwittySuggestsTableView {
+      let containerView = UIView(frame: CGRect.zero)
+      
+      let tableHeaderLabel = UILabel(frame: CGRect.zero)
+      tableHeaderLabel.text = viewModel.bookwittySuggestsTitle
+      tableHeaderLabel.font = FontDynamicType.subheadline.font
+      tableHeaderLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+      tableHeaderLabel.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+      containerView.addSubview(tableHeaderLabel)
+      tableHeaderLabel.alignTop("0", leading: "\(leftMargin)", bottom: "0", trailing: "0", toView: containerView)
+      
+      let separatorView = separatorViewInstance()
+      containerView.addSubview(separatorView)
+      separatorView.alignBottomEdge(withView: containerView, predicate: "0")
+      separatorView.alignLeading("\(leftMargin)", trailing: "0", toView: containerView)
+      
+      return containerView
+    } else {
+      return UIView()
+    }
   }
   
   func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return 45
+    if tableView == bookwittySuggestsTableView {
+      return 45
+    } else {
+      return 45
+    }
   }
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 45
+    if tableView == bookwittySuggestsTableView {
+      return 45
+    } else {
+      return 45
+    }
   }
 }
 
