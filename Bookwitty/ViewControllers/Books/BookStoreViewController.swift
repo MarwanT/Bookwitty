@@ -14,12 +14,16 @@ class BookStoreViewController: UIViewController {
   
   let viewModel = BookStoreViewModel()
   
+  private let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
     let didAddBanner = loadBannerSection()
     let didAddFeaturedSection = loadFeaturedContentSection()
+    addSeparator(leftMargin)
     let didAddViewAllCategoriesSection = loadViewAllCategories()
+    addSeparator()
   }
   
   func loadBannerSection() -> Bool {
