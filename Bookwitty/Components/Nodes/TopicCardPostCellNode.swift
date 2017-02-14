@@ -38,5 +38,13 @@ class TopicCardPostContentNode: ASDisplayNode {
     addSubnode(titleNode)
     addSubnode(topicStatsNode)
     addSubnode(descriptionNode)
+    setupNode()
   }
+
+  private func setupNode() {
+    titleNode.maximumNumberOfLines = 4
+    descriptionNode.maximumNumberOfLines = 3
+    topicStatsNode.maximumNumberOfLines = 1
+  }
+
 }
