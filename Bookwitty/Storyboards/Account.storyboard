@@ -71,6 +71,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="AJV-Nk-iBA" id="pWQ-gh-Ftw"/>
+                                    <outlet property="delegate" destination="AJV-Nk-iBA" id="lyF-IB-LZx"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
