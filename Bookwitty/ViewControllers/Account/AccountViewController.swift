@@ -18,6 +18,7 @@ class AccountViewController: UIViewController {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
+    self.title = self.viewModel.viewControllerTitle
   }
 
   private func initializeComponents() {
