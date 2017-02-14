@@ -66,6 +66,13 @@ class TopicCardPostContentNode: ASDisplayNode {
       }
     }
   }
+  var subImageUrl: String? {
+    didSet {
+      if let subImageUrl = subImageUrl {
+        subImageNode.url = URL(string: subImageUrl)
+      }
+    }
+  }
 
   override init() {
     imageNode = ASNetworkImageNode()
@@ -88,7 +95,7 @@ class TopicCardPostContentNode: ASDisplayNode {
     topicStatsNode.maximumNumberOfLines = 1
 
     subImageNode.style.preferredSize = subImageSize
-    subImageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
+    subImageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
   }
 
   private func isValid(_ value: String?) -> Bool {
