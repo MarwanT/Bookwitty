@@ -26,6 +26,7 @@ class TopicCardPostContentNode: ASDisplayNode {
   private let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let imageHeight: CGFloat = 150.0
+  private let subImageSize = CGSize(width: 100.0, height: 100.0)
 
   private var imageNode: ASNetworkImageNode
   private var subImageNode: ASNetworkImageNode
@@ -85,6 +86,9 @@ class TopicCardPostContentNode: ASDisplayNode {
     titleNode.maximumNumberOfLines = 4
     descriptionNode.maximumNumberOfLines = 3
     topicStatsNode.maximumNumberOfLines = 1
+
+    subImageNode.style.preferredSize = subImageSize
+    subImageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
   }
 
   private func isValid(_ value: String?) -> Bool {
