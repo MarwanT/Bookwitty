@@ -19,6 +19,10 @@ class AccountViewController: UIViewController {
 
     // Do any additional setup after loading the view.
   }
+
+  private func initializeComponents() {
+    tableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
+  }
 }
 
 extension AccountViewController {
