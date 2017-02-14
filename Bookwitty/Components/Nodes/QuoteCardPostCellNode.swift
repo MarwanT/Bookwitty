@@ -24,14 +24,17 @@ class QuoteCardPostCellNode: BaseCardPostNode {
 }
 
 class QuoteCardPostContentNode: ASDisplayNode {
-  var quoteTextNode: ASTextNode
-  var nameTextNode: ASTextNode
+  private var quoteTextNode: ASTextNode
+  private var nameTextNode: ASTextNode
+  private var commentsSummaryNode: ASTextNode
 
   override init() {
     quoteTextNode = ASTextNode()
     nameTextNode = ASTextNode()
+    commentsSummaryNode = ASTextNode()
     super.init()
     addSubnode(quoteTextNode)
     addSubnode(nameTextNode)
+    addSubnode(commentsSummaryNode)
   }
 }
