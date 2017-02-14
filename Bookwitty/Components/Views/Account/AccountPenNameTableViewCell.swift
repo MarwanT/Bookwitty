@@ -14,21 +14,36 @@ class AccountPenNameTableViewCell: UITableViewCell {
   static let reuseIdentifier: String = "AccountPenNameTableViewCellReuseIdentifier"
 
   @IBOutlet weak var profileImageView: UIImageView!
-  @IBOutlet weak var nameLabel: TTTAttributedLabel!
-  @IBOutlet weak var disclosureIndicator: UIImageView!
+  @IBOutlet weak var label: TTTAttributedLabel!
+  @IBOutlet weak var disclosureIndicatorImageView: UIImageView!
 
   override func awakeFromNib() {
     super.awakeFromNib()
     // Initialization code
     self.initializeComponents()
+    applyTheme()
   }
 
   private func initializeComponents() {
     profileImageView.layer.masksToBounds = true
     profileImageView.layer.cornerRadius = profileImageView.frame.width / 2.0
+  }
+}
 
-    nameLabel.font = FontDynamicType.footnote.font
+extension AccountPenNameTableViewCell: Themeable {
+  func applyTheme() {
+    let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
 
-    disclosureIndicator.image = #imageLiteral(resourceName: "rightArrow")
+    contentView.layoutMargins = UIEdgeInsets(
+      top: 0, left: leftMargin, bottom: 0, right: 0)
+
+    selectedBackgroundView = UIImageView(
+      image: UIImage(color: ThemeManager.shared.currentTheme.defaultSelectionColor()))
+    tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
+
+    label.font = FontDynamicType.footnote.font
+    label.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+
+    disclosureIndicatorImageView.image = #imageLiteral(resourceName: "rightArrow")
   }
 }
