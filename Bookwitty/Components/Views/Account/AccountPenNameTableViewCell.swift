@@ -14,8 +14,8 @@ class AccountPenNameTableViewCell: UITableViewCell {
   static let reuseIdentifier: String = "AccountPenNameTableViewCellReuseIdentifier"
 
   @IBOutlet weak var profileImageView: UIImageView!
-  @IBOutlet weak var nameLabel: TTTAttributedLabel!
-  @IBOutlet weak var disclosureIndicator: UIImageView!
+  @IBOutlet weak var label: TTTAttributedLabel!
+  @IBOutlet weak var disclosureIndicatorImageView: UIImageView!
 
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -41,9 +41,9 @@ extension AccountPenNameTableViewCell: Themeable {
       image: UIImage(color: ThemeManager.shared.currentTheme.defaultSelectionColor()))
     tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
 
-    nameLabel.font = FontDynamicType.footnote.font
-    nameLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    label.font = FontDynamicType.footnote.font
+    label.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
 
-    disclosureIndicator.image = #imageLiteral(resourceName: "rightArrow")
+    disclosureIndicatorImageView.image = #imageLiteral(resourceName: "rightArrow")
   }
 }
