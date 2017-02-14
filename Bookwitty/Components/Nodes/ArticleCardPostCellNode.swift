@@ -19,19 +19,13 @@ class ArticleCardPostCellNode: BaseCardPostNode {
   override init() {
     node = ArticleCardContentNode()
     super.init()
-    postInfoData = CardPostInfoNodeData("Shafic","December 12, 2014","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-    node.articleTitle = "Think Metallica & Lady Gaga’s performance at the Grammys will be weird? This isn’t even the weirdest collaboration they’ve given us."
-    node.articleDescription = "The Grammys have sandwiched together some unorthodox, yet delicious, combinations in the past. Each year, the ceremony seems to one-up itself with a radical recipe of rap and jazz, or country and R&B, or something wacky like polka and ska. Their pairings are like banana and bacon -- you don’t think they’d taste well together, but they actually mesh pretty decently once you try them."
-    node.imageUrl = "https://www.billboard.com/files/styles/article_main_image/public/media/metallica-opera-house-nov-2016-billboard-1548.jpg"
-    node.articleCommentsSummary = "Joanna and 4 others you know commented on this"
-
   }
 }
 
 class ArticleCardContentNode: ASDisplayNode {
-  let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
-  let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
-  let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+  private let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
+  private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   
   var imageNode: ASNetworkImageNode
   var titleNode: ASTextNode

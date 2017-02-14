@@ -10,20 +10,25 @@ import Foundation
 import AsyncDisplayKit
 
 protocol CardActionBarNodeDelegate {
-  func witButtonTouchUpInside(sender: ASButtonNode)
-  func commentButtonTouchUpInside(sender: ASButtonNode)
-  func shareButtonTouchUpInside(sender: ASButtonNode)
+  func cardActionBarNode(card: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode)
 }
 
 class CardActionBarNode: ASDisplayNode {
-
+  enum Action {
+    case wit
+    case comment
+    case share
+  }
   var witButton: ASButtonNode
   var commentButton: ASButtonNode
   var shareButton: ASButtonNode
   var delegate: CardActionBarNodeDelegate? = nil
 
-  let normal = ASControlState(rawValue: 0)
-  let buttonHeight: CGFloat = 34.0
+  private let normal = ASControlState(rawValue: 0)
+  private let buttonSize: CGSize = CGSize(width: 34.0, height: 34.0)
+  //MARK: - Localized Strings
+  private let witItTitle: String = localizedString(key: "wit_it", defaultValue: "Wit it")
+  private let wittedTitle: String = localizedString(key: "witted", defaultValue: "Witted")
 
   private override init() {
     witButton = ASButtonNode()
@@ -45,13 +50,11 @@ class CardActionBarNode: ASDisplayNode {
     let imageTintColor: UIColor = ThemeManager.shared.currentTheme.colorNumber15()
 
     //Note: Had a Problem with the selected and highlighted states of the button images
-    let commentImage: UIImage = UIImage(data: UIImagePNGRepresentation(#imageLiteral(resourceName: "comment"))!, scale: 3)!
     commentButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
-    commentButton.setImage(commentImage, for: normal)
+    commentButton.setImage(#imageLiteral(resourceName: "comment"), for: normal)
 
-    let shareImage: UIImage = UIImage(data: UIImagePNGRepresentation(#imageLiteral(resourceName: "shareOutside"))!, scale: 3)!
     shareButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
-    shareButton.setImage(shareImage, for: normal)
+    shareButton.setImage(#imageLiteral(resourceName: "shareOutside"), for: normal)
 
     setupWitButtonStyling()
 
@@ -72,8 +75,8 @@ class CardActionBarNode: ASDisplayNode {
     witButton.setBackgroundImage(buttonBackgroundImage, for: normal)
     witButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
 
-    witButton.setTitle("Wit it", with: buttonFont, with: textColor, for: normal)
-    witButton.setTitle("Witted", with: buttonFont, with: selectedTextColor, for: .selected)
+    witButton.setTitle(witItTitle, with: buttonFont, with: textColor, for: normal)
+    witButton.setTitle(wittedTitle, with: buttonFont, with: selectedTextColor, for: .selected)
 
     witButton.cornerRadius = 4
     witButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
@@ -82,28 +85,24 @@ class CardActionBarNode: ASDisplayNode {
   }
 
   func toggleWitButton() {
-    if (!witButton.isSelected) {
-      witButton.isSelected = true
-    } else {
-      witButton.isSelected = false
-    }
+    witButton.isSelected = !witButton.isSelected
   }
 
   func witButtonTouchUpInside(_ sender: ASButtonNode?) {
     guard let sender = sender else { return }
-    delegate?.witButtonTouchUpInside(sender: sender)
+    delegate?.cardActionBarNode(card: self, didRequestAction: CardActionBarNode.Action.wit, forSender: sender)
     //TODO: Remove line and instead call toggleWitButton when Wit is successful
     toggleWitButton()
   }
 
   func commentButtonTouchUpInside(_ sender: ASButtonNode?) {
     guard let sender = sender else { return }
-    delegate?.commentButtonTouchUpInside(sender: sender)
+    delegate?.cardActionBarNode(card: self, didRequestAction: CardActionBarNode.Action.comment, forSender: sender)
   }
 
   func shareButtonTouchUpInside(_ sender: ASButtonNode?) {
     guard let sender = sender else { return }
-    delegate?.shareButtonTouchUpInside(sender: sender)
+    delegate?.cardActionBarNode(card: self, didRequestAction: CardActionBarNode.Action.share, forSender: sender)
   }
 
   private func spacer(flexGrow: CGFloat = 1.0) -> ASLayoutSpec {
@@ -116,11 +115,11 @@ class CardActionBarNode: ASDisplayNode {
     //Setup Dynamic width Wit Button
     witButton.titleNode.maximumNumberOfLines = 1
     witButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-    witButton.style.height = ASDimensionMake(buttonHeight)
+    witButton.style.height = ASDimensionMake(buttonSize.height)
 
     //Setup other buttons
-    commentButton.style.preferredSize = CGSize(width: buttonHeight, height: buttonHeight)
-    shareButton.style.preferredSize = CGSize(width: buttonHeight, height: buttonHeight)
+    commentButton.style.preferredSize = buttonSize
+    shareButton.style.preferredSize = buttonSize
 
     shareButton.style.spacingBefore = 50
 

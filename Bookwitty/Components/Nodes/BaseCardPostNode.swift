@@ -17,14 +17,14 @@ protocol BaseCardPostNodeContentProvider {
 
 class BaseCardPostNode: ASCellNode {
 
-  let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
-  let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
-  let witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
+  fileprivate let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
+  fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
 
-  private(set) var infoNode: CardPostInfoNode
-  private(set) var actionBarNode: CardActionBarNode
-  private(set) var backgroundNode: ASDisplayNode
-  private(set) var separatorNode: ASDisplayNode
+  fileprivate let infoNode: CardPostInfoNode
+  fileprivate let actionBarNode: CardActionBarNode
+  fileprivate let backgroundNode: ASDisplayNode
+  fileprivate let separatorNode: ASDisplayNode
 
   var postInfoData: CardPostInfoNodeData? {
     didSet {

@@ -17,17 +17,14 @@ class RootTabBarController: UITabBarController {
 
     let placeholderVc1 = NewsFeedViewController()
     let placeholderVc2 = UIViewController()
-
-    let feeds: UIImage = UIImage(data: UIImagePNGRepresentation(#imageLiteral(resourceName: "newsfeed"))!, scale: 4)!
-    let post: UIImage = UIImage(data: UIImagePNGRepresentation( #imageLiteral(resourceName: "createPost"))!, scale: 4)!
     
     placeholderVc1.tabBarItem = UITabBarItem(
       title: "NEWS",
-      image: feeds,
+      image: #imageLiteral(resourceName: "newsfeed"),
       tag: 1)
     placeholderVc2.tabBarItem = UITabBarItem(
       title: "POST",
-      image: post,
+      image: #imageLiteral(resourceName: "createPost"),
       tag:2)
 
     //Set The View controller
