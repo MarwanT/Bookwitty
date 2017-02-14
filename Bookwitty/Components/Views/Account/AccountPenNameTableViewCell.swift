@@ -21,6 +21,7 @@ class AccountPenNameTableViewCell: UITableViewCell {
     super.awakeFromNib()
     // Initialization code
     self.initializeComponents()
+    applyTheme()
   }
 
   private func initializeComponents() {
@@ -30,5 +31,10 @@ class AccountPenNameTableViewCell: UITableViewCell {
     nameLabel.font = FontDynamicType.footnote.font
 
     disclosureIndicator.image = #imageLiteral(resourceName: "rightArrow")
+  }
+}
+
+extension AccountPenNameTableViewCell: Themeable {
+  func applyTheme() {
   }
 }
