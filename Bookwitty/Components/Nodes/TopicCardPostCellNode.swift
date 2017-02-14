@@ -108,6 +108,10 @@ class TopicCardPostContentNode: ASDisplayNode {
                         right: internalMargin + externalMargin)
   }
 
+  private func imageInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0, left: 0, bottom: 0 , right: 0)
+  }
+
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     var nodesArray: [ASLayoutElement] = []
 
@@ -117,12 +121,16 @@ class TopicCardPostContentNode: ASDisplayNode {
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
     //Add Image Node and space after it
 
+    let imageInsetLayoutSpec = ASInsetLayoutSpec(insets: imageInset(), child: imageNode)
+    let videoNodeLayoutSpec = ASCenterLayoutSpec(centeringOptions: ASCenterLayoutSpecCenteringOptions.XY, sizingOptions: ASCenterLayoutSpecSizingOptions.minimumXY, child: subImageNode)
+    let imageOverlayLayoutSpec = ASOverlayLayoutSpec.init(child: imageInsetLayoutSpec, overlay: videoNodeLayoutSpec)
+
     let titleNodeInset = ASInsetLayoutSpec(insets: cardSidesInset(), child: titleNode)
     let topicStatsNodeInset = ASInsetLayoutSpec(insets: cardSidesInset(), child: topicStatsNode)
     let descriptionNodeInset = ASInsetLayoutSpec(insets: cardSidesInset(), child: descriptionNode)
 
     if(isValid(imageUrl)) {
-      nodesArray.append(imageNode)
+      nodesArray.append(imageOverlayLayoutSpec)
     }
     if(isValid(articleTitle)) {
       nodesArray.append(spacer(height: internalMargin))
