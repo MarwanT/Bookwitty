@@ -20,11 +20,19 @@ class AccountViewController: UIViewController {
     // Do any additional setup after loading the view.
     self.title = self.viewModel.viewControllerTitle
     initializeComponents()
+    applyTheme()
   }
 
   private func initializeComponents() {
     tableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
     tableView.register(TableViewSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: TableViewSectionHeaderView.reuseIdentifier)
+  }
+}
+
+extension AccountViewController: Themeable {
+  func applyTheme() {
+    tableView.backgroundColor = UIColor.clear
+    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
   }
 }
 
