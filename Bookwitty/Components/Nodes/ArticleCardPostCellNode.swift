@@ -30,7 +30,6 @@ class ArticleCardContentNode: ASDisplayNode {
   var imageNode: ASNetworkImageNode
   var titleNode: ASTextNode
   var descriptionNode: ASTextNode
-  var commentsSummaryNode: ASTextNode
 
   var articleTitle: String? {
     didSet {
@@ -48,14 +47,6 @@ class ArticleCardContentNode: ASDisplayNode {
       }
     }
   }
-  var articleCommentsSummary: String? {
-    didSet {
-      if let articleCommentsSummary = articleCommentsSummary {
-        commentsSummaryNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
-          .append(text: articleCommentsSummary, color: ThemeManager.shared.currentTheme.colorNumber15()).attributedString
-      }
-    }
-  }
   var imageUrl: String? {
     didSet {
       if let imageUrl = imageUrl {
@@ -69,37 +60,21 @@ class ArticleCardContentNode: ASDisplayNode {
       return !(imageUrl?.isEmpty ?? true)
     }
   }
-
-  var hasComments: Bool {
-    get {
-      return !(articleCommentsSummary?.isEmpty ?? true)
-    }
-  }
   
   override init() {
     imageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
     descriptionNode = ASTextNode()
-    commentsSummaryNode = ASTextNode()
     super.init()
     addSubnode(imageNode)
     addSubnode(titleNode)
     addSubnode(descriptionNode)
-    addSubnode(commentsSummaryNode)
     setupNode()
   }
 
   private func setupNode() {
     titleNode.maximumNumberOfLines = 3
     descriptionNode.maximumNumberOfLines = 3
-    commentsSummaryNode.maximumNumberOfLines = 1
-  }
-
-  private func commentsSummaryInset() -> UIEdgeInsets {
-    return UIEdgeInsets(top: contentSpacing,
-                        left: externalMargin + internalMargin,
-                        bottom: contentSpacing,
-                        right: externalMargin + internalMargin)
   }
 
   private func titleInset() -> UIEdgeInsets {
@@ -135,17 +110,12 @@ class ArticleCardContentNode: ASDisplayNode {
     let imageInsetLayoutSpec = ASInsetLayoutSpec(insets: imageInset(), child: imageNode)
     let titleInsetLayoutSpec = ASInsetLayoutSpec(insets: titleInset(), child: titleNode)
     let descriptionInsetLayoutSpec = ASInsetLayoutSpec(insets: descriptionInset(), child: descriptionNode)
-    let commentsSummaryInsetLayoutSpec = ASInsetLayoutSpec(insets: commentsSummaryInset(), child: commentsSummaryNode)
 
     let nodesArray: [ASLayoutElement]
-    if (hasImage && hasComments) {
-      nodesArray = [imageInsetLayoutSpec, titleInsetLayoutSpec, descriptionInsetLayoutSpec, commentsSummaryInsetLayoutSpec]
-    } else if (hasImage) {
-      nodesArray = [imageInsetLayoutSpec, titleInsetLayoutSpec, descriptionInsetLayoutSpec, spacer(height: internalMargin)]
-    } else if (hasComments) {
-      nodesArray = [titleInsetLayoutSpec, descriptionInsetLayoutSpec, commentsSummaryInsetLayoutSpec]
+    if (hasImage) {
+      nodesArray = [imageInsetLayoutSpec, titleInsetLayoutSpec, descriptionInsetLayoutSpec]
     } else {
-      nodesArray = [titleInsetLayoutSpec, descriptionInsetLayoutSpec, spacer(height: internalMargin)]
+      nodesArray = [titleInsetLayoutSpec, descriptionInsetLayoutSpec] //, spacer(height: internalMargin)
     }
 
     let verticalStack = ASStackLayoutSpec(direction: .vertical,
