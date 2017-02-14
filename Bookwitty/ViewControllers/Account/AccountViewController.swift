@@ -57,7 +57,32 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
   }
 
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    let values = viewModel.values(forRowAt: indexPath)
 
+    if case AccountViewModel.Sections.PenNames.rawValue = indexPath.section, 0 == indexPath.row {
+      guard let currentCell = cell as? AccountPenNameTableViewCell else {
+        return
+      }
+
+      currentCell.label.attributedText = NSAttributedString(string: values.title)
+      currentCell.profileImageView.image = values.image
+
+    } else {
+      guard let currentCell = cell as? DisclosureTableViewCell else {
+        return
+      }
+
+      //Indentation doesn't work with `DisclosureTableViewCell`
+      //Fix the contentView margins to mimic the indentation
+      let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
+      if case AccountViewModel.Sections.PenNames.rawValue = indexPath.section {
+        currentCell.contentView.layoutMargins.left = leftMargin + 45.0
+      } else {
+        currentCell.contentView.layoutMargins.left = leftMargin
+      }
+
+      currentCell.label.text = values.title
+    }
   }
 
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
