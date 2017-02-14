@@ -26,6 +26,7 @@ class AccountViewController: UIViewController {
     self.title = self.viewModel.viewControllerTitle
     initializeComponents()
     applyTheme()
+    fillUserInformation()
   }
 
   private func initializeComponents() {
@@ -38,6 +39,11 @@ class AccountViewController: UIViewController {
 
     tableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
     tableView.register(TableViewSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: TableViewSectionHeaderView.reuseIdentifier)
+  }
+
+  private func fillUserInformation() {
+    self.displayNameLabel.text = nil//Todo: grab the values from the vm when available
+    self.profileImageView.image = nil//Todo: grab the values from the vm when available
   }
 }
 
