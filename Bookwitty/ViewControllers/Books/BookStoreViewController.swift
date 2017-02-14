@@ -38,6 +38,9 @@ class BookStoreViewController: UIViewController {
     // Add the table view height constraint constraint
     bookwittySuggestsTableView.layoutIfNeeded()
     bookwittySuggestsTableView.constrainHeight("\(bookwittySuggestsTableView.contentSize.height)")
+    
+    selectionTableView.layoutIfNeeded()
+    selectionTableView.constrainHeight("\(selectionTableView.contentSize.height)")
   }
   
   func loadBannerSection() -> Bool {
