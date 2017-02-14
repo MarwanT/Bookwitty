@@ -27,6 +27,8 @@
 		594290141E51F2850006B2F1 /* BookStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290131E51F2850006B2F1 /* BookStoreViewController.swift */; };
 		594290161E51F4550006B2F1 /* BookStoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290151E51F4550006B2F1 /* BookStoreViewModel.swift */; };
 		594290181E522D980006B2F1 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290171E522D980006B2F1 /* Banner.swift */; };
+		594290201E5316380006B2F1 /* FeaturedContentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5942901E1E5316380006B2F1 /* FeaturedContentCollectionViewCell.swift */; };
+		594290211E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5942901F1E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib */; };
 		5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5947C2A71E37B3D1003BF12A /* ViewController.swift */; };
 		594F4EA61E42255200A947FA /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA51E42255200A947FA /* AccessToken.swift */; };
 		594F4EA81E423B8600A947FA /* AppNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA71E423B8600A947FA /* AppNotifications.swift */; };
@@ -126,6 +128,8 @@
 		594290131E51F2850006B2F1 /* BookStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookStoreViewController.swift; sourceTree = "<group>"; };
 		594290151E51F4550006B2F1 /* BookStoreViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookStoreViewModel.swift; sourceTree = "<group>"; };
 		594290171E522D980006B2F1 /* Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
+		5942901E1E5316380006B2F1 /* FeaturedContentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedContentCollectionViewCell.swift; sourceTree = "<group>"; };
+		5942901F1E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeaturedContentCollectionViewCell.xib; sourceTree = "<group>"; };
 		5947C2A71E37B3D1003BF12A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		594F4EA51E42255200A947FA /* AccessToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
 		594F4EA71E423B8600A947FA /* AppNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNotifications.swift; sourceTree = "<group>"; };
@@ -371,6 +375,7 @@
 			isa = PBXGroup;
 			children = (
 				56205DE81E5324BC000CA4D7 /* TableViewSectionHeader */,
+				5942901D1E5316380006B2F1 /* FeaturedContentCollectionViewCell */,
 				5942900E1E51B7C00006B2F1 /* DisclosureTableViewCell */,
 				5613402C1E5221570085B8A5 /* Account */,
 				5967E4561E4105020067093F /* NotificationView */,
@@ -407,6 +412,15 @@
 				594290101E51B7C00006B2F1 /* DisclosureTableViewCell.xib */,
 			);
 			path = DisclosureTableViewCell;
+			sourceTree = "<group>";
+		};
+		5942901D1E5316380006B2F1 /* FeaturedContentCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				5942901E1E5316380006B2F1 /* FeaturedContentCollectionViewCell.swift */,
+				5942901F1E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib */,
+			);
+			path = FeaturedContentCollectionViewCell;
 			sourceTree = "<group>";
 		};
 		594F4EAD1E440A4900A947FA /* API */ = {
@@ -735,6 +749,7 @@
 			files = (
 				59DA47671E3B84ED00BA90A5 /* Access.storyboard in Resources */,
 				59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */,
+				594290211E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib in Resources */,
 				5967E4581E4107EF0067093F /* NotificationView.xib in Resources */,
 				597B8E371E3954B200C7811B /* Ubuntu-Medium.ttf in Resources */,
 				59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */,
@@ -875,6 +890,7 @@
 			files = (
 				59903FED1E3B9D90006043EF /* View.swift in Sources */,
 				F42686771E4EF83C0085E581 /* CardPostInfoNode.swift in Sources */,
+				594290201E5316380006B2F1 /* FeaturedContentCollectionViewCell.swift in Sources */,
 				595C4F0F1E3F8C9200BE3942 /* PasswordInputField.swift in Sources */,
 				56399DBF1E51D006005192AC /* AccountViewController.swift in Sources */,
 				59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */,
