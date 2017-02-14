@@ -86,8 +86,11 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
     }
   }
 
-  func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return viewModel.titleFor(section: section)
+  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    let sectionView = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableViewSectionHeaderView.reuseIdentifier) as? TableViewSectionHeaderView
+    sectionView?.label.text = viewModel.titleFor(section: section)
+    sectionView?.contentView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+    return sectionView
   }
 
   func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
