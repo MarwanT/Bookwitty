@@ -88,7 +88,7 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
         return
       }
 
-      currentCell.label.attributedText = NSAttributedString(string: values.title)
+      currentCell.label.text = values.title
       currentCell.profileImageView.image = values.image
 
     } else {
@@ -105,6 +105,7 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
         currentCell.contentView.layoutMargins.left = leftMargin
       }
 
+      currentCell.label.font = FontDynamicType.caption1.font
       currentCell.label.text = values.title
     }
   }

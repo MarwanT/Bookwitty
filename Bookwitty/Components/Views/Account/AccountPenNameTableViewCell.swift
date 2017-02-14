@@ -42,7 +42,7 @@ extension AccountPenNameTableViewCell: Themeable {
       image: UIImage(color: ThemeManager.shared.currentTheme.defaultSelectionColor()))
     tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
 
-    label.font = FontDynamicType.footnote.font
+    label.font = FontDynamicType.caption1.font
     label.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
 
     disclosureIndicatorImageView.image = #imageLiteral(resourceName: "rightArrow")

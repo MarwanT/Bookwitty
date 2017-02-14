@@ -28,7 +28,7 @@ extension TableViewSectionHeaderView: Themeable {
 
     contentView.layoutMargins = UIEdgeInsets(top: 0, left: leftMargin, bottom: 0, right: 0)
 
-    label.font = FontDynamicType.subheadline.font
+    label.font = FontDynamicType.footnote.font
     label.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
   }
 }
