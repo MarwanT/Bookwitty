@@ -7,3 +7,24 @@
 //
 
 import Foundation
+import AsyncDisplayKit
+import SwiftLinkPreview
+
+class QuoteCardPostCellNode: BaseCardPostNode {
+
+  let node: QuoteCardPostContentNode
+  override var shouldShowInfoNode: Bool { return true }
+  override var contentShouldExtendBorders: Bool { return false }
+  override var contentNode: ASDisplayNode { return node }
+
+  override init() {
+    node = QuoteCardPostContentNode()
+    super.init()
+  }
+}
+
+class QuoteCardPostContentNode: ASDisplayNode {
+  override init() {
+    super.init()
+  }
+}
