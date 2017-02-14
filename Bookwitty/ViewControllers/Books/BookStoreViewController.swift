@@ -101,6 +101,15 @@ class BookStoreViewController: UIViewController {
     return true
   }
   
+  func loadSelectionSection() -> Bool {
+    selectionTableView.separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    selectionTableView.separatorInset = UIEdgeInsets(
+      top: 0, left: leftMargin, bottom: 0, right: 0)
+    stackView.addArrangedSubview(selectionTableView)
+    selectionTableView.alignLeading("0", trailing: "0", toView: stackView)
+    return true
+  }
+  
   func addSeparator(_ leftMargin: CGFloat = 0) {
     let separatorView = separatorViewInstance()
     stackView.addArrangedSubview(separatorView)
