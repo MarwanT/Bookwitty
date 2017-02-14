@@ -44,6 +44,7 @@ class AccountViewController: UIViewController {
   private func fillUserInformation() {
     self.displayNameLabel.text = nil//Todo: grab the values from the vm when available
     self.profileImageView.image = nil//Todo: grab the values from the vm when available
+    self.profileImageView.tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
   }
 }
 
