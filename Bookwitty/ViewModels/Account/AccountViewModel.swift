@@ -137,7 +137,7 @@ final class AccountViewModel {
       title = values.title
       value = values.value
       if penNameSubRow == 0 {
-        image = UIImage(named: "exclamation")
+        image = nil //TODO: set the pen name image
       }
     case Sections.CreatePenNames.rawValue:
       title = valuesForCreatePenName(atRow: indexPath.row)
