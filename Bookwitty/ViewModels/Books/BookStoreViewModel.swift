@@ -11,6 +11,7 @@ import Foundation
 final class BookStoreViewModel {
   let viewAllCategoriesLabelText = localizedString(key: "view-all-categories", defaultValue: "View All Categories")
   let bookwittySuggestsTitle = localizedString(key: "bookwitty-suggests", defaultValue: "Bookwitty Suggests")
+  let selectionHeaderTitle = localizedString(key: "our_selection_for_you", defaultValue: "Our selection for you")
 }
 
 
