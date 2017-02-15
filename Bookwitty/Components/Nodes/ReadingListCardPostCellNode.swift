@@ -65,6 +65,12 @@ class ReadingListCardContentNode: ASDisplayNode {
     titleNode.maximumNumberOfLines = 3
     descriptionNode.maximumNumberOfLines = 3
     topicStatsNode.maximumNumberOfLines = 1
+
+    initializeImageCollectionNode()
+  }
+
+  func initializeImageCollectionNode() {
+    //TODO: develop logic
   }
 
   func setTopicStatistics(numberOfPosts: String? = nil, numberOfBooks: String? = nil, numberOfFollowers: String? = nil) {
