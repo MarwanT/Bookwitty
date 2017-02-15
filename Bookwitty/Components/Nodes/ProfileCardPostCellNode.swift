@@ -23,6 +23,8 @@ class ProfileCardPostCellNode: BaseCardPostNode {
 }
 
 class ProfileCardPostContentNode: ASDisplayNode {
+  private let profileImageSize: CGSize = CGSize(width: 70.0, height: 70.0)
+
   var userProfileImageNode: ASNetworkImageNode
   var userNameTextNode: ASTextNode
   var followersTextNode: ASTextNode
@@ -41,5 +43,13 @@ class ProfileCardPostContentNode: ASDisplayNode {
   func setupNodes() {
     userNameTextNode.maximumNumberOfLines = 1
     followersTextNode.maximumNumberOfLines = 1
+
+    let profileBorderWidth: CGFloat = 0.0
+    let profileBorderColor: UIColor? = nil
+    userProfileImageNode.style.preferredSize = profileImageSize
+    userProfileImageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(profileBorderWidth, profileBorderColor)
+    userProfileImageNode.defaultImage = UIImage(color: ASDisplayNodeDefaultPlaceholderColor(), size: profileImageSize)
   }
+
+  
 }
