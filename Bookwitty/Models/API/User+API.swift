@@ -83,6 +83,25 @@ struct UserAPI {
       }
     }
   }
+
+  public static func updateUser(identifier: String, firstName: String? = nil, lastName: String? = nil, email: String? = nil, currentPassword: String?, password: String? = nil, dateOfBirthISO8601: String? = nil, countryISO3166: String? = nil, badges: [String : Any]? = nil, preferences: [String : Any]? = nil, completionBlock: @escaping (_ success: Bool, _ user: User?, _ error: BookwittyAPIError?)->()) -> Cancellable? {
+    return signedAPIRequest(target: BookwittyAPI.updateUser(identifier: identifier, firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirthISO8601, email: email, currentPassword: currentPassword, password: password, country: countryISO3166, badges: badges, preferences: preferences), completion: {
+      (data, statusCode, response, error) in
+      var success: Bool = false
+      var user: User? = nil
+      var error: BookwittyAPIError? = error
+      defer {
+        completionBlock(success, user, error)
+      }
+
+      if let data = data {
+        user = User.parseData(data: data)
+        success = user != nil
+      } else {
+        error = BookwittyAPIError.failToParseData
+      }
+    })
+  }
 }
 
 //MARK: - Moya Needed parameters
