@@ -21,6 +21,7 @@ class ChangePasswordViewController: UIViewController {
 
     // Do any additional setup after loading the view.
     self.title = viewModel.changePasswordText
+    initializeComponents()
   }
 
   private func initializeComponents() {
