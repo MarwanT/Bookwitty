@@ -22,6 +22,8 @@ class ReadingListCardPostCellNode: BaseCardPostNode {
 }
 
 class ReadingListCardContentNode: ASDisplayNode {
+  private let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
+  private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let postText: String = localizedString(key: "number_of_posts_text", defaultValue: "Posts")
   private let booksText: String = localizedString(key: "number_of_books_text", defaultValue: "Books")
   private let followerText: String = localizedString(key: "number_of_follower_text", defaultValue: "Followers")
