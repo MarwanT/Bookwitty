@@ -22,6 +22,10 @@ class ReadingListCardPostCellNode: BaseCardPostNode {
 }
 
 class ReadingListCardContentNode: ASDisplayNode {
+  private let postText: String = localizedString(key: "number_of_posts_text", defaultValue: "Posts")
+  private let booksText: String = localizedString(key: "number_of_books_text", defaultValue: "Books")
+  private let followerText: String = localizedString(key: "number_of_follower_text", defaultValue: "Followers")
+
   private var titleNode: ASTextNode
   private var topicStatsNode: ASTextNode
   private var descriptionNode: ASTextNode
