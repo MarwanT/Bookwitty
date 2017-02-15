@@ -22,6 +22,7 @@ class ChangePasswordViewController: UIViewController {
     // Do any additional setup after loading the view.
     self.title = viewModel.changePasswordText
     initializeComponents()
+    applyTheme()
   }
 
   private func initializeComponents() {
@@ -44,3 +45,12 @@ class ChangePasswordViewController: UIViewController {
       autocapitalizationType: .none)
   }
 }
+
+//Mark: - Themable implementation
+extension ChangePasswordViewController: Themeable {
+  func applyTheme() {
+    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
+    ThemeManager.shared.currentTheme.stylePrimaryButton(button: changePasswordButton)
+  }
+}
+
