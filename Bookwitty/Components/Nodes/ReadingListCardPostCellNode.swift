@@ -47,4 +47,42 @@ class ReadingListCardContentNode: ASDisplayNode {
     topicStatsNode.maximumNumberOfLines = 1
   }
 
+  func setTopicStatistics(numberOfPosts: String? = nil, numberOfBooks: String? = nil, numberOfFollowers: String? = nil) {
+    let separator =  " | "
+    var attrStringBuilder = AttributedStringBuilder(fontDynamicType: .footnote)
+    var addSeparator: Bool = false
+
+    if(isValid(numberOfPosts)) {
+      attrStringBuilder = attrStringBuilder
+        .append(text: numberOfPosts!)
+        .append(text: " " + postText, fontDynamicType: .caption2)
+      addSeparator = true
+    } else {
+      addSeparator = false
+    }
+
+    if(isValid(numberOfBooks)) {
+      attrStringBuilder = attrStringBuilder
+        .append(text: (addSeparator ? separator : ""), fontDynamicType: .caption2)
+        .append(text: numberOfBooks!)
+        .append(text: " " + booksText, fontDynamicType: .caption2)
+      addSeparator = true
+    } else {
+      addSeparator = false
+    }
+
+    if(isValid(numberOfFollowers)) {
+      attrStringBuilder = attrStringBuilder
+        .append(text: (addSeparator ? separator : ""), fontDynamicType: .caption2)
+        .append(text: numberOfFollowers!)
+        .append(text: " " + followerText, fontDynamicType: .caption2)
+    }
+
+    //Set the string value
+    descriptionNode.attributedText = attrStringBuilder.attributedString
+  }
+
+  private func isValid(_ value: String?) -> Bool {
+    return !value.isEmptyOrNil()
+  }
 }
