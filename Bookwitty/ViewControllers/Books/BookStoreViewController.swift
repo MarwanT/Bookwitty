@@ -231,7 +231,7 @@ extension BookStoreViewController: UITableViewDataSource {
       
       let tableHeaderLabel = UILabel(frame: CGRect.zero)
       tableHeaderLabel.text = viewModel.bookwittySuggestsTitle
-      tableHeaderLabel.font = FontDynamicType.subheadline.font
+      tableHeaderLabel.font = FontDynamicType.callout.font
       tableHeaderLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
       tableHeaderLabel.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
       containerView.addSubview(tableHeaderLabel)
