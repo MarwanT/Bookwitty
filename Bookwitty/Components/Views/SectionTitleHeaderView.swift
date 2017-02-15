@@ -9,6 +9,9 @@
 import UIKit
 
 class SectionTitleHeaderView: UITableViewHeaderFooterView {
+  static let reuseIdentifier = "SectionTitleHeaderView"
+  static let nib = UINib(nibName: reuseIdentifier, bundle: nil)
+  
   @IBOutlet weak var verticalBarView: UIView!
   @IBOutlet weak var horizontalBarView: UIView!
   @IBOutlet weak var label: UILabel!
