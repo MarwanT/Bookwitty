@@ -35,5 +35,8 @@ class SectionTitleHeaderView: UITableViewHeaderFooterView {
 
 extension SectionTitleHeaderView: Themeable {
   func applyTheme() {
+    label.font = FontDynamicType.callout.font
+    verticalBarView.backgroundColor = configuration.verticalBarColor
+    horizontalBarView.backgroundColor = configuration.horizontalBarColor
   }
 }
