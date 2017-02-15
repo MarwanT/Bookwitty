@@ -314,7 +314,11 @@ extension BookStoreViewController: UITableViewDataSource {
 
 extension BookStoreViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-    return 0.01 // To remove the separator after the last cell
+    if tableView == bookwittySuggestsTableView {
+      return 0.01 // To remove the separator after the last cell
+    } else {
+      return 93
+    }
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
