@@ -110,6 +110,7 @@ class BookStoreViewController: UIViewController {
       top: 0, left: leftMargin, bottom: 0, right: 0)
     selectionTableView.dataSource = self
     selectionTableView.delegate = self
+    selectionTableView.register(SectionTitleHeaderView.nib, forHeaderFooterViewReuseIdentifier: SectionTitleHeaderView.reuseIdentifier)
     stackView.addArrangedSubview(selectionTableView)
     selectionTableView.alignLeading("0", trailing: "0", toView: stackView)
     return true
@@ -229,7 +230,10 @@ extension BookStoreViewController: UITableViewDataSource {
       
       return containerView
     } else {
-      return UIView()
+      guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: SectionTitleHeaderView.reuseIdentifier) as? SectionTitleHeaderView else {
+        return UIView()
+      }
+      return headerView
     }
   }
   
