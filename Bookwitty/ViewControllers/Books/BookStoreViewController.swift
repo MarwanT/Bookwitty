@@ -15,6 +15,8 @@ class BookStoreViewController: UIViewController {
   let bookwittySuggestsTableView = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)
   let selectionTableView = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)
   let viewAllCategories = UIView.loadFromView(DisclosureView.self, owner: nil)
+  let viewAllBooksView = UIView.loadFromView(DisclosureView.self, owner: nil)
+  let viewAllSelectionsView = UIView.loadFromView(DisclosureView.self, owner: nil)
   
   let viewModel = BookStoreViewModel()
   
@@ -248,21 +250,21 @@ extension BookStoreViewController: UITableViewDataSource {
       return nil
     }
     
-    let viewAllBooksView = UIView.loadFromView(DisclosureView.self, owner: nil)
     viewAllBooksView.style = .highlighted
     viewAllBooksView.delegate = self
     viewAllBooksView.label.text = viewModel.viewAllBooksLabelText
-    let viewAllSelections = UIView.loadFromView(DisclosureView.self, owner: nil)
-    viewAllSelections.style = .highlighted
-    viewAllSelections.delegate = self
-    viewAllSelections.label.text = viewModel.viewAllSelectionsLabelText
+    
+    viewAllSelectionsView.style = .highlighted
+    viewAllSelectionsView.delegate = self
+    viewAllSelectionsView.label.text = viewModel.viewAllSelectionsLabelText
+    
     let topSeparator = separatorViewInstance()
     let middleSeparator = separatorViewInstance()
     let bottomSeparator = separatorViewInstance()
     
     let containerView = UIView(frame: CGRect.zero)
     containerView.addSubview(viewAllBooksView)
-    containerView.addSubview(viewAllSelections)
+    containerView.addSubview(viewAllSelectionsView)
     containerView.addSubview(topSeparator)
     containerView.addSubview(middleSeparator)
     containerView.addSubview(bottomSeparator)
@@ -274,10 +276,10 @@ extension BookStoreViewController: UITableViewDataSource {
     viewAllBooksView.constrainHeight("45")
     middleSeparator.constrainTopSpace(toView: viewAllBooksView, predicate: "0")
     middleSeparator.alignLeading("0", trailing: "0", toView: topSeparator)
-    viewAllSelections.constrainTopSpace(toView: middleSeparator, predicate: "0")
-    viewAllSelections.alignLeading("0", trailing: "0", toView: containerView)
-    viewAllSelections.constrainHeight("45")
-    bottomSeparator.constrainTopSpace(toView: viewAllSelections, predicate: "0")
+    viewAllSelectionsView.constrainTopSpace(toView: middleSeparator, predicate: "0")
+    viewAllSelectionsView.alignLeading("0", trailing: "0", toView: containerView)
+    viewAllSelectionsView.constrainHeight("45")
+    bottomSeparator.constrainTopSpace(toView: viewAllSelectionsView, predicate: "0")
     bottomSeparator.alignLeading("0", trailing: "0", toView: containerView)
     
     return containerView
