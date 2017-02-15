@@ -14,6 +14,7 @@ class BookStoreViewController: UIViewController {
   
   let bookwittySuggestsTableView = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)
   let selectionTableView = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)
+  let viewAllCategories = UIView.loadFromView(DisclosureView.self, owner: nil)
   
   let viewModel = BookStoreViewModel()
   
@@ -83,15 +84,14 @@ class BookStoreViewController: UIViewController {
   }
   
   func loadViewAllCategories() -> Bool {
-    let disclosureView = UIView.loadFromView(DisclosureView.self, owner: nil)
-    disclosureView.style = .highlighted
-    disclosureView.delegate = self
-    disclosureView.label.text = viewModel.viewAllCategoriesLabelText
+    viewAllCategories.style = .highlighted
+    viewAllCategories.delegate = self
+    viewAllCategories.label.text = viewModel.viewAllCategoriesLabelText
     
-    disclosureView.constrainHeight("45")
-    stackView.addArrangedSubview(disclosureView)
-    disclosureView.alignLeadingEdge(withView: stackView, predicate: "0")
-    disclosureView.alignTrailingEdge(withView: stackView, predicate: "0")
+    viewAllCategories.constrainHeight("45")
+    stackView.addArrangedSubview(viewAllCategories)
+    viewAllCategories.alignLeadingEdge(withView: stackView, predicate: "0")
+    viewAllCategories.alignTrailingEdge(withView: stackView, predicate: "0")
     return true
   }
   
