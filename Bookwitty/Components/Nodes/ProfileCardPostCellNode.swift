@@ -104,4 +104,40 @@ class ProfileCardPostContentNode: ASDisplayNode {
     }
   }
 
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    var verticalChildNodes: [ASLayoutElement] = []
+    verticalChildNodes.append(userNameTextNode)
+    if (isValid(followersCount)) {
+      verticalChildNodes.append(spacer(height: 5.0))
+      verticalChildNodes.append(followersTextNode)
+    }
+
+    let verticalChildStack = ASStackLayoutSpec(direction: .vertical,
+                                               spacing: 0,
+                                               justifyContent: .center,
+                                               alignItems: .start,
+                                               children: verticalChildNodes)
+    verticalChildStack.style.height = ASDimensionMake(headerHeight)
+    verticalChildStack.style.flexShrink = 1.0
+
+    let horizontalStackSpec = ASStackLayoutSpec(direction: .horizontal,
+                                                spacing: internalMargin,
+                                                justifyContent: .start,
+                                                alignItems: .stretch,
+                                                children: [userProfileImageNode, verticalChildStack])
+
+    let verticalParentNodes: [ASLayoutElement] = isValid(articleDescription)
+      ? [horizontalStackSpec, descriptionNode]
+      : [horizontalStackSpec]
+
+    let verticalParentStackSpec = ASStackLayoutSpec(direction: .vertical,
+                                                spacing: internalMargin,
+                                                justifyContent: .start,
+                                                alignItems: .stretch,
+                                                children: verticalParentNodes)
+
+
+    return ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), child: verticalParentStackSpec)
+  }
+
 }
