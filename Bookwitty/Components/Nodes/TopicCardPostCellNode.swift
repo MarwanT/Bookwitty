@@ -172,14 +172,14 @@ class TopicCardPostContentNode: ASDisplayNode {
       nodesArray.append(spacer(height: internalMargin))
       nodesArray.append(titleNodeInset)
     }
-    if(isValid(topicStatsNode.attributedText?.string ?? "")) {
+    if(isValid(topicStatsNode.attributedText?.string)) {
       nodesArray.append(spacer(height: internalMargin/2))
       nodesArray.append(topicStatsNodeInset)
     }
     if(isValid(articleDescription)) {
-      nodesArray.append(spacer(height: isValid(topicStatsNode.attributedText?.string ?? "")
-        ? internalMargin/2
-        : internalMargin))
+      let spacerHeight = isValid(topicStatsNode.attributedText?.string) ? internalMargin/2 : internalMargin
+      
+      nodesArray.append(spacer(height: spacerHeight))
       nodesArray.append(descriptionNodeInset)
     }
 
