@@ -146,13 +146,6 @@ class BookStoreViewController: UIViewController {
   }
 }
 
-extension BookStoreViewController: DisclosureViewDelegate {
-  func disclosureViewTapped() {
-    print("View ALl categories")
-  }
-}
-
-
 // MARK: - Featured Content Collection View data source
 
 extension BookStoreViewController: UICollectionViewDataSource {
@@ -172,7 +165,6 @@ extension BookStoreViewController: UICollectionViewDataSource {
   }
 }
 
-
 // MARK: Featured Content Collection View Delegate
 
 extension BookStoreViewController: UICollectionViewDelegate {
@@ -180,7 +172,6 @@ extension BookStoreViewController: UICollectionViewDelegate {
     // TODO: Handle featured content selection
   }
 }
-
 
 // MARK: - Table ViewS Data Source
 
@@ -309,8 +300,7 @@ extension BookStoreViewController: UITableViewDataSource {
   }
 }
 
-
-// MARK: - Table ViewS Delegate
+// MARK: - Table View Delegate
 
 extension BookStoreViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -323,5 +313,13 @@ extension BookStoreViewController: UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
+  }
+}
+
+// MARK: - Disclosure view delegate
+
+extension BookStoreViewController: DisclosureViewDelegate {
+  func disclosureViewTapped() {
+    print("View ALl categories")
   }
 }
