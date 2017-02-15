@@ -123,10 +123,10 @@
             </objects>
             <point key="canvasLocation" x="-439" y="-346"/>
         </scene>
-        <!--View Controller-->
+        <!--Change Password View Controller-->
         <scene sceneID="CZY-ee-IUb">
             <objects>
-                <viewController id="ErE-12-PjT" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChangePasswordViewController" id="ErE-12-PjT" customClass="ChangePasswordViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="x2w-Rw-IJi"/>
                         <viewControllerLayoutGuide type="bottom" id="hac-Ze-CZf"/>
@@ -134,8 +134,47 @@
                     <view key="view" contentMode="scaleToFill" id="MkN-CL-LH5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NVo-1u-LDm" userLabel="Current Password Input Field" customClass="PasswordInputField" customModule="Bookwitty" customModuleProvider="target">
+                                <rect key="frame" x="47" y="120" width="280" height="60"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="FJ7-RU-hBu"/>
+                                    <constraint firstAttribute="width" constant="280" id="eyF-qt-UIv"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cak-Hh-4cb" userLabel="New Password Input Field" customClass="PasswordInputField" customModule="Bookwitty" customModuleProvider="target">
+                                <rect key="frame" x="47" y="199" width="280" height="60"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lo8-2y-CqX" userLabel="Change Button">
+                                <rect key="frame" x="47" y="278" width="280" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="znB-Rh-VS2"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="lo8-2y-CqX" firstAttribute="top" secondItem="Cak-Hh-4cb" secondAttribute="bottom" constant="19" id="8KZ-EV-e9p"/>
+                            <constraint firstItem="Cak-Hh-4cb" firstAttribute="trailing" secondItem="NVo-1u-LDm" secondAttribute="trailing" id="I4s-Jg-0pI"/>
+                            <constraint firstItem="Cak-Hh-4cb" firstAttribute="height" secondItem="NVo-1u-LDm" secondAttribute="height" id="Njt-XZ-Nhl"/>
+                            <constraint firstItem="Cak-Hh-4cb" firstAttribute="top" secondItem="NVo-1u-LDm" secondAttribute="bottom" constant="19" id="PVo-5u-AJR"/>
+                            <constraint firstItem="NVo-1u-LDm" firstAttribute="centerX" secondItem="MkN-CL-LH5" secondAttribute="centerX" id="WOD-qq-dSo"/>
+                            <constraint firstItem="Cak-Hh-4cb" firstAttribute="width" secondItem="NVo-1u-LDm" secondAttribute="width" id="WvO-K9-zzo"/>
+                            <constraint firstItem="lo8-2y-CqX" firstAttribute="width" secondItem="Cak-Hh-4cb" secondAttribute="width" id="d1A-Re-zbm"/>
+                            <constraint firstItem="lo8-2y-CqX" firstAttribute="trailing" secondItem="Cak-Hh-4cb" secondAttribute="trailing" id="ggT-8m-xHb"/>
+                            <constraint firstItem="NVo-1u-LDm" firstAttribute="top" secondItem="x2w-Rw-IJi" secondAttribute="bottom" constant="100" id="ium-Jw-vWZ"/>
+                            <constraint firstItem="lo8-2y-CqX" firstAttribute="leading" secondItem="Cak-Hh-4cb" secondAttribute="leading" id="x9a-R5-J0H"/>
+                            <constraint firstItem="Cak-Hh-4cb" firstAttribute="leading" secondItem="NVo-1u-LDm" secondAttribute="leading" id="yol-FP-nDN"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="changePasswordButton" destination="lo8-2y-CqX" id="q00-CG-Cjc"/>
+                        <outlet property="currentPasswordInputField" destination="NVo-1u-LDm" id="uJ9-KA-Z0G"/>
+                        <outlet property="newPasswordInputField" destination="Cak-Hh-4cb" id="rap-ih-S0H"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5WF-ok-vrq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
