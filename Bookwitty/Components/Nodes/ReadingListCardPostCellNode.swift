@@ -129,4 +129,38 @@ class ReadingListCardContentNode: ASDisplayNode {
   private func imageInset() -> UIEdgeInsets {
     return UIEdgeInsets(top: 0, left: 0, bottom: 0 , right: 0)
   }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    var nodesArray: [ASLayoutElement] = []
+
+    let titleNodeInset = ASInsetLayoutSpec(insets: cardSidesInset(), child: titleNode)
+    let topicStatsNodeInset = ASInsetLayoutSpec(insets: cardSidesInset(), child: topicStatsNode)
+    let descriptionNodeInset = ASInsetLayoutSpec(insets: cardSidesInset(), child: descriptionNode)
+
+    let statsStr = topicStatsNode.attributedText?.string
+
+    if(isValid(articleTitle)) {
+      nodesArray.append(spacer(height: internalMargin))
+      nodesArray.append(titleNodeInset)
+    }
+    if(isValid(statsStr)) {
+      nodesArray.append(spacer(height: internalMargin/2))
+      nodesArray.append(topicStatsNodeInset)
+    }
+    if(isValid(articleDescription)) {
+      let marginHeight = isValid(statsStr) ? internalMargin/2 : internalMargin
+
+      nodesArray.append(spacer(height: marginHeight))
+      nodesArray.append(descriptionNodeInset)
+    }
+
+    let verticalStack = ASStackLayoutSpec(direction: .vertical,
+                                          spacing: 0,
+                                          justifyContent: .start,
+                                          alignItems: .stretch,
+                                          children: nodesArray)
+
+    return verticalStack
+  }
+
 }
