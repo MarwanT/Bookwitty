@@ -30,6 +30,33 @@ class ProfileCardPostContentNode: ASDisplayNode {
   var userNameTextNode: ASTextNode
   var followersTextNode: ASTextNode
 
+  var userName: String? {
+    didSet {
+      if let userName = userName {
+        userNameTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
+          .append(text: userName, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      }
+    }
+  }
+  var followersCount: String? {
+    didSet {
+      if let followersCount = followersCount {
+        followersTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
+          .append(text: followersCount)
+          .append(text: " ")
+          .append(text: followerText, fontDynamicType: .caption2)
+          .attributedString
+      }
+    }
+  }
+  var imageUrl: String? {
+    didSet {
+      if let imageUrl = imageUrl {
+        userProfileImageNode.url = URL(string: imageUrl)
+      }
+    }
+  }
+
   override init() {
     userProfileImageNode = ASNetworkImageNode()
     userNameTextNode = ASTextNode()
