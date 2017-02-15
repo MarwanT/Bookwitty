@@ -26,9 +26,9 @@ class ProfileCardPostContentNode: ASDisplayNode {
   private let profileImageSize: CGSize = CGSize(width: 70.0, height: 70.0)
   private let followerText: String = localizedString(key: "number_of_follower_text", defaultValue: "Followers")
 
-  var userProfileImageNode: ASNetworkImageNode
-  var userNameTextNode: ASTextNode
-  var followersTextNode: ASTextNode
+  private var userProfileImageNode: ASNetworkImageNode
+  private var userNameTextNode: ASTextNode
+  private var followersTextNode: ASTextNode
 
   var userName: String? {
     didSet {
