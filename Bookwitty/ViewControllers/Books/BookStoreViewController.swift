@@ -260,7 +260,7 @@ extension BookStoreViewController: UITableViewDataSource {
     if tableView == bookwittySuggestsTableView {
       return 45
     } else {
-      return 45
+      return BookTableViewCell.minimumHeight
     }
   }
 }
