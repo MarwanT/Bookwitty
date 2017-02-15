@@ -50,7 +50,7 @@ class ReadingListCardContentNode: ASDisplayNode {
       }
     }
   }
-
+  var imageCollection: [String] = []
 
   override init() {
     titleNode = ASTextNode()
