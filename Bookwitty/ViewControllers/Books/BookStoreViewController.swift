@@ -111,6 +111,7 @@ class BookStoreViewController: UIViewController {
     selectionTableView.dataSource = self
     selectionTableView.delegate = self
     selectionTableView.register(SectionTitleHeaderView.nib, forHeaderFooterViewReuseIdentifier: SectionTitleHeaderView.reuseIdentifier)
+    selectionTableView.register(BookTableViewCell.nib, forCellReuseIdentifier: BookTableViewCell.reuseIdentifier)
     stackView.addArrangedSubview(selectionTableView)
     selectionTableView.alignLeading("0", trailing: "0", toView: stackView)
     return true
@@ -207,7 +208,17 @@ extension BookStoreViewController: UITableViewDataSource {
       cell.label.text = data
       return cell
     } else {
-      return UITableViewCell()
+      guard let cell = tableView.dequeueReusableCell(withIdentifier: BookTableViewCell.reuseIdentifier) as? BookTableViewCell else {
+        return UITableViewCell()
+      }
+      
+      let values = viewModel.selectionValues(for: indexPath)
+      cell.productImage = values.image
+      cell.bookTitle = values.bookTitle
+      cell.authorName = values.authorName
+      cell.productType = values.productType
+      cell.price = values.price
+      return cell
     }
   }
   

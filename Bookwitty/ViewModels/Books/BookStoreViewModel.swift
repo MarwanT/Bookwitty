@@ -50,6 +50,10 @@ extension BookStoreViewModel {
   }
   
   var selectionNumberOfItems: Int {
-    return 1
+    return 5
+  }
+  
+  func selectionValues(for indexPath: IndexPath) -> (image: UIImage?, bookTitle: String?, authorName: String?, productType: String?, price: String?) {
+    return (#imageLiteral(resourceName: "Illustrtion"), "Harry potter and the phylosopher's stone and shafic hariri", "J.K. Rowling And Many Many Other authors and famous people", "Paperback", "150,000 L.L")
   }
 }
