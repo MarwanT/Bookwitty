@@ -23,6 +23,8 @@ class ProfileCardPostCellNode: BaseCardPostNode {
 }
 
 class ProfileCardPostContentNode: ASDisplayNode {
+  private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  private let headerHeight: CGFloat = 70.0
   private let profileImageSize: CGSize = CGSize(width: 70.0, height: 70.0)
   private let followerText: String = localizedString(key: "number_of_follower_text", defaultValue: "Followers")
 
@@ -91,5 +93,15 @@ class ProfileCardPostContentNode: ASDisplayNode {
     userProfileImageNode.defaultImage = UIImage(color: ASDisplayNodeDefaultPlaceholderColor(), size: profileImageSize)
   }
 
-  
+  private func isValid(_ value: String?) -> Bool {
+    return !value.isEmptyOrNil()
+  }
+
+  private func spacer(height: CGFloat = 0, width: CGFloat = 0) -> ASLayoutSpec {
+    return ASLayoutSpec().styled { (style) in
+      style.height = ASDimensionMake(height)
+      style.width = ASDimensionMake(width)
+    }
+  }
+
 }
