@@ -18,6 +18,11 @@ class DisclosureView: UIView {
     case highlighted
   }
   
+  struct Configuration {
+    var normalBackgroundColor: UIColor = ThemeManager.shared.currentTheme.colorNumber23()
+    var selectedBackgroundColor: UIColor = ThemeManager.shared.currentTheme.defaultSelectionColor()
+  }
+  
   @IBOutlet weak var label: UILabel!
   @IBOutlet weak var disclosureImageView: UIImageView!
   
