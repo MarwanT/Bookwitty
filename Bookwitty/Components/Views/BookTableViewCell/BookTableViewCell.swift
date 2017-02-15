@@ -12,6 +12,8 @@ class BookTableViewCell: UITableViewCell {
   static let reuseIdentifier = "BookTableViewCell"
   static let nib = UINib(nibName: reuseIdentifier, bundle: nil)
   
+  static let minimumHeight: CGFloat = 180
+  
   @IBOutlet weak var productImageView: UIImageView!
   @IBOutlet weak var bookTitleLabel: UILabel!
   @IBOutlet weak var authorNameLabel: UILabel!
