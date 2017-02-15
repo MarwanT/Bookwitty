@@ -25,8 +25,49 @@ class BookTableViewCell: UITableViewCell {
     applyTheme()
   }
   
-  override func setSelected(_ selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
+  var productImage: UIImage? {
+    get {
+      return productImageView.image
+    }
+    set (image) {
+      return productImageView.image = image
+    }
+  }
+  
+  var bookTitle: String? {
+    get {
+      return bookTitleLabel.text
+    }
+    set (text) {
+      bookTitleLabel.text = text
+    }
+  }
+  
+  var authorName: String? {
+    get {
+      return authorNameLabel.text
+    }
+    set (text) {
+      authorNameLabel.text = text
+    }
+  }
+  
+  var productType: String? {
+    get {
+      return productTypeLabel.text
+    }
+    set (text) {
+      productTypeLabel.text = text
+    }
+  }
+  
+  var price: String? {
+    get {
+      return priceLabel.text
+    }
+    set (text) {
+      priceLabel.text = text
+    }
   }
 }
 
