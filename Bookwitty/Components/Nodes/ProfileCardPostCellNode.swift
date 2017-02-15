@@ -31,6 +31,14 @@ class ProfileCardPostContentNode: ASDisplayNode {
   private var followersTextNode: ASTextNode
   private var descriptionNode: ASTextNode
 
+  var articleDescription: String? {
+    didSet {
+      if let articleDescription = articleDescription {
+        descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
+          .append(text: articleDescription, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      }
+    }
+  }
   var userName: String? {
     didSet {
       if let userName = userName {
