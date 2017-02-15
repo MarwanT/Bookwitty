@@ -98,6 +98,7 @@
 		F45A50131E530AA2005E5C56 /* QuoteCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45A50121E530AA2005E5C56 /* QuoteCardPostCellNode.swift */; };
 		F45A50151E536591005E5C56 /* TopicCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45A50141E536591005E5C56 /* TopicCardPostCellNode.swift */; };
 		F461B25C1E4B73B0005EA5A8 /* NewsFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F461B25B1E4B73B0005EA5A8 /* NewsFeedViewController.swift */; };
+		F4670AFD1E54ACF200159F4F /* ProfileCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4670AFC1E54ACF200159F4F /* ProfileCardPostCellNode.swift */; };
 		F47188181E4B1EB50076F93C /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47188171E4B1EB50076F93C /* Root.storyboard */; };
 		F48278BB1E4B21CA003D82F2 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48278BA1E4B21CA003D82F2 /* RootTabBarController.swift */; };
 		F488D2791E44EB46003A7BD4 /* PenName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F488D2781E44EB46003A7BD4 /* PenName.swift */; };
@@ -214,6 +215,7 @@
 		F45A50121E530AA2005E5C56 /* QuoteCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteCardPostCellNode.swift; sourceTree = "<group>"; };
 		F45A50141E536591005E5C56 /* TopicCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCardPostCellNode.swift; sourceTree = "<group>"; };
 		F461B25B1E4B73B0005EA5A8 /* NewsFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewsFeedViewController.swift; path = Bookwitty/ViewControllers/Root/NewsFeedViewController.swift; sourceTree = SOURCE_ROOT; };
+		F4670AFC1E54ACF200159F4F /* ProfileCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCardPostCellNode.swift; sourceTree = "<group>"; };
 		F47188171E4B1EB50076F93C /* Root.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Root.storyboard; sourceTree = "<group>"; };
 		F48278BA1E4B21CA003D82F2 /* RootTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RootTabBarController.swift; path = Bookwitty/ViewControllers/Root/RootTabBarController.swift; sourceTree = SOURCE_ROOT; };
 		F488D2781E44EB46003A7BD4 /* PenName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenName.swift; sourceTree = "<group>"; };
@@ -378,6 +380,7 @@
 				F426867E1E511B7C0085E581 /* ArticleCardPostCellNode.swift */,
 				F422D82D1E51AC3900A32C2F /* VideoCardPostCellNode.swift */,
 				F45A50141E536591005E5C56 /* TopicCardPostCellNode.swift */,
+				F4670AFC1E54ACF200159F4F /* ProfileCardPostCellNode.swift */,
 				F45A50121E530AA2005E5C56 /* QuoteCardPostCellNode.swift */,
 				F422D82F1E51CD9D00A32C2F /* LinkCardPostCellNode.swift */,
 				F422D82B1E51992800A32C2F /* PhotoCardPostCellNode.swift */,
@@ -973,6 +976,7 @@
 				593769D81E3689FB00F23226 /* DefaultTheme.swift in Sources */,
 				594290291E5347670006B2F1 /* DisclosureView.swift in Sources */,
 				594F4EAF1E440A4900A947FA /* User+API.swift in Sources */,
+				F4670AFD1E54ACF200159F4F /* ProfileCardPostCellNode.swift in Sources */,
 				594290061E4FEEC10006B2F1 /* CategoriesTableViewController.swift in Sources */,
 				59D8FCBC1E4DA394001C1EDB /* CategoryManager.swift in Sources */,
 				F420B6A21E43C570001F34CD /* User.swift in Sources */,
