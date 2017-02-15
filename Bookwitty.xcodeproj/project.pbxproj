@@ -31,6 +31,8 @@
 		594290211E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5942901F1E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib */; };
 		594290291E5347670006B2F1 /* DisclosureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290271E5347670006B2F1 /* DisclosureView.swift */; };
 		5942902A1E5347670006B2F1 /* DisclosureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 594290281E5347670006B2F1 /* DisclosureView.xib */; };
+		5942902C1E53BF060006B2F1 /* SectionTitleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5942902B1E53BF050006B2F1 /* SectionTitleHeaderView.swift */; };
+		5942902E1E53BF2D0006B2F1 /* SectionTitleHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5942902D1E53BF2D0006B2F1 /* SectionTitleHeaderView.xib */; };
 		5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5947C2A71E37B3D1003BF12A /* ViewController.swift */; };
 		594F4EA61E42255200A947FA /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA51E42255200A947FA /* AccessToken.swift */; };
 		594F4EA81E423B8600A947FA /* AppNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA71E423B8600A947FA /* AppNotifications.swift */; };
@@ -134,6 +136,8 @@
 		5942901F1E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeaturedContentCollectionViewCell.xib; sourceTree = "<group>"; };
 		594290271E5347670006B2F1 /* DisclosureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisclosureView.swift; sourceTree = "<group>"; };
 		594290281E5347670006B2F1 /* DisclosureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisclosureView.xib; sourceTree = "<group>"; };
+		5942902B1E53BF050006B2F1 /* SectionTitleHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionTitleHeaderView.swift; sourceTree = "<group>"; };
+		5942902D1E53BF2D0006B2F1 /* SectionTitleHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SectionTitleHeaderView.xib; sourceTree = "<group>"; };
 		5947C2A71E37B3D1003BF12A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		594F4EA51E42255200A947FA /* AccessToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
 		594F4EA71E423B8600A947FA /* AppNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNotifications.swift; sourceTree = "<group>"; };
@@ -388,6 +392,8 @@
 				595C4F0E1E3F8C9200BE3942 /* PasswordInputField.swift */,
 				595C4F101E3F9DA400BE3942 /* InformativeInputField.swift */,
 				594290171E522D980006B2F1 /* Banner.swift */,
+				5942902B1E53BF050006B2F1 /* SectionTitleHeaderView.swift */,
+				5942902D1E53BF2D0006B2F1 /* SectionTitleHeaderView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -767,6 +773,7 @@
 				594290211E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib in Resources */,
 				5967E4581E4107EF0067093F /* NotificationView.xib in Resources */,
 				597B8E371E3954B200C7811B /* Ubuntu-Medium.ttf in Resources */,
+				5942902E1E53BF2D0006B2F1 /* SectionTitleHeaderView.xib in Resources */,
 				59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */,
 				59057FE01E25340A0036AAF3 /* LaunchScreen.storyboard in Resources */,
 				597B8E381E3954B200C7811B /* Ubuntu-Regular.ttf in Resources */,
@@ -958,6 +965,7 @@
 				F45A50151E536591005E5C56 /* TopicCardPostCellNode.swift in Sources */,
 				F48278BB1E4B21CA003D82F2 /* RootTabBarController.swift in Sources */,
 				F420B6A61E43D05E001F34CD /* PenNameViewModel.swift in Sources */,
+				5942902C1E53BF060006B2F1 /* SectionTitleHeaderView.swift in Sources */,
 				595A649C1E2CCB8900655067 /* BookwittyAPI.swift in Sources */,
 				5613402E1E5221730085B8A5 /* AccountPenNameTableViewCell.swift in Sources */,
 				595A649E1E2CF4EA00655067 /* String.swift in Sources */,
