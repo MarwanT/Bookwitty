@@ -67,8 +67,13 @@ class CategoriesTableViewController: UITableViewController {
   }
 }
 
+
+// MARK: - Themeable
+
 extension CategoriesTableViewController: Themeable {
   func applyTheme() {
+    view.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+    
     let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
     
     tableView.separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
