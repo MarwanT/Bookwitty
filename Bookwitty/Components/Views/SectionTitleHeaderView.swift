@@ -12,6 +12,8 @@ class SectionTitleHeaderView: UITableViewHeaderFooterView {
   static let reuseIdentifier = "SectionTitleHeaderView"
   static let nib = UINib(nibName: reuseIdentifier, bundle: nil)
   
+  static let minimumHeight: CGFloat = 60
+  
   struct Configuration {
     var verticalBarColor: UIColor? = ThemeManager.shared.currentTheme.colorNumber1()
     var horizontalBarColor: UIColor? = ThemeManager.shared.currentTheme.colorNumber2()
