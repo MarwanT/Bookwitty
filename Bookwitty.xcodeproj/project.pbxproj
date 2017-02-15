@@ -33,6 +33,9 @@
 		5942902A1E5347670006B2F1 /* DisclosureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 594290281E5347670006B2F1 /* DisclosureView.xib */; };
 		5942902C1E53BF060006B2F1 /* SectionTitleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5942902B1E53BF050006B2F1 /* SectionTitleHeaderView.swift */; };
 		5942902E1E53BF2D0006B2F1 /* SectionTitleHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5942902D1E53BF2D0006B2F1 /* SectionTitleHeaderView.xib */; };
+		594290361E548FA10006B2F1 /* BookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290341E548FA10006B2F1 /* BookTableViewCell.swift */; };
+		594290371E548FA10006B2F1 /* BookTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 594290351E548FA10006B2F1 /* BookTableViewCell.xib */; };
+		594290391E549FF40006B2F1 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290381E549FF40006B2F1 /* UIColor.swift */; };
 		5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5947C2A71E37B3D1003BF12A /* ViewController.swift */; };
 		594F4EA61E42255200A947FA /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA51E42255200A947FA /* AccessToken.swift */; };
 		594F4EA81E423B8600A947FA /* AppNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA71E423B8600A947FA /* AppNotifications.swift */; };
@@ -138,6 +141,9 @@
 		594290281E5347670006B2F1 /* DisclosureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisclosureView.xib; sourceTree = "<group>"; };
 		5942902B1E53BF050006B2F1 /* SectionTitleHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionTitleHeaderView.swift; sourceTree = "<group>"; };
 		5942902D1E53BF2D0006B2F1 /* SectionTitleHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SectionTitleHeaderView.xib; sourceTree = "<group>"; };
+		594290341E548FA10006B2F1 /* BookTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookTableViewCell.swift; sourceTree = "<group>"; };
+		594290351E548FA10006B2F1 /* BookTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookTableViewCell.xib; sourceTree = "<group>"; };
+		594290381E549FF40006B2F1 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		5947C2A71E37B3D1003BF12A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		594F4EA51E42255200A947FA /* AccessToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
 		594F4EA71E423B8600A947FA /* AppNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNotifications.swift; sourceTree = "<group>"; };
@@ -326,6 +332,7 @@
 				59DA47581E3AA8E100BA90A5 /* Localization.swift */,
 				59903FEC1E3B9D90006043EF /* View.swift */,
 				594F4EA71E423B8600A947FA /* AppNotifications.swift */,
+				594290381E549FF40006B2F1 /* UIColor.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -386,6 +393,7 @@
 				5942901D1E5316380006B2F1 /* FeaturedContentCollectionViewCell */,
 				5942900E1E51B7C00006B2F1 /* DisclosureTableViewCell */,
 				5613402C1E5221570085B8A5 /* Account */,
+				594290331E548FA10006B2F1 /* BookTableViewCell */,
 				594290261E5347670006B2F1 /* DisclosureView */,
 				5967E4561E4105020067093F /* NotificationView */,
 				595C4F0C1E3F8C0200BE3942 /* InputField.swift */,
@@ -441,6 +449,15 @@
 				594290281E5347670006B2F1 /* DisclosureView.xib */,
 			);
 			path = DisclosureView;
+			sourceTree = "<group>";
+		};
+		594290331E548FA10006B2F1 /* BookTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				594290341E548FA10006B2F1 /* BookTableViewCell.swift */,
+				594290351E548FA10006B2F1 /* BookTableViewCell.xib */,
+			);
+			path = BookTableViewCell;
 			sourceTree = "<group>";
 		};
 		594F4EAD1E440A4900A947FA /* API */ = {
@@ -771,6 +788,7 @@
 				5942902A1E5347670006B2F1 /* DisclosureView.xib in Resources */,
 				59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */,
 				594290211E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib in Resources */,
+				594290371E548FA10006B2F1 /* BookTableViewCell.xib in Resources */,
 				5967E4581E4107EF0067093F /* NotificationView.xib in Resources */,
 				597B8E371E3954B200C7811B /* Ubuntu-Medium.ttf in Resources */,
 				5942902E1E53BF2D0006B2F1 /* SectionTitleHeaderView.xib in Resources */,
@@ -944,6 +962,7 @@
 				595C4F111E3F9DA400BE3942 /* InformativeInputField.swift in Sources */,
 				59DA47641E3B7A9B00BA90A5 /* TutorialPageViewController.swift in Sources */,
 				59DA47571E3A65A600BA90A5 /* Storyboard.swift in Sources */,
+				594290361E548FA10006B2F1 /* BookTableViewCell.swift in Sources */,
 				F41D52A21E40EB780021A4AE /* RegisterViewModel.swift in Sources */,
 				F45A50131E530AA2005E5C56 /* QuoteCardPostCellNode.swift in Sources */,
 				59D6021E1E36363400271315 /* Font.swift in Sources */,
@@ -972,6 +991,7 @@
 				594290161E51F4550006B2F1 /* BookStoreViewModel.swift in Sources */,
 				59DA47651E3B7A9B00BA90A5 /* TutorialViewController.swift in Sources */,
 				59DA476A1E3B876900BA90A5 /* SignInViewController.swift in Sources */,
+				594290391E549FF40006B2F1 /* UIColor.swift in Sources */,
 				59DA475D1E3B7A8F00BA90A5 /* IntroductionViewModel.swift in Sources */,
 				59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */,
 				59D6021B1E32597B00271315 /* AppKeys.swift in Sources */,

@@ -44,6 +44,8 @@ protocol ThemeColor {
   
   func defaultErrorColor() -> UIColor
   
+  func defaultECommerceColor() -> UIColor
+  
   func defaultButtonColor() -> UIColor
   func defaultButtonHighlightedColor() -> UIColor
   func defaultEcommerceButtonColor() -> UIColor
