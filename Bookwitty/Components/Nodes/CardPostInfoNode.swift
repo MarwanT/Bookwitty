@@ -12,6 +12,8 @@ import AsyncDisplayKit
 typealias CardPostInfoNodeData = (name: String, date: String, imageUrl: String?)
 
 class CardPostInfoNode: ASDisplayNode {
+  fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+
   var userProfileImageNode: ASNetworkImageNode
   var arrowDownImageNode: ASImageNode
   var userNameTextNode: ASTextNode
@@ -89,7 +91,7 @@ class CardPostInfoNode: ASDisplayNode {
                                                       alignItems: .stretch,
                                                       children: [userProfileImageNode, verticalStack, arrowDownImageNode])
 
-    return ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), child: horizontalStackSpec)
+    return ASInsetLayoutSpec(insets: UIEdgeInsets(top: internalMargin, left: internalMargin, bottom: internalMargin, right: internalMargin), child: horizontalStackSpec)
   }
 
 }

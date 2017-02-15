@@ -80,7 +80,7 @@ class ArticleCardContentNode: ASDisplayNode {
   private func titleInset() -> UIEdgeInsets {
     return UIEdgeInsets(top: 0,
                         left: externalMargin + internalMargin,
-                        bottom: internalMargin,
+                        bottom: 0,
                         right: externalMargin + internalMargin)
   }
 
@@ -92,7 +92,7 @@ class ArticleCardContentNode: ASDisplayNode {
   }
 
   private func imageInset() -> UIEdgeInsets {
-    return UIEdgeInsets(top: 0, left: 0, bottom: internalMargin , right: 0)
+    return UIEdgeInsets(top: 0, left: 0, bottom: 0 , right: 0)
   }
 
   private func spacer(height: CGFloat) -> ASLayoutSpec {
@@ -113,9 +113,9 @@ class ArticleCardContentNode: ASDisplayNode {
 
     let nodesArray: [ASLayoutElement]
     if (hasImage) {
-      nodesArray = [imageInsetLayoutSpec, titleInsetLayoutSpec, descriptionInsetLayoutSpec]
+      nodesArray = [imageInsetLayoutSpec, spacer(height: internalMargin), titleInsetLayoutSpec, spacer(height: internalMargin), descriptionInsetLayoutSpec]
     } else {
-      nodesArray = [titleInsetLayoutSpec, descriptionInsetLayoutSpec] //, spacer(height: internalMargin)
+      nodesArray = [titleInsetLayoutSpec, spacer(height: internalMargin), descriptionInsetLayoutSpec]
     }
 
     let verticalStack = ASStackLayoutSpec(direction: .vertical,
