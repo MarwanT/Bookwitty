@@ -12,6 +12,9 @@ class RootTabBarController: UITabBarController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    applyTheme()
+    
     //Set Default select tab index
     self.selectedIndex = 0
 
@@ -32,4 +35,10 @@ class RootTabBarController: UITabBarController {
                             UINavigationController(rootViewController: placeholderVc2)]
   }
 
+}
+
+extension RootTabBarController: Themeable {
+  func applyTheme() {
+    view.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+  }
 }
