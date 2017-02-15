@@ -55,6 +55,8 @@ protocol ThemeColor {
   func defaultSeparatorColor() -> UIColor
   
   func defaultSelectionColor() -> UIColor
+  
+  func defaultBackgroundColor() -> UIColor
 }
 
 protocol ThemeSpacing {
