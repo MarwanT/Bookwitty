@@ -25,7 +25,7 @@ class ReadingListCardContentNode: ASDisplayNode {
   private var titleNode: ASTextNode
   private var topicStatsNode: ASTextNode
   private var descriptionNode: ASTextNode
-  
+
   override init() {
     titleNode = ASTextNode()
     topicStatsNode = ASTextNode()
@@ -34,5 +34,13 @@ class ReadingListCardContentNode: ASDisplayNode {
     addSubnode(titleNode)
     addSubnode(topicStatsNode)
     addSubnode(descriptionNode)
+    setupNode()
   }
+
+  func setupNode() {
+    titleNode.maximumNumberOfLines = 3
+    descriptionNode.maximumNumberOfLines = 3
+    topicStatsNode.maximumNumberOfLines = 1
+  }
+
 }
