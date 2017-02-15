@@ -22,15 +22,17 @@ class ReadingListCardPostCellNode: BaseCardPostNode {
 }
 
 class ReadingListCardContentNode: ASDisplayNode {
-  private let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
-  private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
+  fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let collectionImageSize: CGSize = CGSize(width: 60, height: 100)
+
   private let postText: String = localizedString(key: "number_of_posts_text", defaultValue: "Posts")
   private let booksText: String = localizedString(key: "number_of_books_text", defaultValue: "Books")
   private let followerText: String = localizedString(key: "number_of_follower_text", defaultValue: "Followers")
 
-  private var titleNode: ASTextNode
-  private var topicStatsNode: ASTextNode
-  private var descriptionNode: ASTextNode
+  private let titleNode: ASTextNode
+  private let topicStatsNode: ASTextNode
+  private let descriptionNode: ASTextNode
 
   var articleTitle: String? {
     didSet {
