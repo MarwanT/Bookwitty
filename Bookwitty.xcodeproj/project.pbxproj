@@ -100,6 +100,7 @@
 		F461B25C1E4B73B0005EA5A8 /* NewsFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F461B25B1E4B73B0005EA5A8 /* NewsFeedViewController.swift */; };
 		F4670AFD1E54ACF200159F4F /* ProfileCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4670AFC1E54ACF200159F4F /* ProfileCardPostCellNode.swift */; };
 		F4670AF91E54556800159F4F /* ReadingListCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4670AF81E54556800159F4F /* ReadingListCardPostCellNode.swift */; };
+		F4670AFB1E54669300159F4F /* ReadingListBookNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4670AFA1E54669300159F4F /* ReadingListBookNode.swift */; };
 		F47188181E4B1EB50076F93C /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47188171E4B1EB50076F93C /* Root.storyboard */; };
 		F48278BB1E4B21CA003D82F2 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48278BA1E4B21CA003D82F2 /* RootTabBarController.swift */; };
 		F488D2791E44EB46003A7BD4 /* PenName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F488D2781E44EB46003A7BD4 /* PenName.swift */; };
@@ -218,6 +219,7 @@
 		F461B25B1E4B73B0005EA5A8 /* NewsFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewsFeedViewController.swift; path = Bookwitty/ViewControllers/Root/NewsFeedViewController.swift; sourceTree = SOURCE_ROOT; };
 		F4670AFC1E54ACF200159F4F /* ProfileCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCardPostCellNode.swift; sourceTree = "<group>"; };
 		F4670AF81E54556800159F4F /* ReadingListCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingListCardPostCellNode.swift; sourceTree = "<group>"; };
+		F4670AFA1E54669300159F4F /* ReadingListBookNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingListBookNode.swift; sourceTree = "<group>"; };
 		F47188171E4B1EB50076F93C /* Root.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Root.storyboard; sourceTree = "<group>"; };
 		F48278BA1E4B21CA003D82F2 /* RootTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RootTabBarController.swift; path = Bookwitty/ViewControllers/Root/RootTabBarController.swift; sourceTree = SOURCE_ROOT; };
 		F488D2781E44EB46003A7BD4 /* PenName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenName.swift; sourceTree = "<group>"; };
@@ -382,6 +384,7 @@
 				F426867E1E511B7C0085E581 /* ArticleCardPostCellNode.swift */,
 				F4670AF81E54556800159F4F /* ReadingListCardPostCellNode.swift */,
 				F422D82D1E51AC3900A32C2F /* VideoCardPostCellNode.swift */,
+				F4670AFA1E54669300159F4F /* ReadingListBookNode.swift */,
 				F45A50141E536591005E5C56 /* TopicCardPostCellNode.swift */,
 				F4670AFC1E54ACF200159F4F /* ProfileCardPostCellNode.swift */,
 				F45A50121E530AA2005E5C56 /* QuoteCardPostCellNode.swift */,
@@ -966,6 +969,7 @@
 				59DA475E1E3B7A8F00BA90A5 /* TutorialViewModel.swift in Sources */,
 				597B8E2D1E37F6BC00C7811B /* Image.swift in Sources */,
 				F434F7911E4E16CE001812BD /* CellNode.swift in Sources */,
+				F4670AFB1E54669300159F4F /* ReadingListBookNode.swift in Sources */,
 				595C4F111E3F9DA400BE3942 /* InformativeInputField.swift in Sources */,
 				59DA47641E3B7A9B00BA90A5 /* TutorialPageViewController.swift in Sources */,
 				59DA47571E3A65A600BA90A5 /* Storyboard.swift in Sources */,
