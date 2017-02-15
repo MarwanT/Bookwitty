@@ -252,6 +252,46 @@ extension BookStoreViewController: UITableViewDataSource {
     }
   }
   
+  func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    guard tableView == selectionTableView else {
+      return nil
+    }
+    
+    let viewAllBooksView = UIView.loadFromView(DisclosureView.self, owner: nil)
+    viewAllBooksView.style = .highlighted
+    viewAllBooksView.delegate = self
+    viewAllBooksView.label.text = viewModel.viewAllBooksLabelText
+    let viewAllSelections = UIView.loadFromView(DisclosureView.self, owner: nil)
+    viewAllSelections.style = .highlighted
+    viewAllSelections.delegate = self
+    viewAllSelections.label.text = viewModel.viewAllSelectionsLabelText
+    let topSeparator = separatorViewInstance()
+    let middleSeparator = separatorViewInstance()
+    let bottomSeparator = separatorViewInstance()
+    
+    let containerView = UIView(frame: CGRect.zero)
+    containerView.addSubview(viewAllBooksView)
+    containerView.addSubview(viewAllSelections)
+    containerView.addSubview(topSeparator)
+    containerView.addSubview(middleSeparator)
+    containerView.addSubview(bottomSeparator)
+    
+    topSeparator.alignTopEdge(withView: containerView, predicate: "0")
+    topSeparator.alignLeading("\(leftMargin)", trailing: "0", toView: containerView)
+    viewAllBooksView.constrainTopSpace(toView: topSeparator, predicate: "0")
+    viewAllBooksView.alignLeading("0", trailing: "0", toView: containerView)
+    viewAllBooksView.constrainHeight("45")
+    middleSeparator.constrainTopSpace(toView: viewAllBooksView, predicate: "0")
+    middleSeparator.alignLeading("0", trailing: "0", toView: topSeparator)
+    viewAllSelections.constrainTopSpace(toView: middleSeparator, predicate: "0")
+    viewAllSelections.alignLeading("0", trailing: "0", toView: containerView)
+    viewAllSelections.constrainHeight("45")
+    bottomSeparator.constrainTopSpace(toView: viewAllSelections, predicate: "0")
+    bottomSeparator.alignLeading("0", trailing: "0", toView: containerView)
+    
+    return containerView
+  }
+  
   func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     if tableView == bookwittySuggestsTableView {
       return 45
