@@ -20,15 +20,29 @@ class BaseCardPostNode: ASCellNode {
   fileprivate let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
+  fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
 
   fileprivate let infoNode: CardPostInfoNode
   fileprivate let actionBarNode: CardActionBarNode
   fileprivate let backgroundNode: ASDisplayNode
   fileprivate let separatorNode: ASDisplayNode
+  fileprivate let commentsSummaryNode: ASTextNode
+
+  fileprivate var shouldShowCommentSummaryNode: Bool {
+    return !articleCommentsSummary.isEmptyOrNil()
+  }
 
   var postInfoData: CardPostInfoNodeData? {
     didSet {
       infoNode.data = postInfoData
+    }
+  }
+  var articleCommentsSummary: String? {
+    didSet {
+      if let articleCommentsSummary = articleCommentsSummary {
+        commentsSummaryNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+          .append(text: articleCommentsSummary, color: ThemeManager.shared.currentTheme.colorNumber15()).attributedString
+      }
     }
   }
 
@@ -37,6 +51,7 @@ class BaseCardPostNode: ASCellNode {
     actionBarNode = CardActionBarNode(delegate: nil)
     backgroundNode = ASDisplayNode()
     separatorNode = ASDisplayNode()
+    commentsSummaryNode = ASTextNode()
     super.init()
     setupCellNode()
   }
@@ -54,9 +69,9 @@ class BaseCardPostNode: ASCellNode {
 
     //Order is important: backgroundNode must be the first
     if(shouldShowInfoNode) {
-      addSubnodes(arrayOfNodes: [backgroundNode, infoNode, contentNode, separatorNode, actionBarNode])
+      addSubnodes(arrayOfNodes: [backgroundNode, infoNode, contentNode, commentsSummaryNode, separatorNode, actionBarNode])
     } else {
-      addSubnodes(arrayOfNodes: [backgroundNode, contentNode, separatorNode, actionBarNode])
+      addSubnodes(arrayOfNodes: [backgroundNode, contentNode, commentsSummaryNode, separatorNode, actionBarNode])
     }
 
     separatorNode.isLayerBacked = true
@@ -81,7 +96,7 @@ class BaseCardPostNode: ASCellNode {
 }
 
 //MARK: - Layout Sizing
-extension BaseCardPostNode {
+extension BaseCardPostNode {  
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let backgroundInset = externalInset()
@@ -96,18 +111,33 @@ extension BaseCardPostNode {
     let contentTopInset = shouldShowInfoNode ? 0 : defaultInset.top
     let contentInset = ASInsetLayoutSpec(insets: UIEdgeInsets(top: contentTopInset, left: contentSideInsets, bottom: 0, right: contentSideInsets), child: contentNode)
 
+    let commentSummaryInset: ASLayoutElement = shouldShowCommentSummaryNode ? commentSummaryLayoutSpecs() : spacer(height: internalMargin)
+
     let verticalStack = ASStackLayoutSpec.vertical()
     verticalStack.justifyContent = .center
     verticalStack.alignItems = .stretch
     verticalStack.children = shouldShowInfoNode
-      ? [infoNodeInset, contentInset, separatorNodeInset, actionBarNodeInset]
-      : [contentInset, separatorNodeInset, actionBarNodeInset]
+      ? [infoNodeInset, contentInset, commentSummaryInset, separatorNodeInset, actionBarNodeInset]
+      : [contentInset, commentSummaryInset, separatorNodeInset, actionBarNodeInset]
 
     //Note: If we used children or background properties instead of init -> Order would be important,
     //insetForVerticalLayout must be added before backgroundNode
     let layoutSpec = ASBackgroundLayoutSpec(child: verticalStack, background: backgroundNodeInset)
 
     return layoutSpec
+  }
+
+  private func commentSummaryLayoutSpecs() -> ASStackLayoutSpec {
+    let contentSideInsets = internalInset().left
+    let commentSummarySideSpace = shouldShowCommentSummaryNode ? contentSideInsets : 0
+    let commentSummaryInset = ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: commentSummarySideSpace, bottom: 0, right: commentSummarySideSpace), child: commentsSummaryNode)
+
+    let commentSummaryVerticalStack = ASStackLayoutSpec(direction: .vertical,
+                                                        spacing: 0,
+                                                        justifyContent: .start,
+                                                        alignItems: .stretch,
+                                                        children: [spacer(height: contentSpacing), commentSummaryInset, spacer(height: contentSpacing)])
+    return commentSummaryVerticalStack
   }
 
   /**
@@ -159,6 +189,13 @@ extension BaseCardPostNode {
                         left: externalInset.left + internalMargin,
                         bottom: 0,
                         right: externalInset.right + internalMargin)
+  }
+
+  private func spacer(height: CGFloat = 0, width: CGFloat = 0) -> ASLayoutSpec {
+    return ASLayoutSpec().styled { (style) in
+      style.height = ASDimensionMake(height)
+      style.width = ASDimensionMake(width)
+    }
   }
 }
 

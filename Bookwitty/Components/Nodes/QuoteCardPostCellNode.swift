@@ -29,16 +29,7 @@ class QuoteCardPostContentNode: ASDisplayNode {
 
   private var quoteTextNode: ASTextNode
   private var nameTextNode: ASTextNode
-  private var commentsSummaryNode: ASTextNode
 
-  var articleCommentsSummary: String? {
-    didSet {
-      if let articleCommentsSummary = articleCommentsSummary {
-        commentsSummaryNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
-          .append(text: articleCommentsSummary, color: ThemeManager.shared.currentTheme.colorNumber15()).attributedString
-      }
-    }
-  }
   var articleQuote: String? {
     didSet {
       if let articleQuote = articleQuote {
@@ -59,11 +50,9 @@ class QuoteCardPostContentNode: ASDisplayNode {
   override init() {
     quoteTextNode = ASTextNode()
     nameTextNode = ASTextNode()
-    commentsSummaryNode = ASTextNode()
     super.init()
     addSubnode(quoteTextNode)
     addSubnode(nameTextNode)
-    addSubnode(commentsSummaryNode)
     setupNode()
   }
 
@@ -80,17 +69,7 @@ class QuoteCardPostContentNode: ASDisplayNode {
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-
-    let commentSummaryVerticalStack = ASStackLayoutSpec(direction: .vertical,
-                      spacing: 0,
-                      justifyContent: .start,
-                      alignItems: .stretch,
-                      children: articleCommentsSummary.isEmptyOrNil()
-                        ? [spacer(height: internalMargin)]
-                        : [spacer(height: contentSpacing), commentsSummaryNode, spacer(height: contentSpacing)])
-
-    let layoutSpecs: [ASLayoutElement] = [quoteTextNode, spacer(height: internalMargin/2), nameTextNode,
-                                          commentSummaryVerticalStack]
+    let layoutSpecs: [ASLayoutElement] = [quoteTextNode, spacer(height: internalMargin/2), nameTextNode]
 
     let verticalStack = ASStackLayoutSpec(direction: .vertical,
                                           spacing: 0,
