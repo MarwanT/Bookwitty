@@ -18,6 +18,7 @@ class BookStoreViewController: UIViewController {
   let viewModel = BookStoreViewModel()
   
   fileprivate let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
+  fileprivate let sectionSpacing = ThemeManager.shared.currentTheme.sectionSpacing()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -30,6 +31,8 @@ class BookStoreViewController: UIViewController {
     addSpacing(space: 10)
     let didLoadBookwittySuggests = loadBookwittySuggest()
     addSeparator()
+    addSpacing(space: sectionSpacing)
+    let didLoadSelectionSection = loadSelectionSection()
   }
   
   override func viewWillAppear(_ animated: Bool) {
