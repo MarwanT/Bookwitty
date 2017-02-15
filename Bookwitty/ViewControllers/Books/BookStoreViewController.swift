@@ -321,7 +321,16 @@ extension BookStoreViewController: UITableViewDelegate {
 // MARK: - Disclosure view delegate
 
 extension BookStoreViewController: DisclosureViewDelegate {
-  func disclosureViewTapped() {
-    print("View ALl categories")
+  func disclosureViewTapped(_ disclosureView: DisclosureView) {
+    switch disclosureView {
+    case viewAllCategories:
+      break
+    case viewAllBooksView:
+      break
+    case viewAllSelectionsView:
+      break
+    default:
+      break
+    }
   }
 }
