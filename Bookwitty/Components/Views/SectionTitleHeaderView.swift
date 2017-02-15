@@ -12,9 +12,20 @@ class SectionTitleHeaderView: UITableViewHeaderFooterView {
   static let reuseIdentifier = "SectionTitleHeaderView"
   static let nib = UINib(nibName: reuseIdentifier, bundle: nil)
   
+  struct Configuration {
+    var verticalBarColor: UIColor? = ThemeManager.shared.currentTheme.colorNumber1()
+    var horizontalBarColor: UIColor? = ThemeManager.shared.currentTheme.colorNumber2()
+  }
+  
   @IBOutlet weak var verticalBarView: UIView!
   @IBOutlet weak var horizontalBarView: UIView!
   @IBOutlet weak var label: UILabel!
+  
+  var configuration = Configuration() {
+    didSet {
+      applyTheme()
+    }
+  }
   
   override func awakeFromNib() {
     super.awakeFromNib()
