@@ -9,6 +9,11 @@
 import UIKit
 
 class BookTableViewCell: UITableViewCell {
+  @IBOutlet weak var productImageView: UIImageView!
+  @IBOutlet weak var bookTitleLabel: UILabel!
+  @IBOutlet weak var authorNameLabel: UILabel!
+  @IBOutlet weak var productTypeLabel: UILabel!
+  @IBOutlet weak var priceLabel: UILabel!
   
   override func awakeFromNib() {
     super.awakeFromNib()
