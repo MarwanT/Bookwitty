@@ -22,7 +22,17 @@ class ReadingListCardPostCellNode: BaseCardPostNode {
 }
 
 class ReadingListCardContentNode: ASDisplayNode {
+  private var titleNode: ASTextNode
+  private var topicStatsNode: ASTextNode
+  private var descriptionNode: ASTextNode
+  
   override init() {
+    titleNode = ASTextNode()
+    topicStatsNode = ASTextNode()
+    descriptionNode = ASTextNode()
     super.init()
+    addSubnode(titleNode)
+    addSubnode(topicStatsNode)
+    addSubnode(descriptionNode)
   }
 }
