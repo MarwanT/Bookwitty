@@ -21,4 +21,24 @@ class ChangePasswordViewController: UIViewController {
 
     // Do any additional setup after loading the view.
   }
+
+  private func initializeComponents() {
+    changePasswordButton.setTitle(viewModel.changePasswordText, for: .normal)
+
+    currentPasswordInputField.configuration = InputFieldConfiguration(
+      descriptionLabelText: viewModel.currentPasswordText,
+      textFieldPlaceholder: viewModel.currentPasswordText,
+      invalidationErrorMessage: "",
+      returnKeyType: UIReturnKeyType.next,
+      autocorrectionType: .no,
+      autocapitalizationType: .none)
+
+    newPasswordInputField.configuration = InputFieldConfiguration(
+      descriptionLabelText: viewModel.newPasswordText,
+      textFieldPlaceholder: viewModel.newPasswordText,
+      invalidationErrorMessage: "",
+      returnKeyType: UIReturnKeyType.done,
+      autocorrectionType: .no,
+      autocapitalizationType: .none)
+  }
 }
