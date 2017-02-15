@@ -29,6 +29,7 @@ class ProfileCardPostContentNode: ASDisplayNode {
   private var userProfileImageNode: ASNetworkImageNode
   private var userNameTextNode: ASTextNode
   private var followersTextNode: ASTextNode
+  private var descriptionNode: ASTextNode
 
   var userName: String? {
     didSet {
@@ -61,16 +62,19 @@ class ProfileCardPostContentNode: ASDisplayNode {
     userProfileImageNode = ASNetworkImageNode()
     userNameTextNode = ASTextNode()
     followersTextNode = ASTextNode()
+    descriptionNode = ASTextNode()
     super.init()
     addSubnode(userProfileImageNode)
     addSubnode(userNameTextNode)
     addSubnode(followersTextNode)
+    addSubnode(descriptionNode)
     setupNodes()
   }
 
   func setupNodes() {
     userNameTextNode.maximumNumberOfLines = 1
     followersTextNode.maximumNumberOfLines = 1
+    descriptionNode.maximumNumberOfLines = 4
 
     let profileBorderWidth: CGFloat = 0.0
     let profileBorderColor: UIColor? = nil
