@@ -105,4 +105,22 @@ class ReadingListCardContentNode: ASDisplayNode {
   private func isValid(_ value: String?) -> Bool {
     return !value.isEmptyOrNil()
   }
+
+  private func spacer(height: CGFloat = 0, width: CGFloat = 0) -> ASLayoutSpec {
+    return ASLayoutSpec().styled { (style) in
+      style.height = ASDimensionMake(height)
+      style.width = ASDimensionMake(width)
+    }
+  }
+
+  private func cardSidesInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0,
+                        left: internalMargin + externalMargin,
+                        bottom: 0 ,
+                        right: internalMargin + externalMargin)
+  }
+
+  private func imageInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0, left: 0, bottom: 0 , right: 0)
+  }
 }
