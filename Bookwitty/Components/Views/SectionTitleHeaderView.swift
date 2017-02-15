@@ -15,4 +15,14 @@ class SectionTitleHeaderView: UITableViewHeaderFooterView {
   @IBOutlet weak var verticalBarView: UIView!
   @IBOutlet weak var horizontalBarView: UIView!
   @IBOutlet weak var label: UILabel!
+  
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    applyTheme()
+  }
+}
+
+extension SectionTitleHeaderView: Themeable {
+  func applyTheme() {
+  }
 }
