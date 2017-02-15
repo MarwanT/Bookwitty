@@ -22,12 +22,33 @@ class BookTableViewCell: UITableViewCell {
   
   override func awakeFromNib() {
     super.awakeFromNib()
-    // Initialization code
+    applyTheme()
   }
   
   override func setSelected(_ selected: Bool, animated: Bool) {
     super.setSelected(selected, animated: animated)
+  }
+}
+
+extension BookTableViewCell: Themeable {
+  func applyTheme() {
+    let theme = ThemeManager.shared.currentTheme!
     
-    // Configure the view for the selected state
+    bookTitleLabel.font = FontDynamicType.title3.font
+    authorNameLabel.font = FontDynamicType.caption1.font
+    productTypeLabel.font = FontDynamicType.caption2.font
+    priceLabel.font = FontDynamicType.footnote.font
+    
+    bookTitleLabel.textColor = theme.defaultTextColor()
+    authorNameLabel.textColor = theme.defaultTextColor()
+    productTypeLabel.textColor = theme.defaultTextColor()
+    priceLabel.textColor = theme.defaultECommerceColor()
+    
+    contentView.layoutMargins = UIEdgeInsets(
+      top: theme.generalExternalMargin(),
+      left: theme.generalExternalMargin(),
+      bottom: theme.generalExternalMargin(),
+      right: theme.generalExternalMargin())
+    selectedBackgroundView = UIImageView(image: theme.defaultSelectionColor().image())
   }
 }
