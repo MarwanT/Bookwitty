@@ -14,6 +14,8 @@ class ChangePasswordViewController: UIViewController {
   @IBOutlet weak var newPasswordInputField: PasswordInputField!
   @IBOutlet var changePasswordButton: UIButton!
 
+  private let viewModel = ChangePasswordViewModel()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
 
