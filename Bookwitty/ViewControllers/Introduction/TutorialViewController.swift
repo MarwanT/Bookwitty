@@ -21,6 +21,7 @@ class TutorialViewController: UIPageViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    applyTheme()
     
     dataSource = self
     delegate = self
@@ -114,5 +115,14 @@ extension TutorialViewController: UIPageViewControllerDelegate {
     let selectedViewControllerIndex = completed ? currentViewControllerIndex : previousViewControllersIndex
     
     tutorialDelegate?.tutorialViewController(self, didSelectPageAtIndex: selectedViewControllerIndex)
+  }
+}
+
+
+// MARK: - Themeable
+
+extension TutorialViewController: Themeable {
+  func applyTheme() {
+    view.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
   }
 }
