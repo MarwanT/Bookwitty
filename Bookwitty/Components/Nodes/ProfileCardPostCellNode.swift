@@ -23,7 +23,17 @@ class ProfileCardPostCellNode: BaseCardPostNode {
 }
 
 class ProfileCardPostContentNode: ASDisplayNode {
+  var userProfileImageNode: ASNetworkImageNode
+  var userNameTextNode: ASTextNode
+  var followersTextNode: ASTextNode
+
   override init() {
+    userProfileImageNode = ASNetworkImageNode()
+    userNameTextNode = ASTextNode()
+    followersTextNode = ASTextNode()
     super.init()
+    addSubnode(userProfileImageNode)
+    addSubnode(userNameTextNode)
+    addSubnode(followersTextNode)
   }
 }
