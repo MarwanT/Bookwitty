@@ -36,7 +36,6 @@ class LinkCardPostContentNode: ASDisplayNode {
   var imageNode: ASNetworkImageNode
   var titleNode: ASTextNode
   var descriptionNode: ASTextNode
-  var commentsSummaryNode: ASTextNode
 
   var delegate: LinkCardPostContentDelegate?
 
@@ -53,14 +52,6 @@ class LinkCardPostContentNode: ASDisplayNode {
       if let articleDescription = articleDescription {
         descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
           .append(text: articleDescription, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
-      }
-    }
-  }
-  var articleCommentsSummary: String? {
-    didSet {
-      if let articleCommentsSummary = articleCommentsSummary {
-        commentsSummaryNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
-          .append(text: articleCommentsSummary, color: ThemeManager.shared.currentTheme.colorNumber15()).attributedString
       }
     }
   }
@@ -86,29 +77,21 @@ class LinkCardPostContentNode: ASDisplayNode {
     }
   }
 
-  private var hasComments: Bool {
-    get {
-      return !(articleCommentsSummary?.isEmpty ?? true)
-    }
-  }
 
   override init() {
     imageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
     descriptionNode = ASTextNode()
-    commentsSummaryNode = ASTextNode()
     super.init()
     addSubnode(imageNode)
     addSubnode(titleNode)
     addSubnode(descriptionNode)
-    addSubnode(commentsSummaryNode)
     setupNode()
   }
 
   private func setupNode() {
     titleNode.maximumNumberOfLines = 3
     descriptionNode.maximumNumberOfLines = 3
-    commentsSummaryNode.maximumNumberOfLines = 1
 
     imageNode.addTarget(self, action: #selector(videoImageTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
@@ -139,17 +122,10 @@ class LinkCardPostContentNode: ASDisplayNode {
     delegate?.linkImageTouchUpInside(sender: imageNode)
   }
 
-  private func commentsSummaryInset() -> UIEdgeInsets {
-    return UIEdgeInsets(top: contentSpacing,
-                        left: externalMargin + internalMargin,
-                        bottom: contentSpacing,
-                        right: externalMargin + internalMargin)
-  }
-
   private func titleInset() -> UIEdgeInsets {
     return UIEdgeInsets(top: 0,
                         left: externalMargin + internalMargin,
-                        bottom: internalMargin,
+                        bottom: 0,
                         right: externalMargin + internalMargin)
   }
 
@@ -161,7 +137,7 @@ class LinkCardPostContentNode: ASDisplayNode {
   }
 
   private func imageInset() -> UIEdgeInsets {
-    return UIEdgeInsets(top: 0, left: 0, bottom: internalMargin , right: 0)
+    return UIEdgeInsets(top: 0, left: 0, bottom: 0 , right: 0)
   }
 
   private func spacer(height: CGFloat) -> ASLayoutSpec {
@@ -180,23 +156,18 @@ class LinkCardPostContentNode: ASDisplayNode {
 
     let titleInsetLayoutSpec = ASInsetLayoutSpec(insets: titleInset(), child: titleNode)
     let descriptionInsetLayoutSpec = ASInsetLayoutSpec(insets: descriptionInset(), child: descriptionNode)
-    let commentsSummaryInsetLayoutSpec = ASInsetLayoutSpec(insets: commentsSummaryInset(), child: commentsSummaryNode)
 
     //TODO: Clean adding logic, move top and bottom seraptors from insets to spacers between elements
     let nodesArray: [ASLayoutElement]
-    if (hasImage && hasComments) {
-      nodesArray = [imageInsetLayoutSpec, titleInsetLayoutSpec, descriptionInsetLayoutSpec, commentsSummaryInsetLayoutSpec]
-    } else if (hasImage) {
-      nodesArray = [imageInsetLayoutSpec, titleInsetLayoutSpec, descriptionInsetLayoutSpec, spacer(height: internalMargin)]
-    } else if (hasComments) {
-      nodesArray = [titleInsetLayoutSpec, descriptionInsetLayoutSpec, commentsSummaryInsetLayoutSpec]
+    if (hasImage) {
+      nodesArray = [imageInsetLayoutSpec, spacer(height: internalMargin), titleInsetLayoutSpec, spacer(height: internalMargin), descriptionInsetLayoutSpec]
     } else {
       if (!articleTitle.isEmptyOrNil() && !articleDescription.isEmptyOrNil()) {
-        nodesArray = [titleInsetLayoutSpec, descriptionInsetLayoutSpec, spacer(height: internalMargin)]
+        nodesArray = [titleInsetLayoutSpec, spacer(height: internalMargin), descriptionInsetLayoutSpec]
       } else if (!articleTitle.isEmptyOrNil()) {
         nodesArray = [titleInsetLayoutSpec]
       } else if (!articleDescription.isEmptyOrNil()) {
-        nodesArray = [descriptionInsetLayoutSpec, spacer(height: internalMargin)]
+        nodesArray = [descriptionInsetLayoutSpec]
       } else {
         //Everything was null: Should Never be here
         nodesArray = [spacer(height: internalMargin)]

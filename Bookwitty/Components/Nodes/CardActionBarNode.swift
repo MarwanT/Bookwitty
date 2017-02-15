@@ -24,8 +24,13 @@ class CardActionBarNode: ASDisplayNode {
   var shareButton: ASButtonNode
   var delegate: CardActionBarNodeDelegate? = nil
 
+  private let witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
+  private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+
   private let normal = ASControlState(rawValue: 0)
-  private let buttonSize: CGSize = CGSize(width: 34.0, height: 34.0)
+  private let actionBarHeight: CGFloat = 60.0
+  private let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
+  private let iconSize: CGSize = CGSize(width: 60.0, height: 60.0)
   //MARK: - Localized Strings
   private let witItTitle: String = localizedString(key: "wit_it", defaultValue: "Wit it")
   private let wittedTitle: String = localizedString(key: "witted", defaultValue: "Witted")
@@ -116,23 +121,28 @@ class CardActionBarNode: ASDisplayNode {
     witButton.titleNode.maximumNumberOfLines = 1
     witButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     witButton.style.height = ASDimensionMake(buttonSize.height)
+    //No need to put this witItButtonMargin
+    let centeredWitButtonLayoutSpec = ASCenterLayoutSpec(centeringOptions: ASCenterLayoutSpecCenteringOptions.XY, sizingOptions: ASCenterLayoutSpecSizingOptions.minimumXY, child: witButton)
 
     //Setup other buttons
-    commentButton.style.preferredSize = buttonSize
-    shareButton.style.preferredSize = buttonSize
-
-    shareButton.style.spacingBefore = 50
+    commentButton.style.preferredSize = iconSize
+    shareButton.style.preferredSize = iconSize
+    //Set Soace between share and comment buttons
+    shareButton.style.spacingBefore = internalMargin
+    shareButton.style.spacingAfter = 0
 
     let horizontalStackSpec = ASStackLayoutSpec(direction: .horizontal,
                                                 spacing: 0,
                                                 justifyContent: .spaceAround,
                                                 alignItems: .stretch,
-                                                children: [witButton,
+                                                children: [centeredWitButtonLayoutSpec,
                                                            spacer(),
                                                            commentButton,
                                                            shareButton])
-
-    return horizontalStackSpec
+    //Set Node Height
+    horizontalStackSpec.style.height = ASDimensionMake(actionBarHeight)
+    //Set Node Insets
+    return ASInsetLayoutSpec.init(insets: UIEdgeInsets.init(top: 0, left: internalMargin, bottom: 0, right: internalMargin), child: horizontalStackSpec)
   }
 
 }
