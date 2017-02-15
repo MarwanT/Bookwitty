@@ -99,4 +99,18 @@ extension UserAPI {
     //Serialize Body to conform to JSONAPI
     return user.serializeData(options: [.OmitNullValues])
   }
+
+  static func updatePostBody(identifier: String, firstName: String?, lastName: String?, dateOfBirth: String?, email: String?, currentPassword: String?, password: String?, country: String?, badges: [String : Any]?, preferences: [String : Any]?) -> [String : Any]? {
+    let user = User()
+    user.id = identifier
+    user.firstName = firstName
+    user.lastName = lastName
+    user.dateOfBirth = dateOfBirth
+    user.email = email
+    user.country = country
+    user.password = password
+    user.badges = badges
+    user.preferences = preferences
+    return user.serializeData(options: [.IncludeID, .OmitNullValues])
+  }
 }
