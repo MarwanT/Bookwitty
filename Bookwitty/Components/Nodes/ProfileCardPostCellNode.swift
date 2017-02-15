@@ -35,5 +35,11 @@ class ProfileCardPostContentNode: ASDisplayNode {
     addSubnode(userProfileImageNode)
     addSubnode(userNameTextNode)
     addSubnode(followersTextNode)
+    setupNodes()
+  }
+
+  func setupNodes() {
+    userNameTextNode.maximumNumberOfLines = 1
+    followersTextNode.maximumNumberOfLines = 1
   }
 }
