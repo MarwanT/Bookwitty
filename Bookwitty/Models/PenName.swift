@@ -53,7 +53,5 @@ class PenName: Resource {
 
 // MARK: - Parser
 extension PenName: Parsable {
-  static func type() -> PenName.Type {
-    return PenName.self
-  }
+  typealias AbstractType = PenName
 }

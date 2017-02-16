@@ -11,7 +11,6 @@ import Spine
 
 protocol Parsable {
   associatedtype AbstractType: Resource
-  static func type() -> AbstractType.Type
   static func parseData(data: Data?) -> AbstractType?
   static func parseDataArray(data: Data?) -> Array<AbstractType>?
   func serializeData(options: SerializationOptions) -> [String : Any]?
@@ -31,10 +30,10 @@ extension Parsable where Self: Resource {
       if let parsableModel = document.data?.first as? AbstractType {
         return parsableModel
       } else {
-        print("Could not parse data to \(type()) model")
+        print("Could not parse data to \(self) model")
       }
     } catch let error as NSError {
-      print("Error parsing \(type()) model")
+      print("Error parsing \(self) model")
       print(error)
     }
     return nil

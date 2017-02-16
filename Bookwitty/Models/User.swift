@@ -48,7 +48,5 @@ class User: Resource {
 
 // MARK: - Parser
 extension User: Parsable {
-  static func type() -> User.Type {
-    return User.self
-  }
+  typealias AbstractType = User
 }
