@@ -26,7 +26,7 @@ target 'Bookwitty' do
   pod 'FacebookShare', '0.2.0'
   pod 'FLKAutoLayout', '1.0.0'
   pod 'SwiftMessages', '3.1.4'
-  pod 'EMCCountryPickerController', '1.3.3'
+  pod 'EMCCountryPickerController', :git => 'https://github.com/Keeward/EMCCountryPickerController', :tag => '1.4.0'
   pod 'TTTAttributedLabel', '2.0.0'
   pod 'SwiftyJSON', '3.1.4'
   pod 'ALCameraViewController'

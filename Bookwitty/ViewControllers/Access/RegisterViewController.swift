@@ -35,7 +35,8 @@ class RegisterViewController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-      self.navigationController?.setNavigationBarHidden(false, animated: true)
+    self.navigationController?.setNavigationBarHidden(false, animated: true)
+    navigationController?.navigationBar.backItem?.title = ""
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -228,6 +229,7 @@ class RegisterViewController: UIViewController {
 extension RegisterViewController: InformativeInputFieldDelegate {
   func informativeInputFieldDidTapField(informativeInputField: InformativeInputField) {
     let countryPickerViewController: EMCCountryPickerController = EMCCountryPickerController()
+    countryPickerViewController.labelFont = FontDynamicType.subheadline.font
     countryPickerViewController.countryDelegate = self
     countryPickerViewController.flagSize = 44
     
