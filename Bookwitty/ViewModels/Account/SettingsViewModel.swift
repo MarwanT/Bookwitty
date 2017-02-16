@@ -67,4 +67,65 @@ final class SettingsViewModel {
   private func accessoryForSignOut(atRow row: Int) -> Accessory {
       return .None
   }
+
+  /*
+   * General table view functions
+   */
+  func numberOfSections() -> Int {
+    return self.sectionTitles.count
+  }
+
+  func titleFor(section: Int) -> String {
+    guard section >= 0 && section < self.sectionTitles.count else { return "" }
+
+    return self.sectionTitles[section]
+  }
+
+  func numberOfRowsIn(section: Int) -> Int {
+    guard section >= 0 && section < self.sectionTitles.count else { return 0 }
+
+    var numberOfRows = 0
+    switch section {
+    case Sections.General.rawValue:
+      //email notifications, change password, country/region
+      numberOfRows = 3
+    case Sections.SignOut.rawValue:
+      //sign out
+      numberOfRows = 1
+    default:
+      break
+    }
+    return numberOfRows
+  }
+
+  func values(forRowAt indexPath: IndexPath) -> (title: String, value: Any) {
+    var title: String = ""
+    var value: Any = ""
+    switch indexPath.section {
+    case Sections.General.rawValue:
+      let values = valuesForGeneral(atRow: indexPath.row)
+      title = values.title
+      value = values.value
+    case Sections.SignOut.rawValue:
+      let values = valuesForSignOut(atRow: indexPath.row)
+      title = values.title
+      value = values.value
+    default:
+      break
+    }
+    return (title, value)
+  }
+
+  func accessory(forRowAt indexPath: IndexPath) -> Accessory {
+    var accessory: Accessory = .None
+    switch indexPath.section {
+    case Sections.General.rawValue:
+      return accessoryForGeneral(atRow: indexPath.row)
+    case Sections.SignOut.rawValue:
+      accessory = accessoryForSignOut(atRow: indexPath.row)
+    default:
+      accessory = .None
+    }
+    return accessory
+  }
 }
