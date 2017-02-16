@@ -40,6 +40,8 @@ class DisclosureView: UIView {
     }
   }
   
+  var selected: Bool = false 
+  
   override func awakeFromNib() {
     super.awakeFromNib()
     initializeGestures()
