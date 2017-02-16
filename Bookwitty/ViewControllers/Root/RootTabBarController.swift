@@ -37,6 +37,8 @@ class RootTabBarController: UITabBarController {
   }
 
   private func addObservers() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(signOut(notificaiton:)), name: AppNotification.signOut, object: nil)
   }
 
 }
@@ -49,4 +51,7 @@ extension RootTabBarController: Themeable {
 
 //MARK: - Notifications
 extension RootTabBarController {
+  func signOut(notificaiton: Notification) {
+
+  }
 }
