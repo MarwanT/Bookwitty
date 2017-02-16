@@ -20,6 +20,12 @@ final class SettingsViewModel {
     case SignOut = 1
   }
 
+  enum Accessory {
+    case Disclosure
+    case Switch
+    case None
+  }
+
   private let sectionTitles: [String]
 
   init () {
