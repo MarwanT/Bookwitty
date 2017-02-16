@@ -12,9 +12,11 @@ import FLKAutoLayout
 class BookStoreViewController: UIViewController {
   @IBOutlet weak var stackView: UIStackView!
   
+  let bookwittySuggestsTableView = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)
+  
   let viewModel = BookStoreViewModel()
   
-  private let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
+  fileprivate let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -24,6 +26,17 @@ class BookStoreViewController: UIViewController {
     addSeparator(leftMargin)
     let didAddViewAllCategoriesSection = loadViewAllCategories()
     addSeparator()
+    addSpacing(space: 10)
+    let didLoadBookwittySuggests = loadBookwittySuggest()
+    addSeparator()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    // Add the table view height constraint constraint
+    bookwittySuggestsTableView.layoutIfNeeded()
+    bookwittySuggestsTableView.constrainHeight("\(bookwittySuggestsTableView.contentSize.height)")
   }
   
   func loadBannerSection() -> Bool {
@@ -75,10 +88,20 @@ class BookStoreViewController: UIViewController {
     return true
   }
   
+  func loadBookwittySuggest() -> Bool {
+    bookwittySuggestsTableView.separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    bookwittySuggestsTableView.separatorInset = UIEdgeInsets(
+      top: 0, left: leftMargin, bottom: 0, right: 0)
+    bookwittySuggestsTableView.dataSource = self
+    bookwittySuggestsTableView.delegate = self
+    bookwittySuggestsTableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
+    stackView.addArrangedSubview(bookwittySuggestsTableView)
+    bookwittySuggestsTableView.alignLeading("0", trailing: "0", toView: stackView)
+    return true
+  }
+  
   func addSeparator(_ leftMargin: CGFloat = 0) {
-    let separatorView = UIView(frame: CGRect.zero)
-    separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
-    separatorView.constrainHeight("1")
+    let separatorView = separatorViewInstance()
     stackView.addArrangedSubview(separatorView)
     separatorView.alignLeadingEdge(withView: stackView, predicate: "\(leftMargin)")
     separatorView.alignTrailingEdge(withView: stackView, predicate: "0")
@@ -94,6 +117,13 @@ class BookStoreViewController: UIViewController {
     spacer.constrainHeight("\(space)")
     stackView.addArrangedSubview(spacer)
   }
+  
+  fileprivate func separatorViewInstance() -> UIView {
+    let separatorView = UIView(frame: CGRect.zero)
+    separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    separatorView.constrainHeight("1")
+    return separatorView
+  }
 }
 
 extension BookStoreViewController: DisclosureViewDelegate {
@@ -103,6 +133,7 @@ extension BookStoreViewController: DisclosureViewDelegate {
 }
 
 
+// MARK: - Featured Content Collection View data source
 
 extension BookStoreViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -121,8 +152,74 @@ extension BookStoreViewController: UICollectionViewDataSource {
   }
 }
 
+
+// MARK: Featured Content Collection View Delegate
+
 extension BookStoreViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     // TODO: Handle featured content selection
+  }
+}
+
+
+// MARK: - Table ViewS Data Source
+
+extension BookStoreViewController: UITableViewDataSource {
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return viewModel.bookwittySuggestsNumberOfSections
+  }
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return viewModel.bookwittySuggestsNumberOfItems
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: DisclosureTableViewCell.identifier) as? DisclosureTableViewCell else {
+      return UITableViewCell()
+    }
+    
+    let data = viewModel.dataForBookwittySuggests(indexPath)
+    cell.label.text = data
+    return cell
+  }
+  
+  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    let containerView = UIView(frame: CGRect.zero)
+    
+    let tableHeaderLabel = UILabel(frame: CGRect.zero)
+    tableHeaderLabel.text = viewModel.bookwittySuggestsTitle
+    tableHeaderLabel.font = FontDynamicType.subheadline.font
+    tableHeaderLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    tableHeaderLabel.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+    containerView.addSubview(tableHeaderLabel)
+    tableHeaderLabel.alignTop("0", leading: "\(leftMargin)", bottom: "0", trailing: "0", toView: containerView)
+    
+    let separatorView = separatorViewInstance()
+    containerView.addSubview(separatorView)
+    separatorView.alignBottomEdge(withView: containerView, predicate: "0")
+    separatorView.alignLeading("\(leftMargin)", trailing: "0", toView: containerView)
+    
+    return containerView
+  }
+  
+  func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    return 45
+  }
+  
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 45
+  }
+}
+
+
+// MARK: - Table ViewS Delegate
+
+extension BookStoreViewController: UITableViewDelegate {
+  func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    return 0.01 // To remove the separator after the last cell
+  }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
   }
 }

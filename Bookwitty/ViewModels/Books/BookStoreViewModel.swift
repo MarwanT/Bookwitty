@@ -10,6 +10,7 @@ import Foundation
 
 final class BookStoreViewModel {
   let viewAllCategoriesLabelText = localizedString(key: "view-all-categories", defaultValue: "View All Categories")
+  let bookwittySuggestsTitle = localizedString(key: "bookwitty-suggests", defaultValue: "Bookwitty Suggests")
 }
 
 
@@ -22,5 +23,21 @@ extension BookStoreViewModel {
   
   func dataForFeaturedContent(indexPath: IndexPath) -> (title: String?, image: UIImage?) {
     return ("Featuring Zouzou", #imageLiteral(resourceName: "Illustrtion"))
+  }
+}
+
+// MARK: Bookwitty Suggests
+
+extension BookStoreViewModel {
+  var bookwittySuggestsNumberOfSections: Int {
+    return 1
+  }
+  
+  var bookwittySuggestsNumberOfItems: Int {
+    return 4
+  }
+  
+  func dataForBookwittySuggests(_ indexPath: IndexPath) -> String {
+    return "Reading list \(indexPath.row)"
   }
 }
