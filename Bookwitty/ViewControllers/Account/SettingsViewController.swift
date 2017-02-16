@@ -51,7 +51,7 @@ class SettingsViewController: UIViewController {
       case 0: //email
         break
       case 1: //change password
-        break
+        pushChangePasswordViewController()
       case 2: //country/region
         break
       default:
@@ -62,6 +62,11 @@ class SettingsViewController: UIViewController {
     default:
       break
     }
+  }
+
+  private func pushChangePasswordViewController() {
+    let viewController = Storyboard.Account.instantiate(ChangePasswordViewController.self)
+    self.navigationController?.pushViewController(viewController, animated: true)
   }
 }
 
