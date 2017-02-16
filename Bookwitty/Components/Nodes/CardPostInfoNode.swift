@@ -19,8 +19,8 @@ class CardPostInfoNode: ASDisplayNode {
   var userNameTextNode: ASTextNode
   var postDateTextNode: ASTextNode
 
-  private let userProfileImageDimension: CGFloat = 44.0
-  private let downArrowButtonSize: CGSize = CGSize(width: 30.0, height: 30.0)
+  private let userProfileImageDimension: CGFloat = 45.0
+  private let downArrowButtonSize: CGSize = CGSize(width: 45.0, height: 45.0)
 
   var data: CardPostInfoNodeData? {
     didSet {
@@ -76,6 +76,15 @@ class CardPostInfoNode: ASDisplayNode {
     }
   }
 
+  private func spacer(width: CGFloat = 0.0, flexGrow: CGFloat = 1.0) -> ASLayoutSpec {
+    return ASLayoutSpec().styled { (style) in
+      if(width == 0) {
+        style.flexGrow = flexGrow
+      }
+      style.width = ASDimensionMake(width)
+    }
+  }
+
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     //Add the User Profile Image - Vertical Stack [Name - Date] - Image ArrowDown
     let verticalStack = ASStackLayoutSpec.vertical()
@@ -91,7 +100,7 @@ class CardPostInfoNode: ASDisplayNode {
                                                       alignItems: .stretch,
                                                       children: [userProfileImageNode, verticalStack, arrowDownImageNode])
 
-    return ASInsetLayoutSpec(insets: UIEdgeInsets(top: internalMargin, left: internalMargin, bottom: internalMargin, right: internalMargin), child: horizontalStackSpec)
+    return ASInsetLayoutSpec(insets: UIEdgeInsets(top: internalMargin, left: internalMargin, bottom: internalMargin, right: 0), child: horizontalStackSpec)
   }
 
 }
