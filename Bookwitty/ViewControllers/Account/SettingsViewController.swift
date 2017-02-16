@@ -43,6 +43,26 @@ class SettingsViewController: UIViewController {
 
     viewModel.handleSwitchValueChanged(forRowAt: indexPath, newValue: sender.isOn)
   }
+
+  fileprivate func dispatchSelectionAt(_ indexPath: IndexPath) {
+    switch indexPath.section {
+    case SettingsViewModel.Sections.General.rawValue:
+      switch indexPath.row {
+      case 0: //email
+        break
+      case 1: //change password
+        break
+      case 2: //country/region
+        break
+      default:
+        break
+      }
+    case SettingsViewModel.Sections.SignOut.rawValue: //sign out
+      break
+    default:
+      break
+    }
+  }
 }
 
 extension SettingsViewController: Themeable {
@@ -113,5 +133,6 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
+    dispatchSelectionAt(indexPath)
   }
 }
