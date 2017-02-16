@@ -9,6 +9,7 @@
 import Foundation
 
 class RootTabBarController: UITabBarController {
+  let viewModel = RootTabBarViewModel()
 
   override func viewDidLoad() {
     super.viewDidLoad()
