@@ -41,6 +41,7 @@ class DisclosureView: UIView {
   }
   
   var selected: Bool = false 
+  var isAutoDeselectable: Bool = true
   
   override func awakeFromNib() {
     super.awakeFromNib()
