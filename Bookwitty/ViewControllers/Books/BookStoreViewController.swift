@@ -199,25 +199,29 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     if tableView === bookwittySuggestsTableView {
-      guard let cell = tableView.dequeueReusableCell(withIdentifier: DisclosureTableViewCell.identifier) as? DisclosureTableViewCell else {
-        return UITableViewCell()
-      }
-      
-      let data = viewModel.bookwittySuggestsValues(for: indexPath)
-      cell.label.text = data
-      return cell
+      return tableView.dequeueReusableCell(withIdentifier: DisclosureTableViewCell.identifier) ?? UITableViewCell()
     } else {
-      guard let cell = tableView.dequeueReusableCell(withIdentifier: BookTableViewCell.reuseIdentifier) as? BookTableViewCell else {
-        return UITableViewCell()
+      return tableView.dequeueReusableCell(withIdentifier: BookTableViewCell.reuseIdentifier) ?? UITableViewCell()
+    }
+  }
+  
+  func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    if tableView === bookwittySuggestsTableView {
+      guard let cell = cell as? DisclosureTableViewCell else {
+        return
       }
-      
+      let value = viewModel.bookwittySuggestsValues(for: indexPath)
+      cell.label.text = value
+    } else {
+      guard let cell = cell as? BookTableViewCell else {
+        return
+      }
       let values = viewModel.selectionValues(for: indexPath)
       cell.productImage = values.image
       cell.bookTitle = values.bookTitle
       cell.authorName = values.authorName
       cell.productType = values.productType
       cell.price = values.price
-      return cell
     }
   }
   
