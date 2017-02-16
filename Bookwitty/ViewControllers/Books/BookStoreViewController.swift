@@ -182,7 +182,7 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
   // MARK: Table View Data Source
   
   func numberOfSections(in tableView: UITableView) -> Int {
-    if tableView == bookwittySuggestsTableView {
+    if tableView === bookwittySuggestsTableView {
       return viewModel.bookwittySuggestsNumberOfSections
     } else {
       return viewModel.selectionNumberOfSection
@@ -190,7 +190,7 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    if tableView == bookwittySuggestsTableView {
+    if tableView === bookwittySuggestsTableView {
       return viewModel.bookwittySuggestsNumberOfItems
     } else {
       return viewModel.selectionNumberOfItems
@@ -198,7 +198,7 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    if tableView == bookwittySuggestsTableView {
+    if tableView === bookwittySuggestsTableView {
       guard let cell = tableView.dequeueReusableCell(withIdentifier: DisclosureTableViewCell.identifier) as? DisclosureTableViewCell else {
         return UITableViewCell()
       }
@@ -222,7 +222,7 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
   }
   
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    if tableView == bookwittySuggestsTableView {
+    if tableView === bookwittySuggestsTableView {
       let containerView = UIView(frame: CGRect.zero)
       
       let tableHeaderLabel = UILabel(frame: CGRect.zero)
@@ -249,7 +249,7 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
   }
   
   func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-    guard tableView == selectionTableView else {
+    guard tableView === selectionTableView else {
       return nil
     }
     
@@ -289,7 +289,7 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
   }
   
   func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    if tableView == bookwittySuggestsTableView {
+    if tableView === bookwittySuggestsTableView {
       return 45
     } else {
       return SectionTitleHeaderView.minimumHeight
@@ -297,7 +297,7 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
   }
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    if tableView == bookwittySuggestsTableView {
+    if tableView === bookwittySuggestsTableView {
       return 45
     } else {
       return BookTableViewCell.minimumHeight
@@ -307,7 +307,7 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
   // MARK: Table View Delegate
   
   func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-    if tableView == bookwittySuggestsTableView {
+    if tableView === bookwittySuggestsTableView {
       return 0.01 // To remove the separator after the last cell
     } else {
       return 93
