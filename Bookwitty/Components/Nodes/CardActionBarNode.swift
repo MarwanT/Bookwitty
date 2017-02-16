@@ -32,7 +32,7 @@ class CardActionBarNode: ASDisplayNode {
   private let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
   private let iconSize: CGSize = CGSize(width: 40.0, height: 40.0)
   //MARK: - Localized Strings
-  private let witItTitle: String = localizedString(key: "wit_it", defaultValue: "Wit it")
+  private let witItTitle: String = localizedString(key: "wit_it", defaultValue: "Wit")
   private let wittedTitle: String = localizedString(key: "witted", defaultValue: "Witted")
 
   private override init() {
