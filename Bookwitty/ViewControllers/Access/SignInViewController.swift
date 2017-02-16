@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import TTTAttributedLabel
 
 class SignInViewController: UIViewController {
   @IBOutlet weak var stackView: UIStackView!
@@ -14,6 +15,7 @@ class SignInViewController: UIViewController {
   @IBOutlet weak var stackViewBackgroundView: UIView!
   @IBOutlet weak var passwordField: PasswordInputField!
   @IBOutlet weak var signInButton: UIButton!
+  @IBOutlet weak var registerLabel: TTTAttributedLabel!
   @IBOutlet var separators: [UIView]!
   
   @IBOutlet weak var scrollViewBottomToButtonTopConstraint: NSLayoutConstraint!

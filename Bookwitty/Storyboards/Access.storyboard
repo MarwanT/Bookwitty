@@ -24,7 +24,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="icG-US-vNT">
-                                <rect key="frame" x="0.0" y="20" width="375" height="563"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="521.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gP5-6X-Oaa" userLabel="Stack View Background">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="298"/>
@@ -82,6 +82,12 @@
                                     <constraint firstAttribute="trailing" secondItem="gP5-6X-Oaa" secondAttribute="trailing" id="bvh-Fd-0ei"/>
                                 </constraints>
                             </scrollView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STo-2f-EV2" customClass="TTTAttributedLabel">
+                                <rect key="frame" x="20" y="562" width="335" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1r-FX-WUr" userLabel="Sign-In Button">
                                 <rect key="frame" x="20" y="603" width="335" height="44"/>
                                 <constraints>
@@ -95,12 +101,15 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="icG-US-vNT" firstAttribute="top" secondItem="gGw-xY-8LN" secondAttribute="bottom" id="88b-eI-pbc"/>
-                            <constraint firstItem="icG-US-vNT" firstAttribute="bottom" secondItem="h1r-FX-WUr" secondAttribute="top" constant="-20" id="8pq-BT-a9T"/>
                             <constraint firstItem="icG-US-vNT" firstAttribute="bottom" secondItem="Kez-nw-7iT" secondAttribute="top" id="Hcw-qh-4yI"/>
                             <constraint firstItem="h1r-FX-WUr" firstAttribute="leading" secondItem="gUT-Uy-A5b" secondAttribute="leading" constant="20" id="LGX-Ra-xkS"/>
+                            <constraint firstItem="STo-2f-EV2" firstAttribute="bottom" secondItem="h1r-FX-WUr" secondAttribute="top" constant="-20" id="LXr-aw-D2Y"/>
+                            <constraint firstItem="icG-US-vNT" firstAttribute="bottom" secondItem="STo-2f-EV2" secondAttribute="top" constant="-20" id="NWG-GI-3me"/>
+                            <constraint firstItem="STo-2f-EV2" firstAttribute="trailing" secondItem="gUT-Uy-A5b" secondAttribute="trailing" constant="-20" id="db0-FX-xcp"/>
                             <constraint firstItem="h1r-FX-WUr" firstAttribute="trailing" secondItem="gUT-Uy-A5b" secondAttribute="trailing" constant="-20" id="gfy-Vx-R3M"/>
                             <constraint firstItem="icG-US-vNT" firstAttribute="trailing" secondItem="gUT-Uy-A5b" secondAttribute="trailing" id="i7Q-uL-xeP"/>
                             <constraint firstItem="Kez-nw-7iT" firstAttribute="top" secondItem="h1r-FX-WUr" secondAttribute="bottom" constant="20" id="oTP-0C-C75"/>
+                            <constraint firstItem="STo-2f-EV2" firstAttribute="leading" secondItem="gUT-Uy-A5b" secondAttribute="leading" constant="20" id="x1t-2o-XOR"/>
                             <constraint firstItem="icG-US-vNT" firstAttribute="leading" secondItem="gUT-Uy-A5b" secondAttribute="leading" id="yHW-qb-Sf0"/>
                         </constraints>
                         <variation key="default">
@@ -112,7 +121,7 @@
                     <connections>
                         <outlet property="emailField" destination="654-el-WVd" id="cyi-ou-WbN"/>
                         <outlet property="passwordField" destination="2MS-dN-n76" id="jxs-Dn-pN4"/>
-                        <outlet property="scrollViewBottomToButtonTopConstraint" destination="8pq-BT-a9T" id="p2X-4F-63x"/>
+                        <outlet property="registerLabel" destination="STo-2f-EV2" id="XQg-AN-rvN"/>
                         <outlet property="scrollViewBottomToSuperviewBottomConstraint" destination="Hcw-qh-4yI" id="VcN-A7-eR7"/>
                         <outlet property="signInButton" destination="h1r-FX-WUr" id="FMq-uM-oBn"/>
                         <outlet property="stackView" destination="Dh8-kZ-JBa" id="ejN-os-EDg"/>
