@@ -42,3 +42,7 @@ extension RootTabBarController: Themeable {
     view.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
   }
 }
+
+//MARK: - Notifications
+extension RootTabBarController {
+}
