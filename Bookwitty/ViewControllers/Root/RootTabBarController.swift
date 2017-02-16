@@ -34,8 +34,7 @@ class RootTabBarController: UITabBarController {
     
     // Display Introduction VC if user is not signed in
     if !viewModel.isUserSignedIn {
-      let introductionVC = Storyboard.Introduction.instantiate(IntroductionViewController.self)
-      present(introductionVC, animated: true, completion: nil)
+      presentIntroductionOrSignInViewController()
     } else {
       dismissOverlay()
     }
@@ -61,6 +60,16 @@ class RootTabBarController: UITabBarController {
     
     // Set Default select tab index
     self.selectedIndex = 0
+  }
+  
+  private func presentIntroductionOrSignInViewController() {
+    if viewModel.didSignInAtLeastOnce {
+      let signInVC = Storyboard.Access.instantiate(SignInViewController.self)
+      present(signInVC, animated: true, completion: nil)
+    } else {
+      let introductionVC = Storyboard.Introduction.instantiate(IntroductionViewController.self)
+      present(introductionVC, animated: true, completion: nil)
+    }
   }
 }
 
