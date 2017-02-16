@@ -36,7 +36,8 @@ final class SettingsViewModel {
   private func valuesForGeneral(atRow row: Int) -> (title: String, value: Any) {
     switch row {
     case 0: //email
-      return (emailNotificationsText, false)
+      let sendEmailNotification = GeneralSettings.sharedInstance.shouldSendEmailNotifications
+      return (emailNotificationsText, sendEmailNotification)
     case 1: //change password
       return (changePasswordText, "")
     case 2: //country/region
