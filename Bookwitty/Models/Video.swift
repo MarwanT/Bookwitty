@@ -39,3 +39,7 @@ class Video: Resource {
   }
 }
 
+// MARK: - Parser
+extension Video: Parsable {
+  typealias AbstractType = Video
+}
