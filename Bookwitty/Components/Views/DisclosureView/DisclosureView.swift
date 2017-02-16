@@ -63,6 +63,7 @@ class DisclosureView: UIView {
   }
   
   func didTapOnView(_ sender: Any?) {
+    selected = !selected
     delegate?.disclosureViewTapped(self)
   }
   
