@@ -175,9 +175,12 @@ extension BookStoreViewController: UICollectionViewDelegate {
   }
 }
 
-// MARK: - Table ViewS Data Source
+// MARK: - Table View Delegates
 
-extension BookStoreViewController: UITableViewDataSource {
+extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
+  
+  // MARK: Table View Data Source
+  
   func numberOfSections(in tableView: UITableView) -> Int {
     if tableView == bookwittySuggestsTableView {
       return viewModel.bookwittySuggestsNumberOfSections
@@ -300,11 +303,9 @@ extension BookStoreViewController: UITableViewDataSource {
       return BookTableViewCell.minimumHeight
     }
   }
-}
-
-// MARK: - Table View Delegate
-
-extension BookStoreViewController: UITableViewDelegate {
+  
+  // MARK: Table View Delegate
+  
   func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
     if tableView == bookwittySuggestsTableView {
       return 0.01 // To remove the separator after the last cell
