@@ -19,6 +19,7 @@ class SettingsViewController: UIViewController {
 
     // Do any additional setup after loading the view.
     initializeComponents()
+    setupNavigationBarButtons()
     applyTheme()
   }
 
@@ -28,6 +29,10 @@ class SettingsViewController: UIViewController {
     tableView.register(TableViewSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: TableViewSectionHeaderView.reuseIdentifier)
 
     tableView.tableFooterView = UIView.defaultSeparator(useAutoLayout: false)
+  }
+
+  private func setupNavigationBarButtons() {
+    
   }
 
   func switchValueChanged(_ sender: UISwitch) {
