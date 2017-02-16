@@ -245,7 +245,7 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
       return containerView
     } else {
       guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: SectionTitleHeaderView.reuseIdentifier) as? SectionTitleHeaderView else {
-        return UIView()
+        return nil
       }
       headerView.label.text = viewModel.selectionHeaderTitle
       return headerView
