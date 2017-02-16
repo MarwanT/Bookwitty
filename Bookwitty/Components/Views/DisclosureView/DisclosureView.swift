@@ -58,6 +58,31 @@ class DisclosureView: UIView {
     delegate?.disclosureViewTapped(self)
   }
   
+  func refreshBackground(animated: Bool, completion: @escaping () -> Void) {
+    let animationDuration: TimeInterval = 0.17
+    
+    let currentBackgroundColor: UIColor
+    switch selected {
+    case true:
+      currentBackgroundColor = configuration.selectedBackgroundColor
+    case false:
+      currentBackgroundColor = configuration.normalBackgroundColor
+    }
+    
+    if animated {
+      UIView.animate(
+        withDuration: animationDuration,
+        animations: {
+          self.backgroundColor = currentBackgroundColor
+      }, completion: { (_) in
+          completion()
+      })
+    } else {
+      self.backgroundColor = currentBackgroundColor
+      completion()
+    }
+  }
+  
   fileprivate func refreshStyling() {
     let font: UIFont
     
