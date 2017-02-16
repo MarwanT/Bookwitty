@@ -84,6 +84,12 @@ extension RootTabBarController {
     changeOverlayAlphaValue(animated: animated, alpha: 1, completion: {})
   }
   
+  func dismissOverlay(animated: Bool = true) {
+    changeOverlayAlphaValue(animated: animated, alpha: 0) {
+      self.overlayView.removeFromSuperview()
+    }
+  }
+  
   func changeOverlayAlphaValue(animated: Bool, alpha: CGFloat, completion: @escaping () -> Void) {
     if animated {
       UIView.animate(
