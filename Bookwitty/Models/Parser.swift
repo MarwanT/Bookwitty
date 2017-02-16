@@ -70,6 +70,7 @@ class Parser {
   private func registerResources() {
     serializer.registerResource(User.self)
     serializer.registerResource(PenName.self)
+    serializer.registerResource(Image.self)
   }
 
   private func registerValueFormatters() {

@@ -41,3 +41,7 @@ class Image: Resource {
   }
 }
 
+// MARK: - Parser
+extension Image: Parsable {
+  typealias AbstractType = Image
+}
