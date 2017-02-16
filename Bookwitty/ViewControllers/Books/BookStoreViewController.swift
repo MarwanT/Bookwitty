@@ -13,10 +13,15 @@ class BookStoreViewController: UIViewController {
   @IBOutlet weak var stackView: UIStackView!
   
   let bookwittySuggestsTableView = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)
+  let selectionTableView = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)
+  let viewAllCategories = UIView.loadFromView(DisclosureView.self, owner: nil)
+  let viewAllBooksView = UIView.loadFromView(DisclosureView.self, owner: nil)
+  let viewAllSelectionsView = UIView.loadFromView(DisclosureView.self, owner: nil)
   
   let viewModel = BookStoreViewModel()
   
   fileprivate let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
+  fileprivate let sectionSpacing = ThemeManager.shared.currentTheme.sectionSpacing()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -29,6 +34,8 @@ class BookStoreViewController: UIViewController {
     addSpacing(space: 10)
     let didLoadBookwittySuggests = loadBookwittySuggest()
     addSeparator()
+    addSpacing(space: sectionSpacing)
+    let didLoadSelectionSection = loadSelectionSection()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -37,6 +44,9 @@ class BookStoreViewController: UIViewController {
     // Add the table view height constraint constraint
     bookwittySuggestsTableView.layoutIfNeeded()
     bookwittySuggestsTableView.constrainHeight("\(bookwittySuggestsTableView.contentSize.height)")
+    
+    selectionTableView.layoutIfNeeded()
+    selectionTableView.constrainHeight("\(selectionTableView.contentSize.height)")
   }
   
   func loadBannerSection() -> Bool {
@@ -76,15 +86,14 @@ class BookStoreViewController: UIViewController {
   }
   
   func loadViewAllCategories() -> Bool {
-    let disclosureView = UIView.loadFromView(DisclosureView.self, owner: nil)
-    disclosureView.style = .highlighted
-    disclosureView.delegate = self
-    disclosureView.label.text = viewModel.viewAllCategoriesLabelText
+    viewAllCategories.style = .highlighted
+    viewAllCategories.delegate = self
+    viewAllCategories.label.text = viewModel.viewAllCategoriesLabelText
     
-    disclosureView.constrainHeight("45")
-    stackView.addArrangedSubview(disclosureView)
-    disclosureView.alignLeadingEdge(withView: stackView, predicate: "0")
-    disclosureView.alignTrailingEdge(withView: stackView, predicate: "0")
+    viewAllCategories.constrainHeight("45")
+    stackView.addArrangedSubview(viewAllCategories)
+    viewAllCategories.alignLeadingEdge(withView: stackView, predicate: "0")
+    viewAllCategories.alignTrailingEdge(withView: stackView, predicate: "0")
     return true
   }
   
@@ -97,6 +106,19 @@ class BookStoreViewController: UIViewController {
     bookwittySuggestsTableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
     stackView.addArrangedSubview(bookwittySuggestsTableView)
     bookwittySuggestsTableView.alignLeading("0", trailing: "0", toView: stackView)
+    return true
+  }
+  
+  func loadSelectionSection() -> Bool {
+    selectionTableView.separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    selectionTableView.separatorInset = UIEdgeInsets(
+      top: 0, left: leftMargin, bottom: 0, right: 0)
+    selectionTableView.dataSource = self
+    selectionTableView.delegate = self
+    selectionTableView.register(SectionTitleHeaderView.nib, forHeaderFooterViewReuseIdentifier: SectionTitleHeaderView.reuseIdentifier)
+    selectionTableView.register(BookTableViewCell.nib, forCellReuseIdentifier: BookTableViewCell.reuseIdentifier)
+    stackView.addArrangedSubview(selectionTableView)
+    selectionTableView.alignLeading("0", trailing: "0", toView: stackView)
     return true
   }
   
@@ -126,13 +148,6 @@ class BookStoreViewController: UIViewController {
   }
 }
 
-extension BookStoreViewController: DisclosureViewDelegate {
-  func disclosureViewTapped() {
-    print("View ALl categories")
-  }
-}
-
-
 // MARK: - Featured Content Collection View data source
 
 extension BookStoreViewController: UICollectionViewDataSource {
@@ -152,7 +167,6 @@ extension BookStoreViewController: UICollectionViewDataSource {
   }
 }
 
-
 // MARK: Featured Content Collection View Delegate
 
 extension BookStoreViewController: UICollectionViewDelegate {
@@ -161,65 +175,162 @@ extension BookStoreViewController: UICollectionViewDelegate {
   }
 }
 
-
 // MARK: - Table ViewS Data Source
 
 extension BookStoreViewController: UITableViewDataSource {
   func numberOfSections(in tableView: UITableView) -> Int {
-    return viewModel.bookwittySuggestsNumberOfSections
+    if tableView == bookwittySuggestsTableView {
+      return viewModel.bookwittySuggestsNumberOfSections
+    } else {
+      return viewModel.selectionNumberOfSection
+    }
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return viewModel.bookwittySuggestsNumberOfItems
+    if tableView == bookwittySuggestsTableView {
+      return viewModel.bookwittySuggestsNumberOfItems
+    } else {
+      return viewModel.selectionNumberOfItems
+    }
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: DisclosureTableViewCell.identifier) as? DisclosureTableViewCell else {
-      return UITableViewCell()
+    if tableView == bookwittySuggestsTableView {
+      guard let cell = tableView.dequeueReusableCell(withIdentifier: DisclosureTableViewCell.identifier) as? DisclosureTableViewCell else {
+        return UITableViewCell()
+      }
+      
+      let data = viewModel.dataForBookwittySuggests(indexPath)
+      cell.label.text = data
+      return cell
+    } else {
+      guard let cell = tableView.dequeueReusableCell(withIdentifier: BookTableViewCell.reuseIdentifier) as? BookTableViewCell else {
+        return UITableViewCell()
+      }
+      
+      let values = viewModel.selectionValues(for: indexPath)
+      cell.productImage = values.image
+      cell.bookTitle = values.bookTitle
+      cell.authorName = values.authorName
+      cell.productType = values.productType
+      cell.price = values.price
+      return cell
     }
-    
-    let data = viewModel.dataForBookwittySuggests(indexPath)
-    cell.label.text = data
-    return cell
   }
   
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    if tableView == bookwittySuggestsTableView {
+      let containerView = UIView(frame: CGRect.zero)
+      
+      let tableHeaderLabel = UILabel(frame: CGRect.zero)
+      tableHeaderLabel.text = viewModel.bookwittySuggestsTitle
+      tableHeaderLabel.font = FontDynamicType.callout.font
+      tableHeaderLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+      tableHeaderLabel.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+      containerView.addSubview(tableHeaderLabel)
+      tableHeaderLabel.alignTop("0", leading: "\(leftMargin)", bottom: "0", trailing: "0", toView: containerView)
+      
+      let separatorView = separatorViewInstance()
+      containerView.addSubview(separatorView)
+      separatorView.alignBottomEdge(withView: containerView, predicate: "0")
+      separatorView.alignLeading("\(leftMargin)", trailing: "0", toView: containerView)
+      
+      return containerView
+    } else {
+      guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: SectionTitleHeaderView.reuseIdentifier) as? SectionTitleHeaderView else {
+        return UIView()
+      }
+      headerView.label.text = viewModel.selectionHeaderTitle
+      return headerView
+    }
+  }
+  
+  func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    guard tableView == selectionTableView else {
+      return nil
+    }
+    
+    viewAllBooksView.style = .highlighted
+    viewAllBooksView.delegate = self
+    viewAllBooksView.label.text = viewModel.viewAllBooksLabelText
+    
+    viewAllSelectionsView.style = .highlighted
+    viewAllSelectionsView.delegate = self
+    viewAllSelectionsView.label.text = viewModel.viewAllSelectionsLabelText
+    
+    let topSeparator = separatorViewInstance()
+    let middleSeparator = separatorViewInstance()
+    let bottomSeparator = separatorViewInstance()
+    
     let containerView = UIView(frame: CGRect.zero)
+    containerView.addSubview(viewAllBooksView)
+    containerView.addSubview(viewAllSelectionsView)
+    containerView.addSubview(topSeparator)
+    containerView.addSubview(middleSeparator)
+    containerView.addSubview(bottomSeparator)
     
-    let tableHeaderLabel = UILabel(frame: CGRect.zero)
-    tableHeaderLabel.text = viewModel.bookwittySuggestsTitle
-    tableHeaderLabel.font = FontDynamicType.subheadline.font
-    tableHeaderLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
-    tableHeaderLabel.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
-    containerView.addSubview(tableHeaderLabel)
-    tableHeaderLabel.alignTop("0", leading: "\(leftMargin)", bottom: "0", trailing: "0", toView: containerView)
-    
-    let separatorView = separatorViewInstance()
-    containerView.addSubview(separatorView)
-    separatorView.alignBottomEdge(withView: containerView, predicate: "0")
-    separatorView.alignLeading("\(leftMargin)", trailing: "0", toView: containerView)
+    topSeparator.alignTopEdge(withView: containerView, predicate: "0")
+    topSeparator.alignLeading("\(leftMargin)", trailing: "0", toView: containerView)
+    viewAllBooksView.constrainTopSpace(toView: topSeparator, predicate: "0")
+    viewAllBooksView.alignLeading("0", trailing: "0", toView: containerView)
+    viewAllBooksView.constrainHeight("45")
+    middleSeparator.constrainTopSpace(toView: viewAllBooksView, predicate: "0")
+    middleSeparator.alignLeading("0", trailing: "0", toView: topSeparator)
+    viewAllSelectionsView.constrainTopSpace(toView: middleSeparator, predicate: "0")
+    viewAllSelectionsView.alignLeading("0", trailing: "0", toView: containerView)
+    viewAllSelectionsView.constrainHeight("45")
+    bottomSeparator.constrainTopSpace(toView: viewAllSelectionsView, predicate: "0")
+    bottomSeparator.alignLeading("0", trailing: "0", toView: containerView)
     
     return containerView
   }
   
   func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return 45
+    if tableView == bookwittySuggestsTableView {
+      return 45
+    } else {
+      return SectionTitleHeaderView.minimumHeight
+    }
   }
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 45
+    if tableView == bookwittySuggestsTableView {
+      return 45
+    } else {
+      return BookTableViewCell.minimumHeight
+    }
   }
 }
 
-
-// MARK: - Table ViewS Delegate
+// MARK: - Table View Delegate
 
 extension BookStoreViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-    return 0.01 // To remove the separator after the last cell
+    if tableView == bookwittySuggestsTableView {
+      return 0.01 // To remove the separator after the last cell
+    } else {
+      return 93
+    }
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
+  }
+}
+
+// MARK: - Disclosure view delegate
+
+extension BookStoreViewController: DisclosureViewDelegate {
+  func disclosureViewTapped(_ disclosureView: DisclosureView) {
+    switch disclosureView {
+    case viewAllCategories:
+      break
+    case viewAllBooksView:
+      break
+    case viewAllSelectionsView:
+      break
+    default:
+      break
+    }
   }
 }

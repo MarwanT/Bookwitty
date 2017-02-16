@@ -9,7 +9,7 @@
 import UIKit
 
 protocol DisclosureViewDelegate: class {
-  func disclosureViewTapped()
+  func disclosureViewTapped(_ disclosureView: DisclosureView)
 }
 
 class DisclosureView: UIView {
@@ -41,7 +41,7 @@ class DisclosureView: UIView {
   }
   
   func didTapOnView(_ sender: Any?) {
-    delegate?.disclosureViewTapped()
+    delegate?.disclosureViewTapped(self)
   }
   
   fileprivate func refreshStyling() {
