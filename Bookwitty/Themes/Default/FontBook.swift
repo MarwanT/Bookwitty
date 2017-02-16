@@ -72,18 +72,18 @@ enum FontDynamicType: String {
 extension FontDynamicType {
   fileprivate static var fontSizeTable: [String: [UIContentSizeCategory:CGFloat]] = [
     FontDynamicType.title1.rawValue : [
-      UIContentSizeCategory.accessibilityExtraExtraExtraLarge: 36,
-      UIContentSizeCategory.accessibilityExtraExtraLarge: 36,
-      UIContentSizeCategory.accessibilityExtraLarge: 36,
-      UIContentSizeCategory.accessibilityLarge: 36,
-      UIContentSizeCategory.accessibilityMedium: 36,
-      UIContentSizeCategory.extraExtraExtraLarge: 36,
-      UIContentSizeCategory.extraExtraLarge: 34,
-      UIContentSizeCategory.extraLarge: 32,
-      UIContentSizeCategory.large: 30,
-      UIContentSizeCategory.medium: 29,
-      UIContentSizeCategory.small: 28,
-      UIContentSizeCategory.extraSmall: 27
+      UIContentSizeCategory.accessibilityExtraExtraExtraLarge: 34,
+      UIContentSizeCategory.accessibilityExtraExtraLarge: 34,
+      UIContentSizeCategory.accessibilityExtraLarge: 34,
+      UIContentSizeCategory.accessibilityLarge: 34,
+      UIContentSizeCategory.accessibilityMedium: 34,
+      UIContentSizeCategory.extraExtraExtraLarge: 34,
+      UIContentSizeCategory.extraExtraLarge: 32,
+      UIContentSizeCategory.extraLarge: 30,
+      UIContentSizeCategory.large: 28,
+      UIContentSizeCategory.medium: 27,
+      UIContentSizeCategory.small: 26,
+      UIContentSizeCategory.extraSmall: 25
     ],
     FontDynamicType.title2.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: 30,
