@@ -16,30 +16,12 @@ class RootTabBarController: UITabBarController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    initializeTabBarViewControllers()
     initializeOverlay()
     applyTheme()
     addObservers()
     
     displayOverlay(animated: false)
-    
-    //Set Default select tab index
-    self.selectedIndex = 0
-
-    let placeholderVc1 = NewsFeedViewController()
-    let placeholderVc2 = UIViewController()
-    
-    placeholderVc1.tabBarItem = UITabBarItem(
-      title: "NEWS",
-      image: #imageLiteral(resourceName: "newsfeed"),
-      tag: 1)
-    placeholderVc2.tabBarItem = UITabBarItem(
-      title: "POST",
-      image: #imageLiteral(resourceName: "createPost"),
-      tag:2)
-
-    //Set The View controller
-    self.viewControllers = [UINavigationController(rootViewController: placeholderVc1),
-                            UINavigationController(rootViewController: placeholderVc2)]
   }
 
   private func addObservers() {
@@ -58,8 +40,31 @@ class RootTabBarController: UITabBarController {
       dismissOverlay()
     }
   }
+  
+  private func initializeTabBarViewControllers() {
+    let viewController1 = NewsFeedViewController()
+    let viewController2 = UIViewController()
+    
+    viewController1.tabBarItem = UITabBarItem(
+      title: "NEWS",
+      image: #imageLiteral(resourceName: "newsfeed"),
+      tag: 1)
+    viewController2.tabBarItem = UITabBarItem(
+      title: "POST",
+      image: #imageLiteral(resourceName: "createPost"),
+      tag:2)
+    
+    // Set The View controller
+    self.viewControllers = [
+      UINavigationController(rootViewController: viewController1),
+      UINavigationController(rootViewController: viewController2)]
+    
+    // Set Default select tab index
+    self.selectedIndex = 0
+  }
 }
 
+// MARK: - Themeable
 extension RootTabBarController: Themeable {
   func applyTheme() {
     view.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
