@@ -7,3 +7,12 @@
 //
 
 import Foundation
+import AsyncDisplayKit
+
+class ReadingListBooksNode: ASDisplayNode {
+
+  override init() {
+    super.init()
+  }
+}
+
