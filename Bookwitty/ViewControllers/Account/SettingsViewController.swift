@@ -96,6 +96,9 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     let sectionView = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableViewSectionHeaderView.reuseIdentifier) as? TableViewSectionHeaderView
     sectionView?.label.text = viewModel.titleFor(section: section)
     sectionView?.contentView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+
+    sectionView?.separators?.first?.isHidden = section == 0
+
     return sectionView
   }
 
