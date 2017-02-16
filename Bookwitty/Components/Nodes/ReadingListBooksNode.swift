@@ -47,5 +47,15 @@ class ReadingListBooksNode: ASDisplayNode {
       addSubnode(imageNode)
     }
   }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let horizontalStack = ASStackLayoutSpec(direction: .horizontal,
+                                          spacing: internalMargin/2,
+                                          justifyContent: .center,
+                                          alignItems: .center,
+                                          children: imageListNodes)
+    horizontalStack.style.height = ASDimensionMake(imageNodeSize.height)
+    return horizontalStack
+  }
 }
 
