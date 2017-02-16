@@ -89,7 +89,7 @@ class BaseCardPostNode: ASCellNode {
     backgroundNode.borderWidth = 1.0
     backgroundNode.borderColor = ThemeManager.shared.currentTheme.colorNumber18().cgColor
     backgroundNode.cornerRadius = 4.0
-    backgroundNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
+    backgroundNode.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     //Separator
     separatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
   }
