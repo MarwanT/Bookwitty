@@ -80,7 +80,8 @@ class RootTabBarController: UITabBarController {
       present(signInVC, animated: true, completion: nil)
     } else {
       let introductionVC = Storyboard.Introduction.instantiate(IntroductionViewController.self)
-      present(introductionVC, animated: true, completion: nil)
+      let navigationController = UINavigationController(rootViewController: introductionVC)
+      present(navigationController, animated: true, completion: nil)
     }
   }
   
