@@ -10,6 +10,19 @@ import Foundation
 import AsyncDisplayKit
 
 class ReadingListBooksNode: ASDisplayNode {
+  private static let defaultImageNodeSize: CGSize = CGSize(width: 60.0, height: 100.0)
+
+  private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  private var maxItems: Int = 1
+  private var imageListNodes: [ReadingListBookNode] = []
+
+  var imageNodeSize: CGSize = defaultImageNodeSize
+  var imageCollection: [String]? {
+    didSet {
+      guard (imageListNodes.count == 0) else { return }
+      //TODO: Create Image Nodes and add them as subnodes to this node
+    }
+  }
 
   override init() {
     super.init()
