@@ -80,6 +80,7 @@
 		59DA47671E3B84ED00BA90A5 /* Access.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59DA47661E3B84ED00BA90A5 /* Access.storyboard */; };
 		59DA476A1E3B876900BA90A5 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47691E3B876900BA90A5 /* SignInViewController.swift */; };
 		59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */; };
+		F40700501E55992000DA48A4 /* ReadingListBooksNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */; };
 		F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41D529F1E40EB060021A4AE /* RegisterViewController.swift */; };
 		F41D52A21E40EB780021A4AE /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41D52A11E40EB780021A4AE /* RegisterViewModel.swift */; };
 		F420AD9D1E41D2E600C78AEB /* BookwittyUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420AD9C1E41D2E600C78AEB /* BookwittyUtilityTests.swift */; };
@@ -199,6 +200,7 @@
 		818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BookwittyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B75E5B87D9559EBD71824DD7 /* Pods-Bookwitty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookwitty.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bookwitty/Pods-Bookwitty.debug.xcconfig"; sourceTree = "<group>"; };
 		CB5E98B3C54E0B0AD22F5CB4 /* Pods-BookwittyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookwittyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests.release.xcconfig"; sourceTree = "<group>"; };
+		F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingListBooksNode.swift; sourceTree = "<group>"; };
 		F41D529F1E40EB060021A4AE /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		F41D52A11E40EB780021A4AE /* RegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		F420AD9C1E41D2E600C78AEB /* BookwittyUtilityTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyUtilityTests.swift; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 				F426867E1E511B7C0085E581 /* ArticleCardPostCellNode.swift */,
 				F4670AF81E54556800159F4F /* ReadingListCardPostCellNode.swift */,
 				F422D82D1E51AC3900A32C2F /* VideoCardPostCellNode.swift */,
+				F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */,
 				F4670AFA1E54669300159F4F /* ReadingListBookNode.swift */,
 				F45A50141E536591005E5C56 /* TopicCardPostCellNode.swift */,
 				F4670AFC1E54ACF200159F4F /* ProfileCardPostCellNode.swift */,
@@ -986,6 +989,7 @@
 				594F4EAF1E440A4900A947FA /* User+API.swift in Sources */,
 				F4670AFD1E54ACF200159F4F /* ProfileCardPostCellNode.swift in Sources */,
 				594290061E4FEEC10006B2F1 /* CategoriesTableViewController.swift in Sources */,
+				F40700501E55992000DA48A4 /* ReadingListBooksNode.swift in Sources */,
 				59D8FCBC1E4DA394001C1EDB /* CategoryManager.swift in Sources */,
 				F420B6A21E43C570001F34CD /* User.swift in Sources */,
 				F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */,
