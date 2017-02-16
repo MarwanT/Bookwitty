@@ -139,6 +139,11 @@ class ReadingListCardContentNode: ASDisplayNode {
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     var nodesArray: [ASLayoutElement] = []
 
+    if imageCollection.count > 0 {
+      let customLayoutSpec = ASCenterLayoutSpec(centeringOptions: ASCenterLayoutSpecCenteringOptions.XY, sizingOptions: ASCenterLayoutSpecSizingOptions.minimumXY, child: customHorizontalList)
+      nodesArray.append(customLayoutSpec)
+    }
+
     let titleNodeInset = ASInsetLayoutSpec(insets: cardSidesInset(), child: titleNode)
     let topicStatsNodeInset = ASInsetLayoutSpec(insets: cardSidesInset(), child: topicStatsNode)
     let descriptionNodeInset = ASInsetLayoutSpec(insets: cardSidesInset(), child: descriptionNode)
