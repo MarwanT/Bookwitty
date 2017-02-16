@@ -41,7 +41,7 @@ class SettingsViewController: UIViewController {
       return
     }
 
-    //TODO: handle the switch action for indexPath
+    viewModel.handleSwitchValueChanged(forRowAt: indexPath, newValue: sender.isOn)
   }
 }
 
