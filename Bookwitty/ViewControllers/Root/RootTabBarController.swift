@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FLKAutoLayout
 
 class RootTabBarController: UITabBarController {
   let viewModel = RootTabBarViewModel()
@@ -64,9 +65,37 @@ extension RootTabBarController {
 
 // MARK: - Overlay Methods
 extension RootTabBarController {
+  var animationDuration: TimeInterval {
+    return 0.44
+  }
+  
   func initializeOverlay() {
     overlayView = Bundle.main.loadNibNamed(
       "LaunchScreen", owner: nil, options: nil)![0] as! UIView
     overlayView.alpha = 0
+  }
+  
+  func displayOverlay(animated: Bool = true) {
+    let isAlreadyAddedToViewHierarchy = (overlayView.superview != nil)
+    if !isAlreadyAddedToViewHierarchy {
+      view.addSubview(overlayView)
+      overlayView.alignTop("0", leading: "0", bottom: "0", trailing: "0", toView: view)
+    }
+    changeOverlayAlphaValue(animated: animated, alpha: 1, completion: {})
+  }
+  
+  func changeOverlayAlphaValue(animated: Bool, alpha: CGFloat, completion: @escaping () -> Void) {
+    if animated {
+      UIView.animate(
+        withDuration: animationDuration,
+        animations: {
+          self.overlayView.alpha = alpha
+      }, completion: { (finished) in
+        completion()
+      })
+    } else {
+      overlayView.alpha = alpha
+      completion()
+    }
   }
 }
