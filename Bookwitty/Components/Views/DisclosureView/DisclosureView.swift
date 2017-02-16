@@ -18,14 +18,31 @@ class DisclosureView: UIView {
     case highlighted
   }
   
+  struct Configuration {
+    var normalBackgroundColor: UIColor = ThemeManager.shared.currentTheme.colorNumber23()
+    var selectedBackgroundColor: UIColor = ThemeManager.shared.currentTheme.defaultSelectionColor()
+    var isAutoDeselectable: Bool = true
+    var style: Style = .normal
+  }
+  
   @IBOutlet weak var label: UILabel!
   @IBOutlet weak var disclosureImageView: UIImageView!
   
   weak var delegate: DisclosureViewDelegate? = nil
   
-  var style: Style = .normal {
+  var configuration = Configuration() {
     didSet {
-      refreshStyling()
+      applyTheme()
+    }
+  }
+
+  var selected: Bool = false {
+    didSet {
+      refreshBackground(animated: true) { 
+        if self.selected && self.configuration.isAutoDeselectable {
+          self.selected = false
+        }
+      }
     }
   }
   
@@ -41,13 +58,39 @@ class DisclosureView: UIView {
   }
   
   func didTapOnView(_ sender: Any?) {
+    selected = !selected
     delegate?.disclosureViewTapped(self)
+  }
+  
+  func refreshBackground(animated: Bool, completion: @escaping () -> Void) {
+    let animationDuration: TimeInterval = 0.17
+    
+    let currentBackgroundColor: UIColor
+    switch selected {
+    case true:
+      currentBackgroundColor = configuration.selectedBackgroundColor
+    case false:
+      currentBackgroundColor = configuration.normalBackgroundColor
+    }
+    
+    if animated {
+      UIView.animate(
+        withDuration: animationDuration,
+        animations: {
+          self.backgroundColor = currentBackgroundColor
+      }, completion: { (_) in
+          completion()
+      })
+    } else {
+      self.backgroundColor = currentBackgroundColor
+      completion()
+    }
   }
   
   fileprivate func refreshStyling() {
     let font: UIFont
     
-    switch style {
+    switch configuration.style {
     case .normal:
       tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
       font = FontDynamicType.caption2.font
@@ -71,5 +114,6 @@ extension DisclosureView: Themeable {
     disclosureImageView.image = #imageLiteral(resourceName: "rightArrow")
     
     refreshStyling()
+    refreshBackground(animated: false, completion: {})
   }
 }

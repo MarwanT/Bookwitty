@@ -86,7 +86,7 @@ class BookStoreViewController: UIViewController {
   }
   
   func loadViewAllCategories() -> Bool {
-    viewAllCategories.style = .highlighted
+    viewAllCategories.configuration.style = .highlighted
     viewAllCategories.delegate = self
     viewAllCategories.label.text = viewModel.viewAllCategoriesLabelText
     
@@ -250,11 +250,11 @@ extension BookStoreViewController: UITableViewDataSource {
       return nil
     }
     
-    viewAllBooksView.style = .highlighted
+    viewAllBooksView.configuration.style = .highlighted
     viewAllBooksView.delegate = self
     viewAllBooksView.label.text = viewModel.viewAllBooksLabelText
     
-    viewAllSelectionsView.style = .highlighted
+    viewAllSelectionsView.configuration.style = .highlighted
     viewAllSelectionsView.delegate = self
     viewAllSelectionsView.label.text = viewModel.viewAllSelectionsLabelText
     
