@@ -60,6 +60,15 @@ final class SettingsViewModel {
     }
   }
 
+  private func handleGeneralSwitchValueChanged(atRow row: Int, newValue: Bool) {
+    switch row {
+    case 0: //email
+      GeneralSettings.sharedInstance.shouldSendEmailNotifications = newValue
+    default:
+      break
+    }
+  }
+
   //Sign Out
   private func valuesForSignOut(atRow row: Int) -> (title: String, value: String) {
     return (signOutText, "")
@@ -128,5 +137,14 @@ final class SettingsViewModel {
       accessory = .None
     }
     return accessory
+  }
+
+  func handleSwitchValueChanged(forRowAt indexPath: IndexPath, newValue: Bool) {
+    switch indexPath.section {
+    case Sections.General.rawValue:
+      handleGeneralSwitchValueChanged(atRow: indexPath.row, newValue: newValue)
+    default:
+      break
+    }
   }
 }
