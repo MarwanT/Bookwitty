@@ -58,7 +58,7 @@ class SettingsViewController: UIViewController {
         break
       }
     case SettingsViewModel.Sections.SignOut.rawValue: //sign out
-      break
+      signOut()
     default:
       break
     }
@@ -67,6 +67,10 @@ class SettingsViewController: UIViewController {
   private func pushChangePasswordViewController() {
     let viewController = Storyboard.Account.instantiate(ChangePasswordViewController.self)
     self.navigationController?.pushViewController(viewController, animated: true)
+  }
+
+  private func signOut() {
+    NotificationCenter.default.post(name: AppNotification.signOut, object: nil)
   }
 }
 
