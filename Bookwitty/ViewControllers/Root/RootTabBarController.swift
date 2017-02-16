@@ -50,7 +50,13 @@ class RootTabBarController: UITabBarController {
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
+    // Display Introduction VC if user is not signed in
+    if !viewModel.isUserSignedIn {
+      let introductionVC = Storyboard.Introduction.instantiate(IntroductionViewController.self)
+      present(introductionVC, animated: true, completion: nil)
+    } else {
       dismissOverlay()
+    }
   }
 }
 
