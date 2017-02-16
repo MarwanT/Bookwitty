@@ -28,6 +28,8 @@ final class SettingsViewModel {
 
   private let sectionTitles: [String]
 
+  var countryName: String = "" //TODO: load the default value
+
   init () {
     sectionTitles = ["", ""]
   }
@@ -41,7 +43,7 @@ final class SettingsViewModel {
     case 1: //change password
       return (changePasswordText, "")
     case 2: //country/region
-      return (countryRegionText, "")
+      return (countryRegionText, countryName)
     default:
       return ("", "")
     }
