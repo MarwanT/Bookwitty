@@ -21,6 +21,7 @@ class DisclosureView: UIView {
   struct Configuration {
     var normalBackgroundColor: UIColor = ThemeManager.shared.currentTheme.colorNumber23()
     var selectedBackgroundColor: UIColor = ThemeManager.shared.currentTheme.defaultSelectionColor()
+    var style: Style = .normal
   }
   
   @IBOutlet weak var label: UILabel!
@@ -28,15 +29,9 @@ class DisclosureView: UIView {
   
   weak var delegate: DisclosureViewDelegate? = nil
   
-  var style: Style = .normal {
-    didSet {
-      refreshStyling()
-    }
-  }
-  
   var configuration = Configuration() {
     didSet {
-      refreshStyling()
+      applyTheme()
     }
   }
   
@@ -95,7 +90,7 @@ class DisclosureView: UIView {
   fileprivate func refreshStyling() {
     let font: UIFont
     
-    switch style {
+    switch configuration.style {
     case .normal:
       tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
       font = FontDynamicType.caption2.font
@@ -119,5 +114,6 @@ extension DisclosureView: Themeable {
     disclosureImageView.image = #imageLiteral(resourceName: "rightArrow")
     
     refreshStyling()
+    refreshBackground(animated: false, completion: {})
   }
 }
