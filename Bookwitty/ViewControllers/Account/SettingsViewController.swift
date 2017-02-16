@@ -12,6 +12,8 @@ class SettingsViewController: UIViewController {
 
   @IBOutlet weak var tableView: UITableView!
 
+  fileprivate let viewModel = SettingsViewModel()
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
