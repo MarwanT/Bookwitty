@@ -9,4 +9,7 @@
 import Foundation
 
 final class RootTabBarViewModel {
+  var isUserSignedIn: Bool {
+    return AccessToken.shared.isValid
+  }
 }
