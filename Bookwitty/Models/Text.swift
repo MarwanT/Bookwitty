@@ -39,3 +39,7 @@ class Text: Resource {
   }
 }
 
+// MARK: - Parser
+extension Text: Parsable {
+  typealias AbstractType = Text
+}

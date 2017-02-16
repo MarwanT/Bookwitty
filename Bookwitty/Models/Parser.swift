@@ -75,6 +75,7 @@ class Parser {
     serializer.registerResource(PageAuthor.self)
     serializer.registerResource(ReadingList.self)
     serializer.registerResource(Topic.self)
+    serializer.registerResource(Text.self)
   }
 
   private func registerValueFormatters() {
