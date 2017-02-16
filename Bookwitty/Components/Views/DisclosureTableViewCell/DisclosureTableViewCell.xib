@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -18,8 +18,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="402" height="62"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZa-ZJ-tqf">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZa-ZJ-tqf">
                         <rect key="frame" x="8" y="21" width="346" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QBZ-5u-C5e">
+                        <rect key="frame" x="354" y="31.5" width="0.0" height="0.0"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -33,14 +39,17 @@
                     </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="QBZ-5u-C5e" firstAttribute="leading" secondItem="yZa-ZJ-tqf" secondAttribute="trailing" id="GxP-dw-KXM"/>
                     <constraint firstAttribute="trailing" secondItem="OQP-hg-qxF" secondAttribute="trailing" id="IfZ-xj-8RQ"/>
                     <constraint firstItem="yZa-ZJ-tqf" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="NV4-sA-uZZ"/>
+                    <constraint firstItem="OQP-hg-qxF" firstAttribute="leading" secondItem="QBZ-5u-C5e" secondAttribute="trailing" id="Pcz-xK-8pi"/>
+                    <constraint firstItem="QBZ-5u-C5e" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="SLL-Ad-c7I"/>
                     <constraint firstItem="yZa-ZJ-tqf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="f8d-Bt-4Mo"/>
                     <constraint firstItem="OQP-hg-qxF" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="fuo-5u-u6U"/>
-                    <constraint firstItem="yZa-ZJ-tqf" firstAttribute="trailing" secondItem="OQP-hg-qxF" secondAttribute="leading" id="oBD-Ed-hZI"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="detailsLabel" destination="QBZ-5u-C5e" id="ysa-PH-6gd"/>
                 <outlet property="disclosureImageView" destination="OQP-hg-qxF" id="7AC-5J-TbZ"/>
                 <outlet property="label" destination="yZa-ZJ-tqf" id="M5K-Zq-E5w"/>
             </connections>
