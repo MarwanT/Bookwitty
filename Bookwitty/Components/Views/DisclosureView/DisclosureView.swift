@@ -21,6 +21,7 @@ class DisclosureView: UIView {
   struct Configuration {
     var normalBackgroundColor: UIColor = ThemeManager.shared.currentTheme.colorNumber23()
     var selectedBackgroundColor: UIColor = ThemeManager.shared.currentTheme.defaultSelectionColor()
+    var isAutoDeselectable: Bool = true
     var style: Style = .normal
   }
   
@@ -34,12 +35,11 @@ class DisclosureView: UIView {
       applyTheme()
     }
   }
-  
-  var isAutoDeselectable: Bool = true
+
   var selected: Bool = false {
     didSet {
       refreshBackground(animated: true) { 
-        if self.selected && self.isAutoDeselectable {
+        if self.selected && self.configuration.isAutoDeselectable {
           self.selected = false
         }
       }
