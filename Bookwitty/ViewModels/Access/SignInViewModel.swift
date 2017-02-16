@@ -22,6 +22,10 @@ final class SignInViewModel {
   let viewControllerTitle: String = localizedString(key: "sign_in", defaultValue: "Sign-in")
   let signInErrorInFieldsNotification = localizedString(key: "invalid_fields_notification_message", defaultValue: "Please fill the required fields")
   let okText: String = localizedString(key: "ok", defaultValue: "Ok")
+  let failToSignInAlertTitle: String = localizedString(
+    key: "fail_to_sign_alert_title",
+    defaultValue: "Sign in")
+  let failToSignInAlertMessage: String = localizedString(key: "fail_to_sign_in_alert_message", defaultValue: "Oooops it seems there is something wrong in your credentials")
   
   private var signInRequest: Cancellable? = nil
   

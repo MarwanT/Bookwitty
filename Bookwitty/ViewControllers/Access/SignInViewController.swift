@@ -104,9 +104,13 @@ class SignInViewController: UIViewController {
         password: passwordValidationResult.value!,
         completion: { (success, error) in
           self.hideNetworkActivity()
-          self.showAlertWith(
-            title: "Your Sign in Key",
-            message: "\(AccessToken.shared.token!)")
+          if success {
+            NotificationCenter.default.post(name: AppNotification.Name.didSignIn, object: nil)
+          } else {
+            self.showAlertWith(
+              title: self.viewModel.failToSignInAlertTitle,
+              message: self.viewModel.failToSignInAlertMessage)
+          }
       })
     } else {
       NotificationView.show(notificationMessages:
