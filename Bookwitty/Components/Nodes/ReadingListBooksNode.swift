@@ -20,7 +20,9 @@ class ReadingListBooksNode: ASDisplayNode {
   var imageCollection: [String]? {
     didSet {
       guard (imageListNodes.count == 0) else { return }
-      //TODO: Create Image Nodes and add them as subnodes to this node
+      if let imageCollection = imageCollection, (imageCollection.count > 0) {
+        createImageNodes(imageCollection: imageCollection)
+      }
     }
   }
 
@@ -32,6 +34,18 @@ class ReadingListBooksNode: ASDisplayNode {
   private func calculateMaxItems() -> Int {
     let screenWidth = UIScreen.main.bounds.width
     return  Int(screenWidth / (imageNodeSize.width + internalMargin)) + 2
+  }
+
+  private func createImageNodes(imageCollection: [String]) {
+    let tillIndex = (maxItems > imageCollection.count) ? imageCollection.count : maxItems
+
+    for index in 0 ..< tillIndex {
+      let url = imageCollection[index]
+      let imageNode = ReadingListBookNode(imageNodeSize: imageNodeSize)
+      imageNode.imageUrl = url
+      imageListNodes.append(imageNode)
+      addSubnode(imageNode)
+    }
   }
 }
 
