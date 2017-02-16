@@ -52,6 +52,9 @@ extension RootTabBarController: Themeable {
 //MARK: - Notifications
 extension RootTabBarController {
   func signOut(notificaiton: Notification) {
-
+    AccessToken.shared.deleteToken()
+    //TODO: Delete user information if any
+    //TODO: Pop all controllers
+    //TODO: Present sign in / register controller 
   }
 }
