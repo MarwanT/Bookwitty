@@ -42,3 +42,7 @@ class Audio: Resource {
   }
 }
 
+// MARK: - Parser
+extension Audio: Parsable {
+  typealias AbstractType = Audio
+}
