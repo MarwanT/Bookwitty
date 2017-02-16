@@ -115,7 +115,9 @@ extension DefaultTheme {
     return UIColor.bwRubyHighlighted
   }
   
-  
+  func defaultECommerceColor() -> UIColor {
+    return colorNumber22()
+  }
   
   func defaultButtonColor() -> UIColor {
     return colorNumber19()

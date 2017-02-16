@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="FeaturedContentCollectionViewCell" customModule="Bookwitty" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="226" height="177"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="226" height="177"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2mb-AP-eLS" userLabel="Content View">
+                        <rect key="frame" x="-7" y="0.0" width="240" height="177"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9HL-O2-VmI">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="177"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nnx-je-Qve" userLabel="Overlay View">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="177"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n7M-TP-dUE">
+                                <rect key="frame" x="15" y="146" width="210" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="n7M-TP-dUE" secondAttribute="trailing" constant="15" id="2ld-Yw-n4Z"/>
+                            <constraint firstItem="Nnx-je-Qve" firstAttribute="bottom" secondItem="9HL-O2-VmI" secondAttribute="bottom" id="5yu-h4-ueU"/>
+                            <constraint firstItem="n7M-TP-dUE" firstAttribute="leading" secondItem="2mb-AP-eLS" secondAttribute="leading" constant="15" id="7ag-My-0kB"/>
+                            <constraint firstAttribute="trailing" secondItem="9HL-O2-VmI" secondAttribute="trailing" id="EyF-r6-Awe"/>
+                            <constraint firstItem="Nnx-je-Qve" firstAttribute="leading" secondItem="9HL-O2-VmI" secondAttribute="leading" id="Wud-NC-WsS"/>
+                            <constraint firstAttribute="bottom" secondItem="9HL-O2-VmI" secondAttribute="bottom" id="cbx-xV-slO"/>
+                            <constraint firstItem="9HL-O2-VmI" firstAttribute="top" secondItem="2mb-AP-eLS" secondAttribute="top" id="dgb-aZ-cbP"/>
+                            <constraint firstItem="Nnx-je-Qve" firstAttribute="top" secondItem="9HL-O2-VmI" secondAttribute="top" id="iDH-vO-fIF"/>
+                            <constraint firstItem="9HL-O2-VmI" firstAttribute="leading" secondItem="2mb-AP-eLS" secondAttribute="leading" id="ini-cl-WAs"/>
+                            <constraint firstItem="Nnx-je-Qve" firstAttribute="trailing" secondItem="9HL-O2-VmI" secondAttribute="trailing" id="iyk-vk-3jI"/>
+                            <constraint firstAttribute="bottom" secondItem="n7M-TP-dUE" secondAttribute="bottom" constant="10" id="oUO-YO-uBE"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="2mb-AP-eLS" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="LrL-nX-k0k"/>
+                <constraint firstItem="2mb-AP-eLS" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="-7" id="Mlh-xX-mQ1"/>
+                <constraint firstAttribute="bottom" secondItem="2mb-AP-eLS" secondAttribute="bottom" id="Uyn-rv-Utm"/>
+                <constraint firstAttribute="trailing" secondItem="2mb-AP-eLS" secondAttribute="trailing" constant="-7" id="Vvo-ZK-szy"/>
+            </constraints>
+            <size key="customSize" width="226" height="177"/>
+            <connections>
+                <outlet property="imageView" destination="9HL-O2-VmI" id="A0y-Rn-nGA"/>
+                <outlet property="label" destination="n7M-TP-dUE" id="poh-zs-f05"/>
+                <outlet property="overlayView" destination="Nnx-je-Qve" id="nRp-kF-3qH"/>
+            </connections>
+            <point key="canvasLocation" x="-54" y="59.5"/>
+        </collectionViewCell>
+    </objects>
+</document>
