@@ -13,6 +13,7 @@ class DisclosureTableViewCell: UITableViewCell {
   static let nib: UINib = UINib(nibName: identifier, bundle: nil)
   
   @IBOutlet weak var label: UILabel!
+  @IBOutlet weak var detailsLabel: UILabel!
   @IBOutlet weak var disclosureImageView: UIImageView!
   
   override func awakeFromNib() {
@@ -31,8 +32,11 @@ extension DisclosureTableViewCell: Themeable {
       image: UIImage(color: ThemeManager.shared.currentTheme.defaultSelectionColor()))
     tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
     
-    label.font = FontDynamicType.caption2.font
+    label.font = FontDynamicType.caption1.font
     label.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+
+    detailsLabel.font = FontDynamicType.caption2.font
+    detailsLabel.textColor = ThemeManager.shared.currentTheme.colorNumber15()
     
     disclosureImageView.image = #imageLiteral(resourceName: "rightArrow")
   }
