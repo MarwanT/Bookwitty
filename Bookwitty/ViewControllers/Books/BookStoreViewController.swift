@@ -160,7 +160,7 @@ extension BookStoreViewController: UICollectionViewDataSource {
       return UICollectionViewCell()
     }
     
-    let data = viewModel.dataForFeaturedContent(indexPath: indexPath)
+    let data = viewModel.featuredContentValues(for: indexPath)
     cell.title = data.title
     cell.image = data.image
     return cell
@@ -203,7 +203,7 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
         return UITableViewCell()
       }
       
-      let data = viewModel.dataForBookwittySuggests(indexPath)
+      let data = viewModel.bookwittySuggestsValues(for: indexPath)
       cell.label.text = data
       return cell
     } else {
