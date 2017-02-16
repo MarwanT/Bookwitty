@@ -251,26 +251,7 @@ extension RegisterViewController:  EMCCountryDelegate {
 
 extension RegisterViewController: TTTAttributedLabelDelegate {
   func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
-    guard let host = url.host else {
-      return
-    }
-
-    switch host {
-    case AttributedLinkReference.termsOfUse.rawValue:
-      termsOfUseAction()
-    case AttributedLinkReference.privacyPolicy.rawValue:
-      privacyPolicyAction()
-    default:
-      break
-    }
-  }
-
-  func termsOfUseAction() {
-    //TODO: Implement terms of use action
-  }
-
-  func privacyPolicyAction() {
-    //TODO: Implement privacy policy action
+    WebViewController.present(url: url, inViewController: self)
   }
 }
 
@@ -305,12 +286,12 @@ extension RegisterViewController: InputFieldDelegate {
 }
 
 enum AttributedLinkReference: String {
- case termsOfUse
- case privacyPolicy
+ case termsOfUse = "/terms#terms"
+ case privacyPolicy = "/terms#privacy"
 
   var url: URL {
     get {
-      return URL(string: "bookwittyapp://" + self.rawValue)!
+      return URL(string: "https://www.bookwitty.com" + self.rawValue)!
     }
   }
 }
