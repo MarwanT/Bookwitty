@@ -33,3 +33,7 @@ class Topic: Resource {
   }
 }
 
+// MARK: - Parser
+extension Topic: Parsable {
+  typealias AbstractType = Topic
+}
