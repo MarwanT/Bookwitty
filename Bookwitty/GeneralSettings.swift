@@ -14,17 +14,20 @@ public class GeneralSettings {
   }
   public struct Keys {
     public static let SendUsageData = "SendUsageData"
+    public static let SendEmailNotifications = "SendEmailNotifications"
   }
 
   private let defaults = UserDefaults.standard
   private let defaultValues: [String:Any] = [
-    Keys.SendUsageData : true
+    Keys.SendUsageData : true,
+    Keys.SendEmailNotifications : true
   ]
   
   public static let sharedInstance: GeneralSettings = GeneralSettings()
   private init() {
     defaults.register(defaults: defaultValues)
     shouldSendUsageData = defaults.bool(forKey: Keys.SendUsageData)
+    shouldSendEmailNotifications = defaults.bool(forKey: Keys.SendEmailNotifications)
   }
   
   public var shouldSendUsageData: Bool {
@@ -33,6 +36,12 @@ public class GeneralSettings {
       NotificationCenter.default.post(
         name: GeneralSettings.Notifications.sendUsageDataValueChanged,
         object: self.shouldSendUsageData)
+    }
+  }
+
+  public var shouldSendEmailNotifications: Bool {
+    didSet {
+      defaults.set(self.shouldSendEmailNotifications, forKey: Keys.SendEmailNotifications)
     }
   }
 }

@@ -56,7 +56,7 @@
                                         <rect key="frame" x="0.0" y="88" width="375" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uJj-fX-8lD" id="As1-n2-LQh">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="yty-kW-dyQ">
@@ -178,7 +178,44 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5WF-ok-vrq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="519" y="-347"/>
+            <point key="canvasLocation" x="1250" y="-348"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="o33-TJ-VBZ">
+            <objects>
+                <viewController storyboardIdentifier="SettingsViewController" id="yZd-uI-DSK" customClass="SettingsViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="E5a-Cb-bO8"/>
+                        <viewControllerLayoutGuide type="bottom" id="126-VI-dGs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LkN-gN-drE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KzS-Pi-I7Q">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="yZd-uI-DSK" id="VNm-KO-7VO"/>
+                                    <outlet property="delegate" destination="yZd-uI-DSK" id="2KU-ou-IRB"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="126-VI-dGs" firstAttribute="top" secondItem="KzS-Pi-I7Q" secondAttribute="bottom" id="18t-gm-g8a"/>
+                            <constraint firstItem="KzS-Pi-I7Q" firstAttribute="top" secondItem="E5a-Cb-bO8" secondAttribute="bottom" id="Sw4-r1-Fwf"/>
+                            <constraint firstItem="KzS-Pi-I7Q" firstAttribute="trailing" secondItem="LkN-gN-drE" secondAttribute="trailing" id="WZf-nE-qGe"/>
+                            <constraint firstItem="KzS-Pi-I7Q" firstAttribute="leading" secondItem="LkN-gN-drE" secondAttribute="leading" id="umw-Go-hMx"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="KzS-Pi-I7Q" id="Hjx-R6-r6u"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nV0-Nr-3rS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="482" y="-347"/>
         </scene>
     </scenes>
     <resources>

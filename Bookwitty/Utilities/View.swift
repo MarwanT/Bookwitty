@@ -73,4 +73,15 @@ extension UIView {
     
     return view
   }
+
+  static func defaultSeparator(useAutoLayout: Bool = true) -> UIView {
+    let separator = UIView(frame: CGRect.zero)
+    if useAutoLayout {
+      separator.constrainHeight("1")
+    } else {
+      separator.frame.size.height = 1
+    }
+    separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    return separator
+  }
 }
