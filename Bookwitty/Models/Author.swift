@@ -23,7 +23,6 @@ class Author: Resource {
   var profileImageUrl: String?
   var title: String?
   var type: String?
-  var media: [String: Any]?
 
   override class var resourceType: ResourceType {
     return "authors"
@@ -44,7 +43,6 @@ class Author: Resource {
       "profileImageUrl": Attribute().serializeAs("profile-image-url"),
       "title": Attribute().serializeAs("title"),
       "type": Attribute().serializeAs("type"),
-      "media": Attribute().serializeAs("media")
       ])
   }
 }
