@@ -10,6 +10,8 @@ import Foundation
 
 class RootTabBarController: UITabBarController {
   let viewModel = RootTabBarViewModel()
+  
+  fileprivate var overlayView: UIView!
 
   override func viewDidLoad() {
     super.viewDidLoad()
