@@ -20,6 +20,8 @@ class RootTabBarController: UITabBarController {
     applyTheme()
     addObservers()
     
+    displayOverlay(animated: false)
+    
     //Set Default select tab index
     self.selectedIndex = 0
 
@@ -45,6 +47,11 @@ class RootTabBarController: UITabBarController {
       #selector(signOut(notificaiton:)), name: AppNotification.signOut, object: nil)
   }
 
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+      dismissOverlay()
+  }
 }
 
 extension RootTabBarController: Themeable {
