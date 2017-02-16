@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EMCCountryPickerController
 
 class SettingsViewController: UIViewController {
 
@@ -53,7 +54,7 @@ class SettingsViewController: UIViewController {
       case 1: //change password
         pushChangePasswordViewController()
       case 2: //country/region
-        break
+        pushCountryPickerViewController()
       default:
         break
       }
@@ -67,6 +68,21 @@ class SettingsViewController: UIViewController {
   private func pushChangePasswordViewController() {
     let viewController = Storyboard.Account.instantiate(ChangePasswordViewController.self)
     self.navigationController?.pushViewController(viewController, animated: true)
+  }
+
+  private func pushCountryPickerViewController() {
+    let countryPickerViewController: EMCCountryPickerController = EMCCountryPickerController()
+    countryPickerViewController.labelFont = FontDynamicType.subheadline.font
+    countryPickerViewController.flagSize = 44
+
+    countryPickerViewController.onCountrySelected = { country in
+      guard let country = country else { return }
+      self.viewModel.countryName = country.countryName()
+      self.tableView.reloadData()
+      let _ = countryPickerViewController.navigationController?.popViewController(animated: true)
+    }
+
+    self.navigationController?.pushViewController(countryPickerViewController, animated: true)
   }
 
   private func signOut() {
@@ -107,6 +123,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
 
     currentCell.label.font = FontDynamicType.caption1.font
     currentCell.label.text = values.title
+    currentCell.detailsLabel.text = values.value as? String
 
     let accessory = viewModel.accessory(forRowAt: indexPath)
 
