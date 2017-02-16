@@ -75,7 +75,8 @@ class ReadingListCardContentNode: ASDisplayNode {
   }
 
   func initializeImageCollectionNode() {
-    //TODO: develop logic
+    customHorizontalList.imageNodeSize = collectionImageSize
+    customHorizontalList.imageCollection = imageCollection
   }
 
   func setTopicStatistics(numberOfPosts: String? = nil, numberOfBooks: String? = nil, numberOfFollowers: String? = nil) {
