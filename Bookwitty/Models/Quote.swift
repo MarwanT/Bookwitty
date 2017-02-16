@@ -39,3 +39,7 @@ class Quote: Resource {
   }
 }
 
+// MARK: - Parser
+extension Quote: Parsable {
+  typealias AbstractType = Quote
+}
