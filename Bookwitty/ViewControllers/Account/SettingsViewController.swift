@@ -37,3 +37,63 @@ extension SettingsViewController: Themeable {
     view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
   }
 }
+
+extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return viewModel.numberOfSections()
+  }
+
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return viewModel.numberOfRowsIn(section: section)
+  }
+
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 45.0
+  }
+
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    return tableView.dequeueReusableCell(withIdentifier: DisclosureTableViewCell.identifier, for: indexPath)
+  }
+
+  func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    let values = viewModel.values(forRowAt: indexPath)
+
+    guard let currentCell = cell as? DisclosureTableViewCell else {
+      return
+    }
+
+    currentCell.label.font = FontDynamicType.caption1.font
+    currentCell.label.text = values.title
+
+    let accessory = viewModel.accessory(forRowAt: indexPath)
+
+    var hideDiclosure = true
+    switch accessory {
+    case .Disclosure:
+      hideDiclosure = false
+    case .Switch:
+      let switchView = UISwitch()
+      switchView.isOn = (values.value as? Bool ?? false)
+      currentCell.accessoryView = switchView
+    case .None:
+      break
+    }
+
+    currentCell.disclosureImageView.isHidden = hideDiclosure
+  }
+
+  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    let sectionView = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableViewSectionHeaderView.reuseIdentifier) as? TableViewSectionHeaderView
+    sectionView?.label.text = viewModel.titleFor(section: section)
+    sectionView?.contentView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+    return sectionView
+  }
+
+  func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    return 15.0
+  }
+
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+  }
+}
