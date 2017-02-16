@@ -13,11 +13,16 @@ class RootTabBarController: UITabBarController {
   let viewModel = RootTabBarViewModel()
   
   fileprivate var overlayView: UIView!
+  
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeTabBarViewControllers()
     initializeOverlay()
+    registerNotifications()
     applyTheme()
     addObservers()
     
@@ -62,6 +67,13 @@ class RootTabBarController: UITabBarController {
     self.selectedIndex = 0
   }
   
+  private func registerNotifications() {
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(self.handleDidSignInNotification(_:)),
+      name: AppNotification.Name.didSignIn, object: nil)
+  }
+  
   private func presentIntroductionOrSignInViewController() {
     if viewModel.didSignInAtLeastOnce {
       let signInVC = Storyboard.Access.instantiate(SignInViewController.self)
@@ -70,6 +82,10 @@ class RootTabBarController: UITabBarController {
       let introductionVC = Storyboard.Introduction.instantiate(IntroductionViewController.self)
       present(introductionVC, animated: true, completion: nil)
     }
+  }
+  
+  // MARK: Actions
+  func handleDidSignInNotification(_ sender: Notification) {
   }
 }
 
