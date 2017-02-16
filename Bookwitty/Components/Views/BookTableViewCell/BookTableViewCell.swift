@@ -73,7 +73,7 @@ class BookTableViewCell: UITableViewCell {
 
 extension BookTableViewCell: Themeable {
   func applyTheme() {
-    let theme = ThemeManager.shared.currentTheme!
+    let theme = ThemeManager.shared.currentTheme
     
     bookTitleLabel.font = FontDynamicType.title3.font
     authorNameLabel.font = FontDynamicType.caption1.font

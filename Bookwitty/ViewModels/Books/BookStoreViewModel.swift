@@ -24,7 +24,7 @@ extension BookStoreViewModel {
     return 7
   }
   
-  func dataForFeaturedContent(indexPath: IndexPath) -> (title: String?, image: UIImage?) {
+  func featuredContentValues(for indexPath: IndexPath) -> (title: String?, image: UIImage?) {
     return ("Featuring Zouzou", #imageLiteral(resourceName: "Illustrtion"))
   }
 }
@@ -40,7 +40,7 @@ extension BookStoreViewModel {
     return 4
   }
   
-  func dataForBookwittySuggests(_ indexPath: IndexPath) -> String {
+  func bookwittySuggestsValues(for indexPath: IndexPath) -> String {
     return "Reading list \(indexPath.row)"
   }
 }
