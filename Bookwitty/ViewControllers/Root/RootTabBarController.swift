@@ -15,7 +15,7 @@ class RootTabBarController: UITabBarController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    initializeOverlay()
     applyTheme()
     addObservers()
     
@@ -59,5 +59,14 @@ extension RootTabBarController {
     //TODO: Delete user information if any
     //TODO: Pop all controllers
     //TODO: Present sign in / register controller 
+  }
+}
+
+// MARK: - Overlay Methods
+extension RootTabBarController {
+  func initializeOverlay() {
+    overlayView = Bundle.main.loadNibNamed(
+      "LaunchScreen", owner: nil, options: nil)![0] as! UIView
+    overlayView.alpha = 0
   }
 }
