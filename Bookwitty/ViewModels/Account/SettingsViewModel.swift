@@ -19,4 +19,11 @@ final class SettingsViewModel {
     case General = 0
     case SignOut = 1
   }
+
+  private let sectionTitles: [String]
+
+  init () {
+    sectionTitles = ["", ""]
+  }
+
 }
