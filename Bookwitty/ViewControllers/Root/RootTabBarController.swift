@@ -79,7 +79,8 @@ class RootTabBarController: UITabBarController {
   private func presentIntroductionOrSignInViewController() {
     if viewModel.didSignInAtLeastOnce {
       let signInVC = Storyboard.Access.instantiate(SignInViewController.self)
-      present(signInVC, animated: true, completion: nil)
+      let navigationController = UINavigationController(rootViewController: signInVC)
+      present(navigationController, animated: true, completion: nil)
     } else {
       let introductionVC = Storyboard.Introduction.instantiate(IntroductionViewController.self)
       let navigationController = UINavigationController(rootViewController: introductionVC)
