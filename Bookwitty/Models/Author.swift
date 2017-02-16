@@ -23,6 +23,7 @@ class Author: Resource {
   var profileImageUrl: String?
   var title: String?
   var type: String?
+  //TODO: add PageAuthor model we have a problem with the json-api conforming from the api siding
 
   override class var resourceType: ResourceType {
     return "authors"
