@@ -30,3 +30,7 @@ class PageAuthor: Resource {
   }
 }
 
+// MARK: - Parser
+extension PageAuthor: Parsable {
+  typealias AbstractType = PageAuthor
+}
