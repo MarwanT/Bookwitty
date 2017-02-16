@@ -33,6 +33,7 @@ class ReadingListCardContentNode: ASDisplayNode {
   private let titleNode: ASTextNode
   private let topicStatsNode: ASTextNode
   private let descriptionNode: ASTextNode
+  private let customHorizontalList: ReadingListBooksNode
 
   var articleTitle: String? {
     didSet {
@@ -56,10 +57,12 @@ class ReadingListCardContentNode: ASDisplayNode {
     titleNode = ASTextNode()
     topicStatsNode = ASTextNode()
     descriptionNode = ASTextNode()
+    customHorizontalList = ReadingListBooksNode()
     super.init()
     addSubnode(titleNode)
     addSubnode(topicStatsNode)
     addSubnode(descriptionNode)
+    addSubnode(customHorizontalList)
     setupNode()
   }
 
