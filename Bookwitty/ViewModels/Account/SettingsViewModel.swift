@@ -14,4 +14,9 @@ final class SettingsViewModel {
   let changePasswordText: String = localizedString(key: "change_password", defaultValue: "Change Password")
   let countryRegionText: String = localizedString(key: "country_regions", defaultValue: "Country/Region")
   let signOutText: String = localizedString(key: "sign_out", defaultValue: "Sign Out")
+
+  enum Sections: Int {
+    case General = 0
+    case SignOut = 1
+  }
 }
