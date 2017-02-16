@@ -68,6 +68,8 @@ class SignInViewController: UIViewController {
     stackView.isLayoutMarginsRelativeArrangement = true
     stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
     
+    setupAttributedTexts()
+    
     NotificationCenter.default.addObserver(
       self,
       selector: #selector(SignInViewController.keyboardWillShow(_:)),
@@ -76,6 +78,21 @@ class SignInViewController: UIViewController {
       self,
       selector: #selector(SignInViewController.keyboardWillHide(_:)),
       name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+  }
+  
+  private func setupAttributedTexts() {
+    //Set Attributed Styled up Text
+    registerLabel.attributedText = viewModel.styledRegisterText()
+    //Attributed Label Links Styling
+    registerLabel.linkAttributes = ThemeManager.shared.currentTheme.styleTextLinkAttributes()
+    
+    let registerTermRange: NSRange = (registerLabel.attributedText.string as NSString).range(of: viewModel.registerTermText)
+    
+    //Add click link identifiers
+    registerLabel.addLink(to: AttributedLinkReference.register.url, with: registerTermRange)
+    
+    //Set Delegates
+    registerLabel.delegate = self
   }
   
   deinit {
@@ -186,6 +203,7 @@ extension SignInViewController: Themeable {
   }
 }
 
+// MARK: - Input fields delegate
 extension SignInViewController: InputFieldDelegate {
   func inputFieldShouldReturn(inputField: InputField) -> Bool {
     switch inputField {
@@ -196,5 +214,35 @@ extension SignInViewController: InputFieldDelegate {
     default:
       return true
     }
+  }
+}
+
+// MARK: - TTTAttributedText delegate
+extension SignInViewController: TTTAttributedLabelDelegate {
+  enum AttributedLinkReference: String {
+    case register
+    
+    var url: URL {
+      get {
+        return URL(string: "bookwittyapp://" + self.rawValue)!
+      }
+    }
+  }
+  
+  func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+    guard let host = url.host else {
+      return
+    }
+    
+    switch host {
+    case AttributedLinkReference.register.rawValue:
+      registerAction()
+    default:
+      break
+    }
+  }
+  
+  private func registerAction() {
+    
   }
 }
