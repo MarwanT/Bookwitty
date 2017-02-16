@@ -43,6 +43,7 @@ class RootTabBarController: UITabBarController {
       presentIntroductionOrSignInViewController()
     } else {
       dismissOverlay()
+      GeneralSettings.sharedInstance.didSignInAtLeastOnce = true
     }
   }
   
