@@ -40,8 +40,16 @@ class DisclosureView: UIView {
     }
   }
   
-  var selected: Bool = false 
   var isAutoDeselectable: Bool = true
+  var selected: Bool = false {
+    didSet {
+      refreshBackground(animated: true) { 
+        if self.selected && self.isAutoDeselectable {
+          self.selected = false
+        }
+      }
+    }
+  }
   
   override func awakeFromNib() {
     super.awakeFromNib()
