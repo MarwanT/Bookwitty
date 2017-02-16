@@ -34,6 +34,12 @@ class DisclosureView: UIView {
     }
   }
   
+  var configuration = Configuration() {
+    didSet {
+      refreshStyling()
+    }
+  }
+  
   override func awakeFromNib() {
     super.awakeFromNib()
     initializeGestures()
