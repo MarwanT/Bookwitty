@@ -14,6 +14,7 @@ class RootTabBarController: UITabBarController {
     super.viewDidLoad()
     
     applyTheme()
+    addObservers()
     
     //Set Default select tab index
     self.selectedIndex = 0
@@ -33,6 +34,9 @@ class RootTabBarController: UITabBarController {
     //Set The View controller
     self.viewControllers = [UINavigationController(rootViewController: placeholderVc1),
                             UINavigationController(rootViewController: placeholderVc2)]
+  }
+
+  private func addObservers() {
   }
 
 }
