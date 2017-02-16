@@ -49,3 +49,7 @@ class Author: Resource {
   }
 }
 
+// MARK: - Parser
+extension Author: Parsable {
+  typealias AbstractType = Author
+}
