@@ -169,7 +169,7 @@ extension PenNameViewController: Themeable {
     plusImageView.image = #imageLiteral(resourceName: "plus")
     plusImageView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
 
-    self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
+    self.view.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     ThemeManager.shared.currentTheme.stylePrimaryButton(button: continueButton)
     ThemeManager.shared.currentTheme.styleLabel(label: penNameLabel)
     ThemeManager.shared.currentTheme.styleCaption2(label: noteLabel)

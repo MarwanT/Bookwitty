@@ -27,7 +27,7 @@ class AccountPenNameTableViewCell: UITableViewCell {
   private func initializeComponents() {
     profileImageView.layer.masksToBounds = true
     profileImageView.layer.cornerRadius = profileImageView.frame.width / 2.0
-    backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
+    backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
   }
 }
 

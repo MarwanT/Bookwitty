@@ -155,6 +155,10 @@ extension DefaultTheme {
   func defaultSelectionColor() -> UIColor {
     return colorNumber18()
   }
+  
+  func defaultBackgroundColor() -> UIColor {
+    return colorNumber23()
+  }
 }
 
 // MARK: - Buttons
