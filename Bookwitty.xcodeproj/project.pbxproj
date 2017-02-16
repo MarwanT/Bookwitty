@@ -121,6 +121,7 @@
 		F4A426331E5628080090CD51 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A426321E5628080090CD51 /* Quote.swift */; };
 		F4A426351E5629210090CD51 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A426341E5629210090CD51 /* Video.swift */; };
 		F4A426371E562A9F0090CD51 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A426361E562A9F0090CD51 /* Audio.swift */; };
+		F4A426391E562BAC0090CD51 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A426381E562BAC0090CD51 /* Link.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -255,6 +256,7 @@
 		F4A426321E5628080090CD51 /* Quote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		F4A426341E5629210090CD51 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		F4A426361E562A9F0090CD51 /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
+		F4A426381E562BAC0090CD51 /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
 		F51280CA021D07F160F13471 /* Pods-BookwittyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookwittyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -359,6 +361,7 @@
 				F4A426261E560ED00090CD51 /* Author.swift */,
 				F4A4262C1E5619E10090CD51 /* ReadingList.swift */,
 				F4A426361E562A9F0090CD51 /* Audio.swift */,
+				F4A426381E562BAC0090CD51 /* Link.swift */,
 				F4A4262E1E5622190090CD51 /* Topic.swift */,
 				F4A426341E5629210090CD51 /* Video.swift */,
 				F4A426301E5623EE0090CD51 /* Text.swift */,
@@ -1005,6 +1008,7 @@
 				F420AD9F1E4231E000C78AEB /* AttributedStringBuilder.swift in Sources */,
 				F4A4262D1E5619E10090CD51 /* ReadingList.swift in Sources */,
 				59DA47631E3B7A9B00BA90A5 /* IntroductionViewController.swift in Sources */,
+				F4A426391E562BAC0090CD51 /* Link.swift in Sources */,
 				56399DC21E51D0F0005192AC /* AccountViewModel.swift in Sources */,
 				59D27D0F1E40D2EE00468C29 /* SignInViewModel.swift in Sources */,
 				F426867F1E511B7C0085E581 /* ArticleCardPostCellNode.swift in Sources */,
