@@ -15,12 +15,14 @@ public class GeneralSettings {
   public struct Keys {
     public static let SendUsageData = "SendUsageData"
     public static let SendEmailNotifications = "SendEmailNotifications"
+    public static let DidSignInAtLeastOnce = "DidSignInAtLeastOnce"
   }
 
   private let defaults = UserDefaults.standard
   private let defaultValues: [String:Any] = [
     Keys.SendUsageData : true,
-    Keys.SendEmailNotifications : true
+    Keys.SendEmailNotifications : true,
+    Keys.DidSignInAtLeastOnce : false
   ]
   
   public static let sharedInstance: GeneralSettings = GeneralSettings()
@@ -28,6 +30,7 @@ public class GeneralSettings {
     defaults.register(defaults: defaultValues)
     shouldSendUsageData = defaults.bool(forKey: Keys.SendUsageData)
     shouldSendEmailNotifications = defaults.bool(forKey: Keys.SendEmailNotifications)
+    didSignInAtLeastOnce = defaults.bool(forKey: Keys.DidSignInAtLeastOnce)
   }
   
   public var shouldSendUsageData: Bool {
@@ -42,6 +45,12 @@ public class GeneralSettings {
   public var shouldSendEmailNotifications: Bool {
     didSet {
       defaults.set(self.shouldSendEmailNotifications, forKey: Keys.SendEmailNotifications)
+    }
+  }
+ 
+  public var didSignInAtLeastOnce: Bool {
+    didSet {
+      defaults.set(self.didSignInAtLeastOnce, forKey: Keys.DidSignInAtLeastOnce)
     }
   }
 }
