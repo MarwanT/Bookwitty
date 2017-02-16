@@ -39,6 +39,7 @@ class RootTabBarController: UITabBarController {
     
     // Display Introduction VC if user is not signed in
     if !viewModel.isUserSignedIn {
+      displayOverlay()
       presentIntroductionOrSignInViewController()
     } else {
       dismissOverlay()
