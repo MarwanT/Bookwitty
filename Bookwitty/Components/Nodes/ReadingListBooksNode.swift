@@ -26,6 +26,12 @@ class ReadingListBooksNode: ASDisplayNode {
 
   override init() {
     super.init()
+    maxItems = calculateMaxItems()
+  }
+
+  private func calculateMaxItems() -> Int {
+    let screenWidth = UIScreen.main.bounds.width
+    return  Int(screenWidth / (imageNodeSize.width + internalMargin)) + 2
   }
 }
 
