@@ -42,3 +42,7 @@ class ReadingList: Resource {
   }
 }
 
+// MARK: - Parser
+extension ReadingList: Parsable {
+  typealias AbstractType = ReadingList
+}
