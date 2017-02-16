@@ -29,6 +29,8 @@
 		594290181E522D980006B2F1 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290171E522D980006B2F1 /* Banner.swift */; };
 		594290201E5316380006B2F1 /* FeaturedContentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5942901E1E5316380006B2F1 /* FeaturedContentCollectionViewCell.swift */; };
 		594290211E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5942901F1E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib */; };
+		594290291E5347670006B2F1 /* DisclosureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290271E5347670006B2F1 /* DisclosureView.swift */; };
+		5942902A1E5347670006B2F1 /* DisclosureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 594290281E5347670006B2F1 /* DisclosureView.xib */; };
 		5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5947C2A71E37B3D1003BF12A /* ViewController.swift */; };
 		594F4EA61E42255200A947FA /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA51E42255200A947FA /* AccessToken.swift */; };
 		594F4EA81E423B8600A947FA /* AppNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA71E423B8600A947FA /* AppNotifications.swift */; };
@@ -130,6 +132,8 @@
 		594290171E522D980006B2F1 /* Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		5942901E1E5316380006B2F1 /* FeaturedContentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedContentCollectionViewCell.swift; sourceTree = "<group>"; };
 		5942901F1E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeaturedContentCollectionViewCell.xib; sourceTree = "<group>"; };
+		594290271E5347670006B2F1 /* DisclosureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisclosureView.swift; sourceTree = "<group>"; };
+		594290281E5347670006B2F1 /* DisclosureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisclosureView.xib; sourceTree = "<group>"; };
 		5947C2A71E37B3D1003BF12A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		594F4EA51E42255200A947FA /* AccessToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
 		594F4EA71E423B8600A947FA /* AppNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNotifications.swift; sourceTree = "<group>"; };
@@ -378,6 +382,7 @@
 				5942901D1E5316380006B2F1 /* FeaturedContentCollectionViewCell */,
 				5942900E1E51B7C00006B2F1 /* DisclosureTableViewCell */,
 				5613402C1E5221570085B8A5 /* Account */,
+				594290261E5347670006B2F1 /* DisclosureView */,
 				5967E4561E4105020067093F /* NotificationView */,
 				595C4F0C1E3F8C0200BE3942 /* InputField.swift */,
 				595C4F0E1E3F8C9200BE3942 /* PasswordInputField.swift */,
@@ -421,6 +426,15 @@
 				5942901F1E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib */,
 			);
 			path = FeaturedContentCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		594290261E5347670006B2F1 /* DisclosureView */ = {
+			isa = PBXGroup;
+			children = (
+				594290271E5347670006B2F1 /* DisclosureView.swift */,
+				594290281E5347670006B2F1 /* DisclosureView.xib */,
+			);
+			path = DisclosureView;
 			sourceTree = "<group>";
 		};
 		594F4EAD1E440A4900A947FA /* API */ = {
@@ -748,6 +762,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				59DA47671E3B84ED00BA90A5 /* Access.storyboard in Resources */,
+				5942902A1E5347670006B2F1 /* DisclosureView.xib in Resources */,
 				59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */,
 				594290211E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib in Resources */,
 				5967E4581E4107EF0067093F /* NotificationView.xib in Resources */,
@@ -930,6 +945,7 @@
 				F420B6A41E43D01A001F34CD /* PenNameViewController.swift in Sources */,
 				5967E45A1E410A850067093F /* NotificationView.swift in Sources */,
 				593769D81E3689FB00F23226 /* DefaultTheme.swift in Sources */,
+				594290291E5347670006B2F1 /* DisclosureView.swift in Sources */,
 				594F4EAF1E440A4900A947FA /* User+API.swift in Sources */,
 				594290061E4FEEC10006B2F1 /* CategoriesTableViewController.swift in Sources */,
 				59D8FCBC1E4DA394001C1EDB /* CategoryManager.swift in Sources */,

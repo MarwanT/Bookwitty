@@ -14,11 +14,16 @@ class BookStoreViewController: UIViewController {
   
   let viewModel = BookStoreViewModel()
   
+  private let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
     let didAddBanner = loadBannerSection()
     let didAddFeaturedSection = loadFeaturedContentSection()
+    addSeparator(leftMargin)
+    let didAddViewAllCategoriesSection = loadViewAllCategories()
+    addSeparator()
   }
   
   func loadBannerSection() -> Bool {
@@ -46,7 +51,7 @@ class BookStoreViewController: UIViewController {
     collectionView.register(FeaturedContentCollectionViewCell.nib, forCellWithReuseIdentifier: FeaturedContentCollectionViewCell.reuseIdentifier)
     collectionView.dataSource = self
     collectionView.delegate = self
-    collectionView.backgroundColor = UIColor.orange
+    collectionView.backgroundColor = UIColor.clear
     collectionView.contentInset = contentInset
     collectionView.showsHorizontalScrollIndicator = false
     collectionView.constrainHeight("\(itemSize.height + contentInset.top + contentInset.bottom)")
@@ -55,6 +60,45 @@ class BookStoreViewController: UIViewController {
     stackView.addArrangedSubview(collectionView)
     
     return true
+  }
+  
+  func loadViewAllCategories() -> Bool {
+    let disclosureView = UIView.loadFromView(DisclosureView.self, owner: nil)
+    disclosureView.style = .highlighted
+    disclosureView.delegate = self
+    disclosureView.label.text = viewModel.viewAllCategoriesLabelText
+    
+    disclosureView.constrainHeight("45")
+    stackView.addArrangedSubview(disclosureView)
+    disclosureView.alignLeadingEdge(withView: stackView, predicate: "0")
+    disclosureView.alignTrailingEdge(withView: stackView, predicate: "0")
+    return true
+  }
+  
+  func addSeparator(_ leftMargin: CGFloat = 0) {
+    let separatorView = UIView(frame: CGRect.zero)
+    separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    separatorView.constrainHeight("1")
+    stackView.addArrangedSubview(separatorView)
+    separatorView.alignLeadingEdge(withView: stackView, predicate: "\(leftMargin)")
+    separatorView.alignTrailingEdge(withView: stackView, predicate: "0")
+  }
+  
+  func addSpacing(space: CGFloat) {
+    guard space > 0 else {
+      return
+    }
+    
+    let spacer = UIView(frame: CGRect.zero)
+    spacer.backgroundColor = UIColor.clear
+    spacer.constrainHeight("\(space)")
+    stackView.addArrangedSubview(spacer)
+  }
+}
+
+extension BookStoreViewController: DisclosureViewDelegate {
+  func disclosureViewTapped() {
+    print("View ALl categories")
   }
 }
 
