@@ -18,3 +18,10 @@ class SettingsViewController: UIViewController {
     // Do any additional setup after loading the view.
   }
 }
+
+extension SettingsViewController: Themeable {
+  func applyTheme() {
+    tableView.backgroundColor = UIColor.clear
+    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+  }
+}
