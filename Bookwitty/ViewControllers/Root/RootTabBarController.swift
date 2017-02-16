@@ -86,6 +86,8 @@ class RootTabBarController: UITabBarController {
   
   // MARK: Actions
   func handleDidSignInNotification(_ sender: Notification) {
+    self.dismiss(animated: true, completion: nil)
+    dismissOverlay()
   }
 }
 
