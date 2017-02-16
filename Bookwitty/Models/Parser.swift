@@ -79,6 +79,7 @@ class Parser {
     serializer.registerResource(Quote.self)
     serializer.registerResource(Video.self)
     serializer.registerResource(Audio.self)
+    serializer.registerResource(Link.self)
   }
 
   private func registerValueFormatters() {

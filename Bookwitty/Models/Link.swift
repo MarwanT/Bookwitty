@@ -39,3 +39,7 @@ class Link: Resource {
   }
 }
 
+// MARK: - Parser
+extension Link: Parsable {
+  typealias AbstractType = Link
+}
