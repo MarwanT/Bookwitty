@@ -143,35 +143,30 @@ extension RootTabBarController {
     overlayView = Bundle.main.loadNibNamed(
       "LaunchScreen", owner: nil, options: nil)![0] as! UIView
     overlayView.alpha = 0
+    view.addSubview(overlayView)
+    overlayView.alignTop("0", leading: "0", bottom: "0", trailing: "0", toView: view)
   }
   
   func displayOverlay(animated: Bool = true) {
-    let isAlreadyAddedToViewHierarchy = (overlayView.superview != nil)
-    if !isAlreadyAddedToViewHierarchy {
-      view.addSubview(overlayView)
-      overlayView.alignTop("0", leading: "0", bottom: "0", trailing: "0", toView: view)
-    }
-    changeOverlayAlphaValue(animated: animated, alpha: 1, completion: {})
+    changeOverlayAlphaValue(animated: animated, alpha: 1)
   }
   
   func dismissOverlay(animated: Bool = true) {
-    changeOverlayAlphaValue(animated: animated, alpha: 0) {
-      self.overlayView.removeFromSuperview()
-    }
+    changeOverlayAlphaValue(animated: animated, alpha: 0)
   }
   
-  func changeOverlayAlphaValue(animated: Bool, alpha: CGFloat, completion: @escaping () -> Void) {
+  func changeOverlayAlphaValue(animated: Bool, alpha: CGFloat, completion: (() -> Void)? = nil) {
     if animated {
       UIView.animate(
         withDuration: animationDuration,
         animations: {
           self.overlayView.alpha = alpha
       }, completion: { (finished) in
-        completion()
+        completion?()
       })
     } else {
       overlayView.alpha = alpha
-      completion()
+      completion?()
     }
   }
 }
