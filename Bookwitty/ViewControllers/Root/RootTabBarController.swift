@@ -45,7 +45,7 @@ class RootTabBarController: UITabBarController {
       
     } else {
       dismissOverlay()
-      GeneralSettings.sharedInstance.didSignInAtLeastOnce = true
+      GeneralSettings.sharedInstance.shouldShowIntroduction = true
     }
   }
   
@@ -84,14 +84,14 @@ class RootTabBarController: UITabBarController {
   fileprivate func presentIntroductionOrSignInViewController() {
     displayOverlay()
     
-    if viewModel.didSignInAtLeastOnce {
+    if GeneralSettings.sharedInstance.shouldShowIntroduction {
+      let introductionVC = Storyboard.Introduction.instantiate(IntroductionViewController.self)
+      let navigationController = UINavigationController(rootViewController: introductionVC)
+      present(navigationController, animated: true, completion: nil)
+    } else {
       let signInVC = Storyboard.Access.instantiate(SignInViewController.self)
       signInVC.viewModel.registerNotificationName = AppNotification.rootShouldDisplayRegistration
       let navigationController = UINavigationController(rootViewController: signInVC)
-      present(navigationController, animated: true, completion: nil)
-    } else {
-      let introductionVC = Storyboard.Introduction.instantiate(IntroductionViewController.self)
-      let navigationController = UINavigationController(rootViewController: introductionVC)
       present(navigationController, animated: true, completion: nil)
     }
   }
@@ -121,8 +121,9 @@ extension RootTabBarController {
   }
   
   func signIn(notification: Notification) {
-    self.dismiss(animated: true, completion: nil)
-    dismissOverlay()
+    self.dismiss(animated: true) {
+      self.dismissOverlay()
+    }
   }
   
   func register(notification: Notification) {
@@ -140,38 +141,46 @@ extension RootTabBarController {
   }
   
   func initializeOverlay() {
-    overlayView = Bundle.main.loadNibNamed(
-      "LaunchScreen", owner: nil, options: nil)![0] as! UIView
-    overlayView.alpha = 0
+    let customizeOverlay = {
+      self.overlayView.alpha = 0
+      self.view.addSubview(self.overlayView)
+      self.overlayView.alignTop("0", leading: "0", bottom: "0", trailing: "0", toView: self.view)
+    }
+    
+    guard let launchView = Bundle.main.loadNibNamed("LaunchScreen", owner: nil, options: nil)?.first as? UIView else {
+      overlayView = UIView(frame: CGRect.zero)
+      overlayView.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+      let logoImageView = UIImageView(image: #imageLiteral(resourceName: "bookwitty"))
+      logoImageView.constrainWidth("100", height: "100")
+      overlayView.addSubview(logoImageView)
+      logoImageView.alignCenter(withView: overlayView)
+      customizeOverlay()
+      return
+    }
+    overlayView = launchView
+    customizeOverlay()
   }
   
   func displayOverlay(animated: Bool = true) {
-    let isAlreadyAddedToViewHierarchy = (overlayView.superview != nil)
-    if !isAlreadyAddedToViewHierarchy {
-      view.addSubview(overlayView)
-      overlayView.alignTop("0", leading: "0", bottom: "0", trailing: "0", toView: view)
-    }
-    changeOverlayAlphaValue(animated: animated, alpha: 1, completion: {})
+    changeOverlayAlphaValue(animated: animated, alpha: 1)
   }
   
   func dismissOverlay(animated: Bool = true) {
-    changeOverlayAlphaValue(animated: animated, alpha: 0) {
-      self.overlayView.removeFromSuperview()
-    }
+    changeOverlayAlphaValue(animated: animated, alpha: 0)
   }
   
-  func changeOverlayAlphaValue(animated: Bool, alpha: CGFloat, completion: @escaping () -> Void) {
+  func changeOverlayAlphaValue(animated: Bool, alpha: CGFloat, completion: (() -> Void)? = nil) {
     if animated {
       UIView.animate(
         withDuration: animationDuration,
         animations: {
           self.overlayView.alpha = alpha
       }, completion: { (finished) in
-        completion()
+        completion?()
       })
     } else {
       overlayView.alpha = alpha
-      completion()
+      completion?()
     }
   }
 }
