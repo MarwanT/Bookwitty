@@ -122,6 +122,7 @@
                         <outlet property="emailField" destination="654-el-WVd" id="cyi-ou-WbN"/>
                         <outlet property="passwordField" destination="2MS-dN-n76" id="jxs-Dn-pN4"/>
                         <outlet property="registerLabel" destination="STo-2f-EV2" id="XQg-AN-rvN"/>
+                        <outlet property="scrollViewBottomToButtonTopConstraint" destination="NWG-GI-3me" id="txE-m4-D8r"/>
                         <outlet property="scrollViewBottomToSuperviewBottomConstraint" destination="Hcw-qh-4yI" id="VcN-A7-eR7"/>
                         <outlet property="signInButton" destination="h1r-FX-WUr" id="FMq-uM-oBn"/>
                         <outlet property="stackView" destination="Dh8-kZ-JBa" id="ejN-os-EDg"/>
@@ -324,11 +325,11 @@
                                 <rect key="frame" x="113" y="40" width="150" height="150"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6iX-oN-fFD">
-                                        <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                        <rect key="frame" x="-1" y="0.0" width="150" height="150"/>
                                         <color key="backgroundColor" red="1" green="0.56093499820000003" blue="0.75360141889999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iKi-mB-A8s">
-                                        <rect key="frame" x="53" y="53" width="44" height="44"/>
+                                        <rect key="frame" x="52" y="53" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="iKi-mB-A8s" secondAttribute="height" multiplier="1:1" id="hgh-kz-qXp"/>
                                             <constraint firstAttribute="height" constant="44" id="i5T-3z-6ql"/>
