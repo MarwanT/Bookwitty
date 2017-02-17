@@ -12,6 +12,8 @@ import FLKAutoLayout
 class RootTabBarController: UITabBarController {
   let viewModel = RootTabBarViewModel()
   
+  var shouldDisplayRegisterVC: Bool = false
+  
   fileprivate var overlayView: UIView!
   
   deinit {
@@ -40,7 +42,13 @@ class RootTabBarController: UITabBarController {
     // Display Introduction VC if user is not signed in
     if !viewModel.isUserSignedIn {
       displayOverlay()
-      presentIntroductionOrSignInViewController()
+      if shouldDisplayRegisterVC {
+        shouldDisplayRegisterVC = false
+        presentRegisterViewController()
+      } else {
+        presentIntroductionOrSignInViewController()
+      }
+      
     } else {
       dismissOverlay()
       GeneralSettings.sharedInstance.didSignInAtLeastOnce = true
@@ -74,11 +82,16 @@ class RootTabBarController: UITabBarController {
       self,
       selector: #selector(self.handleDidSignInNotification(_:)),
       name: AppNotification.Name.didSignIn, object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(self.handlerRegisterFromSignInNotification(_:)),
+      name: AppNotification.Name.rootShouldDisplayRegistration, object: nil)
   }
   
   private func presentIntroductionOrSignInViewController() {
     if viewModel.didSignInAtLeastOnce {
       let signInVC = Storyboard.Access.instantiate(SignInViewController.self)
+      signInVC.viewModel.registerNotificationName = AppNotification.Name.rootShouldDisplayRegistration
       let navigationController = UINavigationController(rootViewController: signInVC)
       present(navigationController, animated: true, completion: nil)
     } else {
@@ -88,10 +101,23 @@ class RootTabBarController: UITabBarController {
     }
   }
   
+  private func presentRegisterViewController() {
+    let registerViewController = Storyboard.Access.instantiate(RegisterViewController.self)
+    let navigationViewController = UINavigationController(rootViewController: registerViewController)
+    present(navigationViewController, animated: true, completion: nil)
+  }
+  
   // MARK: Actions
   func handleDidSignInNotification(_ sender: Notification) {
     self.dismiss(animated: true, completion: nil)
     dismissOverlay()
+  }
+  
+  func handlerRegisterFromSignInNotification(_ sender: Notification) {
+    // Upon dismissing the sign in vc, this vc will re-call the `viewDidAppear`
+    // And push the registration vc. logic is handeled there.
+    shouldDisplayRegisterVC = true
+    self.dismiss(animated: true)
   }
 }
 
