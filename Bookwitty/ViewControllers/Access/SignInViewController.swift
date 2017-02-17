@@ -124,7 +124,7 @@ class SignInViewController: UIViewController {
         completion: { (success, error) in
           self.hideNetworkActivity()
           if success {
-            NotificationCenter.default.post(name: AppNotification.Name.didSignIn, object: nil)
+            NotificationCenter.default.post(name: AppNotification.didSignIn, object: nil)
           } else {
             self.showAlertWith(
               title: self.viewModel.failToSignInAlertTitle,

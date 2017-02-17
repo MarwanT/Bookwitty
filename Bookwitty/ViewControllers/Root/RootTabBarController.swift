@@ -24,16 +24,10 @@ class RootTabBarController: UITabBarController {
     super.viewDidLoad()
     initializeTabBarViewControllers()
     initializeOverlay()
-    registerNotifications()
     applyTheme()
     addObservers()
     
     displayOverlay(animated: false)
-  }
-
-  private func addObservers() {
-    NotificationCenter.default.addObserver(self, selector:
-      #selector(signOut(notificaiton:)), name: AppNotification.signOut, object: nil)
   }
 
   override func viewDidAppear(_ animated: Bool) {
@@ -77,21 +71,20 @@ class RootTabBarController: UITabBarController {
     self.selectedIndex = 0
   }
   
-  private func registerNotifications() {
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(self.handleDidSignInNotification(_:)),
-      name: AppNotification.Name.didSignIn, object: nil)
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(self.handlerRegisterFromSignInNotification(_:)),
-      name: AppNotification.Name.rootShouldDisplayRegistration, object: nil)
+  private func addObservers() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(signOut(notificaiton:)), name: AppNotification.signOut, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.signIn(notification:)), name: AppNotification.didSignIn, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.register(notification:)), name: AppNotification.rootShouldDisplayRegistration, object: nil)
+    
   }
   
   private func presentIntroductionOrSignInViewController() {
     if viewModel.didSignInAtLeastOnce {
       let signInVC = Storyboard.Access.instantiate(SignInViewController.self)
-      signInVC.viewModel.registerNotificationName = AppNotification.Name.rootShouldDisplayRegistration
+      signInVC.viewModel.registerNotificationName = AppNotification.rootShouldDisplayRegistration
       let navigationController = UINavigationController(rootViewController: signInVC)
       present(navigationController, animated: true, completion: nil)
     } else {
@@ -107,18 +100,6 @@ class RootTabBarController: UITabBarController {
     present(navigationViewController, animated: true, completion: nil)
   }
   
-  // MARK: Actions
-  func handleDidSignInNotification(_ sender: Notification) {
-    self.dismiss(animated: true, completion: nil)
-    dismissOverlay()
-  }
-  
-  func handlerRegisterFromSignInNotification(_ sender: Notification) {
-    // Upon dismissing the sign in vc, this vc will re-call the `viewDidAppear`
-    // And push the registration vc. logic is handeled there.
-    shouldDisplayRegisterVC = true
-    self.dismiss(animated: true)
-  }
 }
 
 // MARK: - Themeable
@@ -135,6 +116,18 @@ extension RootTabBarController {
     //TODO: Delete user information if any
     //TODO: Pop all controllers
     //TODO: Present sign in / register controller 
+  }
+  
+  func signIn(notification: Notification) {
+    self.dismiss(animated: true, completion: nil)
+    dismissOverlay()
+  }
+  
+  func register(notification: Notification) {
+    // Upon dismissing the sign in vc, this vc will re-call the `viewDidAppear`
+    // And push the registration vc. logic is handeled there.
+    shouldDisplayRegisterVC = true
+    self.dismiss(animated: true)
   }
 }
 
