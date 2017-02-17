@@ -47,6 +47,8 @@ class PenNameViewController: UIViewController {
 
     penNameInputField.delegate = self
 
+    setupBiographyKeyboardToolbar()
+
     //Make Cicular View tappable
     let tap = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnCircularView(_:)))
     profileContainerView.addGestureRecognizer(tap)
@@ -151,13 +153,31 @@ class PenNameViewController: UIViewController {
     }
     navigationController?.present(libraryViewController, animated: true, completion: nil)
   }
+
+  func setupBiographyKeyboardToolbar() {
+    let keyboardToolBarHeight: CGFloat = 50.0
+    let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: keyboardToolBarHeight))
+
+    toolBar.barStyle = UIBarStyle.default
+    toolBar.items = [
+      UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
+      UIBarButtonItem(title: viewModel.doneText, style: UIBarButtonItemStyle.plain, target: self, action: #selector(toolbarDoneButtonAction))]
+    toolBar.sizeToFit()
+
+    biographyTextView.inputAccessoryView = toolBar
+  }
+
+  func toolbarDoneButtonAction() {
+    //Close keyboard when done button is pressed
+    biographyTextView.resignFirstResponder()
+  }
 }
 
 extension PenNameViewController: InputFieldDelegate {
   func inputFieldShouldReturn(inputField: InputField) -> Bool {
     switch inputField {
     case penNameInputField:
-      return penNameInputField.resignFirstResponder()
+      return biographyTextView.becomeFirstResponder()
     default: return true
     }
   }
@@ -185,6 +205,8 @@ extension PenNameViewController: Themeable {
     biographyTextView.attributedText = AttributedStringBuilder.init(fontDynamicType: FontDynamicType.label).append(text: "", color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
 
     noteLabel.textColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
+
+    //biographyTextView
   }
 
   func makeViewCircular(view: UIView,borderColor: UIColor, borderWidth: CGFloat) {
