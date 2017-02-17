@@ -36,9 +36,30 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     title = viewModel.viewController
+    
+    initializeNavigationItems()
 
     collectionNode.delegate = self
     collectionNode.dataSource = self
+  }
+  
+  private func initializeNavigationItems() {
+    let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
+      UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+    leftNegativeSpacer.width = -10
+    let settingsBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "person"), style:
+      UIBarButtonItemStyle.plain, target: self, action:
+      #selector(self.settingsButtonTap(_:)))
+    navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
+  }
+}
+
+// MARK: - Action
+extension NewsFeedViewController {
+  func settingsButtonTap(_ sender: UIBarButtonItem) {
+    let settingsVC = Storyboard.Account.instantiate(AccountViewController.self)
+    settingsVC.hidesBottomBarWhenPushed = true
+    self.navigationController?.pushViewController(settingsVC, animated: true)
   }
 }
 
