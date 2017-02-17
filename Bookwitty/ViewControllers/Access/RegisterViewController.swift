@@ -149,7 +149,7 @@ class RegisterViewController: UIViewController {
 
       viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, completionBlock: { (success: Bool, user: User?, error: BookwittyAPIError?) in
         if let user = user, success {
-          self.pushPenNameViewController(user: user)
+          NotificationCenter.default.post(name: AppNotification.registrationSuccess, object: user)
         } else if let error = error {
           switch(error) {
           case BookwittyAPIError.emailAlreadyExists:
@@ -215,14 +215,6 @@ class RegisterViewController: UIViewController {
     UIView.animate(withDuration: 0.44) {
       self.view.layoutIfNeeded()
     }
-  }
-
-  // MARK: - Actions
-  func pushPenNameViewController(user: User) {
-    let penNameViewController = Storyboard.Access.instantiate(PenNameViewController.self)
-    penNameViewController.viewModel.initializeWith(user: user)
-    
-    self.navigationController?.pushViewController(penNameViewController, animated: true)
   }
 }
 
