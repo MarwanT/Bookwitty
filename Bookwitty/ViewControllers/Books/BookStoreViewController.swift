@@ -27,6 +27,8 @@ class BookStoreViewController: UIViewController {
     super.viewDidLoad()
     title = viewModel.viewControllerTitle
     
+    initializeNavigationItems()
+    
     let didAddBanner = loadBannerSection()
     let didAddFeaturedSection = loadFeaturedContentSection()
     addSeparator(leftMargin)
@@ -48,6 +50,16 @@ class BookStoreViewController: UIViewController {
     
     selectionTableView.layoutIfNeeded()
     selectionTableView.constrainHeight("\(selectionTableView.contentSize.height)")
+  }
+  
+  private func initializeNavigationItems() {
+    let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
+      UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+    leftNegativeSpacer.width = -10
+    let settingsBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "person"), style:
+      UIBarButtonItemStyle.plain, target: self, action:
+      #selector(self.settingsButtonTap(_:)))
+    navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
   }
   
   func loadBannerSection() -> Bool {
@@ -151,6 +163,12 @@ class BookStoreViewController: UIViewController {
   fileprivate func pushCategoriesViewController() {
     let categoriesViewController = Storyboard.Books.instantiate(CategoriesTableViewController.self)
     self.navigationController?.pushViewController(categoriesViewController, animated: true)
+  }
+}
+
+// MARK: - Action
+extension BookStoreViewController {
+  func settingsButtonTap(_ sender: UIBarButtonItem) {
   }
 }
 
