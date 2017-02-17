@@ -105,6 +105,13 @@ class RootTabBarController: UITabBarController {
     }
   }
   
+  fileprivate func presentPenNameViewController(user: User) {
+    let penNameViewController = Storyboard.Access.instantiate(PenNameViewController.self)
+    penNameViewController.viewModel.initializeWith(user: user)
+    let navigationController = UINavigationController(rootViewController: penNameViewController)
+    present(navigationController, animated: true, completion: nil)
+  }
+  
   fileprivate func refreshToOriginalState() {
     viewControllers?.forEach({ _ = ($0 as? UINavigationController)?.popToRootViewController(animated: false) })
     selectedIndex = 0
@@ -134,6 +141,11 @@ extension RootTabBarController {
   }
   
   func register(notification: Notification) {
+    guard let user = notification.object as? User else {
+      return
+    }
+    signIn(notification: notification)
+    presentPenNameViewController(user: user)
   }
 }
 
