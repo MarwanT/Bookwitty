@@ -185,6 +185,11 @@ class SignInViewController: UIViewController {
     alert.addAction(UIAlertAction(title: viewModel.okText, style: UIAlertActionStyle.default, handler: nil))
     self.present(alert, animated: true, completion: nil)
   }
+  
+  fileprivate func pushRegisterViewController() {
+    let registerViewController = Storyboard.Access.instantiate(RegisterViewController.self)
+    navigationController?.pushViewController(registerViewController, animated: true)
+  }
 }
 
 
@@ -247,10 +252,10 @@ extension SignInViewController: TTTAttributedLabelDelegate {
    notifying the the root vc, otherwise it should be notifying the Introduction vc
   */
   private func registerAction() {
-    guard let notificationName = viewModel.registerNotificationName else {
-      return
+    if let notificationName = viewModel.registerNotificationName {
+      NotificationCenter.default.post(name: notificationName, object: nil)
+    } else {
+      pushRegisterViewController()
     }
-    
-    NotificationCenter.default.post(name: notificationName, object: nil)
   }
 }
