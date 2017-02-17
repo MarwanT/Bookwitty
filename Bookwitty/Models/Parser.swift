@@ -86,3 +86,9 @@ class Parser {
     //Register any value formatter here using the serializer
   }
 }
+
+extension Resource {
+  final var registeredResourceType: ResourceType {
+    return type(of: self).resourceType
+  }
+}
