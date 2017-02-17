@@ -36,6 +36,11 @@ class ChangePasswordViewController: UIViewController {
       autocorrectionType: .no,
       autocapitalizationType: .none)
 
+
+    currentPasswordInputField.validationBlock = { (password: String?) -> Bool in
+      return password?.isValidPassword() ?? false
+    }
+
     newPasswordInputField.configuration = InputFieldConfiguration(
       descriptionLabelText: viewModel.newPasswordText,
       textFieldPlaceholder: viewModel.newPasswordText,
@@ -43,6 +48,11 @@ class ChangePasswordViewController: UIViewController {
       returnKeyType: UIReturnKeyType.done,
       autocorrectionType: .no,
       autocapitalizationType: .none)
+
+    newPasswordInputField.validationBlock = { (password: String?) -> Bool in
+      return password?.isValidPassword() ?? false
+    }
+
   }
 }
 
