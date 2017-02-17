@@ -14,8 +14,4 @@ final class RootTabBarViewModel {
   var isUserSignedIn: Bool {
     return AccessToken.shared.isValid
   }
-  
-  var didSignInAtLeastOnce: Bool {
-    return GeneralSettings.sharedInstance.didSignInAtLeastOnce
-  }
 }
