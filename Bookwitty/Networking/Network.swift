@@ -221,7 +221,7 @@ public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -
   let accessToken = AccessToken.shared
   
   guard let refreshToken = accessToken.refreshToken else {
-    NotificationCenter.default.post(name: AppNotification.Name.failToRefreshToken, object: nil)
+    NotificationCenter.default.post(name: AppNotification.failToRefreshToken, object: nil)
     completion(false)
     return nil
   }
@@ -240,7 +240,7 @@ public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -
     switch result {
     case .success(let response):
       if response.statusCode == 400 {
-        NotificationCenter.default.post(name: AppNotification.Name.failToRefreshToken, object: nil)
+        NotificationCenter.default.post(name: AppNotification.failToRefreshToken, object: nil)
         return
       }
       

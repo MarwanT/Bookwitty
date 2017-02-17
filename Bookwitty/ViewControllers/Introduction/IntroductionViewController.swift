@@ -16,6 +16,8 @@ class IntroductionViewController: UIViewController {
   @IBOutlet weak var signInButton: UIButton!
   @IBOutlet weak var tutorialContainer: UIView!
   
+  var shouldDisplayRegisterVC: Bool = false
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -24,6 +26,8 @@ class IntroductionViewController: UIViewController {
     applyTheme()
     
     applyLocalization()
+    
+    registerNotifications()
     
     let tutorialViewController = Storyboard.Introduction.instantiate(TutorialViewController.self)
     tutorialViewController.tutorialDelegate = self
@@ -37,16 +41,49 @@ class IntroductionViewController: UIViewController {
     self.navigationController?.setNavigationBarHidden(true, animated: true)
   }
   
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    if shouldDisplayRegisterVC {
+      shouldDisplayRegisterVC = false
+      pushRegisterViewController()
+    }
+  }
+  
+  func registerNotifications() {
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(self.handlerRegisterFromSignInNotification(_:)),
+      name: AppNotification.shouldDisplayRegistration, object: nil)
+  }
+  
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
   
   // MARK: - Actions
   
   @IBAction func registerButtonTap(_ sender: UIButton) {
-    let signInViewController = Storyboard.Access.instantiate(RegisterViewController.self)
-    self.navigationController?.pushViewController(signInViewController, animated: true)
+    pushRegisterViewController()
   }
   
   @IBAction func signInButtonTap(_ sender: UIButton) {
+    pushSignInViewController()
+  }
+  
+  func handlerRegisterFromSignInNotification(_ notification: Notification) {
+    shouldDisplayRegisterVC = true
+    _ = navigationController?.popViewController(animated: true)
+  }
+  
+  // MARK: Helpers
+  func pushRegisterViewController() {
+    let registerViewController = Storyboard.Access.instantiate(RegisterViewController.self)
+    self.navigationController?.pushViewController(registerViewController, animated: true)
+  }
+  
+  func pushSignInViewController() {
     let signInViewController = Storyboard.Access.instantiate(SignInViewController.self)
+    signInViewController.viewModel.registerNotificationName = AppNotification.shouldDisplayRegistration
     self.navigationController?.pushViewController(signInViewController, animated: true)
   }
 }

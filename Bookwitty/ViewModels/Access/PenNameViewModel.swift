@@ -24,6 +24,7 @@ final class PenNameViewModel {
   let chooseFromLibraryText: String = localizedString(key: "choose_from_library", defaultValue: "Choose photo from library")
   let removeProfilePhotoText: String = localizedString(key: "remove_profile_photo", defaultValue: "Clear profile photo")
   let cancelText: String = localizedString(key: "cancel", defaultValue: "Cancel")
+  let doneText: String = localizedString(key: "done", defaultValue: "Done")
 
   private(set) var user: User!
 

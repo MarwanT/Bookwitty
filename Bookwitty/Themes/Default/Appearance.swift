@@ -44,6 +44,8 @@ protocol ThemeColor {
   
   func defaultErrorColor() -> UIColor
   
+  func defaultECommerceColor() -> UIColor
+  
   func defaultButtonColor() -> UIColor
   func defaultButtonHighlightedColor() -> UIColor
   func defaultEcommerceButtonColor() -> UIColor
@@ -53,6 +55,10 @@ protocol ThemeColor {
   func defaultGrayedTextColor() -> UIColor
   
   func defaultSeparatorColor() -> UIColor
+  
+  func defaultSelectionColor() -> UIColor
+  
+  func defaultBackgroundColor() -> UIColor
 }
 
 protocol ThemeSpacing {
@@ -96,7 +102,7 @@ protocol Theme: ThemeSpacing, ThemeColor, ThemeButtonsStyle, ThemeLabelsStyle, T
 class ThemeManager {
   static let shared = ThemeManager()
   
-  var currentTheme: Theme! {
+  var currentTheme: Theme {
     didSet{
       // TODO: Send notification for updating the layout throughout the app
     }

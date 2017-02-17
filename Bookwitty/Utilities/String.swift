@@ -33,3 +33,17 @@ extension String {
    return String(data: data!, encoding: .utf8)
   }
 }
+
+protocol StringType {
+  var get: String { get }
+}
+
+extension String: StringType {
+  var get: String { return self }
+}
+
+extension Optional where Wrapped: StringType {
+  func isEmptyOrNil() -> Bool {
+    return (self == nil) || self!.get.isEmpty
+  }
+}

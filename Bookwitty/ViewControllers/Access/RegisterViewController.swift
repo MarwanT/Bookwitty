@@ -35,7 +35,8 @@ class RegisterViewController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-      self.navigationController?.setNavigationBarHidden(false, animated: true)
+    self.navigationController?.setNavigationBarHidden(false, animated: true)
+    navigationController?.navigationBar.backItem?.title = ""
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -148,7 +149,7 @@ class RegisterViewController: UIViewController {
 
       viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, completionBlock: { (success: Bool, user: User?, error: BookwittyAPIError?) in
         if let user = user, success {
-          self.pushPenNameViewController(user: user)
+          NotificationCenter.default.post(name: AppNotification.registrationSuccess, object: user)
         } else if let error = error {
           switch(error) {
           case BookwittyAPIError.emailAlreadyExists:
@@ -215,19 +216,12 @@ class RegisterViewController: UIViewController {
       self.view.layoutIfNeeded()
     }
   }
-
-  // MARK: - Actions
-  func pushPenNameViewController(user: User) {
-    let penNameViewController = Storyboard.Access.instantiate(PenNameViewController.self)
-    penNameViewController.viewModel.initializeWith(user: user)
-    
-    self.navigationController?.pushViewController(penNameViewController, animated: true)
-  }
 }
 
 extension RegisterViewController: InformativeInputFieldDelegate {
   func informativeInputFieldDidTapField(informativeInputField: InformativeInputField) {
     let countryPickerViewController: EMCCountryPickerController = EMCCountryPickerController()
+    countryPickerViewController.labelFont = FontDynamicType.subheadline.font
     countryPickerViewController.countryDelegate = self
     countryPickerViewController.flagSize = 44
     
@@ -249,26 +243,7 @@ extension RegisterViewController:  EMCCountryDelegate {
 
 extension RegisterViewController: TTTAttributedLabelDelegate {
   func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
-    guard let host = url.host else {
-      return
-    }
-
-    switch host {
-    case AttributedLinkReference.termsOfUse.rawValue:
-      termsOfUseAction()
-    case AttributedLinkReference.privacyPolicy.rawValue:
-      privacyPolicyAction()
-    default:
-      break
-    }
-  }
-
-  func termsOfUseAction() {
-    //TODO: Implement terms of use action
-  }
-
-  func privacyPolicyAction() {
-    //TODO: Implement privacy policy action
+    WebViewController.present(url: url, inViewController: self)
   }
 }
 
@@ -277,7 +252,7 @@ extension RegisterViewController: Themeable {
     self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
     continueButton.setTitle(viewModel.continueButtonTitle, for: .normal)
     ThemeManager.shared.currentTheme.stylePrimaryButton(button: continueButton)
-    stackViewBackgroundView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
+    stackViewBackgroundView.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
 
     for separator in separators {
       separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
@@ -303,12 +278,12 @@ extension RegisterViewController: InputFieldDelegate {
 }
 
 enum AttributedLinkReference: String {
- case termsOfUse
- case privacyPolicy
+ case termsOfUse = "/terms#terms"
+ case privacyPolicy = "/terms#privacy"
 
   var url: URL {
     get {
-      return URL(string: "bookwittyapp://" + self.rawValue)!
+      return URL(string: "https://www.bookwitty.com" + self.rawValue)!
     }
   }
 }

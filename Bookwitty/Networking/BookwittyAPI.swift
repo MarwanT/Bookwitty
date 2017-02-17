@@ -16,8 +16,9 @@ public enum BookwittyAPI {
   case oAuth(username: String, password: String)
   case refreshToken(refreshToken: String)
   case allAddresses
-  case register(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String?, countryISO3166: String, password: String)
+  case register(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String?, countryISO3166: String, password: String, language: String)
   case user
+  case updateUser(identifier: String, firstName: String?, lastName: String?, dateOfBirth: String?, email: String?, currentPassword: String?, password: String?, country: String?, badges: [String : Any]?, preferences: [String : Any]?)
 }
 
 // MARK: - Target Type
@@ -49,6 +50,8 @@ extension BookwittyAPI: TargetType {
       path = "/user"
     case .user:
       path = "/user"
+    case .updateUser:
+      path = "/user"
     }
     
     return apiBasePath + apiVersion + path
@@ -62,6 +65,8 @@ extension BookwittyAPI: TargetType {
       return .get
     case .register:
       return .post
+    case .updateUser:
+      return .patch
     }
   }
   
@@ -86,8 +91,11 @@ extension BookwittyAPI: TargetType {
       ]
     case .allAddresses, .user:
       return nil
-    case .register(let firstName, let lastName, let email, let dateOfBirth, let country, let password):
-      return UserAPI.registerPostBody(firstName: firstName, lastName: lastName, email: email, dateOfBirth: dateOfBirth, country: country, password: password)
+    case .register(let firstName, let lastName, let email, let dateOfBirth, let country, let password, let language):
+      return UserAPI.registerPostBody(firstName: firstName, lastName: lastName, email: email, dateOfBirth: dateOfBirth, country: country, password: password, language: language)
+
+    case .updateUser(let identifier, let firstName, let lastName, let dateOfBirth, let email, let currentPassword, let password, let country, let badges, let preferences):
+      return UserAPI.updatePostBody(identifier: identifier, firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirth, email: email, currentPassword: currentPassword, password: password, country: country, badges: badges, preferences: preferences)
     }
   }
   

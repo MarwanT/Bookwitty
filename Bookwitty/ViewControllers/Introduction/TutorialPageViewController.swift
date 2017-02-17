@@ -49,6 +49,7 @@ class TutorialPageViewController: UIViewController {
 
 extension TutorialPageViewController: Themeable {
   func applyTheme() {
+    view.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     ThemeManager.shared.currentTheme.styleCallout(label: titleLabel)
     ThemeManager.shared.currentTheme.styleCaption1(label: descriptionLabel)
     stackView.spacing = 10

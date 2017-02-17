@@ -22,9 +22,25 @@ final class SignInViewModel {
   let viewControllerTitle: String = localizedString(key: "sign_in", defaultValue: "Sign-in")
   let signInErrorInFieldsNotification = localizedString(key: "invalid_fields_notification_message", defaultValue: "Please fill the required fields")
   let okText: String = localizedString(key: "ok", defaultValue: "Ok")
+  let failToSignInAlertTitle: String = localizedString(
+    key: "fail_to_sign_alert_title",
+    defaultValue: "Sign in")
+  let failToSignInAlertMessage: String = localizedString(key: "fail_to_sign_in_alert_message", defaultValue: "Oooops it seems there is something wrong in your credentials")
+  let registerLabelText: String = localizedString(key: "sign_in_register_sentence", defaultValue: "You don't have an account")
+  let registerTermText: String = localizedString(key: "register", defaultValue: "Register")
+  
+  
+  func styledRegisterText() -> NSMutableAttributedString {
+    let builder = AttributedStringBuilder(fontDynamicType: FontDynamicType.label)
+    return builder.append(text: registerLabelText)
+      .append(text: "\n")
+      .append(text: registerTermText)
+      .applyParagraphStyling(alignment: NSTextAlignment.center)
+      .attributedString
+  }
+  
   
   private var signInRequest: Cancellable? = nil
-  
   
   func signIn(username: String, password: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?)-> Void ) {
     if let signInRequest = signInRequest {
@@ -37,4 +53,6 @@ final class SignInViewModel {
       completion(success, error)
     })
   }
+  
+  var registerNotificationName: Notification.Name? = nil
 }

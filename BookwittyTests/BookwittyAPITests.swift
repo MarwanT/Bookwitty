@@ -26,7 +26,7 @@ class BookwittyAPITests: XCTestCase {
   func testAllAddressesAPIRequest() {
     let excep = expectation(description: "...")
     
-    _ = apiRequest(target: BookwittyAPI.AllAddresses) {
+    _ = apiRequest(target: BookwittyAPI.allAddresses) {
       (data, statusCode, response, error) in
       
       XCTAssertEqual(statusCode, 200)
@@ -45,7 +45,7 @@ class BookwittyAPITests: XCTestCase {
   func testSignInAPIRequest() {
     let excep = expectation(description: "...")
     
-    _ = User.signIn(
+    _ = UserAPI.signIn(
       withUsername: "danny.hajj@keeward.com", password: "qwerty1234") {
         (success, error) in
         XCTAssertTrue(success)
@@ -62,7 +62,7 @@ class BookwittyAPITests: XCTestCase {
   func testUserAPIRequest() {
     let excep = expectation(description: "...")
     
-    _ = signedAPIRequest(target: BookwittyAPI.User) {
+    _ = signedAPIRequest(target: BookwittyAPI.user) {
       (data, statusCode, response, error) in
       
       XCTAssertEqual(statusCode, 200)

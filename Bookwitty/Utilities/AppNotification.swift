@@ -1,0 +1,17 @@
+//
+//  AppNotifications.swift
+//  Bookwitty
+//
+//  Created by Marwan  on 2/1/17.
+//  Copyright © 2017 Keeward. All rights reserved.
+//
+
+import Foundation
+
+struct AppNotification {
+  static let failToRefreshToken: Notification.Name = Notification.Name(rawValue: "AppNotification.Name.failToRefreshToken")
+  static let signOut: Notification.Name = Notification.Name(rawValue: "SignOutNotification")
+  static let didSignIn: Notification.Name = Notification.Name(rawValue: "AppNotification.didSignIn")
+  static let shouldDisplayRegistration: Notification.Name = Notification.Name(rawValue: "AppNotification.shouldDisplayRegistration")
+  static let registrationSuccess: Notification.Name = Notification.Name(rawValue: "AppNotification.registrationSuccess")
+}

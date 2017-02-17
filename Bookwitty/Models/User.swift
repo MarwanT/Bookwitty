@@ -18,8 +18,16 @@ class User: Resource {
   var country: String? = nil
   var createdAt: String? = nil
   var updatedAt: String? = nil
+  var language: String? = nil
   var badges: [String: Any]? = nil
   var preferences: [String: Any]? = nil
+
+
+  /* Discussion
+  * Only ussed to verify password update
+  */
+  var currentPassword: String? = nil
+
   //TODO: add cart model
   //TODO: add orders array model
   //TODO: add affiliate profiles array model
@@ -41,6 +49,8 @@ class User: Resource {
       "dateOfBirth": Attribute().serializeAs("date-of-birth"),
       "country": Attribute().serializeAs("country"),
       "password": Attribute().serializeAs("password"),
+      "currentPassword": Attribute().serializeAs("current-password"),
+      "language": Attribute().serializeAs("language")
       ])
   }
 
@@ -48,7 +58,5 @@ class User: Resource {
 
 // MARK: - Parser
 extension User: Parsable {
-  static func type() -> User.Type {
-    return User.self
-  }
+  typealias AbstractType = User
 }

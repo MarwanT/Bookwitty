@@ -26,6 +26,11 @@ final class DefaultTheme: Theme {
     let pageControlAppearance = UIPageControl.appearance()
     pageControlAppearance.currentPageIndicatorTintColor = self.colorNumber15()
     pageControlAppearance.pageIndicatorTintColor = self.colorNumber18()
+
+    UITabBar.appearance().barTintColor = self.colorNumber23()
+    UITabBar.appearance().tintColor = self.colorNumber19()
+
+    UISwitch.appearance().onTintColor = self.colorNumber19()
   }
 }
 
@@ -112,7 +117,9 @@ extension DefaultTheme {
     return UIColor.bwRubyHighlighted
   }
   
-  
+  func defaultECommerceColor() -> UIColor {
+    return colorNumber22()
+  }
   
   func defaultButtonColor() -> UIColor {
     return colorNumber19()
@@ -146,6 +153,15 @@ extension DefaultTheme {
   
   func defaultErrorColor() -> UIColor {
     return colorNumber24()
+  }
+  
+  
+  func defaultSelectionColor() -> UIColor {
+    return colorNumber18()
+  }
+  
+  func defaultBackgroundColor() -> UIColor {
+    return colorNumber23()
   }
 }
 
