@@ -51,21 +51,21 @@ class RootTabBarController: UITabBarController {
   
   private func initializeTabBarViewControllers() {
     let viewController1 = NewsFeedViewController()
-    let viewController2 = UIViewController()
+    let bookStoreViewController = Storyboard.Books.instantiate(BookStoreViewController.self)
     
     viewController1.tabBarItem = UITabBarItem(
       title: "NEWS",
       image: #imageLiteral(resourceName: "newsfeed"),
       tag: 1)
-    viewController2.tabBarItem = UITabBarItem(
-      title: "POST",
-      image: #imageLiteral(resourceName: "createPost"),
+    bookStoreViewController.tabBarItem = UITabBarItem(
+      title: viewModel.bookStoreTabTitle,
+      image: #imageLiteral(resourceName: "books"),
       tag:2)
     
     // Set The View controller
     self.viewControllers = [
       UINavigationController(rootViewController: viewController1),
-      UINavigationController(rootViewController: viewController2)]
+      UINavigationController(rootViewController: bookStoreViewController)]
     
     // Set Default select tab index
     self.selectedIndex = 0
