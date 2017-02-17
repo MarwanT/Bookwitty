@@ -42,7 +42,7 @@ class AccessToken {
     let expiry = Date(timeIntervalSinceNow: expiresIn)
     
     defaults.set(token, forKey: Keys.token.rawValue)
-    defaults.set(refresh, forKey: Keys.token.rawValue)
+    defaults.set(refresh, forKey: Keys.refreshToken.rawValue)
     defaults.set(expiry, forKey: Keys.expiryDate.rawValue)
     defaults.set(false, forKey: Keys.updating.rawValue)
   }
