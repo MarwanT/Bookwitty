@@ -17,6 +17,8 @@ class PenNameViewController: UIViewController {
   @IBOutlet weak var penNameInputField: InputField!
   @IBOutlet weak var continueButton: UIButton!
   @IBOutlet weak var profileImageView: UIImageView!
+  @IBOutlet weak var biographyTextView: UITextView!
+  @IBOutlet weak var biographyLabel: UILabel!
 
   @IBOutlet weak var topViewToTopConstraint: NSLayoutConstraint!
   let topViewToTopSpace: CGFloat = 40
@@ -44,6 +46,8 @@ class PenNameViewController: UIViewController {
     penNameInputField.validationBlock = notEmptyValidation
 
     penNameInputField.delegate = self
+
+    setupBiographyKeyboardToolbar()
 
     //Make Cicular View tappable
     let tap = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnCircularView(_:)))
@@ -149,13 +153,31 @@ class PenNameViewController: UIViewController {
     }
     navigationController?.present(libraryViewController, animated: true, completion: nil)
   }
+
+  func setupBiographyKeyboardToolbar() {
+    let keyboardToolBarHeight: CGFloat = 50.0
+    let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: keyboardToolBarHeight))
+
+    toolBar.barStyle = UIBarStyle.default
+    toolBar.items = [
+      UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
+      UIBarButtonItem(title: viewModel.doneText, style: UIBarButtonItemStyle.plain, target: self, action: #selector(toolbarDoneButtonAction))]
+    toolBar.sizeToFit()
+
+    biographyTextView.inputAccessoryView = toolBar
+  }
+
+  func toolbarDoneButtonAction() {
+    //Close keyboard when done button is pressed
+    biographyTextView.resignFirstResponder()
+  }
 }
 
 extension PenNameViewController: InputFieldDelegate {
   func inputFieldShouldReturn(inputField: InputField) -> Bool {
     switch inputField {
     case penNameInputField:
-      return penNameInputField.resignFirstResponder()
+      return biographyTextView.becomeFirstResponder()
     default: return true
     }
   }
@@ -169,13 +191,22 @@ extension PenNameViewController: Themeable {
     plusImageView.image = #imageLiteral(resourceName: "plus")
     plusImageView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
 
+    biographyTextView.layer.borderWidth = 1.0
+    biographyTextView.layer.borderColor = ThemeManager.shared.currentTheme.defaultSeparatorColor().cgColor
+    biographyTextView.layer.cornerRadius = 4.0
+
     self.view.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     ThemeManager.shared.currentTheme.stylePrimaryButton(button: continueButton)
     ThemeManager.shared.currentTheme.styleLabel(label: penNameLabel)
     ThemeManager.shared.currentTheme.styleCaption2(label: noteLabel)
     penNameInputField.textField.textAlignment = .center
-    
+
+    ThemeManager.shared.currentTheme.styleLabel(label: biographyLabel)
+    biographyTextView.attributedText = AttributedStringBuilder.init(fontDynamicType: FontDynamicType.label).append(text: "", color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+
     noteLabel.textColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
+
+    //biographyTextView
   }
 
   func makeViewCircular(view: UIView,borderColor: UIColor, borderWidth: CGFloat) {
