@@ -83,9 +83,9 @@ final class RegisterViewModel {
       registerRequest.cancel()
     }
 
-    registerRequest = UserAPI.registerUser(firstName: firstName, lastName: lastName, email: email, dateOfBirthISO8601: nil, countryISO3166: country, password: password, completionBlock: { (success, user, error) in
-      self.registerRequest = nil
-      completionBlock(success, user, error)
+    registerRequest = UserAPI.registerUser(firstName: firstName, lastName: lastName, email: email, dateOfBirthISO8601: nil, countryISO3166: country, password: password, language: "en", completionBlock: { (success, user, error) in
+        self.request = nil
+        completionBlock(success, user, error)
     })
   }
 }
