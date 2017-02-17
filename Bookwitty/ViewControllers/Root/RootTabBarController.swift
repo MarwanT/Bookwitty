@@ -141,11 +141,24 @@ extension RootTabBarController {
   }
   
   func initializeOverlay() {
-    overlayView = Bundle.main.loadNibNamed(
-      "LaunchScreen", owner: nil, options: nil)![0] as! UIView
-    overlayView.alpha = 0
-    view.addSubview(overlayView)
-    overlayView.alignTop("0", leading: "0", bottom: "0", trailing: "0", toView: view)
+    let customizeOverlay = {
+      self.overlayView.alpha = 0
+      self.view.addSubview(self.overlayView)
+      self.overlayView.alignTop("0", leading: "0", bottom: "0", trailing: "0", toView: self.view)
+    }
+    
+    guard let launchView = Bundle.main.loadNibNamed("LaunchScreen", owner: nil, options: nil)?.first as? UIView else {
+      overlayView = UIView(frame: CGRect.zero)
+      overlayView.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+      let logoImageView = UIImageView(image: #imageLiteral(resourceName: "bookwitty"))
+      logoImageView.constrainWidth("100", height: "100")
+      overlayView.addSubview(logoImageView)
+      logoImageView.alignCenter(withView: overlayView)
+      customizeOverlay()
+      return
+    }
+    overlayView = launchView
+    customizeOverlay()
   }
   
   func displayOverlay(animated: Bool = true) {
