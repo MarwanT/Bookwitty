@@ -11,6 +11,8 @@ import AsyncDisplayKit
 class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
+  
+  let viewModel = NewsFeedViewModel()
 
   let data = ["","","","","","","","","","","","","","",""]
 
