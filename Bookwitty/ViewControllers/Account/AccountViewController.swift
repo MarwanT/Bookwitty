@@ -44,8 +44,9 @@ class AccountViewController: UIViewController {
   }
 
   private func fillUserInformation() {
-    self.displayNameLabel.text = nil//Todo: grab the values from the vm when available
+    self.displayNameLabel.text = "Joe Satriani"//Todo: grab the values from the vm when available
     self.profileImageView.image = nil//Todo: grab the values from the vm when available
+    self.profileImageView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     self.profileImageView.tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
   }
 
@@ -107,6 +108,7 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
 
       currentCell.label.text = values.title
       currentCell.profileImageView.image = values.image
+      currentCell.profileImageView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
 
     } else {
       guard let currentCell = cell as? DisclosureTableViewCell else {
