@@ -16,7 +16,7 @@ public enum BookwittyAPI {
   case oAuth(username: String, password: String)
   case refreshToken(refreshToken: String)
   case allAddresses
-  case register(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String?, countryISO3166: String, password: String)
+  case register(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String?, countryISO3166: String, password: String, language: String)
   case user
   case updateUser(identifier: String, firstName: String?, lastName: String?, dateOfBirth: String?, email: String?, currentPassword: String?, password: String?, country: String?, badges: [String : Any]?, preferences: [String : Any]?)
 }
@@ -91,8 +91,8 @@ extension BookwittyAPI: TargetType {
       ]
     case .allAddresses, .user:
       return nil
-    case .register(let firstName, let lastName, let email, let dateOfBirth, let country, let password):
-      return UserAPI.registerPostBody(firstName: firstName, lastName: lastName, email: email, dateOfBirth: dateOfBirth, country: country, password: password)
+    case .register(let firstName, let lastName, let email, let dateOfBirth, let country, let password, let language):
+      return UserAPI.registerPostBody(firstName: firstName, lastName: lastName, email: email, dateOfBirth: dateOfBirth, country: country, password: password, language: language)
 
     case .updateUser(let identifier, let firstName, let lastName, let dateOfBirth, let email, let currentPassword, let password, let country, let badges, let preferences):
       return UserAPI.updatePostBody(identifier: identifier, firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirth, email: email, currentPassword: currentPassword, password: password, country: country, badges: badges, preferences: preferences)
