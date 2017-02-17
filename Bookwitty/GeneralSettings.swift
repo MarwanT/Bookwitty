@@ -22,7 +22,7 @@ public class GeneralSettings {
   private let defaultValues: [String:Any] = [
     Keys.SendUsageData : true,
     Keys.SendEmailNotifications : true,
-    Keys.ShouldShowIntroduction : false
+    Keys.ShouldShowIntroduction : true
   ]
   
   public static let sharedInstance: GeneralSettings = GeneralSettings()

@@ -45,7 +45,7 @@ class RootTabBarController: UITabBarController {
       
     } else {
       dismissOverlay()
-      GeneralSettings.sharedInstance.shouldShowIntroduction = true
+      GeneralSettings.sharedInstance.shouldShowIntroduction = false
     }
   }
   
