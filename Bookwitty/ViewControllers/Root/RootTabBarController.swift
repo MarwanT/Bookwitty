@@ -27,6 +27,16 @@ class RootTabBarController: UITabBarController {
     
     displayOverlay(animated: false)
   }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    removeObserversWhenVisible()
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    addObserversWhenNotVisible()
+  }
 
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
@@ -68,9 +78,16 @@ class RootTabBarController: UITabBarController {
       #selector(signOut(notificaiton:)), name: AppNotification.signOut, object: nil)
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.signIn(notification:)), name: AppNotification.didSignIn, object: nil)
-    
   }
   
+  private func addObserversWhenNotVisible() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(register(notification:)), name: AppNotification.registrationSuccess, object: nil)
+  }
+  
+  private func removeObserversWhenVisible() {
+    NotificationCenter.default.removeObserver(self, name: AppNotification.registrationSuccess, object: nil)
+  }
   
   // MARK: Helpers
   
@@ -86,6 +103,13 @@ class RootTabBarController: UITabBarController {
       let navigationController = UINavigationController(rootViewController: signInVC)
       present(navigationController, animated: true, completion: nil)
     }
+  }
+  
+  fileprivate func presentPenNameViewController(user: User) {
+    let penNameViewController = Storyboard.Access.instantiate(PenNameViewController.self)
+    penNameViewController.viewModel.initializeWith(user: user)
+    let navigationController = UINavigationController(rootViewController: penNameViewController)
+    present(navigationController, animated: true, completion: nil)
   }
   
   fileprivate func refreshToOriginalState() {
@@ -114,6 +138,14 @@ extension RootTabBarController {
     self.dismiss(animated: true) {
       self.dismissOverlay()
     }
+  }
+  
+  func register(notification: Notification) {
+    guard let user = notification.object as? User else {
+      return
+    }
+    signIn(notification: notification)
+    presentPenNameViewController(user: user)
   }
 }
 

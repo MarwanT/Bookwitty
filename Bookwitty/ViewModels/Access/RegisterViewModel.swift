@@ -76,16 +76,24 @@ final class RegisterViewModel {
       .attributedString
   }
 
-  private var registerRequest: Cancellable? = nil
+  private var request: Cancellable? = nil
 
   func registerUserWithData(firstName: String, lastName: String, email: String, country: String, password: String, completionBlock: @escaping (_ success: Bool, _ user: User?, _ error: BookwittyAPIError?)->()) {
-    if let registerRequest = self.registerRequest {
-      registerRequest.cancel()
+    if let request = self.request {
+      request.cancel()
     }
 
-    registerRequest = UserAPI.registerUser(firstName: firstName, lastName: lastName, email: email, dateOfBirthISO8601: nil, countryISO3166: country, password: password, language: "en", completionBlock: { (success, user, error) in
+    request = UserAPI.registerUser(firstName: firstName, lastName: lastName, email: email, dateOfBirthISO8601: nil, countryISO3166: country, password: password, language: "en", completionBlock: { (success, user, error) in
+      guard success else {
         self.request = nil
         completionBlock(success, user, error)
+        return
+      }
+      
+      self.request = UserAPI.signIn(withUsername: email, password: password, completion: { (success, error) in
+        self.request = nil
+        completionBlock(success, user, error)
+      })
     })
   }
 }
