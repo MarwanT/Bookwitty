@@ -57,6 +57,13 @@ class ChangePasswordViewController: UIViewController {
 
   fileprivate func initiateChangePassword() {
 
+    let currentReult = currentPasswordInputField.validateField()
+    let newResult = newPasswordInputField.validateField()
+
+    guard currentReult.isValid && newResult.isValid else {
+      return
+    }
+
   }
 }
 
