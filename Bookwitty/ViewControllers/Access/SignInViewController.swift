@@ -242,7 +242,15 @@ extension SignInViewController: TTTAttributedLabelDelegate {
     }
   }
   
+  /**
+   If the view controller was presented modally then the sign should be
+   notifying the the root vc, otherwise it should be notifying the Introduction vc
+  */
   private func registerAction() {
+    guard let notificationName = viewModel.registerNotificationName else {
+      return
+    }
     
+    NotificationCenter.default.post(name: notificationName, object: nil)
   }
 }

@@ -53,4 +53,6 @@ final class SignInViewModel {
       completion(success, error)
     })
   }
+  
+  var registerNotificationName: Notification.Name? = nil
 }
