@@ -65,7 +65,21 @@ class ChangePasswordViewController: UIViewController {
     guard currentReult.isValid && newResult.isValid else {
       return
     }
+    let identifier: String = ""//TODO: grab the user identifier
+    let current: String = currentReult.value ?? ""
+    let new: String = newResult.value ?? ""
 
+    viewModel.updatePassword(identifier: identifier, current: current, new: new) {
+      (success: Bool, error: Error?) in
+      if success {
+        let alert = UIAlertController(title: "Success", message: "Password Changes Successfully", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        self.navigationController?.present(alert, animated: true, completion: nil)
+      } else {
+        self.currentPasswordInputField.status = .inValid
+        self.newPasswordInputField.status = .inValid
+      }
+    }
   }
 }
 
