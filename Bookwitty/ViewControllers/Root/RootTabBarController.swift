@@ -121,8 +121,9 @@ extension RootTabBarController {
   }
   
   func signIn(notification: Notification) {
-    self.dismiss(animated: true, completion: nil)
-    dismissOverlay()
+    self.dismiss(animated: true) {
+      self.dismissOverlay()
+    }
   }
   
   func register(notification: Notification) {
