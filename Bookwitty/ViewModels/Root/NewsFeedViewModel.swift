@@ -9,4 +9,5 @@
 import Foundation
 
 final class NewsFeedViewModel {
+  let viewController = localizedString(key: "news", defaultValue: "News")
 }

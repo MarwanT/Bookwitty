@@ -35,6 +35,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = viewModel.viewController
 
     collectionNode.delegate = self
     collectionNode.dataSource = self
