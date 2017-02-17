@@ -29,6 +29,8 @@ final class DefaultTheme: Theme {
 
     UITabBar.appearance().barTintColor = self.colorNumber23()
     UITabBar.appearance().tintColor = self.colorNumber19()
+
+    UISwitch.appearance().onTintColor = self.colorNumber19()
   }
 }
 
