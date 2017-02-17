@@ -171,12 +171,19 @@ extension PenNameViewController: Themeable {
     plusImageView.image = #imageLiteral(resourceName: "plus")
     plusImageView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
 
+    biographyTextView.layer.borderWidth = 1.0
+    biographyTextView.layer.borderColor = ThemeManager.shared.currentTheme.defaultSeparatorColor().cgColor
+    biographyTextView.layer.cornerRadius = 4.0
+
     self.view.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     ThemeManager.shared.currentTheme.stylePrimaryButton(button: continueButton)
     ThemeManager.shared.currentTheme.styleLabel(label: penNameLabel)
     ThemeManager.shared.currentTheme.styleCaption2(label: noteLabel)
     penNameInputField.textField.textAlignment = .center
-    
+
+    ThemeManager.shared.currentTheme.styleLabel(label: biographyLabel)
+    biographyTextView.attributedText = AttributedStringBuilder.init(fontDynamicType: FontDynamicType.label).append(text: "", color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+
     noteLabel.textColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
   }
 
