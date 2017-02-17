@@ -27,6 +27,16 @@ class RootTabBarController: UITabBarController {
     
     displayOverlay(animated: false)
   }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    removeObserversWhenVisible()
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    addObserversWhenNotVisible()
+  }
 
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
@@ -68,9 +78,16 @@ class RootTabBarController: UITabBarController {
       #selector(signOut(notificaiton:)), name: AppNotification.signOut, object: nil)
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.signIn(notification:)), name: AppNotification.didSignIn, object: nil)
-    
   }
   
+  private func addObserversWhenNotVisible() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(register(notification:)), name: AppNotification.registrationSuccess, object: nil)
+  }
+  
+  private func removeObserversWhenVisible() {
+    NotificationCenter.default.removeObserver(self, name: AppNotification.registrationSuccess, object: nil)
+  }
   
   // MARK: Helpers
   
@@ -114,6 +131,9 @@ extension RootTabBarController {
     self.dismiss(animated: true) {
       self.dismissOverlay()
     }
+  }
+  
+  func register(notification: Notification) {
   }
 }
 
