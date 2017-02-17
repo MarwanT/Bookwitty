@@ -136,7 +136,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NVo-1u-LDm" userLabel="Current Password Input Field" customClass="PasswordInputField" customModule="Bookwitty" customModuleProvider="target">
-                                <rect key="frame" x="47" y="120" width="280" height="60"/>
+                                <rect key="frame" x="47" y="70" width="280" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="FJ7-RU-hBu"/>
@@ -144,11 +144,11 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cak-Hh-4cb" userLabel="New Password Input Field" customClass="PasswordInputField" customModule="Bookwitty" customModuleProvider="target">
-                                <rect key="frame" x="47" y="199" width="280" height="60"/>
+                                <rect key="frame" x="47" y="149" width="280" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lo8-2y-CqX" userLabel="Change Button">
-                                <rect key="frame" x="47" y="278" width="280" height="48"/>
+                                <rect key="frame" x="47" y="228" width="280" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="znB-Rh-VS2"/>
                                 </constraints>
@@ -165,7 +165,7 @@
                             <constraint firstItem="Cak-Hh-4cb" firstAttribute="width" secondItem="NVo-1u-LDm" secondAttribute="width" id="WvO-K9-zzo"/>
                             <constraint firstItem="lo8-2y-CqX" firstAttribute="width" secondItem="Cak-Hh-4cb" secondAttribute="width" id="d1A-Re-zbm"/>
                             <constraint firstItem="lo8-2y-CqX" firstAttribute="trailing" secondItem="Cak-Hh-4cb" secondAttribute="trailing" id="ggT-8m-xHb"/>
-                            <constraint firstItem="NVo-1u-LDm" firstAttribute="top" secondItem="x2w-Rw-IJi" secondAttribute="bottom" constant="100" id="ium-Jw-vWZ"/>
+                            <constraint firstItem="NVo-1u-LDm" firstAttribute="top" secondItem="x2w-Rw-IJi" secondAttribute="bottom" constant="50" id="ium-Jw-vWZ"/>
                             <constraint firstItem="lo8-2y-CqX" firstAttribute="leading" secondItem="Cak-Hh-4cb" secondAttribute="leading" id="x9a-R5-J0H"/>
                             <constraint firstItem="Cak-Hh-4cb" firstAttribute="leading" secondItem="NVo-1u-LDm" secondAttribute="leading" id="yol-FP-nDN"/>
                         </constraints>
