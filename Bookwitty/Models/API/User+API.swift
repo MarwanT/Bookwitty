@@ -96,6 +96,7 @@ struct UserAPI {
 
       if let data = data {
         user = User.parseData(data: data)
+        //TODO: Update User
         success = user != nil
       } else {
         error = BookwittyAPIError.failToParseData
