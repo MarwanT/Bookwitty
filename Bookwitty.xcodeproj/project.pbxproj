@@ -41,6 +41,7 @@
 		594290371E548FA10006B2F1 /* BookTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 594290351E548FA10006B2F1 /* BookTableViewCell.xib */; };
 		594290391E549FF40006B2F1 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290381E549FF40006B2F1 /* UIColor.swift */; };
 		5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5947C2A71E37B3D1003BF12A /* ViewController.swift */; };
+		594B9F6F1E55F557007C49E1 /* RootTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594B9F6E1E55F557007C49E1 /* RootTabBarViewModel.swift */; };
 		594F4EA61E42255200A947FA /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA51E42255200A947FA /* AccessToken.swift */; };
 		594F4EA81E423B8600A947FA /* AppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA71E423B8600A947FA /* AppNotification.swift */; };
 		594F4EAF1E440A4900A947FA /* User+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EAE1E440A4900A947FA /* User+API.swift */; };
@@ -60,6 +61,8 @@
 		597B8E381E3954B200C7811B /* Ubuntu-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 597B8E331E3954B200C7811B /* Ubuntu-Regular.ttf */; };
 		597B8E391E3954B200C7811B /* Volkhov-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 597B8E351E3954B200C7811B /* Volkhov-Regular.ttf */; };
 		59903FED1E3B9D90006043EF /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59903FEC1E3B9D90006043EF /* View.swift */; };
+		59A164CB1E561BBD00088D84 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59A164CA1E561BBD00088D84 /* LaunchScreen.xib */; };
+		59A341571E575D3100CF90B3 /* NewsFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A341561E575D3100CF90B3 /* NewsFeedViewModel.swift */; };
 		59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59B65FD21E251FE80093FF44 /* Assets.xcassets */; };
 		59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD55751E302EB800D3B805 /* Analytics+Constants.swift */; };
 		59BD55781E302EB800D3B805 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD55761E302EB800D3B805 /* Analytics.swift */; };
@@ -168,6 +171,7 @@
 		594290351E548FA10006B2F1 /* BookTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookTableViewCell.xib; sourceTree = "<group>"; };
 		594290381E549FF40006B2F1 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		5947C2A71E37B3D1003BF12A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		594B9F6E1E55F557007C49E1 /* RootTabBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootTabBarViewModel.swift; sourceTree = "<group>"; };
 		594F4EA51E42255200A947FA /* AccessToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
 		594F4EA71E423B8600A947FA /* AppNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNotification.swift; sourceTree = "<group>"; };
 		594F4EAE1E440A4900A947FA /* User+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+API.swift"; sourceTree = "<group>"; };
@@ -187,6 +191,8 @@
 		597B8E331E3954B200C7811B /* Ubuntu-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Regular.ttf"; sourceTree = "<group>"; };
 		597B8E351E3954B200C7811B /* Volkhov-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Volkhov-Regular.ttf"; sourceTree = "<group>"; };
 		59903FEC1E3B9D90006043EF /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		59A164CA1E561BBD00088D84 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		59A341561E575D3100CF90B3 /* NewsFeedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeedViewModel.swift; sourceTree = "<group>"; };
 		59B65FD21E251FE80093FF44 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		59BD55751E302EB800D3B805 /* Analytics+Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+Constants.swift"; sourceTree = "<group>"; };
 		59BD55761E302EB800D3B805 /* Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
@@ -333,6 +339,7 @@
 				59DA475A1E3B7A8F00BA90A5 /* Introduction */,
 				59D27D0D1E40D2C400468C29 /* Access */,
 				594290071E4FF0740006B2F1 /* Books */,
+				594B9F6D1E55F470007C49E1 /* Root */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -401,7 +408,6 @@
 		59057FD41E2532420036AAF3 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				59057FDE1E25340A0036AAF3 /* LaunchScreen.storyboard */,
 				59057FDF1E25340A0036AAF3 /* Introduction.storyboard */,
 				59DA47661E3B84ED00BA90A5 /* Access.storyboard */,
 				F47188171E4B1EB50076F93C /* Root.storyboard */,
@@ -458,6 +464,7 @@
 				594290171E522D980006B2F1 /* Banner.swift */,
 				5942902B1E53BF050006B2F1 /* SectionTitleHeaderView.swift */,
 				5942902D1E53BF2D0006B2F1 /* SectionTitleHeaderView.xib */,
+				59A164CA1E561BBD00088D84 /* LaunchScreen.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -515,6 +522,16 @@
 			);
 			path = BookTableViewCell;
 			sourceTree = "<group>";
+		};
+		594B9F6D1E55F470007C49E1 /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				594B9F6E1E55F557007C49E1 /* RootTabBarViewModel.swift */,
+				59A341561E575D3100CF90B3 /* NewsFeedViewModel.swift */,
+			);
+			name = Root;
+			path = Bookwitty/ViewModels/Root;
+			sourceTree = SOURCE_ROOT;
 		};
 		594F4EAD1E440A4900A947FA /* API */ = {
 			isa = PBXGroup;
@@ -858,7 +875,6 @@
 				597B8E371E3954B200C7811B /* Ubuntu-Medium.ttf in Resources */,
 				5942902E1E53BF2D0006B2F1 /* SectionTitleHeaderView.xib in Resources */,
 				59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */,
-				59057FE01E25340A0036AAF3 /* LaunchScreen.storyboard in Resources */,
 				597B8E381E3954B200C7811B /* Ubuntu-Regular.ttf in Resources */,
 				59D8FCB91E4CBF70001C1EDB /* Categories.en.json in Resources */,
 				59D8FCA31E4C760F001C1EDB /* GoogleService-Info.plist in Resources */,
@@ -869,6 +885,7 @@
 				594290031E4F737B0006B2F1 /* Books.storyboard in Resources */,
 				597B8E391E3954B200C7811B /* Volkhov-Regular.ttf in Resources */,
 				56399DBC1E51CF2D005192AC /* Account.storyboard in Resources */,
+				59A164CB1E561BBD00088D84 /* LaunchScreen.xib in Resources */,
 				F47188181E4B1EB50076F93C /* Root.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1027,6 +1044,7 @@
 				59BD55781E302EB800D3B805 /* Analytics.swift in Sources */,
 				F422D8301E51CD9D00A32C2F /* LinkCardPostCellNode.swift in Sources */,
 				56205DEB1E5324BC000CA4D7 /* TableViewSectionHeaderView.swift in Sources */,
+				594B9F6F1E55F557007C49E1 /* RootTabBarViewModel.swift in Sources */,
 				59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */,
 				59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */,
 				59DA475E1E3B7A8F00BA90A5 /* TutorialViewModel.swift in Sources */,
@@ -1048,6 +1066,7 @@
 				5967E45A1E410A850067093F /* NotificationView.swift in Sources */,
 				B4ECA3471E4E05E7004B3EE2 /* WebViewController.swift in Sources */,
 				593769D81E3689FB00F23226 /* DefaultTheme.swift in Sources */,
+				59A341571E575D3100CF90B3 /* NewsFeedViewModel.swift in Sources */,
 				594290291E5347670006B2F1 /* DisclosureView.swift in Sources */,
 				594F4EAF1E440A4900A947FA /* User+API.swift in Sources */,
 				F4670AFD1E54ACF200159F4F /* ProfileCardPostCellNode.swift in Sources */,

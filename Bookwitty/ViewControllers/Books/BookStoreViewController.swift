@@ -25,6 +25,9 @@ class BookStoreViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = viewModel.viewControllerTitle
+    
+    initializeNavigationItems()
     
     let didAddBanner = loadBannerSection()
     let didAddFeaturedSection = loadFeaturedContentSection()
@@ -47,6 +50,16 @@ class BookStoreViewController: UIViewController {
     
     selectionTableView.layoutIfNeeded()
     selectionTableView.constrainHeight("\(selectionTableView.contentSize.height)")
+  }
+  
+  private func initializeNavigationItems() {
+    let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
+      UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+    leftNegativeSpacer.width = -10
+    let settingsBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "person"), style:
+      UIBarButtonItemStyle.plain, target: self, action:
+      #selector(self.settingsButtonTap(_:)))
+    navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
   }
   
   func loadBannerSection() -> Bool {
@@ -145,6 +158,20 @@ class BookStoreViewController: UIViewController {
     separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     separatorView.constrainHeight("1")
     return separatorView
+  }
+  
+  fileprivate func pushCategoriesViewController() {
+    let categoriesViewController = Storyboard.Books.instantiate(CategoriesTableViewController.self)
+    self.navigationController?.pushViewController(categoriesViewController, animated: true)
+  }
+}
+
+// MARK: - Action
+extension BookStoreViewController {
+  func settingsButtonTap(_ sender: UIBarButtonItem) {
+    let settingsVC = Storyboard.Account.instantiate(AccountViewController.self)
+    settingsVC.hidesBottomBarWhenPushed = true
+    self.navigationController?.pushViewController(settingsVC, animated: true)
   }
 }
 
@@ -329,7 +356,7 @@ extension BookStoreViewController: DisclosureViewDelegate {
   func disclosureViewTapped(_ disclosureView: DisclosureView) {
     switch disclosureView {
     case viewAllCategories:
-      break
+      pushCategoriesViewController()
     case viewAllBooksView:
       break
     case viewAllSelectionsView:

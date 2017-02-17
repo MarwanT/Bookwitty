@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import TTTAttributedLabel
 
 class SignInViewController: UIViewController {
   @IBOutlet weak var stackView: UIStackView!
@@ -14,6 +15,7 @@ class SignInViewController: UIViewController {
   @IBOutlet weak var stackViewBackgroundView: UIView!
   @IBOutlet weak var passwordField: PasswordInputField!
   @IBOutlet weak var signInButton: UIButton!
+  @IBOutlet weak var registerLabel: TTTAttributedLabel!
   @IBOutlet var separators: [UIView]!
   
   @IBOutlet weak var scrollViewBottomToButtonTopConstraint: NSLayoutConstraint!
@@ -66,6 +68,8 @@ class SignInViewController: UIViewController {
     stackView.isLayoutMarginsRelativeArrangement = true
     stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
     
+    setupAttributedTexts()
+    
     NotificationCenter.default.addObserver(
       self,
       selector: #selector(SignInViewController.keyboardWillShow(_:)),
@@ -74,6 +78,21 @@ class SignInViewController: UIViewController {
       self,
       selector: #selector(SignInViewController.keyboardWillHide(_:)),
       name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+  }
+  
+  private func setupAttributedTexts() {
+    //Set Attributed Styled up Text
+    registerLabel.attributedText = viewModel.styledRegisterText()
+    //Attributed Label Links Styling
+    registerLabel.linkAttributes = ThemeManager.shared.currentTheme.styleTextLinkAttributes()
+    
+    let registerTermRange: NSRange = (registerLabel.attributedText.string as NSString).range(of: viewModel.registerTermText)
+    
+    //Add click link identifiers
+    registerLabel.addLink(to: AttributedLinkReference.register.url, with: registerTermRange)
+    
+    //Set Delegates
+    registerLabel.delegate = self
   }
   
   deinit {
@@ -104,9 +123,13 @@ class SignInViewController: UIViewController {
         password: passwordValidationResult.value!,
         completion: { (success, error) in
           self.hideNetworkActivity()
-          self.showAlertWith(
-            title: "Your Sign in Key",
-            message: "\(AccessToken.shared.token!)")
+          if success {
+            NotificationCenter.default.post(name: AppNotification.didSignIn, object: nil)
+          } else {
+            self.showAlertWith(
+              title: self.viewModel.failToSignInAlertTitle,
+              message: self.viewModel.failToSignInAlertMessage)
+          }
       })
     } else {
       NotificationView.show(notificationMessages:
@@ -162,6 +185,11 @@ class SignInViewController: UIViewController {
     alert.addAction(UIAlertAction(title: viewModel.okText, style: UIAlertActionStyle.default, handler: nil))
     self.present(alert, animated: true, completion: nil)
   }
+  
+  fileprivate func pushRegisterViewController() {
+    let registerViewController = Storyboard.Access.instantiate(RegisterViewController.self)
+    navigationController?.pushViewController(registerViewController, animated: true)
+  }
 }
 
 
@@ -180,6 +208,7 @@ extension SignInViewController: Themeable {
   }
 }
 
+// MARK: - Input fields delegate
 extension SignInViewController: InputFieldDelegate {
   func inputFieldShouldReturn(inputField: InputField) -> Bool {
     switch inputField {
@@ -189,6 +218,44 @@ extension SignInViewController: InputFieldDelegate {
       return passwordField.resignFirstResponder()
     default:
       return true
+    }
+  }
+}
+
+// MARK: - TTTAttributedText delegate
+extension SignInViewController: TTTAttributedLabelDelegate {
+  enum AttributedLinkReference: String {
+    case register
+    
+    var url: URL {
+      get {
+        return URL(string: "bookwittyapp://" + self.rawValue)!
+      }
+    }
+  }
+  
+  func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+    guard let host = url.host else {
+      return
+    }
+    
+    switch host {
+    case AttributedLinkReference.register.rawValue:
+      registerAction()
+    default:
+      break
+    }
+  }
+  
+  /**
+   If the view controller was presented modally then the sign should be
+   notifying the the root vc, otherwise it should be notifying the Introduction vc
+  */
+  private func registerAction() {
+    if let notificationName = viewModel.registerNotificationName {
+      NotificationCenter.default.post(name: notificationName, object: nil)
+    } else {
+      pushRegisterViewController()
     }
   }
 }

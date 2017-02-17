@@ -18,6 +18,7 @@ class User: Resource {
   var country: String? = nil
   var createdAt: String? = nil
   var updatedAt: String? = nil
+  var language: String? = nil
   var badges: [String: Any]? = nil
   var preferences: [String: Any]? = nil
 
@@ -49,6 +50,7 @@ class User: Resource {
       "country": Attribute().serializeAs("country"),
       "password": Attribute().serializeAs("password"),
       "currentPassword": Attribute().serializeAs("current-password"),
+      "language": Attribute().serializeAs("language")
       ])
   }
 

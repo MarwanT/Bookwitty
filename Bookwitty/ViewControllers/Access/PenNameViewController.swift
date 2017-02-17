@@ -83,6 +83,7 @@ class PenNameViewController: UIViewController {
     //Hide keyboard if visible
     _ = penNameInputField.resignFirstResponder()
     //TODO: validate and action
+    self.dismiss(animated: true, completion: nil)
   }
 
   // MARK: - Keyboard Handling

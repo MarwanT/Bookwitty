@@ -53,7 +53,12 @@ class AccountViewController: UIViewController {
   fileprivate func dispatchSelectionAt(_ indexPath: IndexPath) {
     switch indexPath.section {
     case AccountViewModel.Sections.UserInformation.rawValue:
-      break
+      switch indexPath.row {
+      case 0:
+        pushSettingsViewController()
+      default:
+        break
+      }
     case AccountViewModel.Sections.PenNames.rawValue:
       break
     case AccountViewModel.Sections.CreatePenNames.rawValue:
@@ -63,6 +68,11 @@ class AccountViewController: UIViewController {
     default:
       break
     }
+  }
+  
+  func pushSettingsViewController() {
+    let settingsViewController = Storyboard.Account.instantiate(SettingsViewController.self)
+    navigationController?.pushViewController(settingsViewController, animated: true)
   }
 }
 
