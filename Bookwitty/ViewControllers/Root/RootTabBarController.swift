@@ -12,8 +12,6 @@ import FLKAutoLayout
 class RootTabBarController: UITabBarController {
   let viewModel = RootTabBarViewModel()
   
-  var shouldDisplayRegisterVC: Bool = false
-  
   fileprivate var overlayView: UIView!
   
   deinit {
@@ -36,16 +34,10 @@ class RootTabBarController: UITabBarController {
     // Display Introduction VC if user is not signed in
     if !viewModel.isUserSignedIn {
       displayOverlay()
-      if shouldDisplayRegisterVC {
-        shouldDisplayRegisterVC = false
-        presentRegisterViewController()
-      } else {
-        presentIntroductionOrSignInViewController()
-      }
-      
+      presentIntroductionOrSignInViewController()
     } else {
       dismissOverlay()
-      GeneralSettings.sharedInstance.shouldShowIntroduction = true
+      GeneralSettings.sharedInstance.shouldShowIntroduction = false
     }
   }
   
@@ -76,8 +68,6 @@ class RootTabBarController: UITabBarController {
       #selector(signOut(notificaiton:)), name: AppNotification.signOut, object: nil)
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.signIn(notification:)), name: AppNotification.didSignIn, object: nil)
-    NotificationCenter.default.addObserver(self, selector:
-      #selector(self.register(notification:)), name: AppNotification.rootShouldDisplayRegistration, object: nil)
     
   }
   
@@ -90,18 +80,10 @@ class RootTabBarController: UITabBarController {
       present(navigationController, animated: true, completion: nil)
     } else {
       let signInVC = Storyboard.Access.instantiate(SignInViewController.self)
-      signInVC.viewModel.registerNotificationName = AppNotification.rootShouldDisplayRegistration
       let navigationController = UINavigationController(rootViewController: signInVC)
       present(navigationController, animated: true, completion: nil)
     }
   }
-  
-  fileprivate func presentRegisterViewController() {
-    let registerViewController = Storyboard.Access.instantiate(RegisterViewController.self)
-    let navigationViewController = UINavigationController(rootViewController: registerViewController)
-    present(navigationViewController, animated: true, completion: nil)
-  }
-  
 }
 
 // MARK: - Themeable
@@ -124,13 +106,6 @@ extension RootTabBarController {
     self.dismiss(animated: true) {
       self.dismissOverlay()
     }
-  }
-  
-  func register(notification: Notification) {
-    // Upon dismissing the sign in vc, this vc will re-call the `viewDidAppear`
-    // And push the registration vc. logic is handeled there.
-    shouldDisplayRegisterVC = true
-    self.dismiss(animated: true)
   }
 }
 

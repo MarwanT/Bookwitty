@@ -53,7 +53,7 @@ class IntroductionViewController: UIViewController {
     NotificationCenter.default.addObserver(
       self,
       selector: #selector(self.handlerRegisterFromSignInNotification(_:)),
-      name: AppNotification.introductionShouldDisplayRegistration, object: nil)
+      name: AppNotification.shouldDisplayRegistration, object: nil)
   }
   
   deinit {
@@ -83,7 +83,7 @@ class IntroductionViewController: UIViewController {
   
   func pushSignInViewController() {
     let signInViewController = Storyboard.Access.instantiate(SignInViewController.self)
-    signInViewController.viewModel.registerNotificationName = AppNotification.introductionShouldDisplayRegistration
+    signInViewController.viewModel.registerNotificationName = AppNotification.shouldDisplayRegistration
     self.navigationController?.pushViewController(signInViewController, animated: true)
   }
 }

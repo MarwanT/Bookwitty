@@ -12,6 +12,5 @@ struct AppNotification {
   static let failToRefreshToken: Notification.Name = Notification.Name(rawValue: "AppNotification.Name.failToRefreshToken")
   static let signOut: Notification.Name = Notification.Name(rawValue: "SignOutNotification")
   static let didSignIn: Notification.Name = Notification.Name(rawValue: "AppNotification.didSignIn")
-  static let introductionShouldDisplayRegistration: Notification.Name = Notification.Name(rawValue: "AppNotification.introductionShouldDisplayRegistration")
-  static let rootShouldDisplayRegistration: Notification.Name = Notification.Name(rawValue: "AppNotification.rootShouldDisplayRegistration")
+  static let shouldDisplayRegistration: Notification.Name = Notification.Name(rawValue: "AppNotification.shouldDisplayRegistration")
 }
