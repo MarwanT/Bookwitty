@@ -169,6 +169,9 @@ class BookStoreViewController: UIViewController {
 // MARK: - Action
 extension BookStoreViewController {
   func settingsButtonTap(_ sender: UIBarButtonItem) {
+    let settingsVC = Storyboard.Account.instantiate(AccountViewController.self)
+    settingsVC.hidesBottomBarWhenPushed = true
+    self.navigationController?.pushViewController(settingsVC, animated: true)
   }
 }
 
