@@ -25,6 +25,7 @@ class BookStoreViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = viewModel.viewControllerTitle
     
     let didAddBanner = loadBannerSection()
     let didAddFeaturedSection = loadFeaturedContentSection()
