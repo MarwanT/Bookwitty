@@ -24,28 +24,28 @@ final class AccountViewModel {
   let contactUsText: String = localizedString(key: "contact_us", defaultValue: "Contact Us")
 
   enum Sections: Int {
-    case UserInformation = 0
-    case PenNames = 1
-    case CreatePenNames = 2
-    case CustomerService = 3
+    case UserInformation
+    case PenNames
+    case CustomerService
+    case CreatePenNames
   }
 
   private let sectionTitles: [String]
 
   init () {
-    sectionTitles = ["", penNamesText, "", customerServiceText]
+    sectionTitles = ["", penNamesText, customerServiceText]
   }
 
   //User Information
   private func valuesForUserInformation(atRow row: Int) -> String {
     switch row {
     case 0:
-      return myOrdersText
-    case 1:
-      return addressBookText
-    case 2:
-      return paymentMethodsText
-    case 3:
+//      return myOrdersText
+//    case 1:
+//      return addressBookText
+//    case 2:
+//      return paymentMethodsText
+//    case 3:
       return settingsText
     default:
       return ""
@@ -108,7 +108,8 @@ final class AccountViewModel {
     switch section {
     case Sections.UserInformation.rawValue:
       //my orders, address book, payment methods, settings
-      numberOfRows = 4
+      //For now showing only settings
+      numberOfRows = 1
     case Sections.PenNames.rawValue:
       //user.penNames.count * 3 (3 rows for each pen name)
       numberOfRows = 3
