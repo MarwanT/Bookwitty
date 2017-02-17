@@ -96,6 +96,7 @@ struct UserAPI {
 
       if let data = data {
         user = User.parseData(data: data)
+        //TODO: Update User
         success = user != nil
       } else {
         error = BookwittyAPIError.failToParseData
@@ -127,6 +128,7 @@ extension UserAPI {
     user.dateOfBirth = dateOfBirth
     user.email = email
     user.country = country
+    user.currentPassword = currentPassword
     user.password = password
     user.badges = badges
     user.preferences = preferences

@@ -50,8 +50,8 @@ extension BookwittyAPI: TargetType {
       path = "/user"
     case .user:
       path = "/user"
-    case .updateUser(let identifier):
-      path = "/user/\(identifier)"
+    case .updateUser:
+      path = "/user"
     }
     
     return apiBasePath + apiVersion + path

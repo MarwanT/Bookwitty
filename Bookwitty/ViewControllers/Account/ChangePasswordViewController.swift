@@ -36,6 +36,12 @@ class ChangePasswordViewController: UIViewController {
       autocorrectionType: .no,
       autocapitalizationType: .none)
 
+    currentPasswordInputField.delegate = self
+
+    currentPasswordInputField.validationBlock = { (password: String?) -> Bool in
+      return password?.isValidPassword() ?? false
+    }
+
     newPasswordInputField.configuration = InputFieldConfiguration(
       descriptionLabelText: viewModel.newPasswordText,
       textFieldPlaceholder: viewModel.newPasswordText,
@@ -43,14 +49,65 @@ class ChangePasswordViewController: UIViewController {
       returnKeyType: UIReturnKeyType.done,
       autocorrectionType: .no,
       autocapitalizationType: .none)
+
+    newPasswordInputField.validationBlock = { (password: String?) -> Bool in
+      return password?.isValidPassword() ?? false
+    }
+
+    newPasswordInputField.delegate = self
+  }
+
+  fileprivate func initiateChangePassword() {
+
+    let currentReult = currentPasswordInputField.validateField()
+    let newResult = newPasswordInputField.validateField()
+
+    guard currentReult.isValid && newResult.isValid else {
+      return
+    }
+    let identifier: String = ""//TODO: grab the user identifier
+    let current: String = currentReult.value ?? ""
+    let new: String = newResult.value ?? ""
+
+    viewModel.updatePassword(identifier: identifier, current: current, new: new) {
+      (success: Bool, error: Error?) in
+      if success {
+        let alert = UIAlertController(title: "Success", message: "Password Changes Successfully", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        self.navigationController?.present(alert, animated: true, completion: nil)
+      } else {
+        self.currentPasswordInputField.status = .inValid
+        self.newPasswordInputField.status = .inValid
+      }
+    }
   }
 }
 
-//Mark: - Themable implementation
+//MARK: - Themable implementation
 extension ChangePasswordViewController: Themeable {
   func applyTheme() {
     view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
     ThemeManager.shared.currentTheme.stylePrimaryButton(button: changePasswordButton)
+  }
+}
+
+//MARK: - IBActions
+extension ChangePasswordViewController {
+  @IBAction func changePasswordButtonTouchUpInside(_ sender: UIButton) {
+    initiateChangePassword()
+  }
+}
+
+
+//MARK: - InputFieldDelegate implementation
+extension ChangePasswordViewController: InputFieldDelegate {
+  func inputFieldShouldReturn(inputField: InputField) -> Bool {
+    if inputField === currentPasswordInputField {
+      let _ = newPasswordInputField.becomeFirstResponder()
+    } else if inputField === newPasswordInputField {
+      initiateChangePassword()
+    }
+    return true
   }
 }
 
