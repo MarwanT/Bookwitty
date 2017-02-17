@@ -127,6 +127,7 @@ extension UserAPI {
     user.dateOfBirth = dateOfBirth
     user.email = email
     user.country = country
+    user.currentPassword = currentPassword
     user.password = password
     user.badges = badges
     user.preferences = preferences
