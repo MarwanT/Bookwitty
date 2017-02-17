@@ -36,6 +36,7 @@ class ChangePasswordViewController: UIViewController {
       autocorrectionType: .no,
       autocapitalizationType: .none)
 
+    currentPasswordInputField.delegate = self
 
     currentPasswordInputField.validationBlock = { (password: String?) -> Bool in
       return password?.isValidPassword() ?? false
@@ -53,6 +54,7 @@ class ChangePasswordViewController: UIViewController {
       return password?.isValidPassword() ?? false
     }
 
+    newPasswordInputField.delegate = self
   }
 
   fileprivate func initiateChangePassword() {
@@ -79,6 +81,19 @@ extension ChangePasswordViewController: Themeable {
 extension ChangePasswordViewController {
   @IBAction func changePasswordButtonTouchUpInside(_ sender: UIButton) {
     initiateChangePassword()
+  }
+}
+
+
+//MARK: - InputFieldDelegate implementation
+extension ChangePasswordViewController: InputFieldDelegate {
+  func inputFieldShouldReturn(inputField: InputField) -> Bool {
+    if inputField === currentPasswordInputField {
+      let _ = newPasswordInputField.becomeFirstResponder()
+    } else if inputField === newPasswordInputField {
+      initiateChangePassword()
+    }
+    return true
   }
 }
 
