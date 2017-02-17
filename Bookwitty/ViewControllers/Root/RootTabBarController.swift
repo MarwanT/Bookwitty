@@ -71,6 +71,9 @@ class RootTabBarController: UITabBarController {
     
   }
   
+  
+  // MARK: Helpers
+  
   fileprivate func presentIntroductionOrSignInViewController() {
     displayOverlay()
     
@@ -83,6 +86,11 @@ class RootTabBarController: UITabBarController {
       let navigationController = UINavigationController(rootViewController: signInVC)
       present(navigationController, animated: true, completion: nil)
     }
+  }
+  
+  fileprivate func refreshToOriginalState() {
+    viewControllers?.forEach({ _ = ($0 as? UINavigationController)?.popToRootViewController(animated: false) })
+    selectedIndex = 0
   }
 }
 
@@ -98,8 +106,8 @@ extension RootTabBarController {
   func signOut(notificaiton: Notification) {
     AccessToken.shared.deleteToken()
     presentIntroductionOrSignInViewController()
+    refreshToOriginalState()
     //TODO: Delete user information if any
-    //TODO: Pop all controllers
   }
   
   func signIn(notification: Notification) {
