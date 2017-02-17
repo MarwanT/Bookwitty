@@ -54,6 +54,10 @@ class ChangePasswordViewController: UIViewController {
     }
 
   }
+
+  fileprivate func initiateChangePassword() {
+
+  }
 }
 
 //MARK: - Themable implementation
@@ -61,6 +65,13 @@ extension ChangePasswordViewController: Themeable {
   func applyTheme() {
     view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
     ThemeManager.shared.currentTheme.stylePrimaryButton(button: changePasswordButton)
+  }
+}
+
+//MARK: - IBActions
+extension ChangePasswordViewController {
+  @IBAction func changePasswordButtonTouchUpInside(_ sender: UIButton) {
+    initiateChangePassword()
   }
 }
 

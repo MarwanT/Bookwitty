@@ -153,6 +153,9 @@
                                     <constraint firstAttribute="height" constant="48" id="znB-Rh-VS2"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="changePasswordButtonTouchUpInside:" destination="ErE-12-PjT" eventType="touchUpInside" id="iIC-P7-pKl"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
