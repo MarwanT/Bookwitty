@@ -147,6 +147,11 @@ class BookStoreViewController: UIViewController {
     separatorView.constrainHeight("1")
     return separatorView
   }
+  
+  fileprivate func pushCategoriesViewController() {
+    let categoriesViewController = Storyboard.Books.instantiate(CategoriesTableViewController.self)
+    self.navigationController?.pushViewController(categoriesViewController, animated: true)
+  }
 }
 
 // MARK: - Featured Content Collection View data source
@@ -330,7 +335,7 @@ extension BookStoreViewController: DisclosureViewDelegate {
   func disclosureViewTapped(_ disclosureView: DisclosureView) {
     switch disclosureView {
     case viewAllCategories:
-      break
+      pushCategoriesViewController()
     case viewAllBooksView:
       break
     case viewAllSelectionsView:
