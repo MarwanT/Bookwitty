@@ -419,6 +419,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="biographyLabel" destination="yM2-qz-0QU" id="r5k-cT-e3D"/>
+                        <outlet property="biographyTextView" destination="5wv-rg-5ef" id="bRX-bh-L5j"/>
                         <outlet property="continueButton" destination="DF6-JY-1Yh" id="8Mj-vB-zMP"/>
                         <outlet property="noteLabel" destination="OZg-0c-tp4" id="x8c-pL-t6n"/>
                         <outlet property="penNameInputField" destination="zaG-Ys-Sfi" id="JZH-t8-Z3m"/>

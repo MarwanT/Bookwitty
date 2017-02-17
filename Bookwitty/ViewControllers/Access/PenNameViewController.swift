@@ -17,6 +17,8 @@ class PenNameViewController: UIViewController {
   @IBOutlet weak var penNameInputField: InputField!
   @IBOutlet weak var continueButton: UIButton!
   @IBOutlet weak var profileImageView: UIImageView!
+  @IBOutlet weak var biographyTextView: UITextView!
+  @IBOutlet weak var biographyLabel: UILabel!
 
   @IBOutlet weak var topViewToTopConstraint: NSLayoutConstraint!
   let topViewToTopSpace: CGFloat = 40
