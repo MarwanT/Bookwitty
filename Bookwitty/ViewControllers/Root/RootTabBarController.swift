@@ -81,7 +81,9 @@ class RootTabBarController: UITabBarController {
     
   }
   
-  private func presentIntroductionOrSignInViewController() {
+  fileprivate func presentIntroductionOrSignInViewController() {
+    displayOverlay()
+    
     if viewModel.didSignInAtLeastOnce {
       let signInVC = Storyboard.Access.instantiate(SignInViewController.self)
       signInVC.viewModel.registerNotificationName = AppNotification.rootShouldDisplayRegistration
@@ -94,7 +96,7 @@ class RootTabBarController: UITabBarController {
     }
   }
   
-  private func presentRegisterViewController() {
+  fileprivate func presentRegisterViewController() {
     let registerViewController = Storyboard.Access.instantiate(RegisterViewController.self)
     let navigationViewController = UINavigationController(rootViewController: registerViewController)
     present(navigationViewController, animated: true, completion: nil)
@@ -113,9 +115,9 @@ extension RootTabBarController: Themeable {
 extension RootTabBarController {
   func signOut(notificaiton: Notification) {
     AccessToken.shared.deleteToken()
+    presentIntroductionOrSignInViewController()
     //TODO: Delete user information if any
     //TODO: Pop all controllers
-    //TODO: Present sign in / register controller 
   }
   
   func signIn(notification: Notification) {
