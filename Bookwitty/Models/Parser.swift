@@ -11,7 +11,6 @@ import Spine
 
 protocol Parsable {
   associatedtype AbstractType: Resource
-  static func type() -> AbstractType.Type
   static func parseData(data: Data?) -> AbstractType?
   static func parseDataArray(data: Data?) -> Array<AbstractType>?
   func serializeData(options: SerializationOptions) -> [String : Any]?
@@ -31,10 +30,10 @@ extension Parsable where Self: Resource {
       if let parsableModel = document.data?.first as? AbstractType {
         return parsableModel
       } else {
-        print("Could not parse data to \(type()) model")
+        print("Could not parse data to \(self) model")
       }
     } catch let error as NSError {
-      print("Error parsing \(type()) model")
+      print("Error parsing \(self) model")
       print(error)
     }
     return nil
@@ -71,6 +70,16 @@ class Parser {
   private func registerResources() {
     serializer.registerResource(User.self)
     serializer.registerResource(PenName.self)
+    serializer.registerResource(Image.self)
+    serializer.registerResource(Author.self)
+    serializer.registerResource(PageAuthor.self)
+    serializer.registerResource(ReadingList.self)
+    serializer.registerResource(Topic.self)
+    serializer.registerResource(Text.self)
+    serializer.registerResource(Quote.self)
+    serializer.registerResource(Video.self)
+    serializer.registerResource(Audio.self)
+    serializer.registerResource(Link.self)
   }
 
   private func registerValueFormatters() {
