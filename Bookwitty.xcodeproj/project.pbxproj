@@ -22,6 +22,7 @@
 		56D5F73D1E5B7D0000F6A164 /* PenName+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D5F73C1E5B7D0000F6A164 /* PenName+API.swift */; };
 		56E09DBC1E5463EA00B7C6E6 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E09DBB1E5463EA00B7C6E6 /* ChangePasswordViewController.swift */; };
 		56E09DBE1E546B2100B7C6E6 /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E09DBD1E546B2100B7C6E6 /* ChangePasswordViewModel.swift */; };
+		56FC41971E58CBA100D9B1CE /* NSBundle+Language.m in Sources */ = {isa = PBXBuildFile; fileRef = 56FC41961E58CBA100D9B1CE /* NSBundle+Language.m */; };
 		59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59057FDF1E25340A0036AAF3 /* Introduction.storyboard */; };
 		592974BF1E5F57AE0083A4C2 /* ModelCommonProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592974BE1E5F57AE0083A4C2 /* ModelCommonProperties.swift */; };
 		5929C2711E5B25BC006E08F8 /* CuratedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5929C2701E5B25BC006E08F8 /* CuratedCollection.swift */; };
@@ -169,6 +170,8 @@
 		56D5F73C1E5B7D0000F6A164 /* PenName+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PenName+API.swift"; sourceTree = "<group>"; };
 		56E09DBB1E5463EA00B7C6E6 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		56E09DBD1E546B2100B7C6E6 /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
+		56FC41951E58CBA100D9B1CE /* NSBundle+Language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+Language.h"; sourceTree = "<group>"; };
+		56FC41961E58CBA100D9B1CE /* NSBundle+Language.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+Language.m"; sourceTree = "<group>"; };
 		59057FDF1E25340A0036AAF3 /* Introduction.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Introduction.storyboard; sourceTree = "<group>"; };
 		592974BE1E5F57AE0083A4C2 /* ModelCommonProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelCommonProperties.swift; sourceTree = "<group>"; };
 		5929C2701E5B25BC006E08F8 /* CuratedCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CuratedCollection.swift; sourceTree = "<group>"; };
@@ -366,6 +369,15 @@
 			path = Account;
 			sourceTree = "<group>";
 		};
+		56FC41941E58CB7E00D9B1CE /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				56FC41951E58CBA100D9B1CE /* NSBundle+Language.h */,
+				56FC41961E58CBA100D9B1CE /* NSBundle+Language.m */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
 		59057FC51E252C500036AAF3 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -419,6 +431,7 @@
 		59057FCE1E2530900036AAF3 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				56FC41941E58CB7E00D9B1CE /* Localization */,
 				59BD55741E302EB800D3B805 /* Analytics */,
 				595A649D1E2CF4EA00655067 /* String.swift */,
 				59D6021A1E32597B00271315 /* AppKeys.swift */,
@@ -1120,6 +1133,7 @@
 				594290361E548FA10006B2F1 /* BookTableViewCell.swift in Sources */,
 				F41D52A21E40EB780021A4AE /* RegisterViewModel.swift in Sources */,
 				F4A426271E560ED00090CD51 /* Author.swift in Sources */,
+				56FC41971E58CBA100D9B1CE /* NSBundle+Language.m in Sources */,
 				F45A50131E530AA2005E5C56 /* QuoteCardPostCellNode.swift in Sources */,
 				59D6021E1E36363400271315 /* Font.swift in Sources */,
 				593769D71E3689FB00F23226 /* Appearance.swift in Sources */,
