@@ -96,6 +96,7 @@
 		F40700521E55F55A00DA48A4 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40700511E55F55A00DA48A4 /* Image.swift */; };
 		F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41D529F1E40EB060021A4AE /* RegisterViewController.swift */; };
 		F41D52A21E40EB780021A4AE /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41D52A11E40EB780021A4AE /* RegisterViewModel.swift */; };
+		F4207B941E58466A00216A2E /* PenNameSelectionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4207B931E58466A00216A2E /* PenNameSelectionNode.swift */; };
 		F420AD9D1E41D2E600C78AEB /* BookwittyUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420AD9C1E41D2E600C78AEB /* BookwittyUtilityTests.swift */; };
 		F420AD9F1E4231E000C78AEB /* AttributedStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420AD9E1E4231E000C78AEB /* AttributedStringBuilder.swift */; };
 		F420B6A21E43C570001F34CD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420B6A11E43C570001F34CD /* User.swift */; };
@@ -238,6 +239,7 @@
 		F40700511E55F55A00DA48A4 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		F41D529F1E40EB060021A4AE /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		F41D52A11E40EB780021A4AE /* RegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
+		F4207B931E58466A00216A2E /* PenNameSelectionNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameSelectionNode.swift; sourceTree = "<group>"; };
 		F420AD9C1E41D2E600C78AEB /* BookwittyUtilityTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyUtilityTests.swift; sourceTree = "<group>"; };
 		F420AD9E1E4231E000C78AEB /* AttributedStringBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedStringBuilder.swift; sourceTree = "<group>"; };
 		F420B6A11E43C570001F34CD /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -443,6 +445,7 @@
 				F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */,
 				F426867A1E505CE60085E581 /* BaseCardPostNode.swift */,
 				F426867E1E511B7C0085E581 /* ArticleCardPostCellNode.swift */,
+				F4207B931E58466A00216A2E /* PenNameSelectionNode.swift */,
 				F4670AF81E54556800159F4F /* ReadingListCardPostCellNode.swift */,
 				F422D82D1E51AC3900A32C2F /* VideoCardPostCellNode.swift */,
 				F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */,
@@ -1064,6 +1067,7 @@
 				597B8E2D1E37F6BC00C7811B /* Image+Utils.swift in Sources */,
 				F434F7911E4E16CE001812BD /* CellNode.swift in Sources */,
 				F4670AFB1E54669300159F4F /* ReadingListBookNode.swift in Sources */,
+				F4207B941E58466A00216A2E /* PenNameSelectionNode.swift in Sources */,
 				595C4F111E3F9DA400BE3942 /* InformativeInputField.swift in Sources */,
 				56E09DBC1E5463EA00B7C6E6 /* ChangePasswordViewController.swift in Sources */,
 				59DA47641E3B7A9B00BA90A5 /* TutorialPageViewController.swift in Sources */,
