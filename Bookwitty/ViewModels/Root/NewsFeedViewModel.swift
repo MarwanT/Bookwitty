@@ -52,6 +52,36 @@ class CardRegistry {
 
   private init() {
     //Making Constructor Not Reachable
+    register(resource: Author.self) { () -> BaseCardPostNode in
+      TopicCardPostCellNode()
+    }
+    register(resource: Text.self) { () -> BaseCardPostNode in
+      QuoteCardPostCellNode()
+    }
+    register(resource: Quote.self) { () -> BaseCardPostNode in
+      QuoteCardPostCellNode()
+    }
+    register(resource: Topic.self) { () -> BaseCardPostNode in
+      TopicCardPostCellNode()
+    }
+    register(resource: Audio.self) { () -> BaseCardPostNode in
+      LinkCardPostCellNode()
+    }
+    register(resource: Image.self) { () -> BaseCardPostNode in
+      PhotoCardPostCellNode()
+    }
+    register(resource: Video.self) { () -> BaseCardPostNode in
+      VideoCardPostCellNode()
+    }
+    register(resource: PenName.self) { () -> BaseCardPostNode in
+      ProfileCardPostCellNode()
+    }
+    register(resource: ReadingList.self) { () -> BaseCardPostNode in
+      ReadingListCardPostCellNode()
+    }
+    register(resource: Link.self) { () -> BaseCardPostNode in
+      LinkCardPostCellNode()
+    }
   }
 
   static func getCard(resource : Resource) -> BaseCardPostNode? {
