@@ -85,6 +85,7 @@ class Parser {
 
   private func registerValueFormatters() {
     //Register any value formatter here using the serializer
+    serializer.registerValueFormatter(CuratedCollectionSectionsValueFormatter())
   }
 }
 
