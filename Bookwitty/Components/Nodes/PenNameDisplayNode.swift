@@ -26,6 +26,7 @@ class PenNameDisplayNode: ASControlNode {
   }
   var penNameSummary: String? {
     didSet {
+      applyTextWithStyling(text: penNameSummary)
     }
   }
 
@@ -56,5 +57,14 @@ class PenNameDisplayNode: ASControlNode {
     downArrowImageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.colorNumber20())
 
     downArrowImageNode.transform = CATransform3DMakeRotation(shouldExpand ? CGFloat(M_PI) : 0.0, 0.0, 0.0, 1.0)
+  }
+
+  private func applyTextWithStyling(text: String?) {
+    if let text = text {
+      penNameTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
+        .append(text: text).attributedString
+    } else {
+      penNameTextNode.attributedText = nil
+    }
   }
 }
