@@ -85,7 +85,210 @@ class CardRegistry {
   }
 
   static func getCard(resource : Resource) -> BaseCardPostNode? {
+  private func createAuthorCard(_ resource: Resource) -> BaseCardPostNode? {
+    guard let entry = registry[resource.registeredResourceType] else {
       return nil
+    }
+    let cardCanditate = entry()
+    guard let card = cardCanditate as? TopicCardPostCellNode else {
+      return nil
+    }
+    guard let resource = resource as? Author else {
+      return nil
+    }
+
+    card.node.articleTitle = resource.caption
+    card.node.articleDescription = resource.shortDescription ?? resource.biography
+    card.node.subImageUrl = resource.thumbnailImageUrl ?? resource.profileImageUrl ?? resource.imageUrl
+    card.node.imageUrl = resource.coverImageUrl
+
+    return card
   }
 
+  private func createTextCard(_ resource: Resource) -> BaseCardPostNode? {
+    guard let entry = registry[resource.registeredResourceType] else {
+      return BaseCardPostNode()
+    }
+    let cardCanditate = entry()
+    guard let card = cardCanditate as? QuoteCardPostCellNode else {
+      return nil
+    }
+    guard let resource = resource as? Text else {
+      return nil
+    }
+
+    card.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    card.node.articleQuotePublisher = "XxxX"
+    card.node.articleQuote = "“ \(resource.shortDescription) ”"
+    card.articleCommentsSummary = "XX commented on this"
+
+    return card
+  }
+
+  private func createQuoteCard(_ resource: Resource) -> BaseCardPostNode? {
+    guard let entry = registry[resource.registeredResourceType] else {
+      return nil
+    }
+    let cardCanditate = entry()
+    guard let card = cardCanditate as? QuoteCardPostCellNode else {
+      return nil
+    }
+    guard let resource = resource as? Quote else {
+      return nil
+    }
+
+    let quoteCell = QuoteCardPostCellNode()
+    quoteCell.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    quoteCell.node.articleQuotePublisher = resource.author
+    quoteCell.node.articleQuote = resource.body.isEmptyOrNil() ? "" : "“ \(resource.body!) ”"
+    quoteCell.articleCommentsSummary = "X commented on this"
+
+    return card
+  }
+
+  private func createTopicCard(_ resource: Resource) -> BaseCardPostNode? {
+    guard let entry = registry[resource.registeredResourceType] else {
+      return BaseCardPostNode()
+    }
+    let cardCanditate = entry()
+    guard let card = cardCanditate as? TopicCardPostCellNode else {
+      return nil
+    }
+    guard let resource = resource as? Topic else {
+      return nil
+    }
+
+    card.postInfoData = CardPostInfoNodeData("Shafic","December 12, 2014","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    card.node.articleTitle = nil
+    card.node.articleDescription = resource.shortDescription
+    card.node.imageUrl = resource.coverImageUrl
+    card.node.setTopicStatistics(numberOfPosts: "XX")
+    card.articleCommentsSummary = "X commented on this"
+    card.node.subImageUrl = resource.thumbnailImageUrl
+
+    return card
+  }
+
+  private func createLinkCard(_ resource: Resource) -> BaseCardPostNode? {
+    guard let entry = registry[resource.registeredResourceType] else {
+      return BaseCardPostNode()
+    }
+    let cardCanditate = entry()
+    guard let card = cardCanditate as? LinkCardPostCellNode else {
+      return nil
+    }
+    guard let resource = resource as? Link else {
+      return nil
+    }
+
+    card.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    card.node.linkUrl = resource.urlLink
+    card.node.articleTitle = resource.title
+    card.node.articleDescription = resource.shortDescription
+    card.node.imageNode.url = resource.coverImageUrl.isEmptyOrNil() ? nil : URL(string: resource.coverImageUrl!)
+
+    return card
+  }
+
+  private func createAudioCard(_ resource: Resource) -> BaseCardPostNode? {
+    guard let entry = registry[resource.registeredResourceType] else {
+      return BaseCardPostNode()
+    }
+    let cardCanditate = entry()
+    guard let card = cardCanditate as? LinkCardPostCellNode else {
+      return nil
+    }
+    guard let resource = resource as? Audio else {
+      return nil
+    }
+
+    card.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    card.node.linkUrl = nil
+    card.node.articleTitle = resource.title
+    card.node.articleDescription = resource.shortDescription
+    card.node.imageNode.url = resource.coverImageUrl.isEmptyOrNil() ? nil : URL(string: resource.coverImageUrl!)
+
+    return card
+  }
+
+  private func createImageCard(_ resource: Resource) -> BaseCardPostNode? {
+    guard let entry = registry[resource.registeredResourceType] else {
+      return BaseCardPostNode()
+    }
+    let cardCanditate = entry()
+    guard let card = cardCanditate as? PhotoCardPostCellNode else {
+      return nil
+    }
+    guard let resource = resource as? Image else {
+      return nil
+    }
+
+    card.postInfoData = CardPostInfoNodeData("Michel","December 1, 2016","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    card.node.imageUrl = resource.coverImageUrl
+    card.articleCommentsSummary = "X commented on this"
+
+    return card
+  }
+
+  private func createVideoCard(_ resource: Resource) -> BaseCardPostNode? {
+    guard let entry = registry[resource.registeredResourceType] else {
+      return BaseCardPostNode()
+    }
+    let cardCanditate = entry()
+    guard let card = cardCanditate as? VideoCardPostCellNode else {
+      return nil
+    }
+    guard let resource = resource as? Video else {
+      return nil
+    }
+
+    card.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    card.node.articleTitle = resource.title
+    card.node.articleDescription = resource.shortDescription
+    card.node.imageUrl = resource.coverImageUrl
+    card.articleCommentsSummary = "XX commented on this"
+
+    return card
+  }
+
+  private func createPenNameCard(_ resource: Resource) -> BaseCardPostNode? {
+    guard let entry = registry[resource.registeredResourceType] else {
+      return BaseCardPostNode()
+    }
+    let cardCanditate = entry()
+    guard let card = cardCanditate as? ProfileCardPostCellNode else {
+      return nil
+    }
+    guard let resource = resource as? PenName else {
+      return nil
+    }
+
+    card.node.imageUrl = resource.avatarUrl
+    card.node.followersCount = String(resource.followersCount?.intValue ?? 0)
+    card.node.userName = resource.name
+    card.node.articleDescription = resource.biography
+
+    return card
+  }
+
+  private func createReadingListCard(_ resource: Resource) -> BaseCardPostNode? {
+    guard let entry = registry[resource.registeredResourceType] else {
+      return BaseCardPostNode()
+    }
+    let cardCanditate = entry()
+    guard let card = cardCanditate as? ReadingListCardPostCellNode else {
+      return nil
+    }
+    guard let resource = resource as? ReadingList else {
+      return nil
+    }
+
+    card.postInfoData = CardPostInfoNodeData("Shafic","December 12, 2014","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    card.node.articleTitle = resource.title
+    card.node.articleDescription = resource.shortDescription
+    card.node.setTopicStatistics(numberOfPosts: "XX")
+    card.articleCommentsSummary = "X commented on this"
+
+    return card
+  }
 }
