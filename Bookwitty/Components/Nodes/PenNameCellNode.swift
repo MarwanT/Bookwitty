@@ -77,4 +77,33 @@ class PenNameCellNode: ASCellNode {
       penNameTextNode.attributedText = nil
     }
   }
+
+  private func spacer(flexGrow: CGFloat = 0.0, height: CGFloat = 0.0, width: CGFloat = 0.0) -> ASLayoutSpec {
+    return ASLayoutSpec().styled { (style) in
+      style.height = ASDimensionMake(height)
+      style.width = ASDimensionMake(width)
+      style.flexGrow = flexGrow
+    }
+  }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let centeredImageSpec = ASCenterLayoutSpec(centeringOptions: .Y, sizingOptions: ASCenterLayoutSpecSizingOptions(rawValue: 0), child: penNameImageNode)
+    centeredImageSpec.style.spacingBefore = internalMargin
+    centeredImageSpec.style.spacingAfter = internalMargin
+
+    let centeredNameSpec = ASCenterLayoutSpec(centeringOptions: .Y, sizingOptions: ASCenterLayoutSpecSizingOptions(rawValue: 0), child: penNameTextNode)
+
+    let horizontalSpecChildren: [ASLayoutElement] = select
+      ? [centeredImageSpec, centeredNameSpec, spacer(flexGrow: 1), selectedImageNode]
+      : [centeredImageSpec, centeredNameSpec ]
+    let horizontalSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start, alignItems: .stretch, children:  horizontalSpecChildren)
+
+    let separatorSpaceFromStart = imageSize.width + (internalMargin*2)
+    separatorNode.backgroundColor = showsSeparator ? ThemeManager.shared.currentTheme.defaultSeparatorColor() : UIColor.clear
+    let separatorHorizontalSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start, alignItems: .stretch, children:  [spacer(width: separatorSpaceFromStart), separatorNode])
+
+    let verticalSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0.0, justifyContent: .center, alignItems: .stretch, children: [spacer(flexGrow: 1),horizontalSpec , spacer(flexGrow: 1), separatorHorizontalSpec])
+    
+    return verticalSpec
+  }
 }
