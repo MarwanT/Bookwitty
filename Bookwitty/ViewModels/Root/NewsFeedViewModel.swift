@@ -34,7 +34,7 @@ final class NewsFeedViewModel {
   func nodeForItem(atIndex index: Int) -> BaseCardPostNode? {
     guard data.count > index else { return nil }
     let resource = data[index]
-    return BaseCardPostNode() //TODO: Replace with CardRegistry.getCard(resource: resource)
+    return CardRegistry.getCard(resource: resource)
   }
 }
 
