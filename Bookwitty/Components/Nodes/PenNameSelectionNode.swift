@@ -7,3 +7,11 @@
 //
 
 import Foundation
+import AsyncDisplayKit
+
+class PenNameSelectionNode: ASCellNode {
+  override init() {
+    super.init()
+  }
+}
+
