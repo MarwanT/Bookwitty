@@ -9,6 +9,10 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol PenNameDisplayNodeDelegate {
+  func didTapOnHeader(shouldExpand: Bool)
+}
+
 class PenNameDisplayNode: ASControlNode {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let downArrowImageSize: CGSize = CGSize(width: 45, height: 45)
