@@ -78,6 +78,7 @@ extension NewsFeedViewController: ASCollectionDataSource {
     return {
       let cell: BaseCardPostNode
       switch index {
+      case 0: return PenNameSelectionNode()
       case 19:
         let topicCell: ReadingListCardPostCellNode = ReadingListCardPostCellNode()
         topicCell.postInfoData = CardPostInfoNodeData("Shafic","December 12, 2014","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
@@ -137,7 +138,7 @@ extension NewsFeedViewController: ASCollectionDataSource {
         topicCell.node.setTopicStatistics(numberOfPosts: "73", numberOfBooks: "5")
         topicCell.articleCommentsSummary = nil
         cell = topicCell
-      case 0:
+      case 20:
         let topicCell: TopicCardPostCellNode = TopicCardPostCellNode()
         topicCell.postInfoData = CardPostInfoNodeData("Shafic","December 12, 2014","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
         topicCell.node.articleTitle = "Think Metallica & Lady Gaga’s performance at the Grammys will be weird? This isn’t even the weirdest collaboration they’ve given us."
