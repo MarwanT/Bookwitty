@@ -25,8 +25,8 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     super.init(node: collectionNode)
 
     collectionNode.delegate = self
-    flowLayout.minimumInteritemSpacing  = 1
-    flowLayout.minimumLineSpacing       = 1
+    flowLayout.minimumInteritemSpacing  = 0
+    flowLayout.minimumLineSpacing       = 0
   }
 
   required init?(coder aDecoder: NSCoder) {
