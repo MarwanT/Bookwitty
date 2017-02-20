@@ -15,6 +15,7 @@ class CuratedCollection: Resource {
   var title: String?
   var language: String?
   var region: String?
+  var sections: CuratedCollectionSections?
   
   override class var resourceType: ResourceType {
     return "curated-collections"
@@ -25,6 +26,7 @@ class CuratedCollection: Resource {
       "title" : Attribute().serializeAs("title"),
       "language" : Attribute().serializeAs("language"),
       "region" : Attribute().serializeAs("region"),
+      "sections" : CuratedCollectionSectionsAttribute().serializeAs("sections")
       ])
   }
 }
