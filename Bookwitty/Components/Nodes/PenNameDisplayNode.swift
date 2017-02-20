@@ -60,7 +60,14 @@ class PenNameDisplayNode: ASControlNode {
     downArrowImageNode.image = #imageLiteral(resourceName: "downArrow")
     downArrowImageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.colorNumber20())
 
+    addTarget(self, action: #selector(didTouchUpInside(_:)), forControlEvents: .touchUpInside)
+
     downArrowImageNode.transform = CATransform3DMakeRotation(shouldExpand ? CGFloat(M_PI) : 0.0, 0.0, 0.0, 1.0)
+  }
+
+  func didTouchUpInside(_ sender: Any?) {
+    shouldExpand = !shouldExpand
+    delegate?.didTapOnHeader(shouldExpand: shouldExpand)
   }
 
   private func applyTextWithStyling(text: String?) {
