@@ -45,5 +45,16 @@ class PenNameDisplayNode: ASControlNode {
   }
 
   func setupNodes() {
+    style.height = ASDimensionMake(nodeHeight)
+
+    separatorNode.style.height = ASDimensionMake(1)
+    separatorNode.style.flexGrow = 1
+    separatorNode.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+
+    downArrowImageNode.style.preferredSize = downArrowImageSize
+    downArrowImageNode.image = #imageLiteral(resourceName: "downArrow")
+    downArrowImageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.colorNumber20())
+
+    downArrowImageNode.transform = CATransform3DMakeRotation(shouldExpand ? CGFloat(M_PI) : 0.0, 0.0, 0.0, 1.0)
   }
 }
