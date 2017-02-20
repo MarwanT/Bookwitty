@@ -111,6 +111,7 @@
 		F426867F1E511B7C0085E581 /* ArticleCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426867E1E511B7C0085E581 /* ArticleCardPostCellNode.swift */; };
 		F434F7911E4E16CE001812BD /* CellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F434F7901E4E16CE001812BD /* CellNode.swift */; };
 		F458C5F21E5AFD4300AFD0FC /* PenNameDisplayNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F458C5F11E5AFD4300AFD0FC /* PenNameDisplayNode.swift */; };
+		F458C5F41E5AFEAA00AFD0FC /* PenNameCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F458C5F31E5AFEAA00AFD0FC /* PenNameCellNode.swift */; };
 		F45A50131E530AA2005E5C56 /* QuoteCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45A50121E530AA2005E5C56 /* QuoteCardPostCellNode.swift */; };
 		F45A50151E536591005E5C56 /* TopicCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45A50141E536591005E5C56 /* TopicCardPostCellNode.swift */; };
 		F461B25C1E4B73B0005EA5A8 /* NewsFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F461B25B1E4B73B0005EA5A8 /* NewsFeedViewController.swift */; };
@@ -255,6 +256,7 @@
 		F426867E1E511B7C0085E581 /* ArticleCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleCardPostCellNode.swift; sourceTree = "<group>"; };
 		F434F7901E4E16CE001812BD /* CellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellNode.swift; sourceTree = "<group>"; };
 		F458C5F11E5AFD4300AFD0FC /* PenNameDisplayNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameDisplayNode.swift; sourceTree = "<group>"; };
+		F458C5F31E5AFEAA00AFD0FC /* PenNameCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameCellNode.swift; sourceTree = "<group>"; };
 		F45A50121E530AA2005E5C56 /* QuoteCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteCardPostCellNode.swift; sourceTree = "<group>"; };
 		F45A50141E536591005E5C56 /* TopicCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCardPostCellNode.swift; sourceTree = "<group>"; };
 		F461B25B1E4B73B0005EA5A8 /* NewsFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewsFeedViewController.swift; path = Bookwitty/ViewControllers/Root/NewsFeedViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -449,6 +451,7 @@
 				F426867E1E511B7C0085E581 /* ArticleCardPostCellNode.swift */,
 				F4207B931E58466A00216A2E /* PenNameSelectionNode.swift */,
 				F458C5F11E5AFD4300AFD0FC /* PenNameDisplayNode.swift */,
+				F458C5F31E5AFEAA00AFD0FC /* PenNameCellNode.swift */,
 				F4670AF81E54556800159F4F /* ReadingListCardPostCellNode.swift */,
 				F422D82D1E51AC3900A32C2F /* VideoCardPostCellNode.swift */,
 				F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */,
@@ -1114,6 +1117,7 @@
 				595A649C1E2CCB8900655067 /* BookwittyAPI.swift in Sources */,
 				5613402E1E5221730085B8A5 /* AccountPenNameTableViewCell.swift in Sources */,
 				595A649E1E2CF4EA00655067 /* String.swift in Sources */,
+				F458C5F41E5AFEAA00AFD0FC /* PenNameCellNode.swift in Sources */,
 				594290161E51F4550006B2F1 /* BookStoreViewModel.swift in Sources */,
 				59DA47651E3B7A9B00BA90A5 /* TutorialViewController.swift in Sources */,
 				59DA476A1E3B876900BA90A5 /* SignInViewController.swift in Sources */,
