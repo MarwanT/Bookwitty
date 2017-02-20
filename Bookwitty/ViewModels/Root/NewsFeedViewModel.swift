@@ -7,7 +7,23 @@
 //
 
 import Foundation
+import Spine
 
 final class NewsFeedViewModel {
   let viewController = localizedString(key: "news", defaultValue: "News")
+  var data: [Resource] = []
+
+  func numberOfSections() -> Int {
+    return data.count > 0 ? 1 : 0
+  }
+
+  func numberOfItemsInSection() -> Int {
+    return data.count
+  }
+
+  func nodeForItem(atIndex index: Int) -> BaseCardPostNode? {
+    guard data.count > index else { return nil }
+    let resource = data[index]
+    return BaseCardPostNode() //TODO: Replace with CardRegistry.getCard(resource: resource)
+  }
 }
