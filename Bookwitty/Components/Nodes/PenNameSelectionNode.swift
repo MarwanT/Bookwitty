@@ -60,6 +60,7 @@ class PenNameSelectionNode: ASCellNode {
     lastSeparatorNode.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
 
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+    header.delegate = self
 
     collectionNode.style.preferredSize = CGSize(width: style.maxWidth.value, height: expandedCollectionHeight)
     let extraSeparator = (data.count == 0) ? 0.0 : separatorHeight
@@ -86,3 +87,19 @@ class PenNameSelectionNode: ASCellNode {
   }
 }
 
+//MARK: - PenNameDisplayNodeDelegate
+extension PenNameSelectionNode: PenNameDisplayNodeDelegate {
+  func didTapOnHeader(shouldExpand: Bool) {
+    expand = shouldExpand
+    let extraSeparator = (data.count == 0) ? 0.0 : separatorHeight
+    let heightDimension = expand ? ASDimensionMake(expandedHeightDimension.value + extraSeparator) : collapsedHeightDimension
+    style.height = heightDimension
+
+    transitionLayout(withAnimation: true, shouldMeasureAsync: true) {
+      //This transition will trigger the node's height change and required change from layoutSpecThatFits
+      //In our case the alpha for the collectionNode will change since it is being added and removed from
+      //the parent node.
+      //TODO: Needed Action When Animation Is Done
+    }
+  }
+}
