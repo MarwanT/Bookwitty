@@ -40,6 +40,11 @@ class PenNameSelectionNode: ASCellNode {
   var selectedIndexPath: IndexPath? = nil
 
   override init() {
+    flowLayout = UICollectionViewFlowLayout()
+    flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+    header = PenNameDisplayNode(withCellHeight: PenNameSelectionNode.cellHeight)
+    lastSeparatorNode = ASDisplayNode()
     super.init()
   }
 }
