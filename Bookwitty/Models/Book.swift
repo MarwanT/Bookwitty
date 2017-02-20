@@ -44,3 +44,9 @@ class Book: Resource {
       ])
   }
 }
+
+
+// MARK: - Parser
+extension Book: Parsable {
+  typealias AbstractType = Book
+}
