@@ -21,7 +21,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
     flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: externalMargin/2, right: 0)
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
-
+    collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
     super.init(node: collectionNode)
 
     collectionNode.delegate = self
