@@ -41,6 +41,12 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
     collectionNode.delegate = self
     collectionNode.dataSource = self
+
+    viewModel.loadNewsfeed { (success) in
+      if(success) {
+        self.collectionNode.reloadData()
+      }
+    }
   }
   
   private func initializeNavigationItems() {
