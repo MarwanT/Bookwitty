@@ -37,3 +37,25 @@ final class NewsFeedViewModel {
     return BaseCardPostNode() //TODO: Replace with CardRegistry.getCard(resource: resource)
   }
 }
+
+class CardRegistry {
+  typealias RegEntry = () -> BaseCardPostNode
+
+  static let sharedInstance: CardRegistry = CardRegistry()
+
+  private var registry = [String : RegEntry]()
+
+
+  func register(resource : Resource.Type, creator : @escaping () -> BaseCardPostNode) {
+    registry[resource.resourceType] = creator
+  }
+
+  private init() {
+    //Making Constructor Not Reachable
+  }
+
+  static func getCard(resource : Resource) -> BaseCardPostNode? {
+      return nil
+  }
+
+}
