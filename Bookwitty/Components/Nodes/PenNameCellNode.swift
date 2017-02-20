@@ -50,5 +50,22 @@ class PenNameCellNode: ASCellNode {
   }
 
   private func setupNodes() {
+    style.height = ASDimensionMake(nodeHeight)
+
+    penNameTextNode.maximumNumberOfLines = 1
+
+    penNameImageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0, ASDisplayNodeDefaultPlaceholderColor())
+    penNameImageNode.url = URL(string: "https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    penNameImageNode.style.preferredSize = imageSize
+    penNameImageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
+
+    selectedImageNode.style.preferredSize = downArrowImageSize
+    selectedImageNode.image = #imageLiteral(resourceName: "downArrow")
+    selectedImageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.colorNumber19())
+
+    separatorNode.style.height = ASDimensionMake(1)
+    separatorNode.style.flexGrow = 1
+    separatorNode.style.flexShrink = 1
+    separatorNode.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
   }
 }
