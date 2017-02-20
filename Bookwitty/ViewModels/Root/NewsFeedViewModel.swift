@@ -85,6 +85,34 @@ class CardRegistry {
   }
 
   static func getCard(resource : Resource) -> BaseCardPostNode? {
+    let resourceType: ResourceType = resource.registeredResourceType
+
+    switch(resourceType) {
+    case Author.resourceType:
+      return sharedInstance.createAuthorCard(resource)
+    case Text.resourceType:
+      return sharedInstance.createTextCard(resource)
+    case Quote.resourceType:
+      return sharedInstance.createQuoteCard(resource)
+    case Topic.resourceType:
+      return sharedInstance.createTopicCard(resource)
+    case Audio.resourceType:
+      return sharedInstance.createAudioCard(resource)
+    case Image.resourceType:
+      return sharedInstance.createImageCard(resource)
+    case Video.resourceType:
+      return sharedInstance.createVideoCard(resource)
+    case PenName.resourceType:
+      return sharedInstance.createPenNameCard(resource)
+    case ReadingList.resourceType:
+      return sharedInstance.createReadingListCard(resource)
+    case Link.resourceType:
+      return sharedInstance.createLinkCard(resource)
+    default:
+      return nil
+    }
+  }
+
   private func createAuthorCard(_ resource: Resource) -> BaseCardPostNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return nil
