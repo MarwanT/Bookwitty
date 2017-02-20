@@ -7,3 +7,12 @@
 //
 
 import Foundation
+import Spine
+
+class CuratedCollectionSectionsAttribute: Attribute {
+  let sectionsString: String?
+  
+  init(sectionsString: String? = nil) {
+    self.sectionsString = sectionsString
+  }
+}
