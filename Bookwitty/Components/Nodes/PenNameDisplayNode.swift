@@ -26,6 +26,9 @@ class PenNameDisplayNode: ASControlNode {
   var delegate: PenNameDisplayNodeDelegate?
   var shouldExpand: Bool = true {
     didSet {
+      UIView.animate(withDuration: 0.4, animations: {
+        self.downArrowImageNode.transform = CATransform3DMakeRotation(self.shouldExpand ? CGFloat(M_PI) : 0.0, 0.0, 0.0, 1.0)
+      })
     }
   }
   var penNameSummary: String? {
