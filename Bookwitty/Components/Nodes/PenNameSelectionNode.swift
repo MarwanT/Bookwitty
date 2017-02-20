@@ -65,5 +65,24 @@ class PenNameSelectionNode: ASCellNode {
     let extraSeparator = (data.count == 0) ? 0.0 : separatorHeight
     style.height = ASDimensionMake(expandedHeightDimension.value + extraSeparator)
   }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+//    Commented: Y Transition animation
+//    separatorNode.style.width = ASDimensionMake(constrainedSize.max.width)
+//    collectionNode.style.width = ASDimensionMake(constrainedSize.max.width)
+//    header.style.layoutPosition = CGPoint.init(x: 0, y: 0)
+//    separatorNode.style.layoutPosition = CGPoint.init(x: 0, y: 45.0)
+//    collectionNode.style.layoutPosition = CGPoint.init(x: 0, y: addAll ? 46.0 : -(CGFloat(self.data.count)*45.0))
+//    let nodes: [ASLayoutElement] = addAll ? [collectionNode, separatorNode, header] : [collectionNode, separatorNode, header]
+//    let abosoluteLayout = ASAbsoluteLayoutSpec(sizing: ASAbsoluteLayoutSpecSizing.sizeToFit, children: nodes)
+//    return abosoluteLayout
+
+    let nodes: [ASLayoutElement] = expand ? [header, collectionNode, lastSeparatorNode] : [header] //
+    let verticalStackSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0,
+                                              justifyContent: .start,
+                                              alignItems: .stretch,
+                                              children: nodes)
+    return verticalStackSpec
+  }
 }
 
