@@ -68,4 +68,13 @@ class PenNameCellNode: ASCellNode {
     separatorNode.style.flexShrink = 1
     separatorNode.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
   }
+
+  private func applyTextWithStyling(text: String?) {
+    if let text = text {
+      penNameTextNode.attributedText =   AttributedStringBuilder(fontDynamicType: .caption2)
+        .append(text: text).attributedString
+    } else {
+      penNameTextNode.attributedText = nil
+    }
+  }
 }
