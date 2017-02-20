@@ -17,7 +17,7 @@ class Category {
     self.init(key: nil, value: nil, subcategories: nil)
   }
   
-  init(key: String?, value: String?, subcategories: [Category]? = nil) {
+  init(key: String?, value: String? = nil, subcategories: [Category]? = nil) {
     self.key = key
     self.value = value
     self.subcategories = subcategories
