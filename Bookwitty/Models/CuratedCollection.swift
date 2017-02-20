@@ -52,4 +52,47 @@ class CuratedCollectionSections: NSObject {
     categories = nil
     readingListIdentifiers = nil
   }
+  
+  init(for dictionary: Dictionary<String,Any>) {
+    let parsedValues = CuratedCollectionSections.sections(for: dictionary)
+    self.featuredContent = parsedValues.featuredContent
+    self.categories = parsedValues.categories
+    self.readingListIdentifiers = parsedValues.readingListIdentifiers
+  }
+  
+  private static func sections(for dictionary: [String : Any]) -> (featuredContent: [FeaturedContent], categories: [Category], readingListIdentifiers: [String]) {
+    let json = JSON(dictionary)
+    let featuredContent = self.featuredContent(json: json["featured"])
+    let categories = self.categories(json: json["categories"])
+    let readingListsIdentifiers = self.readingListIdentifiers(json: json["reading-lists"])
+    return (featuredContent, categories, readingListsIdentifiers)
+  }
+  
+  private static func featuredContent(json: JSON) -> [FeaturedContent] {
+    var featured = [FeaturedContent]()
+    for (_, subJSON) in json {
+      let identifier = subJSON["witty-id"].stringValue
+      let caption = subJSON["caption"].stringValue
+      featured.append((identifier, caption))
+    }
+    return featured
+  }
+  
+  private static func categories(json: JSON) -> [Category] {
+    var categories = [Category]()
+    for (_, subJSON) in json {
+      let category = Category(key: subJSON.stringValue)
+      categories.append(category)
+    }
+    return categories
+  }
+  
+  private static func readingListIdentifiers(json: JSON) -> [String] {
+    var identifiers = [String]()
+    for (_, subJSON) in json {
+      let identifier = subJSON["witty-id"].stringValue
+      identifiers.append(identifier)
+    }
+    return identifiers
+  }
 }
