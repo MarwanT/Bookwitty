@@ -67,4 +67,25 @@ class PenNameDisplayNode: ASControlNode {
       penNameTextNode.attributedText = nil
     }
   }
+
+  private func spacer(flexGrow: CGFloat = 0.0, height: CGFloat = 0.0, width: CGFloat = 0.0) -> ASLayoutSpec {
+    return ASLayoutSpec().styled { (style) in
+      style.height = ASDimensionMake(height)
+      style.width = ASDimensionMake(width)
+      style.flexGrow = flexGrow
+    }
+  }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+
+
+    let spec = ASCenterLayoutSpec(centeringOptions: .Y, sizingOptions: ASCenterLayoutSpecSizingOptions(rawValue: 0), child: penNameTextNode)
+    let insetSpec = ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: 0), child: spec)
+
+    let horizontalSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start, alignItems: .stretch, children: [insetSpec, spacer(flexGrow: 1), downArrowImageNode])
+    let verticalSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .center, alignItems: .stretch, children: [spacer(flexGrow: 1), horizontalSpec, spacer(flexGrow: 1), separatorNode])
+    
+    return verticalSpec
+  }
 }
+
