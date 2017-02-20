@@ -52,6 +52,8 @@ class PenNameSelectionNode: ASCellNode {
   func setupNode() {
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
+    collectionNode.delegate = self
+    collectionNode.dataSource = self
     automaticallyManagesSubnodes = true
 
     header.penNameSummary = "Your feed (Shafic Hariri)"
@@ -100,6 +102,46 @@ extension PenNameSelectionNode: PenNameDisplayNodeDelegate {
       //In our case the alpha for the collectionNode will change since it is being added and removed from
       //the parent node.
       //TODO: Needed Action When Animation Is Done
+    }
+  }
+}
+
+//MARK: - ASCollectionDataSource | ASCollectionDelegate
+extension PenNameSelectionNode: ASCollectionDataSource, ASCollectionDelegate {
+  func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+    return data.count > 0 ? 1 : 0
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+    return data.count
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+    let index = indexPath.row
+    let isLast = (index == data.count-1)
+    let name: String = data[index]
+    return {
+      let cell = PenNameCellNode(withSeparator: !isLast, withCellHeight: PenNameSelectionNode.cellHeight)
+      cell.penNameSummary = name
+      return cell
+    }
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
+    return ASSizeRange(
+      min: CGSize(width: collectionNode.frame.width, height: 0.0),
+      max: CGSize(width: collectionNode.frame.width, height: PenNameSelectionNode.cellHeight)
+    )
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    if let selectedIndexPath = selectedIndexPath,
+      let previouslySelectedCellNode = collectionNode.nodeForItem(at: selectedIndexPath) as? PenNameCellNode {
+      previouslySelectedCellNode.select = !previouslySelectedCellNode.select
+    }
+    if let penNameCellNode = collectionNode.nodeForItem(at: indexPath) as? PenNameCellNode {
+      selectedIndexPath = indexPath
+      penNameCellNode.select = !penNameCellNode.select
     }
   }
 }
