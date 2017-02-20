@@ -46,6 +46,24 @@ class PenNameSelectionNode: ASCellNode {
     header = PenNameDisplayNode(withCellHeight: PenNameSelectionNode.cellHeight)
     lastSeparatorNode = ASDisplayNode()
     super.init()
+    setupNode()
+  }
+
+  func setupNode() {
+    flowLayout.minimumInteritemSpacing  = 0
+    flowLayout.minimumLineSpacing       = 0
+    automaticallyManagesSubnodes = true
+
+    header.penNameSummary = "Your feed (Shafic Hariri)"
+
+    lastSeparatorNode.style.preferredSize = CGSize(width: style.maxWidth.value, height: separatorHeight)
+    lastSeparatorNode.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+
+    backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+
+    collectionNode.style.preferredSize = CGSize(width: style.maxWidth.value, height: expandedCollectionHeight)
+    let extraSeparator = (data.count == 0) ? 0.0 : separatorHeight
+    style.height = ASDimensionMake(expandedHeightDimension.value + extraSeparator)
   }
 }
 
