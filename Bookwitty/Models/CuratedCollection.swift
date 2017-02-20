@@ -33,3 +33,21 @@ extension CuratedCollection: Parsable {
   typealias AbstractType = CuratedCollection
 }
 
+
+
+
+// MARK: - Curated collection sections
+
+typealias FeaturedContent = (wittyId: String?, caption: String?)
+
+class CuratedCollectionSections: NSObject {
+  let featuredContent: [FeaturedContent]?
+  let categories: [Category]?
+  let readingListIdentifiers: [String]?
+  
+  override init() {
+    featuredContent = nil
+    categories = nil
+    readingListIdentifiers = nil
+  }
+}
