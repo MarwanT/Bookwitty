@@ -7,3 +7,10 @@
 //
 
 import Foundation
+import AsyncDisplayKit
+
+class PenNameCellNode: ASCellNode {
+  override init() {
+    super.init()
+  }
+}
