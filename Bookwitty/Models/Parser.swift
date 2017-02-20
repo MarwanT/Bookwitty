@@ -88,6 +88,39 @@ class Parser {
     //Register any value formatter here using the serializer
     serializer.registerValueFormatter(CuratedCollectionSectionsValueFormatter())
   }
+
+  static func parseData(data: Data?, mappingTargets: [Resource]? = nil) -> JSONAPIDocument? {
+    guard let data = data else {
+      return nil
+    }
+
+    let serializer = Parser.sharedInstance.serializer
+    do {
+      let document = try serializer.deserializeData(data, mappingTargets: mappingTargets)
+      return document
+    } catch let error as NSError {
+      print("Error parsing data")
+      print(data)
+      print(error)
+    }
+    return nil
+  }
+
+  static func parseDataArray(data: Data?, mappingTargets: [Resource]? = nil) -> [Resource]? {
+    guard let data = data else {
+      return nil
+    }
+    guard let document = parseData(data: data, mappingTargets: mappingTargets) else {
+      print("Error parsing Array of models")
+      return nil
+    }
+
+    if let parsedData = document.data {
+      return parsedData
+    }
+
+    return nil
+  }
 }
 
 extension Resource {
