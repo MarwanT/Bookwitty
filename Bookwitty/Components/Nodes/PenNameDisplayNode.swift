@@ -7,3 +7,10 @@
 //
 
 import Foundation
+import AsyncDisplayKit
+
+class PenNameDisplayNode: ASControlNode {
+  override init() {
+    super.init()
+  }
+}
