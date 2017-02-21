@@ -39,6 +39,14 @@ class PenNameSelectionNode: ASCellNode {
   var expand: Bool = true
   var data: [PenName] = [] {
     didSet {
+      guard data.count > 0 else { return }
+      let selectedPenName = data[selectedIndexPath?.item ?? 0]
+      header.penNameSummary = yourFeedTitle + " " + (selectedPenName.name ?? "")
+      let extraSeparator = (data.count == 0) ? 0.0 : separatorHeight
+      style.height = ASDimensionMake(expandedHeightDimension.value + extraSeparator)
+      collectionNode.style.preferredSize = CGSize(width: style.maxWidth.value, height: expandedCollectionHeight)
+      collectionNode.reloadData()
+      setNeedsLayout()
     }
   }
   var selectedIndexPath: IndexPath? = nil

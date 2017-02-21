@@ -34,6 +34,7 @@ class PenNameDisplayNode: ASControlNode {
   var penNameSummary: String? {
     didSet {
       applyTextWithStyling(text: penNameSummary)
+      setNeedsLayout()
     }
   }
 
