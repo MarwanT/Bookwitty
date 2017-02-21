@@ -12,6 +12,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
   let pullToRefresher = UIRefreshControl()
+  let penNameSelectionNode = PenNameSelectionNode()
 
   let viewModel = NewsFeedViewModel()
   let data = ["","","","","","","","","","","","","","",""]
@@ -112,7 +113,11 @@ extension NewsFeedViewController: ASCollectionDataSource {
     let index = indexPath.row
     
     return {
+      if(index != 0) {
         return self.viewModel.nodeForItem(atIndex: index) ?? BaseCardPostNode()
+      } else {
+        return self.penNameSelectionNode
+      }
     }
   }
 }
