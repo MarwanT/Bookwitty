@@ -136,16 +136,15 @@ struct UserAPI {
     return signedAPIRequest(target: .batch(identifiersArray: identifiers), completion: {
       (data, statusCode, response, error) in
       var success: Bool = false
-      var resource: [Resource]? = nil
+      var resources: [Resource]? = nil
       var error: BookwittyAPIError? = error
       defer {
-        completion(success, resource, error)
+        completion(success, resources, error)
       }
       
       if let data = data {
-//        resource = // Parse and get the resources
-        //TODO: Update User
-//        success = resource != nil
+        resources = Parser.parseDataArray(data: data)
+        success = resources != nil
       } else {
         error = BookwittyAPIError.failToParseData
       }
