@@ -13,12 +13,12 @@ import Spine
 final class NewsFeedViewModel {
   var cancellableRequest:  Cancellable?
   let viewController = localizedString(key: "news", defaultValue: "News")
-  var data: [Resource] = []
+  var data: [Feed] = []
   var selectedPenNameId: String = "6c08337a-108f-4335-b2d0-3a25b9fe6bed"
 
   func loadNewsfeed(completionBlock: @escaping (_ success: Bool) -> ()) {
-    cancellableRequest = NewsfeedAPI.feed(forPenName: selectedPenNameId) { (success, resources, error) in
-      self.data = resources ?? []
+    cancellableRequest = NewsfeedAPI.feed(forPenName: selectedPenNameId) { (success, feeds, error) in
+      self.data = feeds ?? []
       completionBlock(success)
     }
   }
@@ -33,8 +33,8 @@ final class NewsFeedViewModel {
 
   func nodeForItem(atIndex index: Int) -> BaseCardPostNode? {
     guard data.count > index else { return nil }
-    let resource = data[index]
-    return CardRegistry.getCard(resource: resource)
+    let feed = data[index]
+    return CardRegistry.getCard(feed: feed)
   }
 }
 
@@ -46,74 +46,74 @@ class CardRegistry {
   private var registry = [String : RegEntry]()
 
 
-  func register(resource : Resource.Type, creator : @escaping () -> BaseCardPostNode) {
-    registry[resource.resourceType] = creator
+  func register(feed : Feed.Type, creator : @escaping () -> BaseCardPostNode) {
+    registry[feed.resourceType] = creator
   }
 
   private init() {
     //Making Constructor Not Reachable
-    register(resource: Author.self) { () -> BaseCardPostNode in
+    register(feed: Author.self) { () -> BaseCardPostNode in
       TopicCardPostCellNode()
     }
-    register(resource: Text.self) { () -> BaseCardPostNode in
+    register(feed: Text.self) { () -> BaseCardPostNode in
+      ArticleCardPostCellNode()
+    }
+    register(feed: Quote.self) { () -> BaseCardPostNode in
       QuoteCardPostCellNode()
     }
-    register(resource: Quote.self) { () -> BaseCardPostNode in
-      QuoteCardPostCellNode()
-    }
-    register(resource: Topic.self) { () -> BaseCardPostNode in
+    register(feed: Topic.self) { () -> BaseCardPostNode in
       TopicCardPostCellNode()
     }
-    register(resource: Audio.self) { () -> BaseCardPostNode in
+    register(feed: Audio.self) { () -> BaseCardPostNode in
       LinkCardPostCellNode()
     }
-    register(resource: Image.self) { () -> BaseCardPostNode in
+    register(feed: Image.self) { () -> BaseCardPostNode in
       PhotoCardPostCellNode()
     }
-    register(resource: Video.self) { () -> BaseCardPostNode in
+    register(feed: Video.self) { () -> BaseCardPostNode in
       VideoCardPostCellNode()
     }
-    register(resource: PenName.self) { () -> BaseCardPostNode in
+    register(feed: PenName.self) { () -> BaseCardPostNode in
       ProfileCardPostCellNode()
     }
-    register(resource: ReadingList.self) { () -> BaseCardPostNode in
+    register(feed: ReadingList.self) { () -> BaseCardPostNode in
       ReadingListCardPostCellNode()
     }
-    register(resource: Link.self) { () -> BaseCardPostNode in
+    register(feed: Link.self) { () -> BaseCardPostNode in
       LinkCardPostCellNode()
     }
   }
 
-  static func getCard(resource : Resource) -> BaseCardPostNode? {
-    let resourceType: ResourceType = resource.registeredResourceType
+  static func getCard(feed : Feed) -> BaseCardPostNode? {
+    let resourceType: ResourceType = feed.registeredResourceType
 
     switch(resourceType) {
     case Author.resourceType:
-      return sharedInstance.createAuthorCard(resource)
+      return sharedInstance.createAuthorCard(feed)
     case Text.resourceType:
-      return sharedInstance.createTextCard(resource)
+      return sharedInstance.createTextCard(feed)
     case Quote.resourceType:
-      return sharedInstance.createQuoteCard(resource)
+      return sharedInstance.createQuoteCard(feed)
     case Topic.resourceType:
-      return sharedInstance.createTopicCard(resource)
+      return sharedInstance.createTopicCard(feed)
     case Audio.resourceType:
-      return sharedInstance.createAudioCard(resource)
+      return sharedInstance.createAudioCard(feed)
     case Image.resourceType:
-      return sharedInstance.createImageCard(resource)
+      return sharedInstance.createImageCard(feed)
     case Video.resourceType:
-      return sharedInstance.createVideoCard(resource)
+      return sharedInstance.createVideoCard(feed)
     case PenName.resourceType:
-      return sharedInstance.createPenNameCard(resource)
+      return sharedInstance.createPenNameCard(feed)
     case ReadingList.resourceType:
-      return sharedInstance.createReadingListCard(resource)
+      return sharedInstance.createReadingListCard(feed)
     case Link.resourceType:
-      return sharedInstance.createLinkCard(resource)
+      return sharedInstance.createLinkCard(feed)
     default:
       return nil
     }
   }
 
-  private func createAuthorCard(_ resource: Resource) -> BaseCardPostNode? {
+  private func createAuthorCard(_ resource: Feed) -> BaseCardPostNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return nil
     }
@@ -133,7 +133,7 @@ class CardRegistry {
     return card
   }
 
-  private func createTextCard(_ resource: Resource) -> BaseCardPostNode? {
+  private func createTextCard(_ resource: Feed) -> BaseCardPostNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
@@ -153,7 +153,7 @@ class CardRegistry {
     return card
   }
 
-  private func createQuoteCard(_ resource: Resource) -> BaseCardPostNode? {
+  private func createQuoteCard(_ resource: Feed) -> BaseCardPostNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return nil
     }
@@ -174,7 +174,7 @@ class CardRegistry {
     return card
   }
 
-  private func createTopicCard(_ resource: Resource) -> BaseCardPostNode? {
+  private func createTopicCard(_ resource: Feed) -> BaseCardPostNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
@@ -197,7 +197,7 @@ class CardRegistry {
     return card
   }
 
-  private func createLinkCard(_ resource: Resource) -> BaseCardPostNode? {
+  private func createLinkCard(_ resource: Feed) -> BaseCardPostNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
@@ -218,7 +218,7 @@ class CardRegistry {
     return card
   }
 
-  private func createAudioCard(_ resource: Resource) -> BaseCardPostNode? {
+  private func createAudioCard(_ resource: Feed) -> BaseCardPostNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
@@ -258,7 +258,7 @@ class CardRegistry {
     return card
   }
 
-  private func createVideoCard(_ resource: Resource) -> BaseCardPostNode? {
+  private func createVideoCard(_ resource: Feed) -> BaseCardPostNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
@@ -279,7 +279,7 @@ class CardRegistry {
     return card
   }
 
-  private func createPenNameCard(_ resource: Resource) -> BaseCardPostNode? {
+  private func createPenNameCard(_ resource: Feed) -> BaseCardPostNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
@@ -299,7 +299,7 @@ class CardRegistry {
     return card
   }
 
-  private func createReadingListCard(_ resource: Resource) -> BaseCardPostNode? {
+  private func createReadingListCard(_ resource: Feed) -> BaseCardPostNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }

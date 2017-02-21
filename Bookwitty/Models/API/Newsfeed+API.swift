@@ -13,14 +13,14 @@ import Spine
 typealias Feed = Resource
 
 struct NewsfeedAPI {
-  public static func feed(forPenName penNameId: String, completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  public static func feed(forPenName penNameId: String, completion: @escaping (_ success: Bool, _ resources: [Feed]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     return apiRequest(
     target: BookwittyAPI.newsFeed(penNameId: penNameId)) {
       (data, statusCode, response, error) in
       // Ensure the completion block is always called
       var success: Bool = false
       var completionError: BookwittyAPIError? = error
-      var resources: [Resource]?
+      var resources: [Feed]?
       defer {
         completion(success, resources, error)
       }
