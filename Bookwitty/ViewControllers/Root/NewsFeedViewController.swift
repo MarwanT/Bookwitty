@@ -31,6 +31,11 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
 
     super.init(node: collectionNode)
+
+    collectionNode.onDidLoad { [weak self] (collectionNode) in
+      guard let strongSelf = self else { return }
+      collectionNode.view.addSubview(strongSelf.pullToRefresher)
+    }
   }
 
   override func viewDidLoad() {
