@@ -131,7 +131,7 @@ extension RootTabBarController {
     AccessToken.shared.deleteToken()
     presentIntroductionOrSignInViewController()
     refreshToOriginalState()
-    //TODO: Delete user information if any
+    UserManager.shared.deleteSignedInUser()
   }
   
   func signIn(notification: Notification) {
