@@ -22,4 +22,9 @@ class UserManager {
     let userDictionary = user.serializeData(options: [.IncludeID, .OmitNullValues])
     UserDefaults.standard.set(userDictionary, forKey: Key.signedInUser.rawValue)
   }
+  
+  func deleteSignedInUser() {
+    signedInUser = nil
+    UserDefaults.standard.removeObject(forKey: Key.signedInUser.rawValue)
+  }
 }
