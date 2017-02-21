@@ -34,7 +34,7 @@ class PenNameSelectionNode: ASCellNode {
   fileprivate let collectionNode: ASCollectionNode
 
   private let flowLayout: UICollectionViewFlowLayout
-
+  //Consider replacing expand with DisplayMode enum incase we needed something more than expand and collapse.
   var expand: Bool = true
   var data: [String] = ["Shafic Hariri"]
   var selectedIndexPath: IndexPath? = nil
