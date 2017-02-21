@@ -9,6 +9,7 @@
 import UIKit
 
 class BooksTableViewController: UITableViewController {
+  let viewModel = BooksTableViewModel()
   
   override func viewDidLoad() {
     super.viewDidLoad()
