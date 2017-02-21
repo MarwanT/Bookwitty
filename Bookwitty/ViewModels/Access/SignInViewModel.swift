@@ -40,17 +40,30 @@ final class SignInViewModel {
   }
   
   
-  private var signInRequest: Cancellable? = nil
+  private var request: Cancellable? = nil
   
   func signIn(username: String, password: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?)-> Void ) {
-    if let signInRequest = signInRequest {
-      signInRequest.cancel()
+    if let request = request {
+      request.cancel()
     }
     
-    signInRequest = UserAPI.signIn(withUsername: username, password: password, completion: {
+    request = UserAPI.signIn(withUsername: username, password: password, completion: {
       (success, error) in
-      self.signInRequest = nil
-      completion(success, error)
+      guard success else {
+        self.request = nil
+        completion(success, error)
+        return
+      }
+      
+      self.request = UserAPI.user(completion: { (success, user, error) in
+        guard let user = user, success else {
+          self.request = nil
+          completion(success, error)
+          return
+        }
+        
+        UserManager.shared.signedInUser = user
+      })
     })
   }
   
