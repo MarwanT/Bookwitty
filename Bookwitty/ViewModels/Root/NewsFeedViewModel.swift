@@ -125,6 +125,7 @@ class CardRegistry {
       return nil
     }
 
+    card.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
     card.node.articleTitle = resource.caption
     card.node.articleDescription = resource.shortDescription ?? resource.biography
     card.node.subImageUrl = resource.thumbnailImageUrl ?? resource.profileImageUrl ?? resource.imageUrl
