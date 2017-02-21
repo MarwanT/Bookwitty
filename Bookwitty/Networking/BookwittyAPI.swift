@@ -22,6 +22,7 @@ public enum BookwittyAPI {
   case bookStore
   case categoryCuratedContent(categoryIdentifier: String)
   case newsFeed(penNameId: String)
+  case Search(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?)
 }
 
 // MARK: - Target Type
@@ -61,6 +62,8 @@ extension BookwittyAPI: TargetType {
       path = "/curated_collection/category/\(categoryIdentifier)"
     case .newsFeed(let penNameIdentifier):
       path = "/pen_names/\(penNameIdentifier)/feed"
+    case .Search:
+      path = "/search"
     }
     
     return apiBasePath + apiVersion + path
@@ -70,7 +73,7 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .oAuth, .refreshToken:
       return .post
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search:
       return .get
     case .register:
       return .post
@@ -105,6 +108,32 @@ extension BookwittyAPI: TargetType {
 
     case .updateUser(let identifier, let firstName, let lastName, let dateOfBirth, let email, let currentPassword, let password, let country, let badges, let preferences):
       return UserAPI.updatePostBody(identifier: identifier, firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirth, email: email, currentPassword: currentPassword, password: password, country: country, badges: badges, preferences: preferences)
+    case .Search(let filter, let page):
+      var dictionary = [String : Any]()
+
+      //Filters
+      if let filter = filter {
+        if let query = filter.query {
+          dictionary["filter[query]"] = query
+        }
+
+        if let category = filter.category {
+          dictionary["filter[category]"] = category
+        }
+      }
+
+      //Pagination
+      if let page = page {
+        if let number = page.number {
+          dictionary["page[number]"] = number
+        }
+
+        if let size = page.size {
+          dictionary["page[size]"] = size
+        }
+      }
+
+      return dictionary
     }
   }
   
