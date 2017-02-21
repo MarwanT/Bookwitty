@@ -30,6 +30,10 @@ class UserManager {
     }
   }
   
+  var isSignedIn: Bool {
+    return AccessToken.shared.isValid
+  }
+  
   private init() {
     signedInUser = getSignedInUser()
   }
