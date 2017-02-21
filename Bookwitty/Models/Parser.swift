@@ -81,6 +81,7 @@ class Parser {
     serializer.registerResource(Audio.self)
     serializer.registerResource(Link.self)
     serializer.registerResource(CuratedCollection.self)
+    serializer.registerResource(Book.self)
   }
 
   private func registerValueFormatters() {

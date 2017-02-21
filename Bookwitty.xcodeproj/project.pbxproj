@@ -17,6 +17,7 @@
 		56399DC21E51D0F0005192AC /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56399DC11E51D0F0005192AC /* AccountViewModel.swift */; };
 		5644F21A1E55A2F100B7D8E7 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5644F2191E55A2F100B7D8E7 /* SettingsViewController.swift */; };
 		5644F21C1E55A77100B7D8E7 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5644F21B1E55A77100B7D8E7 /* SettingsViewModel.swift */; };
+		56D5F73B1E5B60BF00F6A164 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D5F73A1E5B60BF00F6A164 /* Book.swift */; };
 		56E09DBC1E5463EA00B7C6E6 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E09DBB1E5463EA00B7C6E6 /* ChangePasswordViewController.swift */; };
 		56E09DBE1E546B2100B7C6E6 /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E09DBD1E546B2100B7C6E6 /* ChangePasswordViewModel.swift */; };
 		59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59057FDF1E25340A0036AAF3 /* Introduction.storyboard */; };
@@ -154,6 +155,7 @@
 		56399DC11E51D0F0005192AC /* AccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
 		5644F2191E55A2F100B7D8E7 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		5644F21B1E55A77100B7D8E7 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		56D5F73A1E5B60BF00F6A164 /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		56E09DBB1E5463EA00B7C6E6 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		56E09DBD1E546B2100B7C6E6 /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
 		59057FDF1E25340A0036AAF3 /* Introduction.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Introduction.storyboard; sourceTree = "<group>"; };
@@ -390,6 +392,7 @@
 				F4A4262A1E5617A30090CD51 /* PageAuthor.swift */,
 				59D8FCB21E4C86CD001C1EDB /* Category.swift */,
 				5929C2701E5B25BC006E08F8 /* CuratedCollection.swift */,
+				56D5F73A1E5B60BF00F6A164 /* Book.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1040,6 +1043,7 @@
 				59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */,
 				F461B25C1E4B73B0005EA5A8 /* NewsFeedViewController.swift in Sources */,
 				F4A4262F1E5622190090CD51 /* Topic.swift in Sources */,
+				56D5F73B1E5B60BF00F6A164 /* Book.swift in Sources */,
 				F42686791E4F458A0085E581 /* CardActionBarNode.swift in Sources */,
 				5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */,
 				F426867B1E505CE60085E581 /* BaseCardPostNode.swift in Sources */,
