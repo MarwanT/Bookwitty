@@ -17,4 +17,9 @@ class UserManager {
   
   private init() {
   }
+  
+  private func saveSignedInUser(user: User) {
+    let userDictionary = user.serializeData(options: [.IncludeID, .OmitNullValues])
+    UserDefaults.standard.set(userDictionary, forKey: Key.signedInUser.rawValue)
+  }
 }
