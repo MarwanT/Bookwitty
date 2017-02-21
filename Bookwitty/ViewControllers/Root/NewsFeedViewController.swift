@@ -29,7 +29,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     flowLayout.minimumLineSpacing       = 0
 
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
-    collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
 
     super.init(node: collectionNode)
   }
@@ -75,7 +74,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 // MARK: - Themeable
 extension NewsFeedViewController: Themeable {
   func applyTheme() {
-    //TODO: Apply theme here
+    collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
   }
 }
 
