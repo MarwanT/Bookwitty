@@ -19,14 +19,14 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   init() {
     flowLayout = UICollectionViewFlowLayout()
     let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
-    flowLayout.sectionInset = UIEdgeInsets(top: externalMargin/2, left: 0, bottom: externalMargin/2, right: 0)
+    flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: externalMargin/2, right: 0)
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
-
+    collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
     super.init(node: collectionNode)
 
     collectionNode.delegate = self
-    flowLayout.minimumInteritemSpacing  = 1
-    flowLayout.minimumLineSpacing       = 1
+    flowLayout.minimumInteritemSpacing  = 0
+    flowLayout.minimumLineSpacing       = 0
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -78,6 +78,7 @@ extension NewsFeedViewController: ASCollectionDataSource {
     return {
       let cell: BaseCardPostNode
       switch index {
+      case 0: return PenNameSelectionNode()
       case 19:
         let topicCell: ReadingListCardPostCellNode = ReadingListCardPostCellNode()
         topicCell.postInfoData = CardPostInfoNodeData("Shafic","December 12, 2014","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
@@ -137,7 +138,7 @@ extension NewsFeedViewController: ASCollectionDataSource {
         topicCell.node.setTopicStatistics(numberOfPosts: "73", numberOfBooks: "5")
         topicCell.articleCommentsSummary = nil
         cell = topicCell
-      case 0:
+      case 20:
         let topicCell: TopicCardPostCellNode = TopicCardPostCellNode()
         topicCell.postInfoData = CardPostInfoNodeData("Shafic","December 12, 2014","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
         topicCell.node.articleTitle = "Think Metallica & Lady Gaga’s performance at the Grammys will be weird? This isn’t even the weirdest collaboration they’ve given us."
