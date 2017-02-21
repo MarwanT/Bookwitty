@@ -67,7 +67,7 @@ class CategoryManager {
       
       var currentKeys = parentKeys ?? [String]()
       currentKeys.append(key)
-      let categoryKey = currentKeys.joined(separator: ".")
+      let categoryKey = currentKeys.joined(separator: "")
       
       var subcategories: [Category]? = nil
       var subcategoriesDictionary = valuesDictionary
