@@ -34,6 +34,7 @@ class PenNameSelectionNode: ASCellNode {
   fileprivate let collectionNode: ASCollectionNode
 
   private let flowLayout: UICollectionViewFlowLayout
+  private let yourFeedTitle: String = localizedString(key: "your_feed", defaultValue: "Your feed")
   //Consider replacing expand with DisplayMode enum incase we needed something more than expand and collapse.
   var expand: Bool = true
   var data: [String] = ["Shafic Hariri"]
