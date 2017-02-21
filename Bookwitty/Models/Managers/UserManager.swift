@@ -27,4 +27,17 @@ class UserManager {
     signedInUser = nil
     UserDefaults.standard.removeObject(forKey: Key.signedInUser.rawValue)
   }
+  
+  private func getSignedInUser() -> User? {
+    guard let userDictionary = UserDefaults.standard.value(forKey: Key.signedInUser.rawValue) as? [String : Any] else {
+      return nil
+    }
+    
+    guard let data = try? JSONSerialization.data(withJSONObject: userDictionary, options: JSONSerialization.WritingOptions.prettyPrinted), let user = User.parseData(data: data)
+      else {
+        return nil
+    }
+    
+    return user
+  }
 }
