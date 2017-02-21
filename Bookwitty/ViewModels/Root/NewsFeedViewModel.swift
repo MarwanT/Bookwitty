@@ -24,17 +24,25 @@ final class NewsFeedViewModel {
     }
   }
 
+  func hasPenNames() -> Bool {
+    return penNames.count > 0
+  }
+
   func numberOfSections() -> Int {
-    return data.count > 0 ? 1 : 0
+    let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
+    return data.count > 0 ? 1 : showsPenNameSelectionHeader
   }
 
   func numberOfItemsInSection() -> Int {
-    return data.count
+    let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
+    return data.count + showsPenNameSelectionHeader
   }
 
   func nodeForItem(atIndex index: Int) -> BaseCardPostNode? {
-    guard data.count > index else { return nil }
-    let resource = data[index]
+    let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
+    let dataIndex = index - showsPenNameSelectionHeader
+    guard data.count > dataIndex else { return nil }
+    let resource = data[dataIndex]
     return CardRegistry.getCard(resource: resource)
   }
 }
