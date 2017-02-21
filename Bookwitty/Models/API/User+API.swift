@@ -8,7 +8,7 @@
 
 import Foundation
 import Moya
-
+import Spine
 
 struct UserAPI {
   public static func signIn(withUsername username: String, password: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
@@ -126,6 +126,26 @@ struct UserAPI {
         user = User.parseData(data: data)
         //TODO: Update User
         success = user != nil
+      } else {
+        error = BookwittyAPIError.failToParseData
+      }
+    })
+  }
+  
+  public static func batch(identifiers: [String], completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    return signedAPIRequest(target: .batch(identifiersArray: identifiers), completion: {
+      (data, statusCode, response, error) in
+      var success: Bool = false
+      var resource: [Resource]? = nil
+      var error: BookwittyAPIError? = error
+      defer {
+        completion(success, resource, error)
+      }
+      
+      if let data = data {
+//        resource = // Parse and get the resources
+        //TODO: Update User
+//        success = resource != nil
       } else {
         error = BookwittyAPIError.failToParseData
       }
