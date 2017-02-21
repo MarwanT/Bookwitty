@@ -13,8 +13,8 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let flowLayout: UICollectionViewFlowLayout
   
   let viewModel = NewsFeedViewModel()
-
   let data = ["","","","","","","","","","","","","","",""]
+  var isFirstRun: Bool = true
 
   init() {
     flowLayout = UICollectionViewFlowLayout()
@@ -43,6 +43,13 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     collectionNode.dataSource = self
 
     loadData()
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    if isFirstRun {
+      isFirstRun = false
+    }
   }
 
   private func initializeNavigationItems() {
