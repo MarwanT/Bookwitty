@@ -15,7 +15,23 @@ class UserManager {
   
   static let shared = UserManager()
   
+  /**
+   Currently the user object is signed in on sign in. If the user object 
+   failed to be retrieved then the sign in would be considered as a failure
+   
+   Setting this property updates the saved object in user defaults
+   */
+  var signedInUser: User! = nil {
+    didSet {
+      guard let user = signedInUser else {
+        return
+      }
+      saveSignedInUser(user: user)
+    }
+  }
+  
   private init() {
+    signedInUser = getSignedInUser()
   }
   
   private func saveSignedInUser(user: User) {
