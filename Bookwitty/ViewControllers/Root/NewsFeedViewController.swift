@@ -41,6 +41,8 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
     collectionNode.delegate = self
     collectionNode.dataSource = self
+
+    applyTheme()
   }
 
   override func viewWillAppear(_ animated: Bool) {
