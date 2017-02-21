@@ -24,7 +24,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
     super.init(node: collectionNode)
 
-    collectionNode.delegate = self
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
   }
