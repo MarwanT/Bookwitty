@@ -54,7 +54,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    if isFirstRun {
+    if isFirstRun && UserManager.shared.isSignedIn {
       isFirstRun = false
       loadData()
     }
