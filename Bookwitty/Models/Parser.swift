@@ -9,6 +9,8 @@
 import Foundation
 import Spine
 
+typealias ModelResource = Resource
+
 protocol Parsable {
   associatedtype AbstractType: Resource
   static func parseData(data: Data?) -> AbstractType?

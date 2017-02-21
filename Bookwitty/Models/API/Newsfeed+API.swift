@@ -10,8 +10,6 @@ import Foundation
 import Moya
 import Spine
 
-typealias Feed = Resource
-
 struct NewsfeedAPI {
   public static func feed(forPenName penNameId: String, completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     return apiRequest(
