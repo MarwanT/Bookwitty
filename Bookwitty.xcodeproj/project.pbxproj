@@ -113,6 +113,7 @@
 		F434F7911E4E16CE001812BD /* CellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F434F7901E4E16CE001812BD /* CellNode.swift */; };
 		F458C5F21E5AFD4300AFD0FC /* PenNameDisplayNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F458C5F11E5AFD4300AFD0FC /* PenNameDisplayNode.swift */; };
 		F458C5F41E5AFEAA00AFD0FC /* PenNameCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F458C5F31E5AFEAA00AFD0FC /* PenNameCellNode.swift */; };
+		F458C5F61E5B25D900AFD0FC /* Newsfeed+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = F458C5F51E5B25D900AFD0FC /* Newsfeed+API.swift */; };
 		F45A50131E530AA2005E5C56 /* QuoteCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45A50121E530AA2005E5C56 /* QuoteCardPostCellNode.swift */; };
 		F45A50151E536591005E5C56 /* TopicCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45A50141E536591005E5C56 /* TopicCardPostCellNode.swift */; };
 		F461B25C1E4B73B0005EA5A8 /* NewsFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F461B25B1E4B73B0005EA5A8 /* NewsFeedViewController.swift */; };
@@ -259,6 +260,7 @@
 		F434F7901E4E16CE001812BD /* CellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellNode.swift; sourceTree = "<group>"; };
 		F458C5F11E5AFD4300AFD0FC /* PenNameDisplayNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameDisplayNode.swift; sourceTree = "<group>"; };
 		F458C5F31E5AFEAA00AFD0FC /* PenNameCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameCellNode.swift; sourceTree = "<group>"; };
+		F458C5F51E5B25D900AFD0FC /* Newsfeed+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Newsfeed+API.swift"; sourceTree = "<group>"; };
 		F45A50121E530AA2005E5C56 /* QuoteCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteCardPostCellNode.swift; sourceTree = "<group>"; };
 		F45A50141E536591005E5C56 /* TopicCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCardPostCellNode.swift; sourceTree = "<group>"; };
 		F461B25B1E4B73B0005EA5A8 /* NewsFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewsFeedViewController.swift; path = Bookwitty/ViewControllers/Root/NewsFeedViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -560,6 +562,7 @@
 				594F4EAE1E440A4900A947FA /* User+API.swift */,
 				5929C2721E5B2FDB006E08F8 /* CuratedCollection+API.swift */,
 				592ABB2D1E5C4E4A00975E83 /* Category+API.swift */,
+				F458C5F51E5B25D900AFD0FC /* Newsfeed+API.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1050,6 +1053,7 @@
 				594290181E522D980006B2F1 /* Banner.swift in Sources */,
 				F420AD9F1E4231E000C78AEB /* AttributedStringBuilder.swift in Sources */,
 				F4A4262D1E5619E10090CD51 /* ReadingList.swift in Sources */,
+				F458C5F61E5B25D900AFD0FC /* Newsfeed+API.swift in Sources */,
 				59DA47631E3B7A9B00BA90A5 /* IntroductionViewController.swift in Sources */,
 				F4A426391E562BAC0090CD51 /* Link.swift in Sources */,
 				592ABB2E1E5C4E4A00975E83 /* Category+API.swift in Sources */,
