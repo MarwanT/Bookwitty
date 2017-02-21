@@ -11,7 +11,8 @@ import AsyncDisplayKit
 class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
-  
+  let pullToRefresher = UIRefreshControl()
+
   let viewModel = NewsFeedViewModel()
   let data = ["","","","","","","","","","","","","","",""]
   var isFirstRun: Bool = true
