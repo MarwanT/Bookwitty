@@ -46,6 +46,8 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
     collectionNode.delegate = self
     collectionNode.dataSource = self
+    //Listen to pullToRefresh valueChange and call laodData 
+    pullToRefresher.addTarget(self, action: #selector(self.loadData), for: .valueChanged)
 
     applyTheme()
   }
