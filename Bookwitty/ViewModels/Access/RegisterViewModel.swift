@@ -84,7 +84,7 @@ final class RegisterViewModel {
     }
 
     request = UserAPI.registerUser(firstName: firstName, lastName: lastName, email: email, dateOfBirthISO8601: nil, countryISO3166: country, password: password, language: "en", completionBlock: { (success, user, error) in
-      guard success else {
+      guard success, let registeredUser = user else {
         self.request = nil
         completionBlock(success, user, error)
         return
@@ -92,6 +92,9 @@ final class RegisterViewModel {
       
       self.request = UserAPI.signIn(withUsername: email, password: password, completion: { (success, error) in
         self.request = nil
+        if success {
+          UserManager.shared.signedInUser = registeredUser
+        }
         completionBlock(success, user, error)
       })
     })
