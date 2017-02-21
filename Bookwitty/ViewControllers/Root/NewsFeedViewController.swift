@@ -46,7 +46,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
     collectionNode.delegate = self
     collectionNode.dataSource = self
-    //Listen to pullToRefresh valueChange and call laodData 
+    //Listen to pullToRefresh valueChange and call loadData
     pullToRefresher.addTarget(self, action: #selector(self.loadData), for: .valueChanged)
 
     applyTheme()
@@ -71,8 +71,10 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   }
 
   func loadData() {
+    pullToRefresher.beginRefreshing()
     viewModel.loadNewsfeed { [weak self] (success) in
       guard let strongSelf = self else { return }
+      strongSelf.pullToRefresher.endRefreshing()
       if(success) {
         strongSelf.collectionNode.reloadData()
       }
