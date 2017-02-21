@@ -41,14 +41,13 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
     collectionNode.delegate = self
     collectionNode.dataSource = self
-
-    loadData()
   }
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     if isFirstRun {
       isFirstRun = false
+      loadData()
     }
   }
 
