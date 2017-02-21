@@ -75,6 +75,24 @@
             </objects>
             <point key="canvasLocation" x="1271" y="87"/>
         </scene>
+        <!--Books Table View Controller-->
+        <scene sceneID="5Y0-rr-RZU">
+            <objects>
+                <tableViewController storyboardIdentifier="BooksTableViewController" id="k9F-YR-h32" customClass="BooksTableViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="T4r-i2-pRo">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="k9F-YR-h32" id="fYr-lC-R43"/>
+                            <outlet property="delegate" destination="k9F-YR-h32" id="elX-cn-wbP"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CIh-p5-8N0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1290" y="87"/>
+        </scene>
         <!--Book Store View Controller-->
         <scene sceneID="gFi-Mc-yyX">
             <objects>

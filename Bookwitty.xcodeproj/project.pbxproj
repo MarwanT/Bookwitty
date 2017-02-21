@@ -82,6 +82,7 @@
 		59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD55791E309BFC00D3B805 /* GeneralSettings.swift */; };
 		59CF44011E663C35006C16FC /* General+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF44001E663C35006C16FC /* General+API.swift */; };
 		59CF76481E5C8079003EAB6B /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF76471E5C8079003EAB6B /* UserManager.swift */; };
+		59CF764A1E5CB010003EAB6B /* BooksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF76491E5CB010003EAB6B /* BooksTableViewController.swift */; };
 		59D27D0F1E40D2EE00468C29 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D27D0E1E40D2EE00468C29 /* SignInViewModel.swift */; };
 		59D6021B1E32597B00271315 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D6021A1E32597B00271315 /* AppKeys.swift */; };
 		59D6021E1E36363400271315 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D6021D1E36363400271315 /* Font.swift */; };
@@ -236,6 +237,7 @@
 		59BD55791E309BFC00D3B805 /* GeneralSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralSettings.swift; sourceTree = "<group>"; };
 		59CF44001E663C35006C16FC /* General+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "General+API.swift"; sourceTree = "<group>"; };
 		59CF76471E5C8079003EAB6B /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		59CF76491E5CB010003EAB6B /* BooksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksTableViewController.swift; sourceTree = "<group>"; };
 		59D27D0E1E40D2EE00468C29 /* SignInViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		59D6021A1E32597B00271315 /* AppKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
 		59D6021D1E36363400271315 /* Font.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
@@ -549,6 +551,7 @@
 				594290051E4FEEC10006B2F1 /* CategoriesTableViewController.swift */,
 				594290131E51F2850006B2F1 /* BookStoreViewController.swift */,
 				5945FAC81E6475C80010CF77 /* CategoryViewController.swift */,
+				59CF76491E5CB010003EAB6B /* BooksTableViewController.swift */,
 			);
 			path = Books;
 			sourceTree = "<group>";
@@ -1148,6 +1151,7 @@
 				F496DE081E65DECB007E22B1 /* Paginator.swift in Sources */,
 				59CF44011E663C35006C16FC /* General+API.swift in Sources */,
 				597B8E2D1E37F6BC00C7811B /* Image+Utils.swift in Sources */,
+				59CF764A1E5CB010003EAB6B /* BooksTableViewController.swift in Sources */,
 				F434F7911E4E16CE001812BD /* CellNode.swift in Sources */,
 				F4670AFB1E54669300159F4F /* ReadingListBookNode.swift in Sources */,
 				F4207B941E58466A00216A2E /* PenNameSelectionNode.swift in Sources */,
