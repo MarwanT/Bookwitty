@@ -138,7 +138,7 @@ class CardRegistry {
       return BaseCardPostNode()
     }
     let cardCanditate = entry()
-    guard let card = cardCanditate as? QuoteCardPostCellNode else {
+    guard let card = cardCanditate as? ArticleCardPostCellNode else {
       return nil
     }
     guard let resource = resource as? Text else {
@@ -146,8 +146,9 @@ class CardRegistry {
     }
 
     card.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-    card.node.articleQuotePublisher = "XxxX"
-    card.node.articleQuote = "“ \(resource.shortDescription) ”"
+    card.node.articleTitle = resource.title
+    card.node.articleDescription = resource.shortDescription
+    card.node.imageUrl = resource.coverImageUrl ?? resource.thumbnailImageUrl
     card.articleCommentsSummary = "XX commented on this"
 
     return card
