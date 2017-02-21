@@ -34,8 +34,13 @@ class User: Resource {
   //TODO: add tapffiliate profiles array model
   //TODO: add addresses model array
   //TODO: add payment methods model array
-  //TODO: add pen names methods model array
   //TODO: add primary address model
+
+  @objc
+  private var penNamesCollection: LinkedResourceCollection?
+  lazy var penNames: [PenName]? = {
+    return self.penNamesCollection?.resources as? [PenName]
+  }()
 
   override class var resourceType: ResourceType {
     return "users"
@@ -50,7 +55,8 @@ class User: Resource {
       "country": Attribute().serializeAs("country"),
       "password": Attribute().serializeAs("password"),
       "currentPassword": Attribute().serializeAs("current-password"),
-      "language": Attribute().serializeAs("language")
+      "language": Attribute().serializeAs("language"),
+      "penNamesCollection" : ToManyRelationship(PenName.self).serializeAs("pen-names")
       ])
   }
 
