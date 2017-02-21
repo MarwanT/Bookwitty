@@ -14,6 +14,7 @@ final class NewsFeedViewModel {
   var cancellableRequest:  Cancellable?
   let viewController = localizedString(key: "news", defaultValue: "News")
   var data: [ModelResource] = []
+  var penNames: [PenName] = [PenName()] //TODO: Replace with real pen names loaded or cached.
   var selectedPenNameId: String = "6c08337a-108f-4335-b2d0-3a25b9fe6bed"
 
   func loadNewsfeed(completionBlock: @escaping (_ success: Bool) -> ()) {
