@@ -20,17 +20,18 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  
-  init() {
-    flowLayout = UICollectionViewFlowLayout()
-    let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
-    flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: externalMargin/2, right: 0)
-    collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
-    collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
-    super.init(node: collectionNode)
 
+  init() {
+    let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
+    flowLayout = UICollectionViewFlowLayout()
+    flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: externalMargin/2, right: 0)
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
+
+    collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+    collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+    
+    super.init(node: collectionNode)
   }
 
   override func viewDidLoad() {
