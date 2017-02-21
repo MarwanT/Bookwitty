@@ -18,6 +18,7 @@
 		5644F21A1E55A2F100B7D8E7 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5644F2191E55A2F100B7D8E7 /* SettingsViewController.swift */; };
 		5644F21C1E55A77100B7D8E7 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5644F21B1E55A77100B7D8E7 /* SettingsViewModel.swift */; };
 		56D5F73B1E5B60BF00F6A164 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D5F73A1E5B60BF00F6A164 /* Book.swift */; };
+		56D5F73D1E5B7D0000F6A164 /* PenName+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D5F73C1E5B7D0000F6A164 /* PenName+API.swift */; };
 		56E09DBC1E5463EA00B7C6E6 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E09DBB1E5463EA00B7C6E6 /* ChangePasswordViewController.swift */; };
 		56E09DBE1E546B2100B7C6E6 /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E09DBD1E546B2100B7C6E6 /* ChangePasswordViewModel.swift */; };
 		59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59057FDF1E25340A0036AAF3 /* Introduction.storyboard */; };
@@ -158,6 +159,7 @@
 		5644F2191E55A2F100B7D8E7 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		5644F21B1E55A77100B7D8E7 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		56D5F73A1E5B60BF00F6A164 /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		56D5F73C1E5B7D0000F6A164 /* PenName+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PenName+API.swift"; sourceTree = "<group>"; };
 		56E09DBB1E5463EA00B7C6E6 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		56E09DBD1E546B2100B7C6E6 /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
 		59057FDF1E25340A0036AAF3 /* Introduction.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Introduction.storyboard; sourceTree = "<group>"; };
@@ -565,6 +567,7 @@
 				5929C2721E5B2FDB006E08F8 /* CuratedCollection+API.swift */,
 				592ABB2D1E5C4E4A00975E83 /* Category+API.swift */,
 				F458C5F51E5B25D900AFD0FC /* Newsfeed+API.swift */,
+				56D5F73C1E5B7D0000F6A164 /* PenName+API.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1117,6 +1120,7 @@
 				59D8FCBC1E4DA394001C1EDB /* CategoryManager.swift in Sources */,
 				F420B6A21E43C570001F34CD /* User.swift in Sources */,
 				5644F21A1E55A2F100B7D8E7 /* SettingsViewController.swift in Sources */,
+				56D5F73D1E5B7D0000F6A164 /* PenName+API.swift in Sources */,
 				F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */,
 				F488D2791E44EB46003A7BD4 /* PenName.swift in Sources */,
 				595A64A01E2D0C4D00655067 /* Network.swift in Sources */,

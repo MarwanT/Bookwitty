@@ -23,6 +23,7 @@ public enum BookwittyAPI {
   case categoryCuratedContent(categoryIdentifier: String)
   case newsFeed(penNameId: String)
   case Search(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?)
+  case updatePenName(identifier: String, name: String?, biography: String?, avatarUrl: String?, facebookUrl: String?, tumblrUrl: String?, googlePlusUrl: String?, twitterUrl: String?, instagramUrl: String?, pinterestUrl: String?, youtubeUrl: String?, linkedinUrl: String?, wordpressUrl: String?, websiteUrl: String?)
 }
 
 // MARK: - Target Type
@@ -64,6 +65,8 @@ extension BookwittyAPI: TargetType {
       path = "/pen_names/\(penNameIdentifier)/feed"
     case .Search:
       path = "/search"
+    case .updatePenName(let identifier, _, _, _, _, _, _, _, _, _, _, _, _, _):
+      path = "/pen_names/\(identifier)"
     }
     
     return apiBasePath + apiVersion + path
@@ -77,7 +80,7 @@ extension BookwittyAPI: TargetType {
       return .get
     case .register:
       return .post
-    case .updateUser:
+    case .updateUser, .updatePenName:
       return .patch
     }
   }
@@ -134,6 +137,8 @@ extension BookwittyAPI: TargetType {
       }
 
       return dictionary
+    case .updatePenName(let identifier, let name, let biography, let avatarUrl, let facebookUrl, let tumblrUrl, let googlePlusUrl, let twitterUrl, let instagramUrl, let pinterestUrl, let youtubeUrl, let linkedinUrl, let wordpressUrl, let websiteUrl):
+      return PenNameAPI.updatePostBody(identifier: identifier, name: name, biography: biography, avatarUrl: avatarUrl, facebookUrl: facebookUrl, tumblrUrl: tumblrUrl, googlePlusUrl: googlePlusUrl, twitterUrl: twitterUrl, instagramUrl: instagramUrl, pinterestUrl: pinterestUrl, youtubeUrl: youtubeUrl, linkedinUrl: linkedinUrl, wordpressUrl: wordpressUrl, websiteUrl: websiteUrl)
     }
   }
   
