@@ -9,6 +9,10 @@
 import Foundation
 
 class UserManager {
+  enum Key: String {
+    case signedInUser
+  }
+  
   static let shared = UserManager()
   
   private init() {
