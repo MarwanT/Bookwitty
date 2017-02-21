@@ -65,8 +65,6 @@ class PenNameSelectionNode: ASCellNode {
     collectionNode.dataSource = self
     automaticallyManagesSubnodes = true
 
-    header.penNameSummary = "Your feed (Shafic Hariri)"
-
     lastSeparatorNode.style.preferredSize = CGSize(width: style.maxWidth.value, height: separatorHeight)
     lastSeparatorNode.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
 
