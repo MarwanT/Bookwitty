@@ -80,10 +80,12 @@ class Parser {
     serializer.registerResource(Video.self)
     serializer.registerResource(Audio.self)
     serializer.registerResource(Link.self)
+    serializer.registerResource(CuratedCollection.self)
   }
 
   private func registerValueFormatters() {
     //Register any value formatter here using the serializer
+    serializer.registerValueFormatter(CuratedCollectionSectionsValueFormatter())
   }
 }
 

@@ -19,6 +19,7 @@ public enum BookwittyAPI {
   case register(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String?, countryISO3166: String, password: String, language: String)
   case user
   case updateUser(identifier: String, firstName: String?, lastName: String?, dateOfBirth: String?, email: String?, currentPassword: String?, password: String?, country: String?, badges: [String : Any]?, preferences: [String : Any]?)
+  case bookStore
 }
 
 // MARK: - Target Type
@@ -52,6 +53,8 @@ extension BookwittyAPI: TargetType {
       path = "/user"
     case .updateUser:
       path = "/user"
+    case .bookStore:
+      path = "/curated_collection/book_storefront"
     }
     
     return apiBasePath + apiVersion + path
@@ -61,7 +64,7 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .oAuth, .refreshToken:
       return .post
-    case .allAddresses, .user:
+    case .allAddresses, .user, .bookStore:
       return .get
     case .register:
       return .post
@@ -89,7 +92,7 @@ extension BookwittyAPI: TargetType {
         "grant_type": "refresh_token",
         "scopes": "openid email profile"
       ]
-    case .allAddresses, .user:
+    case .allAddresses, .user, .bookStore:
       return nil
     case .register(let firstName, let lastName, let email, let dateOfBirth, let country, let password, let language):
       return UserAPI.registerPostBody(firstName: firstName, lastName: lastName, email: email, dateOfBirth: dateOfBirth, country: country, password: password, language: language)

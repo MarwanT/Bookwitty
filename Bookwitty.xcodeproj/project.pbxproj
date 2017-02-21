@@ -21,6 +21,10 @@
 		5644F21C1E55A77100B7D8E7 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5644F21B1E55A77100B7D8E7 /* SettingsViewModel.swift */; };
 		59057FE01E25340A0036AAF3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59057FDE1E25340A0036AAF3 /* LaunchScreen.storyboard */; };
 		59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59057FDF1E25340A0036AAF3 /* Introduction.storyboard */; };
+		5929C2711E5B25BC006E08F8 /* CuratedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5929C2701E5B25BC006E08F8 /* CuratedCollection.swift */; };
+		5929C2731E5B2FDB006E08F8 /* CuratedCollection+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5929C2721E5B2FDB006E08F8 /* CuratedCollection+API.swift */; };
+		5929C2751E5B89B1006E08F8 /* ValueFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5929C2741E5B89B1006E08F8 /* ValueFormatters.swift */; };
+		5929C2771E5B89E5006E08F8 /* CustomAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5929C2761E5B89E5006E08F8 /* CustomAttributes.swift */; };
 		593769D71E3689FB00F23226 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593769D51E3689FB00F23226 /* Appearance.swift */; };
 		593769D81E3689FB00F23226 /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593769D61E3689FB00F23226 /* DefaultTheme.swift */; };
 		594290031E4F737B0006B2F1 /* Books.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 594290021E4F737B0006B2F1 /* Books.storyboard */; };
@@ -151,6 +155,10 @@
 		5644F21B1E55A77100B7D8E7 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		59057FDE1E25340A0036AAF3 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		59057FDF1E25340A0036AAF3 /* Introduction.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Introduction.storyboard; sourceTree = "<group>"; };
+		5929C2701E5B25BC006E08F8 /* CuratedCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CuratedCollection.swift; sourceTree = "<group>"; };
+		5929C2721E5B2FDB006E08F8 /* CuratedCollection+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CuratedCollection+API.swift"; sourceTree = "<group>"; };
+		5929C2741E5B89B1006E08F8 /* ValueFormatters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueFormatters.swift; sourceTree = "<group>"; };
+		5929C2761E5B89E5006E08F8 /* CustomAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAttributes.swift; sourceTree = "<group>"; };
 		593769D51E3689FB00F23226 /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Appearance.swift; path = Default/Appearance.swift; sourceTree = "<group>"; };
 		593769D61E3689FB00F23226 /* DefaultTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
 		594290021E4F737B0006B2F1 /* Books.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Books.storyboard; sourceTree = "<group>"; };
@@ -375,6 +383,7 @@
 				F4A426321E5628080090CD51 /* Quote.swift */,
 				F4A4262A1E5617A30090CD51 /* PageAuthor.swift */,
 				59D8FCB21E4C86CD001C1EDB /* Category.swift */,
+				5929C2701E5B25BC006E08F8 /* CuratedCollection.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -537,6 +546,7 @@
 			isa = PBXGroup;
 			children = (
 				594F4EAE1E440A4900A947FA /* User+API.swift */,
+				5929C2721E5B2FDB006E08F8 /* CuratedCollection+API.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -770,6 +780,8 @@
 			isa = PBXGroup;
 			children = (
 				F49AE93D1E47CFEA0031B355 /* Parser.swift */,
+				5929C2741E5B89B1006E08F8 /* ValueFormatters.swift */,
+				5929C2761E5B89E5006E08F8 /* CustomAttributes.swift */,
 			);
 			name = Parser;
 			sourceTree = "<group>";
@@ -1032,6 +1044,7 @@
 				F422D82C1E51992800A32C2F /* PhotoCardPostCellNode.swift in Sources */,
 				5644F21C1E55A77100B7D8E7 /* SettingsViewModel.swift in Sources */,
 				F4A426351E5629210090CD51 /* Video.swift in Sources */,
+				5929C2751E5B89B1006E08F8 /* ValueFormatters.swift in Sources */,
 				59DA47591E3AA8E100BA90A5 /* Localization.swift in Sources */,
 				59D602201E36387A00271315 /* Color.swift in Sources */,
 				F4670AF91E54556800159F4F /* ReadingListCardPostCellNode.swift in Sources */,
@@ -1063,6 +1076,7 @@
 				593769D71E3689FB00F23226 /* Appearance.swift in Sources */,
 				594290091E4FF0E30006B2F1 /* CategoriesTableViewModel.swift in Sources */,
 				F420B6A41E43D01A001F34CD /* PenNameViewController.swift in Sources */,
+				5929C2731E5B2FDB006E08F8 /* CuratedCollection+API.swift in Sources */,
 				5967E45A1E410A850067093F /* NotificationView.swift in Sources */,
 				B4ECA3471E4E05E7004B3EE2 /* WebViewController.swift in Sources */,
 				593769D81E3689FB00F23226 /* DefaultTheme.swift in Sources */,
@@ -1082,8 +1096,10 @@
 				F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */,
 				F488D2791E44EB46003A7BD4 /* PenName.swift in Sources */,
 				595A64A01E2D0C4D00655067 /* Network.swift in Sources */,
+				5929C2771E5B89E5006E08F8 /* CustomAttributes.swift in Sources */,
 				594290141E51F2850006B2F1 /* BookStoreViewController.swift in Sources */,
 				594F4EA81E423B8600A947FA /* AppNotification.swift in Sources */,
+				5929C2711E5B25BC006E08F8 /* CuratedCollection.swift in Sources */,
 				F45A50151E536591005E5C56 /* TopicCardPostCellNode.swift in Sources */,
 				F48278BB1E4B21CA003D82F2 /* RootTabBarController.swift in Sources */,
 				F420B6A61E43D05E001F34CD /* PenNameViewModel.swift in Sources */,
