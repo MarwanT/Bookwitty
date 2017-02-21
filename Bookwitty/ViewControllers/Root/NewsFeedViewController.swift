@@ -130,3 +130,30 @@ extension NewsFeedViewController: ASCollectionDelegate {
     )
   }
 }
+
+extension NewsFeedViewController: UIScrollViewDelegate {
+  public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    scrollToTheRightPosition(scrollView: scrollView)
+  }
+
+  public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    if(!decelerate) {
+      scrollToTheRightPosition(scrollView: scrollView)
+    }
+  }
+
+  private func scrollToTheRightPosition(scrollView: UIScrollView) {
+    let penNameHeight = penNameSelectionNode.occupiedHeight
+    if(scrollView.contentOffset.y <= penNameHeight) {
+      if(penNameHeight/2 > scrollView.contentOffset.y) {
+        UIView.animate(withDuration: 0.5, animations: {
+          scrollView.contentOffset = CGPoint(x: 0, y: 0)
+        })
+      } else {
+        UIView.animate(withDuration: 0.5, animations: {
+          scrollView.contentOffset = CGPoint(x: 0, y: penNameHeight)
+        })
+      }
+    }
+  }
+}
