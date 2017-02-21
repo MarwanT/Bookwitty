@@ -17,6 +17,10 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let data = ["","","","","","","","","","","","","","",""]
   var isFirstRun: Bool = true
 
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   init() {
     flowLayout = UICollectionViewFlowLayout()
     let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
@@ -27,10 +31,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
   }
 
   override func viewDidLoad() {
