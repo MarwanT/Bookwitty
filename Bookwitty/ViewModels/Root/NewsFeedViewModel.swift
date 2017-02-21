@@ -56,7 +56,7 @@ class CardRegistry {
       TopicCardPostCellNode()
     }
     register(resource: Text.self) { () -> BaseCardPostNode in
-      QuoteCardPostCellNode()
+      ArticleCardPostCellNode()
     }
     register(resource: Quote.self) { () -> BaseCardPostNode in
       QuoteCardPostCellNode()
