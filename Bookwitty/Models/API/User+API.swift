@@ -133,6 +133,9 @@ struct UserAPI {
   }
   
   public static func batch(identifiers: [String], completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    
+    let successStatusCode = 200
+    
     return signedAPIRequest(target: .batch(identifiersArray: identifiers), completion: {
       (data, statusCode, response, error) in
       var success: Bool = false
@@ -140,6 +143,11 @@ struct UserAPI {
       var error: BookwittyAPIError? = error
       defer {
         completion(success, resources, error)
+      }
+      
+      guard statusCode == successStatusCode else {
+        error = BookwittyAPIError.invalidStatusCode
+        return
       }
       
       if let data = data {
