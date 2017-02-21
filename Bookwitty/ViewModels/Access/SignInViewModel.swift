@@ -49,8 +49,21 @@ final class SignInViewModel {
     
     request = UserAPI.signIn(withUsername: username, password: password, completion: {
       (success, error) in
-      self.request = nil
-      completion(success, error)
+      guard success else {
+        self.request = nil
+        completion(success, error)
+        return
+      }
+      
+      self.request = UserAPI.user(completion: { (success, user, error) in
+        guard let user = user, success else {
+          self.request = nil
+          completion(success, error)
+          return
+        }
+        
+        UserManager.shared.signedInUser = user
+      })
     })
   }
   
