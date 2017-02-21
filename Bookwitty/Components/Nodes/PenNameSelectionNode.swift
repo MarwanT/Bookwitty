@@ -37,7 +37,10 @@ class PenNameSelectionNode: ASCellNode {
   private let yourFeedTitle: String = localizedString(key: "your_feed", defaultValue: "Your feed")
   //Consider replacing expand with DisplayMode enum incase we needed something more than expand and collapse.
   var expand: Bool = true
-  var data: [String] = ["Shafic Hariri"]
+  var data: [PenName] = [] {
+    didSet {
+    }
+  }
   var selectedIndexPath: IndexPath? = nil
   var occupiedHeight: CGFloat {
     get {
@@ -125,7 +128,7 @@ extension PenNameSelectionNode: ASCollectionDataSource, ASCollectionDelegate {
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
     let index = indexPath.row
     let isLast = (index == data.count-1)
-    let name: String = data[index]
+    let name: String = data[index].name ?? ""
     return {
       let cell = PenNameCellNode(withSeparator: !isLast, withCellHeight: PenNameSelectionNode.cellHeight)
       cell.penNameSummary = name
