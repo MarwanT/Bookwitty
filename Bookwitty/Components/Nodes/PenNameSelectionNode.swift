@@ -39,6 +39,11 @@ class PenNameSelectionNode: ASCellNode {
   var expand: Bool = true
   var data: [String] = ["Shafic Hariri"]
   var selectedIndexPath: IndexPath? = nil
+  var occupiedHeight: CGFloat {
+    get {
+      return expand ? expandedHeightDimension.value : collapsedHeightDimension.value
+    }
+  }
 
   override init() {
     flowLayout = UICollectionViewFlowLayout()
