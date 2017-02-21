@@ -42,13 +42,9 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     collectionNode.delegate = self
     collectionNode.dataSource = self
 
-    viewModel.loadNewsfeed { (success) in
-      if(success) {
-        self.collectionNode.reloadData()
-      }
-    }
+    loadData()
   }
-  
+
   private func initializeNavigationItems() {
     let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
       UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
@@ -57,6 +53,15 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       UIBarButtonItemStyle.plain, target: self, action:
       #selector(self.settingsButtonTap(_:)))
     navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
+  }
+
+  func loadData() {
+    viewModel.loadNewsfeed { [weak self] (success) in
+      guard let strongSelf = self else { return }
+      if(success) {
+        strongSelf.collectionNode.reloadData()
+      }
+    }
   }
 }
 
