@@ -13,7 +13,7 @@ import Spine
 final class NewsFeedViewModel {
   var cancellableRequest:  Cancellable?
   let viewController = localizedString(key: "news", defaultValue: "News")
-  var data: [Resource] = []
+  var data: [ModelResource] = []
   var selectedPenNameId: String = "6c08337a-108f-4335-b2d0-3a25b9fe6bed"
 
   func loadNewsfeed(completionBlock: @escaping (_ success: Bool) -> ()) {
@@ -46,7 +46,7 @@ class CardRegistry {
   private var registry = [String : RegEntry]()
 
 
-  func register(resource : Resource.Type, creator : @escaping () -> BaseCardPostNode) {
+  func register(resource : ModelResource.Type, creator : @escaping () -> BaseCardPostNode) {
     registry[resource.resourceType] = creator
   }
 
@@ -84,7 +84,7 @@ class CardRegistry {
     }
   }
 
-  static func getCard(resource : Resource) -> BaseCardPostNode? {
+  static func getCard(resource : ModelResource) -> BaseCardPostNode? {
     let resourceType: ResourceType = resource.registeredResourceType
 
     switch(resourceType) {
@@ -113,7 +113,7 @@ class CardRegistry {
     }
   }
 
-  private func createAuthorCard(_ resource: Resource) -> BaseCardPostNode? {
+  private func createAuthorCard(_ resource: ModelResource) -> BaseCardPostNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return nil
     }
@@ -133,7 +133,7 @@ class CardRegistry {
     return card
   }
 
-  private func createTextCard(_ resource: Resource) -> BaseCardPostNode? {
+  private func createTextCard(_ resource: ModelResource) -> BaseCardPostNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
@@ -154,7 +154,7 @@ class CardRegistry {
     return card
   }
 
-  private func createQuoteCard(_ resource: Resource) -> BaseCardPostNode? {
+  private func createQuoteCard(_ resource: ModelResource) -> BaseCardPostNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return nil
     }
@@ -179,7 +179,7 @@ class CardRegistry {
     return card
   }
 
-  private func createTopicCard(_ resource: Resource) -> BaseCardPostNode? {
+  private func createTopicCard(_ resource: ModelResource) -> BaseCardPostNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
@@ -202,7 +202,7 @@ class CardRegistry {
     return card
   }
 
-  private func createLinkCard(_ resource: Resource) -> BaseCardPostNode? {
+  private func createLinkCard(_ resource: ModelResource) -> BaseCardPostNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
@@ -223,7 +223,7 @@ class CardRegistry {
     return card
   }
 
-  private func createAudioCard(_ resource: Resource) -> BaseCardPostNode? {
+  private func createAudioCard(_ resource: ModelResource) -> BaseCardPostNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
@@ -244,7 +244,7 @@ class CardRegistry {
     return card
   }
 
-  private func createImageCard(_ resource: Resource) -> BaseCardPostNode? {
+  private func createImageCard(_ resource: ModelResource) -> BaseCardPostNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
@@ -263,7 +263,7 @@ class CardRegistry {
     return card
   }
 
-  private func createVideoCard(_ resource: Resource) -> BaseCardPostNode? {
+  private func createVideoCard(_ resource: ModelResource) -> BaseCardPostNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
@@ -284,7 +284,7 @@ class CardRegistry {
     return card
   }
 
-  private func createPenNameCard(_ resource: Resource) -> BaseCardPostNode? {
+  private func createPenNameCard(_ resource: ModelResource) -> BaseCardPostNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
@@ -304,7 +304,7 @@ class CardRegistry {
     return card
   }
 
-  private func createReadingListCard(_ resource: Resource) -> BaseCardPostNode? {
+  private func createReadingListCard(_ resource: ModelResource) -> BaseCardPostNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
