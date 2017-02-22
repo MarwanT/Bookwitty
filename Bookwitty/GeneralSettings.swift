@@ -19,14 +19,15 @@ public class GeneralSettings {
   }
 
   private let defaults = UserDefaults.standard
-  private let defaultValues: [String:Any] = [
-    Keys.SendUsageData : true,
-    Keys.SendEmailNotifications : true,
-    Keys.ShouldShowIntroduction : true
-  ]
   
   public static let sharedInstance: GeneralSettings = GeneralSettings()
   private init() {
+    let defaultValues: [String : Any] = [
+      Keys.SendUsageData : true,
+      Keys.SendEmailNotifications : true,
+      Keys.ShouldShowIntroduction : true,      
+    ]
+
     defaults.register(defaults: defaultValues)
     shouldSendUsageData = defaults.bool(forKey: Keys.SendUsageData)
     shouldSendEmailNotifications = defaults.bool(forKey: Keys.SendEmailNotifications)
