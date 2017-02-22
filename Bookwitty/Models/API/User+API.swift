@@ -8,7 +8,7 @@
 
 import Foundation
 import Moya
-
+import Spine
 
 struct UserAPI {
   public static func signIn(withUsername username: String, password: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
@@ -131,6 +131,33 @@ struct UserAPI {
       }
     })
   }
+  
+  public static func batch(identifiers: [String], completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    
+    let successStatusCode = 200
+    
+    return signedAPIRequest(target: .batch(identifiers: identifiers), completion: {
+      (data, statusCode, response, error) in
+      var success: Bool = false
+      var resources: [Resource]? = nil
+      var error: BookwittyAPIError? = error
+      defer {
+        completion(success, resources, error)
+      }
+      
+      guard statusCode == successStatusCode else {
+        error = BookwittyAPIError.invalidStatusCode
+        return
+      }
+      
+      if let data = data {
+        resources = Parser.parseDataArray(data: data)
+        success = resources != nil
+      } else {
+        error = BookwittyAPIError.failToParseData
+      }
+    })
+  }
 }
 
 //MARK: - Moya Needed parameters
@@ -162,5 +189,9 @@ extension UserAPI {
     user.badges = badges
     user.preferences = preferences
     return user.serializeData(options: [.IncludeID, .OmitNullValues])
+  }
+  
+  static func batchPostBody(identifiers: [String]) -> [String : Any]? {
+    return ["ids" : identifiers]
   }
 }

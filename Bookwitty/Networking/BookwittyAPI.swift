@@ -24,6 +24,7 @@ public enum BookwittyAPI {
   case newsFeed(penNameId: String)
   case Search(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?)
   case updatePenName(identifier: String, name: String?, biography: String?, avatarUrl: String?, facebookUrl: String?, tumblrUrl: String?, googlePlusUrl: String?, twitterUrl: String?, instagramUrl: String?, pinterestUrl: String?, youtubeUrl: String?, linkedinUrl: String?, wordpressUrl: String?, websiteUrl: String?)
+  case batch(identifiers: [String])
 }
 
 // MARK: - Target Type
@@ -67,6 +68,8 @@ extension BookwittyAPI: TargetType {
       path = "/search"
     case .updatePenName(let identifier, _, _, _, _, _, _, _, _, _, _, _, _, _):
       path = "/pen_names/\(identifier)"
+    case .batch:
+      path = "/content/batch"
     }
     
     return apiBasePath + apiVersion + path
@@ -78,7 +81,7 @@ extension BookwittyAPI: TargetType {
       return .post
     case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search:
       return .get
-    case .register:
+    case .register, .batch:
       return .post
     case .updateUser, .updatePenName:
       return .patch
@@ -104,6 +107,8 @@ extension BookwittyAPI: TargetType {
         "grant_type": "refresh_token",
         "scopes": "openid email profile"
       ]
+    case .batch(let identifiers):
+      return UserAPI.batchPostBody(identifiers: identifiers)
     case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed:
       return nil
     case .register(let firstName, let lastName, let email, let dateOfBirth, let country, let password, let language):
