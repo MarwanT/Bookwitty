@@ -21,4 +21,13 @@ final class Localization {
     case English = "en"
     case French = "fr"
   }
+
+  //Sets the Application Language
+  static func set(language: Language?) {
+    let newLanguage = language ?? .English
+    let oldLanguage = Language(rawValue: GeneralSettings.sharedInstance.preferredLanguage)
+    
+    Bundle.setLanguage(newLanguage.rawValue)
+    GeneralSettings.sharedInstance.preferredLanguage = newLanguage.rawValue
+  }
 }
