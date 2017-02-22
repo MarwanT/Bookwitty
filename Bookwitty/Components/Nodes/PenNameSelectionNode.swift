@@ -12,10 +12,12 @@ import AsyncDisplayKit
 class PenNameSelectionNode: ASCellNode {
   fileprivate static let cellHeight: CGFloat = 45.0
   fileprivate let maxNumberOfCells: Int = 5
+  fileprivate let minNumberOfCells: Int = 1
   fileprivate let separatorHeight: CGFloat = 1.0
   fileprivate let collapsedHeightDimension: ASDimension = ASDimension(unit: ASDimensionUnit.points, value: PenNameSelectionNode.cellHeight)
   fileprivate var expandedHeightDimension: ASDimension {
     get {
+      guard data.count > 1 else { return ASDimension(unit: ASDimensionUnit.points, value: 0.0) }
       let itemHeight = collapsedHeightDimension.value
       let actualNumberOfCells = (maxNumberOfCells > data.count) ? data.count : maxNumberOfCells
       let expandedHeight = itemHeight + (itemHeight * CGFloat(actualNumberOfCells))
@@ -25,6 +27,7 @@ class PenNameSelectionNode: ASCellNode {
   }
   fileprivate var expandedCollectionHeight: CGFloat {
     get {
+      guard data.count > minNumberOfCells else { return 0.0 }
       return expandedHeightDimension.value - PenNameSelectionNode.cellHeight
     }
   }
@@ -36,23 +39,39 @@ class PenNameSelectionNode: ASCellNode {
   private let flowLayout: UICollectionViewFlowLayout
   private let yourFeedTitle: String = localizedString(key: "your_feed", defaultValue: "Your feed")
   //Consider replacing expand with DisplayMode enum incase we needed something more than expand and collapse.
-  var expand: Bool = true
+  var expand: Bool = true {
+    didSet {
+    header.shouldExpand = expand
+    }
+  }
   var data: [PenName] = [] {
     didSet {
-      guard data.count > 0 else { return }
+      guard data.count > minNumberOfCells else {
+        style.height = ASDimensionMake(0.0)
+        setNeedsLayout()
+        return
+      }
+      
       let selectedPenName = data[selectedIndexPath?.item ?? 0]
       header.penNameSummary = yourFeedTitle + " " + (selectedPenName.name ?? "")
-      let extraSeparator = (data.count == 0) ? 0.0 : separatorHeight
+      let extraSeparator = separatorHeight
       style.height = ASDimensionMake(expandedHeightDimension.value + extraSeparator)
       collectionNode.style.preferredSize = CGSize(width: style.maxWidth.value, height: expandedCollectionHeight)
       collectionNode.reloadData()
+      expand = true
       setNeedsLayout()
     }
   }
   var selectedIndexPath: IndexPath? = nil
+  var headerHeight: CGFloat {
+    get {
+      return header.style.height.value
+    }
+  }
   var occupiedHeight: CGFloat {
     get {
-      return expand ? expandedHeightDimension.value : collapsedHeightDimension.value
+      //Subtract separatorHeight from collapsedHeightDimension [So that the view would not be removed the node automatically]
+      return expand ? expandedHeightDimension.value : (collapsedHeightDimension.value - separatorHeight)
     }
   }
 
