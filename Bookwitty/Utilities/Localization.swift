@@ -22,6 +22,17 @@ final class Localization {
     case French = "fr"
   }
 
+  struct Notifications {
+    struct Name {
+      static let languageValueChanged: Notification.Name = Notification.Name(rawValue: "Localization.Language.ValueChanged")
+    }
+
+    struct Key {
+      static let UserInfoKeyOld = "Localization.Language.Key.old"
+      static let UserInfoKeyNew = "Localization.Language.Key.new"
+    }
+  }
+
   //Sets the Application Language
   static func set(language: Language?) {
     let newLanguage = language ?? .English
