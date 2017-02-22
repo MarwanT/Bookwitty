@@ -13,3 +13,7 @@ typealias Count = Int
 func localizedString(key: String, defaultValue: String = "", count: Count = 0, comment: String = "") -> String {
   return NSLocalizedString(key, value: defaultValue, comment: comment)
 }
+
+
+final class Localization {
+}
