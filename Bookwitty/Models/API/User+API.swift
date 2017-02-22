@@ -136,7 +136,7 @@ struct UserAPI {
     
     let successStatusCode = 200
     
-    return signedAPIRequest(target: .batch(identifiersArray: identifiers), completion: {
+    return signedAPIRequest(target: .batch(identifiers: identifiers), completion: {
       (data, statusCode, response, error) in
       var success: Bool = false
       var resources: [Resource]? = nil

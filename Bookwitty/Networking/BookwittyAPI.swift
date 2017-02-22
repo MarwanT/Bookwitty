@@ -24,7 +24,7 @@ public enum BookwittyAPI {
   case newsFeed(penNameId: String)
   case Search(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?)
   case updatePenName(identifier: String, name: String?, biography: String?, avatarUrl: String?, facebookUrl: String?, tumblrUrl: String?, googlePlusUrl: String?, twitterUrl: String?, instagramUrl: String?, pinterestUrl: String?, youtubeUrl: String?, linkedinUrl: String?, wordpressUrl: String?, websiteUrl: String?)
-  case batch(identifiersArray: [String])
+  case batch(identifiers: [String])
 }
 
 // MARK: - Target Type
@@ -107,9 +107,9 @@ extension BookwittyAPI: TargetType {
         "grant_type": "refresh_token",
         "scopes": "openid email profile"
       ]
-    case .batch(let identifiersArray):
+    case .batch(let identifiers):
       return [
-        "ids" : identifiersArray
+        "ids" : identifiers
       ]
     case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed:
       return nil
