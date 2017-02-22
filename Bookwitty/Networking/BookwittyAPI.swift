@@ -113,35 +113,10 @@ extension BookwittyAPI: TargetType {
       return nil
     case .register(let firstName, let lastName, let email, let dateOfBirth, let country, let password, let language):
       return UserAPI.registerPostBody(firstName: firstName, lastName: lastName, email: email, dateOfBirth: dateOfBirth, country: country, password: password, language: language)
-
     case .updateUser(let identifier, let firstName, let lastName, let dateOfBirth, let email, let currentPassword, let password, let country, let badges, let preferences):
       return UserAPI.updatePostBody(identifier: identifier, firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirth, email: email, currentPassword: currentPassword, password: password, country: country, badges: badges, preferences: preferences)
     case .Search(let filter, let page):
-      var dictionary = [String : Any]()
-
-      //Filters
-      if let filter = filter {
-        if let query = filter.query {
-          dictionary["filter[query]"] = query
-        }
-
-        if let category = filter.category {
-          dictionary["filter[category]"] = category
-        }
-      }
-
-      //Pagination
-      if let page = page {
-        if let number = page.number {
-          dictionary["page[number]"] = number
-        }
-
-        if let size = page.size {
-          dictionary["page[size]"] = size
-        }
-      }
-
-      return dictionary
+      return SearchAPI.parameters(filter: filter, page: page)
     case .updatePenName(let identifier, let name, let biography, let avatarUrl, let facebookUrl, let tumblrUrl, let googlePlusUrl, let twitterUrl, let instagramUrl, let pinterestUrl, let youtubeUrl, let linkedinUrl, let wordpressUrl, let websiteUrl):
       return PenNameAPI.updatePostBody(identifier: identifier, name: name, biography: biography, avatarUrl: avatarUrl, facebookUrl: facebookUrl, tumblrUrl: tumblrUrl, googlePlusUrl: googlePlusUrl, twitterUrl: twitterUrl, instagramUrl: instagramUrl, pinterestUrl: pinterestUrl, youtubeUrl: youtubeUrl, linkedinUrl: linkedinUrl, wordpressUrl: wordpressUrl, websiteUrl: websiteUrl)
     }

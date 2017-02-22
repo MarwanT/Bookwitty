@@ -31,3 +31,33 @@ struct SearchAPI {
     }
   }
 }
+
+extension SearchAPI {
+  static func parameters(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?) -> [String : Any]? {
+    var dictionary = [String : Any]()
+
+    //Filters
+    if let filter = filter {
+      if let query = filter.query {
+        dictionary["filter[query]"] = query
+      }
+
+      if let category = filter.category {
+        dictionary["filter[category]"] = category
+      }
+    }
+
+    //Pagination
+    if let page = page {
+      if let number = page.number {
+        dictionary["page[number]"] = number
+      }
+
+      if let size = page.size {
+        dictionary["page[size]"] = size
+      }
+    }
+    
+    return dictionary
+  }
+}
