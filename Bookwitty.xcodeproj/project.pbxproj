@@ -18,6 +18,7 @@
 		5644F21A1E55A2F100B7D8E7 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5644F2191E55A2F100B7D8E7 /* SettingsViewController.swift */; };
 		5644F21C1E55A77100B7D8E7 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5644F21B1E55A77100B7D8E7 /* SettingsViewModel.swift */; };
 		566EE82D1E5D7082004B990D /* Search+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EE82C1E5D7082004B990D /* Search+API.swift */; };
+		566EE87B1E5DC677004B990D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 566EE8781E5DC677004B990D /* Localizable.strings */; };
 		56D5F73B1E5B60BF00F6A164 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D5F73A1E5B60BF00F6A164 /* Book.swift */; };
 		56D5F73D1E5B7D0000F6A164 /* PenName+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D5F73C1E5B7D0000F6A164 /* PenName+API.swift */; };
 		56E09DBC1E5463EA00B7C6E6 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E09DBB1E5463EA00B7C6E6 /* ChangePasswordViewController.swift */; };
@@ -166,6 +167,8 @@
 		5644F2191E55A2F100B7D8E7 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		5644F21B1E55A77100B7D8E7 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		566EE82C1E5D7082004B990D /* Search+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Search+API.swift"; sourceTree = "<group>"; };
+		566EE8791E5DC677004B990D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		566EE87A1E5DC677004B990D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		56D5F73A1E5B60BF00F6A164 /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		56D5F73C1E5B7D0000F6A164 /* PenName+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PenName+API.swift"; sourceTree = "<group>"; };
 		56E09DBB1E5463EA00B7C6E6 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
@@ -367,6 +370,14 @@
 				5644F21B1E55A77100B7D8E7 /* SettingsViewModel.swift */,
 			);
 			path = Account;
+			sourceTree = "<group>";
+		};
+		566EE8771E5DC677004B990D /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				566EE8781E5DC677004B990D /* Localizable.strings */,
+			);
+			path = Localization;
 			sourceTree = "<group>";
 		};
 		56FC41941E58CB7E00D9B1CE /* Localization */ = {
@@ -704,6 +715,7 @@
 		59D8FC9F1E4C760F001C1EDB /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				566EE8771E5DC677004B990D /* Localization */,
 				59D8FCA01E4C760F001C1EDB /* Bookwitty-Bridging-Header.h */,
 				59D8FCA51E4C76E7001C1EDB /* Info.plist */,
 				59D8FCA11E4C760F001C1EDB /* GoogleService-Info.plist */,
@@ -914,6 +926,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = 59FBBC401E1D074400FC84E5;
 			productRefGroup = 59FBBC4A1E1D074400FC84E5 /* Products */;
@@ -948,6 +961,7 @@
 				56205DEC1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib in Resources */,
 				594290121E51B7C00006B2F1 /* DisclosureTableViewCell.xib in Resources */,
 				594290031E4F737B0006B2F1 /* Books.storyboard in Resources */,
+				566EE87B1E5DC677004B990D /* Localizable.strings in Resources */,
 				597B8E391E3954B200C7811B /* Volkhov-Regular.ttf in Resources */,
 				56399DBC1E51CF2D005192AC /* Account.storyboard in Resources */,
 				59A164CB1E561BBD00088D84 /* LaunchScreen.xib in Resources */,
@@ -1207,6 +1221,18 @@
 			targetProxy = 59FBBC5E1E1D074400FC84E5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		566EE8781E5DC677004B990D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				566EE8791E5DC677004B990D /* en */,
+				566EE87A1E5DC677004B990D /* fr */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		59FBBC641E1D074400FC84E5 /* Debug */ = {
