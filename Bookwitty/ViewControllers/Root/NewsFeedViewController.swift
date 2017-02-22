@@ -78,6 +78,14 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       strongSelf.pullToRefresher.endRefreshing()
       if(success) {
         strongSelf.collectionNode.reloadData()
+
+        let testPen1 = PenName()
+        testPen1.name = "Shafic Hariri"
+        let testPen2 = PenName()
+        testPen2.name = "ShafiX"
+        let testPen3 = PenName()
+        testPen3.name = "Triple-X"
+        strongSelf.penNameSelectionNode.data = [testPen1,testPen2, testPen3]
       }
     }
   }
