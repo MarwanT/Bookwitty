@@ -16,4 +16,9 @@ func localizedString(key: String, defaultValue: String = "", count: Count = 0, c
 
 
 final class Localization {
+
+  enum Language: String {
+    case English = "en"
+    case French = "fr"
+  }
 }
