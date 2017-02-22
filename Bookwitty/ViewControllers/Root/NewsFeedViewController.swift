@@ -145,12 +145,14 @@ extension NewsFeedViewController: UIScrollViewDelegate {
   private func scrollToTheRightPosition(scrollView: UIScrollView) {
     let penNameHeight = penNameSelectionNode.occupiedHeight
     if(scrollView.contentOffset.y <= penNameHeight) {
-      if(penNameHeight/2 > scrollView.contentOffset.y) {
-        UIView.animate(withDuration: 0.5, animations: {
-          scrollView.contentOffset = CGPoint(x: 0, y: 0)
+      if(scrollView.contentOffset.y == 0.0) {
+        UIView.animate(withDuration: 0.3, animations: {
+          self.penNameSelectionNode.alpha = 1.0
+          scrollView.contentOffset = CGPoint(x: 0, y: 0.0)
         })
       } else {
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.3, animations: {
+          self.penNameSelectionNode.alpha = 0.4
           scrollView.contentOffset = CGPoint(x: 0, y: penNameHeight)
         })
       }
