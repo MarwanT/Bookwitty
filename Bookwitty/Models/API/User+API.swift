@@ -190,4 +190,8 @@ extension UserAPI {
     user.preferences = preferences
     return user.serializeData(options: [.IncludeID, .OmitNullValues])
   }
+  
+  static func batchPostBody(identifiers: [String]) -> [String : Any]? {
+    return ["ids" : identifiers]
+  }
 }

@@ -108,9 +108,7 @@ extension BookwittyAPI: TargetType {
         "scopes": "openid email profile"
       ]
     case .batch(let identifiers):
-      return [
-        "ids" : identifiers
-      ]
+      return UserAPI.batchPostBody(identifiers: identifiers)
     case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed:
       return nil
     case .register(let firstName, let lastName, let email, let dateOfBirth, let country, let password, let language):
