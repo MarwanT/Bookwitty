@@ -24,6 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Reset flag when application starts
     AccessToken.shared.updating = false
+
+    let preferredLanguage = GeneralSettings.sharedInstance.preferredLanguage
+    Localization.set(language: Localization.Language(rawValue: preferredLanguage))
     
     Fabric.with([Crashlytics.self])
     SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
