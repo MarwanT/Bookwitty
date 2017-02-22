@@ -39,6 +39,26 @@ final class Localization {
     let oldLanguage = Language(rawValue: GeneralSettings.sharedInstance.preferredLanguage)
     
     Bundle.setLanguage(newLanguage.rawValue)
+    postNotificationIfNeeded(new: language, old: oldLanguage)
     GeneralSettings.sharedInstance.preferredLanguage = newLanguage.rawValue
+  }
+
+  //Post Language Changed Notification 
+  //Only if the Language Selected is Different than the current one
+  static func postNotificationIfNeeded(new: Language?, old: Language?) {
+    guard let new = new, let old = old else {
+      return
+    }
+
+    guard new != old else {
+      return
+    }
+
+    let info = [
+      Notifications.Key.UserInfoKeyOld : old.rawValue,
+      Notifications.Key.UserInfoKeyNew : new.rawValue
+    ]
+
+    NotificationCenter.default.post(name: Notifications.Name.languageValueChanged, object: nil, userInfo: info)
   }
 }
