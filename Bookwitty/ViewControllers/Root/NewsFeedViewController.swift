@@ -11,26 +11,31 @@ import AsyncDisplayKit
 class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
-  
+  let pullToRefresher = UIRefreshControl()
+
   let viewModel = NewsFeedViewModel()
-
   let data = ["","","","","","","","","","","","","","",""]
-
-  init() {
-    flowLayout = UICollectionViewFlowLayout()
-    let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
-    flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: externalMargin/2, right: 0)
-    collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
-    collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
-    super.init(node: collectionNode)
-
-    collectionNode.delegate = self
-    flowLayout.minimumInteritemSpacing  = 0
-    flowLayout.minimumLineSpacing       = 0
-  }
+  var isFirstRun: Bool = true
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  init() {
+    let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
+    flowLayout = UICollectionViewFlowLayout()
+    flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: externalMargin/2, right: 0)
+    flowLayout.minimumInteritemSpacing  = 0
+    flowLayout.minimumLineSpacing       = 0
+
+    collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+
+    super.init(node: collectionNode)
+
+    collectionNode.onDidLoad { [weak self] (collectionNode) in
+      guard let strongSelf = self else { return }
+      collectionNode.view.addSubview(strongSelf.pullToRefresher)
+    }
   }
 
   override func viewDidLoad() {
@@ -41,14 +46,20 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
     collectionNode.delegate = self
     collectionNode.dataSource = self
+    //Listen to pullToRefresh valueChange and call loadData
+    pullToRefresher.addTarget(self, action: #selector(self.loadData), for: .valueChanged)
 
-    viewModel.loadNewsfeed { (success) in
-      if(success) {
-        self.collectionNode.reloadData()
-      }
+    applyTheme()
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    if isFirstRun && UserManager.shared.isSignedIn {
+      isFirstRun = false
+      loadData()
     }
   }
-  
+
   private func initializeNavigationItems() {
     let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
       UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
@@ -57,6 +68,25 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       UIBarButtonItemStyle.plain, target: self, action:
       #selector(self.settingsButtonTap(_:)))
     navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
+  }
+
+  func loadData() {
+    pullToRefresher.beginRefreshing()
+    viewModel.loadNewsfeed { [weak self] (success) in
+      guard let strongSelf = self else { return }
+      strongSelf.pullToRefresher.endRefreshing()
+      if(success) {
+        strongSelf.collectionNode.reloadData()
+      }
+    }
+  }
+}
+
+// MARK: - Themeable
+extension NewsFeedViewController: Themeable {
+  func applyTheme() {
+    collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+    pullToRefresher.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
   }
 }
 
