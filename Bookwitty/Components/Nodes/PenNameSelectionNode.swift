@@ -16,7 +16,6 @@ class PenNameSelectionNode: ASCellNode {
   fileprivate let separatorHeight: CGFloat = 1.0
   fileprivate let collapsedHeightDimension: ASDimension = ASDimension(unit: ASDimensionUnit.points, value: PenNameSelectionNode.cellHeight)
   fileprivate var expandedHeightDimension: ASDimension {
-    get {
       guard data.count > minNumberOfCells else {
         return ASDimension(unit: ASDimensionUnit.points, value: 0.0)
       }
@@ -26,16 +25,13 @@ class PenNameSelectionNode: ASCellNode {
       let expandedHeight = itemHeight + (itemHeight * CGFloat(actualNumberOfCells))
 
       return ASDimension(unit: ASDimensionUnit.points, value: expandedHeight)
-    }
   }
   fileprivate var expandedCollectionHeight: CGFloat {
-    get {
       guard data.count > minNumberOfCells else {
         return 0.0
       }
 
       return expandedHeightDimension.value - PenNameSelectionNode.cellHeight
-    }
   }
 
   fileprivate let header: PenNameDisplayNode
@@ -70,15 +66,11 @@ class PenNameSelectionNode: ASCellNode {
   }
   var selectedIndexPath: IndexPath? = nil
   var headerHeight: CGFloat {
-    get {
       return header.style.height.value
-    }
   }
   var occupiedHeight: CGFloat {
-    get {
       //Subtract separatorHeight from collapsedHeightDimension [So that the view would not be removed the node automatically]
       return expand ? expandedHeightDimension.value : (collapsedHeightDimension.value - separatorHeight)
-    }
   }
 
   override init() {
