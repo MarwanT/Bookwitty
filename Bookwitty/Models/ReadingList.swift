@@ -20,8 +20,18 @@ class ReadingList: Resource {
   var shortDescription: String?
   var conclusion: String?
   var body: String?
-  //TODO: Check the full response for > relationships > posts model
-  
+
+  var postsCollection: LinkedResourceCollection?
+  lazy var posts: [ResourceIdentifier]? = {
+    return self.postsCollection?.linkage
+  }()
+
+  @objc
+  private var penNamesCollection: LinkedResourceCollection?
+  lazy var penName: PenName? = {
+    return self.penNamesCollection?.resources[0] as? PenName
+  }()
+
   override class var resourceType: ResourceType {
     return "reading-lists"
   }
@@ -37,7 +47,9 @@ class ReadingList: Resource {
       "shortDescription": Attribute().serializeAs("short-description"),
       "title": Attribute().serializeAs("title"),
       "conclusion": Attribute().serializeAs("conclusion"),
-      "body": Attribute().serializeAs("body")
+      "body": Attribute().serializeAs("body"),
+      "postsCollection" : ToManyRelationship(Resource.self).serializeAs("posts"),
+      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
       ])
   }
 }
