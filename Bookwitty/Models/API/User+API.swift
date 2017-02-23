@@ -172,6 +172,22 @@ struct UserAPI {
       }
     })
   }
+
+  static func updateUser(preference: User.Preference, value: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+
+    let successStatusCode = 204
+
+    return signedAPIRequest(target: .updatePreference(preference: preference.rawValue, value: value), completion: {
+      (data, statusCode, response, error) in
+      var success: Bool = false
+      var error: BookwittyAPIError? = nil
+      defer {
+        completion(success, error)
+      }
+
+      success = statusCode == successStatusCode
+    })
+  }
 }
 
 //MARK: - Moya Needed parameters
@@ -207,5 +223,18 @@ extension UserAPI {
   
   static func batchPostBody(identifiers: [String]) -> [String : Any]? {
     return ["ids" : identifiers]
+  }
+
+  static func updatePostBody(preference: String, value: String) -> [String : Any]? {
+    let dictionary = [
+      "data" : [
+        "type": "users",
+        "attributes" : [
+          "preference" : preference,
+          "value" : value
+        ]
+      ]
+    ]
+    return dictionary
   }
 }

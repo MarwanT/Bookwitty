@@ -66,12 +66,41 @@ final class SettingsViewModel {
     }
   }
 
-  private func handleGeneralSwitchValueChanged(atRow row: Int, newValue: Bool) {
+  private func handleGeneralSwitchValueChanged(atRow row: Int, newValue: Bool, completion: @escaping (()->())) {
     switch row {
     case 0: //email
-      GeneralSettings.sharedInstance.shouldSendEmailNotifications = newValue
+      updateUserPreferences(value: "\(newValue)", completion: { (success: Bool) -> () in
+        if success {
+          GeneralSettings.sharedInstance.shouldSendEmailNotifications = newValue
+        }
+        completion()
+      })
     default:
       break
+    }
+  }
+
+  private func updateUserPreferences(value: String, completion: @escaping ((Bool)->())) {
+    var followersPreferenceSuccess: Bool = false
+    var commentsPreferenceSuccess: Bool = false
+
+    let group = DispatchGroup()
+    group.enter()
+    _ = UserAPI.updateUser(preference: User.Preference.emailNotificationFollowers, value: value) {
+      (success: Bool, error: BookwittyAPIError?) in
+      followersPreferenceSuccess = success
+      group.leave()
+    }
+
+    group.enter()
+    _ = UserAPI.updateUser(preference: User.Preference.emailNotificationComments, value: value) {
+      (success: Bool, error: BookwittyAPIError?) in
+      commentsPreferenceSuccess = success
+      group.leave()
+    }
+
+    group.notify(queue: DispatchQueue.main) {
+      completion(followersPreferenceSuccess && commentsPreferenceSuccess)
     }
   }
 
@@ -160,10 +189,10 @@ final class SettingsViewModel {
     return accessory
   }
 
-  func handleSwitchValueChanged(forRowAt indexPath: IndexPath, newValue: Bool) {
+  func handleSwitchValueChanged(forRowAt indexPath: IndexPath, newValue: Bool, completion: @escaping (()->())) {
     switch indexPath.section {
     case Sections.General.rawValue:
-      handleGeneralSwitchValueChanged(atRow: indexPath.row, newValue: newValue)
+      handleGeneralSwitchValueChanged(atRow: indexPath.row, newValue: newValue, completion: completion)
     default:
       break
     }

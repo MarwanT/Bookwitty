@@ -42,7 +42,10 @@ class SettingsViewController: UIViewController {
       return
     }
 
-    viewModel.handleSwitchValueChanged(forRowAt: indexPath, newValue: sender.isOn)
+    viewModel.handleSwitchValueChanged(forRowAt: indexPath, newValue: sender.isOn) {
+      () -> () in
+      sender.isOn = GeneralSettings.sharedInstance.shouldSendEmailNotifications
+    }
   }
 
   fileprivate func dispatchSelectionAt(_ indexPath: IndexPath) {
