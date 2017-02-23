@@ -66,10 +66,15 @@ final class SettingsViewModel {
     }
   }
 
-  private func handleGeneralSwitchValueChanged(atRow row: Int, newValue: Bool) {
+  private func handleGeneralSwitchValueChanged(atRow row: Int, newValue: Bool, completion: @escaping (()->())) {
     switch row {
     case 0: //email
-      GeneralSettings.sharedInstance.shouldSendEmailNotifications = newValue
+      updateUserPreferences(value: "\(newValue)", completion: { (success: Bool) -> () in
+        if success {
+          GeneralSettings.sharedInstance.shouldSendEmailNotifications = newValue
+        }
+        completion()
+      })
     default:
       break
     }
@@ -184,10 +189,10 @@ final class SettingsViewModel {
     return accessory
   }
 
-  func handleSwitchValueChanged(forRowAt indexPath: IndexPath, newValue: Bool) {
+  func handleSwitchValueChanged(forRowAt indexPath: IndexPath, newValue: Bool, completion: @escaping (()->())) {
     switch indexPath.section {
     case Sections.General.rawValue:
-      handleGeneralSwitchValueChanged(atRow: indexPath.row, newValue: newValue)
+      handleGeneralSwitchValueChanged(atRow: indexPath.row, newValue: newValue, completion: completion)
     default:
       break
     }
