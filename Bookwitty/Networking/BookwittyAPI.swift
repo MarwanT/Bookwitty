@@ -109,8 +109,6 @@ extension BookwittyAPI: TargetType {
       ]
     case .batch(let identifiers):
       return UserAPI.batchPostBody(identifiers: identifiers)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed:
-      return nil
     case .register(let firstName, let lastName, let email, let dateOfBirth, let country, let password, let language):
       return UserAPI.registerPostBody(firstName: firstName, lastName: lastName, email: email, dateOfBirth: dateOfBirth, country: country, password: password, language: language)
     case .updateUser(let identifier, let firstName, let lastName, let dateOfBirth, let email, let currentPassword, let password, let country, let badges, let preferences):
@@ -119,6 +117,8 @@ extension BookwittyAPI: TargetType {
       return SearchAPI.parameters(filter: filter, page: page)
     case .updatePenName(let identifier, let name, let biography, let avatarUrl, let facebookUrl, let tumblrUrl, let googlePlusUrl, let twitterUrl, let instagramUrl, let pinterestUrl, let youtubeUrl, let linkedinUrl, let wordpressUrl, let websiteUrl):
       return PenNameAPI.updatePostBody(identifier: identifier, name: name, biography: biography, avatarUrl: avatarUrl, facebookUrl: facebookUrl, tumblrUrl: tumblrUrl, googlePlusUrl: googlePlusUrl, twitterUrl: twitterUrl, instagramUrl: instagramUrl, pinterestUrl: pinterestUrl, youtubeUrl: youtubeUrl, linkedinUrl: linkedinUrl, wordpressUrl: wordpressUrl, websiteUrl: websiteUrl)
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed:
+      return nil
     }
   }
   
