@@ -51,7 +51,12 @@ class ReadingListCardContentNode: ASDisplayNode {
       }
     }
   }
-  var imageCollection: [String] = []
+  var imageCollection: [String] = [] {
+    didSet {
+      customHorizontalList.imageCollection = imageCollection
+      setNeedsLayout()
+    }
+  }
 
   override init() {
     titleNode = ASTextNode()
