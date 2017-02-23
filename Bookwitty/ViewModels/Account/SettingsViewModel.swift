@@ -34,6 +34,7 @@ final class SettingsViewModel {
 
   init () {
     sectionTitles = ["", ""]
+    countryCode = user.country ?? (Locale.current as NSLocale).object(forKey: NSLocale.Key.countryCode) as? String ?? ""
   }
 
   //General
