@@ -38,6 +38,15 @@ final class AccountViewModel {
 
   private let user: User = UserManager.shared.signedInUser
 
+  func headerInformation() -> (name: String, image: UIImage?) {
+    let nameFormatter = PersonNameComponentsFormatter()
+    nameFormatter.style = .long
+    var nameComponents = PersonNameComponents()
+    nameComponents.givenName = user.firstName
+    nameComponents.familyName = user.lastName
+    return (nameFormatter.string(from: nameComponents), nil)
+  }
+
   //User Information
   private func valuesForUserInformation(atRow row: Int) -> String {
     switch row {
