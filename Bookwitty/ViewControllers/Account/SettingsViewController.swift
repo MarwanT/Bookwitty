@@ -76,10 +76,15 @@ class SettingsViewController: UIViewController {
     countryPickerViewController.flagSize = 44
 
     countryPickerViewController.onCountrySelected = { country in
-      guard let country = country else { return }
-      self.viewModel.countryName = country.countryName()
-      self.tableView.reloadData()
-      let _ = countryPickerViewController.navigationController?.popViewController(animated: true)
+      guard let country = country else {
+        return
+      }
+
+      let _ = countryPickerViewController.navigationController?.popViewController(animated: true)      
+      self.viewModel.updateUserCountry(country: country.countryCode, completion: {
+        (success: Bool) in
+        self.tableView.reloadData()
+      })
     }
 
     self.navigationController?.pushViewController(countryPickerViewController, animated: true)
