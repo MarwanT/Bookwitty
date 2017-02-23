@@ -56,13 +56,20 @@ final class SignInViewModel {
       }
       
       self.request = UserAPI.user(completion: { (success, user, error) in
-        guard let user = user, success else {
+        var success = success
+        var error = error
+        defer {
           self.request = nil
           completion(success, error)
+        }
+        
+        guard let user = user, success else {
+          success = false
           return
         }
         
         UserManager.shared.signedInUser = user
+        success = true
       })
     })
   }
