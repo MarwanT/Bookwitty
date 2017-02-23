@@ -14,6 +14,7 @@ final class NewsFeedViewModel {
   var cancellableRequest:  Cancellable?
   let viewController = localizedString(key: "news", defaultValue: "News")
   var data: [ModelResource] = []
+  var penNames: [PenName] = [PenName()] //TODO: Replace with real pen names loaded or cached.
   var selectedPenNameId: String = "6c08337a-108f-4335-b2d0-3a25b9fe6bed"
 
   func loadNewsfeed(completionBlock: @escaping (_ success: Bool) -> ()) {
@@ -23,17 +24,25 @@ final class NewsFeedViewModel {
     }
   }
 
+  func hasPenNames() -> Bool {
+    return penNames.count > 0
+  }
+
   func numberOfSections() -> Int {
-    return data.count > 0 ? 1 : 0
+    let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
+    return data.count > 0 ? 1 : showsPenNameSelectionHeader
   }
 
   func numberOfItemsInSection() -> Int {
-    return data.count
+    let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
+    return data.count + showsPenNameSelectionHeader
   }
 
   func nodeForItem(atIndex index: Int) -> BaseCardPostNode? {
-    guard data.count > index else { return nil }
-    let resource = data[index]
+    let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
+    let dataIndex = index - showsPenNameSelectionHeader
+    guard data.count > dataIndex else { return nil }
+    let resource = data[dataIndex]
     return CardRegistry.getCard(resource: resource)
   }
 }
@@ -56,7 +65,7 @@ class CardRegistry {
       TopicCardPostCellNode()
     }
     register(resource: Text.self) { () -> BaseCardPostNode in
-      QuoteCardPostCellNode()
+      ArticleCardPostCellNode()
     }
     register(resource: Quote.self) { () -> BaseCardPostNode in
       QuoteCardPostCellNode()
@@ -125,6 +134,7 @@ class CardRegistry {
       return nil
     }
 
+    card.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
     card.node.articleTitle = resource.caption
     card.node.articleDescription = resource.shortDescription ?? resource.biography
     card.node.subImageUrl = resource.thumbnailImageUrl ?? resource.profileImageUrl ?? resource.imageUrl

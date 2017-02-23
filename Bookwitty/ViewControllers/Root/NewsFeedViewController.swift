@@ -12,6 +12,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
   let pullToRefresher = UIRefreshControl()
+  let penNameSelectionNode = PenNameSelectionNode()
 
   let viewModel = NewsFeedViewModel()
   let data = ["","","","","","","","","","","","","","",""]
@@ -77,6 +78,14 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       strongSelf.pullToRefresher.endRefreshing()
       if(success) {
         strongSelf.collectionNode.reloadData()
+
+        let testPen1 = PenName()
+        testPen1.name = "Shafic Hariri"
+        let testPen2 = PenName()
+        testPen2.name = "ShafiX"
+        let testPen3 = PenName()
+        testPen3.name = "Triple-X"
+        strongSelf.penNameSelectionNode.data = [testPen1,testPen2, testPen3]
       }
     }
   }
@@ -112,7 +121,11 @@ extension NewsFeedViewController: ASCollectionDataSource {
     let index = indexPath.row
     
     return {
+      if(index != 0) {
         return self.viewModel.nodeForItem(atIndex: index) ?? BaseCardPostNode()
+      } else {
+        return self.penNameSelectionNode
+      }
     }
   }
 }
@@ -123,5 +136,34 @@ extension NewsFeedViewController: ASCollectionDelegate {
       min: CGSize(width: collectionNode.frame.width, height: 0),
       max: CGSize(width: collectionNode.frame.width, height: .infinity)
     )
+  }
+}
+
+extension NewsFeedViewController: UIScrollViewDelegate {
+  public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    scrollToTheRightPosition(scrollView: scrollView)
+  }
+
+  public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    if(!decelerate) {
+      scrollToTheRightPosition(scrollView: scrollView)
+    }
+  }
+
+  private func scrollToTheRightPosition(scrollView: UIScrollView) {
+    let penNameHeight = penNameSelectionNode.occupiedHeight
+    if scrollView.contentOffset.y <= penNameHeight {
+      if(scrollView.contentOffset.y == 0.0) {
+        UIView.animate(withDuration: 0.3, animations: {
+          self.penNameSelectionNode.alpha = 1.0
+          scrollView.contentOffset = CGPoint(x: 0, y: 0.0)
+        })
+      } else {
+        UIView.animate(withDuration: 0.3, animations: {
+          self.penNameSelectionNode.alpha = 0.4
+          scrollView.contentOffset = CGPoint(x: 0, y: penNameHeight)
+        })
+      }
+    }
   }
 }

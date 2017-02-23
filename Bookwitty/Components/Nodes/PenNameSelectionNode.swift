@@ -12,21 +12,26 @@ import AsyncDisplayKit
 class PenNameSelectionNode: ASCellNode {
   fileprivate static let cellHeight: CGFloat = 45.0
   fileprivate let maxNumberOfCells: Int = 5
+  fileprivate let minNumberOfCells: Int = 1
   fileprivate let separatorHeight: CGFloat = 1.0
   fileprivate let collapsedHeightDimension: ASDimension = ASDimension(unit: ASDimensionUnit.points, value: PenNameSelectionNode.cellHeight)
   fileprivate var expandedHeightDimension: ASDimension {
-    get {
+      guard data.count > minNumberOfCells else {
+        return ASDimension(unit: ASDimensionUnit.points, value: 0.0)
+      }
+
       let itemHeight = collapsedHeightDimension.value
       let actualNumberOfCells = (maxNumberOfCells > data.count) ? data.count : maxNumberOfCells
       let expandedHeight = itemHeight + (itemHeight * CGFloat(actualNumberOfCells))
 
       return ASDimension(unit: ASDimensionUnit.points, value: expandedHeight)
-    }
   }
   fileprivate var expandedCollectionHeight: CGFloat {
-    get {
+      guard data.count > minNumberOfCells else {
+        return 0.0
+      }
+
       return expandedHeightDimension.value - PenNameSelectionNode.cellHeight
-    }
   }
 
   fileprivate let header: PenNameDisplayNode
@@ -34,10 +39,39 @@ class PenNameSelectionNode: ASCellNode {
   fileprivate let collectionNode: ASCollectionNode
 
   private let flowLayout: UICollectionViewFlowLayout
+  private let yourFeedTitle: String = localizedString(key: "your_feed", defaultValue: "Your feed")
   //Consider replacing expand with DisplayMode enum incase we needed something more than expand and collapse.
-  var expand: Bool = true
-  var data: [String] = ["Shafic Hariri"]
+  var expand: Bool = true {
+    didSet {
+    header.shouldExpand = expand
+    }
+  }
+  var data: [PenName] = [] {
+    didSet {
+      guard data.count > minNumberOfCells else {
+        style.height = ASDimensionMake(0.0)
+        setNeedsLayout()
+        return
+      }
+      
+      let selectedPenName = data[selectedIndexPath?.item ?? 0]
+      header.penNameSummary = yourFeedTitle + " " + (selectedPenName.name ?? "")
+      let extraSeparator = separatorHeight
+      style.height = ASDimensionMake(expandedHeightDimension.value + extraSeparator)
+      collectionNode.style.preferredSize = CGSize(width: style.maxWidth.value, height: expandedCollectionHeight)
+      collectionNode.reloadData()
+      expand = true
+      setNeedsLayout()
+    }
+  }
   var selectedIndexPath: IndexPath? = nil
+  var headerHeight: CGFloat {
+      return header.style.height.value
+  }
+  var occupiedHeight: CGFloat {
+      //Subtract separatorHeight from collapsedHeightDimension [So that the view would not be removed the node automatically]
+      return expand ? expandedHeightDimension.value : (collapsedHeightDimension.value - separatorHeight)
+  }
 
   override init() {
     flowLayout = UICollectionViewFlowLayout()
@@ -55,8 +89,6 @@ class PenNameSelectionNode: ASCellNode {
     collectionNode.delegate = self
     collectionNode.dataSource = self
     automaticallyManagesSubnodes = true
-
-    header.penNameSummary = "Your feed (Shafic Hariri)"
 
     lastSeparatorNode.style.preferredSize = CGSize(width: style.maxWidth.value, height: separatorHeight)
     lastSeparatorNode.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
@@ -119,7 +151,7 @@ extension PenNameSelectionNode: ASCollectionDataSource, ASCollectionDelegate {
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
     let index = indexPath.row
     let isLast = (index == data.count-1)
-    let name: String = data[index]
+    let name: String = data[index].name ?? ""
     return {
       let cell = PenNameCellNode(withSeparator: !isLast, withCellHeight: PenNameSelectionNode.cellHeight)
       cell.penNameSummary = name
