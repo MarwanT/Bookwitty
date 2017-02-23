@@ -44,11 +44,13 @@ typealias FeaturedContent = (wittyId: String?, caption: String?)
 typealias Banner = (imageUrlString: String?, caption: String?)
 
 class CuratedCollectionSections: NSObject {
+  let banner: Banner?
   let featuredContent: [FeaturedContent]?
   let categories: [Category]?
   let readingListIdentifiers: [String]?
   
   override init() {
+    banner = nil
     featuredContent = nil
     categories = nil
     readingListIdentifiers = nil
@@ -56,17 +58,19 @@ class CuratedCollectionSections: NSObject {
   
   init(for dictionary: Dictionary<String,Any>) {
     let parsedValues = CuratedCollectionSections.sections(for: dictionary)
+    self.banner = parsedValues.banner
     self.featuredContent = parsedValues.featuredContent
     self.categories = parsedValues.categories
     self.readingListIdentifiers = parsedValues.readingListIdentifiers
   }
   
-  private static func sections(for dictionary: [String : Any]) -> (featuredContent: [FeaturedContent], categories: [Category], readingListIdentifiers: [String]) {
+  private static func sections(for dictionary: [String : Any]) -> (banner: Banner?, featuredContent: [FeaturedContent], categories: [Category], readingListIdentifiers: [String]) {
     let json = JSON(dictionary)
+    let banner: Banner? = nil
     let featuredContent = self.featuredContent(json: json["featured"])
     let categories = self.categories(json: json["categories"])
     let readingListsIdentifiers = self.readingListIdentifiers(json: json["reading-lists"])
-    return (featuredContent, categories, readingListsIdentifiers)
+    return (banner, featuredContent, categories, readingListsIdentifiers)
   }
   
   private static func featuredContent(json: JSON) -> [FeaturedContent] {
