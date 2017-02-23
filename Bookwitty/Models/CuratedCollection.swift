@@ -41,6 +41,7 @@ extension CuratedCollection: Parsable {
 // MARK: - Curated collection sections
 
 typealias FeaturedContent = (wittyId: String?, caption: String?)
+typealias Banner = (imageUrlString: String?, caption: String?)
 
 class CuratedCollectionSections: NSObject {
   let featuredContent: [FeaturedContent]?
