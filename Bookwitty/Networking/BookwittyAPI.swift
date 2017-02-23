@@ -33,6 +33,10 @@ extension TargetType {
   var headerParameters: [String:String]? {
     return nil
   }
+
+  var includes: [ModelResource.Type]? {
+    return nil
+  }
 }
 
 extension BookwittyAPI: TargetType {
@@ -159,6 +163,12 @@ extension BookwittyAPI: TargetType {
     }
   }
 
+  var includes: [ModelResource.Type]? {
+    switch self {
+    default:
+      return nil
+    }
+  }
 }
 
 // MARK: - Global Helpers
