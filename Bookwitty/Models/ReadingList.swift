@@ -26,12 +26,6 @@ class ReadingList: Resource {
     return self.postsCollection?.linkage
   }()
 
-  @objc
-  private var penNamesCollection: LinkedResourceCollection?
-  lazy var penName: PenName? = {
-    return self.penNamesCollection?.resources[0] as? PenName
-  }()
-
   override class var resourceType: ResourceType {
     return "reading-lists"
   }
@@ -48,8 +42,7 @@ class ReadingList: Resource {
       "title": Attribute().serializeAs("title"),
       "conclusion": Attribute().serializeAs("conclusion"),
       "body": Attribute().serializeAs("body"),
-      "postsCollection" : ToManyRelationship(Resource.self).serializeAs("posts"),
-      "penNamesCollection" : ToOneRelationship(PenName.self).serializeAs("pen-name")
+      "postsCollection" : ToManyRelationship(Resource.self).serializeAs("posts")
       ])
   }
 }
