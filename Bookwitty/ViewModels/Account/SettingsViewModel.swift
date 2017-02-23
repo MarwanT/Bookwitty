@@ -75,6 +75,21 @@ final class SettingsViewModel {
     }
   }
 
+  func updateUserCountry(country: String, completion:((Bool)->())?) {
+    guard let identifier = user.id else {
+      completion?(false)
+      return
+    }
+
+    _ = UserAPI.updateUser(identifier: identifier, countryISO3166: country, completionBlock: {
+      (success: Bool, user: User?, error: BookwittyAPIError?) in
+      if success {
+        self.countryCode = country
+      }
+      completion?(success)
+    })
+  }
+
   //Sign Out
   private func valuesForSignOut(atRow row: Int) -> (title: String, value: String) {
     return (signOutText, "")
