@@ -63,12 +63,11 @@ final class SignInViewModel {
           completion(success, error)
         }
         
-        guard let user = user, success else {
+        guard user != nil, success else {
           success = false
           return
         }
-        
-        UserManager.shared.signedInUser = user
+
         success = true
       })
     })

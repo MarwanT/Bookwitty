@@ -78,6 +78,11 @@ struct UserAPI {
       if let data = data {
         user = User.parseData(data: data)
         success = user != nil
+
+        if let user = user {
+          UserManager.shared.signedInUser = user
+        }
+
       } else {
         error = BookwittyAPIError.failToParseData
       }
@@ -106,6 +111,11 @@ struct UserAPI {
       if let data = data {
         user = User.parseData(data: data)
         success = user != nil
+
+        if let user = user {
+          UserManager.shared.signedInUser = user
+        }
+
       } else {
         error = BookwittyAPIError.failToParseData
       }
@@ -124,8 +134,12 @@ struct UserAPI {
 
       if let data = data {
         user = User.parseData(data: data)
-        //TODO: Update User
         success = user != nil
+
+        if let user = user {
+          UserManager.shared.signedInUser = user
+        }
+
       } else {
         error = BookwittyAPIError.failToParseData
       }
