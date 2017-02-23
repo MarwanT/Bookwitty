@@ -17,7 +17,7 @@ class PenNameSelectionNode: ASCellNode {
   fileprivate let collapsedHeightDimension: ASDimension = ASDimension(unit: ASDimensionUnit.points, value: PenNameSelectionNode.cellHeight)
   fileprivate var expandedHeightDimension: ASDimension {
     get {
-      guard data.count > 1 else { return ASDimension(unit: ASDimensionUnit.points, value: 0.0) }
+      guard data.count > minNumberOfCells else { return ASDimension(unit: ASDimensionUnit.points, value: 0.0) }
       let itemHeight = collapsedHeightDimension.value
       let actualNumberOfCells = (maxNumberOfCells > data.count) ? data.count : maxNumberOfCells
       let expandedHeight = itemHeight + (itemHeight * CGFloat(actualNumberOfCells))
