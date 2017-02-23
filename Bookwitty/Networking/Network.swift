@@ -112,6 +112,11 @@ public struct APIProvider {
       endpoint = endpoint.adding(newHTTPHeaderFields: headerParameters)
     }
 
+    if let includes = target.includes {
+      let includeTypes = includes.map({ $0.resourceType }).joined(separator: ",")
+      endpoint = endpoint.adding(newParameters: ["include" : includeTypes])
+    }
+
     // return Endpoint
     return endpoint
   }
