@@ -9,8 +9,8 @@
 import Foundation
 
 class UserManager {
-  enum Key: String {
-    case signedInUser
+  struct Key {
+    static let SignedInUser = "SignInUser"
   }
   
   static let shared = UserManager()
@@ -40,16 +40,16 @@ class UserManager {
   
   private func saveSignedInUser(user: User) {
     let userDictionary = user.serializeData(options: [.IncludeID, .OmitNullValues])
-    UserDefaults.standard.set(userDictionary, forKey: Key.signedInUser.rawValue)
+    UserDefaults.standard.set(userDictionary, forKey: Key.SignedInUser)
   }
   
   func deleteSignedInUser() {
     signedInUser = nil
-    UserDefaults.standard.removeObject(forKey: Key.signedInUser.rawValue)
+    UserDefaults.standard.removeObject(forKey: Key.SignedInUser)
   }
   
   private func getSignedInUser() -> User? {
-    guard let userDictionary = UserDefaults.standard.value(forKey: Key.signedInUser.rawValue) as? [String : Any] else {
+    guard let userDictionary = UserDefaults.standard.value(forKey: Key.SignedInUser) as? [String : Any] else {
       return nil
     }
     
