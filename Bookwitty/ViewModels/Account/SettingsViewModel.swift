@@ -75,6 +75,30 @@ final class SettingsViewModel {
     }
   }
 
+  private func updateUserPreferences(value: String, completion: @escaping ((Bool)->())) {
+    var followersPreferenceSuccess: Bool = false
+    var commentsPreferenceSuccess: Bool = false
+
+    let group = DispatchGroup()
+    group.enter()
+    _ = UserAPI.updateUser(preference: User.Preference.emailNotificationFollowers, value: value) {
+      (success: Bool, error: BookwittyAPIError?) in
+      followersPreferenceSuccess = success
+      group.leave()
+    }
+
+    group.enter()
+    _ = UserAPI.updateUser(preference: User.Preference.emailNotificationComments, value: value) {
+      (success: Bool, error: BookwittyAPIError?) in
+      commentsPreferenceSuccess = success
+      group.leave()
+    }
+
+    group.notify(queue: DispatchQueue.main) {
+      completion(followersPreferenceSuccess && commentsPreferenceSuccess)
+    }
+  }
+
   func updateUserCountry(country: String, completion:((Bool)->())?) {
     guard let identifier = user.id else {
       completion?(false)
