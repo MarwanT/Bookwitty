@@ -28,7 +28,7 @@ final class SettingsViewModel {
 
   private let sectionTitles: [String]
 
-  var countryName: String = "" //TODO: load the default value
+  var countryCode: String = ""
 
   init () {
     sectionTitles = ["", ""]
@@ -43,6 +43,7 @@ final class SettingsViewModel {
     case 1: //change password
       return (changePasswordText, "")
     case 2: //country/region
+      let countryName = (Locale.current as NSLocale).displayName(forKey: NSLocale.Key.countryCode, value: countryCode) ?? ""
       return (countryRegionText, countryName)
     default:
       return ("", "")
