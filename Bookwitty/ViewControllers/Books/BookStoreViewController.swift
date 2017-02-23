@@ -63,7 +63,7 @@ class BookStoreViewController: UIViewController {
   }
   
   func loadBannerSection() -> Bool {
-    let banner = Banner()
+    let banner = BannerView()
     banner.image = #imageLiteral(resourceName: "Illustrtion")
     banner.title = "Bookwitty's Finest"
     banner.subtitle = "The perfect list for everyone on your list"

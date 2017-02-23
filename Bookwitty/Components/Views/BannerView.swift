@@ -1,5 +1,5 @@
 //
-//  Banner.swift
+//  BannerView.swift
 //  Bookwitty
 //
 //  Created by Marwan  on 2/13/17.
@@ -9,7 +9,7 @@
 import UIKit
 import FLKAutoLayout
 
-class Banner: UIView, Themeable {
+class BannerView: UIView, Themeable {
   let imageView = UIImageView(frame: CGRect.zero)
   let labelsContainerView = UIView(frame: CGRect.zero)
   let titleLabel = UILabel(frame: CGRect.zero)

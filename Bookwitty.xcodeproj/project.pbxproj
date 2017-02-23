@@ -38,7 +38,7 @@
 		594290121E51B7C00006B2F1 /* DisclosureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 594290101E51B7C00006B2F1 /* DisclosureTableViewCell.xib */; };
 		594290141E51F2850006B2F1 /* BookStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290131E51F2850006B2F1 /* BookStoreViewController.swift */; };
 		594290161E51F4550006B2F1 /* BookStoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290151E51F4550006B2F1 /* BookStoreViewModel.swift */; };
-		594290181E522D980006B2F1 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290171E522D980006B2F1 /* Banner.swift */; };
+		594290181E522D980006B2F1 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290171E522D980006B2F1 /* BannerView.swift */; };
 		594290201E5316380006B2F1 /* FeaturedContentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5942901E1E5316380006B2F1 /* FeaturedContentCollectionViewCell.swift */; };
 		594290211E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5942901F1E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib */; };
 		594290291E5347670006B2F1 /* DisclosureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290271E5347670006B2F1 /* DisclosureView.swift */; };
@@ -182,7 +182,7 @@
 		594290101E51B7C00006B2F1 /* DisclosureTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DisclosureTableViewCell.xib; sourceTree = "<group>"; };
 		594290131E51F2850006B2F1 /* BookStoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookStoreViewController.swift; sourceTree = "<group>"; };
 		594290151E51F4550006B2F1 /* BookStoreViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookStoreViewModel.swift; sourceTree = "<group>"; };
-		594290171E522D980006B2F1 /* Banner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
+		594290171E522D980006B2F1 /* BannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		5942901E1E5316380006B2F1 /* FeaturedContentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturedContentCollectionViewCell.swift; sourceTree = "<group>"; };
 		5942901F1E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeaturedContentCollectionViewCell.xib; sourceTree = "<group>"; };
 		594290271E5347670006B2F1 /* DisclosureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisclosureView.swift; sourceTree = "<group>"; };
@@ -496,7 +496,7 @@
 				595C4F0C1E3F8C0200BE3942 /* InputField.swift */,
 				595C4F0E1E3F8C9200BE3942 /* PasswordInputField.swift */,
 				595C4F101E3F9DA400BE3942 /* InformativeInputField.swift */,
-				594290171E522D980006B2F1 /* Banner.swift */,
+				594290171E522D980006B2F1 /* BannerView.swift */,
 				5942902B1E53BF050006B2F1 /* SectionTitleHeaderView.swift */,
 				5942902D1E53BF2D0006B2F1 /* SectionTitleHeaderView.xib */,
 				59A164CA1E561BBD00088D84 /* LaunchScreen.xib */,
@@ -1067,7 +1067,7 @@
 				F42686791E4F458A0085E581 /* CardActionBarNode.swift in Sources */,
 				5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */,
 				F426867B1E505CE60085E581 /* BaseCardPostNode.swift in Sources */,
-				594290181E522D980006B2F1 /* Banner.swift in Sources */,
+				594290181E522D980006B2F1 /* BannerView.swift in Sources */,
 				F420AD9F1E4231E000C78AEB /* AttributedStringBuilder.swift in Sources */,
 				F4A4262D1E5619E10090CD51 /* ReadingList.swift in Sources */,
 				592974BF1E5F57AE0083A4C2 /* ModelCommonProperties.swift in Sources */,
