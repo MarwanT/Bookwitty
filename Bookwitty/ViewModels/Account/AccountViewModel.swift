@@ -64,10 +64,10 @@ final class AccountViewModel {
   }
 
   //Pen Names
-  private func valuesForPenName(atRow row: Int) -> (title: String, value: String) {
+  private func valuesForPenName(atRow row: Int, iteration: Int) -> (title: String, value: String) {
     switch row {
     case 0:
-      return ("Satch", "")
+      return (penName(atRow: iteration), "")
     case 1:
       return (interestsText, "")
     case 2:
@@ -75,6 +75,18 @@ final class AccountViewModel {
     default:
       return ("", "")
     }
+  }
+
+  private func penName(atRow row: Int) -> String {
+    guard let penNames = user.penNames else {
+      return ""
+    }
+
+    guard row >= 0 && row < penNames.count else {
+      return ""
+    }
+
+    return penNames[row].name ?? ""
   }
 
   //Create Pen Names
@@ -123,7 +135,7 @@ final class AccountViewModel {
       numberOfRows = 1
     case Sections.PenNames.rawValue:
       //user.penNames.count * 3 (3 rows for each pen name)
-      numberOfRows = 3
+      numberOfRows = (user.penNames?.count ?? 0) * 3
     case Sections.CreatePenNames.rawValue:
       numberOfRows = 1
     case Sections.CustomerService.rawValue:
@@ -143,9 +155,9 @@ final class AccountViewModel {
       title = valuesForUserInformation(atRow: indexPath.row)
       value = ""
     case Sections.PenNames.rawValue:
-    //let penNameIndex: Int = indexPath.row / 4
-      let penNameSubRow = indexPath.row % 4 //(will result in 0 ... 3)
-      let values = valuesForPenName(atRow: penNameSubRow)
+      let penNameIndex: Int = indexPath.row / 3
+      let penNameSubRow = indexPath.row % 3 //(will result in 0 ... 2)
+      let values = valuesForPenName(atRow: penNameSubRow, iteration: penNameIndex)
       title = values.title
       value = values.value
       if penNameSubRow == 0 {
