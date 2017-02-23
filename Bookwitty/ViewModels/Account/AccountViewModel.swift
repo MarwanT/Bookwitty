@@ -36,6 +36,8 @@ final class AccountViewModel {
     sectionTitles = ["", penNamesText, customerServiceText]
   }
 
+  private let user: User = UserManager.shared.signedInUser
+
   //User Information
   private func valuesForUserInformation(atRow row: Int) -> String {
     switch row {
