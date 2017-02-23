@@ -28,6 +28,8 @@ final class SettingsViewModel {
 
   private let sectionTitles: [String]
 
+  private let user: User = UserManager.shared.signedInUser
+
   var countryCode: String = ""
 
   init () {
