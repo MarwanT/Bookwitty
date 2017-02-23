@@ -49,7 +49,7 @@ class ReadingList: Resource {
       "conclusion": Attribute().serializeAs("conclusion"),
       "body": Attribute().serializeAs("body"),
       "postsCollection" : ToManyRelationship(Resource.self).serializeAs("posts"),
-      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
+      "penNamesCollection" : ToOneRelationship(PenName.self).serializeAs("pen-name")
       ])
   }
 }
