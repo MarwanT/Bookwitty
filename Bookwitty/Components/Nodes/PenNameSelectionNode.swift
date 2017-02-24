@@ -9,6 +9,10 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol PenNameSelectionNodeDelegate {
+  func didSelectPenName(penName: PenName, sender: PenNameSelectionNode)
+}
+
 class PenNameSelectionNode: ASCellNode {
   fileprivate static let cellHeight: CGFloat = 45.0
   fileprivate let maxNumberOfCells: Int = 5
