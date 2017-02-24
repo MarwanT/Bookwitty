@@ -43,7 +43,6 @@ class PenNameSelectionNode: ASCellNode {
   //Consider replacing expand with DisplayMode enum incase we needed something more than expand and collapse.
   var expand: Bool = true {
     didSet {
-    header.shouldExpand = expand
     }
   }
   var data: [PenName] = [] {

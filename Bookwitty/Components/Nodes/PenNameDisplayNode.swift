@@ -19,18 +19,11 @@ class PenNameDisplayNode: ASControlNode {
 
   private let penNameTextNode: ASTextNode
   private let separatorNode: ASDisplayNode
-  private let downArrowImageNode: ASImageNode
+  private let downArrowImageNode: RotatingImageNode
 
   private var nodeHeight: CGFloat
 
   var delegate: PenNameDisplayNodeDelegate?
-  var shouldExpand: Bool = true {
-    didSet {
-      UIView.animate(withDuration: 0.4, animations: {
-        self.downArrowImageNode.transform = CATransform3DMakeRotation(self.shouldExpand ? CGFloat(M_PI) : 0.0, 0.0, 0.0, 1.0)
-      })
-    }
-  }
   var penNameSummary: String? {
     didSet {
       applyTextWithStyling(text: penNameSummary)
@@ -41,7 +34,7 @@ class PenNameDisplayNode: ASControlNode {
   private override init() {
     penNameTextNode = ASTextNode()
     separatorNode = ASDisplayNode()
-    downArrowImageNode = ASImageNode()
+    downArrowImageNode = RotatingImageNode(image: #imageLiteral(resourceName: "downArrow"), size: downArrowImageSize)
     nodeHeight = 45.0 // Temporary value
     super.init()
     automaticallyManagesSubnodes = true
@@ -60,13 +53,10 @@ class PenNameDisplayNode: ASControlNode {
     separatorNode.style.flexGrow = 1
     separatorNode.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
 
-    downArrowImageNode.style.preferredSize = downArrowImageSize
-    downArrowImageNode.image = #imageLiteral(resourceName: "downArrow")
     downArrowImageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.colorNumber20())
 
     addTarget(self, action: #selector(didTouchUpInside(_:)), forControlEvents: .touchUpInside)
 
-    downArrowImageNode.transform = CATransform3DMakeRotation(shouldExpand ? CGFloat(M_PI) : 0.0, 0.0, 0.0, 1.0)
   }
 
   func didTouchUpInside(_ sender: Any?) {
