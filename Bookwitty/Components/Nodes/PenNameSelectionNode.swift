@@ -68,7 +68,22 @@ class PenNameSelectionNode: ASCellNode {
       setNeedsLayout()
     }
   }
-  var selectedIndexPath: IndexPath? = nil
+  var delegate: PenNameSelectionNodeDelegate?
+  var selectedIndexPath: IndexPath? = nil {
+    didSet {
+      guard let newValue = selectedIndexPath else {
+        return
+      }
+      guard let oldValue = oldValue else {
+        delegate?.didSelectPenName(penName: data[newValue.item], sender: self)
+        return
+      }
+
+      if oldValue.item != newValue.item {
+          delegate?.didSelectPenName(penName: data[newValue.item], sender: self)
+      }
+    }
+  }
   var headerHeight: CGFloat {
       return header.style.height.value
   }
