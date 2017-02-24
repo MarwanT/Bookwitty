@@ -10,6 +10,10 @@ import Foundation
 import AsyncDisplayKit
 
 class RotatingImageNode: ASImageNode {
+  private let imageSize: CGSize = CGSize(width: 45, height: 45)
+  private var angle: CATransform3D {
+    return CATransform3DMakeRotation(0.0, 0.0, 0.0, 1.0) // Rotation Transform 
+  }
 
   private override init() {
     super.init()
