@@ -14,7 +14,9 @@ final class NewsFeedViewModel {
   var cancellableRequest:  Cancellable?
   let viewController = localizedString(key: "news", defaultValue: "News")
   var data: [ModelResource] = []
-  var penNames: [PenName] = [PenName()] //TODO: Replace with real pen names loaded or cached.
+  var penNames: [PenName] {
+    return UserManager.shared.signedInUser.penNames ?? []
+  }
 
   func loadNewsfeed(completionBlock: @escaping (_ success: Bool) -> ()) {
     cancellableRequest = NewsfeedAPI.feed() { (success, resources, error) in

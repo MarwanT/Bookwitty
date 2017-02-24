@@ -39,10 +39,14 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     }
   }
 
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     title = viewModel.viewController
-    
+    addObservers()
     initializeNavigationItems()
 
     collectionNode.delegate = self
@@ -77,20 +81,25 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       guard let strongSelf = self else { return }
       strongSelf.pullToRefresher.endRefreshing()
       if(success) {
+        strongSelf.penNameSelectionNode.data = strongSelf.viewModel.penNames
         strongSelf.collectionNode.reloadData()
-
-        let testPen1 = PenName()
-        testPen1.name = "Shafic Hariri"
-        let testPen2 = PenName()
-        testPen2.name = "ShafiX"
-        let testPen3 = PenName()
-        testPen3.name = "Triple-X"
-        strongSelf.penNameSelectionNode.data = [testPen1,testPen2, testPen3]
       }
     }
   }
 }
 
+// MARK: - Notification
+extension NewsFeedViewController {
+  func addObservers() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.didSignInNotification(notification:)), name: AppNotification.didSignIn, object: nil)
+  }
+
+  func didSignInNotification(notification: Notification) {
+    //User signed in or changed: Reset isFirstRun to make sure data reloads
+    isFirstRun = true
+  }
+}
 // MARK: - Themeable
 extension NewsFeedViewController: Themeable {
   func applyTheme() {
