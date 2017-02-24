@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Moya
 
 final class BookStoreViewModel {
   let viewAllCategoriesLabelText = localizedString(key: "view_all_categories", defaultValue: "View All Categories")
@@ -21,6 +22,9 @@ final class BookStoreViewModel {
   private var featuredReadingListContent: [Book]? = nil
   private var readingLists: [ReadingList]? = nil
   private var banner: Banner? = nil
+  
+  var request: Cancellable?
+  
 }
 
 
