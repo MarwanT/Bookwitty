@@ -10,7 +10,7 @@ import Foundation
 import AsyncDisplayKit
 
 protocol PenNameDisplayNodeDelegate {
-  func didTapOnHeader(shouldExpand: Bool)
+  func didTapOnHeader(sender: PenNameDisplayNode?)
 }
 
 class PenNameDisplayNode: ASControlNode {
@@ -59,9 +59,8 @@ class PenNameDisplayNode: ASControlNode {
 
   }
 
-  func didTouchUpInside(_ sender: Any?) {
-    shouldExpand = !shouldExpand
-    delegate?.didTapOnHeader(shouldExpand: shouldExpand)
+  func didTouchUpInside(_ sender: PenNameDisplayNode?) {
+    delegate?.didTapOnHeader(sender: sender)
   }
 
   private func applyTextWithStyling(text: String?) {

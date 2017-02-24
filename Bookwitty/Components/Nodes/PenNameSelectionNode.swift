@@ -122,8 +122,9 @@ class PenNameSelectionNode: ASCellNode {
 
 //MARK: - PenNameDisplayNodeDelegate
 extension PenNameSelectionNode: PenNameDisplayNodeDelegate {
-  func didTapOnHeader(shouldExpand: Bool) {
-    expand = shouldExpand
+  func didTapOnHeader(sender: PenNameDisplayNode?) {
+    expand = !expand
+
     let extraSeparator = (data.count == 0) ? 0.0 : separatorHeight
     let heightDimension = expand ? ASDimensionMake(expandedHeightDimension.value + extraSeparator) : collapsedHeightDimension
     style.height = heightDimension
