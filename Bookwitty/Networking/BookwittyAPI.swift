@@ -25,6 +25,7 @@ public enum BookwittyAPI {
   case Search(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?)
   case updatePenName(identifier: String, name: String?, biography: String?, avatarUrl: String?, facebookUrl: String?, tumblrUrl: String?, googlePlusUrl: String?, twitterUrl: String?, instagramUrl: String?, pinterestUrl: String?, youtubeUrl: String?, linkedinUrl: String?, wordpressUrl: String?, websiteUrl: String?)
   case batch(identifiers: [String])
+  case updatePreference(preference: String, value: String)
 }
 
 // MARK: - Target Type
@@ -74,6 +75,8 @@ extension BookwittyAPI: TargetType {
       path = "/pen_names/\(identifier)"
     case .batch:
       path = "/content/batch"
+    case .updatePreference:
+      path = "/user/update_preference"
     }
     
     return apiBasePath + apiVersion + path
@@ -85,7 +88,7 @@ extension BookwittyAPI: TargetType {
       return .post
     case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search:
       return .get
-    case .register, .batch:
+    case .register, .batch, .updatePreference:
       return .post
     case .updateUser, .updatePenName:
       return .patch
@@ -121,6 +124,8 @@ extension BookwittyAPI: TargetType {
       return SearchAPI.parameters(filter: filter, page: page)
     case .updatePenName(let identifier, let name, let biography, let avatarUrl, let facebookUrl, let tumblrUrl, let googlePlusUrl, let twitterUrl, let instagramUrl, let pinterestUrl, let youtubeUrl, let linkedinUrl, let wordpressUrl, let websiteUrl):
       return PenNameAPI.updatePostBody(identifier: identifier, name: name, biography: biography, avatarUrl: avatarUrl, facebookUrl: facebookUrl, tumblrUrl: tumblrUrl, googlePlusUrl: googlePlusUrl, twitterUrl: twitterUrl, instagramUrl: instagramUrl, pinterestUrl: pinterestUrl, youtubeUrl: youtubeUrl, linkedinUrl: linkedinUrl, wordpressUrl: wordpressUrl, websiteUrl: websiteUrl)
+    case .updatePreference(let preference, let value):
+      return UserAPI.updatePostBody(preference: preference, value: value)
     case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed:
       return nil
     }

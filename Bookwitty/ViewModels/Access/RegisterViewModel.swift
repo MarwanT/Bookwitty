@@ -92,9 +92,6 @@ final class RegisterViewModel {
       
       self.request = UserAPI.signIn(withUsername: email, password: password, completion: { (success, error) in
         self.request = nil
-        if success {
-          UserManager.shared.signedInUser = registeredUser
-        }
         completionBlock(success, user, error)
       })
     })

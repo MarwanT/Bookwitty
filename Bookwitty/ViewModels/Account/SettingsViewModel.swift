@@ -28,10 +28,13 @@ final class SettingsViewModel {
 
   private let sectionTitles: [String]
 
-  var countryName: String = "" //TODO: load the default value
+  private let user: User = UserManager.shared.signedInUser
+
+  var countryCode: String = ""
 
   init () {
     sectionTitles = ["", ""]
+    countryCode = user.country ?? (Locale.current as NSLocale).object(forKey: NSLocale.Key.countryCode) as? String ?? ""
   }
 
   //General
@@ -43,6 +46,7 @@ final class SettingsViewModel {
     case 1: //change password
       return (changePasswordText, "")
     case 2: //country/region
+      let countryName = (Locale.current as NSLocale).displayName(forKey: NSLocale.Key.countryCode, value: countryCode) ?? ""
       return (countryRegionText, countryName)
     default:
       return ("", "")
@@ -62,13 +66,57 @@ final class SettingsViewModel {
     }
   }
 
-  private func handleGeneralSwitchValueChanged(atRow row: Int, newValue: Bool) {
+  private func handleGeneralSwitchValueChanged(atRow row: Int, newValue: Bool, completion: @escaping (()->())) {
     switch row {
     case 0: //email
-      GeneralSettings.sharedInstance.shouldSendEmailNotifications = newValue
+      updateUserPreferences(value: "\(newValue)", completion: { (success: Bool) -> () in
+        if success {
+          GeneralSettings.sharedInstance.shouldSendEmailNotifications = newValue
+        }
+        completion()
+      })
     default:
       break
     }
+  }
+
+  private func updateUserPreferences(value: String, completion: @escaping ((Bool)->())) {
+    var followersPreferenceSuccess: Bool = false
+    var commentsPreferenceSuccess: Bool = false
+
+    let group = DispatchGroup()
+    group.enter()
+    _ = UserAPI.updateUser(preference: User.Preference.emailNotificationFollowers, value: value) {
+      (success: Bool, error: BookwittyAPIError?) in
+      followersPreferenceSuccess = success
+      group.leave()
+    }
+
+    group.enter()
+    _ = UserAPI.updateUser(preference: User.Preference.emailNotificationComments, value: value) {
+      (success: Bool, error: BookwittyAPIError?) in
+      commentsPreferenceSuccess = success
+      group.leave()
+    }
+
+    group.notify(queue: DispatchQueue.main) {
+      completion(followersPreferenceSuccess && commentsPreferenceSuccess)
+    }
+  }
+
+  func updateUserCountry(country: String, completion:((Bool)->())?) {
+    guard let identifier = user.id else {
+      completion?(false)
+      return
+    }
+
+    _ = UserAPI.updateUser(identifier: identifier, countryISO3166: country, completionBlock: {
+      (success: Bool, user: User?, error: BookwittyAPIError?) in
+      if success {
+        self.countryCode = country
+      }
+      completion?(success)
+    })
   }
 
   //Sign Out
@@ -141,10 +189,10 @@ final class SettingsViewModel {
     return accessory
   }
 
-  func handleSwitchValueChanged(forRowAt indexPath: IndexPath, newValue: Bool) {
+  func handleSwitchValueChanged(forRowAt indexPath: IndexPath, newValue: Bool, completion: @escaping (()->())) {
     switch indexPath.section {
     case Sections.General.rawValue:
-      handleGeneralSwitchValueChanged(atRow: indexPath.row, newValue: newValue)
+      handleGeneralSwitchValueChanged(atRow: indexPath.row, newValue: newValue, completion: completion)
     default:
       break
     }

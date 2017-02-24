@@ -66,3 +66,10 @@ class User: Resource {
 extension User: Parsable {
   typealias AbstractType = User
 }
+
+extension User {
+  enum Preference: String {
+    case emailNotificationFollowers = "unsub-email-notification-followers"
+    case emailNotificationComments = "unsub-email-notification-comments"
+  }
+}
