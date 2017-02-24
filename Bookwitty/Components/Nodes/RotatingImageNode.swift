@@ -38,4 +38,15 @@ class RotatingImageNode: ASImageNode {
     self.image = image ?? #imageLiteral(resourceName: "downArrow")
     self.style.preferredSize = size ?? imageSize
   }
+
+  func updateDirection(direction: Direction, animated: Bool = true) {
+    self.currentDirection = direction
+
+    if animated {
+      transitionLayout(withAnimation: true, shouldMeasureAsync: false, measurementCompletion: nil)
+    } else {
+      transform = self.rotationTransform
+      setNeedsLayout()
+    }
+  }
 }
