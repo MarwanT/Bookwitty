@@ -18,8 +18,13 @@ class RotatingImageNode: ASImageNode {
   }
 
   private let imageSize: CGSize = CGSize(width: 45, height: 45)
-  private var angle: CATransform3D {
-    return CATransform3DMakeRotation(0.0, 0.0, 0.0, 1.0) // Rotation Transform 
+  private var rotationTransform: CATransform3D {
+    switch(currentDirection) {
+    case .up: return CATransform3DMakeRotation(0.0, 0.0, 0.0, 1.0)
+    case .down: return CATransform3DMakeRotation(CGFloat(M_PI), 0.0, 0.0, 1.0)
+    case .left : return CATransform3DMakeRotation(CGFloat(M_PI_2), 0.0, 0.0, 1.0)
+    case .right : return CATransform3DMakeRotation(-CGFloat(M_PI_2), 0.0, 0.0, 1.0)
+    }
   }
 
   var currentDirection: Direction = .down
