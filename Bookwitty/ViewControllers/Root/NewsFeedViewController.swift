@@ -39,10 +39,14 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     }
   }
 
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     title = viewModel.viewController
-    
+    addObservers()
     initializeNavigationItems()
 
     collectionNode.delegate = self
@@ -84,6 +88,18 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   }
 }
 
+// MARK: - Notification
+extension NewsFeedViewController {
+  func addObservers() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.didSignInNotification(notification:)), name: AppNotification.didSignIn, object: nil)
+  }
+
+  func didSignInNotification(notification: Notification) {
+    //User signed in or changed: Reset isFirstRun to make sure data reloads
+    isFirstRun = true
+  }
+}
 // MARK: - Themeable
 extension NewsFeedViewController: Themeable {
   func applyTheme() {
