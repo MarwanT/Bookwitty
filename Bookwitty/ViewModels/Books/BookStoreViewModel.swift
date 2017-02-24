@@ -26,6 +26,45 @@ final class BookStoreViewModel {
   
   var request: Cancellable?
   
+  func loadData(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    request = loadCuratedContent(completion: {
+      (success, identifiers, error) in
+      guard success else {
+        self.request = nil
+        completion(false, error)
+        return
+      }
+      
+      guard let identifiers = identifiers, identifiers.count > 0 else {
+        self.request = nil
+        completion(true, nil)
+        return
+      }
+
+      // !!!!:
+      // If data needs to be viewed partially here even before retrieving
+      // content details, a block trigering a change in the vc should be called here.
+      
+      self.request = self.loadContentDetails(identifiers: identifiers, completion: {
+        (success, readingList, error) in
+        guard success, let booksIds = readingList?.posts?.flatMap({ $0.id }) else {
+          self.request = nil
+          completion(success, error)
+          return
+        }
+        
+        // !!!!:
+        // If data needs to be viewed partially here even before retrieving
+        // content details, a block trigering a change in the vc should be called here.
+        
+        self.request = self.loadReadingListContent(booksIds: booksIds, completion: {
+          (success, error) in
+          self.request = nil
+          completion(success, error)
+        })
+      })
+    })
+  }
   
   private func loadCuratedContent(completion: @escaping (_ success: Bool, _ identifiers: [String]? , _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     return CuratedCollectionAPI.storeFront(completion: {
