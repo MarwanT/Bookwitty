@@ -37,6 +37,7 @@ class RotatingImageNode: ASImageNode {
     self.init()
     self.image = image ?? #imageLiteral(resourceName: "downArrow")
     self.style.preferredSize = size ?? imageSize
+    self.updateDirection(direction: .down, animated: false)
   }
 
   func updateDirection(direction: Direction, animated: Bool = true) {
