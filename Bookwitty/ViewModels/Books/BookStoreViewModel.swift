@@ -15,6 +15,12 @@ final class BookStoreViewModel {
   let viewAllSelectionsLabelText = localizedString(key: "view_all_selections", defaultValue: "View All Selections")
   let selectionHeaderTitle = localizedString(key: "our_selection_for_you", defaultValue: "Our selection for you")
   let viewControllerTitle = localizedString(key: "books", defaultValue: "Books")
+  
+  private var curatedCollection: CuratedCollection? = nil
+  private var featuredContents: [ModelCommonProperties]? = nil
+  private var featuredReadingListContent: [Book]? = nil
+  private var readingLists: [ReadingList]? = nil
+  private var banner: Banner? = nil
 }
 
 
