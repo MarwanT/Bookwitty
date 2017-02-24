@@ -138,6 +138,7 @@
 		F4A426351E5629210090CD51 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A426341E5629210090CD51 /* Video.swift */; };
 		F4A426371E562A9F0090CD51 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A426361E562A9F0090CD51 /* Audio.swift */; };
 		F4A426391E562BAC0090CD51 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A426381E562BAC0090CD51 /* Link.swift */; };
+		F4CDDD371E60263800474CAA /* RotatingImageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CDDD361E60263800474CAA /* RotatingImageNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -289,6 +290,7 @@
 		F4A426341E5629210090CD51 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		F4A426361E562A9F0090CD51 /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		F4A426381E562BAC0090CD51 /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
+		F4CDDD361E60263800474CAA /* RotatingImageNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RotatingImageNode.swift; sourceTree = "<group>"; };
 		F51280CA021D07F160F13471 /* Pods-BookwittyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookwittyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -466,6 +468,7 @@
 				F4207B931E58466A00216A2E /* PenNameSelectionNode.swift */,
 				F458C5F11E5AFD4300AFD0FC /* PenNameDisplayNode.swift */,
 				F458C5F31E5AFEAA00AFD0FC /* PenNameCellNode.swift */,
+				F4CDDD361E60263800474CAA /* RotatingImageNode.swift */,
 				F4670AF81E54556800159F4F /* ReadingListCardPostCellNode.swift */,
 				F422D82D1E51AC3900A32C2F /* VideoCardPostCellNode.swift */,
 				F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */,
@@ -1093,6 +1096,7 @@
 				56205DEB1E5324BC000CA4D7 /* TableViewSectionHeaderView.swift in Sources */,
 				594B9F6F1E55F557007C49E1 /* RootTabBarViewModel.swift in Sources */,
 				59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */,
+				F4CDDD371E60263800474CAA /* RotatingImageNode.swift in Sources */,
 				59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */,
 				59DA475E1E3B7A8F00BA90A5 /* TutorialViewModel.swift in Sources */,
 				597B8E2D1E37F6BC00C7811B /* Image+Utils.swift in Sources */,
