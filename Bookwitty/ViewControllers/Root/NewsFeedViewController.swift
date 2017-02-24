@@ -51,6 +51,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
     collectionNode.delegate = self
     collectionNode.dataSource = self
+    penNameSelectionNode.delegate = self
     //Listen to pullToRefresh valueChange and call loadData
     pullToRefresher.addTarget(self, action: #selector(self.loadData), for: .valueChanged)
 
@@ -87,7 +88,10 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     }
   }
 }
-
+extension NewsFeedViewController: PenNameSelectionNodeDelegate {
+  func didSelectPenName(penName: PenName, sender: PenNameSelectionNode) {
+  }
+}
 // MARK: - Notification
 extension NewsFeedViewController {
   func addObservers() {
