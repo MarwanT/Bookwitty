@@ -63,6 +63,10 @@ class PenNameDisplayNode: ASControlNode {
     delegate?.didTapOnHeader(sender: sender)
   }
 
+  func updateArrowDirection(direction: RotatingImageNode.Direction, animated: Bool = true) {
+    downArrowImageNode.updateDirection(direction: direction, animated: animated)
+  }
+
   private func applyTextWithStyling(text: String?) {
     if let text = text {
       penNameTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
