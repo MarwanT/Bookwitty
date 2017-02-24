@@ -89,6 +89,7 @@ class Parser {
   private func registerValueFormatters() {
     //Register any value formatter here using the serializer
     serializer.registerValueFormatter(CuratedCollectionSectionsValueFormatter())
+    serializer.registerValueFormatter(ProductDetailsValueFormatter())
   }
 
   static func parseData(data: Data?, mappingTargets: [Resource]? = nil) -> JSONAPIDocument? {
