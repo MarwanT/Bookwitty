@@ -21,7 +21,7 @@ public enum BookwittyAPI {
   case updateUser(identifier: String, firstName: String?, lastName: String?, dateOfBirth: String?, email: String?, currentPassword: String?, password: String?, country: String?, badges: [String : Any]?, preferences: [String : Any]?)
   case bookStore
   case categoryCuratedContent(categoryIdentifier: String)
-  case newsFeed(penNameId: String)
+  case newsFeed()
   case Search(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?)
   case updatePenName(identifier: String, name: String?, biography: String?, avatarUrl: String?, facebookUrl: String?, tumblrUrl: String?, googlePlusUrl: String?, twitterUrl: String?, instagramUrl: String?, pinterestUrl: String?, youtubeUrl: String?, linkedinUrl: String?, wordpressUrl: String?, websiteUrl: String?)
   case batch(identifiers: [String])
@@ -67,8 +67,8 @@ extension BookwittyAPI: TargetType {
       path = "/curated_collection/book_storefront"
     case .categoryCuratedContent(let categoryIdentifier):
       path = "/curated_collection/category/\(categoryIdentifier)"
-    case .newsFeed(let penNameIdentifier):
-      path = "/pen_names/\(penNameIdentifier)/feed"
+    case .newsFeed:
+      path = "/pen_name/feed"
     case .Search:
       path = "/search"
     case .updatePenName(let identifier, _, _, _, _, _, _, _, _, _, _, _, _, _):
