@@ -47,3 +47,10 @@ extension Text: ModelCommonProperties {
 extension Quote: ModelCommonProperties {
   var shortDescription: String? { return nil }
 }
+
+extension Book: ModelCommonProperties {
+  var shortDescription: String? {
+    return nil
+  }
+
+}

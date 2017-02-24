@@ -23,3 +23,18 @@ class CuratedCollectionSectionsValueFormatter: ValueFormatter {
     return ["" : ""]
   }
 }
+
+class ProductDetailsValueFormatter: ValueFormatter {
+  typealias FormattedType = [String : Any]
+  typealias UnformattedType = ProductDetails
+  typealias AttributeType = ProductDetailsAttribute
+  
+  func unformatValue(_ value: [String : Any], forAttribute: ProductDetailsAttribute) -> ProductDetails {
+    return ProductDetails(for: value)
+  }
+  
+  func formatValue(_ value: ProductDetails, forAttribute: ProductDetailsAttribute) -> [String : Any] {
+    // TODO: Implement this
+    return ["" : ""]
+  }
+}

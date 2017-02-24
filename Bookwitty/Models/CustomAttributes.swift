@@ -16,3 +16,11 @@ class CuratedCollectionSectionsAttribute: Attribute {
     self.sectionsString = sectionsString
   }
 }
+
+class ProductDetailsAttribute: Attribute {
+  let productDetails: [String : Any]?
+  
+  init(productDetails: [String : Any]? = nil) {
+    self.productDetails = productDetails
+  }
+}
