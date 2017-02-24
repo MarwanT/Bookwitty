@@ -8,6 +8,7 @@
 
 import Foundation
 import Moya
+import Spine
 
 final class BookStoreViewModel {
   let viewAllCategoriesLabelText = localizedString(key: "view_all_categories", defaultValue: "View All Categories")
@@ -25,6 +26,35 @@ final class BookStoreViewModel {
   
   var request: Cancellable?
   
+  
+  private func loadCuratedContent(completion: @escaping (_ success: Bool, _ identifiers: [String]? , _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    return CuratedCollectionAPI.storeFront(completion: {
+      (success, collection, error) in
+      var identifiers = [String]()
+      
+      guard success, let collection = collection else {
+        completion(false, nil, BookwittyAPIError.undefined)
+        return
+      }
+      
+      self.curatedCollection = collection
+      
+      guard let sections = collection.sections  else {
+        completion(true, nil, nil)
+        return
+      }
+      
+      if let featuredContent = sections.featuredContent {
+        let featuredContentIdentifiers = featuredContent.flatMap({ $0.wittyId })
+        identifiers += featuredContentIdentifiers
+      }
+      if let readingListIdentifiers = sections.readingListIdentifiers {
+        identifiers += readingListIdentifiers
+      }
+      
+      completion(success, identifiers, error)
+    })
+  }
 }
 
 
