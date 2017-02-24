@@ -34,7 +34,12 @@ class UserManager {
   var isSignedIn: Bool {
     return AccessToken.shared.isValid
   }
-  
+
+  var defaultPenName: PenName? {
+    //TODO: Persist and Return the persisted default value
+    return signedInUser?.penNames?.first
+  }
+
   private init() {
     signedInUser = getSignedInUser()
   }

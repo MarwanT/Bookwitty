@@ -11,9 +11,9 @@ import Moya
 import Spine
 
 struct NewsfeedAPI {
-  public static func feed(forPenName penNameId: String, completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
-    return apiRequest(
-    target: BookwittyAPI.newsFeed(penNameId: penNameId)) {
+  public static func feed(completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    return signedAPIRequest(
+    target: BookwittyAPI.newsFeed()) {
       (data, statusCode, response, error) in
       // Ensure the completion block is always called
       var success: Bool = false
