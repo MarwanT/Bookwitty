@@ -13,7 +13,7 @@ class Book: Resource {
 
   var title: String?
   var subtitle: String?
-  var shortDescription: [String : Any]?
+  var bookDescription: [String : Any]?
   var thumbnailImageUrl: String?
   var coverImageUrl: String?
 
@@ -33,7 +33,7 @@ class Book: Resource {
     return fieldsFromDictionary([
       "title" : Attribute().serializeAs("title"),
       "subtitle" : Attribute().serializeAs("subtitle"),
-      "shortDescription" : Attribute().serializeAs("description"),
+      "bookDescription" : Attribute().serializeAs("description"),
       "thumbnailImageUrl" : Attribute().serializeAs("thumbnail-image-url"),
       "userId": Attribute().serializeAs("user-id"),
       "createdAt" : Attribute().serializeAs("created-at"),
