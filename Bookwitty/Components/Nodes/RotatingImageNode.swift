@@ -18,5 +18,10 @@ class RotatingImageNode: ASImageNode {
   private override init() {
     super.init()
   }
-  
+
+  convenience init(image: UIImage? = nil, size: CGSize? = nil) {
+    self.init()
+    self.image = image ?? #imageLiteral(resourceName: "downArrow")
+    self.style.preferredSize = size ?? imageSize
+  }
 }
