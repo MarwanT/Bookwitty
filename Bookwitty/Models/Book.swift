@@ -23,7 +23,7 @@ class Book: Resource {
   var createdAt: String?
   var updatedAt: String?
 
-  var productDetails: [String : Any]?
+  var productDetails: ProductDetails?
   var supplierInformation: [String : Any]?
 
   override class var resourceType: ResourceType {
@@ -40,7 +40,7 @@ class Book: Resource {
       "createdAt" : Attribute().serializeAs("created-at"),
       "updatedAt" : Attribute().serializeAs("updated-at"),
       "coverImageUrl" : Attribute().serializeAs("cover-image-url"),
-      "productDetails" : Attribute().serializeAs("product-details"),
+      "productDetails" : ProductDetailsAttribute().serializeAs("product-details"),
       "supplierInformation" : Attribute().serializeAs("supplier-information"),
       ])
   }
