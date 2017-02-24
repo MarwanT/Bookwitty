@@ -77,15 +77,8 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       guard let strongSelf = self else { return }
       strongSelf.pullToRefresher.endRefreshing()
       if(success) {
+        strongSelf.penNameSelectionNode.data = strongSelf.viewModel.penNames
         strongSelf.collectionNode.reloadData()
-
-        let testPen1 = PenName()
-        testPen1.name = "Shafic Hariri"
-        let testPen2 = PenName()
-        testPen2.name = "ShafiX"
-        let testPen3 = PenName()
-        testPen3.name = "Triple-X"
-        strongSelf.penNameSelectionNode.data = [testPen1,testPen2, testPen3]
       }
     }
   }
