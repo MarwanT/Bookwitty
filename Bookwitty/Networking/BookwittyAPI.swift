@@ -170,6 +170,8 @@ extension BookwittyAPI: TargetType {
 
   var includes: [ModelResource.Type]? {
     switch self {
+    case .user, .register:
+      return [PenName.self]
     default:
       return nil
     }

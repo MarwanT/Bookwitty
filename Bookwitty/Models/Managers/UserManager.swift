@@ -9,8 +9,9 @@
 import Foundation
 
 class UserManager {
-  enum Key: String {
-    case signedInUser
+  struct Key {
+    static let SignedInUser = "SignInUser"
+    static let SignedInUserPenNames = "SignedInUserPenNames"
   }
   
   static let shared = UserManager()
@@ -39,25 +40,42 @@ class UserManager {
   }
   
   private func saveSignedInUser(user: User) {
-    let userDictionary = user.serializeData(options: [.IncludeID, .OmitNullValues])
-    UserDefaults.standard.set(userDictionary, forKey: Key.signedInUser.rawValue)
+    let userDictionary = user.serializeData(options: [.IncludeID, .OmitNullValues, .IncludeToOne, .IncludeToMany])
+    let penNamesArray = user.penNames?.map({ $0.serializeData(options: [.IncludeID, .OmitNullValues, .IncludeToOne, .IncludeToMany]) })
+
+    UserDefaults.standard.set(userDictionary, forKey: Key.SignedInUser)
+    UserDefaults.standard.set(penNamesArray, forKey: Key.SignedInUserPenNames)
   }
   
   func deleteSignedInUser() {
     signedInUser = nil
-    UserDefaults.standard.removeObject(forKey: Key.signedInUser.rawValue)
+    UserDefaults.standard.removeObject(forKey: Key.SignedInUser)
   }
   
   private func getSignedInUser() -> User? {
-    guard let userDictionary = UserDefaults.standard.value(forKey: Key.signedInUser.rawValue) as? [String : Any] else {
+    guard let userDictionary = UserDefaults.standard.value(forKey: Key.SignedInUser) as? [String : Any] else {
       return nil
     }
     
-    guard let data = try? JSONSerialization.data(withJSONObject: userDictionary, options: JSONSerialization.WritingOptions.prettyPrinted), let user = User.parseData(data: data)
-      else {
+    guard let data = try? JSONSerialization.data(withJSONObject: userDictionary, options: JSONSerialization.WritingOptions.prettyPrinted),
+      let user = User.parseData(data: data) else {
         return nil
     }
-    
+
+    guard let userPenNamesArray = UserDefaults.standard.value(forKey: Key.SignedInUserPenNames) as? [[String : Any]] else {
+      return user
+    }
+
+    let penNames = userPenNamesArray.flatMap({ penNameDictionary -> PenName? in
+      guard let data = try? JSONSerialization.data(withJSONObject: penNameDictionary, options: JSONSerialization.WritingOptions.prettyPrinted),
+        let penName = PenName.parseData(data: data) else {
+          return nil
+      }
+
+      return penName
+    })
+
+    user.penNames = penNames
     return user
   }
 }

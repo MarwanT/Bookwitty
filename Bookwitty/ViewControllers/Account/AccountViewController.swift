@@ -44,8 +44,9 @@ class AccountViewController: UIViewController {
   }
 
   private func fillUserInformation() {
-    self.displayNameLabel.text = "Joe Satriani"//Todo: grab the values from the vm when available
-    self.profileImageView.image = nil//Todo: grab the values from the vm when available
+    let values = viewModel.headerInformation()
+    self.displayNameLabel.text = values.name
+    self.profileImageView.image = values.image
     self.profileImageView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     self.profileImageView.tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
   }
@@ -99,7 +100,7 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     var reuseIdentifier: String
 
-    if case AccountViewModel.Sections.PenNames.rawValue = indexPath.section, 0 == indexPath.row {
+    if case AccountViewModel.Sections.PenNames.rawValue = indexPath.section, 0 == (indexPath.row % 3) {
       reuseIdentifier = AccountPenNameTableViewCell.reuseIdentifier
     } else {
       reuseIdentifier = DisclosureTableViewCell.identifier
@@ -111,7 +112,7 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     let values = viewModel.values(forRowAt: indexPath)
 
-    if case AccountViewModel.Sections.PenNames.rawValue = indexPath.section, 0 == indexPath.row {
+    if case AccountViewModel.Sections.PenNames.rawValue = indexPath.section, 0 == (indexPath.row % 3) {
       guard let currentCell = cell as? AccountPenNameTableViewCell else {
         return
       }
