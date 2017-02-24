@@ -7,3 +7,12 @@
 //
 
 import Foundation
+import AsyncDisplayKit
+
+class RotatingImageNode: ASImageNode {
+
+  private override init() {
+    super.init()
+  }
+  
+}
