@@ -12,7 +12,7 @@ import Spine
 
 struct NewsfeedAPI {
   public static func feed(completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
-    return apiRequest(
+    return signedAPIRequest(
     target: BookwittyAPI.newsFeed()) {
       (data, statusCode, response, error) in
       // Ensure the completion block is always called
