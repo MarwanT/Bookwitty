@@ -94,6 +94,10 @@ public struct APIProvider {
       let accessToken = AccessToken.shared
       if let token = accessToken.token, accessToken.isValid {
         headerParameters["Authorization"] = "Bearer \(token)"
+        if let penName = UserManager.shared.defaultPenName,
+           let id = penName.id {
+          headerParameters["X-Bookwitty-Pen-Name"] = id
+        }
       }
       headerParameters["Content-Type"] = "application/vnd.api+json";
       headerParameters["Accept"] = "application/vnd.api+json"
