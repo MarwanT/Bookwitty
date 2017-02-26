@@ -221,16 +221,23 @@ extension BookStoreViewModel {
 // MARK: Bookwitty Suggests
 
 extension BookStoreViewModel {
+  var hasBookwittySuggests: Bool {
+    return bookwittySuggestsNumberOfSections != 0
+  }
+  
   var bookwittySuggestsNumberOfSections: Int {
-    return 1
+    return (readingLists?.count ?? 0) > 0 ? 1 : 0
   }
   
   var bookwittySuggestsNumberOfItems: Int {
-    return 4
+    return readingLists?.count ?? 0
   }
   
   func bookwittySuggestsValues(for indexPath: IndexPath) -> String {
-    return "Reading list \(indexPath.row)"
+    guard let readingListTitle = readingLists?[indexPath.row].title else {
+      return ""
+    }
+    return readingListTitle
   }
 }
 
