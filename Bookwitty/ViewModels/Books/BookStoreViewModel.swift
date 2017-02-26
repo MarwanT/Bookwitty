@@ -194,12 +194,19 @@ extension BookStoreViewModel {
 // MARK: Featured Content
 
 extension BookStoreViewModel {
-  var featuredContentNumberOfItems: Int {
-    return 7
+  var hasFeaturedContent : Bool {
+    return featuredContentNumberOfItems > 0
   }
   
-  func featuredContentValues(for indexPath: IndexPath) -> (title: String?, image: UIImage?) {
-    return ("Featuring Zouzou", #imageLiteral(resourceName: "Illustrtion"))
+  var featuredContentNumberOfItems: Int {
+    return featuredContents?.count ?? 0
+  }
+  
+  func featuredContentValues(for indexPath: IndexPath) -> (title: String?, imageURL: URL?) {
+    guard let featuredContent = featuredContents?[indexPath.row] else {
+      return (nil, nil)
+    }
+    return (featuredContent.title, URL(string: (featuredContent.thumbnailImageUrl ?? "")))
   }
 }
 
