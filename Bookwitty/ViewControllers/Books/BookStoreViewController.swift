@@ -11,6 +11,7 @@ import FLKAutoLayout
 
 class BookStoreViewController: UIViewController {
   @IBOutlet weak var stackView: UIStackView!
+  @IBOutlet weak var scrollView: UIScrollView!
   
   let banner = BannerView()
   let featuredContentCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout())
