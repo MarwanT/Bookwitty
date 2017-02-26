@@ -188,7 +188,6 @@ extension BookStoreViewController: UICollectionViewDataSource {
     
     let data = viewModel.featuredContentValues(for: indexPath)
     cell.title = data.title
-    cell.image = data.image
     return cell
   }
 }
