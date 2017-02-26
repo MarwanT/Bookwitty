@@ -52,12 +52,28 @@ class UserManager {
     UserDefaults.standard.set(userDictionary, forKey: Key.SignedInUser)
     UserDefaults.standard.set(penNamesArray, forKey: Key.SignedInUserPenNames)
   }
+
+  func saveDefaultPenName(penName: PenName) {
+    let serializedPenName = penName.serializeData(options:  [.IncludeID, .OmitNullValues, .IncludeToOne, .IncludeToMany])
+    UserDefaults.standard.set(serializedPenName, forKey: Key.SignedInUserDefaultPenName)
+  }
   
   func deleteSignedInUser() {
     signedInUser = nil
     UserDefaults.standard.removeObject(forKey: Key.SignedInUser)
   }
-  
+
+  private func getUserDefaultPenName() -> PenName? {
+    guard let defaultPenNameDictionary = UserDefaults.standard.value(forKey: Key.SignedInUserDefaultPenName) as? [String : Any] else {
+      return nil
+    }
+    guard let data = try? JSONSerialization.data(withJSONObject: defaultPenNameDictionary, options: JSONSerialization.WritingOptions.prettyPrinted),
+      let penName = PenName.parseData(data: data) else {
+        return nil
+    }
+    return penName
+  }
+
   private func getSignedInUser() -> User? {
     guard let userDictionary = UserDefaults.standard.value(forKey: Key.SignedInUser) as? [String : Any] else {
       return nil
