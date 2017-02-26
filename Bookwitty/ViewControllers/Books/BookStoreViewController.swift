@@ -243,7 +243,6 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
         return
       }
       let values = viewModel.selectionValues(for: indexPath)
-      cell.productImage = values.image
       cell.bookTitle = values.bookTitle
       cell.authorName = values.authorName
       cell.productType = values.productType

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class BookTableViewCell: UITableViewCell {
   static let reuseIdentifier = "BookTableViewCell"
@@ -25,12 +26,12 @@ class BookTableViewCell: UITableViewCell {
     applyTheme()
   }
   
-  var productImage: UIImage? {
+  var productImageURL: URL? {
     get {
-      return productImageView.image
+      return productImageView.sd_imageURL()
     }
-    set (image) {
-      return productImageView.image = image
+    set (imageURL) {
+      return productImageView.sd_setImage(with: imageURL)
     }
   }
   
