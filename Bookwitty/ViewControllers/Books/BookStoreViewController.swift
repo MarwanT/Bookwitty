@@ -30,6 +30,7 @@ class BookStoreViewController: UIViewController {
     super.viewDidLoad()
     title = viewModel.viewControllerTitle
     
+    viewModel.dataLoaded = viewModelLoadedDataBlock()
     
     initializeNavigationItems()
     initializeSubviews()
@@ -93,6 +94,12 @@ class BookStoreViewController: UIViewController {
     selectionTableView.delegate = self
     selectionTableView.register(SectionTitleHeaderView.nib, forHeaderFooterViewReuseIdentifier: SectionTitleHeaderView.reuseIdentifier)
     selectionTableView.register(BookTableViewCell.nib, forCellReuseIdentifier: BookTableViewCell.reuseIdentifier)
+  }
+  
+  private func viewModelLoadedDataBlock() -> (_ finished: Bool) -> Void {
+    return { (finished: Bool) -> Void in
+      self.loadUserInterface()
+    }
   }
   
   private func refreshViewController() {
