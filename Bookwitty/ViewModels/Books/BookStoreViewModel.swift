@@ -78,6 +78,10 @@ final class BookStoreViewModel {
       }
       
       self.curatedCollection = collection
+      self.featuredContents = nil
+      self.featuredReadingListContent = nil
+      self.readingLists = nil
+      self.banner = nil
       
       guard let sections = collection.sections  else {
         completion(true, nil, nil)
