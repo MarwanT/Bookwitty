@@ -12,6 +12,7 @@ class UserManager {
   struct Key {
     static let SignedInUser = "SignInUser"
     static let SignedInUserPenNames = "SignedInUserPenNames"
+    static let SignedInUserDefaultPenName = "SignedInUserDefaultPenName"
   }
   
   static let shared = UserManager()
