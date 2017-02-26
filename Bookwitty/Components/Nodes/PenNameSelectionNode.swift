@@ -179,6 +179,15 @@ extension PenNameSelectionNode: ASCollectionDataSource, ASCollectionDelegate {
     }
   }
 
+  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+    guard let indexPath = collectionNode.indexPath(for: node),
+      let penNameCellNode = collectionNode.nodeForItem(at: indexPath) as? PenNameCellNode else {
+        return
+    }
+    let selectedIndex = selectedIndexPath?.item ?? -1
+    penNameCellNode.select = selectedIndex == indexPath.item
+  }
+
   public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
     return ASSizeRange(
       min: CGSize(width: collectionNode.frame.width, height: 0.0),
