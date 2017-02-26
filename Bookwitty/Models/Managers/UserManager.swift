@@ -100,4 +100,9 @@ class UserManager {
     user.penNames = penNames
     return user
   }
+
+  private func saveSignedInUserPenNames(penNames: [PenName]) {
+    let penNamesArray = penNames.map({ $0.serializeData(options: [.IncludeID, .OmitNullValues, .IncludeToOne, .IncludeToMany]) })
+    UserDefaults.standard.set(penNamesArray, forKey: Key.SignedInUserPenNames)
+  }
 }
