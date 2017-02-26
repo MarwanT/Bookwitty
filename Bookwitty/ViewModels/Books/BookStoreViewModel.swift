@@ -29,6 +29,8 @@ final class BookStoreViewModel {
   
   var request: Cancellable?
   
+  var dataLoaded: ((_ finished: Bool) -> Void)? = nil
+  
   func loadData(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
     request = loadCuratedContent(completion: {
       (success, identifiers, error) in
@@ -43,10 +45,6 @@ final class BookStoreViewModel {
         completion(true, nil)
         return
       }
-
-      // !!!!:
-      // If data needs to be viewed partially here even before retrieving
-      // content details, a block trigering a change in the vc should be called here.
       
       self.request = self.loadContentDetails(identifiers: identifiers, completion: {
         (success, readingList, error) in
@@ -56,9 +54,9 @@ final class BookStoreViewModel {
           return
         }
         
-        // !!!!:
         // If data needs to be viewed partially here even before retrieving
         // content details, a block trigering a change in the vc should be called here.
+        self.dataLoaded?(false)
         
         self.request = self.loadReadingListContent(booksIds: booksIds, completion: {
           (success, error) in
