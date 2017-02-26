@@ -75,11 +75,13 @@ class PenNameSelectionNode: ASCellNode {
         return
       }
       guard let oldValue = oldValue else {
+        updateSelectedPenName()
         delegate?.didSelectPenName(penName: data[newValue.item], sender: self)
         return
       }
 
       if oldValue.item != newValue.item {
+          updateSelectedPenName()
           delegate?.didSelectPenName(penName: data[newValue.item], sender: self)
       }
     }
@@ -137,6 +139,11 @@ class PenNameSelectionNode: ASCellNode {
                                               alignItems: .stretch,
                                               children: nodes)
     return verticalStackSpec
+  }
+
+  func updateSelectedPenName() {
+    let selectedPenName = data[selectedIndexPath?.item ?? 0]
+    header.penNameSummary = yourFeedTitle + " " + (selectedPenName.name ?? "")
   }
 }
 
