@@ -171,6 +171,25 @@ final class BookStoreViewModel {
   }
 }
 
+// MARK: Banner
+
+extension BookStoreViewModel {
+  var hasBanner: Bool {
+    return true
+  }
+  
+  var bannerImageURL: URL? {
+    return URL(string: "http://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2013/09/12/101029496--sites-default-files-images-101029496-3176173-1748009911-hp.jp-1.jpg?v=1474281478")
+  }
+  
+  var bannerTitle: String? {
+    return "Bookwitty's Finest"
+  }
+  
+  var bannerSubtitle: String? {
+    return "The perfect list for everyone on your list"
+  }
+}
 
 // MARK: Featured Content
 
