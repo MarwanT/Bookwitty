@@ -181,9 +181,13 @@ class BookStoreViewController: UIViewController {
   
   func addSeparator(_ leftMargin: CGFloat = 0) {
     let separatorView = separatorViewInstance()
-    stackView.addArrangedSubview(separatorView)
-    separatorView.alignLeadingEdge(withView: stackView, predicate: "\(leftMargin)")
-    separatorView.alignTrailingEdge(withView: stackView, predicate: "0")
+    let containerView = UIView(frame: CGRect.zero)
+    containerView.addSubview(separatorView)
+    separatorView.alignLeadingEdge(withView: containerView, predicate: "\(leftMargin)")
+    separatorView.alignTrailingEdge(withView: containerView, predicate: "0")
+    separatorView.alignTop("0", bottom: "0", toView: containerView)
+    stackView.addArrangedSubview(containerView)
+    containerView.alignLeading("0", trailing: "0", toView: stackView)
   }
   
   func addSpacing(space: CGFloat) {
