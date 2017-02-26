@@ -19,6 +19,7 @@ class BookStoreViewController: UIViewController {
   let viewAllCategories = UIView.loadFromView(DisclosureView.self, owner: nil)
   let viewAllBooksView = UIView.loadFromView(DisclosureView.self, owner: nil)
   let viewAllSelectionsView = UIView.loadFromView(DisclosureView.self, owner: nil)
+  let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
   
   let viewModel = BookStoreViewModel()
   
@@ -47,6 +48,9 @@ class BookStoreViewController: UIViewController {
   }
   
   private func initializeSubviews() {
+    // Activity Indicator
+    activityIndicator.constrainHeight("44")
+    
     // Featured Content View
     let itemSize = FeaturedContentCollectionViewCell.defaultSize
     let interItemSpacing: CGFloat = 10
@@ -95,7 +99,9 @@ class BookStoreViewController: UIViewController {
     
     // Clear All Subviews in stack view
     stackView.subviews.forEach({ $0.removeFromSuperview() })
+    showLoader()
     viewModel.loadData { (success, error) in
+      self.hideLoader()
       guard success else {
         // TODO: Display the bookwitty error view
         return
@@ -193,6 +199,17 @@ class BookStoreViewController: UIViewController {
   fileprivate func pushCategoriesViewController() {
     let categoriesViewController = Storyboard.Books.instantiate(CategoriesTableViewController.self)
     self.navigationController?.pushViewController(categoriesViewController, animated: true)
+  }
+  
+  func showLoader() {
+    activityIndicator.startAnimating()
+    stackView.insertArrangedSubview(activityIndicator, at: 0)
+    activityIndicator.alignLeading("0", trailing: "0", toView: stackView)
+  }
+  
+  func hideLoader() {
+    activityIndicator.stopAnimating()
+    self.activityIndicator.removeFromSuperview()
   }
 }
 
