@@ -244,15 +244,22 @@ extension BookStoreViewModel {
 // MARK: Bookwitty Selection
 
 extension BookStoreViewModel {
+  var hasSelectionSection: Bool {
+    return selectionNumberOfSection > 0
+  }
+  
   var selectionNumberOfSection: Int {
-    return 1
+    return (featuredReadingListContent?.count ?? 0) > 0 ? 1 : 0
   }
   
   var selectionNumberOfItems: Int {
-    return 5
+    return featuredReadingListContent?.count ?? 0
   }
   
-  func selectionValues(for indexPath: IndexPath) -> (image: UIImage?, bookTitle: String?, authorName: String?, productType: String?, price: String?) {
-    return (#imageLiteral(resourceName: "Illustrtion"), "Harry potter and the phylosopher's stone and shafic hariri", "J.K. Rowling And Many Many Other authors and famous people", "Paperback", "150,000 L.L")
+  func selectionValues(for indexPath: IndexPath) -> (imageURL: URL?, bookTitle: String?, authorName: String?, productType: String?, price: String?) {
+    guard let book = featuredReadingListContent?[indexPath.row] else {
+      return (nil, nil, nil, nil, nil)
+    }
+    return (URL(string: book.thumbnailImageUrl ?? ""), book.title, book.productDetails?.author, book.productDetails?.productFormat, "150,000L.L")
   }
 }
