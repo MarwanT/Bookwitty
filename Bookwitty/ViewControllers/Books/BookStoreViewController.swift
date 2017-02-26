@@ -12,6 +12,8 @@ import FLKAutoLayout
 class BookStoreViewController: UIViewController {
   @IBOutlet weak var stackView: UIStackView!
   
+  let banner = BannerView()
+  let featuredContentCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout())
   let bookwittySuggestsTableView = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)
   let selectionTableView = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)
   let viewAllCategories = UIView.loadFromView(DisclosureView.self, owner: nil)
@@ -27,29 +29,11 @@ class BookStoreViewController: UIViewController {
     super.viewDidLoad()
     title = viewModel.viewControllerTitle
     
+    
     initializeNavigationItems()
+    initializeSubviews()
     
-    let didAddBanner = loadBannerSection()
-    let didAddFeaturedSection = loadFeaturedContentSection()
-    addSeparator(leftMargin)
-    let didAddViewAllCategoriesSection = loadViewAllCategories()
-    addSeparator()
-    addSpacing(space: 10)
-    let didLoadBookwittySuggests = loadBookwittySuggest()
-    addSeparator()
-    addSpacing(space: sectionSpacing)
-    let didLoadSelectionSection = loadSelectionSection()
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    // Add the table view height constraint constraint
-    bookwittySuggestsTableView.layoutIfNeeded()
-    bookwittySuggestsTableView.constrainHeight("\(bookwittySuggestsTableView.contentSize.height)")
-    
-    selectionTableView.layoutIfNeeded()
-    selectionTableView.constrainHeight("\(selectionTableView.contentSize.height)")
+    refreshViewController()
   }
   
   private func initializeNavigationItems() {
@@ -62,66 +46,42 @@ class BookStoreViewController: UIViewController {
     navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
   }
   
-  func loadBannerSection() -> Bool {
-    let banner = BannerView()
-    banner.title = "Bookwitty's Finest"
-    banner.subtitle = "The perfect list for everyone on your list"
-    stackView.addArrangedSubview(banner)
-    return true
-  }
-  
-  func loadFeaturedContentSection() -> Bool {
+  private func initializeSubviews() {
+    // Featured Content View
     let itemSize = FeaturedContentCollectionViewCell.defaultSize
     let interItemSpacing: CGFloat = 10
     let contentInset = UIEdgeInsets(
       top: 15, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: 10, right: ThemeManager.shared.currentTheme.generalExternalMargin())
-    
     let flowLayout = UICollectionViewFlowLayout()
     flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
     flowLayout.itemSize = itemSize
     flowLayout.minimumInteritemSpacing = interItemSpacing
+    featuredContentCollectionView.collectionViewLayout = flowLayout
+    featuredContentCollectionView.register(FeaturedContentCollectionViewCell.nib, forCellWithReuseIdentifier: FeaturedContentCollectionViewCell.reuseIdentifier)
+    featuredContentCollectionView.dataSource = self
+    featuredContentCollectionView.delegate = self
+    featuredContentCollectionView.backgroundColor = UIColor.clear
+    featuredContentCollectionView.contentInset = contentInset
+    featuredContentCollectionView.showsHorizontalScrollIndicator = false
+    featuredContentCollectionView.constrainHeight("\(itemSize.height + contentInset.top + contentInset.bottom)")
+    featuredContentCollectionView.constrainWidth("\(self.view.frame.width)")
     
-    let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
-    collectionView.register(FeaturedContentCollectionViewCell.nib, forCellWithReuseIdentifier: FeaturedContentCollectionViewCell.reuseIdentifier)
-    collectionView.dataSource = self
-    collectionView.delegate = self
-    collectionView.backgroundColor = UIColor.clear
-    collectionView.contentInset = contentInset
-    collectionView.showsHorizontalScrollIndicator = false
-    collectionView.constrainHeight("\(itemSize.height + contentInset.top + contentInset.bottom)")
-    collectionView.constrainWidth("\(self.view.frame.width)")
-    
-    stackView.addArrangedSubview(collectionView)
-    
-    return true
-  }
-  
-  func loadViewAllCategories() -> Bool {
+    // View All Categories View
     viewAllCategories.configuration.style = .highlighted
     viewAllCategories.delegate = self
     viewAllCategories.label.text = viewModel.viewAllCategoriesLabelText
-    
     viewAllCategories.constrainHeight("45")
-    stackView.addArrangedSubview(viewAllCategories)
-    viewAllCategories.alignLeadingEdge(withView: stackView, predicate: "0")
-    viewAllCategories.alignTrailingEdge(withView: stackView, predicate: "0")
-    return true
-  }
-  
-  func loadBookwittySuggest() -> Bool {
+    
+    // Bookwitty Suggests View
     bookwittySuggestsTableView.separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     bookwittySuggestsTableView.separatorInset = UIEdgeInsets(
       top: 0, left: leftMargin, bottom: 0, right: 0)
     bookwittySuggestsTableView.dataSource = self
     bookwittySuggestsTableView.delegate = self
     bookwittySuggestsTableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
-    stackView.addArrangedSubview(bookwittySuggestsTableView)
-    bookwittySuggestsTableView.alignLeading("0", trailing: "0", toView: stackView)
-    return true
-  }
-  
-  func loadSelectionSection() -> Bool {
+    
+    // Book Selection View
     selectionTableView.separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     selectionTableView.separatorInset = UIEdgeInsets(
       top: 0, left: leftMargin, bottom: 0, right: 0)
@@ -129,9 +89,80 @@ class BookStoreViewController: UIViewController {
     selectionTableView.delegate = self
     selectionTableView.register(SectionTitleHeaderView.nib, forHeaderFooterViewReuseIdentifier: SectionTitleHeaderView.reuseIdentifier)
     selectionTableView.register(BookTableViewCell.nib, forCellReuseIdentifier: BookTableViewCell.reuseIdentifier)
-    stackView.addArrangedSubview(selectionTableView)
-    selectionTableView.alignLeading("0", trailing: "0", toView: stackView)
-    return true
+  }
+  
+  private func refreshViewController() {
+    
+    // Clear All Subviews in stack view
+    stackView.subviews.forEach({ $0.removeFromSuperview() })
+    viewModel.loadData { (success, error) in
+      guard success else {
+        // TODO: Display the bookwitty error view
+        return
+      }
+      self.loadUserInterface()
+    }
+  }
+  
+  private func loadUserInterface() {
+    loadBannerSection()
+    loadFeaturedContentSection()
+    loadViewAllCategories()
+    loadBookwittySuggest()
+    loadSelectionSection()
+  }
+  
+  func loadBannerSection() {
+    let canDisplayBanner = banner.superview == nil
+    if viewModel.hasBanner && canDisplayBanner {
+      banner.imageURL = viewModel.bannerImageURL
+      banner.title = viewModel.bannerTitle
+      banner.subtitle = viewModel.bannerSubtitle
+      UIView.animate(withDuration: 2, animations: { 
+        self.stackView.addArrangedSubview(self.banner)
+      })
+    }
+  }
+  
+  func loadFeaturedContentSection() {
+    let canDisplayFeaturedContent = featuredContentCollectionView.superview == nil
+    if viewModel.hasFeaturedContent && canDisplayFeaturedContent {
+      stackView.addArrangedSubview(featuredContentCollectionView)
+    }
+  }
+  
+  func loadViewAllCategories() {
+    let canDisplayCategories = viewAllCategories.superview == nil
+    if viewModel.hasCategories && canDisplayCategories {
+      addSeparator(leftMargin)
+      stackView.addArrangedSubview(viewAllCategories)
+    }
+  }
+  
+  func loadBookwittySuggest() {
+    let canDisplayBookwittySuggest = bookwittySuggestsTableView.superview == nil
+    if viewModel.hasBookwittySuggests && canDisplayBookwittySuggest {
+      addSeparator()
+      addSpacing(space: 10)
+      stackView.addArrangedSubview(bookwittySuggestsTableView)
+      bookwittySuggestsTableView.alignLeading("0", trailing: "0", toView: stackView)
+      // Add the table view height constraint
+      bookwittySuggestsTableView.layoutIfNeeded()
+      bookwittySuggestsTableView.constrainHeight("\(bookwittySuggestsTableView.contentSize.height)")
+    }
+  }
+  
+  func loadSelectionSection() {
+    let canDisplaySelection = selectionTableView.superview == nil
+    if viewModel.hasSelectionSection && canDisplaySelection {
+      addSeparator()
+      addSpacing(space: sectionSpacing)
+      stackView.addArrangedSubview(selectionTableView)
+      selectionTableView.alignLeading("0", trailing: "0", toView: stackView)
+      // Add the table view height constraint
+      selectionTableView.layoutIfNeeded()
+      selectionTableView.constrainHeight("\(selectionTableView.contentSize.height)")
+    }
   }
   
   func addSeparator(_ leftMargin: CGFloat = 0) {
@@ -188,6 +219,7 @@ extension BookStoreViewController: UICollectionViewDataSource {
     
     let data = viewModel.featuredContentValues(for: indexPath)
     cell.title = data.title
+    cell.imageURL = data.imageURL
     return cell
   }
 }
@@ -242,6 +274,7 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
         return
       }
       let values = viewModel.selectionValues(for: indexPath)
+      cell.productImageURL = values.imageURL
       cell.bookTitle = values.bookTitle
       cell.authorName = values.authorName
       cell.productType = values.productType
