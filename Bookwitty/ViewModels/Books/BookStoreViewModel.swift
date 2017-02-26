@@ -210,6 +210,14 @@ extension BookStoreViewModel {
   }
 }
 
+// MARK: Categories
+
+extension BookStoreViewModel {
+  var hasCategories: Bool {
+    return true
+  }
+}
+
 // MARK: Bookwitty Suggests
 
 extension BookStoreViewModel {
