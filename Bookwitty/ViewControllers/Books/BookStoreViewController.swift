@@ -22,6 +22,8 @@ class BookStoreViewController: UIViewController {
   let viewAllSelectionsView = UIView.loadFromView(DisclosureView.self, owner: nil)
   let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
   
+  let refreshController = UIRefreshControl()
+  
   let viewModel = BookStoreViewModel()
   
   fileprivate let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
@@ -34,6 +36,7 @@ class BookStoreViewController: UIViewController {
     viewModel.dataLoaded = viewModelLoadedDataBlock()
     
     initializeNavigationItems()
+    initializePullToRefresh()
     initializeSubviews()
     
     refreshViewController()
@@ -47,6 +50,11 @@ class BookStoreViewController: UIViewController {
       UIBarButtonItemStyle.plain, target: self, action:
       #selector(self.settingsButtonTap(_:)))
     navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
+  }
+  
+  private func initializePullToRefresh() {
+    scrollView.addSubview(refreshController)
+    refreshController.addTarget(self, action: #selector(refreshViewController), for: .valueChanged)
   }
   
   private func initializeSubviews() {
@@ -103,13 +111,12 @@ class BookStoreViewController: UIViewController {
     }
   }
   
-  private func refreshViewController() {
-    
+  func refreshViewController() {
     // Clear All Subviews in stack view
     stackView.subviews.forEach({ $0.removeFromSuperview() })
-    showLoader()
+    refreshController.beginRefreshing()
     viewModel.loadData { (success, error) in
-      self.hideLoader()
+      self.refreshController.endRefreshing()
       guard success else {
         // TODO: Display the bookwitty error view
         self.showAlertWith(title: self.viewModel.errorLoadingDataTitle, message: self.viewModel.errorLoadingDataMessage)
@@ -133,7 +140,7 @@ class BookStoreViewController: UIViewController {
       banner.imageURL = viewModel.bannerImageURL
       banner.title = viewModel.bannerTitle
       banner.subtitle = viewModel.bannerSubtitle
-      UIView.animate(withDuration: 2, animations: { 
+      UIView.animate(withDuration: 2, animations: {
         self.stackView.addArrangedSubview(self.banner)
       })
     }
@@ -219,17 +226,6 @@ class BookStoreViewController: UIViewController {
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
     alert.addAction(UIAlertAction(title: viewModel.okText, style: UIAlertActionStyle.default, handler: nil))
     self.present(alert, animated: true, completion: nil)
-  }
-  
-  func showLoader() {
-    activityIndicator.startAnimating()
-    stackView.insertArrangedSubview(activityIndicator, at: 0)
-    activityIndicator.alignLeading("0", trailing: "0", toView: stackView)
-  }
-  
-  func hideLoader() {
-    activityIndicator.stopAnimating()
-    self.activityIndicator.removeFromSuperview()
   }
 }
 
