@@ -17,6 +17,9 @@ final class BookStoreViewModel {
   let viewAllSelectionsLabelText = localizedString(key: "view_all_selections", defaultValue: "View All Selections")
   let selectionHeaderTitle = localizedString(key: "our_selection_for_you", defaultValue: "Our selection for you")
   let viewControllerTitle = localizedString(key: "books", defaultValue: "Books")
+  let errorLoadingDataTitle = localizedString(key: "error_loading_data_title", defaultValue: "Error Loading Data")
+  let errorLoadingDataMessage = localizedString(key: "error_loading_data_message", defaultValue: "We could not load your data")
+  let okText = localizedString(key: "ok", defaultValue: "Ok")
   
   private var curatedCollection: CuratedCollection? = nil
   private var featuredContents: [ModelCommonProperties]? = nil
