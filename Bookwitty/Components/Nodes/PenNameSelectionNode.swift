@@ -50,24 +50,7 @@ class PenNameSelectionNode: ASCellNode {
       header.updateArrowDirection(direction: expand ? .down : .up)
     }
   }
-  var data: [PenName] = [] {
-    didSet {
-      guard data.count > minNumberOfCells else {
-        style.height = ASDimensionMake(0.0)
-        setNeedsLayout()
-        return
-      }
-      
-      let selectedPenName = data[selectedIndexPath?.item ?? 0]
-      header.penNameSummary = yourFeedTitle + " " + (selectedPenName.name ?? "")
-      let extraSeparator = separatorHeight
-      style.height = ASDimensionMake(expandedHeightDimension.value + extraSeparator)
-      collectionNode.style.preferredSize = CGSize(width: style.maxWidth.value, height: expandedCollectionHeight)
-      collectionNode.reloadData()
-      expand = true
-      setNeedsLayout()
-    }
-  }
+  fileprivate var data: [PenName] = []
   var delegate: PenNameSelectionNodeDelegate?
   var selectedIndexPath: IndexPath? = nil {
     didSet {
@@ -144,6 +127,42 @@ class PenNameSelectionNode: ASCellNode {
   func updateSelectedPenName() {
     let selectedPenName = data[selectedIndexPath?.item ?? 0]
     header.penNameSummary = yourFeedTitle + " " + (selectedPenName.name ?? "")
+  }
+
+  func loadData(penNames: [PenName]?, withSelected selectedPenName: PenName?) {
+    data = penNames ?? []
+
+    guard data.count > minNumberOfCells else {
+      style.height = ASDimensionMake(0.0)
+      setNeedsLayout()
+      return
+    }
+
+    expand = true
+
+    if let selectedPenNameId = selectedPenName?.id {
+      _ = data.enumerated().filter({ (item: (offset: Int, penName: PenName)) -> Bool in
+        guard let id = item.penName.id else {
+          return false
+        }
+        let found = selectedPenNameId == id
+        if found {
+          self.selectedIndexPath = IndexPath(row: item.offset, section: 0)
+        }
+        return found
+      })
+    } else {
+      self.selectedIndexPath = IndexPath(row: 0, section: 0)
+    }
+
+    updateSelectedPenName()
+    let extraSeparator = separatorHeight
+    style.height = ASDimensionMake(expandedHeightDimension.value + extraSeparator)
+
+    collectionNode.style.preferredSize = CGSize(width: style.maxWidth.value, height: expandedCollectionHeight)
+    collectionNode.reloadData()
+
+    setNeedsLayout()
   }
 }
 
