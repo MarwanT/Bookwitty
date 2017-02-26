@@ -49,8 +49,7 @@ class UserManager {
   }
 
   var defaultPenName: PenName? {
-    //TODO: Persist and Return the persisted default value
-    return signedInUser?.penNames?.first
+    return getUserDefaultPenName()
   }
 
   private init() {
