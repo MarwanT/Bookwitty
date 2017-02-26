@@ -41,8 +41,15 @@ extension Parsable where Self: Resource {
     return nil
   }
 
-  static func parseDataArray(data: Data?) -> Array<AbstractType>? {
-    return nil
+  static func parseDataArray(data: Data?) -> [AbstractType]? {
+    guard let data = data,
+    let resourceArray = Parser.parseDataArray(data: data) else {
+      return nil
+    }
+
+    return resourceArray.flatMap { (resource) -> AbstractType? in
+      return resource as? AbstractType
+    }
   }
 
   func serializeData(options: SerializationOptions) -> [String : Any]? {
