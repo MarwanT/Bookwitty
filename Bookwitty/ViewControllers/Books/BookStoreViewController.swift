@@ -111,6 +111,7 @@ class BookStoreViewController: UIViewController {
       self.hideLoader()
       guard success else {
         // TODO: Display the bookwitty error view
+        self.showAlertWith(title: self.viewModel.errorLoadingDataTitle, message: self.viewModel.errorLoadingDataMessage)
         return
       }
       self.loadUserInterface()
@@ -206,6 +207,13 @@ class BookStoreViewController: UIViewController {
   fileprivate func pushCategoriesViewController() {
     let categoriesViewController = Storyboard.Books.instantiate(CategoriesTableViewController.self)
     self.navigationController?.pushViewController(categoriesViewController, animated: true)
+  }
+  
+  // MARK: Helpers
+  func showAlertWith(title: String, message: String) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    alert.addAction(UIAlertAction(title: viewModel.okText, style: UIAlertActionStyle.default, handler: nil))
+    self.present(alert, animated: true, completion: nil)
   }
   
   func showLoader() {
