@@ -36,6 +36,18 @@ class UserManager {
     return AccessToken.shared.isValid
   }
 
+  var penNames: [PenName]? {
+    get {
+      return isSignedIn ? signedInUser.penNames : nil
+    }
+    set {
+      guard let penNames = newValue else {
+        return
+      }
+      saveSignedInUserPenNames(penNames: penNames)
+    }
+  }
+
   var defaultPenName: PenName? {
     //TODO: Persist and Return the persisted default value
     return signedInUser?.penNames?.first
