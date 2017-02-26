@@ -76,20 +76,29 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
   }
 
-  func loadData() {
+  func loadData(withPenNames reloadPenNames: Bool = true) {
     pullToRefresher.beginRefreshing()
     viewModel.loadNewsfeed { [weak self] (success) in
       guard let strongSelf = self else { return }
       strongSelf.pullToRefresher.endRefreshing()
-      if(success) {
-        strongSelf.penNameSelectionNode.data = strongSelf.viewModel.penNames
-        strongSelf.collectionNode.reloadData()
-      }
+      strongSelf.collectionNode.reloadData(completion: { 
+        if reloadPenNames {
+          strongSelf.reloadPenNamesNode()
+        }
+      })
     }
+  }
+
+  func reloadPenNamesNode() {
+    //collectionNode.reloadData()
+    penNameSelectionNode.loadData(penNames: viewModel.penNames, withSelected: viewModel.defaultPenName)
   }
 }
 extension NewsFeedViewController: PenNameSelectionNodeDelegate {
   func didSelectPenName(penName: PenName, sender: PenNameSelectionNode) {
+    viewModel.didUpdateDefaultPenName(penName: penName, completionBlock: {
+      loadData(withPenNames: false)
+    })
   }
 }
 // MARK: - Notification
@@ -139,6 +148,12 @@ extension NewsFeedViewController: ASCollectionDataSource {
       } else {
         return self.penNameSelectionNode
       }
+    }
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+    if node is PenNameSelectionNode {
+      penNameSelectionNode.setNeedsLayout()
     }
   }
 }
