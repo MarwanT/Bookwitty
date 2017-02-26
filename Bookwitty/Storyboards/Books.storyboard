@@ -67,6 +67,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="scrollView" destination="bdt-NZ-rSs" id="hXW-Gc-EeR"/>
                         <outlet property="stackView" destination="rhn-g5-XdI" id="cde-cH-bum"/>
                     </connections>
                 </viewController>
