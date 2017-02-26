@@ -21,11 +21,11 @@ final class BookStoreViewModel {
   let errorLoadingDataMessage = localizedString(key: "error_loading_data_message", defaultValue: "We could not load your data")
   let okText = localizedString(key: "ok", defaultValue: "Ok")
   
-  private var curatedCollection: CuratedCollection? = nil
-  private var featuredContents: [ModelCommonProperties]? = nil
-  private var featuredReadingListContent: [Book]? = nil
-  private var readingLists: [ReadingList]? = nil
-  private var banner: Banner? = nil
+  fileprivate var curatedCollection: CuratedCollection? = nil
+  fileprivate var featuredContents: [ModelCommonProperties]? = nil
+  fileprivate var featuredReadingListContent: [Book]? = nil
+  fileprivate var readingLists: [ReadingList]? = nil
+  fileprivate var banner: Banner? = nil
   
   var request: Cancellable?
   
