@@ -8,6 +8,7 @@
 
 import UIKit
 import FLKAutoLayout
+import SDWebImage
 
 class BannerView: UIView, Themeable {
   let imageView = UIImageView(frame: CGRect.zero)
@@ -82,12 +83,12 @@ class BannerView: UIView, Themeable {
   
   // MARK: - APIs
   
-  var image: UIImage? {
+  var imageURL: URL? {
     get {
-      return imageView.image
+      return imageView.sd_imageURL()
     }
-    set (image) {
-      imageView.image = image
+    set (imageURL) {
+      imageView.sd_setImage(with: imageURL)
     }
   }
   
