@@ -53,6 +53,7 @@ class BookStoreViewController: UIViewController {
   }
   
   private func initializePullToRefresh() {
+    scrollView.alwaysBounceVertical = true
     scrollView.addSubview(refreshController)
     refreshController.addTarget(self, action: #selector(refreshViewController), for: .valueChanged)
   }
