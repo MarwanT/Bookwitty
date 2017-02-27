@@ -12,9 +12,7 @@ final class PenNameViewModel {
   private(set) var user: User!
 
   func penDisplayName() -> String {
-    let firstName = user.firstName ?? ""
-    let lastName = user.lastName ?? ""
-    return firstName + " " + lastName
+    return user.penNames?.first?.name ?? ""
   }
 
   func initializeWith(user: User) {
