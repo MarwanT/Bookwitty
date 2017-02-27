@@ -16,6 +16,7 @@ protocol CardActionBarNodeDelegate {
 class CardActionBarNode: ASDisplayNode {
   enum Action {
     case wit
+    case unwit
     case comment
     case share
   }
