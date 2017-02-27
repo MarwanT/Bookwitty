@@ -257,15 +257,14 @@ class CardRegistry {
       return nil
     }
 
-    let quoteCell = QuoteCardPostCellNode()
-    quoteCell.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-    quoteCell.node.articleQuotePublisher = resource.author
+    card.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    card.node.articleQuotePublisher = resource.author
     if let qoute = resource.body, !qoute.isEmpty {
-      quoteCell.node.articleQuote = "“ \(qoute) ”"
+      card.node.articleQuote = "“ \(qoute) ”"
     } else if let qoute = resource.title, !qoute.isEmpty {
-      quoteCell.node.articleQuote = "“ \(qoute) ”"
+      card.node.articleQuote = "“ \(qoute) ”"
     }
-    quoteCell.articleCommentsSummary = "X commented on this"
+    card.articleCommentsSummary = "X commented on this"
 
     return card
   }
