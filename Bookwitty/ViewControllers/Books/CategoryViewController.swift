@@ -50,6 +50,14 @@ class CategoryViewController: UIViewController {
     featuredContentCollectionView.showsHorizontalScrollIndicator = false
     featuredContentCollectionView.constrainHeight("\(itemSize.height + contentInset.top + contentInset.bottom)")
     featuredContentCollectionView.constrainWidth("\(self.view.frame.width)")
+    
+    // Bookwitty Suggests View
+    bookwittySuggestsTableView.separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    bookwittySuggestsTableView.separatorInset = UIEdgeInsets(
+      top: 0, left: leftMargin, bottom: 0, right: 0)
+    bookwittySuggestsTableView.dataSource = self
+    bookwittySuggestsTableView.delegate = self
+    bookwittySuggestsTableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
   }
   
   
@@ -83,5 +91,67 @@ extension CategoryViewController: UICollectionViewDataSource, UICollectionViewDe
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     // TODO: Handle featured content selection
+  }
+}
+
+
+// MARK: - Table Views Delegates & Data Source
+
+extension CategoryViewController: UITableViewDataSource, UITableViewDelegate {
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return viewModel.bookwittySuggestsNumberOfSections
+  }
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return viewModel.bookwittySuggestsNumberOfItems
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    return tableView.dequeueReusableCell(withIdentifier: DisclosureTableViewCell.identifier) ?? UITableViewCell()
+  }
+  
+  func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    guard let cell = cell as? DisclosureTableViewCell else {
+      return
+    }
+    let value = viewModel.bookwittySuggestsValues(for: indexPath)
+    cell.label.text = value
+  }
+  
+  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    let containerView = UIView(frame: CGRect.zero)
+    
+    let tableHeaderLabel = UILabel(frame: CGRect.zero)
+    tableHeaderLabel.text = viewModel.bookwittySuggestsTitle
+    tableHeaderLabel.font = FontDynamicType.callout.font
+    tableHeaderLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    tableHeaderLabel.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+    containerView.addSubview(tableHeaderLabel)
+    tableHeaderLabel.alignTop("0", leading: "\(leftMargin)", bottom: "0", trailing: "0", toView: containerView)
+    
+    let separatorView = separatorViewInstance()
+    containerView.addSubview(separatorView)
+    separatorView.alignBottomEdge(withView: containerView, predicate: "0")
+    separatorView.alignLeading("\(leftMargin)", trailing: "0", toView: containerView)
+    
+    return containerView
+  }
+  
+  func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    return 45
+  }
+  
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 45
+  }
+  
+  // MARK: Table View Delegate
+  
+  func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    return 0.01 // To remove the separator after the last cell
+  }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
   }
 }
