@@ -190,11 +190,15 @@ extension NewsFeedViewController: UIScrollViewDelegate {
         UIView.animate(withDuration: 0.3, animations: {
           self.penNameSelectionNode.alpha = 1.0
           scrollView.contentOffset = CGPoint(x: 0, y: 0.0)
+          //TODO: use inset to hide the bar:
+          //scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         })
       } else {
         UIView.animate(withDuration: 0.3, animations: {
           self.penNameSelectionNode.alpha = 0.4
           scrollView.contentOffset = CGPoint(x: 0, y: penNameHeight)
+          //TODO: use inset to hide the bar:
+          //scrollView.contentInset = UIEdgeInsets(top: -penNameHeight, left: 0, bottom: 0, right: 0)
         })
       }
     }
