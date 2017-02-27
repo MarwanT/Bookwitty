@@ -63,6 +63,10 @@ final class NewsFeedViewModel {
     }
   }
 
+  func hasNextPage() -> Bool {
+    return (nextPage != nil)
+  }
+
   func sharingContent(index: Int) -> String? {
     let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
     let dataIndex = index - showsPenNameSelectionHeader
