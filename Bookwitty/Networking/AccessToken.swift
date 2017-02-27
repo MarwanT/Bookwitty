@@ -80,7 +80,7 @@ class AccessToken {
     return expiryDate.isInPast
   }
   
-  private var hasTokens: Bool {
+  var hasTokens: Bool {
     guard let token = token, let refreshToken = refreshToken else {
       return false
     }
