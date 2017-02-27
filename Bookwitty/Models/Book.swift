@@ -114,6 +114,15 @@ class SupplierInformation: NSObject {
   var listPrice: Price?
   var price: Price?
   var userPrice: Price?
+  var displayPrice: Price? {
+    if userPrice?.formattedValue != nil {
+      return userPrice
+    } else if price?.formattedValue != nil {
+      return price
+    } else {
+      return listPrice
+    }
+  }
   
   override init() {
     super.init()
