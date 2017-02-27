@@ -137,7 +137,6 @@ final class BookStoreViewModel {
       }
       
       self.featuredReadingListContent = Array(books.prefix(maximumNumberOfBooks))
-      
     })
   }
   
@@ -264,6 +263,6 @@ extension BookStoreViewModel {
     guard let book = featuredReadingListContent?[indexPath.row] else {
       return (nil, nil, nil, nil, nil)
     }
-    return (URL(string: book.thumbnailImageUrl ?? ""), book.title, book.productDetails?.author, book.productDetails?.productFormat, "150,000L.L")
+    return (URL(string: book.thumbnailImageUrl ?? ""), book.title, book.productDetails?.author, book.productDetails?.productFormat, book.supplierInformation?.displayPrice?.formattedValue)
   }
 }
