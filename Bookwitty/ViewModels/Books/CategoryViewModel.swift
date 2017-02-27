@@ -76,6 +76,23 @@ final class CategoryViewModel {
     })
   }
   
+  private func loadCategoryBooks(categoryIdentifier: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    categoryBooks = nil
+    
+    let maximumNumberOfBooks: Int = 3
+    return SearchAPI.search(filter: (nil, [categoryIdentifier]), page: nil, completion: {
+      (success, resources, error) in
+      defer {
+        completion(success, error)
+      }
+      
+      guard success, let books = resources as? [Book] else {
+        return
+      }
+      
+      self.categoryBooks = Array(books.prefix(maximumNumberOfBooks))
+    })
+  }
   
   // MARK: Filters
   
