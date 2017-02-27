@@ -14,6 +14,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let pullToRefresher = UIRefreshControl()
   let penNameSelectionNode = PenNameSelectionNode()
 
+  let scrollingThreshold: CGFloat = 25.0
   let viewModel = NewsFeedViewModel()
   let data = ["","","","","","","","","","","","","","",""]
   var isFirstRun: Bool = true
@@ -185,7 +186,7 @@ extension NewsFeedViewController: UIScrollViewDelegate {
   private func scrollToTheRightPosition(scrollView: UIScrollView) {
     let penNameHeight = penNameSelectionNode.occupiedHeight
     if scrollView.contentOffset.y <= penNameHeight {
-      if(scrollView.contentOffset.y == 0.0) {
+      if(scrollView.contentOffset.y <= scrollingThreshold) {
         UIView.animate(withDuration: 0.3, animations: {
           self.penNameSelectionNode.alpha = 1.0
           scrollView.contentOffset = CGPoint(x: 0, y: 0.0)
