@@ -9,5 +9,9 @@
 import Foundation
 
 final class CategoryViewModel {
-  
+  fileprivate var curatedCollection: CuratedCollection? = nil
+  fileprivate var featuredContents: [ModelCommonProperties]? = nil
+  fileprivate var categoryBooks: [Book]? = nil
+  fileprivate var readingLists: [ReadingList]? = nil
+  fileprivate var banner: Banner? = nil
 }
