@@ -43,7 +43,8 @@ extension Parsable where Self: Resource {
 
   static func parseDataArray(data: Data?) -> [AbstractType]? {
     guard let data = data,
-    let resourceArray = Parser.parseDataArray(data: data) else {
+    let parsedData = Parser.parseDataArray(data: data),
+    let resourceArray = parsedData.resources else {
       return nil
     }
 
@@ -117,20 +118,22 @@ class Parser {
     return nil
   }
 
-  static func parseDataArray(data: Data?, mappingTargets: [Resource]? = nil) -> [Resource]? {
+  static func parseDataArray(data: Data?, mappingTargets: [Resource]? = nil) -> (resources: [Resource]?, next: URL?, errors: [APIError]?)? {
     guard let data = data else {
       return nil
     }
-    guard let document = parseData(data: data, mappingTargets: mappingTargets) else {
+    guard let document: JSONAPIDocument = parseData(data: data, mappingTargets: mappingTargets) else {
       print("Error parsing Array of models")
       return nil
     }
 
+    let next = document.links?["next"]
+    
     if let parsedData = document.data {
-      return parsedData
+      return (parsedData, next, document.errors)
     }
 
-    return nil
+    return (nil, next, document.errors)
   }
 }
 
