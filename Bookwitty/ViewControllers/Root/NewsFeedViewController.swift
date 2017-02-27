@@ -95,7 +95,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   }
 
   func reloadPenNamesNode() {
-    //collectionNode.reloadData()
     penNameSelectionNode.loadData(penNames: viewModel.penNames, withSelected: viewModel.defaultPenName)
   }
 }
