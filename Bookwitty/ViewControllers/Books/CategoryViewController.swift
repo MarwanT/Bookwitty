@@ -85,6 +85,17 @@ class CategoryViewController: UIViewController {
     return separatorView
   }
   
+  private func addSeparator(_ leftMargin: CGFloat = 0) {
+    let separatorView = separatorViewInstance()
+    let containerView = UIView(frame: CGRect.zero)
+    containerView.addSubview(separatorView)
+    separatorView.alignLeadingEdge(withView: containerView, predicate: "\(leftMargin)")
+    separatorView.alignTrailingEdge(withView: containerView, predicate: "0")
+    separatorView.alignTop("0", bottom: "0", toView: containerView)
+    stackView.addArrangedSubview(containerView)
+    containerView.alignLeading("0", trailing: "0", toView: stackView)
+  }
+  
   private func addSpacing(space: CGFloat) {
     guard space > 0 else {
       return
