@@ -21,6 +21,11 @@ final class CategoryViewModel {
   // MARK: API Calls
 
   private func loadCuratedContent(categoryIdentifier: String, completion: @escaping (_ success: Bool, _ identifiers: [String]? , _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    curatedCollection = nil
+    featuredContents = nil
+    readingLists = nil
+    banner = nil
+    
     return CategoryAPI.categoryCuratedContent(categoryIdentifier: categoryIdentifier, completion: {
       (success, collection, error) in
       var identifiers = [String]()
@@ -31,10 +36,6 @@ final class CategoryViewModel {
       }
       
       self.curatedCollection = collection
-      self.featuredContents = nil
-      self.categoryBooks = nil
-      self.readingLists = nil
-      self.banner = nil
       
       guard let sections = collection.sections  else {
         completion(true, nil, nil)
