@@ -34,8 +34,12 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     super.init(node: collectionNode)
 
     collectionNode.onDidLoad { [weak self] (collectionNode) in
-      guard let strongSelf = self else { return }
-      collectionNode.view.addSubview(strongSelf.pullToRefresher)
+      guard let strongSelf = self,
+        let collectionView = collectionNode.view as? ASCollectionView else {
+          return
+      }
+      collectionView.addSubview(strongSelf.pullToRefresher)
+      collectionView.alwaysBounceVertical = true
     }
   }
 
