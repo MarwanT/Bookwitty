@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+import UIImageViewAlignedSwift
 
 class BookTableViewCell: UITableViewCell {
   static let reuseIdentifier = "BookTableViewCell"
@@ -15,7 +16,7 @@ class BookTableViewCell: UITableViewCell {
   
   static let minimumHeight: CGFloat = 180
   
-  @IBOutlet weak var productImageView: UIImageView!
+  @IBOutlet weak var productImageView: UIImageViewAligned!
   @IBOutlet weak var bookTitleLabel: UILabel!
   @IBOutlet weak var authorNameLabel: UILabel!
   @IBOutlet weak var productTypeLabel: UILabel!
@@ -23,7 +24,12 @@ class BookTableViewCell: UITableViewCell {
   
   override func awakeFromNib() {
     super.awakeFromNib()
+    initializeComponents()
     applyTheme()
+  }
+  
+  func initializeComponents() {
+    productImageView.alignTop = true
   }
   
   var productImageURL: URL? {

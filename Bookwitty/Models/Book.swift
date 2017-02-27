@@ -114,6 +114,15 @@ class SupplierInformation: NSObject {
   var listPrice: Price?
   var price: Price?
   var userPrice: Price?
+  var displayPrice: Price? {
+    if userPrice?.formattedValue != nil {
+      return userPrice
+    } else if price?.formattedValue != nil {
+      return price
+    } else {
+      return listPrice
+    }
+  }
   
   override init() {
     super.init()
@@ -148,6 +157,13 @@ struct Price {
     let json = JSON(dictionary)
     currency = json["currency"].stringValue
     value = json["value"].stringValue
+  }
+  
+  var formattedValue: String? {
+    guard let currency = currency, let value = value, !currency.isEmpty, !value.isEmpty else {
+      return nil
+    }
+    return currency + " " + value
   }
 }
 

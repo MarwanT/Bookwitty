@@ -34,6 +34,7 @@ target 'Bookwitty' do
   pod 'AsyncDisplayKit', '2.0.2'
   pod 'SwiftLinkPreview', '2.0.0'
   pod 'SDWebImage', '4.0.0'
+  pod 'UIImageViewAlignedSwift', '0.3.1'
 
   target 'BookwittyTests' do
     inherit! :search_paths

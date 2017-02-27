@@ -42,6 +42,22 @@ class BookStoreViewController: UIViewController {
     refreshViewController()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    /*
+     When the refresh controller is still refreshing, and we navigate away and
+     back to this view controller, the activity indicator stops animating.
+     The is a turn around to re animate it if needed
+     */
+    if refreshController.isRefreshing == true {
+      let offset = scrollView.contentOffset
+      refreshController.endRefreshing()
+      refreshController.beginRefreshing()
+      scrollView.contentOffset = offset
+    }
+  }
+  
   private func initializeNavigationItems() {
     let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
       UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
@@ -53,6 +69,7 @@ class BookStoreViewController: UIViewController {
   }
   
   private func initializePullToRefresh() {
+    scrollView.alwaysBounceVertical = true
     scrollView.addSubview(refreshController)
     refreshController.addTarget(self, action: #selector(refreshViewController), for: .valueChanged)
   }
@@ -150,13 +167,13 @@ class BookStoreViewController: UIViewController {
     let canDisplayFeaturedContent = featuredContentCollectionView.superview == nil
     if viewModel.hasFeaturedContent && canDisplayFeaturedContent {
       stackView.addArrangedSubview(featuredContentCollectionView)
+      addSeparator(leftMargin)
     }
   }
   
   func loadViewAllCategories() {
     let canDisplayCategories = viewAllCategories.superview == nil
     if viewModel.hasCategories && canDisplayCategories {
-      addSeparator(leftMargin)
       stackView.addArrangedSubview(viewAllCategories)
     }
   }
@@ -338,6 +355,10 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
         return nil
       }
       headerView.label.text = viewModel.selectionHeaderTitle
+      let headerConfiguration = SectionTitleHeaderView.Configuration(
+        verticalBarColor: ThemeManager.shared.currentTheme.colorNumber6(),
+        horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber5())
+      headerView.configuration = headerConfiguration
       return headerView
     }
   }
