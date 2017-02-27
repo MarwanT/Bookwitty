@@ -82,8 +82,14 @@ class PenNameViewController: UIViewController {
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
     //Hide keyboard if visible
     _ = penNameInputField.resignFirstResponder()
-    //TODO: validate and action
-    self.dismiss(animated: true, completion: nil)
+    _ = biographyTextView.resignFirstResponder()
+
+    let name = penNameInputField.textField.text
+    let biography = biographyTextView.text
+    self.viewModel.updatePenNameIfNeeded(name: name, biography: biography) {
+      (success: Bool) in
+      self.dismiss(animated: true, completion: nil)
+    }
   }
 
   // MARK: - Keyboard Handling
