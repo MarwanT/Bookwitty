@@ -125,17 +125,19 @@ final class BookStoreViewModel {
   }
   
   private func loadReadingListContent(booksIds: [String], completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let maximumNumberOfBooks = 3
     return UserAPI.batch(identifiers: booksIds, completion: {
       (success, resource, error) in
       defer {
         completion(success, error)
       }
       
-      guard success, let books = resource?.filter({ ($0 is Book) }) else {
+      guard success, let books = resource?.filter({ ($0 is Book) }) as? [Book] else {
         return
       }
       
-      self.featuredReadingListContent = books as? [Book]
+      self.featuredReadingListContent = Array(books.prefix(maximumNumberOfBooks))
+      
     })
   }
   
