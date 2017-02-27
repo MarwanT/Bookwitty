@@ -14,6 +14,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let pullToRefresher = UIRefreshControl()
   let penNameSelectionNode = PenNameSelectionNode()
 
+  let scrollingThreshold: CGFloat = 25.0
   let viewModel = NewsFeedViewModel()
   let data = ["","","","","","","","","","","","","","",""]
   var isFirstRun: Bool = true
@@ -34,8 +35,12 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     super.init(node: collectionNode)
 
     collectionNode.onDidLoad { [weak self] (collectionNode) in
-      guard let strongSelf = self else { return }
-      collectionNode.view.addSubview(strongSelf.pullToRefresher)
+      guard let strongSelf = self,
+        let collectionView = collectionNode.view as? ASCollectionView else {
+          return
+      }
+      collectionView.addSubview(strongSelf.pullToRefresher)
+      collectionView.alwaysBounceVertical = true
     }
   }
 
@@ -181,15 +186,19 @@ extension NewsFeedViewController: UIScrollViewDelegate {
   private func scrollToTheRightPosition(scrollView: UIScrollView) {
     let penNameHeight = penNameSelectionNode.occupiedHeight
     if scrollView.contentOffset.y <= penNameHeight {
-      if(scrollView.contentOffset.y == 0.0) {
+      if(scrollView.contentOffset.y <= scrollingThreshold) {
         UIView.animate(withDuration: 0.3, animations: {
           self.penNameSelectionNode.alpha = 1.0
           scrollView.contentOffset = CGPoint(x: 0, y: 0.0)
+          //TODO: use inset to hide the bar:
+          //scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         })
       } else {
         UIView.animate(withDuration: 0.3, animations: {
           self.penNameSelectionNode.alpha = 0.4
           scrollView.contentOffset = CGPoint(x: 0, y: penNameHeight)
+          //TODO: use inset to hide the bar:
+          //scrollView.contentInset = UIEdgeInsets(top: -penNameHeight, left: 0, bottom: 0, right: 0)
         })
       }
     }
