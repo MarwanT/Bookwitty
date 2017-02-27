@@ -17,6 +17,7 @@ final class CategoryViewModel {
   fileprivate var readingLists: [ReadingList]? = nil
   fileprivate var banner: Banner? = nil
   
+  var category: Category! = nil
   
   // MARK: API Calls
 
