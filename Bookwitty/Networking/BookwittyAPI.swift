@@ -26,6 +26,7 @@ public enum BookwittyAPI {
   case updatePenName(identifier: String, name: String?, biography: String?, avatarUrl: String?, facebookUrl: String?, tumblrUrl: String?, googlePlusUrl: String?, twitterUrl: String?, instagramUrl: String?, pinterestUrl: String?, youtubeUrl: String?, linkedinUrl: String?, wordpressUrl: String?, websiteUrl: String?)
   case batch(identifiers: [String])
   case updatePreference(preference: String, value: String)
+  case penNames()
 }
 
 // MARK: - Target Type
@@ -77,6 +78,8 @@ extension BookwittyAPI: TargetType {
       path = "/content/batch"
     case .updatePreference:
       path = "/user/update_preference"
+    case .penNames:
+      path = "/user/pen_names"
     }
     
     return apiBasePath + apiVersion + path
@@ -86,7 +89,7 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .oAuth, .refreshToken:
       return .post
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames:
       return .get
     case .register, .batch, .updatePreference:
       return .post
@@ -126,7 +129,7 @@ extension BookwittyAPI: TargetType {
       return PenNameAPI.updatePostBody(identifier: identifier, name: name, biography: biography, avatarUrl: avatarUrl, facebookUrl: facebookUrl, tumblrUrl: tumblrUrl, googlePlusUrl: googlePlusUrl, twitterUrl: twitterUrl, instagramUrl: instagramUrl, pinterestUrl: pinterestUrl, youtubeUrl: youtubeUrl, linkedinUrl: linkedinUrl, wordpressUrl: wordpressUrl, websiteUrl: websiteUrl)
     case .updatePreference(let preference, let value):
       return UserAPI.updatePostBody(preference: preference, value: value)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames:
       return nil
     }
   }

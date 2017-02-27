@@ -12,6 +12,7 @@ class UserManager {
   struct Key {
     static let SignedInUser = "SignInUser"
     static let SignedInUserPenNames = "SignedInUserPenNames"
+    static let SignedInUserDefaultPenName = "SignedInUserDefaultPenName"
   }
   
   static let shared = UserManager()
@@ -35,9 +36,20 @@ class UserManager {
     return AccessToken.shared.isValid
   }
 
+  var penNames: [PenName]? {
+    get {
+      return isSignedIn ? signedInUser.penNames : nil
+    }
+    set {
+      guard let penNames = newValue else {
+        return
+      }
+      saveSignedInUserPenNames(penNames: penNames)
+    }
+  }
+
   var defaultPenName: PenName? {
-    //TODO: Persist and Return the persisted default value
-    return signedInUser?.penNames?.first
+    return getUserDefaultPenName()
   }
 
   private init() {
@@ -50,13 +62,34 @@ class UserManager {
 
     UserDefaults.standard.set(userDictionary, forKey: Key.SignedInUser)
     UserDefaults.standard.set(penNamesArray, forKey: Key.SignedInUserPenNames)
+
+    if let firstPenName = user.penNames?.first {
+      //On sign-in save the first name as the default one
+      saveDefaultPenName(penName: firstPenName)
+    }
+  }
+
+  func saveDefaultPenName(penName: PenName) {
+    let serializedPenName = penName.serializeData(options:  [.IncludeID, .OmitNullValues, .IncludeToOne, .IncludeToMany])
+    UserDefaults.standard.set(serializedPenName, forKey: Key.SignedInUserDefaultPenName)
   }
   
   func deleteSignedInUser() {
     signedInUser = nil
     UserDefaults.standard.removeObject(forKey: Key.SignedInUser)
   }
-  
+
+  private func getUserDefaultPenName() -> PenName? {
+    guard let defaultPenNameDictionary = UserDefaults.standard.value(forKey: Key.SignedInUserDefaultPenName) as? [String : Any] else {
+      return nil
+    }
+    guard let data = try? JSONSerialization.data(withJSONObject: defaultPenNameDictionary, options: JSONSerialization.WritingOptions.prettyPrinted),
+      let penName = PenName.parseData(data: data) else {
+        return nil
+    }
+    return penName
+  }
+
   private func getSignedInUser() -> User? {
     guard let userDictionary = UserDefaults.standard.value(forKey: Key.SignedInUser) as? [String : Any] else {
       return nil
@@ -82,5 +115,10 @@ class UserManager {
 
     user.penNames = penNames
     return user
+  }
+
+  private func saveSignedInUserPenNames(penNames: [PenName]) {
+    let penNamesArray = penNames.map({ $0.serializeData(options: [.IncludeID, .OmitNullValues, .IncludeToOne, .IncludeToMany]) })
+    UserDefaults.standard.set(penNamesArray, forKey: Key.SignedInUserPenNames)
   }
 }

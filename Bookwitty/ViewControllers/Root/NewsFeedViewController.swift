@@ -14,6 +14,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let pullToRefresher = UIRefreshControl()
   let penNameSelectionNode = PenNameSelectionNode()
 
+  let scrollingThreshold: CGFloat = 25.0
   let viewModel = NewsFeedViewModel()
   let data = ["","","","","","","","","","","","","","",""]
   var isFirstRun: Bool = true
@@ -34,8 +35,12 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     super.init(node: collectionNode)
 
     collectionNode.onDidLoad { [weak self] (collectionNode) in
-      guard let strongSelf = self else { return }
-      collectionNode.view.addSubview(strongSelf.pullToRefresher)
+      guard let strongSelf = self,
+        let collectionView = collectionNode.view as? ASCollectionView else {
+          return
+      }
+      collectionView.addSubview(strongSelf.pullToRefresher)
+      collectionView.alwaysBounceVertical = true
     }
   }
 
@@ -51,6 +56,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
     collectionNode.delegate = self
     collectionNode.dataSource = self
+    penNameSelectionNode.delegate = self
     //Listen to pullToRefresh valueChange and call loadData
     pullToRefresher.addTarget(self, action: #selector(self.loadData), for: .valueChanged)
 
@@ -75,19 +81,31 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
   }
 
-  func loadData() {
+  func loadData(withPenNames reloadPenNames: Bool = true) {
     pullToRefresher.beginRefreshing()
     viewModel.loadNewsfeed { [weak self] (success) in
       guard let strongSelf = self else { return }
       strongSelf.pullToRefresher.endRefreshing()
-      if(success) {
-        strongSelf.penNameSelectionNode.data = strongSelf.viewModel.penNames
-        strongSelf.collectionNode.reloadData()
-      }
+      strongSelf.collectionNode.reloadData(completion: { 
+        if reloadPenNames {
+          strongSelf.reloadPenNamesNode()
+        }
+      })
     }
   }
-}
 
+  func reloadPenNamesNode() {
+    //collectionNode.reloadData()
+    penNameSelectionNode.loadData(penNames: viewModel.penNames, withSelected: viewModel.defaultPenName)
+  }
+}
+extension NewsFeedViewController: PenNameSelectionNodeDelegate {
+  func didSelectPenName(penName: PenName, sender: PenNameSelectionNode) {
+    viewModel.didUpdateDefaultPenName(penName: penName, completionBlock: {
+      loadData(withPenNames: false)
+    })
+  }
+}
 // MARK: - Notification
 extension NewsFeedViewController {
   func addObservers() {
@@ -137,6 +155,12 @@ extension NewsFeedViewController: ASCollectionDataSource {
       }
     }
   }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+    if node is PenNameSelectionNode {
+      penNameSelectionNode.setNeedsLayout()
+    }
+  }
 }
 
 extension NewsFeedViewController: ASCollectionDelegate {
@@ -162,15 +186,19 @@ extension NewsFeedViewController: UIScrollViewDelegate {
   private func scrollToTheRightPosition(scrollView: UIScrollView) {
     let penNameHeight = penNameSelectionNode.occupiedHeight
     if scrollView.contentOffset.y <= penNameHeight {
-      if(scrollView.contentOffset.y == 0.0) {
+      if(scrollView.contentOffset.y <= scrollingThreshold) {
         UIView.animate(withDuration: 0.3, animations: {
           self.penNameSelectionNode.alpha = 1.0
           scrollView.contentOffset = CGPoint(x: 0, y: 0.0)
+          //TODO: use inset to hide the bar:
+          //scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         })
       } else {
         UIView.animate(withDuration: 0.3, animations: {
           self.penNameSelectionNode.alpha = 0.4
           scrollView.contentOffset = CGPoint(x: 0, y: penNameHeight)
+          //TODO: use inset to hide the bar:
+          //scrollView.contentInset = UIEdgeInsets(top: -penNameHeight, left: 0, bottom: 0, right: 0)
         })
       }
     }
