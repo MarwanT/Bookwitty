@@ -66,6 +66,10 @@
                             <constraint firstItem="GN4-QF-JPu" firstAttribute="leading" secondItem="oK2-bw-xUR" secondAttribute="leading" id="VFC-J1-dGB"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="scrollView" destination="GN4-QF-JPu" id="U17-s9-8HT"/>
+                        <outlet property="stackView" destination="d2H-d8-UKe" id="Fhx-p6-zuL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PhR-0t-jrG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

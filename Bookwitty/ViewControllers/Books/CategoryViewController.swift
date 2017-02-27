@@ -9,6 +9,9 @@
 import UIKit
 
 class CategoryViewController: UIViewController {
+  @IBOutlet weak var scrollView: UIScrollView!
+  @IBOutlet weak var stackView: UIStackView!
+  
   let viewModel = CategoryViewModel()
   
   override func viewDidLoad() {
