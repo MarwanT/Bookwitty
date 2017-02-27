@@ -262,3 +262,10 @@ extension CategoryViewModel {
     return (URL(string: book.thumbnailImageUrl ?? ""), book.title, book.productDetails?.author, book.productDetails?.productFormat, book.supplierInformation?.displayPrice?.formattedValue)
   }
 }
+
+
+// MARK: Localization
+
+extension CategoryViewModel {
+  var viewControllerTitle: String { return localizedString(key: "category", defaultValue: "Category") }
+}
