@@ -93,13 +93,21 @@ class CardActionBarNode: ASDisplayNode {
 
   func toggleWitButton() {
     witButton.isSelected = !witButton.isSelected
+    setNeedsLayout()
   }
 
   func witButtonTouchUpInside(_ sender: ASButtonNode?) {
     guard let sender = sender else { return }
+    //Get action from witButton status
+    let action = !witButton.isSelected ? CardActionBarNode.Action.wit : CardActionBarNode.Action.unwit
+    //Assume success and Toggle button anyway, if witting/unwitting fails delegate should either call didFinishAction or  call toggleWitButton.
     toggleWitButton()
 
-    delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: CardActionBarNode.Action.wit, forSender: sender, didFinishAction: { [weak self] (success: Bool) in
+    delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: action, forSender: sender, didFinishAction: { [weak self] (success: Bool) in
+      guard let strongSelf = self else { return }
+      if !success { //Toggle back on failure
+        strongSelf.toggleWitButton()
+      }
     })
   }
 
