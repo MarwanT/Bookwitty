@@ -107,7 +107,7 @@ class Parser {
 
     let serializer = Parser.sharedInstance.serializer
     do {
-      let document = try serializer.deserializeData(data, mappingTargets: mappingTargets)
+      let document = try serializer.deserializeData(data, mappingTargets: mappingTargets, options: [.SkipUnregisteredType])
       return document
     } catch let error as NSError {
       print("Error parsing data")
