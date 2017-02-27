@@ -106,3 +106,21 @@ class ProductDetails: NSObject {
     self.numberOfPages = json["nb-of-pages"].stringValue
   }
 }
+
+// MARK: - Price
+struct Price {
+  var currency: String?
+  let value: String?
+  
+  init(for dictionary: [String : Any]?) {
+    guard let dictionary = dictionary else {
+      currency = nil
+      value = nil
+      return
+    }
+    let json = JSON(dictionary)
+    currency = json["currency"].stringValue
+    value = json["value"].stringValue
+  }
+}
+
