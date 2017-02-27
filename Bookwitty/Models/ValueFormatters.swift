@@ -38,3 +38,18 @@ class ProductDetailsValueFormatter: ValueFormatter {
     return ["" : ""]
   }
 }
+
+class SupplierInformationValueFormatter: ValueFormatter {
+  typealias FormattedType = [String : Any]
+  typealias UnformattedType = SupplierInformation
+  typealias AttributeType = SupplierInformationAttribute
+  
+  func unformatValue(_ value: [String : Any], forAttribute: SupplierInformationAttribute) -> SupplierInformation {
+    return SupplierInformation(for: value)
+  }
+  
+  func formatValue(_ value: SupplierInformation, forAttribute: SupplierInformationAttribute) -> [String : Any] {
+    // TODO: Implement this
+    return ["" : ""]
+  }
+}

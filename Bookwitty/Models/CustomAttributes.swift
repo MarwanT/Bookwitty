@@ -24,3 +24,11 @@ class ProductDetailsAttribute: Attribute {
     self.productDetails = productDetails
   }
 }
+
+class SupplierInformationAttribute: Attribute {
+  let supplierInformation: [String : Any]?
+  
+  init(supplierInformation: [String : Any]? = nil) {
+    self.supplierInformation = supplierInformation
+  }
+}

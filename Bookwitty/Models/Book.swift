@@ -24,7 +24,7 @@ class Book: Resource {
   var updatedAt: String?
 
   var productDetails: ProductDetails?
-  var supplierInformation: [String : Any]?
+  var supplierInformation: SupplierInformation?
 
   override class var resourceType: ResourceType {
     return "books"
@@ -41,7 +41,7 @@ class Book: Resource {
       "updatedAt" : Attribute().serializeAs("updated-at"),
       "coverImageUrl" : Attribute().serializeAs("cover-image-url"),
       "productDetails" : ProductDetailsAttribute().serializeAs("product-details"),
-      "supplierInformation" : Attribute().serializeAs("supplier-information"),
+      "supplierInformation" : SupplierInformationAttribute().serializeAs("supplier-information"),
       ])
   }
 }
@@ -54,7 +54,7 @@ extension Book: Parsable {
 
 
 
-
+// MARK: - Product Details
 class ProductDetails: NSObject {
   var author: String?
   var categories: [String]?
@@ -106,3 +106,48 @@ class ProductDetails: NSObject {
     self.numberOfPages = json["nb-of-pages"].stringValue
   }
 }
+
+
+// MARK: - Supplier Information
+class SupplierInformation: NSObject {
+  var quantity: Int?
+  var listPrice: Price?
+  var price: Price?
+  var userPrice: Price?
+  
+  override init() {
+    super.init()
+  }
+  
+  init(for dictionary: [String : Any]) {
+    super.init()
+    setValues(dictionary: dictionary)
+  }
+  
+  private func setValues(dictionary: [String : Any]) {
+    let json = JSON(dictionary)
+    self.quantity = json["quantity"].intValue
+    self.listPrice = Price(for: json["list-price"].dictionaryObject)
+    self.price = Price(for: json["price"].dictionaryObject)
+    self.userPrice = Price(for: json["user-price"].dictionaryObject)
+  }
+}
+
+
+// MARK: - Price
+struct Price {
+  var currency: String?
+  let value: String?
+  
+  init(for dictionary: [String : Any]?) {
+    guard let dictionary = dictionary else {
+      currency = nil
+      value = nil
+      return
+    }
+    let json = JSON(dictionary)
+    currency = json["currency"].stringValue
+    value = json["value"].stringValue
+  }
+}
+
