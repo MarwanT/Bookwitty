@@ -272,4 +272,7 @@ extension CategoryViewModel {
   var selectionHeaderTitle: String { return localizedString(key: "our_selection_for_you", defaultValue: "Our selection for you") }
   var viewAllBooksLabelText: String { return localizedString(key: "view_all_books", defaultValue: "View All Books") }
   var viewAllSelectionsLabelText: String { return localizedString(key: "view_all_selections", defaultValue: "View All Selections") }
+  var errorLoadingDataTitle: String { return localizedString(key: "error_loading_data_title", defaultValue: "Error Loading Data") }
+  var errorLoadingDataMessage: String { return localizedString(key: "error_loading_data_message", defaultValue: "We could not load your data") }
+  var okText: String { return localizedString(key: "ok", defaultValue: "Ok") }
 }

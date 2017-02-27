@@ -29,6 +29,8 @@ class CategoryViewController: UIViewController {
     title = viewModel.viewControllerTitle
     
     initializeSubviews()
+    
+    refreshViewController()
   }
   
   private func initializeSubviews() {
@@ -69,6 +71,21 @@ class CategoryViewController: UIViewController {
     selectionTableView.register(SectionTitleHeaderView.nib, forHeaderFooterViewReuseIdentifier: SectionTitleHeaderView.reuseIdentifier)
     selectionTableView.register(BookTableViewCell.nib, forCellReuseIdentifier: BookTableViewCell.reuseIdentifier)
   }
+  
+  
+  // MARK: Actions
+  func refreshViewController() {
+    // Clear All Subviews in stack view
+    stackView.subviews.forEach({ $0.removeFromSuperview() })
+    viewModel.loadData { (success, error) in
+      guard success else {
+        self.showAlertWith(title: self.viewModel.errorLoadingDataTitle, message: self.viewModel.errorLoadingDataMessage)
+        return
+      }
+      self.loadUserInterface()
+    }
+  }
+  
   
   // MARK: Subviews Builders
   private func loadUserInterface() {
