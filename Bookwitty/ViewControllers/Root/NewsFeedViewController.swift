@@ -202,8 +202,13 @@ extension NewsFeedViewController: BaseCardPostNodeDelegate {
       viewModel.unwitContent(index: index) { (success) in
         didFinishAction?(success)
       }
+    case .share:
+      let sharingInfo: String? = viewModel.sharingContent(index: index)
+      if let sharingInfo = sharingInfo {
+        presentShareSheet(shareContent: sharingInfo)
+      }
     default:
-      //TODO: handle comment and share actions
+      //TODO: handle comment
       break
     }
   }
