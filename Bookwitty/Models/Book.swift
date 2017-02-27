@@ -149,5 +149,12 @@ struct Price {
     currency = json["currency"].stringValue
     value = json["value"].stringValue
   }
+  
+  var formattedValue: String? {
+    guard let currency = currency, let value = value, !currency.isEmpty, !value.isEmpty else {
+      return nil
+    }
+    return currency + " " + value
+  }
 }
 
