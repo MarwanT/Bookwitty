@@ -55,12 +55,11 @@ final class CategoryViewModel {
     })
   }
   
-  private func loadContentDetails(identifiers: [String], completion: @escaping (_ success: Bool, _ readingList: ReadingList?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  private func loadContentDetails(identifiers: [String], completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     return UserAPI.batch(identifiers: identifiers, completion: {
       (success, resources, error) in
-      var readingList: ReadingList? = nil
       defer {
-        completion(success, readingList, error)
+        completion(success, error)
       }
       
       guard success, let resources = resources else {
