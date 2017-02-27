@@ -69,6 +69,13 @@ class CategoryViewController: UIViewController {
     selectionTableView.register(BookTableViewCell.nib, forCellReuseIdentifier: BookTableViewCell.reuseIdentifier)
   }
   
+  // MARK: Alerts
+  private func showAlertWith(title: String, message: String) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    alert.addAction(UIAlertAction(title: viewModel.okText, style: UIAlertActionStyle.default, handler: nil))
+    self.present(alert, animated: true, completion: nil)
+  }
+  
   
   // MARK: Helpers
   fileprivate func separatorViewInstance() -> UIView {
