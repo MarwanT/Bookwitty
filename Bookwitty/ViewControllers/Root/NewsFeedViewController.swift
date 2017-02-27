@@ -16,7 +16,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
   let scrollingThreshold: CGFloat = 25.0
   let viewModel = NewsFeedViewModel()
-  let data = ["","","","","","","","","","","","","","",""]
   var isFirstRun: Bool = true
 
   required init?(coder aDecoder: NSCoder) {
