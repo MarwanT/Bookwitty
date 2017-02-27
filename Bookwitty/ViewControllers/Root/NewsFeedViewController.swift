@@ -168,7 +168,23 @@ extension NewsFeedViewController: ASCollectionDataSource {
 // MARK - BaseCardPostNode Delegate
 extension NewsFeedViewController: BaseCardPostNodeDelegate {
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
-    //TODO: handle and trigger the right actions for CardActionBarNode.Action
+    guard let index = collectionNode.indexPath(for: card)?.item else {
+      return
+    }
+
+    switch(action) {
+    case .wit:
+      viewModel.witContent(index: index) { (success) in
+        didFinishAction?(success)
+      }
+    case .unwit:
+      viewModel.unwitContent(index: index) { (success) in
+        didFinishAction?(success)
+      }
+    default:
+      //TODO: handle comment and share actions
+      break
+    }
   }
 }
 
