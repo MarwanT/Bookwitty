@@ -14,6 +14,8 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let pullToRefresher = UIRefreshControl()
   let penNameSelectionNode = PenNameSelectionNode()
 
+  var collectionView: ASCollectionView?
+
   let scrollingThreshold: CGFloat = 25.0
   let viewModel = NewsFeedViewModel()
   var isFirstRun: Bool = true
@@ -35,11 +37,12 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
     collectionNode.onDidLoad { [weak self] (collectionNode) in
       guard let strongSelf = self,
-        let collectionView = collectionNode.view as? ASCollectionView else {
+        let asCollectionView = collectionNode.view as? ASCollectionView else {
           return
       }
-      collectionView.addSubview(strongSelf.pullToRefresher)
-      collectionView.alwaysBounceVertical = true
+      strongSelf.collectionView = asCollectionView
+      strongSelf.collectionView?.addSubview(strongSelf.pullToRefresher)
+      strongSelf.collectionView?.alwaysBounceVertical = true
     }
   }
 
