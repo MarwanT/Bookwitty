@@ -121,4 +121,20 @@ class UserManager {
     let penNamesArray = penNames.map({ $0.serializeData(options: [.IncludeID, .OmitNullValues, .IncludeToOne, .IncludeToMany]) })
     UserDefaults.standard.set(penNamesArray, forKey: Key.SignedInUserPenNames)
   }
+
+  func replaceUpdated(penName: PenName?) {
+    guard let penName = penName else {
+      return
+    }
+
+    if let index = self.signedInUser.penNames?.index(where: { $0.id == penName.id }) {
+      signedInUser.penNames?[index] = penName
+    }
+
+    if getUserDefaultPenName()?.id == penName.id {
+      saveDefaultPenName(penName: penName)
+    }
+
+    saveSignedInUserPenNames(penNames: signedInUser.penNames ?? [])
+  }
 }
