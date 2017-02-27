@@ -51,6 +51,15 @@ class CategoryViewController: UIViewController {
     featuredContentCollectionView.constrainHeight("\(itemSize.height + contentInset.top + contentInset.bottom)")
     featuredContentCollectionView.constrainWidth("\(self.view.frame.width)")
   }
+  
+  
+  // MARK: Helpers
+  fileprivate func separatorViewInstance() -> UIView {
+    let separatorView = UIView(frame: CGRect.zero)
+    separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    separatorView.constrainHeight("1")
+    return separatorView
+  }
 }
 
 
