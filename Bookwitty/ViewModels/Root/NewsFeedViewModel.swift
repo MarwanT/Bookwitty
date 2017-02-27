@@ -13,6 +13,7 @@ import Spine
 final class NewsFeedViewModel {
   var cancellableRequest:  Cancellable?
   let viewController = localizedString(key: "news", defaultValue: "News")
+  var nextPage: URL?
   var data: [ModelResource] = []
   var penNames: [PenName] {
     return UserManager.shared.penNames ?? []
@@ -55,8 +56,9 @@ final class NewsFeedViewModel {
   }
 
   func loadNewsfeed(completionBlock: @escaping (_ success: Bool) -> ()) {
-    cancellableRequest = NewsfeedAPI.feed() { (success, resources, error) in
+    cancellableRequest = NewsfeedAPI.feed() { (success, resources, nextPage, error) in
       self.data = resources ?? []
+      self.nextPage = nextPage
       completionBlock(success)
     }
   }

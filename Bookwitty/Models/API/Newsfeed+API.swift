@@ -11,7 +11,7 @@ import Moya
 import Spine
 
 struct NewsfeedAPI {
-  public static func feed(completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  public static func feed(completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ nextPage: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     return signedAPIRequest(
     target: BookwittyAPI.newsFeed()) {
       (data, statusCode, response, error) in
@@ -19,8 +19,9 @@ struct NewsfeedAPI {
       var success: Bool = false
       var completionError: BookwittyAPIError? = error
       var resources: [Resource]?
+      var nextPage: URL?
       defer {
-        completion(success, resources, error)
+        completion(success, resources, nextPage, error)
       }
 
       // If status code is not available then break
@@ -47,6 +48,7 @@ struct NewsfeedAPI {
         resources = parsedData.resources
         success = parsedData.resources != nil
         completionError = nil
+        nextPage = parsedData.next
       }
     }
   }
