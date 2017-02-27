@@ -269,4 +269,7 @@ extension CategoryViewModel {
 extension CategoryViewModel {
   var viewControllerTitle: String { return localizedString(key: "category", defaultValue: "Category") }
   var bookwittySuggestsTitle: String { return localizedString(key: "bookwitty_suggests", defaultValue: "Bookwitty Suggests") }
+  var selectionHeaderTitle: String { return localizedString(key: "our_selection_for_you", defaultValue: "Our selection for you") }
+  var viewAllBooksLabelText: String { return localizedString(key: "view_all_books", defaultValue: "View All Books") }
+  var viewAllSelectionsLabelText: String { return localizedString(key: "view_all_selections", defaultValue: "View All Selections") }
 }
