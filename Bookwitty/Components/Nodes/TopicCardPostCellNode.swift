@@ -27,9 +27,9 @@ class TopicCardPostContentNode: ASDisplayNode {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let imageHeight: CGFloat = 150.0
   private let subImageSize = CGSize(width: 100.0, height: 100.0)
-  private let postText: String = localizedString(key: "number_of_posts_text", defaultValue: "Posts")
-  private let booksText: String = localizedString(key: "number_of_books_text", defaultValue: "Books")
-  private let followerText: String = localizedString(key: "number_of_follower_text", defaultValue: "Followers")
+  private let postText: String = localizedString(key: "posts", defaultValue: "Posts")
+  private let booksText: String = localizedString(key: "books", defaultValue: "Books")
+  private let followerText: String = localizedString(key: "followers", defaultValue: "Followers")
 
   private var imageNode: ASNetworkImageNode
   private var subImageNode: ASNetworkImageNode

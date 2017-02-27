@@ -26,7 +26,7 @@ class ProfileCardPostContentNode: ASDisplayNode {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let headerHeight: CGFloat = 70.0
   private let profileImageSize: CGSize = CGSize(width: 70.0, height: 70.0)
-  private let followerText: String = localizedString(key: "number_of_follower_text", defaultValue: "Followers")
+  private let followerText: String = localizedString(key: "followers", defaultValue: "Followers")
 
   private var userProfileImageNode: ASNetworkImageNode
   private var userNameTextNode: ASTextNode
