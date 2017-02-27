@@ -26,6 +26,19 @@ final class NewsFeedViewModel {
     completionBlock()
   }
 
+  func witContent(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
+    let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
+    let dataIndex = index - showsPenNameSelectionHeader
+    guard data.count > dataIndex,
+      let contentId = data[index].id else {
+      completionBlock(false)
+      return
+    }
+
+    cancellableRequest = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
+      completionBlock(success)
+    })
+  }
 
   func loadNewsfeed(completionBlock: @escaping (_ success: Bool) -> ()) {
     cancellableRequest = NewsfeedAPI.feed() { (success, resources, error) in

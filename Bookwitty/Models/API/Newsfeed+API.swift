@@ -47,4 +47,31 @@ struct NewsfeedAPI {
       }
     }
   }
+
+  public static func wit(contentId: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let witSuccessStatusNoContent = 204
+
+    return signedAPIRequest(target: BookwittyAPI.wit(contentId: contentId), completion: { (data, statusCode, response, error) in
+      // Ensure the completion block is always called
+      var success: Bool = false
+      var completionError: BookwittyAPIError? = error
+      defer {
+        completion(success, error)
+      }
+
+      // If status code is not available then break
+      guard let statusCode = statusCode else {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      // If status code != success then break
+      if statusCode != witSuccessStatusNoContent {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      success = statusCode == witSuccessStatusNoContent
+    })
+  }
 }

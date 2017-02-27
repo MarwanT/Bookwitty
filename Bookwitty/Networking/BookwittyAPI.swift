@@ -27,6 +27,7 @@ public enum BookwittyAPI {
   case batch(identifiers: [String])
   case updatePreference(preference: String, value: String)
   case penNames()
+  case wit(contentId: String)
 }
 
 // MARK: - Target Type
@@ -80,6 +81,8 @@ extension BookwittyAPI: TargetType {
       path = "/user/update_preference"
     case .penNames:
       path = "/user/pen_names"
+    case .wit(let contentId):
+      path = "/content/\(contentId)/wit"
     }
     
     return apiBasePath + apiVersion + path
@@ -91,7 +94,7 @@ extension BookwittyAPI: TargetType {
       return .post
     case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames:
       return .get
-    case .register, .batch, .updatePreference:
+    case .register, .batch, .updatePreference, .wit:
       return .post
     case .updateUser, .updatePenName:
       return .patch
@@ -129,7 +132,7 @@ extension BookwittyAPI: TargetType {
       return PenNameAPI.updatePostBody(identifier: identifier, name: name, biography: biography, avatarUrl: avatarUrl, facebookUrl: facebookUrl, tumblrUrl: tumblrUrl, googlePlusUrl: googlePlusUrl, twitterUrl: twitterUrl, instagramUrl: instagramUrl, pinterestUrl: pinterestUrl, youtubeUrl: youtubeUrl, linkedinUrl: linkedinUrl, wordpressUrl: wordpressUrl, websiteUrl: websiteUrl)
     case .updatePreference(let preference, let value):
       return UserAPI.updatePostBody(preference: preference, value: value)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit:
       return nil
     }
   }
