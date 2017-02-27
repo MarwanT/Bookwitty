@@ -20,6 +20,7 @@ class CategoryViewController: UIViewController {
   let viewAllSelectionsView = UIView.loadFromView(DisclosureView.self, owner: nil)
   
   fileprivate let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
+  fileprivate let sectionSpacing = ThemeManager.shared.currentTheme.sectionSpacing()
   
   let viewModel = CategoryViewModel()
   
@@ -68,6 +69,59 @@ class CategoryViewController: UIViewController {
     selectionTableView.register(SectionTitleHeaderView.nib, forHeaderFooterViewReuseIdentifier: SectionTitleHeaderView.reuseIdentifier)
     selectionTableView.register(BookTableViewCell.nib, forCellReuseIdentifier: BookTableViewCell.reuseIdentifier)
   }
+  
+  // MARK: Subviews Builders
+  private func loadUserInterface() {
+    loadBannerSection()
+    loadFeaturedContentSection()
+    loadBookwittySuggest()
+    loadSelectionSection()
+  }
+  
+  private func loadBannerSection() {
+    let canDisplayBanner = banner.superview == nil
+    if viewModel.hasBanner && canDisplayBanner {
+      banner.imageURL = viewModel.bannerImageURL
+      banner.title = viewModel.bannerTitle
+      banner.subtitle = viewModel.bannerSubtitle
+      self.stackView.addArrangedSubview(self.banner)
+    }
+  }
+  
+  private func loadFeaturedContentSection() {
+    let canDisplayFeaturedContent = featuredContentCollectionView.superview == nil
+    if viewModel.hasFeaturedContent && canDisplayFeaturedContent {
+      stackView.addArrangedSubview(featuredContentCollectionView)
+      addSeparator(leftMargin)
+    }
+  }
+  
+  private func loadBookwittySuggest() {
+    let canDisplayBookwittySuggest = bookwittySuggestsTableView.superview == nil
+    if viewModel.hasBookwittySuggests && canDisplayBookwittySuggest {
+      addSeparator()
+      addSpacing(space: 10)
+      stackView.addArrangedSubview(bookwittySuggestsTableView)
+      bookwittySuggestsTableView.alignLeading("0", trailing: "0", toView: stackView)
+      // Add the table view height constraint
+      bookwittySuggestsTableView.layoutIfNeeded()
+      bookwittySuggestsTableView.constrainHeight("\(bookwittySuggestsTableView.contentSize.height)")
+    }
+  }
+  
+  private func loadSelectionSection() {
+    let canDisplaySelection = selectionTableView.superview == nil
+    if viewModel.hasSelectionSection && canDisplaySelection {
+      addSeparator()
+      addSpacing(space: sectionSpacing)
+      stackView.addArrangedSubview(selectionTableView)
+      selectionTableView.alignLeading("0", trailing: "0", toView: stackView)
+      // Add the table view height constraint
+      selectionTableView.layoutIfNeeded()
+      selectionTableView.constrainHeight("\(selectionTableView.contentSize.height)")
+    }
+  }
+  
   
   // MARK: Alerts
   private func showAlertWith(title: String, message: String) {
