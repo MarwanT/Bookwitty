@@ -15,6 +15,12 @@ protocol BaseCardPostNodeContentProvider {
   var contentNode: ASDisplayNode { get }
 }
 
+extension BaseCardPostNode: CardActionBarNodeDelegate {
+  func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    delegate?.cardActionBarNode(card: self, cardActionBar: cardActionBar, didRequestAction: action, forSender: sender, didFinishAction: didFinishAction)
+  }
+}
+
 protocol BaseCardPostNodeDelegate {
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
 }
@@ -36,6 +42,7 @@ class BaseCardPostNode: ASCellNode {
     return !articleCommentsSummary.isEmptyOrNil()
   }
 
+  var delegate: BaseCardPostNodeDelegate?
   var postInfoData: CardPostInfoNodeData? {
     didSet {
       infoNode.data = postInfoData
@@ -61,6 +68,7 @@ class BaseCardPostNode: ASCellNode {
   }
 
   private func setupCellNode() {
+    actionBarNode.delegate = self
     manageNodes()
     setupCardTheme()
     
