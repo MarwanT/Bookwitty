@@ -48,7 +48,7 @@ class BaseCardPostNode: ASCellNode {
 
   override init() {
     infoNode = CardPostInfoNode()
-    actionBarNode = CardActionBarNode(delegate: nil)
+    actionBarNode = CardActionBarNode()
     backgroundNode = ASDisplayNode()
     separatorNode = ASDisplayNode()
     commentsSummaryNode = ASTextNode()

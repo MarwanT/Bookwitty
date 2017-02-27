@@ -36,7 +36,7 @@ class CardActionBarNode: ASDisplayNode {
   private let witItTitle: String = localizedString(key: "wit_it", defaultValue: "Wit")
   private let wittedTitle: String = localizedString(key: "witted", defaultValue: "Witted")
 
-  private override init() {
+  override init() {
     witButton = ASButtonNode()
     commentButton = ASButtonNode()
     shareButton = ASButtonNode()
@@ -44,12 +44,7 @@ class CardActionBarNode: ASDisplayNode {
     addSubnode(witButton)
     addSubnode(commentButton)
     addSubnode(shareButton)
-  }
-
-  convenience init(delegate: CardActionBarNodeDelegate?) {
-    self.init()
     self.initializeNode()
-    self.delegate = delegate
   }
 
   private func initializeNode() {
