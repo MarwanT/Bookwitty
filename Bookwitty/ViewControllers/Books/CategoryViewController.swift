@@ -18,6 +18,7 @@ class CategoryViewController: UIViewController {
   let selectionTableView = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)
   let viewAllBooksView = UIView.loadFromView(DisclosureView.self, owner: nil)
   let viewAllSelectionsView = UIView.loadFromView(DisclosureView.self, owner: nil)
+  let refreshController = UIRefreshControl()
   
   fileprivate let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
   fileprivate let sectionSpacing = ThemeManager.shared.currentTheme.sectionSpacing()
@@ -28,6 +29,7 @@ class CategoryViewController: UIViewController {
     super.viewDidLoad()
     title = viewModel.viewControllerTitle
     
+    initializePullToRefresh()
     initializeSubviews()
     
     refreshViewController()
@@ -72,12 +74,19 @@ class CategoryViewController: UIViewController {
     selectionTableView.register(BookTableViewCell.nib, forCellReuseIdentifier: BookTableViewCell.reuseIdentifier)
   }
   
+  private func initializePullToRefresh() {
+    scrollView.alwaysBounceVertical = true
+    scrollView.addSubview(refreshController)
+    refreshController.addTarget(self, action: #selector(refreshViewController), for: .valueChanged)
+  }
   
   // MARK: Actions
   func refreshViewController() {
     // Clear All Subviews in stack view
     stackView.subviews.forEach({ $0.removeFromSuperview() })
+    refreshController.beginRefreshing()
     viewModel.loadData { (success, error) in
+      self.refreshController.endRefreshing()
       guard success else {
         self.showAlertWith(title: self.viewModel.errorLoadingDataTitle, message: self.viewModel.errorLoadingDataMessage)
         return
