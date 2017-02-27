@@ -9,6 +9,8 @@
 import UIKit
 
 class CategoryViewController: UIViewController {
+  let viewModel = CategoryViewModel()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
   }
