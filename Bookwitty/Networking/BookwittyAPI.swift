@@ -26,7 +26,7 @@ public enum BookwittyAPI {
   case updatePenName(identifier: String, name: String?, biography: String?, avatarUrl: String?, facebookUrl: String?, tumblrUrl: String?, googlePlusUrl: String?, twitterUrl: String?, instagramUrl: String?, pinterestUrl: String?, youtubeUrl: String?, linkedinUrl: String?, wordpressUrl: String?, websiteUrl: String?)
   case batch(identifiers: [String])
   case updatePreference(preference: String, value: String)
-  case penNames()
+  case penNames
   case wit(contentId: String)
   case unwit(contentId: String)
 }

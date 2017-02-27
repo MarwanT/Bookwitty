@@ -11,7 +11,7 @@ import Moya
 
 struct PenNameAPI {
   public static func getPenNames(completionBlock: @escaping (_ success: Bool, _ penNames: [PenName]?, _ error: BookwittyAPIError?)->()) -> Cancellable? {
-    return signedAPIRequest(target: BookwittyAPI.penNames(), completion: { (data: Data?, statusCode: Int?, response: URLResponse?, error: BookwittyAPIError?) in
+    return signedAPIRequest(target: BookwittyAPI.penNames, completion: { (data: Data?, statusCode: Int?, response: URLResponse?, error: BookwittyAPIError?) in
       var penNames: [PenName]? = nil
       var error: BookwittyAPIError? = nil
       var success: Bool = false
