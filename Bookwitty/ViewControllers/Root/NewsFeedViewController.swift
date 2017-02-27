@@ -95,7 +95,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   }
 
   func reloadPenNamesNode() {
-    //collectionNode.reloadData()
     penNameSelectionNode.loadData(penNames: viewModel.penNames, withSelected: viewModel.defaultPenName)
   }
 }
@@ -149,7 +148,9 @@ extension NewsFeedViewController: ASCollectionDataSource {
     
     return {
       if(index != 0) {
-        return self.viewModel.nodeForItem(atIndex: index) ?? BaseCardPostNode()
+        let baseCardNode = self.viewModel.nodeForItem(atIndex: index) ?? BaseCardPostNode()
+        baseCardNode.delegate = self
+        return baseCardNode
       } else {
         return self.penNameSelectionNode
       }
@@ -159,6 +160,29 @@ extension NewsFeedViewController: ASCollectionDataSource {
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
     if node is PenNameSelectionNode {
       penNameSelectionNode.setNeedsLayout()
+    }
+  }
+}
+
+// MARK - BaseCardPostNode Delegate
+extension NewsFeedViewController: BaseCardPostNodeDelegate {
+  func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    guard let index = collectionNode.indexPath(for: card)?.item else {
+      return
+    }
+
+    switch(action) {
+    case .wit:
+      viewModel.witContent(index: index) { (success) in
+        didFinishAction?(success)
+      }
+    case .unwit:
+      viewModel.unwitContent(index: index) { (success) in
+        didFinishAction?(success)
+      }
+    default:
+      //TODO: handle comment and share actions
+      break
     }
   }
 }
