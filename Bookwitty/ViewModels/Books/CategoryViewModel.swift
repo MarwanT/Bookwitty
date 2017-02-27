@@ -20,6 +20,58 @@ final class CategoryViewModel {
   var category: Category! = nil
   
   // MARK: API Calls
+  
+  var curatedContentRequest: Cancellable? = nil
+  var categoryBooksRequest: Cancellable? = nil
+  
+  func loadData(completion: @escaping (_ success: Bool, _ error: [BookwittyAPIError?]?) -> Void) {
+    guard let categoryIdentifier = category.key else {
+      completion(false, nil)
+      return
+    }
+    
+    var curatedAPISuccess: Bool = false
+    var categoryBooksAPISuccess: Bool = false
+    var curatedAPIError: BookwittyAPIError? = nil
+    var categoryBooksAPIError: BookwittyAPIError? = nil
+    
+    let group = DispatchGroup()
+    
+    group.enter()
+    curatedContentRequest = loadCuratedContent(categoryIdentifier: categoryIdentifier, completion: {
+      (success, identifiers, error) in
+      guard success, let identifiers = identifiers, identifiers.count > 0 else {
+        self.curatedContentRequest = nil
+        curatedAPISuccess = success
+        curatedAPIError = error
+        group.leave()
+        return
+      }
+      
+      self.curatedContentRequest = self.loadContentDetails(identifiers: identifiers, completion: {
+        (success, error) in
+        self.curatedContentRequest = nil
+        curatedAPISuccess = success
+        curatedAPIError = error
+        group.leave()
+      })
+    })
+    
+    
+    group.enter()
+    categoryBooksRequest = loadCategoryBooks(categoryIdentifier: categoryIdentifier, completion: {
+      (success, error) in
+      self.categoryBooksRequest = nil
+      categoryBooksAPISuccess = success
+      categoryBooksAPIError = error
+      group.leave()
+    })
+    
+    
+    group.notify(queue: DispatchQueue.main) { 
+      completion(curatedAPISuccess && categoryBooksAPISuccess, [curatedAPIError, categoryBooksAPIError])
+    }
+  }
 
   private func loadCuratedContent(categoryIdentifier: String, completion: @escaping (_ success: Bool, _ identifiers: [String]? , _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     curatedCollection = nil
