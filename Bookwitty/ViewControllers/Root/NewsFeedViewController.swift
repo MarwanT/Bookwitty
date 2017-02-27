@@ -149,7 +149,9 @@ extension NewsFeedViewController: ASCollectionDataSource {
     
     return {
       if(index != 0) {
-        return self.viewModel.nodeForItem(atIndex: index) ?? BaseCardPostNode()
+        let baseCardNode = self.viewModel.nodeForItem(atIndex: index) ?? BaseCardPostNode()
+        baseCardNode.delegate = self
+        return baseCardNode
       } else {
         return self.penNameSelectionNode
       }
@@ -160,6 +162,13 @@ extension NewsFeedViewController: ASCollectionDataSource {
     if node is PenNameSelectionNode {
       penNameSelectionNode.setNeedsLayout()
     }
+  }
+}
+
+// MARK - BaseCardPostNode Delegate
+extension NewsFeedViewController: BaseCardPostNodeDelegate {
+  func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    //TODO: handle and trigger the right actions for CardActionBarNode.Action
   }
 }
 
