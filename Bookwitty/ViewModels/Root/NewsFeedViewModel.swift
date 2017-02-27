@@ -67,6 +67,21 @@ final class NewsFeedViewModel {
     return (nextPage != nil)
   }
 
+  func loadNextPage(completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let nextPage = nextPage else {
+      completionBlock(false)
+      return
+    }
+
+    cancellableRequest = NewsfeedAPI.nextFeedPage(nextPage: nextPage) { (success, resources, nextPage, error) in
+      if let resources = resources, success {
+        self.data += resources
+        self.nextPage = nextPage
+      }
+      completionBlock(success)
+    }
+  }
+
   func sharingContent(index: Int) -> String? {
     let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
     let dataIndex = index - showsPenNameSelectionHeader
