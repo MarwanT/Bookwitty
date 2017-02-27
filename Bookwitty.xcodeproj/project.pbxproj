@@ -49,6 +49,7 @@
 		594290371E548FA10006B2F1 /* BookTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 594290351E548FA10006B2F1 /* BookTableViewCell.xib */; };
 		594290391E549FF40006B2F1 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290381E549FF40006B2F1 /* UIColor.swift */; };
 		5945FAC91E6475C80010CF77 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5945FAC81E6475C80010CF77 /* CategoryViewController.swift */; };
+		5945FACB1E6476A30010CF77 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5945FACA1E6476A30010CF77 /* CategoryViewModel.swift */; };
 		5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5947C2A71E37B3D1003BF12A /* ViewController.swift */; };
 		594B9F6F1E55F557007C49E1 /* RootTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594B9F6E1E55F557007C49E1 /* RootTabBarViewModel.swift */; };
 		594F4EA61E42255200A947FA /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA51E42255200A947FA /* AccessToken.swift */; };
@@ -195,6 +196,7 @@
 		594290351E548FA10006B2F1 /* BookTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookTableViewCell.xib; sourceTree = "<group>"; };
 		594290381E549FF40006B2F1 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		5945FAC81E6475C80010CF77 /* CategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
+		5945FACA1E6476A30010CF77 /* CategoryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		5947C2A71E37B3D1003BF12A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		594B9F6E1E55F557007C49E1 /* RootTabBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootTabBarViewModel.swift; sourceTree = "<group>"; };
 		594F4EA51E42255200A947FA /* AccessToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
@@ -524,6 +526,7 @@
 			children = (
 				594290081E4FF0E30006B2F1 /* CategoriesTableViewModel.swift */,
 				594290151E51F4550006B2F1 /* BookStoreViewModel.swift */,
+				5945FACA1E6476A30010CF77 /* CategoryViewModel.swift */,
 			);
 			path = Books;
 			sourceTree = "<group>";
@@ -1111,6 +1114,7 @@
 				F4207B941E58466A00216A2E /* PenNameSelectionNode.swift in Sources */,
 				595C4F111E3F9DA400BE3942 /* InformativeInputField.swift in Sources */,
 				56E09DBC1E5463EA00B7C6E6 /* ChangePasswordViewController.swift in Sources */,
+				5945FACB1E6476A30010CF77 /* CategoryViewModel.swift in Sources */,
 				59DA47641E3B7A9B00BA90A5 /* TutorialPageViewController.swift in Sources */,
 				59DA47571E3A65A600BA90A5 /* Storyboard.swift in Sources */,
 				594290361E548FA10006B2F1 /* BookTableViewCell.swift in Sources */,
