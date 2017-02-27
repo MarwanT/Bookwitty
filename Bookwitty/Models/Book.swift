@@ -24,7 +24,7 @@ class Book: Resource {
   var updatedAt: String?
 
   var productDetails: ProductDetails?
-  var supplierInformation: [String : Any]?
+  var supplierInformation: SupplierInformation?
 
   override class var resourceType: ResourceType {
     return "books"
@@ -41,7 +41,7 @@ class Book: Resource {
       "updatedAt" : Attribute().serializeAs("updated-at"),
       "coverImageUrl" : Attribute().serializeAs("cover-image-url"),
       "productDetails" : ProductDetailsAttribute().serializeAs("product-details"),
-      "supplierInformation" : Attribute().serializeAs("supplier-information"),
+      "supplierInformation" : SupplierInformationAttribute().serializeAs("supplier-information"),
       ])
   }
 }
@@ -54,7 +54,7 @@ extension Book: Parsable {
 
 
 
-
+// MARK: - Product Details
 class ProductDetails: NSObject {
   var author: String?
   var categories: [String]?
