@@ -151,13 +151,13 @@ class BookStoreViewController: UIViewController {
     let canDisplayFeaturedContent = featuredContentCollectionView.superview == nil
     if viewModel.hasFeaturedContent && canDisplayFeaturedContent {
       stackView.addArrangedSubview(featuredContentCollectionView)
+      addSeparator(leftMargin)
     }
   }
   
   func loadViewAllCategories() {
     let canDisplayCategories = viewAllCategories.superview == nil
     if viewModel.hasCategories && canDisplayCategories {
-      addSeparator(leftMargin)
       stackView.addArrangedSubview(viewAllCategories)
     }
   }
