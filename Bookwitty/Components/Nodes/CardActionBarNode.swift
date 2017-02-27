@@ -10,7 +10,7 @@ import Foundation
 import AsyncDisplayKit
 
 protocol CardActionBarNodeDelegate {
-  func cardActionBarNode(card: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode)
+  func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
 }
 
 class CardActionBarNode: ASDisplayNode {
@@ -96,19 +96,20 @@ class CardActionBarNode: ASDisplayNode {
 
   func witButtonTouchUpInside(_ sender: ASButtonNode?) {
     guard let sender = sender else { return }
-    delegate?.cardActionBarNode(card: self, didRequestAction: CardActionBarNode.Action.wit, forSender: sender)
-    //TODO: Remove line and instead call toggleWitButton when Wit is successful
     toggleWitButton()
+
+    delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: CardActionBarNode.Action.wit, forSender: sender, didFinishAction: { [weak self] (success: Bool) in
+    })
   }
 
   func commentButtonTouchUpInside(_ sender: ASButtonNode?) {
     guard let sender = sender else { return }
-    delegate?.cardActionBarNode(card: self, didRequestAction: CardActionBarNode.Action.comment, forSender: sender)
+    delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: CardActionBarNode.Action.comment, forSender: sender, didFinishAction: nil)
   }
 
   func shareButtonTouchUpInside(_ sender: ASButtonNode?) {
     guard let sender = sender else { return }
-    delegate?.cardActionBarNode(card: self, didRequestAction: CardActionBarNode.Action.share, forSender: sender)
+    delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: CardActionBarNode.Action.share, forSender: sender, didFinishAction: nil)
   }
 
   private func spacer(width: CGFloat = 0.0, flexGrow: CGFloat = 1.0) -> ASLayoutSpec {
