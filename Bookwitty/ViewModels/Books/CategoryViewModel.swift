@@ -173,3 +173,92 @@ final class CategoryViewModel {
     return readingLists
   }
 }
+
+
+// MARK: - Banner
+
+extension CategoryViewModel {
+  var hasBanner: Bool {
+    return true
+  }
+  
+  var bannerImageURL: URL? {
+    return URL(string: "http://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2013/09/12/101029496--sites-default-files-images-101029496-3176173-1748009911-hp.jp-1.jpg?v=1474281478")
+  }
+  
+  var bannerTitle: String? {
+    return "Bookwitty's Finest"
+  }
+  
+  var bannerSubtitle: String? {
+    return "The perfect list for everyone on your list"
+  }
+}
+
+
+// MARK: - Featured Content
+
+extension CategoryViewModel {
+  var hasFeaturedContent : Bool {
+    return featuredContentNumberOfItems > 0
+  }
+  
+  var featuredContentNumberOfItems: Int {
+    return featuredContents?.count ?? 0
+  }
+  
+  func featuredContentValues(for indexPath: IndexPath) -> (title: String?, imageURL: URL?) {
+    guard let featuredContent = featuredContents?[indexPath.row] else {
+      return (nil, nil)
+    }
+    return (featuredContent.title, URL(string: (featuredContent.thumbnailImageUrl ?? "")))
+  }
+}
+
+
+// MARK: - Bookwitty Suggests
+
+extension CategoryViewModel {
+  var hasBookwittySuggests: Bool {
+    return bookwittySuggestsNumberOfSections != 0
+  }
+  
+  var bookwittySuggestsNumberOfSections: Int {
+    return (readingLists?.count ?? 0) > 0 ? 1 : 0
+  }
+  
+  var bookwittySuggestsNumberOfItems: Int {
+    return readingLists?.count ?? 0
+  }
+  
+  func bookwittySuggestsValues(for indexPath: IndexPath) -> String {
+    guard let readingListTitle = readingLists?[indexPath.row].title else {
+      return ""
+    }
+    return readingListTitle
+  }
+}
+
+
+// MARK: - Bookwitty Selection
+
+extension CategoryViewModel {
+  var hasSelectionSection: Bool {
+    return selectionNumberOfSection > 0
+  }
+  
+  var selectionNumberOfSection: Int {
+    return (categoryBooks?.count ?? 0) > 0 ? 1 : 0
+  }
+  
+  var selectionNumberOfItems: Int {
+    return categoryBooks?.count ?? 0
+  }
+  
+  func selectionValues(for indexPath: IndexPath) -> (imageURL: URL?, bookTitle: String?, authorName: String?, productType: String?, price: String?) {
+    guard let book = categoryBooks?[indexPath.row] else {
+      return (nil, nil, nil, nil, nil)
+    }
+    return (URL(string: book.thumbnailImageUrl ?? ""), book.title, book.productDetails?.author, book.productDetails?.productFormat, book.supplierInformation?.displayPrice?.formattedValue)
+  }
+}
