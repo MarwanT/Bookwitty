@@ -355,6 +355,10 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
         return nil
       }
       headerView.label.text = viewModel.selectionHeaderTitle
+      let headerConfiguration = SectionTitleHeaderView.Configuration(
+        verticalBarColor: ThemeManager.shared.currentTheme.colorNumber6(),
+        horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber5())
+      headerView.configuration = headerConfiguration
       return headerView
     }
   }
