@@ -48,6 +48,7 @@
 		594290361E548FA10006B2F1 /* BookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290341E548FA10006B2F1 /* BookTableViewCell.swift */; };
 		594290371E548FA10006B2F1 /* BookTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 594290351E548FA10006B2F1 /* BookTableViewCell.xib */; };
 		594290391E549FF40006B2F1 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594290381E549FF40006B2F1 /* UIColor.swift */; };
+		5945FAC91E6475C80010CF77 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5945FAC81E6475C80010CF77 /* CategoryViewController.swift */; };
 		5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5947C2A71E37B3D1003BF12A /* ViewController.swift */; };
 		594B9F6F1E55F557007C49E1 /* RootTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594B9F6E1E55F557007C49E1 /* RootTabBarViewModel.swift */; };
 		594F4EA61E42255200A947FA /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA51E42255200A947FA /* AccessToken.swift */; };
@@ -193,6 +194,7 @@
 		594290341E548FA10006B2F1 /* BookTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookTableViewCell.swift; sourceTree = "<group>"; };
 		594290351E548FA10006B2F1 /* BookTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookTableViewCell.xib; sourceTree = "<group>"; };
 		594290381E549FF40006B2F1 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		5945FAC81E6475C80010CF77 /* CategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		5947C2A71E37B3D1003BF12A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		594B9F6E1E55F557007C49E1 /* RootTabBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootTabBarViewModel.swift; sourceTree = "<group>"; };
 		594F4EA51E42255200A947FA /* AccessToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
@@ -512,6 +514,7 @@
 			children = (
 				594290051E4FEEC10006B2F1 /* CategoriesTableViewController.swift */,
 				594290131E51F2850006B2F1 /* BookStoreViewController.swift */,
+				5945FAC81E6475C80010CF77 /* CategoryViewController.swift */,
 			);
 			path = Books;
 			sourceTree = "<group>";
@@ -1131,6 +1134,7 @@
 				F40700521E55F55A00DA48A4 /* Image.swift in Sources */,
 				F4A4262B1E5617A30090CD51 /* PageAuthor.swift in Sources */,
 				F40700501E55992000DA48A4 /* ReadingListBooksNode.swift in Sources */,
+				5945FAC91E6475C80010CF77 /* CategoryViewController.swift in Sources */,
 				F4A426371E562A9F0090CD51 /* Audio.swift in Sources */,
 				59D8FCBC1E4DA394001C1EDB /* CategoryManager.swift in Sources */,
 				F420B6A21E43C570001F34CD /* User.swift in Sources */,
