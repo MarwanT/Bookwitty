@@ -8,6 +8,7 @@
 
 import Foundation
 import Moya
+import Spine
 
 final class CategoryViewModel {
   fileprivate var curatedCollection: CuratedCollection? = nil
@@ -50,5 +51,55 @@ final class CategoryViewModel {
       
       completion(success, identifiers, error)
     })
+  }
+  
+  private func loadContentDetails(identifiers: [String], completion: @escaping (_ success: Bool, _ readingList: ReadingList?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    return UserAPI.batch(identifiers: identifiers, completion: {
+      (success, resources, error) in
+      var readingList: ReadingList? = nil
+      defer {
+        completion(success, readingList, error)
+      }
+      
+      guard success, let resources = resources else {
+        return
+      }
+      
+      if let featuredContents = self.curatedCollection?.sections?.featuredContent {
+        self.featuredContents = self.filterFeaturedContents(featuredContents: featuredContents, resources: resources)
+      }
+      
+      if let readingListsIdentifiers = self.curatedCollection?.sections?.readingListIdentifiers {
+        self.readingLists = self.filterReadingLists(readingListsIdentifiers: readingListsIdentifiers, resources: resources)
+      }
+    })
+  }
+  
+  
+  // MARK: Filters
+  
+  private func filterFeaturedContents(featuredContents: [FeaturedContent], resources: [Resource]) -> [ModelCommonProperties] {
+    var filteredContent = [ModelCommonProperties]()
+    
+    let postIds = featuredContents.flatMap({ $0.wittyId })
+    for postId in postIds {
+      guard let resource = resources.filter({ $0.id == postId }).first as? ModelCommonProperties else {
+        continue
+      }
+      filteredContent.append(resource)
+    }
+    
+    return filteredContent
+  }
+  
+  private func filterReadingLists(readingListsIdentifiers: [String], resources: [Resource]) -> [ReadingList] {
+    var readingLists = [ReadingList]()
+    for readingListIdentifier in readingListsIdentifiers {
+      guard let resource = resources.filter({ $0.id == readingListIdentifier }).first as? ReadingList else {
+        continue
+      }
+      readingLists.append(resource)
+    }
+    return readingLists
   }
 }
