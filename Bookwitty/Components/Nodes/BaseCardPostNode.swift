@@ -15,6 +15,10 @@ protocol BaseCardPostNodeContentProvider {
   var contentNode: ASDisplayNode { get }
 }
 
+protocol BaseCardPostNodeDelegate {
+  func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
+}
+
 class BaseCardPostNode: ASCellNode {
 
   fileprivate let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
