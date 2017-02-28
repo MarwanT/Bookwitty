@@ -17,15 +17,31 @@ class BooksTableViewController: UITableViewController {
     tableView.register(BookTableViewCell.nib, forCellReuseIdentifier: BookTableViewCell.reuseIdentifier)
   }
   
-  // MARK: - Table view data source
-  
   override func numberOfSections(in tableView: UITableView) -> Int {
-    // #warning Incomplete implementation, return the number of sections
-    return 0
+    return viewModel.numberOfSections
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    // #warning Incomplete implementation, return the number of rows
-    return 0
+    return viewModel.numberOfRows(for: section)
+  }
+  
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    return tableView.dequeueReusableCell(withIdentifier: BookTableViewCell.reuseIdentifier) ?? UITableViewCell()
+  }
+  
+  override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    guard let cell = cell as? BookTableViewCell else {
+      return
+    }
+    let values = viewModel.selectionValues(for: indexPath)
+    cell.productImageURL = values.imageURL
+    cell.bookTitle = values.bookTitle
+    cell.authorName = values.authorName
+    cell.productType = values.productType
+    cell.price = values.price
+  }
+  
+  override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return BookTableViewCell.minimumHeight
   }
 }
