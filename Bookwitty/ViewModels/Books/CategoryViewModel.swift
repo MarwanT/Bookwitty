@@ -17,6 +17,8 @@ final class CategoryViewModel {
   fileprivate var readingLists: [ReadingList]? = nil
   fileprivate var banner: Banner? = nil
   
+  let maximumNumberOfBooks: Int = 3
+  
   var category: Category! = nil
   
   var subcategories: [Category]? {
@@ -139,7 +141,6 @@ final class CategoryViewModel {
   private func loadCategoryBooks(categoryIdentifier: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     categoryBooks = nil
     
-    let maximumNumberOfBooks: Int = 3
     return SearchAPI.search(filter: (nil, [categoryIdentifier]), page: nil, completion: {
       (success, resources, error) in
       defer {
@@ -150,7 +151,7 @@ final class CategoryViewModel {
         return
       }
       
-      self.categoryBooks = Array(books.prefix(maximumNumberOfBooks))
+      self.categoryBooks = books
     })
   }
   
@@ -260,7 +261,10 @@ extension CategoryViewModel {
   }
   
   var selectionNumberOfItems: Int {
-    return categoryBooks?.count ?? 0
+    guard let booksCount = categoryBooks?.count else {
+      return 0
+    }
+    return booksCount < maximumNumberOfBooks ? booksCount : maximumNumberOfBooks
   }
   
   func selectionValues(for indexPath: IndexPath) -> (imageURL: URL?, bookTitle: String?, authorName: String?, productType: String?, price: String?) {
