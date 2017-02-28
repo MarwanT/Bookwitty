@@ -134,6 +134,7 @@
 		F48278BB1E4B21CA003D82F2 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48278BA1E4B21CA003D82F2 /* RootTabBarController.swift */; };
 		F488D2791E44EB46003A7BD4 /* PenName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F488D2781E44EB46003A7BD4 /* PenName.swift */; };
 		F488D27B1E44F559003A7BD4 /* BookwittyParsersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F488D27A1E44F559003A7BD4 /* BookwittyParsersTests.swift */; };
+		F496DE081E65DECB007E22B1 /* Paginator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F496DE071E65DECB007E22B1 /* Paginator.swift */; };
 		F49AE93E1E47CFEA0031B355 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49AE93D1E47CFEA0031B355 /* Parser.swift */; };
 		F4A426271E560ED00090CD51 /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A426261E560ED00090CD51 /* Author.swift */; };
 		F4A4262B1E5617A30090CD51 /* PageAuthor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A4262A1E5617A30090CD51 /* PageAuthor.swift */; };
@@ -294,6 +295,7 @@
 		F48278BA1E4B21CA003D82F2 /* RootTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RootTabBarController.swift; path = Bookwitty/ViewControllers/Root/RootTabBarController.swift; sourceTree = SOURCE_ROOT; };
 		F488D2781E44EB46003A7BD4 /* PenName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenName.swift; sourceTree = "<group>"; };
 		F488D27A1E44F559003A7BD4 /* BookwittyParsersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyParsersTests.swift; sourceTree = "<group>"; };
+		F496DE071E65DECB007E22B1 /* Paginator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paginator.swift; sourceTree = "<group>"; };
 		F49AE93D1E47CFEA0031B355 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		F4A426261E560ED00090CD51 /* Author.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Author.swift; sourceTree = "<group>"; };
 		F4A4262A1E5617A30090CD51 /* PageAuthor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageAuthor.swift; sourceTree = "<group>"; };
@@ -455,6 +457,7 @@
 				597B8E2C1E37F6BC00C7811B /* Image+Utils.swift */,
 				59DA47581E3AA8E100BA90A5 /* Localization.swift */,
 				59903FEC1E3B9D90006043EF /* View.swift */,
+				F496DE071E65DECB007E22B1 /* Paginator.swift */,
 				594F4EA71E423B8600A947FA /* AppNotification.swift */,
 				594290381E549FF40006B2F1 /* UIColor.swift */,
 			);
@@ -1139,6 +1142,7 @@
 				F4CDDD371E60263800474CAA /* RotatingImageNode.swift in Sources */,
 				59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */,
 				59DA475E1E3B7A8F00BA90A5 /* TutorialViewModel.swift in Sources */,
+				F496DE081E65DECB007E22B1 /* Paginator.swift in Sources */,
 				597B8E2D1E37F6BC00C7811B /* Image+Utils.swift in Sources */,
 				F434F7911E4E16CE001812BD /* CellNode.swift in Sources */,
 				F4670AFB1E54669300159F4F /* ReadingListBookNode.swift in Sources */,
