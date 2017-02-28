@@ -281,6 +281,10 @@ class Strings {
     return localizedString(key: "tutorial_fifth_page_title")
   }
 
+  class func tutorial_first_page_description() -> String {
+    return localizedString(key: "tutorial_first_page_description")
+  }
+
   class func tutorial_first_page_title() -> String {
     return localizedString(key: "tutorial_first_page_title")
   }

@@ -9,7 +9,7 @@
 import Foundation
 
 final class RootTabBarViewModel {
-  let bookStoreTabTitle = localizedString(key: "books", defaultValue: "Books")
+  let bookStoreTabTitle = Strings.books()
   
   var isUserSignedIn: Bool {
     return AccessToken.shared.hasTokens

@@ -26,9 +26,9 @@ class ReadingListCardContentNode: ASDisplayNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let collectionImageSize: CGSize = CGSize(width: 60, height: 100)
 
-  private let postText: String = localizedString(key: "posts", defaultValue: "Posts")
-  private let booksText: String = localizedString(key: "books", defaultValue: "Books")
-  private let followerText: String = localizedString(key: "followers", defaultValue: "Followers")
+  private let postText: String = Strings.posts()
+  private let booksText: String = Strings.books()
+  private let followerText: String = Strings.followers()
 
   private let titleNode: ASTextNode
   private let topicStatsNode: ASTextNode

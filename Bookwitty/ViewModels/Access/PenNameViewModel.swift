@@ -9,22 +9,22 @@
 import Foundation
 
 final class PenNameViewModel {
-  let viewControllerTitle: String = localizedString(key: "choose_pen_name", defaultValue: "Choose a Pen Name")
+  let viewControllerTitle: String = Strings.choose_pen_name()
 
-  let continueButtonTitle: String = localizedString(key: "continue", defaultValue: "Continue")
+  let continueButtonTitle: String = Strings.continue()
 
-  let penNameTextFieldPlaceholderText: String = localizedString(key: "enter_your_pen_name", defaultValue: "Enter your pen name")
-  let penNameInvalidationErrorMessage: String = localizedString(key: "pen_name_cant_be_empty", defaultValue: "Oooops pen name can not be empty")
+  let penNameTextFieldPlaceholderText: String = Strings.enter_your_pen_name()
+  let penNameInvalidationErrorMessage: String = Strings.pen_name_cant_be_empty()
 
-  let penNameTitleText: String = localizedString(key: "pen_name", defaultValue: "Pen Name")
-  let penNameNoteText: String = localizedString(key: "dont_worry_you_can_always_change_it_later", defaultValue: "Don't worry, you can always change it later")
+  let penNameTitleText: String = Strings.pen_name()
+  let penNameNoteText: String = Strings.dont_worry_you_can_change_it_later()
 
-  let imagePickerTitle: String = localizedString(key: "profile_picture", defaultValue: "Profile Picture")
-  let takeProfilePhotoText: String = localizedString(key: "take_Profile_photo", defaultValue: "Take profile photo")
-  let chooseFromLibraryText: String = localizedString(key: "choose_from_library", defaultValue: "Choose photo from library")
-  let removeProfilePhotoText: String = localizedString(key: "clear_profile_photo", defaultValue: "Clear profile photo")
-  let cancelText: String = localizedString(key: "cancel", defaultValue: "Cancel")
-  let doneText: String = localizedString(key: "done", defaultValue: "Done")
+  let imagePickerTitle: String = Strings.profile_picture()
+  let takeProfilePhotoText: String = Strings.take_Profile_photo()
+  let chooseFromLibraryText: String = Strings.choose_from_library()
+  let removeProfilePhotoText: String = Strings.clear_profile_photo()
+  let cancelText: String = Strings.cancel()
+  let doneText: String = Strings.done()
 
   private(set) var user: User!
 

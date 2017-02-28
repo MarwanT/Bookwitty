@@ -26,7 +26,7 @@ final class CategoryViewModel {
   }
   
   var viewControllerTitle: String {
-    return category.value ?? localizedString(key: "category", defaultValue: "Category")
+    return category.value ?? Strings.category()
   }
   
   // MARK: API Calls
@@ -292,11 +292,11 @@ extension CategoryViewModel {
 // MARK: Localization
 
 extension CategoryViewModel {
-  var bookwittySuggestsTitle: String { return localizedString(key: "bookwitty_suggests", defaultValue: "Bookwitty Suggests") }
-  var selectionHeaderTitle: String { return localizedString(key: "our_selection_for_you", defaultValue: "Our selection for you") }
-  var viewAllBooksLabelText: String { return localizedString(key: "view_all_books", defaultValue: "View All Books") }
-  var viewSubcategoriesText: String { return localizedString(key: "view_subcategories", defaultValue: "View Subcategories") }
-  var errorLoadingDataTitle: String { return localizedString(key: "error_loading_data_title", defaultValue: "Error Loading Data") }
-  var errorLoadingDataMessage: String { return localizedString(key: "error_loading_data_message", defaultValue: "We could not load your data") }
-  var okText: String { return localizedString(key: "ok", defaultValue: "Ok") }
+  var bookwittySuggestsTitle: String { return Strings.bookwitty_suggests() }
+  var selectionHeaderTitle: String { return Strings.our_selection_for_you() }
+  var viewAllBooksLabelText: String { return Strings.view_all_books() }
+  var viewSubcategoriesText: String { return  Strings.view_subcategories() }
+  var errorLoadingDataTitle: String { return Strings.error_loading_data() }
+  var errorLoadingDataMessage: String { return Strings.couldnt_load_your_data() }
+  var okText: String { return Strings.ok() }
 }

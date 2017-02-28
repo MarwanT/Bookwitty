@@ -10,37 +10,37 @@ import Foundation
 import Moya
 
 final class RegisterViewModel {
-  let viewControllerTitle: String = localizedString(key: "sign_up", defaultValue: "Sign up")
+  let viewControllerTitle: String = Strings.sign_up()
 
-  let continueButtonTitle: String = localizedString(key: "continue", defaultValue: "Continue")
+  let continueButtonTitle: String = Strings.continue()
 
-  let okText: String = localizedString(key: "ok", defaultValue: "Ok")
+  let okText: String = Strings.ok()
 
-  let emailDescriptionLabelText: String = localizedString(key: "email", defaultValue: "Email")
-  let emailTextFieldPlaceholderText: String = localizedString(key: "enter_your_email", defaultValue: "Enter your email")
-  let emailInvalidationErrorMessage: String = localizedString(key: "email_invalid", defaultValue: "Oooops your email seems to be invalid")
+  let emailDescriptionLabelText: String = Strings.email()
+  let emailTextFieldPlaceholderText: String = Strings.enter_your_email()
+  let emailInvalidationErrorMessage: String = Strings.email_invalid()
 
-  let passwordDescriptionLabelText: String = localizedString(key: "password", defaultValue: "Password")
-  let passwordTextFieldPlaceholderText: String = localizedString(key: "enter_your_password", defaultValue: "Enter your password")
-  let passwordInvalidationErrorMessage: String = localizedString(key: "password_invalid", defaultValue: "Oooops your password seems to be invalid")
+  let passwordDescriptionLabelText: String = Strings.password()
+  let passwordTextFieldPlaceholderText: String = Strings.enter_your_password()
+  let passwordInvalidationErrorMessage: String = Strings.password_invalid()
 
-  let firstNameDescriptionLabelText: String = localizedString(key: "first_name", defaultValue: "First name")
-  let firstNameTextFieldPlaceholderText: String = localizedString(key: "enter_your_first_name", defaultValue: "Enter your first name")
-  let firstNameInvalidationErrorMessage: String = localizedString(key: "first_name_invalid", defaultValue: "Oooops your first name seems to be empty")
+  let firstNameDescriptionLabelText: String = Strings.first_name()
+  let firstNameTextFieldPlaceholderText: String = Strings.enter_your_first_name()
+  let firstNameInvalidationErrorMessage: String = Strings.first_name_invalid()
 
-  let lastNameDescriptionLabelText: String = localizedString(key: "last_name", defaultValue: "Last name")
-  let lastNameTextFieldPlaceholderText: String = localizedString(key: "enter_your_last_name", defaultValue: "Enter your last name")
-  let lastNameInvalidationErrorMessage: String = localizedString(key: "last_name_invalid", defaultValue: "Oooops your email seems to be empty")
+  let lastNameDescriptionLabelText: String = Strings.last_name()
+  let lastNameTextFieldPlaceholderText: String = Strings.enter_your_last_name()
+  let lastNameInvalidationErrorMessage: String = Strings.last_name_invalid()
 
-  let countryDescriptionLabelText: String = localizedString(key: "country", defaultValue: "Country")
-  let countryTextFieldPlaceholderText: String = localizedString(key: "country", defaultValue: "Country")
+  let countryDescriptionLabelText: String = Strings.country()
+  let countryTextFieldPlaceholderText: String = Strings.country()
 
-  let termsOfUseAndPolicyText: String = localizedString(key: "terms_of_use_and_privacy_policy", defaultValue: "By tapping Sign up : you agree to the\n•Terms of Use• and •Privacy Policy•")
+  let termsOfUseAndPolicyText: String = Strings.terms_of_use_and_privacy_policy()
 
-  let ooopsText: String = localizedString(key: "ooops", defaultValue: "Ooops")
-  let somethingWentWrongText: String = localizedString(key: "some_thing_wrong_error", defaultValue: "Something went wrong")
-  let emailAlreadyExistsErrorText: String = localizedString(key: "email_already_registered", defaultValue: "The email address you have entered is already registered!")
-  let registerErrorInFieldsNotification = localizedString(key: "please_fill_required_field", defaultValue: "Please fill the required fields")
+  let ooopsText: String = Strings.ooops()
+  let somethingWentWrongText: String = Strings.some_thing_wrong_error()
+  let emailAlreadyExistsErrorText: String = Strings.email_already_registered()
+  let registerErrorInFieldsNotification = Strings.please_fill_required_field()
 
   var country: (code: String, name: String)?
 

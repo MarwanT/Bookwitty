@@ -10,24 +10,22 @@ import Foundation
 import Moya
 
 final class SignInViewModel {
-  let signInButtonTitle: String = localizedString(key: "sign_in", defaultValue: "Sign-in")
-  let emailDescriptionLabelText: String = localizedString(key: "email", defaultValue: "Email")
-  let emailTextFieldPlaceholderText: String = localizedString(key: "enter_your_email", defaultValue: "Enter your email")
-  let emailInvalidationErrorMessage: String = localizedString(key: "email_invalid", defaultValue: "Oooops your email seems to be invalid")
+  let signInButtonTitle: String = Strings.sign_in()
+  let emailDescriptionLabelText: String = Strings.email()
+  let emailTextFieldPlaceholderText: String = Strings.enter_your_email()
+  let emailInvalidationErrorMessage: String = Strings.email_invalid()
   
-  let passwordDescriptionLabelText: String = localizedString(key: "password", defaultValue: "Password")
-  let passwordTextFieldPlaceholderText: String = localizedString(key: "enter_your_password", defaultValue: "Enter your password")
-  let passwordInvalidationErrorMessage: String = localizedString(key: "password_invalid", defaultValue: "Oooops your password seems to be invalid")
+  let passwordDescriptionLabelText: String = Strings.password()
+  let passwordTextFieldPlaceholderText: String = Strings.enter_your_password()
+  let passwordInvalidationErrorMessage: String = Strings.password_invalid()
   
-  let viewControllerTitle: String = localizedString(key: "sign_in", defaultValue: "Sign-in")
-  let signInErrorInFieldsNotification = localizedString(key: "please_fill_required_field", defaultValue: "Please fill the required fields")
-  let okText: String = localizedString(key: "ok", defaultValue: "Ok")
-  let failToSignInAlertTitle: String = localizedString(
-    key: "fail_to_sign_alert_title",
-    defaultValue: "Sign in")
-  let failToSignInAlertMessage: String = localizedString(key: "something_wrong_in_credentials", defaultValue: "Oooops it seems there is something wrong in your credentials")
-  let registerLabelText: String = localizedString(key: "you_dont_have_account", defaultValue: "You don't have an account")
-  let registerTermText: String = localizedString(key: "register", defaultValue: "Register")
+  let viewControllerTitle: String = Strings.sign_in()
+  let signInErrorInFieldsNotification = Strings.please_fill_required_field()
+  let okText: String = Strings.ok()
+  let failToSignInAlertTitle: String = Strings.sign_in()
+  let failToSignInAlertMessage: String = Strings.something_wrong_in_credentials()
+  let registerLabelText: String = Strings.you_dont_have_account()
+  let registerTermText: String = Strings.register()
   
   
   func styledRegisterText() -> NSMutableAttributedString {

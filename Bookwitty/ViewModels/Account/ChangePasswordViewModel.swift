@@ -9,11 +9,11 @@
 import Foundation
 
 class ChangePasswordViewModel {
-  let currentPasswordText: String = localizedString(key: "current_password", defaultValue: "Current Password")
-  let newPasswordText: String = localizedString(key: "new_password", defaultValue: "New Password")
-  let changePasswordText: String = localizedString(key: "change_password", defaultValue: "Change Password")
-  let changePasswordSuccessNotification: String = localizedString(key: "change_password_success", defaultValue: "Password changed successfully")
-  let changePasswordErrorNotification: String = localizedString(key: "change_password_error", defaultValue: "Could not change password")
+  let currentPasswordText: String = Strings.current_password()
+  let newPasswordText: String = Strings.new_password()
+  let changePasswordText: String = Strings.change_password()
+  let changePasswordSuccessNotification: String = Strings.change_password_success()
+  let changePasswordErrorNotification: String = Strings.change_password_error()
 
   func updatePassword(identifier: String, current: String, new: String, closure: ((Bool, Error?) -> Void)?) {
     let _ = UserAPI.updateUser(identifier: identifier, currentPassword: current, password: new) {

@@ -9,11 +9,11 @@
 import Foundation
 
 final class SettingsViewModel {
-  let viewControllerTitle: String = localizedString(key: "settings", defaultValue: "Settings")
-  let emailNotificationsText: String = localizedString(key: "email_notifications", defaultValue: "Email Notifications")
-  let changePasswordText: String = localizedString(key: "change_password", defaultValue: "Change Password")
-  let countryRegionText: String = localizedString(key: "country_region", defaultValue: "Country/Region")
-  let signOutText: String = localizedString(key: "sign_out", defaultValue: "Sign Out")
+  let viewControllerTitle: String = Strings.settings()
+  let emailNotificationsText: String = Strings.email_notifications()
+  let changePasswordText: String = Strings.change_password()
+  let countryRegionText: String = Strings.country_region()
+  let signOutText: String = Strings.sign_out()
 
   enum Sections: Int {
     case General = 0
