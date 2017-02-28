@@ -175,6 +175,12 @@ class RegisterViewController: UIViewController {
           switch(error) {
           case BookwittyAPIError.emailAlreadyExists:
             self.showAlertErrorWith(title: Strings.ooops(), message: Strings.email_already_registered())
+          case .failToSignIn:
+            /*
+             Registration is successful, but since the sign in failed then 
+             The root vc will re-display the sign in vc for signing in again
+             */
+            NotificationCenter.default.post(name: AppNotification.registrationSuccess, object: nil)
           default: break
           }
         } else {
