@@ -268,13 +268,26 @@ extension CategoryViewModel {
 }
 
 
+// MARK: - Subcategories
+
+extension CategoryViewModel {
+  var hasSubcategories: Bool {
+    if let subcategories = category.subcategories, subcategories.count > 0 {
+      return true
+    } else {
+      return false
+    }
+  }
+}
+
+
 // MARK: Localization
 
 extension CategoryViewModel {
   var bookwittySuggestsTitle: String { return localizedString(key: "bookwitty_suggests", defaultValue: "Bookwitty Suggests") }
   var selectionHeaderTitle: String { return localizedString(key: "our_selection_for_you", defaultValue: "Our selection for you") }
   var viewAllBooksLabelText: String { return localizedString(key: "view_all_books", defaultValue: "View All Books") }
-  var viewAllSelectionsLabelText: String { return localizedString(key: "view_all_selections", defaultValue: "View All Selections") }
+  var viewSubcategoriesText: String { return localizedString(key: "view_subcategories", defaultValue: "View Subcategories") }
   var errorLoadingDataTitle: String { return localizedString(key: "error_loading_data_title", defaultValue: "Error Loading Data") }
   var errorLoadingDataMessage: String { return localizedString(key: "error_loading_data_message", defaultValue: "We could not load your data") }
   var okText: String { return localizedString(key: "ok", defaultValue: "Ok") }

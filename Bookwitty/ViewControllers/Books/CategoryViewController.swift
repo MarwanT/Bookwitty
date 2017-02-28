@@ -17,7 +17,7 @@ class CategoryViewController: UIViewController {
   let bookwittySuggestsTableView = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)
   let selectionTableView = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)
   let viewAllBooksView = UIView.loadFromView(DisclosureView.self, owner: nil)
-  let viewAllSelectionsView = UIView.loadFromView(DisclosureView.self, owner: nil)
+  let viewSubcategories = UIView.loadFromView(DisclosureView.self, owner: nil)
   let refreshController = UIRefreshControl()
   
   fileprivate let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
@@ -72,6 +72,16 @@ class CategoryViewController: UIViewController {
     selectionTableView.delegate = self
     selectionTableView.register(SectionTitleHeaderView.nib, forHeaderFooterViewReuseIdentifier: SectionTitleHeaderView.reuseIdentifier)
     selectionTableView.register(BookTableViewCell.nib, forCellReuseIdentifier: BookTableViewCell.reuseIdentifier)
+    
+    // View All Books
+    viewAllBooksView.configuration.style = .highlighted
+    viewAllBooksView.delegate = self
+    viewAllBooksView.label.text = viewModel.viewAllBooksLabelText
+    
+    // View Subcategories
+    viewSubcategories.configuration.style = .highlighted
+    viewSubcategories.delegate = self
+    viewSubcategories.label.text = viewModel.viewSubcategoriesText
   }
   
   private func initializePullToRefresh() {
@@ -99,6 +109,8 @@ class CategoryViewController: UIViewController {
     loadFeaturedContentSection()
     loadBookwittySuggest()
     loadSelectionSection()
+    loadSubcategoriesSection()
+    addSeparator()
   }
   
   private func loadBannerSection() {
@@ -142,6 +154,16 @@ class CategoryViewController: UIViewController {
       // Add the table view height constraint
       selectionTableView.layoutIfNeeded()
       selectionTableView.constrainHeight("\(selectionTableView.contentSize.height)")
+    }
+  }
+  
+  private func loadSubcategoriesSection() {
+    let canDisplayViewAllSubcategories = viewSubcategories.superview == nil
+    if viewModel.hasSubcategories && canDisplayViewAllSubcategories {
+      addSeparator(leftMargin)
+      viewSubcategories.constrainHeight("45")
+      stackView.addArrangedSubview(viewSubcategories)
+      viewSubcategories.alignLeading("0", trailing: "0", toView: stackView)
     }
   }
   
@@ -293,37 +315,17 @@ extension CategoryViewController: UITableViewDataSource, UITableViewDelegate {
       return nil
     }
     
-    viewAllBooksView.configuration.style = .highlighted
-    viewAllBooksView.delegate = self
-    viewAllBooksView.label.text = viewModel.viewAllBooksLabelText
-    
-    viewAllSelectionsView.configuration.style = .highlighted
-    viewAllSelectionsView.delegate = self
-    viewAllSelectionsView.label.text = viewModel.viewAllSelectionsLabelText
-    
     let topSeparator = separatorViewInstance()
-    let middleSeparator = separatorViewInstance()
-    let bottomSeparator = separatorViewInstance()
     
     let containerView = UIView(frame: CGRect.zero)
     containerView.addSubview(viewAllBooksView)
-    containerView.addSubview(viewAllSelectionsView)
     containerView.addSubview(topSeparator)
-    containerView.addSubview(middleSeparator)
-    containerView.addSubview(bottomSeparator)
     
     topSeparator.alignTopEdge(withView: containerView, predicate: "0")
     topSeparator.alignLeading("\(leftMargin)", trailing: "0", toView: containerView)
     viewAllBooksView.constrainTopSpace(toView: topSeparator, predicate: "0")
     viewAllBooksView.alignLeading("0", trailing: "0", toView: containerView)
     viewAllBooksView.constrainHeight("45")
-    middleSeparator.constrainTopSpace(toView: viewAllBooksView, predicate: "0")
-    middleSeparator.alignLeading("0", trailing: "0", toView: topSeparator)
-    viewAllSelectionsView.constrainTopSpace(toView: middleSeparator, predicate: "0")
-    viewAllSelectionsView.alignLeading("0", trailing: "0", toView: containerView)
-    viewAllSelectionsView.constrainHeight("45")
-    bottomSeparator.constrainTopSpace(toView: viewAllSelectionsView, predicate: "0")
-    bottomSeparator.alignLeading("0", trailing: "0", toView: containerView)
     
     return containerView
   }
@@ -348,7 +350,7 @@ extension CategoryViewController: UITableViewDataSource, UITableViewDelegate {
     if tableView === bookwittySuggestsTableView {
       return 0.01 // To remove the separator after the last cell
     } else {
-      return 93
+      return 46
     }
   }
   
@@ -364,7 +366,7 @@ extension CategoryViewController: DisclosureViewDelegate {
     switch disclosureView {
     case viewAllBooksView:
       break
-    case viewAllSelectionsView:
+    case viewSubcategories:
       break
     default:
       break
