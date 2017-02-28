@@ -7,3 +7,20 @@
 //
 
 import Foundation
+import UIKit
+import AsyncDisplayKit
+
+class DiscoverViewController: ASViewController<ASCollectionNode> {
+  let collectionNode: ASCollectionNode
+  let flowLayout: UICollectionViewFlowLayout
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  init() {
+    flowLayout = UICollectionViewFlowLayout()
+    collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+    super.init(node: collectionNode)
+  }
+}
