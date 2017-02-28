@@ -37,3 +37,21 @@ final class BooksTableViewModel {
     return (URL(string: book.thumbnailImageUrl ?? ""), book.title, book.productDetails?.author, book.productDetails?.productFormat, book.supplierInformation?.displayPrice?.formattedValue)
   }
 }
+
+
+extension BooksTableViewModel {
+  fileprivate func loadBooksForIds(identifiers: [String], completion: @escaping (_ success: Bool, _ books: [Book]?) -> Void) {
+    _ = UserAPI.batch(identifiers: identifiers, completion: {
+      (success, resources, error) in
+      var books: [Book]? = nil
+      defer {
+        completion(success, books)
+      }
+      
+      guard success, let definedResources = resources as? [Book] else {
+        return
+      }
+      books = definedResources
+    })
+  }
+}
