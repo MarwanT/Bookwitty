@@ -176,13 +176,13 @@ class BookStoreViewController: UIViewController {
     if viewModel.hasCategories && canDisplayCategories {
       stackView.addArrangedSubview(viewAllCategories)
       viewAllCategories.alignLeading("0", trailing: "0", toView: stackView)
+      addSeparator()
     }
   }
   
   func loadBookwittySuggest() {
     let canDisplayBookwittySuggest = bookwittySuggestsTableView.superview == nil
     if viewModel.hasBookwittySuggests && canDisplayBookwittySuggest {
-      addSeparator()
       addSpacing(space: 10)
       stackView.addArrangedSubview(bookwittySuggestsTableView)
       bookwittySuggestsTableView.alignLeading("0", trailing: "0", toView: stackView)
