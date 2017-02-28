@@ -19,6 +19,10 @@ final class CategoryViewModel {
   
   var category: Category! = nil
   
+  var subcategories: [Category]? {
+    return category.subcategories
+  }
+  
   var viewControllerTitle: String {
     return category.value ?? localizedString(key: "category", defaultValue: "Category")
   }

@@ -204,6 +204,15 @@ class CategoryViewController: UIViewController {
     spacer.constrainHeight("\(space)")
     stackView.addArrangedSubview(spacer)
   }
+  
+  func pushSubcategoriesList() {
+    guard let subcategories = viewModel.subcategories else {
+      return
+    }
+    let categoriesTableViewController = Storyboard.Books.instantiate(CategoriesTableViewController.self)
+    categoriesTableViewController.viewModel.categories = subcategories
+    navigationController?.pushViewController(categoriesTableViewController, animated: true)
+  }
 }
 
 
@@ -366,7 +375,7 @@ extension CategoryViewController: DisclosureViewDelegate {
     case viewAllBooksView:
       break
     case viewSubcategories:
-      break
+      pushSubcategoriesList()
     default:
       break
     }
