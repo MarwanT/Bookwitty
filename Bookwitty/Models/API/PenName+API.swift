@@ -44,7 +44,7 @@ struct PenNameAPI {
 
       if let data = data {
         penName = PenName.parseData(data: data)
-        //TODO: Update User
+        UserManager.shared.replaceUpdated(penName: penName)
         success = penName != nil
       } else {
         error = BookwittyAPIError.failToParseData
