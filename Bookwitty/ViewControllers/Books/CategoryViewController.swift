@@ -35,6 +35,22 @@ class CategoryViewController: UIViewController {
     refreshViewController()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    /*
+     When the refresh controller is still refreshing, and we navigate away and
+     back to this view controller, the activity indicator stops animating.
+     The is a turn around to re animate it if needed
+     */
+    if refreshController.isRefreshing == true {
+      let offset = scrollView.contentOffset
+      refreshController.endRefreshing()
+      refreshController.beginRefreshing()
+      scrollView.contentOffset = offset
+    }
+  }
+  
   private func initializeSubviews() {
     // Featured Content View
     let itemSize = FeaturedContentCollectionViewCell.defaultSize
