@@ -14,9 +14,10 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let pullToRefresher = UIRefreshControl()
   let penNameSelectionNode = PenNameSelectionNode()
 
+  var collectionView: ASCollectionView?
+
   let scrollingThreshold: CGFloat = 25.0
   let viewModel = NewsFeedViewModel()
-  let data = ["","","","","","","","","","","","","","",""]
   var isFirstRun: Bool = true
 
   required init?(coder aDecoder: NSCoder) {
@@ -36,11 +37,12 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
     collectionNode.onDidLoad { [weak self] (collectionNode) in
       guard let strongSelf = self,
-        let collectionView = collectionNode.view as? ASCollectionView else {
+        let asCollectionView = collectionNode.view as? ASCollectionView else {
           return
       }
-      collectionView.addSubview(strongSelf.pullToRefresher)
-      collectionView.alwaysBounceVertical = true
+      strongSelf.collectionView = asCollectionView
+      strongSelf.collectionView?.addSubview(strongSelf.pullToRefresher)
+      strongSelf.collectionView?.alwaysBounceVertical = true
     }
   }
 
@@ -69,8 +71,28 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       isFirstRun = false
       loadData()
     }
+    animateRefreshControllerIfNeeded()
   }
 
+  /*
+   When the refresh controller is still refreshing, and we navigate away and
+   back to this view controller, the activity indicator stops animating.
+   The is a turn around to re animate it if needed
+   */
+  private func animateRefreshControllerIfNeeded() {
+    guard let collectionView = collectionView else {
+      return
+    }
+
+    if self.pullToRefresher.isRefreshing == true {
+      let offset = collectionView.contentOffset
+
+      self.pullToRefresher.endRefreshing()
+      self.pullToRefresher.beginRefreshing()
+      collectionView.contentOffset = offset
+    }
+  }
+  
   private func initializeNavigationItems() {
     let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
       UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
