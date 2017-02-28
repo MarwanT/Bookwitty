@@ -229,6 +229,12 @@ class CategoryViewController: UIViewController {
     categoriesTableViewController.viewModel.categories = subcategories
     navigationController?.pushViewController(categoriesTableViewController, animated: true)
   }
+  
+  func pushBooksTableView() {
+    let booksTableViewController = Storyboard.Books.instantiate(BooksTableViewController.self)
+    booksTableViewController.viewModel = viewModel.booksTableViewModel
+    navigationController?.pushViewController(booksTableViewController, animated: true)
+  }
 }
 
 
@@ -389,7 +395,7 @@ extension CategoryViewController: DisclosureViewDelegate {
   func disclosureViewTapped(_ disclosureView: DisclosureView) {
     switch disclosureView {
     case viewAllBooksView:
-      break
+      pushBooksTableView()
     case viewSubcategories:
       pushSubcategoriesList()
     default:

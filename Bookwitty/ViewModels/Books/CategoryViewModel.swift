@@ -273,6 +273,16 @@ extension CategoryViewModel {
     }
     return (URL(string: book.thumbnailImageUrl ?? ""), book.title, book.productDetails?.author, book.productDetails?.productFormat, book.supplierInformation?.displayPrice?.formattedValue)
   }
+  
+  var booksTableViewModel: BooksTableViewModel {
+    guard let booksInfo = categoryBooks else {
+      return BooksTableViewModel()
+    }
+    
+    let viewModel = BooksTableViewModel(books: booksInfo.books, loadingMode:
+      BooksTableViewModel.DataLoadingMode.server(nextPageURL: booksInfo.nextPage))
+    return viewModel
+  }
 }
 
 
