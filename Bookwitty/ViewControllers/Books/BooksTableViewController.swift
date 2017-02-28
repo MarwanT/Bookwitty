@@ -9,12 +9,21 @@
 import UIKit
 
 class BooksTableViewController: UITableViewController {
+  let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+  
   var viewModel = BooksTableViewModel()
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    tableView.tableFooterView = UIView(frame: CGRect.zero)
     tableView.register(BookTableViewCell.nib, forCellReuseIdentifier: BookTableViewCell.reuseIdentifier)
+    
+    initializeComponents()
+  }
+  
+  func initializeComponents() {
+    activityIndicator.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 44)
   }
   
   override func numberOfSections(in tableView: UITableView) -> Int {
@@ -52,10 +61,10 @@ extension BooksTableViewController {
   override func scrollViewDidScroll(_ scrollView: UIScrollView) {
     if tableView.contentOffset.y >= (tableView.contentSize.height - tableView.bounds.size.height) {
       if viewModel.hasNextPage && !viewModel.isLoadingNextPage {
-        // TODO: Display activity indicator
+        showActivityIndicator()
         self.viewModel.loadNextPage(completion: {
           (success) in
-          // TODO: Remove activity indicator
+          self.hideActivityIndicator()
           guard success else {
             return
           }
@@ -63,5 +72,15 @@ extension BooksTableViewController {
         })
       }
     }
+  }
+  
+  func showActivityIndicator() {
+    tableView.tableFooterView = activityIndicator
+    activityIndicator.startAnimating()
+  }
+  
+  func hideActivityIndicator() {
+    activityIndicator.stopAnimating()
+    tableView.tableFooterView = UIView(frame: CGRect.zero)
   }
 }
