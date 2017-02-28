@@ -15,6 +15,7 @@ class BooksTableViewController: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = Strings.books()
     
     tableView.tableFooterView = UIView(frame: CGRect.zero)
     tableView.register(BookTableViewCell.nib, forCellReuseIdentifier: BookTableViewCell.reuseIdentifier)
