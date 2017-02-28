@@ -92,11 +92,11 @@ class CategoryViewController: UIViewController {
   
   // MARK: Actions
   func refreshViewController() {
-    // Clear All Subviews in stack view
-    stackView.subviews.forEach({ $0.removeFromSuperview() })
     refreshController.beginRefreshing()
     viewModel.loadData { (success, error) in
       self.refreshController.endRefreshing()
+      // Clear All Subviews in stack view
+      self.stackView.subviews.forEach({ $0.removeFromSuperview() })
       self.loadUserInterface()
       // TODO: If there is nothing to be displayed display no data view
     }
