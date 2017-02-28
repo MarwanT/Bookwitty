@@ -215,7 +215,8 @@ class CardRegistry {
       return nil
     }
 
-    card.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    let name = resource.penName?.name ?? "[No Name]"
+    card.postInfoData = CardPostInfoNodeData(name, "December 2, 2020", "https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
     card.node.articleTitle = resource.caption
     card.node.articleDescription = resource.shortDescription ?? resource.biography
     card.node.subImageUrl = resource.thumbnailImageUrl ?? resource.profileImageUrl ?? resource.imageUrl
@@ -236,7 +237,8 @@ class CardRegistry {
       return nil
     }
 
-    card.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    let name = resource.penName?.name ?? "[No Name]"
+    card.postInfoData = CardPostInfoNodeData(name, "December 2, 2020", "https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.imageUrl = resource.coverImageUrl ?? resource.thumbnailImageUrl
@@ -257,7 +259,8 @@ class CardRegistry {
       return nil
     }
 
-    card.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    let name = resource.penName?.name ?? "[No Name]"
+    card.postInfoData = CardPostInfoNodeData(name, "December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
     card.node.articleQuotePublisher = resource.author
     if let qoute = resource.body, !qoute.isEmpty {
       card.node.articleQuote = "“ \(qoute) ”"
@@ -281,7 +284,8 @@ class CardRegistry {
       return nil
     }
 
-    card.postInfoData = CardPostInfoNodeData("Shafic","December 12, 2014","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    let name = resource.penName?.name ?? "[No Name]"
+    card.postInfoData = CardPostInfoNodeData(name, "December 12, 2014","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
     card.node.articleTitle = nil
     card.node.articleDescription = resource.shortDescription
     card.node.imageUrl = resource.coverImageUrl
@@ -304,7 +308,8 @@ class CardRegistry {
       return nil
     }
 
-    card.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    let name = resource.penName?.name ?? "[No Name]"
+    card.postInfoData = CardPostInfoNodeData(name, "December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
     card.node.linkUrl = resource.urlLink
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
@@ -325,7 +330,8 @@ class CardRegistry {
       return nil
     }
 
-    card.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    let name = resource.penName?.name ?? "[No Name]"
+    card.postInfoData = CardPostInfoNodeData(name, "December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
     card.node.linkUrl = nil
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
@@ -346,7 +352,8 @@ class CardRegistry {
       return nil
     }
 
-    card.postInfoData = CardPostInfoNodeData("Michel","December 1, 2016","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    let name = resource.penName?.name ?? "[No Name]"
+    card.postInfoData = CardPostInfoNodeData(name, "December 1, 2016","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
     card.node.imageUrl = resource.coverImageUrl
     card.articleCommentsSummary = "X commented on this"
 
@@ -365,7 +372,8 @@ class CardRegistry {
       return nil
     }
 
-    card.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    let name = resource.penName?.name ?? "[No Name]"
+    card.postInfoData = CardPostInfoNodeData(name, "December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.imageUrl = resource.coverImageUrl
@@ -406,7 +414,8 @@ class CardRegistry {
       return nil
     }
 
-    card.postInfoData = CardPostInfoNodeData("Shafic","December 12, 2014","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    let name = resource.penName?.name ?? "[No Name]"
+    card.postInfoData = CardPostInfoNodeData(name, "December 12, 2014","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.setTopicStatistics(numberOfPosts: "XX")
