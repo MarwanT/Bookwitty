@@ -9,12 +9,6 @@
 import Foundation
 
 final class SettingsViewModel {
-  let viewControllerTitle: String = localizedString(key: "settings", defaultValue: "Settings")
-  let emailNotificationsText: String = localizedString(key: "email_notifications", defaultValue: "Email Notifications")
-  let changePasswordText: String = localizedString(key: "change_password", defaultValue: "Change Password")
-  let countryRegionText: String = localizedString(key: "country_regions", defaultValue: "Country/Region")
-  let signOutText: String = localizedString(key: "sign_out", defaultValue: "Sign Out")
-
   enum Sections: Int {
     case General = 0
     case SignOut = 1
@@ -42,12 +36,12 @@ final class SettingsViewModel {
     switch row {
     case 0: //email
       let sendEmailNotification = GeneralSettings.sharedInstance.shouldSendEmailNotifications
-      return (emailNotificationsText, sendEmailNotification)
+      return (Strings.email_notifications(), sendEmailNotification)
     case 1: //change password
-      return (changePasswordText, "")
+      return (Strings.change_password(), "")
     case 2: //country/region
       let countryName = (Locale.current as NSLocale).displayName(forKey: NSLocale.Key.countryCode, value: countryCode) ?? ""
-      return (countryRegionText, countryName)
+      return (Strings.country_region(), countryName)
     default:
       return ("", "")
     }
@@ -121,7 +115,7 @@ final class SettingsViewModel {
 
   //Sign Out
   private func valuesForSignOut(atRow row: Int) -> (title: String, value: String) {
-    return (signOutText, "")
+    return (Strings.sign_out(), "")
   }
 
   private func accessoryForSignOut(atRow row: Int) -> Accessory {

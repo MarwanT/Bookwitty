@@ -46,16 +46,37 @@ class RegisterViewController: UIViewController {
 
   private func setupAttributedTexts() {
     //Set Attributed Styled up Text
-    termsLabel.attributedText = viewModel.styledTermsOfUseAndPrivacyPolicyText()
+    let termsText = viewModel.styledTermsOfUseAndPrivacyPolicyText()
+    let termsNSString = termsText.mutableString as NSMutableString
+
     //Attributed Label Links Styling
     termsLabel.linkAttributes = ThemeManager.shared.currentTheme.styleTextLinkAttributes()
 
-    let termsOfUseRange: NSRange = (termsLabel.attributedText.string as NSString).range(of: viewModel.termsOfUseText)
-    let privacyPolicyRange: NSRange = (termsLabel.attributedText.string as NSString).range(of: viewModel.privacyPolicyText)
+    let range: NSRange = NSRange(location: 0, length: termsNSString.length)
+    let regular = try! NSRegularExpression(pattern: "•(.*?)•", options: [])
 
-    //Add click link identifiers
-    termsLabel.addLink(to: AttributedLinkReference.termsOfUse.url, with: termsOfUseRange)
-    termsLabel.addLink(to: AttributedLinkReference.privacyPolicy.url, with: privacyPolicyRange)
+    var resultRanges: [NSRange] = []
+    regular.enumerateMatches(in: termsText.string, options: [], range: range, using: {
+      (result: NSTextCheckingResult?, flags, stop) in
+      if let result = result {
+        resultRanges.append(result.rangeAt(1))
+      }
+    })
+
+    termsNSString.replaceOccurrences(of: "•", with: "", options: [], range: range)
+    termsLabel.attributedText = termsText
+
+    for (index, range) in resultRanges.enumerated() {
+      let effectiveRange = NSRange(location: (range.location - (2 * index + 1)), length: range.length)
+      switch index {
+      case 0:
+        termsLabel.addLink(to: AttributedLinkReference.termsOfUse.url, with: effectiveRange)
+      case 1:
+        termsLabel.addLink(to: AttributedLinkReference.privacyPolicy.url, with: effectiveRange)
+      default:
+        break
+      }
+    }
 
     //Set Delegates
     termsLabel.delegate = self
@@ -63,42 +84,42 @@ class RegisterViewController: UIViewController {
 
   /// Do the required setup
   private func awakeSelf() {
-    title = viewModel.viewControllerTitle
+    title = Strings.sign_up()
 
     setupAttributedTexts()
 
     firstNameField.configuration = InputFieldConfiguration(
-      descriptionLabelText: viewModel.firstNameDescriptionLabelText,
-      textFieldPlaceholder: viewModel.firstNameTextFieldPlaceholderText,
-      invalidationErrorMessage: viewModel.firstNameInvalidationErrorMessage,
+      descriptionLabelText: Strings.first_name(),
+      textFieldPlaceholder: Strings.enter_your_first_name(),
+      invalidationErrorMessage: Strings.first_name_invalid(),
       returnKeyType: UIReturnKeyType.continue,
       autocorrectionType: .no)
 
     lastNameField.configuration = InputFieldConfiguration(
-      descriptionLabelText: viewModel.lastNameDescriptionLabelText,
-      textFieldPlaceholder: viewModel.lastNameTextFieldPlaceholderText,
-      invalidationErrorMessage: viewModel.lastNameInvalidationErrorMessage,
+      descriptionLabelText: Strings.last_name(),
+      textFieldPlaceholder: Strings.enter_your_last_name(),
+      invalidationErrorMessage: Strings.last_name_invalid(),
       returnKeyType: UIReturnKeyType.continue,
       autocorrectionType: .no)
 
     emailField.configuration = InputFieldConfiguration(
-      descriptionLabelText: viewModel.emailDescriptionLabelText,
-      textFieldPlaceholder: viewModel.emailTextFieldPlaceholderText,
-      invalidationErrorMessage: viewModel.emailInvalidationErrorMessage,
+      descriptionLabelText: Strings.email(),
+      textFieldPlaceholder: Strings.enter_your_email(),
+      invalidationErrorMessage: Strings.email_invalid(),
       returnKeyType: UIReturnKeyType.continue,
       keyboardType: .emailAddress,
       autocorrectionType: .no,
       autocapitalizationType: .none)
 
     passwordField.configuration = InputFieldConfiguration(
-      descriptionLabelText: viewModel.passwordDescriptionLabelText,
-      textFieldPlaceholder: viewModel.passwordTextFieldPlaceholderText,
-      invalidationErrorMessage: viewModel.passwordInvalidationErrorMessage,
+      descriptionLabelText: Strings.password(),
+      textFieldPlaceholder: Strings.enter_your_password(),
+      invalidationErrorMessage: Strings.password_invalid(),
       returnKeyType: UIReturnKeyType.done)
 
     countryField.configuration = InputFieldConfiguration(
-      descriptionLabelText: viewModel.countryDescriptionLabelText,
-      textFieldPlaceholder: viewModel.countryTextFieldPlaceholderText,
+      descriptionLabelText: Strings.country(),
+      textFieldPlaceholder: Strings.country(),
       returnKeyType: UIReturnKeyType.default)
 
     countryField.text = viewModel.country?.name ?? ""
@@ -153,17 +174,17 @@ class RegisterViewController: UIViewController {
         } else if let error = error {
           switch(error) {
           case BookwittyAPIError.emailAlreadyExists:
-            self.showAlertErrorWith(title: self.viewModel.ooopsText, message: self.viewModel.emailAlreadyExistsErrorText)
+            self.showAlertErrorWith(title: Strings.ooops(), message: Strings.email_already_registered())
           default: break
           }
         } else {
-          self.showAlertErrorWith(title: self.viewModel.ooopsText, message: self.viewModel.somethingWentWrongText)
+          self.showAlertErrorWith(title: Strings.ooops(), message: Strings.some_thing_wrong_error())
         }
       })
     } else {
       NotificationView.show(notificationMessages:
         [
-          NotificationMessage(text: viewModel.registerErrorInFieldsNotification)
+          NotificationMessage(text: Strings.please_fill_required_field())
         ]
       )
 
@@ -172,7 +193,7 @@ class RegisterViewController: UIViewController {
 
   func showAlertErrorWith(title: String, message: String) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-    alert.addAction(UIAlertAction(title: viewModel.okText, style: UIAlertActionStyle.default, handler: nil))
+    alert.addAction(UIAlertAction(title: Strings.ok(), style: UIAlertActionStyle.default, handler: nil))
     self.present(alert, animated: true, completion: nil)
   }
 
@@ -250,7 +271,7 @@ extension RegisterViewController: TTTAttributedLabelDelegate {
 extension RegisterViewController: Themeable {
   func applyTheme() {
     self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
-    continueButton.setTitle(viewModel.continueButtonTitle, for: .normal)
+    continueButton.setTitle(Strings.continue(), for: .normal)
     ThemeManager.shared.currentTheme.stylePrimaryButton(button: continueButton)
     stackViewBackgroundView.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
 

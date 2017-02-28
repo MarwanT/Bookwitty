@@ -26,7 +26,6 @@ class ProfileCardPostContentNode: ASDisplayNode {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let headerHeight: CGFloat = 70.0
   private let profileImageSize: CGSize = CGSize(width: 70.0, height: 70.0)
-  private let followerText: String = localizedString(key: "number_of_follower_text", defaultValue: "Followers")
 
   private var userProfileImageNode: ASNetworkImageNode
   private var userNameTextNode: ASTextNode
@@ -51,11 +50,12 @@ class ProfileCardPostContentNode: ASDisplayNode {
   }
   var followersCount: String? {
     didSet {
+      //TODO: This should be handled with localization plurals
       if let followersCount = followersCount {
         followersTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
           .append(text: followersCount)
           .append(text: " ")
-          .append(text: followerText, fontDynamicType: .caption2)
+          .append(text: Strings.followers(), fontDynamicType: .caption2)
           .attributedString
       }
     }

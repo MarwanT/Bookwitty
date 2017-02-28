@@ -19,7 +19,7 @@ class CategoriesTableViewController: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = viewModel.viewControllerTitle
+    title = Strings.categories()
     
     tableView.register(DisclosureTableViewCell.nib,
                        forCellReuseIdentifier: DisclosureTableViewCell.identifier)

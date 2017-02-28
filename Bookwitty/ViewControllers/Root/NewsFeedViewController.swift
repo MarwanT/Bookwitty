@@ -52,7 +52,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = viewModel.viewController
+    title = Strings.news()
     addObservers()
     initializeNavigationItems()
 

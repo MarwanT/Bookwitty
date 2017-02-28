@@ -56,11 +56,12 @@ class RootTabBarController: UITabBarController {
     let bookStoreViewController = Storyboard.Books.instantiate(BookStoreViewController.self)
     
     viewController1.tabBarItem = UITabBarItem(
+      //TODO: This should be localized
       title: "NEWS",
       image: #imageLiteral(resourceName: "newsfeed"),
       tag: 1)
     bookStoreViewController.tabBarItem = UITabBarItem(
-      title: viewModel.bookStoreTabTitle,
+      title: Strings.books(),
       image: #imageLiteral(resourceName: "books"),
       tag:2)
     

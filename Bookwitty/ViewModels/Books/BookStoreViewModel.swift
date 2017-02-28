@@ -11,16 +11,6 @@ import Moya
 import Spine
 
 final class BookStoreViewModel {
-  let viewAllCategoriesLabelText = localizedString(key: "view_all_categories", defaultValue: "View All Categories")
-  let bookwittySuggestsTitle = localizedString(key: "bookwitty_suggests", defaultValue: "Bookwitty Suggests")
-  let viewAllBooksLabelText = localizedString(key: "view_all_books", defaultValue: "View All Books")
-  let viewAllSelectionsLabelText = localizedString(key: "view_all_selections", defaultValue: "View All Selections")
-  let selectionHeaderTitle = localizedString(key: "our_selection_for_you", defaultValue: "Our selection for you")
-  let viewControllerTitle = localizedString(key: "books", defaultValue: "Books")
-  let errorLoadingDataTitle = localizedString(key: "error_loading_data_title", defaultValue: "Error Loading Data")
-  let errorLoadingDataMessage = localizedString(key: "error_loading_data_message", defaultValue: "We could not load your data")
-  let okText = localizedString(key: "ok", defaultValue: "Ok")
-  
   fileprivate var curatedCollection: CuratedCollection? = nil
   fileprivate var featuredContents: [ModelCommonProperties]? = nil
   fileprivate var featuredReadingListContent: [Book]? = nil

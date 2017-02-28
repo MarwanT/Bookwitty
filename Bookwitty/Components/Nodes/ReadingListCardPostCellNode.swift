@@ -26,10 +26,6 @@ class ReadingListCardContentNode: ASDisplayNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let collectionImageSize: CGSize = CGSize(width: 60, height: 100)
 
-  private let postText: String = localizedString(key: "number_of_posts_text", defaultValue: "Posts")
-  private let booksText: String = localizedString(key: "number_of_books_text", defaultValue: "Books")
-  private let followerText: String = localizedString(key: "number_of_follower_text", defaultValue: "Followers")
-
   private let titleNode: ASTextNode
   private let topicStatsNode: ASTextNode
   private let descriptionNode: ASTextNode
@@ -89,30 +85,33 @@ class ReadingListCardContentNode: ASDisplayNode {
     var attrStringBuilder = AttributedStringBuilder(fontDynamicType: .footnote)
     var addSeparator: Bool = false
 
+    //TODO: This should be handled with localization plurals
     if(isValid(numberOfPosts)) {
       attrStringBuilder = attrStringBuilder
         .append(text: numberOfPosts!)
-        .append(text: " " + postText, fontDynamicType: .caption2)
+        .append(text: " " + Strings.posts(), fontDynamicType: .caption2)
       addSeparator = true
     } else {
       addSeparator = false
     }
 
+    //TODO: This should be handled with localization plurals
     if(isValid(numberOfBooks)) {
       attrStringBuilder = attrStringBuilder
         .append(text: (addSeparator ? separator : ""), fontDynamicType: .caption2)
         .append(text: numberOfBooks!)
-        .append(text: " " + booksText, fontDynamicType: .caption2)
+        .append(text: " " + Strings.books(), fontDynamicType: .caption2)
       addSeparator = true
     } else {
       addSeparator = false
     }
 
+    //TODO: This should be handled with localization plurals
     if(isValid(numberOfFollowers)) {
       attrStringBuilder = attrStringBuilder
         .append(text: (addSeparator ? separator : ""), fontDynamicType: .caption2)
         .append(text: numberOfFollowers!)
-        .append(text: " " + followerText, fontDynamicType: .caption2)
+        .append(text: " " + Strings.followers(), fontDynamicType: .caption2)
     }
 
     //Set the string value

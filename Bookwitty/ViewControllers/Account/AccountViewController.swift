@@ -23,7 +23,7 @@ class AccountViewController: UIViewController {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
-    self.title = self.viewModel.viewControllerTitle
+    self.title = Strings.account()
     initializeComponents()
     applyTheme()
     fillUserInformation()

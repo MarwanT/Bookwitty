@@ -76,12 +76,12 @@ class CategoryViewController: UIViewController {
     // View All Books
     viewAllBooksView.configuration.style = .highlighted
     viewAllBooksView.delegate = self
-    viewAllBooksView.label.text = viewModel.viewAllBooksLabelText
+    viewAllBooksView.label.text = Strings.view_all_books()
     
     // View Subcategories
     viewSubcategories.configuration.style = .highlighted
     viewSubcategories.delegate = self
-    viewSubcategories.label.text = viewModel.viewSubcategoriesText
+    viewSubcategories.label.text = Strings.view_subcategories()
   }
   
   private func initializePullToRefresh() {
@@ -170,7 +170,7 @@ class CategoryViewController: UIViewController {
   // MARK: Alerts
   private func showAlertWith(title: String, message: String) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-    alert.addAction(UIAlertAction(title: viewModel.okText, style: UIAlertActionStyle.default, handler: nil))
+    alert.addAction(UIAlertAction(title: Strings.ok(), style: UIAlertActionStyle.default, handler: nil))
     self.present(alert, animated: true, completion: nil)
   }
   
@@ -292,7 +292,7 @@ extension CategoryViewController: UITableViewDataSource, UITableViewDelegate {
       let containerView = UIView(frame: CGRect.zero)
       
       let tableHeaderLabel = UILabel(frame: CGRect.zero)
-      tableHeaderLabel.text = viewModel.bookwittySuggestsTitle
+      tableHeaderLabel.text = Strings.bookwitty_suggests()
       tableHeaderLabel.font = FontDynamicType.callout.font
       tableHeaderLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
       tableHeaderLabel.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
@@ -309,7 +309,7 @@ extension CategoryViewController: UITableViewDataSource, UITableViewDelegate {
       guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: SectionTitleHeaderView.reuseIdentifier) as? SectionTitleHeaderView else {
         return nil
       }
-      headerView.label.text = viewModel.selectionHeaderTitle
+      headerView.label.text = Strings.our_selection_for_you()
       let headerConfiguration = SectionTitleHeaderView.Configuration(
         verticalBarColor: ThemeManager.shared.currentTheme.colorNumber6(),
         horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber5())

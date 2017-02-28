@@ -31,7 +31,7 @@ class BookStoreViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = viewModel.viewControllerTitle
+    title = Strings.books()
     
     viewModel.dataLoaded = viewModelLoadedDataBlock()
     
@@ -101,7 +101,7 @@ class BookStoreViewController: UIViewController {
     // View All Categories View
     viewAllCategories.configuration.style = .highlighted
     viewAllCategories.delegate = self
-    viewAllCategories.label.text = viewModel.viewAllCategoriesLabelText
+    viewAllCategories.label.text = Strings.view_all_categories()
     viewAllCategories.constrainHeight("45")
     
     // Bookwitty Suggests View
@@ -124,13 +124,13 @@ class BookStoreViewController: UIViewController {
     // View All Books
     viewAllBooksView.configuration.style = .highlighted
     viewAllBooksView.delegate = self
-    viewAllBooksView.label.text = viewModel.viewAllBooksLabelText
+    viewAllBooksView.label.text = Strings.view_all_books()
     viewAllBooksView.constrainHeight("45")
     
     // View All Selections
     viewAllSelectionsView.configuration.style = .highlighted
     viewAllSelectionsView.delegate = self
-    viewAllSelectionsView.label.text = viewModel.viewAllSelectionsLabelText
+    viewAllSelectionsView.label.text = Strings.view_all_selections()
     viewAllSelectionsView.constrainHeight("45")
   }
   
@@ -146,7 +146,7 @@ class BookStoreViewController: UIViewController {
       self.refreshController.endRefreshing()
       guard success else {
         // TODO: Display the bookwitty error view
-        self.showAlertWith(title: self.viewModel.errorLoadingDataTitle, message: self.viewModel.errorLoadingDataMessage)
+        self.showAlertWith(title: Strings.error_loading_data(), message: Strings.couldnt_load_your_data())
         return
       }
       // Clear All Subviews in stack view
@@ -265,7 +265,7 @@ class BookStoreViewController: UIViewController {
   // MARK: Helpers
   func showAlertWith(title: String, message: String) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-    alert.addAction(UIAlertAction(title: viewModel.okText, style: UIAlertActionStyle.default, handler: nil))
+    alert.addAction(UIAlertAction(title: Strings.ok(), style: UIAlertActionStyle.default, handler: nil))
     self.present(alert, animated: true, completion: nil)
   }
 }
@@ -361,7 +361,7 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
       let containerView = UIView(frame: CGRect.zero)
       
       let tableHeaderLabel = UILabel(frame: CGRect.zero)
-      tableHeaderLabel.text = viewModel.bookwittySuggestsTitle
+      tableHeaderLabel.text = Strings.bookwitty_suggests()
       tableHeaderLabel.font = FontDynamicType.callout.font
       tableHeaderLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
       tableHeaderLabel.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
@@ -378,7 +378,7 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
       guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: SectionTitleHeaderView.reuseIdentifier) as? SectionTitleHeaderView else {
         return nil
       }
-      headerView.label.text = viewModel.selectionHeaderTitle
+      headerView.label.text = Strings.our_selection_for_you()
       let headerConfiguration = SectionTitleHeaderView.Configuration(
         verticalBarColor: ThemeManager.shared.currentTheme.colorNumber6(),
         horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber5())

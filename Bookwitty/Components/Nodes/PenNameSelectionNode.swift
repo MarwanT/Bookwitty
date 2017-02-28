@@ -43,7 +43,6 @@ class PenNameSelectionNode: ASCellNode {
   fileprivate let collectionNode: ASCollectionNode
 
   private let flowLayout: UICollectionViewFlowLayout
-  private let yourFeedTitle: String = localizedString(key: "your_feed", defaultValue: "Your feed")
   //Consider replacing expand with DisplayMode enum incase we needed something more than expand and collapse.
   var expand: Bool = true {
     didSet {
@@ -126,7 +125,7 @@ class PenNameSelectionNode: ASCellNode {
 
   func updateSelectedPenName() {
     let selectedPenName = data[selectedIndexPath?.item ?? 0]
-    header.penNameSummary = yourFeedTitle + " " + (selectedPenName.name ?? "")
+    header.penNameSummary = Strings.your_feed() + " " + (selectedPenName.name ?? "")
   }
 
   func loadData(penNames: [PenName]?, withSelected selectedPenName: PenName?) {

@@ -12,4 +12,6 @@
 #import <Google/Analytics.h>
 #import <AsyncDisplayKit/AsyncDisplayKit.h>
 
+#include "NSBundle+Language.h"
+
 #endif /* Bookwitty_Bridging_Header_h */

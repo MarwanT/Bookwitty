@@ -42,21 +42,21 @@ class SignInViewController: UIViewController {
   
   /// Do the required setup
   private func awakeSelf() {
-    title = viewModel.signInButtonTitle
+    title = Strings.sign_in()
 
     emailField.configuration = InputFieldConfiguration(
-      descriptionLabelText: viewModel.emailDescriptionLabelText,
-      textFieldPlaceholder: viewModel.emailTextFieldPlaceholderText,
-      invalidationErrorMessage: viewModel.emailInvalidationErrorMessage,
+      descriptionLabelText: Strings.email(),
+      textFieldPlaceholder: Strings.enter_your_email(),
+      invalidationErrorMessage: Strings.email_invalid(),
       returnKeyType: UIReturnKeyType.continue,
       keyboardType: .emailAddress,
       autocorrectionType: .no,
       autocapitalizationType: .none)
 
     passwordField.configuration = InputFieldConfiguration(
-      descriptionLabelText: viewModel.passwordDescriptionLabelText,
-      textFieldPlaceholder: viewModel.passwordTextFieldPlaceholderText,
-      invalidationErrorMessage: viewModel.passwordInvalidationErrorMessage,
+      descriptionLabelText: Strings.password(),
+      textFieldPlaceholder: Strings.enter_your_password(),
+      invalidationErrorMessage: Strings.password_invalid(),
       returnKeyType: UIReturnKeyType.done)
 
     emailField.validationBlock = emailValidation()
@@ -86,7 +86,7 @@ class SignInViewController: UIViewController {
     //Attributed Label Links Styling
     registerLabel.linkAttributes = ThemeManager.shared.currentTheme.styleTextLinkAttributes()
     
-    let registerTermRange: NSRange = (registerLabel.attributedText.string as NSString).range(of: viewModel.registerTermText)
+    let registerTermRange: NSRange = (registerLabel.attributedText.string as NSString).range(of: Strings.register())
     
     //Add click link identifiers
     registerLabel.addLink(to: AttributedLinkReference.register.url, with: registerTermRange)
@@ -127,14 +127,14 @@ class SignInViewController: UIViewController {
             NotificationCenter.default.post(name: AppNotification.didSignIn, object: nil)
           } else {
             self.showAlertWith(
-              title: self.viewModel.failToSignInAlertTitle,
-              message: self.viewModel.failToSignInAlertMessage)
+              title: Strings.sign_in(),
+              message: Strings.something_wrong_in_credentials())
           }
       })
     } else {
       NotificationView.show(notificationMessages:
         [
-          NotificationMessage(text: viewModel.signInErrorInFieldsNotification)
+          NotificationMessage(text: Strings.please_fill_required_field())
         ]
       )
     }
@@ -182,7 +182,7 @@ class SignInViewController: UIViewController {
   
   func showAlertWith(title: String, message: String) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-    alert.addAction(UIAlertAction(title: viewModel.okText, style: UIAlertActionStyle.default, handler: nil))
+    alert.addAction(UIAlertAction(title: Strings.ok(), style: UIAlertActionStyle.default, handler: nil))
     self.present(alert, animated: true, completion: nil)
   }
   
@@ -198,7 +198,7 @@ class SignInViewController: UIViewController {
 extension SignInViewController: Themeable {
   func applyTheme() {
     self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
-    signInButton.setTitle(viewModel.signInButtonTitle, for: .normal)
+    signInButton.setTitle(Strings.sign_in(), for: .normal)
     ThemeManager.shared.currentTheme.stylePrimaryButton(button: signInButton)
     stackViewBackgroundView.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     

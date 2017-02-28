@@ -33,14 +33,14 @@ class PenNameViewController: UIViewController {
   /// Do the required setup
   private func awakeSelf() {
     penNameInputField.configuration = InputFieldConfiguration(
-      textFieldPlaceholder: viewModel.penNameTextFieldPlaceholderText,
-      invalidationErrorMessage: viewModel.penNameInvalidationErrorMessage,
+      textFieldPlaceholder: Strings.enter_your_pen_name(),
+      invalidationErrorMessage: Strings.pen_name_cant_be_empty(),
       returnKeyType: UIReturnKeyType.done)
     
-    self.title = viewModel.viewControllerTitle
-    continueButton.setTitle(viewModel.continueButtonTitle, for: .normal)
-    penNameLabel.text = viewModel.penNameTitleText
-    noteLabel.text = viewModel.penNameNoteText
+    self.title = Strings.choose_pen_name()
+    continueButton.setTitle(Strings.continue(), for: .normal)
+    penNameLabel.text = Strings.pen_name()
+    noteLabel.text = Strings.dont_worry_you_can_change_it_later()
     penNameInputField.textField.text  = viewModel.penDisplayName()
 
     penNameInputField.validationBlock = notEmptyValidation
@@ -106,19 +106,19 @@ class PenNameViewController: UIViewController {
   func showPhotoPickerActionSheet() {
     let hasProfilePicture = self.profileImageView.image != nil
 
-    let alertController = UIAlertController(title: viewModel.imagePickerTitle, message: nil, preferredStyle: .actionSheet)
-    let chooseFromLibraryButton = UIAlertAction(title: viewModel.chooseFromLibraryText, style: .default, handler: { (action) -> Void in
+    let alertController = UIAlertController(title: Strings.profile_picture(), message: nil, preferredStyle: .actionSheet)
+    let chooseFromLibraryButton = UIAlertAction(title: Strings.choose_from_library(), style: .default, handler: { (action) -> Void in
       self.openLibrary()
     })
-    let  takeAPhotoButton = UIAlertAction(title: viewModel.takeProfilePhotoText, style: .default, handler: { (action) -> Void in
+    let  takeAPhotoButton = UIAlertAction(title: Strings.take_Profile_photo(), style: .default, handler: { (action) -> Void in
       self.openCamera()
     })
-    let  removePhotoButton = UIAlertAction(title: viewModel.removeProfilePhotoText, style: .default, handler: { (action) -> Void in
+    let  removePhotoButton = UIAlertAction(title: Strings.clear_profile_photo(), style: .default, handler: { (action) -> Void in
       self.profileImageView.image = nil
       self.plusImageView.alpha = 1
     })
 
-    let cancelButton = UIAlertAction(title: viewModel.cancelText, style: .cancel, handler: nil)
+    let cancelButton = UIAlertAction(title: Strings.cancel(), style: .cancel, handler: nil)
 
     alertController.addAction(chooseFromLibraryButton)
     alertController.addAction(takeAPhotoButton)
@@ -162,7 +162,7 @@ class PenNameViewController: UIViewController {
     toolBar.barStyle = UIBarStyle.default
     toolBar.items = [
       UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil),
-      UIBarButtonItem(title: viewModel.doneText, style: UIBarButtonItemStyle.plain, target: self, action: #selector(toolbarDoneButtonAction))]
+      UIBarButtonItem(title: Strings.done(), style: UIBarButtonItemStyle.plain, target: self, action: #selector(toolbarDoneButtonAction))]
     toolBar.sizeToFit()
 
     biographyTextView.inputAccessoryView = toolBar

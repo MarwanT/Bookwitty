@@ -20,17 +20,17 @@ class ChangePasswordViewController: UIViewController {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
-    self.title = viewModel.changePasswordText
+    self.title = Strings.change_password()
     initializeComponents()
     applyTheme()
   }
 
   private func initializeComponents() {
-    changePasswordButton.setTitle(viewModel.changePasswordText, for: .normal)
+    changePasswordButton.setTitle(Strings.change_password(), for: .normal)
 
     currentPasswordInputField.configuration = InputFieldConfiguration(
-      descriptionLabelText: viewModel.currentPasswordText,
-      textFieldPlaceholder: viewModel.currentPasswordText,
+      descriptionLabelText: Strings.current_password(),
+      textFieldPlaceholder: Strings.current_password(),
       invalidationErrorMessage: "",
       returnKeyType: UIReturnKeyType.next,
       autocorrectionType: .no,
@@ -43,8 +43,8 @@ class ChangePasswordViewController: UIViewController {
     }
 
     newPasswordInputField.configuration = InputFieldConfiguration(
-      descriptionLabelText: viewModel.newPasswordText,
-      textFieldPlaceholder: viewModel.newPasswordText,
+      descriptionLabelText: Strings.new_password(),
+      textFieldPlaceholder: Strings.new_password(),
       invalidationErrorMessage: "",
       returnKeyType: UIReturnKeyType.done,
       autocorrectionType: .no,
