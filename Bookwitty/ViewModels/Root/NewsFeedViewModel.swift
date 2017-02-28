@@ -22,9 +22,24 @@ final class NewsFeedViewModel {
     return UserManager.shared.defaultPenName
   }
 
-  func didUpdateDefaultPenName(penName: PenName, completionBlock: () -> ()) {
-    UserManager.shared.saveDefaultPenName(penName: penName)
-    completionBlock()
+  func didUpdateDefaultPenName(penName: PenName, completionBlock: (_ didSaveDefault: Bool) -> ()) {
+    var didSaveDefault: Bool = false
+    defer {
+      completionBlock(didSaveDefault)
+    }
+
+    if let oldPenNameId = defaultPenName?.id {
+      //Cached Pen-Name Id
+      if let newPenNameId = penName.id, newPenNameId != oldPenNameId {
+        UserManager.shared.saveDefaultPenName(penName: penName)
+        didSaveDefault = true
+      }
+      //Else do nothing: Since the default PenName did not change.
+    } else {
+      //Save Default Pen-Name
+      UserManager.shared.saveDefaultPenName(penName: penName)
+      didSaveDefault = true
+    }
   }
 
   func witContent(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
