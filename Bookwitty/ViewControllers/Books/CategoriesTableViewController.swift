@@ -27,6 +27,9 @@ class CategoriesTableViewController: UITableViewController {
     // Uncomment the following line to preserve selection between presentations
     clearsSelectionOnViewWillAppear = true
     
+    // Remove empty lines
+    tableView.tableFooterView = UIView(frame: CGRect.zero)
+    
     applyTheme()
     
     if delegate == nil {
@@ -85,6 +88,8 @@ extension CategoriesTableViewController: Themeable {
 
 extension CategoriesTableViewController: CategoriesTableViewDelegate {
   func categoriesTableViewDidSelectCategory(_ viewController: CategoriesTableViewController, category: Category) {
-    // TODO: Implement default navigation
+    let categoryViewController = Storyboard.Books.instantiate(CategoryViewController.self)
+    categoryViewController.viewModel.category = category
+    navigationController?.pushViewController(categoryViewController, animated: true)
   }
 }
