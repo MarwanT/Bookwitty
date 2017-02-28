@@ -45,3 +45,23 @@ class BooksTableViewController: UITableViewController {
     return BookTableViewCell.minimumHeight
   }
 }
+
+
+// MARK: - Pagination
+extension BooksTableViewController {
+  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if tableView.contentOffset.y >= (tableView.contentSize.height - tableView.bounds.size.height) {
+      if viewModel.hasNextPage && !viewModel.isLoadingNextPage {
+        // TODO: Display activity indicator
+        self.viewModel.loadNextPage(completion: {
+          (success) in
+          // TODO: Remove activity indicator
+          guard success else {
+            return
+          }
+          self.tableView.reloadData()
+        })
+      }
+    }
+  }
+}

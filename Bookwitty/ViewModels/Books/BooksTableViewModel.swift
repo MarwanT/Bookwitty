@@ -17,6 +17,12 @@ final class BooksTableViewModel {
   fileprivate var books: [Book]? = nil
   fileprivate var mode: DataLoadingMode? = nil
   
+  var isLoadingNextPage: Bool = false
+  var didReachLastPage: Bool = false
+  var hasNextPage: Bool {
+    return !didReachLastPage
+  }
+  
   init(books: [Book]? = nil, loadingMode: DataLoadingMode? = nil) {
     self.books = books
     self.mode = loadingMode
@@ -39,7 +45,43 @@ final class BooksTableViewModel {
 }
 
 
+// MARK: - Paging Methods
 extension BooksTableViewModel {
+  func loadNextPage(completion: @escaping (_ success: Bool) -> Void) {
+    guard let mode = mode else {
+      completion(false)
+      return
+    }
+    
+    isLoadingNextPage = true
+    
+    switch mode {
+    case .local(let paginator):
+      guard let nextPageIds = paginator.nextPageIds(), nextPageIds.count > 0 else {
+        self.didReachLastPage = true
+        self.isLoadingNextPage = false
+        completion(false)
+        return
+      }
+      loadBooksForIds(identifiers: nextPageIds, completion: {
+        (success, books) in
+        var didLoadBooks = false
+        defer {
+          self.isLoadingNextPage = false
+          completion(didLoadBooks)
+        }
+        
+        guard success, let books = books else {
+          return
+        }
+        self.books?.append(contentsOf: books)
+        didLoadBooks = true
+      })
+    default: completion(false)
+    }
+  }
+  
+  
   fileprivate func loadBooksForIds(identifiers: [String], completion: @escaping (_ success: Bool, _ books: [Book]?) -> Void) {
     _ = UserAPI.batch(identifiers: identifiers, completion: {
       (success, resources, error) in
