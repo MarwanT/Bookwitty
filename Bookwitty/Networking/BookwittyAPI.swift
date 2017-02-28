@@ -30,6 +30,7 @@ public enum BookwittyAPI {
   case wit(contentId: String)
   case unwit(contentId: String)
   case absolute(url: URL)
+  case discover
 }
 
 // MARK: - Target Type
@@ -92,6 +93,8 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(contentId)/wit"
     case .unwit(let contentId):
       path = "/content/\(contentId)/wit"
+    case .discover:
+      path = "/curated_collection/discover_page"
     case .absolute(_):
       return ""
     }
@@ -103,7 +106,7 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .oAuth, .refreshToken:
       return .post
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute, .discover:
       return .get
     case .register, .batch, .updatePreference, .wit:
       return .post
@@ -144,7 +147,7 @@ extension BookwittyAPI: TargetType {
       return PenNameAPI.updatePostBody(identifier: identifier, name: name, biography: biography, avatarUrl: avatarUrl, facebookUrl: facebookUrl, tumblrUrl: tumblrUrl, googlePlusUrl: googlePlusUrl, twitterUrl: twitterUrl, instagramUrl: instagramUrl, pinterestUrl: pinterestUrl, youtubeUrl: youtubeUrl, linkedinUrl: linkedinUrl, wordpressUrl: wordpressUrl, websiteUrl: websiteUrl)
     case .updatePreference(let preference, let value):
       return UserAPI.updatePostBody(preference: preference, value: value)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover:
       return nil
     }
   }
