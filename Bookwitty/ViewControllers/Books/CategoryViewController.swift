@@ -110,7 +110,6 @@ class CategoryViewController: UIViewController {
     loadBookwittySuggest()
     loadSelectionSection()
     loadSubcategoriesSection()
-    addSeparator()
   }
   
   private func loadBannerSection() {
@@ -134,20 +133,19 @@ class CategoryViewController: UIViewController {
   private func loadBookwittySuggest() {
     let canDisplayBookwittySuggest = bookwittySuggestsTableView.superview == nil
     if viewModel.hasBookwittySuggests && canDisplayBookwittySuggest {
-      addSeparator()
       addSpacing(space: 10)
       stackView.addArrangedSubview(bookwittySuggestsTableView)
       bookwittySuggestsTableView.alignLeading("0", trailing: "0", toView: stackView)
       // Add the table view height constraint
       bookwittySuggestsTableView.layoutIfNeeded()
       bookwittySuggestsTableView.constrainHeight("\(bookwittySuggestsTableView.contentSize.height)")
+      addSeparator()
     }
   }
   
   private func loadSelectionSection() {
     let canDisplaySelection = selectionTableView.superview == nil
     if viewModel.hasSelectionSection && canDisplaySelection {
-      addSeparator()
       addSpacing(space: sectionSpacing)
       stackView.addArrangedSubview(selectionTableView)
       selectionTableView.alignLeading("0", trailing: "0", toView: stackView)
@@ -164,6 +162,7 @@ class CategoryViewController: UIViewController {
       viewSubcategories.constrainHeight("45")
       stackView.addArrangedSubview(viewSubcategories)
       viewSubcategories.alignLeading("0", trailing: "0", toView: stackView)
+      addSeparator()
     }
   }
   
