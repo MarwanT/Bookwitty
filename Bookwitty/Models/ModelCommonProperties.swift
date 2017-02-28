@@ -12,8 +12,8 @@ import Spine
 protocol ModelCommonProperties {
   var id: String? { get }
   var title: String? { get }
-  var createdAt: String? { get }
-  var updatedAt: String? { get }
+  var createdAt: NSDate? { get }
+  var updatedAt: NSDate? { get }
   var thumbnailImageUrl: String? { get }
   var coverImageUrl: String? { get }
   var shortDescription: String? { get }

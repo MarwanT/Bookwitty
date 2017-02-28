@@ -11,8 +11,8 @@ import Spine
 
 class Author: Resource {
   var name: String?
-  var createdAt: String?
-  var updatedAt: String?
+  var createdAt: NSDate?
+  var updatedAt: NSDate?
   var userId: String?
   var thumbnailImageUrl: String?
   var coverImageUrl: String?
@@ -23,6 +23,7 @@ class Author: Resource {
   var profileImageUrl: String?
   var title: String?
   var type: String?
+  var penName: PenName?
   //TODO: add PageAuthor model we have a problem with the json-api conforming from the api siding
 
   override class var resourceType: ResourceType {
@@ -32,8 +33,8 @@ class Author: Resource {
   override class var fields: [Field] {
     return fieldsFromDictionary([
       "name": Attribute().serializeAs("name"),
-      "createdAt": Attribute().serializeAs("created-at"),
-      "updatedAt": Attribute().serializeAs("updated-at"),
+      "createdAt": DateAttribute().serializeAs("created-at"),
+      "updatedAt": DateAttribute().serializeAs("updated-at"),
       "userId": Attribute().serializeAs("user-id"),
       "thumbnailImageUrl": Attribute().serializeAs("thumbnail-image-url"),
       "coverImageUrl": Attribute().serializeAs("cover-image-url"),
@@ -44,6 +45,7 @@ class Author: Resource {
       "profileImageUrl": Attribute().serializeAs("profile-image-url"),
       "title": Attribute().serializeAs("title"),
       "type": Attribute().serializeAs("type"),
+      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
       ])
   }
 }

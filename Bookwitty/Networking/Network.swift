@@ -117,7 +117,7 @@ public struct APIProvider {
     }
 
     if let includes = target.includes {
-      let includeTypes = includes.map({ $0.resourceType }).joined(separator: ",")
+      let includeTypes = includes.map({ $0 }).joined(separator: ",")
       endpoint = endpoint.adding(newParameters: ["include" : includeTypes])
     }
 

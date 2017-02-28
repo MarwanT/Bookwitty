@@ -20,8 +20,8 @@ class Book: Resource {
 
   var userId: String?
 
-  var createdAt: String?
-  var updatedAt: String?
+  var createdAt: NSDate?
+  var updatedAt: NSDate?
 
   var productDetails: ProductDetails?
   var supplierInformation: SupplierInformation?
@@ -37,8 +37,8 @@ class Book: Resource {
       "bookDescription" : Attribute().serializeAs("description"),
       "thumbnailImageUrl" : Attribute().serializeAs("thumbnail-image-url"),
       "userId": Attribute().serializeAs("user-id"),
-      "createdAt" : Attribute().serializeAs("created-at"),
-      "updatedAt" : Attribute().serializeAs("updated-at"),
+      "createdAt" : DateAttribute().serializeAs("created-at"),
+      "updatedAt" : DateAttribute().serializeAs("updated-at"),
       "coverImageUrl" : Attribute().serializeAs("cover-image-url"),
       "productDetails" : ProductDetailsAttribute().serializeAs("product-details"),
       "supplierInformation" : SupplierInformationAttribute().serializeAs("supplier-information"),

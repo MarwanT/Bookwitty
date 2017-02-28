@@ -11,8 +11,8 @@ import Spine
 
 class ReadingList: Resource {
   var name: String?
-  var createdAt: String?
-  var updatedAt: String?
+  var createdAt: NSDate?
+  var updatedAt: NSDate?
   var userId: String?
   var thumbnailImageUrl: String?
   var coverImageUrl: String?
@@ -20,6 +20,7 @@ class ReadingList: Resource {
   var shortDescription: String?
   var conclusion: String?
   var body: String?
+  var penName: PenName?
 
   var postsCollection: LinkedResourceCollection?
   lazy var posts: [ResourceIdentifier]? = {
@@ -33,8 +34,8 @@ class ReadingList: Resource {
   override class var fields: [Field] {
     return fieldsFromDictionary([
       "name": Attribute().serializeAs("name"),
-      "createdAt": Attribute().serializeAs("created-at"),
-      "updatedAt": Attribute().serializeAs("updated-at"),
+      "createdAt": DateAttribute().serializeAs("created-at"),
+      "updatedAt": DateAttribute().serializeAs("updated-at"),
       "userId": Attribute().serializeAs("user-id"),
       "thumbnailImageUrl": Attribute().serializeAs("thumbnail-image-url"),
       "coverImageUrl": Attribute().serializeAs("cover-image-url"),
@@ -42,7 +43,8 @@ class ReadingList: Resource {
       "title": Attribute().serializeAs("title"),
       "conclusion": Attribute().serializeAs("conclusion"),
       "body": Attribute().serializeAs("body"),
-      "postsCollection" : ToManyRelationship(Resource.self).serializeAs("posts")
+      "postsCollection" : ToManyRelationship(Resource.self).serializeAs("posts"),
+      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
       ])
   }
 }

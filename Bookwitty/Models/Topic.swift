@@ -10,12 +10,13 @@ import Foundation
 import Spine
 
 class Topic: Resource {
-  var createdAt: String?
-  var updatedAt: String?
+  var createdAt: NSDate?
+  var updatedAt: NSDate?
   var userId: String?
   var thumbnailImageUrl: String?
   var coverImageUrl: String?
   var shortDescription: String?
+  var penName: PenName?
 
   override class var resourceType: ResourceType {
     return "topics"
@@ -23,12 +24,13 @@ class Topic: Resource {
 
   override class var fields: [Field] {
     return fieldsFromDictionary([
-      "createdAt": Attribute().serializeAs("created-at"),
-      "updatedAt": Attribute().serializeAs("updated-at"),
+      "createdAt": DateAttribute().serializeAs("created-at"),
+      "updatedAt": DateAttribute().serializeAs("updated-at"),
       "userId": Attribute().serializeAs("user-id"),
       "thumbnailImageUrl": Attribute().serializeAs("thumbnail-image-url"),
       "coverImageUrl": Attribute().serializeAs("cover-image-url"),
-      "shortDescription": Attribute().serializeAs("short-description")
+      "shortDescription": Attribute().serializeAs("short-description"),
+      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
       ])
   }
 }
