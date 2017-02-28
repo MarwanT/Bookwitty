@@ -35,10 +35,7 @@ final class RegisterViewModel {
   let countryDescriptionLabelText: String = localizedString(key: "country", defaultValue: "Country")
   let countryTextFieldPlaceholderText: String = localizedString(key: "country", defaultValue: "Country")
 
-  let termsOfUseText: String = localizedString(key: "terms_of_use", defaultValue: "Terms of Use")
-  let privacyPolicyText: String = localizedString(key: "privacy_policy", defaultValue: "Privacy Policy")
-  let andText: String = localizedString(key: "and", defaultValue: "and")
-  let termsOfUseAndPrivacyPolicyLabelText: String = localizedString(key: "terms_of_use_and_privacy_policy", defaultValue: "By tapping Sign up, you agree to the")
+  let termsOfUseAndPolicyText: String = localizedString(key: "terms_of_use_and_privacy_policy", defaultValue: "By tapping Sign up : you agree to the\n•Terms of Use• and •Privacy Policy•")
 
   let ooopsText: String = localizedString(key: "ooops", defaultValue: "Ooops")
   let somethingWentWrongText: String = localizedString(key: "some_thing_wrong_error", defaultValue: "Something went wrong")
@@ -67,11 +64,7 @@ final class RegisterViewModel {
 
   func styledTermsOfUseAndPrivacyPolicyText() -> NSMutableAttributedString {
     let builder = AttributedStringBuilder(fontDynamicType: FontDynamicType.label)
-    return builder.append(text: termsOfUseAndPrivacyPolicyLabelText)
-      .append(text: "\n")
-      .append(text: termsOfUseText)
-      .append(text:  " " + andText + " ")
-      .append(text: privacyPolicyText)
+    return builder.append(text: termsOfUseAndPolicyText)
       .applyParagraphStyling(alignment: NSTextAlignment.center)
       .attributedString
   }
