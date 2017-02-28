@@ -8,6 +8,7 @@
 
 import UIKit
 import Moya
+import Spine
 
 struct SearchAPI {
   static func search(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?, completion: @escaping (_ success: Bool, _ collection: [ModelResource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
@@ -25,8 +26,13 @@ struct SearchAPI {
         return
       }
       // Parse Data
-      collection = Parser.parseDataArray(data: data)
-      success = true
+      guard let parsedData: (resources: [Resource]?, next: URL?, errors: [APIError]?) = Parser.parseDataArray(data: data) else {
+        error = BookwittyAPIError.failToParseData
+        return
+      }
+      //TODO: handle parsedData.next and parsedData.errors if any
+      collection = parsedData.resources
+      success = parsedData.resources != nil
       error = nil
     }
   }

@@ -226,6 +226,48 @@ extension NewsFeedViewController: ASCollectionDelegate {
       max: CGSize(width: collectionNode.frame.width, height: .infinity)
     )
   }
+
+  public func shouldBatchFetch(for collectionNode: ASCollectionNode) -> Bool {
+    return viewModel.hasNextPage()
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
+    let initialLastIndexPath: Int = viewModel.numberOfItemsInSection()
+
+    // Fetch next page data
+    viewModel.loadNextPage { [weak self] (success) in
+      guard let strongSelf = self else {
+        return
+      }
+      let finalLastIndexPath: Int = strongSelf.viewModel.numberOfItemsInSection()
+
+      if success && finalLastIndexPath > initialLastIndexPath {
+        let updateIndexRange = initialLastIndexPath..<finalLastIndexPath
+
+        let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
+          return IndexPath(row: index, section: 0)
+        })
+        strongSelf.loadItemsWithIndex(updatedRange: updatedIndexPathRange, onMainThread: true)
+      }
+
+      // Properly finish the batch fetch
+      context.completeBatchFetching(true)
+    }
+  }
+
+  func loadItemsWithIndex(updatedRange: [IndexPath], onMainThread mainThread: Bool) {
+    if mainThread {
+      let block = DispatchWorkItem { [weak self] in
+        guard let strongSelf = self else {
+          return
+        }
+        strongSelf.collectionNode.insertItems(at: updatedRange)
+      }
+      DispatchQueue.main.async(execute: block)
+    } else {
+      collectionNode.insertItems(at: updatedRange)
+    }
+  }
 }
 
 extension NewsFeedViewController: UIScrollViewDelegate {

@@ -165,7 +165,14 @@ struct UserAPI {
       }
       
       if let data = data {
-        resources = Parser.parseDataArray(data: data)
+        // Parse Data
+        guard let parsedData: (resources: [Resource]?, next: URL?, errors: [APIError]?) = Parser.parseDataArray(data: data) else {
+          error = BookwittyAPIError.failToParseData
+          return
+        }
+        //TODO: handle parsedData.next and parsedData.errors if any
+
+        resources = parsedData.resources
         success = resources != nil
       } else {
         error = BookwittyAPIError.failToParseData

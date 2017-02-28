@@ -11,7 +11,7 @@ import Moya
 import Spine
 
 struct NewsfeedAPI {
-  public static func feed(completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  public static func feed(completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ nextPage: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     return signedAPIRequest(
     target: BookwittyAPI.newsFeed()) {
       (data, statusCode, response, error) in
@@ -19,8 +19,9 @@ struct NewsfeedAPI {
       var success: Bool = false
       var completionError: BookwittyAPIError? = error
       var resources: [Resource]?
+      var nextPage: URL?
       defer {
-        completion(success, resources, error)
+        completion(success, resources, nextPage, error)
       }
 
       // If status code is not available then break
@@ -37,13 +38,59 @@ struct NewsfeedAPI {
 
       // Retrieve Dictionary from data
       do {
-        guard let data = data else {
-          return
-        }
         // Parse Data
-        resources = Parser.parseDataArray(data: data)
-        success = true
+        guard let data = data,
+          let parsedData = Parser.parseDataArray(data: data) else {
+            return
+        }
+        //TODO: handle parsedData.next and parsedData.errors if any
+        
+        resources = parsedData.resources
+        success = parsedData.resources != nil
         completionError = nil
+        nextPage = parsedData.next
+      }
+    }
+  }
+
+  public static func nextFeedPage(nextPage: URL, completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ nextPage: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    return signedAPIRequest(
+    target: BookwittyAPI.next(fullUrl: nextPage)) {
+      (data, statusCode, response, error) in
+      // Ensure the completion block is always called
+      var success: Bool = false
+      var completionError: BookwittyAPIError? = error
+      var resources: [Resource]?
+      var nextPage: URL?
+      defer {
+        completion(success, resources, nextPage, error)
+      }
+
+      // If status code is not available then break
+      guard let statusCode = statusCode else {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      // If status code != success then break
+      if statusCode != 200 {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      // Retrieve Dictionary from data
+      do {
+        // Parse Data
+        guard let data = data,
+          let parsedData = Parser.parseDataArray(data: data) else {
+            return
+        }
+        //TODO: handle parsedData.next and parsedData.errors if any
+
+        resources = parsedData.resources
+        success = parsedData.resources != nil
+        completionError = nil
+        nextPage = parsedData.next
       }
     }
   }

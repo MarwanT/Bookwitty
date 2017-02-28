@@ -13,6 +13,7 @@ import Spine
 final class NewsFeedViewModel {
   var cancellableRequest:  Cancellable?
   let viewController = localizedString(key: "news", defaultValue: "News")
+  var nextPage: URL?
   var data: [ModelResource] = []
   var penNames: [PenName] {
     return UserManager.shared.penNames ?? []
@@ -55,8 +56,28 @@ final class NewsFeedViewModel {
   }
 
   func loadNewsfeed(completionBlock: @escaping (_ success: Bool) -> ()) {
-    cancellableRequest = NewsfeedAPI.feed() { (success, resources, error) in
+    cancellableRequest = NewsfeedAPI.feed() { (success, resources, nextPage, error) in
       self.data = resources ?? []
+      self.nextPage = nextPage
+      completionBlock(success)
+    }
+  }
+
+  func hasNextPage() -> Bool {
+    return (nextPage != nil)
+  }
+
+  func loadNextPage(completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let nextPage = nextPage else {
+      completionBlock(false)
+      return
+    }
+
+    cancellableRequest = NewsfeedAPI.nextFeedPage(nextPage: nextPage) { (success, resources, nextPage, error) in
+      if let resources = resources, success {
+        self.data += resources
+        self.nextPage = nextPage
+      }
       completionBlock(success)
     }
   }
@@ -236,15 +257,14 @@ class CardRegistry {
       return nil
     }
 
-    let quoteCell = QuoteCardPostCellNode()
-    quoteCell.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-    quoteCell.node.articleQuotePublisher = resource.author
+    card.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    card.node.articleQuotePublisher = resource.author
     if let qoute = resource.body, !qoute.isEmpty {
-      quoteCell.node.articleQuote = "“ \(qoute) ”"
+      card.node.articleQuote = "“ \(qoute) ”"
     } else if let qoute = resource.title, !qoute.isEmpty {
-      quoteCell.node.articleQuote = "“ \(qoute) ”"
+      card.node.articleQuote = "“ \(qoute) ”"
     }
-    quoteCell.articleCommentsSummary = "X commented on this"
+    card.articleCommentsSummary = "X commented on this"
 
     return card
   }
