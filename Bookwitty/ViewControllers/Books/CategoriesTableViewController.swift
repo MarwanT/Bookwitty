@@ -27,6 +27,9 @@ class CategoriesTableViewController: UITableViewController {
     // Uncomment the following line to preserve selection between presentations
     clearsSelectionOnViewWillAppear = true
     
+    // Remove empty lines
+    tableView.tableFooterView = UIView(frame: CGRect.zero)
+    
     applyTheme()
     
     if delegate == nil {
