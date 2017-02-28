@@ -77,7 +77,29 @@ extension BooksTableViewModel {
         self.books?.append(contentsOf: books)
         didLoadBooks = true
       })
-    default: completion(false)
+    case .server(let nextPageURL):
+      guard let url = nextPageURL else {
+        self.didReachLastPage = true
+        self.isLoadingNextPage = false
+        completion(false)
+        return
+      }
+      
+      loadBooksForURL(nextPageURL: url, completion: {
+        (success, books, url) in
+        var didLoadBooks = false
+        defer {
+          self.isLoadingNextPage = false
+          self.mode = .server(nextPageURL: url)
+          completion(didLoadBooks)
+        }
+        
+        guard success, let books = books else {
+          return
+        }
+        self.books?.append(contentsOf: books)
+        didLoadBooks = true
+      })
     }
   }
   
@@ -88,6 +110,21 @@ extension BooksTableViewModel {
       var books: [Book]? = nil
       defer {
         completion(success, books)
+      }
+      
+      guard success, let definedResources = resources as? [Book] else {
+        return
+      }
+      books = definedResources
+    })
+  }
+  
+  fileprivate func loadBooksForURL(nextPageURL: URL, completion: @escaping (_ success: Bool, _ books: [Book]?, _ nextPage: URL?) -> Void) {
+    _ = GeneralAPI.nextPage(nextPage: nextPageURL, completion: {
+      (success, resources, nextPage, error) in
+      var books: [Book]? = nil
+      defer {
+        completion(success, books, nextPage)
       }
       
       guard success, let definedResources = resources as? [Book] else {
