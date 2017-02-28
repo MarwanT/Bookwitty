@@ -46,16 +46,37 @@ class RegisterViewController: UIViewController {
 
   private func setupAttributedTexts() {
     //Set Attributed Styled up Text
-    termsLabel.attributedText = viewModel.styledTermsOfUseAndPrivacyPolicyText()
+    let termsText = viewModel.styledTermsOfUseAndPrivacyPolicyText()
+    let termsNSString = termsText.mutableString as NSMutableString
+
     //Attributed Label Links Styling
     termsLabel.linkAttributes = ThemeManager.shared.currentTheme.styleTextLinkAttributes()
 
-    let termsOfUseRange: NSRange = (termsLabel.attributedText.string as NSString).range(of: viewModel.termsOfUseText)
-    let privacyPolicyRange: NSRange = (termsLabel.attributedText.string as NSString).range(of: viewModel.privacyPolicyText)
+    let range: NSRange = NSRange(location: 0, length: termsNSString.length)
+    let regular = try! NSRegularExpression(pattern: "•(.*?)•", options: [])
 
-    //Add click link identifiers
-    termsLabel.addLink(to: AttributedLinkReference.termsOfUse.url, with: termsOfUseRange)
-    termsLabel.addLink(to: AttributedLinkReference.privacyPolicy.url, with: privacyPolicyRange)
+    var resultRanges: [NSRange] = []
+    regular.enumerateMatches(in: termsText.string, options: [], range: range, using: {
+      (result: NSTextCheckingResult?, flags, stop) in
+      if let result = result {
+        resultRanges.append(result.rangeAt(1))
+      }
+    })
+
+    termsNSString.replaceOccurrences(of: "•", with: "", options: [], range: range)
+    termsLabel.attributedText = termsText
+
+    for (index, range) in resultRanges.enumerated() {
+      let effectiveRange = NSRange(location: (range.location - (2 * index + 1)), length: range.length)
+      switch index {
+      case 0:
+        termsLabel.addLink(to: AttributedLinkReference.termsOfUse.url, with: effectiveRange)
+      case 1:
+        termsLabel.addLink(to: AttributedLinkReference.privacyPolicy.url, with: effectiveRange)
+      default:
+        break
+      }
+    }
 
     //Set Delegates
     termsLabel.delegate = self
