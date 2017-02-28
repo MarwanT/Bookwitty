@@ -19,6 +19,7 @@ class Quote: Resource {
   var author: String?
   var title: String?
   var type: String?
+  var penName: PenName?
 
   override class var resourceType: ResourceType {
     return "quotes"
@@ -34,7 +35,8 @@ class Quote: Resource {
       "body": Attribute().serializeAs("body"),
       "title": Attribute().serializeAs("title"),
       "type": Attribute().serializeAs("type"),
-      "author": Attribute().serializeAs("author")
+      "author": Attribute().serializeAs("author"),
+      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
       ])
   }
 }

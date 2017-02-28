@@ -21,6 +21,7 @@ class Audio: Resource {
   var caption: String?
   //TODO: Check if media_link is a related object or a dictionary
   var media: [String: Any]?
+  var penName: PenName?
 
   override class var resourceType: ResourceType {
     return "audios"
@@ -37,7 +38,8 @@ class Audio: Resource {
       "shortDescription": Attribute().serializeAs("short-description"),
       "title": Attribute().serializeAs("title"),
       "type": Attribute().serializeAs("type"),
-      "media": Attribute().serializeAs("media")
+      "media": Attribute().serializeAs("media"),
+      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
       ])
   }
 }

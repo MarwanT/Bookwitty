@@ -23,6 +23,7 @@ class Author: Resource {
   var profileImageUrl: String?
   var title: String?
   var type: String?
+  var penName: PenName?
   //TODO: add PageAuthor model we have a problem with the json-api conforming from the api siding
 
   override class var resourceType: ResourceType {
@@ -44,6 +45,7 @@ class Author: Resource {
       "profileImageUrl": Attribute().serializeAs("profile-image-url"),
       "title": Attribute().serializeAs("title"),
       "type": Attribute().serializeAs("type"),
+      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
       ])
   }
 }

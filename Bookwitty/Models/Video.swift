@@ -19,6 +19,7 @@ class Video: Resource {
   var title: String?
   var shortDescription: String?
   var caption: String?
+  var penName: PenName?
 
   override class var resourceType: ResourceType {
     return "videos"
@@ -34,7 +35,8 @@ class Video: Resource {
       "type": Attribute().serializeAs("type"),
       "title": Attribute().serializeAs("title"),
       "shortDescription": Attribute().serializeAs("short-description"),
-      "caption": Attribute().serializeAs("caption")
+      "caption": Attribute().serializeAs("caption"),
+      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
       ])
   }
 }

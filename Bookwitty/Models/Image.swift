@@ -20,6 +20,7 @@ class Image: Resource {
   var title: String?
   var type: String?
   var media: [String: Any]?
+  var penName: PenName?
 
   override class var resourceType: ResourceType {
     return "images"
@@ -36,7 +37,8 @@ class Image: Resource {
       "shortDescription": Attribute().serializeAs("short-description"),
       "title": Attribute().serializeAs("title"),
       "type": Attribute().serializeAs("type"),
-      "media": Attribute().serializeAs("media")
+      "media": Attribute().serializeAs("media"),
+      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
       ])
   }
 }
