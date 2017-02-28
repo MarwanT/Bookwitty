@@ -87,11 +87,8 @@ class CategoryViewController: UIViewController {
     refreshController.beginRefreshing()
     viewModel.loadData { (success, error) in
       self.refreshController.endRefreshing()
-      guard success else {
-        self.showAlertWith(title: self.viewModel.errorLoadingDataTitle, message: self.viewModel.errorLoadingDataMessage)
-        return
-      }
       self.loadUserInterface()
+      // TODO: If there is nothing to be displayed display no data view
     }
   }
   
