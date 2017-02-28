@@ -175,6 +175,7 @@ class BookStoreViewController: UIViewController {
     let canDisplayCategories = viewAllCategories.superview == nil
     if viewModel.hasCategories && canDisplayCategories {
       stackView.addArrangedSubview(viewAllCategories)
+      viewAllCategories.alignLeading("0", trailing: "0", toView: stackView)
     }
   }
   
