@@ -39,13 +39,11 @@ extension CuratedCollection: Parsable {
 
 
 // MARK: - Curated collection sections
-
-typealias FeaturedContent = (wittyId: String?, caption: String?)
 typealias Banner = (imageUrlString: String?, caption: String?)
 
 class CuratedCollectionSections: NSObject {
   let banner: Banner?
-  let featuredContent: [FeaturedContent]?
+  let featuredContent: [String]?
   let categories: [Category]?
   let readingListIdentifiers: [String]?
   let booksIdentifiers: [String]?
@@ -70,25 +68,15 @@ class CuratedCollectionSections: NSObject {
     self.pagesIdentifiers = parsedValues.pagesIdentifiers
   }
   
-  private static func sections(for dictionary: [String : Any]) -> (banner: Banner?, featuredContent: [FeaturedContent], categories: [Category], readingListIdentifiers: [String], booksIdentifiers: [String], pagesIdentifiers: [String]) {
+  private static func sections(for dictionary: [String : Any]) -> (banner: Banner?, featuredContent: [String], categories: [Category], readingListIdentifiers: [String], booksIdentifiers: [String], pagesIdentifiers: [String]) {
     let json = JSON(dictionary)
     let banner: Banner? = nil
-    let featuredContent = self.featuredContent(json: json["featured"])
+    let featuredContent = self.wittyIdentifiers(json: json["featured"])
     let categories = self.categories(json: json["categories"])
-    let readingListsIdentifiers = self.readingListIdentifiers(json: json["reading-lists"])
-    let booksIdentifiers = self.booksIdentifiers(json: json["books"])
-    let pagesIdentifiers = self.pagesIdentifiers(json: json["pages"])
+    let readingListsIdentifiers = self.wittyIdentifiers(json: json["reading-lists"])
+    let booksIdentifiers = self.wittyIdentifiers(json: json["books"])
+    let pagesIdentifiers = self.wittyIdentifiers(json: json["pages"])
     return (banner, featuredContent, categories, readingListsIdentifiers, booksIdentifiers, pagesIdentifiers)
-  }
-  
-  private static func featuredContent(json: JSON) -> [FeaturedContent] {
-    var featured = [FeaturedContent]()
-    for (_, subJSON) in json {
-      let identifier = subJSON["witty-id"].stringValue
-      let caption = subJSON["caption"].stringValue
-      featured.append((identifier, caption))
-    }
-    return featured
   }
   
   private static func categories(json: JSON) -> [Category] {
@@ -100,25 +88,7 @@ class CuratedCollectionSections: NSObject {
     return categories
   }
   
-  private static func readingListIdentifiers(json: JSON) -> [String] {
-    var identifiers = [String]()
-    for (_, subJSON) in json {
-      let identifier = subJSON["witty-id"].stringValue
-      identifiers.append(identifier)
-    }
-    return identifiers
-  }
-
-  private static func booksIdentifiers(json: JSON) -> [String] {
-    var identifiers = [String]()
-    for (_, subJSON) in json {
-      let identifier = subJSON["witty-id"].stringValue
-      identifiers.append(identifier)
-    }
-    return identifiers
-  }
-
-  private static func pagesIdentifiers(json: JSON) -> [String] {
+  private static func wittyIdentifiers(json: JSON) -> [String] {
     var identifiers = [String]()
     for (_, subJSON) in json {
       let identifier = subJSON["witty-id"].stringValue
