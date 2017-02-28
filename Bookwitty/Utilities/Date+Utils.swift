@@ -7,3 +7,18 @@
 //
 
 import Foundation
+
+extension Date {
+  static func formatDate(date: NSDate?, dateStyle dStyle: DateFormatter.Style = .long, timeStyle tStyle: DateFormatter.Style = .none) -> String {
+    guard let nsDate = date else {
+      return ""
+    }
+
+    let date = nsDate as Date
+    return date.formatDate(dateStyle: dStyle, timeStyle: tStyle)
+  }
+
+  func formatDate(dateStyle dStyle: DateFormatter.Style = .long, timeStyle tStyle: DateFormatter.Style = .none) -> String {
+    return DateFormatter.localizedString(from: self, dateStyle: dStyle, timeStyle: tStyle)
+  }
+}
