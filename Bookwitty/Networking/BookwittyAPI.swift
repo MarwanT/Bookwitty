@@ -122,8 +122,7 @@ extension BookwittyAPI: TargetType {
         "client_id": AppKeys.shared.apiKey,
         "client_secret": AppKeys.shared.apiSecret,
         "refresh_token": refreshToken,
-        "grant_type": "refresh_token",
-        "scopes": "openid email profile"
+        "grant_type": "refresh_token"
       ]
     case .batch(let identifiers):
       return UserAPI.batchPostBody(identifiers: identifiers)

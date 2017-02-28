@@ -87,7 +87,7 @@ public struct APIProvider {
     // Add Header Fields to Endpoint
     var headerParameters = [String : String]();
     switch target{
-    case .oAuth, .register:
+    case .oAuth, .register, .refreshToken:
       headerParameters["Content-Type"] = "application/json";
       headerParameters["Accept"] = "application/json"
     default:
@@ -248,7 +248,7 @@ public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -
     
     switch result {
     case .success(let response):
-      if response.statusCode == 400 {
+      if response.statusCode == 400 || response.statusCode == 401 {
         NotificationCenter.default.post(name: AppNotification.failToRefreshToken, object: nil)
         return
       }
