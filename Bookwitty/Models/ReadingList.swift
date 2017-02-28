@@ -11,7 +11,7 @@ import Spine
 
 class ReadingList: Resource {
   var name: String?
-  var createdAt: String?
+  var createdAt: NSDate?
   var updatedAt: String?
   var userId: String?
   var thumbnailImageUrl: String?
@@ -34,7 +34,7 @@ class ReadingList: Resource {
   override class var fields: [Field] {
     return fieldsFromDictionary([
       "name": Attribute().serializeAs("name"),
-      "createdAt": Attribute().serializeAs("created-at"),
+      "createdAt": DateAttribute().serializeAs("created-at"),
       "updatedAt": Attribute().serializeAs("updated-at"),
       "userId": Attribute().serializeAs("user-id"),
       "thumbnailImageUrl": Attribute().serializeAs("thumbnail-image-url"),
