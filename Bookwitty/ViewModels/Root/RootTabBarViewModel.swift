@@ -9,8 +9,6 @@
 import Foundation
 
 final class RootTabBarViewModel {
-  let bookStoreTabTitle = Strings.books()
-  
   var isUserSignedIn: Bool {
     return AccessToken.shared.hasTokens
   }

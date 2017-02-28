@@ -288,15 +288,3 @@ extension CategoryViewModel {
   }
 }
 
-
-// MARK: Localization
-
-extension CategoryViewModel {
-  var bookwittySuggestsTitle: String { return Strings.bookwitty_suggests() }
-  var selectionHeaderTitle: String { return Strings.our_selection_for_you() }
-  var viewAllBooksLabelText: String { return Strings.view_all_books() }
-  var viewSubcategoriesText: String { return  Strings.view_subcategories() }
-  var errorLoadingDataTitle: String { return Strings.error_loading_data() }
-  var errorLoadingDataMessage: String { return Strings.couldnt_load_your_data() }
-  var okText: String { return Strings.ok() }
-}

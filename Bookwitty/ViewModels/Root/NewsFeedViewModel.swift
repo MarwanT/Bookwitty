@@ -12,7 +12,6 @@ import Spine
 
 final class NewsFeedViewModel {
   var cancellableRequest:  Cancellable?
-  let viewController = Strings.news()
   var nextPage: URL?
   var data: [ModelResource] = []
   var penNames: [PenName] {

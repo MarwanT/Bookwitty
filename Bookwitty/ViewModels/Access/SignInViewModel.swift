@@ -10,29 +10,12 @@ import Foundation
 import Moya
 
 final class SignInViewModel {
-  let signInButtonTitle: String = Strings.sign_in()
-  let emailDescriptionLabelText: String = Strings.email()
-  let emailTextFieldPlaceholderText: String = Strings.enter_your_email()
-  let emailInvalidationErrorMessage: String = Strings.email_invalid()
-  
-  let passwordDescriptionLabelText: String = Strings.password()
-  let passwordTextFieldPlaceholderText: String = Strings.enter_your_password()
-  let passwordInvalidationErrorMessage: String = Strings.password_invalid()
-  
-  let viewControllerTitle: String = Strings.sign_in()
-  let signInErrorInFieldsNotification = Strings.please_fill_required_field()
-  let okText: String = Strings.ok()
-  let failToSignInAlertTitle: String = Strings.sign_in()
-  let failToSignInAlertMessage: String = Strings.something_wrong_in_credentials()
-  let registerLabelText: String = Strings.you_dont_have_account()
-  let registerTermText: String = Strings.register()
-  
-  
   func styledRegisterText() -> NSMutableAttributedString {
+    //TODO: Should remove the concatenation
     let builder = AttributedStringBuilder(fontDynamicType: FontDynamicType.label)
-    return builder.append(text: registerLabelText)
+    return builder.append(text: Strings.you_dont_have_account())
       .append(text: "\n")
-      .append(text: registerTermText)
+      .append(text: Strings.register())
       .applyParagraphStyling(alignment: NSTextAlignment.center)
       .attributedString
   }

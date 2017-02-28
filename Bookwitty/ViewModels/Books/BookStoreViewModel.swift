@@ -11,16 +11,6 @@ import Moya
 import Spine
 
 final class BookStoreViewModel {
-  let viewAllCategoriesLabelText = Strings.view_all_categories()
-  let bookwittySuggestsTitle = Strings.bookwitty_suggests()
-  let viewAllBooksLabelText = Strings.view_all_books()
-  let viewAllSelectionsLabelText = Strings.view_all_selections()
-  let selectionHeaderTitle = Strings.our_selection_for_you()
-  let viewControllerTitle = Strings.books()
-  let errorLoadingDataTitle = Strings.error_loading_data()
-  let errorLoadingDataMessage = Strings.couldnt_load_your_data()
-  let okText = Strings.ok()
-  
   fileprivate var curatedCollection: CuratedCollection? = nil
   fileprivate var featuredContents: [ModelCommonProperties]? = nil
   fileprivate var featuredReadingListContent: [Book]? = nil

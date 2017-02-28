@@ -9,20 +9,6 @@
 import Foundation
 
 final class AccountViewModel {
-  let viewControllerTitle: String = Strings.account()
-  let myOrdersText: String = Strings.my_orders()
-  let addressBookText: String = Strings.address_book()
-  let paymentMethodsText: String = Strings.payment_methods()
-  let settingsText: String = Strings.settings()
-  let penNamesText: String = Strings.pen_names()
-  let draftsText: String = Strings.drafts()
-  let interestsText: String = Strings.interests()
-  let readingListsText: String = Strings.reading_lists()
-  let createNewPenNameText: String = Strings.create_new_pen_names()
-  let customerServiceText: String = Strings.customer_service()
-  let helpText: String = Strings.help()
-  let contactUsText: String = Strings.contact_us()
-
   enum Sections: Int {
     case UserInformation
     case PenNames
@@ -30,13 +16,18 @@ final class AccountViewModel {
     case CreatePenNames
   }
 
-  private let sectionTitles: [String]
+  private var sectionTitles: [String] = []
 
   init () {
-    sectionTitles = ["", penNamesText, customerServiceText]
+    self.fillSectionTitles()
   }
 
   private let user: User = UserManager.shared.signedInUser
+
+  func fillSectionTitles() {
+    self.sectionTitles.removeAll()
+    self.sectionTitles += ["", Strings.pen_names(), Strings.customer_service()]
+  }
 
   func headerInformation() -> (name: String, image: UIImage?) {
     let nameFormatter = PersonNameComponentsFormatter()
@@ -51,13 +42,13 @@ final class AccountViewModel {
   private func valuesForUserInformation(atRow row: Int) -> String {
     switch row {
     case 0:
-//      return myOrdersText
+//      return Strings.my_orders()
 //    case 1:
-//      return addressBookText
+//      return Strings.address_book()
 //    case 2:
-//      return paymentMethodsText
+//      return Strings.payment_methods()
 //    case 3:
-      return settingsText
+      return Strings.settings()
     default:
       return ""
     }
@@ -69,9 +60,9 @@ final class AccountViewModel {
     case 0:
       return (penName(atRow: iteration), "")
     case 1:
-      return (interestsText, "")
+      return (Strings.interests(), "")
     case 2:
-      return (readingListsText, "")
+      return (Strings.reading_lists(), "")
     default:
       return ("", "")
     }
@@ -93,7 +84,7 @@ final class AccountViewModel {
   private func valuesForCreatePenName(atRow row: Int) -> String {
     switch row {
     case 0:
-      return createNewPenNameText
+      return Strings.create_new_pen_names()
     default:
       return ""
     }
@@ -103,9 +94,9 @@ final class AccountViewModel {
   private func valuesForCustomerService(atRow row: Int) -> String {
     switch row {
     case 0:
-      return helpText
+      return Strings.help()
     case 1:
-      return contactUsText
+      return Strings.contact_us()
     default:
       return ""
     }

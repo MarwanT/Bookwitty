@@ -8,9 +8,7 @@
 
 import Foundation
 
-final class CategoriesTableViewModel {
-  let viewControllerTitle = Strings.categories()
-  
+final class CategoriesTableViewModel {  
   var categories: [Category]
   
   init () {

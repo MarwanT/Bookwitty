@@ -25,7 +25,7 @@ class SettingsViewController: UIViewController {
   }
 
   private func initializeComponents() {
-    self.title = self.viewModel.viewControllerTitle
+    self.title = Strings.settings()
     tableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
     tableView.register(TableViewSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: TableViewSectionHeaderView.reuseIdentifier)
 
