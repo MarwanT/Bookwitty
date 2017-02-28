@@ -48,12 +48,14 @@ class CuratedCollectionSections: NSObject {
   let featuredContent: [FeaturedContent]?
   let categories: [Category]?
   let readingListIdentifiers: [String]?
+  let booksIdentifiers: [String]?
   
   override init() {
     banner = nil
     featuredContent = nil
     categories = nil
     readingListIdentifiers = nil
+    booksIdentifiers = nil
   }
   
   init(for dictionary: Dictionary<String,Any>) {
@@ -62,15 +64,17 @@ class CuratedCollectionSections: NSObject {
     self.featuredContent = parsedValues.featuredContent
     self.categories = parsedValues.categories
     self.readingListIdentifiers = parsedValues.readingListIdentifiers
+    self.booksIdentifiers = parsedValues.booksIdentifiers
   }
   
-  private static func sections(for dictionary: [String : Any]) -> (banner: Banner?, featuredContent: [FeaturedContent], categories: [Category], readingListIdentifiers: [String]) {
+  private static func sections(for dictionary: [String : Any]) -> (banner: Banner?, featuredContent: [FeaturedContent], categories: [Category], readingListIdentifiers: [String], booksIdentifiers: [String]) {
     let json = JSON(dictionary)
     let banner: Banner? = nil
     let featuredContent = self.featuredContent(json: json["featured"])
     let categories = self.categories(json: json["categories"])
     let readingListsIdentifiers = self.readingListIdentifiers(json: json["reading-lists"])
-    return (banner, featuredContent, categories, readingListsIdentifiers)
+    let booksIdentifiers = self.booksIdentifiers(json: json["books"])
+    return (banner, featuredContent, categories, readingListsIdentifiers, booksIdentifiers)
   }
   
   private static func featuredContent(json: JSON) -> [FeaturedContent] {
@@ -93,6 +97,15 @@ class CuratedCollectionSections: NSObject {
   }
   
   private static func readingListIdentifiers(json: JSON) -> [String] {
+    var identifiers = [String]()
+    for (_, subJSON) in json {
+      let identifier = subJSON["witty-id"].stringValue
+      identifiers.append(identifier)
+    }
+    return identifiers
+  }
+
+  private static func booksIdentifiers(json: JSON) -> [String] {
     var identifiers = [String]()
     for (_, subJSON) in json {
       let identifier = subJSON["witty-id"].stringValue
