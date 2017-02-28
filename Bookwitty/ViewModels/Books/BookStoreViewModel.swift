@@ -41,7 +41,7 @@ final class BookStoreViewModel {
       
       self.request = self.loadContentDetails(identifiers: identifiers, completion: {
         (success, readingList, error) in
-        guard success, let booksIds = readingList?.posts?.flatMap({ $0.id }) else {
+        guard success, let booksIds = readingList?.posts?.filter({ $0.type == Book.resourceType }).flatMap({ $0.id }) else {
           self.request = nil
           completion(success, error)
           return
