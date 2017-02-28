@@ -85,6 +85,8 @@ extension CategoriesTableViewController: Themeable {
 
 extension CategoriesTableViewController: CategoriesTableViewDelegate {
   func categoriesTableViewDidSelectCategory(_ viewController: CategoriesTableViewController, category: Category) {
-    // TODO: Implement default navigation
+    let categoryViewController = Storyboard.Books.instantiate(CategoryViewController.self)
+    categoryViewController.viewModel.category = category
+    navigationController?.pushViewController(categoryViewController, animated: true)
   }
 }
