@@ -9,7 +9,7 @@
 import UIKit
 
 class BooksTableViewController: UITableViewController {
-  let viewModel = BooksTableViewModel()
+  var viewModel = BooksTableViewModel()
   
   override func viewDidLoad() {
     super.viewDidLoad()
