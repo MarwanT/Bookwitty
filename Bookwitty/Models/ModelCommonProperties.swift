@@ -13,7 +13,7 @@ protocol ModelCommonProperties {
   var id: String? { get }
   var title: String? { get }
   var createdAt: NSDate? { get }
-  var updatedAt: String? { get }
+  var updatedAt: NSDate? { get }
   var thumbnailImageUrl: String? { get }
   var coverImageUrl: String? { get }
   var shortDescription: String? { get }

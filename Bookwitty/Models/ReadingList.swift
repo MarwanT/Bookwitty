@@ -12,7 +12,7 @@ import Spine
 class ReadingList: Resource {
   var name: String?
   var createdAt: NSDate?
-  var updatedAt: String?
+  var updatedAt: NSDate?
   var userId: String?
   var thumbnailImageUrl: String?
   var coverImageUrl: String?
@@ -35,7 +35,7 @@ class ReadingList: Resource {
     return fieldsFromDictionary([
       "name": Attribute().serializeAs("name"),
       "createdAt": DateAttribute().serializeAs("created-at"),
-      "updatedAt": Attribute().serializeAs("updated-at"),
+      "updatedAt": DateAttribute().serializeAs("updated-at"),
       "userId": Attribute().serializeAs("user-id"),
       "thumbnailImageUrl": Attribute().serializeAs("thumbnail-image-url"),
       "coverImageUrl": Attribute().serializeAs("cover-image-url"),

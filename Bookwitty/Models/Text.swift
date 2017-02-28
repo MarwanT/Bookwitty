@@ -11,7 +11,7 @@ import Spine
 
 class Text: Resource {
   var createdAt: NSDate?
-  var updatedAt: String?
+  var updatedAt: NSDate?
   var userId: String?
   var thumbnailImageUrl: String?
   var coverImageUrl: String?
@@ -28,7 +28,7 @@ class Text: Resource {
   override class var fields: [Field] {
     return fieldsFromDictionary([
       "createdAt": DateAttribute().serializeAs("created-at"),
-      "updatedAt": Attribute().serializeAs("updated-at"),
+      "updatedAt": DateAttribute().serializeAs("updated-at"),
       "userId": Attribute().serializeAs("user-id"),
       "thumbnailImageUrl": Attribute().serializeAs("thumbnail-image-url"),
       "coverImageUrl": Attribute().serializeAs("cover-image-url"),
