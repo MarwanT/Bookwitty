@@ -11,7 +11,7 @@ import Foundation
 final class BooksTableViewModel {
   enum DataLoadingMode {
     case local(paginator: Paginator)
-    case server(nextPageURL: URL)
+    case server(nextPageURL: URL?)
   }
   
   fileprivate var books: [Book]? = nil
