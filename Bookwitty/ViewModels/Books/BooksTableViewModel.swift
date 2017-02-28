@@ -17,6 +17,11 @@ final class BooksTableViewModel {
   fileprivate var books: [Book]? = nil
   fileprivate var mode: DataLoadingMode? = nil
   
+  init(books: [Book]? = nil, loadingMode: DataLoadingMode? = nil) {
+    self.books = books
+    self.mode = loadingMode
+  }
+  
   var numberOfSections: Int {
     return (books?.count ?? 0) > 0 ? 1 : 0
   }
