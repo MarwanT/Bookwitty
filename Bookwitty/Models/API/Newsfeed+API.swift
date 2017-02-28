@@ -36,20 +36,16 @@ struct NewsfeedAPI {
         return
       }
 
-      // Retrieve Dictionary from data
-      do {
-        // Parse Data
-        guard let data = data,
-          let parsedData = Parser.parseDataArray(data: data) else {
-            return
-        }
-        //TODO: handle parsedData.next and parsedData.errors if any
-        
-        resources = parsedData.resources
-        success = parsedData.resources != nil
-        completionError = nil
-        nextPage = parsedData.next
+      // Parse Data
+      guard let data = data,
+        let parsedData = Parser.parseDataArray(data: data) else {
+          return
       }
+
+      resources = parsedData.resources
+      success = parsedData.resources != nil
+      completionError = nil
+      nextPage = parsedData.next
     }
   }
 
