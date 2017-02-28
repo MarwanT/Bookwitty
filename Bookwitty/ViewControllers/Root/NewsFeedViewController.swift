@@ -246,7 +246,7 @@ extension NewsFeedViewController: ASCollectionDelegate {
         let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
           return IndexPath(row: index, section: 0)
         })
-        strongSelf.loadItemsWithIndex(updatedRange: updatedIndexPathRange, onMainThread: true)
+        strongSelf.loadItemsWithIndex(updatedRange: updatedIndexPathRange)
       }
 
       // Properly finish the batch fetch
@@ -254,17 +254,20 @@ extension NewsFeedViewController: ASCollectionDelegate {
     }
   }
 
-  func loadItemsWithIndex(updatedRange: [IndexPath], onMainThread mainThread: Bool) {
-    if mainThread {
-      let block = DispatchWorkItem { [weak self] in
+  /**
+   * Note: loadItemsWithIndex will always run on the main thread
+   */
+  func loadItemsWithIndex(updatedRange: [IndexPath]) {
+    if Thread.isMainThread {
+      collectionNode.insertItems(at: updatedRange)
+    } else {
+      DispatchQueue.main.async {
+        [weak self] in
         guard let strongSelf = self else {
           return
         }
         strongSelf.collectionNode.insertItems(at: updatedRange)
       }
-      DispatchQueue.main.async(execute: block)
-    } else {
-      collectionNode.insertItems(at: updatedRange)
     }
   }
 }
