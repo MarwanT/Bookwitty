@@ -27,6 +27,9 @@ final class BookStoreViewModel {
   fileprivate var readingLists: [ReadingList]? = nil
   fileprivate var banner: Banner? = nil
   
+  let maximumNumberOfBooks = 3
+  let maximumNumberOfReadingLists = 3
+  
   var request: Cancellable?
   
   var dataLoaded: ((_ finished: Bool) -> Void)? = nil
@@ -125,7 +128,7 @@ final class BookStoreViewModel {
   }
   
   private func loadReadingListContent(booksIds: [String], completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
-    let maximumNumberOfBooks = 3
+    
     return UserAPI.batch(identifiers: booksIds, completion: {
       (success, resource, error) in
       defer {
@@ -136,7 +139,7 @@ final class BookStoreViewModel {
         return
       }
       
-      self.featuredReadingListContent = Array(books.prefix(maximumNumberOfBooks))
+      self.featuredReadingListContent = books
     })
   }
   
@@ -233,7 +236,10 @@ extension BookStoreViewModel {
   }
   
   var bookwittySuggestsNumberOfItems: Int {
-    return readingLists?.count ?? 0
+    guard let readingListsCount = readingLists?.count else {
+      return 0
+    }
+    return readingListsCount < maximumNumberOfReadingLists ? readingListsCount : maximumNumberOfReadingLists
   }
   
   func bookwittySuggestsValues(for indexPath: IndexPath) -> String {
@@ -256,7 +262,10 @@ extension BookStoreViewModel {
   }
   
   var selectionNumberOfItems: Int {
-    return featuredReadingListContent?.count ?? 0
+    guard let booksCount = featuredReadingListContent?.count else {
+      return 0
+    }
+    return booksCount < maximumNumberOfBooks ? booksCount : maximumNumberOfBooks
   }
   
   func selectionValues(for indexPath: IndexPath) -> (imageURL: URL?, bookTitle: String?, authorName: String?, productType: String?, price: String?) {
