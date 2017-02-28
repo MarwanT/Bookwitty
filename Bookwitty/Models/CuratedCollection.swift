@@ -49,6 +49,7 @@ class CuratedCollectionSections: NSObject {
   let categories: [Category]?
   let readingListIdentifiers: [String]?
   let booksIdentifiers: [String]?
+  let pagesIdentifiers: [String]?
   
   override init() {
     banner = nil
@@ -56,6 +57,7 @@ class CuratedCollectionSections: NSObject {
     categories = nil
     readingListIdentifiers = nil
     booksIdentifiers = nil
+    pagesIdentifiers = nil
   }
   
   init(for dictionary: Dictionary<String,Any>) {
@@ -65,16 +67,18 @@ class CuratedCollectionSections: NSObject {
     self.categories = parsedValues.categories
     self.readingListIdentifiers = parsedValues.readingListIdentifiers
     self.booksIdentifiers = parsedValues.booksIdentifiers
+    self.pagesIdentifiers = parsedValues.pagesIdentifiers
   }
   
-  private static func sections(for dictionary: [String : Any]) -> (banner: Banner?, featuredContent: [FeaturedContent], categories: [Category], readingListIdentifiers: [String], booksIdentifiers: [String]) {
+  private static func sections(for dictionary: [String : Any]) -> (banner: Banner?, featuredContent: [FeaturedContent], categories: [Category], readingListIdentifiers: [String], booksIdentifiers: [String], pagesIdentifiers: [String]) {
     let json = JSON(dictionary)
     let banner: Banner? = nil
     let featuredContent = self.featuredContent(json: json["featured"])
     let categories = self.categories(json: json["categories"])
     let readingListsIdentifiers = self.readingListIdentifiers(json: json["reading-lists"])
     let booksIdentifiers = self.booksIdentifiers(json: json["books"])
-    return (banner, featuredContent, categories, readingListsIdentifiers, booksIdentifiers)
+    let pagesIdentifiers = self.pagesIdentifiers(json: json["pages"])
+    return (banner, featuredContent, categories, readingListsIdentifiers, booksIdentifiers, pagesIdentifiers)
   }
   
   private static func featuredContent(json: JSON) -> [FeaturedContent] {
@@ -106,6 +110,15 @@ class CuratedCollectionSections: NSObject {
   }
 
   private static func booksIdentifiers(json: JSON) -> [String] {
+    var identifiers = [String]()
+    for (_, subJSON) in json {
+      let identifier = subJSON["witty-id"].stringValue
+      identifiers.append(identifier)
+    }
+    return identifiers
+  }
+
+  private static func pagesIdentifiers(json: JSON) -> [String] {
     var identifiers = [String]()
     for (_, subJSON) in json {
       let identifier = subJSON["witty-id"].stringValue
