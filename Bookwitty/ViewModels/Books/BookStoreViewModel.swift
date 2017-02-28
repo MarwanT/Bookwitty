@@ -267,4 +267,15 @@ extension BookStoreViewModel {
     }
     return (URL(string: book.thumbnailImageUrl ?? ""), book.title, book.productDetails?.author, book.productDetails?.productFormat, book.supplierInformation?.displayPrice?.formattedValue)
   }
+  
+  var booksTableViewModel: BooksTableViewModel {
+    guard let books = featuredReadingListContent else {
+      return BooksTableViewModel()
+    }
+    
+    let paginator = Paginator(ids: books.booksIds, pageSize: pageSize, startPage: 1)
+    let viewModel = BooksTableViewModel(books: books.fetchedBooks, loadingMode:
+      BooksTableViewModel.DataLoadingMode.local(paginator: paginator))
+    return viewModel
+  }
 }

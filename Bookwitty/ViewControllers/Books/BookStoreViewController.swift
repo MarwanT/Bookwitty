@@ -268,6 +268,12 @@ class BookStoreViewController: UIViewController {
     alert.addAction(UIAlertAction(title: Strings.ok(), style: UIAlertActionStyle.default, handler: nil))
     self.present(alert, animated: true, completion: nil)
   }
+  
+  func pushBooksTableView() {
+    let booksTableViewController = Storyboard.Books.instantiate(BooksTableViewController.self)
+    booksTableViewController.viewModel = viewModel.booksTableViewModel
+    navigationController?.pushViewController(booksTableViewController, animated: true)
+  }
 }
 
 // MARK: - Action
@@ -445,7 +451,7 @@ extension BookStoreViewController: DisclosureViewDelegate {
     case viewAllCategories:
       pushCategoriesViewController()
     case viewAllBooksView:
-      break
+      pushBooksTableView()
     case viewAllSelectionsView:
       break
     default:
