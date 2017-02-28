@@ -55,7 +55,7 @@ struct NewsfeedAPI {
 
   public static func nextFeedPage(nextPage: URL, completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ nextPage: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     return signedAPIRequest(
-    target: BookwittyAPI.next(fullUrl: nextPage)) {
+    target: BookwittyAPI.absolute(url: nextPage)) {
       (data, statusCode, response, error) in
       // Ensure the completion block is always called
       var success: Bool = false
