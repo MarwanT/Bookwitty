@@ -84,7 +84,7 @@ final class AccountViewModel {
   private func valuesForCreatePenName(atRow row: Int) -> String {
     switch row {
     case 0:
-      return Strings.create_new_pen_names()
+      return Strings.create_new_pen_name()
     default:
       return ""
     }

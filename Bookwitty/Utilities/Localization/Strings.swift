@@ -73,8 +73,8 @@ class Strings {
     return localizedString(key: "country_region")
   }
 
-  class func create_new_pen_names() -> String {
-    return localizedString(key: "create_new_pen_names")
+  class func create_new_pen_name() -> String {
+    return localizedString(key: "create_new_pen_name")
   }
 
   class func current_password() -> String {
