@@ -9,8 +9,13 @@
 import Foundation
 
 final class BooksTableViewModel {
+  enum DataLoadingMode {
+    case local(paginator: Paginator)
+    case server(nextPageURL: URL)
+  }
   
   fileprivate var books: [Book]? = nil
+  fileprivate var mode: DataLoadingMode? = nil
   
   var numberOfSections: Int {
     return (books?.count ?? 0) > 0 ? 1 : 0
