@@ -122,8 +122,10 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 }
 extension NewsFeedViewController: PenNameSelectionNodeDelegate {
   func didSelectPenName(penName: PenName, sender: PenNameSelectionNode) {
-    viewModel.didUpdateDefaultPenName(penName: penName, completionBlock: {
-      loadData(withPenNames: false)
+    viewModel.didUpdateDefaultPenName(penName: penName, completionBlock: {  didSaveDefault in
+      if didSaveDefault {
+        loadData(withPenNames: false)
+      }
     })
   }
 }
