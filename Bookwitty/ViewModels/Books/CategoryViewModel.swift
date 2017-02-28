@@ -19,6 +19,10 @@ final class CategoryViewModel {
   
   var category: Category! = nil
   
+  var viewControllerTitle: String {
+    return category.value ?? localizedString(key: "category", defaultValue: "Category")
+  }
+  
   // MARK: API Calls
   
   var curatedContentRequest: Cancellable? = nil
@@ -267,7 +271,6 @@ extension CategoryViewModel {
 // MARK: Localization
 
 extension CategoryViewModel {
-  var viewControllerTitle: String { return localizedString(key: "category", defaultValue: "Category") }
   var bookwittySuggestsTitle: String { return localizedString(key: "bookwitty_suggests", defaultValue: "Bookwitty Suggests") }
   var selectionHeaderTitle: String { return localizedString(key: "our_selection_for_you", defaultValue: "Our selection for you") }
   var viewAllBooksLabelText: String { return localizedString(key: "view_all_books", defaultValue: "View All Books") }
