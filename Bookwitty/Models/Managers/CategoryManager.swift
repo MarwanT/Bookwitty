@@ -81,4 +81,41 @@ class CategoryManager {
     
     return categories
   }
+  
+  func category(from identifier: String) -> Category? {
+    guard let categories = categories else {
+      return nil
+    }
+    let identifiersTree = categoryIdentifiersTree(for: identifier)
+    return leefCategory(index: 0, categoryIdentifiers: identifiersTree, categories: categories)
+  }
+  
+  func categoryIdentifiersTree(for identifier: String) -> [String] {
+    let identifierCharacters = Array(identifier.characters)
+    var identifiersTree = [String]()
+    for (index, character) in identifierCharacters.enumerated() {
+      if index == 0 {
+        identifiersTree.append(String(character))
+        continue
+      }
+      let previousIdentifier = identifiersTree[index-1]
+      identifiersTree.append(previousIdentifier+String(character))
+    }
+    return identifiersTree
+  }
+  
+  private func leefCategory(index: Int, categoryIdentifiers: [String], categories: [Category]) -> Category? {
+    let identifier = categoryIdentifiers[index]
+    guard let category = categories.filter({ $0.key == identifier }).first else {
+      return nil
+    }
+    if index == (categoryIdentifiers.count - 1) {
+      return category
+    } else {
+      guard let subcategories = category.subcategories else {
+        return nil
+      }
+      return leefCategory(index: index+1, categoryIdentifiers: categoryIdentifiers, categories: subcategories)
+    }
+  }
 }
