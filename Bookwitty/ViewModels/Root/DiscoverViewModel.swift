@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import Moya
 
 final class DiscoverViewModel {
+  var cancellableRequest:  Cancellable?
 
 }
