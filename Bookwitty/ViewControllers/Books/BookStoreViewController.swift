@@ -120,6 +120,18 @@ class BookStoreViewController: UIViewController {
     selectionTableView.delegate = self
     selectionTableView.register(SectionTitleHeaderView.nib, forHeaderFooterViewReuseIdentifier: SectionTitleHeaderView.reuseIdentifier)
     selectionTableView.register(BookTableViewCell.nib, forCellReuseIdentifier: BookTableViewCell.reuseIdentifier)
+    
+    // View All Books
+    viewAllBooksView.configuration.style = .highlighted
+    viewAllBooksView.delegate = self
+    viewAllBooksView.label.text = viewModel.viewAllBooksLabelText
+    viewAllBooksView.constrainHeight("45")
+    
+    // View All Selections
+    viewAllSelectionsView.configuration.style = .highlighted
+    viewAllSelectionsView.delegate = self
+    viewAllSelectionsView.label.text = viewModel.viewAllSelectionsLabelText
+    viewAllSelectionsView.constrainHeight("45")
   }
   
   private func viewModelLoadedDataBlock() -> (_ finished: Bool) -> Void {
@@ -149,6 +161,7 @@ class BookStoreViewController: UIViewController {
     loadViewAllCategories()
     loadBookwittySuggest()
     loadSelectionSection()
+    loadViewAllSelections()
   }
   
   func loadBannerSection() {
@@ -175,13 +188,14 @@ class BookStoreViewController: UIViewController {
     let canDisplayCategories = viewAllCategories.superview == nil
     if viewModel.hasCategories && canDisplayCategories {
       stackView.addArrangedSubview(viewAllCategories)
+      viewAllCategories.alignLeading("0", trailing: "0", toView: stackView)
+      addSeparator()
     }
   }
   
   func loadBookwittySuggest() {
     let canDisplayBookwittySuggest = bookwittySuggestsTableView.superview == nil
     if viewModel.hasBookwittySuggests && canDisplayBookwittySuggest {
-      addSeparator()
       addSpacing(space: 10)
       stackView.addArrangedSubview(bookwittySuggestsTableView)
       bookwittySuggestsTableView.alignLeading("0", trailing: "0", toView: stackView)
@@ -201,6 +215,16 @@ class BookStoreViewController: UIViewController {
       // Add the table view height constraint
       selectionTableView.layoutIfNeeded()
       selectionTableView.constrainHeight("\(selectionTableView.contentSize.height)")
+    }
+  }
+  
+  func loadViewAllSelections() {
+    let canDisplayViewAllSelections = viewAllSelectionsView.superview == nil
+    if viewModel.hasSelectionSection && canDisplayViewAllSelections {
+      addSeparator(leftMargin)
+      stackView.addArrangedSubview(viewAllSelectionsView)
+      viewAllSelectionsView.alignLeading("0", trailing: "0", toView: stackView)
+      addSeparator()
     }
   }
   
@@ -368,37 +392,16 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
       return nil
     }
     
-    viewAllBooksView.configuration.style = .highlighted
-    viewAllBooksView.delegate = self
-    viewAllBooksView.label.text = viewModel.viewAllBooksLabelText
-    
-    viewAllSelectionsView.configuration.style = .highlighted
-    viewAllSelectionsView.delegate = self
-    viewAllSelectionsView.label.text = viewModel.viewAllSelectionsLabelText
-    
     let topSeparator = separatorViewInstance()
-    let middleSeparator = separatorViewInstance()
-    let bottomSeparator = separatorViewInstance()
     
     let containerView = UIView(frame: CGRect.zero)
     containerView.addSubview(viewAllBooksView)
-    containerView.addSubview(viewAllSelectionsView)
     containerView.addSubview(topSeparator)
-    containerView.addSubview(middleSeparator)
-    containerView.addSubview(bottomSeparator)
     
     topSeparator.alignTopEdge(withView: containerView, predicate: "0")
     topSeparator.alignLeading("\(leftMargin)", trailing: "0", toView: containerView)
     viewAllBooksView.constrainTopSpace(toView: topSeparator, predicate: "0")
     viewAllBooksView.alignLeading("0", trailing: "0", toView: containerView)
-    viewAllBooksView.constrainHeight("45")
-    middleSeparator.constrainTopSpace(toView: viewAllBooksView, predicate: "0")
-    middleSeparator.alignLeading("0", trailing: "0", toView: topSeparator)
-    viewAllSelectionsView.constrainTopSpace(toView: middleSeparator, predicate: "0")
-    viewAllSelectionsView.alignLeading("0", trailing: "0", toView: containerView)
-    viewAllSelectionsView.constrainHeight("45")
-    bottomSeparator.constrainTopSpace(toView: viewAllSelectionsView, predicate: "0")
-    bottomSeparator.alignLeading("0", trailing: "0", toView: containerView)
     
     return containerView
   }
@@ -425,7 +428,7 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
     if tableView === bookwittySuggestsTableView {
       return 0.01 // To remove the separator after the last cell
     } else {
-      return 93
+      return 46
     }
   }
   
