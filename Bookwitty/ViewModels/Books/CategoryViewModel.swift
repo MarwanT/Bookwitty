@@ -13,7 +13,7 @@ import Spine
 final class CategoryViewModel {
   fileprivate var curatedCollection: CuratedCollection? = nil
   fileprivate var featuredContents: [ModelCommonProperties]? = nil
-  fileprivate var categoryBooks: [Book]? = nil
+  fileprivate var categoryBooks: (books: [Book]?, nextPage: URL?)? = nil
   fileprivate var readingLists: [ReadingList]? = nil
   fileprivate var banner: Banner? = nil
   
@@ -151,7 +151,7 @@ final class CategoryViewModel {
         return
       }
       
-      self.categoryBooks = books
+      self.categoryBooks = (books, nextPage)
     })
   }
   
@@ -257,18 +257,18 @@ extension CategoryViewModel {
   }
   
   var selectionNumberOfSection: Int {
-    return (categoryBooks?.count ?? 0) > 0 ? 1 : 0
+    return (categoryBooks?.books?.count ?? 0) > 0 ? 1 : 0
   }
   
   var selectionNumberOfItems: Int {
-    guard let booksCount = categoryBooks?.count else {
+    guard let booksCount = categoryBooks?.books?.count else {
       return 0
     }
     return booksCount < maximumNumberOfBooks ? booksCount : maximumNumberOfBooks
   }
   
   func selectionValues(for indexPath: IndexPath) -> (imageURL: URL?, bookTitle: String?, authorName: String?, productType: String?, price: String?) {
-    guard let book = categoryBooks?[indexPath.row] else {
+    guard let book = categoryBooks?.books?[indexPath.row] else {
       return (nil, nil, nil, nil, nil)
     }
     return (URL(string: book.thumbnailImageUrl ?? ""), book.title, book.productDetails?.author, book.productDetails?.productFormat, book.supplierInformation?.displayPrice?.formattedValue)
