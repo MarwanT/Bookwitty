@@ -116,11 +116,21 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   }
 
   func loadData(withPenNames reloadPenNames: Bool = true) {
-    pullToRefresher.beginRefreshing()
+    viewModel.data = []
+    collectionNode.reloadData()
+    if !reloadPenNames {
+      self.isLoadingMore = true
+    } else {
+      self.pullToRefresher.beginRefreshing()
+    }
     viewModel.loadNewsfeed { [weak self] (success) in
       guard let strongSelf = self else { return }
-      strongSelf.pullToRefresher.endRefreshing()
-      strongSelf.collectionNode.reloadData(completion: { 
+      if !reloadPenNames {
+        strongSelf.isLoadingMore = false
+      } else {
+        strongSelf.pullToRefresher.endRefreshing()
+      }
+      strongSelf.collectionNode.reloadData(completion: {
         if reloadPenNames {
           strongSelf.reloadPenNamesNode()
         }
