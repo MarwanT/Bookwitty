@@ -12,6 +12,7 @@ import AsyncDisplayKit
 class TopicHeaderNode: ASDisplayNode {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+  private let imageHeight: CGFloat = 200.0
 
   private var imageNode: ASNetworkImageNode
 
@@ -23,11 +24,18 @@ class TopicHeaderNode: ASDisplayNode {
   }
 
   private func setupNode() {
-    
+    imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
+    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     var nodesArray: [ASLayoutElement] = []
+
+    let imageSize = CGSize(width: constrainedSize.max.width, height: imageHeight)
+    imageNode.style.preferredSize = imageSize
+
+    nodesArray.append(imageNode)
+
     let verticalStack = ASStackLayoutSpec(direction: .vertical,
                                           spacing: internalMargin,
                                           justifyContent: .start,
