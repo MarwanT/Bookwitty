@@ -21,7 +21,6 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
 
   let viewModel = DiscoverViewModel()
   
-  var isFirstRun: Bool = true
   var isLoadingMore: Bool = false {
     didSet {
       let bottomMargin: CGFloat = isLoadingMore ? -(externalMargin/2) : -(LoaderNode.nodeHeight - externalMargin/2)
@@ -68,15 +67,15 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     pullToRefresher.addTarget(self, action: #selector(self.loadData), for: .valueChanged)
 
     applyTheme()
+
+    if UserManager.shared.isSignedIn {
+      loadData()
+    }
   }
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     animateRefreshControllerIfNeeded()
-    if isFirstRun && UserManager.shared.isSignedIn {
-      isFirstRun = false
-      loadData()
-    }
   }
 
   /*
