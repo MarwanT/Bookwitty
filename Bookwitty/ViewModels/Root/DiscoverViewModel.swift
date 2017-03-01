@@ -8,10 +8,13 @@
 
 import Foundation
 import Moya
+import Spine
 
 final class DiscoverViewModel {
   var cancellableRequest:  Cancellable?
   var dataIdentifiers: [String] = []
+  var data: [ModelResource] = []
+  var paginator: Paginator?
 
   func loadDiscoverData(completionBlock: @escaping (_ success: Bool) -> ()) {
     cancellableRequest = DiscoverAPI.discover { (success, curatedCollection, error) in
