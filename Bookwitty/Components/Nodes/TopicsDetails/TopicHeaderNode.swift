@@ -29,6 +29,8 @@ class TopicHeaderNode: ASDisplayNode {
   private func setupNode() {
     imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
+
+    titleNode.maximumNumberOfLines = 4
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -38,6 +40,9 @@ class TopicHeaderNode: ASDisplayNode {
     imageNode.style.preferredSize = imageSize
 
     nodesArray.append(imageNode)
+
+    let titleNodeInset = ASInsetLayoutSpec(insets: sideInset(), child: titleNode)
+    nodesArray.append(titleNodeInset)
 
     let verticalStack = ASStackLayoutSpec(direction: .vertical,
                                           spacing: internalMargin,
