@@ -13,6 +13,8 @@ class TopicHeaderNode: ASDisplayNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let imageHeight: CGFloat = 200.0
+  fileprivate let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
+  fileprivate let normal = ASControlState(rawValue: 0)
 
   private var imageNode: ASNetworkImageNode
   private var titleNode: ASTextNode
