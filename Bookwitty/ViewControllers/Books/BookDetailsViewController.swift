@@ -24,9 +24,16 @@ class BookDetailsViewController: ASViewController<ASDisplayNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeViewController()
+    applyTheme()
   }
   
   private func initializeViewController() {
     title = viewModel.viewControllerTitle
+  }
+}
+
+extension BookDetailsViewController: Themeable {
+  func applyTheme() {
+    node.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
   }
 }
