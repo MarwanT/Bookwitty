@@ -51,6 +51,20 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     collectionNode.dataSource = self
     applyTheme()
   }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    loadData()
+  }
+
+  func loadData() {
+    pullToRefresher.beginRefreshing()
+    viewModel.loadDiscoverData { [weak self] (success) in
+      guard let strongSelf = self else { return }
+      strongSelf.pullToRefresher.endRefreshing()
+      strongSelf.collectionNode.reloadData()
+    }
+  }
 }
 
 // MARK: - Themeable
