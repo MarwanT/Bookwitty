@@ -64,6 +64,8 @@
 "new_password" = "New Password";
 "news" = "News";
 "number_of_pages" = "Number Of Pages";
+"follow" = "Follow";
+"followed" = "Followed";
 "followers" = "Followers";
 "ok" = "Ok";
 "ooops" = "Ooops";
