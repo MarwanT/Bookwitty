@@ -84,8 +84,7 @@ final class BookStoreViewModel {
       }
       
       if let featuredContent = sections.featuredContent {
-        let featuredContentIdentifiers = featuredContent.flatMap({ $0.wittyId })
-        identifiers += featuredContentIdentifiers
+        identifiers += featuredContent
       }
       if let readingListIdentifiers = sections.readingListIdentifiers {
         identifiers += readingListIdentifiers
@@ -136,11 +135,10 @@ final class BookStoreViewModel {
     })
   }
   
-  private func filterFeaturedContents(featuredContents: [FeaturedContent], resources: [Resource]) -> [ModelCommonProperties] {
+  private func filterFeaturedContents(featuredContents: [String], resources: [Resource]) -> [ModelCommonProperties] {
     var filteredContent = [ModelCommonProperties]()
-    
-    let postIds = featuredContents.flatMap({ $0.wittyId })
-    for postId in postIds {
+
+    for postId in featuredContents {
       guard let resource = resources.filter({ $0.id == postId }).first as? ModelCommonProperties else {
         continue
       }
