@@ -84,3 +84,51 @@ extension DiscoverViewModel {
     return CardRegistry.getCard(resource: resource)
   }
 }
+
+// MARK: - Posts Actions 
+extension DiscoverViewModel {
+  func witContent(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard data.count > index,
+      let contentId = data[index].id else {
+        completionBlock(false)
+        return
+    }
+
+    cancellableRequest = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
+      completionBlock(success)
+    })
+  }
+
+  func unwitContent(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard data.count > index,
+      let contentId = data[index].id else {
+        completionBlock(false)
+        return
+    }
+
+    cancellableRequest = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
+      completionBlock(success)
+    })
+  }
+
+  func sharingContent(index: Int) -> String? {
+    guard data.count > index,
+      let commonProperties = data[index] as? ModelCommonProperties else {
+        return nil
+    }
+
+    let content = data[index]
+    //TODO: Make sure that we are sharing the right information
+    let shortDesciption = commonProperties.shortDescription ?? commonProperties.title ?? ""
+    if let sharingUrl = content.url {
+      var sharingString = sharingUrl.absoluteString
+      sharingString += shortDesciption.isEmpty ? "" : "\n\n\(shortDesciption)"
+      return sharingString
+    }
+
+    //TODO: Remove dummy data and return nil instead since we do not have a url to share.
+    var sharingString = "https://bookwitty-api-qa.herokuapp.com/reading_list/ios-mobile-applications-development/58a6f9b56b2c581af13637f6"
+    sharingString += shortDesciption.isEmpty ? "" : "\n\n\(shortDesciption)"
+    return sharingString
+  }
+}
