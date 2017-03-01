@@ -60,7 +60,7 @@ class PenNameCellNode: ASCellNode {
     penNameImageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
 
     selectedImageNode.style.preferredSize = downArrowImageSize
-    selectedImageNode.image = #imageLiteral(resourceName: "downArrow")
+    selectedImageNode.image = #imageLiteral(resourceName: "tick")
     selectedImageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.colorNumber19())
 
     separatorNode.style.height = ASDimensionMake(1)
