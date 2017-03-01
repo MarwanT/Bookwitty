@@ -114,6 +114,7 @@ extension DiscoverViewController: ASCollectionDataSource {
 
     return {
       let baseCardNode = self.viewModel.nodeForItem(atIndex: index) ?? BaseCardPostNode()
+      baseCardNode.delegate = self
       return baseCardNode
     }
   }
@@ -169,6 +170,33 @@ extension DiscoverViewController: ASCollectionDelegate {
         }
         strongSelf.collectionNode.insertItems(at: updatedRange)
       }
+    }
+  }
+}
+
+// MARK - BaseCardPostNode Delegate
+extension DiscoverViewController: BaseCardPostNodeDelegate {
+  func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    guard let index = collectionNode.indexPath(for: card)?.item else {
+      return
+    }
+
+    switch(action) {
+    case .wit:
+      viewModel.witContent(index: index) { (success) in
+        didFinishAction?(success)
+      }
+    case .unwit:
+      viewModel.unwitContent(index: index) { (success) in
+        didFinishAction?(success)
+      }
+    case .share:
+      if let sharingInfo: String = viewModel.sharingContent(index: index) {
+        presentShareSheet(shareContent: sharingInfo)
+      }
+    default:
+      //TODO: handle comment
+      break
     }
   }
 }
