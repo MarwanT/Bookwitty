@@ -58,6 +58,26 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     loadData()
+    animateRefreshControllerIfNeeded()
+  }
+
+  /*
+   When the refresh controller is still refreshing, and we navigate away and
+   back to this view controller, the activity indicator stops animating.
+   The is a turn around to re animate it if needed
+   */
+  private func animateRefreshControllerIfNeeded() {
+    guard let collectionView = collectionView else {
+      return
+    }
+
+    if self.pullToRefresher.isRefreshing == true {
+      let offset = collectionView.contentOffset
+
+      self.pullToRefresher.endRefreshing()
+      self.pullToRefresher.beginRefreshing()
+      collectionView.contentOffset = offset
+    }
   }
 
   func loadData() {
