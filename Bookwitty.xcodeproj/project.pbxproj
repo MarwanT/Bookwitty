@@ -118,6 +118,7 @@
 		F422D82C1E51992800A32C2F /* PhotoCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F422D82B1E51992800A32C2F /* PhotoCardPostCellNode.swift */; };
 		F422D82E1E51AC3900A32C2F /* VideoCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F422D82D1E51AC3900A32C2F /* VideoCardPostCellNode.swift */; };
 		F422D8301E51CD9D00A32C2F /* LinkCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F422D82F1E51CD9D00A32C2F /* LinkCardPostCellNode.swift */; };
+		F42441651E66FE260087E3B1 /* CardFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42441641E66FE260087E3B1 /* CardFactory.swift */; };
 		F42686771E4EF83C0085E581 /* CardPostInfoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */; };
 		F42686791E4F458A0085E581 /* CardActionBarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42686781E4F458A0085E581 /* CardActionBarNode.swift */; };
 		F426867B1E505CE60085E581 /* BaseCardPostNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426867A1E505CE60085E581 /* BaseCardPostNode.swift */; };
@@ -137,10 +138,10 @@
 		F48278BB1E4B21CA003D82F2 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48278BA1E4B21CA003D82F2 /* RootTabBarController.swift */; };
 		F488D2791E44EB46003A7BD4 /* PenName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F488D2781E44EB46003A7BD4 /* PenName.swift */; };
 		F488D27B1E44F559003A7BD4 /* BookwittyParsersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F488D27A1E44F559003A7BD4 /* BookwittyParsersTests.swift */; };
-		F496DE081E65DECB007E22B1 /* Paginator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F496DE071E65DECB007E22B1 /* Paginator.swift */; };
 		F496DE021E65BF56007E22B1 /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F496DE011E65BF56007E22B1 /* DiscoverViewController.swift */; };
 		F496DE041E65C75D007E22B1 /* DiscoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F496DE031E65C75D007E22B1 /* DiscoverViewModel.swift */; };
 		F496DE061E65CB30007E22B1 /* Discover+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = F496DE051E65CB30007E22B1 /* Discover+API.swift */; };
+		F496DE081E65DECB007E22B1 /* Paginator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F496DE071E65DECB007E22B1 /* Paginator.swift */; };
 		F49AE93E1E47CFEA0031B355 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49AE93D1E47CFEA0031B355 /* Parser.swift */; };
 		F4A426271E560ED00090CD51 /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A426261E560ED00090CD51 /* Author.swift */; };
 		F4A4262B1E5617A30090CD51 /* PageAuthor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A4262A1E5617A30090CD51 /* PageAuthor.swift */; };
@@ -285,6 +286,7 @@
 		F422D82B1E51992800A32C2F /* PhotoCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCardPostCellNode.swift; sourceTree = "<group>"; };
 		F422D82D1E51AC3900A32C2F /* VideoCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCardPostCellNode.swift; sourceTree = "<group>"; };
 		F422D82F1E51CD9D00A32C2F /* LinkCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkCardPostCellNode.swift; sourceTree = "<group>"; };
+		F42441641E66FE260087E3B1 /* CardFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardFactory.swift; path = Factory/CardFactory.swift; sourceTree = "<group>"; };
 		F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPostInfoNode.swift; sourceTree = "<group>"; };
 		F42686781E4F458A0085E581 /* CardActionBarNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardActionBarNode.swift; sourceTree = "<group>"; };
 		F426867A1E505CE60085E581 /* BaseCardPostNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCardPostNode.swift; sourceTree = "<group>"; };
@@ -304,10 +306,10 @@
 		F48278BA1E4B21CA003D82F2 /* RootTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RootTabBarController.swift; path = Bookwitty/ViewControllers/Root/RootTabBarController.swift; sourceTree = SOURCE_ROOT; };
 		F488D2781E44EB46003A7BD4 /* PenName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenName.swift; sourceTree = "<group>"; };
 		F488D27A1E44F559003A7BD4 /* BookwittyParsersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyParsersTests.swift; sourceTree = "<group>"; };
-		F496DE071E65DECB007E22B1 /* Paginator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paginator.swift; sourceTree = "<group>"; };
 		F496DE011E65BF56007E22B1 /* DiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		F496DE031E65C75D007E22B1 /* DiscoverViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverViewModel.swift; sourceTree = "<group>"; };
 		F496DE051E65CB30007E22B1 /* Discover+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Discover+API.swift"; sourceTree = "<group>"; };
+		F496DE071E65DECB007E22B1 /* Paginator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paginator.swift; sourceTree = "<group>"; };
 		F49AE93D1E47CFEA0031B355 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		F4A426261E560ED00090CD51 /* Author.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Author.swift; sourceTree = "<group>"; };
 		F4A4262A1E5617A30090CD51 /* PageAuthor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageAuthor.swift; sourceTree = "<group>"; };
@@ -809,6 +811,7 @@
 			isa = PBXGroup;
 			children = (
 				59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */,
+				F42441631E66FDF00087E3B1 /* Factories */,
 				59B65FD11E251FE80093FF44 /* Assets */,
 				59057FD11E25317B0036AAF3 /* Themes */,
 				59057FD71E2533010036AAF3 /* Components */,
@@ -852,6 +855,14 @@
 				CB5E98B3C54E0B0AD22F5CB4 /* Pods-BookwittyTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		F42441631E66FDF00087E3B1 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				F42441641E66FE260087E3B1 /* CardFactory.swift */,
+			);
+			name = Factories;
 			sourceTree = "<group>";
 		};
 		F48278B91E4B214A003D82F2 /* Root */ = {
@@ -1172,6 +1183,7 @@
 				F4207B941E58466A00216A2E /* PenNameSelectionNode.swift in Sources */,
 				595C4F111E3F9DA400BE3942 /* InformativeInputField.swift in Sources */,
 				56E09DBC1E5463EA00B7C6E6 /* ChangePasswordViewController.swift in Sources */,
+				F42441651E66FE260087E3B1 /* CardFactory.swift in Sources */,
 				5945FACB1E6476A30010CF77 /* CategoryViewModel.swift in Sources */,
 				59DA47641E3B7A9B00BA90A5 /* TutorialPageViewController.swift in Sources */,
 				59DA47571E3A65A600BA90A5 /* Storyboard.swift in Sources */,

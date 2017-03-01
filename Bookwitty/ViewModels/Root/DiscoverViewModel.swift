@@ -81,7 +81,7 @@ extension DiscoverViewModel {
   func nodeForItem(atIndex index: Int) -> BaseCardPostNode? {
     guard data.count > index else { return nil }
     let resource = data[index]
-    return CardRegistry.getCard(resource: resource)
+    return CardFactory.shared.createCardFor(resource: resource)
   }
 }
 

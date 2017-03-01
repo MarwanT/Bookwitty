@@ -19,6 +19,8 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
 
   let viewModel = DiscoverViewModel()
   
+  var isFirstRun: Bool = true
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -59,8 +61,11 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    loadData()
     animateRefreshControllerIfNeeded()
+    if isFirstRun && UserManager.shared.isSignedIn {
+      isFirstRun = false
+      loadData()
+    }
   }
 
   /*
