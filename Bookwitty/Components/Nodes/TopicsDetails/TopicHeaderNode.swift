@@ -40,6 +40,23 @@ class TopicHeaderNode: ASDisplayNode {
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
 
     titleNode.maximumNumberOfLines = 4
+    topicStatsNode.maximumNumberOfLines = 1
+
+    let buttonFont = FontDynamicType.subheadline.font
+    let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+    let selectedTextColor = ThemeManager.shared.currentTheme.colorNumber23()
+    let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultBackgroundColor())
+    let selectedButtonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultButtonColor())
+    actionButton.titleNode.maximumNumberOfLines = 1
+    actionButton.setBackgroundImage(buttonBackgroundImage, for: normal)
+    actionButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
+
+    actionButton.setTitle(Strings.follow(), with: buttonFont, with: textColor, for: normal)
+    actionButton.setTitle(Strings.followed(), with: buttonFont, with: selectedTextColor, for: .selected)
+    actionButton.cornerRadius = 2
+    actionButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
+    actionButton.borderWidth = 2
+    actionButton.clipsToBounds = true
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -52,6 +69,25 @@ class TopicHeaderNode: ASDisplayNode {
 
     let titleNodeInset = ASInsetLayoutSpec(insets: sideInset(), child: titleNode)
     nodesArray.append(titleNodeInset)
+
+    actionButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+    actionButton.style.height = ASDimensionMake(buttonSize.height)
+
+    var statsAndActionNodes: [ASLayoutElement] = []
+
+    statsAndActionNodes.append(topicStatsNode)
+    statsAndActionNodes.append(spacer(flexGrow: 1.0))
+    statsAndActionNodes.append(spacer(width: internalMargin))
+    statsAndActionNodes.append(actionButton)
+
+    let statsAndActionHorizontalSpec = ASStackLayoutSpec(direction: .horizontal,
+                                                spacing: 0,
+                                                justifyContent: .end,
+                                                alignItems: .center,
+                                                children: statsAndActionNodes)
+
+    let horizontalSpecInset = ASInsetLayoutSpec(insets: sideInset(), child: statsAndActionHorizontalSpec)
+    nodesArray.append(horizontalSpecInset)
 
     let verticalStack = ASStackLayoutSpec(direction: .vertical,
                                           spacing: internalMargin,
