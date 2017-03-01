@@ -32,7 +32,8 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     flowLayout.sectionInset = UIEdgeInsets(top: externalMargin/2, left: 0, bottom: externalMargin/2, right: 0)
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
-
+    flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.nodeHeight)
+    
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     loaderNode = LoaderNode()
     
@@ -47,6 +48,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
       strongSelf.collectionView?.addSubview(strongSelf.pullToRefresher)
       strongSelf.collectionView?.alwaysBounceVertical = true
     }
+    collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionFooter)
   }
 
   override func viewDidLoad() {
@@ -125,9 +127,20 @@ extension DiscoverViewController: ASCollectionDataSource {
       return baseCardNode
     }
   }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
+    switch kind {
+    case UICollectionElementKindSectionFooter: return loaderNode
+    default: return ASCellNode()
+    }
+  }
 }
 
 extension DiscoverViewController: ASCollectionDelegate {
+  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    return CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.nodeHeight)
+  }
+
   public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
     return ASSizeRange(
       min: CGSize(width: collectionNode.frame.width, height: 0),
