@@ -17,6 +17,8 @@ class BookDetailsViewController: ASViewController<ASDisplayNode> {
   }
   
   init() {
+    let baseNode = ASDisplayNode()
+    super.init(node: baseNode)
   }
   
   override func viewDidLoad() {
