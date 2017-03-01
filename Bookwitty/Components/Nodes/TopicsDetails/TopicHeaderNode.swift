@@ -44,3 +44,21 @@ class TopicHeaderNode: ASDisplayNode {
     return verticalStack
   }
 }
+
+//Helpers
+extension TopicHeaderNode {
+  fileprivate func sideInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0,
+                        left: internalMargin,
+                        bottom: 0,
+                        right: internalMargin)
+  }
+
+  fileprivate func spacer(flexGrow: CGFloat = 0.0, height: CGFloat = 0.0, width: CGFloat = 0.0) -> ASLayoutSpec {
+    return ASLayoutSpec().styled { (style) in
+      style.height = ASDimensionMake(height)
+      style.width = ASDimensionMake(width)
+      style.flexGrow = flexGrow
+    }
+  }
+}
