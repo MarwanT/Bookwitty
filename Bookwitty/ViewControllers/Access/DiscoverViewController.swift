@@ -47,6 +47,8 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = Strings.discover()
+
     collectionNode.delegate = self
     collectionNode.dataSource = self
     //Listen to pullToRefresh valueChange and call loadData
