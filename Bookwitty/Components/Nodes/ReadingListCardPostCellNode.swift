@@ -11,13 +11,19 @@ import AsyncDisplayKit
 
 class ReadingListCardPostCellNode: BaseCardPostNode {
   let node: ReadingListCardContentNode
-  override var shouldShowInfoNode: Bool { return true }
+  var showsInfoNode: Bool = true
+  override var shouldShowInfoNode: Bool { return showsInfoNode }
   override var contentShouldExtendBorders: Bool { return true }
   override var contentNode: ASDisplayNode { return node }
 
   override init() {
     node = ReadingListCardContentNode()
     super.init()
+  }
+
+  convenience init(shouldShowInfoNode: Bool) {
+    self.init()
+    showsInfoNode = shouldShowInfoNode
   }
 }
 

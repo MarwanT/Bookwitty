@@ -12,13 +12,19 @@ import AsyncDisplayKit
 class ProfileCardPostCellNode: BaseCardPostNode {
 
   let node: ProfileCardPostContentNode
-  override var shouldShowInfoNode: Bool { return false }
+  var showsInfoNode: Bool = false
+  override var shouldShowInfoNode: Bool { return showsInfoNode }
   override var contentShouldExtendBorders: Bool { return false }
   override var contentNode: ASDisplayNode { return node }
 
   override init() {
     node = ProfileCardPostContentNode()
     super.init()
+  }
+
+  convenience init(shouldShowInfoNode: Bool) {
+    self.init()
+    showsInfoNode = shouldShowInfoNode
   }
 }
 
