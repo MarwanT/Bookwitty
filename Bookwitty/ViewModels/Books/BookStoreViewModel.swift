@@ -13,12 +13,14 @@ import Spine
 final class BookStoreViewModel {
   fileprivate var curatedCollection: CuratedCollection? = nil
   fileprivate var featuredContents: [ModelCommonProperties]? = nil
-  fileprivate var featuredReadingListContent: [Book]? = nil
+  fileprivate var featuredReadingListContent: (fetchedBooks: [Book]?, booksIds: [String])? = nil
   fileprivate var readingLists: [ReadingList]? = nil
   fileprivate var banner: Banner? = nil
   
   let maximumNumberOfBooks = 3
   let maximumNumberOfReadingLists = 3
+  
+  let pageSize: Int = 10
   
   var request: Cancellable?
   
@@ -41,7 +43,7 @@ final class BookStoreViewModel {
       
       self.request = self.loadContentDetails(identifiers: identifiers, completion: {
         (success, readingList, error) in
-        guard success, let booksIds = readingList?.posts?.flatMap({ $0.id }) else {
+        guard success, let booksIds = readingList?.posts?.filter({ $0.type == Book.resourceType }).flatMap({ $0.id }) else {
           self.request = nil
           completion(success, error)
           return
@@ -118,8 +120,9 @@ final class BookStoreViewModel {
   }
   
   private func loadReadingListContent(booksIds: [String], completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let selectedIds = Array(booksIds.prefix(pageSize))
     
-    return UserAPI.batch(identifiers: booksIds, completion: {
+    return UserAPI.batch(identifiers: selectedIds, completion: {
       (success, resource, error) in
       defer {
         completion(success, error)
@@ -129,7 +132,7 @@ final class BookStoreViewModel {
         return
       }
       
-      self.featuredReadingListContent = books
+      self.featuredReadingListContent = (books, booksIds)
     })
   }
   
@@ -248,20 +251,32 @@ extension BookStoreViewModel {
   }
   
   var selectionNumberOfSection: Int {
-    return (featuredReadingListContent?.count ?? 0) > 0 ? 1 : 0
+    return (featuredReadingListContent?.fetchedBooks?.count ?? 0) > 0 ? 1 : 0
   }
   
   var selectionNumberOfItems: Int {
-    guard let booksCount = featuredReadingListContent?.count else {
+    guard let booksCount = featuredReadingListContent?.fetchedBooks?.count else {
       return 0
     }
     return booksCount < maximumNumberOfBooks ? booksCount : maximumNumberOfBooks
   }
   
   func selectionValues(for indexPath: IndexPath) -> (imageURL: URL?, bookTitle: String?, authorName: String?, productType: String?, price: String?) {
-    guard let book = featuredReadingListContent?[indexPath.row] else {
+    guard let book = featuredReadingListContent?.fetchedBooks?[indexPath.row] else {
       return (nil, nil, nil, nil, nil)
     }
     return (URL(string: book.thumbnailImageUrl ?? ""), book.title, book.productDetails?.author, book.productDetails?.productFormat, book.supplierInformation?.displayPrice?.formattedValue)
+  }
+  
+  var books: [Book]? {
+    return featuredReadingListContent?.fetchedBooks
+  }
+  
+  var booksLoadingMode: DataLoadingMode? {
+    guard let books = featuredReadingListContent else {
+      return nil
+    }
+    let paginator = Paginator(ids: books.booksIds, pageSize: pageSize, startPage: 1)
+    return .local(paginator: paginator)
   }
 }

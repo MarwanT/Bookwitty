@@ -35,6 +35,22 @@ class CategoryViewController: UIViewController {
     refreshViewController()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    /*
+     When the refresh controller is still refreshing, and we navigate away and
+     back to this view controller, the activity indicator stops animating.
+     The is a turn around to re animate it if needed
+     */
+    if refreshController.isRefreshing == true {
+      let offset = scrollView.contentOffset
+      refreshController.endRefreshing()
+      refreshController.beginRefreshing()
+      scrollView.contentOffset = offset
+    }
+  }
+  
   private func initializeSubviews() {
     // Featured Content View
     let itemSize = FeaturedContentCollectionViewCell.defaultSize
@@ -213,6 +229,12 @@ class CategoryViewController: UIViewController {
     categoriesTableViewController.viewModel.categories = subcategories
     navigationController?.pushViewController(categoriesTableViewController, animated: true)
   }
+  
+  func pushBooksTableView(with books: [Book]? = nil, loadingMode: DataLoadingMode? = nil) {
+    let booksTableViewController = Storyboard.Books.instantiate(BooksTableViewController.self)
+    booksTableViewController.initialize(with: books, loadingMode: loadingMode)
+    navigationController?.pushViewController(booksTableViewController, animated: true)
+  }
 }
 
 
@@ -373,7 +395,7 @@ extension CategoryViewController: DisclosureViewDelegate {
   func disclosureViewTapped(_ disclosureView: DisclosureView) {
     switch disclosureView {
     case viewAllBooksView:
-      break
+      pushBooksTableView(with: viewModel.books, loadingMode: viewModel.booksLoadingMode)
     case viewSubcategories:
       pushSubcategoriesList()
     default:
