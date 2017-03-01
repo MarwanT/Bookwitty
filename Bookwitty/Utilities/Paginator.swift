@@ -19,6 +19,10 @@ class Paginator {
     self.startIndex = min((startPage * pageSize), ids.endIndex)
   }
 
+  func hasMorePages() -> Bool {
+    return startIndex < ids.endIndex
+  }
+
   func nextPageIds() -> [String]? {
     guard startIndex < ids.endIndex else {
       return nil

@@ -143,48 +143,48 @@ final class NewsFeedViewModel {
 }
 
 class CardRegistry {
-  typealias RegEntry = () -> BaseCardPostNode
+  typealias RegEntry = (_ shouldShowInfoNode: Bool) -> BaseCardPostNode
 
   static let sharedInstance: CardRegistry = CardRegistry()
 
   private var registry = [String : RegEntry]()
 
 
-  func register(resource : ModelResource.Type, creator : @escaping () -> BaseCardPostNode) {
+  func register(resource : ModelResource.Type, creator : @escaping (_ shouldShowInfoNode: Bool) -> BaseCardPostNode) {
     registry[resource.resourceType] = creator
   }
 
   private init() {
     //Making Constructor Not Reachable
-    register(resource: Author.self) { () -> BaseCardPostNode in
+    register(resource: Author.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
       TopicCardPostCellNode()
     }
-    register(resource: Text.self) { () -> BaseCardPostNode in
-      ArticleCardPostCellNode()
+    register(resource: Text.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
+      ArticleCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
     }
-    register(resource: Quote.self) { () -> BaseCardPostNode in
-      QuoteCardPostCellNode()
+    register(resource: Quote.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
+      QuoteCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
     }
-    register(resource: Topic.self) { () -> BaseCardPostNode in
-      TopicCardPostCellNode()
+    register(resource: Topic.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
+      TopicCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
     }
-    register(resource: Audio.self) { () -> BaseCardPostNode in
-      LinkCardPostCellNode()
+    register(resource: Audio.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
+      LinkCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
     }
-    register(resource: Image.self) { () -> BaseCardPostNode in
-      PhotoCardPostCellNode()
+    register(resource: Image.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
+      PhotoCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
     }
-    register(resource: Video.self) { () -> BaseCardPostNode in
-      VideoCardPostCellNode()
+    register(resource: Video.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
+      VideoCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
     }
-    register(resource: PenName.self) { () -> BaseCardPostNode in
-      ProfileCardPostCellNode()
+    register(resource: PenName.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
+      ProfileCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
     }
-    register(resource: ReadingList.self) { () -> BaseCardPostNode in
-      ReadingListCardPostCellNode()
+    register(resource: ReadingList.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
+      ReadingListCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
     }
-    register(resource: Link.self) { () -> BaseCardPostNode in
-      LinkCardPostCellNode()
+    register(resource: Link.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
+      LinkCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
     }
   }
 
@@ -221,11 +221,11 @@ class CardRegistry {
     guard let entry = registry[resource.registeredResourceType] else {
       return nil
     }
-    let cardCanditate = entry()
-    guard let card = cardCanditate as? TopicCardPostCellNode else {
+    guard let resource = resource as? Author else {
       return nil
     }
-    guard let resource = resource as? Author else {
+    let cardCanditate = entry(resource.penName?.name != nil)
+    guard let card = cardCanditate as? TopicCardPostCellNode else {
       return nil
     }
 
@@ -244,11 +244,11 @@ class CardRegistry {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
-    let cardCanditate = entry()
-    guard let card = cardCanditate as? ArticleCardPostCellNode else {
+    guard let resource = resource as? Text else {
       return nil
     }
-    guard let resource = resource as? Text else {
+    let cardCanditate = entry(resource.penName?.name != nil)
+    guard let card = cardCanditate as? ArticleCardPostCellNode else {
       return nil
     }
 
@@ -267,11 +267,11 @@ class CardRegistry {
     guard let entry = registry[resource.registeredResourceType] else {
       return nil
     }
-    let cardCanditate = entry()
-    guard let card = cardCanditate as? QuoteCardPostCellNode else {
+    guard let resource = resource as? Quote else {
       return nil
     }
-    guard let resource = resource as? Quote else {
+    let cardCanditate = entry(resource.penName?.name != nil)
+    guard let card = cardCanditate as? QuoteCardPostCellNode else {
       return nil
     }
 
@@ -293,11 +293,11 @@ class CardRegistry {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
-    let cardCanditate = entry()
-    guard let card = cardCanditate as? TopicCardPostCellNode else {
+    guard let resource = resource as? Topic else {
       return nil
     }
-    guard let resource = resource as? Topic else {
+    let cardCanditate = entry(resource.penName?.name != nil)
+    guard let card = cardCanditate as? TopicCardPostCellNode else {
       return nil
     }
 
@@ -318,11 +318,11 @@ class CardRegistry {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
-    let cardCanditate = entry()
-    guard let card = cardCanditate as? LinkCardPostCellNode else {
+    guard let resource = resource as? Link else {
       return nil
     }
-    guard let resource = resource as? Link else {
+    let cardCanditate = entry(resource.penName?.name != nil)
+    guard let card = cardCanditate as? LinkCardPostCellNode else {
       return nil
     }
 
@@ -341,11 +341,11 @@ class CardRegistry {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
-    let cardCanditate = entry()
-    guard let card = cardCanditate as? LinkCardPostCellNode else {
+    guard let resource = resource as? Audio else {
       return nil
     }
-    guard let resource = resource as? Audio else {
+    let cardCanditate = entry(resource.penName?.name != nil)
+    guard let card = cardCanditate as? LinkCardPostCellNode else {
       return nil
     }
 
@@ -364,11 +364,11 @@ class CardRegistry {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
-    let cardCanditate = entry()
-    guard let card = cardCanditate as? PhotoCardPostCellNode else {
+    guard let resource = resource as? Image else {
       return nil
     }
-    guard let resource = resource as? Image else {
+    let cardCanditate = entry(resource.penName?.name != nil)
+    guard let card = cardCanditate as? PhotoCardPostCellNode else {
       return nil
     }
 
@@ -385,11 +385,11 @@ class CardRegistry {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
-    let cardCanditate = entry()
-    guard let card = cardCanditate as? VideoCardPostCellNode else {
+    guard let resource = resource as? Video else {
       return nil
     }
-    guard let resource = resource as? Video else {
+    let cardCanditate = entry(resource.penName?.name != nil)
+    guard let card = cardCanditate as? VideoCardPostCellNode else {
       return nil
     }
 
@@ -408,11 +408,11 @@ class CardRegistry {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
-    let cardCanditate = entry()
-    guard let card = cardCanditate as? ProfileCardPostCellNode else {
+    guard let resource = resource as? PenName else {
       return nil
     }
-    guard let resource = resource as? PenName else {
+    let cardCanditate = entry(false)
+    guard let card = cardCanditate as? ProfileCardPostCellNode else {
       return nil
     }
 
@@ -428,11 +428,11 @@ class CardRegistry {
     guard let entry = registry[resource.registeredResourceType] else {
       return BaseCardPostNode()
     }
-    let cardCanditate = entry()
-    guard let card = cardCanditate as? ReadingListCardPostCellNode else {
+    guard let resource = resource as? ReadingList else {
       return nil
     }
-    guard let resource = resource as? ReadingList else {
+    let cardCanditate = entry(resource.penName?.name != nil)
+    guard let card = cardCanditate as? ReadingListCardPostCellNode else {
       return nil
     }
 
