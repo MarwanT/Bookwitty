@@ -49,6 +49,9 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     super.viewDidLoad()
     collectionNode.delegate = self
     collectionNode.dataSource = self
+    //Listen to pullToRefresh valueChange and call loadData
+    pullToRefresher.addTarget(self, action: #selector(self.loadData), for: .valueChanged)
+
     applyTheme()
   }
 
