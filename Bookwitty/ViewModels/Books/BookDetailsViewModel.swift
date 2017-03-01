@@ -9,5 +9,6 @@
 import Foundation
 
 final class BookDetailsViewModel {
+  var book: Book! = nil
   
 }
