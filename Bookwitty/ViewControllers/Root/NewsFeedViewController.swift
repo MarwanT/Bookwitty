@@ -31,6 +31,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: externalMargin/2, right: 0)
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
+    flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.nodeHeight)
 
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
 
@@ -47,6 +48,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       strongSelf.collectionView?.addSubview(strongSelf.pullToRefresher)
       strongSelf.collectionView?.alwaysBounceVertical = true
     }
+    collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionFooter)
   }
 
   deinit {
@@ -122,6 +124,10 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   func reloadPenNamesNode() {
     penNameSelectionNode.loadData(penNames: viewModel.penNames, withSelected: viewModel.defaultPenName)
   }
+
+  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    return CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.nodeHeight)
+  }
 }
 extension NewsFeedViewController: PenNameSelectionNodeDelegate {
   func didSelectPenName(penName: PenName, sender: PenNameSelectionNode) {
@@ -187,6 +193,13 @@ extension NewsFeedViewController: ASCollectionDataSource {
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
     if node is PenNameSelectionNode {
       penNameSelectionNode.setNeedsLayout()
+    }
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
+    switch kind {
+    case UICollectionElementKindSectionFooter: return loaderNode
+    default: return ASCellNode()
     }
   }
 }
