@@ -138,7 +138,7 @@ final class NewsFeedViewModel {
     let dataIndex = index - showsPenNameSelectionHeader
     guard data.count > dataIndex else { return nil }
     let resource = data[dataIndex]
-    return CardRegistry.getCard(resource: resource)
+    return CardFactory.shared.createCardFor(resource: resource)
   }
 }
 
