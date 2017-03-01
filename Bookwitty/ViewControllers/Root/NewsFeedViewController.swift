@@ -132,9 +132,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     penNameSelectionNode.loadData(penNames: viewModel.penNames, withSelected: viewModel.defaultPenName)
   }
 
-  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-    return CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.nodeHeight)
-  }
 }
 extension NewsFeedViewController: PenNameSelectionNodeDelegate {
   func didSelectPenName(penName: PenName, sender: PenNameSelectionNode) {
@@ -291,10 +288,6 @@ extension NewsFeedViewController: ASCollectionDelegate {
       completionBlock()
     } else {
       DispatchQueue.main.async {
-        [weak self] in
-        guard let strongSelf = self else {
-          return
-        }
         completionBlock()
       }
     }
