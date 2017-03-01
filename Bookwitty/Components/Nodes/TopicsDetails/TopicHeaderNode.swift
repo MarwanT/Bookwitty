@@ -64,6 +64,7 @@ class TopicHeaderNode: ASDisplayNode {
       if let topicTitle = topicTitle {
         titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
           .append(text: topicTitle, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+        setNeedsLayout()
       }
     }
   }
@@ -72,6 +73,7 @@ class TopicHeaderNode: ASDisplayNode {
     didSet {
       if let imageUrl = imageUrl {
         imageNode.url = URL(string: imageUrl)
+        setNeedsLayout()
       }
     }
   }
@@ -101,6 +103,7 @@ class TopicHeaderNode: ASDisplayNode {
 
     //Set the string value
     topicStatsNode.attributedText = attrStringBuilder.attributedString
+    setNeedsLayout()
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -109,19 +112,26 @@ class TopicHeaderNode: ASDisplayNode {
     let imageSize = CGSize(width: constrainedSize.max.width, height: imageHeight)
     imageNode.style.preferredSize = imageSize
 
-    nodesArray.append(imageNode)
+    if isValid(imageUrl) {
+      nodesArray.append(imageNode)
+    }
 
     let titleNodeInset = ASInsetLayoutSpec(insets: sideInset(), child: titleNode)
-    nodesArray.append(titleNodeInset)
+    if isValid(topicTitle) {
+      nodesArray.append(titleNodeInset)
+    }
 
     actionButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
     actionButton.style.height = ASDimensionMake(buttonSize.height)
 
     var statsAndActionNodes: [ASLayoutElement] = []
 
-    statsAndActionNodes.append(topicStatsNode)
-    statsAndActionNodes.append(spacer(flexGrow: 1.0))
-    statsAndActionNodes.append(spacer(width: internalMargin))
+    if isValid(topicStatsNode.attributedText?.string) {
+      statsAndActionNodes.append(topicStatsNode)
+      statsAndActionNodes.append(spacer(flexGrow: 1.0))
+      statsAndActionNodes.append(spacer(width: internalMargin))
+    }
+
     statsAndActionNodes.append(actionButton)
 
     let statsAndActionHorizontalSpec = ASStackLayoutSpec(direction: .horizontal,
