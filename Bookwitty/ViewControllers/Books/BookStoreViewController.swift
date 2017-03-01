@@ -269,9 +269,9 @@ class BookStoreViewController: UIViewController {
     self.present(alert, animated: true, completion: nil)
   }
   
-  func pushBooksTableView() {
+  func pushBooksTableView(with books: [Book]? = nil, loadingMode: DataLoadingMode? = nil) {
     let booksTableViewController = Storyboard.Books.instantiate(BooksTableViewController.self)
-    booksTableViewController.viewModel = viewModel.booksTableViewModel
+    booksTableViewController.initialize(with: books, loadingMode: loadingMode)
     navigationController?.pushViewController(booksTableViewController, animated: true)
   }
 }
@@ -451,7 +451,7 @@ extension BookStoreViewController: DisclosureViewDelegate {
     case viewAllCategories:
       pushCategoriesViewController()
     case viewAllBooksView:
-      pushBooksTableView()
+      pushBooksTableView(with: viewModel.books, loadingMode: viewModel.booksLoadingMode)
     case viewAllSelectionsView:
       break
     default:

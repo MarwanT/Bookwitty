@@ -13,6 +13,10 @@ class BooksTableViewController: UITableViewController {
   
   var viewModel = BooksTableViewModel()
   
+  func initialize(with books: [Book]?, loadingMode: DataLoadingMode?) {
+    viewModel.initialize(with: books, loadingMode: loadingMode)
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     title = Strings.books()
@@ -23,7 +27,7 @@ class BooksTableViewController: UITableViewController {
     initializeComponents()
   }
   
-  func initializeComponents() {
+  private func initializeComponents() {
     activityIndicator.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 44)
   }
   

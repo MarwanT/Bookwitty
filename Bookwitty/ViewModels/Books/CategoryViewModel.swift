@@ -274,15 +274,18 @@ extension CategoryViewModel {
     return (URL(string: book.thumbnailImageUrl ?? ""), book.title, book.productDetails?.author, book.productDetails?.productFormat, book.supplierInformation?.displayPrice?.formattedValue)
   }
   
-  var booksTableViewModel: BooksTableViewModel {
+  var books: [Book]? {
+    return categoryBooks?.books
+  }
+  
+  var booksLoadingMode: DataLoadingMode? {
     guard let booksInfo = categoryBooks else {
-      return BooksTableViewModel()
+      return nil
     }
     
-    let viewModel = BooksTableViewModel(books: booksInfo.books, loadingMode:
-      BooksTableViewModel.DataLoadingMode.server(nextPageURL: booksInfo.nextPage))
-    return viewModel
+    return DataLoadingMode.server(nextPageURL: booksInfo.nextPage)
   }
+
 }
 
 

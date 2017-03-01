@@ -230,9 +230,9 @@ class CategoryViewController: UIViewController {
     navigationController?.pushViewController(categoriesTableViewController, animated: true)
   }
   
-  func pushBooksTableView() {
+  func pushBooksTableView(with books: [Book]? = nil, loadingMode: DataLoadingMode? = nil) {
     let booksTableViewController = Storyboard.Books.instantiate(BooksTableViewController.self)
-    booksTableViewController.viewModel = viewModel.booksTableViewModel
+    booksTableViewController.initialize(with: books, loadingMode: loadingMode)
     navigationController?.pushViewController(booksTableViewController, animated: true)
   }
 }
@@ -395,7 +395,7 @@ extension CategoryViewController: DisclosureViewDelegate {
   func disclosureViewTapped(_ disclosureView: DisclosureView) {
     switch disclosureView {
     case viewAllBooksView:
-      pushBooksTableView()
+      pushBooksTableView(with: viewModel.books, loadingMode: viewModel.booksLoadingMode)
     case viewSubcategories:
       pushSubcategoriesList()
     default:

@@ -8,12 +8,12 @@
 
 import Foundation
 
+enum DataLoadingMode {
+  case local(paginator: Paginator)
+  case server(nextPageURL: URL?)
+}
+
 final class BooksTableViewModel {
-  enum DataLoadingMode {
-    case local(paginator: Paginator)
-    case server(nextPageURL: URL?)
-  }
-  
   fileprivate var books: [Book]? = nil
   fileprivate var mode: DataLoadingMode? = nil
   
@@ -24,6 +24,11 @@ final class BooksTableViewModel {
   }
   
   init(books: [Book]? = nil, loadingMode: DataLoadingMode? = nil) {
+    self.books = books
+    self.mode = loadingMode
+  }
+  
+  func initialize(with books: [Book]?, loadingMode: DataLoadingMode?) {
     self.books = books
     self.mode = loadingMode
   }
