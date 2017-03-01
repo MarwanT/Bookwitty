@@ -11,6 +11,7 @@ import UIKit
 import AsyncDisplayKit
 
 class DiscoverViewController: ASViewController<ASCollectionNode> {
+  let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
   let pullToRefresher = UIRefreshControl()
@@ -21,13 +22,19 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
   let viewModel = DiscoverViewModel()
   
   var isFirstRun: Bool = true
+  var isLoadingMore: Bool = false {
+    didSet {
+      let bottomMargin: CGFloat = isLoadingMore ? -(externalMargin/2) : -(LoaderNode.nodeHeight - externalMargin/2)
+      flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomMargin, right: 0)
+      loaderNode.updateLoaderVisibility(show: isLoadingMore)
+    }
+  }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
   init() {
-    let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
     flowLayout = UICollectionViewFlowLayout()
     flowLayout.sectionInset = UIEdgeInsets(top: externalMargin/2, left: 0, bottom: externalMargin/2, right: 0)
     flowLayout.minimumInteritemSpacing  = 0
@@ -153,8 +160,14 @@ extension DiscoverViewController: ASCollectionDelegate {
   }
 
   public func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
+    guard !isLoadingMore else {
+      return
+    }
     let initialLastIndexPath: Int = viewModel.numberOfItemsInSection()
-
+    
+    DispatchQueue.main.async {
+      self.isLoadingMore = true
+    }
     // Fetch next page data
     viewModel.loadNextPage { [weak self] (success) in
       guard let strongSelf = self else {
@@ -168,7 +181,10 @@ extension DiscoverViewController: ASCollectionDelegate {
         let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
           return IndexPath(row: index, section: 0)
         })
-        strongSelf.loadItemsWithIndex(updatedRange: updatedIndexPathRange)
+        strongSelf.loadItemsWithIndexOnMainThread() {
+          collectionNode.insertItems(at: updatedIndexPathRange)
+          strongSelf.isLoadingMore = false
+        }
       }
 
       // Properly finish the batch fetch
@@ -179,16 +195,12 @@ extension DiscoverViewController: ASCollectionDelegate {
   /**
    * Note: loadItemsWithIndex will always run on the main thread
    */
-  func loadItemsWithIndex(updatedRange: [IndexPath]) {
+  func loadItemsWithIndexOnMainThread(completionBlock: @escaping () -> ()) {
     if Thread.isMainThread {
-      collectionNode.insertItems(at: updatedRange)
+      completionBlock()
     } else {
       DispatchQueue.main.async {
-        [weak self] in
-        guard let strongSelf = self else {
-          return
-        }
-        strongSelf.collectionNode.insertItems(at: updatedRange)
+        completionBlock()
       }
     }
   }
