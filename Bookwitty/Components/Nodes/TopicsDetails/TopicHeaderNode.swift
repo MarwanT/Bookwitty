@@ -10,9 +10,9 @@ import UIKit
 import AsyncDisplayKit
 
 class TopicHeaderNode: ASDisplayNode {
-  private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
-  private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
-  private let imageHeight: CGFloat = 200.0
+  fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+  fileprivate let imageHeight: CGFloat = 200.0
 
   private var imageNode: ASNetworkImageNode
 
