@@ -45,7 +45,7 @@ final class NewsFeedViewModel {
     let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
     let dataIndex = index - showsPenNameSelectionHeader
     guard data.count > dataIndex,
-      let contentId = data[index].id else {
+      let contentId = data[dataIndex].id else {
       completionBlock(false)
       return
     }
@@ -59,7 +59,7 @@ final class NewsFeedViewModel {
     let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
     let dataIndex = index - showsPenNameSelectionHeader
     guard data.count > dataIndex,
-      let contentId = data[index].id else {
+      let contentId = data[dataIndex].id else {
         completionBlock(false)
         return
     }
@@ -100,11 +100,11 @@ final class NewsFeedViewModel {
     let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
     let dataIndex = index - showsPenNameSelectionHeader
     guard data.count > dataIndex,
-    let commonProperties = data[index] as? ModelCommonProperties else {
+    let commonProperties = data[dataIndex] as? ModelCommonProperties else {
         return nil
     }
 
-    let content = data[index]
+    let content = data[dataIndex]
     //TODO: Make sure that we are sharing the right information
     let shortDesciption = commonProperties.shortDescription ?? commonProperties.title ?? ""
     if let sharingUrl = content.url {
