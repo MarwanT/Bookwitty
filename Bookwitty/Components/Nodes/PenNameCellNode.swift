@@ -32,6 +32,15 @@ class PenNameCellNode: ASCellNode {
     }
   }
 
+  var penNamePictureUrl: String? {
+    didSet {
+      if let penNamePictureUrl = penNamePictureUrl {
+        penNameImageNode.url = URL(string: penNamePictureUrl)
+      } else {
+        penNameImageNode.url = nil
+      }
+    }
+  }
   private override init() {
     penNameTextNode = ASTextNode()
     penNameImageNode = ASNetworkImageNode()
@@ -55,9 +64,9 @@ class PenNameCellNode: ASCellNode {
     penNameTextNode.maximumNumberOfLines = 1
 
     penNameImageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0, ASDisplayNodeDefaultPlaceholderColor())
-    penNameImageNode.url = URL(string: "https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
     penNameImageNode.style.preferredSize = imageSize
     penNameImageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
+    penNameImageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
 
     selectedImageNode.style.preferredSize = downArrowImageSize
     selectedImageNode.image = #imageLiteral(resourceName: "tick")
