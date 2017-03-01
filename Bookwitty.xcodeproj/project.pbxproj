@@ -809,6 +809,7 @@
 			isa = PBXGroup;
 			children = (
 				59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */,
+				F42441631E66FDF00087E3B1 /* Factory */,
 				59B65FD11E251FE80093FF44 /* Assets */,
 				59057FD11E25317B0036AAF3 /* Themes */,
 				59057FD71E2533010036AAF3 /* Components */,
@@ -852,6 +853,13 @@
 				CB5E98B3C54E0B0AD22F5CB4 /* Pods-BookwittyTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		F42441631E66FDF00087E3B1 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Factory;
 			sourceTree = "<group>";
 		};
 		F48278B91E4B214A003D82F2 /* Root */ = {
