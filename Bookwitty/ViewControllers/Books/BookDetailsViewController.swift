@@ -10,6 +10,8 @@ import UIKit
 import AsyncDisplayKit
 
 class BookDetailsViewController: ASViewController<ASDisplayNode> {
+  let viewModel = BookDetailsViewModel()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
