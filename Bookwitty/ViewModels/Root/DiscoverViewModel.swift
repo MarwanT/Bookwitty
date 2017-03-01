@@ -40,3 +40,24 @@ final class DiscoverViewModel {
     }
   }
 }
+
+// MARK: - Collection Helper
+extension DiscoverViewModel {
+  func hasNextPage() -> Bool {
+    return paginator?.hasMorePages() ?? false
+  }
+
+  func numberOfSections() -> Int {
+    return data.count > 0 ? 1 : 0
+  }
+
+  func numberOfItemsInSection() -> Int {
+    return data.count
+  }
+
+  func nodeForItem(atIndex index: Int) -> BaseCardPostNode? {
+    guard data.count > index else { return nil }
+    let resource = data[index]
+    return CardRegistry.getCard(resource: resource)
+  }
+}
