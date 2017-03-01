@@ -15,6 +15,8 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
   let flowLayout: UICollectionViewFlowLayout
   let pullToRefresher = UIRefreshControl()
 
+  var collectionView: ASCollectionView?
+
   let viewModel = DiscoverViewModel()
   
   required init?(coder aDecoder: NSCoder) {
