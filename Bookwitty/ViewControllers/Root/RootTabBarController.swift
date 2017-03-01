@@ -54,20 +54,26 @@ class RootTabBarController: UITabBarController {
   private func initializeTabBarViewControllers() {
     let viewController1 = NewsFeedViewController()
     let bookStoreViewController = Storyboard.Books.instantiate(BookStoreViewController.self)
-    
+    let discoverViewController = DiscoverViewController()
+
     viewController1.tabBarItem = UITabBarItem(
       //TODO: This should be localized
       title: "NEWS",
       image: #imageLiteral(resourceName: "newsfeed"),
       tag: 1)
+    discoverViewController.tabBarItem = UITabBarItem(
+      title: "DISCOVER",//TODO: Replace with localized string
+      image: #imageLiteral(resourceName: "discover"),
+      tag:2)
     bookStoreViewController.tabBarItem = UITabBarItem(
       title: Strings.books(),
       image: #imageLiteral(resourceName: "books"),
-      tag:2)
-    
+      tag:3)
+
     // Set The View controller
     self.viewControllers = [
       UINavigationController(rootViewController: viewController1),
+      UINavigationController(rootViewController: discoverViewController),
       UINavigationController(rootViewController: bookStoreViewController)]
     
     // Set Default select tab index
