@@ -15,11 +15,14 @@ class TopicHeaderNode: ASDisplayNode {
   fileprivate let imageHeight: CGFloat = 200.0
 
   private var imageNode: ASNetworkImageNode
+  private var titleNode: ASTextNode
 
   override init() {
     imageNode = ASNetworkImageNode()
+    titleNode = ASTextNode()
     super.init()
     addSubnode(imageNode)
+    addSubnode(titleNode)
     setupNode()
   }
 
