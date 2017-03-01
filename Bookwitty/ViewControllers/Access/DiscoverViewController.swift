@@ -13,6 +13,7 @@ import AsyncDisplayKit
 class DiscoverViewController: ASViewController<ASCollectionNode> {
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
+  let pullToRefresher = UIRefreshControl()
 
   let viewModel = DiscoverViewModel()
   
