@@ -13,13 +13,19 @@ import SwiftLinkPreview
 class QuoteCardPostCellNode: BaseCardPostNode {
 
   let node: QuoteCardPostContentNode
-  override var shouldShowInfoNode: Bool { return true }
+  var showsInfoNode: Bool = true
+  override var shouldShowInfoNode: Bool { return showsInfoNode }
   override var contentShouldExtendBorders: Bool { return false }
   override var contentNode: ASDisplayNode { return node }
 
   override init() {
     node = QuoteCardPostContentNode()
     super.init()
+  }
+
+  convenience init(shouldShowInfoNode: Bool) {
+    self.init()
+    showsInfoNode = shouldShowInfoNode
   }
 }
 

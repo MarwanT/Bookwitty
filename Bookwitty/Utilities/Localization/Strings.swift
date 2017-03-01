@@ -340,4 +340,8 @@ class Strings {
   class func your_feed() -> String {
     return localizedString(key: "your_feed")
   }
+
+  class func discover() -> String {
+    return localizedString(key: "discover")
+  }
 }
