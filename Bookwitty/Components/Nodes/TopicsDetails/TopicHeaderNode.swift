@@ -25,4 +25,14 @@ class TopicHeaderNode: ASDisplayNode {
   private func setupNode() {
     
   }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    var nodesArray: [ASLayoutElement] = []
+    let verticalStack = ASStackLayoutSpec(direction: .vertical,
+                                          spacing: internalMargin,
+                                          justifyContent: .start,
+                                          alignItems: .stretch,
+                                          children: nodesArray)
+    return verticalStack
+  }
 }
