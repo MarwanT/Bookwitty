@@ -23,7 +23,10 @@ class BookDetailsViewController: ASViewController<ASDisplayNode> {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    // Do any additional setup after loading the view.
+    initializeViewController()
+  }
+  
+  private func initializeViewController() {
+    title = viewModel.viewControllerTitle
   }
 }

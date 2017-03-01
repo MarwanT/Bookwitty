@@ -11,4 +11,7 @@ import Foundation
 final class BookDetailsViewModel {
   var book: Book! = nil
   
+  var viewControllerTitle: String? {
+    return book.title
+  }
 }
