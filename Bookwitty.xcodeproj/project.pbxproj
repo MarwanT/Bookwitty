@@ -118,6 +118,7 @@
 		F422D82C1E51992800A32C2F /* PhotoCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F422D82B1E51992800A32C2F /* PhotoCardPostCellNode.swift */; };
 		F422D82E1E51AC3900A32C2F /* VideoCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F422D82D1E51AC3900A32C2F /* VideoCardPostCellNode.swift */; };
 		F422D8301E51CD9D00A32C2F /* LinkCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F422D82F1E51CD9D00A32C2F /* LinkCardPostCellNode.swift */; };
+		F42441651E66FE260087E3B1 /* CardFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42441641E66FE260087E3B1 /* CardFactory.swift */; };
 		F42686771E4EF83C0085E581 /* CardPostInfoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */; };
 		F42686791E4F458A0085E581 /* CardActionBarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42686781E4F458A0085E581 /* CardActionBarNode.swift */; };
 		F426867B1E505CE60085E581 /* BaseCardPostNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426867A1E505CE60085E581 /* BaseCardPostNode.swift */; };
@@ -285,6 +286,7 @@
 		F422D82B1E51992800A32C2F /* PhotoCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCardPostCellNode.swift; sourceTree = "<group>"; };
 		F422D82D1E51AC3900A32C2F /* VideoCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCardPostCellNode.swift; sourceTree = "<group>"; };
 		F422D82F1E51CD9D00A32C2F /* LinkCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkCardPostCellNode.swift; sourceTree = "<group>"; };
+		F42441641E66FE260087E3B1 /* CardFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardFactory.swift; path = Factory/CardFactory.swift; sourceTree = "<group>"; };
 		F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPostInfoNode.swift; sourceTree = "<group>"; };
 		F42686781E4F458A0085E581 /* CardActionBarNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardActionBarNode.swift; sourceTree = "<group>"; };
 		F426867A1E505CE60085E581 /* BaseCardPostNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCardPostNode.swift; sourceTree = "<group>"; };
@@ -858,6 +860,7 @@
 		F42441631E66FDF00087E3B1 /* Factory */ = {
 			isa = PBXGroup;
 			children = (
+				F42441641E66FE260087E3B1 /* CardFactory.swift */,
 			);
 			name = Factory;
 			sourceTree = "<group>";
@@ -1180,6 +1183,7 @@
 				F4207B941E58466A00216A2E /* PenNameSelectionNode.swift in Sources */,
 				595C4F111E3F9DA400BE3942 /* InformativeInputField.swift in Sources */,
 				56E09DBC1E5463EA00B7C6E6 /* ChangePasswordViewController.swift in Sources */,
+				F42441651E66FE260087E3B1 /* CardFactory.swift in Sources */,
 				5945FACB1E6476A30010CF77 /* CategoryViewModel.swift in Sources */,
 				59DA47641E3B7A9B00BA90A5 /* TutorialPageViewController.swift in Sources */,
 				59DA47571E3A65A600BA90A5 /* Storyboard.swift in Sources */,
