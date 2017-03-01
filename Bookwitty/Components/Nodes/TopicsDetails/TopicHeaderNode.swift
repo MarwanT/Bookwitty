@@ -12,9 +12,13 @@ import AsyncDisplayKit
 class TopicHeaderNode: ASDisplayNode {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
-  	
+
+  private var imageNode: ASNetworkImageNode
+
   override init() {
+    imageNode = ASNetworkImageNode()
     super.init()
+    addSubnode(imageNode)
     setupNode()
   }
 
