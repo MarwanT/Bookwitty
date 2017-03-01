@@ -24,8 +24,24 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
   }
 
   init() {
+    let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
     flowLayout = UICollectionViewFlowLayout()
+    flowLayout.sectionInset = UIEdgeInsets(top: externalMargin/2, left: 0, bottom: externalMargin/2, right: 0)
+    flowLayout.minimumInteritemSpacing  = 0
+    flowLayout.minimumLineSpacing       = 0
+
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+
     super.init(node: collectionNode)
+
+    collectionNode.onDidLoad { [weak self] (collectionNode) in
+      guard let strongSelf = self,
+        let asCollectionView = collectionNode.view as? ASCollectionView else {
+          return
+      }
+      strongSelf.collectionView = asCollectionView
+      strongSelf.collectionView?.addSubview(strongSelf.pullToRefresher)
+      strongSelf.collectionView?.alwaysBounceVertical = true
+    }
   }
 }
