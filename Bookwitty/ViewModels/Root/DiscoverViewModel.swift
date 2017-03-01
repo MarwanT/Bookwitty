@@ -34,10 +34,33 @@ final class DiscoverViewModel {
   }
 
   func loadNextPage(completionBlock: @escaping (_ success: Bool) -> ()) {
-    //TODO: load Next Page
-    defer {
-      completionBlock(success)
+    if let listOfIdentifiers = self.paginator?.nextPageIds() {
+      cancellableRequest = loadBatch(listOfIdentifiers: listOfIdentifiers, completion: { (success: Bool, resources: [Resource]?, error: BookwittyAPIError?) in
+        defer {
+          completionBlock(success)
+        }
+        if let resources = resources, success {
+          self.data += resources
+        }
+      })
+    } else {
+      completionBlock(false)
     }
+  }
+
+  private func loadBatch(listOfIdentifiers: [String], completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    return UserAPI.batch(identifiers: listOfIdentifiers, completion: {
+      (success, resource, error) in
+      var resources: [Resource]?
+      defer {
+        completion(success, resources, error)
+      }
+
+      guard success, let result = resource else {
+        return
+      }
+      resources = result
+    })
   }
 }
 
