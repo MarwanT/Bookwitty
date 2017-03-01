@@ -59,6 +59,50 @@ class TopicHeaderNode: ASDisplayNode {
     actionButton.clipsToBounds = true
   }
 
+  var topicTitle: String? {
+    didSet {
+      if let topicTitle = topicTitle {
+        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
+          .append(text: topicTitle, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+      }
+    }
+  }
+
+  var imageUrl: String? {
+    didSet {
+      if let imageUrl = imageUrl {
+        imageNode.url = URL(string: imageUrl)
+      }
+    }
+  }
+
+  func setTopicStatistics(numberOfFollowers: String? = nil, numberOfPosts: String? = nil) {
+    let separator =  " | "
+    var attrStringBuilder = AttributedStringBuilder(fontDynamicType: .footnote)
+    var addSeparator: Bool = false
+
+    //TODO: This should be handled with localization plurals
+    if isValid(numberOfFollowers) {
+      attrStringBuilder = attrStringBuilder
+        .append(text: numberOfFollowers!)
+        .append(text: " " + Strings.followers(), fontDynamicType: .caption2)
+      addSeparator = true
+    } else {
+      addSeparator = false
+    }
+
+    //TODO: This should be handled with localization plurals
+    if isValid(numberOfPosts) {
+      attrStringBuilder = attrStringBuilder
+        .append(text: (addSeparator ? separator : ""), fontDynamicType: .caption2)
+        .append(text: numberOfPosts!)
+        .append(text: " " + Strings.posts(), fontDynamicType: .caption2)
+    }
+
+    //Set the string value
+    topicStatsNode.attributedText = attrStringBuilder.attributedString
+  }
+
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     var nodesArray: [ASLayoutElement] = []
 
