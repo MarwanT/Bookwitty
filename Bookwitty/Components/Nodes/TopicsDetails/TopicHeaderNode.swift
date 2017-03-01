@@ -114,4 +114,8 @@ extension TopicHeaderNode {
       style.flexGrow = flexGrow
     }
   }
+
+  fileprivate func isValid(_ value: String?) -> Bool {
+    return !value.isEmptyOrNil()
+  }
 }
