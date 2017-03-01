@@ -136,17 +136,21 @@ extension RootTabBarController {
   }
   
   func signIn(notification: Notification) {
-    self.dismiss(animated: true) {
-      self.dismissOverlay()
-    }
+    showRootViewController()
   }
   
   func register(notification: Notification) {
+    showRootViewController()
     guard let user = notification.object as? User else {
       return
     }
-    signIn(notification: notification)
     presentPenNameViewController(user: user)
+  }
+  
+  func showRootViewController() {
+    self.dismiss(animated: true) {
+      self.dismissOverlay()
+    }
   }
 }
 
