@@ -44,4 +44,17 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
       strongSelf.collectionView?.alwaysBounceVertical = true
     }
   }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    applyTheme()
+  }
+}
+
+// MARK: - Themeable
+extension DiscoverViewController: Themeable {
+  func applyTheme() {
+    collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+    pullToRefresher.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
+  }
 }
