@@ -17,15 +17,19 @@ class TopicHeaderNode: ASDisplayNode {
   private var imageNode: ASNetworkImageNode
   private var titleNode: ASTextNode
   private var topicStatsNode: ASTextNode
+  private var actionButton: ASButtonNode
+
 
   override init() {
     imageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
     topicStatsNode = ASTextNode()
+    actionButton = ASButtonNode()
     super.init()
     addSubnode(imageNode)
     addSubnode(titleNode)
     addSubnode(topicStatsNode)
+    addSubnode(actionButton)
     setupNode()
   }
 
