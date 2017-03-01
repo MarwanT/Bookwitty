@@ -13,7 +13,8 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let flowLayout: UICollectionViewFlowLayout
   let pullToRefresher = UIRefreshControl()
   let penNameSelectionNode = PenNameSelectionNode()
-
+  let loaderNode: LoaderNode
+  
   var collectionView: ASCollectionView?
 
   let scrollingThreshold: CGFloat = 25.0
@@ -32,6 +33,8 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     flowLayout.minimumLineSpacing       = 0
 
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+
+    loaderNode = LoaderNode()
 
     super.init(node: collectionNode)
 
