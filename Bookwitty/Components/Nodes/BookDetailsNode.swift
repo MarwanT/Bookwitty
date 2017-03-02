@@ -25,6 +25,13 @@ class BookDetailsNode: ASDisplayNode {
       justifyContent: .start, alignItems: .center, children: [headerNode])
     return mainStack
   }
+  
+  func initializeContent() {
+    // Set header information
+    headerNode.title = book.title
+    headerNode.author = book.productDetails?.author
+    headerNode.imageURL = URL(string: book.coverImageUrl ?? "")
+  }
 }
 
 extension BookDetailsNode: Themeable {
