@@ -9,4 +9,5 @@
 import AsyncDisplayKit
 
 class BookDetailsNode: ASDisplayNode {
+  var book: Book?
 }
