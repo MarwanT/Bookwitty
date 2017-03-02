@@ -20,5 +20,11 @@ class BookDetailsFormatNode: ASControlNode {
 
 extension BookDetailsFormatNode {
   struct Configuration {
+    let textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    fileprivate var viewEdgeInset = UIEdgeInsetsMake(
+      ThemeManager.shared.currentTheme.titleMargin(),
+      ThemeManager.shared.currentTheme.titleMargin(),
+      ThemeManager.shared.currentTheme.titleMargin(),
+      ThemeManager.shared.currentTheme.titleMargin())
   }
 }
