@@ -29,6 +29,8 @@ class BookDetailsHeaderNode: ASDisplayNode {
     imageNode.isLayerBacked = true
     titleNode.isLayerBacked = true
     authorNode.isLayerBacked = true
+    
+    imageNode.style.preferredSize = configuration.imageNodePreferredSize
   }
   
   // MARK: APIs
