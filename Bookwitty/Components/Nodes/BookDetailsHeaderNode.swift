@@ -32,31 +32,24 @@ class BookDetailsHeaderNode: ASDisplayNode {
   
   // MARK: APIs
   var imageURL: URL? {
-    get {
-      return imageNode.url
-    }
-    set(url) {
-      imageNode.url = url
+    didSet {
+      imageNode.url = imageURL
+      setNeedsLayout()
     }
   }
   
   var title: String? {
-    get {
-      return titleNode.attributedText?.string
-    }
-    set(text) {
+    didSet {
       titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title3)
-        .append(text: text ?? "", color: configuration.titleTextColor).attributedString
+        .append(text: title ?? "", color: configuration.titleTextColor).attributedString
+      setNeedsLayout()
     }
   }
   
   var author: String? {
-    get {
-      return authorNode.attributedText?.string
-    }
-    set(text) {
+    didSet {
       authorNode.attributedText = AttributedStringBuilder(fontDynamicType: .subheadline)
-        .append(text: text ?? "", color: configuration.authorTextColor).attributedString
+        .append(text: author ?? "", color: configuration.authorTextColor).attributedString
     }
   }
 }
