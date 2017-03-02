@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import Segmentio
 
 final class SegmentedControl: UIView {
+  private var segmentioView: Segmentio!
   class func instantiate() -> SegmentedControl {
     let segmentedControl = SegmentedControl(frame: CGRect.zero)
     segmentedControl.initializeComponents()
@@ -16,6 +18,14 @@ final class SegmentedControl: UIView {
   }
 
   private func initializeComponents() {
+    segmentioView = Segmentio(frame: CGRect.zero)
+    segmentioView.translatesAutoresizingMaskIntoConstraints = false
+    segmentioView.clipsToBounds = true
 
+    self.addSubview(segmentioView)
+    segmentioView.alignTopEdge(withView: self, predicate: "0")
+    segmentioView.alignLeadingEdge(withView: self, predicate: "0")
+    segmentioView.alignTrailingEdge(withView: self, predicate: "0")
+    segmentioView.alignBottomEdge(withView: self, predicate: "0")
   }
 }
