@@ -188,11 +188,14 @@ extension RootTabBarController {
   }
   
   func displayOverlay(animated: Bool = true) {
+    overlayView.isHidden = false
     changeOverlayAlphaValue(animated: animated, alpha: 1)
   }
   
   func dismissOverlay(animated: Bool = true) {
-    changeOverlayAlphaValue(animated: animated, alpha: 0)
+    changeOverlayAlphaValue(animated: animated, alpha: 0) {
+      self.overlayView.isHidden = true
+    }
   }
   
   func changeOverlayAlphaValue(animated: Bool, alpha: CGFloat, completion: (() -> Void)? = nil) {
