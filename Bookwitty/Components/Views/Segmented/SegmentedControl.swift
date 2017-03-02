@@ -11,6 +11,8 @@ import Segmentio
 
 final class SegmentedControl: UIView {
   private var segmentioView: Segmentio!
+  private var segmentOtions: SegmentioOptions!
+
   class func instantiate() -> SegmentedControl {
     let segmentedControl = SegmentedControl(frame: CGRect.zero)
     segmentedControl.initializeComponents()
@@ -27,6 +29,43 @@ final class SegmentedControl: UIView {
     segmentioView.alignLeadingEdge(withView: self, predicate: "0")
     segmentioView.alignTrailingEdge(withView: self, predicate: "0")
     segmentioView.alignBottomEdge(withView: self, predicate: "0")
+
+    let indicatorOptions = SegmentioIndicatorOptions(type: SegmentioIndicatorType.bottom,
+                                                     ratio: 1.0,
+                                                     height: 4.0,
+                                                     color: ThemeManager.shared.currentTheme.defaultButtonColor())
+
+
+    let horizontalSeparatorOptions = SegmentioHorizontalSeparatorOptions(type: SegmentioHorizontalSeparatorType.bottom,
+                                                                         height: 2.0,
+                                                                         color: ThemeManager.shared.currentTheme.defaultSeparatorColor())
+
+
+    let defaultState = SegmentioState(backgroundColor: .clear,
+                                      titleFont: FontDynamicType.footnote.font,
+                                      titleTextColor: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+
+    let selectedState = SegmentioState(backgroundColor: .clear,
+                                       titleFont: FontDynamicType.footnote.font,
+                                       titleTextColor: ThemeManager.shared.currentTheme.defaultTextColor())
+
+    let highlightedState = SegmentioState(backgroundColor: .clear,
+                                          titleFont: FontDynamicType.footnote.font,
+                                          titleTextColor: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+
+    let states = (defaultState, selectedState, highlightedState)
+
+    segmentOtions = SegmentioOptions(backgroundColor: ThemeManager.shared.currentTheme.defaultBackgroundColor(),
+                                     maxVisibleItems: 3,
+                                     scrollEnabled: true,
+                                     indicatorOptions: indicatorOptions,
+                                     horizontalSeparatorOptions: horizontalSeparatorOptions,
+                                     verticalSeparatorOptions: nil,
+                                     imageContentMode: UIViewContentMode.scaleAspectFit,
+                                     labelTextAlignment: NSTextAlignment.center,
+                                     labelTextNumberOfLines: 1,
+                                     segmentStates: states,
+                                     animationDuration: 0.1)
   }
 
   func embed(in view: UIView) {
