@@ -71,7 +71,7 @@ final class SegmentedControl: UIView {
                                      verticalSeparatorOptions: nil,
                                      imageContentMode: UIViewContentMode.scaleAspectFit,
                                      labelTextAlignment: NSTextAlignment.center,
-                                     labelTextNumberOfLines: 1,
+                                     labelTextNumberOfLines: 2,
                                      segmentStates: states,
                                      animationDuration: 0.1)
   }
