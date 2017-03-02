@@ -9,6 +9,11 @@
 import UIKit
 
 final class SegmentedControl: UIView {
+  class func instantiate() -> SegmentedControl {
+    let segmentedControl = SegmentedControl(frame: CGRect.zero)
+    segmentedControl.initializeComponents()
+    return segmentedControl
+  }
 
   private func initializeComponents() {
 
