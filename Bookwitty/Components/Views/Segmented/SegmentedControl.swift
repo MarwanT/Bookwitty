@@ -89,4 +89,8 @@ final class SegmentedControl: UIView {
     segmentioView.selectedSegmentioIndex = 0
     return true
   }
+
+  func select(index: Int) {
+    segmentioView.selectedSegmentioIndex = index
+  }
 }
