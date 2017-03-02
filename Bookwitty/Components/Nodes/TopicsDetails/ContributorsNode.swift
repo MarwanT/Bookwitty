@@ -15,12 +15,15 @@ class ContributorsNode: ASDisplayNode {
   fileprivate let imageBorderWidth: CGFloat = 0.0
   fileprivate let imgaeBorderColor: UIColor? = nil
 
+  private var statsNode: ASTextNode
   override init() {
+    statsNode = ASTextNode()
     super.init()
     automaticallyManagesSubnodes = true
     setupNode()
   }
   private func setupNode() {
+    statsNode.maximumNumberOfLines = 1
   }
 }
 
