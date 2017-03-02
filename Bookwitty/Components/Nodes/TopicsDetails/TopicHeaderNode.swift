@@ -80,6 +80,13 @@ class TopicHeaderNode: ASDisplayNode {
     }
   }
 
+  var contributorsValues: (imageUrls: [String]?, numberOfContributors: String?)? {
+    didSet {
+      contributorsNode.imagesUrls = contributorsValues?.imageUrls
+      contributorsNode.numberOfContributors = contributorsValues?.numberOfContributors
+    }
+  }
+
   func setTopicStatistics(numberOfFollowers: String? = nil, numberOfPosts: String? = nil) {
     let separator =  " | "
     var attrStringBuilder = AttributedStringBuilder(fontDynamicType: .footnote)
@@ -145,9 +152,15 @@ class TopicHeaderNode: ASDisplayNode {
     let horizontalSpecInset = ASInsetLayoutSpec(insets: sideInset(), child: statsAndActionHorizontalSpec)
     nodesArray.append(horizontalSpecInset)
 
-    contributorsNode.style.width = ASDimensionMake(constrainedSize.max.width)
-    contributorsNode.style.height = ASDimensionMake(45.0)
-    nodesArray.append(contributorsNode)
+    if let contributorsValues = contributorsValues {
+      let count = contributorsValues.imageUrls?.count ?? 0
+      let text = contributorsValues.numberOfContributors
+      if count != 0 || isValid(text){
+        contributorsNode.style.width = ASDimensionMake(constrainedSize.max.width)
+        contributorsNode.style.height = ASDimensionMake(45.0)
+        nodesArray.append(contributorsNode)
+      }
+    }
 
     let verticalStack = ASStackLayoutSpec(direction: .vertical,
                                           spacing: internalMargin,
