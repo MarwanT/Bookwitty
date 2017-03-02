@@ -40,6 +40,7 @@ extension CuratedCollection: Parsable {
 
 // MARK: - Curated collection sections
 typealias Banner = (imageUrlString: String?, caption: String?)
+typealias OnBoardingCollection =  [String : OnBoardingCollectionItem]
 
 class CuratedCollectionSections: NSObject {
   let banner: Banner?
@@ -95,6 +96,35 @@ class CuratedCollectionSections: NSObject {
       identifiers.append(identifier)
     }
     return identifiers
+  }
+}
+
+struct OnBoardingCollectionItem {
+  var featured: [CuratedCollectionItem]?
+  var wittyIds: [CuratedCollectionItem]?
+  var penNames: [String]?
+
+  init(featured: [CuratedCollectionItem]? = nil, wittyIds: [CuratedCollectionItem]? = nil, penNames: [String]?  = nil) {
+    self.featured = featured
+    self.wittyIds = wittyIds
+    self.penNames = penNames
+  }
+
+  static func parse(from json: JSON) -> OnBoardingCollectionItem {
+    let featured: [CuratedCollectionItem]? = CuratedCollectionItem.parseArray(json: json["featured"])
+    let wittyIds: [CuratedCollectionItem]? = CuratedCollectionItem.parseArray(json: json["witty-ids"])
+    let penNames: [String]? = OnBoardingCollectionItem.parseStrings(json: json["pen-names"])
+
+    return OnBoardingCollectionItem(featured: featured, wittyIds: wittyIds, penNames: penNames)
+  }
+
+  static private func parseStrings(json: JSON) -> [String]? {
+    var values = [String]()
+    for (_, subJSON) in json {
+      let value = subJSON.stringValue
+      values.append(value)
+    }
+    return values.count == 0 ? nil : values
   }
 }
 
