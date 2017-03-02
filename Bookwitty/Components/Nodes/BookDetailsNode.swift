@@ -39,6 +39,16 @@ class BookDetailsNode: ASDisplayNode {
   }
 }
 
+extension BookDetailsNode {
+  struct Configuration {
+    fileprivate let formatNodeEdgeInsets = UIEdgeInsetsMake(
+      ThemeManager.shared.currentTheme.generalExternalMargin(),
+      ThemeManager.shared.currentTheme.generalExternalMargin(),
+      ThemeManager.shared.currentTheme.generalExternalMargin(),
+      ThemeManager.shared.currentTheme.generalExternalMargin())
+  }
+}
+
 extension BookDetailsNode: Themeable {
   func applyTheme() {
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
