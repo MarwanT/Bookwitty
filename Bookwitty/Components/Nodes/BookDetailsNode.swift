@@ -15,6 +15,7 @@ class BookDetailsNode: ASDisplayNode {
   
   override init() {
     super.init()
+    automaticallyManagesSubnodes = true
     applyTheme()
   }
 }
