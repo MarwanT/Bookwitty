@@ -54,9 +54,23 @@ class BookDetailsHeaderNode: ASDisplayNode {
   }
 }
 
+// MARK: - Configuration
 extension BookDetailsHeaderNode {
   struct Configuration {
     var titleTextColor = ThemeManager.shared.currentTheme.defaultTextColor()
     var authorTextColor = ThemeManager.shared.currentTheme.colorNumber19()
+    var backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+    fileprivate var labelsSpacing: CGFloat = 5
+    fileprivate var imageNodePreferredSize: CGSize = CGSize(width: 100, height: 150)
+    fileprivate var generalEdgeInsets = UIEdgeInsets(
+      top: ThemeManager.shared.currentTheme.booksVerticalSpacing(),
+      left: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      bottom: ThemeManager.shared.currentTheme.booksVerticalSpacing(),
+      right: ThemeManager.shared.currentTheme.generalExternalMargin())
+    fileprivate var horizontalEdgeInsets = UIEdgeInsets(
+      top: 0,
+      left: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      bottom: 0,
+      right: ThemeManager.shared.currentTheme.generalExternalMargin())
   }
 }
