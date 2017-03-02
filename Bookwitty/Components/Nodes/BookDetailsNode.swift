@@ -10,4 +10,16 @@ import AsyncDisplayKit
 
 class BookDetailsNode: ASDisplayNode {
   var book: Book?
+  
+  override init() {
+    super.init()
+    applyTheme()
+  }
 }
+
+extension BookDetailsNode: Themeable {
+  func applyTheme() {
+    backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+  }
+}
+
