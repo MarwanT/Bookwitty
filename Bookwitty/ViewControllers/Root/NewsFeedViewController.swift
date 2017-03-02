@@ -17,13 +17,25 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let loaderNode: LoaderNode
   
   var collectionView: ASCollectionView?
-
+  var scrollView: UIScrollView? {
+    if let collectionView = collectionView {
+      return collectionView as UIScrollView
+    }
+    return nil
+  }
   let scrollingThreshold: CGFloat = 25.0
   let viewModel = NewsFeedViewModel()
   var isFirstRun: Bool = true
   var isLoadingMore: Bool = false {
     didSet {
-      let bottomMargin: CGFloat = isLoadingMore ? -(externalMargin/2) : -(LoaderNode.nodeHeight - externalMargin/2)
+      let bottomMargin: CGFloat
+      if isLoadingMore {
+        bottomMargin = -(externalMargin/2)
+      } else {
+        //If we have Zero data items this means that we are only showing the pen-name-selection-node
+        bottomMargin = viewModel.data.count == 0 ? 0.0 : -(LoaderNode.nodeHeight - externalMargin/2)
+      }
+
       flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomMargin, right: 0)
       loaderNode.updateLoaderVisibility(show: isLoadingMore)
     }
@@ -116,12 +128,22 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   }
 
   func loadData(withPenNames reloadPenNames: Bool = true) {
-    pullToRefresher.beginRefreshing()
+    viewModel.data = []
+    collectionNode.reloadData()
+    if !reloadPenNames {
+      self.isLoadingMore = true
+    } else {
+      self.pullToRefresher.beginRefreshing()
+    }
     viewModel.loadNewsfeed { [weak self] (success) in
       guard let strongSelf = self else { return }
-      strongSelf.pullToRefresher.endRefreshing()
-      strongSelf.collectionNode.reloadData(completion: { 
-        if reloadPenNames {
+      if !reloadPenNames {
+        strongSelf.isLoadingMore = false
+      } else {
+        strongSelf.pullToRefresher.endRefreshing()
+      }
+      strongSelf.collectionNode.reloadData(completion: {
+        if reloadPenNames || strongSelf.penNameSelectionNode.calculatedLayout?.size.height ?? 0.0 > 0.0 {
           strongSelf.reloadPenNamesNode()
         }
       })
@@ -135,6 +157,10 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 }
 extension NewsFeedViewController: PenNameSelectionNodeDelegate {
   func didSelectPenName(penName: PenName, sender: PenNameSelectionNode) {
+    if let scrollView = scrollView {
+      penNameSelectionNode.alpha = 1.0
+      scrollView.contentOffset = CGPoint(x: 0, y: 0.0)
+    }
     viewModel.didUpdateDefaultPenName(penName: penName, completionBlock: {  didSaveDefault in
       if didSaveDefault {
         loadData(withPenNames: false)

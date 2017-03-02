@@ -101,7 +101,8 @@ extension  CardFactory {
 
     let name = resource.penName?.name ?? "[No Name]"
     let date = Date.formatDate(date: resource.createdAt)
-    card.postInfoData = CardPostInfoNodeData(name, date, "https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    let penNameprofileImage = resource.penName?.avatarUrl
+    card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
     card.node.articleTitle = resource.caption
     card.node.articleDescription = resource.shortDescription ?? resource.biography
     card.node.subImageUrl = resource.thumbnailImageUrl ?? resource.profileImageUrl ?? resource.imageUrl
@@ -127,7 +128,8 @@ extension  CardFactory {
 
     let name = resource.penName?.name ?? "[No Name]"
     let date = Date.formatDate(date: resource.createdAt)
-    card.postInfoData = CardPostInfoNodeData(name, date, "https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    let penNameprofileImage = resource.penName?.avatarUrl
+    card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.imageUrl = resource.coverImageUrl ?? resource.thumbnailImageUrl
@@ -153,7 +155,8 @@ extension  CardFactory {
 
     let name = resource.penName?.name ?? "[No Name]"
     let date = Date.formatDate(date: resource.createdAt)
-    card.postInfoData = CardPostInfoNodeData(name, date, "https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    let penNameprofileImage = resource.penName?.avatarUrl
+    card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
     card.node.articleQuotePublisher = resource.author
     if let qoute = resource.body, !qoute.isEmpty {
       card.node.articleQuote = "“ \(qoute) ”"
@@ -182,7 +185,8 @@ extension  CardFactory {
 
     let name = resource.penName?.name ?? "[No Name]"
     let date = Date.formatDate(date: resource.createdAt)
-    card.postInfoData = CardPostInfoNodeData(name, date, "https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    let penNameprofileImage = resource.penName?.avatarUrl
+    card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
     card.node.articleTitle = nil
     card.node.articleDescription = resource.shortDescription
     card.node.imageUrl = resource.coverImageUrl
@@ -210,7 +214,8 @@ extension  CardFactory {
 
     let name = resource.penName?.name ?? "[No Name]"
     let date = Date.formatDate(date: resource.createdAt)
-    card.postInfoData = CardPostInfoNodeData(name, date, "https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    let penNameprofileImage = resource.penName?.avatarUrl
+    card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
     card.node.linkUrl = resource.urlLink
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
@@ -236,7 +241,8 @@ extension  CardFactory {
 
     let name = resource.penName?.name ?? "[No Name]"
     let date = Date.formatDate(date: resource.createdAt)
-    card.postInfoData = CardPostInfoNodeData(name, date, "https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    let penNameprofileImage = resource.penName?.avatarUrl
+    card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
     card.node.linkUrl = nil
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
@@ -262,7 +268,8 @@ extension  CardFactory {
 
     let name = resource.penName?.name ?? "[No Name]"
     let date = Date.formatDate(date: resource.createdAt)
-    card.postInfoData = CardPostInfoNodeData(name, date, "https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    let penNameprofileImage = resource.penName?.avatarUrl
+    card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
     card.node.imageUrl = resource.coverImageUrl
     card.articleCommentsSummary = "X commented on this"
 
@@ -286,7 +293,8 @@ extension  CardFactory {
 
     let name = resource.penName?.name ?? "[No Name]"
     let date = Date.formatDate(date: resource.createdAt)
-    card.postInfoData = CardPostInfoNodeData(name, date, "https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    let penNameprofileImage = resource.penName?.avatarUrl
+    card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.imageUrl = resource.coverImageUrl
@@ -335,7 +343,8 @@ extension  CardFactory {
 
     let name = resource.penName?.name ?? "[No Name]"
     let date = Date.formatDate(date: resource.createdAt)
-    card.postInfoData = CardPostInfoNodeData(name, date, "https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
+    let penNameprofileImage = resource.penName?.avatarUrl
+    card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.setTopicStatistics(numberOfPosts: "XX")

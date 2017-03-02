@@ -21,11 +21,10 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
 
   let viewModel = DiscoverViewModel()
   
-  var isFirstRun: Bool = true
   var isLoadingMore: Bool = false {
     didSet {
       let bottomMargin: CGFloat = isLoadingMore ? -(externalMargin/2) : -(LoaderNode.nodeHeight - externalMargin/2)
-      flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomMargin, right: 0)
+      flowLayout.sectionInset = UIEdgeInsets(top: externalMargin, left: 0, bottom: bottomMargin, right: 0)
       loaderNode.updateLoaderVisibility(show: isLoadingMore)
     }
   }
@@ -36,7 +35,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
 
   init() {
     flowLayout = UICollectionViewFlowLayout()
-    flowLayout.sectionInset = UIEdgeInsets(top: externalMargin/2, left: 0, bottom: externalMargin/2, right: 0)
+    flowLayout.sectionInset = UIEdgeInsets(top: externalMargin, left: 0, bottom: externalMargin/2, right: 0)
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
     flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.nodeHeight)
@@ -68,15 +67,15 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     pullToRefresher.addTarget(self, action: #selector(self.loadData), for: .valueChanged)
 
     applyTheme()
+
+    if UserManager.shared.isSignedIn {
+      loadData()
+    }
   }
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     animateRefreshControllerIfNeeded()
-    if isFirstRun && UserManager.shared.isSignedIn {
-      isFirstRun = false
-      loadData()
-    }
   }
 
   /*
