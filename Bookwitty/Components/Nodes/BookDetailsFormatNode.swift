@@ -16,6 +16,7 @@ class BookDetailsFormatNode: ASControlNode {
   override init() {
     textNode = ASTextNode()
     super.init()
+    applyTheme()
   }
 }
 
@@ -27,5 +28,12 @@ extension BookDetailsFormatNode {
       ThemeManager.shared.currentTheme.titleMargin(),
       ThemeManager.shared.currentTheme.titleMargin(),
       ThemeManager.shared.currentTheme.titleMargin())
+  }
+}
+
+extension BookDetailsFormatNode: Themeable {
+  func applyTheme() {
+    borderWidth = 1.0
+    borderColor = ThemeManager.shared.currentTheme.colorNumber18().cgColor
   }
 }
