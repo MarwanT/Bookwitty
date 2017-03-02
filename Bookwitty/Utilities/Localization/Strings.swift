@@ -65,6 +65,10 @@ class Strings {
     return localizedString(key: "continue")
   }
 
+  class func contributors() -> String {
+    return localizedString(key: "contributors")
+  }
+
   class func country() -> String {
     return localizedString(key: "country")
   }
