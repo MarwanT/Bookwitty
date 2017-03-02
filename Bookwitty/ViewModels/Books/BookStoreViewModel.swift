@@ -266,6 +266,13 @@ extension BookStoreViewModel {
     return (URL(string: book.thumbnailImageUrl ?? ""), book.title, book.productDetails?.author, book.productDetails?.productFormat, book.supplierInformation?.displayPrice?.formattedValue)
   }
   
+  func book(for indexPath: IndexPath) -> Book? {
+    guard let book = featuredReadingListContent?.fetchedBooks?[indexPath.row] else {
+      return nil
+    }
+    return book
+  }
+  
   var books: [Book]? {
     return featuredReadingListContent?.fetchedBooks
   }

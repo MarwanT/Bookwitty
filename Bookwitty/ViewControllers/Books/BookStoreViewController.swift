@@ -262,6 +262,11 @@ class BookStoreViewController: UIViewController {
     self.navigationController?.pushViewController(categoriesViewController, animated: true)
   }
   
+  fileprivate func pushBookDetailsViewController(with book: Book) {
+    let bookDetailsViewController = BookDetailsViewController(with: book)
+    navigationController?.pushViewController(bookDetailsViewController, animated: true)
+  }
+  
   // MARK: Helpers
   func showAlertWith(title: String, message: String) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
@@ -440,6 +445,15 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
+    
+    if tableView === bookwittySuggestsTableView {
+      
+    } else {
+      guard let book = viewModel.book(for: indexPath) else {
+        return
+      }
+      pushBookDetailsViewController(with: book)
+    }
   }
 }
 
