@@ -28,4 +28,13 @@ final class SegmentedControl: UIView {
     segmentioView.alignTrailingEdge(withView: self, predicate: "0")
     segmentioView.alignBottomEdge(withView: self, predicate: "0")
   }
+
+  func embed(in view: UIView) {
+    guard !view.subviews.contains(self) else {
+      return
+    }
+
+    view.addSubview(self)
+    self.constrainHeight("45")
+  }
 }
