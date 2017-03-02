@@ -11,4 +11,9 @@ import AsyncDisplayKit
 class BookDetailsFormatNode: ASControlNode {
   fileprivate let textNode: ASTextNode
   
+  
+  override init() {
+    textNode = ASTextNode()
+    super.init()
+  }
 }
