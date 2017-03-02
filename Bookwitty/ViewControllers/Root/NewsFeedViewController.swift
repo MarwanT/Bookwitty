@@ -17,7 +17,12 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let loaderNode: LoaderNode
   
   var collectionView: ASCollectionView?
-
+  var scrollView: UIScrollView? {
+    if let collectionView = collectionView {
+      return collectionView as UIScrollView
+    }
+    return nil
+  }
   let scrollingThreshold: CGFloat = 25.0
   let viewModel = NewsFeedViewModel()
   var isFirstRun: Bool = true
@@ -138,7 +143,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
         strongSelf.pullToRefresher.endRefreshing()
       }
       strongSelf.collectionNode.reloadData(completion: {
-        if reloadPenNames {
+        if reloadPenNames || strongSelf.penNameSelectionNode.calculatedLayout?.size.height ?? 0.0 > 0.0 {
           strongSelf.reloadPenNamesNode()
         }
       })
@@ -152,6 +157,10 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 }
 extension NewsFeedViewController: PenNameSelectionNodeDelegate {
   func didSelectPenName(penName: PenName, sender: PenNameSelectionNode) {
+    if let scrollView = scrollView {
+      penNameSelectionNode.alpha = 1.0
+      scrollView.contentOffset = CGPoint(x: 0, y: 0.0)
+    }
     viewModel.didUpdateDefaultPenName(penName: penName, completionBlock: {  didSaveDefault in
       if didSaveDefault {
         loadData(withPenNames: false)
