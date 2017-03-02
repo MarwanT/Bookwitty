@@ -10,4 +10,7 @@ import UIKit
 
 final class SegmentedControl: UIView {
 
+  private func initializeComponents() {
+
+  }
 }
