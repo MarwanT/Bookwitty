@@ -16,7 +16,13 @@ class BookDetailsFormatNode: ASControlNode {
   override init() {
     textNode = ASTextNode()
     super.init()
+    initializeComponents()
     applyTheme()
+  }
+  
+  func initializeComponents() {
+    automaticallyManagesSubnodes = true
+    textNode.isLayerBacked = true
   }
 }
 
