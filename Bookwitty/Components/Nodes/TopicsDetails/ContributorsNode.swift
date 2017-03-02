@@ -25,6 +25,37 @@ class ContributorsNode: ASDisplayNode {
     automaticallyManagesSubnodes = true
     setupNode()
   }
+
+  var imagesUrls: [String]? {
+    didSet {
+      imagesNodes.removeAll()
+      if let imagesUrls = imagesUrls {
+        let limit = min(10, imagesUrls.count)
+        for index in 0..<limit {
+          let imageNode = ASNetworkImageNode()
+          imageNode.style.preferredSize = imageSize
+          imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
+          imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(imageBorderWidth, imgaeBorderColor)
+          imageNode.url = URL(string: imagesUrls[index])
+          imagesNodes.append(imageNode)
+        }
+        setNeedsLayout()
+      }
+    }
+  }
+
+  var numberOfContributors: String? {
+    didSet {
+      //TODO: This should be handled with localization plurals
+      if isValid(numberOfContributors) {
+        statsNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
+          .append(text: numberOfContributors!)
+          .append(text: " " + Strings.followers()).attributedString
+        setNeedsLayout()
+      }
+    }
+  }
+
   private func setupNode() {
     statsNode.maximumNumberOfLines = 1
   }
