@@ -9,5 +9,6 @@
 import AsyncDisplayKit
 
 class BookDetailsFormatNode: ASControlNode {
+  fileprivate let textNode: ASTextNode
   
 }
