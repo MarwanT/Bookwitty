@@ -13,6 +13,8 @@ class BookDetailsHeaderNode: ASDisplayNode {
   fileprivate var titleNode: ASTextNode
   fileprivate var authorNode: ASTextNode
   
+  var configuration = Configuration()
+  
   override init() {
     imageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
