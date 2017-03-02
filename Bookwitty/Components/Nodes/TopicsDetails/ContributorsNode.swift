@@ -15,6 +15,13 @@ class ContributorsNode: ASDisplayNode {
   fileprivate let imageBorderWidth: CGFloat = 0.0
   fileprivate let imgaeBorderColor: UIColor? = nil
 
+  override init() {
+    super.init()
+    automaticallyManagesSubnodes = true
+    setupNode()
+  }
+  private func setupNode() {
+  }
 }
 
 //Helpers
