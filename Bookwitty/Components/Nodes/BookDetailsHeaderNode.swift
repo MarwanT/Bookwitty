@@ -28,6 +28,36 @@ class BookDetailsHeaderNode: ASDisplayNode {
     titleNode.isLayerBacked = true
     authorNode.isLayerBacked = true
   }
+  
+  // MARK: APIs
+  var imageURL: URL? {
+    get {
+      return imageNode.url
+    }
+    set(url) {
+      imageNode.url = url
+    }
+  }
+  
+  var title: String? {
+    get {
+      return titleNode.attributedText?.string
+    }
+    set(text) {
+      titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title3)
+        .append(text: text ?? "", color: configuration.titleTextColor).attributedString
+    }
+  }
+  
+  var author: String? {
+    get {
+      return authorNode.attributedText?.string
+    }
+    set(text) {
+      authorNode.attributedText = AttributedStringBuilder(fontDynamicType: .subheadline)
+        .append(text: text ?? "", color: configuration.authorTextColor).attributedString
+    }
+  }
 }
 
 extension BookDetailsHeaderNode {
