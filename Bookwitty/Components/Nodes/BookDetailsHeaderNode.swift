@@ -9,4 +9,14 @@
 import AsyncDisplayKit
 
 class BookDetailsHeaderNode: ASDisplayNode {
+  fileprivate var imageNode: ASNetworkImageNode
+  fileprivate var titleNode: ASTextNode
+  fileprivate var authorNode: ASTextNode
+  
+  override init() {
+    imageNode = ASNetworkImageNode()
+    titleNode = ASTextNode()
+    authorNode = ASTextNode()
+    super.init()
+  }
 }
