@@ -24,6 +24,14 @@ class BookDetailsFormatNode: ASControlNode {
     automaticallyManagesSubnodes = true
     textNode.isLayerBacked = true
   }
+  
+  var format: String? {
+    didSet {
+      textNode.attributedText = AttributedStringBuilder(fontDynamicType: .subheadline)
+        .append(text: Strings.format() + ": " + (format ?? ""), color: configuration.textColor).attributedString
+      setNeedsLayout()
+    }
+  }
 }
 
 extension BookDetailsFormatNode {
