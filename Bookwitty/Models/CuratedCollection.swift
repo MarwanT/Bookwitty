@@ -97,3 +97,30 @@ class CuratedCollectionSections: NSObject {
     return identifiers
   }
 }
+
+struct CuratedCollectionItem {
+  var size: Int
+  var caption: String
+  var wittyId: String
+
+  init(size: Int, caption: String, wittyId: String) {
+    self.size = size
+    self.caption = caption
+    self.wittyId = wittyId
+  }
+
+  static func parse(from json: JSON) -> CuratedCollectionItem {
+    let size: Int = json["size"].intValue
+    let caption: String = json["caption"].stringValue
+    let wittyId: String = json["witty-id"].stringValue
+    return CuratedCollectionItem(size: size, caption: caption, wittyId: wittyId)
+  }
+
+  static func parseArray(json: JSON) -> [CuratedCollectionItem]? {
+    var items = [CuratedCollectionItem]()
+    for (_, subJSON) in json {
+      items.append(CuratedCollectionItem.parse(from: subJSON))
+    }
+    return items.count == 0 ? nil : items
+  }
+}
