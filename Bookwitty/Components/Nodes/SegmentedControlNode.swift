@@ -9,8 +9,12 @@
 import UIKit
 import AsyncDisplayKit
 
+typealias SegmentedControlNodeSelectionCallBack = (_ segmentedControlNode: SegmentedControlNode, _ selectedSegmentIndex: Int) -> ()
+
 class SegmentedControlNode: ASDisplayNode {
   private var segmentedControl: SegmentedControl!
+
+  var selectedSegmentChanged: SegmentedControlNodeSelectionCallBack?
 
   convenience override init() {
     self.init(viewBlock: { () -> UIView in
@@ -19,6 +23,9 @@ class SegmentedControlNode: ASDisplayNode {
     })
 
     self.segmentedControl = self.view as! SegmentedControl
+    self.segmentedControl.selectedSegmentChanged = { (segmentedControl, selectedSegmentIndex) in
+      self.selectedSegmentChanged?(self, selectedSegmentIndex)
+    }
   }
 
   func initialize(with segments: [String]) {
