@@ -27,3 +27,10 @@ class BookDetailsHeaderNode: ASDisplayNode {
     authorNode.isLayerBacked = true
   }
 }
+
+extension BookDetailsHeaderNode {
+  struct Configuration {
+    var titleTextColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    var authorTextColor = ThemeManager.shared.currentTheme.colorNumber19()
+  }
+}
