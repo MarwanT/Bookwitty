@@ -9,7 +9,12 @@
 import AsyncDisplayKit
 
 class BookDetailsNode: ASDisplayNode {
-  var book: Book?
+  var book: Book! = nil {
+    didSet {
+      initializeContent()
+      setNeedsLayout()
+    }
+  }
   
   private var headerNode = BookDetailsHeaderNode()
   
