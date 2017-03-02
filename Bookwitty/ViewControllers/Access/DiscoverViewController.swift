@@ -11,29 +11,38 @@ import UIKit
 import AsyncDisplayKit
 
 class DiscoverViewController: ASViewController<ASCollectionNode> {
+  let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
   let pullToRefresher = UIRefreshControl()
+  let loaderNode: LoaderNode
 
   var collectionView: ASCollectionView?
 
   let viewModel = DiscoverViewModel()
   
-  var isFirstRun: Bool = true
+  var isLoadingMore: Bool = false {
+    didSet {
+      let bottomMargin: CGFloat = isLoadingMore ? -(externalMargin/2) : -(LoaderNode.nodeHeight - externalMargin/2)
+      flowLayout.sectionInset = UIEdgeInsets(top: externalMargin, left: 0, bottom: bottomMargin, right: 0)
+      loaderNode.updateLoaderVisibility(show: isLoadingMore)
+    }
+  }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
   init() {
-    let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
     flowLayout = UICollectionViewFlowLayout()
-    flowLayout.sectionInset = UIEdgeInsets(top: externalMargin/2, left: 0, bottom: externalMargin/2, right: 0)
+    flowLayout.sectionInset = UIEdgeInsets(top: externalMargin, left: 0, bottom: externalMargin/2, right: 0)
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
-
+    flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.nodeHeight)
+    
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
-
+    loaderNode = LoaderNode()
+    
     super.init(node: collectionNode)
 
     collectionNode.onDidLoad { [weak self] (collectionNode) in
@@ -45,6 +54,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
       strongSelf.collectionView?.addSubview(strongSelf.pullToRefresher)
       strongSelf.collectionView?.alwaysBounceVertical = true
     }
+    collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionFooter)
   }
 
   override func viewDidLoad() {
@@ -57,15 +67,15 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     pullToRefresher.addTarget(self, action: #selector(self.loadData), for: .valueChanged)
 
     applyTheme()
+
+    if UserManager.shared.isSignedIn {
+      loadData()
+    }
   }
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     animateRefreshControllerIfNeeded()
-    if isFirstRun && UserManager.shared.isSignedIn {
-      isFirstRun = false
-      loadData()
-    }
   }
 
   /*
@@ -123,9 +133,20 @@ extension DiscoverViewController: ASCollectionDataSource {
       return baseCardNode
     }
   }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
+    switch kind {
+    case UICollectionElementKindSectionFooter: return loaderNode
+    default: return ASCellNode()
+    }
+  }
 }
 
 extension DiscoverViewController: ASCollectionDelegate {
+  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    return CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.nodeHeight)
+  }
+
   public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
     return ASSizeRange(
       min: CGSize(width: collectionNode.frame.width, height: 0),
@@ -138,8 +159,14 @@ extension DiscoverViewController: ASCollectionDelegate {
   }
 
   public func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
+    guard !isLoadingMore else {
+      return
+    }
     let initialLastIndexPath: Int = viewModel.numberOfItemsInSection()
-
+    
+    DispatchQueue.main.async {
+      self.isLoadingMore = true
+    }
     // Fetch next page data
     viewModel.loadNextPage { [weak self] (success) in
       guard let strongSelf = self else {
@@ -153,7 +180,10 @@ extension DiscoverViewController: ASCollectionDelegate {
         let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
           return IndexPath(row: index, section: 0)
         })
-        strongSelf.loadItemsWithIndex(updatedRange: updatedIndexPathRange)
+        strongSelf.loadItemsWithIndexOnMainThread() {
+          collectionNode.insertItems(at: updatedIndexPathRange)
+          strongSelf.isLoadingMore = false
+        }
       }
 
       // Properly finish the batch fetch
@@ -164,16 +194,12 @@ extension DiscoverViewController: ASCollectionDelegate {
   /**
    * Note: loadItemsWithIndex will always run on the main thread
    */
-  func loadItemsWithIndex(updatedRange: [IndexPath]) {
+  func loadItemsWithIndexOnMainThread(completionBlock: @escaping () -> ()) {
     if Thread.isMainThread {
-      collectionNode.insertItems(at: updatedRange)
+      completionBlock()
     } else {
       DispatchQueue.main.async {
-        [weak self] in
-        guard let strongSelf = self else {
-          return
-        }
-        strongSelf.collectionNode.insertItems(at: updatedRange)
+        completionBlock()
       }
     }
   }

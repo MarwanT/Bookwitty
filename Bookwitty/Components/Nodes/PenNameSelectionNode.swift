@@ -197,9 +197,11 @@ extension PenNameSelectionNode: ASCollectionDataSource, ASCollectionDelegate {
     let index = indexPath.row
     let isLast = (index == data.count-1)
     let name: String = data[index].name ?? ""
+    let url = data[index].avatarUrl
     return {
       let cell = PenNameCellNode(withSeparator: !isLast, withCellHeight: PenNameSelectionNode.cellHeight)
       cell.penNameSummary = name
+      cell.penNamePictureUrl = url
       return cell
     }
   }
