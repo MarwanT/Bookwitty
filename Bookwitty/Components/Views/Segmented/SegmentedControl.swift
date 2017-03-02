@@ -9,9 +9,13 @@
 import UIKit
 import Segmentio
 
+typealias SegmentedControlSelectionCallBack = (_ segmentedControl: SegmentedControl, _ selectedSegmentIndex: Int) -> ()
+
 final class SegmentedControl: UIView {
   private var segmentioView: Segmentio!
   private var segmentOtions: SegmentioOptions!
+
+  var selectedSegmentChanged: SegmentedControlSelectionCallBack?
 
   class func instantiate() -> SegmentedControl {
     let segmentedControl = SegmentedControl(frame: CGRect.zero)
@@ -29,6 +33,10 @@ final class SegmentedControl: UIView {
     segmentioView.alignLeadingEdge(withView: self, predicate: "0")
     segmentioView.alignTrailingEdge(withView: self, predicate: "0")
     segmentioView.alignBottomEdge(withView: self, predicate: "0")
+
+    segmentioView.valueDidChange = { (segmentio, selectedIndex) in
+      self.selectedSegmentChanged?(self, selectedIndex)
+    }
 
     let indicatorOptions = SegmentioIndicatorOptions(type: SegmentioIndicatorType.bottom,
                                                      ratio: 1.0,
