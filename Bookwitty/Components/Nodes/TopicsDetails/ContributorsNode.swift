@@ -49,8 +49,8 @@ class ContributorsNode: ASDisplayNode {
       //TODO: This should be handled with localization plurals
       if isValid(numberOfContributors) {
         statsNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
-          .append(text: numberOfContributors!)
-          .append(text: " " + Strings.followers()).attributedString
+          .append(text: numberOfContributors! + " " + Strings.contributors(), color: ThemeManager.shared.currentTheme.defaultButtonColor())
+          .attributedString
         setNeedsLayout()
       }
     }
@@ -73,21 +73,22 @@ class ContributorsNode: ASDisplayNode {
 
     let imagesStackSpec = ASStackLayoutSpec(direction: .horizontal,
                                                          spacing: 5,
-                                                         justifyContent: .end,
+                                                         justifyContent: .start,
                                                          alignItems: .center,
                                                          children: imagesNodes)
 
+    if imagesNodes.count > 2 {
+      imagesStackSpec.style.spacingBefore = (-45.0 / 2.0) - internalMargin
+    }
 
     nodesArray.append(imagesStackSpec)
-
-    nodesArray.append(spacer(flexGrow: 1.0))
-    nodesArray.append(spacer(width: internalMargin))
+    nodesArray.append(spacer(width: 1.5 * internalMargin))
 
     nodesArray.append(statsNode)
 
     let horizontalSpec = ASStackLayoutSpec(direction: .horizontal,
                                                          spacing: 0,
-                                                         justifyContent: .end,
+                                                         justifyContent: .spaceBetween,
                                                          alignItems: .center,
                                                          children: nodesArray)
 
