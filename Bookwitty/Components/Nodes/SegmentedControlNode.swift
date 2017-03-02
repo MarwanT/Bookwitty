@@ -7,7 +7,17 @@
 //
 
 import UIKit
+import AsyncDisplayKit
 
 class SegmentedControlNode: ASDisplayNode {
+  private var segmentedControl: SegmentedControl!
 
+  convenience override init() {
+    self.init(viewBlock: { () -> UIView in
+      let segmentedControl = SegmentedControl.instantiate()      
+      return segmentedControl
+    })
+
+    self.segmentedControl = self.view as! SegmentedControl
+  }
 }
