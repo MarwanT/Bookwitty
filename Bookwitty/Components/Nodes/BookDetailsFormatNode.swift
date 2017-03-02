@@ -17,3 +17,8 @@ class BookDetailsFormatNode: ASControlNode {
     super.init()
   }
 }
+
+extension BookDetailsFormatNode {
+  struct Configuration {
+  }
+}
