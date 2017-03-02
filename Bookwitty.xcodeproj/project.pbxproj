@@ -108,6 +108,7 @@
 		59DA47671E3B84ED00BA90A5 /* Access.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59DA47661E3B84ED00BA90A5 /* Access.storyboard */; };
 		59DA476A1E3B876900BA90A5 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47691E3B876900BA90A5 /* SignInViewController.swift */; };
 		59EC5B971E689E0E006E1CB9 /* BookDetailsFormatNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC5B961E689E0E006E1CB9 /* BookDetailsFormatNode.swift */; };
+		59EC5B991E68C95A006E1CB9 /* BookDetailsECommerceNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC5B981E68C95A006E1CB9 /* BookDetailsECommerceNode.swift */; };
 		59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */; };
 		B4ECA3471E4E05E7004B3EE2 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4ECA3461E4E05E7004B3EE2 /* WebViewController.swift */; };
 		F40700501E55992000DA48A4 /* ReadingListBooksNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */; };
@@ -275,6 +276,7 @@
 		59DA47661E3B84ED00BA90A5 /* Access.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Access.storyboard; sourceTree = "<group>"; };
 		59DA47691E3B876900BA90A5 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		59EC5B961E689E0E006E1CB9 /* BookDetailsFormatNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsFormatNode.swift; sourceTree = "<group>"; };
+		59EC5B981E68C95A006E1CB9 /* BookDetailsECommerceNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsECommerceNode.swift; sourceTree = "<group>"; };
 		59FBBC491E1D074400FC84E5 /* Bookwitty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookwitty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59FBBC5D1E1D074400FC84E5 /* BookwittyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BookwittyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -546,6 +548,7 @@
 				59CF44081E68356E006C16FC /* BookDetailsNode.swift */,
 				59CF44061E671524006C16FC /* BookDetailsHeaderNode.swift */,
 				59EC5B961E689E0E006E1CB9 /* BookDetailsFormatNode.swift */,
+				59EC5B981E68C95A006E1CB9 /* BookDetailsECommerceNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -1264,6 +1267,7 @@
 				59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */,
 				59D6021B1E32597B00271315 /* AppKeys.swift in Sources */,
 				594290111E51B7C00006B2F1 /* DisclosureTableViewCell.swift in Sources */,
+				59EC5B991E68C95A006E1CB9 /* BookDetailsECommerceNode.swift in Sources */,
 				594F4EA61E42255200A947FA /* AccessToken.swift in Sources */,
 				F458C5F21E5AFD4300AFD0FC /* PenNameDisplayNode.swift in Sources */,
 				59D8FCB31E4C86CD001C1EDB /* Category.swift in Sources */,
