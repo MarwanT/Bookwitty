@@ -18,6 +18,8 @@ class BookDetailsNode: ASDisplayNode {
   
   private var headerNode = BookDetailsHeaderNode()
   
+  var configuration = Configuration()
+  
   override init() {
     super.init()
     automaticallyManagesSubnodes = true
