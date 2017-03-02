@@ -33,6 +33,33 @@ class BookDetailsHeaderNode: ASDisplayNode {
     imageNode.style.preferredSize = configuration.imageNodePreferredSize
   }
   
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let verticalLayoutSpec = ASStackLayoutSpec(
+      direction: .vertical,
+      spacing: configuration.labelsSpacing,
+      justifyContent:ASStackLayoutJustifyContent.start,
+      alignItems: ASStackLayoutAlignItems.start,
+      children: [titleNode, authorNode])
+    let verticalInsetsSpec = ASInsetLayoutSpec(
+      insets: configuration.horizontalEdgeInsets,
+      child: verticalLayoutSpec)
+    verticalInsetsSpec.style.flexShrink = 1.0
+    verticalInsetsSpec.style.flexGrow = 1.0
+    
+    let horizontalLayoutSpec = ASStackLayoutSpec(
+      direction: .horizontal,
+      spacing: 0,
+      justifyContent: ASStackLayoutJustifyContent.start,
+      alignItems: ASStackLayoutAlignItems.stretch,
+      children: [imageNode, verticalInsetsSpec])
+    
+    let generalInsetSpec = ASInsetLayoutSpec(
+      insets: configuration.generalEdgeInsets,
+      child: horizontalLayoutSpec)
+    
+    return generalInsetSpec
+  }
+  
   // MARK: APIs
   var imageURL: URL? {
     didSet {
