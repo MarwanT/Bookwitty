@@ -25,6 +25,13 @@ class BookDetailsFormatNode: ASControlNode {
     textNode.isLayerBacked = true
   }
   
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    style.width = ASDimensionMake(constrainedSize.max.width)
+    
+    let insetsSpec = ASInsetLayoutSpec(insets: configuration.viewEdgeInset, child: textNode)
+    return insetsSpec
+  }
+  
   var format: String? {
     didSet {
       textNode.attributedText = AttributedStringBuilder(fontDynamicType: .subheadline)
