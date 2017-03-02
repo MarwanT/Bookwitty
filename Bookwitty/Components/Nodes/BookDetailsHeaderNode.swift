@@ -24,6 +24,7 @@ class BookDetailsHeaderNode: ASDisplayNode {
   }
   
   func initializeComponents() {
+    automaticallyManagesSubnodes = true
     imageNode.isLayerBacked = true
     titleNode.isLayerBacked = true
     authorNode.isLayerBacked = true
