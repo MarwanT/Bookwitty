@@ -16,8 +16,11 @@ class ContributorsNode: ASDisplayNode {
   fileprivate let imgaeBorderColor: UIColor? = nil
 
   private var statsNode: ASTextNode
+  private var imagesNodes: [ASNetworkImageNode]
+
   override init() {
     statsNode = ASTextNode()
+    imagesNodes = []
     super.init()
     automaticallyManagesSubnodes = true
     setupNode()
