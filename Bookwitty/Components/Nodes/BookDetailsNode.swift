@@ -11,6 +11,8 @@ import AsyncDisplayKit
 class BookDetailsNode: ASDisplayNode {
   var book: Book?
   
+  private var headerNode = BookDetailsHeaderNode()
+  
   override init() {
     super.init()
     applyTheme()
