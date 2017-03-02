@@ -76,4 +76,17 @@ final class SegmentedControl: UIView {
     view.addSubview(self)
     self.constrainHeight("45")
   }
+
+  @discardableResult
+  func initialize(with segments: [String]) -> Bool {
+    guard segments.count > 0 else {
+      return false
+    }
+
+    let segmentioSegments: [SegmentioItem] = segments.flatMap({ SegmentioItem(title: $0, image: nil) })
+    let options = segmentOtions ?? SegmentioOptions()
+    segmentioView.setup(content: segmentioSegments, style: SegmentioStyle.onlyLabel, options: options)
+    segmentioView.selectedSegmentioIndex = 0
+    return true
+  }
 }
