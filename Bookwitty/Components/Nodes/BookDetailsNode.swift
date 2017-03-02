@@ -17,6 +17,9 @@ class BookDetailsNode: ASDisplayNode {
   }
   
   private var headerNode = BookDetailsHeaderNode()
+  private var formatNode = BookDetailsFormatNode()
+  
+  var configuration = Configuration()
   
   override init() {
     super.init()
@@ -26,8 +29,12 @@ class BookDetailsNode: ASDisplayNode {
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     style.width = ASDimensionMake(constrainedSize.max.width)
+    
+    let formatNodeInsetSpec = ASInsetLayoutSpec(
+      insets: configuration.formatNodeEdgeInsets, child: formatNode)
+    
     let mainStack = ASStackLayoutSpec(direction: .vertical, spacing: 0.0,
-      justifyContent: .start, alignItems: .center, children: [headerNode])
+      justifyContent: .start, alignItems: .center, children: [headerNode, formatNodeInsetSpec])
     return mainStack
   }
   
@@ -36,6 +43,19 @@ class BookDetailsNode: ASDisplayNode {
     headerNode.title = book.title
     headerNode.author = book.productDetails?.author
     headerNode.imageURL = URL(string: book.coverImageUrl ?? "")
+    
+    // Set format Information
+    formatNode.format = book.productDetails?.productFormat
+  }
+}
+
+extension BookDetailsNode {
+  struct Configuration {
+    fileprivate let formatNodeEdgeInsets = UIEdgeInsetsMake(
+      ThemeManager.shared.currentTheme.generalExternalMargin(),
+      ThemeManager.shared.currentTheme.generalExternalMargin(),
+      ThemeManager.shared.currentTheme.generalExternalMargin(),
+      ThemeManager.shared.currentTheme.generalExternalMargin())
   }
 }
 

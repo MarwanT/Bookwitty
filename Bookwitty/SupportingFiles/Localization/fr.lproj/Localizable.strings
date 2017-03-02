@@ -43,6 +43,7 @@
 "error_loading_data" = "Error Loading Data";
 "first_name" = "First name";
 "first_name_invalid" = "Oooops your first name seems to be empty";
+"format" = "Forma";
 "help" = "Help";
 "interests" = "Interests";
 "last_name" = "Last name";
