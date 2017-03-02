@@ -49,7 +49,8 @@ class CuratedCollectionSections: NSObject {
   let readingListIdentifiers: [String]?
   let booksIdentifiers: [String]?
   let pagesIdentifiers: [String]?
-  
+  let curatedCollectionOnBoardList: OnBoardingCollection?
+
   override init() {
     banner = nil
     featuredContent = nil
@@ -57,6 +58,7 @@ class CuratedCollectionSections: NSObject {
     readingListIdentifiers = nil
     booksIdentifiers = nil
     pagesIdentifiers = nil
+    curatedCollectionOnBoardList = nil
   }
   
   init(for dictionary: Dictionary<String,Any>) {
@@ -67,9 +69,10 @@ class CuratedCollectionSections: NSObject {
     self.readingListIdentifiers = parsedValues.readingListIdentifiers
     self.booksIdentifiers = parsedValues.booksIdentifiers
     self.pagesIdentifiers = parsedValues.pagesIdentifiers
+    self.curatedCollectionOnBoardList = parsedValues.curatedCollectionOnBoardList
   }
   
-  private static func sections(for dictionary: [String : Any]) -> (banner: Banner?, featuredContent: [String], categories: [Category], readingListIdentifiers: [String], booksIdentifiers: [String], pagesIdentifiers: [String]) {
+  private static func sections(for dictionary: [String : Any]) -> (banner: Banner?, featuredContent: [String], categories: [Category], readingListIdentifiers: [String], booksIdentifiers: [String], pagesIdentifiers: [String], curatedCollectionOnBoardList: OnBoardingCollection?) {
     let json = JSON(dictionary)
     let banner: Banner? = nil
     let featuredContent = self.wittyIdentifiers(json: json["featured"])
@@ -77,7 +80,8 @@ class CuratedCollectionSections: NSObject {
     let readingListsIdentifiers = self.wittyIdentifiers(json: json["reading-lists"])
     let booksIdentifiers = self.wittyIdentifiers(json: json["books"])
     let pagesIdentifiers = self.wittyIdentifiers(json: json["pages"])
-    return (banner, featuredContent, categories, readingListsIdentifiers, booksIdentifiers, pagesIdentifiers)
+    let curatedCollectionOnBoardList: [String : OnBoardingCollectionItem]? = self.onBoardList(json: json["onboard-list"])
+    return (banner, featuredContent, categories, readingListsIdentifiers, booksIdentifiers, pagesIdentifiers, curatedCollectionOnBoardList)
   }
   
   private static func categories(json: JSON) -> [Category] {
@@ -96,6 +100,16 @@ class CuratedCollectionSections: NSObject {
       identifiers.append(identifier)
     }
     return identifiers
+  }
+
+  private static func onBoardList(json: JSON) -> OnBoardingCollection? {
+    var identifiers: OnBoardingCollection = OnBoardingCollection()
+    for subJSON in json {
+      let key: String = subJSON.0
+      let value: JSON = subJSON.1
+      identifiers[key] = OnBoardingCollectionItem.parse(from: value)
+    }
+    return identifiers.count == 0 ? nil : identifiers
   }
 }
 
