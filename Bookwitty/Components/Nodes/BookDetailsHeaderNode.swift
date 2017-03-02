@@ -21,6 +21,7 @@ class BookDetailsHeaderNode: ASDisplayNode {
     authorNode = ASTextNode()
     super.init()
     initializeComponents()
+    applyTheme()
   }
   
   func initializeComponents() {
@@ -72,5 +73,12 @@ extension BookDetailsHeaderNode {
       left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: 0,
       right: ThemeManager.shared.currentTheme.generalExternalMargin())
+  }
+}
+
+// MARK: - Themeable
+extension BookDetailsHeaderNode: Themeable {
+  func applyTheme() {
+    backgroundColor = configuration.backgroundColor
   }
 }
