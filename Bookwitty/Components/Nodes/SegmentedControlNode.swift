@@ -20,4 +20,8 @@ class SegmentedControlNode: ASDisplayNode {
 
     self.segmentedControl = self.view as! SegmentedControl
   }
+
+  func initialize(with segments: [String]) {
+    self.segmentedControl.initialize(with: segments)
+  }
 }
