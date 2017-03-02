@@ -17,8 +17,9 @@ class BookDetailsViewController: ASViewController<ASDisplayNode> {
     fatalError("init(coder:) has not been implemented")
   }
   
-  init() {
+  init(with book: Book) {
     super.init(node: bookDetailsNode)
+    viewModel.book = book
     bookDetailsNode.book = viewModel.book
   }
   
