@@ -152,6 +152,10 @@ class Strings {
   class func first_name_invalid() -> String {
     return localizedString(key: "first_name_invalid")
   }
+  
+  class func format() -> String {
+    return localizedString(key: "format")
+  }
 
   class func help() -> String {
     return localizedString(key: "help")
