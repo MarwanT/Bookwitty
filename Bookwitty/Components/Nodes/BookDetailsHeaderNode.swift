@@ -18,5 +18,12 @@ class BookDetailsHeaderNode: ASDisplayNode {
     titleNode = ASTextNode()
     authorNode = ASTextNode()
     super.init()
+    initializeComponents()
+  }
+  
+  func initializeComponents() {
+    imageNode.isLayerBacked = true
+    titleNode.isLayerBacked = true
+    authorNode.isLayerBacked = true
   }
 }
