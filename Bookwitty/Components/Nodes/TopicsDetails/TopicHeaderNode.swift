@@ -20,18 +20,20 @@ class TopicHeaderNode: ASDisplayNode {
   private var titleNode: ASTextNode
   private var topicStatsNode: ASTextNode
   private var actionButton: ASButtonNode
-
+  private var contributorsNode: ContributorsNode
 
   override init() {
     imageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
     topicStatsNode = ASTextNode()
     actionButton = ASButtonNode()
+    contributorsNode = ContributorsNode()
     super.init()
     addSubnode(imageNode)
     addSubnode(titleNode)
     addSubnode(topicStatsNode)
     addSubnode(actionButton)
+    addSubnode(contributorsNode)
     setupNode()
   }
 
@@ -142,6 +144,10 @@ class TopicHeaderNode: ASDisplayNode {
 
     let horizontalSpecInset = ASInsetLayoutSpec(insets: sideInset(), child: statsAndActionHorizontalSpec)
     nodesArray.append(horizontalSpecInset)
+
+    contributorsNode.style.width = ASDimensionMake(constrainedSize.max.width)
+    contributorsNode.style.height = ASDimensionMake(45.0)
+    nodesArray.append(contributorsNode)
 
     let verticalStack = ASStackLayoutSpec(direction: .vertical,
                                           spacing: internalMargin,
