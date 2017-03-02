@@ -23,7 +23,14 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   var isFirstRun: Bool = true
   var isLoadingMore: Bool = false {
     didSet {
-      let bottomMargin: CGFloat = isLoadingMore ? -(externalMargin/2) : -(LoaderNode.nodeHeight - externalMargin/2)
+      let bottomMargin: CGFloat
+      if isLoadingMore {
+        bottomMargin = -(externalMargin/2)
+      } else {
+        //If we have Zero data items this means that we are only showing the pen-name-selection-node
+        bottomMargin = viewModel.data.count == 0 ? 0.0 : -(LoaderNode.nodeHeight - externalMargin/2)
+      }
+
       flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomMargin, right: 0)
       loaderNode.updateLoaderVisibility(show: isLoadingMore)
     }
