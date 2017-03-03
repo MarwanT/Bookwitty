@@ -20,6 +20,7 @@ class BookDetailsStockNode: ASDisplayNode {
     shippingInformationTextNode = ASTextNode()
     buyThisBookButtonNode = ASButtonNode()
     super.init()
+    applyTheme()
   }
 }
 
@@ -57,3 +58,8 @@ extension BookDetailsStockNode {
   }
 }
 
+extension BookDetailsStockNode: Themeable {
+  func applyTheme() {
+    ThemeManager.shared.currentTheme.styleECommercePrimaryButton(button: buyThisBookButtonNode)
+  }
+}
