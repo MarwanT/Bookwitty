@@ -176,6 +176,10 @@ class Strings {
   class func last_name_invalid() -> String {
     return localizedString(key: "last_name_invalid")
   }
+  
+  class func list_price() -> String {
+    return localizedString(key: "list_price")
+  }
 
   class func my_orders() -> String {
     return localizedString(key: "my_orders")
