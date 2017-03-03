@@ -20,6 +20,14 @@ class BookDetailsECommerceNode: ASDisplayNode {
     stockNode = BookDetailsStockNode()
     separatorNode = ASDisplayNode()
     super.init()
+    initializeComponents()
+  }
+  
+  private func initializeComponents() {
+    automaticallyManagesSubnodes = true
+    separatorNode.isLayerBacked = true
+    separatorNode.backgroundColor = configuration.separatorColor
+    separatorNode.style.height = ASDimensionMake(configuration.separatorHeight)
   }
 }
 
