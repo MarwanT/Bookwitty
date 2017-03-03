@@ -20,7 +20,16 @@ class BookDetailsStockNode: ASDisplayNode {
     shippingInformationTextNode = ASTextNode()
     buyThisBookButtonNode = ASButtonNode()
     super.init()
+    initializeComponents()
     applyTheme()
+  }
+  
+  func initializeComponents() {
+    automaticallyManagesSubnodes = true
+    availabilityTextNode.isLayerBacked = true
+    
+    shippingInformation = Strings.free_shipping_internationally()
+    buyButtonText = Strings.buy_this_book()
   }
 }
 
