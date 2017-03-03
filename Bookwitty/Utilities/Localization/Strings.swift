@@ -25,6 +25,10 @@ class Strings {
     return localizedString(key: "bookwitty_suggests")
   }
 
+  class func buy_this_book() -> String {
+    return localizedString(key: "buy_this_book")
+  }
+  
   class func cancel() -> String {
     return localizedString(key: "cancel")
   }
