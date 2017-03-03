@@ -35,6 +35,39 @@ class BookDetailsStockNode: ASDisplayNode {
     buyThisBookButtonNode.addTarget(self, action: #selector(self.buyThisBookTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
   
+  
+  func set(supplierInformation: SupplierInformation?) {
+    guard let quantity = supplierInformation?.quantity else {
+      return
+    }
+    availability = quantity > 0 ? .inStock : .outOfStock
+  }
+  
+  
+  // MARK: Subnodes Values APIs
+  private var availability: ProductAvailability? {
+    didSet {
+      availabilityTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .subheadline)
+        .append(text: (availability ?? .outOfStock).string, color: (availability ?? .outOfStock).color).attributedString
+      setNeedsLayout()
+    }
+  }
+  
+  private var shippingInformation: String? {
+    didSet {
+      shippingInformationTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .subheadline)
+        .append(text: "\(shippingInformation ?? "")*", color: configuration.defaultTextColor, underlineStyle: NSUnderlineStyle.styleSingle).attributedString
+      setNeedsLayout()
+    }
+  }
+  
+  private var buyButtonText: String? {
+    didSet {
+      buyThisBookButtonNode.setTitle(buyButtonText ?? "", with: FontDynamicType.subheadline.font, with: configuration.buyButtonTextColor, for: ASControlState(rawValue: 0))
+      setNeedsLayout()
+    }
+  }
+  
   // MARK: Actions
   func shippingInformationTouchUpInside(_ sender: Any?) {
     print("Did Tap Shipping Information")
