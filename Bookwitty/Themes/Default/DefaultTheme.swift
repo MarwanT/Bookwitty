@@ -8,6 +8,7 @@
 
 import Foundation
 import TTTAttributedLabel
+import AsyncDisplayKit
 
 final class DefaultTheme: Theme {
 
@@ -220,6 +221,20 @@ extension DefaultTheme {
       highlightedColor: defaultButtonHighlightedColor())
   }
   
+  func styleECommercePrimaryButton(button: UIButton) {
+    stylePrimaryButton(
+      button: button,
+      withColor: defaultEcommerceButtonColor(),
+      highlightedColor: defaultEcommerceButtonHighlightedColor())
+  }
+  
+  func styleECommerceSecondaryButton(button: UIButton) {
+    styleSecondaryButton(
+      button: button,
+      withColor: defaultEcommerceButtonColor(),
+      highlightedColor: defaultEcommerceButtonHighlightedColor())
+  }
+  
   func stylePrimaryButton(button: UIButton, withColor color: UIColor, highlightedColor: UIColor) {
     button.titleLabel?.font = FontDynamicType.subheadline.font
     button.setTitleColor(colorNumber23(), for: .normal)
@@ -239,6 +254,52 @@ extension DefaultTheme {
     button.layer.cornerRadius = 4
     button.layer.borderWidth = 2
     button.layer.borderColor = color.cgColor
+  }
+  
+  func stylePrimaryButton(button: ASButtonNode) {
+    stylePrimaryButton(
+      button: button,
+      withColor: defaultButtonColor(),
+      highlightedColor: defaultButtonHighlightedColor())
+  }
+  
+  func styleSecondaryButton(button: ASButtonNode) {
+    styleSecondaryButton(
+      button: button,
+      withColor: defaultButtonColor(),
+      highlightedColor: defaultButtonHighlightedColor())
+  }
+  
+  func styleECommercePrimaryButton(button: ASButtonNode) {
+    stylePrimaryButton(
+      button: button,
+      withColor: defaultEcommerceButtonColor(),
+      highlightedColor: defaultEcommerceButtonHighlightedColor())
+  }
+  
+  func styleECommerceSecondaryButton(button: ASButtonNode) {
+    styleSecondaryButton(
+      button: button,
+      withColor: defaultEcommerceButtonColor(),
+      highlightedColor: defaultEcommerceButtonHighlightedColor())
+  }
+  
+  func stylePrimaryButton(button: ASButtonNode, withColor color: UIColor, highlightedColor: UIColor) {
+    button.tintColor = UIColor.white
+    button.setBackgroundImage(color.image(), for: ASControlState(rawValue: 0))
+    button.setBackgroundImage(highlightedColor.image(), for: .highlighted)
+    button.clipsToBounds = true
+    button.layer.cornerRadius = 4
+    button.style.height = ASDimensionMake(45)
+  }
+  
+  func styleSecondaryButton(button: ASButtonNode, withColor color: UIColor, highlightedColor: UIColor) {
+    button.backgroundColor = colorNumber23()
+    button.clipsToBounds = true
+    button.cornerRadius = 4
+    button.borderWidth = 2
+    button.borderColor = color.cgColor
+    button.style.height = ASDimensionMake(45)
   }
 }
 
