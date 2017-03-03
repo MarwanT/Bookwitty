@@ -141,6 +141,7 @@
 		F42ED4F21E686BF9002B65DF /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42ED4F11E686BF9002B65DF /* OnBoardingViewController.swift */; };
 		F434F7911E4E16CE001812BD /* CellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F434F7901E4E16CE001812BD /* CellNode.swift */; };
 		F43A5E8E1E69858A008C018B /* OnBoardingInternalCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43A5E8D1E69858A008C018B /* OnBoardingInternalCellNode.swift */; };
+		F43A5E901E69878A008C018B /* OnBoardingCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43A5E8F1E69878A008C018B /* OnBoardingCellNode.swift */; };
 		F442CF871E65832000F59913 /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F442CF861E65832000F59913 /* Date+Utils.swift */; };
 		F458C5F21E5AFD4300AFD0FC /* PenNameDisplayNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F458C5F11E5AFD4300AFD0FC /* PenNameDisplayNode.swift */; };
 		F458C5F41E5AFEAA00AFD0FC /* PenNameCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F458C5F31E5AFEAA00AFD0FC /* PenNameCellNode.swift */; };
@@ -326,6 +327,7 @@
 		F42ED4F11E686BF9002B65DF /* OnBoardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		F434F7901E4E16CE001812BD /* CellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellNode.swift; sourceTree = "<group>"; };
 		F43A5E8D1E69858A008C018B /* OnBoardingInternalCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingInternalCellNode.swift; sourceTree = "<group>"; };
+		F43A5E8F1E69878A008C018B /* OnBoardingCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingCellNode.swift; sourceTree = "<group>"; };
 		F442CF861E65832000F59913 /* Date+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
 		F458C5F11E5AFD4300AFD0FC /* PenNameDisplayNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameDisplayNode.swift; sourceTree = "<group>"; };
 		F458C5F31E5AFEAA00AFD0FC /* PenNameCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameCellNode.swift; sourceTree = "<group>"; };
@@ -561,6 +563,7 @@
 				F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */,
 				F4670AFA1E54669300159F4F /* ReadingListBookNode.swift */,
 				F43A5E8D1E69858A008C018B /* OnBoardingInternalCellNode.swift */,
+				F43A5E8F1E69878A008C018B /* OnBoardingCellNode.swift */,
 				F45A50141E536591005E5C56 /* TopicCardPostCellNode.swift */,
 				F4670AFC1E54ACF200159F4F /* ProfileCardPostCellNode.swift */,
 				F45A50121E530AA2005E5C56 /* QuoteCardPostCellNode.swift */,
@@ -1189,6 +1192,7 @@
 				594290201E5316380006B2F1 /* FeaturedContentCollectionViewCell.swift in Sources */,
 				595C4F0F1E3F8C9200BE3942 /* PasswordInputField.swift in Sources */,
 				56399DBF1E51D006005192AC /* AccountViewController.swift in Sources */,
+				F43A5E901E69878A008C018B /* OnBoardingCellNode.swift in Sources */,
 				F496DE041E65C75D007E22B1 /* DiscoverViewModel.swift in Sources */,
 				566EE82D1E5D7082004B990D /* Search+API.swift in Sources */,
 				59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */,
