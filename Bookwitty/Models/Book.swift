@@ -159,6 +159,11 @@ struct Price {
     value = json["value"].int
   }
   
+  init(currency: String?, value: Int?) {
+    self.currency = currency
+    self.value = value
+  }
+  
   var formattedValue: String? {
     guard let currency = currency, let value = value, !currency.isEmpty else {
       return nil
