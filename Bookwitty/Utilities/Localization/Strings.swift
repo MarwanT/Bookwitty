@@ -164,6 +164,10 @@ class Strings {
   class func help() -> String {
     return localizedString(key: "help")
   }
+  
+  class func in_stock() -> String {
+    return localizedString(key: "in_stock")
+  }
 
   class func interests() -> String {
     return localizedString(key: "interests")

@@ -46,6 +46,7 @@
 "first_name_invalid" = "Oooops your first name seems to be empty";
 "format" = "Forma";
 "help" = "Help";
+"in_stock" = "En stock";
 "interests" = "Interests";
 "last_name" = "Last name";
 "last_name_invalid" = "Oooops your email seems to be empty";
