@@ -9,4 +9,16 @@
 import AsyncDisplayKit
 
 class BookDetailsPricesNode: ASDisplayNode {
+  fileprivate let priceTextNode: ASTextNode
+  fileprivate let userPriceTextNode: ASTextNode
+  fileprivate let listPriceTextNode: ASTextNode
+  fileprivate let savingTextNode: ASTextNode
+  
+  override init() {
+    priceTextNode = ASTextNode()
+    userPriceTextNode = ASTextNode()
+    listPriceTextNode = ASTextNode()
+    savingTextNode = ASTextNode()
+    super.init()
+  }
 }
