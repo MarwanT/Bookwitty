@@ -33,6 +33,45 @@ class BookDetailsPricesNode: ASDisplayNode {
     savingTextNode.isLayerBacked = true
   }
   
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let priceInsetSpec = ASInsetLayoutSpec(insets: configuration.textEdgeInsets, child: priceTextNode)
+    let userPriceInsetSpec = ASInsetLayoutSpec(insets: configuration.textEdgeInsets, child: userPriceTextNode)
+    let listPriceInsetSpec = ASInsetLayoutSpec(insets: configuration.textEdgeInsets, child: listPriceTextNode)
+    let savePriceInsetSpec = ASInsetLayoutSpec(insets: configuration.textEdgeInsets, child: savingTextNode)
+    
+    var mainPricesElements: [ASLayoutElement] = [priceInsetSpec]
+    if userPrice != nil {
+      mainPricesElements.append(userPriceInsetSpec)
+    }
+    let mainPricesVerticalStack = ASStackLayoutSpec(
+      direction: .vertical,
+      spacing: 0,
+      justifyContent: .start,
+      alignItems: .stretch,
+      children: mainPricesElements)
+    
+    let savingPricesVerticalStack = ASStackLayoutSpec(
+      direction: .vertical,
+      spacing: 0,
+      justifyContent: .start,
+      alignItems: .stretch,
+      children: [listPriceInsetSpec, savePriceInsetSpec])
+    let savingPricesInsetSpec = ASInsetLayoutSpec(
+      insets: configuration.savingPricesEdgeInsets, child: savingPricesVerticalStack)
+    
+    var verticalSpecChildren: [ASLayoutElement] = [mainPricesVerticalStack]
+    if listPrice != nil && savingPrice != nil {
+      verticalSpecChildren.append(savingPricesInsetSpec)
+    }
+    
+    let verticalStack = ASStackLayoutSpec(
+      direction: .vertical, spacing: 0,
+      justifyContent: ASStackLayoutJustifyContent.start,
+      alignItems: ASStackLayoutAlignItems.stretch,
+      children: verticalSpecChildren)
+    return verticalStack
+  }
+  
   func set(supplierInformation: SupplierInformation?) {
     guard let supplierInformation = supplierInformation else {
       setNeedsLayout()
