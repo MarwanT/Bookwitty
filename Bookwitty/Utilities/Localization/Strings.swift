@@ -160,6 +160,10 @@ class Strings {
   class func format() -> String {
     return localizedString(key: "format")
   }
+  
+  class func free_shipping_internationally() -> String {
+    return localizedString(key: "free_shipping_internationally")
+  }
 
   class func help() -> String {
     return localizedString(key: "help")

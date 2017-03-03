@@ -45,6 +45,7 @@
 "first_name" = "First name";
 "first_name_invalid" = "Oooops your first name seems to be empty";
 "format" = "Forma";
+"free_shipping_internationally" = "Livraison international gratuite";
 "help" = "Help";
 "in_stock" = "En stock";
 "interests" = "Interests";
