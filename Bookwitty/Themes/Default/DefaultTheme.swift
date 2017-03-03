@@ -115,7 +115,7 @@ extension DefaultTheme {
   }
   
   func colorNumber22Highlighted() -> UIColor {
-    return UIColor.bwRubyHighlighted
+    return UIColor.bwOrangeHighlighted
   }
   
   func defaultECommerceColor() -> UIColor {
