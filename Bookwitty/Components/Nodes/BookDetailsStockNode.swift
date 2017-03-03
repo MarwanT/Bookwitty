@@ -30,6 +30,18 @@ class BookDetailsStockNode: ASDisplayNode {
     
     shippingInformation = Strings.free_shipping_internationally()
     buyButtonText = Strings.buy_this_book()
+    
+    shippingInformationTextNode.addTarget(self, action: #selector(self.shippingInformationTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    buyThisBookButtonNode.addTarget(self, action: #selector(self.buyThisBookTouchUpInside(_:)), forControlEvents: .touchUpInside)
+  }
+  
+  // MARK: Actions
+  func shippingInformationTouchUpInside(_ sender: Any?) {
+    print("Did Tap Shipping Information")
+  }
+  
+  func buyThisBookTouchUpInside(_ sender: Any?) {
+    print("Buy This Book")
   }
 }
 
