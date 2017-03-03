@@ -352,6 +352,10 @@ class Strings {
   class func you_dont_have_account() -> String {
     return localizedString(key: "you_dont_have_account")
   }
+  
+  class func you_save() -> String {
+    return localizedString(key: "you_save")
+  }
 
   class func your_feed() -> String {
     return localizedString(key: "your_feed")
