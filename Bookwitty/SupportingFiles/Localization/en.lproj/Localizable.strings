@@ -10,6 +10,7 @@
 "address_book" = "Address Book";
 "books" = "Books";
 "bookwitty_suggests" = "Bookwitty Suggests";
+"buy_this_book" = "Buy This Book";
 "cancel" = "Cancel";
 "categories" = "Categories";
 "category" = "Category";
@@ -43,10 +44,14 @@
 "error_loading_data" = "Error Loading Data";
 "first_name" = "First name";
 "first_name_invalid" = "Oooops your first name seems to be empty";
+"format" = "Format";
+"free_shipping_internationally" = "Free shipping internationally";
 "help" = "Help";
+"in_stock" = "In stock";
 "interests" = "Interests";
 "last_name" = "Last name";
 "last_name_invalid" = "Oooops your email seems to be empty";
+"list_price" = "List price";
 "my_orders" = "My Orders";
 "new_password" = "New Password";
 "news" = "News";
@@ -54,6 +59,7 @@
 "ok" = "Ok";
 "ooops" = "Ooops";
 "our_selection_for_you" = "Our selection for you";
+"out_of_stock" = "Out of stock";
 "password" = "Password";
 "password_invalid" = "Oooops your password seems to be invalid";
 "payment_methods" = "Payment Methods";
@@ -90,4 +96,5 @@
 "wit_it" = "Wit";
 "witted" = "Witted";
 "you_dont_have_account" = "You don't have an account";
+"you_save" = "You save";
 "your_feed" = "Your feed";

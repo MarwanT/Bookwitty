@@ -25,6 +25,10 @@ class Strings {
     return localizedString(key: "bookwitty_suggests")
   }
 
+  class func buy_this_book() -> String {
+    return localizedString(key: "buy_this_book")
+  }
+  
   class func cancel() -> String {
     return localizedString(key: "cancel")
   }
@@ -152,9 +156,21 @@ class Strings {
   class func first_name_invalid() -> String {
     return localizedString(key: "first_name_invalid")
   }
+  
+  class func format() -> String {
+    return localizedString(key: "format")
+  }
+  
+  class func free_shipping_internationally() -> String {
+    return localizedString(key: "free_shipping_internationally")
+  }
 
   class func help() -> String {
     return localizedString(key: "help")
+  }
+  
+  class func in_stock() -> String {
+    return localizedString(key: "in_stock")
   }
 
   class func interests() -> String {
@@ -167,6 +183,10 @@ class Strings {
 
   class func last_name_invalid() -> String {
     return localizedString(key: "last_name_invalid")
+  }
+  
+  class func list_price() -> String {
+    return localizedString(key: "list_price")
   }
 
   class func my_orders() -> String {
@@ -195,6 +215,10 @@ class Strings {
 
   class func our_selection_for_you() -> String {
     return localizedString(key: "our_selection_for_you")
+  }
+  
+  class func out_of_stock() -> String {
+    return localizedString(key: "out_of_stock")
   }
 
   class func password() -> String {
@@ -339,6 +363,10 @@ class Strings {
   
   class func you_dont_have_account() -> String {
     return localizedString(key: "you_dont_have_account")
+  }
+  
+  class func you_save() -> String {
+    return localizedString(key: "you_save")
   }
 
   class func your_feed() -> String {

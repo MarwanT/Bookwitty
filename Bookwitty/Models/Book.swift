@@ -114,7 +114,7 @@ class SupplierInformation: NSObject {
   var listPrice: Price?
   var price: Price?
   var userPrice: Price?
-  var displayPrice: Price? {
+  var preferredPrice: Price? {
     if userPrice?.formattedValue != nil {
       return userPrice
     } else if price?.formattedValue != nil {
@@ -146,7 +146,7 @@ class SupplierInformation: NSObject {
 // MARK: - Price
 struct Price {
   var currency: String?
-  let value: String?
+  let value: Int?
   
   init(for dictionary: [String : Any]?) {
     guard let dictionary = dictionary else {
@@ -156,14 +156,19 @@ struct Price {
     }
     let json = JSON(dictionary)
     currency = json["currency"].stringValue
-    value = json["value"].stringValue
+    value = json["value"].int
+  }
+  
+  init(currency: String?, value: Int?) {
+    self.currency = currency
+    self.value = value
   }
   
   var formattedValue: String? {
-    guard let currency = currency, let value = value, !currency.isEmpty, !value.isEmpty else {
+    guard let currency = currency, let value = value, !currency.isEmpty else {
       return nil
     }
-    return currency + " " + value
+    return currency + " \(value)"
   }
 }
 
