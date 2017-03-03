@@ -22,6 +22,15 @@ class BookDetailsPricesNode: ASDisplayNode {
     listPriceTextNode = ASTextNode()
     savingTextNode = ASTextNode()
     super.init()
+    initializeComponents()
+  }
+  
+  private func initializeComponents() {
+    automaticallyManagesSubnodes = true
+    priceTextNode.isLayerBacked = true
+    userPriceTextNode.isLayerBacked = true
+    listPriceTextNode.isLayerBacked = true
+    savingTextNode.isLayerBacked = true
   }
 }
 
