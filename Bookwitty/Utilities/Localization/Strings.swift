@@ -212,6 +212,10 @@ class Strings {
   class func our_selection_for_you() -> String {
     return localizedString(key: "our_selection_for_you")
   }
+  
+  class func out_of_stock() -> String {
+    return localizedString(key: "out_of_stock")
+  }
 
   class func password() -> String {
     return localizedString(key: "password")
