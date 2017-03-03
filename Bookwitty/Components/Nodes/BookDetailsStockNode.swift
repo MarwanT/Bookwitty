@@ -35,6 +35,20 @@ class BookDetailsStockNode: ASDisplayNode {
     buyThisBookButtonNode.addTarget(self, action: #selector(self.buyThisBookTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
   
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let availabilityInsetsSpec = ASInsetLayoutSpec(insets: configuration.textEdgeInsets, child: availabilityTextNode)
+    let shippingInsetsSpec = ASInsetLayoutSpec(insets: configuration.textEdgeInsets, child: shippingInformationTextNode)
+    let buyButtonInsetsSpec = ASInsetLayoutSpec(insets: configuration.buyButtonEdgeInsets, child: buyThisBookButtonNode)
+    
+    var verticalSpecChildren: [ASLayoutElement] = [availabilityInsetsSpec]
+    if availability == .inStock {
+      verticalSpecChildren.append(shippingInsetsSpec)
+      verticalSpecChildren.append(buyButtonInsetsSpec)
+    }
+    
+    let verticalStackSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: verticalSpecChildren)
+    return verticalStackSpec
+  }
   
   func set(supplierInformation: SupplierInformation?) {
     guard let quantity = supplierInformation?.quantity else {
