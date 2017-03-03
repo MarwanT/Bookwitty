@@ -32,5 +32,28 @@ extension BookDetailsStockNode {
     fileprivate var buyButtonEdgeInsets = UIEdgeInsetsMake(
       ThemeManager.shared.currentTheme.generalExternalMargin(), 0, 0, 0)
   }
+  
+  enum ProductAvailability {
+    case inStock
+    case outOfStock
+    
+    var string: String {
+      switch self {
+      case .inStock:
+        return Strings.in_stock()
+      case .outOfStock:
+        return Strings.out_of_stock()
+      }
+    }
+    
+    var color: UIColor {
+      switch self {
+      case .inStock:
+        return ThemeManager.shared.currentTheme.colorNumber21()
+      case .outOfStock:
+        return ThemeManager.shared.currentTheme.defaultErrorColor()
+      }
+    }
+  }
 }
 
