@@ -47,6 +47,13 @@ final class BooksTableViewModel {
     }
     return (URL(string: book.thumbnailImageUrl ?? ""), book.title, book.productDetails?.author, book.productDetails?.productFormat, book.supplierInformation?.preferredPrice?.formattedValue)
   }
+  
+  func book(for indexPath: IndexPath) -> Book? {
+    guard let book = books?[indexPath.row] else {
+      return nil
+    }
+    return book
+  }
 }
 
 

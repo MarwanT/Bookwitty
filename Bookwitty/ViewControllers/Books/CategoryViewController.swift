@@ -235,6 +235,11 @@ class CategoryViewController: UIViewController {
     booksTableViewController.initialize(with: books, loadingMode: loadingMode)
     navigationController?.pushViewController(booksTableViewController, animated: true)
   }
+  
+  fileprivate func pushBookDetailsViewController(with book: Book) {
+    let bookDetailsViewController = BookDetailsViewController(with: book)
+    navigationController?.pushViewController(bookDetailsViewController, animated: true)
+  }
 }
 
 
@@ -386,6 +391,15 @@ extension CategoryViewController: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
+    
+    if tableView === bookwittySuggestsTableView {
+      
+    } else {
+      guard let book = viewModel.book(for: indexPath) else {
+        return
+      }
+      pushBookDetailsViewController(with: book)
+    }
   }
 }
 

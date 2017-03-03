@@ -284,6 +284,12 @@ extension CategoryViewModel {
     return DataLoadingMode.server(nextPageURL: booksInfo.nextPage)
   }
 
+  func book(for indexPath: IndexPath) -> Book? {
+    guard let book = categoryBooks?.books?[indexPath.row] else {
+      return nil
+    }
+    return book
+  }
 }
 
 
