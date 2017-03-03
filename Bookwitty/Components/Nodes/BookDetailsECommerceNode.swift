@@ -29,6 +29,21 @@ class BookDetailsECommerceNode: ASDisplayNode {
     separatorNode.backgroundColor = configuration.separatorColor
     separatorNode.style.height = ASDimensionMake(configuration.separatorHeight)
   }
+  
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    separatorNode.style.width = ASDimensionMake(constrainedSize.max.width)
+    
+    let separatorInsetsSpecs = ASInsetLayoutSpec(insets: configuration.separatorEdgeInsets, child: separatorNode)
+    
+    let verticalStackSpec = ASStackLayoutSpec(direction: .vertical, spacing: 5, justifyContent: .start, alignItems: .stretch, children: [pricesNode, separatorInsetsSpecs, stockNode])
+    return verticalStackSpec
+  }
+  
+  func set(supplierInformation: SupplierInformation?) {
+    pricesNode.set(supplierInformation: supplierInformation)
+    stockNode.set(supplierInformation: supplierInformation)
+    setNeedsLayout()
+  }
 }
 
 extension BookDetailsECommerceNode {
