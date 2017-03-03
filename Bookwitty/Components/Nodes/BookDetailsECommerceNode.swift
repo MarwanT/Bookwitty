@@ -13,6 +13,8 @@ class BookDetailsECommerceNode: ASDisplayNode {
   fileprivate let separatorNode: ASDisplayNode
   fileprivate let stockNode: BookDetailsStockNode
   
+  var configuration = Configuration()
+  
   override init() {
     pricesNode = BookDetailsPricesNode()
     stockNode = BookDetailsStockNode()
@@ -21,3 +23,12 @@ class BookDetailsECommerceNode: ASDisplayNode {
   }
 }
 
+extension BookDetailsECommerceNode {
+  struct Configuration {
+    var separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    fileprivate var separatorHeight: CGFloat = 1
+    fileprivate var separatorEdgeInsets = UIEdgeInsetsMake(
+      ThemeManager.shared.currentTheme.generalExternalMargin() - 9, 0,
+      ThemeManager.shared.currentTheme.generalExternalMargin() - 9, 0)
+  }
+}
