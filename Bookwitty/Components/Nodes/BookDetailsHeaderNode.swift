@@ -34,6 +34,8 @@ class BookDetailsHeaderNode: ASDisplayNode {
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    style.width = ASDimensionMake(constrainedSize.max.width)
+    
     let verticalLayoutSpec = ASStackLayoutSpec(
       direction: .vertical,
       spacing: configuration.labelsSpacing,
