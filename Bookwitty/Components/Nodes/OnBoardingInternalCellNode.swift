@@ -7,3 +7,27 @@
 //
 
 import Foundation
+import AsyncDisplayKit
+
+class OnBoardingInternalCellNode: ASCellNode {
+  static let cellHeight: CGFloat = 115.0
+
+  fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+
+  let titleTextNode: ASTextNode
+  let shortDescriptionTextNode: ASTextNode
+  let selectionButtonNode: ASButtonNode
+  let imageNode: ASNetworkImageNode
+  let separator: ASDisplayNode
+
+
+  override init() {
+    titleTextNode = ASTextNode()
+    shortDescriptionTextNode =  ASTextNode()
+    selectionButtonNode =  ASButtonNode()
+    imageNode =  ASNetworkImageNode()
+    separator = ASDisplayNode()
+    super.init()
+  }
+}
