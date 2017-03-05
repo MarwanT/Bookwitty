@@ -24,5 +24,14 @@ class OnBoardingItemHeaderNode: ASDisplayNode {
 
     super.init()
     automaticallyManagesSubnodes = true
+
+    rotatingImageNode.image = #imageLiteral(resourceName: "downArrow")
+
+    titleTextNode.style.maxHeight = ASDimensionMake(OnBoardingItemHeaderNode.nodeHeight)
+    separator.style.height = ASDimensionMake(1.0)
+    separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+
+    style.height = ASDimensionMake(OnBoardingItemHeaderNode.nodeHeight)
+    backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
   }
 }
