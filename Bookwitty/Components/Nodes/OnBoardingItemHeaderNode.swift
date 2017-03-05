@@ -25,6 +25,7 @@ class OnBoardingItemHeaderNode: ASDisplayNode {
     super.init()
     automaticallyManagesSubnodes = true
 
+    rotatingImageNode.updateDirection(direction: RotatingImageNode.Direction.down, animated: false)
     rotatingImageNode.image = #imageLiteral(resourceName: "downArrow")
 
     titleTextNode.style.maxHeight = ASDimensionMake(OnBoardingItemHeaderNode.nodeHeight)
@@ -34,6 +35,12 @@ class OnBoardingItemHeaderNode: ASDisplayNode {
     style.height = ASDimensionMake(OnBoardingItemHeaderNode.nodeHeight)
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
   }
+
+
+  func updateArrowDirection(direction: RotatingImageNode.Direction, animated: Bool = true) {
+    rotatingImageNode.updateDirection(direction: direction, animated: animated)
+  }
+
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     separator.style.width = ASDimensionMake(constrainedSize.max.width)
 
