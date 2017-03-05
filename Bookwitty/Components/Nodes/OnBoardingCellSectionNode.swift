@@ -7,3 +7,20 @@
 //
 
 import Foundation
+import AsyncDisplayKit
+
+class OnBoardingCellSectionNode: ASCellNode {
+  static let nodeHeight: CGFloat = 45.0
+
+  fileprivate let internalMargin: CGFloat = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let titleTextNode: ASTextNode
+  fileprivate let separator: ASDisplayNode
+
+
+  override init() {
+    titleTextNode = ASTextNode()
+    separator = ASDisplayNode()
+    super.init()
+    automaticallyManagesSubnodes = true
+  }
+}
