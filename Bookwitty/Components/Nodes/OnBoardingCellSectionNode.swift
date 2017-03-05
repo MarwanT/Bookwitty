@@ -16,6 +16,14 @@ class OnBoardingCellSectionNode: ASCellNode {
   fileprivate let titleTextNode: ASTextNode
   fileprivate let separator: ASDisplayNode
 
+  var text: String? {
+    didSet {
+      if let text = text {
+        titleTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .subheadline)
+          .append(text: text, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      }
+    }
+  }
 
   override init() {
     titleTextNode = ASTextNode()
