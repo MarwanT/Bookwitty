@@ -84,4 +84,10 @@ extension OnBoardingControllerNode: ASCollectionDelegate, ASCollectionDataSource
       max: CGSize(width: collectionNode.frame.width, height: .infinity)
     )
   }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    if let cell = collectionNode.nodeForItem(at: indexPath) as? OnBoardingCellNode {
+      cell.showAll = !cell.showAll
+    }
+  }
 }
