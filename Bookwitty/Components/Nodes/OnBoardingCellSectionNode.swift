@@ -22,5 +22,14 @@ class OnBoardingCellSectionNode: ASCellNode {
     separator = ASDisplayNode()
     super.init()
     automaticallyManagesSubnodes = true
+
+    titleTextNode.maximumNumberOfLines = 1
+
+    style.height = ASDimensionMake(OnBoardingCellSectionNode.nodeHeight)
+
+    separator.style.height = ASDimensionMake(1.0)
+    separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+
+    backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
   }
 }
