@@ -18,10 +18,13 @@ class AttributedStringBuilder {
   }
 
   func append(text: String, fontDynamicType: FontDynamicType? = nil, color: UIColor =  ThemeManager.shared.currentTheme.defaultTextColor(),
-              underlineStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone) -> Self {
-    let atrString = NSAttributedString(string: text, attributes: [ NSFontAttributeName : fontDynamicType?.font ?? self.fontDynamicType.font,
-                                                                   NSForegroundColorAttributeName : color,
-                                                                   NSUnderlineStyleAttributeName: underlineStyle.rawValue
+              underlineStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone,
+              strikeThroughStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone) -> Self {
+    let atrString = NSAttributedString(string: text, attributes: [
+      NSFontAttributeName : fontDynamicType?.font ?? self.fontDynamicType.font,
+      NSForegroundColorAttributeName : color,
+      NSUnderlineStyleAttributeName: underlineStyle.rawValue,
+      NSStrikethroughStyleAttributeName: strikeThroughStyle.rawValue
       ])
 
     attributedString.append(atrString)

@@ -10,8 +10,8 @@ import Foundation
 import Spine
 
 class Link: Resource {
-  var createdAt: String?
-  var updatedAt: String?
+  var createdAt: NSDate?
+  var updatedAt: NSDate?
   var userId: String?
   var thumbnailImageUrl: String?
   var coverImageUrl: String?
@@ -19,6 +19,7 @@ class Link: Resource {
   var title: String?
   var shortDescription: String?
   var type: String?
+  var penName: PenName?
 
   override class var resourceType: ResourceType {
     return "links"
@@ -26,15 +27,16 @@ class Link: Resource {
 
   override class var fields: [Field] {
     return fieldsFromDictionary([
-      "createdAt": Attribute().serializeAs("created-at"),
-      "updatedAt": Attribute().serializeAs("updated-at"),
+      "createdAt": DateAttribute().serializeAs("created-at"),
+      "updatedAt": DateAttribute().serializeAs("updated-at"),
       "userId": Attribute().serializeAs("user-id"),
       "thumbnailImageUrl": Attribute().serializeAs("thumbnail-image-url"),
       "coverImageUrl": Attribute().serializeAs("cover-image-url"),
       "urlLink": Attribute().serializeAs("url"),
       "title": Attribute().serializeAs("title"),
       "shortDescription": Attribute().serializeAs("short-description"),
-      "type": Attribute().serializeAs("type")
+      "type": Attribute().serializeAs("type"),
+      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
       ])
   }
 }

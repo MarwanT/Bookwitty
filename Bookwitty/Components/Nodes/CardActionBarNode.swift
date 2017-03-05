@@ -10,12 +10,13 @@ import Foundation
 import AsyncDisplayKit
 
 protocol CardActionBarNodeDelegate {
-  func cardActionBarNode(card: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode)
+  func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
 }
 
 class CardActionBarNode: ASDisplayNode {
   enum Action {
     case wit
+    case unwit
     case comment
     case share
   }
@@ -31,11 +32,8 @@ class CardActionBarNode: ASDisplayNode {
   private let actionBarHeight: CGFloat = 60.0
   private let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
   private let iconSize: CGSize = CGSize(width: 40.0, height: 40.0)
-  //MARK: - Localized Strings
-  private let witItTitle: String = localizedString(key: "wit_it", defaultValue: "Wit")
-  private let wittedTitle: String = localizedString(key: "witted", defaultValue: "Witted")
 
-  private override init() {
+  override init() {
     witButton = ASButtonNode()
     commentButton = ASButtonNode()
     shareButton = ASButtonNode()
@@ -43,12 +41,7 @@ class CardActionBarNode: ASDisplayNode {
     addSubnode(witButton)
     addSubnode(commentButton)
     addSubnode(shareButton)
-  }
-
-  convenience init(delegate: CardActionBarNodeDelegate?) {
-    self.init()
     self.initializeNode()
-    self.delegate = delegate
   }
 
   private func initializeNode() {
@@ -80,8 +73,8 @@ class CardActionBarNode: ASDisplayNode {
     witButton.setBackgroundImage(buttonBackgroundImage, for: normal)
     witButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
 
-    witButton.setTitle(witItTitle, with: buttonFont, with: textColor, for: normal)
-    witButton.setTitle(wittedTitle, with: buttonFont, with: selectedTextColor, for: .selected)
+    witButton.setTitle(Strings.wit_it(), with: buttonFont, with: textColor, for: normal)
+    witButton.setTitle(Strings.witted(), with: buttonFont, with: selectedTextColor, for: .selected)
 
     witButton.cornerRadius = 4
     witButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
@@ -92,23 +85,32 @@ class CardActionBarNode: ASDisplayNode {
 
   func toggleWitButton() {
     witButton.isSelected = !witButton.isSelected
+    setNeedsLayout()
   }
 
   func witButtonTouchUpInside(_ sender: ASButtonNode?) {
     guard let sender = sender else { return }
-    delegate?.cardActionBarNode(card: self, didRequestAction: CardActionBarNode.Action.wit, forSender: sender)
-    //TODO: Remove line and instead call toggleWitButton when Wit is successful
+    //Get action from witButton status
+    let action = !witButton.isSelected ? CardActionBarNode.Action.wit : CardActionBarNode.Action.unwit
+    //Assume success and Toggle button anyway, if witting/unwitting fails delegate should either call didFinishAction or  call toggleWitButton.
     toggleWitButton()
+
+    delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: action, forSender: sender, didFinishAction: { [weak self] (success: Bool) in
+      guard let strongSelf = self else { return }
+      if !success { //Toggle back on failure
+        strongSelf.toggleWitButton()
+      }
+    })
   }
 
   func commentButtonTouchUpInside(_ sender: ASButtonNode?) {
     guard let sender = sender else { return }
-    delegate?.cardActionBarNode(card: self, didRequestAction: CardActionBarNode.Action.comment, forSender: sender)
+    delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: CardActionBarNode.Action.comment, forSender: sender, didFinishAction: nil)
   }
 
   func shareButtonTouchUpInside(_ sender: ASButtonNode?) {
     guard let sender = sender else { return }
-    delegate?.cardActionBarNode(card: self, didRequestAction: CardActionBarNode.Action.share, forSender: sender)
+    delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: CardActionBarNode.Action.share, forSender: sender, didFinishAction: nil)
   }
 
   private func spacer(width: CGFloat = 0.0, flexGrow: CGFloat = 1.0) -> ASLayoutSpec {

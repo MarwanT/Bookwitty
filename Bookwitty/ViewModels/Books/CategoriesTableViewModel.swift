@@ -8,10 +8,8 @@
 
 import Foundation
 
-final class CategoriesTableViewModel {
-  let viewControllerTitle = localizedString(key: "categories", defaultValue: "Categories")
-  
-  let categories: [Category]
+final class CategoriesTableViewModel {  
+  var categories: [Category]
   
   init () {
     categories = CategoryManager.shared.categories ?? [Category]()
@@ -26,7 +24,7 @@ final class CategoriesTableViewModel {
   }
   
   func data(forCellAtIndexPath index: IndexPath) -> String {
-    return categories[index.row].value ?? "Discover"
+    return categories[index.row].value ?? ""
   }
   
   func category(forCellAtIndexPath index: IndexPath) -> Category {

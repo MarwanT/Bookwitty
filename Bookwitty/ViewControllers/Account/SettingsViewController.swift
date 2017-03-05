@@ -25,7 +25,7 @@ class SettingsViewController: UIViewController {
   }
 
   private func initializeComponents() {
-    self.title = self.viewModel.viewControllerTitle
+    self.title = Strings.settings()
     tableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
     tableView.register(TableViewSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: TableViewSectionHeaderView.reuseIdentifier)
 
@@ -42,7 +42,10 @@ class SettingsViewController: UIViewController {
       return
     }
 
-    viewModel.handleSwitchValueChanged(forRowAt: indexPath, newValue: sender.isOn)
+    viewModel.handleSwitchValueChanged(forRowAt: indexPath, newValue: sender.isOn) {
+      () -> () in
+      sender.isOn = GeneralSettings.sharedInstance.shouldSendEmailNotifications
+    }
   }
 
   fileprivate func dispatchSelectionAt(_ indexPath: IndexPath) {
@@ -76,10 +79,15 @@ class SettingsViewController: UIViewController {
     countryPickerViewController.flagSize = 44
 
     countryPickerViewController.onCountrySelected = { country in
-      guard let country = country else { return }
-      self.viewModel.countryName = country.countryName()
-      self.tableView.reloadData()
-      let _ = countryPickerViewController.navigationController?.popViewController(animated: true)
+      guard let country = country else {
+        return
+      }
+
+      let _ = countryPickerViewController.navigationController?.popViewController(animated: true)      
+      self.viewModel.updateUserCountry(country: country.countryCode, completion: {
+        (success: Bool) in
+        self.tableView.reloadData()
+      })
     }
 
     self.navigationController?.pushViewController(countryPickerViewController, animated: true)

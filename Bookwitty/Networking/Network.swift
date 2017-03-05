@@ -22,6 +22,7 @@ public enum BookwittyAPIError: Swift.Error {
   case invalidStatusCode
   case failToRetrieveDictionary
   case failToParseData
+  case failToSignIn
   case undefined
   
   init(moyaError: MoyaError) {
@@ -87,13 +88,17 @@ public struct APIProvider {
     // Add Header Fields to Endpoint
     var headerParameters = [String : String]();
     switch target{
-    case .oAuth, .register:
+    case .oAuth, .register, .refreshToken:
       headerParameters["Content-Type"] = "application/json";
       headerParameters["Accept"] = "application/json"
     default:
       let accessToken = AccessToken.shared
       if let token = accessToken.token, accessToken.isValid {
         headerParameters["Authorization"] = "Bearer \(token)"
+        if let penName = UserManager.shared.defaultPenName,
+           let id = penName.id {
+          headerParameters["X-Bookwitty-Pen-Name"] = id
+        }
       }
       headerParameters["Content-Type"] = "application/vnd.api+json";
       headerParameters["Accept"] = "application/vnd.api+json"
@@ -110,6 +115,11 @@ public struct APIProvider {
     // Add header fields to Endpoint
     if headerParameters.count > 0 {
       endpoint = endpoint.adding(newHTTPHeaderFields: headerParameters)
+    }
+
+    if let includes = target.includes {
+      let includeTypes = includes.map({ $0 }).joined(separator: ",")
+      endpoint = endpoint.adding(newParameters: ["include" : includeTypes])
     }
 
     // return Endpoint
@@ -239,7 +249,7 @@ public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -
     
     switch result {
     case .success(let response):
-      if response.statusCode == 400 {
+      if response.statusCode == 400 || response.statusCode == 401 {
         NotificationCenter.default.post(name: AppNotification.failToRefreshToken, object: nil)
         return
       }

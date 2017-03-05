@@ -7,34 +7,51 @@
 //
 
 import Foundation
+import Moya
 
 final class PenNameViewModel {
-  let viewControllerTitle: String = localizedString(key: "pen_name", defaultValue: "Choose a Pen Name")
-
-  let continueButtonTitle: String = localizedString(key: "continue", defaultValue: "Continue")
-
-  let penNameTextFieldPlaceholderText: String = localizedString(key: "email_text_field_pen_name", defaultValue: "Enter your pen name")
-  let penNameInvalidationErrorMessage: String = localizedString(key: "pen_name_invalidation_error_message", defaultValue: "Oooops pen name can not be empty")
-
-  let penNameTitleText: String = localizedString(key: "pen_name_title", defaultValue: "Pen Name")
-  let penNameNoteText: String = localizedString(key: "pen_name_note", defaultValue: "Don't worry, you can always change it later")
-
-  let imagePickerTitle: String = localizedString(key: "image_picker_title", defaultValue: "Profile Picture")
-  let takeProfilePhotoText: String = localizedString(key: "take_Profile_photo", defaultValue: "Take profile photo")
-  let chooseFromLibraryText: String = localizedString(key: "choose_from_library", defaultValue: "Choose photo from library")
-  let removeProfilePhotoText: String = localizedString(key: "remove_profile_photo", defaultValue: "Clear profile photo")
-  let cancelText: String = localizedString(key: "cancel", defaultValue: "Cancel")
-  let doneText: String = localizedString(key: "done", defaultValue: "Done")
-
   private(set) var user: User!
 
+  private var updateRequest: Cancellable? = nil
+
   func penDisplayName() -> String {
-    let firstName = user.firstName ?? ""
-    let lastName = user.lastName ?? ""
-    return firstName + " " + lastName
+    return user.penNames?.first?.name ?? ""
   }
 
   func initializeWith(user: User) {
     self.user = user
+  }
+
+  func updatePenNameIfNeeded(name: String?, biography: String?, completion: ((Bool)->())?) {
+    var successful = false
+    defer {
+      completion?(successful)
+    }
+
+    guard let penName = user.penNames?.first else {
+      return
+    }
+
+    guard let identifier = penName.id else {
+      return
+    }
+
+    //no needed update if nothing changed
+    if name == penName.name && penName.biography == biography {
+      successful = true
+      return
+    }
+
+    if updateRequest != nil {
+      updateRequest?.cancel()
+    }
+
+    updateRequest = PenNameAPI.updatePenName(identifier: identifier, name: name, biography: biography, avatarUrl: nil, facebookUrl: nil, tumblrUrl: nil, googlePlusUrl: nil, twitterUrl: nil, instagramUrl: nil, pinterestUrl: nil, youtubeUrl: nil, linkedinUrl: nil, wordpressUrl: nil, websiteUrl: nil) {
+      (success: Bool, penName: PenName?, error: BookwittyAPIError?) in
+      successful = success
+      if let penName = penName {
+        self.user.penNames?[0] = penName
+      }
+    }
   }
 }

@@ -36,10 +36,14 @@ class AccessToken {
   public func save(dictionary: NSDictionary) {
     let json = JSON(dictionary)
     
-    let token = json["access_token"].stringValue
-    let refresh = json["refresh_token"].stringValue
+    let tokenValue = json["access_token"].string
+    let refreshValue = json["refresh_token"].string
     let expiresIn = json["expires_in"].doubleValue as TimeInterval
     let expiry = Date(timeIntervalSinceNow: expiresIn)
+    
+    guard let token = tokenValue, let refresh = refreshValue else {
+      return
+    }
     
     defaults.set(token, forKey: Keys.token.rawValue)
     defaults.set(refresh, forKey: Keys.refreshToken.rawValue)
@@ -80,7 +84,7 @@ class AccessToken {
     return expiryDate.isInPast
   }
   
-  private var hasTokens: Bool {
+  var hasTokens: Bool {
     guard let token = token, let refreshToken = refreshToken else {
       return false
     }

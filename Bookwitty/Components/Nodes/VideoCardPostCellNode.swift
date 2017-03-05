@@ -12,13 +12,19 @@ import AsyncDisplayKit
 class VideoCardPostCellNode: BaseCardPostNode {
 
   let node: VideoCardContentNode
-  override var shouldShowInfoNode: Bool { return true }
+  var showsInfoNode: Bool = true
+  override var shouldShowInfoNode: Bool { return showsInfoNode }
   override var contentShouldExtendBorders: Bool { return true }
   override var contentNode: ASDisplayNode { return node }
 
   override init() {
     node = VideoCardContentNode()
     super.init()
+  }
+
+  convenience init(shouldShowInfoNode: Bool) {
+    self.init()
+    showsInfoNode = shouldShowInfoNode
   }
 }
 

@@ -16,21 +16,26 @@ public class GeneralSettings {
     public static let SendUsageData = "SendUsageData"
     public static let SendEmailNotifications = "SendEmailNotifications"
     public static let ShouldShowIntroduction = "ShouldShowIntroduction"
+    public static let PreferredLanguage = "PreferredLanguage"
   }
 
   private let defaults = UserDefaults.standard
-  private let defaultValues: [String:Any] = [
-    Keys.SendUsageData : true,
-    Keys.SendEmailNotifications : true,
-    Keys.ShouldShowIntroduction : true
-  ]
   
   public static let sharedInstance: GeneralSettings = GeneralSettings()
   private init() {
+    let defaultLanguage = Locale.current.languageCode ?? Localization.Language.English.rawValue
+
+    let defaultValues: [String : Any] = [
+      Keys.SendUsageData : true,
+      Keys.SendEmailNotifications : true,
+      Keys.ShouldShowIntroduction : true,      
+    ]
+
     defaults.register(defaults: defaultValues)
     shouldSendUsageData = defaults.bool(forKey: Keys.SendUsageData)
     shouldSendEmailNotifications = defaults.bool(forKey: Keys.SendEmailNotifications)
     shouldShowIntroduction = defaults.bool(forKey: Keys.ShouldShowIntroduction)
+    preferredLanguage = defaults.string(forKey: Keys.PreferredLanguage) ?? Localization.Language.English.rawValue
   }
   
   public var shouldSendUsageData: Bool {
@@ -51,6 +56,12 @@ public class GeneralSettings {
   public var shouldShowIntroduction: Bool {
     didSet {
       defaults.set(self.shouldShowIntroduction, forKey: Keys.ShouldShowIntroduction)
+    }
+  }
+
+  public var preferredLanguage: String {
+    didSet {
+      defaults.set(self.preferredLanguage, forKey: Keys.PreferredLanguage)
     }
   }
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class FeaturedContentCollectionViewCell: UICollectionViewCell {
   static let reuseIdentifier = "FeaturedContentCollectionViewCell"
@@ -26,12 +27,12 @@ class FeaturedContentCollectionViewCell: UICollectionViewCell {
   
   // MARK: APIs
   
-  var image: UIImage? {
+  var imageURL: URL? {
     get {
-      return imageView.image
+      return imageView.sd_imageURL()
     }
-    set (image) {
-      imageView.image = image
+    set (imageURL) {
+      imageView.sd_setImage(with: imageURL)
     }
   }
   

@@ -19,6 +19,18 @@ public enum BookwittyAPI {
   case register(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String?, countryISO3166: String, password: String, language: String)
   case user
   case updateUser(identifier: String, firstName: String?, lastName: String?, dateOfBirth: String?, email: String?, currentPassword: String?, password: String?, country: String?, badges: [String : Any]?, preferences: [String : Any]?)
+  case bookStore
+  case categoryCuratedContent(categoryIdentifier: String)
+  case newsFeed()
+  case Search(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?)
+  case updatePenName(identifier: String, name: String?, biography: String?, avatarUrl: String?, facebookUrl: String?, tumblrUrl: String?, googlePlusUrl: String?, twitterUrl: String?, instagramUrl: String?, pinterestUrl: String?, youtubeUrl: String?, linkedinUrl: String?, wordpressUrl: String?, websiteUrl: String?)
+  case batch(identifiers: [String])
+  case updatePreference(preference: String, value: String)
+  case penNames
+  case wit(contentId: String)
+  case unwit(contentId: String)
+  case absolute(url: URL)
+  case discover
 }
 
 // MARK: - Target Type
@@ -27,11 +39,20 @@ extension TargetType {
   var headerParameters: [String:String]? {
     return nil
   }
+
+  var includes: [ModelResource.Type]? {
+    return nil
+  }
 }
 
 extension BookwittyAPI: TargetType {
   public var baseURL: URL {
-    return Environment.current.baseURL
+    switch self {
+    case .absolute(let fullUrl):
+      return fullUrl
+    default:
+      return Environment.current.baseURL
+    }
   }
   
   public var path: String {
@@ -52,6 +73,30 @@ extension BookwittyAPI: TargetType {
       path = "/user"
     case .updateUser:
       path = "/user"
+    case .bookStore:
+      path = "/curated_collection/book_storefront"
+    case .categoryCuratedContent(let categoryIdentifier):
+      path = "/curated_collection/category/\(categoryIdentifier)"
+    case .newsFeed:
+      path = "/pen_name/feed"
+    case .Search:
+      path = "/search"
+    case .updatePenName(let identifier, _, _, _, _, _, _, _, _, _, _, _, _, _):
+      path = "/pen_names/\(identifier)"
+    case .batch:
+      path = "/content/batch"
+    case .updatePreference:
+      path = "/user/update_preference"
+    case .penNames:
+      path = "/user/pen_names"
+    case .wit(let contentId):
+      path = "/content/\(contentId)/wit"
+    case .unwit(let contentId):
+      path = "/content/\(contentId)/wit"
+    case .discover:
+      path = "/curated_collection/discover_page"
+    case .absolute(_):
+      return ""
     }
     
     return apiBasePath + apiVersion + path
@@ -61,12 +106,14 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .oAuth, .refreshToken:
       return .post
-    case .allAddresses, .user:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute, .discover:
       return .get
-    case .register:
+    case .register, .batch, .updatePreference, .wit:
       return .post
-    case .updateUser:
+    case .updateUser, .updatePenName:
       return .patch
+    case .unwit:
+      return .delete
     }
   }
   
@@ -86,16 +133,22 @@ extension BookwittyAPI: TargetType {
         "client_id": AppKeys.shared.apiKey,
         "client_secret": AppKeys.shared.apiSecret,
         "refresh_token": refreshToken,
-        "grant_type": "refresh_token",
-        "scopes": "openid email profile"
+        "grant_type": "refresh_token"
       ]
-    case .allAddresses, .user:
-      return nil
+    case .batch(let identifiers):
+      return UserAPI.batchPostBody(identifiers: identifiers)
     case .register(let firstName, let lastName, let email, let dateOfBirth, let country, let password, let language):
       return UserAPI.registerPostBody(firstName: firstName, lastName: lastName, email: email, dateOfBirth: dateOfBirth, country: country, password: password, language: language)
-
     case .updateUser(let identifier, let firstName, let lastName, let dateOfBirth, let email, let currentPassword, let password, let country, let badges, let preferences):
       return UserAPI.updatePostBody(identifier: identifier, firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirth, email: email, currentPassword: currentPassword, password: password, country: country, badges: badges, preferences: preferences)
+    case .Search(let filter, let page):
+      return SearchAPI.parameters(filter: filter, page: page)
+    case .updatePenName(let identifier, let name, let biography, let avatarUrl, let facebookUrl, let tumblrUrl, let googlePlusUrl, let twitterUrl, let instagramUrl, let pinterestUrl, let youtubeUrl, let linkedinUrl, let wordpressUrl, let websiteUrl):
+      return PenNameAPI.updatePostBody(identifier: identifier, name: name, biography: biography, avatarUrl: avatarUrl, facebookUrl: facebookUrl, tumblrUrl: tumblrUrl, googlePlusUrl: googlePlusUrl, twitterUrl: twitterUrl, instagramUrl: instagramUrl, pinterestUrl: pinterestUrl, youtubeUrl: youtubeUrl, linkedinUrl: linkedinUrl, wordpressUrl: wordpressUrl, websiteUrl: websiteUrl)
+    case .updatePreference(let preference, let value):
+      return UserAPI.updatePostBody(preference: preference, value: value)
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover:
+      return nil
     }
   }
   
@@ -136,6 +189,16 @@ extension BookwittyAPI: TargetType {
     }
   }
 
+  var includes: [String]? {
+    switch self {
+    case .user, .register:
+      return [PenName.resourceType]
+    case .newsFeed:
+      return ["pen-name", "contributors", "commenters"]
+    default:
+      return nil
+    }
+  }
 }
 
 // MARK: - Global Helpers

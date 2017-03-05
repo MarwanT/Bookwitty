@@ -8,6 +8,7 @@
 
 import Foundation
 import TTTAttributedLabel
+import AsyncDisplayKit
 
 protocol Themeable {
   func applyTheme()
@@ -76,8 +77,17 @@ protocol ThemeSpacing {
 protocol ThemeButtonsStyle {
   func stylePrimaryButton(button: UIButton)
   func styleSecondaryButton(button: UIButton)
+  func styleECommercePrimaryButton(button: UIButton)
+  func styleECommerceSecondaryButton(button: UIButton)
   func stylePrimaryButton(button: UIButton, withColor color: UIColor, highlightedColor: UIColor)
   func styleSecondaryButton(button: UIButton, withColor color: UIColor, highlightedColor: UIColor)
+  
+  func stylePrimaryButton(button: ASButtonNode)
+  func styleSecondaryButton(button: ASButtonNode)
+  func styleECommercePrimaryButton(button: ASButtonNode)
+  func styleECommerceSecondaryButton(button: ASButtonNode)
+  func stylePrimaryButton(button: ASButtonNode, withColor color: UIColor, highlightedColor: UIColor)
+  func styleSecondaryButton(button: ASButtonNode, withColor color: UIColor, highlightedColor: UIColor)
 }
 
 protocol ThemeLabelsStyle {

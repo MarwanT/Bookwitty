@@ -9,38 +9,112 @@ import UIKit
 import AsyncDisplayKit
 
 class NewsFeedViewController: ASViewController<ASCollectionNode> {
+  let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
+  let pullToRefresher = UIRefreshControl()
+  let penNameSelectionNode = PenNameSelectionNode()
+  let loaderNode: LoaderNode
   
+  var collectionView: ASCollectionView?
+  var scrollView: UIScrollView? {
+    if let collectionView = collectionView {
+      return collectionView as UIScrollView
+    }
+    return nil
+  }
+  let scrollingThreshold: CGFloat = 25.0
   let viewModel = NewsFeedViewModel()
+  var isFirstRun: Bool = true
+  var isLoadingMore: Bool = false {
+    didSet {
+      let bottomMargin: CGFloat
+      if isLoadingMore {
+        bottomMargin = -(externalMargin/2)
+      } else {
+        //If we have Zero data items this means that we are only showing the pen-name-selection-node
+        bottomMargin = viewModel.data.count == 0 ? 0.0 : -(LoaderNode.nodeHeight - externalMargin/2)
+      }
 
-  let data = ["","","","","","","","","","","","","","",""]
-
-  init() {
-    flowLayout = UICollectionViewFlowLayout()
-    let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
-    flowLayout.sectionInset = UIEdgeInsets(top: externalMargin/2, left: 0, bottom: externalMargin/2, right: 0)
-    collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
-
-    super.init(node: collectionNode)
-
-    collectionNode.delegate = self
-    flowLayout.minimumInteritemSpacing  = 1
-    flowLayout.minimumLineSpacing       = 1
+      flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomMargin, right: 0)
+      loaderNode.updateLoaderVisibility(show: isLoadingMore)
+    }
   }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
+  init() {
+    flowLayout = UICollectionViewFlowLayout()
+    flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: externalMargin/2, right: 0)
+    flowLayout.minimumInteritemSpacing  = 0
+    flowLayout.minimumLineSpacing       = 0
+    flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.nodeHeight)
+
+    collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+
+    loaderNode = LoaderNode()
+
+    super.init(node: collectionNode)
+
+    collectionNode.onDidLoad { [weak self] (collectionNode) in
+      guard let strongSelf = self,
+        let asCollectionView = collectionNode.view as? ASCollectionView else {
+          return
+      }
+      strongSelf.collectionView = asCollectionView
+      strongSelf.collectionView?.addSubview(strongSelf.pullToRefresher)
+      strongSelf.collectionView?.alwaysBounceVertical = true
+    }
+    collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionFooter)
+  }
+
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = viewModel.viewController
-    
+    title = Strings.news()
+    addObservers()
     initializeNavigationItems()
 
     collectionNode.delegate = self
     collectionNode.dataSource = self
+    penNameSelectionNode.delegate = self
+    //Listen to pullToRefresh valueChange and call loadData
+    pullToRefresher.addTarget(self, action: #selector(self.loadData), for: .valueChanged)
+
+    applyTheme()
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    if isFirstRun && UserManager.shared.isSignedIn {
+      isFirstRun = false
+      loadData()
+    }
+    animateRefreshControllerIfNeeded()
+  }
+
+  /*
+   When the refresh controller is still refreshing, and we navigate away and
+   back to this view controller, the activity indicator stops animating.
+   The is a turn around to re animate it if needed
+   */
+  private func animateRefreshControllerIfNeeded() {
+    guard let collectionView = collectionView else {
+      return
+    }
+
+    if self.pullToRefresher.isRefreshing == true {
+      let offset = collectionView.contentOffset
+
+      self.pullToRefresher.endRefreshing()
+      self.pullToRefresher.beginRefreshing()
+      collectionView.contentOffset = offset
+    }
   }
   
   private func initializeNavigationItems() {
@@ -51,6 +125,66 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       UIBarButtonItemStyle.plain, target: self, action:
       #selector(self.settingsButtonTap(_:)))
     navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
+  }
+
+  func loadData(withPenNames reloadPenNames: Bool = true) {
+    viewModel.data = []
+    collectionNode.reloadData()
+    if !reloadPenNames {
+      self.isLoadingMore = true
+    } else {
+      self.pullToRefresher.beginRefreshing()
+    }
+    viewModel.loadNewsfeed { [weak self] (success) in
+      guard let strongSelf = self else { return }
+      if !reloadPenNames {
+        strongSelf.isLoadingMore = false
+      } else {
+        strongSelf.pullToRefresher.endRefreshing()
+      }
+      strongSelf.collectionNode.reloadData(completion: {
+        if reloadPenNames || strongSelf.penNameSelectionNode.calculatedLayout?.size.height ?? 0.0 > 0.0 {
+          strongSelf.reloadPenNamesNode()
+        }
+      })
+    }
+  }
+
+  func reloadPenNamesNode() {
+    penNameSelectionNode.loadData(penNames: viewModel.penNames, withSelected: viewModel.defaultPenName)
+  }
+
+}
+extension NewsFeedViewController: PenNameSelectionNodeDelegate {
+  func didSelectPenName(penName: PenName, sender: PenNameSelectionNode) {
+    if let scrollView = scrollView {
+      penNameSelectionNode.alpha = 1.0
+      scrollView.contentOffset = CGPoint(x: 0, y: 0.0)
+    }
+    viewModel.didUpdateDefaultPenName(penName: penName, completionBlock: {  didSaveDefault in
+      if didSaveDefault {
+        loadData(withPenNames: false)
+      }
+    })
+  }
+}
+// MARK: - Notification
+extension NewsFeedViewController {
+  func addObservers() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.didSignInNotification(notification:)), name: AppNotification.didSignIn, object: nil)
+  }
+
+  func didSignInNotification(notification: Notification) {
+    //User signed in or changed: Reset isFirstRun to make sure data reloads
+    isFirstRun = true
+  }
+}
+// MARK: - Themeable
+extension NewsFeedViewController: Themeable {
+  func applyTheme() {
+    collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+    pullToRefresher.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
   }
 }
 
@@ -65,180 +199,64 @@ extension NewsFeedViewController {
 
 extension NewsFeedViewController: ASCollectionDataSource {
   func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
-    return data.count > 0 ? 1 : 0
+    return viewModel.numberOfSections()
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    return data.count
+    return viewModel.numberOfItemsInSection()
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
     let index = indexPath.row
     
     return {
-      let cell: BaseCardPostNode
-      switch index {
-      case 19:
-        let topicCell: ReadingListCardPostCellNode = ReadingListCardPostCellNode()
-        topicCell.postInfoData = CardPostInfoNodeData("Shafic","December 12, 2014","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-        topicCell.node.articleTitle = "Think Metallica & Lady Gaga’s performance at the Grammys will be weird? This isn’t even the weirdest collaboration they’ve given us."
-        topicCell.node.articleDescription = "The Grammys have sandwiched together some unorthodox, yet delicious, combinations in the past. Each year, the ceremony seems to one-up itself with a radical recipe of rap and jazz, or country and R&B, or something wacky like polka and ska. Their pairings are like banana and bacon -- you don’t think they’d taste well together, but they actually mesh pretty decently once you try them."
-        topicCell.node.setTopicStatistics(numberOfPosts: "73")
-        topicCell.articleCommentsSummary = "Joanna and 4 others you know commented on this"
-        cell = topicCell
-      case 18:
-        let profileCell: ProfileCardPostCellNode = ProfileCardPostCellNode()
-        profileCell.node.imageUrl = "https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png"
-        profileCell.node.followersCount = nil
-        profileCell.node.userName = "Marwan Al Toutoun Nji"
-        profileCell.node.articleDescription = "I am an Art'Tist"
-        cell = profileCell
-      case 17:
-        let profileCell: ProfileCardPostCellNode = ProfileCardPostCellNode()
-        profileCell.node.imageUrl = "https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png"
-        profileCell.node.followersCount = "1564"
-        profileCell.node.userName = "Shafic Abed Al'Moutaleb Al'Hariri"
-        profileCell.node.articleDescription = "The Grammys have sandwiched together some unorthodox, yet delicious, combinations in the past. Each year, the ceremony seems to one-up itself with a radical recipe of rap and jazz, or country and R&B, or something wacky like polka and ska. Their pairings are like banana and bacon -- you don’t think they’d taste well together, but they actually mesh pretty decently once you try them."
-        cell = profileCell
-      case 16:
-        let topicCell: TopicCardPostCellNode = TopicCardPostCellNode()
-        topicCell.postInfoData = CardPostInfoNodeData("Shafic","December 12, 2014","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-        topicCell.node.articleTitle = "Think Metallica & Lady Gaga’s performance at the Grammys will be weird? This isn’t even the weirdest collaboration they’ve given us."
-        topicCell.node.articleDescription = "The Grammys have sandwiched together some unorthodox, yet delicious, combinations in the past. Each year, the ceremony seems to one-up itself with a radical recipe of rap and jazz, or country and R&B, or something wacky like polka and ska. Their pairings are like banana and bacon -- you don’t think they’d taste well together, but they actually mesh pretty decently once you try them."
-        topicCell.node.imageUrl = "https://www.billboard.com/files/styles/article_main_image/public/media/metallica-opera-house-nov-2016-billboard-1548.jpg"
-        topicCell.node.setTopicStatistics(numberOfPosts: "73")
-        topicCell.articleCommentsSummary = "Joanna and 4 others you know commented on this"
-        topicCell.node.subImageUrl = "https://s-media-cache-ak0.pinimg.com/736x/61/81/9b/61819b3a8b1ad89bbfb541e7fc15025b.jpg"
-        cell = topicCell
-      case 15:
-        let topicCell: TopicCardPostCellNode = TopicCardPostCellNode()
-        topicCell.postInfoData = CardPostInfoNodeData("Shafic","December 12, 2014","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-        topicCell.node.articleTitle = nil
-        topicCell.node.articleDescription = "The Grammys have sandwiched together some unorthodox, yet delicious, combinations in the past. Each year, the ceremony seems to one-up itself with a radical recipe of rap and jazz, or country and R&B, or something wacky like polka and ska. Their pairings are like banana and bacon -- you don’t think they’d taste well together, but they actually mesh pretty decently once you try them."
-        topicCell.node.imageUrl = nil
-        topicCell.node.setTopicStatistics(numberOfBooks: "18", numberOfFollowers: "1230")
-        topicCell.articleCommentsSummary = "Joanna and 4 others you know commented on this"
-        cell = topicCell
-      case 14:
-        let topicCell: TopicCardPostCellNode = TopicCardPostCellNode()
-        topicCell.postInfoData = CardPostInfoNodeData("Shafic","December 12, 2014","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-        topicCell.node.articleTitle = "Think Metallica & Lady Gaga’s performance at the Grammys will be weird? This isn’t even the weirdest collaboration they’ve given us."
-        topicCell.node.setTopicStatistics(numberOfPosts: "73", numberOfBooks: "18", numberOfFollowers: "1230")
-        topicCell.node.articleDescription = nil
-        topicCell.node.imageUrl = nil
-        topicCell.articleCommentsSummary = "Joanna and 4 others you know commented on this"
-        cell = topicCell
-      case 13:
-        let topicCell: TopicCardPostCellNode = TopicCardPostCellNode()
-        topicCell.postInfoData = CardPostInfoNodeData("Shafic","December 12, 2014","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-        topicCell.node.articleTitle = "Think Metallica & Lady Gaga’s performance at the Grammys will be weird? This isn’t even the weirdest collaboration they’ve given us."
-        topicCell.node.articleDescription = "The Grammys have sandwiched together some unorthodox, yet delicious, combinations in the past. Each year, the ceremony seems to one-up itself with a radical recipe of rap and jazz, or country and R&B, or something wacky like polka and ska. Their pairings are like banana and bacon -- you don’t think they’d taste well together, but they actually mesh pretty decently once you try them."
-        topicCell.node.imageUrl = "https://www.billboard.com/files/styles/article_main_image/public/media/metallica-opera-house-nov-2016-billboard-1548.jpg"
-        topicCell.node.setTopicStatistics(numberOfPosts: "73", numberOfBooks: "5")
-        topicCell.articleCommentsSummary = nil
-        cell = topicCell
-      case 0:
-        let topicCell: TopicCardPostCellNode = TopicCardPostCellNode()
-        topicCell.postInfoData = CardPostInfoNodeData("Shafic","December 12, 2014","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-        topicCell.node.articleTitle = "Think Metallica & Lady Gaga’s performance at the Grammys will be weird? This isn’t even the weirdest collaboration they’ve given us."
-        topicCell.node.articleDescription = "The Grammys have sandwiched together some unorthodox, yet delicious, combinations in the past. Each year, the ceremony seems to one-up itself with a radical recipe of rap and jazz, or country and R&B, or something wacky like polka and ska. Their pairings are like banana and bacon -- you don’t think they’d taste well together, but they actually mesh pretty decently once you try them."
-        topicCell.node.imageUrl = "https://www.billboard.com/files/styles/article_main_image/public/media/metallica-opera-house-nov-2016-billboard-1548.jpg"
-        topicCell.articleCommentsSummary = "Joanna and 4 others you know commented on this"
-        cell = topicCell
-      case 1:
-        let articleCell: ArticleCardPostCellNode = ArticleCardPostCellNode()
-        articleCell.postInfoData = CardPostInfoNodeData("Shafic","December 12, 2014","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-        articleCell.node.articleTitle = "Think Metallica & Lady Gaga’s performance at the Grammys will be weird? This isn’t even the weirdest collaboration they’ve given us."
-        articleCell.node.articleDescription = "The Grammys have sandwiched together some unorthodox, yet delicious, combinations in the past. Each year, the ceremony seems to one-up itself with a radical recipe of rap and jazz, or country and R&B, or something wacky like polka and ska. Their pairings are like banana and bacon -- you don’t think they’d taste well together, but they actually mesh pretty decently once you try them."
-        articleCell.node.imageUrl = "https://www.billboard.com/files/styles/article_main_image/public/media/metallica-opera-house-nov-2016-billboard-1548.jpg"
-        articleCell.articleCommentsSummary = "Joanna and 4 others you know commented on this"
-        cell = articleCell
-        cell.supplementaryElementKind = "HEADER"
-      case 2:
-        let photoCell = PhotoCardPostCellNode()
-        photoCell.postInfoData = CardPostInfoNodeData("Michel","December 1, 2016","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-        photoCell.node.imageUrl = "https://www.accompany.com/wp-content/uploads/accompany-relationship-management-book-recommendations-600x400.jpg"
-        photoCell.articleCommentsSummary = "Shafic and 2 others you know commented on this"
-        cell = photoCell
-      case 3:
-        let articleCell: ArticleCardPostCellNode = ArticleCardPostCellNode()
-        articleCell.postInfoData = CardPostInfoNodeData("Shafic","December 12, 2014","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-        articleCell.node.articleTitle = "What happens after companies jettison traditional year-end evaluations? Ahead of the curve: The future of performance management"
-        articleCell.node.articleDescription = "The worst-kept secret in companies has long been the fact that the yearly ritual of evaluating (and sometimes rating and ranking) the performance of employees epitomizes the absurdities of corporate life. Managers and staff alike too often view performance management as time consuming, excessively subjective, demotivating, and ultimately unhelpful. In these cases, it does little to improve the performance of employees. It may even undermine their performance as they struggle with ratings, worry about compensation, and try to make sense of performance feedback."
-        articleCell.articleCommentsSummary = "Marilyn commented on this"
-        articleCell.node.imageUrl = ""
-        cell = articleCell
-      case 4:
-        let videoCell = VideoCardPostCellNode()
-        videoCell.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-        videoCell.node.articleTitle = "Live version of 'Iron Sky' from Paolo's album 'Caustic Love'. Recorded live at Abbey Road, London."
-        videoCell.node.articleDescription = "“Iron Sky” may very well have started out as a “slow burner” single off of Scottish singer/ songwriter Paolo Nutini’s album Caustic Love, but it has combusted into one hell of a blaze. The song starts with a low deep bass; just a few notes to introduce the psychedelic guitar which gives way to Paolo Nutini’s voice. The song cries with lyrics that tell a story to rise above the Iron Sky of suppression and pollution that is slowly taking over society’s mind. “Iron sky” is a song that is a compelling stirring blend of conscious-soul subject wrapped up in a deep, deep-soul style. Paolo’s strong lyrical message echoes the voices of yesterday like Curtis Mayfield or Marvin Gay with the same smooth, seductive gut intensity."
-        videoCell.node.imageUrl = "https://i3.ytimg.com/vi/ELKbtFljucQ/hqdefault.jpg"
-        videoCell.articleCommentsSummary = "Shafic and 10 others you know commented on this"
-        cell = videoCell
-      case 5:
-        let linkCell = LinkCardPostCellNode()
-        linkCell.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-        linkCell.node.linkUrl = "https://medium.com/pointer-io/the-engineers-guide-to-companies-ed859187f78c#.sthe5orpf"
-        linkCell.node.articleTitle = "The Engineer’s Guide to Companies"
-        linkCell.node.articleDescription = "In my previous, totally important technology business article, The Engineer’s Guide to Management, I explained how massive management infrastructure is necessary for running an effective engineering organization. If you didn’t read that other article, you probably should."
-        cell = linkCell
-      case 6:
-        let linkCell = LinkCardPostCellNode()
-        linkCell.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-        linkCell.node.linkUrl = nil
-        linkCell.node.articleTitle = nil
-        linkCell.node.articleDescription = "In my previous, totally important technology business article, The Engineer’s Guide to Management, I explained how massive management infrastructure is necessary for running an effective engineering organization. If you didn’t read that other article, you probably should."
-        cell = linkCell
-      case 7:
-        let linkCell = LinkCardPostCellNode()
-        linkCell.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-        linkCell.node.linkUrl = "https://soundcloud.com/superduperkylemusic/kyle-ispy-feat-lil-yachty"
-        linkCell.node.articleTitle = nil
-        linkCell.node.articleDescription = nil
-        cell = linkCell
-      case 8:
-        let linkCell = LinkCardPostCellNode()
-        linkCell.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-        linkCell.node.linkUrl = "https://medium.com/pointer-io/the-engineers-guide-to-companies-ed859187f78c#.sthe5orpf"
-        linkCell.node.articleTitle = nil
-        linkCell.node.articleDescription = "In my previous, totally important technology business article, The Engineer’s Guide to Management, I explained how massive management infrastructure is necessary for running an effective engineering organization. If you didn’t read that other article, you probably should."
-        linkCell.articleCommentsSummary = nil
-        cell = linkCell
-      case 9:
-        let linkCell = LinkCardPostCellNode()
-        linkCell.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-        linkCell.node.linkUrl = nil
-        linkCell.node.articleTitle = "The Engineer’s Guide to Companies"
-        linkCell.node.articleDescription = "In my previous, totally important technology business article, The Engineer’s Guide to Management, I explained how massive management infrastructure is necessary for running an effective engineering organization. If you didn’t read that other article, you probably should."
-        linkCell.articleCommentsSummary = nil
-        cell = linkCell
-      case 10:
-        let linkCell = LinkCardPostCellNode()
-        linkCell.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-        linkCell.node.linkUrl = nil
-        linkCell.node.articleTitle = "The Engineer’s Guide to Companies"
-        linkCell.node.articleDescription = nil
-        linkCell.articleCommentsSummary = nil
-        cell = linkCell
-      case 11:
-        let quoteCell = QuoteCardPostCellNode()
-        quoteCell.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-        quoteCell.node.articleQuotePublisher = "Woody Allen"
-        quoteCell.node.articleQuote = "“ I'm not afraid to die, I just don't want to be here when it happens ”"
-        quoteCell.articleCommentsSummary = "Shafic and 10 others you know commented on this"
-        cell = quoteCell
-      case 12:
-        let quoteCell = QuoteCardPostCellNode()
-        quoteCell.postInfoData = CardPostInfoNodeData("Charles","December 2, 2020","https://ocw.mit.edu/faculty/michael-cuthbert/cuthbert.png")
-        quoteCell.node.articleQuotePublisher = "Norman Cousins"
-        quoteCell.node.articleQuote = "“ Death is not the greatest loss in life. The greatest loss is what dies inside us while we live. ”"
-        quoteCell.articleCommentsSummary = nil
-        cell = quoteCell
-      default:
-        cell = BaseCardPostNode()
+      if(index != 0) {
+        let baseCardNode = self.viewModel.nodeForItem(atIndex: index) ?? BaseCardPostNode()
+        baseCardNode.delegate = self
+        return baseCardNode
+      } else {
+        return self.penNameSelectionNode
       }
-      return cell
+    }
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+    if node is PenNameSelectionNode {
+      penNameSelectionNode.setNeedsLayout()
+    }
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
+    switch kind {
+    case UICollectionElementKindSectionFooter: return loaderNode
+    default: return ASCellNode()
+    }
+  }
+}
+
+// MARK - BaseCardPostNode Delegate
+extension NewsFeedViewController: BaseCardPostNodeDelegate {
+  func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    guard let index = collectionNode.indexPath(for: card)?.item else {
+      return
+    }
+
+    switch(action) {
+    case .wit:
+      viewModel.witContent(index: index) { (success) in
+        didFinishAction?(success)
+      }
+    case .unwit:
+      viewModel.unwitContent(index: index) { (success) in
+        didFinishAction?(success)
+      }
+    case .share:
+      if let sharingInfo: String = viewModel.sharingContent(index: index) {
+        presentShareSheet(shareContent: sharingInfo)
+      }
+    default:
+      //TODO: handle comment
+      break
     }
   }
 }
@@ -249,5 +267,88 @@ extension NewsFeedViewController: ASCollectionDelegate {
       min: CGSize(width: collectionNode.frame.width, height: 0),
       max: CGSize(width: collectionNode.frame.width, height: .infinity)
     )
+  }
+
+  public func shouldBatchFetch(for collectionNode: ASCollectionNode) -> Bool {
+    return viewModel.hasNextPage()
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
+    guard !isLoadingMore else {
+      return
+    }
+    let initialLastIndexPath: Int = viewModel.numberOfItemsInSection()
+
+    DispatchQueue.main.async {
+      self.isLoadingMore = true
+    }
+    // Fetch next page data
+    viewModel.loadNextPage { [weak self] (success) in
+      guard let strongSelf = self else {
+        return
+      }
+      let finalLastIndexPath: Int = strongSelf.viewModel.numberOfItemsInSection()
+
+      if success && finalLastIndexPath > initialLastIndexPath {
+        let updateIndexRange = initialLastIndexPath..<finalLastIndexPath
+
+        let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
+          return IndexPath(row: index, section: 0)
+        })
+        strongSelf.loadItemsWithIndexOnMainThread() {
+          collectionNode.insertItems(at: updatedIndexPathRange)
+          strongSelf.isLoadingMore = false
+        }
+      }
+
+      // Properly finish the batch fetch
+      context.completeBatchFetching(true)
+    }
+  }
+
+  /**
+   * Note: loadItemsWithIndex will always run on the main thread
+   */
+  func loadItemsWithIndexOnMainThread(completionBlock: @escaping () -> ()) {
+    if Thread.isMainThread {
+      completionBlock()
+    } else {
+      DispatchQueue.main.async {
+        completionBlock()
+      }
+    }
+  }
+}
+
+extension NewsFeedViewController: UIScrollViewDelegate {
+  public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    scrollToTheRightPosition(scrollView: scrollView)
+  }
+
+  public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    if(!decelerate) {
+      scrollToTheRightPosition(scrollView: scrollView)
+    }
+  }
+
+  private func scrollToTheRightPosition(scrollView: UIScrollView) {
+    let penNameHeight = penNameSelectionNode.occupiedHeight
+    if scrollView.contentOffset.y <= penNameHeight {
+      if(scrollView.contentOffset.y <= scrollingThreshold) {
+        UIView.animate(withDuration: 0.3, animations: {
+          self.penNameSelectionNode.alpha = 1.0
+          scrollView.contentOffset = CGPoint(x: 0, y: 0.0)
+          //TODO: use inset to hide the bar:
+          //scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        })
+      } else {
+        UIView.animate(withDuration: 0.3, animations: {
+          self.penNameSelectionNode.alpha = 0.4
+          scrollView.contentOffset = CGPoint(x: 0, y: penNameHeight)
+          //TODO: use inset to hide the bar:
+          //scrollView.contentInset = UIEdgeInsets(top: -penNameHeight, left: 0, bottom: 0, right: 0)
+        })
+      }
+    }
   }
 }

@@ -1,5 +1,5 @@
 //
-//  Banner.swift
+//  BannerView.swift
 //  Bookwitty
 //
 //  Created by Marwan  on 2/13/17.
@@ -8,8 +8,9 @@
 
 import UIKit
 import FLKAutoLayout
+import SDWebImage
 
-class Banner: UIView, Themeable {
+class BannerView: UIView, Themeable {
   let imageView = UIImageView(frame: CGRect.zero)
   let labelsContainerView = UIView(frame: CGRect.zero)
   let titleLabel = UILabel(frame: CGRect.zero)
@@ -82,12 +83,12 @@ class Banner: UIView, Themeable {
   
   // MARK: - APIs
   
-  var image: UIImage? {
+  var imageURL: URL? {
     get {
-      return imageView.image
+      return imageView.sd_imageURL()
     }
-    set (image) {
-      imageView.image = image
+    set (imageURL) {
+      imageView.sd_setImage(with: imageURL)
     }
   }
   

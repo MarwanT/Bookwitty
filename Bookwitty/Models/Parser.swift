@@ -9,6 +9,8 @@
 import Foundation
 import Spine
 
+typealias ModelResource = Resource
+
 protocol Parsable {
   associatedtype AbstractType: Resource
   static func parseData(data: Data?) -> AbstractType?
@@ -39,8 +41,16 @@ extension Parsable where Self: Resource {
     return nil
   }
 
-  static func parseDataArray(data: Data?) -> Array<AbstractType>? {
-    return nil
+  static func parseDataArray(data: Data?) -> [AbstractType]? {
+    guard let data = data,
+    let parsedData = Parser.parseDataArray(data: data),
+    let resourceArray = parsedData.resources else {
+      return nil
+    }
+
+    return resourceArray.flatMap { (resource) -> AbstractType? in
+      return resource as? AbstractType
+    }
   }
 
   func serializeData(options: SerializationOptions) -> [String : Any]? {
@@ -80,10 +90,50 @@ class Parser {
     serializer.registerResource(Video.self)
     serializer.registerResource(Audio.self)
     serializer.registerResource(Link.self)
+    serializer.registerResource(CuratedCollection.self)
+    serializer.registerResource(Book.self)
   }
 
   private func registerValueFormatters() {
     //Register any value formatter here using the serializer
+    serializer.registerValueFormatter(CuratedCollectionSectionsValueFormatter())
+    serializer.registerValueFormatter(ProductDetailsValueFormatter())
+    serializer.registerValueFormatter(SupplierInformationValueFormatter())
+  }
+
+  static func parseData(data: Data?, mappingTargets: [Resource]? = nil) -> JSONAPIDocument? {
+    guard let data = data else {
+      return nil
+    }
+
+    let serializer = Parser.sharedInstance.serializer
+    do {
+      let document = try serializer.deserializeData(data, mappingTargets: mappingTargets, options: [.SkipUnregisteredType])
+      return document
+    } catch let error as NSError {
+      print("Error parsing data")
+      print(data)
+      print(error)
+    }
+    return nil
+  }
+
+  static func parseDataArray(data: Data?, mappingTargets: [Resource]? = nil) -> (resources: [Resource]?, next: URL?, errors: [APIError]?)? {
+    guard let data = data else {
+      return nil
+    }
+    guard let document: JSONAPIDocument = parseData(data: data, mappingTargets: mappingTargets) else {
+      print("Error parsing Array of models")
+      return nil
+    }
+
+    let next = document.links?["next"]
+    
+    if let parsedData = document.data {
+      return (parsedData, next, document.errors)
+    }
+
+    return (nil, next, document.errors)
   }
 }
 

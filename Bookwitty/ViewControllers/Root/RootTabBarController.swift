@@ -54,19 +54,26 @@ class RootTabBarController: UITabBarController {
   private func initializeTabBarViewControllers() {
     let viewController1 = NewsFeedViewController()
     let bookStoreViewController = Storyboard.Books.instantiate(BookStoreViewController.self)
-    
+    let discoverViewController = DiscoverViewController()
+
     viewController1.tabBarItem = UITabBarItem(
+      //TODO: This should be localized
       title: "NEWS",
       image: #imageLiteral(resourceName: "newsfeed"),
       tag: 1)
-    bookStoreViewController.tabBarItem = UITabBarItem(
-      title: viewModel.bookStoreTabTitle,
-      image: #imageLiteral(resourceName: "books"),
+    discoverViewController.tabBarItem = UITabBarItem(
+      title: "DISCOVER",//TODO: Replace with localized string
+      image: #imageLiteral(resourceName: "discover"),
       tag:2)
-    
+    bookStoreViewController.tabBarItem = UITabBarItem(
+      title: Strings.books(),
+      image: #imageLiteral(resourceName: "books"),
+      tag:3)
+
     // Set The View controller
     self.viewControllers = [
       UINavigationController(rootViewController: viewController1),
+      UINavigationController(rootViewController: discoverViewController),
       UINavigationController(rootViewController: bookStoreViewController)]
     
     // Set Default select tab index
@@ -131,21 +138,25 @@ extension RootTabBarController {
     AccessToken.shared.deleteToken()
     presentIntroductionOrSignInViewController()
     refreshToOriginalState()
-    //TODO: Delete user information if any
+    UserManager.shared.deleteSignedInUser()
   }
   
   func signIn(notification: Notification) {
-    self.dismiss(animated: true) {
-      self.dismissOverlay()
-    }
+    showRootViewController()
   }
   
   func register(notification: Notification) {
+    showRootViewController()
     guard let user = notification.object as? User else {
       return
     }
-    signIn(notification: notification)
     presentPenNameViewController(user: user)
+  }
+  
+  func showRootViewController() {
+    self.dismiss(animated: true) {
+      self.dismissOverlay()
+    }
   }
 }
 
@@ -177,11 +188,14 @@ extension RootTabBarController {
   }
   
   func displayOverlay(animated: Bool = true) {
+    overlayView.isHidden = false
     changeOverlayAlphaValue(animated: animated, alpha: 1)
   }
   
   func dismissOverlay(animated: Bool = true) {
-    changeOverlayAlphaValue(animated: animated, alpha: 0)
+    changeOverlayAlphaValue(animated: animated, alpha: 0) {
+      self.overlayView.isHidden = true
+    }
   }
   
   func changeOverlayAlphaValue(animated: Bool, alpha: CGFloat, completion: (() -> Void)? = nil) {

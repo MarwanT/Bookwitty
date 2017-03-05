@@ -18,7 +18,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="396" height="125.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NMk-UF-HYN">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NMk-UF-HYN" customClass="UIImageViewAligned" customModule="UIImageViewAlignedSwift">
                         <rect key="frame" x="0.0" y="0.0" width="100" height="125.5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="100" id="Y1n-wR-2ZB"/>

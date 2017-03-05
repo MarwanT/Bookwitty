@@ -29,10 +29,12 @@ target 'Bookwitty' do
   pod 'EMCCountryPickerController', :git => 'https://github.com/Keeward/EMCCountryPickerController', :tag => '1.4.0'
   pod 'TTTAttributedLabel', '2.0.0'
   pod 'SwiftyJSON', '3.1.4'
-  pod 'ALCameraViewController'
-  pod 'Spine', :git => 'https://github.com/wvteijlingen/Spine.git'
-  pod 'AsyncDisplayKit', '2.0.2'
+  pod 'ALCameraViewController', '1.2.7'
+  pod 'Spine', :git => 'https://github.com/Keeward/Spine.git'
+  pod 'AsyncDisplayKit', '2.2'
   pod 'SwiftLinkPreview', '2.0.0'
+  pod 'SDWebImage', '4.0.0'
+  pod 'UIImageViewAlignedSwift', '0.3.1'
 
   target 'BookwittyTests' do
     inherit! :search_paths
