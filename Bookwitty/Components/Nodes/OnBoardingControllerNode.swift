@@ -19,6 +19,9 @@ class OnBoardingControllerNode: ASDisplayNode {
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
 
+  //TODO: Replace with real data
+  var data: [String] = ["Test 1","Test 2","Test 3","Test 4"]
+
   override init() {
     titleTextNode = ASTextNode()
     flowLayout = UICollectionViewFlowLayout()
@@ -33,6 +36,8 @@ class OnBoardingControllerNode: ASDisplayNode {
 
     style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 0.0)
 
+    collectionNode.delegate = self
+    collectionNode.dataSource = self
     collectionNode.style.flexGrow = 1.0
     collectionNode.style.flexShrink = 1.0
     collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
@@ -55,3 +60,19 @@ class OnBoardingControllerNode: ASDisplayNode {
   }
 }
 
+extension OnBoardingControllerNode: ASCollectionDelegate, ASCollectionDataSource {
+  func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+    return 1
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+    return data.count
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
+    return ASSizeRange(
+      min: CGSize(width: collectionNode.frame.width, height: 0.0),
+      max: CGSize(width: collectionNode.frame.width, height: .infinity)
+    )
+  }
+}
