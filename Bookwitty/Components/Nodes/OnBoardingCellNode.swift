@@ -101,6 +101,11 @@ class OnBoardingCellNode: ASCellNode {
 
 extension OnBoardingCellNode: ASCollectionDelegate, ASCollectionDataSource {
 
+  func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
+    let cell = OnBoardingCellSectionNode()
+    cell.text = "Topics to Follow"
+    return cell
+  }
 
   func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
     return sections.count
