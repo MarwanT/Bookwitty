@@ -134,6 +134,7 @@
 		F422D82E1E51AC3900A32C2F /* VideoCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F422D82D1E51AC3900A32C2F /* VideoCardPostCellNode.swift */; };
 		F422D8301E51CD9D00A32C2F /* LinkCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F422D82F1E51CD9D00A32C2F /* LinkCardPostCellNode.swift */; };
 		F42441651E66FE260087E3B1 /* CardFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42441641E66FE260087E3B1 /* CardFactory.swift */; };
+		F42600891E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42600881E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift */; };
 		F42686771E4EF83C0085E581 /* CardPostInfoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */; };
 		F42686791E4F458A0085E581 /* CardActionBarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42686781E4F458A0085E581 /* CardActionBarNode.swift */; };
 		F426867B1E505CE60085E581 /* BaseCardPostNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426867A1E505CE60085E581 /* BaseCardPostNode.swift */; };
@@ -322,6 +323,7 @@
 		F422D82D1E51AC3900A32C2F /* VideoCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCardPostCellNode.swift; sourceTree = "<group>"; };
 		F422D82F1E51CD9D00A32C2F /* LinkCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkCardPostCellNode.swift; sourceTree = "<group>"; };
 		F42441641E66FE260087E3B1 /* CardFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardFactory.swift; path = Factories/CardFactory.swift; sourceTree = "<group>"; };
+		F42600881E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingItemHeaderNode.swift; sourceTree = "<group>"; };
 		F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPostInfoNode.swift; sourceTree = "<group>"; };
 		F42686781E4F458A0085E581 /* CardActionBarNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardActionBarNode.swift; sourceTree = "<group>"; };
 		F426867A1E505CE60085E581 /* BaseCardPostNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCardPostNode.swift; sourceTree = "<group>"; };
@@ -569,6 +571,7 @@
 				F4670AFA1E54669300159F4F /* ReadingListBookNode.swift */,
 				F43A5E8D1E69858A008C018B /* OnBoardingInternalCellNode.swift */,
 				F43A5E8F1E69878A008C018B /* OnBoardingCellNode.swift */,
+				F42600881E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift */,
 				F45A50141E536591005E5C56 /* TopicCardPostCellNode.swift */,
 				F43A5E911E69A840008C018B /* OnBoardingControllerNode.swift */,
 				F4670AFC1E54ACF200159F4F /* ProfileCardPostCellNode.swift */,
@@ -1200,6 +1203,7 @@
 				56399DBF1E51D006005192AC /* AccountViewController.swift in Sources */,
 				F43A5E901E69878A008C018B /* OnBoardingCellNode.swift in Sources */,
 				F496DE041E65C75D007E22B1 /* DiscoverViewModel.swift in Sources */,
+				F42600891E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift in Sources */,
 				566EE82D1E5D7082004B990D /* Search+API.swift in Sources */,
 				59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */,
 				562A31201E659919002851DE /* Strings.swift in Sources */,
