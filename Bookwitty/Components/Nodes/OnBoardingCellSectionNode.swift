@@ -32,4 +32,17 @@ class OnBoardingCellSectionNode: ASCellNode {
 
     backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
   }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    separator.style.width = ASDimensionMake(constrainedSize.max.width)
+
+    let insetSpec = ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: internalMargin), child: titleTextNode)
+    let centerSpec = ASCenterLayoutSpec(centeringOptions: ASCenterLayoutSpecCenteringOptions.Y, sizingOptions: ASCenterLayoutSpecSizingOptions.minimumX, child: insetSpec)
+    centerSpec.style.height = ASDimensionMake(OnBoardingCellSectionNode.nodeHeight - 1.0)
+
+    let vStack = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .spaceBetween,
+                                   alignItems: .stretch, children: [centerSpec, separator])
+    
+    return vStack
+  }
 }
