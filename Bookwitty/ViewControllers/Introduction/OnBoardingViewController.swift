@@ -9,16 +9,20 @@
 import Foundation
 import AsyncDisplayKit
 
-class OnBoardingViewController: ASViewController<ASDisplayNode> {
-  let onBoardingNode: ASDisplayNode
+class OnBoardingViewController: ASViewController<OnBoardingControllerNode> {
+  let onBoardingNode: OnBoardingControllerNode
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
   init() {
-    onBoardingNode = ASDisplayNode()
+    onBoardingNode = OnBoardingControllerNode()
     super.init(node: onBoardingNode)
+
   }
 
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+  }
 }
