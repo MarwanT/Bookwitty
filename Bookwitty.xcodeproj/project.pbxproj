@@ -172,6 +172,7 @@
 		F4A426371E562A9F0090CD51 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A426361E562A9F0090CD51 /* Audio.swift */; };
 		F4A426391E562BAC0090CD51 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A426381E562BAC0090CD51 /* Link.swift */; };
 		F4CDDD371E60263800474CAA /* RotatingImageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CDDD361E60263800474CAA /* RotatingImageNode.swift */; };
+		F4EAEE3A1E6B1128006429B7 /* LayoutSpec+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EAEE391E6B1128006429B7 /* LayoutSpec+Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -359,6 +360,7 @@
 		F4A426361E562A9F0090CD51 /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		F4A426381E562BAC0090CD51 /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
 		F4CDDD361E60263800474CAA /* RotatingImageNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RotatingImageNode.swift; sourceTree = "<group>"; };
+		F4EAEE391E6B1128006429B7 /* LayoutSpec+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LayoutSpec+Utils.swift"; sourceTree = "<group>"; };
 		F51280CA021D07F160F13471 /* Pods-BookwittyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookwittyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -507,6 +509,7 @@
 				F420AD9E1E4231E000C78AEB /* AttributedStringBuilder.swift */,
 				F442CF861E65832000F59913 /* Date+Utils.swift */,
 				597B8E2C1E37F6BC00C7811B /* Image+Utils.swift */,
+				F4EAEE391E6B1128006429B7 /* LayoutSpec+Utils.swift */,
 				59DA47581E3AA8E100BA90A5 /* Localization.swift */,
 				59903FEC1E3B9D90006043EF /* View.swift */,
 				F496DE071E65DECB007E22B1 /* Paginator.swift */,
@@ -1283,6 +1286,7 @@
 				F40700521E55F55A00DA48A4 /* Image.swift in Sources */,
 				F4A4262B1E5617A30090CD51 /* PageAuthor.swift in Sources */,
 				F40700501E55992000DA48A4 /* ReadingListBooksNode.swift in Sources */,
+				F4EAEE3A1E6B1128006429B7 /* LayoutSpec+Utils.swift in Sources */,
 				5945FAC91E6475C80010CF77 /* CategoryViewController.swift in Sources */,
 				F4A426371E562A9F0090CD51 /* Audio.swift in Sources */,
 				59D8FCBC1E4DA394001C1EDB /* CategoryManager.swift in Sources */,
