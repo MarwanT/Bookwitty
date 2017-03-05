@@ -135,6 +135,7 @@
 		F422D8301E51CD9D00A32C2F /* LinkCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F422D82F1E51CD9D00A32C2F /* LinkCardPostCellNode.swift */; };
 		F42441651E66FE260087E3B1 /* CardFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42441641E66FE260087E3B1 /* CardFactory.swift */; };
 		F42600891E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42600881E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift */; };
+		F426008B1E6CD18800E14D93 /* OnBoardingCellSectionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426008A1E6CD18800E14D93 /* OnBoardingCellSectionNode.swift */; };
 		F42686771E4EF83C0085E581 /* CardPostInfoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */; };
 		F42686791E4F458A0085E581 /* CardActionBarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42686781E4F458A0085E581 /* CardActionBarNode.swift */; };
 		F426867B1E505CE60085E581 /* BaseCardPostNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426867A1E505CE60085E581 /* BaseCardPostNode.swift */; };
@@ -324,6 +325,7 @@
 		F422D82F1E51CD9D00A32C2F /* LinkCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkCardPostCellNode.swift; sourceTree = "<group>"; };
 		F42441641E66FE260087E3B1 /* CardFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardFactory.swift; path = Factories/CardFactory.swift; sourceTree = "<group>"; };
 		F42600881E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingItemHeaderNode.swift; sourceTree = "<group>"; };
+		F426008A1E6CD18800E14D93 /* OnBoardingCellSectionNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingCellSectionNode.swift; sourceTree = "<group>"; };
 		F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPostInfoNode.swift; sourceTree = "<group>"; };
 		F42686781E4F458A0085E581 /* CardActionBarNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardActionBarNode.swift; sourceTree = "<group>"; };
 		F426867A1E505CE60085E581 /* BaseCardPostNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCardPostNode.swift; sourceTree = "<group>"; };
@@ -570,6 +572,7 @@
 				F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */,
 				F4670AFA1E54669300159F4F /* ReadingListBookNode.swift */,
 				F43A5E8D1E69858A008C018B /* OnBoardingInternalCellNode.swift */,
+				F426008A1E6CD18800E14D93 /* OnBoardingCellSectionNode.swift */,
 				F43A5E8F1E69878A008C018B /* OnBoardingCellNode.swift */,
 				F42600881E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift */,
 				F45A50141E536591005E5C56 /* TopicCardPostCellNode.swift */,
@@ -1324,6 +1327,7 @@
 				F42ED4F21E686BF9002B65DF /* OnBoardingViewController.swift in Sources */,
 				594290161E51F4550006B2F1 /* BookStoreViewModel.swift in Sources */,
 				59DA47651E3B7A9B00BA90A5 /* TutorialViewController.swift in Sources */,
+				F426008B1E6CD18800E14D93 /* OnBoardingCellSectionNode.swift in Sources */,
 				59DA476A1E3B876900BA90A5 /* SignInViewController.swift in Sources */,
 				59EC5BA91E6C5987006E1CB9 /* BookDetailsPricesNode.swift in Sources */,
 				594290391E549FF40006B2F1 /* UIColor.swift in Sources */,
