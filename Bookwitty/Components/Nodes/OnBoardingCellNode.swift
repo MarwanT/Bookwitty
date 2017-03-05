@@ -14,10 +14,31 @@ class OnBoardingCellNode: ASCellNode {
   fileprivate let contentSpacing: CGFloat = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let collapsedCellHeight: CGFloat = 45.0
 
+  fileprivate var expandedCellHeight: CGFloat {
+    return  collectionHeight + collapsedCellHeight
+  }
+  fileprivate var collectionHeight: CGFloat {
+    return (CGFloat(data.count) * OnBoardingInternalCellNode.cellHeight)
+  }
+  fileprivate var collapsedFinalFrame: CGRect {
+    return CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: collapsedCellHeight)
+  }
+  fileprivate var expandedFinalFrame: CGRect {
+    return CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: expandedCellHeight)
+  }
 
   let headerNode: OnBoardingItemHeaderNode
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
+
+  var showAll: Bool = true {
+    didSet {
+      let newHeightDimension = ASDimensionMake(showAll ? expandedCellHeight : collapsedCellHeight)
+      self.style.height = newHeightDimension
+      headerNode.updateArrowDirection(direction: showAll ? .up : .right, animated: true)
+      transitionLayout(withAnimation: true, shouldMeasureAsync: false, measurementCompletion: nil)
+    }
+  }
 
   override init() {
     headerNode = OnBoardingItemHeaderNode()
@@ -32,6 +53,7 @@ class OnBoardingCellNode: ASCellNode {
     super.init()
 
     automaticallyManagesSubnodes = true
+    style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: expandedCellHeight)
 
     collectionNode.delegate = self
     collectionNode.dataSource = self
@@ -48,6 +70,23 @@ class OnBoardingCellNode: ASCellNode {
     collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
   }
   
+  override func animateLayoutTransition(_ context: ASContextTransitioning) {
+    let finalFrame = showAll ? expandedFinalFrame : collapsedFinalFrame
+
+    let finalCollectionFrame = CGRect(x: 0,
+                                      y: showAll ? collapsedCellHeight : -collapsedCellHeight/2,
+                                      width: UIScreen.main.bounds.width,
+                                      height: collectionHeight)
+
+    UIView.animate(withDuration: 0.30, animations: {
+      self.view.sendSubview(toBack: self.collectionNode.view)
+      self.collectionNode.frame = finalCollectionFrame
+      self.frame = finalFrame
+    }) { (success) in
+      context.completeTransition(true)
+    }
+  }
+
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let vStack = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start,
                                    alignItems: .stretch, children: showAll ? [headerNode, collectionNode] : [headerNode])
