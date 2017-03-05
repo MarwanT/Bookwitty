@@ -32,5 +32,20 @@ class OnBoardingCellNode: ASCellNode {
     super.init()
 
     automaticallyManagesSubnodes = true
+
+    collectionNode.delegate = self
+    collectionNode.dataSource = self
+    collectionNode.style.flexGrow = 1.0
+    collectionNode.style.flexShrink = 1.0
+
+    showAll = true
+
+    backgroundColor = UIColor.bwNero
   }
+
+  override func didLoad() {
+    super.didLoad()
+    collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
+  }
+  
 }
