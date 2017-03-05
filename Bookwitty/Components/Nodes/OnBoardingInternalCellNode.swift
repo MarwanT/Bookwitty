@@ -21,6 +21,11 @@ class OnBoardingInternalCellNode: ASCellNode {
   let imageNode: ASNetworkImageNode
   let separator: ASDisplayNode
 
+  fileprivate var fullSeparator: Bool {
+    return isLast
+  }
+
+  var isLast: Bool = false
 
   override init() {
     titleTextNode = ASTextNode()
@@ -48,5 +53,36 @@ class OnBoardingInternalCellNode: ASCellNode {
     separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
 
     style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: OnBoardingInternalCellNode.cellHeight)
+  }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let vStack =  ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .center,
+                                   alignItems: .start, children: [titleTextNode, shortDescriptionTextNode])
+    vStack.children = [titleTextNode, ASLayoutSpec.spacer(height: internalMargin/2), shortDescriptionTextNode]
+
+    let textInsetSpec = ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: internalMargin), child: vStack)
+    textInsetSpec.style.flexShrink = 1.0
+    textInsetSpec.style.flexGrow = 1.0
+
+    let endStack = ASStackLayoutSpec.vertical()
+    endStack.justifyContent = .center
+    endStack.children = [selectionButtonNode]
+
+    let hStack = ASStackLayoutSpec(direction: .horizontal, spacing: 0,
+                                   justifyContent: .start, alignItems: .stretch,
+                                   children: [imageNode, textInsetSpec, endStack])
+    let insetSpec = ASInsetLayoutSpec(insets: UIEdgeInsets(top: internalMargin, left: internalMargin, bottom: internalMargin, right: internalMargin), child: hStack)
+
+    let separatorWidth = fullSeparator ?
+      constrainedSize.max.width :
+      constrainedSize.max.width - ((textInsetSpec.insets.left + insetSpec.insets.left) + imageNode.style.width.value)
+    separator.style.width = ASDimensionMake(separatorWidth)
+
+    let finalVStack = ASStackLayoutSpec.vertical()
+    finalVStack.justifyContent = .spaceBetween
+    finalVStack.alignItems = .end
+    finalVStack.children = [insetSpec, separator]
+
+    return finalVStack
   }
 }
