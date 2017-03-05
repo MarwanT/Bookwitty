@@ -48,4 +48,10 @@ class OnBoardingCellNode: ASCellNode {
     collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
   }
   
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let vStack = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start,
+                                   alignItems: .stretch, children: showAll ? [headerNode, collectionNode] : [headerNode])
+
+    return vStack
+  }
 }
