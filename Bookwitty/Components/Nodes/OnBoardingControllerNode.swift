@@ -45,5 +45,13 @@ class OnBoardingControllerNode: ASDisplayNode {
     separatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
     separatorNode.isLayerBacked = true
   }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let titleCenterSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: ASCenterLayoutSpecSizingOptions(rawValue: 0), child: titleTextNode)
+    let titleInsetSpec = ASInsetLayoutSpec(insets: UIEdgeInsets(top: internalMargin, left: internalMargin, bottom: internalMargin, right: internalMargin), child: titleCenterSpec)
+    let vStack = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start,
+                                   alignItems: .stretch, children: [titleInsetSpec, separatorNode, collectionNode])
+    return vStack
+  }
 }
 
