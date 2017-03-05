@@ -34,4 +34,18 @@ class OnBoardingItemHeaderNode: ASDisplayNode {
     style.height = ASDimensionMake(OnBoardingItemHeaderNode.nodeHeight)
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
   }
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    separator.style.width = ASDimensionMake(constrainedSize.max.width)
+
+    let hStack = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start,
+                                   alignItems: .center, children: [titleTextNode, ASLayoutSpec.spacer(flexGrow: 1.0), rotatingImageNode])
+    let insetSpec = ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: 0), child: hStack)
+    let centerSpec = ASCenterLayoutSpec(centeringOptions: ASCenterLayoutSpecCenteringOptions.Y, sizingOptions: ASCenterLayoutSpecSizingOptions.minimumX, child: insetSpec)
+    centerSpec.style.height = ASDimensionMake(OnBoardingItemHeaderNode.nodeHeight - 1.0)
+
+    let vStack = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .spaceBetween,
+                                   alignItems: .stretch, children: [centerSpec, separator])
+    
+    return vStack
+  }
 }
