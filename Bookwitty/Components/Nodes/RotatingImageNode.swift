@@ -59,6 +59,8 @@ class RotatingImageNode: ASImageNode {
   override func animateLayoutTransition(_ context: ASContextTransitioning) {
     UIView.animate(withDuration: 0.4, animations: {
       self.transform = self.rotationTransform
-    })
+    }) { (success) in
+      context.completeTransition(success)
+    }
   }
 }
