@@ -26,6 +26,23 @@ class OnBoardingInternalCellNode: ASCellNode {
   }
 
   var isLast: Bool = false
+  var text: String? {
+    didSet {
+      if let text = text {
+        titleTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
+          .append(text: text, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      }
+    }
+  }
+  var descriptionText: String? {
+    didSet {
+      if let descriptionText = descriptionText {
+        shortDescriptionTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+          .append(text: descriptionText, color: ThemeManager.shared.currentTheme.defaultTextColor())
+          .applyParagraphStyling(lineSpacing: 5).attributedString
+      }
+    }
+  }
 
   override init() {
     titleTextNode = ASTextNode()
