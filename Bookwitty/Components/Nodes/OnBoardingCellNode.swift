@@ -43,6 +43,13 @@ class OnBoardingCellNode: ASCellNode {
       transitionLayout(withAnimation: true, shouldMeasureAsync: false, measurementCompletion: nil)
     }
   }
+  var text: String? {
+    didSet {
+      if let text = text {
+        headerNode.text = text
+      }
+    }
+  }
 
   override init() {
     headerNode = OnBoardingItemHeaderNode()
