@@ -31,6 +31,10 @@ class OnBoardingCellNode: ASCellNode {
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
 
+  //TODO: Replace with real data
+  var data: [String] = ["Test 1","Test 2","Test 3","Test 4"]
+  var sections: [String] = ["Section 1", "Section 2"]
+
   var showAll: Bool = true {
     didSet {
       let newHeightDimension = ASDimensionMake(showAll ? expandedCellHeight : collapsedCellHeight)
@@ -92,5 +96,24 @@ class OnBoardingCellNode: ASCellNode {
                                    alignItems: .stretch, children: showAll ? [headerNode, collectionNode] : [headerNode])
 
     return vStack
+  }
+}
+
+extension OnBoardingCellNode: ASCollectionDelegate, ASCollectionDataSource {
+
+
+  func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+    return sections.count
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+    return data.count
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
+    return ASSizeRange(
+      min: CGSize(width: collectionNode.frame.width, height: OnBoardingInternalCellNode.cellHeight),
+      max: CGSize(width: collectionNode.frame.width, height: OnBoardingInternalCellNode.cellHeight)
+    )
   }
 }
