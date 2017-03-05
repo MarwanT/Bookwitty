@@ -69,6 +69,15 @@ extension OnBoardingControllerNode: ASCollectionDelegate, ASCollectionDataSource
     return data.count
   }
 
+  func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+    let index = indexPath.row
+    return {
+      let baseCardNode = OnBoardingCellNode()
+      baseCardNode.text = "Interior Design"
+      return baseCardNode
+    }
+  }
+
   public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
     return ASSizeRange(
       min: CGSize(width: collectionNode.frame.width, height: 0.0),
