@@ -33,11 +33,16 @@ class RotatingImageNode: ASImageNode {
     super.init()
   }
 
-  convenience init(image: UIImage? = nil, size: CGSize? = nil) {
+  convenience init(image: UIImage? = nil, size: CGSize? = nil, direction: Direction = .down) {
     self.init()
     self.image = image ?? #imageLiteral(resourceName: "downArrow")
     self.style.preferredSize = size ?? imageSize
-    self.updateDirection(direction: .down, animated: false)
+    self.updateDirection(direction: direction, animated: false)
+  }
+
+  func transformRotation(direction: Direction) -> CATransform3D {
+    self.currentDirection = direction
+    return self.rotationTransform
   }
 
   func updateDirection(direction: Direction, animated: Bool = true) {
