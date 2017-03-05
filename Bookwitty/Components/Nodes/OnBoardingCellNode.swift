@@ -115,6 +115,18 @@ extension OnBoardingCellNode: ASCollectionDelegate, ASCollectionDataSource {
     return data.count
   }
 
+  func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+    let index = indexPath.row
+    let isLast = index == (data.count - 1)
+    return {
+      let baseCardNode = OnBoardingInternalCellNode()
+      baseCardNode.text = "\(index) User Experience Design"
+      baseCardNode.descriptionText = "A page top share interesting books or articles related to UX design, and design thinking."
+      baseCardNode.isLast = isLast 
+      return baseCardNode
+    }
+  }
+
   public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
     return ASSizeRange(
       min: CGSize(width: collectionNode.frame.width, height: OnBoardingInternalCellNode.cellHeight),
