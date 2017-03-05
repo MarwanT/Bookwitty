@@ -30,6 +30,20 @@ class OnBoardingControllerNode: ASDisplayNode {
     separatorNode = ASDisplayNode()
     super.init()
     automaticallyManagesSubnodes = true
+
+    style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 0.0)
+
+    collectionNode.style.flexGrow = 1.0
+    collectionNode.style.flexShrink = 1.0
+    collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+
+    titleTextNode.style.maxHeight = ASDimensionMake(headerHeight)
+    titleTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
+      .append(text: "Following People and Topics is how you fill up your home feed with interesting reads.", color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+
+    separatorNode.style.height = ASDimensionMake(1.0)
+    separatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
+    separatorNode.isLayerBacked = true
   }
 }
 
