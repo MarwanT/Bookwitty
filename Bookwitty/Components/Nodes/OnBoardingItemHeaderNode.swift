@@ -16,6 +16,14 @@ class OnBoardingItemHeaderNode: ASDisplayNode {
   private let titleTextNode: ASTextNode
   private let rotatingImageNode: RotatingImageNode
   private let separator: ASDisplayNode
+  var text: String? {
+    didSet {
+      if let text = text {
+        titleTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption1)
+          .append(text: text, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      }
+    }
+  }
 
   override init() {
     rotatingImageNode = RotatingImageNode(image: #imageLiteral(resourceName: "downArrow"), size: CGSize(width: 45.0, height: 45.0), direction: .right)
