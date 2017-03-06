@@ -75,6 +75,20 @@ class OnBoardingInternalCellNode: ASCellNode {
   }
 
   func setupSelectionButton() {
+    let plusImage: UIImage = #imageLiteral(resourceName: "plus")
+    let tickImage: UIImage = #imageLiteral(resourceName: "tick")
+    let whiteColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+    let buttonWhiteBackgroundColor = UIImage(color: whiteColor)
+    let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultButtonColor())
+
+    selectionButtonNode.setImage(tickImage, for: .selected)
+    selectionButtonNode.setBackgroundImage(buttonBackgroundImage, for: .selected)
+
+    //Default state Button Image, tint and background color
+    selectionButtonNode.setImage(plusImage, for: .init(rawValue: 0))
+    selectionButtonNode.setBackgroundImage(buttonWhiteBackgroundColor, for: .init(rawValue: 0))
+    selectionButtonNode.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.defaultButtonColor())
+
     selectionButtonNode.cornerRadius = 4
     selectionButtonNode.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
     selectionButtonNode.borderWidth = 2
