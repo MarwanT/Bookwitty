@@ -43,6 +43,46 @@ class BookDetailsAboutNode: ASDisplayNode {
     bottomSeparator.style.height = ASDimensionMake(1)
   }
   
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    style.width = ASDimensionMake(constrainedSize.max.width)
+    style.flexGrow = 1.0
+    style.flexShrink = 1.0
+    
+    descriptionTextNode.maximumNumberOfLines = dispayMode == .compact ? configuration.compactMaximumNumberOfLines : 0
+    
+    var layoutElements = [ASLayoutElement]()
+    layoutElements.append(headerNode)
+    
+    let descriptionInsets = ASInsetLayoutSpec(
+      insets: configuration.descriptionTextEdgeInsets,
+      child: descriptionTextNode)
+    layoutElements.append(descriptionInsets)
+    
+    switch dispayMode {
+    case .compact:
+      let topSeparatorInsets = ASInsetLayoutSpec(
+        insets: configuration.topSeparatorEdgeInsets,
+        child: topSeparator)
+      layoutElements.append(topSeparatorInsets)
+      layoutElements.append(viewDescription)
+      layoutElements.append(bottomSeparator)
+    case .expanded:
+      break
+    }
+    
+    let horizontalStack = ASStackLayoutSpec(
+      direction: .vertical,
+      spacing: 0,
+      justifyContent: .start,
+      alignItems: .stretch,
+      children: layoutElements)
+    let nodeInsets = ASInsetLayoutSpec(
+      insets: configuration.generalEdgeInsets,
+      child: horizontalStack)
+    
+    return nodeInsets
+  }
+  
   var about: String? {
     didSet {
       descriptionTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
