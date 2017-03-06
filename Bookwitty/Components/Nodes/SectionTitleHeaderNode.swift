@@ -20,6 +20,13 @@ class SectionTitleHeaderNode: ASDisplayNode {
     horizontalBarNode = ASDisplayNode()
     titleNode = ASTextNode()
     super.init()
+    initializeComponents()
+  }
+  
+  func initializeComponents() {
+    automaticallyManagesSubnodes = true
+    verticalBarColor = configuration.verticalBarColor
+    horizontalBarColor = configuration.horizontalBarColor
   }
 }
 
