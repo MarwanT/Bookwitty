@@ -32,6 +32,7 @@ class DisclosureNode: ASControlNode {
   
   // MARK: Actions
   func nodeTouchUpInside(_ sender: Any?) {
+    nodeSelected = !nodeSelected
   }
   
   // MARK: Helpers
