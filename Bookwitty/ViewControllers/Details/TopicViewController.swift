@@ -11,6 +11,10 @@ import AsyncDisplayKit
 
 class TopicViewController: ASViewController<ASCollectionNode> {
 
+  fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+  fileprivate let segmentedNodeHeight: CGFloat = 45.0
+
   fileprivate let collectionNode: ASCollectionNode
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
