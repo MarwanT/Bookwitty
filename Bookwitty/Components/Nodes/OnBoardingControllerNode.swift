@@ -9,6 +9,12 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol OnBoardingControllerDataSource {
+  func numberOfSections(in collectionNode: ASCollectionNode) -> Int
+  func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int
+  func onBoardingCellNodeTitle(index: Int) -> String
+}
+
 class OnBoardingControllerNode: ASDisplayNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
