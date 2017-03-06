@@ -26,6 +26,11 @@ class DisclosureNode: ASControlNode {
     automaticallyManagesSubnodes = true
     style.height = ASDimensionMake(Configuration.nodeHeight)
     imageNode.image = #imageLiteral(resourceName: "rightArrow")
+    addTarget(self, action: #selector(nodeTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
+  }
+  
+  // MARK: Actions
+  func nodeTouchUpInside(_ sender: Any?) {
   }
   
   // MARK: Helpers
