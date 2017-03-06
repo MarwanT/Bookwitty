@@ -70,6 +70,15 @@ class OnBoardingInternalCellNode: ASCellNode {
     separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
 
     style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: OnBoardingInternalCellNode.cellHeight)
+
+    setupSelectionButton()
+  }
+
+  func setupSelectionButton() {
+    selectionButtonNode.cornerRadius = 4
+    selectionButtonNode.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
+    selectionButtonNode.borderWidth = 2
+    selectionButtonNode.clipsToBounds = true
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
