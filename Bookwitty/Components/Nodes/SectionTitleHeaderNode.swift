@@ -28,6 +28,34 @@ class SectionTitleHeaderNode: ASDisplayNode {
     verticalBarColor = configuration.verticalBarColor
     horizontalBarColor = configuration.horizontalBarColor
   }
+  
+  func setTitle(title: String?, verticalBarColor: UIColor? = nil, horizontalBarColor: UIColor? = nil) {
+    self.title = title
+    self.verticalBarColor = verticalBarColor ?? configuration.verticalBarColor
+    self.horizontalBarColor = horizontalBarColor ?? configuration.horizontalBarColor
+  }
+  
+  private var title: String?  {
+    didSet {
+      titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .callout)
+        .append(text: title ?? "", color: configuration.defaultTextColor).attributedString
+      setNeedsLayout()
+    }
+  }
+  
+  private var verticalBarColor: UIColor? {
+    didSet {
+      verticalBarNode.backgroundColor = verticalBarColor
+      setNeedsLayout()
+    }
+  }
+  
+  private var horizontalBarColor: UIColor? {
+    didSet {
+      horizontalBarNode.backgroundColor = horizontalBarColor
+      setNeedsLayout()
+    }
+  }
 }
 
 extension SectionTitleHeaderNode {
