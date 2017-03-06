@@ -357,6 +357,10 @@ class Strings {
     return localizedString(key: "view_all_selections")
   }
   
+  class func view_whole_description() -> String {
+    return localizedString(key: "view_whole_description")
+  }
+  
   class func wit_it() -> String {
     return localizedString(key: "wit_it")
   }
