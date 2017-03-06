@@ -33,7 +33,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
         bottomMargin = -(externalMargin/2)
       } else {
         //If we have Zero data items this means that we are only showing the pen-name-selection-node
-        bottomMargin = viewModel.data.count == 0 ? 0.0 : -(LoaderNode.nodeHeight - externalMargin/2)
+        bottomMargin = viewModel.data.count == 0 ? 0.0 : -(loaderNode.usedHeight - externalMargin/2)
       }
 
       flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomMargin, right: 0)
@@ -50,14 +50,12 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: externalMargin/2, right: 0)
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
-    flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.nodeHeight)
 
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
-
     loaderNode = LoaderNode()
-
     super.init(node: collectionNode)
 
+    flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: loaderNode.usedHeight)
     collectionNode.onDidLoad { [weak self] (collectionNode) in
       guard let strongSelf = self,
         let asCollectionView = collectionNode.view as? ASCollectionView else {

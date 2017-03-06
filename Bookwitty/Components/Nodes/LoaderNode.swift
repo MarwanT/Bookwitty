@@ -10,11 +10,16 @@ import Foundation
 import AsyncDisplayKit
 
 class LoaderNode: ASCellNode {
-  static let nodeHeight: CGFloat = 45.0
+  static let defaultNodeHeight: CGFloat = 45.0
   let activityIndicatorNode: ASCellNode
+
+  var usedHeight: CGFloat {
+    return nodeHeight ?? LoaderNode.defaultNodeHeight
+  }
   var loaderView: UIActivityIndicatorView? {
     return isNodeLoaded ? activityIndicatorNode.view as? UIActivityIndicatorView : nil
   }
+  private var nodeHeight: CGFloat?
 
   override init() {
     activityIndicatorNode = ASCellNode(viewBlock: { () -> UIView in
@@ -22,12 +27,22 @@ class LoaderNode: ASCellNode {
       activityIndicatorView.activityIndicatorViewStyle = .white
       activityIndicatorView.color = UIColor.bwRuby
       activityIndicatorView.hidesWhenStopped = true
-      print(activityIndicatorView.frame.height)
+      activityIndicatorView.backgroundColor = UIColor.clear
       return activityIndicatorView
     })
     super.init()
     automaticallyManagesSubnodes = true
-    style.height = ASDimensionMake(LoaderNode.nodeHeight)
+    initializeNode()
+  }
+
+  convenience init(nodeHeight: CGFloat) {
+    self.init()
+    self.nodeHeight = nodeHeight
+    initializeNode()
+  }
+
+  func initializeNode() {
+    style.height = ASDimensionMake(usedHeight)
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -37,7 +52,8 @@ class LoaderNode: ASCellNode {
   }
 
   func updateLoaderVisibility(show: Bool) {
-    style.height = ASDimensionMake(show ? LoaderNode.nodeHeight : 0.0)
+    style.height = ASDimensionMake(show ? LoaderNode.defaultNodeHeight : 0.0)
+    isHidden = !show
     if show {
       loaderView?.startAnimating()
     } else {
