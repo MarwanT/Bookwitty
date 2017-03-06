@@ -9,6 +9,9 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol OnBoardingLoadingButtonDelegate {
+  func loadingButtonTouchUpInside(onBoardingLoadingButton: OnBoardingLoadingButton)
+}
 
 class OnBoardingLoadingButton: ASDisplayNode {
   let loaderNode: LoaderNode
