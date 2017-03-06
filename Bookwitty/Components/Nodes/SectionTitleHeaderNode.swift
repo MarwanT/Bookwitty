@@ -29,6 +29,51 @@ class SectionTitleHeaderNode: ASDisplayNode {
     horizontalBarColor = configuration.horizontalBarColor
   }
   
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    style.width = ASDimensionMake(constrainedSize.max.width)
+    style.minHeight = ASDimensionMake(configuration.minimumHeight)
+    
+    // Although these sizes will change, they are required for avoiding an
+    // Async warining over unability to calculate the size of the nodes
+    verticalBarNode.style.preferredSize = CGSize(width: 0, height: 0)
+    horizontalBarNode.style.preferredSize = CGSize(width: 0, height: 0)
+    
+    verticalBarNode.style.width = ASDimensionMake(configuration.verticalBarWidth)
+    
+    // Layout Background Nodes
+    let verticalBarInsetsSpec = ASInsetLayoutSpec(
+      insets: configuration.verticalBarEdgeInsets,
+      child: verticalBarNode)
+    let horizontalBarInsetsSpec = ASInsetLayoutSpec(
+      insets: configuration.horizontalBarEdgeInsets,
+      child: horizontalBarNode)
+    horizontalBarInsetsSpec.style.flexGrow = 1.0
+    horizontalBarInsetsSpec.style.flexShrink = 1.0
+    let backgroundSpec = ASStackLayoutSpec(
+      direction: .horizontal,
+      spacing: 0,
+      justifyContent: .start,
+      alignItems: .stretch,
+      children: [verticalBarInsetsSpec, horizontalBarInsetsSpec])
+    backgroundSpec.style.flexGrow = 1.0
+    backgroundSpec.style.flexShrink = 1.0
+    
+    // Layout Forground/Title Node
+    let titleInsetsSpec = ASInsetLayoutSpec(
+      insets: configuration.titleEdgeInsets,
+      child: titleNode)
+    let centerTitleVertically = ASCenterLayoutSpec(
+      horizontalPosition:
+      ASRelativeLayoutSpecPosition.start,
+      verticalPosition: ASRelativeLayoutSpecPosition.center,
+      sizingOption: ASRelativeLayoutSpecSizingOption.minimumHeight,
+      child: titleInsetsSpec)
+    
+    // Join Background and Foreground nodes
+    let nodeLayoutSpec = ASBackgroundLayoutSpec(child: centerTitleVertically, background: backgroundSpec)
+    return nodeLayoutSpec
+  }
+  
   func setTitle(title: String?, verticalBarColor: UIColor? = nil, horizontalBarColor: UIColor? = nil) {
     self.title = title
     self.verticalBarColor = verticalBarColor ?? configuration.verticalBarColor
