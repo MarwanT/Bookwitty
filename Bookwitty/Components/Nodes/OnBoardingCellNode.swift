@@ -126,11 +126,11 @@ extension OnBoardingCellNode: ASCollectionDelegate, ASCollectionDataSource {
     let index = indexPath.row
     let isLast = index == (data.count - 1)
     return {
-      let baseCardNode = OnBoardingInternalCellNode()
-      baseCardNode.text = "\(index) User Experience Design"
-      baseCardNode.descriptionText = "A page top share interesting books or articles related to UX design, and design thinking."
-      baseCardNode.isLast = isLast 
-      return baseCardNode
+      let cell = OnBoardingInternalCellNode()
+      cell.text = "\(index) User Experience Design"
+      cell.descriptionText = "A page top share interesting books or articles related to UX design, and design thinking."
+      cell.isLast = isLast
+      return cell
     }
   }
 
