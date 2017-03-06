@@ -9,5 +9,19 @@
 import AsyncDisplayKit
 
 class BookDetailsAboutNode: ASDisplayNode {
+  fileprivate let headerNode: SectionTitleHeaderNode
+  fileprivate let descriptionTextNode: ASTextNode
+  fileprivate let viewDescription: DisclosureNode
+  fileprivate let topSeparator: ASDisplayNode
+  fileprivate let bottomSeparator: ASDisplayNode
   
+  
+  override init() {
+    headerNode = SectionTitleHeaderNode()
+    descriptionTextNode = ASTextNode()
+    viewDescription = DisclosureNode()
+    topSeparator = ASDisplayNode()
+    bottomSeparator = ASDisplayNode()
+    super.init()
+  }
 }
