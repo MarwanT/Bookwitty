@@ -7,3 +7,22 @@
 //
 
 import Foundation
+import AsyncDisplayKit
+
+
+class OnBoardingLoadingButton: ASDisplayNode {
+  let loaderNode: LoaderNode
+  let button: ASButtonNode
+
+  override init() {
+    loaderNode = LoaderNode()
+    button = ASButtonNode()
+    super.init()
+    automaticallyManagesSubnodes = true
+    setupSelectionButton()
+  }
+
+  func setupSelectionButton() {
+  }
+
+}
