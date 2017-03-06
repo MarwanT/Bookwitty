@@ -51,4 +51,7 @@ class OnBoardingLoadingButton: ASDisplayNode {
   func touchUpInsideButton() {
     delegate?.loadingButtonTouchUpInside(onBoardingLoadingButton: self)
   }
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    return ASOverlayLayoutSpec(child: loaderNode, overlay: button)
+  }
 }
