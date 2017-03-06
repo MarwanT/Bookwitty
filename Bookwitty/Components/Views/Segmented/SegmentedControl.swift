@@ -17,6 +17,10 @@ final class SegmentedControl: UIView {
 
   var selectedSegmentChanged: SegmentedControlSelectionCallBack?
 
+  var selectedIndex: Int {
+    return segmentioView.selectedSegmentioIndex
+  }
+
   class func instantiate() -> SegmentedControl {
     let segmentedControl = SegmentedControl(frame: CGRect.zero)
     segmentedControl.initializeComponents()

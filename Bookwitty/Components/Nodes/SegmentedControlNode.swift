@@ -16,6 +16,10 @@ class SegmentedControlNode: ASCellNode {
 
   var selectedSegmentChanged: SegmentedControlNodeSelectionCallBack?
 
+  var selectedIndex: Int {
+    return self.segmentedControl.selectedIndex
+  }
+
   convenience override init() {
     self.init(viewBlock: { () -> UIView in
       let segmentedControl = SegmentedControl.instantiate()      
