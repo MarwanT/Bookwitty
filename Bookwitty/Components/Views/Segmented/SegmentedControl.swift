@@ -45,7 +45,7 @@ final class SegmentedControl: UIView {
                                                      color: ThemeManager.shared.currentTheme.defaultButtonColor())
 
 
-    let horizontalSeparatorOptions = SegmentioHorizontalSeparatorOptions(type: SegmentioHorizontalSeparatorType.bottom,
+    let horizontalSeparatorOptions = SegmentioHorizontalSeparatorOptions(type: SegmentioHorizontalSeparatorType.topAndBottom,
                                                                          height: 2.0,
                                                                          color: ThemeManager.shared.currentTheme.defaultSeparatorColor())
 
