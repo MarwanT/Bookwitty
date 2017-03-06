@@ -93,6 +93,15 @@ class OnBoardingInternalCellNode: ASCellNode {
     selectionButtonNode.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
     selectionButtonNode.borderWidth = 2
     selectionButtonNode.clipsToBounds = true
+
+    selectionButtonNode.addTarget(self, action: #selector(selectionButtonStatusChange(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
+  }
+
+  func selectionButtonStatusChange(_ sender: Any?) {
+    selectionButtonNode.isSelected = !selectionButtonNode.isSelected
+
+    let color = selectionButtonNode.isSelected ? ThemeManager.shared.currentTheme.defaultBackgroundColor() : ThemeManager.shared.currentTheme.defaultButtonColor()
+    selectionButtonNode.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(color)
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
