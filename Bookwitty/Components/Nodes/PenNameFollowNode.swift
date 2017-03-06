@@ -92,14 +92,27 @@ class PenNameFollowNode: ASCellNode {
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     var nodesArray: [ASLayoutElement] = []
-    nodesArray.append(imageNode)
-    nodesArray.append(spacer(width: internalMargin))
+
+    if isValid(imageUrl) {
+      nodesArray.append(imageNode)
+      nodesArray.append(spacer(width: internalMargin))
+    }
+
+    var infoNodes: [ASLayoutElement] = []
+
+    if isValid(penName) {
+      infoNodes.append(nameNode)
+    }
+
+    if isValid(biography) {
+      infoNodes.append(biographyNode)
+    }
 
     let verticalSpec = ASStackLayoutSpec(direction: .vertical,
                                          spacing: internalMargin / 3.0,
                                          justifyContent: .start,
                                          alignItems: .start,
-                                         children: [nameNode, biographyNode])
+                                         children: infoNodes)
     verticalSpec.style.flexShrink = 1.0
 
     nodesArray.append(verticalSpec)
