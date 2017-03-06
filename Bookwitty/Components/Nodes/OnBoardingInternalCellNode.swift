@@ -17,7 +17,7 @@ class OnBoardingInternalCellNode: ASCellNode {
 
   let titleTextNode: ASTextNode
   let shortDescriptionTextNode: ASTextNode
-  let selectionButtonNode: ASButtonNode
+  let selectionButtonNode: OnBoardingLoadingButton
   let imageNode: ASNetworkImageNode
   let separator: ASDisplayNode
 
@@ -47,7 +47,7 @@ class OnBoardingInternalCellNode: ASCellNode {
   override init() {
     titleTextNode = ASTextNode()
     shortDescriptionTextNode =  ASTextNode()
-    selectionButtonNode =  ASButtonNode()
+    selectionButtonNode =  OnBoardingLoadingButton()
     imageNode =  ASNetworkImageNode()
     separator = ASDisplayNode()
     super.init()
@@ -60,7 +60,6 @@ class OnBoardingInternalCellNode: ASCellNode {
     shortDescriptionTextNode.maximumNumberOfLines = 3
     titleTextNode.maximumNumberOfLines = 1
 
-    selectionButtonNode.backgroundColor = UIColor.bwRuby
     selectionButtonNode.style.preferredSize = CGSize(width: 36.0, height: 36.0)
     imageNode.style.preferredSize = CGSize(width: 45.0, height: 45.0)
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
@@ -71,37 +70,6 @@ class OnBoardingInternalCellNode: ASCellNode {
 
     style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: OnBoardingInternalCellNode.cellHeight)
 
-    setupSelectionButton()
-  }
-
-  func setupSelectionButton() {
-    let plusImage: UIImage = #imageLiteral(resourceName: "plus")
-    let tickImage: UIImage = #imageLiteral(resourceName: "tick")
-    let whiteColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
-    let buttonWhiteBackgroundColor = UIImage(color: whiteColor)
-    let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultButtonColor())
-
-    selectionButtonNode.setImage(tickImage, for: .selected)
-    selectionButtonNode.setBackgroundImage(buttonBackgroundImage, for: .selected)
-
-    //Default state Button Image, tint and background color
-    selectionButtonNode.setImage(plusImage, for: .init(rawValue: 0))
-    selectionButtonNode.setBackgroundImage(buttonWhiteBackgroundColor, for: .init(rawValue: 0))
-    selectionButtonNode.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.defaultButtonColor())
-
-    selectionButtonNode.cornerRadius = 4
-    selectionButtonNode.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
-    selectionButtonNode.borderWidth = 2
-    selectionButtonNode.clipsToBounds = true
-
-    selectionButtonNode.addTarget(self, action: #selector(selectionButtonStatusChange(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
-  }
-
-  func selectionButtonStatusChange(_ sender: Any?) {
-    selectionButtonNode.isSelected = !selectionButtonNode.isSelected
-
-    let color = selectionButtonNode.isSelected ? ThemeManager.shared.currentTheme.defaultBackgroundColor() : ThemeManager.shared.currentTheme.defaultButtonColor()
-    selectionButtonNode.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(color)
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
