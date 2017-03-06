@@ -11,6 +11,7 @@ import AsyncDisplayKit
 
 class OnBoardingViewController: ASViewController<OnBoardingControllerNode> {
   let onBoardingNode: OnBoardingControllerNode
+  let viewModel: OnBoardingViewModel = OnBoardingViewModel()
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
