@@ -12,13 +12,17 @@ class DisclosureNode: ASControlNode {
   private let titleTextNode: ASTextNode
   private let imageNode: ASImageNode
   
-  var configuration = Configuration() 
   var nodeSelected: Bool = false {
     didSet {
       transitionLayout(withAnimation: true, shouldMeasureAsync: false, measurementCompletion: nil)
     }
   }
   
+  var configuration = Configuration() {
+    didSet {
+      refreshNodeStyling()
+    }
+  }
   
   override init() {
     imageNode = ASImageNode()
