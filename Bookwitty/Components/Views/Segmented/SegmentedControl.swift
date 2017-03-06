@@ -24,7 +24,8 @@ final class SegmentedControl: UIView {
   }
 
   private func initializeComponents() {
-    segmentioView = Segmentio(frame: CGRect.zero)
+    //The Height is added to let segmentio draw the horizontal separators correctly
+    segmentioView = Segmentio(frame: CGRect(x: 0, y: 0, width: 0, height: 45.0))
     segmentioView.translatesAutoresizingMaskIntoConstraints = false
     segmentioView.clipsToBounds = true
 
