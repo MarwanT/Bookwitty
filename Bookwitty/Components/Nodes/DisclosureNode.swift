@@ -13,7 +13,12 @@ class DisclosureNode: ASControlNode {
   private let imageNode: ASImageNode
   
   var configuration = Configuration() 
-  var nodeSelected: Bool = false 
+  var nodeSelected: Bool = false {
+    didSet {
+      transitionLayout(withAnimation: true, shouldMeasureAsync: false, measurementCompletion: nil)
+    }
+  }
+  
   
   override init() {
     imageNode = ASImageNode()
@@ -21,6 +26,15 @@ class DisclosureNode: ASControlNode {
     super.init()
     initializeNode()
     refreshNodeStyling()
+  }
+  
+  override func animateLayoutTransition(_ context: ASContextTransitioning) {
+    refreshBackground {
+      context.completeTransition(true)
+      if self.nodeSelected && self.configuration.isAutoDeselectable {
+        self.nodeSelected = false
+      }
+    }
   }
   
   private func initializeNode() {
