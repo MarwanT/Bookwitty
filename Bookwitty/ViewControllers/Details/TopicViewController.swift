@@ -16,6 +16,8 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   fileprivate let segmentedNodeHeight: CGFloat = 45.0
 
   fileprivate let collectionNode: ASCollectionNode
+  fileprivate var flowLayout: UICollectionViewFlowLayout
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
