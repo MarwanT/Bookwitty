@@ -25,8 +25,7 @@ class OnBoardingControllerNode: ASDisplayNode {
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
 
-  //TODO: Replace with real data
-  var data: [String] = ["Test 1","Test 2","Test 3","Test 4"]
+  var dataSource: OnBoardingControllerDataSource!
 
   override init() {
     titleTextNode = ASTextNode()
@@ -68,18 +67,19 @@ class OnBoardingControllerNode: ASDisplayNode {
 
 extension OnBoardingControllerNode: ASCollectionDelegate, ASCollectionDataSource {
   func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
-    return 1
+    return dataSource.numberOfSections(in: collectionNode)
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    return data.count
+    return dataSource.collectionNode(collectionNode, numberOfItemsInSection: section)
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
     let index = indexPath.row
+    let title = dataSource.onBoardingCellNodeTitle(index: index)
     return {
       let baseCardNode = OnBoardingCellNode()
-      baseCardNode.text = "Interior Design"
+      baseCardNode.text = title
       return baseCardNode
     }
   }

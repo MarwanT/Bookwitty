@@ -28,4 +28,27 @@ final class OnBoardingViewModel {
     }
   }
 
+  func numberOfOnBoardingTitleSections() -> Int {
+    return data != nil ? 1 : 0
+  }
+
+  func numberOfItems() -> Int {
+    guard let data = data else {
+      return 0
+    }
+    return data.count
+  }
+
+  func onBoardingCellNodeTitle(index: Int) -> String {
+    guard let data = data else {
+      return ""
+    }
+    let dataArray = Array(data.keys)
+    guard (index >= 0 && index < dataArray.count) else {
+      return ""
+    }
+
+    let item = Array(data.keys)[index]
+    return item
+  }
 }

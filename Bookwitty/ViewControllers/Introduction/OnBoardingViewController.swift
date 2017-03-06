@@ -23,7 +23,26 @@ class OnBoardingViewController: ASViewController<OnBoardingControllerNode> {
 
   }
 
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    onBoardingNode.dataSource = self
+  }
+
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
+  }
+}
+
+extension OnBoardingViewController: OnBoardingControllerDataSource {
+  func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+    return viewModel.numberOfOnBoardingTitleSections()
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+    return viewModel.numberOfItems()
+  }
+
+  func onBoardingCellNodeTitle(index: Int) -> String {
+    return viewModel.onBoardingCellNodeTitle(index: index)
   }
 }
