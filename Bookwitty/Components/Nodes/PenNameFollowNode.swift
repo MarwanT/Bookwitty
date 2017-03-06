@@ -10,6 +10,9 @@ import UIKit
 import AsyncDisplayKit
 
 class PenNameFollowNode: ASCellNode {
+  fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let imageSize: CGSize = CGSize(width: 45.0, height: 45.0)
+  fileprivate let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
 
   override init() {
     super.init()
