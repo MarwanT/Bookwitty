@@ -15,6 +15,8 @@ class BookDetailsAboutNode: ASDisplayNode {
   fileprivate let topSeparator: ASDisplayNode
   fileprivate let bottomSeparator: ASDisplayNode
   
+  var configuration = Configuration()
+  
   
   override init() {
     headerNode = SectionTitleHeaderNode()
