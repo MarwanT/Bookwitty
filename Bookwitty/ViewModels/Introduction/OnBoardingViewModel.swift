@@ -7,7 +7,25 @@
 //
 
 import Foundation
+import Moya
 
 final class OnBoardingViewModel {
+  var cancellableRequest: Cancellable?
+  var data:  [String : OnBoardingCollectionItem]?
+
+  func loadOnBoardingData(completionBlock: @escaping (_ success: Bool) -> ()) {
+    cancellableRequest = CuratedCollectionAPI.onBoarding { (success, curatedCollection, error) in
+      guard let sections = curatedCollection?.sections else {
+        completionBlock(false)
+        return
+      }
+
+      if let onBoardingList = sections.curatedCollectionOnBoardList {
+        self.data = onBoardingList
+      }
+
+      completionBlock(false)
+    }
+  }
 
 }
