@@ -70,6 +70,7 @@ class OnBoardingInternalCellNode: ASCellNode {
 
     style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: OnBoardingInternalCellNode.cellHeight)
 
+    selectionButtonNode.delegate = self
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -101,5 +102,14 @@ class OnBoardingInternalCellNode: ASCellNode {
     finalVStack.children = [insetSpec, separator]
 
     return finalVStack
+  }
+}
+
+extension OnBoardingInternalCellNode: OnBoardingLoadingButtonDelegate {
+  func loadingButtonTouchUpInside(onBoardingLoadingButton: OnBoardingLoadingButton) {
+    guard !selectionButtonNode.isLoading else {
+      return
+    }
+    selectionButtonNode.state = .loading
   }
 }
