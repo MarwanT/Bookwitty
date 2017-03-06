@@ -9,6 +9,10 @@
 import UIKit
 
 class Strings {
+  class func about_this_book() -> String {
+    return localizedString(key: "about_this_book")
+  }
+  
   class func account() -> String {
     return localizedString(key: "account")
   }
