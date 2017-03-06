@@ -9,6 +9,10 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol OnBoardingInternalCellNodeDelegate {
+  func didTapOnSelectionButton(cell: OnBoardingInternalCellNode, button: OnBoardingLoadingButton, isSelected: Bool, doneCompletionBlock: @escaping (_ success: Bool) -> ())
+}
+
 class OnBoardingInternalCellNode: ASCellNode {
   static let cellHeight: CGFloat = 115.0
 
@@ -25,6 +29,7 @@ class OnBoardingInternalCellNode: ASCellNode {
     return isLast
   }
 
+  var delegate: OnBoardingInternalCellNodeDelegate?
   var isLast: Bool = false
   var text: String? {
     didSet {
@@ -111,5 +116,10 @@ extension OnBoardingInternalCellNode: OnBoardingLoadingButtonDelegate {
       return
     }
     selectionButtonNode.state = .loading
+
+    delegate?.didTapOnSelectionButton(cell: self, button: selectionButtonNode, isSelected: selectionButtonNode.button.isSelected, doneCompletionBlock: { (success: Bool) in
+      self.selectionButtonNode.state = (arc4random_uniform(2) == 0) ? .normal : .selected
+      //TODO: Handle success / failure action
+    })
   }
 }
