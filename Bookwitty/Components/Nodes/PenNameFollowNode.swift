@@ -60,6 +60,32 @@ class PenNameFollowNode: ASCellNode {
     actionButton.style.height = ASDimensionMake(buttonSize.height)
 
   }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    var nodesArray: [ASLayoutElement] = []
+    nodesArray.append(imageNode)
+    nodesArray.append(spacer(width: internalMargin))
+
+    let verticalSpec = ASStackLayoutSpec(direction: .vertical,
+                                         spacing: internalMargin / 3.0,
+                                         justifyContent: .start,
+                                         alignItems: .start,
+                                         children: [nameNode, biographyNode])
+    verticalSpec.style.flexShrink = 1.0
+
+    nodesArray.append(verticalSpec)
+    nodesArray.append(spacer(width: internalMargin / 2.0))
+    nodesArray.append(actionButton)
+
+    let horizontalSpec = ASStackLayoutSpec(direction: .horizontal,
+                                           spacing: 0,
+                                           justifyContent: .spaceBetween,
+                                           alignItems: .start,
+                                           children: nodesArray)
+
+    let insetSpec = ASInsetLayoutSpec(insets: edgeInset(), child: horizontalSpec)
+    return insetSpec
+  }
 }
 
 
