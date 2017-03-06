@@ -40,6 +40,10 @@ class OnBoardingLoadingButton: ASDisplayNode {
     borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
     borderWidth = 2
     clipsToBounds = true
+
+    button.addTarget(self, action: #selector(touchUpInsideButton), forControlEvents: ASControlNodeEvent.touchUpInside)
   }
 
+  func touchUpInsideButton() {
+  }
 }
