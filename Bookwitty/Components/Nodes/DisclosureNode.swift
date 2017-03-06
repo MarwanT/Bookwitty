@@ -9,4 +9,12 @@
 import AsyncDisplayKit
 
 class DisclosureNode: ASControlNode {
+  private let titleTextNode: ASTextNode
+  private let imageNode: ASImageNode
+  
+  override init() {
+    imageNode = ASImageNode()
+    titleTextNode = ASTextNode()
+    super.init()
+  }
 }
