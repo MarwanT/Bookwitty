@@ -17,6 +17,7 @@ class BookDetailsAboutNode: ASDisplayNode {
   
   var configuration = Configuration()
   
+  var dispayMode: DisplayMode = .compact
   
   override init() {
     headerNode = SectionTitleHeaderNode()
