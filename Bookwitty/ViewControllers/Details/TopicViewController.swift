@@ -9,15 +9,16 @@
 import UIKit
 import AsyncDisplayKit
 
-class TopicViewController: ASViewController<ASDisplayNode> {
+class TopicViewController: ASViewController<ASCollectionNode> {
 
-  let displayNode: ASDisplayNode
+  fileprivate let collectionNode: ASCollectionNode
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
   init() {
-    displayNode = ASDisplayNode()
-    super.init(node: displayNode)
+    flowLayout = UICollectionViewFlowLayout()
+    collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+    super.init(node: collectionNode)
   }
 }
