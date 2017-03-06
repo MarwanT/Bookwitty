@@ -18,6 +18,13 @@ class DisclosureNode: ASControlNode {
     imageNode = ASImageNode()
     titleTextNode = ASTextNode()
     super.init()
+    initializeNode()
+  }
+  
+  private func initializeNode() {
+    automaticallyManagesSubnodes = true
+    style.height = ASDimensionMake(Configuration.nodeHeight)
+    imageNode.image = #imageLiteral(resourceName: "rightArrow")
   }
 }
 
