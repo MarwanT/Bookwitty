@@ -9,4 +9,14 @@
 import AsyncDisplayKit
 
 class SectionTitleHeaderNode: ASDisplayNode {
+  fileprivate let verticalBarNode: ASDisplayNode
+  fileprivate let horizontalBarNode: ASDisplayNode
+  fileprivate let titleNode: ASTextNode
+  
+  override init() {
+    verticalBarNode = ASDisplayNode()
+    horizontalBarNode = ASDisplayNode()
+    titleNode = ASTextNode()
+    super.init()
+  }
 }
