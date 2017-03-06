@@ -130,6 +130,7 @@ extension OnBoardingCellNode: ASCollectionDelegate, ASCollectionDataSource {
       cell.text = "\(index) User Experience Design"
       cell.descriptionText = "A page top share interesting books or articles related to UX design, and design thinking."
       cell.isLast = isLast
+      cell.delegate = self
       return cell
     }
   }
@@ -139,5 +140,14 @@ extension OnBoardingCellNode: ASCollectionDelegate, ASCollectionDataSource {
       min: CGSize(width: collectionNode.frame.width, height: OnBoardingInternalCellNode.cellHeight),
       max: CGSize(width: collectionNode.frame.width, height: OnBoardingInternalCellNode.cellHeight)
     )
+  }
+}
+
+extension OnBoardingCellNode: OnBoardingInternalCellNodeDelegate {
+  func didTapOnSelectionButton(cell: OnBoardingInternalCellNode, button: OnBoardingLoadingButton, isSelected: Bool, doneCompletionBlock: @escaping (_ success: Bool) -> ()) {
+    //TODO: Do needed action
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + DispatchTimeInterval.seconds(4)) {
+      doneCompletionBlock(true)
+    }
   }
 }
