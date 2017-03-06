@@ -161,6 +161,8 @@ class TopicHeaderNode: ASDisplayNode {
       }
     }
 
+    //Height is zero since the `ASStackLayoutSpec` will add the internalMargin as spacing between the items
+    nodesArray.append(spacer(height: 0.0))
     let verticalStack = ASStackLayoutSpec(direction: .vertical,
                                           spacing: internalMargin,
                                           justifyContent: .start,
