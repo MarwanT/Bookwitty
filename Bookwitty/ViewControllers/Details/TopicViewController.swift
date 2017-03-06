@@ -16,6 +16,9 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   fileprivate let segmentedNodeHeight: CGFloat = 45.0
 
   fileprivate let collectionNode: ASCollectionNode
+
+  fileprivate var headerNode: TopicHeaderNode
+  fileprivate var segmentedNode: SegmentedControlNode
   fileprivate var flowLayout: UICollectionViewFlowLayout
 
   required init?(coder aDecoder: NSCoder) {
@@ -23,6 +26,9 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   }
 
   init() {
+    headerNode = TopicHeaderNode()
+    segmentedNode = SegmentedControlNode()
+
     flowLayout = UICollectionViewFlowLayout()
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     super.init(node: collectionNode)
