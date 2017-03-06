@@ -6,4 +6,8 @@
 //  Copyright © 2017 Keeward. All rights reserved.
 //
 
-import Foundation
+import AsyncDisplayKit
+
+class BookDetailsAboutNode: ASDisplayNode {
+  
+}
