@@ -14,7 +14,6 @@ class TopicHeaderNode: ASDisplayNode {
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let imageHeight: CGFloat = 200.0
   fileprivate let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
-  fileprivate let normal = ASControlState(rawValue: 0)
 
   private var imageNode: ASNetworkImageNode
   private var titleNode: ASTextNode
@@ -50,10 +49,10 @@ class TopicHeaderNode: ASDisplayNode {
     let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultBackgroundColor())
     let selectedButtonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultButtonColor())
     actionButton.titleNode.maximumNumberOfLines = 1
-    actionButton.setBackgroundImage(buttonBackgroundImage, for: normal)
+    actionButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
     actionButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
 
-    actionButton.setTitle(Strings.follow(), with: buttonFont, with: textColor, for: normal)
+    actionButton.setTitle(Strings.follow(), with: buttonFont, with: textColor, for: .normal)
     actionButton.setTitle(Strings.followed(), with: buttonFont, with: selectedTextColor, for: .selected)
     actionButton.cornerRadius = 2
     actionButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
