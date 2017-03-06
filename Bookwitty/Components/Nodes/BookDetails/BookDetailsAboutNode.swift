@@ -26,6 +26,21 @@ class BookDetailsAboutNode: ASDisplayNode {
     topSeparator = ASDisplayNode()
     bottomSeparator = ASDisplayNode()
     super.init()
+    initializeNode()
+  }
+  
+  func initializeNode() {
+    automaticallyManagesSubnodes = true
+    
+    headerNode.setTitle(title: Strings.about_this_book(), verticalBarColor: configuration.headerVerticalBarColor, horizontalBarColor: configuration.headerHorizontalBarColor)
+    descriptionTextNode.maximumNumberOfLines = configuration.compactMaximumNumberOfLines
+    viewDescription.configuration.style = .highlighted
+    viewDescription.text = Strings.view_whole_description()
+    
+    topSeparator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    bottomSeparator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    topSeparator.style.height = ASDimensionMake(1)
+    bottomSeparator.style.height = ASDimensionMake(1)
   }
   
   var about: String? {
