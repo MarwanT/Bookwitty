@@ -43,4 +43,9 @@ extension BookDetailsAboutNode {
       top: 0, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: 0, right: 0)
   }
+  
+  enum DisplayMode {
+    case compact
+    case expanded
+  }
 }
