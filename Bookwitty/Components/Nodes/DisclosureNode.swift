@@ -13,6 +13,7 @@ class DisclosureNode: ASControlNode {
   private let imageNode: ASImageNode
   
   var configuration = Configuration() 
+  var nodeSelected: Bool = false 
   
   override init() {
     imageNode = ASImageNode()
