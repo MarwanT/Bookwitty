@@ -17,6 +17,7 @@ class OnBoardingLoadingButton: ASDisplayNode {
   let loaderNode: LoaderNode
   let button: ASButtonNode
 
+  var delegate: OnBoardingLoadingButtonDelegate?
   override init() {
     loaderNode = LoaderNode()
     button = ASButtonNode()
@@ -48,5 +49,6 @@ class OnBoardingLoadingButton: ASDisplayNode {
   }
 
   func touchUpInsideButton() {
+    delegate?.loadingButtonTouchUpInside(onBoardingLoadingButton: self)
   }
 }
