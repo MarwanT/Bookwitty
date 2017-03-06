@@ -13,6 +13,8 @@ class SectionTitleHeaderNode: ASDisplayNode {
   fileprivate let horizontalBarNode: ASDisplayNode
   fileprivate let titleNode: ASTextNode
   
+  var configuration = Configuration()
+  
   override init() {
     verticalBarNode = ASDisplayNode()
     horizontalBarNode = ASDisplayNode()
