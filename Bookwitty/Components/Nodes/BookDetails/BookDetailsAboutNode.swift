@@ -27,6 +27,14 @@ class BookDetailsAboutNode: ASDisplayNode {
     bottomSeparator = ASDisplayNode()
     super.init()
   }
+  
+  var about: String? {
+    didSet {
+      descriptionTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
+        .append(text: about ?? "", color: configuration.defaultTextColor).attributedString
+      setNeedsLayout()
+    }
+  }
 }
 
 extension BookDetailsAboutNode {
