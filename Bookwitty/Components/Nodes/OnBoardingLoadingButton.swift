@@ -23,6 +23,15 @@ class OnBoardingLoadingButton: ASDisplayNode {
   let button: ASButtonNode
 
   var delegate: OnBoardingLoadingButtonDelegate?
+  var isLoading: Bool {
+    return state == .loading
+  }
+  var state: State = .normal {
+    didSet {
+      updateViewState()
+    }
+  }
+
   override init() {
     loaderNode = LoaderNode()
     button = ASButtonNode()
@@ -56,6 +65,26 @@ class OnBoardingLoadingButton: ASDisplayNode {
   func touchUpInsideButton() {
     delegate?.loadingButtonTouchUpInside(onBoardingLoadingButton: self)
   }
+
+  func updateViewState() {
+    switch state {
+    case .normal, .selected:
+      button.isHidden = false
+      button.isSelected = (state == .selected)
+      updateButtonAppearance()
+    case .loading:
+      button.isHidden = true
+      updateButtonAppearance()
+      loaderNode.updateLoaderVisibility(show: true)
+    }
+    setNeedsLayout()
+  }
+
+  func updateButtonAppearance() {
+      let color = button.isSelected ? ThemeManager.shared.currentTheme.defaultBackgroundColor() : ThemeManager.shared.currentTheme.defaultButtonColor()
+      button.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(color)
+  }
+
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     return ASOverlayLayoutSpec(child: loaderNode, overlay: button)
   }
