@@ -18,3 +18,28 @@ class DisclosureNode: ASControlNode {
     super.init()
   }
 }
+
+extension DisclosureNode {
+  enum Style {
+    case normal
+    case highlighted
+    
+    var fontType: FontDynamicType {
+      switch self {
+      case .normal:
+        return .caption2
+      case .highlighted:
+        return .footnote
+      }
+    }
+    
+    var tintColor: UIColor {
+      switch self {
+      case .normal:
+        return ThemeManager.shared.currentTheme.defaultTextColor()
+      case .highlighted:
+        return ThemeManager.shared.currentTheme.colorNumber19()
+      }
+    }
+  }
+}
