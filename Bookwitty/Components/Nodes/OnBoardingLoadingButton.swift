@@ -23,6 +23,23 @@ class OnBoardingLoadingButton: ASDisplayNode {
   }
 
   func setupSelectionButton() {
+    let plusImage: UIImage = #imageLiteral(resourceName: "plus")
+    let tickImage: UIImage = #imageLiteral(resourceName: "tick")
+    let buttonWhiteBackgroundColor = UIImage(color: ThemeManager.shared.currentTheme.defaultBackgroundColor())
+    let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultButtonColor())
+
+    button.setImage(tickImage, for: .selected)
+    button.setBackgroundImage(buttonBackgroundImage, for: .selected)
+
+    //Default state Button Image, tint and background color
+    button.setImage(plusImage, for: .normal)
+    button.setBackgroundImage(buttonWhiteBackgroundColor, for: .normal)
+    button.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.defaultButtonColor())
+
+    cornerRadius = 4
+    borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
+    borderWidth = 2
+    clipsToBounds = true
   }
 
 }
