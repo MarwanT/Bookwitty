@@ -32,6 +32,35 @@ class PenNameFollowNode: ASCellNode {
     setupNode()
   }
 
+  var penName: String? {
+    didSet {
+      if let penName = penName {
+        nameNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
+          .append(text: penName, color: ThemeManager.shared.currentTheme.defaultButtonColor()).attributedString
+        setNeedsLayout()
+      }
+    }
+  }
+
+  var biography: String? {
+    didSet {
+      if let biography = biography {
+        biographyNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+          .append(text: biography, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+        setNeedsLayout()
+      }
+    }
+  }
+
+  var imageUrl: String? {
+    didSet {
+      if let imageUrl = imageUrl {
+        imageNode.url = URL(string: imageUrl)
+        setNeedsLayout()
+      }
+    }
+  }
+
   private func setupNode() {
     imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
     imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0.0, nil)
