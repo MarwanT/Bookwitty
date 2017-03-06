@@ -14,6 +14,11 @@ protocol OnBoardingLoadingButtonDelegate {
 }
 
 class OnBoardingLoadingButton: ASDisplayNode {
+  enum State {
+    case normal
+    case loading
+    case selected
+  }
   let loaderNode: LoaderNode
   let button: ASButtonNode
 
