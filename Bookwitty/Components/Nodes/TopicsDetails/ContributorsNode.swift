@@ -63,9 +63,7 @@ class ContributorsNode: ASDisplayNode {
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     var nodesArray: [ASLayoutElement] = []
 
-
-    let canFitImageCount: Int = Int(ceil((constrainedSize.max.width - (statsNode.calculatedSize.width + internalMargin + 1.0)) / (imageSize.width + 5.0)))
-
+    let canFitImageCount: Int = Int(ceil((constrainedSize.max.width - (statsNode.calculateSizeThatFits(constrainedSize.max).width + internalMargin + 1.0)) / (imageSize.width + 5.0)))
 
     while imagesNodes.count > canFitImageCount {
       _ = imagesNodes.popLast()
@@ -82,8 +80,7 @@ class ContributorsNode: ASDisplayNode {
     }
 
     nodesArray.append(imagesStackSpec)
-    nodesArray.append(spacer(width: 1.5 * internalMargin))
-
+    nodesArray.append(spacer(width: internalMargin))
     nodesArray.append(statsNode)
 
     let horizontalSpec = ASStackLayoutSpec(direction: .horizontal,
