@@ -26,6 +26,14 @@ class DisclosureNode: ASControlNode {
     style.height = ASDimensionMake(Configuration.nodeHeight)
     imageNode.image = #imageLiteral(resourceName: "rightArrow")
   }
+  
+  var text: String? {
+    didSet {
+      titleTextNode.attributedText = AttributedStringBuilder(fontDynamicType: configuration.style.fontType)
+        .append(text: text ?? "", color: configuration.style.tintColor).attributedString
+      setNeedsLayout()
+    }
+  }
 }
 
 extension DisclosureNode {
