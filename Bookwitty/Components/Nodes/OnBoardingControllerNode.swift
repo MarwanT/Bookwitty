@@ -65,6 +65,12 @@ class OnBoardingControllerNode: ASDisplayNode {
   }
 }
 
+extension OnBoardingControllerNode {
+  func reloadCollection() {
+    collectionNode.reloadData()
+  }
+}
+
 extension OnBoardingControllerNode: ASCollectionDelegate, ASCollectionDataSource {
   func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
     return dataSource.numberOfSections(in: collectionNode)
