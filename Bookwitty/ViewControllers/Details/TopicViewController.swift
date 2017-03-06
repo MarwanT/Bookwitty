@@ -33,4 +33,18 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     super.init(node: collectionNode)
   }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    initializeComponents()
+  }
+
+  private func initializeComponents() {
+    //TODO: Should be localized and mapped to an enum
+    segmentedNode.initialize(with: ["Latest", "Related Books", "Followers"])
+    collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
+    flowLayout.minimumInteritemSpacing = 0
+    flowLayout.minimumLineSpacing = 0
+    flowLayout.sectionHeadersPinToVisibleBounds = true
+  }
 }
