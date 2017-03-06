@@ -11,7 +11,7 @@ import AsyncDisplayKit
 
 typealias SegmentedControlNodeSelectionCallBack = (_ segmentedControlNode: SegmentedControlNode, _ selectedSegmentIndex: Int) -> ()
 
-class SegmentedControlNode: ASDisplayNode {
+class SegmentedControlNode: ASCellNode {
   private var segmentedControl: SegmentedControl!
 
   var selectedSegmentChanged: SegmentedControlNodeSelectionCallBack?
