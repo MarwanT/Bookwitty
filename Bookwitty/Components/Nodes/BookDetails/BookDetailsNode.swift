@@ -8,7 +8,7 @@
 
 import AsyncDisplayKit
 
-class BookDetailsNode: ASDisplayNode {
+class BookDetailsNode: ASScrollNode {
   var book: Book! = nil {
     didSet {
       initializeContent()
@@ -19,12 +19,18 @@ class BookDetailsNode: ASDisplayNode {
   private var headerNode = BookDetailsHeaderNode()
   private var formatNode = BookDetailsFormatNode()
   private var eCommerceNode = BookDetailsECommerceNode()
+  private var aboutNode = BookDetailsAboutNode()
   
   var configuration = Configuration()
+  
+  override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
+    super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
+  }
   
   override init() {
     super.init()
     automaticallyManagesSubnodes = true
+    automaticallyManagesContentSize = true
     applyTheme()
   }
   
@@ -44,6 +50,9 @@ class BookDetailsNode: ASDisplayNode {
     if book.supplierInformation != nil {
       layoutElements.append(eCommerceNodeInsetSpec)
     }
+    if (book.bookDescription?.first?.value as? String) != nil {
+      layoutElements.append(aboutNode)
+    }
     
     let mainStack = ASStackLayoutSpec(direction: .vertical, spacing: 0.0,
       justifyContent: .start, alignItems: .center, children: layoutElements)
@@ -61,6 +70,9 @@ class BookDetailsNode: ASDisplayNode {
     
     // Set e-commerce Information
     eCommerceNode.set(supplierInformation: book.supplierInformation)
+    
+    // Set About Information
+    aboutNode.about = book.bookDescription?.first?.value as? String
   }
 }
 
