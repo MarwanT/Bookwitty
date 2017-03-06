@@ -12,6 +12,8 @@ class DisclosureNode: ASControlNode {
   private let titleTextNode: ASTextNode
   private let imageNode: ASImageNode
   
+  var configuration = Configuration() 
+  
   override init() {
     imageNode = ASImageNode()
     titleTextNode = ASTextNode()
@@ -41,5 +43,17 @@ extension DisclosureNode {
         return ThemeManager.shared.currentTheme.colorNumber19()
       }
     }
+  }
+  
+  struct Configuration {
+    static var nodeHeight: CGFloat = 45.0
+    var nodeEdgeInsets = UIEdgeInsets(
+      top: 0, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      bottom: 0, right: 0)
+    
+    var normalBackgroundColor: UIColor = ThemeManager.shared.currentTheme.colorNumber23()
+    var selectedBackgroundColor: UIColor = ThemeManager.shared.currentTheme.defaultSelectionColor()
+    var isAutoDeselectable: Bool = true
+    var style: Style = .normal
   }
 }
