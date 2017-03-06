@@ -9,7 +9,7 @@
 import UIKit
 import AsyncDisplayKit
 
-class TopicHeaderNode: ASDisplayNode {
+class TopicHeaderNode: ASCellNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let imageHeight: CGFloat = 200.0
