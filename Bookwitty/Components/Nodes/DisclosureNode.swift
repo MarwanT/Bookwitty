@@ -19,12 +19,22 @@ class DisclosureNode: ASControlNode {
     titleTextNode = ASTextNode()
     super.init()
     initializeNode()
+    refreshNodeStyling()
   }
   
   private func initializeNode() {
     automaticallyManagesSubnodes = true
     style.height = ASDimensionMake(Configuration.nodeHeight)
     imageNode.image = #imageLiteral(resourceName: "rightArrow")
+  }
+  
+  // MARK: Helpers
+  private func refreshNodeStyling() {
+    let currentText = text
+    text = currentText
+    backgroundColor = configuration.normalBackgroundColor
+    imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(configuration.style.tintColor)
+    setNeedsLayout()
   }
   
   var text: String? {
