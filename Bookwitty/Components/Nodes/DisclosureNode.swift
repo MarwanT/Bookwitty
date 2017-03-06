@@ -75,6 +75,26 @@ class DisclosureNode: ASControlNode {
     }
   }
   
+  func refreshBackground(completion: @escaping () -> Void) {
+    let animationDuration: TimeInterval = 0.17
+    
+    let currentBackgroundColor: UIColor
+    switch nodeSelected {
+    case true:
+      currentBackgroundColor = configuration.selectedBackgroundColor
+    case false:
+      currentBackgroundColor = configuration.normalBackgroundColor
+    }
+    
+    UIView.animate(
+      withDuration: animationDuration,
+      animations: {
+        self.backgroundColor = currentBackgroundColor
+    }, completion: { (_) in
+      completion()
+    })
+  }
+  
   var text: String? {
     didSet {
       titleTextNode.attributedText = AttributedStringBuilder(fontDynamicType: configuration.style.fontType)
