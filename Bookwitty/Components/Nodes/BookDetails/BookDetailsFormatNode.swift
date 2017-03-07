@@ -23,11 +23,11 @@ class BookDetailsFormatNode: ASCellNode {
   func initializeComponents() {
     automaticallyManagesSubnodes = true
     textNode.isLayerBacked = true
+    
+    style.width = ASDimensionMake(UIScreen.main.bounds.width)
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    style.width = ASDimensionMake(constrainedSize.max.width)
-    
     let insetsSpec = ASInsetLayoutSpec(insets: configuration.viewEdgeInset, child: textNode)
     return insetsSpec
   }
