@@ -48,6 +48,8 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     let segments: [String] = self.mode.categories.map({ $0.name })
     segmentedNode.initialize(with: segments)
 
+    segmentedNode.selectedSegmentChanged = segmentedNode(segmentedControlNode:didSelectSegmentIndex:)
+
     collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
     collectionNode.delegate = self
     collectionNode.dataSource = self
@@ -55,6 +57,10 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     flowLayout.minimumInteritemSpacing = 0
     flowLayout.minimumLineSpacing = 0
     flowLayout.sectionHeadersPinToVisibleBounds = true
+  }
+
+  private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
+    //TODO: Add the segment selected index logic
   }
 }
 
