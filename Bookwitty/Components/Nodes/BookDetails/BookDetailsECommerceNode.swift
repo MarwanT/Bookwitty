@@ -38,7 +38,9 @@ class BookDetailsECommerceNode: ASCellNode {
     let separatorInsetsSpecs = ASInsetLayoutSpec(insets: configuration.separatorEdgeInsets, child: separatorNode)
     
     let verticalStackSpec = ASStackLayoutSpec(direction: .vertical, spacing: 5, justifyContent: .start, alignItems: .stretch, children: [pricesNode, separatorInsetsSpecs, stockNode])
-    return verticalStackSpec
+    let externalInsets = ASInsetLayoutSpec(
+      insets: configuration.externalEdgeInsets, child: verticalStackSpec)
+    return externalInsets
   }
   
   func set(supplierInformation: SupplierInformation?) {
@@ -50,6 +52,10 @@ class BookDetailsECommerceNode: ASCellNode {
 
 extension BookDetailsECommerceNode {
   struct Configuration {
+    var externalEdgeInsets = UIEdgeInsets(
+      top: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      left: ThemeManager.shared.currentTheme.generalExternalMargin(), bottom: 0,
+      right: ThemeManager.shared.currentTheme.generalExternalMargin())
     var separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     fileprivate var separatorHeight: CGFloat = 1
     fileprivate var separatorEdgeInsets = UIEdgeInsetsMake(
