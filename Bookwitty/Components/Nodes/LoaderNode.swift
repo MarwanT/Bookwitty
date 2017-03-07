@@ -42,7 +42,7 @@ class LoaderNode: ASCellNode {
   }
 
   func initializeNode() {
-    style.height = ASDimensionMake(usedHeight)
+    style.preferredSize = CGSize(width: usedHeight, height: usedHeight)
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -52,7 +52,6 @@ class LoaderNode: ASCellNode {
   }
 
   func updateLoaderVisibility(show: Bool) {
-    style.height = ASDimensionMake(show ? LoaderNode.defaultNodeHeight : 0.0)
     isHidden = !show
     if show {
       loaderView?.startAnimating()
@@ -60,5 +59,14 @@ class LoaderNode: ASCellNode {
       loaderView?.stopAnimating()
     }
     setNeedsLayout()
+  }
+
+  func syncAnimationWithState() {
+    let show = !isHidden
+    if show {
+      loaderView?.startAnimating()
+    } else {
+      loaderView?.stopAnimating()
+    }
   }
 }

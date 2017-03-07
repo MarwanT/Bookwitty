@@ -137,6 +137,7 @@
 		F42600891E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42600881E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift */; };
 		F426008B1E6CD18800E14D93 /* OnBoardingCellSectionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426008A1E6CD18800E14D93 /* OnBoardingCellSectionNode.swift */; };
 		F426008D1E6D8D1200E14D93 /* OnBoardingLoadingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426008C1E6D8D1200E14D93 /* OnBoardingLoadingButton.swift */; };
+		F426008F1E6DCD8B00E14D93 /* OnBoardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426008E1E6DCD8B00E14D93 /* OnBoardingViewModel.swift */; };
 		F42686771E4EF83C0085E581 /* CardPostInfoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */; };
 		F42686791E4F458A0085E581 /* CardActionBarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42686781E4F458A0085E581 /* CardActionBarNode.swift */; };
 		F426867B1E505CE60085E581 /* BaseCardPostNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426867A1E505CE60085E581 /* BaseCardPostNode.swift */; };
@@ -328,6 +329,7 @@
 		F42600881E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingItemHeaderNode.swift; sourceTree = "<group>"; };
 		F426008A1E6CD18800E14D93 /* OnBoardingCellSectionNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingCellSectionNode.swift; sourceTree = "<group>"; };
 		F426008C1E6D8D1200E14D93 /* OnBoardingLoadingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingLoadingButton.swift; sourceTree = "<group>"; };
+		F426008E1E6DCD8B00E14D93 /* OnBoardingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingViewModel.swift; sourceTree = "<group>"; };
 		F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPostInfoNode.swift; sourceTree = "<group>"; };
 		F42686781E4F458A0085E581 /* CardActionBarNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardActionBarNode.swift; sourceTree = "<group>"; };
 		F426867A1E505CE60085E581 /* BaseCardPostNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCardPostNode.swift; sourceTree = "<group>"; };
@@ -824,6 +826,7 @@
 			children = (
 				59DA475B1E3B7A8F00BA90A5 /* IntroductionViewModel.swift */,
 				59DA475C1E3B7A8F00BA90A5 /* TutorialViewModel.swift */,
+				F426008E1E6DCD8B00E14D93 /* OnBoardingViewModel.swift */,
 			);
 			path = Introduction;
 			sourceTree = "<group>";
@@ -1247,6 +1250,7 @@
 				F49AE93E1E47CFEA0031B355 /* Parser.swift in Sources */,
 				595C4F0D1E3F8C0200BE3942 /* InputField.swift in Sources */,
 				F4A426311E5623EE0090CD51 /* Text.swift in Sources */,
+				F426008F1E6DCD8B00E14D93 /* OnBoardingViewModel.swift in Sources */,
 				59BD55781E302EB800D3B805 /* Analytics.swift in Sources */,
 				F422D8301E51CD9D00A32C2F /* LinkCardPostCellNode.swift in Sources */,
 				56205DEB1E5324BC000CA4D7 /* TableViewSectionHeaderView.swift in Sources */,
