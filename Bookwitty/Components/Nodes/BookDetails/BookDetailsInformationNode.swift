@@ -36,11 +36,11 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
     return tableViewData.count > 0 ? 1 : 0
   }
   
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
     return tableViewData.count
   }
   
-  func tableView(_ tableView: ASTableView, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+  func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
     // TODO: Get info
     let data = tableViewData[indexPath.row]
     
