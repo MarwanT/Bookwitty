@@ -9,26 +9,49 @@
 import UIKit
 import AsyncDisplayKit
 
-class BookDetailsViewController: ASViewController<ASDisplayNode> {
+class BookDetailsViewController: ASViewController<ASCollectionNode> {
   let viewModel = BookDetailsViewModel()
-  let bookDetailsNode = BookDetailsNode()
+  
+  let collectionNode: ASCollectionNode
+  let flowLayout: UICollectionViewFlowLayout
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
   
   init(with book: Book) {
-    super.init(node: bookDetailsNode)
+    flowLayout = UICollectionViewFlowLayout()
+    flowLayout.sectionInset = UIEdgeInsets.zero
+    flowLayout.minimumInteritemSpacing  = 0
+    flowLayout.minimumLineSpacing       = 0
+    
+    collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     viewModel.book = book
-    bookDetailsNode.book = viewModel.book
+    
+    super.init(node: collectionNode)
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    initializeViewController()
+    title = viewModel.viewControllerTitle
+    
+    collectionNode.delegate = self
+    collectionNode.dataSource = self
+  }
+}
+
+extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegate {
+  func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+    return viewModel.numberOfSections
   }
   
-  private func initializeViewController() {
-    title = viewModel.viewControllerTitle
+  func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+    return viewModel.numberOfItemsForSection(section: section)
+  }
+  
+  func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+    return {
+      return self.viewModel.nodeForItem(at: indexPath)
+    }
   }
 }
