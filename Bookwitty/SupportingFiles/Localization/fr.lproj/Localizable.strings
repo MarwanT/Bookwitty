@@ -9,6 +9,7 @@
 "about_this_book" = "About this book";
 "account" = "Account";
 "address_book" = "Address Book";
+"author" = "Author";
 "book_details" = "Book details";
 "books" = "Books";
 "bookwitty_suggests" = "Bookwitty Suggests";
@@ -49,14 +50,19 @@
 "format" = "Forma";
 "free_shipping_internationally" = "Livraison international gratuite";
 "help" = "Help";
+"imprint" = "Imprint";
 "in_stock" = "En stock";
 "interests" = "Interests";
+"isbn10" = "ISBN-10";
+"isbn13" = "ISBN-13";
+"language_of_text" = "language Of Text";
 "last_name" = "Last name";
 "last_name_invalid" = "Oooops your email seems to be empty";
 "list_price" = "liste de prix";
 "my_orders" = "My Orders";
 "new_password" = "New Password";
 "news" = "News";
+"number_of_pages" = "Number Of Pages";
 "followers" = "Followers";
 "ok" = "Ok";
 "ooops" = "Ooops";
@@ -70,7 +76,9 @@
 "pen_names" = "Pen Names";
 "please_fill_required_field" = "Please fill the required fields";
 "posts" = "Posts";
+"product_format" = "Product Format";
 "profile_picture" = "Profile Picture";
+"publisher" = "publisher";
 "reading_lists" = "Reading Lists";
 "register" = "Register";
 "clear_profile_photo" = "Clear profile photo";
@@ -80,6 +88,7 @@
 "sign_up" = "Sign up";
 "some_thing_wrong_error" = "Something went wrong";
 "something_wrong_in_credentials" = "Oooops it seems there is something wrong in your credentials";
+"subtitle" = "Subtitle";
 "take_Profile_photo" = "Take profile photo";
 "terms_of_use_and_privacy_policy" = "By tapping Sign up : you agree to the Terms of Use and Privacy Policy";
 "tutorial_fifth_page_description" = "Whatever you want to dig deeper in a topic : explore new ideas or discuss with people : you're sure to find articles and reading lists about subjects you like";
