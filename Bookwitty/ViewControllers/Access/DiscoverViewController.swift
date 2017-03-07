@@ -23,7 +23,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
   
   var isLoadingMore: Bool = false {
     didSet {
-      let bottomMargin: CGFloat = isLoadingMore ? -(externalMargin/2) : -(LoaderNode.nodeHeight - externalMargin/2)
+      let bottomMargin: CGFloat = isLoadingMore ? -(externalMargin/2) : -(loaderNode.usedHeight - externalMargin/2)
       flowLayout.sectionInset = UIEdgeInsets(top: externalMargin, left: 0, bottom: bottomMargin, right: 0)
       loaderNode.updateLoaderVisibility(show: isLoadingMore)
     }
@@ -38,13 +38,12 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     flowLayout.sectionInset = UIEdgeInsets(top: externalMargin, left: 0, bottom: externalMargin/2, right: 0)
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
-    flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.nodeHeight)
-    
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     loaderNode = LoaderNode()
-    
+
     super.init(node: collectionNode)
 
+    flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: loaderNode.usedHeight)
     collectionNode.onDidLoad { [weak self] (collectionNode) in
       guard let strongSelf = self,
         let asCollectionView = collectionNode.view as? ASCollectionView else {
@@ -144,7 +143,7 @@ extension DiscoverViewController: ASCollectionDataSource {
 
 extension DiscoverViewController: ASCollectionDelegate {
   public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-    return CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.nodeHeight)
+    return CGSize(width: UIScreen.main.bounds.width, height: loaderNode.usedHeight)
   }
 
   public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {

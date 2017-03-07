@@ -9,6 +9,10 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol OnBoardingInternalCellNodeDelegate {
+  func didTapOnSelectionButton(cell: OnBoardingInternalCellNode, button: OnBoardingLoadingButton, isSelected: Bool, doneCompletionBlock: @escaping (_ success: Bool) -> ())
+}
+
 class OnBoardingInternalCellNode: ASCellNode {
   static let cellHeight: CGFloat = 115.0
 
@@ -17,7 +21,7 @@ class OnBoardingInternalCellNode: ASCellNode {
 
   let titleTextNode: ASTextNode
   let shortDescriptionTextNode: ASTextNode
-  let selectionButtonNode: ASButtonNode
+  let selectionButtonNode: OnBoardingLoadingButton
   let imageNode: ASNetworkImageNode
   let separator: ASDisplayNode
 
@@ -25,6 +29,7 @@ class OnBoardingInternalCellNode: ASCellNode {
     return isLast
   }
 
+  var delegate: OnBoardingInternalCellNodeDelegate?
   var isLast: Bool = false
   var text: String? {
     didSet {
@@ -47,7 +52,7 @@ class OnBoardingInternalCellNode: ASCellNode {
   override init() {
     titleTextNode = ASTextNode()
     shortDescriptionTextNode =  ASTextNode()
-    selectionButtonNode =  ASButtonNode()
+    selectionButtonNode =  OnBoardingLoadingButton()
     imageNode =  ASNetworkImageNode()
     separator = ASDisplayNode()
     super.init()
@@ -60,7 +65,6 @@ class OnBoardingInternalCellNode: ASCellNode {
     shortDescriptionTextNode.maximumNumberOfLines = 3
     titleTextNode.maximumNumberOfLines = 1
 
-    selectionButtonNode.backgroundColor = UIColor.bwRuby
     selectionButtonNode.style.preferredSize = CGSize(width: 36.0, height: 36.0)
     imageNode.style.preferredSize = CGSize(width: 45.0, height: 45.0)
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
@@ -70,6 +74,8 @@ class OnBoardingInternalCellNode: ASCellNode {
     separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
 
     style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: OnBoardingInternalCellNode.cellHeight)
+
+    selectionButtonNode.delegate = self
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -101,5 +107,19 @@ class OnBoardingInternalCellNode: ASCellNode {
     finalVStack.children = [insetSpec, separator]
 
     return finalVStack
+  }
+}
+
+extension OnBoardingInternalCellNode: OnBoardingLoadingButtonDelegate {
+  func loadingButtonTouchUpInside(onBoardingLoadingButton: OnBoardingLoadingButton) {
+    guard !selectionButtonNode.isLoading else {
+      return
+    }
+    selectionButtonNode.state = .loading
+
+    delegate?.didTapOnSelectionButton(cell: self, button: selectionButtonNode, isSelected: selectionButtonNode.button.isSelected, doneCompletionBlock: { (success: Bool) in
+      self.selectionButtonNode.state = (arc4random_uniform(2) == 0) ? .normal : .selected
+      //TODO: Handle success / failure action
+    })
   }
 }
