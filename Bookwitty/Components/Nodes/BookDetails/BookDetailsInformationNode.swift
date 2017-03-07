@@ -11,6 +11,7 @@ import AsyncDisplayKit
 class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSource {
   var productDetails: ProductDetails? = nil {
     didSet {
+      refactorProductDetailsForTableData()
     }
   }
   
