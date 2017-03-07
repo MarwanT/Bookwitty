@@ -85,7 +85,7 @@ class BookDetailsAboutNode: ASCellNode {
       alignItems: .stretch,
       children: layoutElements)
     let nodeInsets = ASInsetLayoutSpec(
-      insets: configuration.generalEdgeInsets,
+      insets: configuration.externalEdgeInsets,
       child: horizontalStack)
     
     return nodeInsets
@@ -106,7 +106,7 @@ extension BookDetailsAboutNode {
     fileprivate let headerVerticalBarColor = ThemeManager.shared.currentTheme.colorNumber6()
     fileprivate let headerHorizontalBarColor = ThemeManager.shared.currentTheme.colorNumber5()
     fileprivate let compactMaximumNumberOfLines: UInt = 6
-    fileprivate let generalEdgeInsets = UIEdgeInsets(
+    fileprivate let externalEdgeInsets = UIEdgeInsets(
       top: ThemeManager.shared.currentTheme.generalExternalMargin(),
       left: 0, bottom: 0, right: 0)
     fileprivate let descriptionTextEdgeInsets = UIEdgeInsets(
