@@ -45,8 +45,9 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   }
 
   private func initializeComponents() {
-    //TODO: Should be localized and mapped to an enum
-    segmentedNode.initialize(with: ["Latest", "Related Books", "Followers"])
+    let segments: [String] = self.mode.categories.map({ $0.name })
+    segmentedNode.initialize(with: segments)
+
     collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
     collectionNode.delegate = self
     collectionNode.dataSource = self
