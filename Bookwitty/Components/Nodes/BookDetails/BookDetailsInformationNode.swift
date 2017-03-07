@@ -82,7 +82,31 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
       }
     default:
       return { return ASCellNode() }
+    }
+  }
+  
+  func tableNode(_ tableNode: ASTableNode, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+    tableNode.deselectRow(at: indexPath, animated: true)
     
+    switch indexPath.section {
+    case 0:
+      return nil
+    case 1:
+      return indexPath
+    case 2:
+      return indexPath
+    default:
+      return indexPath
+    }
+  }
+  
+  func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+    tableNode.deselectRow(at: indexPath, animated: true)
+    switch indexPath.section {
+    case 2:
+      print("View All")
+    default:
+      break
     }
   }
 }
