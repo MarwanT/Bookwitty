@@ -8,6 +8,10 @@
 
 import AsyncDisplayKit
 
+protocol DisclosureNodeDelegate {
+  func disclosureNodeDidTap(disclosureNode: DisclosureNode, selected: Bool)
+}
+
 class DisclosureNode: ASControlNode {
   private let titleTextNode: ASTextNode
   private let imageNode: ASImageNode
@@ -23,6 +27,8 @@ class DisclosureNode: ASControlNode {
       refreshNodeStyling()
     }
   }
+  
+  var delegate: DisclosureNodeDelegate?
   
   override init() {
     imageNode = ASImageNode()
@@ -51,6 +57,7 @@ class DisclosureNode: ASControlNode {
   // MARK: Actions
   func nodeTouchUpInside(_ sender: Any?) {
     nodeSelected = !nodeSelected
+    delegate?.disclosureNodeDidTap(disclosureNode: self, selected: nodeSelected)
   }
   
   // MARK: Helpers
