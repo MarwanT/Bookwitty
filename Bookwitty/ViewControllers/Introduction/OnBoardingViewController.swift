@@ -85,5 +85,14 @@ extension OnBoardingViewController: OnBoardingCellDelegate {
       doneCompletionBlock(false)
       return
     }
+    if shouldSelect {
+      viewModel.followRequest(identifier: id, completionBlock: { (succes) in
+        doneCompletionBlock(succes)
+      })
+    } else {
+      viewModel.unfollowRequest(identifier: id, completionBlock: { (succes) in
+        doneCompletionBlock(succes)
+      })
+    }
   }
 }
