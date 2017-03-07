@@ -12,7 +12,7 @@ protocol BookDetailsAboutNodeDelegate {
   func aboutNodeDidTapViewDescription(aboutNode: BookDetailsAboutNode)
 }
 
-class BookDetailsAboutNode: ASDisplayNode {
+class BookDetailsAboutNode: ASCellNode {
   fileprivate let headerNode: SectionTitleHeaderNode
   fileprivate let descriptionTextNode: ASTextNode
   fileprivate let viewDescription: DisclosureNode
