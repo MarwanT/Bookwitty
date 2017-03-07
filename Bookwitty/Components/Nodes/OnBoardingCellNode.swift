@@ -9,6 +9,10 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol OnBoardingCellDelegate {
+  func didTapOnSelectionButton(internalCollectionNode collectioNode: ASCollectionNode, indexPath: IndexPath, cell: OnBoardingInternalCellNode, button: OnBoardingLoadingButton, isSelected: Bool, doneCompletionBlock: @escaping (_ success: Bool) -> ())
+}
+
 class OnBoardingCellNode: ASCellNode {
   fileprivate let internalMargin: CGFloat = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let contentSpacing: CGFloat = ThemeManager.shared.currentTheme.contentSpacing()
@@ -43,6 +47,7 @@ class OnBoardingCellNode: ASCellNode {
       transitionLayout(withAnimation: true, shouldMeasureAsync: false, measurementCompletion: nil)
     }
   }
+  var delegate: OnBoardingCellDelegate?
   var text: String? {
     didSet {
       if let text = text {
@@ -147,9 +152,9 @@ extension OnBoardingCellNode: ASCollectionDelegate, ASCollectionDataSource {
 
 extension OnBoardingCellNode: OnBoardingInternalCellNodeDelegate {
   func didTapOnSelectionButton(cell: OnBoardingInternalCellNode, button: OnBoardingLoadingButton, isSelected: Bool, doneCompletionBlock: @escaping (_ success: Bool) -> ()) {
-    //TODO: Do needed action
-    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + DispatchTimeInterval.seconds(4)) {
-      doneCompletionBlock(true)
+    guard let indexPath = collectionNode.indexPath(for: cell) else {
+      return
     }
+    delegate?.didTapOnSelectionButton(internalCollectionNode: collectionNode, indexPath: indexPath, cell: cell, button: button, isSelected: isSelected, doneCompletionBlock: doneCompletionBlock)
   }
 }
