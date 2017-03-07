@@ -9,11 +9,13 @@
 import AsyncDisplayKit
 
 class BookDetailsFormatNode: ASCellNode {
+  fileprivate let borderNode: ASDisplayNode
   fileprivate let textNode: ASTextNode
   
   var configuration = Configuration()
   
   override init() {
+    borderNode = ASDisplayNode()
     textNode = ASTextNode()
     super.init()
     initializeComponents()
@@ -23,13 +25,16 @@ class BookDetailsFormatNode: ASCellNode {
   func initializeComponents() {
     automaticallyManagesSubnodes = true
     textNode.isLayerBacked = true
+    borderNode.isLayerBacked = true
     
     style.width = ASDimensionMake(UIScreen.main.bounds.width)
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    let insetsSpec = ASInsetLayoutSpec(insets: configuration.viewEdgeInset, child: textNode)
-    return insetsSpec
+    let formatTextSpec = ASInsetLayoutSpec(insets: configuration.formatTextEdgeInsets, child: textNode)
+    let backgroundSpec = ASBackgroundLayoutSpec(child: formatTextSpec, background: borderNode)
+    let externalInsets = ASInsetLayoutSpec(insets: configuration.externalEdgeInsets, child: backgroundSpec)
+    return externalInsets
   }
   
   var format: String? {
@@ -44,7 +49,11 @@ class BookDetailsFormatNode: ASCellNode {
 extension BookDetailsFormatNode {
   struct Configuration {
     let textColor = ThemeManager.shared.currentTheme.defaultTextColor()
-    fileprivate var viewEdgeInset = UIEdgeInsetsMake(
+    var externalEdgeInsets = UIEdgeInsets(
+      top: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      left: ThemeManager.shared.currentTheme.generalExternalMargin(), bottom: 0,
+      right: ThemeManager.shared.currentTheme.generalExternalMargin())
+    fileprivate var formatTextEdgeInsets = UIEdgeInsetsMake(
       ThemeManager.shared.currentTheme.titleMargin(),
       ThemeManager.shared.currentTheme.titleMargin(),
       ThemeManager.shared.currentTheme.titleMargin(),
@@ -54,7 +63,7 @@ extension BookDetailsFormatNode {
 
 extension BookDetailsFormatNode: Themeable {
   func applyTheme() {
-    borderWidth = 1.0
-    borderColor = ThemeManager.shared.currentTheme.colorNumber18().cgColor
+    borderNode.borderWidth = 1.0
+    borderNode.borderColor = ThemeManager.shared.currentTheme.colorNumber18().cgColor
   }
 }
