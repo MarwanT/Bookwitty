@@ -50,6 +50,11 @@ class OnBoardingCellNode: ASCellNode {
       }
     }
   }
+  var isLoading: Bool = false {
+    didSet {
+      headerNode.isLoading = isLoading
+    }
+  }
 
   override init() {
     headerNode = OnBoardingItemHeaderNode()

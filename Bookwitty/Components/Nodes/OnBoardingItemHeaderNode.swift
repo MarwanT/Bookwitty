@@ -13,6 +13,8 @@ class OnBoardingItemHeaderNode: ASDisplayNode {
   fileprivate let internalMargin: CGFloat = ThemeManager.shared.currentTheme.cardInternalMargin()
   static let nodeHeight: CGFloat = 45.0
 
+  let loaderNode: LoaderNode
+
   private let titleTextNode: ASTextNode
   private let rotatingImageNode: RotatingImageNode
   private let separator: ASDisplayNode
@@ -24,17 +26,26 @@ class OnBoardingItemHeaderNode: ASDisplayNode {
       }
     }
   }
+  var isLoading: Bool = false {
+    didSet {
+      loaderNode.updateLoaderVisibility(show: isLoading)
+      rotatingImageNode.isHidden = isLoading
+    }
+  }
 
   override init() {
     rotatingImageNode = RotatingImageNode(image: #imageLiteral(resourceName: "downArrow"), size: CGSize(width: 45.0, height: 45.0), direction: .right)
     titleTextNode = ASTextNode()
     separator = ASDisplayNode()
-
+    loaderNode = LoaderNode(nodeHeight: 45.0)
     super.init()
     automaticallyManagesSubnodes = true
 
-    rotatingImageNode.updateDirection(direction: RotatingImageNode.Direction.down, animated: false)
-    rotatingImageNode.image = #imageLiteral(resourceName: "downArrow")
+    loaderNode.activityIndicatorNode.onDidLoad { (node) in
+      self.loaderNode.syncAnimationWithState()
+    }
+    
+    rotatingImageNode.updateDirection(direction: RotatingImageNode.Direction.right, animated: false)
 
     titleTextNode.style.maxHeight = ASDimensionMake(OnBoardingItemHeaderNode.nodeHeight)
     separator.style.height = ASDimensionMake(1.0)
@@ -44,16 +55,16 @@ class OnBoardingItemHeaderNode: ASDisplayNode {
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
   }
 
-
   func updateArrowDirection(direction: RotatingImageNode.Direction, animated: Bool = true) {
     rotatingImageNode.updateDirection(direction: direction, animated: animated)
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     separator.style.width = ASDimensionMake(constrainedSize.max.width)
+    let loadingSpec = ASOverlayLayoutSpec(child: loaderNode, overlay: rotatingImageNode)
 
     let hStack = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start,
-                                   alignItems: .center, children: [titleTextNode, ASLayoutSpec.spacer(flexGrow: 1.0), rotatingImageNode])
+                                   alignItems: .center, children: [titleTextNode, ASLayoutSpec.spacer(flexGrow: 1.0), loadingSpec])
     let insetSpec = ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: 0), child: hStack)
     let centerSpec = ASCenterLayoutSpec(centeringOptions: ASCenterLayoutSpecCenteringOptions.Y, sizingOptions: ASCenterLayoutSpecSizingOptions.minimumX, child: insetSpec)
     centerSpec.style.height = ASDimensionMake(OnBoardingItemHeaderNode.nodeHeight - 1.0)
