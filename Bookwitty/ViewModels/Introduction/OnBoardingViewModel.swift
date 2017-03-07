@@ -51,4 +51,26 @@ final class OnBoardingViewModel {
     let item = Array(data.keys)[index]
     return item
   }
+
+  func curatedOnBoardingData(index: Int) -> [String : [CuratedCollectionItem]]? {
+    guard let data = data else {
+      return nil
+    }
+    let dataArray = Array(data.values)
+    guard (index >= 0 && index < dataArray.count) else {
+      return nil
+    }
+
+    let item: OnBoardingCollectionItem = dataArray[index]
+    var itemData: [String : [CuratedCollectionItem]] = [:]
+    itemData["topic"] = []
+    if let featured = item.featured {
+      itemData["topic"]? += featured
+    }
+    if let wittyIds = item.wittyIds {
+      itemData["topic"]? += wittyIds
+    }
+
+    return itemData
+  }
 }
