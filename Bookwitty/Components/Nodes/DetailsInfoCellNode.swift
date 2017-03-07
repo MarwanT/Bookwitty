@@ -47,6 +47,22 @@ class DetailsInfoCellNode: ASCellNode {
     return stackInsets
   }
   
+  var key: String? {
+    didSet {
+      keyTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption1)
+        .append(text: key ?? "", color: configuration.defaultTextColor).attributedString
+      setNeedsLayout()
+    }
+  }
+  
+  var value: String? {
+    didSet {
+      valueTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+        .append(text: value ?? "", color: configuration.defaultTextColor).attributedString
+      setNeedsLayout()
+    }
+  }
+  
   private func spacer(flexGrow: CGFloat = 0.0, height: CGFloat = 0.0, width: CGFloat = 0.0) -> ASLayoutSpec {
     return ASLayoutSpec().styled { (style) in
       style.height = ASDimensionMake(height)
