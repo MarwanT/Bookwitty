@@ -12,7 +12,8 @@ import AsyncDisplayKit
 protocol OnBoardingControllerDataSource {
   func numberOfSections(in collectionNode: ASCollectionNode) -> Int
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int
-  func onBoardingCellNodeTitle(index: Int) -> String
+  func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock
+  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode, at indexPath: IndexPath)
 }
 
 class OnBoardingControllerNode: ASDisplayNode {
@@ -81,13 +82,14 @@ extension OnBoardingControllerNode: ASCollectionDelegate, ASCollectionDataSource
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
-    let index = indexPath.row
-    let title = dataSource.onBoardingCellNodeTitle(index: index)
-    return {
-      let baseCardNode = OnBoardingCellNode()
-      baseCardNode.text = title
-      return baseCardNode
+    return dataSource.collectionNode(collectionNode, nodeBlockForItemAt: indexPath)
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+    guard let indexPath = collectionNode.indexPath(for: node) else {
+      return
     }
+    dataSource.collectionNode(collectionNode, willDisplayItemWith: node, at: indexPath)
   }
 
   public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {

@@ -48,4 +48,32 @@ extension OnBoardingViewController: OnBoardingControllerDataSource {
   func onBoardingCellNodeTitle(index: Int) -> String {
     return viewModel.onBoardingCellNodeTitle(index: index)
   }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+    return {
+      let onBoardingCellNode = OnBoardingCellNode()
+      return onBoardingCellNode
+    }
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode, at indexPath: IndexPath) {
+    if let node = node as? OnBoardingCellNode {
+      let title = viewModel.onBoardingCellNodeTitle(index: indexPath.row)
+      node.text = title
+      node.isLoading = true
+      _ = viewModel.loadOnBoardingCellNodeData(indexPath: indexPath, completionBlock: { [weak self] (indexPath, success, cellCollectionDictionary) in
+        guard let strongSelf = self else { return }
+        if success {
+          strongSelf.updateNodeForCollectionAtWith(indexPath: indexPath, dictionary: cellCollectionDictionary)
+        }
+      })
+    }
+  }
+
+  func updateNodeForCollectionAtWith(indexPath: IndexPath, dictionary: [String : [CellNodeDataItemModel]]?) {
+    if let node = onBoardingNode.collectionNode.nodeForItem(at: indexPath) as? OnBoardingCellNode {
+      node.setViewModelData(data: dictionary)
+      node.isLoading = false
+    }
+  }
 }
