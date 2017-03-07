@@ -345,6 +345,10 @@ class Strings {
     return localizedString(key: "tutorial_third_page_title")
   }
   
+  class func view_all() -> String {
+    return localizedString(key: "view_all")
+  }
+  
   class func view_all_books() -> String {
     return localizedString(key: "view_all_books")
   }
