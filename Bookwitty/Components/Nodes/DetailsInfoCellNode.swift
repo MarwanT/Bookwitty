@@ -9,4 +9,12 @@
 import AsyncDisplayKit
 
 class DetailsInfoCellNode: ASCellNode {
+  fileprivate var keyTextNode: ASTextNode
+  fileprivate var valueTextNode: ASTextNode
+  
+  override init() {
+    keyTextNode = ASTextNode()
+    valueTextNode = ASTextNode()
+    super.init()
+  }
 }
