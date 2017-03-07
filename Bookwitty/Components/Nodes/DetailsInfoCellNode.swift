@@ -79,8 +79,8 @@ extension DetailsInfoCellNode {
     static let minimumHeight: CGFloat = 45
     let defaultTextColor = ThemeManager.shared.currentTheme.defaultTextColor()
     let stackEdgeInsets = UIEdgeInsets(
-      top: 10, left: 0, bottom: 10,
-      right: ThemeManager.shared.currentTheme.generalExternalMargin())
+      top: 10, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      bottom: 10, right: ThemeManager.shared.currentTheme.generalExternalMargin())
     let keyNodeEdgeInsets = UIEdgeInsets(
       top: 0, left: 0, bottom: 0,
       right: (ThemeManager.shared.currentTheme.generalExternalMargin() * 2))
