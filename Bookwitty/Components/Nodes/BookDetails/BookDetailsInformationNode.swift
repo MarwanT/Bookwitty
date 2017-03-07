@@ -31,6 +31,9 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
   override func onDidLoad(_ body: @escaping ASDisplayNodeDidLoadBlock) {
     super.onDidLoad(body)
     view.tableFooterView = UIView(frame: CGRect.zero)
+    view.separatorInset = UIEdgeInsets(
+      top: 0, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      bottom: 0, right: 0)
   }
   
   override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
