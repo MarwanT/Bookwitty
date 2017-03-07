@@ -59,6 +59,7 @@ extension OnBoardingViewController: OnBoardingControllerDataSource {
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode, at indexPath: IndexPath) {
     if let node = node as? OnBoardingCellNode {
       let title = viewModel.onBoardingCellNodeTitle(index: indexPath.row)
+      node.delegate = self
       node.text = title
       node.isLoading = true
       _ = viewModel.loadOnBoardingCellNodeData(indexPath: indexPath, completionBlock: { [weak self] (indexPath, success, cellCollectionDictionary) in
@@ -74,6 +75,15 @@ extension OnBoardingViewController: OnBoardingControllerDataSource {
     if let node = onBoardingNode.collectionNode.nodeForItem(at: indexPath) as? OnBoardingCellNode {
       node.setViewModelData(data: dictionary)
       node.isLoading = false
+    }
+  }
+}
+
+extension OnBoardingViewController: OnBoardingCellDelegate {
+  func didTapOnSelectionButton(internalCollectionNode: ASCollectionNode, indexPath: IndexPath, cell: OnBoardingInternalCellNode, button: OnBoardingLoadingButton, isSelected: Bool, doneCompletionBlock: @escaping (_ success: Bool) -> ()) {
+    //TODO: Replace with Real-API request and call back to completion
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + DispatchTimeInterval.seconds(2)) {
+      doneCompletionBlock(true)
     }
   }
 }
