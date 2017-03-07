@@ -21,6 +21,36 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
     }
   }
   
+  
+  override init() {
+    super.init()
+    delegate = self
+    dataSource = self
+  }
+  
+  override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
+    super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
+  }
+  
+  func numberOfSections(in tableNode: ASTableNode) -> Int {
+    return tableViewData.count > 0 ? 1 : 0
+  }
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return tableViewData.count
+  }
+  
+  func tableView(_ tableView: ASTableView, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
+    // TODO: Get info
+    let data = tableViewData[indexPath.row]
+    
+    return {
+      let cell = DetailsInfoCellNode()
+      cell.key = data.key
+      cell.value = data.value
+      return cell
+    }
+  }
 }
 
 // MARK: - Helpers
