@@ -62,6 +62,8 @@ class PenNameFollowNode: ASCellNode {
   }
 
   private func setupNode() {
+    backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+
     imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
     imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0.0, nil)
 
