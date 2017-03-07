@@ -6,4 +6,7 @@
 //  Copyright © 2017 Keeward. All rights reserved.
 //
 
-import Foundation
+import AsyncDisplayKit
+
+class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSource {
+}
