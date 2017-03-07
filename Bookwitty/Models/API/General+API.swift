@@ -52,4 +52,34 @@ struct GeneralAPI {
       }
     }
   }
+
+  static func follow(identifer: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+
+    let successStatusCode = 204
+
+    return signedAPIRequest(target: .follow(identifier: identifer), completion: {
+      (data, statusCode, response, error) in
+      // Ensure the completion block is always called
+      var success: Bool = false
+      var completionError: BookwittyAPIError? = error
+      defer {
+        completion(success, error)
+      }
+
+      // If status code is not available then break
+      guard let statusCode = statusCode else {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      // If status code != success then break
+      if statusCode != successStatusCode {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      success = statusCode == successStatusCode
+    })
+  }
+
 }
