@@ -17,6 +17,7 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
   
   fileprivate var tableViewData = [(key: String, value: String)]() {
     didSet {
+      reloadNode()
     }
   }
   
