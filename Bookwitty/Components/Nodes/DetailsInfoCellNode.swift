@@ -20,6 +20,7 @@ class DetailsInfoCellNode: ASCellNode {
     super.init()
     automaticallyManagesSubnodes = true
     style.minHeight = ASDimensionMake(Configuration.minimumHeight)
+    separatorInset = configuration.separatorInsets
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -83,5 +84,8 @@ extension DetailsInfoCellNode {
     let keyNodeEdgeInsets = UIEdgeInsets(
       top: 0, left: 0, bottom: 0,
       right: (ThemeManager.shared.currentTheme.generalExternalMargin() * 2))
+    let separatorInsets = UIEdgeInsets(
+      top: 0, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      bottom: 0, right: 0)
   }
 }
