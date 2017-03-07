@@ -8,7 +8,7 @@
 
 import AsyncDisplayKit
 
-class BookDetailsHeaderNode: ASDisplayNode {
+class BookDetailsHeaderNode: ASCellNode {
   fileprivate var imageNode: ASNetworkImageNode
   fileprivate var titleNode: ASTextNode
   fileprivate var authorNode: ASTextNode
