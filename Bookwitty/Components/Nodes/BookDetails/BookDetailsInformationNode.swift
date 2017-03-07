@@ -38,22 +38,51 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
   }
   
   func numberOfSections(in tableNode: ASTableNode) -> Int {
-    return tableViewData.count > 0 ? 1 : 0
+    return tableViewData.count > 0 ? 3 : 0 // Header + Data + Footer
   }
   
   func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-    return tableViewData.count
+    switch section {
+    case 0: // Header
+      return 1
+    case 1: // Data
+      return tableViewData.count
+    case 2: // Footer
+      return 1
+    default:
+      return 0
+    }
   }
   
   func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
-    // TODO: Get info
-    let data = tableViewData[indexPath.row]
+    switch indexPath.section {
+    case 0: // Header
+      return {
+        let cell = SectionTitleHeaderNode()
+        cell.setTitle(
+          title: Strings.book_details(),
+          verticalBarColor: ThemeManager.shared.currentTheme.colorNumber8(),
+          horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber7())
+        return cell
+      }
+    case 1: // Data
+      let data = tableViewData[indexPath.row]
+      return {
+        let cell = DetailsInfoCellNode()
+        cell.key = data.key
+        cell.value = data.value
+        return cell
+      }
+    case 2: // Footer
+      return {
+        let cell = DisclosureNodeCell()
+        cell.text = Strings.view_all()
+        cell.configuration.style = .highlighted
+        return cell
+      }
+    default:
+      return { return ASCellNode() }
     
-    return {
-      let cell = DetailsInfoCellNode()
-      cell.key = data.key
-      cell.value = data.value
-      return cell
     }
   }
 }
