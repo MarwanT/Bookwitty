@@ -21,7 +21,6 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
     }
   }
   
-  
   override init() {
     super.init()
     delegate = self
@@ -50,8 +49,6 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
       return 1
     case 1: // Data
       return tableViewData.count
-    case 2: // Footer
-      return 1
     default:
       return 0
     }
@@ -77,13 +74,6 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
         cell.value = data.value
         return cell
       }
-    case 2: // Footer
-      return {
-        let cell = DisclosureNodeCell()
-        cell.text = Strings.view_all()
-        cell.configuration.style = .highlighted
-        return cell
-      }
     default:
       return { return ASCellNode() }
     }
@@ -97,8 +87,6 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
       return nil
     case 1: // Data
       return indexPath
-    case 2: // Footer
-      return indexPath
     default:
       return nil
     }
@@ -106,12 +94,6 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
   
   func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
     tableNode.deselectRow(at: indexPath, animated: true)
-    switch indexPath.section {
-    case 2: // Footer
-      print("View All")
-    default:
-      break
-    }
   }
 }
 
