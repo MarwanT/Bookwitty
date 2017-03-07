@@ -61,6 +61,7 @@
 		59591F1B1E6D7E7A005592B8 /* DisclosureNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59591F1A1E6D7E7A005592B8 /* DisclosureNode.swift */; };
 		59591F1D1E6DAF5D005592B8 /* BookDetailsAboutNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59591F1C1E6DAF5D005592B8 /* BookDetailsAboutNode.swift */; };
 		59591F1F1E6EB065005592B8 /* BookDetailsInformationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59591F1E1E6EB065005592B8 /* BookDetailsInformationNode.swift */; };
+		59591F231E6EE3FE005592B8 /* DetailsInfoCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59591F221E6EE3FE005592B8 /* DetailsInfoCellNode.swift */; };
 		595A649C1E2CCB8900655067 /* BookwittyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649B1E2CCB8900655067 /* BookwittyAPI.swift */; };
 		595A649E1E2CF4EA00655067 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649D1E2CF4EA00655067 /* String.swift */; };
 		595A64A01E2D0C4D00655067 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649F1E2D0C4D00655067 /* Network.swift */; };
@@ -234,6 +235,7 @@
 		59591F1A1E6D7E7A005592B8 /* DisclosureNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisclosureNode.swift; sourceTree = "<group>"; };
 		59591F1C1E6DAF5D005592B8 /* BookDetailsAboutNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsAboutNode.swift; sourceTree = "<group>"; };
 		59591F1E1E6EB065005592B8 /* BookDetailsInformationNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsInformationNode.swift; sourceTree = "<group>"; };
+		59591F221E6EE3FE005592B8 /* DetailsInfoCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsInfoCellNode.swift; sourceTree = "<group>"; };
 		595A649B1E2CCB8900655067 /* BookwittyAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyAPI.swift; sourceTree = "<group>"; };
 		595A649D1E2CF4EA00655067 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		595A649F1E2D0C4D00655067 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -560,6 +562,7 @@
 				F42686781E4F458A0085E581 /* CardActionBarNode.swift */,
 				59EC5BAB1E6C5B51006E1CB9 /* SectionTitleHeaderNode.swift */,
 				59591F1A1E6D7E7A005592B8 /* DisclosureNode.swift */,
+				59591F221E6EE3FE005592B8 /* DetailsInfoCellNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -1276,6 +1279,7 @@
 				F488D2791E44EB46003A7BD4 /* PenName.swift in Sources */,
 				595A64A01E2D0C4D00655067 /* Network.swift in Sources */,
 				5929C2771E5B89E5006E08F8 /* CustomAttributes.swift in Sources */,
+				59591F231E6EE3FE005592B8 /* DetailsInfoCellNode.swift in Sources */,
 				59CF44051E66FEDF006C16FC /* BookDetailsViewModel.swift in Sources */,
 				594290141E51F2850006B2F1 /* BookStoreViewController.swift in Sources */,
 				594F4EA81E423B8600A947FA /* AppNotification.swift in Sources */,
