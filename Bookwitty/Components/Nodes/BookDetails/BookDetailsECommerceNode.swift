@@ -28,6 +28,8 @@ class BookDetailsECommerceNode: ASCellNode {
     separatorNode.isLayerBacked = true
     separatorNode.backgroundColor = configuration.separatorColor
     separatorNode.style.height = ASDimensionMake(configuration.separatorHeight)
+    
+    style.width = ASDimensionMake(UIScreen.main.bounds.width)
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
