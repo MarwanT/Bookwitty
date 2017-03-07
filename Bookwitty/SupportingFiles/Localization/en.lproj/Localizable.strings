@@ -6,6 +6,7 @@
   Copyright © 2017 Keeward. All rights reserved.
 */
 
+"about_this_book" = "About this book";
 "account" = "Account";
 "address_book" = "Address Book";
 "books" = "Books";
@@ -93,6 +94,7 @@
 "view_all_categories" = "View All Categories";
 "view_all_selections" = "View All Selections";
 "view_subcategories" = "View Subcategories";
+"view_whole_description" = "View Whole Description";
 "wit_it" = "Wit";
 "witted" = "Witted";
 "you_dont_have_account" = "You don't have an account";

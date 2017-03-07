@@ -59,6 +59,7 @@
 		594F4EA81E423B8600A947FA /* AppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA71E423B8600A947FA /* AppNotification.swift */; };
 		594F4EAF1E440A4900A947FA /* User+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EAE1E440A4900A947FA /* User+API.swift */; };
 		59591F1B1E6D7E7A005592B8 /* DisclosureNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59591F1A1E6D7E7A005592B8 /* DisclosureNode.swift */; };
+		59591F1D1E6DAF5D005592B8 /* BookDetailsAboutNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59591F1C1E6DAF5D005592B8 /* BookDetailsAboutNode.swift */; };
 		595A649C1E2CCB8900655067 /* BookwittyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649B1E2CCB8900655067 /* BookwittyAPI.swift */; };
 		595A649E1E2CF4EA00655067 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649D1E2CF4EA00655067 /* String.swift */; };
 		595A64A01E2D0C4D00655067 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649F1E2D0C4D00655067 /* Network.swift */; };
@@ -230,6 +231,7 @@
 		594F4EA71E423B8600A947FA /* AppNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNotification.swift; sourceTree = "<group>"; };
 		594F4EAE1E440A4900A947FA /* User+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+API.swift"; sourceTree = "<group>"; };
 		59591F1A1E6D7E7A005592B8 /* DisclosureNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisclosureNode.swift; sourceTree = "<group>"; };
+		59591F1C1E6DAF5D005592B8 /* BookDetailsAboutNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsAboutNode.swift; sourceTree = "<group>"; };
 		595A649B1E2CCB8900655067 /* BookwittyAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyAPI.swift; sourceTree = "<group>"; };
 		595A649D1E2CF4EA00655067 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		595A649F1E2D0C4D00655067 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -824,6 +826,7 @@
 				59EC5BA21E6C5987006E1CB9 /* BookDetailsNode.swift */,
 				59EC5BA31E6C5987006E1CB9 /* BookDetailsPricesNode.swift */,
 				59EC5BA41E6C5987006E1CB9 /* BookDetailsStockNode.swift */,
+				59591F1C1E6DAF5D005592B8 /* BookDetailsAboutNode.swift */,
 			);
 			path = BookDetails;
 			sourceTree = "<group>";
@@ -1274,6 +1277,7 @@
 				594F4EA81E423B8600A947FA /* AppNotification.swift in Sources */,
 				F442CF871E65832000F59913 /* Date+Utils.swift in Sources */,
 				5929C2711E5B25BC006E08F8 /* CuratedCollection.swift in Sources */,
+				59591F1D1E6DAF5D005592B8 /* BookDetailsAboutNode.swift in Sources */,
 				F45A50151E536591005E5C56 /* TopicCardPostCellNode.swift in Sources */,
 				F48278BB1E4B21CA003D82F2 /* RootTabBarController.swift in Sources */,
 				F420B6A61E43D05E001F34CD /* PenNameViewModel.swift in Sources */,

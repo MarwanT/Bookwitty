@@ -9,6 +9,10 @@
 import UIKit
 
 class Strings {
+  class func about_this_book() -> String {
+    return localizedString(key: "about_this_book")
+  }
+  
   class func account() -> String {
     return localizedString(key: "account")
   }
@@ -351,6 +355,10 @@ class Strings {
 
   class func view_all_selections() -> String {
     return localizedString(key: "view_all_selections")
+  }
+  
+  class func view_whole_description() -> String {
+    return localizedString(key: "view_whole_description")
   }
   
   class func wit_it() -> String {
