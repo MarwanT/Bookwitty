@@ -89,21 +89,21 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
     tableNode.deselectRow(at: indexPath, animated: true)
     
     switch indexPath.section {
-    case 0:
+    case 0: // Header
       return nil
-    case 1:
+    case 1: // Data
       return indexPath
-    case 2:
+    case 2: // Footer
       return indexPath
     default:
-      return indexPath
+      return nil
     }
   }
   
   func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
     tableNode.deselectRow(at: indexPath, animated: true)
     switch indexPath.section {
-    case 2:
+    case 2: // Footer
       print("View All")
     default:
       break
