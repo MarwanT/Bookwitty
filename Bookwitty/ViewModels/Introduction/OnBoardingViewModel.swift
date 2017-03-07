@@ -73,4 +73,16 @@ final class OnBoardingViewModel {
 
     return itemData
   }
+
+  func getRelatedKey(for id: String, from items: [String : [CuratedCollectionItem]]) -> String? {
+    let filteredDictionary = items.filter({ (dictionaryItem: (key: String, value: [CuratedCollectionItem])) -> Bool in
+      return dictionaryItem.value.filter({ (curatedItem) -> Bool in
+        return curatedItem.wittyId == id
+      }).count >= 1
+    })
+    guard filteredDictionary.count > 0 else {
+      return nil
+    }
+    return filteredDictionary[0].key
+  }
 }
