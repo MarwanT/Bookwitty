@@ -82,4 +82,32 @@ struct GeneralAPI {
     })
   }
 
+  static func unfollow(identifer: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let unfollowSuccessStatusNoContent = 204
+    let unfollowSuccessStatusAlreadyDeleted = 404
+
+    return signedAPIRequest(target: .unfollow(identifier: identifer), completion: {
+      (data, statusCode, response, error) in
+      // Ensure the completion block is always called
+      var success: Bool = false
+      var completionError: BookwittyAPIError? = error
+      defer {
+        completion(success, error)
+      }
+
+      // If status code is not available then break
+      guard let statusCode = statusCode else {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      // If status code != success then break
+      if statusCode != unfollowSuccessStatusNoContent && statusCode != unfollowSuccessStatusAlreadyDeleted {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      success = (statusCode == unfollowSuccessStatusNoContent || statusCode == unfollowSuccessStatusAlreadyDeleted)
+    })
+  }
 }
