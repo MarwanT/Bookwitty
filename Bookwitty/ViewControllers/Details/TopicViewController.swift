@@ -21,6 +21,11 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   fileprivate var segmentedNode: SegmentedControlNode
   fileprivate var flowLayout: UICollectionViewFlowLayout
 
+  fileprivate var normal: [Category] = [.latest(index: 0), .relatedBooks(index: 1), .followers(index: 2) ]
+  fileprivate var book: [Category] = [.latest(index: 0), .relatedBooks(index: 1), .editions(index: 2), .followers(index: 3)]
+
+  fileprivate lazy var mode: Mode = .normal(categories: self.normal)
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -49,6 +54,70 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     flowLayout.minimumInteritemSpacing = 0
     flowLayout.minimumLineSpacing = 0
     flowLayout.sectionHeadersPinToVisibleBounds = true
+  }
+}
+
+//MARK: - Mode Helpers
+extension TopicViewController {
+  fileprivate enum Mode {
+    case normal(categories: [Category])
+    case book(categories: [Category])
+
+    var categories: [Category] {
+      switch self {
+      case .normal(let categories):
+        return categories
+      case .book(let categories):
+        return categories
+      }
+    }
+  }
+
+  fileprivate enum Category {
+    case latest(index: Int)
+    case relatedBooks(index: Int)
+    case editions(index: Int)
+    case followers(index: Int)
+    case none
+
+    //TODO: Should be localized
+    var name: String {
+      switch self {
+      case .latest:
+        return "Latest"
+      case .relatedBooks:
+        return "Related Books"
+      case .editions:
+        return "Editions"
+      case .followers:
+        return "Followers"
+      case .none:
+        return ""
+      }
+    }
+
+    var index: Int {
+      switch self {
+      case .latest(let index):
+        return index
+      case .relatedBooks(let index):
+        return index
+      case .editions(let index):
+        return index
+      case .followers(let index):
+        return index
+      case .none:
+        return NSNotFound
+      }
+    }
+  }
+
+  fileprivate func category(withIndex index: Int) -> Category {
+    guard let category = self.mode.categories.filter({ $0.index == index }).first else {
+      return .none
+    }
+
+    return category
   }
 }
 
