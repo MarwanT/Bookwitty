@@ -126,7 +126,7 @@ final class OnBoardingViewModel {
     return filteredDictionary[0].key
   }
 
-  func followRequest(identifier: String, completionBlock: (_ success: Bool) -> ()) {
+  func followRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     _ = GeneralAPI.follow(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
@@ -134,7 +134,7 @@ final class OnBoardingViewModel {
     }
   }
 
-  func unfollowRequest(identifier: String, completionBlock: (_ success: Bool) -> ()) {
+  func unfollowRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
