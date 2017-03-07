@@ -20,6 +20,14 @@ class Strings {
   class func address_book() -> String {
     return localizedString(key: "address_book")
   }
+  
+  class func author() -> String {
+    return localizedString(key: "author")
+  }
+  
+  class func book_details() -> String {
+    return localizedString(key: "book_details")
+  }
 
   class func books() -> String {
     return localizedString(key: "books")
@@ -173,6 +181,10 @@ class Strings {
     return localizedString(key: "help")
   }
   
+  class func imprint() -> String {
+    return localizedString(key: "imprint")
+  }
+  
   class func in_stock() -> String {
     return localizedString(key: "in_stock")
   }
@@ -180,7 +192,19 @@ class Strings {
   class func interests() -> String {
     return localizedString(key: "interests")
   }
+  
+  class func isbn10() -> String {
+    return localizedString(key: "isbn10")
+  }
 
+  class func isbn13() -> String {
+    return localizedString(key: "isbn13")
+  }
+  
+  class func language_of_text() -> String {
+    return localizedString(key: "language_of_text")
+  }
+  
   class func last_name() -> String {
     return localizedString(key: "last_name")
   }
@@ -203,6 +227,10 @@ class Strings {
 
   class func news() -> String {
     return localizedString(key: "news")
+  }
+  
+  class func number_of_pages() -> String {
+    return localizedString(key: "number_of_pages")
   }
 
   class func followers() -> String {
@@ -256,6 +284,14 @@ class Strings {
   class func posts() -> String {
     return localizedString(key: "posts")
   }
+  
+  class func product_format() -> String {
+    return localizedString(key: "product_format")
+  }
+  
+  class func publisher() -> String {
+    return localizedString(key: "publisher")
+  }
 
   class func profile_picture() -> String {
     return localizedString(key: "profile_picture")
@@ -295,6 +331,10 @@ class Strings {
 
   class func something_wrong_in_credentials() -> String {
     return localizedString(key: "something_wrong_in_credentials")
+  }
+  
+  class func subtitle() -> String {
+    return localizedString(key: "subtitle")
   }
 
   class func take_Profile_photo() -> String {
@@ -339,6 +379,10 @@ class Strings {
 
   class func tutorial_third_page_title() -> String {
     return localizedString(key: "tutorial_third_page_title")
+  }
+  
+  class func view_all() -> String {
+    return localizedString(key: "view_all")
   }
   
   class func view_all_books() -> String {

@@ -105,6 +105,38 @@ class ProductDetails: NSObject {
     self.width = json["width"].dictionaryObject
     self.numberOfPages = json["nb-of-pages"].stringValue
   }
+  
+  func associatedKeyValues() -> [(key: String, value: String)] {
+    var associatedInformation = [(key: String, value: String)]()
+    if let author = author {
+      associatedInformation.append((Strings.author(), author))
+    }
+    if let imprint = imprint {
+      associatedInformation.append((Strings.imprint(), imprint))
+    }
+    if let isbn10 = isbn10 {
+      associatedInformation.append((Strings.isbn10(), isbn10))
+    }
+    if let isbn13 = isbn13 {
+      associatedInformation.append((Strings.isbn13(), isbn13))
+    }
+    if let languageOfText = languageOfText {
+      associatedInformation.append((Strings.language_of_text(), languageOfText))
+    }
+    if let productFormat = productFormat {
+      associatedInformation.append((Strings.product_format(), productFormat))
+    }
+    if let publisher = publisher {
+      associatedInformation.append((Strings.publisher(), publisher))
+    }
+    if let subtitle = subtitle {
+      associatedInformation.append((Strings.subtitle(), subtitle))
+    }
+    if let numberOfPages = numberOfPages {
+      associatedInformation.append((Strings.number_of_pages(), numberOfPages))
+    }
+    return associatedInformation
+  }
 }
 
 
