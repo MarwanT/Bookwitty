@@ -48,10 +48,11 @@ class BookDetailsAboutNode: ASCellNode {
     bottomSeparator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     topSeparator.style.height = ASDimensionMake(1)
     bottomSeparator.style.height = ASDimensionMake(1)
+    
+    style.width = ASDimensionMake(UIScreen.main.bounds.width)
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    style.width = ASDimensionMake(constrainedSize.max.width)
     style.flexGrow = 1.0
     style.flexShrink = 1.0
     
