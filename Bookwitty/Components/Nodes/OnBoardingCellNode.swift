@@ -37,8 +37,8 @@ class OnBoardingCellNode: ASCellNode {
 
   var showAll: Bool = true {
     didSet {
-      let newHeightDimension = ASDimensionMake(showAll ? expandedCellHeight : collapsedCellHeight)
-      self.style.height = newHeightDimension
+      let newHeight = showAll ? expandedCellHeight : collapsedCellHeight
+      style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: newHeight)
       headerNode.updateArrowDirection(direction: showAll ? .up : .right, animated: true)
       transitionLayout(withAnimation: true, shouldMeasureAsync: false, measurementCompletion: nil)
     }
@@ -64,21 +64,18 @@ class OnBoardingCellNode: ASCellNode {
     super.init()
 
     automaticallyManagesSubnodes = true
-    style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: expandedCellHeight)
 
     collectionNode.delegate = self
     collectionNode.dataSource = self
+    collectionNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
     collectionNode.style.flexGrow = 1.0
     collectionNode.style.flexShrink = 1.0
-
-    showAll = true
-
-    backgroundColor = UIColor.bwNero
   }
 
   override func didLoad() {
     super.didLoad()
     collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
+    showAll = false
   }
   
   override func animateLayoutTransition(_ context: ASContextTransitioning) {
