@@ -8,7 +8,7 @@
 
 import AsyncDisplayKit
 
-class BookDetailsFormatNode: ASControlNode {
+class BookDetailsFormatNode: ASCellNode {
   fileprivate let textNode: ASTextNode
   
   var configuration = Configuration()
