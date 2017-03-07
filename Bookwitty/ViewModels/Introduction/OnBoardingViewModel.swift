@@ -8,6 +8,9 @@
 
 import Foundation
 import Moya
+import Spine
+
+typealias CellNodeDataItemModel = (id: String?, shortDescription: String?, longDescription: String?, imageUrl: String?)
 
 final class OnBoardingViewModel {
   var cancellableRequest: Cancellable?
@@ -74,6 +77,43 @@ final class OnBoardingViewModel {
     return itemData
   }
 
+  func loadOnBoardingCellNodeData(indexPath: IndexPath, completionBlock: @escaping (_ indexPath: IndexPath, _ success: Bool, _ dictionary: [String : [CellNodeDataItemModel]]?) -> ()) -> Cancellable? {
+    let index = indexPath.row
+    guard let items: [String : [CuratedCollectionItem]] = curatedOnBoardingData(index: index) else {
+      completionBlock(indexPath, false, nil)
+      return nil
+    }
+    let values: [CuratedCollectionItem] = items.flatMap { (item: (key: String, value: [CuratedCollectionItem])) -> [CuratedCollectionItem] in
+      return item.value
+    }
+    let itemIds: [String] = values.flatMap { (item) -> String? in
+      return item.wittyId
+    }
+
+    return UserAPI.batch(identifiers: itemIds) { (success, resources, error) in
+      var dictionary: [String : [CellNodeDataItemModel]] = [:]
+      defer {
+        completionBlock(indexPath, success, dictionary)
+      }
+      guard let resources = resources else {
+        return
+      }
+      //init dictionary
+      for resource in resources {
+        if let topic = resource as? Topic {
+          let model: CellNodeDataItemModel = (topic.id, topic.title, topic.shortDescription, topic.thumbnailImageUrl)
+          if let id = topic.id,
+            let key = self.getRelatedKey(for: id, from: items) {
+            if dictionary[key] == nil {
+              dictionary[key] = []
+            }
+            dictionary[key]? = [model]
+          }
+        }
+      }
+    }
+  }
+
   func getRelatedKey(for id: String, from items: [String : [CuratedCollectionItem]]) -> String? {
     let filteredDictionary = items.filter({ (dictionaryItem: (key: String, value: [CuratedCollectionItem])) -> Bool in
       return dictionaryItem.value.filter({ (curatedItem) -> Bool in
@@ -86,3 +126,4 @@ final class OnBoardingViewModel {
     return filteredDictionary[0].key
   }
 }
+
