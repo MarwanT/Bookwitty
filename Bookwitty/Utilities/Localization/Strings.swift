@@ -20,6 +20,10 @@ class Strings {
   class func address_book() -> String {
     return localizedString(key: "address_book")
   }
+  
+  class func book_details() -> String {
+    return localizedString(key: "book_details")
+  }
 
   class func books() -> String {
     return localizedString(key: "books")
