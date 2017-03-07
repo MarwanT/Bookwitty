@@ -47,6 +47,7 @@ class OnBoardingCellNode: ASCellNode {
       transitionLayout(withAnimation: true, shouldMeasureAsync: false, measurementCompletion: nil)
     }
   }
+  fileprivate var viewModel: OnBoardingCellNodeViewModel = OnBoardingCellNodeViewModel()
   var delegate: OnBoardingCellDelegate?
   var text: String? {
     didSet {
@@ -117,28 +118,38 @@ extension OnBoardingCellNode: ASCollectionDelegate, ASCollectionDataSource {
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
     let cell = OnBoardingCellSectionNode()
-    cell.text = "Topics to Follow"
+    cell.text = viewModel.onBoardingCellNodeTitle(index: indexPath.section)
     return cell
   }
 
   func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
-    return sections.count
+    return viewModel.numberOfSections()
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    return data.count
+    return viewModel.numberOfItemsInSections(section: section)
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
-    let index = indexPath.row
-    let isLast = index == (data.count - 1)
+    let isLast = viewModel.isLastItemInSection(indexPath: indexPath)
     return {
       let cell = OnBoardingInternalCellNode()
-      cell.text = "\(index) User Experience Design"
-      cell.descriptionText = "A page top share interesting books or articles related to UX design, and design thinking."
       cell.isLast = isLast
       cell.delegate = self
       return cell
+    }
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+    guard let indexPath = collectionNode.indexPath(for: node),
+      let node = node as? OnBoardingInternalCellNode else {
+        return
+    }
+    let item: CellNodeDataItemModel? = viewModel.onBoardingCellNodeSectionItem(indexPath: indexPath)
+    node.text = item?.shortDescription ?? ""
+    node.descriptionText = item?.longDescription ?? ""
+    if let url = item?.imageUrl {
+      node.imageNode.url = URL(string: url)
     }
   }
 
