@@ -8,12 +8,18 @@
 
 import AsyncDisplayKit
 
+protocol BookDetailsAboutNodeDelegate {
+  func aboutNodeDidTapViewDescription(aboutNode: BookDetailsAboutNode)
+}
+
 class BookDetailsAboutNode: ASDisplayNode {
   fileprivate let headerNode: SectionTitleHeaderNode
   fileprivate let descriptionTextNode: ASTextNode
   fileprivate let viewDescription: DisclosureNode
   fileprivate let topSeparator: ASDisplayNode
   fileprivate let bottomSeparator: ASDisplayNode
+  
+  var delegate: BookDetailsAboutNodeDelegate?
   
   var configuration = Configuration()
   
@@ -36,6 +42,7 @@ class BookDetailsAboutNode: ASDisplayNode {
     descriptionTextNode.maximumNumberOfLines = configuration.compactMaximumNumberOfLines
     viewDescription.configuration.style = .highlighted
     viewDescription.text = Strings.view_whole_description()
+    viewDescription.delegate = self
     
     topSeparator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     bottomSeparator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
@@ -113,5 +120,12 @@ extension BookDetailsAboutNode {
   enum DisplayMode {
     case compact
     case expanded
+  }
+}
+
+
+extension BookDetailsAboutNode: DisclosureNodeDelegate {
+  func disclosureNodeDidTap(disclosureNode: DisclosureNode, selected: Bool) {
+    delegate?.aboutNodeDidTapViewDescription(aboutNode: self)
   }
 }
