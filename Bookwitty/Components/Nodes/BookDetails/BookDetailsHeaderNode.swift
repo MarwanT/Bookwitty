@@ -31,11 +31,10 @@ class BookDetailsHeaderNode: ASCellNode {
     authorNode.isLayerBacked = true
     
     imageNode.style.preferredSize = configuration.imageNodePreferredSize
+    style.width = ASDimensionMake(UIScreen.main.bounds.width)
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    style.width = ASDimensionMake(constrainedSize.max.width)
-    
     let verticalLayoutSpec = ASStackLayoutSpec(
       direction: .vertical,
       spacing: configuration.labelsSpacing,
