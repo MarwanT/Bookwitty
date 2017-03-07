@@ -99,7 +99,7 @@ extension OnBoardingControllerNode: ASCollectionDelegate, ASCollectionDataSource
 
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
     if let cell = collectionNode.nodeForItem(at: indexPath) as? OnBoardingCellNode {
-      cell.showAll = !cell.showAll
+      cell.updateViewState(state: cell.showAll ? OnBoardingCellNode.State.collapsed : OnBoardingCellNode.State.expanded)
     }
   }
 }
