@@ -62,6 +62,7 @@
 		59591F1D1E6DAF5D005592B8 /* BookDetailsAboutNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59591F1C1E6DAF5D005592B8 /* BookDetailsAboutNode.swift */; };
 		59591F1F1E6EB065005592B8 /* BookDetailsInformationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59591F1E1E6EB065005592B8 /* BookDetailsInformationNode.swift */; };
 		59591F231E6EE3FE005592B8 /* DetailsInfoCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59591F221E6EE3FE005592B8 /* DetailsInfoCellNode.swift */; };
+		59591F251E6F01C7005592B8 /* DisclosureNodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59591F241E6F01C7005592B8 /* DisclosureNodeCell.swift */; };
 		595A649C1E2CCB8900655067 /* BookwittyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649B1E2CCB8900655067 /* BookwittyAPI.swift */; };
 		595A649E1E2CF4EA00655067 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649D1E2CF4EA00655067 /* String.swift */; };
 		595A64A01E2D0C4D00655067 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595A649F1E2D0C4D00655067 /* Network.swift */; };
@@ -236,6 +237,7 @@
 		59591F1C1E6DAF5D005592B8 /* BookDetailsAboutNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsAboutNode.swift; sourceTree = "<group>"; };
 		59591F1E1E6EB065005592B8 /* BookDetailsInformationNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsInformationNode.swift; sourceTree = "<group>"; };
 		59591F221E6EE3FE005592B8 /* DetailsInfoCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsInfoCellNode.swift; sourceTree = "<group>"; };
+		59591F241E6F01C7005592B8 /* DisclosureNodeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisclosureNodeCell.swift; sourceTree = "<group>"; };
 		595A649B1E2CCB8900655067 /* BookwittyAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyAPI.swift; sourceTree = "<group>"; };
 		595A649D1E2CF4EA00655067 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		595A649F1E2D0C4D00655067 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -562,6 +564,7 @@
 				F42686781E4F458A0085E581 /* CardActionBarNode.swift */,
 				59EC5BAB1E6C5B51006E1CB9 /* SectionTitleHeaderNode.swift */,
 				59591F1A1E6D7E7A005592B8 /* DisclosureNode.swift */,
+				59591F241E6F01C7005592B8 /* DisclosureNodeCell.swift */,
 				59591F221E6EE3FE005592B8 /* DetailsInfoCellNode.swift */,
 			);
 			path = Nodes;
@@ -1272,6 +1275,7 @@
 				F41F3AB71E6785CB004622D3 /* LoaderNode.swift in Sources */,
 				F496DE061E65CB30007E22B1 /* Discover+API.swift in Sources */,
 				F420B6A21E43C570001F34CD /* User.swift in Sources */,
+				59591F251E6F01C7005592B8 /* DisclosureNodeCell.swift in Sources */,
 				5644F21A1E55A2F100B7D8E7 /* SettingsViewController.swift in Sources */,
 				56D5F73D1E5B7D0000F6A164 /* PenName+API.swift in Sources */,
 				F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */,
