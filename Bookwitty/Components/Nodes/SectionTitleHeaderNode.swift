@@ -8,7 +8,7 @@
 
 import AsyncDisplayKit
 
-class SectionTitleHeaderNode: ASDisplayNode {
+class SectionTitleHeaderNode: ASCellNode {
   fileprivate let verticalBarNode: ASDisplayNode
   fileprivate let horizontalBarNode: ASDisplayNode
   fileprivate let titleNode: ASTextNode
