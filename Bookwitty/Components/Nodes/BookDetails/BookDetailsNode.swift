@@ -32,6 +32,11 @@ class BookDetailsNode: ASScrollNode {
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
     applyTheme()
+    initializeComponents()
+  }
+  
+  func initializeComponents() {
+    aboutNode.delegate = self
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -92,6 +97,13 @@ extension BookDetailsNode {
 extension BookDetailsNode: Themeable {
   func applyTheme() {
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+  }
+}
+
+extension BookDetailsNode: BookDetailsAboutNodeDelegate {
+  func aboutNodeDidTapViewDescription(aboutNode: BookDetailsAboutNode) {
+    print("About Section Tapped")
+    // TODO: Go to details view controller
   }
 }
 
