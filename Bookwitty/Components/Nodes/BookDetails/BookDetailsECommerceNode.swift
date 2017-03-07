@@ -8,7 +8,7 @@
 
 import AsyncDisplayKit
 
-class BookDetailsECommerceNode: ASDisplayNode {
+class BookDetailsECommerceNode: ASCellNode {
   fileprivate let pricesNode: BookDetailsPricesNode
   fileprivate let separatorNode: ASDisplayNode
   fileprivate let stockNode: BookDetailsStockNode
