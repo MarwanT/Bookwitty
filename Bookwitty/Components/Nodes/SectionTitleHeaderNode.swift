@@ -27,11 +27,11 @@ class SectionTitleHeaderNode: ASCellNode {
     automaticallyManagesSubnodes = true
     verticalBarColor = configuration.verticalBarColor
     horizontalBarColor = configuration.horizontalBarColor
+    style.minHeight = ASDimensionMake(configuration.minimumHeight)
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     style.width = ASDimensionMake(constrainedSize.max.width)
-    style.minHeight = ASDimensionMake(configuration.minimumHeight)
     
     // Although these sizes will change, they are required for avoiding an
     // Async warining over unability to calculate the size of the nodes
