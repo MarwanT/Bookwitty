@@ -10,7 +10,7 @@ import Foundation
 import AsyncDisplayKit
 
 protocol OnBoardingCellDelegate {
-  func didTapOnSelectionButton(internalCollectionNode collectioNode: ASCollectionNode, indexPath: IndexPath, cell: OnBoardingInternalCellNode, button: OnBoardingLoadingButton, isSelected: Bool, doneCompletionBlock: @escaping (_ success: Bool) -> ())
+  func didTapOnSelectionButton(dataItem: CellNodeDataItemModel, internalCollectionNode collectioNode: ASCollectionNode, indexPath: IndexPath, cell: OnBoardingInternalCellNode, button: OnBoardingLoadingButton, shouldSelect: Bool, doneCompletionBlock: @escaping (_ success: Bool) -> ())
 }
 
 class OnBoardingCellNode: ASCellNode {
@@ -175,11 +175,16 @@ extension OnBoardingCellNode: ASCollectionDelegate, ASCollectionDataSource {
 }
 
 extension OnBoardingCellNode: OnBoardingInternalCellNodeDelegate {
-  func didTapOnSelectionButton(cell: OnBoardingInternalCellNode, button: OnBoardingLoadingButton, isSelected: Bool, doneCompletionBlock: @escaping (_ success: Bool) -> ()) {
+  func didTapOnSelectionButton(cell: OnBoardingInternalCellNode, button: OnBoardingLoadingButton, shouldSelect: Bool, doneCompletionBlock: @escaping (_ success: Bool) -> ()) {
     guard let indexPath = collectionNode.indexPath(for: cell) else {
+      doneCompletionBlock(false)
       return
     }
-    delegate?.didTapOnSelectionButton(internalCollectionNode: collectionNode, indexPath: indexPath, cell: cell, button: button, isSelected: isSelected, doneCompletionBlock: doneCompletionBlock)
+    guard let dataItem: CellNodeDataItemModel = viewModel.onBoardingCellNodeSectionItem(indexPath: indexPath) else {
+      doneCompletionBlock(false)
+        return
+    }
+    delegate?.didTapOnSelectionButton(dataItem: dataItem, internalCollectionNode: collectionNode, indexPath: indexPath, cell: cell, button: button, shouldSelect: shouldSelect, doneCompletionBlock: doneCompletionBlock)
   }
 }
 

@@ -80,10 +80,10 @@ extension OnBoardingViewController: OnBoardingControllerDataSource {
 }
 
 extension OnBoardingViewController: OnBoardingCellDelegate {
-  func didTapOnSelectionButton(internalCollectionNode: ASCollectionNode, indexPath: IndexPath, cell: OnBoardingInternalCellNode, button: OnBoardingLoadingButton, isSelected: Bool, doneCompletionBlock: @escaping (_ success: Bool) -> ()) {
-    //TODO: Replace with Real-API request and call back to completion
-    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + DispatchTimeInterval.seconds(2)) {
-      doneCompletionBlock(true)
+  func didTapOnSelectionButton(dataItem: CellNodeDataItemModel, internalCollectionNode: ASCollectionNode, indexPath: IndexPath, cell: OnBoardingInternalCellNode, button: OnBoardingLoadingButton, shouldSelect: Bool, doneCompletionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let id = dataItem.id else {
+      doneCompletionBlock(false)
+      return
     }
   }
 }

@@ -10,7 +10,7 @@ import Foundation
 import AsyncDisplayKit
 
 protocol OnBoardingInternalCellNodeDelegate {
-  func didTapOnSelectionButton(cell: OnBoardingInternalCellNode, button: OnBoardingLoadingButton, isSelected: Bool, doneCompletionBlock: @escaping (_ success: Bool) -> ())
+  func didTapOnSelectionButton(cell: OnBoardingInternalCellNode, button: OnBoardingLoadingButton, shouldSelect: Bool, doneCompletionBlock: @escaping (_ success: Bool) -> ())
 }
 
 class OnBoardingInternalCellNode: ASCellNode {
@@ -117,9 +117,10 @@ extension OnBoardingInternalCellNode: OnBoardingLoadingButtonDelegate {
     }
     selectionButtonNode.state = .loading
 
-    delegate?.didTapOnSelectionButton(cell: self, button: selectionButtonNode, isSelected: selectionButtonNode.button.isSelected, doneCompletionBlock: { (success: Bool) in
-      self.selectionButtonNode.state = (arc4random_uniform(2) == 0) ? .normal : .selected
-      //TODO: Handle success / failure action
+    let shouldSelect = !selectionButtonNode.button.isSelected
+    delegate?.didTapOnSelectionButton(cell: self, button: selectionButtonNode, shouldSelect: shouldSelect, doneCompletionBlock: { (success: Bool) in
+      //Randomize For testing => (arc4random_uniform(2) == 0) ? .normal : .selected
+      self.selectionButtonNode.state = (success && shouldSelect) ? .selected : .normal
     })
   }
 }
