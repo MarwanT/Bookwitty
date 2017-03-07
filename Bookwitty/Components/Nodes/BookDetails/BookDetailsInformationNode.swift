@@ -63,6 +63,7 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
           title: Strings.book_details(),
           verticalBarColor: ThemeManager.shared.currentTheme.colorNumber8(),
           horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber7())
+        cell.separatorInset.left = 1000
         return cell
       }
     case 1: // Data
