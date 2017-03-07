@@ -158,3 +158,56 @@ extension OnBoardingCellNode: OnBoardingInternalCellNodeDelegate {
     delegate?.didTapOnSelectionButton(internalCollectionNode: collectionNode, indexPath: indexPath, cell: cell, button: button, isSelected: isSelected, doneCompletionBlock: doneCompletionBlock)
   }
 }
+
+final class OnBoardingCellNodeViewModel {
+  var data: [String : [CellNodeDataItemModel]] = [:]
+
+  func onBoardingCellNodeSectionItems(section: Int) -> [CellNodeDataItemModel] {
+    let dataArray = Array(data.values)
+    guard (section >= 0 && section < dataArray.count) else {
+      return []
+    }
+    return dataArray[section]
+  }
+
+  func numberOfSections() -> Int {
+    return data.count == 0 ? 0 : 1
+  }
+
+  func numberOfItemsInSections(section: Int) -> Int {
+    return onBoardingCellNodeSectionItems(section: section).count
+  }
+
+  func onBoardingCellNodeTitle(index: Int) -> String {
+    let dataArray = Array(data.keys)
+    guard (index >= 0 && index < dataArray.count) else {
+      return ""
+    }
+
+    let item = Array(data.keys)[index]
+    return item
+  }
+
+  func onBoardingCellNodeSectionItem(indexPath: IndexPath) -> CellNodeDataItemModel? {
+    let section = indexPath.section
+    let index = indexPath.item
+    let itemsInSection = onBoardingCellNodeSectionItems(section: section)
+    guard itemsInSection.count > 0 && index < itemsInSection.count else {
+      return nil
+    }
+    return itemsInSection[index]
+  }
+
+  func isLastItemInSection(indexPath: IndexPath) -> Bool {
+    return (onBoardingCellNodeSectionItems(section: indexPath.section).count - 1) == indexPath.item
+  }
+
+
+  func numberOfSubItems() -> Int {
+    var count = 0
+    for (_,value) in data {
+      count += value.count
+    }
+    return count
+  }
+}
