@@ -8,7 +8,7 @@
 
 import AsyncDisplayKit
 
-class BookDetailsHeaderNode: ASDisplayNode {
+class BookDetailsHeaderNode: ASCellNode {
   fileprivate var imageNode: ASNetworkImageNode
   fileprivate var titleNode: ASTextNode
   fileprivate var authorNode: ASTextNode
@@ -31,11 +31,10 @@ class BookDetailsHeaderNode: ASDisplayNode {
     authorNode.isLayerBacked = true
     
     imageNode.style.preferredSize = configuration.imageNodePreferredSize
+    style.width = ASDimensionMake(UIScreen.main.bounds.width)
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    style.width = ASDimensionMake(constrainedSize.max.width)
-    
     let verticalLayoutSpec = ASStackLayoutSpec(
       direction: .vertical,
       spacing: configuration.labelsSpacing,

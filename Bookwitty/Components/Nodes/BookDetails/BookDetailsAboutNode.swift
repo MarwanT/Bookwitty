@@ -12,7 +12,7 @@ protocol BookDetailsAboutNodeDelegate {
   func aboutNodeDidTapViewDescription(aboutNode: BookDetailsAboutNode)
 }
 
-class BookDetailsAboutNode: ASDisplayNode {
+class BookDetailsAboutNode: ASCellNode {
   fileprivate let headerNode: SectionTitleHeaderNode
   fileprivate let descriptionTextNode: ASTextNode
   fileprivate let viewDescription: DisclosureNode
@@ -48,10 +48,11 @@ class BookDetailsAboutNode: ASDisplayNode {
     bottomSeparator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     topSeparator.style.height = ASDimensionMake(1)
     bottomSeparator.style.height = ASDimensionMake(1)
+    
+    style.width = ASDimensionMake(UIScreen.main.bounds.width)
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    style.width = ASDimensionMake(constrainedSize.max.width)
     style.flexGrow = 1.0
     style.flexShrink = 1.0
     
@@ -84,7 +85,7 @@ class BookDetailsAboutNode: ASDisplayNode {
       alignItems: .stretch,
       children: layoutElements)
     let nodeInsets = ASInsetLayoutSpec(
-      insets: configuration.generalEdgeInsets,
+      insets: configuration.externalEdgeInsets,
       child: horizontalStack)
     
     return nodeInsets
@@ -105,7 +106,7 @@ extension BookDetailsAboutNode {
     fileprivate let headerVerticalBarColor = ThemeManager.shared.currentTheme.colorNumber6()
     fileprivate let headerHorizontalBarColor = ThemeManager.shared.currentTheme.colorNumber5()
     fileprivate let compactMaximumNumberOfLines: UInt = 6
-    fileprivate let generalEdgeInsets = UIEdgeInsets(
+    fileprivate let externalEdgeInsets = UIEdgeInsets(
       top: ThemeManager.shared.currentTheme.generalExternalMargin(),
       left: 0, bottom: 0, right: 0)
     fileprivate let descriptionTextEdgeInsets = UIEdgeInsets(

@@ -289,7 +289,7 @@ extension DefaultTheme {
     button.setBackgroundImage(color.image(), for: ASControlState(rawValue: 0))
     button.setBackgroundImage(highlightedColor.image(), for: .highlighted)
     button.clipsToBounds = true
-    button.layer.cornerRadius = 4
+    button.cornerRadius = 4
     button.style.height = ASDimensionMake(45)
   }
   

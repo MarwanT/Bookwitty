@@ -8,7 +8,7 @@
 
 import AsyncDisplayKit
 
-class BookDetailsECommerceNode: ASDisplayNode {
+class BookDetailsECommerceNode: ASCellNode {
   fileprivate let pricesNode: BookDetailsPricesNode
   fileprivate let separatorNode: ASDisplayNode
   fileprivate let stockNode: BookDetailsStockNode
@@ -28,6 +28,8 @@ class BookDetailsECommerceNode: ASDisplayNode {
     separatorNode.isLayerBacked = true
     separatorNode.backgroundColor = configuration.separatorColor
     separatorNode.style.height = ASDimensionMake(configuration.separatorHeight)
+    
+    style.width = ASDimensionMake(UIScreen.main.bounds.width)
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -36,7 +38,9 @@ class BookDetailsECommerceNode: ASDisplayNode {
     let separatorInsetsSpecs = ASInsetLayoutSpec(insets: configuration.separatorEdgeInsets, child: separatorNode)
     
     let verticalStackSpec = ASStackLayoutSpec(direction: .vertical, spacing: 5, justifyContent: .start, alignItems: .stretch, children: [pricesNode, separatorInsetsSpecs, stockNode])
-    return verticalStackSpec
+    let externalInsets = ASInsetLayoutSpec(
+      insets: configuration.externalEdgeInsets, child: verticalStackSpec)
+    return externalInsets
   }
   
   func set(supplierInformation: SupplierInformation?) {
@@ -48,6 +52,10 @@ class BookDetailsECommerceNode: ASDisplayNode {
 
 extension BookDetailsECommerceNode {
   struct Configuration {
+    var externalEdgeInsets = UIEdgeInsets(
+      top: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      left: ThemeManager.shared.currentTheme.generalExternalMargin(), bottom: 0,
+      right: ThemeManager.shared.currentTheme.generalExternalMargin())
     var separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     fileprivate var separatorHeight: CGFloat = 1
     fileprivate var separatorEdgeInsets = UIEdgeInsetsMake(
