@@ -28,6 +28,11 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
     dataSource = self
   }
   
+  override func onDidLoad(_ body: @escaping ASDisplayNodeDidLoadBlock) {
+    super.onDidLoad(body)
+    view.tableFooterView = UIView(frame: CGRect.zero)
+  }
+  
   override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
