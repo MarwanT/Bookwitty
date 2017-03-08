@@ -158,7 +158,7 @@ final class BookStoreViewModel {
         continue
       }
       
-      if readingLists.count == 0 {
+      if featuredReadingList == nil {
         featuredReadingList = resource
       } else {
         readingLists.append(resource)
