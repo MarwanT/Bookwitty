@@ -16,6 +16,8 @@ class Topic: Resource {
   var thumbnailImageUrl: String?
   var coverImageUrl: String?
   var shortDescription: String?
+  var longDescription: String?
+  var title: String?
   var penName: PenName?
 
   override class var resourceType: ResourceType {
@@ -30,6 +32,8 @@ class Topic: Resource {
       "thumbnailImageUrl": Attribute().serializeAs("thumbnail-image-url"),
       "coverImageUrl": Attribute().serializeAs("cover-image-url"),
       "shortDescription": Attribute().serializeAs("short-description"),
+      "longDescription": Attribute().serializeAs("description"),
+      "title": Attribute().serializeAs("title"),
       "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
       ])
   }

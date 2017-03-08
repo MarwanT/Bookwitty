@@ -1,0 +1,107 @@
+//
+//  OnBoardingControllerNode.swift
+//  Bookwitty
+//
+//  Created by Shafic Hariri on 3/3/17.
+//  Copyright © 2017 Keeward. All rights reserved.
+//
+
+import Foundation
+import AsyncDisplayKit
+
+protocol OnBoardingControllerDataSource {
+  func numberOfSections(in collectionNode: ASCollectionNode) -> Int
+  func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int
+  func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock
+  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode, at indexPath: IndexPath)
+}
+
+class OnBoardingControllerNode: ASDisplayNode {
+  fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+  fileprivate let headerHeight: CGFloat = 45.0
+
+  let titleTextNode: ASTextNode
+  let separatorNode: ASDisplayNode
+  let collectionNode: ASCollectionNode
+  let flowLayout: UICollectionViewFlowLayout
+
+  var dataSource: OnBoardingControllerDataSource!
+
+  override init() {
+    titleTextNode = ASTextNode()
+    flowLayout = UICollectionViewFlowLayout()
+    flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    flowLayout.minimumInteritemSpacing  = 0
+    flowLayout.minimumLineSpacing       = 0
+
+    collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+    separatorNode = ASDisplayNode()
+    super.init()
+    automaticallyManagesSubnodes = true
+
+    style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 0.0)
+
+    collectionNode.delegate = self
+    collectionNode.dataSource = self
+    collectionNode.style.flexGrow = 1.0
+    collectionNode.style.flexShrink = 1.0
+    collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+
+    titleTextNode.style.maxHeight = ASDimensionMake(headerHeight)
+    titleTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
+      .append(text: Strings.onboarding_view_header_title(), color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+
+    separatorNode.style.height = ASDimensionMake(1.0)
+    separatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
+    separatorNode.isLayerBacked = true
+  }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let titleCenterSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: ASCenterLayoutSpecSizingOptions(rawValue: 0), child: titleTextNode)
+    let titleInsetSpec = ASInsetLayoutSpec(insets: UIEdgeInsets(top: internalMargin, left: internalMargin, bottom: internalMargin, right: internalMargin), child: titleCenterSpec)
+    let vStack = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start,
+                                   alignItems: .stretch, children: [titleInsetSpec, separatorNode, collectionNode])
+    return vStack
+  }
+}
+
+extension OnBoardingControllerNode {
+  func reloadCollection() {
+    collectionNode.reloadData()
+  }
+}
+
+extension OnBoardingControllerNode: ASCollectionDelegate, ASCollectionDataSource {
+  func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+    return dataSource.numberOfSections(in: collectionNode)
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+    return dataSource.collectionNode(collectionNode, numberOfItemsInSection: section)
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+    return dataSource.collectionNode(collectionNode, nodeBlockForItemAt: indexPath)
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+    guard let indexPath = collectionNode.indexPath(for: node) else {
+      return
+    }
+    dataSource.collectionNode(collectionNode, willDisplayItemWith: node, at: indexPath)
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
+    return ASSizeRange(
+      min: CGSize(width: collectionNode.frame.width, height: 0.0),
+      max: CGSize(width: collectionNode.frame.width, height: .infinity)
+    )
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    if let cell = collectionNode.nodeForItem(at: indexPath) as? OnBoardingCellNode {
+      cell.updateViewState(state: cell.showAll ? OnBoardingCellNode.State.collapsed : OnBoardingCellNode.State.expanded)
+    }
+  }
+}

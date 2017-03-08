@@ -23,7 +23,6 @@ extension Video: ModelCommonProperties {
 }
 
 extension Topic: ModelCommonProperties {
-  var title: String? { return nil }
 }
 
 extension Image: ModelCommonProperties {

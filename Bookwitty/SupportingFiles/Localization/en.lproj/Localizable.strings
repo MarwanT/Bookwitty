@@ -111,3 +111,6 @@
 "you_dont_have_account" = "You don't have an account";
 "you_save" = "You save";
 "your_feed" = "Your feed";
+"topics_to_follow" = "Topics to Follow";
+"follow_topics" = "Follow Topics";
+"onboarding_view_header_title" = "Following People and Topics is how you fill up your home feed with interesting reads.";
