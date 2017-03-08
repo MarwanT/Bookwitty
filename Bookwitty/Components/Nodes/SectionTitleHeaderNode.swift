@@ -13,7 +13,11 @@ class SectionTitleHeaderNode: ASCellNode {
   fileprivate let horizontalBarNode: ASDisplayNode
   fileprivate let titleNode: ASTextNode
   
-  var configuration = Configuration()
+  var configuration = Configuration() {
+    didSet {
+      setNeedsLayout()
+    }
+  }
   
   override init() {
     verticalBarNode = ASDisplayNode()
@@ -71,7 +75,9 @@ class SectionTitleHeaderNode: ASCellNode {
     
     // Join Background and Foreground nodes
     let nodeLayoutSpec = ASBackgroundLayoutSpec(child: centerTitleVertically, background: backgroundSpec)
-    return nodeLayoutSpec
+    let externalInsets = ASInsetLayoutSpec(
+      insets: configuration.externalEdgeInsets, child: nodeLayoutSpec)
+    return externalInsets
   }
   
   func setTitle(title: String?, verticalBarColor: UIColor? = nil, horizontalBarColor: UIColor? = nil) {
@@ -107,9 +113,13 @@ extension SectionTitleHeaderNode {
   struct Configuration {
     var verticalBarColor = ThemeManager.shared.currentTheme.colorNumber6()
     var horizontalBarColor = ThemeManager.shared.currentTheme.colorNumber5()
+    var externalEdgeInsets = UIEdgeInsets(
+      top: ThemeManager.shared.currentTheme.generalExternalMargin()*2, left: 0, bottom: 0, right: 0)
     fileprivate var defaultTextColor = ThemeManager.shared.currentTheme.defaultTextColor()
     fileprivate var verticalBarWidth: CGFloat = 8
-    fileprivate var minimumHeight: CGFloat = 60
+    fileprivate var minimumHeight: CGFloat {
+      return 60.0 + externalEdgeInsets.bottom + externalEdgeInsets.top
+    }
     fileprivate var verticalBarEdgeInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
     fileprivate var horizontalBarEdgeInsets = UIEdgeInsets(top: 0, left: 80 - 8, bottom: 0, right: 0)
     fileprivate var titleEdgeInsets = UIEdgeInsets(top: 10, left: 25, bottom: 10, right: 0)
