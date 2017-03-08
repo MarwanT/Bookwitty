@@ -16,3 +16,18 @@ final class ReadingListsViewModel {
     dataArray += lists
   }
 }
+
+//MARK: - Collection Helpers
+extension ReadingListsViewModel {
+  func numberOfItems() -> Int {
+    return dataArray.count
+  }
+
+  func readingList(at item: Int) -> ReadingList? {
+    guard item >= 0 && item < dataArray.count else {
+      return nil
+    }
+
+    return dataArray[item]
+  }
+}
