@@ -58,7 +58,6 @@ class PenNameSelectionNode: ASCellNode {
       }
       guard let oldValue = oldValue else {
         updateSelectedPenName()
-        delegate?.didSelectPenName(penName: data[newValue.item], sender: self)
         return
       }
 

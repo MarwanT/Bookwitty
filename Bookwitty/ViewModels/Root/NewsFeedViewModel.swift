@@ -85,6 +85,7 @@ final class NewsFeedViewModel {
         self.data = resources ?? []
         self.nextPage = nextPage
       }
+      self.cancellableRequest = nil
       completionBlock(success)
     }
   }
@@ -107,6 +108,7 @@ final class NewsFeedViewModel {
         self.data += resources
         self.nextPage = nextPage
       }
+      self.cancellableRequest = nil
       completionBlock(success)
     }
   }
