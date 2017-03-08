@@ -87,7 +87,7 @@ extension BookDetailsViewModel {
       node = eCommerceNode
     case .about:
       let aboutNode = BookDetailsAboutNode()
-      aboutNode.about = book.bookDescription?.first?.value as? String
+      aboutNode.about = book.bookDescription
       node = aboutNode
     case .serie:
       break
@@ -126,7 +126,7 @@ extension BookDetailsViewModel {
   }
   
   var itemsInAbout: Int {
-    if let aboutInfo = book.bookDescription?.first?.value as? String, !aboutInfo.isEmpty {
+    if let aboutInfo = book.bookDescription, !aboutInfo.isEmpty {
       return 1
     } else {
       return 0
