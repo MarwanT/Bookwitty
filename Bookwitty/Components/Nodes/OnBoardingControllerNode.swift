@@ -57,6 +57,11 @@ class OnBoardingControllerNode: ASDisplayNode {
     separatorNode.style.height = ASDimensionMake(1.0)
     separatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
     separatorNode.isLayerBacked = true
+
+    ThemeManager.shared.currentTheme.styleSecondaryButton(button: continueButton)
+    continueButton.setTitle(Strings.continue(), with: FontDynamicType.subheadline.font, with: ThemeManager.shared.currentTheme.defaultButtonColor(), for: UIControlState.normal)
+    continueButton.setTitle(Strings.continue(), with: FontDynamicType.subheadline.font, with: ThemeManager.shared.currentTheme.defaultButtonHighlightedColor(), for: UIControlState.highlighted)
+    continueButton.style.height = ASDimensionMake(44.0)
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
