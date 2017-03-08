@@ -25,6 +25,9 @@ enum BookDetailsSection: Int {
 final class BookDetailsViewModel {
   var book: Book! = nil
   
+  let maximumNumberOfDetails: Int = 3
+  var bookDetailedInformation: [(key: String, value: String)]? = nil
+  
   var viewControllerTitle: String? {
     return ""
   }
@@ -94,7 +97,33 @@ extension BookDetailsViewModel {
     case .peopleWhoLikeThisBook:
       break
     case .details:
-      break
+      guard let bookDetailedInformation = bookDetailedInformation else {
+        break
+      }
+      switch indexPath.row {
+      case 0: // Header
+        // TODO: Return Header with external margin
+        let headerNode = SectionTitleHeaderNode()
+        headerNode.configuration.externalEdgeInsets.top = (ThemeManager.shared.currentTheme.generalExternalMargin() * 2)
+        headerNode.setTitle(
+          title: Strings.book_details(),
+          verticalBarColor: ThemeManager.shared.currentTheme.colorNumber8(),
+          horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber7())
+        node = headerNode
+      case (bookDetailedInformation.count + 1): // Footer
+        let footerNode = DisclosureNodeCell()
+        footerNode.configuration.addInternalBottomSeparator = true
+        footerNode.text = Strings.view_all()
+        footerNode.configuration.style = .highlighted
+        node = footerNode
+      default: // Information
+        let (key, value) = bookDetailedInformation[indexPath.row - 1]
+        let infoCell = DetailsInfoCellNode()
+        infoCell.key = key
+        infoCell.value = value
+        infoCell.configuration.addInternalBottomSeparator = true
+        node = infoCell
+      }
     case .categories:
       break
     case .recommendedReadingLists:
@@ -142,7 +171,15 @@ extension BookDetailsViewModel {
   }
   
   var itemsInDetails: Int {
-    return 0
+    if let details = book.productDetails?.associatedKeyValues(), details.count > 0 {
+      let numberOfInformationRows: Int = details.count < maximumNumberOfDetails ? details.count : maximumNumberOfDetails
+      bookDetailedInformation = Array(details.prefix(numberOfInformationRows))
+      let header: Int = 1
+      let footer: Int = 1
+      return header + numberOfInformationRows + footer
+    } else {
+      return 0
+    }
   }
   
   var itemsInCategories: Int {
