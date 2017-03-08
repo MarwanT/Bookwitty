@@ -57,16 +57,15 @@ class RootTabBarController: UITabBarController {
     let discoverViewController = DiscoverViewController()
 
     viewController1.tabBarItem = UITabBarItem(
-      //TODO: This should be localized
-      title: "NEWS",
+      title: Strings.news().uppercased(),
       image: #imageLiteral(resourceName: "newsfeed"),
       tag: 1)
     discoverViewController.tabBarItem = UITabBarItem(
-      title: "DISCOVER",//TODO: Replace with localized string
+      title: Strings.discover().uppercased(),
       image: #imageLiteral(resourceName: "discover"),
       tag:2)
     bookStoreViewController.tabBarItem = UITabBarItem(
-      title: Strings.books(),
+      title: Strings.books().uppercased(),
       image: #imageLiteral(resourceName: "books"),
       tag:3)
 
