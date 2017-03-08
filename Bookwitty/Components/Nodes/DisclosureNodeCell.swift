@@ -32,6 +32,7 @@ class DisclosureNodeCell: ASCellNode {
     automaticallyManagesSubnodes = true
     style.height = ASDimensionMake(Configuration.nodeHeight)
     imageNode.image = #imageLiteral(resourceName: "rightArrow")
+    separatorInset = configuration.separatorInsets
   }
   
   // MARK: Helpers
@@ -61,7 +62,22 @@ class DisclosureNodeCell: ASCellNode {
       sizingOption: ASRelativeLayoutSpecSizingOption.minimumHeight,
       child: insetSpec)
     
-    return centerSpec
+    var layoutElements: ASLayoutSpec = centerSpec
+    
+    if configuration.addInternalBottomSeparator {
+      let separatorInsetsSpec = ASInsetLayoutSpec(insets: configuration.separatorInsets, child: separator())
+      let verticalStack = ASStackLayoutSpec(
+        direction: .vertical,
+        spacing: 0,
+        justifyContent: .start,
+        alignItems: .stretch,
+        children: [spacer(flexGrow: 1.0), separatorInsetsSpec])
+      let backgroundSpec = ASBackgroundLayoutSpec(
+        child: centerSpec, background: verticalStack)
+      layoutElements = backgroundSpec
+    }
+
+    return layoutElements
   }
   
   // MARK: Helpers
@@ -72,6 +88,13 @@ class DisclosureNodeCell: ASCellNode {
       style.flexGrow = flexGrow
       style.flexShrink = flexGrow
     }
+  }
+  
+  private func separator() -> ASDisplayNode {
+    let separator = ASDisplayNode()
+    separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    separator.style.height = ASDimensionMake(1)
+    return separator
   }
   
   var text: String? {
@@ -113,5 +136,7 @@ extension DisclosureNodeCell {
       top: 0, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: 0, right: 0)
     var style: Style = .normal
+    var addInternalBottomSeparator: Bool = false
+    let separatorInsets = UIEdgeInsets.zero
   }
 }
