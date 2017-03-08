@@ -70,6 +70,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    initializeNavigationItems()
     title = Strings.discover()
 
     collectionNode.delegate = self
@@ -89,6 +90,16 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
       })
     }
     animateRefreshControllerIfNeeded()
+  }
+
+  private func initializeNavigationItems() {
+    let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
+      UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+    leftNegativeSpacer.width = -10
+    let settingsBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "person"), style:
+      UIBarButtonItemStyle.plain, target: self, action:
+      #selector(self.settingsButtonTap(_:)))
+    navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
   }
 
   /*
@@ -132,6 +143,15 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     loadData(loadingStatus: .reloading, completionBlock: {
       self.pullToRefresher.endRefreshing()
     })
+  }
+}
+
+// MARK: - Action
+extension DiscoverViewController {
+  func settingsButtonTap(_ sender: UIBarButtonItem) {
+    let settingsVC = Storyboard.Account.instantiate(AccountViewController.self)
+    settingsVC.hidesBottomBarWhenPushed = true
+    self.navigationController?.pushViewController(settingsVC, animated: true)
   }
 }
 
