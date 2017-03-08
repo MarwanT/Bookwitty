@@ -29,4 +29,8 @@ class ReadingListsViewController: ASViewController<ASCollectionNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
   }
+
+  private func initializeComponents() {
+    
+  }
 }
