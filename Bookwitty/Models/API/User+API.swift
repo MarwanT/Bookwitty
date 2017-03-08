@@ -229,7 +229,14 @@ extension UserAPI {
   }
   
   static func batchPostBody(identifiers: [String]) -> [String : Any]? {
-    return ["ids" : identifiers]
+    let dictionary = [
+      "data" : [
+        "attributes" : [
+          "ids" : identifiers,
+        ]
+      ]
+    ]
+    return dictionary
   }
 
   static func updatePostBody(preference: String, value: String) -> [String : Any]? {

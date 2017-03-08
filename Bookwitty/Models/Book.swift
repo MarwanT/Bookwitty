@@ -14,7 +14,7 @@ class Book: Resource {
 
   var title: String?
   var subtitle: String?
-  var bookDescription: [String : Any]?
+  var bookDescription: String?
   var thumbnailImageUrl: String?
   var coverImageUrl: String?
 

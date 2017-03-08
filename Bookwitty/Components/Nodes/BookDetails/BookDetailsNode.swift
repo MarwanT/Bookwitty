@@ -55,7 +55,7 @@ class BookDetailsNode: ASScrollNode {
     if book.supplierInformation != nil {
       layoutElements.append(eCommerceNodeInsetSpec)
     }
-    if (book.bookDescription?.first?.value as? String) != nil {
+    if book.bookDescription != nil {
       layoutElements.append(aboutNode)
     }
     
@@ -77,7 +77,7 @@ class BookDetailsNode: ASScrollNode {
     eCommerceNode.set(supplierInformation: book.supplierInformation)
     
     // Set About Information
-    aboutNode.about = book.bookDescription?.first?.value as? String
+    aboutNode.about = book.bookDescription
   }
 }
 
