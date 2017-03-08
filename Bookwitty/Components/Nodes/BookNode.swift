@@ -34,6 +34,48 @@ class BookNode: ASCellNode {
     setupNode()
   }
 
+  var title: String? {
+    didSet {
+      if let title = title {
+        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+          .append(text: title, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+        setNeedsLayout()
+      }
+    }
+  }
+
+  var author: String? {
+    didSet {
+      if let author = author {
+        authorNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption1)
+          .append(text: author, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+        setNeedsLayout()
+      }
+    }
+  }
+
+  var format: String? {
+    didSet {
+      if let format = format {
+        formatNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+          .append(text: format, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+        setNeedsLayout()
+      }
+    }
+  }
+
+  var price: Double? {
+    didSet {
+      if let price = price {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = NumberFormatter.Style.currency
+        let priceString = formatter.string(from: NSNumber(value: price)) ?? String(price)
+        priceNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
+          .append(text: priceString, color: ThemeManager.shared.currentTheme.defaultECommerceColor()).attributedString
+      }
+    }
+  }
+
   private func setupNode() {
     style.preferredSize = CGSize(width: imageSize.width + 2 * internalMargin, height: imageSize.height + 2 * internalMargin)
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
@@ -55,17 +97,35 @@ class BookNode: ASCellNode {
     nodesArray.append(imageNode)
 
     var infoArray: [ASLayoutElement] = []
+
+    var topNodes: [ASLayoutElement] = []
+    if isValid(title) {
+      topNodes.append(titleNode)
+    }
+
+    if isValid(author) {
+      topNodes.append(authorNode)
+    }
+
     let titleAuthorVerticalSpec = ASStackLayoutSpec(direction: .vertical,
                                                     spacing: 0,
                                                     justifyContent: .start,
                                                     alignItems: .start,
-                                                    children: [titleNode, authorNode])
+                                                    children: topNodes)
 
+    var bottomNodes: [ASLayoutElement] = []
+    if isValid(format) {
+      bottomNodes.append(formatNode)
+    }
+
+    if isValid(price?.description) {
+      bottomNodes.append(priceNode)
+    }
     let formatPriceVerticalSpec = ASStackLayoutSpec(direction: .vertical,
                                                     spacing: 0,
                                                     justifyContent: .end,
                                                     alignItems: .start,
-                                                    children: [formatNode, priceNode])
+                                                    children: bottomNodes)
 
     infoArray.append(titleAuthorVerticalSpec)
     infoArray.append(spacer(flexGrow: 1.0))
