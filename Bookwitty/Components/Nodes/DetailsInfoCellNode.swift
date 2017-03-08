@@ -25,6 +25,7 @@ class DetailsInfoCellNode: ASCellNode {
     automaticallyManagesSubnodes = true
     style.minHeight = ASDimensionMake(Configuration.minimumHeight)
     separatorInset = configuration.separatorInsets
+    selectedBackgroundView = configuration.backgroundSelectionView
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -116,5 +117,10 @@ extension DetailsInfoCellNode {
       top: 0, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: 0, right: 0)
     var addInternalBottomSeparator: Bool = false
+    fileprivate var backgroundSelectionView: UIView {
+      let backView = UIView(frame: CGRect.zero)
+      backView.backgroundColor = ThemeManager.shared.currentTheme.defaultSelectionColor()
+      return backView
+    }
   }
 }
