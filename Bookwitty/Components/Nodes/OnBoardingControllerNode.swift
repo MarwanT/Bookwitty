@@ -63,6 +63,7 @@ class OnBoardingControllerNode: ASDisplayNode {
     continueButton.setTitle(Strings.continue(), with: FontDynamicType.subheadline.font, with: ThemeManager.shared.currentTheme.defaultButtonColor(), for: UIControlState.normal)
     continueButton.setTitle(Strings.continue(), with: FontDynamicType.subheadline.font, with: ThemeManager.shared.currentTheme.defaultButtonHighlightedColor(), for: UIControlState.highlighted)
     continueButton.style.height = ASDimensionMake(44.0)
+    continueButton.addTarget(self, action: #selector(continueButtonTouchUpInside), forControlEvents: ASControlNodeEvent.touchUpInside)
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -74,6 +75,9 @@ class OnBoardingControllerNode: ASDisplayNode {
     let vStack = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start,
                                    alignItems: .stretch, children: [titleInsetSpec, separatorNode, collectionNode,  buttonInset])
     return vStack
+  }
+
+  func continueButtonTouchUpInside(sender: Any?) {
   }
 }
 
