@@ -63,8 +63,8 @@ class PenNameSelectionNode: ASCellNode {
       }
 
       if oldValue.item != newValue.item {
-          updateSelectedPenName()
-          delegate?.didSelectPenName(penName: data[newValue.item], sender: self)
+        updateSelectedPenName()
+        delegate?.didSelectPenName(penName: data[newValue.item], sender: self)
       }
     }
   }
@@ -128,6 +128,25 @@ class PenNameSelectionNode: ASCellNode {
     header.penNameSummary = Strings.your_feed() + " " + (selectedPenName.name ?? "")
   }
 
+  func toggleNodeState() {
+    expand = !expand
+
+    let extraSeparator = (data.count == 0) ? 0.0 : separatorHeight
+    let heightDimension = expand ? ASDimensionMake(expandedHeightDimension.value + extraSeparator) : collapsedHeightDimension
+    style.height = heightDimension
+
+    transitionLayout(withAnimation: true, shouldMeasureAsync: true) {
+      //This transition will trigger the node's height change and required change from layoutSpecThatFits
+      //In our case the alpha for the collectionNode will change since it is being added and removed from
+      //the parent node.
+      //TODO: Needed Action When Animation Is Done
+    }
+  }
+
+  func hasData() -> Bool {
+    return data.count > 0
+  }
+
   func loadData(penNames: [PenName]?, withSelected selectedPenName: PenName?) {
     data = penNames ?? []
 
@@ -168,18 +187,7 @@ class PenNameSelectionNode: ASCellNode {
 //MARK: - PenNameDisplayNodeDelegate
 extension PenNameSelectionNode: PenNameDisplayNodeDelegate {
   func didTapOnHeader(sender: PenNameDisplayNode?) {
-    expand = !expand
-
-    let extraSeparator = (data.count == 0) ? 0.0 : separatorHeight
-    let heightDimension = expand ? ASDimensionMake(expandedHeightDimension.value + extraSeparator) : collapsedHeightDimension
-    style.height = heightDimension
-
-    transitionLayout(withAnimation: true, shouldMeasureAsync: true) {
-      //This transition will trigger the node's height change and required change from layoutSpecThatFits
-      //In our case the alpha for the collectionNode will change since it is being added and removed from
-      //the parent node.
-      //TODO: Needed Action When Animation Is Done
-    }
+    toggleNodeState()
   }
 }
 
@@ -230,6 +238,7 @@ extension PenNameSelectionNode: ASCollectionDataSource, ASCollectionDelegate {
     if let penNameCellNode = collectionNode.nodeForItem(at: indexPath) as? PenNameCellNode {
       selectedIndexPath = indexPath
       penNameCellNode.select = !penNameCellNode.select
+      toggleNodeState()
     }
   }
 }
