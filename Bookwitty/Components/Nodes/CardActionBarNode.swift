@@ -83,6 +83,10 @@ class CardActionBarNode: ASDisplayNode {
 
   }
 
+  func setWitButton(witted: Bool) {
+    witButton.isSelected = witted
+  }
+
   func toggleWitButton() {
     witButton.isSelected = !witButton.isSelected
     setNeedsLayout()
