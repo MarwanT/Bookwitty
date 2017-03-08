@@ -48,29 +48,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let viewModel = NewsFeedViewModel()
   var isFirstRun: Bool = true
 
-  func updateBottomLoaderVisibility(show: Bool) {
-    if Thread.isMainThread {
-      reloadFooter(show: show)
-    } else {
-      DispatchQueue.main.async {
-        self.reloadFooter(show: show)
-      }
-    }
-  }
-
-  func reloadFooter(show: Bool) {
-    let bottomMargin: CGFloat
-    if show {
-      bottomMargin = -(self.externalMargin/2)
-    } else {
-      //If we have Zero data items this means that we are only showing the pen-name-selection-node
-      bottomMargin = self.viewModel.data.count == 0 ? 0.0 : -(self.loaderNode.usedHeight - self.externalMargin/2)
-    }
-
-    self.flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomMargin, right: 0)
-    self.loaderNode.updateLoaderVisibility(show: show)
-  }
-
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -195,6 +172,32 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   }
 
 }
+
+extension NewsFeedViewController {
+  func updateBottomLoaderVisibility(show: Bool) {
+    if Thread.isMainThread {
+      reloadFooter(show: show)
+    } else {
+      DispatchQueue.main.async {
+        self.reloadFooter(show: show)
+      }
+    }
+  }
+
+  func reloadFooter(show: Bool) {
+    let bottomMargin: CGFloat
+    if show {
+      bottomMargin = -(self.externalMargin/2)
+    } else {
+      //If we have Zero data items this means that we are only showing the pen-name-selection-node
+      bottomMargin = self.viewModel.data.count == 0 ? 0.0 : -(self.loaderNode.usedHeight - self.externalMargin/2)
+    }
+
+    self.flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomMargin, right: 0)
+    self.loaderNode.updateLoaderVisibility(show: show)
+  }
+}
+
 extension NewsFeedViewController: PenNameSelectionNodeDelegate {
   func didSelectPenName(penName: PenName, sender: PenNameSelectionNode) {
     if let scrollView = scrollView {
@@ -347,19 +350,6 @@ extension NewsFeedViewController: ASCollectionDelegate {
           return IndexPath(row: index, section: 0)
         })
         collectionNode.insertItems(at: updatedIndexPathRange)
-      }
-    }
-  }
-
-  /**
-   * Note: loadItemsWithIndex will always run on the main thread
-   */
-  func loadItemsWithIndexOnMainThread(completionBlock: @escaping () -> ()) {
-    if Thread.isMainThread {
-      completionBlock()
-    } else {
-      DispatchQueue.main.async {
-        completionBlock()
       }
     }
   }
