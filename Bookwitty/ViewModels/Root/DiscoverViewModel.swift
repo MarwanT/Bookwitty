@@ -16,7 +16,15 @@ final class DiscoverViewModel {
   var data: [ModelResource] = []
   var paginator: Paginator?
 
+  func cancellableOnGoingRequest() {
+    if let cancellableRequest = cancellableRequest {
+      cancellableRequest.cancel()
+    }
+  }
+
   func loadDiscoverData(completionBlock: @escaping (_ success: Bool) -> ()) {
+    cancellableOnGoingRequest()
+
     cancellableRequest = DiscoverAPI.discover { (success, curatedCollection, error) in
       guard let sections = curatedCollection?.sections else {
         completionBlock(false)
@@ -35,6 +43,7 @@ final class DiscoverViewModel {
 
   func loadNextPage(completionBlock: @escaping (_ success: Bool) -> ()) {
     if let listOfIdentifiers = self.paginator?.nextPageIds() {
+      cancellableOnGoingRequest()
       cancellableRequest = loadBatch(listOfIdentifiers: listOfIdentifiers, completion: { (success: Bool, resources: [Resource]?, error: BookwittyAPIError?) in
         defer {
           completionBlock(success)
