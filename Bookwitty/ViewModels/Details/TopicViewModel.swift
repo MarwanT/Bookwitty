@@ -9,5 +9,5 @@
 import Foundation
 
 final class TopicViewModel {
-
+  var topic: Topic?
 }
