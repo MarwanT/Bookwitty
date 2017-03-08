@@ -78,17 +78,16 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     pullToRefresher.addTarget(self, action: #selector(self.pullDownToReloadData), for: .valueChanged)
 
     applyTheme()
+  }
 
-    if UserManager.shared.isSignedIn {
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    if UserManager.shared.isSignedIn && loadingStatus == .none && viewModel.numberOfItemsInSection() == 0 {
       self.pullToRefresher.beginRefreshing()
       loadData(loadingStatus: .loading, completionBlock: {
         self.pullToRefresher.endRefreshing()
       })
     }
-  }
-
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
     animateRefreshControllerIfNeeded()
   }
 
