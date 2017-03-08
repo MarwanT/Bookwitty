@@ -20,6 +20,7 @@
 		56399DC21E51D0F0005192AC /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56399DC11E51D0F0005192AC /* AccountViewModel.swift */; };
 		5644F21A1E55A2F100B7D8E7 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5644F2191E55A2F100B7D8E7 /* SettingsViewController.swift */; };
 		5644F21C1E55A77100B7D8E7 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5644F21B1E55A77100B7D8E7 /* SettingsViewModel.swift */; };
+		564EEC0A1E70194100700474 /* TopicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564EEC091E70194100700474 /* TopicViewModel.swift */; };
 		566EE82D1E5D7082004B990D /* Search+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EE82C1E5D7082004B990D /* Search+API.swift */; };
 		566EE87B1E5DC677004B990D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 566EE8781E5DC677004B990D /* Localizable.strings */; };
 		56929CE61E671BE700B3D00A /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56929CE51E671BE700B3D00A /* SegmentedControl.swift */; };
@@ -211,6 +212,7 @@
 		56399DC11E51D0F0005192AC /* AccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
 		5644F2191E55A2F100B7D8E7 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		5644F21B1E55A77100B7D8E7 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		564EEC091E70194100700474 /* TopicViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicViewModel.swift; sourceTree = "<group>"; };
 		566EE82C1E5D7082004B990D /* Search+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Search+API.swift"; sourceTree = "<group>"; };
 		566EE8791E5DC677004B990D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		566EE87A1E5DC677004B990D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -472,6 +474,14 @@
 			path = Account;
 			sourceTree = "<group>";
 		};
+		564EEC081E70192300700474 /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				564EEC091E70194100700474 /* TopicViewModel.swift */,
+			);
+			path = Details;
+			sourceTree = "<group>";
+		};
 		566EE8771E5DC677004B990D /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -509,6 +519,7 @@
 		59057FC51E252C500036AAF3 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				564EEC081E70192300700474 /* Details */,
 				56399DC01E51D0DA005192AC /* Account */,
 				59DA475A1E3B7A8F00BA90A5 /* Introduction */,
 				59D27D0D1E40D2C400468C29 /* Access */,
@@ -1344,6 +1355,7 @@
 				5945FACB1E6476A30010CF77 /* CategoryViewModel.swift in Sources */,
 				59DA47641E3B7A9B00BA90A5 /* TutorialPageViewController.swift in Sources */,
 				59DA47571E3A65A600BA90A5 /* Storyboard.swift in Sources */,
+				564EEC0A1E70194100700474 /* TopicViewModel.swift in Sources */,
 				594290361E548FA10006B2F1 /* BookTableViewCell.swift in Sources */,
 				59EC5BA71E6C5987006E1CB9 /* BookDetailsHeaderNode.swift in Sources */,
 				562A31261E65E214002851DE /* TopicHeaderNode.swift in Sources */,
