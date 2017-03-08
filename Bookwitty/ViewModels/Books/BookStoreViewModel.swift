@@ -284,4 +284,8 @@ extension BookStoreViewModel {
     let paginator = Paginator(ids: books.booksIds, pageSize: pageSize, startPage: 1)
     return .local(paginator: paginator)
   }
+
+  var selections: [ReadingList] {
+    return readingLists ?? []
+  }
 }
