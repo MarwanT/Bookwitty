@@ -16,6 +16,10 @@ protocol OnBoardingControllerDataSource {
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode, at indexPath: IndexPath)
 }
 
+protocol OnBoardingControllerNodeDelegate {
+  func continueButtonTouchUpInside(_ sender: Any?)
+}
+
 class OnBoardingControllerNode: ASDisplayNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
@@ -28,6 +32,7 @@ class OnBoardingControllerNode: ASDisplayNode {
   let continueButton: ASButtonNode
   let flowLayout: UICollectionViewFlowLayout
 
+  var delegate: OnBoardingControllerNodeDelegate?
   var dataSource: OnBoardingControllerDataSource!
 
   override init() {
