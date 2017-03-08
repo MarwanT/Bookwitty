@@ -9,5 +9,10 @@
 import Foundation
 
 final class ReadingListsViewModel {
+  fileprivate var dataArray: [ReadingList] = []
 
+  func initialize(with lists: [ReadingList]) {
+    dataArray.removeAll()
+    dataArray += lists
+  }
 }
