@@ -18,6 +18,7 @@ protocol OnBoardingControllerDataSource {
 
 class OnBoardingControllerNode: ASDisplayNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let headerHeight: CGFloat = 45.0
 
@@ -67,8 +68,11 @@ class OnBoardingControllerNode: ASDisplayNode {
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let titleCenterSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: ASCenterLayoutSpecSizingOptions(rawValue: 0), child: titleTextNode)
     let titleInsetSpec = ASInsetLayoutSpec(insets: UIEdgeInsets(top: internalMargin, left: internalMargin, bottom: internalMargin, right: internalMargin), child: titleCenterSpec)
+
+    let buttonInset = ASInsetLayoutSpec(insets: UIEdgeInsets(top: externalMargin, left: internalMargin, bottom: externalMargin, right: internalMargin), child: continueButton)
+
     let vStack = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start,
-                                   alignItems: .stretch, children: [titleInsetSpec, separatorNode, collectionNode])
+                                   alignItems: .stretch, children: [titleInsetSpec, separatorNode, collectionNode,  buttonInset])
     return vStack
   }
 }
