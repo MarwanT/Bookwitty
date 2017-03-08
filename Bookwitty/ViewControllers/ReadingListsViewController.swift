@@ -35,4 +35,9 @@ class ReadingListsViewController: ASViewController<ASCollectionNode> {
   private func initializeComponents() {
     
   }
+
+  func initialize(with lists: [ReadingList]) {
+    viewModel.initialize(with: lists)
+    collectionNode.reloadData()
+  }
 }
