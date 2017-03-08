@@ -49,6 +49,49 @@ class BookNode: ASCellNode {
     formatNode.maximumNumberOfLines = 1
     priceNode.maximumNumberOfLines = 1
   }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    var nodesArray: [ASLayoutElement] = []
+    nodesArray.append(imageNode)
+
+    var infoArray: [ASLayoutElement] = []
+    let titleAuthorVerticalSpec = ASStackLayoutSpec(direction: .vertical,
+                                                    spacing: 0,
+                                                    justifyContent: .start,
+                                                    alignItems: .start,
+                                                    children: [titleNode, authorNode])
+
+    let formatPriceVerticalSpec = ASStackLayoutSpec(direction: .vertical,
+                                                    spacing: 0,
+                                                    justifyContent: .end,
+                                                    alignItems: .start,
+                                                    children: [formatNode, priceNode])
+
+    infoArray.append(titleAuthorVerticalSpec)
+    infoArray.append(spacer(flexGrow: 1.0))
+    infoArray.append(formatPriceVerticalSpec)
+
+    let verticalSpec = ASStackLayoutSpec(direction: .vertical,
+                                         spacing: 0,
+                                         justifyContent: .spaceBetween,
+                                         alignItems: .start,
+                                         children: infoArray)
+
+    verticalSpec.style.flexShrink = 1.0
+    verticalSpec.style.flexGrow = 1.0
+
+    nodesArray.append(spacer(width: internalMargin))
+    nodesArray.append(verticalSpec)
+
+    let horizontalSpec = ASStackLayoutSpec(direction: .horizontal,
+                                           spacing: 0,
+                                           justifyContent: .start,
+                                           alignItems: .stretch,
+                                           children: nodesArray)
+
+    let insetSpec = ASInsetLayoutSpec(insets: edgeInset(), child: horizontalSpec)
+    return insetSpec
+  }
 }
 
 //Helpers
