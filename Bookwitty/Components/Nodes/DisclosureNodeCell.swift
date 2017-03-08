@@ -33,6 +33,7 @@ class DisclosureNodeCell: ASCellNode {
     style.height = ASDimensionMake(Configuration.nodeHeight)
     imageNode.image = #imageLiteral(resourceName: "rightArrow")
     separatorInset = configuration.separatorInsets
+    selectedBackgroundView = configuration.backgroundSelectionView
   }
   
   // MARK: Helpers
@@ -138,5 +139,10 @@ extension DisclosureNodeCell {
     var style: Style = .normal
     var addInternalBottomSeparator: Bool = false
     let separatorInsets = UIEdgeInsets.zero
+    fileprivate var backgroundSelectionView: UIView {
+      let backView = UIView(frame: CGRect.zero)
+      backView.backgroundColor = ThemeManager.shared.currentTheme.defaultSelectionColor()
+      return backView
+    }
   }
 }
