@@ -12,7 +12,11 @@ class DetailsInfoCellNode: ASCellNode {
   fileprivate var keyTextNode: ASTextNode
   fileprivate var valueTextNode: ASTextNode
   
-  private var configuration = Configuration()
+  var configuration = Configuration() {
+    didSet {
+      setNeedsLayout()
+    }
+  }
   
   override init() {
     keyTextNode = ASTextNode()
@@ -30,7 +34,7 @@ class DetailsInfoCellNode: ASCellNode {
       insets: configuration.keyNodeEdgeInsets,
       child: keyTextNode)
     
-    let layoutElements: [ASLayoutElement] = [
+    let horizontalStacklayoutElements: [ASLayoutElement] = [
       keyNodeInsets,
       spacer(flexGrow: 1.0),
       valueTextNode
@@ -39,13 +43,30 @@ class DetailsInfoCellNode: ASCellNode {
     let horizontalStack = ASStackLayoutSpec(
       direction: .horizontal,
       spacing: 0,
-      justifyContent: .start, alignItems: .center, children: layoutElements)
+      justifyContent: .start,
+      alignItems: .center,
+      children: horizontalStacklayoutElements)
     horizontalStack.style.width = ASDimensionMake(constrainedSize.max.width)
-    let stackInsets = ASInsetLayoutSpec(
-      insets: configuration.stackEdgeInsets,
+    let horizontalStackInsets = ASInsetLayoutSpec(
+      insets: configuration.horizontalStackEdgeInsets,
       child: horizontalStack)
     
-    return stackInsets
+    var layoutElements: ASLayoutSpec = horizontalStackInsets
+    
+    if configuration.addInternalBottomSeparator {
+      let separatorInsetsSpec = ASInsetLayoutSpec(insets: configuration.separatorInsets, child: separator())
+      let verticalStack = ASStackLayoutSpec(
+        direction: .vertical,
+        spacing: 0,
+        justifyContent: .start,
+        alignItems: .stretch,
+        children: [spacer(flexGrow: 1.0), separatorInsetsSpec])
+      let backgroundSpec = ASBackgroundLayoutSpec(
+        child: horizontalStackInsets, background: verticalStack)
+      layoutElements = backgroundSpec
+    }
+    
+    return layoutElements
   }
   
   var key: String? {
@@ -72,13 +93,20 @@ class DetailsInfoCellNode: ASCellNode {
       style.flexShrink = flexGrow
     }
   }
+  
+  private func separator() -> ASDisplayNode {
+    let separator = ASDisplayNode()
+    separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    separator.style.height = ASDimensionMake(1)
+    return separator
+  }
 }
 
 extension DetailsInfoCellNode {
   struct Configuration {
     static let minimumHeight: CGFloat = 45
     let defaultTextColor = ThemeManager.shared.currentTheme.defaultTextColor()
-    let stackEdgeInsets = UIEdgeInsets(
+    let horizontalStackEdgeInsets = UIEdgeInsets(
       top: 10, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: 10, right: ThemeManager.shared.currentTheme.generalExternalMargin())
     let keyNodeEdgeInsets = UIEdgeInsets(
@@ -87,5 +115,6 @@ extension DetailsInfoCellNode {
     let separatorInsets = UIEdgeInsets(
       top: 0, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: 0, right: 0)
+    var addInternalBottomSeparator: Bool = false
   }
 }
