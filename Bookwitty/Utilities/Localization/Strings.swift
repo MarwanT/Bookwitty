@@ -428,4 +428,16 @@ class Strings {
   class func discover() -> String {
     return localizedString(key: "discover")
   }
+
+  class func topics_to_follow() -> String {
+    return localizedString(key: "topics_to_follow")
+  }
+
+  class func follow_topics() -> String {
+    return localizedString(key: "follow_topics")
+  }
+
+  class func onboarding_view_header_title() -> String {
+    return localizedString(key: "onboarding_view_header_title")
+  }
 }

@@ -25,6 +25,7 @@ class OnBoardingViewController: ASViewController<OnBoardingControllerNode> {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = Strings.follow_topics()
     onBoardingNode.dataSource = self
     viewModel.loadOnBoardingData { (success: Bool) in
       self.onBoardingNode.reloadCollection()
