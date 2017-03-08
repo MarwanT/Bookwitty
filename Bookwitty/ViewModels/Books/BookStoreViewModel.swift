@@ -153,12 +153,12 @@ final class BookStoreViewModel {
   private func filterReadingLists(readingListsIdentifiers: [String], resources: [Resource]) -> (featuredList: ReadingList?, readingLists: [ReadingList]) {
     var featuredReadingList: ReadingList? = nil
     var readingLists = [ReadingList]()
-    for (index, readingListIdentifier) in readingListsIdentifiers.enumerated() {
+    for readingListIdentifier in readingListsIdentifiers {
       guard let resource = resources.filter({ $0.id == readingListIdentifier }).first as? ReadingList else {
         continue
       }
       
-      if index == 0 {
+      if readingLists.count == 0 {
         featuredReadingList = resource
       } else {
         readingLists.append(resource)
