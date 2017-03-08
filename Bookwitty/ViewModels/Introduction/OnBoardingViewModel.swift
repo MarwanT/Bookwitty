@@ -64,14 +64,15 @@ final class OnBoardingViewModel {
       return nil
     }
 
+    let key = Strings.topics_to_follow()
     let item: OnBoardingCollectionItem = dataArray[index]
     var itemData: [String : [CuratedCollectionItem]] = [:]
-    itemData["topic"] = []
+    itemData[key] = []
     if let featured = item.featured {
-      itemData["topic"]? += featured
+      itemData[key]? += featured
     }
     if let wittyIds = item.wittyIds {
-      itemData["topic"]? += wittyIds
+      itemData[key]? += wittyIds
     }
 
     return itemData

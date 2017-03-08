@@ -50,7 +50,7 @@ class OnBoardingControllerNode: ASDisplayNode {
 
     titleTextNode.style.maxHeight = ASDimensionMake(headerHeight)
     titleTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
-      .append(text: "Following People and Topics is how you fill up your home feed with interesting reads.", color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      .append(text: Strings.onboarding_view_header_title(), color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
 
     separatorNode.style.height = ASDimensionMake(1.0)
     separatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
