@@ -16,6 +16,8 @@ class ReadingListsViewController: ASViewController<ASCollectionNode> {
   fileprivate let collectionNode: ASCollectionNode
   fileprivate let flowLayout: UICollectionViewFlowLayout
 
+  fileprivate let viewModel = ReadingListsViewModel()
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
