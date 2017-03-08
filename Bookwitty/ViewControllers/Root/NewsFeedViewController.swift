@@ -9,13 +9,34 @@ import UIKit
 import AsyncDisplayKit
 
 class NewsFeedViewController: ASViewController<ASCollectionNode> {
+  enum LoadingStatus {
+    case none
+    case loadMore
+    case reloading
+    case loading
+  }
+
   let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
   let pullToRefresher = UIRefreshControl()
   let penNameSelectionNode = PenNameSelectionNode()
   let loaderNode: LoaderNode
-  
+
+  var loadingStatus: LoadingStatus = .none {
+    didSet {
+      switch loadingStatus {
+      case .loading:
+        break
+      case .reloading:
+        updateBottomLoaderVisibility(show: true)
+      case .loadMore:
+        updateBottomLoaderVisibility(show: true)
+      case .none:
+        updateBottomLoaderVisibility(show: false)
+      }
+    }
+  }
   var collectionView: ASCollectionView?
   var scrollView: UIScrollView? {
     if let collectionView = collectionView {
@@ -26,19 +47,28 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let scrollingThreshold: CGFloat = 25.0
   let viewModel = NewsFeedViewModel()
   var isFirstRun: Bool = true
-  var isLoadingMore: Bool = false {
-    didSet {
-      let bottomMargin: CGFloat
-      if isLoadingMore {
-        bottomMargin = -(externalMargin/2)
-      } else {
-        //If we have Zero data items this means that we are only showing the pen-name-selection-node
-        bottomMargin = viewModel.data.count == 0 ? 0.0 : -(loaderNode.usedHeight - externalMargin/2)
-      }
 
-      flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomMargin, right: 0)
-      loaderNode.updateLoaderVisibility(show: isLoadingMore)
+  func updateBottomLoaderVisibility(show: Bool) {
+    if Thread.isMainThread {
+      reloadFooter(show: show)
+    } else {
+      DispatchQueue.main.async {
+        self.reloadFooter(show: show)
+      }
     }
+  }
+
+  func reloadFooter(show: Bool) {
+    let bottomMargin: CGFloat
+    if show {
+      bottomMargin = -(self.externalMargin/2)
+    } else {
+      //If we have Zero data items this means that we are only showing the pen-name-selection-node
+      bottomMargin = self.viewModel.data.count == 0 ? 0.0 : -(self.loaderNode.usedHeight - self.externalMargin/2)
+    }
+
+    self.flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomMargin, right: 0)
+    self.loaderNode.updateLoaderVisibility(show: show)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -82,7 +112,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     collectionNode.dataSource = self
     penNameSelectionNode.delegate = self
     //Listen to pullToRefresh valueChange and call loadData
-    pullToRefresher.addTarget(self, action: #selector(self.loadData), for: .valueChanged)
+    pullToRefresher.addTarget(self, action: #selector(self.pullDownToReloadData), for: .valueChanged)
 
     applyTheme()
   }
@@ -91,7 +121,13 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     super.viewWillAppear(animated)
     if isFirstRun && UserManager.shared.isSignedIn {
       isFirstRun = false
-      loadData()
+
+      viewModel.cancellableOnGoingRequest()
+
+      self.pullToRefresher.beginRefreshing()
+      loadData(withPenNames: true, loadingStatus: .loading, completionBlock: {
+        self.pullToRefresher.endRefreshing()
+      })
     }
     animateRefreshControllerIfNeeded()
   }
@@ -125,26 +161,32 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
   }
 
-  func loadData(withPenNames reloadPenNames: Bool = true) {
-    viewModel.data = []
-    collectionNode.reloadData()
-    if !reloadPenNames {
-      self.isLoadingMore = true
-    } else {
-      self.pullToRefresher.beginRefreshing()
+  func pullDownToReloadData() {
+    guard loadingStatus != .reloading else {
+      return
     }
+    
+    self.pullToRefresher.beginRefreshing()
+    loadData(withPenNames: true, loadingStatus: .reloading, completionBlock: {
+      self.pullToRefresher.endRefreshing()
+    })
+  }
+
+  func loadData(withPenNames reloadPenNames: Bool = true, loadingStatus: LoadingStatus, completionBlock: @escaping () -> ()) {
+    self.loadingStatus = loadingStatus
+
     viewModel.loadNewsfeed { [weak self] (success) in
       guard let strongSelf = self else { return }
-      if !reloadPenNames {
-        strongSelf.isLoadingMore = false
-      } else {
-        strongSelf.pullToRefresher.endRefreshing()
+      strongSelf.loadingStatus = .none
+
+      completionBlock()
+      if success {
+        strongSelf.collectionNode.reloadData(completion: {
+          if reloadPenNames || !strongSelf.penNameSelectionNode.hasData() {
+            strongSelf.reloadPenNamesNode()
+          }
+        })
       }
-      strongSelf.collectionNode.reloadData(completion: {
-        if reloadPenNames || strongSelf.penNameSelectionNode.calculatedLayout?.size.height ?? 0.0 > 0.0 {
-          strongSelf.reloadPenNamesNode()
-        }
-      })
     }
   }
 
@@ -159,9 +201,12 @@ extension NewsFeedViewController: PenNameSelectionNodeDelegate {
       penNameSelectionNode.alpha = 1.0
       scrollView.contentOffset = CGPoint(x: 0, y: 0.0)
     }
+    viewModel.cancellableOnGoingRequest()
+    viewModel.data = []
+    collectionNode.reloadData()
     viewModel.didUpdateDefaultPenName(penName: penName, completionBlock: {  didSaveDefault in
       if didSaveDefault {
-        loadData(withPenNames: false)
+        loadData(withPenNames: false, loadingStatus: .reloading, completionBlock: { })
       }
     })
   }
@@ -272,16 +317,24 @@ extension NewsFeedViewController: ASCollectionDelegate {
   }
 
   public func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
-    guard !isLoadingMore else {
+    guard context.isFetching() else {
       return
     }
+    guard loadingStatus == .none else {
+      context.completeBatchFetching(true)
+      return
+    }
+    context.beginBatchFetching()
+    self.loadingStatus = .loadMore
+
     let initialLastIndexPath: Int = viewModel.numberOfItemsInSection()
 
-    DispatchQueue.main.async {
-      self.isLoadingMore = true
-    }
     // Fetch next page data
     viewModel.loadNextPage { [weak self] (success) in
+      defer {
+        context.completeBatchFetching(true)
+        self!.loadingStatus = .none
+      }
       guard let strongSelf = self else {
         return
       }
@@ -293,14 +346,8 @@ extension NewsFeedViewController: ASCollectionDelegate {
         let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
           return IndexPath(row: index, section: 0)
         })
-        strongSelf.loadItemsWithIndexOnMainThread() {
-          collectionNode.insertItems(at: updatedIndexPathRange)
-          strongSelf.isLoadingMore = false
-        }
+        collectionNode.insertItems(at: updatedIndexPathRange)
       }
-
-      // Properly finish the batch fetch
-      context.completeBatchFetching(true)
     }
   }
 
