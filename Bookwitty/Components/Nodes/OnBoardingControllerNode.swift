@@ -24,6 +24,7 @@ class OnBoardingControllerNode: ASDisplayNode {
   let titleTextNode: ASTextNode
   let separatorNode: ASDisplayNode
   let collectionNode: ASCollectionNode
+  let continueButton: ASButtonNode
   let flowLayout: UICollectionViewFlowLayout
 
   var dataSource: OnBoardingControllerDataSource!
@@ -37,6 +38,7 @@ class OnBoardingControllerNode: ASDisplayNode {
 
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     separatorNode = ASDisplayNode()
+    continueButton = ASButtonNode()
     super.init()
     automaticallyManagesSubnodes = true
 
