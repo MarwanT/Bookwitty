@@ -21,6 +21,7 @@ class ReadingList: Resource {
   var conclusion: String?
   var body: String?
   var penName: PenName?
+  var vote: String?
 
   var postsCollection: LinkedResourceCollection?
   lazy var posts: [ResourceIdentifier]? = {
@@ -36,6 +37,7 @@ class ReadingList: Resource {
       "name": Attribute().serializeAs("name"),
       "createdAt": DateAttribute().serializeAs("created-at"),
       "updatedAt": DateAttribute().serializeAs("updated-at"),
+      "vote": Attribute().serializeAs("vote"),
       "userId": Attribute().serializeAs("user-id"),
       "thumbnailImageUrl": Attribute().serializeAs("thumbnail-image-url"),
       "coverImageUrl": Attribute().serializeAs("cover-image-url"),

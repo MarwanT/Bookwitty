@@ -22,7 +22,8 @@ class Audio: Resource {
   //TODO: Check if media_link is a related object or a dictionary
   var media: [String: Any]?
   var penName: PenName?
-
+  var vote: String?
+  
   override class var resourceType: ResourceType {
     return "audios"
   }
@@ -35,6 +36,7 @@ class Audio: Resource {
       "thumbnailImageUrl": Attribute().serializeAs("thumbnail-image-url"),
       "coverImageUrl": Attribute().serializeAs("cover-image-url"),
       "caption": Attribute().serializeAs("caption"),
+      "vote": Attribute().serializeAs("vote"),
       "shortDescription": Attribute().serializeAs("short-description"),
       "title": Attribute().serializeAs("title"),
       "type": Attribute().serializeAs("type"),

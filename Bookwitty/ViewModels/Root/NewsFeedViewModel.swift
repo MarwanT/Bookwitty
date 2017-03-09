@@ -69,10 +69,23 @@ final class NewsFeedViewModel {
     })
   }
 
+  func cancellableOnGoingRequest() {
+    if let cancellableRequest = cancellableRequest {
+      cancellableRequest.cancel()
+    }
+  }
+
   func loadNewsfeed(completionBlock: @escaping (_ success: Bool) -> ()) {
+    if let cancellableRequest = cancellableRequest {
+      cancellableRequest.cancel()
+    }
     cancellableRequest = NewsfeedAPI.feed() { (success, resources, nextPage, error) in
-      self.data = resources ?? []
-      self.nextPage = nextPage
+      if success {
+        self.data.removeAll(keepingCapacity: false)
+        self.data = resources ?? []
+        self.nextPage = nextPage
+      }
+      self.cancellableRequest = nil
       completionBlock(success)
     }
   }
@@ -86,12 +99,16 @@ final class NewsFeedViewModel {
       completionBlock(false)
       return
     }
+    if let cancellableRequest = cancellableRequest {
+      cancellableRequest.cancel()
+    }
 
     cancellableRequest = NewsfeedAPI.nextFeedPage(nextPage: nextPage) { (success, resources, nextPage, error) in
       if let resources = resources, success {
         self.data += resources
         self.nextPage = nextPage
       }
+      self.cancellableRequest = nil
       completionBlock(success)
     }
   }

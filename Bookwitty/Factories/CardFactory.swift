@@ -107,6 +107,7 @@ extension  CardFactory {
     card.node.articleDescription = resource.shortDescription ?? resource.biography
     card.node.subImageUrl = resource.thumbnailImageUrl ?? resource.profileImageUrl ?? resource.imageUrl
     card.node.imageUrl = resource.coverImageUrl
+    card.wit = resource.isWitted
 
     return card
   }
@@ -134,6 +135,7 @@ extension  CardFactory {
     card.node.articleDescription = resource.shortDescription
     card.node.imageUrl = resource.coverImageUrl ?? resource.thumbnailImageUrl
     card.articleCommentsSummary = "XX commented on this"
+    card.wit = resource.isWitted
 
     return card
   }
@@ -164,6 +166,7 @@ extension  CardFactory {
       card.node.articleQuote = "“ \(qoute) ”"
     }
     card.articleCommentsSummary = "X commented on this"
+    card.wit = resource.isWitted
 
     return card
   }
@@ -193,6 +196,7 @@ extension  CardFactory {
     card.node.setTopicStatistics(numberOfPosts: "XX")
     card.articleCommentsSummary = "X commented on this"
     card.node.subImageUrl = resource.thumbnailImageUrl
+    card.wit = resource.isWitted
 
     return card
   }
@@ -220,6 +224,7 @@ extension  CardFactory {
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.imageNode.url = resource.coverImageUrl.isEmptyOrNil() ? nil : URL(string: resource.coverImageUrl!)
+    card.wit = resource.isWitted
 
     return card
   }
@@ -247,6 +252,7 @@ extension  CardFactory {
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.imageNode.url = resource.coverImageUrl.isEmptyOrNil() ? nil : URL(string: resource.coverImageUrl!)
+    card.wit = resource.isWitted
 
     return card
   }
@@ -272,7 +278,8 @@ extension  CardFactory {
     card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
     card.node.imageUrl = resource.coverImageUrl
     card.articleCommentsSummary = "X commented on this"
-
+    card.wit = resource.isWitted
+    
     return card
   }
 }
@@ -299,6 +306,7 @@ extension  CardFactory {
     card.node.articleDescription = resource.shortDescription
     card.node.imageUrl = resource.coverImageUrl
     card.articleCommentsSummary = "XX commented on this"
+    card.wit = resource.isWitted
 
     return card
   }
@@ -349,6 +357,7 @@ extension  CardFactory {
     card.node.articleDescription = resource.shortDescription
     card.node.setTopicStatistics(numberOfPosts: "XX")
     card.articleCommentsSummary = "X commented on this"
+    card.wit = resource.isWitted
 
     return card
   }
