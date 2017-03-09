@@ -43,5 +43,11 @@ class PostDetailsNode: ASDisplayNode {
   }
 
   func initializeNode() {
+    backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+    style.flexGrow = 1.0
+    style.flexShrink = 1.0
+
+    descriptionNode.style.flexGrow = 1.0
+    descriptionNode.style.flexShrink = 1.0
   }
 }
