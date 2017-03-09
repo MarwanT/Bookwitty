@@ -20,6 +20,17 @@ class PostDetailsHeaderNode: ASCellNode {
   fileprivate let separator: ASDisplayNode
   fileprivate let bottomSeparator: ASDisplayNode
 
+  var title: String? {
+    didSet {
+      textNode.attributedText = title.isEmptyOrNil() ? nil : AttributedStringBuilder(fontDynamicType: FontDynamicType.title1).append(text: title!).attributedString
+    }
+  }
+  var image: String? {
+    didSet {
+      imageNode.url = image.isEmptyOrNil() ? nil : URL(string: image!)
+    }
+  }
+
   override init() {
     imageNode = ASNetworkImageNode()
     textNode = ASTextNode()
