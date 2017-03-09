@@ -19,6 +19,7 @@ class PostDetailItemNode: ASDisplayNode {
   let subheadLineNode: ASTextNode
   let captionNode: ASTextNode
   let bodyNode: ASTextNode
+  let separator: ASDisplayNode
 
   var headLine: String? {
     didSet {
@@ -64,11 +65,16 @@ class PostDetailItemNode: ASDisplayNode {
     subheadLineNode = ASTextNode()
     captionNode = ASTextNode()
     bodyNode = ASTextNode()
+    separator = ASDisplayNode()
     super.init()
     initializeNode()
   }
 
   func initializeNode() {
+    //Separator Setup
+    separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    separator.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 1.0)
+
     //Image Setup
     imageNode.style.preferredSize = CGSize(width: 75.0, height: 75.0)
     //Body Setup
