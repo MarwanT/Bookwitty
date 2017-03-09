@@ -119,7 +119,9 @@ extension BookDetailsViewController {
   }
   
   fileprivate func viewCategory(_ category: Category) {
-    print("View Category: \(category.value)")
+    let categoryViewController = Storyboard.Books.instantiate(CategoryViewController.self)
+    categoryViewController.viewModel.category = category
+    navigationController?.pushViewController(categoryViewController, animated: true)
   }
 }
 
