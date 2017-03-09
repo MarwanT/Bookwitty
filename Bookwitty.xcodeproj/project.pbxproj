@@ -133,6 +133,7 @@
 		F40700521E55F55A00DA48A4 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40700511E55F55A00DA48A4 /* Image.swift */; };
 		F417B1C71E71303500B0FAFE /* PostDetailsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F417B1C61E71303500B0FAFE /* PostDetailsNode.swift */; };
 		F417B1C91E71A7F900B0FAFE /* PostDetailsHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F417B1C81E71A7F900B0FAFE /* PostDetailsHeaderNode.swift */; };
+		F417B1CD1E71C31B00B0FAFE /* PostDetailsItemNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F417B1CC1E71C31B00B0FAFE /* PostDetailsItemNode.swift */; };
 		F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41D529F1E40EB060021A4AE /* RegisterViewController.swift */; };
 		F41D52A21E40EB780021A4AE /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41D52A11E40EB780021A4AE /* RegisterViewModel.swift */; };
 		F41F3AB71E6785CB004622D3 /* LoaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41F3AB61E6785CB004622D3 /* LoaderNode.swift */; };
@@ -337,6 +338,7 @@
 		F40700511E55F55A00DA48A4 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		F417B1C61E71303500B0FAFE /* PostDetailsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailsNode.swift; sourceTree = "<group>"; };
 		F417B1C81E71A7F900B0FAFE /* PostDetailsHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailsHeaderNode.swift; sourceTree = "<group>"; };
+		F417B1CC1E71C31B00B0FAFE /* PostDetailsItemNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailsItemNode.swift; path = PostDetails/PostDetailsItemNode.swift; sourceTree = "<group>"; };
 		F41D529F1E40EB060021A4AE /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		F41D52A11E40EB780021A4AE /* RegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		F41F3AB61E6785CB004622D3 /* LoaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderNode.swift; sourceTree = "<group>"; };
@@ -1025,6 +1027,7 @@
 			children = (
 				F417B1C61E71303500B0FAFE /* PostDetailsNode.swift */,
 				F417B1C81E71A7F900B0FAFE /* PostDetailsHeaderNode.swift */,
+				F417B1CC1E71C31B00B0FAFE /* PostDetailsItemNode.swift */,
 			);
 			name = PostDetails;
 			sourceTree = "<group>";
@@ -1410,6 +1413,7 @@
 				F41F3AB71E6785CB004622D3 /* LoaderNode.swift in Sources */,
 				F496DE061E65CB30007E22B1 /* Discover+API.swift in Sources */,
 				F420B6A21E43C570001F34CD /* User.swift in Sources */,
+				F417B1CD1E71C31B00B0FAFE /* PostDetailsItemNode.swift in Sources */,
 				59591F251E6F01C7005592B8 /* DisclosureNodeCell.swift in Sources */,
 				5644F21A1E55A2F100B7D8E7 /* SettingsViewController.swift in Sources */,
 				F426008D1E6D8D1200E14D93 /* OnBoardingLoadingButton.swift in Sources */,
