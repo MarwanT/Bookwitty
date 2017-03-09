@@ -28,7 +28,7 @@ class PostDetailsNode: ASScrollNode {
   }
   var body: String? {
     didSet {
-      let attributed = body.isEmptyOrNil() ? nil : AttributedStringBuilder(fontDynamicType: FontDynamicType.title3).append(text: body!).attributedString
+      let attributed = body.isEmptyOrNil() ? nil : AttributedStringBuilder(fontDynamicType: FontDynamicType.title3).append(text: body!, fromHtml: true).attributedString
       descriptionNode.attributedText = attributed
     }
   }
