@@ -14,7 +14,28 @@ class GenericNodeViewController: ASViewController<ASDisplayNode> {
   }
   
   init(node: ASDisplayNode, title: String? = nil) {
-    super.init(node: node)
+    let baseNode = GenericNodeViewController.encapsulateWithScrollNodeIfNeeded(node: node)
+    super.init(node: baseNode)
     self.title = title
+  }
+  
+  private static func encapsulateWithScrollNodeIfNeeded(node: ASDisplayNode) -> ASDisplayNode {
+    guard !(node.view is UIScrollView) else {
+      return node
+    }
+    
+    let scrollNode = ASScrollNode()
+    scrollNode.automaticallyManagesSubnodes = true
+    scrollNode.automaticallyManagesContentSize = true
+    scrollNode.layoutSpecBlock = { displayNode, constrainedSize in
+      let stack = ASStackLayoutSpec(
+        direction: .vertical,
+        spacing: 0,
+        justifyContent: .start,
+        alignItems: .stretch,
+        children: [node])
+      return stack
+    }
+    return scrollNode
   }
 }
