@@ -20,7 +20,8 @@ class Video: Resource {
   var shortDescription: String?
   var caption: String?
   var penName: PenName?
-
+  var vote: String?
+  
   override class var resourceType: ResourceType {
     return "videos"
   }
@@ -33,6 +34,7 @@ class Video: Resource {
       "thumbnailImageUrl": Attribute().serializeAs("thumbnail-image-url"),
       "coverImageUrl": Attribute().serializeAs("cover-image-url"),
       "type": Attribute().serializeAs("type"),
+      "vote": Attribute().serializeAs("vote"),
       "title": Attribute().serializeAs("title"),
       "shortDescription": Attribute().serializeAs("short-description"),
       "caption": Attribute().serializeAs("caption"),

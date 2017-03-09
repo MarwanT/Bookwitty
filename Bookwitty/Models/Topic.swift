@@ -19,7 +19,8 @@ class Topic: Resource {
   var longDescription: String?
   var title: String?
   var penName: PenName?
-
+  var vote: String?
+  
   override class var resourceType: ResourceType {
     return "topics"
   }
@@ -29,6 +30,7 @@ class Topic: Resource {
       "createdAt": DateAttribute().serializeAs("created-at"),
       "updatedAt": DateAttribute().serializeAs("updated-at"),
       "userId": Attribute().serializeAs("user-id"),
+      "vote": Attribute().serializeAs("vote"),
       "thumbnailImageUrl": Attribute().serializeAs("thumbnail-image-url"),
       "coverImageUrl": Attribute().serializeAs("cover-image-url"),
       "shortDescription": Attribute().serializeAs("short-description"),

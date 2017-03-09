@@ -24,6 +24,8 @@ class Author: Resource {
   var title: String?
   var type: String?
   var penName: PenName?
+  var vote: String?
+
   //TODO: add PageAuthor model we have a problem with the json-api conforming from the api siding
 
   override class var resourceType: ResourceType {
@@ -35,6 +37,7 @@ class Author: Resource {
       "name": Attribute().serializeAs("name"),
       "createdAt": DateAttribute().serializeAs("created-at"),
       "updatedAt": DateAttribute().serializeAs("updated-at"),
+      "vote": Attribute().serializeAs("vote"),
       "userId": Attribute().serializeAs("user-id"),
       "thumbnailImageUrl": Attribute().serializeAs("thumbnail-image-url"),
       "coverImageUrl": Attribute().serializeAs("cover-image-url"),

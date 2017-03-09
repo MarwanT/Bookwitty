@@ -20,7 +20,8 @@ class Link: Resource {
   var shortDescription: String?
   var type: String?
   var penName: PenName?
-
+  var vote: String?
+  
   override class var resourceType: ResourceType {
     return "links"
   }
@@ -34,6 +35,7 @@ class Link: Resource {
       "coverImageUrl": Attribute().serializeAs("cover-image-url"),
       "urlLink": Attribute().serializeAs("url"),
       "title": Attribute().serializeAs("title"),
+      "vote": Attribute().serializeAs("vote"),
       "shortDescription": Attribute().serializeAs("short-description"),
       "type": Attribute().serializeAs("type"),
       "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")

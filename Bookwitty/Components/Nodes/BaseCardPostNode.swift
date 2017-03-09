@@ -56,6 +56,11 @@ class BaseCardPostNode: ASCellNode {
       }
     }
   }
+  var wit: Bool = false {
+    didSet {
+      actionBarNode.setWitButton(witted: wit)
+    }
+  }
 
   override init() {
     infoNode = CardPostInfoNode()
