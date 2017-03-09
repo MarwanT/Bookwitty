@@ -30,7 +30,7 @@ target 'Bookwitty' do
   pod 'TTTAttributedLabel', '2.0.0'
   pod 'SwiftyJSON', '3.1.4'
   pod 'ALCameraViewController', '1.2.7'
-  pod 'Spine', :git => 'https://github.com/Keeward/Spine.git'
+  pod 'Spine', :git => 'https://github.com/Keeward/Spine.git', :tag => '0.3.1'
   pod 'AsyncDisplayKit', '2.2'
   pod 'SwiftLinkPreview', '2.0.0'
   pod 'SDWebImage', '4.0.0'
