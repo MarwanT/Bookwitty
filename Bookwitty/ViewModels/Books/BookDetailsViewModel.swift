@@ -182,3 +182,52 @@ extension BookDetailsViewModel {
     return 0
   }
 }
+
+// MARK: - Selection
+extension BookDetailsViewModel {
+  func shouldSelectItem(at indexPath: IndexPath) -> Bool {
+    guard let section = BookDetailsViewController.Section(rawValue: indexPath.section) else {
+      return false
+    }
+    
+    switch section {
+    case .details:
+      guard let bookDetailedInformation = bookDetailedInformation else {
+        return false
+      }
+      switch indexPath.row {
+      case 0: // Header
+        return false
+      case (bookDetailedInformation.count + 1): // Footer
+        return true
+      default: // Information
+        return false
+      }
+    default:
+      return false
+    }
+  }
+  
+  func actionForItem(at indexPath: IndexPath) -> BookDetailsViewController.Action? {
+    guard let section = BookDetailsViewController.Section(rawValue: indexPath.section) else {
+      return nil
+    }
+    
+    switch section {
+    case .details:
+      guard let bookDetailedInformation = bookDetailedInformation else {
+        return nil
+      }
+      switch indexPath.row {
+      case 0: // Header
+        return nil
+      case (bookDetailedInformation.count + 1): // Footer
+        return .viewDetails
+      default: // Information
+        return nil
+      }
+    default:
+      return nil
+    }
+  }
+}

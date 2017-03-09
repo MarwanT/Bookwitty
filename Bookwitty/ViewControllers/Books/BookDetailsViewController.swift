@@ -54,6 +54,15 @@ extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
       return self.viewModel.nodeForItem(at: indexPath)
     }
   }
+  
+  func collectionNode(_ collectionNode: ASCollectionNode, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+    return viewModel.shouldSelectItem(at: indexPath)
+  }
+  
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    collectionNode.deselectItem(at: indexPath, animated: true)
+    perform(action: viewModel.actionForItem(at: indexPath))
+  }
 }
 
 // MARK: - Actions
