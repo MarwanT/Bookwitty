@@ -14,6 +14,9 @@ class PostDetailsItemNode: ASDisplayNode {
 }
 
 class PostDetailItemNode: ASDisplayNode {
+  private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+
   let imageNode: ASNetworkImageNode
   let headLineNode: ASTextNode
   let subheadLineNode: ASTextNode
@@ -97,4 +100,17 @@ class PostDetailItemNode: ASDisplayNode {
     captionNode.style.flexShrink = 1
   }
 
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let outerMostVStack = ASStackLayoutSpec.vertical()
+    outerMostVStack.spacing = contentSpacing
+    outerMostVStack.justifyContent = .start
+    outerMostVStack.alignItems = .stretch
+
+    let outerMostHStack = ASStackLayoutSpec.horizontal()
+    outerMostHStack.justifyContent = .center
+    outerMostHStack.alignItems = .stretch
+
+    outerMostVStack.children = [outerMostHStack, bodyNode, separator]
+    return outerMostVStack
+  }
 }
