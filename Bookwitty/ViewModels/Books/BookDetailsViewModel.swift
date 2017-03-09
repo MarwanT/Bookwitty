@@ -15,6 +15,7 @@ final class BookDetailsViewModel {
   
   let maximumNumberOfDetails: Int = 3
   var bookDetailedInformation: [(key: String, value: String)]? = nil
+  var bookCategories: [Category]? = nil
   
   var viewControllerTitle: String? {
     return ""
@@ -90,7 +91,6 @@ extension BookDetailsViewModel {
       }
       switch indexPath.row {
       case 0: // Header
-        // TODO: Return Header with external margin
         let headerNode = SectionTitleHeaderNode()
         headerNode.configuration.externalEdgeInsets.top = (ThemeManager.shared.currentTheme.generalExternalMargin() * 2)
         headerNode.setTitle(
@@ -113,7 +113,26 @@ extension BookDetailsViewModel {
         node = infoCell
       }
     case .categories:
-      break
+      guard let categories = bookCategories, categories.count > 0 else {
+        break
+      }
+      switch indexPath.row {
+      case 0: // Header
+        let headerNode = SectionSubtitleHeaderNode()
+        headerNode.title = Strings.book_categories()
+        node = headerNode
+      default: // Information
+        let category = categories[indexPath.row - 1]
+        let disclosureNode = DisclosureNodeCell()
+        disclosureNode.text = category.value
+        disclosureNode.configuration.addInternalBottomSeparator = true
+        var separatorLeftInset = ThemeManager.shared.currentTheme.generalExternalMargin()
+        if indexPath.row == categories.count {
+          separatorLeftInset = 0
+        }
+        disclosureNode.configuration.separatorInsets.left = separatorLeftInset
+        node = disclosureNode
+      }
     case .recommendedReadingLists:
       break
     case .relatedTopics:
@@ -171,7 +190,17 @@ extension BookDetailsViewModel {
   }
   
   var itemsInCategories: Int {
-    return 0
+    guard let categoriesIds = book.productDetails?.categories else {
+      return 0
+    }
+    let bookCategories = CategoryManager.shared.categories(from: categoriesIds)
+    guard bookCategories.count > 0 else {
+      return 0
+    }
+    
+    self.bookCategories = bookCategories
+    let header: Int = 1
+    return bookCategories.count + header
   }
   
   var itemsInRecommendedReadingLists: Int {
