@@ -25,7 +25,7 @@ final class BookDetailsViewModel {
   }
   
   func numberOfItemsForSection(section: Int) -> Int {
-    guard let section = BookDetailsViewController.Section(rawValue: section) else {
+    guard let section = Section(rawValue: section) else {
       return 0
     }
     switch section {
@@ -57,7 +57,7 @@ final class BookDetailsViewModel {
 extension BookDetailsViewModel {
   func nodeForItem(at indexPath: IndexPath) -> ASCellNode {
     var node = ASCellNode()
-    guard let section = BookDetailsViewController.Section(rawValue: indexPath.section) else {
+    guard let section = Section(rawValue: indexPath.section) else {
       return node
     }
     
@@ -186,7 +186,7 @@ extension BookDetailsViewModel {
 // MARK: - Selection
 extension BookDetailsViewModel {
   func shouldSelectItem(at indexPath: IndexPath) -> Bool {
-    guard let section = BookDetailsViewController.Section(rawValue: indexPath.section) else {
+    guard let section = Section(rawValue: indexPath.section) else {
       return false
     }
     
@@ -209,7 +209,7 @@ extension BookDetailsViewModel {
   }
   
   func actionForItem(at indexPath: IndexPath) -> BookDetailsViewController.Action? {
-    guard let section = BookDetailsViewController.Section(rawValue: indexPath.section) else {
+    guard let section = Section(rawValue: indexPath.section) else {
       return nil
     }
     
@@ -229,5 +229,21 @@ extension BookDetailsViewModel {
     default:
       return nil
     }
+  }
+}
+
+// MARK: - Declarations
+extension BookDetailsViewModel {
+  enum Section: Int {
+    case header = 0
+    case format
+    case eCommerce
+    case about
+    case serie
+    case peopleWhoLikeThisBook
+    case details
+    case categories
+    case recommendedReadingLists
+    case relatedTopics
   }
 }
