@@ -30,6 +30,17 @@ class PostDetailsHeaderNode: ASCellNode {
       imageNode.url = image.isEmptyOrNil() ? nil : URL(string: image!)
     }
   }
+  var date: String? {
+    didSet {
+      profileBarNode.biography = date
+    }
+  }
+  var penName: PenName? {
+    didSet {
+      profileBarNode.penName = penName?.name
+      profileBarNode.imageUrl = penName?.avatarUrl
+    }
+  }
 
   override init() {
     imageNode = ASNetworkImageNode()

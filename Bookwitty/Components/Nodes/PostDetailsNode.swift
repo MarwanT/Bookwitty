@@ -32,6 +32,16 @@ class PostDetailsNode: ASScrollNode {
       descriptionNode.attributedText = attributed
     }
   }
+  var date: String? {
+    didSet {
+      headerNode.date = date
+    }
+  }
+  var penName: PenName? {
+    didSet {
+      headerNode.penName = penName
+    }
+  }
 
   override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
     headerNode = PostDetailsHeaderNode()
