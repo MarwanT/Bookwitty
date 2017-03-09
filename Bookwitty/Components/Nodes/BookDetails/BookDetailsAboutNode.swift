@@ -106,9 +106,7 @@ extension BookDetailsAboutNode {
     fileprivate let headerVerticalBarColor = ThemeManager.shared.currentTheme.colorNumber6()
     fileprivate let headerHorizontalBarColor = ThemeManager.shared.currentTheme.colorNumber5()
     fileprivate let compactMaximumNumberOfLines: UInt = 6
-    fileprivate let externalEdgeInsets = UIEdgeInsets(
-      top: ThemeManager.shared.currentTheme.generalExternalMargin(),
-      left: 0, bottom: 0, right: 0)
+    fileprivate let externalEdgeInsets = UIEdgeInsets.zero
     fileprivate let descriptionTextEdgeInsets = UIEdgeInsets(
       top: ThemeManager.shared.currentTheme.generalExternalMargin(),
       left: ThemeManager.shared.currentTheme.generalExternalMargin(),
