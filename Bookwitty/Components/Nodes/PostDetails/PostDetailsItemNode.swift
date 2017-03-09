@@ -20,6 +20,44 @@ class PostDetailItemNode: ASDisplayNode {
   let captionNode: ASTextNode
   let bodyNode: ASTextNode
 
+  var headLine: String? {
+    didSet {
+      if let headLine = headLine {
+        headLineNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.headline).append(text: headLine).attributedString
+      }
+    }
+  }
+  var imageUrl: String? {
+    didSet {
+      if let imageUrl = imageUrl {
+        imageNode.url = URL(string: imageUrl)
+      } else {
+        imageNode.url = nil
+      }
+    }
+  }
+  var subheadLine: String? {
+    didSet {
+      if let subheadLine = subheadLine {
+        subheadLineNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.subheadline).append(text: subheadLine).attributedString
+      }
+    }
+  }
+  var caption: String? {
+    didSet {
+      if let caption = caption {
+        captionNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: caption).attributedString
+      }
+    }
+  }
+  var body: String? {
+    didSet {
+      if let body = body {
+        bodyNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.body).append(text: body).attributedString
+      }
+    }
+  }
+
   override init() {
     imageNode = ASNetworkImageNode()
     headLineNode = ASTextNode()
