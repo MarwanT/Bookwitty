@@ -8,6 +8,11 @@
 
 import AsyncDisplayKit
 
+protocol BookDetailsECommerceNodeDelegate: class {
+  func eCommerceNodeDidTapOnBuyBook(node: BookDetailsECommerceNode)
+  func eCommerceNodeDidTapOnShippingInformation(node: BookDetailsECommerceNode)
+}
+
 class BookDetailsECommerceNode: ASCellNode {
   fileprivate let pricesNode: BookDetailsPricesNode
   fileprivate let separatorNode: ASDisplayNode
