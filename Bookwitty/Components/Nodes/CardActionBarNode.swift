@@ -13,7 +13,7 @@ protocol CardActionBarNodeDelegate {
   func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
 }
 
-class CardActionBarNode: ASDisplayNode {
+class CardActionBarNode: ASCellNode {
   enum Action {
     case wit
     case unwit
