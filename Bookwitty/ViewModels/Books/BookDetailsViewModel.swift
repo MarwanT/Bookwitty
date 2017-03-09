@@ -232,6 +232,16 @@ extension BookDetailsViewModel {
       default: // Information
         return false
       }
+    case .categories:
+      guard bookCategories != nil else {
+        return false
+      }
+      switch indexPath.row {
+      case 0: // Header
+        return false
+      default:
+        return true
+      }
     default:
       return false
     }
@@ -254,6 +264,16 @@ extension BookDetailsViewModel {
         return .viewDetails
       default: // Information
         return nil
+      }
+    case .categories:
+      guard let categories = bookCategories else {
+        return nil
+      }
+      switch indexPath.row {
+      case 0: // Header
+        return nil
+      default:
+        return .viewCategory(categories[indexPath.row - 1])
       }
     default:
       return nil
