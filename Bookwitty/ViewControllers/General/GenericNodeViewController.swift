@@ -17,6 +17,7 @@ class GenericNodeViewController: ASViewController<ASDisplayNode> {
     let baseNode = GenericNodeViewController.encapsulateWithScrollNodeIfNeeded(node: node)
     super.init(node: baseNode)
     self.title = title
+    applyTheme()
   }
   
   private static func encapsulateWithScrollNodeIfNeeded(node: ASDisplayNode) -> ASDisplayNode {
@@ -37,5 +38,11 @@ class GenericNodeViewController: ASViewController<ASDisplayNode> {
       return stack
     }
     return scrollNode
+  }
+}
+
+extension GenericNodeViewController: Themeable {
+  func applyTheme() {
+    node.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
   }
 }
