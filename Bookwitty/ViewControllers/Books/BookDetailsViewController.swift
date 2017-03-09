@@ -56,6 +56,47 @@ extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
   }
 }
 
+// MARK: - Actions
+extension BookDetailsViewController {
+  fileprivate func perform(action: Action?) {
+    guard let action = action else {
+      return
+    }
+    switch action {
+    case .viewImageFullScreen:
+      break
+    case .viewFormat:
+      break
+    case .viewCategory:
+      break
+    case .viewDescription:
+      break
+    case .viewDetails:
+      viewDetails()
+    case .share:
+      break
+    case .buyThisBook:
+      buyThisBook()
+    case .addToWishlist:
+      break
+    case .viewShippingInfo:
+      viewShippingInfo()
+    }
+  }
+  
+  fileprivate func viewDetails() {
+    print("View Details")
+  }
+  
+  fileprivate func viewShippingInfo() {
+    print("View Shipping Info")
+  }
+  
+  fileprivate func buyThisBook() {
+    print("Buy This Book")
+  }
+}
+
 // MARK: - Declarations
 extension BookDetailsViewController {
   enum Section: Int {
