@@ -32,11 +32,26 @@ class PostDetailsHeaderNode: ASCellNode {
     initializeNode()
   }
 
+  override func didLoad() {
+    imageNode.contentMode = .scaleAspectFill
+  }
+
   func initializeNode() {
     //Separator Styling
+    separator.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 1.0)
+    separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    bottomSeparator.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 1.0)
+    bottomSeparator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+
     //Post Iamge
+    imageNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 200.0)
+    imageNode.backgroundColor = UIColor.bwKeppel
     //Post Title
+    textNode.style.flexGrow = 1
+    textNode.style.flexShrink = 1
     //Profile Bar
+    profileBarNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 45.0)
+    profileBarNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
     //Action Bar
   }
 }
