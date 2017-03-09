@@ -69,7 +69,12 @@ extension ReadingListsViewController: ASCollectionDataSource, ASCollectionDelega
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
-
+    if let indexPath = collectionNode.indexPath(for: node), indexPath.item % 7 == 0 {
+      viewModel.loadNextReadingListPageContent(closure: {
+        (success, indices) in
+        self.collectionNode.reloadItems(at: indices.map({ IndexPath(item: $0, section: 0) }))
+      })
+    }
   }
 
   public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
