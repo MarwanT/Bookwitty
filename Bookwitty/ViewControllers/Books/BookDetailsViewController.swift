@@ -39,6 +39,17 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
     
     collectionNode.delegate = self
     collectionNode.dataSource = self
+    
+    loadNavigationBarButtons()
+  }
+  
+  private func loadNavigationBarButtons() {
+    let shareButton = UIBarButtonItem(
+      image: #imageLiteral(resourceName: "shareOutside"),
+      style: UIBarButtonItemStyle.plain,
+      target: self,
+      action: #selector(shareOutsideButton(_:)))
+    navigationItem.rightBarButtonItem = shareButton
   }
 }
 
@@ -125,6 +136,9 @@ extension BookDetailsViewController {
     let categoryViewController = Storyboard.Books.instantiate(CategoryViewController.self)
     categoryViewController.viewModel.category = category
     navigationController?.pushViewController(categoryViewController, animated: true)
+  }
+  
+  func shareOutsideButton(_ sender: Any?) {
   }
 }
 
