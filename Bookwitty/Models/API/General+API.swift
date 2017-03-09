@@ -138,3 +138,16 @@ struct GeneralAPI {
     })
   }
 }
+
+extension GeneralAPI {
+  static func postsParameters(type: [String]?) -> [String : Any]? {
+    var dictionary = [String : Any]()
+
+    //Filters
+    if let type = type {
+      dictionary["filter[type]"] = type
+    }
+
+    return dictionary
+  }
+}
