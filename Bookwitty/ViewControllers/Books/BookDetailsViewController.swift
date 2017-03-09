@@ -54,4 +54,82 @@ extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
       return self.viewModel.nodeForItem(at: indexPath)
     }
   }
+  
+  func collectionNode(_ collectionNode: ASCollectionNode, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+    return viewModel.shouldSelectItem(at: indexPath)
+  }
+  
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    collectionNode.deselectItem(at: indexPath, animated: true)
+    perform(action: viewModel.actionForItem(at: indexPath))
+  }
+}
+
+// MARK: - Actions
+extension BookDetailsViewController {
+  fileprivate func perform(action: Action?) {
+    guard let action = action else {
+      return
+    }
+    switch action {
+    case .viewImageFullScreen:
+      break
+    case .viewFormat:
+      break
+    case .viewCategory:
+      break
+    case .viewDescription:
+      break
+    case .viewDetails:
+      viewDetails()
+    case .share:
+      break
+    case .buyThisBook:
+      buyThisBook()
+    case .addToWishlist:
+      break
+    case .viewShippingInfo:
+      viewShippingInfo()
+    }
+  }
+  
+  fileprivate func viewDetails() {
+    print("View Details")
+  }
+  
+  fileprivate func viewShippingInfo() {
+    print("View Shipping Info")
+  }
+  
+  fileprivate func buyThisBook() {
+    print("Buy This Book")
+  }
+}
+
+// MARK: - Declarations
+extension BookDetailsViewController {
+  enum Section: Int {
+    case header = 0
+    case format
+    case eCommerce
+    case about
+    case serie
+    case peopleWhoLikeThisBook
+    case details
+    case categories
+    case recommendedReadingLists
+    case relatedTopics
+  }
+  
+  enum Action {
+    case viewImageFullScreen
+    case viewFormat
+    case viewDetails
+    case viewCategory
+    case viewDescription
+    case viewShippingInfo
+    case buyThisBook
+    case share
+    case addToWishlist
+  }
 }
