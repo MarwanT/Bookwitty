@@ -210,6 +210,11 @@ extension DiscoverViewController: ASCollectionDataSource {
 }
 
 extension DiscoverViewController: ASCollectionDelegate {
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    let resource = viewModel.resourceForIndex(index: indexPath.item)
+    actionForCard(resource: resource)
+  }
+
   public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
     return CGSize(width: UIScreen.main.bounds.width, height: loaderNode.usedHeight)
   }
@@ -287,3 +292,74 @@ extension DiscoverViewController: BaseCardPostNodeDelegate {
     }
   }
 }
+
+// MARK: - Actions For Cards
+extension DiscoverViewController {
+  func actionForCard(resource: ModelResource?) {
+    guard let resource = resource else {
+      return
+    }
+    let registeredType = resource.registeredResourceType
+
+    switch registeredType {
+    case Image.resourceType:
+      actionForImageResourceType(resource: resource)
+    case Author.resourceType:
+      actionForAuthorResourceType(resource: resource)
+    case ReadingList.resourceType:
+      actionForReadingListResourceType(resource: resource)
+    case Topic.resourceType:
+      actionForTopicResourceType(resource: resource)
+    case Text.resourceType:
+      actionForTextResourceType(resource: resource)
+    case Quote.resourceType:
+      actionForQuoteResourceType(resource: resource)
+    case Video.resourceType:
+      actionForVideoResourceType(resource: resource)
+    case Audio.resourceType:
+      actionForAudioResourceType(resource: resource)
+    case Link.resourceType:
+      actionForLinkResourceType(resource: resource)
+    default:
+      print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")
+      break
+    }
+  }
+
+  fileprivate func actionForImageResourceType(resource: ModelResource) {
+    //TODO: Implement the right action
+  }
+
+  fileprivate func actionForAuthorResourceType(resource: ModelResource) {
+    //TODO: Implement the right action
+  }
+
+  fileprivate func actionForReadingListResourceType(resource: ModelResource) {
+    //TODO: Implement the right action
+  }
+
+  fileprivate func actionForTopicResourceType(resource: ModelResource) {
+    //TODO: Implement the right action
+  }
+
+  fileprivate func actionForTextResourceType(resource: ModelResource) {
+    //TODO: Implement the right action
+  }
+
+  fileprivate func actionForQuoteResourceType(resource: ModelResource) {
+    //TODO: Implement the right action
+  }
+
+  fileprivate func actionForVideoResourceType(resource: ModelResource) {
+    //TODO: Implement the right action
+  }
+
+  fileprivate func actionForAudioResourceType(resource: ModelResource) {
+    //TODO: Implement the right action
+  }
+
+  fileprivate func actionForLinkResourceType(resource: ModelResource) {
+    //TODO: Implement the right action
+  }
+}
+
