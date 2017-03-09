@@ -566,16 +566,11 @@
 				59EC5B9E1E6C5987006E1CB9 /* BookDetails */,
 				F417B1C41E712C7100B0FAFE /* Cards */,
 				F434F7901E4E16CE001812BD /* CellNode.swift */,
-				F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */,
-				F426867A1E505CE60085E581 /* BaseCardPostNode.swift */,
-				F426867E1E511B7C0085E581 /* ArticleCardPostCellNode.swift */,
 				F41F3AB61E6785CB004622D3 /* LoaderNode.swift */,
 				F4207B931E58466A00216A2E /* PenNameSelectionNode.swift */,
 				F458C5F11E5AFD4300AFD0FC /* PenNameDisplayNode.swift */,
 				F458C5F31E5AFEAA00AFD0FC /* PenNameCellNode.swift */,
 				F4CDDD361E60263800474CAA /* RotatingImageNode.swift */,
-				F4670AF81E54556800159F4F /* ReadingListCardPostCellNode.swift */,
-				F422D82D1E51AC3900A32C2F /* VideoCardPostCellNode.swift */,
 				F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */,
 				F4670AFA1E54669300159F4F /* ReadingListBookNode.swift */,
 				F43A5E8D1E69858A008C018B /* OnBoardingInternalCellNode.swift */,
@@ -583,13 +578,7 @@
 				F43A5E8F1E69878A008C018B /* OnBoardingCellNode.swift */,
 				F426008C1E6D8D1200E14D93 /* OnBoardingLoadingButton.swift */,
 				F42600881E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift */,
-				F45A50141E536591005E5C56 /* TopicCardPostCellNode.swift */,
 				F43A5E911E69A840008C018B /* OnBoardingControllerNode.swift */,
-				F4670AFC1E54ACF200159F4F /* ProfileCardPostCellNode.swift */,
-				F45A50121E530AA2005E5C56 /* QuoteCardPostCellNode.swift */,
-				F422D82F1E51CD9D00A32C2F /* LinkCardPostCellNode.swift */,
-				F422D82B1E51992800A32C2F /* PhotoCardPostCellNode.swift */,
-				F42686781E4F458A0085E581 /* CardActionBarNode.swift */,
 				59EC5BAB1E6C5B51006E1CB9 /* SectionTitleHeaderNode.swift */,
 				591E15551E70E381008CA78A /* SectionSubtitleHeaderNode.swift */,
 				59591F1A1E6D7E7A005592B8 /* DisclosureNode.swift */,
@@ -944,6 +933,17 @@
 		F417B1C41E712C7100B0FAFE /* Cards */ = {
 			isa = PBXGroup;
 			children = (
+				F426867A1E505CE60085E581 /* BaseCardPostNode.swift */,
+				F426867E1E511B7C0085E581 /* ArticleCardPostCellNode.swift */,
+				F4670AF81E54556800159F4F /* ReadingListCardPostCellNode.swift */,
+				F422D82D1E51AC3900A32C2F /* VideoCardPostCellNode.swift */,
+				F45A50141E536591005E5C56 /* TopicCardPostCellNode.swift */,
+				F4670AFC1E54ACF200159F4F /* ProfileCardPostCellNode.swift */,
+				F45A50121E530AA2005E5C56 /* QuoteCardPostCellNode.swift */,
+				F422D82F1E51CD9D00A32C2F /* LinkCardPostCellNode.swift */,
+				F422D82B1E51992800A32C2F /* PhotoCardPostCellNode.swift */,
+				F42686781E4F458A0085E581 /* CardActionBarNode.swift */,
+				F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */,
 			);
 			name = Cards;
 			sourceTree = "<group>";
