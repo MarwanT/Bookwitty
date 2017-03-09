@@ -81,17 +81,17 @@ class PostDetailsHeaderNode: ASCellNode {
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let vStackSpec = ASStackLayoutSpec.vertical()
-    vStackSpec.spacing = contentSpacing
+    vStackSpec.spacing = 0.0
 
     let textInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: textNode)
-    let profileBarInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: profileBarNode)
     let separatorInset =  ASInsetLayoutSpec(insets: sidesEdgeInset(), child: separator)
     let bottomSeparatorInset =  ASInsetLayoutSpec(insets: sidesEdgeInset(), child: bottomSeparator)
 
     let vStackActionBarSpec = ASStackLayoutSpec.vertical()
     vStackActionBarSpec.children = [separatorInset, actionBarNode, bottomSeparatorInset]
 
-    vStackSpec.children = [imageNode, textInsetSpec, profileBarInsetSpec, vStackActionBarSpec]
+    vStackSpec.children = [imageNode, ASLayoutSpec.spacer(height: contentSpacing),
+                           textInsetSpec, profileBarNode, vStackActionBarSpec]
     return vStackSpec
   }
 }
