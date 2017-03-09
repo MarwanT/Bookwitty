@@ -27,6 +27,7 @@
 		56FC41971E58CBA100D9B1CE /* NSBundle+Language.m in Sources */ = {isa = PBXBuildFile; fileRef = 56FC41961E58CBA100D9B1CE /* NSBundle+Language.m */; };
 		59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59057FDF1E25340A0036AAF3 /* Introduction.storyboard */; };
 		591E15561E70E381008CA78A /* SectionSubtitleHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591E15551E70E381008CA78A /* SectionSubtitleHeaderNode.swift */; };
+		591E15581E70FE37008CA78A /* GenericNodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591E15571E70FE37008CA78A /* GenericNodeViewController.swift */; };
 		592974BF1E5F57AE0083A4C2 /* ModelCommonProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592974BE1E5F57AE0083A4C2 /* ModelCommonProperties.swift */; };
 		5929C2711E5B25BC006E08F8 /* CuratedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5929C2701E5B25BC006E08F8 /* CuratedCollection.swift */; };
 		5929C2731E5B2FDB006E08F8 /* CuratedCollection+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5929C2721E5B2FDB006E08F8 /* CuratedCollection+API.swift */; };
@@ -211,6 +212,7 @@
 		56FC41961E58CBA100D9B1CE /* NSBundle+Language.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+Language.m"; sourceTree = "<group>"; };
 		59057FDF1E25340A0036AAF3 /* Introduction.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Introduction.storyboard; sourceTree = "<group>"; };
 		591E15551E70E381008CA78A /* SectionSubtitleHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionSubtitleHeaderNode.swift; sourceTree = "<group>"; };
+		591E15571E70FE37008CA78A /* GenericNodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericNodeViewController.swift; sourceTree = "<group>"; };
 		592974BE1E5F57AE0083A4C2 /* ModelCommonProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelCommonProperties.swift; sourceTree = "<group>"; };
 		5929C2701E5B25BC006E08F8 /* CuratedCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CuratedCollection.swift; sourceTree = "<group>"; };
 		5929C2721E5B2FDB006E08F8 /* CuratedCollection+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CuratedCollection+API.swift"; sourceTree = "<group>"; };
@@ -922,6 +924,7 @@
 			isa = PBXGroup;
 			children = (
 				B4ECA3461E4E05E7004B3EE2 /* WebViewController.swift */,
+				591E15571E70FE37008CA78A /* GenericNodeViewController.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -1280,6 +1283,7 @@
 				F45A50131E530AA2005E5C56 /* QuoteCardPostCellNode.swift in Sources */,
 				59D6021E1E36363400271315 /* Font.swift in Sources */,
 				593769D71E3689FB00F23226 /* Appearance.swift in Sources */,
+				591E15581E70FE37008CA78A /* GenericNodeViewController.swift in Sources */,
 				594290091E4FF0E30006B2F1 /* CategoriesTableViewModel.swift in Sources */,
 				F420B6A41E43D01A001F34CD /* PenNameViewController.swift in Sources */,
 				5929C2731E5B2FDB006E08F8 /* CuratedCollection+API.swift in Sources */,
