@@ -15,7 +15,7 @@ class PostDetailsHeaderNode: ASCellNode {
 
   fileprivate let imageNode: ASNetworkImageNode
   fileprivate let textNode: ASTextNode
-  fileprivate let profileBarNode: ASDisplayNode // TODO: Replace with PenNameFollowNode
+  fileprivate let profileBarNode: PenNameFollowNode
   fileprivate let actionBarNode: CardActionBarNode
   fileprivate let separator: ASDisplayNode
   fileprivate let bottomSeparator: ASDisplayNode
@@ -34,7 +34,7 @@ class PostDetailsHeaderNode: ASCellNode {
   override init() {
     imageNode = ASNetworkImageNode()
     textNode = ASTextNode()
-    profileBarNode = ASDisplayNode()
+    profileBarNode = PenNameFollowNode()
     actionBarNode = CardActionBarNode()
     separator = ASDisplayNode()
     bottomSeparator = ASDisplayNode()
@@ -60,9 +60,6 @@ class PostDetailsHeaderNode: ASCellNode {
     //Post Title
     textNode.style.flexGrow = 1
     textNode.style.flexShrink = 1
-    //Profile Bar
-    profileBarNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 45.0)
-    profileBarNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
     //Action Bar
     actionBarNode.delegate = self
   }
