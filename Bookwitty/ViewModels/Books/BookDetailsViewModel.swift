@@ -22,6 +22,14 @@ final class BookDetailsViewModel {
     return ""
   }
   
+  var shipementInfoURL: URL? {
+    return URL(string: "/shipping", relativeTo: Environment.current.baseURL)
+  }
+  
+  var bookCanonicalURL: URL? {
+    return book.canonicalURL
+  }
+  
   var numberOfSections: Int {
     return 10
   }
@@ -76,6 +84,7 @@ extension BookDetailsViewModel {
       node = formatNode
     case .eCommerce:
       let eCommerceNode = BookDetailsECommerceNode()
+      eCommerceNode.delegate = viewController
       eCommerceNode.set(supplierInformation: book.supplierInformation)
       node = eCommerceNode
     case .about:

@@ -8,10 +8,17 @@
 
 import AsyncDisplayKit
 
+protocol BookDetailsECommerceNodeDelegate: class {
+  func eCommerceNodeDidTapOnBuyBook(node: BookDetailsECommerceNode)
+  func eCommerceNodeDidTapOnShippingInformation(node: BookDetailsECommerceNode)
+}
+
 class BookDetailsECommerceNode: ASCellNode {
   fileprivate let pricesNode: BookDetailsPricesNode
   fileprivate let separatorNode: ASDisplayNode
   fileprivate let stockNode: BookDetailsStockNode
+  
+  weak var delegate: BookDetailsECommerceNodeDelegate? = nil
   
   var configuration = Configuration()
   
@@ -28,6 +35,8 @@ class BookDetailsECommerceNode: ASCellNode {
     separatorNode.isLayerBacked = true
     separatorNode.backgroundColor = configuration.separatorColor
     separatorNode.style.height = ASDimensionMake(configuration.separatorHeight)
+    
+    stockNode.delegate = self
     
     style.width = ASDimensionMake(UIScreen.main.bounds.width)
   }
@@ -50,6 +59,18 @@ class BookDetailsECommerceNode: ASCellNode {
   }
 }
 
+// MARK: -
+extension BookDetailsECommerceNode: BookDetailsStockNodeDelegate {
+  func stockNodeDidTapOnShippingInformation(node: BookDetailsStockNode) {
+    delegate?.eCommerceNodeDidTapOnShippingInformation(node: self)
+  }
+  
+  func stockNodeDidTapOnBuyBook(node: BookDetailsStockNode) {
+    delegate?.eCommerceNodeDidTapOnBuyBook(node: self)
+  }
+}
+
+// MARK: - Declarations
 extension BookDetailsECommerceNode {
   struct Configuration {
     var externalEdgeInsets = UIEdgeInsets(

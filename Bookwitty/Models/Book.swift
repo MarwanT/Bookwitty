@@ -25,6 +25,14 @@ class Book: Resource {
 
   var productDetails: ProductDetails?
   var supplierInformation: SupplierInformation?
+  
+  var canonicalURL: URL? {
+    guard let urlString = self.links?["canonical-url"] as? String,
+      let url = URL(string: urlString) else {
+      return nil
+    }
+    return url
+  }
 
   override class var resourceType: ResourceType {
     return "books"
