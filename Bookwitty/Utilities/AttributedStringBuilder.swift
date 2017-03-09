@@ -19,12 +19,21 @@ class AttributedStringBuilder {
 
   func append(text: String, fontDynamicType: FontDynamicType? = nil, color: UIColor =  ThemeManager.shared.currentTheme.defaultTextColor(),
               underlineStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone,
-              strikeThroughStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone) -> Self {
+              strikeThroughStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone,
+              fromHtml: Bool = false, htmlImageWidth: CGFloat = UIScreen.main.bounds.width) -> Self {
+    if fromHtml, let htmlAtrString = htmlAttributedString(text: text, fontDynamicType: fontDynamicType, color: color,
+                                                          underlineStyle: underlineStyle, strikeThroughStyle: strikeThroughStyle,
+                                                          htmlImageWidth: htmlImageWidth) {
+      attributedString.append(htmlAtrString)
+      return self
+    }
+
     let atrString = NSAttributedString(string: text, attributes: [
       NSFontAttributeName : fontDynamicType?.font ?? self.fontDynamicType.font,
       NSForegroundColorAttributeName : color,
       NSUnderlineStyleAttributeName: underlineStyle.rawValue,
-      NSStrikethroughStyleAttributeName: strikeThroughStyle.rawValue
+      NSStrikethroughStyleAttributeName: strikeThroughStyle.rawValue,
+      NSDocumentTypeDocumentAttribute: fromHtml ? NSHTMLTextDocumentType : NSPlainTextDocumentType
       ])
 
     attributedString.append(atrString)
