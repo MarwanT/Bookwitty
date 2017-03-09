@@ -80,8 +80,8 @@ extension BookDetailsViewController {
       viewCategory(category)
     case .viewDescription:
       break
-    case .viewDetails:
-      viewDetails()
+    case .viewDetails(let productDetails):
+      viewDetails(productDetails)
     case .share:
       break
     case .buyThisBook:
@@ -93,8 +93,11 @@ extension BookDetailsViewController {
     }
   }
   
-  fileprivate func viewDetails() {
-    print("View Details")
+  fileprivate func viewDetails(_ productDetails: ProductDetails) {
+    let node = BookDetailsInformationNode()
+    node.productDetails = productDetails
+    let genericViewController = GenericNodeViewController(node: node, title: viewModel.book.title)
+    self.navigationController?.pushViewController(genericViewController, animated: true)
   }
   
   fileprivate func viewShippingInfo() {
@@ -115,7 +118,7 @@ extension BookDetailsViewController {
   enum Action {
     case viewImageFullScreen
     case viewFormat
-    case viewDetails
+    case viewDetails(ProductDetails)
     case viewCategory(Category)
     case viewDescription
     case viewShippingInfo
