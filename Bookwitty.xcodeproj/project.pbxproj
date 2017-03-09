@@ -113,7 +113,6 @@
 		59EC5BA51E6C5987006E1CB9 /* BookDetailsECommerceNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC5B9F1E6C5987006E1CB9 /* BookDetailsECommerceNode.swift */; };
 		59EC5BA61E6C5987006E1CB9 /* BookDetailsFormatNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC5BA01E6C5987006E1CB9 /* BookDetailsFormatNode.swift */; };
 		59EC5BA71E6C5987006E1CB9 /* BookDetailsHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC5BA11E6C5987006E1CB9 /* BookDetailsHeaderNode.swift */; };
-		59EC5BA81E6C5987006E1CB9 /* BookDetailsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC5BA21E6C5987006E1CB9 /* BookDetailsNode.swift */; };
 		59EC5BA91E6C5987006E1CB9 /* BookDetailsPricesNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC5BA31E6C5987006E1CB9 /* BookDetailsPricesNode.swift */; };
 		59EC5BAA1E6C5987006E1CB9 /* BookDetailsStockNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC5BA41E6C5987006E1CB9 /* BookDetailsStockNode.swift */; };
 		59EC5BAC1E6C5B51006E1CB9 /* SectionTitleHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC5BAB1E6C5B51006E1CB9 /* SectionTitleHeaderNode.swift */; };
@@ -298,7 +297,6 @@
 		59EC5B9F1E6C5987006E1CB9 /* BookDetailsECommerceNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsECommerceNode.swift; sourceTree = "<group>"; };
 		59EC5BA01E6C5987006E1CB9 /* BookDetailsFormatNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsFormatNode.swift; sourceTree = "<group>"; };
 		59EC5BA11E6C5987006E1CB9 /* BookDetailsHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsHeaderNode.swift; sourceTree = "<group>"; };
-		59EC5BA21E6C5987006E1CB9 /* BookDetailsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsNode.swift; sourceTree = "<group>"; };
 		59EC5BA31E6C5987006E1CB9 /* BookDetailsPricesNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsPricesNode.swift; sourceTree = "<group>"; };
 		59EC5BA41E6C5987006E1CB9 /* BookDetailsStockNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsStockNode.swift; sourceTree = "<group>"; };
 		59EC5BAB1E6C5B51006E1CB9 /* SectionTitleHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionTitleHeaderNode.swift; sourceTree = "<group>"; };
@@ -858,7 +856,6 @@
 				59EC5B9F1E6C5987006E1CB9 /* BookDetailsECommerceNode.swift */,
 				59EC5BA01E6C5987006E1CB9 /* BookDetailsFormatNode.swift */,
 				59EC5BA11E6C5987006E1CB9 /* BookDetailsHeaderNode.swift */,
-				59EC5BA21E6C5987006E1CB9 /* BookDetailsNode.swift */,
 				59EC5BA31E6C5987006E1CB9 /* BookDetailsPricesNode.swift */,
 				59EC5BA41E6C5987006E1CB9 /* BookDetailsStockNode.swift */,
 				59591F1C1E6DAF5D005592B8 /* BookDetailsAboutNode.swift */,
@@ -1220,7 +1217,6 @@
 				F461B25C1E4B73B0005EA5A8 /* NewsFeedViewController.swift in Sources */,
 				F4A4262F1E5622190090CD51 /* Topic.swift in Sources */,
 				56D5F73B1E5B60BF00F6A164 /* Book.swift in Sources */,
-				59EC5BA81E6C5987006E1CB9 /* BookDetailsNode.swift in Sources */,
 				F42686791E4F458A0085E581 /* CardActionBarNode.swift in Sources */,
 				5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */,
 				F426867B1E505CE60085E581 /* BaseCardPostNode.swift in Sources */,
@@ -1309,7 +1305,6 @@
 				F420B6A21E43C570001F34CD /* User.swift in Sources */,
 				59591F251E6F01C7005592B8 /* DisclosureNodeCell.swift in Sources */,
 				5644F21A1E55A2F100B7D8E7 /* SettingsViewController.swift in Sources */,
-				59EC5B971E689E0E006E1CB9 /* BookDetailsFormatNode.swift in Sources */,
 				F426008D1E6D8D1200E14D93 /* OnBoardingLoadingButton.swift in Sources */,
 				56D5F73D1E5B7D0000F6A164 /* PenName+API.swift in Sources */,
 				F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */,
@@ -1344,7 +1339,6 @@
 				59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */,
 				59D6021B1E32597B00271315 /* AppKeys.swift in Sources */,
 				594290111E51B7C00006B2F1 /* DisclosureTableViewCell.swift in Sources */,
-				59EC5B991E68C95A006E1CB9 /* BookDetailsECommerceNode.swift in Sources */,
 				F43A5E8E1E69858A008C018B /* OnBoardingInternalCellNode.swift in Sources */,
 				594F4EA61E42255200A947FA /* AccessToken.swift in Sources */,
 				F458C5F21E5AFD4300AFD0FC /* PenNameDisplayNode.swift in Sources */,
