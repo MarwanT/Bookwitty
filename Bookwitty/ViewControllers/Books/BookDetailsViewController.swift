@@ -103,7 +103,10 @@ extension BookDetailsViewController {
   }
   
   fileprivate func viewAboutDescription(_ description: String) {
-    let node = BookDetailsAboutNode()
+    let externalInsets = UIEdgeInsets(
+      top: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      left: 0, bottom: 0, right: 0)
+    let node = BookDetailsAboutNode(externalInsets: externalInsets)
     node.about = description
     node.dispayMode = .expanded
     let genericViewController = GenericNodeViewController(node: node, title: viewModel.book.title)
