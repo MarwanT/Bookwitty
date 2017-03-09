@@ -9,7 +9,7 @@
 import Foundation
 import AsyncDisplayKit
 
-class PostDetailsNode: ASDisplayNode {
+class PostDetailsNode: ASScrollNode {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
 
@@ -31,6 +31,12 @@ class PostDetailsNode: ASDisplayNode {
       let attributed = body.isEmptyOrNil() ? nil : AttributedStringBuilder(fontDynamicType: FontDynamicType.title3).append(text: body!).attributedString
       descriptionNode.attributedText = attributed
     }
+  }
+
+  override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
+    headerNode = PostDetailsHeaderNode()
+    descriptionNode = ASTextNode()
+    super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
   override init() {
