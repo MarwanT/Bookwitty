@@ -18,6 +18,8 @@ class BookDetailsStockNode: ASDisplayNode {
   fileprivate let shippingInformationTextNode: ASTextNode
   fileprivate let buyThisBookButtonNode: ASButtonNode
   
+  weak var delegate: BookDetailsStockNodeDelegate?
+  
   var configuration = Configuration()
   
   override init() {
@@ -89,11 +91,11 @@ class BookDetailsStockNode: ASDisplayNode {
   
   // MARK: Actions
   func shippingInformationTouchUpInside(_ sender: Any?) {
-    print("Did Tap Shipping Information")
+    delegate?.stockNodeDidTapOnShippingInformation(node: self)
   }
   
   func buyThisBookTouchUpInside(_ sender: Any?) {
-    print("Buy This Book")
+    delegate?.stockNodeDidTapOnBuyBook(node: self)
   }
 }
 
