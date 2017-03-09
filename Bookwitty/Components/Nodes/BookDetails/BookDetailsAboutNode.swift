@@ -8,7 +8,7 @@
 
 import AsyncDisplayKit
 
-protocol BookDetailsAboutNodeDelegate {
+protocol BookDetailsAboutNodeDelegate: class {
   func aboutNodeDidTapViewDescription(aboutNode: BookDetailsAboutNode)
 }
 
@@ -19,7 +19,7 @@ class BookDetailsAboutNode: ASCellNode {
   fileprivate let topSeparator: ASDisplayNode
   fileprivate let bottomSeparator: ASDisplayNode
   
-  var delegate: BookDetailsAboutNodeDelegate?
+  weak var delegate: BookDetailsAboutNodeDelegate?
   
   var configuration = Configuration()
   
