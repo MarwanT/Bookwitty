@@ -65,6 +65,27 @@ class PostDetailsHeaderNode: ASCellNode {
     profileBarNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
     //Action Bar
     actionBarNode.delegate = self
+  }
+
+  func sidesEdgeInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: internalMargin)
+  }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let vStackSpec = ASStackLayoutSpec.vertical()
+    vStackSpec.spacing = contentSpacing
+
+    let textInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: textNode)
+    let profileBarInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: profileBarNode)
+    let separatorInset =  ASInsetLayoutSpec(insets: sidesEdgeInset(), child: separator)
+    let bottomSeparatorInset =  ASInsetLayoutSpec(insets: sidesEdgeInset(), child: bottomSeparator)
+
+    let vStackActionBarSpec = ASStackLayoutSpec.vertical()
+    vStackActionBarSpec.children = [separatorInset, actionBarNode, bottomSeparatorInset]
+
+    vStackSpec.children = [imageNode, textInsetSpec, profileBarInsetSpec, vStackActionBarSpec]
+    return vStackSpec
+  }
 }
 
 extension PostDetailsHeaderNode: CardActionBarNodeDelegate {
