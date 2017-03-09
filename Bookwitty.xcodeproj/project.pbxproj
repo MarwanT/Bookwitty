@@ -564,6 +564,7 @@
 			isa = PBXGroup;
 			children = (
 				59EC5B9E1E6C5987006E1CB9 /* BookDetails */,
+				F417B1C41E712C7100B0FAFE /* Cards */,
 				F434F7901E4E16CE001812BD /* CellNode.swift */,
 				F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */,
 				F426867A1E505CE60085E581 /* BaseCardPostNode.swift */,
@@ -938,6 +939,13 @@
 				CB5E98B3C54E0B0AD22F5CB4 /* Pods-BookwittyTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		F417B1C41E712C7100B0FAFE /* Cards */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Cards;
 			sourceTree = "<group>";
 		};
 		F42441631E66FDF00087E3B1 /* Factories */ = {
