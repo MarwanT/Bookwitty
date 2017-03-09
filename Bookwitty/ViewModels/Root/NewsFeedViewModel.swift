@@ -150,11 +150,19 @@ final class NewsFeedViewModel {
     return data.count + showsPenNameSelectionHeader
   }
 
-  func nodeForItem(atIndex index: Int) -> BaseCardPostNode? {
+  func resourceForIndex(index: Int) -> ModelResource? {
     let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
     let dataIndex = index - showsPenNameSelectionHeader
     guard data.count > dataIndex else { return nil }
     let resource = data[dataIndex]
+    return resource
+  }
+
+  func nodeForItem(atIndex index: Int) -> BaseCardPostNode? {
+    guard let resource = resourceForIndex(index: index) else {
+      return nil
+    }
+
     return CardFactory.shared.createCardFor(resource: resource)
   }
 }
