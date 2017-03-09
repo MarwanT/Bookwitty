@@ -7,3 +7,10 @@
 //
 
 import Foundation
+import AsyncDisplayKit
+
+class PostDetailsNode: ASDisplayNode {
+  override init() {
+    super.init()
+  }
+}
