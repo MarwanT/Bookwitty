@@ -138,7 +138,7 @@ extension DisclosureNodeCell {
       bottom: 0, right: 0)
     var style: Style = .normal
     var addInternalBottomSeparator: Bool = false
-    let separatorInsets = UIEdgeInsets.zero
+    var separatorInsets = UIEdgeInsets.zero
     fileprivate var backgroundSelectionView: UIView {
       let backView = UIView(frame: CGRect.zero)
       backView.backgroundColor = ThemeManager.shared.currentTheme.defaultSelectionColor()
