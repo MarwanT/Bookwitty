@@ -21,6 +21,8 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
     }
   }
   
+  var configuration = Configuration()
+  
   override init() {
     super.init()
     delegate = self
@@ -58,7 +60,10 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
     switch indexPath.section {
     case 0: // Header
       return {
-        let cell = SectionTitleHeaderNode()
+        let headerTopInsets = UIEdgeInsets(
+          top: self.configuration.topMargin,
+          left: 0, bottom: 0, right: 0)
+        let cell = SectionTitleHeaderNode(externalInsets: headerTopInsets)
         cell.setTitle(
           title: Strings.book_details(),
           verticalBarColor: ThemeManager.shared.currentTheme.colorNumber8(),
@@ -108,5 +113,12 @@ extension BookDetailsInformationNode {
   
   fileprivate func reloadNode() {
     reloadData()
+  }
+}
+
+// MARK: - Configurations
+extension BookDetailsInformationNode {
+  struct Configuration {
+    var topMargin: CGFloat = ThemeManager.shared.currentTheme.generalExternalMargin()
   }
 }
