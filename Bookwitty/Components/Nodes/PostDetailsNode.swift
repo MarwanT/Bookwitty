@@ -56,4 +56,17 @@ class PostDetailsNode: ASScrollNode {
     descriptionNode.style.flexGrow = 1.0
     descriptionNode.style.flexShrink = 1.0
   }
+
+  func sidesEdgeInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: internalMargin)
+  }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let vStackSpec = ASStackLayoutSpec.vertical()
+    vStackSpec.spacing = contentSpacing
+    let descriptionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: descriptionNode)
+    vStackSpec.children = [headerNode, descriptionInsetSpec]
+
+    return vStackSpec
+  }
 }
