@@ -64,5 +64,11 @@ class PostDetailsHeaderNode: ASCellNode {
     profileBarNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 45.0)
     profileBarNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
     //Action Bar
+    actionBarNode.delegate = self
+}
+
+extension PostDetailsHeaderNode: CardActionBarNodeDelegate {
+  func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    //TODO: delegate action to parent
   }
 }
