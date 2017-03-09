@@ -90,8 +90,8 @@ extension BookDetailsViewController {
       buyThisBook()
     case .addToWishlist:
       break
-    case .viewShippingInfo:
-      viewShippingInfo()
+    case .viewShippingInfo(let url):
+      viewShippingInfo(url)
     }
   }
   
@@ -110,7 +110,7 @@ extension BookDetailsViewController {
     self.navigationController?.pushViewController(genericViewController, animated: true)
   }
   
-  fileprivate func viewShippingInfo() {
+  fileprivate func viewShippingInfo(_ url: URL) {
     print("View Shipping Info")
   }
   
@@ -125,13 +125,27 @@ extension BookDetailsViewController {
   }
 }
 
-// MARK: - Declarations
+// MARK: - Book details about node
 extension BookDetailsViewController: BookDetailsAboutNodeDelegate {
   func aboutNodeDidTapViewDescription(aboutNode: BookDetailsAboutNode) {
     guard let description = aboutNode.about else {
       return
     }
     perform(action: .viewDescription(description))
+  }
+}
+
+// MARK: - Book details about node
+extension BookDetailsViewController: BookDetailsECommerceNodeDelegate {
+  func eCommerceNodeDidTapOnBuyBook(node: BookDetailsECommerceNode) {
+    
+  }
+  
+  func eCommerceNodeDidTapOnShippingInformation(node: BookDetailsECommerceNode) {
+    guard let url = viewModel.shippementInfoURL else {
+      return
+    }
+    WebViewController.present(url: url, inViewController: self)
   }
 }
 
@@ -143,7 +157,7 @@ extension BookDetailsViewController {
     case viewDetails(ProductDetails)
     case viewCategory(Category)
     case viewDescription(String)
-    case viewShippingInfo
+    case viewShippingInfo(URL)
     case buyThisBook
     case share
     case addToWishlist
