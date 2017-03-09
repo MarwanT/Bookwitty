@@ -29,6 +29,8 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
     viewModel.book = book
     
     super.init(node: collectionNode)
+    
+    viewModel.viewController = self
   }
   
   override func viewDidLoad() {

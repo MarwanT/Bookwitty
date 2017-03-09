@@ -16,6 +16,7 @@ final class BookDetailsViewModel {
   let maximumNumberOfDetails: Int = 3
   var bookDetailedInformation: [(key: String, value: String)]? = nil
   var bookCategories: [Category]? = nil
+  weak var viewController: BookDetailsViewController? = nil
   
   var viewControllerTitle: String? {
     return ""
@@ -80,6 +81,7 @@ extension BookDetailsViewModel {
     case .about:
       let aboutNode = BookDetailsAboutNode()
       aboutNode.about = book.bookDescription
+      aboutNode.delegate = viewController
       node = aboutNode
     case .serie:
       break
