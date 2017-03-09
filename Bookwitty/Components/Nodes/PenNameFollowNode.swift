@@ -118,6 +118,7 @@ class PenNameFollowNode: ASCellNode {
     verticalSpec.style.flexShrink = 1.0
 
     nodesArray.append(verticalSpec)
+    nodesArray.append(spacer(flexGrow: 1.0))
     nodesArray.append(spacer(width: internalMargin / 2.0))
     nodesArray.append(actionButton)
 
