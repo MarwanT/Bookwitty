@@ -11,6 +11,12 @@ import UIKit
 import AsyncDisplayKit
 
 class DiscoverViewController: ASViewController<ASCollectionNode> {
+  enum LoadingStatus {
+    case none
+    case loadMore
+    case reloading
+    case loading
+  }
   let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
@@ -20,12 +26,18 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
   var collectionView: ASCollectionView?
 
   let viewModel = DiscoverViewModel()
-  
-  var isLoadingMore: Bool = false {
+  var loadingStatus: LoadingStatus = .none {
     didSet {
-      let bottomMargin: CGFloat = isLoadingMore ? -(externalMargin/2) : -(loaderNode.usedHeight - externalMargin/2)
-      flowLayout.sectionInset = UIEdgeInsets(top: externalMargin, left: 0, bottom: bottomMargin, right: 0)
-      loaderNode.updateLoaderVisibility(show: isLoadingMore)
+      switch loadingStatus {
+      case .loading:
+        break
+      case .reloading:
+        updateBottomLoaderVisibility(show: false)
+      case .loadMore:
+        updateBottomLoaderVisibility(show: true)
+      case .none:
+        updateBottomLoaderVisibility(show: false)
+      }
     }
   }
 
@@ -58,23 +70,36 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    initializeNavigationItems()
     title = Strings.discover()
 
     collectionNode.delegate = self
     collectionNode.dataSource = self
     //Listen to pullToRefresh valueChange and call loadData
-    pullToRefresher.addTarget(self, action: #selector(self.loadData), for: .valueChanged)
+    pullToRefresher.addTarget(self, action: #selector(self.pullDownToReloadData), for: .valueChanged)
 
     applyTheme()
-
-    if UserManager.shared.isSignedIn {
-      loadData()
-    }
   }
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    if UserManager.shared.isSignedIn && loadingStatus == .none && viewModel.numberOfItemsInSection() == 0 {
+      self.pullToRefresher.beginRefreshing()
+      loadData(loadingStatus: .loading, completionBlock: {
+        self.pullToRefresher.endRefreshing()
+      })
+    }
     animateRefreshControllerIfNeeded()
+  }
+
+  private func initializeNavigationItems() {
+    let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
+      UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+    leftNegativeSpacer.width = -10
+    let settingsBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "person"), style:
+      UIBarButtonItemStyle.plain, target: self, action:
+      #selector(self.settingsButtonTap(_:)))
+    navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
   }
 
   /*
@@ -96,13 +121,56 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     }
   }
 
-  func loadData() {
-    pullToRefresher.beginRefreshing()
+  func loadData(loadingStatus: LoadingStatus, completionBlock: @escaping () -> ()) {
+    self.loadingStatus = loadingStatus
+
     viewModel.loadDiscoverData { [weak self] (success) in
       guard let strongSelf = self else { return }
-      strongSelf.pullToRefresher.endRefreshing()
+      strongSelf.loadingStatus = .none
+
+      completionBlock()
+
       strongSelf.collectionNode.reloadData()
     }
+  }
+
+  func pullDownToReloadData() {
+    guard loadingStatus != .reloading else {
+      return
+    }
+
+    self.pullToRefresher.beginRefreshing()
+    loadData(loadingStatus: .reloading, completionBlock: {
+      self.pullToRefresher.endRefreshing()
+    })
+  }
+}
+
+// MARK: - Action
+extension DiscoverViewController {
+  func settingsButtonTap(_ sender: UIBarButtonItem) {
+    let settingsVC = Storyboard.Account.instantiate(AccountViewController.self)
+    settingsVC.hidesBottomBarWhenPushed = true
+    self.navigationController?.pushViewController(settingsVC, animated: true)
+  }
+}
+
+// MARK: - Reload Footer
+extension DiscoverViewController {
+  func updateBottomLoaderVisibility(show: Bool) {
+    if Thread.isMainThread {
+      reloadFooter(show: show)
+    } else {
+      DispatchQueue.main.async {
+        self.reloadFooter(show: show)
+      }
+    }
+  }
+
+  func reloadFooter(show: Bool) {
+    let bottomMargin: CGFloat = show ? -(externalMargin/2) : -(loaderNode.usedHeight - externalMargin/2)
+    flowLayout.sectionInset = UIEdgeInsets(top: externalMargin, left: 0, bottom: bottomMargin, right: 0)
+    loaderNode.updateLoaderVisibility(show: show)
   }
 }
 
@@ -158,16 +226,24 @@ extension DiscoverViewController: ASCollectionDelegate {
   }
 
   public func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
-    guard !isLoadingMore else {
+    guard context.isFetching() else {
       return
     }
-    let initialLastIndexPath: Int = viewModel.numberOfItemsInSection()
-    
-    DispatchQueue.main.async {
-      self.isLoadingMore = true
+    guard loadingStatus == .none else {
+      context.completeBatchFetching(true)
+      return
     }
+    context.beginBatchFetching()
+    self.loadingStatus = .loadMore
+
+    let initialLastIndexPath: Int = viewModel.numberOfItemsInSection()
+
     // Fetch next page data
     viewModel.loadNextPage { [weak self] (success) in
+      defer {
+        context.completeBatchFetching(true)
+        self!.loadingStatus = .none
+      }
       guard let strongSelf = self else {
         return
       }
@@ -179,26 +255,7 @@ extension DiscoverViewController: ASCollectionDelegate {
         let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
           return IndexPath(row: index, section: 0)
         })
-        strongSelf.loadItemsWithIndexOnMainThread() {
-          collectionNode.insertItems(at: updatedIndexPathRange)
-          strongSelf.isLoadingMore = false
-        }
-      }
-
-      // Properly finish the batch fetch
-      context.completeBatchFetching(true)
-    }
-  }
-
-  /**
-   * Note: loadItemsWithIndex will always run on the main thread
-   */
-  func loadItemsWithIndexOnMainThread(completionBlock: @escaping () -> ()) {
-    if Thread.isMainThread {
-      completionBlock()
-    } else {
-      DispatchQueue.main.async {
-        completionBlock()
+        collectionNode.insertItems(at: updatedIndexPathRange)
       }
     }
   }
