@@ -237,6 +237,14 @@ class Strings {
     return localizedString(key: "number_of_pages")
   }
 
+  class func follow() -> String {
+    return localizedString(key: "follow")
+  }
+
+  class func followed() -> String {
+    return localizedString(key: "followed")
+  }
+
   class func followers() -> String {
     return localizedString(key: "followers")
   }
