@@ -80,8 +80,8 @@ extension BookDetailsViewController {
       break
     case .viewCategory(let category):
       viewCategory(category)
-    case .viewDescription:
-      break
+    case .viewDescription(let description):
+      viewAboutDescription(description)
     case .viewDetails(let productDetails):
       viewDetails(productDetails)
     case .share:
@@ -102,6 +102,14 @@ extension BookDetailsViewController {
     self.navigationController?.pushViewController(genericViewController, animated: true)
   }
   
+  fileprivate func viewAboutDescription(_ description: String) {
+    let node = BookDetailsAboutNode()
+    node.about = description
+    node.dispayMode = .expanded
+    let genericViewController = GenericNodeViewController(node: node, title: viewModel.book.title)
+    self.navigationController?.pushViewController(genericViewController, animated: true)
+  }
+  
   fileprivate func viewShippingInfo() {
     print("View Shipping Info")
   }
@@ -116,13 +124,23 @@ extension BookDetailsViewController {
 }
 
 // MARK: - Declarations
+extension BookDetailsViewController: BookDetailsAboutNodeDelegate {
+  func aboutNodeDidTapViewDescription(aboutNode: BookDetailsAboutNode) {
+    guard let description = aboutNode.about else {
+      return
+    }
+    perform(action: .viewDescription(description))
+  }
+}
+
+// MARK: - Declarations
 extension BookDetailsViewController {  
   enum Action {
     case viewImageFullScreen
     case viewFormat
     case viewDetails(ProductDetails)
     case viewCategory(Category)
-    case viewDescription
+    case viewDescription(String)
     case viewShippingInfo
     case buyThisBook
     case share
