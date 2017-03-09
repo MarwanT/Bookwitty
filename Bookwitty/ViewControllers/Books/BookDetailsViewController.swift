@@ -70,4 +70,16 @@ extension BookDetailsViewController {
     case recommendedReadingLists
     case relatedTopics
   }
+  
+  enum Action {
+    case viewImageFullScreen
+    case viewFormat
+    case viewDetails
+    case viewCategory
+    case viewDescription
+    case viewShippingInfo
+    case buyThisBook
+    case share
+    case addToWishlist
+  }
 }
