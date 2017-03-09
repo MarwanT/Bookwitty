@@ -80,6 +80,33 @@ struct GeneralAPI {
     })
   }
 
+  static func posts(contentIdentifier identifier: String, type: [String]?, completion: @escaping (_ success: Bool, _ resource: [ModelResource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let successStatusCode: Int = 200
+
+    return signedAPIRequest(target: .posts(identifier: identifier, type: type), completion: {
+      (data, statusCode, response, error) in
+      var success: Bool = statusCode == successStatusCode
+      var resources: [ModelResource]? = nil
+      var error: BookwittyAPIError? = error
+
+      defer {
+        completion(success, resources, error)
+      }
+
+      guard statusCode == successStatusCode else {
+        error = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      guard let data = data else {
+        error = BookwittyAPIError.failToParseData
+        return
+      }
+
+      resources = Parser.parseDataArray(data: data)?.resources
+    })
+  }
+
   static func follow(identifer: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
 
     let successStatusCode = 204
