@@ -86,8 +86,8 @@ extension BookDetailsViewController {
       viewDetails(productDetails)
     case .share:
       break
-    case .buyThisBook:
-      buyThisBook()
+    case .buyThisBook(let url):
+      buyThisBook(url)
     case .addToWishlist:
       break
     case .viewShippingInfo(let url):
@@ -114,11 +114,11 @@ extension BookDetailsViewController {
   }
   
   fileprivate func viewShippingInfo(_ url: URL) {
-    print("View Shipping Info")
+    WebViewController.present(url: url, inViewController: self)
   }
   
-  fileprivate func buyThisBook() {
-    print("Buy This Book")
+  fileprivate func buyThisBook(_ url: URL) {
+    WebViewController.present(url: url, inViewController: self)
   }
   
   fileprivate func viewCategory(_ category: Category) {
@@ -144,14 +144,14 @@ extension BookDetailsViewController: BookDetailsECommerceNodeDelegate {
     guard let url = viewModel.bookCanonicalURL else {
       return
     }
-    WebViewController.present(url: url, inViewController: self)
+    perform(action: .buyThisBook(url))
   }
   
   func eCommerceNodeDidTapOnShippingInformation(node: BookDetailsECommerceNode) {
     guard let url = viewModel.shipementInfoURL else {
       return
     }
-    WebViewController.present(url: url, inViewController: self)
+    perform(action: .viewShippingInfo(url))
   }
 }
 
@@ -164,7 +164,7 @@ extension BookDetailsViewController {
     case viewCategory(Category)
     case viewDescription(String)
     case viewShippingInfo(URL)
-    case buyThisBook
+    case buyThisBook(URL)
     case share
     case addToWishlist
   }
