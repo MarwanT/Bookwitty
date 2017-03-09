@@ -76,8 +76,8 @@ extension BookDetailsViewController {
       break
     case .viewFormat:
       break
-    case .viewCategory:
-      break
+    case .viewCategory(let category):
+      viewCategory(category)
     case .viewDescription:
       break
     case .viewDetails:
@@ -104,28 +104,19 @@ extension BookDetailsViewController {
   fileprivate func buyThisBook() {
     print("Buy This Book")
   }
+  
+  fileprivate func viewCategory(_ category: Category) {
+    print("View Category: \(category.value)")
+  }
 }
 
 // MARK: - Declarations
-extension BookDetailsViewController {
-  enum Section: Int {
-    case header = 0
-    case format
-    case eCommerce
-    case about
-    case serie
-    case peopleWhoLikeThisBook
-    case details
-    case categories
-    case recommendedReadingLists
-    case relatedTopics
-  }
-  
+extension BookDetailsViewController {  
   enum Action {
     case viewImageFullScreen
     case viewFormat
     case viewDetails
-    case viewCategory
+    case viewCategory(Category)
     case viewDescription
     case viewShippingInfo
     case buyThisBook
