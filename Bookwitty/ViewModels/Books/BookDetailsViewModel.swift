@@ -9,18 +9,6 @@
 import Foundation
 import AsyncDisplayKit
 
-enum BookDetailsSection: Int {
-  case header = 0
-  case format
-  case eCommerce
-  case about
-  case serie
-  case peopleWhoLikeThisBook
-  case details
-  case categories
-  case recommendedReadingLists
-  case relatedTopics
-}
 
 final class BookDetailsViewModel {
   var book: Book! = nil
@@ -37,7 +25,7 @@ final class BookDetailsViewModel {
   }
   
   func numberOfItemsForSection(section: Int) -> Int {
-    guard let section = BookDetailsSection(rawValue: section) else {
+    guard let section = BookDetailsViewController.Section(rawValue: section) else {
       return 0
     }
     switch section {
@@ -69,7 +57,7 @@ final class BookDetailsViewModel {
 extension BookDetailsViewModel {
   func nodeForItem(at indexPath: IndexPath) -> ASCellNode {
     var node = ASCellNode()
-    guard let section = BookDetailsSection(rawValue: indexPath.section) else {
+    guard let section = BookDetailsViewController.Section(rawValue: indexPath.section) else {
       return node
     }
     

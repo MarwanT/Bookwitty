@@ -55,3 +55,19 @@ extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
     }
   }
 }
+
+// MARK: - Declarations
+extension BookDetailsViewController {
+  enum Section: Int {
+    case header = 0
+    case format
+    case eCommerce
+    case about
+    case serie
+    case peopleWhoLikeThisBook
+    case details
+    case categories
+    case recommendedReadingLists
+    case relatedTopics
+  }
+}
