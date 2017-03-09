@@ -145,7 +145,7 @@ extension BookDetailsViewController: BookDetailsECommerceNodeDelegate {
   }
   
   func eCommerceNodeDidTapOnShippingInformation(node: BookDetailsECommerceNode) {
-    guard let url = viewModel.shippementInfoURL else {
+    guard let url = viewModel.shipementInfoURL else {
       return
     }
     WebViewController.present(url: url, inViewController: self)

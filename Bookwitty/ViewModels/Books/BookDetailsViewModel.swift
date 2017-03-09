@@ -22,7 +22,7 @@ final class BookDetailsViewModel {
     return ""
   }
   
-  var shippementInfoURL: URL? {
+  var shipementInfoURL: URL? {
     return URL(string: "/shipping", relativeTo: Environment.current.baseURL)
   }
   
