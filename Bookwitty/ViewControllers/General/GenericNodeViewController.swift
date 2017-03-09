@@ -9,6 +9,12 @@
 import AsyncDisplayKit
 
 class GenericNodeViewController: ASViewController<ASDisplayNode> {
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
   
-    
+  init(node: ASDisplayNode, title: String? = nil) {
+    super.init(node: node)
+    self.title = title
+  }
 }
