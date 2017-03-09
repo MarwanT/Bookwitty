@@ -308,6 +308,11 @@ extension NewsFeedViewController: BaseCardPostNodeDelegate {
 }
 
 extension NewsFeedViewController: ASCollectionDelegate {
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    let resource = viewModel.resourceForIndex(index: indexPath.item)
+    actionForCard(resource: resource)
+  }
+
   public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
     return ASSizeRange(
       min: CGSize(width: collectionNode.frame.width, height: 0),
@@ -384,6 +389,49 @@ extension NewsFeedViewController: UIScrollViewDelegate {
           //scrollView.contentInset = UIEdgeInsets(top: -penNameHeight, left: 0, bottom: 0, right: 0)
         })
       }
+    }
+  }
+}
+
+// MARK: - Actions For Cards
+extension NewsFeedViewController {
+  func actionForCard(resource: ModelResource?) {
+    guard let resource = resource else {
+      return
+    }
+    let registeredType = resource.registeredResourceType
+
+    switch registeredType {
+    case Image.resourceType:
+      //TODO: Create action function :actionForImageResourceType(resource: resource)
+      break
+    case Author.resourceType:
+      //TODO: Create action function :actionForAuthorResourceType(resource: resource)
+      break
+    case ReadingList.resourceType:
+      //TODO: Create action function :actionForReadingListResourceType(resource: resource)
+      break
+    case Topic.resourceType:
+      //TODO: Create action function :actionForTopicResourceType(resource: resource)
+      break
+    case Text.resourceType:
+      //TODO: Create action function :actionForTextResourceType(resource: resource)
+      break
+    case Quote.resourceType:
+      //TODO: Create action function :actionForQuoteResourceType(resource: resource)
+      break
+    case Video.resourceType:
+      //TODO: Create action function :actionForVideoResourceType(resource: resource)
+      break
+    case Audio.resourceType:
+      //TODO: Create action function :actionForAudioResourceType(resource: resource)
+      break
+    case Link.resourceType:
+      //TODO: Create action function :actionForLinkResourceType(resource: resource)
+      break
+    default:
+      print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")
+      break
     }
   }
 }
