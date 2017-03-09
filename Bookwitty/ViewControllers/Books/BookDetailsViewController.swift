@@ -135,10 +135,13 @@ extension BookDetailsViewController: BookDetailsAboutNodeDelegate {
   }
 }
 
-// MARK: - Book details about node
+// MARK: - Book details e-commerce node
 extension BookDetailsViewController: BookDetailsECommerceNodeDelegate {
   func eCommerceNodeDidTapOnBuyBook(node: BookDetailsECommerceNode) {
-    
+    guard let url = viewModel.bookCanonicalURL else {
+      return
+    }
+    WebViewController.present(url: url, inViewController: self)
   }
   
   func eCommerceNodeDidTapOnShippingInformation(node: BookDetailsECommerceNode) {

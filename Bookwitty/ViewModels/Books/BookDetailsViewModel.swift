@@ -26,6 +26,10 @@ final class BookDetailsViewModel {
     return URL(string: "/shipping", relativeTo: Environment.current.baseURL)
   }
   
+  var bookCanonicalURL: URL? {
+    return book.canonicalURL
+  }
+  
   var numberOfSections: Int {
     return 10
   }
