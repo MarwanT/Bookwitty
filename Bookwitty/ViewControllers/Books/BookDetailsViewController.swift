@@ -39,6 +39,17 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
     
     collectionNode.delegate = self
     collectionNode.dataSource = self
+    
+    loadNavigationBarButtons()
+  }
+  
+  private func loadNavigationBarButtons() {
+    let shareButton = UIBarButtonItem(
+      image: #imageLiteral(resourceName: "shareOutside"),
+      style: UIBarButtonItemStyle.plain,
+      target: self,
+      action: #selector(shareOutsideButton(_:)))
+    navigationItem.rightBarButtonItem = shareButton
   }
 }
 
@@ -84,8 +95,8 @@ extension BookDetailsViewController {
       viewAboutDescription(description)
     case .viewDetails(let productDetails):
       viewDetails(productDetails)
-    case .share:
-      break
+    case .share(let title, let url):
+      shareBook(title: title, url: url)
     case .buyThisBook(let url):
       buyThisBook(url)
     case .addToWishlist:
@@ -126,6 +137,20 @@ extension BookDetailsViewController {
     categoryViewController.viewModel.category = category
     navigationController?.pushViewController(categoryViewController, animated: true)
   }
+  
+  fileprivate func shareBook(title: String, url: URL) {
+    let activityViewController = UIActivityViewController(
+      activityItems: [title, url],
+      applicationActivities: nil)
+    present(activityViewController, animated: true, completion: nil)
+  }
+  
+  func shareOutsideButton(_ sender: Any?) {
+    guard let url = viewModel.bookCanonicalURL else {
+      return
+    }
+    perform(action: .share(bookTitle: self.viewModel.book.title ?? "", url: url))
+  }
 }
 
 // MARK: - Book details about node
@@ -165,7 +190,7 @@ extension BookDetailsViewController {
     case viewDescription(String)
     case viewShippingInfo(URL)
     case buyThisBook(URL)
-    case share
+    case share(bookTitle: String, url: URL)
     case addToWishlist
   }
 }
