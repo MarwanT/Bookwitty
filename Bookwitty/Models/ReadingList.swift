@@ -28,6 +28,10 @@ class ReadingList: Resource {
     return self.postsCollection?.linkage
   }()
 
+  lazy var posts: [ModelResource]? = {
+    return self.postsCollection?.resources
+  }()
+
   override class var resourceType: ResourceType {
     return "reading-lists"
   }
