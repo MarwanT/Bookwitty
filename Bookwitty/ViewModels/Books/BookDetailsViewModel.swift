@@ -261,7 +261,10 @@ extension BookDetailsViewModel {
       case 0: // Header
         return nil
       case (bookDetailedInformation.count + 1): // Footer
-        return .viewDetails
+        guard let productDetails = book.productDetails else {
+          return nil
+        }
+        return .viewDetails(productDetails)
       default: // Information
         return nil
       }
