@@ -19,7 +19,8 @@ class SectionTitleHeaderNode: ASCellNode {
     }
   }
   
-  override init() {
+  init(externalInsets: UIEdgeInsets = UIEdgeInsets.zero) {
+    configuration.externalEdgeInsets = externalInsets
     verticalBarNode = ASDisplayNode()
     horizontalBarNode = ASDisplayNode()
     titleNode = ASTextNode()
@@ -113,8 +114,7 @@ extension SectionTitleHeaderNode {
   struct Configuration {
     var verticalBarColor = ThemeManager.shared.currentTheme.colorNumber6()
     var horizontalBarColor = ThemeManager.shared.currentTheme.colorNumber5()
-    var externalEdgeInsets = UIEdgeInsets(
-      top: ThemeManager.shared.currentTheme.generalExternalMargin()*2, left: 0, bottom: 0, right: 0)
+    var externalEdgeInsets = UIEdgeInsets.zero
     fileprivate var defaultTextColor = ThemeManager.shared.currentTheme.defaultTextColor()
     fileprivate var verticalBarWidth: CGFloat = 8
     fileprivate var minimumHeight: CGFloat {

@@ -88,7 +88,10 @@ extension BookDetailsViewModel {
       eCommerceNode.set(supplierInformation: book.supplierInformation)
       node = eCommerceNode
     case .about:
-      let aboutNode = BookDetailsAboutNode()
+      let externalInsets = UIEdgeInsets(
+        top: ThemeManager.shared.currentTheme.generalExternalMargin() * 2,
+        left: 0, bottom: 0, right: 0)
+      let aboutNode = BookDetailsAboutNode(externalInsets: externalInsets)
       aboutNode.about = book.bookDescription
       aboutNode.delegate = viewController
       node = aboutNode
@@ -102,8 +105,10 @@ extension BookDetailsViewModel {
       }
       switch indexPath.row {
       case 0: // Header
-        let headerNode = SectionTitleHeaderNode()
-        headerNode.configuration.externalEdgeInsets.top = (ThemeManager.shared.currentTheme.generalExternalMargin() * 2)
+        let externalInsets = UIEdgeInsets(
+          top: ThemeManager.shared.currentTheme.generalExternalMargin() * 2,
+          left: 0, bottom: 0, right: 0)
+        let headerNode = SectionTitleHeaderNode(externalInsets: externalInsets)
         headerNode.setTitle(
           title: Strings.book_details(),
           verticalBarColor: ThemeManager.shared.currentTheme.colorNumber8(),

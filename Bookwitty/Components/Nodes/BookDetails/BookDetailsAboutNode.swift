@@ -25,7 +25,8 @@ class BookDetailsAboutNode: ASCellNode {
   
   var dispayMode: DisplayMode = .compact
   
-  override init() {
+  init(externalInsets: UIEdgeInsets = UIEdgeInsets.zero) {
+    configuration.externalEdgeInsets = externalInsets
     headerNode = SectionTitleHeaderNode()
     descriptionTextNode = ASTextNode()
     viewDescription = DisclosureNode()
@@ -106,7 +107,7 @@ extension BookDetailsAboutNode {
     fileprivate let headerVerticalBarColor = ThemeManager.shared.currentTheme.colorNumber6()
     fileprivate let headerHorizontalBarColor = ThemeManager.shared.currentTheme.colorNumber5()
     fileprivate let compactMaximumNumberOfLines: UInt = 6
-    fileprivate let externalEdgeInsets = UIEdgeInsets.zero
+    fileprivate var externalEdgeInsets = UIEdgeInsets.zero
     fileprivate let descriptionTextEdgeInsets = UIEdgeInsets(
       top: ThemeManager.shared.currentTheme.generalExternalMargin(),
       left: ThemeManager.shared.currentTheme.generalExternalMargin(),
