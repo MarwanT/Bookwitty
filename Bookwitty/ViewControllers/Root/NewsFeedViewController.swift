@@ -403,35 +403,62 @@ extension NewsFeedViewController {
 
     switch registeredType {
     case Image.resourceType:
-      //TODO: Create action function :actionForImageResourceType(resource: resource)
-      break
+      actionForImageResourceType(resource: resource)
     case Author.resourceType:
-      //TODO: Create action function :actionForAuthorResourceType(resource: resource)
-      break
+      actionForAuthorResourceType(resource: resource)
     case ReadingList.resourceType:
-      //TODO: Create action function :actionForReadingListResourceType(resource: resource)
-      break
+      actionForReadingListResourceType(resource: resource)
     case Topic.resourceType:
-      //TODO: Create action function :actionForTopicResourceType(resource: resource)
-      break
+      actionForTopicResourceType(resource: resource)
     case Text.resourceType:
-      //TODO: Create action function :actionForTextResourceType(resource: resource)
-      break
+      actionForTextResourceType(resource: resource)
     case Quote.resourceType:
-      //TODO: Create action function :actionForQuoteResourceType(resource: resource)
-      break
+      actionForQuoteResourceType(resource: resource)
     case Video.resourceType:
-      //TODO: Create action function :actionForVideoResourceType(resource: resource)
-      break
+      actionForVideoResourceType(resource: resource)
     case Audio.resourceType:
-      //TODO: Create action function :actionForAudioResourceType(resource: resource)
-      break
+      actionForAudioResourceType(resource: resource)
     case Link.resourceType:
-      //TODO: Create action function :actionForLinkResourceType(resource: resource)
-      break
+      actionForLinkResourceType(resource: resource)
     default:
       print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")
       break
     }
+  }
+
+  fileprivate func actionForImageResourceType(resource: ModelResource) {
+    //TODO: Implement the right action
+  }
+
+  fileprivate func actionForAuthorResourceType(resource: ModelResource) {
+    //TODO: Implement the right action
+  }
+
+  fileprivate func actionForReadingListResourceType(resource: ModelResource) {
+    //TODO: Implement the right action
+  }
+
+  fileprivate func actionForTopicResourceType(resource: ModelResource) {
+    //TODO: Implement the right action
+  }
+
+  fileprivate func actionForTextResourceType(resource: ModelResource) {
+    //TODO: Implement the right action
+  }
+
+  fileprivate func actionForQuoteResourceType(resource: ModelResource) {
+    //TODO: Implement the right action
+  }
+
+  fileprivate func actionForVideoResourceType(resource: ModelResource) {
+    //TODO: Implement the right action
+  }
+
+  fileprivate func actionForAudioResourceType(resource: ModelResource) {
+    //TODO: Implement the right action
+  }
+
+  fileprivate func actionForLinkResourceType(resource: ModelResource) {
+    //TODO: Implement the right action
   }
 }
