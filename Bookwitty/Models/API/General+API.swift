@@ -53,6 +53,87 @@ struct GeneralAPI {
     }
   }
 
+  static func content<T: Resource>(of identifier: String, completion: @escaping (_ success: Bool, _ resource: T?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? where T: Parsable {
+    let successStatusCode: Int = 200
+
+    return signedAPIRequest(target: .content(identifier: identifier), completion: {
+      (data, statusCode, response, error) in
+      var success: Bool = statusCode == successStatusCode
+      var resource: T? = nil
+      var error: BookwittyAPIError? = error
+
+      defer {
+        completion(success, resource, error)
+      }
+
+      guard statusCode == successStatusCode else {
+        error = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      guard let data = data else {
+        error = BookwittyAPIError.failToParseData
+        return
+      }
+
+      resource = T.parseData(data: data) as? T
+    })
+  }
+
+  static func posts(contentIdentifier identifier: String, type: [String]?, completion: @escaping (_ success: Bool, _ resource: [ModelResource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let successStatusCode: Int = 200
+
+    return signedAPIRequest(target: .posts(identifier: identifier, type: type), completion: {
+      (data, statusCode, response, error) in
+      var success: Bool = statusCode == successStatusCode
+      var resources: [ModelResource]? = nil
+      var error: BookwittyAPIError? = error
+
+      defer {
+        completion(success, resources, error)
+      }
+
+      guard statusCode == successStatusCode else {
+        error = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      guard let data = data else {
+        error = BookwittyAPIError.failToParseData
+        return
+      }
+
+      resources = Parser.parseDataArray(data: data)?.resources
+    })
+  }
+
+  static func editions(contentIdentifier identifier: String, completion: @escaping (_ success: Bool, _ resource: [ModelResource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let successStatusCode: Int = 200
+
+    return signedAPIRequest(target: .editions(identifier: identifier), completion: {
+      (data, statusCode, response, error) in
+      var success: Bool = statusCode == successStatusCode
+      var resources: [ModelResource]? = nil
+      var error: BookwittyAPIError? = error
+
+      defer {
+        completion(success, resources, error)
+      }
+
+      guard statusCode == successStatusCode else {
+        error = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      guard let data = data else {
+        error = BookwittyAPIError.failToParseData
+        return
+      }
+
+      resources = Parser.parseDataArray(data: data)?.resources
+    })
+  }
+
   static func follow(identifer: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
 
     let successStatusCode = 204
@@ -109,5 +190,18 @@ struct GeneralAPI {
 
       success = (statusCode == unfollowSuccessStatusNoContent || statusCode == unfollowSuccessStatusAlreadyDeleted)
     })
+  }
+}
+
+extension GeneralAPI {
+  static func postsParameters(type: [String]?) -> [String : Any]? {
+    var dictionary = [String : Any]()
+
+    //Filters
+    if let type = type {
+      dictionary["filter[type]"] = type
+    }
+
+    return dictionary
   }
 }
