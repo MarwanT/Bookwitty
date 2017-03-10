@@ -10,6 +10,7 @@
 "account" = "Account";
 "address_book" = "Address Book";
 "author" = "Author";
+"bag" = "Bag";
 "book_categories" = "Book Categories";
 "book_details" = "Book details";
 "books" = "Books";
@@ -87,6 +88,8 @@
 "register" = "Register";
 "clear_profile_photo" = "Clear profile photo";
 "settings" = "Settings";
+"shop_in_app_coming_soon_message" = "Soon you will be able to buy books in the Mobile App.";
+"shop_online" = "Shop Online";
 "sign_in" = "Sign in";
 "sign_out" = "Sign Out";
 "sign_up" = "Sign up";

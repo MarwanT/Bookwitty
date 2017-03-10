@@ -63,6 +63,7 @@ class RootTabBarController: UITabBarController {
     let viewController1 = NewsFeedViewController()
     let bookStoreViewController = Storyboard.Books.instantiate(BookStoreViewController.self)
     let discoverViewController = DiscoverViewController()
+    let bagViewController = BagViewController()
 
     viewController1.tabBarItem = UITabBarItem(
       title: Strings.news().uppercased(),
@@ -76,12 +77,18 @@ class RootTabBarController: UITabBarController {
       title: Strings.books().uppercased(),
       image: #imageLiteral(resourceName: "books"),
       tag:3)
+    bagViewController.tabBarItem = UITabBarItem(
+      title: Strings.bag().uppercased(),
+      image: #imageLiteral(resourceName: "emptyBasket"),
+      tag:3)
 
     // Set The View controller
     self.viewControllers = [
       UINavigationController(rootViewController: viewController1),
       UINavigationController(rootViewController: discoverViewController),
-      UINavigationController(rootViewController: bookStoreViewController)]
+      UINavigationController(rootViewController: bookStoreViewController),
+      UINavigationController(rootViewController: bagViewController),
+    ]
     
     // Set Default select tab index
     self.selectedIndex = 0

@@ -25,6 +25,10 @@ class Strings {
     return localizedString(key: "author")
   }
   
+  class func bag() -> String {
+    return localizedString(key: "bag")
+  }
+  
   class func book_categories() -> String {
     return localizedString(key: "book_categories")
   }
@@ -327,6 +331,14 @@ class Strings {
 
   class func settings() -> String {
     return localizedString(key: "settings")
+  }
+  
+  class func shop_in_app_coming_soon_message() -> String {
+    return localizedString(key: "shop_in_app_coming_soon_message")
+  }
+  
+  class func shop_online() -> String {
+    return localizedString(key: "shop_online")
   }
 
   class func sign_in() -> String {
