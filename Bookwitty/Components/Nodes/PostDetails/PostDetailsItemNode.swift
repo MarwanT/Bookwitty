@@ -59,6 +59,8 @@ class PostDetailsItemNode: ASDisplayNode {
 class PostDetailItemNode: ASDisplayNode {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+  private let largeImageHeight: CGFloat = 120.0
+  private let smallImageHeight: CGFloat = 90.0
 
   let imageNode: ASNetworkImageNode
   let headLineNode: ASTextNode
@@ -68,6 +70,9 @@ class PostDetailItemNode: ASDisplayNode {
   let separator: ASDisplayNode
   let button: ASButtonNode
 
+  var smallImage: Bool = true
+  var showsSubheadline: Bool = true
+  var showsButton: Bool = false
   var headLine: String? {
     didSet {
       if let headLine = headLine {
@@ -117,8 +122,7 @@ class PostDetailItemNode: ASDisplayNode {
       setNeedsLayout()
     }
   }
-
-  override init() {
+  private override init() {
     imageNode = ASNetworkImageNode()
     headLineNode = ASTextNode()
     subheadLineNode = ASTextNode()
@@ -128,6 +132,13 @@ class PostDetailItemNode: ASDisplayNode {
     button = ASButtonNode()
     super.init()
     automaticallyManagesSubnodes = true
+  }
+
+  convenience init(smallImage: Bool = true, showsSubheadline: Bool = true, showsButton: Bool = false) {
+    self.init()
+    self.smallImage = smallImage
+    self.showsSubheadline = showsSubheadline
+    self.showsButton = showsButton
     initializeNode()
   }
 
@@ -141,7 +152,7 @@ class PostDetailItemNode: ASDisplayNode {
     separator.style.flexGrow = 1
 
     //Image Setup
-    imageNode.style.preferredSize = CGSize(width: 90.0, height: 90.0)
+    imageNode.style.preferredSize = CGSize(width: smallImageHeight, height: smallImage ? smallImageHeight : largeImageHeight)
     imageNode.backgroundColor = UIColor.bwKeppel
     //Body Setup
     bodyNode.maximumNumberOfLines = 7
