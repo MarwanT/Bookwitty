@@ -68,6 +68,7 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
       itemNode.caption = res?.productDetails?.author
       itemNode.headLine = res?.title
       itemNode.subheadLine = nil
+      itemNode.delegate = self
       return itemNode
     case Topic.resourceType:
       let res = resource as? Topic
@@ -96,5 +97,11 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
 
   func postDetailsItemCount(_ postDetailsItem: PostDetailsItemNode) -> Int {
     return viewModel.contentPostsItemCount()
+  }
+}
+
+extension PostDetailsViewController: PostDetailItemNodeDelegate {
+  func postDetailItemNodeButtonTouchUpInside(PostDetailItemNode: PostDetailItemNode, button: ASButtonNode) {
+    //TODO: Marwan Please add the Action for "Buy A Book" Here
   }
 }
