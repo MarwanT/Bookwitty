@@ -9,6 +9,10 @@
 import UIKit
 import AsyncDisplayKit
 
+protocol TopicHeaderNodeDelegate: class {
+  func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ASButtonNode)
+}
+
 class TopicHeaderNode: ASCellNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
@@ -20,6 +24,8 @@ class TopicHeaderNode: ASCellNode {
   private var topicStatsNode: ASTextNode
   private var actionButton: ASButtonNode
   private var contributorsNode: ContributorsNode
+
+  weak var delegate: TopicHeaderNodeDelegate?
 
   override init() {
     imageNode = ASNetworkImageNode()
@@ -59,6 +65,7 @@ class TopicHeaderNode: ASCellNode {
     actionButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
     actionButton.borderWidth = 2
     actionButton.clipsToBounds = true
+    actionButton.addTarget(self, action: #selector(actionButtonTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
   }
 
   var topicTitle: String? {
@@ -172,6 +179,13 @@ class TopicHeaderNode: ASCellNode {
                                           alignItems: .stretch,
                                           children: nodesArray)
     return verticalStack
+  }
+}
+
+//Actions
+extension TopicHeaderNode {
+  func actionButtonTouchUpInside(_ sender: ASButtonNode) {
+    delegate?.topicHeader(node: self, actionButtonTouchUpInside: sender)
   }
 }
 
