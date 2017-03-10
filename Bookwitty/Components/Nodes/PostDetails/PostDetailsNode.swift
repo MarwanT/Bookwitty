@@ -15,6 +15,7 @@ class PostDetailsNode: ASScrollNode {
 
   fileprivate let headerNode: PostDetailsHeaderNode
   fileprivate let descriptionNode: ASTextNode
+  fileprivate let postItemsNode: PostDetailsItemNode
 
   var title: String? {
     didSet {
@@ -46,12 +47,14 @@ class PostDetailsNode: ASScrollNode {
   override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
     headerNode = PostDetailsHeaderNode()
     descriptionNode = ASTextNode()
+    postItemsNode = PostDetailsItemNode()
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
   override init() {
     headerNode = PostDetailsHeaderNode()
     descriptionNode = ASTextNode()
+    postItemsNode = PostDetailsItemNode()
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
@@ -75,7 +78,7 @@ class PostDetailsNode: ASScrollNode {
     let vStackSpec = ASStackLayoutSpec.vertical()
     vStackSpec.spacing = contentSpacing
     let descriptionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: descriptionNode)
-    vStackSpec.children = [headerNode, descriptionInsetSpec]
+    vStackSpec.children = [headerNode, descriptionInsetSpec, postItemsNode]
 
     return vStackSpec
   }
