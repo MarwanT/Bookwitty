@@ -19,6 +19,14 @@ class BagNode: ASDisplayNode {
     textNode = ASTextNode()
     shopOnlineButton = ASButtonNode()
     super.init()
+    applyTheme()
+  }
+}
+
+// MARK: - Theme
+extension BagNode: Themeable {
+  func applyTheme() {
+    ThemeManager.shared.currentTheme.styleECommercePrimaryButton(button: shopOnlineButton)
   }
 }
 
