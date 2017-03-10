@@ -179,14 +179,14 @@ extension TopicViewController {
 extension TopicViewController: TopicHeaderNodeDelegate {
   func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ASButtonNode) {
     if button.isSelected {
-      viewModel.unfollowRequest(completionBlock: { (success: Bool) in
+      viewModel.unfollowContent(completionBlock: { (success: Bool) in
         if success {
           node.following = false
           button.isSelected = false
         }
       })
     } else {
-      viewModel.followRequest(completionBlock: { (success: Bool) in
+      viewModel.unfollowContent(completionBlock: { (success: Bool) in
         if success {
           node.following = true
           button.isSelected = true
