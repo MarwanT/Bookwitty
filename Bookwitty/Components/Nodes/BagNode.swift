@@ -8,12 +8,17 @@
 
 import AsyncDisplayKit
 
+protocol BagNodeDelegate: class {
+  func bagNodeShopOnline(node: BagNode)
+}
 
 class BagNode: ASDisplayNode {
   fileprivate let textNode: ASTextNode
   fileprivate let shopOnlineButton: ASButtonNode
   
   var configuration = Configuration()
+  
+  weak var delegate: BagNodeDelegate?
   
   override init() {
     textNode = ASTextNode()
@@ -62,6 +67,7 @@ class BagNode: ASDisplayNode {
 // MARK: - Actions
 extension BagNode {
   func shopOnlineTouchUpInside(_ sender: Any) {
+    delegate?.bagNodeShopOnline(node: self)
   }
 }
 
