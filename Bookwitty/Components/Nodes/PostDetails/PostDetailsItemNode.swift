@@ -114,7 +114,7 @@ class PostDetailItemNode: ASDisplayNode {
   var body: String? {
     didSet {
       if let body = body {
-        bodyNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.body).append(text: body).applyParagraphStyling(lineSpacing: 4.0).attributedString
+        bodyNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.body).append(text: body).attributedString
       } else {
         bodyNode.attributedText = nil
       }
@@ -183,7 +183,6 @@ class PostDetailItemNode: ASDisplayNode {
     button.style.flexGrow = 1.0
     button.style.flexShrink = 1.0
     button.titleNode.maximumNumberOfLines = 1
-    button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     ThemeManager.shared.currentTheme.styleECommercePrimaryButton(button: button)
   }
 
