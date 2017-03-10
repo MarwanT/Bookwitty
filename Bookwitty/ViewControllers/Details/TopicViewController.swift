@@ -41,6 +41,10 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     super.init(node: collectionNode)
   }
 
+  func initialize(with topic: Topic?) {
+    viewModel.initialize(with: topic)
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeComponents()
