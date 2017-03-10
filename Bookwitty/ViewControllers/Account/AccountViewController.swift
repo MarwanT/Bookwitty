@@ -54,7 +54,12 @@ class AccountViewController: UIViewController {
         break
       }
     case AccountViewModel.Sections.PenNames.rawValue:
-      break
+      switch indexPath.row % viewModel.numberOfRowsPerPenName {
+      case 1:
+        pushPenNameViewController(indexPath: indexPath)
+      default:
+        break
+      }
     case AccountViewModel.Sections.CreatePenNames.rawValue:
       break
     case AccountViewModel.Sections.CustomerService.rawValue:
@@ -67,6 +72,13 @@ class AccountViewController: UIViewController {
   func pushSettingsViewController() {
     let settingsViewController = Storyboard.Account.instantiate(SettingsViewController.self)
     navigationController?.pushViewController(settingsViewController, animated: true)
+  }
+
+  func pushPenNameViewController(indexPath: IndexPath) {
+    let penNameViewController = Storyboard.Access.instantiate(PenNameViewController.self)
+    let penName = viewModel.selectedPenName(atRow: indexPath.row)
+    penNameViewController.viewModel.initializeWith(penName: penName, andUser: UserManager.shared.signedInUser)
+    navigationController?.pushViewController(penNameViewController, animated: true)
   }
 }
 
