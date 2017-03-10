@@ -61,3 +61,34 @@ final class TopicViewModel {
     }
   }
 }
+
+//MARK: - Latest
+extension TopicViewModel {
+  func numberOfLatest() -> Int {
+    return latest.count
+  }
+
+  func latest(at item: Int) -> ModelResource? {
+    guard item >= 0 && item < latest.count else {
+      return nil
+    }
+
+    return latest[item]
+  }
+
+  func getLatest(loadMore: Bool = false) {
+    guard let identifier = topic?.id else {
+      return
+    }
+
+    _ = GeneralAPI.posts(contentIdentifier: identifier, type: nil) {
+      (success: Bool, resources: [ModelResource]?, error: BookwittyAPIError?) in
+      if success {
+        if !loadMore {
+          self.latest.removeAll()
+        }
+        self.latest += resources ?? []
+      }
+    }
+  }
+}
