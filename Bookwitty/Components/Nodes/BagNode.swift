@@ -23,6 +23,18 @@ class BagNode: ASDisplayNode {
     applyTheme()
   }
   
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let stackSpecs = ASStackLayoutSpec(
+      direction: .vertical,
+      spacing: 20,
+      justifyContent: .center,
+      alignItems: .stretch,
+      children: [textNode, shopOnlineButton])
+    let insetsSpec = ASInsetLayoutSpec(
+      insets: configuration.edgeInsets, child: stackSpecs)
+    return insetsSpec
+  }
+  
   private func initializeComponents() {
     automaticallyManagesSubnodes = true
     text = Strings.shop_in_app_coming_soon_message()
