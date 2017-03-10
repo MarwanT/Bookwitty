@@ -28,6 +28,9 @@ class PostDetailsViewModel {
   var body: String? {
     return bodyFromResource(resource: resource)
   }
+  var conculsion: String? {
+    return conclusionFromResource(resource: resource)
+  }
   var date: NSDate? {
     return (resource as? ModelCommonProperties)?.createdAt
   }
@@ -42,6 +45,17 @@ class PostDetailsViewModel {
   init(resource: Resource) {
     self.resource = resource
   }
+
+  private func conclusionFromResource(resource: Resource) -> String? {
+    switch(resource.registeredResourceType) {
+    case ReadingList.resourceType:
+      return (resource as? ReadingList)?.conclusion
+    case Text.resourceType:
+      return nil
+    default: return nil
+    }
+  }
+  
 
   private func bodyFromResource(resource: Resource) -> String? {
     switch(resource.registeredResourceType) {

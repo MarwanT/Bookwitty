@@ -35,6 +35,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     let date = Date.formatDate(date: viewModel.date)
     postDetailsNode.date = date
     postDetailsNode.penName = viewModel.penName
+    postDetailsNode.conculsion = viewModel.conculsion
     postDetailsNode.dataSource = self
     loadContentPosts()
   }

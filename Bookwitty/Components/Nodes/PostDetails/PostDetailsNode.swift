@@ -17,6 +17,7 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let descriptionNode: ASTextNode
   fileprivate let postItemsNode: PostDetailsItemNode
   fileprivate let separator: ASDisplayNode
+  fileprivate let conculsionNode: ASTextNode
 
   var title: String? {
     didSet {
@@ -49,12 +50,22 @@ class PostDetailsNode: ASScrollNode {
       postItemsNode.dataSource = dataSource
     }
   }
+  var conculsion: String? {
+    didSet {
+      if let conculsion = conculsion {
+        conculsionNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.body).append(text: conculsion, fromHtml: true).attributedString
+      } else {
+        conculsionNode.attributedText = nil
+      }
+    }
+  }
 
   override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
     headerNode = PostDetailsHeaderNode()
     descriptionNode = ASTextNode()
     postItemsNode = PostDetailsItemNode()
     separator = ASDisplayNode()
+    conculsionNode = ASTextNode()
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
@@ -63,6 +74,7 @@ class PostDetailsNode: ASScrollNode {
     descriptionNode = ASTextNode()
     postItemsNode = PostDetailsItemNode()
     separator = ASDisplayNode()
+    conculsionNode = ASTextNode()
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
@@ -86,6 +98,9 @@ class PostDetailsNode: ASScrollNode {
 
     descriptionNode.style.flexGrow = 1.0
     descriptionNode.style.flexShrink = 1.0
+
+    conculsionNode.style.flexGrow = 1.0
+    conculsionNode.style.flexShrink = 1.0
   }
 
   func sidesEdgeInset() -> UIEdgeInsets {
@@ -99,6 +114,10 @@ class PostDetailsNode: ASScrollNode {
     let separatorInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: separator)
     vStackSpec.children = [headerNode, descriptionInsetSpec, separatorInsetSpec, postItemsNode]
 
+    if !conculsion.isEmptyOrNil() {
+      let conculsionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: conculsionNode)
+      vStackSpec.children?.append(conculsionInsetSpec)
+    }
     return vStackSpec
   }
 }
