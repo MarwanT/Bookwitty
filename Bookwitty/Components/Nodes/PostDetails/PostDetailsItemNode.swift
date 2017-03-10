@@ -14,6 +14,13 @@ class PostDetailsItemNode: ASDisplayNode {
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
 
   var nodes: [PostDetailItemNode]
+  var data: [String] = [] {
+    didSet {
+      createNodes()
+      setNeedsLayout()
+    }
+  }
+
   override init() {
     nodes = []
     super.init()
@@ -24,6 +31,19 @@ class PostDetailsItemNode: ASDisplayNode {
   func initializeNodes() {
     style.flexShrink = 1
     style.flexGrow = 1
+  }
+
+  func createNodes() {
+    data.forEach { (str) in
+      let newNode = PostDetailItemNode()
+      //TODO: fill data on itration
+      let randBool = (arc4random_uniform(2) == 0)
+      newNode.body = randBool ? nil : "Some Long text should Some Long text should Some Long text should Some Long text should Some Long text should go here yes Some Long text should go here yes Some Long text should go here yes Some Long text should go here yes"
+      newNode.caption = randBool ? nil : "2017, Dec 21st"
+      newNode.headLine = !randBool ? nil : "This is The Headline And It Should Wrap, HellYeah! Got That Wrap, HellYeah! Got That Wrap, HellYeah! Got That"
+      newNode.subheadLine = !randBool ? nil : "Weirdo Il Weird Il Weird Il Weird Il Weird Il Weird"
+      nodes.append(newNode)
+    }
   }
 
 }
