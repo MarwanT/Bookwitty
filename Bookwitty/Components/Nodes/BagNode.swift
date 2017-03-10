@@ -19,7 +19,37 @@ class BagNode: ASDisplayNode {
     textNode = ASTextNode()
     shopOnlineButton = ASButtonNode()
     super.init()
+    initializeComponents()
     applyTheme()
+  }
+  
+  private func initializeComponents() {
+    automaticallyManagesSubnodes = true
+    text = Strings.shop_in_app_coming_soon_message()
+    shopOnlineButtonTitle = Strings.shop_online()
+    backgroundColor = configuration.backgroundColor
+    shopOnlineButton.addTarget(self, action: #selector(shopOnlineTouchUpInside(_:)), forControlEvents: .touchUpInside)
+  }
+  
+  private var text: String? {
+    didSet {
+      textNode.attributedText = AttributedStringBuilder(fontDynamicType: .subheadline)
+        .append(text: text ?? "", color: configuration.defaultTextColor).applyParagraphStyling(lineSpacing: 5, alignment: NSTextAlignment.center).attributedString
+      setNeedsLayout()
+    }
+  }
+  
+  private var shopOnlineButtonTitle: String? {
+    didSet {
+      shopOnlineButton.setTitle(shopOnlineButtonTitle ?? "", with: FontDynamicType.subheadline.font, with: configuration.shopOnlineButtonTitleColor, for: UIControlState.normal)
+      setNeedsLayout()
+    }
+  }
+}
+
+// MARK: - Actions
+extension BagNode {
+  func shopOnlineTouchUpInside(_ sender: Any) {
   }
 }
 
