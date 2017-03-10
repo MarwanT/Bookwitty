@@ -65,6 +65,16 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     flowLayout.sectionHeadersPinToVisibleBounds = true
   }
 
+  fileprivate func fillHeaderNode() {
+    let values = viewModel.valuesForTopic()
+
+    headerNode.topicTitle = values.title
+    headerNode.imageUrl = values.coverImageUrl
+
+    headerNode.setTopicStatistics(numberOfFollowers: values.stats.followers, numberOfPosts: values.stats.posts)
+    headerNode.setContributorsValues(numberOfContributors: values.contributors.count, imageUrls: values.contributors.imageUrls)
+  }
+
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
     //TODO: Add the segment selected index logic
   }
