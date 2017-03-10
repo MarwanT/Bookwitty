@@ -142,8 +142,7 @@ class RootTabBarController: UITabBarController {
   }
   
   fileprivate func refreshToOriginalState() {
-    viewControllers?.forEach({ _ = ($0 as? UINavigationController)?.popToRootViewController(animated: false) })
-    selectedIndex = 0
+    initializeTabBarViewControllers()
   }
 }
 
@@ -159,8 +158,8 @@ extension RootTabBarController {
   func signOut(notificaiton: Notification) {
     AccessToken.shared.deleteToken()
     presentIntroductionOrSignInViewController()
-    refreshToOriginalState()
     UserManager.shared.deleteSignedInUser()
+    refreshToOriginalState()
   }
   
   func signIn(notification: Notification) {
