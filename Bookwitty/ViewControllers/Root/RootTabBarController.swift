@@ -53,6 +53,8 @@ class RootTabBarController: UITabBarController {
       } else {
         dismissOverlay()
         GeneralSettings.sharedInstance.shouldShowIntroduction = false
+        NotificationCenter.default.post(
+          name: AppNotification.shouldRefreshData, object: nil)
       }
     }
   }
