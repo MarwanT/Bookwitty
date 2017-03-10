@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import AsyncDisplayKit
+import Spine
 
 class DiscoverViewController: ASViewController<ASCollectionNode> {
   enum LoadingStatus {
@@ -326,6 +327,11 @@ extension DiscoverViewController {
     }
   }
 
+  func pushPostDetailsViewController(resource: Resource) {
+    let nodeVc = PostDetailsViewController(resource: resource)
+    self.navigationController?.pushViewController(nodeVc, animated: true)
+  }
+  
   fileprivate func actionForImageResourceType(resource: ModelResource) {
     //TODO: Implement the right action
   }
@@ -335,7 +341,7 @@ extension DiscoverViewController {
   }
 
   fileprivate func actionForReadingListResourceType(resource: ModelResource) {
-    //TODO: Implement the right action
+    pushPostDetailsViewController(resource: resource)
   }
 
   fileprivate func actionForTopicResourceType(resource: ModelResource) {
@@ -343,7 +349,7 @@ extension DiscoverViewController {
   }
 
   fileprivate func actionForTextResourceType(resource: ModelResource) {
-    //TODO: Implement the right action
+    pushPostDetailsViewController(resource: resource)
   }
 
   fileprivate func actionForQuoteResourceType(resource: ModelResource) {
