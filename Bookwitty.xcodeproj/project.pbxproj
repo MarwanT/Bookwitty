@@ -131,9 +131,14 @@
 		B4ECA3471E4E05E7004B3EE2 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4ECA3461E4E05E7004B3EE2 /* WebViewController.swift */; };
 		F40700501E55992000DA48A4 /* ReadingListBooksNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */; };
 		F40700521E55F55A00DA48A4 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40700511E55F55A00DA48A4 /* Image.swift */; };
+		F417B1D11E71C3D400B0FAFE /* PostDetailsHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F417B1CE1E71C3D400B0FAFE /* PostDetailsHeaderNode.swift */; };
+		F417B1D21E71C3D400B0FAFE /* PostDetailsItemNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F417B1CF1E71C3D400B0FAFE /* PostDetailsItemNode.swift */; };
+		F417B1D31E71C3D400B0FAFE /* PostDetailsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F417B1D01E71C3D400B0FAFE /* PostDetailsNode.swift */; };
 		F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41D529F1E40EB060021A4AE /* RegisterViewController.swift */; };
 		F41D52A21E40EB780021A4AE /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41D52A11E40EB780021A4AE /* RegisterViewModel.swift */; };
 		F41F3AB71E6785CB004622D3 /* LoaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41F3AB61E6785CB004622D3 /* LoaderNode.swift */; };
+		F42041C11E72ACCA00E7D208 /* PostDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42041C01E72ACCA00E7D208 /* PostDetailsViewController.swift */; };
+		F42041C31E72E84C00E7D208 /* PostDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42041C21E72E84C00E7D208 /* PostDetailsViewModel.swift */; };
 		F4207B941E58466A00216A2E /* PenNameSelectionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4207B931E58466A00216A2E /* PenNameSelectionNode.swift */; };
 		F420AD9D1E41D2E600C78AEB /* BookwittyUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420AD9C1E41D2E600C78AEB /* BookwittyUtilityTests.swift */; };
 		F420AD9F1E4231E000C78AEB /* AttributedStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420AD9E1E4231E000C78AEB /* AttributedStringBuilder.swift */; };
@@ -333,9 +338,14 @@
 		CB5E98B3C54E0B0AD22F5CB4 /* Pods-BookwittyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookwittyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests.release.xcconfig"; sourceTree = "<group>"; };
 		F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingListBooksNode.swift; sourceTree = "<group>"; };
 		F40700511E55F55A00DA48A4 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		F417B1CE1E71C3D400B0FAFE /* PostDetailsHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailsHeaderNode.swift; path = PostDetails/PostDetailsHeaderNode.swift; sourceTree = "<group>"; };
+		F417B1CF1E71C3D400B0FAFE /* PostDetailsItemNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailsItemNode.swift; path = PostDetails/PostDetailsItemNode.swift; sourceTree = "<group>"; };
+		F417B1D01E71C3D400B0FAFE /* PostDetailsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailsNode.swift; path = PostDetails/PostDetailsNode.swift; sourceTree = "<group>"; };
 		F41D529F1E40EB060021A4AE /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		F41D52A11E40EB780021A4AE /* RegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		F41F3AB61E6785CB004622D3 /* LoaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderNode.swift; sourceTree = "<group>"; };
+		F42041C01E72ACCA00E7D208 /* PostDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailsViewController.swift; sourceTree = "<group>"; };
+		F42041C21E72E84C00E7D208 /* PostDetailsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailsViewModel.swift; sourceTree = "<group>"; };
 		F4207B931E58466A00216A2E /* PenNameSelectionNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameSelectionNode.swift; sourceTree = "<group>"; };
 		F420AD9C1E41D2E600C78AEB /* BookwittyUtilityTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyUtilityTests.swift; sourceTree = "<group>"; };
 		F420AD9E1E4231E000C78AEB /* AttributedStringBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedStringBuilder.swift; sourceTree = "<group>"; };
@@ -442,6 +452,7 @@
 			isa = PBXGroup;
 			children = (
 				562A31221E65D7F2002851DE /* TopicViewController.swift */,
+				F42041C01E72ACCA00E7D208 /* PostDetailsViewController.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -478,6 +489,7 @@
 			isa = PBXGroup;
 			children = (
 				564EEC091E70194100700474 /* TopicViewModel.swift */,
+				F42041C21E72E84C00E7D208 /* PostDetailsViewModel.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -626,6 +638,7 @@
 				F417B1C41E712C7100B0FAFE /* Cards */,
 				56E8B6421E6971B900D8E71E /* ControllerNodes */,
 				562A31241E65E1DE002851DE /* TopicsDetails */,
+				F417B1C51E712FD100B0FAFE /* PostDetails */,
 				F434F7901E4E16CE001812BD /* CellNode.swift */,
 				F41F3AB61E6785CB004622D3 /* LoaderNode.swift */,
 				F4207B931E58466A00216A2E /* PenNameSelectionNode.swift */,
@@ -1015,6 +1028,16 @@
 			name = Cards;
 			sourceTree = "<group>";
 		};
+		F417B1C51E712FD100B0FAFE /* PostDetails */ = {
+			isa = PBXGroup;
+			children = (
+				F417B1CE1E71C3D400B0FAFE /* PostDetailsHeaderNode.swift */,
+				F417B1CF1E71C3D400B0FAFE /* PostDetailsItemNode.swift */,
+				F417B1D01E71C3D400B0FAFE /* PostDetailsNode.swift */,
+			);
+			name = PostDetails;
+			sourceTree = "<group>";
+		};
 		F42441631E66FDF00087E3B1 /* Factories */ = {
 			isa = PBXGroup;
 			children = (
@@ -1301,6 +1324,7 @@
 				59EC5BA81E6C5987006E1CB9 /* BookDetailsNode.swift in Sources */,
 				56D36E821E6DAB3400791098 /* PenNameFollowNode.swift in Sources */,
 				F42686791E4F458A0085E581 /* CardActionBarNode.swift in Sources */,
+				F417B1D31E71C3D400B0FAFE /* PostDetailsNode.swift in Sources */,
 				5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */,
 				F426867B1E505CE60085E581 /* BaseCardPostNode.swift in Sources */,
 				594290181E522D980006B2F1 /* BannerView.swift in Sources */,
@@ -1332,6 +1356,7 @@
 				595C4F0D1E3F8C0200BE3942 /* InputField.swift in Sources */,
 				F4A426311E5623EE0090CD51 /* Text.swift in Sources */,
 				F426008F1E6DCD8B00E14D93 /* OnBoardingViewModel.swift in Sources */,
+				F417B1D21E71C3D400B0FAFE /* PostDetailsItemNode.swift in Sources */,
 				59BD55781E302EB800D3B805 /* Analytics.swift in Sources */,
 				F422D8301E51CD9D00A32C2F /* LinkCardPostCellNode.swift in Sources */,
 				56205DEB1E5324BC000CA4D7 /* TableViewSectionHeaderView.swift in Sources */,
@@ -1369,6 +1394,7 @@
 				594290091E4FF0E30006B2F1 /* CategoriesTableViewModel.swift in Sources */,
 				F420B6A41E43D01A001F34CD /* PenNameViewController.swift in Sources */,
 				5929C2731E5B2FDB006E08F8 /* CuratedCollection+API.swift in Sources */,
+				F42041C11E72ACCA00E7D208 /* PostDetailsViewController.swift in Sources */,
 				59EC5BA61E6C5987006E1CB9 /* BookDetailsFormatNode.swift in Sources */,
 				F43A5E921E69A840008C018B /* OnBoardingControllerNode.swift in Sources */,
 				5967E45A1E410A850067093F /* NotificationView.swift in Sources */,
@@ -1383,6 +1409,7 @@
 				F4670AFD1E54ACF200159F4F /* ProfileCardPostCellNode.swift in Sources */,
 				56E09DBE1E546B2100B7C6E6 /* ChangePasswordViewModel.swift in Sources */,
 				591E15561E70E381008CA78A /* SectionSubtitleHeaderNode.swift in Sources */,
+				F42041C31E72E84C00E7D208 /* PostDetailsViewModel.swift in Sources */,
 				594290061E4FEEC10006B2F1 /* CategoriesTableViewController.swift in Sources */,
 				F40700521E55F55A00DA48A4 /* Image.swift in Sources */,
 				F4A4262B1E5617A30090CD51 /* PageAuthor.swift in Sources */,
@@ -1414,6 +1441,7 @@
 				F45A50151E536591005E5C56 /* TopicCardPostCellNode.swift in Sources */,
 				F48278BB1E4B21CA003D82F2 /* RootTabBarController.swift in Sources */,
 				F420B6A61E43D05E001F34CD /* PenNameViewModel.swift in Sources */,
+				F417B1D11E71C3D400B0FAFE /* PostDetailsHeaderNode.swift in Sources */,
 				5942902C1E53BF060006B2F1 /* SectionTitleHeaderView.swift in Sources */,
 				59EC5BA51E6C5987006E1CB9 /* BookDetailsECommerceNode.swift in Sources */,
 				595A649C1E2CCB8900655067 /* BookwittyAPI.swift in Sources */,

@@ -452,4 +452,12 @@ class Strings {
   class func onboarding_view_header_title() -> String {
     return localizedString(key: "onboarding_view_header_title")
   }
+
+  class func reading_list() -> String {
+    return localizedString(key: "reading_list")
+  }
+
+  class func article() -> String {
+    return localizedString(key: "article")
+  }
 }

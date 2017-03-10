@@ -7,6 +7,7 @@
 //
 import UIKit
 import AsyncDisplayKit
+import Spine
 
 class NewsFeedViewController: ASViewController<ASCollectionNode> {
   enum LoadingStatus {
@@ -426,6 +427,11 @@ extension NewsFeedViewController {
     }
   }
 
+  func pushPostDetailsViewController(resource: Resource) {
+    let nodeVc = PostDetailsViewController(resource: resource)
+    self.navigationController?.pushViewController(nodeVc, animated: true)
+  }
+
   fileprivate func actionForImageResourceType(resource: ModelResource) {
     //TODO: Implement the right action
   }
@@ -435,7 +441,7 @@ extension NewsFeedViewController {
   }
 
   fileprivate func actionForReadingListResourceType(resource: ModelResource) {
-    //TODO: Implement the right action
+    pushPostDetailsViewController(resource: resource)
   }
 
   fileprivate func actionForTopicResourceType(resource: ModelResource) {
@@ -443,7 +449,7 @@ extension NewsFeedViewController {
   }
 
   fileprivate func actionForTextResourceType(resource: ModelResource) {
-    //TODO: Implement the right action
+    pushPostDetailsViewController(resource: resource)
   }
 
   fileprivate func actionForQuoteResourceType(resource: ModelResource) {

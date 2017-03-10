@@ -19,16 +19,60 @@ class AttributedStringBuilder {
 
   func append(text: String, fontDynamicType: FontDynamicType? = nil, color: UIColor =  ThemeManager.shared.currentTheme.defaultTextColor(),
               underlineStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone,
-              strikeThroughStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone) -> Self {
+              strikeThroughStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone,
+              fromHtml: Bool = false, htmlImageWidth: CGFloat = UIScreen.main.bounds.width) -> Self {
+    if fromHtml, let htmlAtrString = htmlAttributedString(text: text, fontDynamicType: fontDynamicType, color: color,
+                                                          underlineStyle: underlineStyle, strikeThroughStyle: strikeThroughStyle,
+                                                          htmlImageWidth: htmlImageWidth) {
+      attributedString.append(htmlAtrString)
+      return self
+    }
+
     let atrString = NSAttributedString(string: text, attributes: [
       NSFontAttributeName : fontDynamicType?.font ?? self.fontDynamicType.font,
       NSForegroundColorAttributeName : color,
       NSUnderlineStyleAttributeName: underlineStyle.rawValue,
-      NSStrikethroughStyleAttributeName: strikeThroughStyle.rawValue
+      NSStrikethroughStyleAttributeName: strikeThroughStyle.rawValue,
+      NSDocumentTypeDocumentAttribute: fromHtml ? NSHTMLTextDocumentType : NSPlainTextDocumentType
       ])
 
     attributedString.append(atrString)
     return self
+  }
+
+  private func htmlAttributedString(text: String, fontDynamicType: FontDynamicType? = nil, color: UIColor =  ThemeManager.shared.currentTheme.defaultTextColor(),
+                                    underlineStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone,
+                                    strikeThroughStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone,
+                                    htmlImageWidth: CGFloat = UIScreen.main.bounds.width) -> NSAttributedString? {
+    guard let data = text.data(using: String.Encoding.utf16, allowLossyConversion: false) else {
+      return nil
+    }
+    guard let html = try? NSMutableAttributedString(
+      data: data,
+      options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
+      documentAttributes: nil) else {
+        return nil
+    }
+    let rangeA = NSRange(location: 0, length: html.string.characters.count)
+    html.addAttributes([NSFontAttributeName : fontDynamicType?.font ?? self.fontDynamicType.font,
+                        NSForegroundColorAttributeName : color,
+                        NSUnderlineStyleAttributeName: underlineStyle.rawValue,
+                        NSStrikethroughStyleAttributeName: strikeThroughStyle.rawValue], range: rangeA)
+
+    let range = NSRange(location: 0, length: html.string.characters.count)
+    html.enumerateAttribute(NSAttachmentAttributeName, in: range, options: [], using: { (value, range, stop) in
+      if let attachment = value as? NSTextAttachment {
+        guard let image = attachment.image(forBounds: UIScreen.main.bounds, textContainer: NSTextContainer(), characterIndex: range.location) else {
+          return
+        }
+        let ratio = (image.size.width / htmlImageWidth)
+        let resizedImage = image.resizeImage(width: htmlImageWidth, height: image.size.height / ratio)
+        attachment.image = resizedImage
+        attachment.bounds = CGRect(x: 0, y: 0, width: resizedImage.size.width, height: resizedImage.size.height)
+      }
+    })
+
+    return html
   }
 
   /**

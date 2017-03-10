@@ -117,3 +117,5 @@
 "topics_to_follow" = "Sujets à Suivre";
 "follow_topics" = "Suivez les Sujets";
 "onboarding_view_header_title" = "Following People and Topics is how you fill up your home feed with interesting reads.";
+"reading_list" = "Reading List";
+"article" = "Article";
