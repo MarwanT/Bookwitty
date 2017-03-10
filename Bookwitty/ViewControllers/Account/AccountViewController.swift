@@ -14,7 +14,6 @@ class AccountViewController: UIViewController {
   @IBOutlet weak var tableView: UITableView!
 
   @IBOutlet private weak var headerView: UIView!
-  @IBOutlet private weak var profileImageView: UIImageView!
   @IBOutlet private weak var displayNameLabel: TTTAttributedLabel!
 
   fileprivate let viewModel = AccountViewModel()
@@ -30,9 +29,6 @@ class AccountViewController: UIViewController {
   }
 
   private func initializeComponents() {
-    self.profileImageView.layer.masksToBounds = true
-    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.width / 2.0
-
     self.headerView.layoutMargins.left = ThemeManager.shared.currentTheme.generalExternalMargin()
     self.headerView.layoutMargins.right = ThemeManager.shared.currentTheme.generalExternalMargin()
     self.displayNameLabel.font = FontDynamicType.subheadline.font
@@ -46,9 +42,6 @@ class AccountViewController: UIViewController {
   private func fillUserInformation() {
     let values = viewModel.headerInformation()
     self.displayNameLabel.text = values.name
-    self.profileImageView.image = values.image
-    self.profileImageView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
-    self.profileImageView.tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
   }
 
   fileprivate func dispatchSelectionAt(_ indexPath: IndexPath) {

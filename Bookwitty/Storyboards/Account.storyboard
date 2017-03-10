@@ -28,15 +28,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="4Ny-JK-d3z">
-                                            <rect key="frame" x="8" y="9" width="42" height="42"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="42" id="07T-oZ-gNr"/>
-                                                <constraint firstAttribute="height" constant="42" id="MSa-cD-PCl"/>
-                                            </constraints>
-                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zcJ-GJ-84E" customClass="TTTAttributedLabel">
-                                            <rect key="frame" x="69" y="30" width="0.0" height="0.0"/>
+                                            <rect key="frame" x="8" y="30" width="0.0" height="0.0"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -44,11 +37,9 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
+                                        <constraint firstItem="zcJ-GJ-84E" firstAttribute="leading" secondItem="0mr-6V-kZK" secondAttribute="leadingMargin" id="GkG-Vl-zAW"/>
                                         <constraint firstItem="zcJ-GJ-84E" firstAttribute="centerY" secondItem="0mr-6V-kZK" secondAttribute="centerY" id="Ivm-x7-Zkl"/>
-                                        <constraint firstItem="zcJ-GJ-84E" firstAttribute="leading" secondItem="4Ny-JK-d3z" secondAttribute="trailing" constant="19" id="MGh-V7-tRD"/>
-                                        <constraint firstItem="4Ny-JK-d3z" firstAttribute="leading" secondItem="0mr-6V-kZK" secondAttribute="leadingMargin" id="MYL-xj-ZLQ"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="zcJ-GJ-84E" secondAttribute="trailingMargin" id="hZv-Bj-VG8"/>
-                                        <constraint firstItem="4Ny-JK-d3z" firstAttribute="centerY" secondItem="0mr-6V-kZK" secondAttribute="centerY" id="iew-74-1gM"/>
                                     </constraints>
                                 </view>
                                 <prototypes>
@@ -115,7 +106,6 @@
                     <connections>
                         <outlet property="displayNameLabel" destination="zcJ-GJ-84E" id="Tp2-Gc-0uz"/>
                         <outlet property="headerView" destination="0mr-6V-kZK" id="xei-cc-nl2"/>
-                        <outlet property="profileImageView" destination="4Ny-JK-d3z" id="zkj-a1-ln1"/>
                         <outlet property="tableView" destination="gyh-Ix-2rX" id="Voi-Xs-x1c"/>
                     </connections>
                 </viewController>
