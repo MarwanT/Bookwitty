@@ -154,6 +154,14 @@ class PostDetailItemNode: ASDisplayNode {
 
     bodyNode.style.flexGrow = 1
     bodyNode.style.flexShrink = 1
+
+    //Button Style-up
+    button.style.height = ASDimensionMake(34.0)
+    button.style.flexGrow = 1.0
+    button.style.flexShrink = 1.0
+    button.titleNode.maximumNumberOfLines = 1
+    button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    ThemeManager.shared.currentTheme.styleECommercePrimaryButton(button: button)
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
