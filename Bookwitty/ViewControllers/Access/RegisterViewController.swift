@@ -314,12 +314,12 @@ extension RegisterViewController: InputFieldDelegate {
 }
 
 enum AttributedLinkReference: String {
- case termsOfUse = "/terms#terms"
- case privacyPolicy = "/terms#privacy"
+ case termsOfUse = "/terms?layout=app"
+ case privacyPolicy = "/privacy?layout=app"
 
   var url: URL {
     get {
-      return URL(string: "https://www.bookwitty.com" + self.rawValue)!
+      return URL(string: self.rawValue, relativeTo: Environment.current.baseURL)!
     }
   }
 }

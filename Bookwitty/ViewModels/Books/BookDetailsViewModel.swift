@@ -23,7 +23,7 @@ final class BookDetailsViewModel {
   }
   
   var shipementInfoURL: URL? {
-    return URL(string: "/shipping", relativeTo: Environment.current.baseURL)
+    return URL(string: "/shipping?layout=app", relativeTo: Environment.current.baseURL)
   }
   
   var bookCanonicalURL: URL? {
