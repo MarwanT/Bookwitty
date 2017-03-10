@@ -16,4 +16,8 @@ final class TopicViewModel {
   fileprivate var relatedBooks: [Book] = []
   fileprivate var followers: [PenName] = []
 
+  func initialize(with topic: Topic?) {
+    self.topic = topic
+    initiateContentCalls()
+  }
 }
