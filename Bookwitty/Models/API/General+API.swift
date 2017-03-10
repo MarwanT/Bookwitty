@@ -53,10 +53,10 @@ struct GeneralAPI {
     }
   }
 
-  static func content<T: Resource>(of identifier: String, completion: @escaping (_ success: Bool, _ resource: T?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? where T: Parsable {
+  static func content<T: Resource>(of identifier: String, include: [String]?, completion: @escaping (_ success: Bool, _ resource: T?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? where T: Parsable {
     let successStatusCode: Int = 200
 
-    return signedAPIRequest(target: .content(identifier: identifier), completion: {
+    return signedAPIRequest(target: .content(identifier: identifier, include: include), completion: {
       (data, statusCode, response, error) in
       var success: Bool = statusCode == successStatusCode
       var resource: T? = nil

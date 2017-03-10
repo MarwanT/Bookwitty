@@ -421,6 +421,8 @@ extension NewsFeedViewController {
       actionForAudioResourceType(resource: resource)
     case Link.resourceType:
       actionForLinkResourceType(resource: resource)
+    case Book.resourceType:
+      actionForBookResourceType(resource: resource)
     default:
       print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")
       break
@@ -445,7 +447,13 @@ extension NewsFeedViewController {
   }
 
   fileprivate func actionForTopicResourceType(resource: ModelResource) {
-    //TODO: Implement the right action
+    guard resource is Topic else {
+      return
+    }
+
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(withTopic: resource as? Topic)
+    navigationController?.pushViewController(topicViewController, animated: true)
   }
 
   fileprivate func actionForTextResourceType(resource: ModelResource) {
@@ -466,5 +474,15 @@ extension NewsFeedViewController {
 
   fileprivate func actionForLinkResourceType(resource: ModelResource) {
     //TODO: Implement the right action
+  }
+
+  fileprivate func actionForBookResourceType(resource: ModelResource) {
+    guard resource is Book else {
+      return
+    }
+
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(withBook: resource as? Book)
+    navigationController?.pushViewController(topicViewController, animated: true)
   }
 }

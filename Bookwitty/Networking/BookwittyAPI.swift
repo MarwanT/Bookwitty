@@ -34,7 +34,7 @@ public enum BookwittyAPI {
   case onBoarding
   case follow(identifier: String)
   case unfollow(identifier: String)
-  case content(identifier: String)
+  case content(identifier: String, include: [String]?)
   case followers(identifier: String)
   case posts(identifier: String, type: [String]?)
   case editions(identifier: String)
@@ -110,7 +110,7 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(identifier)/follow"
     case .unfollow(let identifier):
       path = "/content/\(identifier)/follow"
-    case .content(let identifier):
+    case .content(let identifier, _):
       path = "/content/\(identifier)"
     case .followers(let identifier):
       path = "/content/\(identifier)/followers"
@@ -218,6 +218,8 @@ extension BookwittyAPI: TargetType {
       return [PenName.resourceType]
     case .newsFeed:
       return ["pen-name", "contributors", "commenters"]
+    case .content(_, let include):
+      return include
     default:
       return nil
     }

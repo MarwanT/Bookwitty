@@ -34,6 +34,17 @@ extension String {
   }
 }
 
+//Adds a failable init that mirrors the Int? given
+extension String {
+  init?(counting: Int?) {
+    guard let count = counting else{
+      return nil
+    }
+
+    self = String(count)
+  }
+}
+
 protocol StringType {
   var get: String { get }
 }

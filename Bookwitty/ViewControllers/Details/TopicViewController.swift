@@ -41,9 +41,18 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     super.init(node: collectionNode)
   }
 
+  func initialize(withTopic topic: Topic?) {
+    viewModel.initialize(withTopic: topic)
+  }
+
+  func initialize(withBook book: Book?) {
+    viewModel.initialize(withBook: book)
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeComponents()
+    fillHeaderNode()
   }
 
   private func initializeComponents() {
@@ -59,10 +68,37 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     flowLayout.minimumInteritemSpacing = 0
     flowLayout.minimumLineSpacing = 0
     flowLayout.sectionHeadersPinToVisibleBounds = true
+
+    viewModel.callback = self.callback(for:)
+  }
+
+  fileprivate func fillHeaderNode() {
+    let values = viewModel.valuesForHeader()
+
+    headerNode.topicTitle = values.title
+    headerNode.imageUrl = values.coverImageUrl
+
+    headerNode.setTopicStatistics(numberOfFollowers: values.stats.followers, numberOfPosts: values.stats.posts)
+    headerNode.setContributorsValues(numberOfContributors: values.contributors.count, imageUrls: values.contributors.imageUrls)
   }
 
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
-    //TODO: Add the segment selected index logic
+    collectionNode.reloadSections(IndexSet(integer: 1))
+  }
+
+  private func callback(for callbackCategory: TopicViewModel.CallbackCategory) {
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+    switch (callbackCategory, category) {
+    case (.content, _):
+      self.collectionNode.reloadSections(IndexSet(integer: 0))
+    case (.latest, .latest): fallthrough
+    case (.editions, .editions): fallthrough
+    case (.relatedBooks, .relatedBooks): fallthrough
+    case (.followers, .editions):
+      self.collectionNode.reloadSections(IndexSet(integer: 1))
+    default:
+      break
+    }
   }
 }
 
@@ -142,7 +178,23 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    return section == 0 ? 1 : 20
+    var contentNumberOfRows: Int
+
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+    switch category {
+    case .latest:
+      contentNumberOfRows = viewModel.numberOfLatest()
+    case .editions:
+      contentNumberOfRows = viewModel.numberOfEditions()
+    case .relatedBooks:
+      contentNumberOfRows = viewModel.numberOfRelatedBooks()
+    case .followers:
+      contentNumberOfRows = viewModel.numberOfFollowers()
+    case .none:
+      contentNumberOfRows = 0
+    }
+
+    return section == 0 ? 1 : contentNumberOfRows
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
@@ -153,7 +205,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
     }
 
     return {
-      return BaseCardPostNode()
+      return self.cellNodeBlockFor(item: indexPath.item, category: self.category(withIndex: self.segmentedNode.selectedIndex))
     }
   }
 
@@ -171,7 +223,51 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+    guard let indexPath = collectionNode.indexPath(for: node) else {
+      return
+    }
 
+    if indexPath.section == 0 {
+      self.fillHeaderNode()
+    } else if indexPath.section == 1 {
+      let category = self.category(withIndex: segmentedNode.selectedIndex)
+      switch category {
+      case .latest:
+        //data is filled when node is created
+        break
+      case .editions:
+        guard let cell = node as? BookNode else {
+          return
+        }
+
+        let book = viewModel.edition(at: indexPath.item)
+        cell.title = book?.title
+        cell.author = book?.productDetails?.author
+        cell.format = book?.productDetails?.productFormat
+        cell.price = book?.supplierInformation?.preferredPrice?.formattedValue
+      case .relatedBooks:
+        guard let cell = node as? BookNode else {
+          return
+        }
+
+        let book = viewModel.relatedBook(at: indexPath.item)
+        cell.title = book?.title
+        cell.author = book?.productDetails?.author
+        cell.format = book?.productDetails?.productFormat
+        cell.price = book?.supplierInformation?.preferredPrice?.formattedValue
+      case .followers:
+        guard let cell = node as? PenNameFollowNode else {
+          return
+        }
+
+        let follower = viewModel.follower(at: indexPath.item)
+        cell.penName = follower?.name
+        cell.biography = follower?.biography
+        cell.imageUrl = follower?.avatarUrl
+      case .none:
+        break
+      }
+    }
   }
 
   public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
@@ -179,5 +275,23 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
       min: CGSize(width: collectionNode.frame.width, height: 0),
       max: CGSize(width: collectionNode.frame.width, height: .infinity)
     )
+  }
+
+  private func cellNodeBlockFor(item: Int, category: Category) -> ASCellNode {
+    switch category {
+    case .latest:
+      guard let post = viewModel.latest(at: item), let node = CardFactory.shared.createCardFor(resource: post) else {
+        return ASCellNode()
+      }
+      return node
+    case .editions:
+      return BookNode()
+    case .relatedBooks:
+      return BookNode()
+    case .followers:
+      return PenNameFollowNode()
+    case .none:
+      return ASCellNode()
+    }
   }
 }
