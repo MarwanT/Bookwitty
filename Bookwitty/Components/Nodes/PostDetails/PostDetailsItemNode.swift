@@ -10,6 +10,21 @@ import UIKit
 import AsyncDisplayKit
 
 class PostDetailsItemNode: ASDisplayNode {
+  private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+
+  var nodes: [PostDetailItemNode]
+  override init() {
+    nodes = []
+    super.init()
+    automaticallyManagesSubnodes = true
+    initializeNodes()
+  }
+
+  func initializeNodes() {
+    style.flexShrink = 1
+    style.flexGrow = 1
+  }
 
 }
 
