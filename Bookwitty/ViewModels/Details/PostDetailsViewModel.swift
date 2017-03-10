@@ -7,3 +7,12 @@
 //
 
 import Foundation
+import Spine
+
+class PostDetailsViewModel {
+  let resource: Resource
+
+  init(resource: Resource) {
+    self.resource = resource
+  }
+}
