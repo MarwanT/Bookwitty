@@ -165,7 +165,7 @@ class PostDetailItemNode: ASDisplayNode {
 
     //Image Setup
     imageNode.style.preferredSize = CGSize(width: smallImageHeight, height: smallImage ? smallImageHeight : largeImageHeight)
-    imageNode.backgroundColor = UIColor.bwKeppel
+    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
     //Body Setup
     bodyNode.maximumNumberOfLines = 7
     //HeadLine Setup
