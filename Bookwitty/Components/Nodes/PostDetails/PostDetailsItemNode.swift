@@ -28,7 +28,10 @@ class PostDetailItemNode: ASDisplayNode {
     didSet {
       if let headLine = headLine {
         headLineNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.headline).append(text: headLine).attributedString
+      } else {
+        headLineNode.attributedText = nil
       }
+      setNeedsLayout()
     }
   }
   var imageUrl: String? {
@@ -43,22 +46,31 @@ class PostDetailItemNode: ASDisplayNode {
   var subheadLine: String? {
     didSet {
       if let subheadLine = subheadLine {
-        subheadLineNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.subheadline).append(text: subheadLine).attributedString
+        subheadLineNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.subheadline).append(text: subheadLine).applyParagraphStyling(lineSpacing: 4.0).attributedString
+      } else {
+        subheadLineNode.attributedText = nil
       }
+      setNeedsLayout()
     }
   }
   var caption: String? {
     didSet {
       if let caption = caption {
-        captionNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: caption).attributedString
+        captionNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: caption).applyParagraphStyling(lineSpacing: 4.0).attributedString
+      } else {
+        captionNode.attributedText = nil
       }
+      setNeedsLayout()
     }
   }
   var body: String? {
     didSet {
       if let body = body {
-        bodyNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.body).append(text: body).attributedString
+        bodyNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.body).append(text: body).applyParagraphStyling(lineSpacing: 4.0).attributedString
+      } else {
+        bodyNode.attributedText = nil
       }
+      setNeedsLayout()
     }
   }
 
