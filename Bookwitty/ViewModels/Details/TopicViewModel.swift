@@ -151,3 +151,32 @@ extension TopicViewModel {
     }
   }
 }
+
+//MARK: - Followers
+extension TopicViewModel {
+  func numberOfFollowers() -> Int {
+    return followers.count
+  }
+
+  func follower(at item: Int) -> PenName? {
+    guard item >= 0 && item < followers.count else {
+      return nil
+    }
+
+    return followers[item]
+  }
+
+  func getFollowers() {
+    guard let identifier = topic?.id else {
+      return
+    }
+
+    _ = PenNameAPI.followers(contentIdentifier: identifier) {
+      (success: Bool, penNames: [PenName]?, error: BookwittyAPIError?) in
+      if success {
+        self.followers.removeAll()
+        self.followers += penNames ?? []
+      }
+    }
+  }
+}
