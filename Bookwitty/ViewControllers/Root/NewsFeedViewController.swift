@@ -445,7 +445,13 @@ extension NewsFeedViewController {
   }
 
   fileprivate func actionForTopicResourceType(resource: ModelResource) {
-    //TODO: Implement the right action
+    guard resource is Topic else {
+      return
+    }
+
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(with: resource as? Topic)
+    navigationController?.pushViewController(topicViewController, animated: true)
   }
 
   fileprivate func actionForTextResourceType(resource: ModelResource) {
