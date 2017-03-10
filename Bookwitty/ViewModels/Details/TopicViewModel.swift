@@ -336,3 +336,58 @@ extension TopicViewModel {
     }
   }
 }
+
+//MARK: - Follow / Unfollow
+extension TopicViewModel {
+  func followRequest(completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let identifier = identifier else {
+      return
+    }
+    
+    _ = GeneralAPI.follow(identifer: identifier) { (success, error) in
+      defer {
+        completionBlock(success)
+      }
+
+      if success {
+        if let topic = self.topic {
+          topic.following = true
+        }
+
+        if let book = self.book {
+          book.following = true
+        }
+
+        if let author = self.author {
+          author.following = true
+        }
+      }
+    }
+  }
+
+  func unfollowRequest(completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let identifier = identifier else {
+      return
+    }
+
+    _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
+      defer {
+        completionBlock(success)
+      }
+
+      if success {
+        if let topic = self.topic {
+          topic.following = false
+        }
+
+        if let book = self.book {
+          book.following = false
+        }
+
+        if let author = self.author {
+          author.following = false
+        }
+      }
+    }
+  }
+}
