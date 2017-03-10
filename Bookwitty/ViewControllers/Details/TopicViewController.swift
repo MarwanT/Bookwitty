@@ -306,9 +306,15 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
       let resource = viewModel.latest(at: indexPath.item)
       actionForCard(resource: resource)
     case .relatedBooks:
-      break
+      if let resource = viewModel.relatedBook(at: indexPath.item) {
+        let vc = BookDetailsViewController(with: resource)
+        navigationController?.pushViewController(vc, animated: true)
+      }
     case .editions:
-      break
+      if let resource = viewModel.edition(at: indexPath.item) {
+        let vc = BookDetailsViewController(with: resource)
+        navigationController?.pushViewController(vc, animated: true)
+      }
     case .followers:
       break
     case .none:
