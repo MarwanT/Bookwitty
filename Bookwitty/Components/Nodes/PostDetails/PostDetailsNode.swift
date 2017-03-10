@@ -43,6 +43,11 @@ class PostDetailsNode: ASScrollNode {
       headerNode.penName = penName
     }
   }
+  var dataSource: PostDetailsItemNodeDataSource! {
+    didSet {
+      postItemsNode.dataSource = dataSource
+    }
+  }
 
   override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
     headerNode = PostDetailsHeaderNode()
@@ -59,6 +64,11 @@ class PostDetailsNode: ASScrollNode {
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
     initializeNode()
+  }
+
+  func loadPostItemsNode() {
+    postItemsNode.loadNodes()
+    setNeedsLayout()
   }
 
   func initializeNode() {
