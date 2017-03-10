@@ -139,7 +139,8 @@ final class AccountViewModel {
     case Sections.CreatePenNames.rawValue:
       numberOfRows = 1
     case Sections.CustomerService.rawValue:
-      numberOfRows = 2
+      //WAS 2
+      numberOfRows = 1
     default:
       break
     }
