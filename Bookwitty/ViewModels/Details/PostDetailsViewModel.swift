@@ -83,6 +83,25 @@ class PostDetailsViewModel {
     }
   }
 
+  func shouldLoadContentPosts() -> Bool {
+    guard let content = contentPostsIdentifiers,
+      content.count > 0 else {
+        return false
+    }
+    return true
+  }
+
+  func contentPostsItem(at index: Int) -> Resource? {
+    guard let contentPostsResources = contentPostsResources,
+      contentPostsResources.count > index else {
+        return nil
+    }
+    return contentPostsResources[index]
+  }
+
+  func contentPostsItemCount() -> Int {
+    return contentPostsResources?.count ?? 0
+  }
 
   func loadContentPosts(completionBlock: @escaping (_ success: Bool) -> ()) {
     guard let listOfIdentifiers = contentPostsIdentifiers?.prefix(10).flatMap({ $0.id }) else {
