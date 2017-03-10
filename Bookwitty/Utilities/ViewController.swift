@@ -42,8 +42,8 @@ extension UIViewController {
   }
 
 
-  func presentShareSheet(shareContent: String) {
-    let activityViewController = UIActivityViewController(activityItems: [shareContent], applicationActivities: nil)
+  func presentShareSheet(shareContent: [String]) {
+    let activityViewController = UIActivityViewController(activityItems: shareContent, applicationActivities: nil)
     present(activityViewController, animated: true, completion: {})
   }
 }

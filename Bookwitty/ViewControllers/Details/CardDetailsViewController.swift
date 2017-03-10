@@ -38,7 +38,7 @@ extension CardDetailsViewController: BaseCardPostNodeDelegate {
         didFinishAction?(success)
       }
     case .share:
-      if let sharingInfo: String = viewModel.sharingContent() {
+      if let sharingInfo: [String] = viewModel.sharingContent() {
         presentShareSheet(shareContent: sharingInfo)
       }
     default:
