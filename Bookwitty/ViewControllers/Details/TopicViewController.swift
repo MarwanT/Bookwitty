@@ -59,11 +59,12 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeComponents()
-    fillHeaderNode()
   }
 
   private func initializeComponents() {
     title = Strings.topic()
+
+    headerNode.delegate = self
 
     let segments: [String] = self.mode.categories.map({ $0.name })
     segmentedNode.initialize(with: segments)
@@ -172,6 +173,26 @@ extension TopicViewController {
     }
 
     return category
+  }
+}
+
+extension TopicViewController: TopicHeaderNodeDelegate {
+  func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ASButtonNode) {
+    if button.isSelected {
+      viewModel.unfollowRequest(completionBlock: { (success: Bool) in
+        if success {
+          node.following = false
+          button.isSelected = false
+        }
+      })
+    } else {
+      viewModel.followRequest(completionBlock: { (success: Bool) in
+        if success {
+          node.following = true
+          button.isSelected = true
+        }
+      })
+    }
   }
 }
 
