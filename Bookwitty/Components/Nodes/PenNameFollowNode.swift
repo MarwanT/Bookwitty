@@ -9,6 +9,10 @@
 import UIKit
 import AsyncDisplayKit
 
+protocol PenNameFollowNodeDelegate: class {
+  func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ASButtonNode)
+}
+
 class PenNameFollowNode: ASCellNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let imageSize: CGSize = CGSize(width: 45.0, height: 45.0)
@@ -19,6 +23,8 @@ class PenNameFollowNode: ASCellNode {
   private var biographyNode: ASTextNode
   private var actionButton: ASButtonNode
   private let separatorNode: ASDisplayNode
+
+  weak var delegate: PenNameFollowNodeDelegate?
 
   override init() {
     imageNode = ASNetworkImageNode()
@@ -64,6 +70,12 @@ class PenNameFollowNode: ASCellNode {
     }
   }
 
+  var following: Bool = false {
+    didSet {
+      actionButton.isSelected = following
+    }
+  }
+
   var showBottomSeparator: Bool = false
 
   private func setupNode() {
@@ -83,6 +95,7 @@ class PenNameFollowNode: ASCellNode {
     actionButton.titleNode.maximumNumberOfLines = 1
     actionButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
     actionButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
+    actionButton.isSelected = self.following
 
     actionButton.setTitle(Strings.follow(), with: buttonFont, with: textColor, for: .normal)
     actionButton.setTitle(Strings.followed(), with: buttonFont, with: selectedTextColor, for: .selected)
@@ -94,6 +107,7 @@ class PenNameFollowNode: ASCellNode {
     imageNode.style.preferredSize = imageSize
     actionButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
     actionButton.style.height = ASDimensionMake(buttonSize.height)
+    actionButton.addTarget(self, action: #selector(actionButtonTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
 
     separatorNode.style.height = ASDimensionMake(1)
     separatorNode.style.flexGrow = 1
@@ -148,6 +162,13 @@ class PenNameFollowNode: ASCellNode {
                                          children: showBottomSeparator ? [insetSpec, separatorNodeInset] : [insetSpec])
 
     return parentVerticalSpec
+  }
+}
+
+//Actions
+extension PenNameFollowNode {
+  func actionButtonTouchUpInside(_ sender: ASButtonNode) {
+    delegate?.penName(node: self, actionButtonTouchUpInside: sender)
   }
 }
 

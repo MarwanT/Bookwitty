@@ -26,6 +26,17 @@ class PenName: Resource {
   var followersCount: NSNumber?
   var followingCount: NSNumber?
 
+  @objc
+  private var followingNumber: NSNumber?
+  var following: Bool {
+    get {
+      return ((followingNumber?.intValue ?? 0) == 1)
+    }
+    set {
+      followingNumber = NSNumber(value: newValue)
+    }
+  }
+
   override class var resourceType: ResourceType {
     return "pen-names"
   }
@@ -45,6 +56,7 @@ class PenName: Resource {
       "linkedinUrl": Attribute().serializeAs("linkedin-url"),
       "wordpressUrl": Attribute().serializeAs("wordpress-url"),
       "websiteUrl": Attribute().serializeAs("website-url"),
+      "followingNumber": Attribute().serializeAs("following"),
       "followersCount": Attribute().serializeAs("followers-count"),
       "followingCount": Attribute().serializeAs("following-count")
       ])

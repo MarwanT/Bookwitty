@@ -179,14 +179,14 @@ extension TopicViewController {
 extension TopicViewController: TopicHeaderNodeDelegate {
   func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ASButtonNode) {
     if button.isSelected {
-      viewModel.unfollowRequest(completionBlock: { (success: Bool) in
+      viewModel.unfollowContent(completionBlock: { (success: Bool) in
         if success {
           node.following = false
           button.isSelected = false
         }
       })
     } else {
-      viewModel.followRequest(completionBlock: { (success: Bool) in
+      viewModel.unfollowContent(completionBlock: { (success: Bool) in
         if success {
           node.following = true
           button.isSelected = true
@@ -195,6 +195,29 @@ extension TopicViewController: TopicHeaderNodeDelegate {
     }
   }
 }
+
+extension TopicViewController: PenNameFollowNodeDelegate {
+  func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ASButtonNode) {
+    guard let indexPath = collectionNode.indexPath(for: node) else {
+      return
+    }
+
+    if button.isSelected {
+      viewModel.unfollowPenName(at: indexPath.item, completionBlock: {
+        (success: Bool) in
+        node.following = false
+        button.isSelected = false
+      })
+    } else {
+      viewModel.followPenName(at: indexPath.item, completionBlock: {
+        (success: Bool) in
+        node.following = true
+        button.isSelected = true
+      })
+    }
+  }
+}
+
 
 extension TopicViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -294,6 +317,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
         cell.penName = follower?.name
         cell.biography = follower?.biography
         cell.imageUrl = follower?.avatarUrl
+        cell.following = follower?.following ?? false
       case .none:
         break
       }
@@ -321,6 +345,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
     case .followers:
       let penNameNode = PenNameFollowNode()
       penNameNode.showBottomSeparator = true
+      penNameNode.delegate = self
       return penNameNode
     case .none:
       return ASCellNode()
@@ -408,7 +433,13 @@ extension TopicViewController {
   }
 
   fileprivate func actionForAuthorResourceType(resource: ModelResource) {
-    //TODO: Implement the right action
+    guard resource is Author else {
+      return
+    }
+
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(withAuthor: resource as? Author)
+    navigationController?.pushViewController(topicViewController, animated: true)
   }
 
   fileprivate func actionForReadingListResourceType(resource: ModelResource) {
