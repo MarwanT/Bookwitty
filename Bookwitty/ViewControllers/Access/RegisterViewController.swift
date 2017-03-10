@@ -314,8 +314,8 @@ extension RegisterViewController: InputFieldDelegate {
 }
 
 enum AttributedLinkReference: String {
- case privacyPolicy = "/terms#privacy"
  case termsOfUse = "/terms?layout=app"
+ case privacyPolicy = "/privacy?layout=app"
 
   var url: URL {
     get {
