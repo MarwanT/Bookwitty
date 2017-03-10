@@ -64,14 +64,11 @@ class BookNode: ASCellNode {
     }
   }
 
-  var price: Double? {
+  var price: String? {
     didSet {
       if let price = price {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = NumberFormatter.Style.currency
-        let priceString = formatter.string(from: NSNumber(value: price)) ?? String(price)
         priceNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
-          .append(text: priceString, color: ThemeManager.shared.currentTheme.defaultECommerceColor()).attributedString
+          .append(text: price, color: ThemeManager.shared.currentTheme.defaultECommerceColor()).attributedString
       }
     }
   }
