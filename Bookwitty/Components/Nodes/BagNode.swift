@@ -10,4 +10,12 @@ import AsyncDisplayKit
 
 
 class BagNode: ASDisplayNode {
+  fileprivate let textNode: ASTextNode
+  fileprivate let shopOnlineButton: ASButtonNode
+  
+  override init() {
+    textNode = ASTextNode()
+    shopOnlineButton = ASButtonNode()
+    super.init()
+  }
 }
