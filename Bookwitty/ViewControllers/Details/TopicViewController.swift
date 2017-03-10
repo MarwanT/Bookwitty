@@ -294,6 +294,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
         cell.penName = follower?.name
         cell.biography = follower?.biography
         cell.imageUrl = follower?.avatarUrl
+        cell.following = follower?.following ?? false
       case .none:
         break
       }
