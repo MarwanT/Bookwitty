@@ -66,6 +66,7 @@ class PostDetailItemNode: ASDisplayNode {
   let captionNode: ASTextNode
   let bodyNode: ASTextNode
   let separator: ASDisplayNode
+  let button: ASButtonNode
 
   var headLine: String? {
     didSet {
@@ -124,6 +125,7 @@ class PostDetailItemNode: ASDisplayNode {
     captionNode = ASTextNode()
     bodyNode = ASTextNode()
     separator = ASDisplayNode()
+    button = ASButtonNode()
     super.init()
     automaticallyManagesSubnodes = true
     initializeNode()
