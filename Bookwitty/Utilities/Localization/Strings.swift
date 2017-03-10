@@ -121,6 +121,10 @@ class Strings {
     return localizedString(key: "drafts")
   }
 
+  class func edit_pen_name() -> String {
+    return localizedString(key: "edit_pen_name")
+  }
+
   class func email() -> String {
     return localizedString(key: "email")
   }

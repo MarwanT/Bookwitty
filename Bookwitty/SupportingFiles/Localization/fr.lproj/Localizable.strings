@@ -36,6 +36,7 @@
 "done" = "Done";
 "dont_worry_you_can_change_it_later" = "Don't worry : you can always change it later";
 "drafts" = "Drafts";
+"edit_pen_name" = "Edit pen name";
 "email" = "Email";
 "email_alread_registered" = "The email address you have entered is already registered!";
 "email_invalid" = "Oooops your email seems to be invalid";
