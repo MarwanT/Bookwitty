@@ -63,6 +63,8 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     flowLayout.minimumInteritemSpacing = 0
     flowLayout.minimumLineSpacing = 0
     flowLayout.sectionHeadersPinToVisibleBounds = true
+
+    viewModel.callback = self.callback(for:)
   }
 
   fileprivate func fillHeaderNode() {
@@ -77,6 +79,21 @@ class TopicViewController: ASViewController<ASCollectionNode> {
 
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
     collectionNode.reloadSections(IndexSet(integer: 1))
+  }
+
+  private func callback(for callbackCategory: TopicViewModel.CallbackCategory) {
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+    switch (callbackCategory, category) {
+    case (.content, _):
+      self.collectionNode.reloadSections(IndexSet(integer: 0))
+    case (.latest, .latest): fallthrough
+    case (.editions, .editions): fallthrough
+    case (.relatedBooks, .relatedBooks): fallthrough
+    case (.followers, .editions):
+      self.collectionNode.reloadSections(IndexSet(integer: 1))
+    default:
+      break
+    }
   }
 }
 
