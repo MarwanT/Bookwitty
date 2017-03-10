@@ -87,12 +87,17 @@ class PostDetailItemNode: ASDisplayNode {
   }
 
   func initializeNode() {
+    style.width = ASDimensionMake(UIScreen.main.bounds.width)
+    style.height = ASDimensionAuto
+
     //Separator Setup
     separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
-    separator.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 1.0)
+    separator.style.height = ASDimensionMake(1.0)
+    separator.style.flexGrow = 1
 
     //Image Setup
-    imageNode.style.preferredSize = CGSize(width: 75.0, height: 75.0)
+    imageNode.style.preferredSize = CGSize(width: 90.0, height: 90.0)
+    imageNode.backgroundColor = UIColor.bwKeppel
     //Body Setup
     bodyNode.maximumNumberOfLines = 7
     //HeadLine Setup
@@ -103,14 +108,7 @@ class PostDetailItemNode: ASDisplayNode {
     captionNode.maximumNumberOfLines = 1
 
     bodyNode.style.flexGrow = 1
-    headLineNode.style.flexGrow = 1
-    subheadLineNode.style.flexGrow = 1
-    captionNode.style.flexGrow = 1
-
     bodyNode.style.flexShrink = 1
-    headLineNode.style.flexShrink = 1
-    subheadLineNode.style.flexShrink = 1
-    captionNode.style.flexShrink = 1
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
