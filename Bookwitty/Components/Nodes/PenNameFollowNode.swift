@@ -64,6 +64,12 @@ class PenNameFollowNode: ASCellNode {
     }
   }
 
+  var following: Bool = false {
+    didSet {
+      actionButton.isSelected = following
+    }
+  }
+
   var showBottomSeparator: Bool = false
 
   private func setupNode() {
@@ -83,6 +89,7 @@ class PenNameFollowNode: ASCellNode {
     actionButton.titleNode.maximumNumberOfLines = 1
     actionButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
     actionButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
+    actionButton.isSelected = self.following
 
     actionButton.setTitle(Strings.follow(), with: buttonFont, with: textColor, for: .normal)
     actionButton.setTitle(Strings.followed(), with: buttonFont, with: selectedTextColor, for: .selected)
