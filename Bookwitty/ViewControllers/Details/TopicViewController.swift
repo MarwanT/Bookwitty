@@ -408,7 +408,13 @@ extension TopicViewController {
   }
 
   fileprivate func actionForAuthorResourceType(resource: ModelResource) {
-    //TODO: Implement the right action
+    guard resource is Author else {
+      return
+    }
+
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(withAuthor: resource as? Author)
+    navigationController?.pushViewController(topicViewController, animated: true)
   }
 
   fileprivate func actionForReadingListResourceType(resource: ModelResource) {
