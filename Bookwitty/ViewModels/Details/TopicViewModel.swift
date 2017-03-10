@@ -92,3 +92,32 @@ extension TopicViewModel {
     }
   }
 }
+
+//MARK: - Editions
+extension TopicViewModel {
+  func numberOfEditions() -> Int {
+    return editions.count
+  }
+
+  func edition(at item: Int) -> Book? {
+    guard item >= 0 && item < editions.count else {
+      return nil
+    }
+
+    return editions[item]
+  }
+
+  func getEditions() {
+    guard let identifier = topic?.id else {
+      return
+    }
+
+    _ = GeneralAPI.editions(contentIdentifier: identifier) {
+      (success: Bool, resources: [ModelResource]?, error: BookwittyAPIError?) in
+      if success {
+        self.editions.removeAll()
+        self.editions += (resources as? [Book]) ?? []
+      }
+    }
+  }
+}
