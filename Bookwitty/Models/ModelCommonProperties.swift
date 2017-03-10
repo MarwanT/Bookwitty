@@ -29,6 +29,7 @@ protocol ModelCommonProperties {
   var shortDescription: String? { get }
   var vote: String? { get }
   var isWitted: Bool { get }
+  var canonicalURL: URL? { get }
 }
 
 extension Video: ModelCommonProperties {
