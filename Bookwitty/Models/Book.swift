@@ -29,7 +29,12 @@ class Book: Resource {
   @objc
   private var followingNumber: NSNumber?
   var following: Bool {
-    return ((followingNumber?.intValue ?? 0) == 1)
+    get {
+      return ((followingNumber?.intValue ?? 0) == 1)
+    }
+    set {
+      followingNumber = NSNumber(value: newValue)
+    }
   }
 
   @objc

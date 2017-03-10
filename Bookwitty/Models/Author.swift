@@ -29,7 +29,12 @@ class Author: Resource {
   @objc
   private var followingNumber: NSNumber?
   var following: Bool {
-    return ((followingNumber?.intValue ?? 0) == 1)
+    get {
+      return ((followingNumber?.intValue ?? 0) == 1)
+    }
+    set {
+      followingNumber = NSNumber(value: newValue)
+    }
   }
 
   //TODO: add PageAuthor model we have a problem with the json-api conforming from the api siding

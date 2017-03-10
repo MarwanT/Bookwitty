@@ -24,7 +24,12 @@ class Topic: Resource {
   @objc
   private var followingNumber: NSNumber?
   var following: Bool {
+    get {
     return ((followingNumber?.intValue ?? 0) == 1)
+    }
+    set {
+      followingNumber = NSNumber(value: newValue)
+    }
   }
 
   @objc
