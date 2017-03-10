@@ -11,23 +11,23 @@ import Foundation
 final class IntroductionViewModel {
   let tutorialData: [TutorialPageData] = [
     (title: Strings.tutorial_first_page_title(), Strings.tutorial_first_page_title(),
-     image: #imageLiteral(resourceName: "Illustrtion"),
+     image: #imageLiteral(resourceName: "illustration1"),
      color: ThemeManager.shared.currentTheme.colorNumber4()),
     (title: Strings.tutorial_second_page_title(),
      description: Strings.tutorial_second_page_description(),
-     image: #imageLiteral(resourceName: "Illustrtion"),
+     image: #imageLiteral(resourceName: "illustration2"),
      color: ThemeManager.shared.currentTheme.colorNumber6()),
     (title: Strings.tutorial_third_page_title(),
      description: Strings.tutorial_second_page_description(),
-     image: #imageLiteral(resourceName: "Illustrtion"),
+     image: #imageLiteral(resourceName: "illustration3"),
      color: ThemeManager.shared.currentTheme.colorNumber6()),
     (title: Strings.tutorial_forth_page_title(),
      description: Strings.tutorial_forth_page_description(),
-     image: #imageLiteral(resourceName: "Illustrtion"),
+     image: #imageLiteral(resourceName: "illustration4"),
      color: ThemeManager.shared.currentTheme.colorNumber6()),
     (title: Strings.tutorial_fifth_page_title(),
      description: Strings.tutorial_fifth_page_description(),
-     image: #imageLiteral(resourceName: "Illustrtion"),
+     image: #imageLiteral(resourceName: "illustration5"),
      color: ThemeManager.shared.currentTheme.colorNumber6())
   ]
   
