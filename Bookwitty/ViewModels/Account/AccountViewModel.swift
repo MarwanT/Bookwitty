@@ -18,6 +18,8 @@ final class AccountViewModel {
 
   private var sectionTitles: [String] = []
 
+  let numberOfRowsPerPenName: Int = 2
+
   init () {
     self.fillSectionTitles()
   }
@@ -55,29 +57,35 @@ final class AccountViewModel {
   }
 
   //Pen Names
-  private func valuesForPenName(atRow row: Int, iteration: Int) -> (title: String, value: String) {
+  private func valuesForPenName(atRow row: Int, iteration: Int) -> (title: String, value: String, image: String?) {
     switch row {
     case 0:
-      return (penName(atRow: iteration), "")
+      let pen: PenName? = penName(atRow: iteration)
+      return (pen?.name ?? "", "", pen?.avatarUrl)
     case 1:
-      return (Strings.interests(), "")
+      return (Strings.edit_pen_name(), "", nil)
+    //WAS: return (Strings.interests(), "")
     case 2:
-      return (Strings.reading_lists(), "")
+      return (Strings.reading_lists(), "", nil)
     default:
-      return ("", "")
+      return ("", "", nil)
     }
   }
 
-  private func penName(atRow row: Int) -> String {
+  private func penName(atRow row: Int) -> PenName? {
     guard let penNames = user.penNames else {
-      return ""
+      return nil
     }
 
     guard row >= 0 && row < penNames.count else {
-      return ""
+      return nil
     }
 
-    return penNames[row].name ?? ""
+    return penNames[row]
+  }
+
+  func selectedPenName(atRow row: Int) -> PenName? {
+    return penName(atRow: row / numberOfRowsPerPenName)
   }
 
   //Create Pen Names
@@ -126,33 +134,35 @@ final class AccountViewModel {
       numberOfRows = 1
     case Sections.PenNames.rawValue:
       //user.penNames.count * 3 (3 rows for each pen name)
-      numberOfRows = (user.penNames?.count ?? 0) * 3
+      //WAS: (user.penNames?.count ?? 0) * 3
+      numberOfRows = (user.penNames?.count ?? 0) * numberOfRowsPerPenName
     case Sections.CreatePenNames.rawValue:
       numberOfRows = 1
     case Sections.CustomerService.rawValue:
-      numberOfRows = 2
+      //WAS 2
+      numberOfRows = 1
     default:
       break
     }
     return numberOfRows
   }
 
-  func values(forRowAt indexPath: IndexPath) -> (title: String, value: String, image: UIImage?) {
+  func values(forRowAt indexPath: IndexPath) -> (title: String, value: String, imageUrl: String?) {
     var title: String = ""
     var value: String = ""
-    var image: UIImage? = nil
+    var image: String? = nil
     switch indexPath.section {
     case Sections.UserInformation.rawValue:
       title = valuesForUserInformation(atRow: indexPath.row)
       value = ""
     case Sections.PenNames.rawValue:
-      let penNameIndex: Int = indexPath.row / 3
-      let penNameSubRow = indexPath.row % 3 //(will result in 0 ... 2)
+      let penNameIndex: Int = indexPath.row / numberOfRowsPerPenName
+      let penNameSubRow = indexPath.row % numberOfRowsPerPenName //(will result in 0 ... numberOfRowsPerPenName)
       let values = valuesForPenName(atRow: penNameSubRow, iteration: penNameIndex)
       title = values.title
       value = values.value
       if penNameSubRow == 0 {
-        image = nil //TODO: set the pen name image
+        image = values.image
       }
     case Sections.CreatePenNames.rawValue:
       title = valuesForCreatePenName(atRow: indexPath.row)

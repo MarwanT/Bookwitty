@@ -10,15 +10,17 @@ import Foundation
 import Moya
 
 final class PenNameViewModel {
-  private(set) var user: User!
+  private(set) var penName: PenName?
+  private var user: User?
 
   private var updateRequest: Cancellable? = nil
 
   func penDisplayName() -> String {
-    return user.penNames?.first?.name ?? ""
+    return penName?.name ?? ""
   }
 
-  func initializeWith(user: User) {
+  func initializeWith(penName: PenName?, andUser user: User?) {
+    self.penName = penName
     self.user = user
   }
 
@@ -28,7 +30,7 @@ final class PenNameViewModel {
       completion?(successful)
     }
 
-    guard let penName = user.penNames?.first else {
+    guard let penName = penName else {
       return
     }
 
@@ -50,7 +52,10 @@ final class PenNameViewModel {
       (success: Bool, penName: PenName?, error: BookwittyAPIError?) in
       successful = success
       if let penName = penName {
-        self.user.penNames?[0] = penName
+        self.penName = penName
+        if let index = self.user?.penNames?.index(where: { $0.id == penName.id }) {
+          self.user?.penNames?[index] = penName
+        }
       }
     }
   }
