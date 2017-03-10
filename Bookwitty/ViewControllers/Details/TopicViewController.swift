@@ -48,6 +48,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeComponents()
+    fillHeaderNode()
   }
 
   private func initializeComponents() {
