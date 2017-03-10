@@ -450,7 +450,7 @@ extension NewsFeedViewController {
     }
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(with: resource as? Topic)
+    topicViewController.initialize(withTopic: resource as? Topic)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 

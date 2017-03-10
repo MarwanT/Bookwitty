@@ -41,8 +41,12 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     super.init(node: collectionNode)
   }
 
-  func initialize(with topic: Topic?) {
-    viewModel.initialize(with: topic)
+  func initialize(withTopic topic: Topic?) {
+    viewModel.initialize(withTopic: topic)
+  }
+
+  func initialize(withBook book: Book?) {
+    viewModel.initialize(withBook: book)
   }
 
   override func viewDidLoad() {
@@ -69,7 +73,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   }
 
   fileprivate func fillHeaderNode() {
-    let values = viewModel.valuesForTopic()
+    let values = viewModel.valuesForHeader()
 
     headerNode.topicTitle = values.title
     headerNode.imageUrl = values.coverImageUrl
