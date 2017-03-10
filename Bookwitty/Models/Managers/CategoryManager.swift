@@ -17,20 +17,7 @@ class CategoryManager {
   }
   
   private func categoriesLanguage() -> String {
-    var language = "en"
-    guard let preferredLanguage = NSLocale.preferredLanguages.first else {
-      return language
-    }
-    
-    switch preferredLanguage {
-    // TODO: detect french language and assign it here when available
-    case "en":
-      language = preferredLanguage
-    default:
-      break
-    }
-    
-    return language
+    return GeneralSettings.sharedInstance.preferredLanguage
   }
   
   private func loadCategoriesFromJSON() {
