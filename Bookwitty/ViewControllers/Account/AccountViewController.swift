@@ -93,7 +93,7 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     var reuseIdentifier: String
 
-    if case AccountViewModel.Sections.PenNames.rawValue = indexPath.section, 0 == (indexPath.row % 3) {
+    if case AccountViewModel.Sections.PenNames.rawValue = indexPath.section, 0 == (indexPath.row % 2) {
       reuseIdentifier = AccountPenNameTableViewCell.reuseIdentifier
     } else {
       reuseIdentifier = DisclosureTableViewCell.identifier
@@ -105,14 +105,15 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     let values = viewModel.values(forRowAt: indexPath)
 
-    if case AccountViewModel.Sections.PenNames.rawValue = indexPath.section, 0 == (indexPath.row % 3) {
+    if case AccountViewModel.Sections.PenNames.rawValue = indexPath.section, 0 == (indexPath.row % 2) {
       guard let currentCell = cell as? AccountPenNameTableViewCell else {
         return
       }
 
       currentCell.label.text = values.title
-      currentCell.profileImageView.image = values.image
+      currentCell.profileImageView.sd_setImage(with: URL(string: values.imageUrl ?? ""))
       currentCell.profileImageView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+      currentCell.disclosureIndicatorImageView.isHidden = true
 
     } else {
       guard let currentCell = cell as? DisclosureTableViewCell else {
