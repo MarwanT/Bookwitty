@@ -123,6 +123,7 @@
 		59DA47651E3B7A9B00BA90A5 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47621E3B7A9B00BA90A5 /* TutorialViewController.swift */; };
 		59DA47671E3B84ED00BA90A5 /* Access.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59DA47661E3B84ED00BA90A5 /* Access.storyboard */; };
 		59DA476A1E3B876900BA90A5 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA47691E3B876900BA90A5 /* SignInViewController.swift */; };
+		59DBA6631E731C640049B427 /* Categories.fr.json in Resources */ = {isa = PBXBuildFile; fileRef = 59DBA6621E731C640049B427 /* Categories.fr.json */; };
 		59EC5BA51E6C5987006E1CB9 /* BookDetailsECommerceNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC5B9F1E6C5987006E1CB9 /* BookDetailsECommerceNode.swift */; };
 		59EC5BA61E6C5987006E1CB9 /* BookDetailsFormatNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC5BA01E6C5987006E1CB9 /* BookDetailsFormatNode.swift */; };
 		59EC5BA71E6C5987006E1CB9 /* BookDetailsHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC5BA11E6C5987006E1CB9 /* BookDetailsHeaderNode.swift */; };
@@ -327,6 +328,7 @@
 		59DA47621E3B7A9B00BA90A5 /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		59DA47661E3B84ED00BA90A5 /* Access.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Access.storyboard; sourceTree = "<group>"; };
 		59DA47691E3B876900BA90A5 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		59DBA6621E731C640049B427 /* Categories.fr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Categories.fr.json; sourceTree = "<group>"; };
 		59EC5B9F1E6C5987006E1CB9 /* BookDetailsECommerceNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsECommerceNode.swift; sourceTree = "<group>"; };
 		59EC5BA01E6C5987006E1CB9 /* BookDetailsFormatNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsFormatNode.swift; sourceTree = "<group>"; };
 		59EC5BA11E6C5987006E1CB9 /* BookDetailsHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsHeaderNode.swift; sourceTree = "<group>"; };
@@ -893,6 +895,7 @@
 				59D8FCA51E4C76E7001C1EDB /* Info.plist */,
 				59D8FCA11E4C760F001C1EDB /* GoogleService-Info.plist */,
 				59D8FCB81E4CBF70001C1EDB /* Categories.en.json */,
+				59DBA6621E731C640049B427 /* Categories.fr.json */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -1190,6 +1193,7 @@
 				594290121E51B7C00006B2F1 /* DisclosureTableViewCell.xib in Resources */,
 				594290031E4F737B0006B2F1 /* Books.storyboard in Resources */,
 				566EE87B1E5DC677004B990D /* Localizable.strings in Resources */,
+				59DBA6631E731C640049B427 /* Categories.fr.json in Resources */,
 				597B8E391E3954B200C7811B /* Volkhov-Regular.ttf in Resources */,
 				56399DBC1E51CF2D005192AC /* Account.storyboard in Resources */,
 				59A164CB1E561BBD00088D84 /* LaunchScreen.xib in Resources */,
@@ -1336,7 +1340,6 @@
 				F461B25C1E4B73B0005EA5A8 /* NewsFeedViewController.swift in Sources */,
 				F4A4262F1E5622190090CD51 /* Topic.swift in Sources */,
 				56D5F73B1E5B60BF00F6A164 /* Book.swift in Sources */,
-				59EC5BA81E6C5987006E1CB9 /* BookDetailsNode.swift in Sources */,
 				56D36E821E6DAB3400791098 /* PenNameFollowNode.swift in Sources */,
 				F42686791E4F458A0085E581 /* CardActionBarNode.swift in Sources */,
 				F417B1D31E71C3D400B0FAFE /* PostDetailsNode.swift in Sources */,
