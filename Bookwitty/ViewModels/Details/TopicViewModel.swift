@@ -80,7 +80,7 @@ final class TopicViewModel {
   }
 
 
-  func valuesForHeader() -> (title: String?, thumbnailImageUrl: String?, coverImageUrl: String?, stats: (followers: String?, posts: String?), contributors: (count: String?, imageUrls: [String]?)) {
+  func valuesForHeader() -> (title: String?, following: Bool, thumbnailImageUrl: String?, coverImageUrl: String?, stats: (followers: String?, posts: String?), contributors: (count: String?, imageUrls: [String]?)) {
     if topic != nil {
       return valuesForTopic()
     }
@@ -93,15 +93,16 @@ final class TopicViewModel {
       return valuesForAuthor()
     }
 
-    return (nil, nil, nil, stats: (nil, nil), contributors: (nil, nil))
+    return (nil, false, nil, nil, stats: (nil, nil), contributors: (nil, nil))
   }
 
-  private func valuesForTopic() -> (title: String?, thumbnailImageUrl: String?, coverImageUrl: String?, stats: (followers: String?, posts: String?), contributors: (count: String?, imageUrls: [String]?)) {
+  private func valuesForTopic() -> (title: String?, following: Bool, thumbnailImageUrl: String?, coverImageUrl: String?, stats: (followers: String?, posts: String?), contributors: (count: String?, imageUrls: [String]?)) {
     guard let topic = topic else {
-      return (nil, nil, nil, stats: (nil, nil), contributors: (nil, nil))
+      return (nil, false, nil, nil, stats: (nil, nil), contributors: (nil, nil))
     }
 
     let title  = topic.title
+    let following = topic.following
     let thumbnail = topic.thumbnailImageUrl
     let cover = topic.coverImageUrl
     let counts = topic.counts
@@ -112,16 +113,17 @@ final class TopicViewModel {
 
     let stats: (String?, String?) = (followers, posts)
     let contributorsValues: (String?, [String]?) = (contributors, contributorsImages)
-    
-    return (title: title, thumbnailImageUrl: thumbnail, coverImageUrl: cover, stats: stats, contributors: contributorsValues)
+
+    return (title: title, following: following, thumbnailImageUrl: thumbnail, coverImageUrl: cover, stats: stats, contributors: contributorsValues)
   }
 
-  private func valuesForBook() -> (title: String?, thumbnailImageUrl: String?, coverImageUrl: String?, stats: (followers: String?, posts: String?), contributors: (count: String?, imageUrls: [String]?)) {
+  private func valuesForBook() -> (title: String?, following: Bool, thumbnailImageUrl: String?, coverImageUrl: String?, stats: (followers: String?, posts: String?), contributors: (count: String?, imageUrls: [String]?)) {
     guard let book = book else {
-      return (nil, nil, nil, stats: (nil, nil), contributors: (nil, nil))
+      return (nil, false, nil, nil, stats: (nil, nil), contributors: (nil, nil))
     }
 
     let title  = book.title
+    let following = book.following
     let thumbnail = book.thumbnailImageUrl
     let cover = book.coverImageUrl
     let counts = book.counts
@@ -133,15 +135,16 @@ final class TopicViewModel {
     let stats: (String?, String?) = (followers, posts)
     let contributorsValues: (String?, [String]?) = (contributors, contributorsImages)
 
-    return (title: title, thumbnailImageUrl: thumbnail, coverImageUrl: cover, stats: stats, contributors: contributorsValues)
+    return (title: title, following: following, thumbnailImageUrl: thumbnail, coverImageUrl: cover, stats: stats, contributors: contributorsValues)
   }
 
-  private func valuesForAuthor() -> (title: String?, thumbnailImageUrl: String?, coverImageUrl: String?, stats: (followers: String?, posts: String?), contributors: (count: String?, imageUrls: [String]?)) {
+  private func valuesForAuthor() -> (title: String?, following: Bool, thumbnailImageUrl: String?, coverImageUrl: String?, stats: (followers: String?, posts: String?), contributors: (count: String?, imageUrls: [String]?)) {
     guard let author = author else {
-      return (nil, nil, nil, stats: (nil, nil), contributors: (nil, nil))
+      return (nil, false, nil, nil, stats: (nil, nil), contributors: (nil, nil))
     }
 
     let title  = author.name
+    let following = author.following
     let thumbnail = author.thumbnailImageUrl
     let cover = author.coverImageUrl
     let counts = author.counts
@@ -153,7 +156,7 @@ final class TopicViewModel {
     let stats: (String?, String?) = (followers, posts)
     let contributorsValues: (String?, [String]?) = (contributors, contributorsImages)
 
-    return (title: title, thumbnailImageUrl: thumbnail, coverImageUrl: cover, stats: stats, contributors: contributorsValues)
+    return (title: title, following: following, thumbnailImageUrl: thumbnail, coverImageUrl: cover, stats: stats, contributors: contributorsValues)
   }
 
   private func getTopicContent() {
