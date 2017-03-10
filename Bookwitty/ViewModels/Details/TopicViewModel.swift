@@ -10,4 +10,10 @@ import Foundation
 
 final class TopicViewModel {
   var topic: Topic?
+
+  fileprivate var latest: [ModelResource] = []
+  fileprivate var editions: [Book] = []
+  fileprivate var relatedBooks: [Book] = []
+  fileprivate var followers: [PenName] = []
+
 }
