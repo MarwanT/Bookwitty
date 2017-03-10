@@ -22,6 +22,12 @@ class Topic: Resource {
   var vote: String?
 
   @objc
+  private var contributorsCollection: LinkedResourceCollection?
+  lazy var contributors: [PenName]? = {
+    return self.contributorsCollection?.resources as? [PenName]
+  }()
+
+  @objc
   fileprivate var countsDictionary: [String : Any]?
   
   override class var resourceType: ResourceType {
@@ -40,7 +46,8 @@ class Topic: Resource {
       "longDescription": Attribute().serializeAs("description"),
       "countsDictionary": Attribute().serializeAs("counts"),
       "title": Attribute().serializeAs("title"),
-      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
+      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name"),
+      "contributorsCollection" : ToManyRelationship(PenName.self).serializeAs("contributors"),
       ])
   }
 }
