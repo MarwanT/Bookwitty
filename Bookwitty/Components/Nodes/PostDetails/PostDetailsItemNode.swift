@@ -202,21 +202,16 @@ class PostDetailItemNode: ASDisplayNode {
     textRightVStack.style.flexShrink = 1
     textRightVStack.style.flexGrow = 1
 
-    if !headLine.isEmptyOrNil() {
-      textRightVStack.children?.append(headLineNode)
-      if !subheadLine.isEmptyOrNil() {
-        textRightVStack.children?.append(ASLayoutSpec.spacer(height: internalMargin))
-        textRightVStack.children?.append(subheadLineNode)
-      }
-      if !caption.isEmptyOrNil() {
-        textRightVStack.children?.append(ASLayoutSpec.spacer(height: internalMargin/2))
-        textRightVStack.children?.append(captionNode)
-      }
-    } else if !subheadLine.isEmptyOrNil() {
+    textRightVStack.children?.append(headLineNode)
+    let shouldAddSubheadline = showsSubheadline && !subheadLine.isEmptyOrNil()
+    if shouldAddSubheadline {
+      textRightVStack.children?.append(ASLayoutSpec.spacer(height: internalMargin))
       textRightVStack.children?.append(subheadLineNode)
-      textRightVStack.children?.append(ASLayoutSpec.spacer(height: internalMargin/2))
-      textRightVStack.children?.append(captionNode)
-    } else {
+    }
+
+    if !caption.isEmptyOrNil() {
+      let topSpacer = shouldAddSubheadline ? ASLayoutSpec.spacer(height: internalMargin/2) : ASLayoutSpec.spacer(height: internalMargin)
+      textRightVStack.children?.append(topSpacer)
       textRightVStack.children?.append(captionNode)
     }
 
@@ -224,12 +219,27 @@ class PostDetailItemNode: ASDisplayNode {
     outerMostHStack.justifyContent = .start
     outerMostHStack.alignItems = .stretch
     outerMostHStack.children = [imageNode, ASLayoutSpec.spacer(width: internalMargin), textRightVStack]
+
+    var outerVStackChildren: [ASLayoutElement] = []
     if !body.isEmptyOrNil() {
-      outerMostVStack.children = [outerMostHStack, ASLayoutSpec.spacer(height: contentSpacing), bodyNode,
-                                  ASLayoutSpec.spacer(height: contentSpacing), separator]
+      outerVStackChildren.append(outerMostHStack)
+      outerVStackChildren.append(ASLayoutSpec.spacer(height: contentSpacing))
+      outerVStackChildren.append(bodyNode)
     } else {
-      outerMostVStack.children = [outerMostHStack, ASLayoutSpec.spacer(height: contentSpacing), separator]
+       outerVStackChildren.append(outerMostHStack)
     }
+    if showsButton {
+      let buttonHStack = ASStackLayoutSpec.horizontal()
+      buttonHStack.justifyContent = .start
+      buttonHStack.alignItems = .stretch
+      buttonHStack.children = [button, ASLayoutSpec.spacer(flexGrow: 1)]
+      outerVStackChildren.append(ASLayoutSpec.spacer(height: internalMargin))
+      outerVStackChildren.append(buttonHStack)
+    }
+
+    outerVStackChildren.append(ASLayoutSpec.spacer(height: contentSpacing))
+    outerVStackChildren.append(separator)
+    outerMostVStack.children = outerVStackChildren
     return ASInsetLayoutSpec(insets: UIEdgeInsets(top: contentSpacing, left: internalMargin, bottom: 0, right: internalMargin), child: outerMostVStack)
   }
 }
