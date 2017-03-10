@@ -63,7 +63,12 @@ class AccountViewController: UIViewController {
     case AccountViewModel.Sections.CreatePenNames.rawValue:
       break
     case AccountViewModel.Sections.CustomerService.rawValue:
-      break
+      switch indexPath.row {
+      case 0:
+        openHelpInBrowser()
+      default:
+        break
+      }
     default:
       break
     }
@@ -79,6 +84,21 @@ class AccountViewController: UIViewController {
     let penName = viewModel.selectedPenName(atRow: indexPath.row)
     penNameViewController.viewModel.initializeWith(penName: penName, andUser: UserManager.shared.signedInUser)
     navigationController?.pushViewController(penNameViewController, animated: true)
+  }
+
+  func openHelpInBrowser() {
+    let helpUrl: String
+    switch GeneralSettings.sharedInstance.preferredLanguage {
+    case Localization.Language.French.rawValue:
+      helpUrl = "https://support.bookwitty.com/hc/fr-fr"
+    case Localization.Language.English.rawValue: fallthrough
+    default:
+      helpUrl = "https://support.bookwitty.com/hc/en-us"
+    }
+
+    if let url = URL(string: helpUrl) {
+      UIApplication.shared.openURL(url)
+    }
   }
 }
 
