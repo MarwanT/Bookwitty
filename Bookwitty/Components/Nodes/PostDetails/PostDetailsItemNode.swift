@@ -46,6 +46,14 @@ class PostDetailsItemNode: ASDisplayNode {
     }
   }
 
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let vStack = ASStackLayoutSpec.vertical()
+    vStack.spacing = 0.0
+    vStack.justifyContent = .start
+    vStack.alignItems = .stretch
+    vStack.children = nodes
+    return vStack
+  }
 }
 
 class PostDetailItemNode: ASDisplayNode {
