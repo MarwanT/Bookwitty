@@ -76,7 +76,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   }
 
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
-    //TODO: Add the segment selected index logic
+    collectionNode.reloadSections(IndexSet(integer: 1))
   }
 }
 
