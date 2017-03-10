@@ -156,7 +156,23 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    return section == 0 ? 1 : 20
+    var contentNumberOfRows: Int
+
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+    switch category {
+    case .latest:
+      contentNumberOfRows = viewModel.numberOfLatest()
+    case .editions:
+      contentNumberOfRows = viewModel.numberOfEditions()
+    case .relatedBooks:
+      contentNumberOfRows = viewModel.numberOfRelatedBooks()
+    case .followers:
+      contentNumberOfRows = viewModel.numberOfFollowers()
+    case .none:
+      contentNumberOfRows = 0
+    }
+
+    return section == 0 ? 1 : contentNumberOfRows
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
