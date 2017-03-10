@@ -137,6 +137,7 @@
 		F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41D529F1E40EB060021A4AE /* RegisterViewController.swift */; };
 		F41D52A21E40EB780021A4AE /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41D52A11E40EB780021A4AE /* RegisterViewModel.swift */; };
 		F41F3AB71E6785CB004622D3 /* LoaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41F3AB61E6785CB004622D3 /* LoaderNode.swift */; };
+		F42041C11E72ACCA00E7D208 /* PostDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42041C01E72ACCA00E7D208 /* PostDetailsViewController.swift */; };
 		F4207B941E58466A00216A2E /* PenNameSelectionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4207B931E58466A00216A2E /* PenNameSelectionNode.swift */; };
 		F420AD9D1E41D2E600C78AEB /* BookwittyUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420AD9C1E41D2E600C78AEB /* BookwittyUtilityTests.swift */; };
 		F420AD9F1E4231E000C78AEB /* AttributedStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420AD9E1E4231E000C78AEB /* AttributedStringBuilder.swift */; };
@@ -342,6 +343,7 @@
 		F41D529F1E40EB060021A4AE /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		F41D52A11E40EB780021A4AE /* RegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		F41F3AB61E6785CB004622D3 /* LoaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderNode.swift; sourceTree = "<group>"; };
+		F42041C01E72ACCA00E7D208 /* PostDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailsViewController.swift; sourceTree = "<group>"; };
 		F4207B931E58466A00216A2E /* PenNameSelectionNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameSelectionNode.swift; sourceTree = "<group>"; };
 		F420AD9C1E41D2E600C78AEB /* BookwittyUtilityTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookwittyUtilityTests.swift; sourceTree = "<group>"; };
 		F420AD9E1E4231E000C78AEB /* AttributedStringBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributedStringBuilder.swift; sourceTree = "<group>"; };
@@ -448,6 +450,7 @@
 			isa = PBXGroup;
 			children = (
 				562A31221E65D7F2002851DE /* TopicViewController.swift */,
+				F42041C01E72ACCA00E7D208 /* PostDetailsViewController.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -1388,6 +1391,7 @@
 				594290091E4FF0E30006B2F1 /* CategoriesTableViewModel.swift in Sources */,
 				F420B6A41E43D01A001F34CD /* PenNameViewController.swift in Sources */,
 				5929C2731E5B2FDB006E08F8 /* CuratedCollection+API.swift in Sources */,
+				F42041C11E72ACCA00E7D208 /* PostDetailsViewController.swift in Sources */,
 				59EC5BA61E6C5987006E1CB9 /* BookDetailsFormatNode.swift in Sources */,
 				F43A5E921E69A840008C018B /* OnBoardingControllerNode.swift in Sources */,
 				5967E45A1E410A850067093F /* NotificationView.swift in Sources */,
