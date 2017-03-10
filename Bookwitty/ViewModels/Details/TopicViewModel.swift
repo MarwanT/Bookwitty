@@ -24,4 +24,23 @@ final class TopicViewModel {
   private func initiateContentCalls() {
 
   }
+
+  func valuesForTopic() -> (title: String?, thumbnailImageUrl: String?, coverImageUrl: String?, stats: (followers: String?, posts: String?), contributors: (count: String?, imageUrls: [String]?)) {
+    guard let topic = topic else {
+      return (nil, nil, nil, stats: (nil, nil), contributors: (nil, nil))
+    }
+
+    let title  = topic.title
+    let thumbnail = topic.thumbnailImageUrl
+    let cover = topic.coverImageUrl
+    let counts = topic.counts
+    let followers = String(counting: counts.followers)
+    let posts = String(counting: counts.posts)
+    let contributors = String(counting: counts.contributors)
+
+    let stats: (String?, String?) = (followers, posts)
+    let contributorsValues: (String?, [String]?) = (contributors, nil)
+    
+    return (title: title, thumbnailImageUrl: thumbnail, coverImageUrl: cover, stats: stats, contributors: contributorsValues)
+  }
 }
