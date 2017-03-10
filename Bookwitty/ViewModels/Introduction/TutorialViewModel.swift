@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias TutorialPageData = (title: String?, description: String?, image: UIImage, color: UIColor?)
+typealias TutorialPageData = (title: String?, description: String?, image: UIImage, color: UIColor?, pastelColor: UIColor?)
 
 final class TutorialViewModel {
   var tutorialPageData: [TutorialPageData] = [TutorialPageData]()

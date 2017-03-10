@@ -90,13 +90,16 @@ class IntroductionViewController: UIViewController {
 
 extension IntroductionViewController: TutorialViewControllerDelegate {
   func tutorialViewController(_ tutorialViewController: TutorialViewController, didSelectPageAtIndex index: Int) {
-    guard let buttonsColor = viewModel.colorForIndex(index: index) else {
-      return
-    }
+    let colors = viewModel.colorsForIndex(index: index)
+    
     
     UIView.animate(withDuration: 0.34) {
-      self.changeButtonsColors(withColor: buttonsColor)
-      self.view.backgroundColor = buttonsColor
+      if let buttonsColor = colors.color {
+        self.changeButtonsColors(withColor: buttonsColor)
+      }
+      if let backgroundColor = colors.pastelColor {
+        self.view.backgroundColor = backgroundColor
+      }
     }
   }
 }
