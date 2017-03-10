@@ -22,7 +22,7 @@ class ReadingList: Resource {
   var body: String?
   var penName: PenName?
   var vote: String?
-
+  
   var postsCollection: LinkedResourceCollection?
   lazy var postsRelations: [ResourceIdentifier]? = {
     return self.postsCollection?.linkage

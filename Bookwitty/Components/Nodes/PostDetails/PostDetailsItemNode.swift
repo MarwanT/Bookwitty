@@ -55,6 +55,10 @@ class PostDetailsItemNode: ASDisplayNode {
   }
 }
 
+protocol PostDetailItemNodeDelegate {
+  func postDetailItemNodeButtonTouchUpInside(PostDetailItemNode: PostDetailItemNode, button: ASButtonNode)
+}
+
 class PostDetailItemNode: ASDisplayNode {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
@@ -69,6 +73,7 @@ class PostDetailItemNode: ASDisplayNode {
   let separator: ASDisplayNode
   let button: ASButtonNode
 
+  var delegate: PostDetailItemNodeDelegate?
   var smallImage: Bool = true
   var showsSubheadline: Bool = true
   var showsButton: Bool = false
@@ -165,7 +170,7 @@ class PostDetailItemNode: ASDisplayNode {
 
     //Image Setup
     imageNode.style.preferredSize = CGSize(width: smallImageHeight, height: smallImage ? smallImageHeight : largeImageHeight)
-    imageNode.backgroundColor = UIColor.bwKeppel
+    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
     //Body Setup
     bodyNode.maximumNumberOfLines = 7
     //HeadLine Setup
@@ -184,6 +189,12 @@ class PostDetailItemNode: ASDisplayNode {
     button.style.flexShrink = 1.0
     button.titleNode.maximumNumberOfLines = 1
     ThemeManager.shared.currentTheme.styleECommercePrimaryButton(button: button)
+    //Add tap delegate
+    button.addTarget(self, action: #selector(postDetailItemNodeButtonTouchUpInside), forControlEvents: .touchUpInside)
+  }
+
+  func postDetailItemNodeButtonTouchUpInside() {
+    delegate?.postDetailItemNodeButtonTouchUpInside(PostDetailItemNode: self, button: button)
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

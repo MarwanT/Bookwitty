@@ -20,7 +20,7 @@ class Topic: Resource {
   var title: String?
   var penName: PenName?
   var vote: String?
-
+  
   @objc
   private var contributorsCollection: LinkedResourceCollection?
   lazy var contributors: [PenName]? = {

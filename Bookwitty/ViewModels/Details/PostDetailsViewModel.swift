@@ -40,6 +40,9 @@ class PostDetailsViewModel {
   var contentPostsIdentifiers: [ResourceIdentifier]? {
     return contentPostsFromResource(resource: resource)
   }
+  var canonicalURL: URL? {
+    return resource.canonicalURL
+  }
   var contentPostsResources: [Resource]?
 
   init(resource: Resource) {
@@ -118,7 +121,7 @@ class PostDetailsViewModel {
   }
 
   func loadContentPosts(completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard let listOfIdentifiers = contentPostsIdentifiers?.prefix(10).flatMap({ $0.id }) else {
+    guard let listOfIdentifiers = contentPostsIdentifiers?.prefix(20).flatMap({ $0.id }) else {
       completionBlock(false)
       return
     }

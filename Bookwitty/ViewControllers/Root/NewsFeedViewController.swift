@@ -297,7 +297,7 @@ extension NewsFeedViewController: BaseCardPostNodeDelegate {
         didFinishAction?(success)
       }
     case .share:
-      if let sharingInfo: String = viewModel.sharingContent(index: index) {
+      if let sharingInfo: [String] = viewModel.sharingContent(index: index) {
         presentShareSheet(shareContent: sharingInfo)
       }
     default:

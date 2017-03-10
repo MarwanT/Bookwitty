@@ -25,7 +25,7 @@ class Author: Resource {
   var type: String?
   var penName: PenName?
   var vote: String?
-
+  
   //TODO: add PageAuthor model we have a problem with the json-api conforming from the api siding
 
   override class var resourceType: ResourceType {

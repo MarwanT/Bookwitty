@@ -127,24 +127,16 @@ extension DiscoverViewModel {
     })
   }
 
-  func sharingContent(index: Int) -> String? {
+  func sharingContent(index: Int) -> [String]? {
     guard data.count > index,
       let commonProperties = data[index] as? ModelCommonProperties else {
         return nil
     }
 
-    let content = data[index]
-    //TODO: Make sure that we are sharing the right information
-    let shortDesciption = commonProperties.shortDescription ?? commonProperties.title ?? ""
-    if let sharingUrl = content.url {
-      var sharingString = sharingUrl.absoluteString
-      sharingString += shortDesciption.isEmpty ? "" : "\n\n\(shortDesciption)"
-      return sharingString
+    let shortDesciption = commonProperties.title ?? commonProperties.shortDescription ?? ""
+    if let sharingUrl = commonProperties.canonicalURL {
+      return [shortDesciption, sharingUrl.absoluteString]
     }
-
-    //TODO: Remove dummy data and return nil instead since we do not have a url to share.
-    var sharingString = "https://bookwitty-api-qa.herokuapp.com/reading_list/ios-mobile-applications-development/58a6f9b56b2c581af13637f6"
-    sharingString += shortDesciption.isEmpty ? "" : "\n\n\(shortDesciption)"
-    return sharingString
+    return [shortDesciption]
   }
 }
