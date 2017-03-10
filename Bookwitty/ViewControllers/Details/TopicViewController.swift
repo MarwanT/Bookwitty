@@ -43,10 +43,12 @@ class TopicViewController: ASViewController<ASCollectionNode> {
 
   func initialize(withTopic topic: Topic?) {
     viewModel.initialize(withTopic: topic)
+    self.mode = .normal(categories: self.normal)
   }
 
   func initialize(withBook book: Book?) {
     viewModel.initialize(withBook: book)
+    self.mode = .normal(categories: self.book)
   }
 
   override func viewDidLoad() {
