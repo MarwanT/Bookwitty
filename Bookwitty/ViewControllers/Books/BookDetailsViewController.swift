@@ -29,6 +29,8 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
     viewModel.book = book
     
     super.init(node: collectionNode)
+    
+    viewModel.viewController = self
   }
   
   override func viewDidLoad() {
@@ -37,6 +39,17 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
     
     collectionNode.delegate = self
     collectionNode.dataSource = self
+    
+    loadNavigationBarButtons()
+  }
+  
+  private func loadNavigationBarButtons() {
+    let shareButton = UIBarButtonItem(
+      image: #imageLiteral(resourceName: "shareOutside"),
+      style: UIBarButtonItemStyle.plain,
+      target: self,
+      action: #selector(shareOutsideButton(_:)))
+    navigationItem.rightBarButtonItem = shareButton
   }
 }
 
@@ -78,35 +91,92 @@ extension BookDetailsViewController {
       break
     case .viewCategory(let category):
       viewCategory(category)
-    case .viewDescription:
-      break
-    case .viewDetails:
-      viewDetails()
-    case .share:
-      break
-    case .buyThisBook:
-      buyThisBook()
+    case .viewDescription(let description):
+      viewAboutDescription(description)
+    case .viewDetails(let productDetails):
+      viewDetails(productDetails)
+    case .share(let title, let url):
+      shareBook(title: title, url: url)
+    case .buyThisBook(let url):
+      buyThisBook(url)
     case .addToWishlist:
       break
-    case .viewShippingInfo:
-      viewShippingInfo()
+    case .viewShippingInfo(let url):
+      viewShippingInfo(url)
     }
   }
   
-  fileprivate func viewDetails() {
-    print("View Details")
+  fileprivate func viewDetails(_ productDetails: ProductDetails) {
+    let node = BookDetailsInformationNode()
+    node.productDetails = productDetails
+    let genericViewController = GenericNodeViewController(node: node, title: viewModel.book.title)
+    self.navigationController?.pushViewController(genericViewController, animated: true)
   }
   
-  fileprivate func viewShippingInfo() {
-    print("View Shipping Info")
+  fileprivate func viewAboutDescription(_ description: String) {
+    let externalInsets = UIEdgeInsets(
+      top: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      left: 0, bottom: 0, right: 0)
+    let node = BookDetailsAboutNode(externalInsets: externalInsets)
+    node.about = description
+    node.dispayMode = .expanded
+    let genericViewController = GenericNodeViewController(node: node, title: viewModel.book.title)
+    self.navigationController?.pushViewController(genericViewController, animated: true)
   }
   
-  fileprivate func buyThisBook() {
-    print("Buy This Book")
+  fileprivate func viewShippingInfo(_ url: URL) {
+    WebViewController.present(url: url, inViewController: self)
+  }
+  
+  fileprivate func buyThisBook(_ url: URL) {
+    WebViewController.present(url: url, inViewController: self)
   }
   
   fileprivate func viewCategory(_ category: Category) {
-    print("View Category: \(category.value)")
+    let categoryViewController = Storyboard.Books.instantiate(CategoryViewController.self)
+    categoryViewController.viewModel.category = category
+    navigationController?.pushViewController(categoryViewController, animated: true)
+  }
+  
+  fileprivate func shareBook(title: String, url: URL) {
+    let activityViewController = UIActivityViewController(
+      activityItems: [title, url],
+      applicationActivities: nil)
+    present(activityViewController, animated: true, completion: nil)
+  }
+  
+  func shareOutsideButton(_ sender: Any?) {
+    guard let url = viewModel.bookCanonicalURL else {
+      return
+    }
+    perform(action: .share(bookTitle: self.viewModel.book.title ?? "", url: url))
+  }
+}
+
+// MARK: - Book details about node
+extension BookDetailsViewController: BookDetailsAboutNodeDelegate {
+  func aboutNodeDidTapViewDescription(aboutNode: BookDetailsAboutNode) {
+    guard let description = aboutNode.about else {
+      return
+    }
+    perform(action: .viewDescription(description))
+  }
+}
+
+// MARK: - Book details e-commerce node
+extension BookDetailsViewController: BookDetailsECommerceNodeDelegate {
+  func eCommerceNodeDidTapOnBuyBook(node: BookDetailsECommerceNode) {
+    guard let url = viewModel.bookCanonicalURL else {
+      return
+    }
+    perform(action: .buyThisBook(url))
+  }
+  
+  func eCommerceNodeDidTapOnShippingInformation(node: BookDetailsECommerceNode) {
+    guard let url = viewModel.shipementInfoURL else {
+      return
+    }
+    perform(action: .viewShippingInfo(url))
   }
 }
 
@@ -115,12 +185,12 @@ extension BookDetailsViewController {
   enum Action {
     case viewImageFullScreen
     case viewFormat
-    case viewDetails
+    case viewDetails(ProductDetails)
     case viewCategory(Category)
-    case viewDescription
-    case viewShippingInfo
-    case buyThisBook
-    case share
+    case viewDescription(String)
+    case viewShippingInfo(URL)
+    case buyThisBook(URL)
+    case share(bookTitle: String, url: URL)
     case addToWishlist
   }
 }

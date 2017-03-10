@@ -16,9 +16,18 @@ final class BookDetailsViewModel {
   let maximumNumberOfDetails: Int = 3
   var bookDetailedInformation: [(key: String, value: String)]? = nil
   var bookCategories: [Category]? = nil
+  weak var viewController: BookDetailsViewController? = nil
   
   var viewControllerTitle: String? {
     return ""
+  }
+  
+  var shipementInfoURL: URL? {
+    return URL(string: "/shipping", relativeTo: Environment.current.baseURL)
+  }
+  
+  var bookCanonicalURL: URL? {
+    return book.canonicalURL
   }
   
   var numberOfSections: Int {
@@ -75,11 +84,16 @@ extension BookDetailsViewModel {
       node = formatNode
     case .eCommerce:
       let eCommerceNode = BookDetailsECommerceNode()
+      eCommerceNode.delegate = viewController
       eCommerceNode.set(supplierInformation: book.supplierInformation)
       node = eCommerceNode
     case .about:
-      let aboutNode = BookDetailsAboutNode()
+      let externalInsets = UIEdgeInsets(
+        top: ThemeManager.shared.currentTheme.generalExternalMargin() * 2,
+        left: 0, bottom: 0, right: 0)
+      let aboutNode = BookDetailsAboutNode(externalInsets: externalInsets)
       aboutNode.about = book.bookDescription
+      aboutNode.delegate = viewController
       node = aboutNode
     case .serie:
       break
@@ -91,8 +105,10 @@ extension BookDetailsViewModel {
       }
       switch indexPath.row {
       case 0: // Header
-        let headerNode = SectionTitleHeaderNode()
-        headerNode.configuration.externalEdgeInsets.top = (ThemeManager.shared.currentTheme.generalExternalMargin() * 2)
+        let externalInsets = UIEdgeInsets(
+          top: ThemeManager.shared.currentTheme.generalExternalMargin() * 2,
+          left: 0, bottom: 0, right: 0)
+        let headerNode = SectionTitleHeaderNode(externalInsets: externalInsets)
         headerNode.setTitle(
           title: Strings.book_details(),
           verticalBarColor: ThemeManager.shared.currentTheme.colorNumber8(),
@@ -261,7 +277,10 @@ extension BookDetailsViewModel {
       case 0: // Header
         return nil
       case (bookDetailedInformation.count + 1): // Footer
-        return .viewDetails
+        guard let productDetails = book.productDetails else {
+          return nil
+        }
+        return .viewDetails(productDetails)
       default: // Information
         return nil
       }

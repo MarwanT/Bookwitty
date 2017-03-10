@@ -8,10 +8,17 @@
 
 import AsyncDisplayKit
 
+protocol BookDetailsStockNodeDelegate: class {
+  func stockNodeDidTapOnBuyBook(node: BookDetailsStockNode)
+  func stockNodeDidTapOnShippingInformation(node: BookDetailsStockNode)
+}
+
 class BookDetailsStockNode: ASDisplayNode {
   fileprivate let availabilityTextNode: ASTextNode
   fileprivate let shippingInformationTextNode: ASTextNode
   fileprivate let buyThisBookButtonNode: ASButtonNode
+  
+  weak var delegate: BookDetailsStockNodeDelegate?
   
   var configuration = Configuration()
   
@@ -84,11 +91,11 @@ class BookDetailsStockNode: ASDisplayNode {
   
   // MARK: Actions
   func shippingInformationTouchUpInside(_ sender: Any?) {
-    print("Did Tap Shipping Information")
+    delegate?.stockNodeDidTapOnShippingInformation(node: self)
   }
   
   func buyThisBookTouchUpInside(_ sender: Any?) {
-    print("Buy This Book")
+    delegate?.stockNodeDidTapOnBuyBook(node: self)
   }
 }
 
