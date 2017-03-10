@@ -14,4 +14,5 @@ struct AppNotification {
   static let didSignIn: Notification.Name = Notification.Name(rawValue: "AppNotification.didSignIn")
   static let shouldDisplayRegistration: Notification.Name = Notification.Name(rawValue: "AppNotification.shouldDisplayRegistration")
   static let registrationSuccess: Notification.Name = Notification.Name(rawValue: "AppNotification.registrationSuccess")
+  static let shouldRefreshData: Notification.Name = Notification.Name(rawValue: "AppNotification.shouldRefreshData")
 }
