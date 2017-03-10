@@ -79,11 +79,9 @@ class TopicHeaderNode: ASCellNode {
     }
   }
 
-  var contributorsValues: (imageUrls: [String]?, numberOfContributors: String?)? {
-    didSet {
-      contributorsNode.imagesUrls = contributorsValues?.imageUrls
-      contributorsNode.numberOfContributors = contributorsValues?.numberOfContributors
-    }
+  func setContributorsValues(numberOfContributors: String?, imageUrls: [String]?) {
+    contributorsNode.imagesUrls = imageUrls
+    contributorsNode.numberOfContributors = numberOfContributors
   }
 
   func setTopicStatistics(numberOfFollowers: String? = nil, numberOfPosts: String? = nil) {
@@ -151,14 +149,12 @@ class TopicHeaderNode: ASCellNode {
     let horizontalSpecInset = ASInsetLayoutSpec(insets: sideInset(), child: statsAndActionHorizontalSpec)
     nodesArray.append(horizontalSpecInset)
 
-    if let contributorsValues = contributorsValues {
-      let count = contributorsValues.imageUrls?.count ?? 0
-      let text = contributorsValues.numberOfContributors
-      if count != 0 || isValid(text){
-        contributorsNode.style.width = ASDimensionMake(constrainedSize.max.width)
-        contributorsNode.style.height = ASDimensionMake(45.0)
-        nodesArray.append(contributorsNode)
-      }
+    let count = contributorsNode.imagesUrls?.count ?? 0
+    let text = contributorsNode.numberOfContributors
+    if count != 0 || isValid(text){
+      contributorsNode.style.width = ASDimensionMake(constrainedSize.max.width)
+      contributorsNode.style.height = ASDimensionMake(45.0)
+      nodesArray.append(contributorsNode)
     }
 
     //Height is zero since the `ASStackLayoutSpec` will add the internalMargin as spacing between the items
