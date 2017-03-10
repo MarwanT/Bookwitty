@@ -22,14 +22,6 @@ class ReadingList: Resource {
   var body: String?
   var penName: PenName?
   var vote: String?
-
-  var canonicalURL: URL? {
-    guard let urlString = self.links?["canonical-url"] as? String,
-      let url = URL(string: urlString) else {
-        return nil
-    }
-    return url
-  }
   
   var postsCollection: LinkedResourceCollection?
   lazy var postsRelations: [ResourceIdentifier]? = {
