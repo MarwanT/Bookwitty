@@ -9,6 +9,10 @@
 import UIKit
 import AsyncDisplayKit
 
+protocol PenNameFollowNodeDelegate: class {
+  func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ASButtonNode)
+}
+
 class PenNameFollowNode: ASCellNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let imageSize: CGSize = CGSize(width: 45.0, height: 45.0)
@@ -19,6 +23,8 @@ class PenNameFollowNode: ASCellNode {
   private var biographyNode: ASTextNode
   private var actionButton: ASButtonNode
   private let separatorNode: ASDisplayNode
+
+  weak var delegate: PenNameFollowNodeDelegate?
 
   override init() {
     imageNode = ASNetworkImageNode()
