@@ -113,15 +113,46 @@ class PostDetailItemNode: ASDisplayNode {
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let outerMostVStack = ASStackLayoutSpec.vertical()
-    outerMostVStack.spacing = contentSpacing
+    outerMostVStack.spacing = 0
     outerMostVStack.justifyContent = .start
     outerMostVStack.alignItems = .stretch
 
-    let outerMostHStack = ASStackLayoutSpec.horizontal()
-    outerMostHStack.justifyContent = .center
-    outerMostHStack.alignItems = .stretch
+    let textRightVStack = ASStackLayoutSpec.vertical()
+    textRightVStack.spacing = 0.0
+    textRightVStack.justifyContent = .start
+    textRightVStack.alignItems = .start
+    textRightVStack.children = []
+    textRightVStack.style.flexShrink = 1
+    textRightVStack.style.flexGrow = 1
 
-    outerMostVStack.children = [outerMostHStack, bodyNode, separator]
-    return outerMostVStack
+    if !headLine.isEmptyOrNil() {
+      textRightVStack.children?.append(headLineNode)
+      if !subheadLine.isEmptyOrNil() {
+        textRightVStack.children?.append(ASLayoutSpec.spacer(height: internalMargin))
+        textRightVStack.children?.append(subheadLineNode)
+      }
+      if !caption.isEmptyOrNil() {
+        textRightVStack.children?.append(ASLayoutSpec.spacer(height: internalMargin/2))
+        textRightVStack.children?.append(captionNode)
+      }
+    } else if !subheadLine.isEmptyOrNil() {
+      textRightVStack.children?.append(subheadLineNode)
+      textRightVStack.children?.append(ASLayoutSpec.spacer(height: internalMargin/2))
+      textRightVStack.children?.append(captionNode)
+    } else {
+      textRightVStack.children?.append(captionNode)
+    }
+
+    let outerMostHStack = ASStackLayoutSpec.horizontal()
+    outerMostHStack.justifyContent = .start
+    outerMostHStack.alignItems = .stretch
+    outerMostHStack.children = [imageNode, ASLayoutSpec.spacer(width: internalMargin), textRightVStack]
+    if !body.isEmptyOrNil() {
+      outerMostVStack.children = [outerMostHStack, ASLayoutSpec.spacer(height: contentSpacing), bodyNode,
+                                  ASLayoutSpec.spacer(height: contentSpacing), separator]
+    } else {
+      outerMostVStack.children = [outerMostHStack, ASLayoutSpec.spacer(height: contentSpacing), separator]
+    }
+    return ASInsetLayoutSpec(insets: UIEdgeInsets(top: contentSpacing, left: internalMargin, bottom: 0, right: internalMargin), child: outerMostVStack)
   }
 }
