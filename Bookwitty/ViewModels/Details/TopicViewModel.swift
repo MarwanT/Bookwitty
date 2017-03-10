@@ -22,6 +22,7 @@ final class TopicViewModel {
 
   var topic: Topic?
   var book: Book?
+  var author: Author?
 
   fileprivate var latest: [ModelResource] = []
   fileprivate var editions: [Book] = []
@@ -38,6 +39,11 @@ final class TopicViewModel {
     initiateContentCalls()
   }
 
+  func initialize(withAuthor author: Author?) {
+    self.author = author
+    initiateContentCalls()
+  }
+
   var identifier: String? {
     if let topic = topic {
       return topic.id
@@ -47,12 +53,20 @@ final class TopicViewModel {
       return book.id
     }
 
+    if let author = author {
+      return author.id
+    }
+
     return nil
   }
 
   private func initiateContentCalls() {
     if topic != nil {
       getTopicContent()
+    }
+
+    if author != nil {
+      getAuthorContent()
     }
 
     if book != nil {
@@ -73,6 +87,10 @@ final class TopicViewModel {
 
     if book != nil {
       return valuesForBook()
+    }
+
+    if author != nil {
+      return valuesForAuthor()
     }
 
     return (nil, nil, nil, stats: (nil, nil), contributors: (nil, nil))
@@ -118,6 +136,26 @@ final class TopicViewModel {
     return (title: title, thumbnailImageUrl: thumbnail, coverImageUrl: cover, stats: stats, contributors: contributorsValues)
   }
 
+  private func valuesForAuthor() -> (title: String?, thumbnailImageUrl: String?, coverImageUrl: String?, stats: (followers: String?, posts: String?), contributors: (count: String?, imageUrls: [String]?)) {
+    guard let author = author else {
+      return (nil, nil, nil, stats: (nil, nil), contributors: (nil, nil))
+    }
+
+    let title  = author.name
+    let thumbnail = author.thumbnailImageUrl
+    let cover = author.coverImageUrl
+    let counts = author.counts
+    let followers = String(counting: counts.followers)
+    let posts = String(counting: counts.posts)
+    let contributors = String(counting: counts.contributors)
+    let contributorsImages: [String]? = author.contributors?.flatMap({ $0.avatarUrl })
+
+    let stats: (String?, String?) = (followers, posts)
+    let contributorsValues: (String?, [String]?) = (contributors, contributorsImages)
+
+    return (title: title, thumbnailImageUrl: thumbnail, coverImageUrl: cover, stats: stats, contributors: contributorsValues)
+  }
+
   private func getTopicContent() {
     guard let identifier = identifier else {
       return
@@ -142,13 +180,31 @@ final class TopicViewModel {
     }
 
     _ = GeneralAPI.content(of: identifier, include: ["contributors"]) {
-      (success: Bool, topic: Topic?, error: BookwittyAPIError?) in
+      (success: Bool, book: Book?, error: BookwittyAPIError?) in
       if success {
-        guard let topic = topic else {
+        guard let book = book else {
           return
         }
 
-        self.topic = topic
+        self.book = book
+        self.callback?(.content)
+      }
+    }
+  }
+
+  private func getAuthorContent() {
+    guard let identifier = identifier else {
+      return
+    }
+
+    _ = GeneralAPI.content(of: identifier, include: ["contributors"]) {
+      (success: Bool, author: Author?, error: BookwittyAPIError?) in
+      if success {
+        guard let author = author else {
+          return
+        }
+
+        self.author = author
         self.callback?(.content)
       }
     }
