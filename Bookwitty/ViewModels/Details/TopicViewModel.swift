@@ -20,4 +20,8 @@ final class TopicViewModel {
     self.topic = topic
     initiateContentCalls()
   }
+
+  private func initiateContentCalls() {
+
+  }
 }
