@@ -78,7 +78,7 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
       let date = Date.formatDate(date: res?.createdAt)
       itemNode.caption = date
       itemNode.headLine = res?.title
-      itemNode.subheadLine = nil //TODO: Use count/contributors from Charles' branch
+      itemNode.subheadLine = String(counting: res?.counts.contributors)
       return itemNode
     case Text.resourceType:
       let res = resource as? Text
