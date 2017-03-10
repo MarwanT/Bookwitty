@@ -9,6 +9,17 @@
 import Foundation
 
 final class TopicViewModel {
+
+  enum CallbackCategory {
+    case content
+    case latest
+    case editions
+    case relatedBooks
+    case followers
+  }
+
+  var callback: ((CallbackCategory) -> ())?
+
   var topic: Topic?
 
   fileprivate var latest: [ModelResource] = []
@@ -57,6 +68,7 @@ final class TopicViewModel {
         }
 
         self.topic = topic
+        self.callback?(.content)
       }
     }
   }
@@ -88,6 +100,7 @@ extension TopicViewModel {
           self.latest.removeAll()
         }
         self.latest += resources ?? []
+        self.callback?(.latest)
       }
     }
   }
@@ -117,6 +130,7 @@ extension TopicViewModel {
       if success {
         self.editions.removeAll()
         self.editions += (resources as? [Book]) ?? []
+        self.callback?(.editions)
       }
     }
   }
@@ -147,6 +161,7 @@ extension TopicViewModel {
         self.relatedBooks.removeAll()
         let books = resources?.filter({ $0.registeredResourceType == Book.resourceType })
         self.relatedBooks += (books as? [Book]) ?? []
+        self.callback?(.relatedBooks)
       }
     }
   }
@@ -176,6 +191,7 @@ extension TopicViewModel {
       if success {
         self.followers.removeAll()
         self.followers += penNames ?? []
+        self.callback?(.followers)
       }
     }
   }
