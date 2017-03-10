@@ -183,7 +183,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
     }
 
     return {
-      return BaseCardPostNode()
+      return self.cellNodeBlockFor(item: indexPath.item, category: self.category(withIndex: self.segmentedNode.selectedIndex))
     }
   }
 
@@ -209,5 +209,23 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
       min: CGSize(width: collectionNode.frame.width, height: 0),
       max: CGSize(width: collectionNode.frame.width, height: .infinity)
     )
+  }
+
+  private func cellNodeBlockFor(item: Int, category: Category) -> ASCellNode {
+    switch category {
+    case .latest:
+      guard let post = viewModel.latest(at: item), let node = CardFactory.shared.createCardFor(resource: post) else {
+        return ASCellNode()
+      }
+      return node
+    case .editions:
+      return BookNode()
+    case .relatedBooks:
+      return BookNode()
+    case .followers:
+      return PenNameFollowNode()
+    case .none:
+      return ASCellNode()
+    }
   }
 }
