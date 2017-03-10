@@ -9,6 +9,11 @@
 import UIKit
 import AsyncDisplayKit
 
+protocol PostDetailsItemNodeDataSource {
+  func postDetailsItem(_ postDetailsItem: PostDetailsItemNode, nodeForItemAt index: Int) -> ASDisplayNode
+  func postDetailsItemCount(_ postDetailsItem: PostDetailsItemNode) -> Int
+}
+
 class PostDetailsItemNode: ASDisplayNode {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
@@ -20,6 +25,7 @@ class PostDetailsItemNode: ASDisplayNode {
       setNeedsLayout()
     }
   }
+  var dataSource: PostDetailsItemNodeDataSource!
 
   override init() {
     nodes = []
