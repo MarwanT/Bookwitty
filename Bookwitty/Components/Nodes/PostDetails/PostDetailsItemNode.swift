@@ -82,6 +82,7 @@ class PostDetailItemNode: ASDisplayNode {
     bodyNode = ASTextNode()
     separator = ASDisplayNode()
     super.init()
+    automaticallyManagesSubnodes = true
     initializeNode()
   }
 
