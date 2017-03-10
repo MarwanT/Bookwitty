@@ -34,4 +34,17 @@ class Paginator {
 
     return Array(nextRangeIds)
   }
+
+  func currentIdentifiers() -> [String]? {
+    guard startIndex < ids.endIndex else {
+      return nil
+    }
+    let endIndex = min((startIndex + pageSize), ids.endIndex)
+    let nextRangeIds: ArraySlice<String> = ids[startIndex..<endIndex]
+    return Array(nextRangeIds)
+  }
+
+  func incrementPage() {
+    startIndex += pageSize
+  }
 }

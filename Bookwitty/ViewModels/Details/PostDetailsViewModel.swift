@@ -80,7 +80,7 @@ class PostDetailsViewModel {
   private func contentPostsFromResource(resource: Resource) -> [ResourceIdentifier]? {
     switch(resource.registeredResourceType) {
     case ReadingList.resourceType:
-      return (resource as? ReadingList)?.posts
+      return (resource as? ReadingList)?.postsRelations
     case Text.resourceType:
       return nil
     default: return nil

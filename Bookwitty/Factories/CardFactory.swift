@@ -334,6 +334,7 @@ extension  CardFactory {
       return nil
     }
 
+    //TODO: Remove the static data
     let name = resource.penName?.name ?? "[No Name]"
     let date = Date.formatDate(date: resource.createdAt)
     let penNameprofileImage = resource.penName?.avatarUrl
@@ -394,6 +395,9 @@ extension  CardFactory {
     card.node.setTopicStatistics(numberOfPosts: "XX")
     card.articleCommentsSummary = "X commented on this"
     card.wit = resource.isWitted
+
+    let images = resource.posts?.map({ ($0 as? ModelCommonProperties)?.thumbnailImageUrl }) ?? []
+    card.node.imageCollection = images.flatMap({$0})
 
     return card
   }
