@@ -392,6 +392,36 @@ extension TopicViewModel {
     }
   }
 
+  func followPenName(at item: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let penName = follower(at: item), let identifier = penName.id else {
+      completionBlock(false)
+      return
+    }
+
+    followRequest(identifier: identifier) {
+      (success: Bool) in
+      defer {
+        completionBlock(success)
+      }
+      penName.following = true
+    }
+  }
+
+  func unfollowPenName(at item: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let penName = follower(at: item), let identifier = penName.id else {
+      completionBlock(false)
+      return
+    }
+
+    followRequest(identifier: identifier) {
+      (success: Bool) in
+      defer {
+        completionBlock(success)
+      }
+      penName.following = false
+    }
+  }
+
   fileprivate func followRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     _ = GeneralAPI.follow(identifer: identifier) { (success, error) in
       defer {
