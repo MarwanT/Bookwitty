@@ -56,6 +56,8 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   }
 
   private func initializeComponents() {
+    title = Strings.topic()
+
     let segments: [String] = self.mode.categories.map({ $0.name })
     segmentedNode.initialize(with: segments)
 
