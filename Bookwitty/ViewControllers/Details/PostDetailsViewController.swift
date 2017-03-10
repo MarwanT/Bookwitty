@@ -35,6 +35,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     let date = Date.formatDate(date: viewModel.date)
     postDetailsNode.date = date
     postDetailsNode.penName = viewModel.penName
+    postDetailsNode.dataSource = self
     loadContentPosts()
   }
 
@@ -47,5 +48,52 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
       //Done Loading - Update UI
       self.postDetailsNode.loadPostItemsNode()
     }
+  }
+}
+
+extension PostDetailsViewController: PostDetailsItemNodeDataSource {
+
+  func postDetailsItem(_ postDetailsItem: PostDetailsItemNode, nodeForItemAt index: Int) -> ASDisplayNode {
+    guard let resource = viewModel.contentPostsItem(at: index) else {
+      return ASDisplayNode()
+    }
+    switch (resource.registeredResourceType) {
+    case Book.resourceType:
+      let res = resource as? Book
+      let itemNode = PostDetailItemNode(smallImage: false, showsSubheadline: false, showsButton: true)
+      itemNode.imageUrl = res?.thumbnailImageUrl
+      itemNode.body = res?.bookDescription
+      itemNode.buttonTitle = Strings.buy_this_book()
+      itemNode.caption = res?.productDetails?.author
+      itemNode.headLine = res?.title
+      itemNode.subheadLine = nil
+      return itemNode
+    case Topic.resourceType:
+      let res = resource as? Topic
+      let itemNode = PostDetailItemNode(smallImage: true, showsSubheadline: true, showsButton: false)
+      itemNode.imageUrl = res?.thumbnailImageUrl
+      itemNode.body = res?.shortDescription
+      let date = Date.formatDate(date: res?.createdAt)
+      itemNode.caption = date
+      itemNode.headLine = res?.title
+      itemNode.subheadLine = "33 Contributors"
+      return itemNode
+    case Text.resourceType:
+      let res = resource as? Text
+      let itemNode = PostDetailItemNode(smallImage: true, showsSubheadline: true, showsButton: false)
+      itemNode.imageUrl = res?.thumbnailImageUrl
+      itemNode.body = res?.shortDescription
+      let date = Date.formatDate(date: res?.createdAt)
+      itemNode.caption = date
+      itemNode.headLine = res?.title
+      itemNode.subheadLine = res?.penName?.name
+      return itemNode
+    default :
+      return ASDisplayNode()
+    }
+  }
+
+  func postDetailsItemCount(_ postDetailsItem: PostDetailsItemNode) -> Int {
+    return viewModel.contentPostsItemCount()
   }
 }
