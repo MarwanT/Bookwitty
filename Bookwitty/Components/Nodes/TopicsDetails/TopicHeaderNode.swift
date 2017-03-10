@@ -51,6 +51,7 @@ class TopicHeaderNode: ASCellNode {
     actionButton.titleNode.maximumNumberOfLines = 1
     actionButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
     actionButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
+    actionButton.isSelected = self.following
 
     actionButton.setTitle(Strings.follow(), with: buttonFont, with: textColor, for: .normal)
     actionButton.setTitle(Strings.followed(), with: buttonFont, with: selectedTextColor, for: .selected)
@@ -76,6 +77,12 @@ class TopicHeaderNode: ASCellNode {
         imageNode.url = URL(string: imageUrl)
         setNeedsLayout()
       }
+    }
+  }
+
+  var following: Bool = false {
+    didSet {
+      actionButton.isSelected = following
     }
   }
 
