@@ -25,7 +25,13 @@ class Author: Resource {
   var type: String?
   var penName: PenName?
   var vote: String?
-  
+
+  @objc
+  private var followingNumber: NSNumber?
+  var following: Bool {
+    return ((followingNumber?.intValue ?? 0) == 1)
+  }
+
   //TODO: add PageAuthor model we have a problem with the json-api conforming from the api siding
   @objc
   private var contributorsCollection: LinkedResourceCollection?
@@ -56,6 +62,7 @@ class Author: Resource {
       "shortDescription": Attribute().serializeAs("short-description"),
       "profileImageUrl": Attribute().serializeAs("profile-image-url"),
       "title": Attribute().serializeAs("title"),
+      "followingNumber": Attribute().serializeAs("following"),
       "type": Attribute().serializeAs("type"),
       "contributorsCollection" : ToManyRelationship(PenName.self).serializeAs("contributors"),
       "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
