@@ -93,7 +93,7 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     var reuseIdentifier: String
 
-    if case AccountViewModel.Sections.PenNames.rawValue = indexPath.section, 0 == (indexPath.row % 2) {
+    if case AccountViewModel.Sections.PenNames.rawValue = indexPath.section, 0 == (indexPath.row % viewModel.numberOfRowsPerPenName) {
       reuseIdentifier = AccountPenNameTableViewCell.reuseIdentifier
     } else {
       reuseIdentifier = DisclosureTableViewCell.identifier
@@ -105,7 +105,7 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     let values = viewModel.values(forRowAt: indexPath)
 
-    if case AccountViewModel.Sections.PenNames.rawValue = indexPath.section, 0 == (indexPath.row % 2) {
+    if case AccountViewModel.Sections.PenNames.rawValue = indexPath.section, 0 == (indexPath.row % viewModel.numberOfRowsPerPenName) {
       guard let currentCell = cell as? AccountPenNameTableViewCell else {
         return
       }

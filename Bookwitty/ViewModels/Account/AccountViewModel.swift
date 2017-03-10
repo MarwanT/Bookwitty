@@ -18,6 +18,8 @@ final class AccountViewModel {
 
   private var sectionTitles: [String] = []
 
+  let numberOfRowsPerPenName: Int = 2
+
   init () {
     self.fillSectionTitles()
   }
@@ -129,7 +131,7 @@ final class AccountViewModel {
     case Sections.PenNames.rawValue:
       //user.penNames.count * 3 (3 rows for each pen name)
       //WAS: (user.penNames?.count ?? 0) * 3
-      numberOfRows = (user.penNames?.count ?? 0) * 2
+      numberOfRows = (user.penNames?.count ?? 0) * numberOfRowsPerPenName
     case Sections.CreatePenNames.rawValue:
       numberOfRows = 1
     case Sections.CustomerService.rawValue:
@@ -149,8 +151,8 @@ final class AccountViewModel {
       title = valuesForUserInformation(atRow: indexPath.row)
       value = ""
     case Sections.PenNames.rawValue:
-      let penNameIndex: Int = indexPath.row / 2
-      let penNameSubRow = indexPath.row % 2 //(will result in 0 ... 2)
+      let penNameIndex: Int = indexPath.row / numberOfRowsPerPenName
+      let penNameSubRow = indexPath.row % numberOfRowsPerPenName //(will result in 0 ... numberOfRowsPerPenName)
       let values = valuesForPenName(atRow: penNameSubRow, iteration: penNameIndex)
       title = values.title
       value = values.value
