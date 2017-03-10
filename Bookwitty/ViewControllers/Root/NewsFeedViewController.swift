@@ -434,8 +434,16 @@ extension NewsFeedViewController {
     self.navigationController?.pushViewController(nodeVc, animated: true)
   }
 
+  func pushGenericViewControllerCard(resource: Resource, title: String?) {
+    guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+      return
+    }
+    let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
+    navigationController?.pushViewController(genericVC, animated: true)
+  }
+
   fileprivate func actionForImageResourceType(resource: ModelResource) {
-    //TODO: Implement the right action
+    pushGenericViewControllerCard(resource: resource, title: "Image")
   }
 
   fileprivate func actionForAuthorResourceType(resource: ModelResource) {
@@ -461,19 +469,19 @@ extension NewsFeedViewController {
   }
 
   fileprivate func actionForQuoteResourceType(resource: ModelResource) {
-    //TODO: Implement the right action
+    pushGenericViewControllerCard(resource: resource, title: "Quote")
   }
 
   fileprivate func actionForVideoResourceType(resource: ModelResource) {
-    //TODO: Implement the right action
+    pushGenericViewControllerCard(resource: resource, title: "Video")
   }
 
   fileprivate func actionForAudioResourceType(resource: ModelResource) {
-    //TODO: Implement the right action
+    pushGenericViewControllerCard(resource: resource, title: "Audio")
   }
 
   fileprivate func actionForLinkResourceType(resource: ModelResource) {
-    //TODO: Implement the right action
+    pushGenericViewControllerCard(resource: resource, title: "Link")
   }
 
   fileprivate func actionForBookResourceType(resource: ModelResource) {
