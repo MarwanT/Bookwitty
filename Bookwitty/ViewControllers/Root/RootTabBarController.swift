@@ -42,7 +42,7 @@ class RootTabBarController: UITabBarController {
     super.viewDidAppear(animated)
     
     // Display Introduction VC if user is not signed in
-    if !viewModel.isUserSignedIn {
+    if !UserManager.shared.isSignedIn {
       displayOverlay()
       presentIntroductionOrSignInViewController()
     } else {

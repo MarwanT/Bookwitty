@@ -33,7 +33,7 @@ class UserManager {
   }
   
   var isSignedIn: Bool {
-    return AccessToken.shared.isValid
+    return AccessToken.shared.hasTokens && signedInUser != nil
   }
 
   var penNames: [PenName]? {
