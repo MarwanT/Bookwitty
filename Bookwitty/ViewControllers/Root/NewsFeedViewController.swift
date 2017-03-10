@@ -97,16 +97,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    if isFirstRun && UserManager.shared.isSignedIn {
-      isFirstRun = false
-
-      viewModel.cancellableOnGoingRequest()
-
-      self.pullToRefresher.beginRefreshing()
-      loadData(withPenNames: true, loadingStatus: .loading, completionBlock: {
-        self.pullToRefresher.endRefreshing()
-      })
-    }
     animateRefreshControllerIfNeeded()
   }
 
@@ -137,6 +127,16 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       UIBarButtonItemStyle.plain, target: self, action:
       #selector(self.settingsButtonTap(_:)))
     navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
+  }
+  
+  func refreshViewControllerData() {
+    if UserManager.shared.isSignedIn {
+      viewModel.cancellableOnGoingRequest()
+      self.pullToRefresher.beginRefreshing()
+      loadData(withPenNames: true, loadingStatus: .loading, completionBlock: {
+        self.pullToRefresher.endRefreshing()
+      })
+    }
   }
 
   func pullDownToReloadData() {
@@ -219,12 +219,11 @@ extension NewsFeedViewController: PenNameSelectionNodeDelegate {
 extension NewsFeedViewController {
   func addObservers() {
     NotificationCenter.default.addObserver(self, selector:
-      #selector(self.didSignInNotification(notification:)), name: AppNotification.didSignIn, object: nil)
+      #selector(self.refreshData(_:)), name: AppNotification.shouldRefreshData, object: nil)
   }
 
-  func didSignInNotification(notification: Notification) {
-    //User signed in or changed: Reset isFirstRun to make sure data reloads
-    isFirstRun = true
+  func refreshData(_ notification: Notification) {
+    refreshViewControllerData()
   }
 }
 // MARK: - Themeable

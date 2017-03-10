@@ -42,12 +42,20 @@ class RootTabBarController: UITabBarController {
     super.viewDidAppear(animated)
     
     // Display Introduction VC if user is not signed in
-    if !viewModel.isUserSignedIn {
+    if !UserManager.shared.isSignedIn {
       displayOverlay()
       presentIntroductionOrSignInViewController()
     } else {
-      dismissOverlay()
-      GeneralSettings.sharedInstance.shouldShowIntroduction = false
+      if UserManager.shared.shouldEditPenName {
+        presentPenNameViewController(user: UserManager.shared.signedInUser)
+      } else if UserManager.shared.shouldDisplayOnboarding {
+        presentOnboardingViewController()
+      } else {
+        dismissOverlay()
+        GeneralSettings.sharedInstance.shouldShowIntroduction = false
+        NotificationCenter.default.post(
+          name: AppNotification.shouldRefreshData, object: nil)
+      }
     }
   }
   
@@ -84,6 +92,8 @@ class RootTabBarController: UITabBarController {
       #selector(signOut(notificaiton:)), name: AppNotification.signOut, object: nil)
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.signIn(notification:)), name: AppNotification.didSignIn, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.didFinishBoarding(notification:)), name: AppNotification.didFinishBoarding, object: nil)
   }
   
   private func addObserversWhenNotVisible() {
@@ -118,6 +128,12 @@ class RootTabBarController: UITabBarController {
     present(navigationController, animated: true, completion: nil)
   }
   
+  fileprivate func presentOnboardingViewController() {
+    let onboardingViewController = OnBoardingViewController()
+    let navigationController = UINavigationController(rootViewController: onboardingViewController)
+    present(navigationController, animated: true, completion: nil)
+  }
+  
   fileprivate func refreshToOriginalState() {
     viewControllers?.forEach({ _ = ($0 as? UINavigationController)?.popToRootViewController(animated: false) })
     selectedIndex = 0
@@ -146,10 +162,12 @@ extension RootTabBarController {
   
   func register(notification: Notification) {
     showRootViewController()
-    guard let user = notification.object as? User else {
-      return
-    }
-    presentPenNameViewController(user: user)
+  }
+  
+  func didFinishBoarding(notification: Notification) {
+    NotificationCenter.default.post(
+      name: AppNotification.shouldRefreshData, object: nil)
+    showRootViewController()
   }
   
   func showRootViewController() {

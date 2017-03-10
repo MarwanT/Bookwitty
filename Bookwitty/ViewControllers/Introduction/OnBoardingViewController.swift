@@ -26,14 +26,26 @@ class OnBoardingViewController: ASViewController<OnBoardingControllerNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     title = Strings.follow_topics()
+    onBoardingNode.delegate = self
     onBoardingNode.dataSource = self
     viewModel.loadOnBoardingData { (success: Bool) in
       self.onBoardingNode.reloadCollection()
     }
+    
+    applyTheme()
   }
 
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
+  }
+}
+
+extension OnBoardingViewController: OnBoardingControllerDelegate {
+  func continueButtonTouchUpInside(_ sender: Any?) {
+    UserManager.shared.shouldDisplayOnboarding = false
+    NotificationCenter.default.post(
+      name: AppNotification.didFinishBoarding,
+      object: nil)
   }
 }
 
@@ -95,5 +107,11 @@ extension OnBoardingViewController: OnBoardingCellDelegate {
         doneCompletionBlock(succes)
       })
     }
+  }
+}
+
+extension OnBoardingViewController: Themeable {
+  func applyTheme() {
+    node.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
   }
 }

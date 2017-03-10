@@ -16,16 +16,23 @@ protocol OnBoardingControllerDataSource {
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode, at indexPath: IndexPath)
 }
 
+protocol OnBoardingControllerDelegate {
+  func continueButtonTouchUpInside(_ sender: Any?)
+}
+
 class OnBoardingControllerNode: ASDisplayNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let headerHeight: CGFloat = 45.0
 
   let titleTextNode: ASTextNode
   let separatorNode: ASDisplayNode
   let collectionNode: ASCollectionNode
+  let continueButton: ASButtonNode
   let flowLayout: UICollectionViewFlowLayout
 
+  var delegate: OnBoardingControllerDelegate?
   var dataSource: OnBoardingControllerDataSource!
 
   override init() {
@@ -37,6 +44,7 @@ class OnBoardingControllerNode: ASDisplayNode {
 
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     separatorNode = ASDisplayNode()
+    continueButton = ASButtonNode()
     super.init()
     automaticallyManagesSubnodes = true
 
@@ -55,14 +63,27 @@ class OnBoardingControllerNode: ASDisplayNode {
     separatorNode.style.height = ASDimensionMake(1.0)
     separatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
     separatorNode.isLayerBacked = true
+
+    ThemeManager.shared.currentTheme.styleSecondaryButton(button: continueButton)
+    continueButton.setTitle(Strings.continue(), with: FontDynamicType.subheadline.font, with: ThemeManager.shared.currentTheme.defaultButtonColor(), for: UIControlState.normal)
+    continueButton.setTitle(Strings.continue(), with: FontDynamicType.subheadline.font, with: ThemeManager.shared.currentTheme.defaultButtonHighlightedColor(), for: UIControlState.highlighted)
+    continueButton.style.height = ASDimensionMake(44.0)
+    continueButton.addTarget(self, action: #selector(continueButtonTouchUpInside), forControlEvents: ASControlNodeEvent.touchUpInside)
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let titleCenterSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: ASCenterLayoutSpecSizingOptions(rawValue: 0), child: titleTextNode)
     let titleInsetSpec = ASInsetLayoutSpec(insets: UIEdgeInsets(top: internalMargin, left: internalMargin, bottom: internalMargin, right: internalMargin), child: titleCenterSpec)
+
+    let buttonInset = ASInsetLayoutSpec(insets: UIEdgeInsets(top: externalMargin, left: internalMargin, bottom: externalMargin, right: internalMargin), child: continueButton)
+
     let vStack = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start,
-                                   alignItems: .stretch, children: [titleInsetSpec, separatorNode, collectionNode])
+                                   alignItems: .stretch, children: [titleInsetSpec, separatorNode, collectionNode,  buttonInset])
     return vStack
+  }
+
+  func continueButtonTouchUpInside(sender: Any?) {
+    delegate?.continueButtonTouchUpInside(sender)
   }
 }
 
