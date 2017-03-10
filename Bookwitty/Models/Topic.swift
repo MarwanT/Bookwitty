@@ -21,6 +21,14 @@ class Topic: Resource {
   var penName: PenName?
   var vote: String?
 
+  var canonicalURL: URL? {
+    guard let urlString = self.links?["canonical-url"] as? String,
+      let url = URL(string: urlString) else {
+        return nil
+    }
+    return url
+  }
+  
   @objc
   private var contributorsCollection: LinkedResourceCollection?
   lazy var contributors: [PenName]? = {
