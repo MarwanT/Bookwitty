@@ -27,5 +27,6 @@ class BagViewController: ASViewController<ASDisplayNode> {
 
 extension BagViewController: BagNodeDelegate {
   func bagNodeShopOnline(node: BagNode) {
+    UIApplication.shared.openURL(Environment.current.baseURL)
   }
 }
