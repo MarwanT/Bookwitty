@@ -122,6 +122,19 @@ class PostDetailItemNode: ASDisplayNode {
       setNeedsLayout()
     }
   }
+  var buttonTitle: String? {
+    didSet {
+      if let buttonTitle = buttonTitle {
+        let buttonFont = FontDynamicType.subheadline.font
+        let textColor = ThemeManager.shared.currentTheme.colorNumber23()
+
+        button.setTitle(buttonTitle, with: buttonFont, with: textColor, for: .normal)
+      } else {
+        button.setTitle("", with: nil, with: nil, for: .normal)
+      }
+      setNeedsLayout()
+    }
+  }
   private override init() {
     imageNode = ASNetworkImageNode()
     headLineNode = ASTextNode()
