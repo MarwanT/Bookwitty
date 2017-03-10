@@ -16,6 +16,7 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let headerNode: PostDetailsHeaderNode
   fileprivate let descriptionNode: ASTextNode
   fileprivate let postItemsNode: PostDetailsItemNode
+  fileprivate let separator: ASDisplayNode
 
   var title: String? {
     didSet {
@@ -53,6 +54,7 @@ class PostDetailsNode: ASScrollNode {
     headerNode = PostDetailsHeaderNode()
     descriptionNode = ASTextNode()
     postItemsNode = PostDetailsItemNode()
+    separator = ASDisplayNode()
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
@@ -60,6 +62,7 @@ class PostDetailsNode: ASScrollNode {
     headerNode = PostDetailsHeaderNode()
     descriptionNode = ASTextNode()
     postItemsNode = PostDetailsItemNode()
+    separator = ASDisplayNode()
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
@@ -76,6 +79,11 @@ class PostDetailsNode: ASScrollNode {
     style.flexGrow = 1.0
     style.flexShrink = 1.0
 
+    separator.style.flexGrow = 1
+    separator.style.flexShrink = 1
+    separator.style.height = ASDimensionMake(1.0)
+    separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+
     descriptionNode.style.flexGrow = 1.0
     descriptionNode.style.flexShrink = 1.0
   }
@@ -88,7 +96,8 @@ class PostDetailsNode: ASScrollNode {
     let vStackSpec = ASStackLayoutSpec.vertical()
     vStackSpec.spacing = contentSpacing
     let descriptionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: descriptionNode)
-    vStackSpec.children = [headerNode, descriptionInsetSpec, postItemsNode]
+    let separatorInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: separator)
+    vStackSpec.children = [headerNode, descriptionInsetSpec, separatorInsetSpec, postItemsNode]
 
     return vStackSpec
   }
