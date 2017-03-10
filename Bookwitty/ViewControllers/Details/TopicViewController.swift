@@ -196,6 +196,29 @@ extension TopicViewController: TopicHeaderNodeDelegate {
   }
 }
 
+extension TopicViewController: PenNameFollowNodeDelegate {
+  func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ASButtonNode) {
+    guard let indexPath = collectionNode.indexPath(for: node) else {
+      return
+    }
+
+    if button.isSelected {
+      viewModel.unfollowPenName(at: indexPath.item, completionBlock: {
+        (success: Bool) in
+        node.following = false
+        button.isSelected = false
+      })
+    } else {
+      viewModel.followPenName(at: indexPath.item, completionBlock: {
+        (success: Bool) in
+        node.following = true
+        button.isSelected = true
+      })
+    }
+  }
+}
+
+
 extension TopicViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
     return section == 0 ? CGSize.zero : CGSize(width: collectionView.frame.size.width, height: segmentedNodeHeight)
@@ -322,6 +345,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
     case .followers:
       let penNameNode = PenNameFollowNode()
       penNameNode.showBottomSeparator = true
+      penNameNode.delegate = self
       return penNameNode
     case .none:
       return ASCellNode()
