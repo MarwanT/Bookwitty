@@ -43,4 +43,21 @@ final class TopicViewModel {
     
     return (title: title, thumbnailImageUrl: thumbnail, coverImageUrl: cover, stats: stats, contributors: contributorsValues)
   }
+
+  func getContent() {
+    guard let identifier = topic?.id else {
+      return
+    }
+
+    _ = GeneralAPI.content(of: identifier, include: ["contributors"]) {
+      (success: Bool, topic: Topic?, error: BookwittyAPIError?) in
+      if success {
+        guard let topic = topic else {
+          return
+        }
+
+        self.topic = topic
+      }
+    }
+  }
 }
