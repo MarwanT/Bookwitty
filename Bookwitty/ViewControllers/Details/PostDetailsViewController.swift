@@ -102,6 +102,9 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
 
 extension PostDetailsViewController: PostDetailItemNodeDelegate {
   func postDetailItemNodeButtonTouchUpInside(PostDetailItemNode: PostDetailItemNode, button: ASButtonNode) {
-    //TODO: Marwan Please add the Action for "Buy A Book" Here
+    guard let url = viewModel.canonicalURL else {
+      return
+    }
+    WebViewController.present(url: url, inViewController: self)
   }
 }

@@ -40,6 +40,9 @@ class PostDetailsViewModel {
   var contentPostsIdentifiers: [ResourceIdentifier]? {
     return contentPostsFromResource(resource: resource)
   }
+  var canonicalURL: URL? {
+    return resource.canonicalURL
+  }
   var contentPostsResources: [Resource]?
 
   init(resource: Resource) {
