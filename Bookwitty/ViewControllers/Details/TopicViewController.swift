@@ -289,7 +289,9 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
     case .relatedBooks:
       return BookNode()
     case .followers:
-      return PenNameFollowNode()
+      let penNameNode = PenNameFollowNode()
+      penNameNode.showBottomSeparator = true
+      return penNameNode
     case .none:
       return ASCellNode()
     }
