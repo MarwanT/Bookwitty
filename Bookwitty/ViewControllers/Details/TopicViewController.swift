@@ -298,6 +298,23 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
       return ASCellNode()
     }
   }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+    switch category {
+    case .latest:
+      let resource = viewModel.latest(at: indexPath.item)
+      actionForCard(resource: resource)
+    case .relatedBooks:
+      break
+    case .editions:
+      break
+    case .followers:
+      break
+    case .none:
+      break
+    }
+  }
 }
 
 // MARK: - Actions For Cards
