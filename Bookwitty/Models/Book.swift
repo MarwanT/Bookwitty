@@ -25,9 +25,16 @@ class Book: Resource {
 
   var productDetails: ProductDetails?
   var supplierInformation: SupplierInformation?
-  
+
+  @objc
+  private var contributorsCollection: LinkedResourceCollection?
+  lazy var contributors: [PenName]? = {
+    return self.contributorsCollection?.resources as? [PenName]
+  }()
+
   @objc
   fileprivate var countsDictionary: [String : Any]?
+
   var canonicalURL: URL? {
     guard let urlString = self.links?["canonical-url"] as? String,
       let url = URL(string: urlString) else {
@@ -51,6 +58,7 @@ class Book: Resource {
       "updatedAt" : DateAttribute().serializeAs("updated-at"),
       "coverImageUrl" : Attribute().serializeAs("cover-image-url"),
       "countsDictionary": Attribute().serializeAs("counts"),
+      "contributorsCollection" : ToManyRelationship(PenName.self).serializeAs("contributors"),
       "productDetails" : ProductDetailsAttribute().serializeAs("product-details"),
       "supplierInformation" : SupplierInformationAttribute().serializeAs("supplier-information"),
       ])
