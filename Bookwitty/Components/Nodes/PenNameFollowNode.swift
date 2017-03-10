@@ -18,17 +18,20 @@ class PenNameFollowNode: ASCellNode {
   private var nameNode: ASTextNode
   private var biographyNode: ASTextNode
   private var actionButton: ASButtonNode
+  private let separatorNode: ASDisplayNode
 
   override init() {
     imageNode = ASNetworkImageNode()
     nameNode = ASTextNode()
     biographyNode = ASTextNode()
     actionButton = ASButtonNode()
+    separatorNode = ASDisplayNode()
     super.init()
     addSubnode(imageNode)
     addSubnode(nameNode)
     addSubnode(biographyNode)
     addSubnode(actionButton)
+    addSubnode(separatorNode)
     setupNode()
   }
 
@@ -61,6 +64,8 @@ class PenNameFollowNode: ASCellNode {
     }
   }
 
+  var showBottomSeparator: Bool = false
+
   private func setupNode() {
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
 
@@ -90,6 +95,10 @@ class PenNameFollowNode: ASCellNode {
     actionButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
     actionButton.style.height = ASDimensionMake(buttonSize.height)
 
+    separatorNode.style.height = ASDimensionMake(1)
+    separatorNode.style.flexGrow = 1
+    separatorNode.isLayerBacked = true
+    separatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -129,7 +138,16 @@ class PenNameFollowNode: ASCellNode {
                                            children: nodesArray)
 
     let insetSpec = ASInsetLayoutSpec(insets: edgeInset(), child: horizontalSpec)
-    return insetSpec
+    let separatorNodeInset = ASInsetLayoutSpec(insets: separatorInset(), child: separatorNode)
+
+
+    let parentVerticalSpec = ASStackLayoutSpec(direction: .vertical,
+                                         spacing: 0,
+                                         justifyContent: .center,
+                                         alignItems: .stretch,
+                                         children: showBottomSeparator ? [insetSpec, separatorNodeInset] : [insetSpec])
+
+    return parentVerticalSpec
   }
 }
 
@@ -140,6 +158,13 @@ extension PenNameFollowNode {
     return UIEdgeInsets(top: internalMargin,
                         left: internalMargin,
                         bottom: internalMargin,
+                        right: internalMargin)
+  }
+
+  fileprivate func separatorInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0,
+                        left: internalMargin,
+                        bottom: 0,
                         right: internalMargin)
   }
 
