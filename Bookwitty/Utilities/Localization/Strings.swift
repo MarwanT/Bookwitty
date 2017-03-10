@@ -336,6 +336,10 @@ class Strings {
   class func shop_in_app_coming_soon_message() -> String {
     return localizedString(key: "shop_in_app_coming_soon_message")
   }
+  
+  class func shop_online() -> String {
+    return localizedString(key: "shop_online")
+  }
 
   class func sign_in() -> String {
     return localizedString(key: "sign_in")
