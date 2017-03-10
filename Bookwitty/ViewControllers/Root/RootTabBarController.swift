@@ -123,7 +123,7 @@ class RootTabBarController: UITabBarController {
   
   fileprivate func presentPenNameViewController(user: User) {
     let penNameViewController = Storyboard.Access.instantiate(PenNameViewController.self)
-    penNameViewController.viewModel.initializeWith(user: user)
+    penNameViewController.viewModel.initializeWith(penName: user.penNames?.first, andUser: user)
     let navigationController = UINavigationController(rootViewController: penNameViewController)
     present(navigationController, animated: true, completion: nil)
   }
