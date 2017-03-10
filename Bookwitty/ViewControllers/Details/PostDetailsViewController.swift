@@ -7,3 +7,17 @@
 //
 
 import Foundation
+import AsyncDisplayKit
+
+class PostDetailsViewController: ASViewController<PostDetailsNode> {
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  init(title: String? = nil, resource: Resource) {
+    postDetailsNode = PostDetailsNode()
+    super.init(node: postDetailsNode)
+  }
+
+}
