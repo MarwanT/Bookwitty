@@ -80,7 +80,10 @@ class PenNameViewController: UIViewController {
   }
 
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
-    //Hide keyboard if visible
+    // Set the show pen name flag to false
+    UserManager.shared.shouldEditPenName = false
+    
+    // Hide keyboard if visible
     _ = penNameInputField.resignFirstResponder()
     _ = biographyTextView.resignFirstResponder()
 
