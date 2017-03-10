@@ -16,7 +16,7 @@ protocol OnBoardingControllerDataSource {
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode, at indexPath: IndexPath)
 }
 
-protocol OnBoardingControllerNodeDelegate {
+protocol OnBoardingControllerDelegate {
   func continueButtonTouchUpInside(_ sender: Any?)
 }
 
@@ -32,7 +32,7 @@ class OnBoardingControllerNode: ASDisplayNode {
   let continueButton: ASButtonNode
   let flowLayout: UICollectionViewFlowLayout
 
-  var delegate: OnBoardingControllerNodeDelegate?
+  var delegate: OnBoardingControllerDelegate?
   var dataSource: OnBoardingControllerDataSource!
 
   override init() {
@@ -83,6 +83,7 @@ class OnBoardingControllerNode: ASDisplayNode {
   }
 
   func continueButtonTouchUpInside(sender: Any?) {
+    delegate?.continueButtonTouchUpInside(sender)
   }
 }
 
