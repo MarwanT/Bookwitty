@@ -319,7 +319,7 @@ enum AttributedLinkReference: String {
 
   var url: URL {
     get {
-      return URL(string: "https://www.bookwitty.com" + self.rawValue)!
+      return URL(string: self.rawValue, relativeTo: Environment.current.baseURL)!
     }
   }
 }
