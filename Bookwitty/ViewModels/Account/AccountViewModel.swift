@@ -84,6 +84,10 @@ final class AccountViewModel {
     return penNames[row]
   }
 
+  func selectedPenName(atRow row: Int) -> PenName? {
+    return penName(atRow: row / numberOfRowsPerPenName)
+  }
+
   //Create Pen Names
   private func valuesForCreatePenName(atRow row: Int) -> String {
     switch row {
