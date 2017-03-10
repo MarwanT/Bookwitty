@@ -302,6 +302,10 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    guard indexPath.section == 1 else {
+      return
+    }
+
     let category = self.category(withIndex: segmentedNode.selectedIndex)
     switch category {
     case .latest:
