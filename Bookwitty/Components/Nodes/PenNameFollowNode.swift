@@ -107,6 +107,7 @@ class PenNameFollowNode: ASCellNode {
     imageNode.style.preferredSize = imageSize
     actionButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
     actionButton.style.height = ASDimensionMake(buttonSize.height)
+    actionButton.addTarget(self, action: #selector(actionButtonTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
 
     separatorNode.style.height = ASDimensionMake(1)
     separatorNode.style.flexGrow = 1
@@ -161,6 +162,13 @@ class PenNameFollowNode: ASCellNode {
                                          children: showBottomSeparator ? [insetSpec, separatorNodeInset] : [insetSpec])
 
     return parentVerticalSpec
+  }
+}
+
+//Actions
+extension PenNameFollowNode {
+  func actionButtonTouchUpInside(_ sender: ASButtonNode) {
+    delegate?.penName(node: self, actionButtonTouchUpInside: sender)
   }
 }
 
