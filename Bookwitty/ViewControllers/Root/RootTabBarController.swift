@@ -46,8 +46,14 @@ class RootTabBarController: UITabBarController {
       displayOverlay()
       presentIntroductionOrSignInViewController()
     } else {
-      dismissOverlay()
-      GeneralSettings.sharedInstance.shouldShowIntroduction = false
+      if UserManager.shared.shouldEditPenName {
+        presentPenNameViewController(user: UserManager.shared.signedInUser)
+      } else if UserManager.shared.shouldDisplayOnboarding {
+        presentOnboardingViewController()
+      } else {
+        dismissOverlay()
+        GeneralSettings.sharedInstance.shouldShowIntroduction = false
+      }
     }
   }
   
@@ -118,6 +124,12 @@ class RootTabBarController: UITabBarController {
     present(navigationController, animated: true, completion: nil)
   }
   
+  fileprivate func presentOnboardingViewController() {
+    let onboardingViewController = OnBoardingViewController()
+    let navigationController = UINavigationController(rootViewController: onboardingViewController)
+    present(navigationController, animated: true, completion: nil)
+  }
+  
   fileprivate func refreshToOriginalState() {
     viewControllers?.forEach({ _ = ($0 as? UINavigationController)?.popToRootViewController(animated: false) })
     selectedIndex = 0
@@ -146,10 +158,6 @@ extension RootTabBarController {
   
   func register(notification: Notification) {
     showRootViewController()
-    guard let user = notification.object as? User else {
-      return
-    }
-    presentPenNameViewController(user: user)
   }
   
   func showRootViewController() {
