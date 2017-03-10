@@ -90,6 +90,8 @@ class RootTabBarController: UITabBarController {
       #selector(signOut(notificaiton:)), name: AppNotification.signOut, object: nil)
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.signIn(notification:)), name: AppNotification.didSignIn, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.didFinishBoarding(notification:)), name: AppNotification.didFinishBoarding, object: nil)
   }
   
   private func addObserversWhenNotVisible() {
@@ -157,6 +159,12 @@ extension RootTabBarController {
   }
   
   func register(notification: Notification) {
+    showRootViewController()
+  }
+  
+  func didFinishBoarding(notification: Notification) {
+    NotificationCenter.default.post(
+      name: AppNotification.shouldRefreshData, object: nil)
     showRootViewController()
   }
   
