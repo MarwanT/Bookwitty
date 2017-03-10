@@ -201,7 +201,51 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+    guard let indexPath = collectionNode.indexPath(for: node) else {
+      return
+    }
 
+    if indexPath.section == 0 {
+      self.fillHeaderNode()
+    } else if indexPath.section == 1 {
+      let category = self.category(withIndex: segmentedNode.selectedIndex)
+      switch category {
+      case .latest:
+        //data is filled when node is created
+        break
+      case .editions:
+        guard let cell = node as? BookNode else {
+          return
+        }
+
+        let book = viewModel.edition(at: indexPath.item)
+        cell.title = book?.title
+        cell.author = book?.productDetails?.author
+        cell.format = book?.productDetails?.productFormat
+        cell.price = book?.supplierInformation?.preferredPrice?.formattedValue
+      case .relatedBooks:
+        guard let cell = node as? BookNode else {
+          return
+        }
+
+        let book = viewModel.relatedBook(at: indexPath.item)
+        cell.title = book?.title
+        cell.author = book?.productDetails?.author
+        cell.format = book?.productDetails?.productFormat
+        cell.price = book?.supplierInformation?.preferredPrice?.formattedValue
+      case .followers:
+        guard let cell = node as? PenNameFollowNode else {
+          return
+        }
+
+        let follower = viewModel.follower(at: indexPath.item)
+        cell.penName = follower?.name
+        cell.biography = follower?.biography
+        cell.imageUrl = follower?.avatarUrl
+      case .none:
+        break
+      }
+    }
   }
 
   public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
