@@ -43,19 +43,29 @@ class TopicViewController: ASViewController<ASCollectionNode> {
 
   func initialize(withTopic topic: Topic?) {
     viewModel.initialize(withTopic: topic)
+    self.mode = .normal(categories: self.normal)
   }
 
   func initialize(withBook book: Book?) {
     viewModel.initialize(withBook: book)
+    self.mode = .normal(categories: self.book)
+  }
+
+  func initialize(withAuthor author: Author?) {
+    viewModel.initialize(withAuthor: author)
+    self.mode = .normal(categories: self.book)
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeComponents()
-    fillHeaderNode()
   }
 
   private func initializeComponents() {
+    title = Strings.topic()
+
+    headerNode.delegate = self
+
     let segments: [String] = self.mode.categories.map({ $0.name })
     segmentedNode.initialize(with: segments)
 
@@ -77,7 +87,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
 
     headerNode.topicTitle = values.title
     headerNode.imageUrl = values.coverImageUrl
-
+    headerNode.following = values.following
     headerNode.setTopicStatistics(numberOfFollowers: values.stats.followers, numberOfPosts: values.stats.posts)
     headerNode.setContributorsValues(numberOfContributors: values.contributors.count, imageUrls: values.contributors.imageUrls)
   }
@@ -163,6 +173,26 @@ extension TopicViewController {
     }
 
     return category
+  }
+}
+
+extension TopicViewController: TopicHeaderNodeDelegate {
+  func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ASButtonNode) {
+    if button.isSelected {
+      viewModel.unfollowRequest(completionBlock: { (success: Bool) in
+        if success {
+          node.following = false
+          button.isSelected = false
+        }
+      })
+    } else {
+      viewModel.followRequest(completionBlock: { (success: Bool) in
+        if success {
+          node.following = true
+          button.isSelected = true
+        }
+      })
+    }
   }
 }
 
@@ -295,5 +325,133 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
     case .none:
       return ASCellNode()
     }
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    guard indexPath.section == 1 else {
+      return
+    }
+
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+    switch category {
+    case .latest:
+      let resource = viewModel.latest(at: indexPath.item)
+      actionForCard(resource: resource)
+    case .relatedBooks:
+      if let resource = viewModel.relatedBook(at: indexPath.item) {
+        let vc = BookDetailsViewController(with: resource)
+        navigationController?.pushViewController(vc, animated: true)
+      }
+    case .editions:
+      if let resource = viewModel.edition(at: indexPath.item) {
+        let vc = BookDetailsViewController(with: resource)
+        navigationController?.pushViewController(vc, animated: true)
+      }
+    case .followers:
+      break
+    case .none:
+      break
+    }
+  }
+}
+
+// MARK: - Actions For Cards
+extension TopicViewController {
+  func actionForCard(resource: ModelResource?) {
+    guard let resource = resource else {
+      return
+    }
+    let registeredType = resource.registeredResourceType
+
+    switch registeredType {
+    case Image.resourceType:
+      actionForImageResourceType(resource: resource)
+    case Author.resourceType:
+      actionForAuthorResourceType(resource: resource)
+    case ReadingList.resourceType:
+      actionForReadingListResourceType(resource: resource)
+    case Topic.resourceType:
+      actionForTopicResourceType(resource: resource)
+    case Text.resourceType:
+      actionForTextResourceType(resource: resource)
+    case Quote.resourceType:
+      actionForQuoteResourceType(resource: resource)
+    case Video.resourceType:
+      actionForVideoResourceType(resource: resource)
+    case Audio.resourceType:
+      actionForAudioResourceType(resource: resource)
+    case Link.resourceType:
+      actionForLinkResourceType(resource: resource)
+    case Book.resourceType:
+      actionForBookResourceType(resource: resource)
+    default:
+      print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")
+      break
+    }
+  }
+
+  func pushPostDetailsViewController(resource: ModelResource) {
+    let nodeVc = PostDetailsViewController(resource: resource)
+    self.navigationController?.pushViewController(nodeVc, animated: true)
+  }
+
+  func pushGenericViewControllerCard(resource: ModelResource, title: String?) {
+    guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+      return
+    }
+    let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
+    navigationController?.pushViewController(genericVC, animated: true)
+  }
+
+  fileprivate func actionForImageResourceType(resource: ModelResource) {
+    pushGenericViewControllerCard(resource: resource, title: "Image")
+  }
+
+  fileprivate func actionForAuthorResourceType(resource: ModelResource) {
+    //TODO: Implement the right action
+  }
+
+  fileprivate func actionForReadingListResourceType(resource: ModelResource) {
+    pushPostDetailsViewController(resource: resource)
+  }
+
+  fileprivate func actionForTopicResourceType(resource: ModelResource) {
+    guard resource is Topic else {
+      return
+    }
+
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(withTopic: resource as? Topic)
+    navigationController?.pushViewController(topicViewController, animated: true)
+  }
+
+  fileprivate func actionForTextResourceType(resource: ModelResource) {
+    pushPostDetailsViewController(resource: resource)
+  }
+
+  fileprivate func actionForQuoteResourceType(resource: ModelResource) {
+    pushGenericViewControllerCard(resource: resource, title: "Quote")
+  }
+
+  fileprivate func actionForVideoResourceType(resource: ModelResource) {
+    pushGenericViewControllerCard(resource: resource, title: "Video")
+  }
+
+  fileprivate func actionForAudioResourceType(resource: ModelResource) {
+    pushGenericViewControllerCard(resource: resource, title: "Audio")
+  }
+
+  fileprivate func actionForLinkResourceType(resource: ModelResource) {
+    pushGenericViewControllerCard(resource: resource, title: "Link")
+  }
+
+  fileprivate func actionForBookResourceType(resource: ModelResource) {
+    guard resource is Book else {
+      return
+    }
+
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(withBook: resource as? Book)
+    navigationController?.pushViewController(topicViewController, animated: true)
   }
 }

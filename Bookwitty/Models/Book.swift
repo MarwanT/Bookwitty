@@ -27,6 +27,17 @@ class Book: Resource {
   var supplierInformation: SupplierInformation?
 
   @objc
+  private var followingNumber: NSNumber?
+  var following: Bool {
+    get {
+      return ((followingNumber?.intValue ?? 0) == 1)
+    }
+    set {
+      followingNumber = NSNumber(value: newValue)
+    }
+  }
+
+  @objc
   private var contributorsCollection: LinkedResourceCollection?
   lazy var contributors: [PenName]? = {
     return self.contributorsCollection?.resources as? [PenName]
@@ -50,6 +61,7 @@ class Book: Resource {
       "updatedAt" : DateAttribute().serializeAs("updated-at"),
       "coverImageUrl" : Attribute().serializeAs("cover-image-url"),
       "countsDictionary": Attribute().serializeAs("counts"),
+      "followingNumber": Attribute().serializeAs("following"),
       "contributorsCollection" : ToManyRelationship(PenName.self).serializeAs("contributors"),
       "productDetails" : ProductDetailsAttribute().serializeAs("product-details"),
       "supplierInformation" : SupplierInformationAttribute().serializeAs("supplier-information"),

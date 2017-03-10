@@ -361,6 +361,10 @@ class Strings {
     return localizedString(key: "terms_of_use_and_privacy_policy")
   }
 
+  class func topic() -> String {
+    return localizedString(key: "topic")
+  }
+
   class func tutorial_fifth_page_description() -> String {
     return localizedString(key: "tutorial_fifth_page_description")
   }

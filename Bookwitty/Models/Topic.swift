@@ -22,6 +22,17 @@ class Topic: Resource {
   var vote: String?
   
   @objc
+  private var followingNumber: NSNumber?
+  var following: Bool {
+    get {
+    return ((followingNumber?.intValue ?? 0) == 1)
+    }
+    set {
+      followingNumber = NSNumber(value: newValue)
+    }
+  }
+
+  @objc
   private var contributorsCollection: LinkedResourceCollection?
   lazy var contributors: [PenName]? = {
     return self.contributorsCollection?.resources as? [PenName]
@@ -46,6 +57,7 @@ class Topic: Resource {
       "longDescription": Attribute().serializeAs("description"),
       "countsDictionary": Attribute().serializeAs("counts"),
       "title": Attribute().serializeAs("title"),
+      "followingNumber": Attribute().serializeAs("following"),
       "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name"),
       "contributorsCollection" : ToManyRelationship(PenName.self).serializeAs("contributors"),
       ])
