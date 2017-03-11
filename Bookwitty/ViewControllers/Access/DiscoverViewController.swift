@@ -9,8 +9,15 @@
 import Foundation
 import UIKit
 import AsyncDisplayKit
+import Spine
 
 class DiscoverViewController: ASViewController<ASCollectionNode> {
+  enum LoadingStatus {
+    case none
+    case loadMore
+    case reloading
+    case loading
+  }
   let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
@@ -20,12 +27,18 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
   var collectionView: ASCollectionView?
 
   let viewModel = DiscoverViewModel()
-  
-  var isLoadingMore: Bool = false {
+  var loadingStatus: LoadingStatus = .none {
     didSet {
-      let bottomMargin: CGFloat = isLoadingMore ? -(externalMargin/2) : -(LoaderNode.nodeHeight - externalMargin/2)
-      flowLayout.sectionInset = UIEdgeInsets(top: externalMargin, left: 0, bottom: bottomMargin, right: 0)
-      loaderNode.updateLoaderVisibility(show: isLoadingMore)
+      switch loadingStatus {
+      case .loading:
+        break
+      case .reloading:
+        updateBottomLoaderVisibility(show: false)
+      case .loadMore:
+        updateBottomLoaderVisibility(show: true)
+      case .none:
+        updateBottomLoaderVisibility(show: false)
+      }
     }
   }
 
@@ -38,13 +51,12 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     flowLayout.sectionInset = UIEdgeInsets(top: externalMargin, left: 0, bottom: externalMargin/2, right: 0)
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
-    flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.nodeHeight)
-    
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     loaderNode = LoaderNode()
-    
+
     super.init(node: collectionNode)
 
+    flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: loaderNode.usedHeight)
     collectionNode.onDidLoad { [weak self] (collectionNode) in
       guard let strongSelf = self,
         let asCollectionView = collectionNode.view as? ASCollectionView else {
@@ -59,23 +71,36 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    initializeNavigationItems()
     title = Strings.discover()
 
     collectionNode.delegate = self
     collectionNode.dataSource = self
     //Listen to pullToRefresh valueChange and call loadData
-    pullToRefresher.addTarget(self, action: #selector(self.loadData), for: .valueChanged)
+    pullToRefresher.addTarget(self, action: #selector(self.pullDownToReloadData), for: .valueChanged)
 
     applyTheme()
-
-    if UserManager.shared.isSignedIn {
-      loadData()
-    }
   }
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    if UserManager.shared.isSignedIn && loadingStatus == .none && viewModel.numberOfItemsInSection() == 0 {
+      self.pullToRefresher.beginRefreshing()
+      loadData(loadingStatus: .loading, completionBlock: {
+        self.pullToRefresher.endRefreshing()
+      })
+    }
     animateRefreshControllerIfNeeded()
+  }
+
+  private func initializeNavigationItems() {
+    let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
+      UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+    leftNegativeSpacer.width = -10
+    let settingsBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "person"), style:
+      UIBarButtonItemStyle.plain, target: self, action:
+      #selector(self.settingsButtonTap(_:)))
+    navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
   }
 
   /*
@@ -97,13 +122,56 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     }
   }
 
-  func loadData() {
-    pullToRefresher.beginRefreshing()
+  func loadData(loadingStatus: LoadingStatus, completionBlock: @escaping () -> ()) {
+    self.loadingStatus = loadingStatus
+
     viewModel.loadDiscoverData { [weak self] (success) in
       guard let strongSelf = self else { return }
-      strongSelf.pullToRefresher.endRefreshing()
+      strongSelf.loadingStatus = .none
+
+      completionBlock()
+
       strongSelf.collectionNode.reloadData()
     }
+  }
+
+  func pullDownToReloadData() {
+    guard loadingStatus != .reloading else {
+      return
+    }
+
+    self.pullToRefresher.beginRefreshing()
+    loadData(loadingStatus: .reloading, completionBlock: {
+      self.pullToRefresher.endRefreshing()
+    })
+  }
+}
+
+// MARK: - Action
+extension DiscoverViewController {
+  func settingsButtonTap(_ sender: UIBarButtonItem) {
+    let settingsVC = Storyboard.Account.instantiate(AccountViewController.self)
+    settingsVC.hidesBottomBarWhenPushed = true
+    self.navigationController?.pushViewController(settingsVC, animated: true)
+  }
+}
+
+// MARK: - Reload Footer
+extension DiscoverViewController {
+  func updateBottomLoaderVisibility(show: Bool) {
+    if Thread.isMainThread {
+      reloadFooter(show: show)
+    } else {
+      DispatchQueue.main.async {
+        self.reloadFooter(show: show)
+      }
+    }
+  }
+
+  func reloadFooter(show: Bool) {
+    let bottomMargin: CGFloat = show ? -(externalMargin/2) : -(loaderNode.usedHeight - externalMargin/2)
+    flowLayout.sectionInset = UIEdgeInsets(top: externalMargin, left: 0, bottom: bottomMargin, right: 0)
+    loaderNode.updateLoaderVisibility(show: show)
   }
 }
 
@@ -143,8 +211,13 @@ extension DiscoverViewController: ASCollectionDataSource {
 }
 
 extension DiscoverViewController: ASCollectionDelegate {
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    let resource = viewModel.resourceForIndex(index: indexPath.item)
+    actionForCard(resource: resource)
+  }
+
   public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-    return CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.nodeHeight)
+    return CGSize(width: UIScreen.main.bounds.width, height: loaderNode.usedHeight)
   }
 
   public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
@@ -159,16 +232,24 @@ extension DiscoverViewController: ASCollectionDelegate {
   }
 
   public func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
-    guard !isLoadingMore else {
+    guard context.isFetching() else {
       return
     }
-    let initialLastIndexPath: Int = viewModel.numberOfItemsInSection()
-    
-    DispatchQueue.main.async {
-      self.isLoadingMore = true
+    guard loadingStatus == .none else {
+      context.completeBatchFetching(true)
+      return
     }
+    context.beginBatchFetching()
+    self.loadingStatus = .loadMore
+
+    let initialLastIndexPath: Int = viewModel.numberOfItemsInSection()
+
     // Fetch next page data
     viewModel.loadNextPage { [weak self] (success) in
+      defer {
+        context.completeBatchFetching(true)
+        self!.loadingStatus = .none
+      }
       guard let strongSelf = self else {
         return
       }
@@ -180,26 +261,7 @@ extension DiscoverViewController: ASCollectionDelegate {
         let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
           return IndexPath(row: index, section: 0)
         })
-        strongSelf.loadItemsWithIndexOnMainThread() {
-          collectionNode.insertItems(at: updatedIndexPathRange)
-          strongSelf.isLoadingMore = false
-        }
-      }
-
-      // Properly finish the batch fetch
-      context.completeBatchFetching(true)
-    }
-  }
-
-  /**
-   * Note: loadItemsWithIndex will always run on the main thread
-   */
-  func loadItemsWithIndexOnMainThread(completionBlock: @escaping () -> ()) {
-    if Thread.isMainThread {
-      completionBlock()
-    } else {
-      DispatchQueue.main.async {
-        completionBlock()
+        collectionNode.insertItems(at: updatedIndexPathRange)
       }
     }
   }
@@ -222,7 +284,7 @@ extension DiscoverViewController: BaseCardPostNodeDelegate {
         didFinishAction?(success)
       }
     case .share:
-      if let sharingInfo: String = viewModel.sharingContent(index: index) {
+      if let sharingInfo: [String] = viewModel.sharingContent(index: index) {
         presentShareSheet(shareContent: sharingInfo)
       }
     default:
@@ -231,3 +293,111 @@ extension DiscoverViewController: BaseCardPostNodeDelegate {
     }
   }
 }
+
+// MARK: - Actions For Cards
+extension DiscoverViewController {
+  func actionForCard(resource: ModelResource?) {
+    guard let resource = resource else {
+      return
+    }
+    let registeredType = resource.registeredResourceType
+
+    switch registeredType {
+    case Image.resourceType:
+      actionForImageResourceType(resource: resource)
+    case Author.resourceType:
+      actionForAuthorResourceType(resource: resource)
+    case ReadingList.resourceType:
+      actionForReadingListResourceType(resource: resource)
+    case Topic.resourceType:
+      actionForTopicResourceType(resource: resource)
+    case Text.resourceType:
+      actionForTextResourceType(resource: resource)
+    case Quote.resourceType:
+      actionForQuoteResourceType(resource: resource)
+    case Video.resourceType:
+      actionForVideoResourceType(resource: resource)
+    case Audio.resourceType:
+      actionForAudioResourceType(resource: resource)
+    case Link.resourceType:
+      actionForLinkResourceType(resource: resource)
+    case Book.resourceType:
+      actionForBookResourceType(resource: resource)
+    default:
+      print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")
+      break
+    }
+  }
+
+  func pushPostDetailsViewController(resource: Resource) {
+    let nodeVc = PostDetailsViewController(resource: resource)
+    self.navigationController?.pushViewController(nodeVc, animated: true)
+  }
+
+  func pushGenericViewControllerCard(resource: Resource, title: String?) {
+    guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+      return
+    }
+    let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
+    navigationController?.pushViewController(genericVC, animated: true)
+  }
+  
+  fileprivate func actionForImageResourceType(resource: ModelResource) {
+    pushGenericViewControllerCard(resource: resource, title: "Image")
+  }
+
+  fileprivate func actionForAuthorResourceType(resource: ModelResource) {
+    guard resource is Author else {
+      return
+    }
+
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(withAuthor: resource as? Author)
+    navigationController?.pushViewController(topicViewController, animated: true)
+  }
+
+  fileprivate func actionForReadingListResourceType(resource: ModelResource) {
+    pushPostDetailsViewController(resource: resource)
+  }
+
+  fileprivate func actionForTopicResourceType(resource: ModelResource) {
+    guard resource is Topic else {
+      return
+    }
+
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(withTopic: resource as? Topic)
+    navigationController?.pushViewController(topicViewController, animated: true)
+  }
+
+  fileprivate func actionForTextResourceType(resource: ModelResource) {
+    pushPostDetailsViewController(resource: resource)
+  }
+
+  fileprivate func actionForQuoteResourceType(resource: ModelResource) {
+    pushGenericViewControllerCard(resource: resource, title: "Quote")
+  }
+
+  fileprivate func actionForVideoResourceType(resource: ModelResource) {
+    pushGenericViewControllerCard(resource: resource, title: "Video")
+  }
+
+  fileprivate func actionForAudioResourceType(resource: ModelResource) {
+    pushGenericViewControllerCard(resource: resource, title: "Audio")
+  }
+
+  fileprivate func actionForLinkResourceType(resource: ModelResource) {
+    pushGenericViewControllerCard(resource: resource, title: "Link")
+  }
+
+  fileprivate func actionForBookResourceType(resource: ModelResource) {
+    guard resource is Book else {
+      return
+    }
+
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(withBook: resource as? Book)
+    navigationController?.pushViewController(topicViewController, animated: true)
+  }
+}
+

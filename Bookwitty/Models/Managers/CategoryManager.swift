@@ -17,20 +17,7 @@ class CategoryManager {
   }
   
   private func categoriesLanguage() -> String {
-    var language = "en"
-    guard let preferredLanguage = NSLocale.preferredLanguages.first else {
-      return language
-    }
-    
-    switch preferredLanguage {
-    // TODO: detect french language and assign it here when available
-    case "en":
-      language = preferredLanguage
-    default:
-      break
-    }
-    
-    return language
+    return GeneralSettings.sharedInstance.preferredLanguage
   }
   
   private func loadCategoriesFromJSON() {
@@ -56,7 +43,7 @@ class CategoryManager {
   }
   
   
-  func categoriesFromDictionary(fromDictionary dictionary: [String: Any], parentKeys: [String]? = nil) -> [Category] {
+  private func categoriesFromDictionary(fromDictionary dictionary: [String: Any], parentKeys: [String]? = nil) -> [Category] {
     var categories = [Category]()
     
     for (key, value) in dictionary {
@@ -82,6 +69,20 @@ class CategoryManager {
     return categories
   }
   
+  /// Returns Category object out of sent ids if available
+  /// ids with no matching local category won't be included in the 
+  /// Returned result
+  func categories(from identifiers: [String]) -> [Category] {
+    var categoriesArray = [Category]()
+    for identifier in identifiers {
+      guard let category = category(from: identifier) else {
+        continue
+      }
+      categoriesArray.append(category)
+    }
+    return categoriesArray
+  }
+  
   func category(from identifier: String) -> Category? {
     guard let categories = categories else {
       return nil
@@ -90,7 +91,7 @@ class CategoryManager {
     return leefCategory(index: 0, categoryIdentifiers: identifiersTree, categories: categories)
   }
   
-  func categoryIdentifiersTree(for identifier: String) -> [String] {
+  private func categoryIdentifiersTree(for identifier: String) -> [String] {
     let identifierCharacters = Array(identifier.characters)
     var identifiersTree = [String]()
     for (index, character) in identifierCharacters.enumerated() {

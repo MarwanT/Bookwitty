@@ -49,6 +49,9 @@ class CardFactory {
     register(resource: Link.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
       LinkCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
     }
+    register(resource: Book.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
+      TopicCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
+    }
   }
 
   func register(resource : ModelResource.Type, creator : @escaping (_ shouldShowInfoNode: Bool) -> BaseCardPostNode) {
@@ -79,6 +82,8 @@ class CardFactory {
       return createReadingListCard(resource)
     case Link.resourceType:
       return createLinkCard(resource)
+    case Book.resourceType:
+      return createBookCard(resource)
     default:
       return nil
     }
@@ -107,6 +112,7 @@ extension  CardFactory {
     card.node.articleDescription = resource.shortDescription ?? resource.biography
     card.node.subImageUrl = resource.thumbnailImageUrl ?? resource.profileImageUrl ?? resource.imageUrl
     card.node.imageUrl = resource.coverImageUrl
+    card.wit = resource.isWitted
 
     return card
   }
@@ -134,6 +140,7 @@ extension  CardFactory {
     card.node.articleDescription = resource.shortDescription
     card.node.imageUrl = resource.coverImageUrl ?? resource.thumbnailImageUrl
     card.articleCommentsSummary = "XX commented on this"
+    card.wit = resource.isWitted
 
     return card
   }
@@ -164,6 +171,7 @@ extension  CardFactory {
       card.node.articleQuote = "“ \(qoute) ”"
     }
     card.articleCommentsSummary = "X commented on this"
+    card.wit = resource.isWitted
 
     return card
   }
@@ -193,6 +201,7 @@ extension  CardFactory {
     card.node.setTopicStatistics(numberOfPosts: "XX")
     card.articleCommentsSummary = "X commented on this"
     card.node.subImageUrl = resource.thumbnailImageUrl
+    card.wit = resource.isWitted
 
     return card
   }
@@ -220,6 +229,38 @@ extension  CardFactory {
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.imageNode.url = resource.coverImageUrl.isEmptyOrNil() ? nil : URL(string: resource.coverImageUrl!)
+    card.wit = resource.isWitted
+
+    return card
+  }
+}
+
+// MARK: - Book Card
+extension  CardFactory {
+  fileprivate func createBookCard(_ resource: ModelResource) -> TopicCardPostCellNode? {
+    guard let entry = registry[resource.registeredResourceType] else {
+      return nil
+    }
+    guard let resource = resource as? Book else {
+      return nil
+    }
+
+    let cardCanditate = entry(resource.productDetails?.author != nil)
+    guard let card = cardCanditate as? TopicCardPostCellNode else {
+      return nil
+    }
+
+    let name = resource.productDetails?.author ?? "[No Name]"
+    let date = Date.formatDate(date: resource.createdAt)
+    card.postInfoData = CardPostInfoNodeData(name, date, nil)
+
+    card.node.articleTitle = resource.title
+    card.node.articleDescription = resource.bookDescription
+    card.node.setTopicStatistics(numberOfPosts: "XX")
+    card.articleCommentsSummary = "X commented on this"
+    card.node.imageUrl = resource.coverImageUrl
+    card.node.subImageUrl = resource.thumbnailImageUrl
+    card.wit = resource.isWitted
 
     return card
   }
@@ -247,6 +288,7 @@ extension  CardFactory {
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.imageNode.url = resource.coverImageUrl.isEmptyOrNil() ? nil : URL(string: resource.coverImageUrl!)
+    card.wit = resource.isWitted
 
     return card
   }
@@ -272,7 +314,8 @@ extension  CardFactory {
     card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
     card.node.imageUrl = resource.coverImageUrl
     card.articleCommentsSummary = "X commented on this"
-
+    card.wit = resource.isWitted
+    
     return card
   }
 }
@@ -291,6 +334,7 @@ extension  CardFactory {
       return nil
     }
 
+    //TODO: Remove the static data
     let name = resource.penName?.name ?? "[No Name]"
     let date = Date.formatDate(date: resource.createdAt)
     let penNameprofileImage = resource.penName?.avatarUrl
@@ -299,6 +343,7 @@ extension  CardFactory {
     card.node.articleDescription = resource.shortDescription
     card.node.imageUrl = resource.coverImageUrl
     card.articleCommentsSummary = "XX commented on this"
+    card.wit = resource.isWitted
 
     return card
   }
@@ -349,6 +394,10 @@ extension  CardFactory {
     card.node.articleDescription = resource.shortDescription
     card.node.setTopicStatistics(numberOfPosts: "XX")
     card.articleCommentsSummary = "X commented on this"
+    card.wit = resource.isWitted
+
+    let images = resource.posts?.map({ ($0 as? ModelCommonProperties)?.thumbnailImageUrl }) ?? []
+    card.node.imageCollection = images.flatMap({$0})
 
     return card
   }

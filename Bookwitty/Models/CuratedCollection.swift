@@ -40,6 +40,7 @@ extension CuratedCollection: Parsable {
 
 // MARK: - Curated collection sections
 typealias Banner = (imageUrlString: String?, caption: String?)
+typealias OnBoardingCollection =  [String : OnBoardingCollectionItem]
 
 class CuratedCollectionSections: NSObject {
   let banner: Banner?
@@ -48,7 +49,8 @@ class CuratedCollectionSections: NSObject {
   let readingListIdentifiers: [String]?
   let booksIdentifiers: [String]?
   let pagesIdentifiers: [String]?
-  
+  let curatedCollectionOnBoardList: OnBoardingCollection?
+
   override init() {
     banner = nil
     featuredContent = nil
@@ -56,6 +58,7 @@ class CuratedCollectionSections: NSObject {
     readingListIdentifiers = nil
     booksIdentifiers = nil
     pagesIdentifiers = nil
+    curatedCollectionOnBoardList = nil
   }
   
   init(for dictionary: Dictionary<String,Any>) {
@@ -66,9 +69,10 @@ class CuratedCollectionSections: NSObject {
     self.readingListIdentifiers = parsedValues.readingListIdentifiers
     self.booksIdentifiers = parsedValues.booksIdentifiers
     self.pagesIdentifiers = parsedValues.pagesIdentifiers
+    self.curatedCollectionOnBoardList = parsedValues.curatedCollectionOnBoardList
   }
   
-  private static func sections(for dictionary: [String : Any]) -> (banner: Banner?, featuredContent: [String], categories: [Category], readingListIdentifiers: [String], booksIdentifiers: [String], pagesIdentifiers: [String]) {
+  private static func sections(for dictionary: [String : Any]) -> (banner: Banner?, featuredContent: [String], categories: [Category], readingListIdentifiers: [String], booksIdentifiers: [String], pagesIdentifiers: [String], curatedCollectionOnBoardList: OnBoardingCollection?) {
     let json = JSON(dictionary)
     let banner: Banner? = nil
     let featuredContent = self.wittyIdentifiers(json: json["featured"])
@@ -76,7 +80,8 @@ class CuratedCollectionSections: NSObject {
     let readingListsIdentifiers = self.wittyIdentifiers(json: json["reading-lists"])
     let booksIdentifiers = self.wittyIdentifiers(json: json["books"])
     let pagesIdentifiers = self.wittyIdentifiers(json: json["pages"])
-    return (banner, featuredContent, categories, readingListsIdentifiers, booksIdentifiers, pagesIdentifiers)
+    let curatedCollectionOnBoardList: [String : OnBoardingCollectionItem]? = self.onBoardList(json: json["onboard-list"])
+    return (banner, featuredContent, categories, readingListsIdentifiers, booksIdentifiers, pagesIdentifiers, curatedCollectionOnBoardList)
   }
   
   private static func categories(json: JSON) -> [Category] {
@@ -95,5 +100,71 @@ class CuratedCollectionSections: NSObject {
       identifiers.append(identifier)
     }
     return identifiers
+  }
+
+  private static func onBoardList(json: JSON) -> OnBoardingCollection? {
+    var identifiers: OnBoardingCollection = OnBoardingCollection()
+    for subJSON in json {
+      let key: String = subJSON.0
+      let value: JSON = subJSON.1
+      identifiers[key] = OnBoardingCollectionItem.parse(from: value)
+    }
+    return identifiers.count == 0 ? nil : identifiers
+  }
+}
+
+struct OnBoardingCollectionItem {
+  var featured: [CuratedCollectionItem]?
+  var wittyIds: [CuratedCollectionItem]?
+  var penNames: [String]?
+
+  init(featured: [CuratedCollectionItem]? = nil, wittyIds: [CuratedCollectionItem]? = nil, penNames: [String]?  = nil) {
+    self.featured = featured
+    self.wittyIds = wittyIds
+    self.penNames = penNames
+  }
+
+  static func parse(from json: JSON) -> OnBoardingCollectionItem {
+    let featured: [CuratedCollectionItem]? = CuratedCollectionItem.parseArray(json: json["featured"])
+    let wittyIds: [CuratedCollectionItem]? = CuratedCollectionItem.parseArray(json: json["witty-ids"])
+    let penNames: [String]? = OnBoardingCollectionItem.parseStrings(json: json["pen-names"])
+
+    return OnBoardingCollectionItem(featured: featured, wittyIds: wittyIds, penNames: penNames)
+  }
+
+  static private func parseStrings(json: JSON) -> [String]? {
+    var values = [String]()
+    for (_, subJSON) in json {
+      let value = subJSON.stringValue
+      values.append(value)
+    }
+    return values.count == 0 ? nil : values
+  }
+}
+
+struct CuratedCollectionItem {
+  var size: Int
+  var caption: String
+  var wittyId: String
+
+  init(size: Int, caption: String, wittyId: String) {
+    self.size = size
+    self.caption = caption
+    self.wittyId = wittyId
+  }
+
+  static func parse(from json: JSON) -> CuratedCollectionItem {
+    let size: Int = json["size"].intValue
+    let caption: String = json["caption"].stringValue
+    let wittyId: String = json["witty-id"].stringValue
+    return CuratedCollectionItem(size: size, caption: caption, wittyId: wittyId)
+  }
+
+  static func parseArray(json: JSON) -> [CuratedCollectionItem]? {
+    var items = [CuratedCollectionItem]()
+    for (_, subJSON) in json {
+      items.append(CuratedCollectionItem.parse(from: subJSON))
+    }
+    return items.count == 0 ? nil : items
   }
 }

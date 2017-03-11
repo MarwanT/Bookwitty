@@ -43,7 +43,7 @@ final class BookStoreViewModel {
       
       self.request = self.loadContentDetails(identifiers: identifiers, completion: {
         (success, readingList, error) in
-        guard success, let booksIds = readingList?.posts?.filter({ $0.type == Book.resourceType }).flatMap({ $0.id }) else {
+        guard success, let booksIds = readingList?.postsRelations?.filter({ $0.type == Book.resourceType }).flatMap({ $0.id }) else {
           self.request = nil
           completion(success, error)
           return
@@ -153,12 +153,12 @@ final class BookStoreViewModel {
   private func filterReadingLists(readingListsIdentifiers: [String], resources: [Resource]) -> (featuredList: ReadingList?, readingLists: [ReadingList]) {
     var featuredReadingList: ReadingList? = nil
     var readingLists = [ReadingList]()
-    for (index, readingListIdentifier) in readingListsIdentifiers.enumerated() {
+    for readingListIdentifier in readingListsIdentifiers {
       guard let resource = resources.filter({ $0.id == readingListIdentifier }).first as? ReadingList else {
         continue
       }
       
-      if index == 0 {
+      if featuredReadingList == nil {
         featuredReadingList = resource
       } else {
         readingLists.append(resource)
@@ -283,5 +283,9 @@ extension BookStoreViewModel {
     }
     let paginator = Paginator(ids: books.booksIds, pageSize: pageSize, startPage: 1)
     return .local(paginator: paginator)
+  }
+
+  var selections: [ReadingList] {
+    return readingLists ?? []
   }
 }

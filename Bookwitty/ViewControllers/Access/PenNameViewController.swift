@@ -80,7 +80,10 @@ class PenNameViewController: UIViewController {
   }
 
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
-    //Hide keyboard if visible
+    // Set the show pen name flag to false
+    UserManager.shared.shouldEditPenName = false
+    
+    // Hide keyboard if visible
     _ = penNameInputField.resignFirstResponder()
     _ = biographyTextView.resignFirstResponder()
 
@@ -88,8 +91,14 @@ class PenNameViewController: UIViewController {
     let biography = biographyTextView.text
     self.viewModel.updatePenNameIfNeeded(name: name, biography: biography) {
       (success: Bool) in
-      self.dismiss(animated: true, completion: nil)
+      // TODO: Handle the fail here
+      self.pushOnboardingViewController()
     }
+  }
+  
+  fileprivate func pushOnboardingViewController() {
+    let onboardingViewController = OnBoardingViewController()
+    navigationController?.pushViewController(onboardingViewController, animated: true)
   }
 
   // MARK: - Keyboard Handling

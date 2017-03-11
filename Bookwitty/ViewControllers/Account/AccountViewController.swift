@@ -14,7 +14,6 @@ class AccountViewController: UIViewController {
   @IBOutlet weak var tableView: UITableView!
 
   @IBOutlet private weak var headerView: UIView!
-  @IBOutlet private weak var profileImageView: UIImageView!
   @IBOutlet private weak var displayNameLabel: TTTAttributedLabel!
 
   fileprivate let viewModel = AccountViewModel()
@@ -30,9 +29,6 @@ class AccountViewController: UIViewController {
   }
 
   private func initializeComponents() {
-    self.profileImageView.layer.masksToBounds = true
-    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.width / 2.0
-
     self.headerView.layoutMargins.left = ThemeManager.shared.currentTheme.generalExternalMargin()
     self.headerView.layoutMargins.right = ThemeManager.shared.currentTheme.generalExternalMargin()
     self.displayNameLabel.font = FontDynamicType.subheadline.font
@@ -46,9 +42,6 @@ class AccountViewController: UIViewController {
   private func fillUserInformation() {
     let values = viewModel.headerInformation()
     self.displayNameLabel.text = values.name
-    self.profileImageView.image = values.image
-    self.profileImageView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
-    self.profileImageView.tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
   }
 
   fileprivate func dispatchSelectionAt(_ indexPath: IndexPath) {
@@ -61,11 +54,21 @@ class AccountViewController: UIViewController {
         break
       }
     case AccountViewModel.Sections.PenNames.rawValue:
-      break
+      switch indexPath.row % viewModel.numberOfRowsPerPenName {
+      case 1:
+        pushPenNameViewController(indexPath: indexPath)
+      default:
+        break
+      }
     case AccountViewModel.Sections.CreatePenNames.rawValue:
       break
     case AccountViewModel.Sections.CustomerService.rawValue:
-      break
+      switch indexPath.row {
+      case 0:
+        openHelpInBrowser()
+      default:
+        break
+      }
     default:
       break
     }
@@ -74,6 +77,28 @@ class AccountViewController: UIViewController {
   func pushSettingsViewController() {
     let settingsViewController = Storyboard.Account.instantiate(SettingsViewController.self)
     navigationController?.pushViewController(settingsViewController, animated: true)
+  }
+
+  func pushPenNameViewController(indexPath: IndexPath) {
+    let penNameViewController = Storyboard.Access.instantiate(PenNameViewController.self)
+    let penName = viewModel.selectedPenName(atRow: indexPath.row)
+    penNameViewController.viewModel.initializeWith(penName: penName, andUser: UserManager.shared.signedInUser)
+    navigationController?.pushViewController(penNameViewController, animated: true)
+  }
+
+  func openHelpInBrowser() {
+    let helpUrl: String
+    switch GeneralSettings.sharedInstance.preferredLanguage {
+    case Localization.Language.French.rawValue:
+      helpUrl = "https://support.bookwitty.com/hc/fr-fr"
+    case Localization.Language.English.rawValue: fallthrough
+    default:
+      helpUrl = "https://support.bookwitty.com/hc/en-us"
+    }
+
+    if let url = URL(string: helpUrl) {
+      UIApplication.shared.openURL(url)
+    }
   }
 }
 
@@ -100,7 +125,7 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     var reuseIdentifier: String
 
-    if case AccountViewModel.Sections.PenNames.rawValue = indexPath.section, 0 == (indexPath.row % 3) {
+    if case AccountViewModel.Sections.PenNames.rawValue = indexPath.section, 0 == (indexPath.row % viewModel.numberOfRowsPerPenName) {
       reuseIdentifier = AccountPenNameTableViewCell.reuseIdentifier
     } else {
       reuseIdentifier = DisclosureTableViewCell.identifier
@@ -112,14 +137,15 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     let values = viewModel.values(forRowAt: indexPath)
 
-    if case AccountViewModel.Sections.PenNames.rawValue = indexPath.section, 0 == (indexPath.row % 3) {
+    if case AccountViewModel.Sections.PenNames.rawValue = indexPath.section, 0 == (indexPath.row % viewModel.numberOfRowsPerPenName) {
       guard let currentCell = cell as? AccountPenNameTableViewCell else {
         return
       }
 
       currentCell.label.text = values.title
-      currentCell.profileImageView.image = values.image
+      currentCell.profileImageView.sd_setImage(with: URL(string: values.imageUrl ?? ""))
       currentCell.profileImageView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+      currentCell.disclosureIndicatorImageView.isHidden = true
 
     } else {
       guard let currentCell = cell as? DisclosureTableViewCell else {

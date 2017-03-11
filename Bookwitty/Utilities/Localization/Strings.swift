@@ -9,12 +9,32 @@
 import UIKit
 
 class Strings {
+  class func about_this_book() -> String {
+    return localizedString(key: "about_this_book")
+  }
+  
   class func account() -> String {
     return localizedString(key: "account")
   }
 
   class func address_book() -> String {
     return localizedString(key: "address_book")
+  }
+  
+  class func author() -> String {
+    return localizedString(key: "author")
+  }
+  
+  class func bag() -> String {
+    return localizedString(key: "bag")
+  }
+  
+  class func book_categories() -> String {
+    return localizedString(key: "book_categories")
+  }
+  
+  class func book_details() -> String {
+    return localizedString(key: "book_details")
   }
 
   class func books() -> String {
@@ -105,6 +125,10 @@ class Strings {
     return localizedString(key: "drafts")
   }
 
+  class func edit_pen_name() -> String {
+    return localizedString(key: "edit_pen_name")
+  }
+
   class func email() -> String {
     return localizedString(key: "email")
   }
@@ -169,6 +193,10 @@ class Strings {
     return localizedString(key: "help")
   }
   
+  class func imprint() -> String {
+    return localizedString(key: "imprint")
+  }
+  
   class func in_stock() -> String {
     return localizedString(key: "in_stock")
   }
@@ -176,7 +204,19 @@ class Strings {
   class func interests() -> String {
     return localizedString(key: "interests")
   }
+  
+  class func isbn10() -> String {
+    return localizedString(key: "isbn10")
+  }
 
+  class func isbn13() -> String {
+    return localizedString(key: "isbn13")
+  }
+  
+  class func language_of_text() -> String {
+    return localizedString(key: "language_of_text")
+  }
+  
   class func last_name() -> String {
     return localizedString(key: "last_name")
   }
@@ -199,6 +239,18 @@ class Strings {
 
   class func news() -> String {
     return localizedString(key: "news")
+  }
+  
+  class func number_of_pages() -> String {
+    return localizedString(key: "number_of_pages")
+  }
+
+  class func follow() -> String {
+    return localizedString(key: "follow")
+  }
+
+  class func followed() -> String {
+    return localizedString(key: "followed")
   }
 
   class func followers() -> String {
@@ -252,6 +304,14 @@ class Strings {
   class func posts() -> String {
     return localizedString(key: "posts")
   }
+  
+  class func product_format() -> String {
+    return localizedString(key: "product_format")
+  }
+  
+  class func publisher() -> String {
+    return localizedString(key: "publisher")
+  }
 
   class func profile_picture() -> String {
     return localizedString(key: "profile_picture")
@@ -271,6 +331,14 @@ class Strings {
 
   class func settings() -> String {
     return localizedString(key: "settings")
+  }
+  
+  class func shop_in_app_coming_soon_message() -> String {
+    return localizedString(key: "shop_in_app_coming_soon_message")
+  }
+  
+  class func shop_online() -> String {
+    return localizedString(key: "shop_online")
   }
 
   class func sign_in() -> String {
@@ -292,6 +360,10 @@ class Strings {
   class func something_wrong_in_credentials() -> String {
     return localizedString(key: "something_wrong_in_credentials")
   }
+  
+  class func subtitle() -> String {
+    return localizedString(key: "subtitle")
+  }
 
   class func take_Profile_photo() -> String {
     return localizedString(key: "take_Profile_photo")
@@ -299,6 +371,10 @@ class Strings {
 
   class func terms_of_use_and_privacy_policy() -> String {
     return localizedString(key: "terms_of_use_and_privacy_policy")
+  }
+
+  class func topic() -> String {
+    return localizedString(key: "topic")
   }
 
   class func tutorial_fifth_page_description() -> String {
@@ -337,6 +413,10 @@ class Strings {
     return localizedString(key: "tutorial_third_page_title")
   }
   
+  class func view_all() -> String {
+    return localizedString(key: "view_all")
+  }
+  
   class func view_all_books() -> String {
     return localizedString(key: "view_all_books")
   }
@@ -351,6 +431,10 @@ class Strings {
 
   class func view_all_selections() -> String {
     return localizedString(key: "view_all_selections")
+  }
+  
+  class func view_whole_description() -> String {
+    return localizedString(key: "view_whole_description")
   }
   
   class func wit_it() -> String {
@@ -375,5 +459,25 @@ class Strings {
 
   class func discover() -> String {
     return localizedString(key: "discover")
+  }
+
+  class func topics_to_follow() -> String {
+    return localizedString(key: "topics_to_follow")
+  }
+
+  class func follow_topics() -> String {
+    return localizedString(key: "follow_topics")
+  }
+
+  class func onboarding_view_header_title() -> String {
+    return localizedString(key: "onboarding_view_header_title")
+  }
+
+  class func reading_list() -> String {
+    return localizedString(key: "reading_list")
+  }
+
+  class func article() -> String {
+    return localizedString(key: "article")
   }
 }

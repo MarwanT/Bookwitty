@@ -16,8 +16,31 @@ class Topic: Resource {
   var thumbnailImageUrl: String?
   var coverImageUrl: String?
   var shortDescription: String?
+  var longDescription: String?
+  var title: String?
   var penName: PenName?
+  var vote: String?
+  
+  @objc
+  private var followingNumber: NSNumber?
+  var following: Bool {
+    get {
+    return ((followingNumber?.intValue ?? 0) == 1)
+    }
+    set {
+      followingNumber = NSNumber(value: newValue)
+    }
+  }
 
+  @objc
+  private var contributorsCollection: LinkedResourceCollection?
+  lazy var contributors: [PenName]? = {
+    return self.contributorsCollection?.resources as? [PenName]
+  }()
+
+  @objc
+  fileprivate var countsDictionary: [String : Any]?
+  
   override class var resourceType: ResourceType {
     return "topics"
   }
@@ -27,11 +50,48 @@ class Topic: Resource {
       "createdAt": DateAttribute().serializeAs("created-at"),
       "updatedAt": DateAttribute().serializeAs("updated-at"),
       "userId": Attribute().serializeAs("user-id"),
+      "vote": Attribute().serializeAs("vote"),
       "thumbnailImageUrl": Attribute().serializeAs("thumbnail-image-url"),
       "coverImageUrl": Attribute().serializeAs("cover-image-url"),
       "shortDescription": Attribute().serializeAs("short-description"),
-      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
+      "longDescription": Attribute().serializeAs("description"),
+      "countsDictionary": Attribute().serializeAs("counts"),
+      "title": Attribute().serializeAs("title"),
+      "followingNumber": Attribute().serializeAs("following"),
+      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name"),
+      "contributorsCollection" : ToManyRelationship(PenName.self).serializeAs("contributors"),
       ])
+  }
+}
+
+//MARK: - Counts Helpers
+extension Topic {
+  private struct CountsKey {
+    private init(){}
+    static let followers = "followers"
+    static let contributors = "contributors"
+    static let comments = "comments"
+    static let relatedLinks = "related-links"
+  }
+
+  var counts: (contributors: Int?, followers: Int?, posts: Int?) {
+    guard let counts = countsDictionary else {
+      return (nil, nil, nil)
+    }
+
+    let contributors = (counts[CountsKey.contributors] as? NSNumber)?.intValue
+    let followers = (counts[CountsKey.followers] as? NSNumber)?.intValue
+    let relatedLinks = counts[CountsKey.relatedLinks] as? [String : NSNumber]
+
+    var posts: Int? = nil
+
+    if let relatedLinks = relatedLinks {
+      let values = Array(relatedLinks.values)
+      posts = values.reduce(0) { (cumulative, current: NSNumber) -> Int in
+        return cumulative + current.intValue
+      }
+    }
+    return (contributors, followers, posts)
   }
 }
 

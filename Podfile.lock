@@ -87,6 +87,7 @@ PODS:
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
+  - Segmentio (2.1.2)
   - Spine (0.3):
     - BrightFutures (~> 5.0)
     - SwiftyJSON (~> 3.1.4)
@@ -110,7 +111,8 @@ DEPENDENCIES:
   - Keys (from `Pods/CocoaPodsKeys`)
   - Moya (= 8.0.0)
   - SDWebImage (= 4.0.0)
-  - Spine (from `https://github.com/Keeward/Spine.git`)
+  - Segmentio (= 2.1.2)
+  - Spine (from `https://github.com/Keeward/Spine.git`, tag `0.3.1`)
   - SwiftLinkPreview (= 2.0.0)
   - SwiftMessages (= 3.1.4)
   - SwiftyJSON (= 3.1.4)
@@ -125,14 +127,15 @@ EXTERNAL SOURCES:
     :path: Pods/CocoaPodsKeys
   Spine:
     :git: https://github.com/Keeward/Spine.git
+    :tag: 0.3.1
 
 CHECKOUT OPTIONS:
   EMCCountryPickerController:
     :git: https://github.com/Keeward/EMCCountryPickerController
     :tag: 1.4.0
   Spine:
-    :commit: c01f5001bc6f05b690abcaa491d09f0eb17d6cf0
     :git: https://github.com/Keeward/Spine.git
+    :tag: 0.3.1
 
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
@@ -165,6 +168,7 @@ SPEC CHECKSUMS:
   PINRemoteImage: c4f9f16932840c597f32e69dd288e10e111a1929
   Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
+  Segmentio: f85114993e305bd9c522952eef8c2c4db732fd17
   Spine: 9a5076f732897dc67c0303b4b3d871cfee903efa
   SwiftLinkPreview: 47a131fd165204f0c3f2531320e48a7da5856915
   SwiftMessages: 08386e74abe1b32fa8ac2075edb4043c56db709d
@@ -172,6 +176,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   UIImageViewAlignedSwift: e57cc89b4738a82ffad1b76e8ab01f898215bbfb
 
-PODFILE CHECKSUM: d1d5246d84fbff87144a32025549de1e4161e0c7
+PODFILE CHECKSUM: c239e5f992cb76a1e9b1df5a9d23eee4fc29d6d7
 
 COCOAPODS: 1.2.0

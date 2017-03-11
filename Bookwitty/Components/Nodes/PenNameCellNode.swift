@@ -23,7 +23,7 @@ class PenNameCellNode: ASCellNode {
 
   var select: Bool = false {
     didSet {
-      transitionLayout(withAnimation: true, shouldMeasureAsync: true)
+      transitionLayout(withAnimation: false, shouldMeasureAsync: false)
     }
   }
   var penNameSummary: String? {

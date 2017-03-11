@@ -16,7 +16,15 @@ final class DiscoverViewModel {
   var data: [ModelResource] = []
   var paginator: Paginator?
 
+  func cancellableOnGoingRequest() {
+    if let cancellableRequest = cancellableRequest {
+      cancellableRequest.cancel()
+    }
+  }
+
   func loadDiscoverData(completionBlock: @escaping (_ success: Bool) -> ()) {
+    cancellableOnGoingRequest()
+
     cancellableRequest = DiscoverAPI.discover { (success, curatedCollection, error) in
       guard let sections = curatedCollection?.sections else {
         completionBlock(false)
@@ -35,6 +43,7 @@ final class DiscoverViewModel {
 
   func loadNextPage(completionBlock: @escaping (_ success: Bool) -> ()) {
     if let listOfIdentifiers = self.paginator?.nextPageIds() {
+      cancellableOnGoingRequest()
       cancellableRequest = loadBatch(listOfIdentifiers: listOfIdentifiers, completion: { (success: Bool, resources: [Resource]?, error: BookwittyAPIError?) in
         defer {
           completionBlock(success)
@@ -78,9 +87,16 @@ extension DiscoverViewModel {
     return data.count
   }
 
-  func nodeForItem(atIndex index: Int) -> BaseCardPostNode? {
+  func resourceForIndex(index: Int) -> ModelResource? {
     guard data.count > index else { return nil }
     let resource = data[index]
+    return resource
+  }
+
+  func nodeForItem(atIndex index: Int) -> BaseCardPostNode? {
+    guard let resource = resourceForIndex(index: index) else {
+      return nil
+    }
     return CardFactory.shared.createCardFor(resource: resource)
   }
 }
@@ -111,24 +127,16 @@ extension DiscoverViewModel {
     })
   }
 
-  func sharingContent(index: Int) -> String? {
+  func sharingContent(index: Int) -> [String]? {
     guard data.count > index,
       let commonProperties = data[index] as? ModelCommonProperties else {
         return nil
     }
 
-    let content = data[index]
-    //TODO: Make sure that we are sharing the right information
-    let shortDesciption = commonProperties.shortDescription ?? commonProperties.title ?? ""
-    if let sharingUrl = content.url {
-      var sharingString = sharingUrl.absoluteString
-      sharingString += shortDesciption.isEmpty ? "" : "\n\n\(shortDesciption)"
-      return sharingString
+    let shortDesciption = commonProperties.title ?? commonProperties.shortDescription ?? ""
+    if let sharingUrl = commonProperties.canonicalURL {
+      return [shortDesciption, sharingUrl.absoluteString]
     }
-
-    //TODO: Remove dummy data and return nil instead since we do not have a url to share.
-    var sharingString = "https://bookwitty-api-qa.herokuapp.com/reading_list/ios-mobile-applications-development/58a6f9b56b2c581af13637f6"
-    sharingString += shortDesciption.isEmpty ? "" : "\n\n\(shortDesciption)"
-    return sharingString
+    return [shortDesciption]
   }
 }

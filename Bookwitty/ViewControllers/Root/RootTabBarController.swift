@@ -42,12 +42,20 @@ class RootTabBarController: UITabBarController {
     super.viewDidAppear(animated)
     
     // Display Introduction VC if user is not signed in
-    if !viewModel.isUserSignedIn {
+    if !UserManager.shared.isSignedIn {
       displayOverlay()
       presentIntroductionOrSignInViewController()
     } else {
-      dismissOverlay()
-      GeneralSettings.sharedInstance.shouldShowIntroduction = false
+      if UserManager.shared.shouldEditPenName {
+        presentPenNameViewController(user: UserManager.shared.signedInUser)
+      } else if UserManager.shared.shouldDisplayOnboarding {
+        presentOnboardingViewController()
+      } else {
+        dismissOverlay()
+        GeneralSettings.sharedInstance.shouldShowIntroduction = false
+        NotificationCenter.default.post(
+          name: AppNotification.shouldRefreshData, object: nil)
+      }
     }
   }
   
@@ -55,26 +63,32 @@ class RootTabBarController: UITabBarController {
     let viewController1 = NewsFeedViewController()
     let bookStoreViewController = Storyboard.Books.instantiate(BookStoreViewController.self)
     let discoverViewController = DiscoverViewController()
+    let bagViewController = BagViewController()
 
     viewController1.tabBarItem = UITabBarItem(
-      //TODO: This should be localized
-      title: "NEWS",
+      title: Strings.news().uppercased(),
       image: #imageLiteral(resourceName: "newsfeed"),
       tag: 1)
     discoverViewController.tabBarItem = UITabBarItem(
-      title: "DISCOVER",//TODO: Replace with localized string
+      title: Strings.discover().uppercased(),
       image: #imageLiteral(resourceName: "discover"),
       tag:2)
     bookStoreViewController.tabBarItem = UITabBarItem(
-      title: Strings.books(),
+      title: Strings.books().uppercased(),
       image: #imageLiteral(resourceName: "books"),
+      tag:3)
+    bagViewController.tabBarItem = UITabBarItem(
+      title: Strings.bag().uppercased(),
+      image: #imageLiteral(resourceName: "emptyBasket"),
       tag:3)
 
     // Set The View controller
     self.viewControllers = [
       UINavigationController(rootViewController: viewController1),
       UINavigationController(rootViewController: discoverViewController),
-      UINavigationController(rootViewController: bookStoreViewController)]
+      UINavigationController(rootViewController: bookStoreViewController),
+      UINavigationController(rootViewController: bagViewController),
+    ]
     
     // Set Default select tab index
     self.selectedIndex = 0
@@ -85,6 +99,8 @@ class RootTabBarController: UITabBarController {
       #selector(signOut(notificaiton:)), name: AppNotification.signOut, object: nil)
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.signIn(notification:)), name: AppNotification.didSignIn, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.didFinishBoarding(notification:)), name: AppNotification.didFinishBoarding, object: nil)
   }
   
   private func addObserversWhenNotVisible() {
@@ -114,14 +130,19 @@ class RootTabBarController: UITabBarController {
   
   fileprivate func presentPenNameViewController(user: User) {
     let penNameViewController = Storyboard.Access.instantiate(PenNameViewController.self)
-    penNameViewController.viewModel.initializeWith(user: user)
+    penNameViewController.viewModel.initializeWith(penName: user.penNames?.first, andUser: user)
     let navigationController = UINavigationController(rootViewController: penNameViewController)
     present(navigationController, animated: true, completion: nil)
   }
   
+  fileprivate func presentOnboardingViewController() {
+    let onboardingViewController = OnBoardingViewController()
+    let navigationController = UINavigationController(rootViewController: onboardingViewController)
+    present(navigationController, animated: true, completion: nil)
+  }
+  
   fileprivate func refreshToOriginalState() {
-    viewControllers?.forEach({ _ = ($0 as? UINavigationController)?.popToRootViewController(animated: false) })
-    selectedIndex = 0
+    initializeTabBarViewControllers()
   }
 }
 
@@ -137,8 +158,8 @@ extension RootTabBarController {
   func signOut(notificaiton: Notification) {
     AccessToken.shared.deleteToken()
     presentIntroductionOrSignInViewController()
-    refreshToOriginalState()
     UserManager.shared.deleteSignedInUser()
+    refreshToOriginalState()
   }
   
   func signIn(notification: Notification) {
@@ -147,10 +168,12 @@ extension RootTabBarController {
   
   func register(notification: Notification) {
     showRootViewController()
-    guard let user = notification.object as? User else {
-      return
-    }
-    presentPenNameViewController(user: user)
+  }
+  
+  func didFinishBoarding(notification: Notification) {
+    NotificationCenter.default.post(
+      name: AppNotification.shouldRefreshData, object: nil)
+    showRootViewController()
   }
   
   func showRootViewController() {

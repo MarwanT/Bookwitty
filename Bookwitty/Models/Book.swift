@@ -14,7 +14,7 @@ class Book: Resource {
 
   var title: String?
   var subtitle: String?
-  var bookDescription: [String : Any]?
+  var bookDescription: String?
   var thumbnailImageUrl: String?
   var coverImageUrl: String?
 
@@ -25,6 +25,26 @@ class Book: Resource {
 
   var productDetails: ProductDetails?
   var supplierInformation: SupplierInformation?
+
+  @objc
+  private var followingNumber: NSNumber?
+  var following: Bool {
+    get {
+      return ((followingNumber?.intValue ?? 0) == 1)
+    }
+    set {
+      followingNumber = NSNumber(value: newValue)
+    }
+  }
+
+  @objc
+  private var contributorsCollection: LinkedResourceCollection?
+  lazy var contributors: [PenName]? = {
+    return self.contributorsCollection?.resources as? [PenName]
+  }()
+
+  @objc
+  fileprivate var countsDictionary: [String : Any]?
 
   override class var resourceType: ResourceType {
     return "books"
@@ -40,12 +60,45 @@ class Book: Resource {
       "createdAt" : DateAttribute().serializeAs("created-at"),
       "updatedAt" : DateAttribute().serializeAs("updated-at"),
       "coverImageUrl" : Attribute().serializeAs("cover-image-url"),
+      "countsDictionary": Attribute().serializeAs("counts"),
+      "followingNumber": Attribute().serializeAs("following"),
+      "contributorsCollection" : ToManyRelationship(PenName.self).serializeAs("contributors"),
       "productDetails" : ProductDetailsAttribute().serializeAs("product-details"),
       "supplierInformation" : SupplierInformationAttribute().serializeAs("supplier-information"),
       ])
   }
 }
 
+//MARK: - Counts Helpers
+extension Book {
+  private struct CountsKey {
+    private init(){}
+    static let followers = "followers"
+    static let contributors = "contributors"
+    static let comments = "comments"
+    static let relatedLinks = "related-links"
+  }
+
+  var counts: (contributors: Int?, followers: Int?, posts: Int?) {
+    guard let counts = countsDictionary else {
+      return (nil, nil, nil)
+    }
+
+    let contributors = (counts[CountsKey.contributors] as? NSNumber)?.intValue
+    let followers = (counts[CountsKey.followers] as? NSNumber)?.intValue
+    let relatedLinks = counts[CountsKey.relatedLinks] as? [String : NSNumber]
+
+    var posts: Int? = nil
+
+    if let relatedLinks = relatedLinks {
+      let values = Array(relatedLinks.values)
+      posts = values.reduce(0) { (cumulative, current: NSNumber) -> Int in
+        return cumulative + current.intValue
+      }
+    }
+    return (contributors, followers, posts)
+  }
+}
 
 // MARK: - Parser
 extension Book: Parsable {
@@ -104,6 +157,38 @@ class ProductDetails: NSObject {
     self.weight = json["weight"].dictionaryObject
     self.width = json["width"].dictionaryObject
     self.numberOfPages = json["nb-of-pages"].stringValue
+  }
+  
+  func associatedKeyValues() -> [(key: String, value: String)] {
+    var associatedInformation = [(key: String, value: String)]()
+    if let author = author {
+      associatedInformation.append((Strings.author(), author))
+    }
+    if let imprint = imprint {
+      associatedInformation.append((Strings.imprint(), imprint))
+    }
+    if let isbn10 = isbn10 {
+      associatedInformation.append((Strings.isbn10(), isbn10))
+    }
+    if let isbn13 = isbn13 {
+      associatedInformation.append((Strings.isbn13(), isbn13))
+    }
+    if let languageOfText = languageOfText {
+      associatedInformation.append((Strings.language_of_text(), languageOfText))
+    }
+    if let productFormat = productFormat {
+      associatedInformation.append((Strings.product_format(), productFormat))
+    }
+    if let publisher = publisher {
+      associatedInformation.append((Strings.publisher(), publisher))
+    }
+    if let subtitle = subtitle {
+      associatedInformation.append((Strings.subtitle(), subtitle))
+    }
+    if let numberOfPages = numberOfPages {
+      associatedInformation.append((Strings.number_of_pages(), numberOfPages))
+    }
+    return associatedInformation
   }
 }
 

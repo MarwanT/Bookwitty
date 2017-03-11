@@ -21,10 +21,15 @@ class ReadingList: Resource {
   var conclusion: String?
   var body: String?
   var penName: PenName?
-
+  var vote: String?
+  
   var postsCollection: LinkedResourceCollection?
-  lazy var posts: [ResourceIdentifier]? = {
+  lazy var postsRelations: [ResourceIdentifier]? = {
     return self.postsCollection?.linkage
+  }()
+
+  lazy var posts: [ModelResource]? = {
+    return self.postsCollection?.resources
   }()
 
   override class var resourceType: ResourceType {
@@ -36,6 +41,7 @@ class ReadingList: Resource {
       "name": Attribute().serializeAs("name"),
       "createdAt": DateAttribute().serializeAs("created-at"),
       "updatedAt": DateAttribute().serializeAs("updated-at"),
+      "vote": Attribute().serializeAs("vote"),
       "userId": Attribute().serializeAs("user-id"),
       "thumbnailImageUrl": Attribute().serializeAs("thumbnail-image-url"),
       "coverImageUrl": Attribute().serializeAs("cover-image-url"),

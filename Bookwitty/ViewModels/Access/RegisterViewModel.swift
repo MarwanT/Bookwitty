@@ -44,7 +44,8 @@ final class RegisterViewModel {
       request.cancel()
     }
 
-    request = UserAPI.registerUser(firstName: firstName, lastName: lastName, email: email, dateOfBirthISO8601: nil, countryISO3166: country, password: password, language: "en", completionBlock: { (success, user, error) in
+    let language = GeneralSettings.sharedInstance.preferredLanguage
+    request = UserAPI.registerUser(firstName: firstName, lastName: lastName, email: email, dateOfBirthISO8601: nil, countryISO3166: country, password: password, language: language, completionBlock: { (success, user, error) in
       guard success, let registeredUser = user else {
         self.request = nil
         completionBlock(success, user, error)

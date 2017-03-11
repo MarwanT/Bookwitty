@@ -169,22 +169,31 @@ class RegisterViewController: UIViewController {
       let country = viewModel.country!.code
 
       viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, completionBlock: { (success: Bool, user: User?, error: BookwittyAPIError?) in
-        if let user = user, success {
+        let successBlock = {
+          UserManager.shared.shouldEditPenName = true
+          UserManager.shared.shouldDisplayOnboarding = true
           NotificationCenter.default.post(name: AppNotification.registrationSuccess, object: user)
+        }
+        let failBlock = { (message: String) in
+          self.showAlertErrorWith(title: Strings.ooops(), message: message)
+        }
+        
+        if user != nil, success {
+          successBlock()
         } else if let error = error {
           switch(error) {
           case BookwittyAPIError.emailAlreadyExists:
-            self.showAlertErrorWith(title: Strings.ooops(), message: Strings.email_already_registered())
+            failBlock(Strings.email_already_registered())
           case .failToSignIn:
             /*
-             Registration is successful, but since the sign in failed then 
+             Registration is successful, but since the sign in failed then
              The root vc will re-display the sign in vc for signing in again
              */
-            NotificationCenter.default.post(name: AppNotification.registrationSuccess, object: nil)
+            successBlock()
           default: break
           }
         } else {
-          self.showAlertErrorWith(title: Strings.ooops(), message: Strings.some_thing_wrong_error())
+          failBlock(Strings.some_thing_wrong_error())
         }
       })
     } else {
@@ -305,12 +314,12 @@ extension RegisterViewController: InputFieldDelegate {
 }
 
 enum AttributedLinkReference: String {
- case termsOfUse = "/terms#terms"
- case privacyPolicy = "/terms#privacy"
+ case termsOfUse = "/terms?layout=app"
+ case privacyPolicy = "/privacy?layout=app"
 
   var url: URL {
     get {
-      return URL(string: "https://www.bookwitty.com" + self.rawValue)!
+      return URL(string: self.rawValue, relativeTo: Environment.current.baseURL)!
     }
   }
 }

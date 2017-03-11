@@ -47,4 +47,15 @@ extension UIImage {
     
     return scaledImage
   }
+
+  func resizeImage(width: CGFloat, height: CGFloat) -> UIImage {
+    let rect = AVMakeRect(aspectRatio: size, insideRect: CGRect(x: 0, y: 0, width: width, height: height))
+    let newSize = CGSize(width: width, height: height)
+
+    UIGraphicsBeginImageContext(newSize)
+    self.draw(in: rect)
+    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    return newImage!
+  }
 }

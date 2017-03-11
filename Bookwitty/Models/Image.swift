@@ -21,6 +21,7 @@ class Image: Resource {
   var type: String?
   var media: [String: Any]?
   var penName: PenName?
+  var vote: String?
 
   override class var resourceType: ResourceType {
     return "images"
@@ -34,6 +35,7 @@ class Image: Resource {
       "thumbnailImageUrl": Attribute().serializeAs("thumbnail-image-url"),
       "coverImageUrl": Attribute().serializeAs("cover-image-url"),
       "caption": Attribute().serializeAs("caption"),
+      "vote": Attribute().serializeAs("vote"),
       "shortDescription": Attribute().serializeAs("short-description"),
       "title": Attribute().serializeAs("title"),
       "type": Attribute().serializeAs("type"),

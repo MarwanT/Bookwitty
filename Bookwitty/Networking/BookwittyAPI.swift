@@ -31,6 +31,13 @@ public enum BookwittyAPI {
   case unwit(contentId: String)
   case absolute(url: URL)
   case discover
+  case onBoarding
+  case follow(identifier: String)
+  case unfollow(identifier: String)
+  case content(identifier: String, include: [String]?)
+  case followers(identifier: String)
+  case posts(identifier: String, type: [String]?)
+  case editions(identifier: String)
 }
 
 // MARK: - Target Type
@@ -95,8 +102,22 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(contentId)/wit"
     case .discover:
       path = "/curated_collection/discover_page"
+    case .onBoarding:
+      path = "/curated_collection/onboarding_selection"
     case .absolute(_):
       return ""
+    case .follow(let identifier):
+      path = "/content/\(identifier)/follow"
+    case .unfollow(let identifier):
+      path = "/content/\(identifier)/follow"
+    case .content(let identifier, _):
+      path = "/content/\(identifier)"
+    case .followers(let identifier):
+      path = "/content/\(identifier)/followers"
+    case .posts(let identifier, _):
+      path = "/content/\(identifier)/posts"
+    case .editions(let identifier):
+      path = "/content/\(identifier)/editions"
     }
     
     return apiBasePath + apiVersion + path
@@ -106,13 +127,13 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .oAuth, .refreshToken:
       return .post
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute, .discover:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions:
       return .get
-    case .register, .batch, .updatePreference, .wit:
+    case .register, .batch, .updatePreference, .wit, .follow:
       return .post
     case .updateUser, .updatePenName:
       return .patch
-    case .unwit:
+    case .unwit, .unfollow:
       return .delete
     }
   }
@@ -147,7 +168,9 @@ extension BookwittyAPI: TargetType {
       return PenNameAPI.updatePostBody(identifier: identifier, name: name, biography: biography, avatarUrl: avatarUrl, facebookUrl: facebookUrl, tumblrUrl: tumblrUrl, googlePlusUrl: googlePlusUrl, twitterUrl: twitterUrl, instagramUrl: instagramUrl, pinterestUrl: pinterestUrl, youtubeUrl: youtubeUrl, linkedinUrl: linkedinUrl, wordpressUrl: wordpressUrl, websiteUrl: websiteUrl)
     case .updatePreference(let preference, let value):
       return UserAPI.updatePostBody(preference: preference, value: value)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover:
+    case .posts(_, let type):
+      return GeneralAPI.postsParameters(type: type)
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions:
       return nil
     }
   }
@@ -195,6 +218,8 @@ extension BookwittyAPI: TargetType {
       return [PenName.resourceType]
     case .newsFeed:
       return ["pen-name", "contributors", "commenters"]
+    case .content(_, let include):
+      return include
     default:
       return nil
     }

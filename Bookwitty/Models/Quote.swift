@@ -20,7 +20,8 @@ class Quote: Resource {
   var title: String?
   var type: String?
   var penName: PenName?
-
+  var vote: String?
+  
   override class var resourceType: ResourceType {
     return "quotes"
   }
@@ -33,6 +34,7 @@ class Quote: Resource {
       "thumbnailImageUrl": Attribute().serializeAs("thumbnail-image-url"),
       "coverImageUrl": Attribute().serializeAs("cover-image-url"),
       "body": Attribute().serializeAs("body"),
+      "vote": Attribute().serializeAs("vote"),
       "title": Attribute().serializeAs("title"),
       "type": Attribute().serializeAs("type"),
       "author": Attribute().serializeAs("author"),

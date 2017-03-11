@@ -13,6 +13,8 @@ class UserManager {
     static let SignedInUser = "SignInUser"
     static let SignedInUserPenNames = "SignedInUserPenNames"
     static let SignedInUserDefaultPenName = "SignedInUserDefaultPenName"
+    static let ShouldEditPenName = "ShouldEditPenName"
+    static let ShouldDisplayOnboarding = "ShouldDisplayOnboarding"
   }
   
   static let shared = UserManager()
@@ -33,7 +35,25 @@ class UserManager {
   }
   
   var isSignedIn: Bool {
-    return AccessToken.shared.isValid
+    return AccessToken.shared.hasTokens && signedInUser != nil
+  }
+  
+  var shouldEditPenName: Bool {
+    get {
+      return UserDefaults.standard.bool(forKey: Key.ShouldEditPenName) 
+    }
+    set {
+      UserDefaults.standard.set(newValue, forKey: Key.ShouldEditPenName)
+    }
+  }
+  
+  var shouldDisplayOnboarding: Bool {
+    get {
+      return UserDefaults.standard.bool(forKey: Key.ShouldDisplayOnboarding)
+    }
+    set {
+      UserDefaults.standard.set(newValue, forKey: Key.ShouldDisplayOnboarding)
+    }
   }
 
   var penNames: [PenName]? {

@@ -49,6 +49,11 @@ class PenNameDisplayNode: ASControlNode {
   func setupNodes() {
     style.height = ASDimensionMake(nodeHeight)
 
+    penNameTextNode.style.minWidth = ASDimensionMake(120)
+    penNameTextNode.maximumNumberOfLines = 1
+    penNameTextNode.style.flexGrow = 1
+    penNameTextNode.style.flexShrink = 1
+    
     separatorNode.style.height = ASDimensionMake(1)
     separatorNode.style.flexGrow = 1
     separatorNode.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()

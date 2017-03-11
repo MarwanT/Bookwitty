@@ -7,15 +7,37 @@
 //
 import UIKit
 import AsyncDisplayKit
+import Spine
 
 class NewsFeedViewController: ASViewController<ASCollectionNode> {
+  enum LoadingStatus {
+    case none
+    case loadMore
+    case reloading
+    case loading
+  }
+
   let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
   let pullToRefresher = UIRefreshControl()
   let penNameSelectionNode = PenNameSelectionNode()
   let loaderNode: LoaderNode
-  
+
+  var loadingStatus: LoadingStatus = .none {
+    didSet {
+      switch loadingStatus {
+      case .loading:
+        break
+      case .reloading:
+        updateBottomLoaderVisibility(show: true)
+      case .loadMore:
+        updateBottomLoaderVisibility(show: true)
+      case .none:
+        updateBottomLoaderVisibility(show: false)
+      }
+    }
+  }
   var collectionView: ASCollectionView?
   var scrollView: UIScrollView? {
     if let collectionView = collectionView {
@@ -26,20 +48,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let scrollingThreshold: CGFloat = 25.0
   let viewModel = NewsFeedViewModel()
   var isFirstRun: Bool = true
-  var isLoadingMore: Bool = false {
-    didSet {
-      let bottomMargin: CGFloat
-      if isLoadingMore {
-        bottomMargin = -(externalMargin/2)
-      } else {
-        //If we have Zero data items this means that we are only showing the pen-name-selection-node
-        bottomMargin = viewModel.data.count == 0 ? 0.0 : -(LoaderNode.nodeHeight - externalMargin/2)
-      }
-
-      flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomMargin, right: 0)
-      loaderNode.updateLoaderVisibility(show: isLoadingMore)
-    }
-  }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -50,14 +58,12 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: externalMargin/2, right: 0)
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
-    flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.nodeHeight)
 
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
-
     loaderNode = LoaderNode()
-
     super.init(node: collectionNode)
 
+    flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: loaderNode.usedHeight)
     collectionNode.onDidLoad { [weak self] (collectionNode) in
       guard let strongSelf = self,
         let asCollectionView = collectionNode.view as? ASCollectionView else {
@@ -84,17 +90,13 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     collectionNode.dataSource = self
     penNameSelectionNode.delegate = self
     //Listen to pullToRefresh valueChange and call loadData
-    pullToRefresher.addTarget(self, action: #selector(self.loadData), for: .valueChanged)
+    pullToRefresher.addTarget(self, action: #selector(self.pullDownToReloadData), for: .valueChanged)
 
     applyTheme()
   }
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    if isFirstRun && UserManager.shared.isSignedIn {
-      isFirstRun = false
-      loadData()
-    }
     animateRefreshControllerIfNeeded()
   }
 
@@ -126,27 +128,43 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       #selector(self.settingsButtonTap(_:)))
     navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
   }
-
-  func loadData(withPenNames reloadPenNames: Bool = true) {
-    viewModel.data = []
-    collectionNode.reloadData()
-    if !reloadPenNames {
-      self.isLoadingMore = true
-    } else {
+  
+  func refreshViewControllerData() {
+    if UserManager.shared.isSignedIn {
+      viewModel.cancellableOnGoingRequest()
       self.pullToRefresher.beginRefreshing()
+      loadData(withPenNames: true, loadingStatus: .loading, completionBlock: {
+        self.pullToRefresher.endRefreshing()
+      })
     }
+  }
+
+  func pullDownToReloadData() {
+    guard loadingStatus != .reloading else {
+      return
+    }
+    
+    self.pullToRefresher.beginRefreshing()
+    loadData(withPenNames: true, loadingStatus: .reloading, completionBlock: {
+      self.pullToRefresher.endRefreshing()
+    })
+  }
+
+  func loadData(withPenNames reloadPenNames: Bool = true, loadingStatus: LoadingStatus, completionBlock: @escaping () -> ()) {
+    self.loadingStatus = loadingStatus
+
     viewModel.loadNewsfeed { [weak self] (success) in
       guard let strongSelf = self else { return }
-      if !reloadPenNames {
-        strongSelf.isLoadingMore = false
-      } else {
-        strongSelf.pullToRefresher.endRefreshing()
+      strongSelf.loadingStatus = .none
+
+      completionBlock()
+      if success {
+        strongSelf.collectionNode.reloadData(completion: {
+          if reloadPenNames || !strongSelf.penNameSelectionNode.hasData() {
+            strongSelf.reloadPenNamesNode()
+          }
+        })
       }
-      strongSelf.collectionNode.reloadData(completion: {
-        if reloadPenNames || strongSelf.penNameSelectionNode.calculatedLayout?.size.height ?? 0.0 > 0.0 {
-          strongSelf.reloadPenNamesNode()
-        }
-      })
     }
   }
 
@@ -155,15 +173,44 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   }
 
 }
+
+extension NewsFeedViewController {
+  func updateBottomLoaderVisibility(show: Bool) {
+    if Thread.isMainThread {
+      reloadFooter(show: show)
+    } else {
+      DispatchQueue.main.async {
+        self.reloadFooter(show: show)
+      }
+    }
+  }
+
+  func reloadFooter(show: Bool) {
+    let bottomMargin: CGFloat
+    if show {
+      bottomMargin = -(self.externalMargin/2)
+    } else {
+      //If we have Zero data items this means that we are only showing the pen-name-selection-node
+      bottomMargin = self.viewModel.data.count == 0 ? 0.0 : -(self.loaderNode.usedHeight - self.externalMargin/2)
+    }
+
+    self.flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomMargin, right: 0)
+    self.loaderNode.updateLoaderVisibility(show: show)
+  }
+}
+
 extension NewsFeedViewController: PenNameSelectionNodeDelegate {
   func didSelectPenName(penName: PenName, sender: PenNameSelectionNode) {
     if let scrollView = scrollView {
       penNameSelectionNode.alpha = 1.0
       scrollView.contentOffset = CGPoint(x: 0, y: 0.0)
     }
+    viewModel.cancellableOnGoingRequest()
+    viewModel.data = []
+    collectionNode.reloadData()
     viewModel.didUpdateDefaultPenName(penName: penName, completionBlock: {  didSaveDefault in
       if didSaveDefault {
-        loadData(withPenNames: false)
+        loadData(withPenNames: false, loadingStatus: .reloading, completionBlock: { })
       }
     })
   }
@@ -172,12 +219,11 @@ extension NewsFeedViewController: PenNameSelectionNodeDelegate {
 extension NewsFeedViewController {
   func addObservers() {
     NotificationCenter.default.addObserver(self, selector:
-      #selector(self.didSignInNotification(notification:)), name: AppNotification.didSignIn, object: nil)
+      #selector(self.refreshData(_:)), name: AppNotification.shouldRefreshData, object: nil)
   }
 
-  func didSignInNotification(notification: Notification) {
-    //User signed in or changed: Reset isFirstRun to make sure data reloads
-    isFirstRun = true
+  func refreshData(_ notification: Notification) {
+    refreshViewControllerData()
   }
 }
 // MARK: - Themeable
@@ -251,7 +297,7 @@ extension NewsFeedViewController: BaseCardPostNodeDelegate {
         didFinishAction?(success)
       }
     case .share:
-      if let sharingInfo: String = viewModel.sharingContent(index: index) {
+      if let sharingInfo: [String] = viewModel.sharingContent(index: index) {
         presentShareSheet(shareContent: sharingInfo)
       }
     default:
@@ -262,6 +308,11 @@ extension NewsFeedViewController: BaseCardPostNodeDelegate {
 }
 
 extension NewsFeedViewController: ASCollectionDelegate {
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    let resource = viewModel.resourceForIndex(index: indexPath.item)
+    actionForCard(resource: resource)
+  }
+
   public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
     return ASSizeRange(
       min: CGSize(width: collectionNode.frame.width, height: 0),
@@ -274,16 +325,24 @@ extension NewsFeedViewController: ASCollectionDelegate {
   }
 
   public func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
-    guard !isLoadingMore else {
+    guard context.isFetching() else {
       return
     }
+    guard loadingStatus == .none else {
+      context.completeBatchFetching(true)
+      return
+    }
+    context.beginBatchFetching()
+    self.loadingStatus = .loadMore
+
     let initialLastIndexPath: Int = viewModel.numberOfItemsInSection()
 
-    DispatchQueue.main.async {
-      self.isLoadingMore = true
-    }
     // Fetch next page data
     viewModel.loadNextPage { [weak self] (success) in
+      defer {
+        context.completeBatchFetching(true)
+        self!.loadingStatus = .none
+      }
       guard let strongSelf = self else {
         return
       }
@@ -295,26 +354,7 @@ extension NewsFeedViewController: ASCollectionDelegate {
         let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
           return IndexPath(row: index, section: 0)
         })
-        strongSelf.loadItemsWithIndexOnMainThread() {
-          collectionNode.insertItems(at: updatedIndexPathRange)
-          strongSelf.isLoadingMore = false
-        }
-      }
-
-      // Properly finish the batch fetch
-      context.completeBatchFetching(true)
-    }
-  }
-
-  /**
-   * Note: loadItemsWithIndex will always run on the main thread
-   */
-  func loadItemsWithIndexOnMainThread(completionBlock: @escaping () -> ()) {
-    if Thread.isMainThread {
-      completionBlock()
-    } else {
-      DispatchQueue.main.async {
-        completionBlock()
+        collectionNode.insertItems(at: updatedIndexPathRange)
       }
     }
   }
@@ -350,5 +390,112 @@ extension NewsFeedViewController: UIScrollViewDelegate {
         })
       }
     }
+  }
+}
+
+// MARK: - Actions For Cards
+extension NewsFeedViewController {
+  func actionForCard(resource: ModelResource?) {
+    guard let resource = resource else {
+      return
+    }
+    let registeredType = resource.registeredResourceType
+
+    switch registeredType {
+    case Image.resourceType:
+      actionForImageResourceType(resource: resource)
+    case Author.resourceType:
+      actionForAuthorResourceType(resource: resource)
+    case ReadingList.resourceType:
+      actionForReadingListResourceType(resource: resource)
+    case Topic.resourceType:
+      actionForTopicResourceType(resource: resource)
+    case Text.resourceType:
+      actionForTextResourceType(resource: resource)
+    case Quote.resourceType:
+      actionForQuoteResourceType(resource: resource)
+    case Video.resourceType:
+      actionForVideoResourceType(resource: resource)
+    case Audio.resourceType:
+      actionForAudioResourceType(resource: resource)
+    case Link.resourceType:
+      actionForLinkResourceType(resource: resource)
+    case Book.resourceType:
+      actionForBookResourceType(resource: resource)
+    default:
+      print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")
+      break
+    }
+  }
+
+  func pushPostDetailsViewController(resource: Resource) {
+    let nodeVc = PostDetailsViewController(resource: resource)
+    self.navigationController?.pushViewController(nodeVc, animated: true)
+  }
+
+  func pushGenericViewControllerCard(resource: Resource, title: String?) {
+    guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+      return
+    }
+    let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
+    navigationController?.pushViewController(genericVC, animated: true)
+  }
+
+  fileprivate func actionForImageResourceType(resource: ModelResource) {
+    pushGenericViewControllerCard(resource: resource, title: "Image")
+  }
+
+  fileprivate func actionForAuthorResourceType(resource: ModelResource) {
+    guard resource is Author else {
+      return
+    }
+
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(withAuthor: resource as? Author)
+    navigationController?.pushViewController(topicViewController, animated: true)
+  }
+
+  fileprivate func actionForReadingListResourceType(resource: ModelResource) {
+    pushPostDetailsViewController(resource: resource)
+  }
+
+  fileprivate func actionForTopicResourceType(resource: ModelResource) {
+    guard resource is Topic else {
+      return
+    }
+
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(withTopic: resource as? Topic)
+    navigationController?.pushViewController(topicViewController, animated: true)
+  }
+
+  fileprivate func actionForTextResourceType(resource: ModelResource) {
+    pushPostDetailsViewController(resource: resource)
+  }
+
+  fileprivate func actionForQuoteResourceType(resource: ModelResource) {
+    pushGenericViewControllerCard(resource: resource, title: "Quote")
+  }
+
+  fileprivate func actionForVideoResourceType(resource: ModelResource) {
+    pushGenericViewControllerCard(resource: resource, title: "Video")
+  }
+
+  fileprivate func actionForAudioResourceType(resource: ModelResource) {
+    pushGenericViewControllerCard(resource: resource, title: "Audio")
+  }
+
+  fileprivate func actionForLinkResourceType(resource: ModelResource) {
+    pushGenericViewControllerCard(resource: resource, title: "Link")
+  }
+
+  fileprivate func actionForBookResourceType(resource: ModelResource) {
+    guard resource is Book else {
+      return
+    }
+
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(withBook: resource as? Book)
+    navigationController?.pushViewController(topicViewController, animated: true)
   }
 }

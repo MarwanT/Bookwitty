@@ -20,7 +20,8 @@ class Text: Resource {
   var title: String?
   var type: String?
   var penName: PenName?
-
+  var vote: String?
+  
   override class var resourceType: ResourceType {
     return "texts"
   }
@@ -30,6 +31,7 @@ class Text: Resource {
       "createdAt": DateAttribute().serializeAs("created-at"),
       "updatedAt": DateAttribute().serializeAs("updated-at"),
       "userId": Attribute().serializeAs("user-id"),
+      "vote": Attribute().serializeAs("vote"),
       "thumbnailImageUrl": Attribute().serializeAs("thumbnail-image-url"),
       "coverImageUrl": Attribute().serializeAs("cover-image-url"),
       "body": Attribute().serializeAs("body"),

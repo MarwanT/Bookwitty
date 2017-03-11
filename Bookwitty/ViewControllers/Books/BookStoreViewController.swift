@@ -279,6 +279,12 @@ class BookStoreViewController: UIViewController {
     booksTableViewController.initialize(with: books, loadingMode: loadingMode)
     navigationController?.pushViewController(booksTableViewController, animated: true)
   }
+
+  fileprivate func pushReadingListsViewController(with readingLists: [ReadingList]) {
+    let readingListsViewController = ReadingListsViewController()
+    readingListsViewController.initialize(with: readingLists)
+    navigationController?.pushViewController(readingListsViewController, animated: true)
+  }
 }
 
 // MARK: - Action
@@ -467,7 +473,7 @@ extension BookStoreViewController: DisclosureViewDelegate {
     case viewAllBooksView:
       pushBooksTableView(with: viewModel.books, loadingMode: viewModel.booksLoadingMode)
     case viewAllSelectionsView:
-      break
+      pushReadingListsViewController(with: viewModel.selections)
     default:
       break
     }

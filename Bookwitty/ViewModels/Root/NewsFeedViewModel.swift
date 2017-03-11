@@ -69,10 +69,23 @@ final class NewsFeedViewModel {
     })
   }
 
+  func cancellableOnGoingRequest() {
+    if let cancellableRequest = cancellableRequest {
+      cancellableRequest.cancel()
+    }
+  }
+
   func loadNewsfeed(completionBlock: @escaping (_ success: Bool) -> ()) {
+    if let cancellableRequest = cancellableRequest {
+      cancellableRequest.cancel()
+    }
     cancellableRequest = NewsfeedAPI.feed() { (success, resources, nextPage, error) in
-      self.data = resources ?? []
-      self.nextPage = nextPage
+      if success {
+        self.data.removeAll(keepingCapacity: false)
+        self.data = resources ?? []
+        self.nextPage = nextPage
+      }
+      self.cancellableRequest = nil
       completionBlock(success)
     }
   }
@@ -86,17 +99,21 @@ final class NewsFeedViewModel {
       completionBlock(false)
       return
     }
+    if let cancellableRequest = cancellableRequest {
+      cancellableRequest.cancel()
+    }
 
     cancellableRequest = NewsfeedAPI.nextFeedPage(nextPage: nextPage) { (success, resources, nextPage, error) in
       if let resources = resources, success {
         self.data += resources
         self.nextPage = nextPage
       }
+      self.cancellableRequest = nil
       completionBlock(success)
     }
   }
 
-  func sharingContent(index: Int) -> String? {
+  func sharingContent(index: Int) -> [String]? {
     let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
     let dataIndex = index - showsPenNameSelectionHeader
     guard data.count > dataIndex,
@@ -105,18 +122,13 @@ final class NewsFeedViewModel {
     }
 
     let content = data[dataIndex]
-    //TODO: Make sure that we are sharing the right information
-    let shortDesciption = commonProperties.shortDescription ?? commonProperties.title ?? ""
-    if let sharingUrl = content.url {
+    let shortDesciption = commonProperties.title ?? commonProperties.shortDescription ?? ""
+    if let sharingUrl = commonProperties.canonicalURL {
       var sharingString = sharingUrl.absoluteString
       sharingString += shortDesciption.isEmpty ? "" : "\n\n\(shortDesciption)"
-      return sharingString
+      return [sharingUrl.absoluteString, shortDesciption]
     }
-
-    //TODO: Remove dummy data and return nil instead since we do not have a url to share.
-    var sharingString = "https://bookwitty-api-qa.herokuapp.com/reading_list/ios-mobile-applications-development/58a6f9b56b2c581af13637f6"
-    sharingString += shortDesciption.isEmpty ? "" : "\n\n\(shortDesciption)"
-    return sharingString
+    return [shortDesciption]
   }
 
   func hasPenNames() -> Bool {
@@ -133,11 +145,19 @@ final class NewsFeedViewModel {
     return data.count + showsPenNameSelectionHeader
   }
 
-  func nodeForItem(atIndex index: Int) -> BaseCardPostNode? {
+  func resourceForIndex(index: Int) -> ModelResource? {
     let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
     let dataIndex = index - showsPenNameSelectionHeader
     guard data.count > dataIndex else { return nil }
     let resource = data[dataIndex]
+    return resource
+  }
+
+  func nodeForItem(atIndex index: Int) -> BaseCardPostNode? {
+    guard let resource = resourceForIndex(index: index) else {
+      return nil
+    }
+
     return CardFactory.shared.createCardFor(resource: resource)
   }
 }
