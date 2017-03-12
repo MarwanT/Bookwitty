@@ -37,11 +37,10 @@ class ReadingListBookNode: ASCellNode {
     imageNode.imageModificationBlock = { image in
       return image.imageWithSize(size: self.imageSize) ?? image
     }
-
-    imageNode.clipsToBounds = true
     imageNode.style.width = ASDimensionMake(imageSize.width)
     imageNode.style.maxHeight = ASDimensionMake(imageSize.height)
     imageNode.defaultImage = UIImage(color: ASDisplayNodeDefaultPlaceholderColor(), size: imageSize)
+    imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
   }
 
   private func imageInset() -> UIEdgeInsets {
