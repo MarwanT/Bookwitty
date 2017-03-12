@@ -258,6 +258,15 @@ extension NewsFeedViewController: ASCollectionDataSource {
     return {
       if(index != 0) {
         let baseCardNode = self.viewModel.nodeForItem(atIndex: index) ?? BaseCardPostNode()
+        if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
+          !readingListCell.node.isImageCollectionLoaded {
+          let max = readingListCell.node.maxNumberOfImages
+          self.viewModel.loadReadingListImages(atIndex: index, maxNumberOfImages: max, completionBlock: { (imageCollection) in
+            if let imageCollection = imageCollection, imageCollection.count > 0 {
+              readingListCell.node.loadImages(with: imageCollection)
+            }
+          })
+        }
         baseCardNode.delegate = self
         return baseCardNode
       } else {
