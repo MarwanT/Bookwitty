@@ -177,9 +177,7 @@ extension RootTabBarController {
   }
   
   func showRootViewController() {
-    self.dismiss(animated: true) {
-      self.dismissOverlay()
-    }
+    self.dismiss(animated: true)
   }
 }
 
