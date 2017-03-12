@@ -16,15 +16,19 @@ struct DiscoverAPI {
       var success: Bool = false
       var collection: CuratedCollection? = nil
       var error: BookwittyAPIError? = nil
-      defer {
-        completion(success, collection, error)
-      }
+      DispatchQueue.global(qos: .background).async {
+        defer {
+          DispatchQueue.main.async {
+            completion(success, collection, error)
+          }
+        }
 
-      if let data = data {
-        collection = CuratedCollection.parseData(data: data)
-        success = collection != nil
-      } else {
-        error = BookwittyAPIError.failToParseData
+        if let data = data {
+          collection = CuratedCollection.parseData(data: data)
+          success = collection != nil
+        } else {
+          error = BookwittyAPIError.failToParseData
+        }
       }
     })
   }
