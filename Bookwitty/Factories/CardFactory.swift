@@ -396,6 +396,8 @@ extension  CardFactory {
     card.articleCommentsSummary = "X commented on this"
     card.wit = resource.isWitted
 
+    let imagesCount = resource.postsRelations?.count ?? 0
+    card.node.prepareImages(imageCount: imagesCount)
     return card
   }
 }
