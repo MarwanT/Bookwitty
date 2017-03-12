@@ -232,7 +232,6 @@ class RegisterViewController: UIViewController {
 
   // MARK: - Keyboard Handling
   func keyboardWillShow(_ notification: NSNotification) {
-
     if let value = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
       let frame = value.cgRectValue
       scrollViewBottomToSuperviewBottomConstraint.constant = -frame.height
@@ -241,7 +240,7 @@ class RegisterViewController: UIViewController {
     self.view.removeConstraint(scrollViewBottomToLabelTopConstraint)
     self.view.addConstraint(scrollViewBottomToSuperviewBottomConstraint)
     UIView.animate(withDuration: 0.44) {
-      self.view.layoutIfNeeded()
+      self.view.layoutSubviews()
     }
   }
 
@@ -249,7 +248,7 @@ class RegisterViewController: UIViewController {
     self.view.removeConstraint(scrollViewBottomToSuperviewBottomConstraint)
     self.view.addConstraint(scrollViewBottomToLabelTopConstraint)
     UIView.animate(withDuration: 0.44) {
-      self.view.layoutIfNeeded()
+      self.view.layoutSubviews()
     }
   }
 }

@@ -155,7 +155,7 @@ class SignInViewController: UIViewController {
     self.view.removeConstraint(scrollViewBottomToButtonTopConstraint)
     self.view.addConstraint(scrollViewBottomToSuperviewBottomConstraint)
     UIView.animate(withDuration: 0.44) {
-      self.view.layoutIfNeeded()
+      self.view.layoutSubviews()
     }
   }
   
@@ -163,7 +163,7 @@ class SignInViewController: UIViewController {
     self.view.removeConstraint(scrollViewBottomToSuperviewBottomConstraint)
     self.view.addConstraint(scrollViewBottomToButtonTopConstraint)
     UIView.animate(withDuration: 0.44) { 
-      self.view.layoutIfNeeded()
+      self.view.layoutSubviews()
     }
   }
   
