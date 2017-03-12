@@ -8,13 +8,20 @@
 
 import Foundation
 import AsyncDisplayKit
+import DTCoreText
+
+extension PostDetailsNode: DTAttributedTextContentNodeDelegate {
+  func attributedTextContentNodeNeedsLayout(node: DTAttributedTextContentNode) {
+    setNeedsLayout()
+  }
+}
 
 class PostDetailsNode: ASScrollNode {
-  private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
-  private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+  fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
 
   fileprivate let headerNode: PostDetailsHeaderNode
-  fileprivate let descriptionNode: ASTextNode
+  fileprivate let descriptionNode: DTAttributedTextContentNode//ASTextNode
   fileprivate let postItemsNode: PostDetailsItemNode
   fileprivate let separator: ASDisplayNode
   fileprivate let conculsionNode: ASTextNode
@@ -31,8 +38,9 @@ class PostDetailsNode: ASScrollNode {
   }
   var body: String? {
     didSet {
-      let attributed = body.isEmptyOrNil() ? nil : AttributedStringBuilder(fontDynamicType: FontDynamicType.title3).append(text: body!, fromHtml: true).attributedString
-      descriptionNode.attributedText = attributed
+      if let body = body {
+        descriptionNode.htmlString(text: body, fontDynamicType: FontDynamicType.body)
+      }
     }
   }
   var date: String? {
@@ -62,7 +70,7 @@ class PostDetailsNode: ASScrollNode {
 
   override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
     headerNode = PostDetailsHeaderNode()
-    descriptionNode = ASTextNode()
+    descriptionNode = DTAttributedTextContentNode()
     postItemsNode = PostDetailsItemNode()
     separator = ASDisplayNode()
     conculsionNode = ASTextNode()
@@ -71,7 +79,7 @@ class PostDetailsNode: ASScrollNode {
 
   override init() {
     headerNode = PostDetailsHeaderNode()
-    descriptionNode = ASTextNode()
+    descriptionNode = DTAttributedTextContentNode()
     postItemsNode = PostDetailsItemNode()
     separator = ASDisplayNode()
     conculsionNode = ASTextNode()
@@ -87,6 +95,8 @@ class PostDetailsNode: ASScrollNode {
   }
 
   func initializeNode() {
+    descriptionNode.delegate = self
+
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     style.flexGrow = 1.0
     style.flexShrink = 1.0
@@ -96,6 +106,7 @@ class PostDetailsNode: ASScrollNode {
     separator.style.height = ASDimensionMake(1.0)
     separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
 
+    descriptionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 125)
     descriptionNode.style.flexGrow = 1.0
     descriptionNode.style.flexShrink = 1.0
 
