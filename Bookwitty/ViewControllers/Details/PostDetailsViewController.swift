@@ -45,8 +45,10 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
       return
     }
     //Start Loading
+    postDetailsNode.showPostsLoader = true
     viewModel.loadContentPosts { (success) in
       //Done Loading - Update UI
+      self.postDetailsNode.showPostsLoader = false
       self.postDetailsNode.loadPostItemsNode()
     }
   }

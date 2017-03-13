@@ -68,6 +68,13 @@ class PostDetailsNode: ASScrollNode {
       }
     }
   }
+  var showPostsLoader: Bool = false {
+    didSet {
+      if isNodeLoaded {
+        setNeedsLayout()
+      }
+    }
+  }
 
   override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
     headerNode = PostDetailsHeaderNode()
@@ -126,7 +133,16 @@ class PostDetailsNode: ASScrollNode {
     vStackSpec.spacing = contentSpacing
     let descriptionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: descriptionNode)
     let separatorInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: separator)
-    vStackSpec.children = [headerNode, descriptionInsetSpec, separatorInsetSpec, postItemsNode]
+
+    vStackSpec.children = [headerNode, descriptionInsetSpec, separatorInsetSpec]
+    postItemsNodeLoader.updateLoaderVisibility(show: showPostsLoader)
+    if showPostsLoader {
+      let postItemsLoaderOverlaySpec = ASWrapperLayoutSpec(layoutElement: postItemsNodeLoader)
+      postItemsLoaderOverlaySpec.style.width = ASDimensionMake(constrainedSize.max.width)
+      vStackSpec.children?.append(postItemsLoaderOverlaySpec)
+    }
+    vStackSpec.children?.append(postItemsNode)
+
 
     if !conculsion.isEmptyOrNil() {
       let conculsionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: conculsionNode)
