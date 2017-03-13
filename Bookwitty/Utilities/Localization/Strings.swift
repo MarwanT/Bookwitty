@@ -336,6 +336,10 @@ class Strings {
   class func register() -> String {
     return localizedString(key: "register")
   }
+  
+  class func related_bookwitty_topics() -> String {
+    return localizedString(key: "related_bookwitty_topics")
+  }
 
   class func clear_profile_photo() -> String {
     return localizedString(key: "clear_profile_photo")
