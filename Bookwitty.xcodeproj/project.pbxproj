@@ -168,6 +168,7 @@
 		F426867F1E511B7C0085E581 /* ArticleCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426867E1E511B7C0085E581 /* ArticleCardPostCellNode.swift */; };
 		F42ED4F21E686BF9002B65DF /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42ED4F11E686BF9002B65DF /* OnBoardingViewController.swift */; };
 		F434F7911E4E16CE001812BD /* CellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F434F7901E4E16CE001812BD /* CellNode.swift */; };
+		F43996851E76C76700FE9D8B /* PostsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43996841E76C76700FE9D8B /* PostsListViewController.swift */; };
 		F43A5E8E1E69858A008C018B /* OnBoardingInternalCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43A5E8D1E69858A008C018B /* OnBoardingInternalCellNode.swift */; };
 		F43A5E901E69878A008C018B /* OnBoardingCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43A5E8F1E69878A008C018B /* OnBoardingCellNode.swift */; };
 		F43A5E921E69A840008C018B /* OnBoardingControllerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43A5E911E69A840008C018B /* OnBoardingControllerNode.swift */; };
@@ -384,6 +385,7 @@
 		F426867E1E511B7C0085E581 /* ArticleCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleCardPostCellNode.swift; sourceTree = "<group>"; };
 		F42ED4F11E686BF9002B65DF /* OnBoardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		F434F7901E4E16CE001812BD /* CellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellNode.swift; sourceTree = "<group>"; };
+		F43996841E76C76700FE9D8B /* PostsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostsListViewController.swift; sourceTree = "<group>"; };
 		F43A5E8D1E69858A008C018B /* OnBoardingInternalCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingInternalCellNode.swift; sourceTree = "<group>"; };
 		F43A5E8F1E69878A008C018B /* OnBoardingCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingCellNode.swift; sourceTree = "<group>"; };
 		F43A5E911E69A840008C018B /* OnBoardingControllerNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingControllerNode.swift; sourceTree = "<group>"; };
@@ -472,6 +474,7 @@
 				562A31221E65D7F2002851DE /* TopicViewController.swift */,
 				F42041C01E72ACCA00E7D208 /* PostDetailsViewController.swift */,
 				F42041C41E73010100E7D208 /* CardDetailsViewController.swift */,
+				F43996841E76C76700FE9D8B /* PostsListViewController.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -1363,6 +1366,7 @@
 				F42600891E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift in Sources */,
 				566EE82D1E5D7082004B990D /* Search+API.swift in Sources */,
 				59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */,
+				F43996851E76C76700FE9D8B /* PostsListViewController.swift in Sources */,
 				562A31201E659919002851DE /* Strings.swift in Sources */,
 				59EC5BAC1E6C5B51006E1CB9 /* SectionTitleHeaderNode.swift in Sources */,
 				F461B25C1E4B73B0005EA5A8 /* NewsFeedViewController.swift in Sources */,
