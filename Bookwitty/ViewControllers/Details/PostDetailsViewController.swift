@@ -110,7 +110,7 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
 }
 
 extension PostDetailsViewController: PostDetailItemNodeDelegate {
-  func postDetailItemNodeButtonTouchUpInside(PostDetailItemNode: PostDetailItemNode, button: ASButtonNode) {
+  func postDetailItemNodeButtonTouchUpInside(postDetailItemNode: PostDetailItemNode, button: ASButtonNode) {
     guard let url = viewModel.canonicalURL else {
       return
     }

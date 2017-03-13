@@ -56,7 +56,7 @@ class PostDetailsItemNode: ASDisplayNode {
 }
 
 protocol PostDetailItemNodeDelegate {
-  func postDetailItemNodeButtonTouchUpInside(PostDetailItemNode: PostDetailItemNode, button: ASButtonNode)
+  func postDetailItemNodeButtonTouchUpInside(postDetailItemNode: PostDetailItemNode, button: ASButtonNode)
 }
 
 class PostDetailItemNode: ASDisplayNode {
@@ -194,7 +194,7 @@ class PostDetailItemNode: ASDisplayNode {
   }
 
   func postDetailItemNodeButtonTouchUpInside() {
-    delegate?.postDetailItemNodeButtonTouchUpInside(PostDetailItemNode: self, button: button)
+    delegate?.postDetailItemNodeButtonTouchUpInside(postDetailItemNode: self, button: button)
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
