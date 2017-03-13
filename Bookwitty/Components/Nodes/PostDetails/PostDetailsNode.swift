@@ -182,7 +182,9 @@ class PostDetailsNode: ASScrollNode {
     if !conculsion.isEmptyOrNil() {
       let conculsionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: conculsionNode)
       vStackSpec.children?.append(conculsionInsetSpec)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
     }
+    vStackSpec.children?.append(booksHorizontalCollectionNode)
     return vStackSpec
   }
 }
