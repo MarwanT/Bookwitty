@@ -31,7 +31,7 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
 
   fileprivate let headerNode: PostDetailsHeaderNode
-  fileprivate let descriptionNode: DTAttributedTextContentNode//ASTextNode
+  fileprivate let descriptionNode: DTAttributedTextContentNode
   fileprivate let postItemsNode: PostDetailsItemNode
   fileprivate let separator: ASDisplayNode
   fileprivate let conculsionNode: ASTextNode
