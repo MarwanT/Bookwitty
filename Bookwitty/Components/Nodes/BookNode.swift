@@ -73,14 +73,21 @@ class BookNode: ASCellNode {
     }
   }
 
+  var imageUrl: String? {
+    didSet {
+      if let imageUrl = imageUrl {
+        imageNode.url = URL(string: imageUrl)
+        setNeedsLayout()
+      }
+    }
+  }
+
   private func setupNode() {
     style.preferredSize = CGSize(width: imageSize.width + 2 * internalMargin, height: imageSize.height + 2 * internalMargin)
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
 
     imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
     imageNode.style.preferredSize = imageSize
-
-    imageNode.url = URL(string: "https://s-media-cache-ak0.pinimg.com/originals/d9/3a/1f/d93a1f03418f95787ce59cd90338ec02.jpg")!
     imageNode.contentMode = UIViewContentMode.scaleAspectFit
 
     titleNode.maximumNumberOfLines = 3
