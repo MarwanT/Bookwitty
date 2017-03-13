@@ -27,4 +27,16 @@ class PostsListViewModel {
     paginator = Paginator(ids: result, pageSize: pageSize, startPage: startPage)
   }
 
+  func hasNextPage() -> Bool {
+    return paginator?.hasMorePages() ?? false
+  }
+
+  func contentPostsItem(at index: Int) -> Resource? {
+    return data[index]
+  }
+
+  func contentPostsItemCount() -> Int {
+    return data.count
+  }
+
 }
