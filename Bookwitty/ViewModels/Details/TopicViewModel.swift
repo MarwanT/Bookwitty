@@ -228,7 +228,7 @@ extension TopicViewModel {
     return latest[item]
   }
 
-  func getLatest(loadMore: Bool = false) {
+  func getLatest() {
     guard let identifier = identifier else {
       return
     }
@@ -236,9 +236,7 @@ extension TopicViewModel {
     _ = GeneralAPI.posts(contentIdentifier: identifier, type: nil) {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       if success {
-        if !loadMore {
-          self.latest.removeAll()
-        }
+        self.latest.removeAll()
         self.latest += resources ?? []
         self.callback?(.latest)
       }
