@@ -29,6 +29,7 @@ protocol PostDetailsNodeDelegate {
 class PostDetailsNode: ASScrollNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+  fileprivate let horizontalCollectionNodeHeight: CGFloat = 264.0
 
   fileprivate let headerNode: PostDetailsHeaderNode
   fileprivate let descriptionNode: DTAttributedTextContentNode
@@ -133,6 +134,8 @@ class PostDetailsNode: ASScrollNode {
   }
 
   func initializeNode() {
+    booksHorizontalCollectionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width,
+                                                               height: horizontalCollectionNodeHeight)
     descriptionNode.delegate = self
 
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
