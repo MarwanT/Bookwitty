@@ -304,6 +304,34 @@ extension BookDetailsViewModel {
 
 // MARK: - API Calls
 extension BookDetailsViewModel {
+  func loadContent(completion: @escaping (_ success: Bool, _ error: [BookwittyAPIError?]) -> Void) {
+    let queue = DispatchGroup()
+    
+    var loadBookDetailsSuccess: Bool = false
+    var loadRelatedContentSuccess: Bool = false
+    var loadBookDetailsError: BookwittyAPIError? = nil
+    var loadRelatedContentError: BookwittyAPIError? = nil
+    
+    queue.enter()
+    loadBookDetails { (success, error) in
+      loadBookDetailsSuccess = success
+      loadBookDetailsError = error
+      queue.leave()
+    }
+    
+    queue.enter()
+    loadRelatedContent { (success, error) in
+      loadRelatedContentSuccess = success
+      loadRelatedContentError = error
+      queue.leave()
+    }
+    
+    queue.notify(queue: DispatchQueue.main) { 
+      completion(
+        loadBookDetailsSuccess && loadRelatedContentSuccess,
+        [loadBookDetailsError, loadRelatedContentError])
+    }
+  }
   
   func loadBookDetails(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
     var success: Bool = false
