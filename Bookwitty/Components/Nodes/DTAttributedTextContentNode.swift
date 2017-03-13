@@ -96,7 +96,7 @@ extension DTAttributedTextContentNode: DTLazyImageViewDelegate, DTAttributedText
     // update all attachments that matching this URL
     if let contentView = textContentView {
       if let layoutFrame = contentView.layoutFrame {
-        if let list =  layoutFrame.textAttachments() {
+        if let list = layoutFrame.textAttachments()?.filter({ $0 is DTImageTextAttachment }) {
           list.forEach({ (dtTextAttachment) in
             if let item = dtTextAttachment as? DTImageTextAttachment {
               if let image = lazyImageView.image {
