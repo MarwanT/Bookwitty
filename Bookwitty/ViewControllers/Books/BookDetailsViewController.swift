@@ -41,6 +41,11 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
     collectionNode.dataSource = self
     
     loadNavigationBarButtons()
+    
+    viewModel.loadContent { (success, errors) in
+      // TODO: Handle reloading the content
+      self.collectionNode.reloadData()
+    }
   }
   
   private func loadNavigationBarButtons() {
