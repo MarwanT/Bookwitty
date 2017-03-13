@@ -152,7 +152,33 @@ extension BookDetailsViewModel {
         node = disclosureNode
       }
     case .recommendedReadingLists:
-      break
+      guard let relatedReadingLists = relatedReadingLists, relatedReadingLists.count > 0 else {
+        break
+      }
+      switch indexPath.row {
+      case 0: // Header
+        let externalInsets = UIEdgeInsets(
+          top: ThemeManager.shared.currentTheme.generalExternalMargin() * 2,
+          left: 0, bottom: ThemeManager.shared.currentTheme.generalExternalMargin(), right: 0)
+        let headerNode = SectionTitleHeaderNode(externalInsets: externalInsets)
+        headerNode.setTitle(
+          title: Strings.book_recommended_in_reading_lists(),
+          verticalBarColor: ThemeManager.shared.currentTheme.colorNumber4(),
+          horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber3())
+        node = headerNode
+      case relatedReadingLists.count + 1: // Footer
+        let footerNode = DisclosureNodeCell()
+        footerNode.configuration.addInternalBottomSeparator = true
+        footerNode.text = Strings.view_all()
+        footerNode.configuration.style = .highlighted
+        node = footerNode
+      default:
+        let resource = relatedReadingLists[indexPath.row - 1]
+        guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+          break
+        }
+        return cardNode
+      }
     case .relatedTopics:
       break
     }
@@ -222,7 +248,12 @@ extension BookDetailsViewModel {
   }
   
   var itemsInRecommendedReadingLists: Int {
-    return 0
+    guard let relatedReadingLists = relatedReadingLists else {
+      return 0
+    }
+    let header: Int = 1
+    let footer: Int = 1
+    return relatedReadingLists.count + header + footer
   }
   
   var itemsInRelatedTopics: Int {
