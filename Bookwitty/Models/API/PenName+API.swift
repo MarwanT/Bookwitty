@@ -53,7 +53,7 @@ struct PenNameAPI {
   }
 
   public static func followers(contentIdentifier identifier: String, completionBlock: @escaping (_ success: Bool, _ penNames: [PenName]?, _ next: URL?, _ error: BookwittyAPIError?)->()) -> Cancellable? {
-    return signedAPIRequest(target: BookwittyAPI.penNames, completion: { (data: Data?, statusCode: Int?, response: URLResponse?, error: BookwittyAPIError?) in
+    return signedAPIRequest(target: BookwittyAPI.followers(identifier: identifier), completion: { (data: Data?, statusCode: Int?, response: URLResponse?, error: BookwittyAPIError?) in
       var penNames: [PenName]? = nil
       var next: URL? = nil
       var error: BookwittyAPIError? = nil
@@ -66,10 +66,6 @@ struct PenNameAPI {
         penNames = values.resources
         next = values.next
         success = penNames != nil
-
-        if let penNames = penNames {
-          UserManager.shared.penNames = penNames
-        }
       } else {
         error = BookwittyAPIError.failToParseData
       }
