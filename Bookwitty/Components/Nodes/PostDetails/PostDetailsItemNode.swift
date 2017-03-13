@@ -59,7 +59,7 @@ protocol PostDetailItemNodeDelegate {
   func postDetailItemNodeButtonTouchUpInside(postDetailItemNode: PostDetailItemNode, button: ASButtonNode)
 }
 
-class PostDetailItemNode: ASDisplayNode {
+class PostDetailItemNode: ASCellNode {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   private let largeImageHeight: CGFloat = 120.0
