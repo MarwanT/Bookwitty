@@ -106,6 +106,7 @@ extension PostsListViewController: ASCollectionDataSource, ASCollectionDelegate 
       itemNode.caption = res?.productDetails?.author
       itemNode.headLine = res?.title
       itemNode.subheadLine = nil
+      itemNode.delegate = self
       return itemNode
     case Topic.resourceType:
       let res = resource as? Topic
@@ -142,6 +143,18 @@ extension PostsListViewController: ASCollectionDataSource, ASCollectionDelegate 
     } else {
       return 1
     }
+  }
+}
+
+extension PostsListViewController: PostDetailItemNodeDelegate {
+  func postDetailItemNodeButtonTouchUpInside(postDetailItemNode: PostDetailItemNode, button: ASButtonNode) {
+    guard let indexPath = collectionNode.indexPath(for: postDetailItemNode) else {
+      return
+    }
+    guard let url = viewModel.contentPostsItem(at: indexPath.row)?.canonicalURL else {
+      return
+    }
+    WebViewController.present(url: url, inViewController: self)
   }
 }
 
