@@ -11,6 +11,13 @@ import AsyncDisplayKit
 
 class TopicViewController: ASViewController<ASCollectionNode> {
 
+  enum LoadingStatus {
+    case none
+    case loadMore
+    case reloading
+    case loading
+  }
+
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let segmentedNodeHeight: CGFloat = 45.0
@@ -19,6 +26,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
 
   fileprivate var headerNode: TopicHeaderNode
   fileprivate var segmentedNode: SegmentedControlNode
+  fileprivate let loaderNode: LoaderNode
   fileprivate var flowLayout: UICollectionViewFlowLayout
 
   fileprivate var normal: [Category] = [.latest(index: 0), .relatedBooks(index: 1), .followers(index: 2) ]
@@ -28,6 +36,9 @@ class TopicViewController: ASViewController<ASCollectionNode> {
 
   fileprivate let viewModel = TopicViewModel()
 
+  fileprivate var loadingStatus: LoadingStatus = .none
+
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -35,6 +46,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   init() {
     headerNode = TopicHeaderNode()
     segmentedNode = SegmentedControlNode()
+    loaderNode = LoaderNode()
 
     flowLayout = UICollectionViewFlowLayout()
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
@@ -176,6 +188,31 @@ extension TopicViewController {
   }
 }
 
+//MARK: - Loading Status Helper
+extension TopicViewController {
+  func setLoading(status: LoadingStatus) {
+    self.loadingStatus = status
+
+    let show: Bool
+    switch self.loadingStatus {
+    case .loading, .loadMore, .reloading:
+      show = true
+    case .none:
+      show = false
+    }
+
+    if Thread.current.isMainThread {
+      self.loaderNode.updateLoaderVisibility(show: show)
+      self.collectionNode.reloadSections(IndexSet(integer: 2))
+    } else {
+      DispatchQueue.main.sync {
+        self.loaderNode.updateLoaderVisibility(show: show)
+        self.collectionNode.reloadSections(IndexSet(integer: 2))
+      }
+    }
+  }
+}
+
 extension TopicViewController: TopicHeaderNodeDelegate {
   func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ASButtonNode) {
     if button.isSelected {
@@ -221,16 +258,25 @@ extension TopicViewController: PenNameFollowNodeDelegate {
 
 extension TopicViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-    return section == 0 ? CGSize.zero : CGSize(width: collectionView.frame.size.width, height: segmentedNodeHeight)
+    return section != 1 ? CGSize.zero : CGSize(width: collectionView.frame.size.width, height: segmentedNodeHeight)
   }
 }
 
 extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
   func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
-    return 2
+    return 3
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+
+    if section == 0 {
+      return 1
+    }
+
+    if section == 2 {
+      return loadingStatus != .none ? 1 : 0
+    }
+
     var contentNumberOfRows: Int
 
     let category = self.category(withIndex: segmentedNode.selectedIndex)
@@ -247,13 +293,19 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
       contentNumberOfRows = 0
     }
 
-    return section == 0 ? 1 : contentNumberOfRows
+    return contentNumberOfRows
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
     if indexPath.section == 0 {
       return {
         return self.headerNode
+      }
+    }
+
+    if indexPath.section == 2 {
+      return {
+        return self.loaderNode
       }
     }
 
@@ -406,6 +458,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
     }
 
     context.beginBatchFetching()
+    self.setLoading(status: .loadMore)
 
     var callBackCategory: TopicViewModel.CallbackCategory = .content
     switch category {
@@ -427,6 +480,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
 
       defer {
         context.completeBatchFetching(true)
+        self.setLoading(status: .none)
       }
 
       if success {
