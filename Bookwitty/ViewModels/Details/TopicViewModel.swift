@@ -327,7 +327,7 @@ extension TopicViewModel {
     }
 
     _ = PenNameAPI.followers(contentIdentifier: identifier) {
-      (success: Bool, penNames: [PenName]?, error: BookwittyAPIError?) in
+      (success: Bool, penNames: [PenName]?, next: URL?, error: BookwittyAPIError?) in
       if success {
         self.followers.removeAll()
         self.followers += penNames ?? []

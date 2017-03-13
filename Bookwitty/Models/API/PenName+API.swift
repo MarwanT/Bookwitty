@@ -20,7 +20,7 @@ struct PenNameAPI {
       }
 
       if let data = data {
-        penNames = PenName.parseDataArray(data: data)
+        penNames = PenName.parseDataArray(data: data)?.resources
         success = penNames != nil
 
         if let penNames = penNames {
@@ -52,17 +52,19 @@ struct PenNameAPI {
     })
   }
 
-  public static func followers(contentIdentifier identifier: String, completionBlock: @escaping (_ success: Bool, _ penNames: [PenName]?, _ error: BookwittyAPIError?)->()) -> Cancellable? {
+  public static func followers(contentIdentifier identifier: String, completionBlock: @escaping (_ success: Bool, _ penNames: [PenName]?, _ next: URL?, _ error: BookwittyAPIError?)->()) -> Cancellable? {
     return signedAPIRequest(target: BookwittyAPI.penNames, completion: { (data: Data?, statusCode: Int?, response: URLResponse?, error: BookwittyAPIError?) in
       var penNames: [PenName]? = nil
+      var next: URL? = nil
       var error: BookwittyAPIError? = nil
       var success: Bool = false
       defer {
-        completionBlock(success, penNames, error)
+        completionBlock(success, penNames, next, error)
       }
 
-      if let data = data {
-        penNames = PenName.parseDataArray(data: data)
+      if let data = data, let values = PenName.parseDataArray(data: data) {
+        penNames = values.resources
+        next = values.next
         success = penNames != nil
 
         if let penNames = penNames {
