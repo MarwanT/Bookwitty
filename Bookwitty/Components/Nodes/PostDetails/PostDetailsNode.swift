@@ -37,6 +37,8 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let conculsionNode: ASTextNode
   fileprivate let postItemsNodeLoader: LoaderNode
   fileprivate let postItemsNodeViewAll: DisclosureNode
+  fileprivate let booksHorizontalCollectionNode: ASCollectionNode
+  fileprivate let booksHorizontalFlowLayout: UICollectionViewFlowLayout
 
   var title: String? {
     didSet {
@@ -96,6 +98,12 @@ class PostDetailsNode: ASScrollNode {
     conculsionNode = ASTextNode()
     postItemsNodeLoader = LoaderNode()
     postItemsNodeViewAll = DisclosureNode()
+    booksHorizontalFlowLayout = UICollectionViewFlowLayout()
+    booksHorizontalFlowLayout.scrollDirection = .horizontal
+    booksHorizontalFlowLayout.sectionInset = UIEdgeInsets.zero
+    booksHorizontalFlowLayout.minimumInteritemSpacing  = 0
+    booksHorizontalFlowLayout.minimumLineSpacing       = internalMargin
+    booksHorizontalCollectionNode = ASCollectionNode(collectionViewLayout: booksHorizontalFlowLayout)
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
@@ -107,6 +115,12 @@ class PostDetailsNode: ASScrollNode {
     conculsionNode = ASTextNode()
     postItemsNodeLoader = LoaderNode()
     postItemsNodeViewAll = DisclosureNode()
+    booksHorizontalFlowLayout = UICollectionViewFlowLayout()
+    booksHorizontalFlowLayout.scrollDirection = .horizontal
+    booksHorizontalFlowLayout.sectionInset = UIEdgeInsets.zero
+    booksHorizontalFlowLayout.minimumInteritemSpacing  = 0
+    booksHorizontalFlowLayout.minimumLineSpacing       = internalMargin
+    booksHorizontalCollectionNode = ASCollectionNode(collectionViewLayout: booksHorizontalFlowLayout)
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
