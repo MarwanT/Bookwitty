@@ -13,6 +13,7 @@
 "bag" = "Bag";
 "book_categories" = "Book Categories";
 "book_details" = "Book details";
+"book_recommended_in_reading_lists" = "This book is recommended in the following reading lists";
 "books" = "Books";
 "bookwitty_suggests" = "Bookwitty Suggests";
 "buy_this_book" = "Acheter Ce Livre";
