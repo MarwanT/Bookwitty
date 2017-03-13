@@ -37,6 +37,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.penName = viewModel.penName
     postDetailsNode.conculsion = viewModel.conculsion
     postDetailsNode.dataSource = self
+    postDetailsNode.delegate = self
     loadContentPosts()
   }
 
@@ -51,6 +52,12 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
       self.postDetailsNode.showPostsLoader = false
       self.postDetailsNode.loadPostItemsNode()
     }
+  }
+}
+
+extension PostDetailsViewController: PostDetailsNodeDelegate {
+  func shouldShowPostDetailsAllPosts() {
+    //TODO: Open AllPosts VC
   }
 }
 

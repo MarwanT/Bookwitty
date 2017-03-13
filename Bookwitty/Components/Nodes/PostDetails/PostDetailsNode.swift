@@ -18,7 +18,12 @@ extension PostDetailsNode: DTAttributedTextContentNodeDelegate {
 
 extension PostDetailsNode: DisclosureNodeDelegate {
   func disclosureNodeDidTap(disclosureNode: DisclosureNode, selected: Bool) {
+    delegate?.shouldShowPostDetailsAllPosts()
   }
+}
+
+protocol PostDetailsNodeDelegate {
+  func shouldShowPostDetailsAllPosts()
 }
 
 class PostDetailsNode: ASScrollNode {
@@ -60,6 +65,7 @@ class PostDetailsNode: ASScrollNode {
       headerNode.penName = penName
     }
   }
+  var delegate: PostDetailsNodeDelegate?
   var dataSource: PostDetailsItemNodeDataSource! {
     didSet {
       postItemsNode.dataSource = dataSource
