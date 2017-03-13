@@ -96,6 +96,7 @@ extension PostsListViewController: ASCollectionDataSource, ASCollectionDelegate 
     guard let resource = viewModel.contentPostsItem(at: index) else {
       return ASCellNode()
     }
+    //TODO: Refactor create posts facotry
     switch (resource.registeredResourceType) {
     case Book.resourceType:
       let res = resource as? Book
