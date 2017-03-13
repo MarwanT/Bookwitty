@@ -304,6 +304,18 @@ extension BookDetailsViewModel {
 
 // MARK: - API Calls
 extension BookDetailsViewModel {
+  
+  func loadBookDetails(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    var success: Bool = false
+    var error:BookwittyAPIError? = nil
+    defer {
+      completion(success, error)
+    }
+    
+    // TODO: Load book details From API
+    success = true
+  }
+  
   func loadRelatedContent(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
     guard let bookId = book.id else {
       return
