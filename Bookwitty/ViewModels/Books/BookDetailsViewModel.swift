@@ -12,6 +12,8 @@ import AsyncDisplayKit
 
 final class BookDetailsViewModel {
   var book: Book! = nil
+  var relatedReadingLists: [ReadingList]? = nil
+  var relatedTopics: [Topic]? = nil
   
   let maximumNumberOfDetails: Int = 3
   var bookDetailedInformation: [(key: String, value: String)]? = nil
@@ -297,6 +299,32 @@ extension BookDetailsViewModel {
     default:
       return nil
     }
+  }
+}
+
+// MARK: - API Calls
+extension BookDetailsViewModel {
+  func loadRelatedContent(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    guard let bookId = book.id else {
+      return
+    }
+    
+    _ = GeneralAPI.posts(
+      contentIdentifier: bookId, type: [ReadingList.resourceType, Topic.resourceType], completion: {
+        (success, resources, error) in
+        var success: Bool = success
+        var error: BookwittyAPIError? = error
+        defer {
+          completion(success, error)
+        }
+        
+        guard success, let resources = resources, resources.count > 0 else {
+          return
+        }
+        
+        self.relatedReadingLists = Array(resources.flatMap({ $0 as? ReadingList }).prefix(self.maximumNumberOfDetails))
+        self.relatedTopics = Array(resources.flatMap({ $0 as? Topic }).prefix(self.maximumNumberOfDetails))
+    })
   }
 }
 
