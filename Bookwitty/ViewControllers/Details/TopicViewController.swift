@@ -380,6 +380,70 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
       break
     }
   }
+
+  func shouldBatchFetch(for collectionNode: ASCollectionNode) -> Bool {
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+    switch category {
+    case .latest:
+      return viewModel.hasNextLatest
+    case .relatedBooks:
+      return viewModel.hasNextRelatedBooks
+    case .editions:
+      return viewModel.hasNextEditions
+    case .followers:
+      return viewModel.hasNextFollowers
+    case .none:
+      return false
+    }
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
+
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+
+    guard context.isFetching() else {
+      return
+    }
+
+    context.beginBatchFetching()
+
+    var callBackCategory: TopicViewModel.CallbackCategory = .content
+    switch category {
+    case .latest:
+      callBackCategory = .latest
+    case .editions:
+      callBackCategory = .editions
+    case .relatedBooks:
+      callBackCategory = .relatedBooks
+    case .followers:
+      callBackCategory = .followers
+    default:
+      break
+    }
+
+    viewModel.loadNext(for: callBackCategory) {
+      (success: Bool, indices: [Int]?, callBackCategory) in
+      var insert: Bool = false
+
+      defer {
+        context.completeBatchFetching(true)
+      }
+
+      if success {
+        switch callBackCategory {
+        case .latest, .editions, .relatedBooks, .followers:
+          insert = true
+        default:
+          insert = false
+        }
+
+        if insert {
+          let indexes: [IndexPath] = indices?.map({ IndexPath(item: $0, section: 1) }) ?? []
+          collectionNode.insertItems(at: indexes)
+        }
+      }
+    }
+  }
 }
 
 // MARK: - Actions For Cards
