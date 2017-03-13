@@ -22,6 +22,26 @@ extension PostDetailsNode: DisclosureNodeDelegate {
   }
 }
 
+extension PostDetailsNode: ASCollectionDataSource {
+  public func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+    //TODO: replace with a real value
+    return 10
+  }
+  public func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+    return 1
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> AsyncDisplayKit.ASCellNodeBlock {
+    //TODO: replace placeholder cell with the real book cell
+    return {
+      let cell = ASCellNode()
+      cell.style.preferredSize = CGSize(width: 90.0, height: collectionNode.style.height.value)
+      cell.backgroundColor = UIColor.bwEarth
+      return cell
+    }
+  }
+}
+
 protocol PostDetailsNodeDelegate {
   func shouldShowPostDetailsAllPosts()
 }
@@ -136,6 +156,7 @@ class PostDetailsNode: ASScrollNode {
   func initializeNode() {
     booksHorizontalCollectionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width,
                                                                height: horizontalCollectionNodeHeight)
+    booksHorizontalCollectionNode.dataSource = self
     descriptionNode.delegate = self
 
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
