@@ -25,9 +25,16 @@ final class TopicViewModel {
   var author: Author?
 
   fileprivate var latest: [ModelResource] = []
+  fileprivate var latestNextUrl: URL? = nil
+
   fileprivate var editions: [Book] = []
+  fileprivate var editionsNextUrl: URL? = nil
+
   fileprivate var relatedBooks: [Book] = []
+  fileprivate var relatedBooksNextUrl: URL? = nil
+
   fileprivate var followers: [PenName] = []
+  fileprivate var followersNextUrl: URL? = nil
 
   func initialize(withTopic topic: Topic?) {
     self.topic = topic
@@ -216,6 +223,10 @@ final class TopicViewModel {
 
 //MARK: - Latest
 extension TopicViewModel {
+  var hasNextLatest: Bool {
+    return self.latestNextUrl != nil
+  }
+
   func numberOfLatest() -> Int {
     return latest.count
   }
@@ -238,6 +249,8 @@ extension TopicViewModel {
       if success {
         self.latest.removeAll()
         self.latest += resources ?? []
+        self.latestNextUrl = next
+
         self.callback?(.latest)
       }
     }
@@ -246,6 +259,10 @@ extension TopicViewModel {
 
 //MARK: - Editions
 extension TopicViewModel {
+  var hasNextEditions: Bool {
+    return self.editionsNextUrl != nil
+  }
+
   func numberOfEditions() -> Int {
     return editions.count
   }
@@ -268,6 +285,8 @@ extension TopicViewModel {
       if success {
         self.editions.removeAll()
         self.editions += (resources as? [Book]) ?? []
+        self.editionsNextUrl = next
+
         self.callback?(.editions)
       }
     }
@@ -276,6 +295,10 @@ extension TopicViewModel {
 
 //MARK: - Related Books
 extension TopicViewModel {
+  var hasNextRelatedBooks: Bool {
+    return self.relatedBooksNextUrl != nil
+  }
+
   func numberOfRelatedBooks() -> Int {
     return relatedBooks.count
   }
@@ -299,6 +322,8 @@ extension TopicViewModel {
         self.relatedBooks.removeAll()
         let books = resources?.filter({ $0.registeredResourceType == Book.resourceType })
         self.relatedBooks += (books as? [Book]) ?? []
+        self.relatedBooksNextUrl = next
+
         self.callback?(.relatedBooks)
       }
     }
@@ -307,6 +332,10 @@ extension TopicViewModel {
 
 //MARK: - Followers
 extension TopicViewModel {
+  var hasNextFollowers: Bool {
+    return self.followersNextUrl != nil
+  }
+
   func numberOfFollowers() -> Int {
     return followers.count
   }
@@ -329,6 +358,8 @@ extension TopicViewModel {
       if success {
         self.followers.removeAll()
         self.followers += penNames ?? []
+        self.followersNextUrl = next
+
         self.callback?(.followers)
       }
     }
