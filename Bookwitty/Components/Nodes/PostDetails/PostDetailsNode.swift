@@ -16,6 +16,11 @@ extension PostDetailsNode: DTAttributedTextContentNodeDelegate {
   }
 }
 
+extension PostDetailsNode: DisclosureNodeDelegate {
+  func disclosureNodeDidTap(disclosureNode: DisclosureNode, selected: Bool) {
+  }
+}
+
 class PostDetailsNode: ASScrollNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
@@ -128,6 +133,7 @@ class PostDetailsNode: ASScrollNode {
 
     postItemsNodeViewAll.configuration.style = .highlighted
     postItemsNodeViewAll.text = Strings.view_all()
+    postItemsNodeViewAll.delegate = self
   }
 
   func sidesEdgeInset() -> UIEdgeInsets {
