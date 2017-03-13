@@ -8,6 +8,7 @@
 
 import Foundation
 import Spine
+import Moya
 
 class PostsListViewModel {
   var data: [Resource] = []
@@ -39,4 +40,34 @@ class PostsListViewModel {
     return data.count
   }
 
+  func loadContentPosts(completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let listOfIdentifiers = self.paginator?.nextPageIds() else {
+      completionBlock(false)
+      return
+    }
+
+    cancellableRequest = loadBatch(listOfIdentifiers: listOfIdentifiers, completion: { (success: Bool, resources: [Resource]?, error: BookwittyAPIError?) in
+      defer {
+        completionBlock(success)
+      }
+      if let resources = resources, success {
+        self.data += resources
+      }
+    })
+  }
+
+  private func loadBatch(listOfIdentifiers: [String], completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    return UserAPI.batch(identifiers: listOfIdentifiers, completion: {
+      (success, resource, error) in
+      var resources: [Resource]?
+      defer {
+        completion(success, resources, error)
+      }
+
+      guard success, let result = resource else {
+        return
+      }
+      resources = result
+    })
+  }
 }
