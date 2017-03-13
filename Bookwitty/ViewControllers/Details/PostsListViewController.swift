@@ -11,12 +11,19 @@ import AsyncDisplayKit
 import Spine
 
 class PostsListViewController: ASViewController<ASCollectionNode> {
+  enum LoadingStatus {
+    case none
+    case loadMore
+    case reloading
+    case loading
+  }
   fileprivate let collectionNodeLoadingSection: Int = 1
   fileprivate let collectionNodeItemsSection: Int = 0
   fileprivate let collectionNode: ASCollectionNode
   fileprivate let flowLayout: UICollectionViewFlowLayout
   fileprivate let loaderNode: LoaderNode
 
+  fileprivate var loadingStatus: LoadingStatus = .none
 
   var viewModel: PostsListViewModel
 
