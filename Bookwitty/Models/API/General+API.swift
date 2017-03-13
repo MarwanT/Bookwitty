@@ -80,7 +80,7 @@ struct GeneralAPI {
     })
   }
 
-  static func posts(contentIdentifier identifier: String, type: [String]?, completion: @escaping (_ success: Bool, _ resource: [ModelResource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  static func posts(contentIdentifier identifier: String, type: [String]?, completion: @escaping (_ success: Bool, _ resource: [ModelResource]?, _ next: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let successStatusCode: Int = 200
 
     return signedAPIRequest(target: .posts(identifier: identifier, type: type), completion: {
@@ -88,9 +88,10 @@ struct GeneralAPI {
       var success: Bool = statusCode == successStatusCode
       var resources: [ModelResource]? = nil
       var error: BookwittyAPIError? = error
+      var next: URL? = nil
 
       defer {
-        completion(success, resources, error)
+        completion(success, resources, next, error)
       }
 
       guard statusCode == successStatusCode else {
@@ -103,21 +104,25 @@ struct GeneralAPI {
         return
       }
 
-      resources = Parser.parseDataArray(data: data)?.resources
+      let values = Parser.parseDataArray(data: data)
+
+      resources = values?.resources
+      next = values?.next
     })
   }
 
-  static func editions(contentIdentifier identifier: String, completion: @escaping (_ success: Bool, _ resource: [ModelResource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  static func editions(contentIdentifier identifier: String, completion: @escaping (_ success: Bool, _ resource: [ModelResource]?, _ next: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let successStatusCode: Int = 200
 
     return signedAPIRequest(target: .editions(identifier: identifier), completion: {
       (data, statusCode, response, error) in
       var success: Bool = statusCode == successStatusCode
       var resources: [ModelResource]? = nil
+      var next: URL? = nil
       var error: BookwittyAPIError? = error
 
       defer {
-        completion(success, resources, error)
+        completion(success, resources, next, error)
       }
 
       guard statusCode == successStatusCode else {
@@ -130,7 +135,9 @@ struct GeneralAPI {
         return
       }
 
-      resources = Parser.parseDataArray(data: data)?.resources
+      let values = Parser.parseDataArray(data: data)
+      resources = values?.resources
+      next = values?.next
     })
   }
 

@@ -234,7 +234,7 @@ extension TopicViewModel {
     }
 
     _ = GeneralAPI.posts(contentIdentifier: identifier, type: nil) {
-      (success: Bool, resources: [ModelResource]?, error: BookwittyAPIError?) in
+      (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       if success {
         if !loadMore {
           self.latest.removeAll()
@@ -266,7 +266,7 @@ extension TopicViewModel {
     }
 
     _ = GeneralAPI.editions(contentIdentifier: identifier) {
-      (success: Bool, resources: [ModelResource]?, error: BookwittyAPIError?) in
+      (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       if success {
         self.editions.removeAll()
         self.editions += (resources as? [Book]) ?? []
@@ -296,7 +296,7 @@ extension TopicViewModel {
     }
 
     _ = GeneralAPI.posts(contentIdentifier: identifier, type: [Book.resourceType]) {
-      (success: Bool, resources: [ModelResource]?, error: BookwittyAPIError?) in
+      (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       if success {
         self.relatedBooks.removeAll()
         let books = resources?.filter({ $0.registeredResourceType == Book.resourceType })
