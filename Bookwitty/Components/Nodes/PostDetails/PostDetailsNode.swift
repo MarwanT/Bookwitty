@@ -142,11 +142,14 @@ class PostDetailsNode: ASScrollNode {
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let vStackSpec = ASStackLayoutSpec.vertical()
-    vStackSpec.spacing = contentSpacing
+    vStackSpec.spacing = 0.0
+
     let descriptionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: descriptionNode)
     let separatorInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: separator)
 
-    vStackSpec.children = [headerNode, descriptionInsetSpec, separatorInsetSpec]
+    vStackSpec.children = [headerNode, ASLayoutSpec.spacer(height: contentSpacing),
+                           descriptionInsetSpec, ASLayoutSpec.spacer(height: contentSpacing),
+                           separatorInsetSpec, ASLayoutSpec.spacer(height: contentSpacing)]
     postItemsNodeLoader.updateLoaderVisibility(show: showPostsLoader)
     if showPostsLoader {
       let postItemsLoaderOverlaySpec = ASWrapperLayoutSpec(layoutElement: postItemsNodeLoader)
@@ -154,7 +157,7 @@ class PostDetailsNode: ASScrollNode {
       vStackSpec.children?.append(postItemsLoaderOverlaySpec)
     }
     vStackSpec.children?.append(postItemsNode)
-
+    vStackSpec.children?.append(postItemsNodeViewAll)
 
     if !conculsion.isEmptyOrNil() {
       let conculsionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: conculsionNode)
