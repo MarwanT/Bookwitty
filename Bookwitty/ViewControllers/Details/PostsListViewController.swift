@@ -48,4 +48,13 @@ class PostsListViewController: ASViewController<ASCollectionNode> {
     self.title = title
   }
 
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    loadingStatus = .loading
+    viewModel.loadContentPosts { (success) in
+      //Done Loading - Update UI
+      self.loadingStatus = .none
+      self.collectionNode.reloadData()
+    }
+  }
 }
