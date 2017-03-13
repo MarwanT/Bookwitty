@@ -247,13 +247,25 @@ extension TopicViewModel {
     _ = GeneralAPI.posts(contentIdentifier: identifier, type: nil) {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       if success {
-        self.latest.removeAll()
-        self.latest += resources ?? []
-        self.latestNextUrl = next
-
+        _ = self.handleLatest(results: resources, next: next, reset: true)
         self.callback?(.latest)
       }
     }
+  }
+
+  fileprivate func handleLatest(results: [ModelResource]?, next: URL?, reset: Bool = false) -> [Int]? {
+    guard let results = results else {
+      return nil
+    }
+
+    if reset {
+      self.latest.removeAll()
+    }
+
+    let lastIndex = self.latest.endIndex
+    self.latest += results
+    self.latestNextUrl = next
+    return Array(lastIndex..<self.latest.endIndex)
   }
 }
 
@@ -283,13 +295,25 @@ extension TopicViewModel {
     _ = GeneralAPI.editions(contentIdentifier: identifier) {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       if success {
-        self.editions.removeAll()
-        self.editions += (resources as? [Book]) ?? []
-        self.editionsNextUrl = next
-
+        _ = self.handleEdition(results: (resources as? [Book] ?? []), next: next, reset: true)
         self.callback?(.editions)
       }
     }
+  }
+
+  fileprivate func handleEdition(results: [Book]?, next: URL?, reset: Bool = false) -> [Int]? {
+    guard let results = results else {
+      return nil
+    }
+
+    if reset {
+      self.editions.removeAll()
+    }
+
+    let lastIndex = self.editions.endIndex
+    self.editions += results
+    self.editionsNextUrl = next
+    return Array(lastIndex..<self.editions.endIndex)
   }
 }
 
@@ -321,12 +345,24 @@ extension TopicViewModel {
       if success {
         self.relatedBooks.removeAll()
         let books = resources?.filter({ $0.registeredResourceType == Book.resourceType })
-        self.relatedBooks += (books as? [Book]) ?? []
-        self.relatedBooksNextUrl = next
-
+        _ = self.handleRelatedBooks(results: (books as? [Book] ?? []), next: next, reset: true)
         self.callback?(.relatedBooks)
       }
     }
+  }
+
+  fileprivate func handleRelatedBooks(results: [Book]?, next: URL?, reset: Bool = false) -> [Int]? {
+    guard let results = results else {
+      return nil
+    }
+
+    if reset {
+      self.relatedBooks.removeAll()
+    }
+    let lastIndex = self.relatedBooks.endIndex
+    self.relatedBooks += results
+    self.relatedBooksNextUrl = next
+    return Array(lastIndex..<self.relatedBooks.endIndex)
   }
 }
 
@@ -356,13 +392,24 @@ extension TopicViewModel {
     _ = PenNameAPI.followers(contentIdentifier: identifier) {
       (success: Bool, penNames: [PenName]?, next: URL?, error: BookwittyAPIError?) in
       if success {
-        self.followers.removeAll()
-        self.followers += penNames ?? []
-        self.followersNextUrl = next
-
+        _ = self.handleFollowers(results: penNames, next: next, reset: true)
         self.callback?(.followers)
       }
     }
+  }
+
+  fileprivate func handleFollowers(results: [PenName]?, next: URL?, reset: Bool = false) -> [Int]? {
+    guard let results = results else {
+      return nil
+    }
+
+    if reset {
+      self.followers.removeAll()
+    }
+    let lastIndex = self.followers.endIndex
+    self.followers += results
+    self.followersNextUrl = next
+    return Array(lastIndex..<self.followers.endIndex)
   }
 }
 
