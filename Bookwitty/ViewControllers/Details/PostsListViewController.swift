@@ -50,6 +50,9 @@ class PostsListViewController: ASViewController<ASCollectionNode> {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    collectionNode.delegate = self
+    collectionNode.dataSource = self
+
     loadingStatus = .loading
     viewModel.loadContentPosts { (success) in
       //Done Loading - Update UI
@@ -58,3 +61,87 @@ class PostsListViewController: ASViewController<ASCollectionNode> {
     }
   }
 }
+
+extension PostsListViewController: ASCollectionDataSource, ASCollectionDelegate {
+
+  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+    if node is LoaderNode {
+      let shouldShow = !(loadingStatus == .none)
+      loaderNode.updateLoaderVisibility(show: shouldShow)
+      loaderNode.style.height = ASDimensionMake(shouldShow ? LoaderNode.defaultNodeHeight : 0.0)
+      loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
+      loaderNode.setNeedsLayout()
+    }
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+    let index = indexPath.row
+    let section = indexPath.section
+
+    return {
+      if section == self.collectionNodeItemsSection {
+        let cellNode = self.nodeForItem(nodeForItemAt: index)
+        if let postCellNode = cellNode as? PostDetailItemNode {
+          postCellNode.delegate = self
+          return postCellNode
+        }
+        return cellNode
+      } else {
+        return self.loaderNode
+      }
+    }
+  }
+
+  func nodeForItem(nodeForItemAt index: Int) -> ASCellNode {
+    guard let resource = viewModel.contentPostsItem(at: index) else {
+      return ASCellNode()
+    }
+    switch (resource.registeredResourceType) {
+    case Book.resourceType:
+      let res = resource as? Book
+      let itemNode = PostDetailItemNode(smallImage: false, showsSubheadline: false, showsButton: true)
+      itemNode.imageUrl = res?.thumbnailImageUrl
+      itemNode.body = res?.bookDescription
+      itemNode.buttonTitle = Strings.buy_this_book()
+      itemNode.caption = res?.productDetails?.author
+      itemNode.headLine = res?.title
+      itemNode.subheadLine = nil
+      return itemNode
+    case Topic.resourceType:
+      let res = resource as? Topic
+      let itemNode = PostDetailItemNode(smallImage: true, showsSubheadline: true, showsButton: false)
+      itemNode.imageUrl = res?.thumbnailImageUrl
+      itemNode.body = res?.shortDescription
+      let date = Date.formatDate(date: res?.createdAt)
+      itemNode.caption = date
+      itemNode.headLine = res?.title
+      itemNode.subheadLine = String(counting: res?.counts.contributors)
+      return itemNode
+    case Text.resourceType:
+      let res = resource as? Text
+      let itemNode = PostDetailItemNode(smallImage: true, showsSubheadline: true, showsButton: false)
+      itemNode.imageUrl = res?.thumbnailImageUrl
+      itemNode.body = res?.shortDescription
+      let date = Date.formatDate(date: res?.createdAt)
+      itemNode.caption = date
+      itemNode.headLine = res?.title
+      itemNode.subheadLine = res?.penName?.name
+      return itemNode
+    default :
+      return ASCellNode()
+    }
+  }
+
+  public func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+    return 2
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+    if section == collectionNodeItemsSection {
+      return viewModel.contentPostsItemCount()
+    } else {
+      return 1
+    }
+  }
+}
+
