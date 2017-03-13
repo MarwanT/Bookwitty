@@ -125,6 +125,9 @@ class PostDetailsNode: ASScrollNode {
 
     conculsionNode.style.flexGrow = 1.0
     conculsionNode.style.flexShrink = 1.0
+
+    postItemsNodeViewAll.configuration.style = .highlighted
+    postItemsNodeViewAll.text = Strings.view_all()
   }
 
   func sidesEdgeInset() -> UIEdgeInsets {
