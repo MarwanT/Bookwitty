@@ -25,6 +25,7 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let postItemsNode: PostDetailsItemNode
   fileprivate let separator: ASDisplayNode
   fileprivate let conculsionNode: ASTextNode
+  fileprivate let postItemsNodeLoader: LoaderNode
 
   var title: String? {
     didSet {
@@ -74,6 +75,7 @@ class PostDetailsNode: ASScrollNode {
     postItemsNode = PostDetailsItemNode()
     separator = ASDisplayNode()
     conculsionNode = ASTextNode()
+    postItemsNodeLoader = LoaderNode()
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
@@ -83,6 +85,7 @@ class PostDetailsNode: ASScrollNode {
     postItemsNode = PostDetailsItemNode()
     separator = ASDisplayNode()
     conculsionNode = ASTextNode()
+    postItemsNodeLoader = LoaderNode()
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
