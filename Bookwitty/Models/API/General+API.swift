@@ -199,7 +199,7 @@ extension GeneralAPI {
 
     //Filters
     if let type = type {
-      dictionary["filter[type]"] = type
+      dictionary["filter[types]"] = type
     }
 
     return dictionary
