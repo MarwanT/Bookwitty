@@ -158,3 +158,43 @@ extension PostsListViewController: PostDetailItemNodeDelegate {
   }
 }
 
+// MARK: - Load More Logic
+extension PostsListViewController {
+  public func shouldBatchFetch(for collectionNode: ASCollectionNode) -> Bool {
+    return viewModel.hasNextPage()
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
+    guard context.isFetching() else {
+      return
+    }
+    guard loadingStatus == .none else {
+      context.completeBatchFetching(true)
+      return
+    }
+    context.beginBatchFetching()
+    self.loadingStatus = .loadMore
+
+    let initialLastIndexPath: Int = viewModel.contentPostsItemCount()
+
+    viewModel.loadContentPosts { [weak self] (success) in
+      defer {
+        context.completeBatchFetching(true)
+        self?.loadingStatus = .none
+      }
+      guard let strongSelf = self else {
+        return
+      }
+      let finalLastIndexPath: Int = strongSelf.viewModel.contentPostsItemCount()
+
+      if success && finalLastIndexPath > initialLastIndexPath {
+        let updateIndexRange = initialLastIndexPath..<finalLastIndexPath
+
+        let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
+          return IndexPath(row: index, section: strongSelf.collectionNodeLoadingSection)
+        })
+        collectionNode.insertItems(at: updatedIndexPathRange)
+      }
+    }
+  }
+}
