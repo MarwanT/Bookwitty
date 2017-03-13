@@ -180,7 +180,33 @@ extension BookDetailsViewModel {
         return cardNode
       }
     case .relatedTopics:
-      break
+      guard let relatedTopics = relatedTopics, relatedTopics.count > 0 else {
+        break
+      }
+      switch indexPath.row {
+      case 0: // Header
+        let externalInsets = UIEdgeInsets(
+          top: ThemeManager.shared.currentTheme.generalExternalMargin() * 2,
+          left: 0, bottom: ThemeManager.shared.currentTheme.generalExternalMargin(), right: 0)
+        let headerNode = SectionTitleHeaderNode(externalInsets: externalInsets)
+        headerNode.setTitle(
+          title: Strings.related_bookwitty_topics(),
+          verticalBarColor: ThemeManager.shared.currentTheme.colorNumber13(),
+          horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber2())
+        node = headerNode
+      case relatedTopics.count + 1: // Footer
+        let footerNode = DisclosureNodeCell()
+        footerNode.configuration.addInternalBottomSeparator = true
+        footerNode.text = Strings.view_all()
+        footerNode.configuration.style = .highlighted
+        node = footerNode
+      default:
+        let resource = relatedTopics[indexPath.row - 1]
+        guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+          break
+        }
+        return cardNode
+      }
     }
     
     return node
@@ -257,7 +283,12 @@ extension BookDetailsViewModel {
   }
   
   var itemsInRelatedTopics: Int {
-    return 0
+    guard let relatedTopics = relatedTopics else {
+      return 0
+    }
+    let header: Int = 1
+    let footer: Int = 1
+    return relatedTopics.count + header + footer
   }
 }
 
