@@ -413,6 +413,55 @@ extension TopicViewModel {
   }
 }
 
+//MARK: - Next Page
+extension TopicViewModel {
+  func loadNext(for category: CallbackCategory, closure: ((_ success: Bool, _ indices: [Int]?, _ category: CallbackCategory)->())?) {
+    var url: URL? = nil
+    switch category {
+    case .latest:
+      url = self.latestNextUrl
+    case .relatedBooks:
+      url = self.relatedBooksNextUrl
+    case .editions:
+      url = self.editionsNextUrl
+    case .followers:
+      url = self.followersNextUrl
+    default:
+      url = nil
+    }
+
+    guard let next = url else {
+      return
+    }
+
+    _ = GeneralAPI.nextPage(nextPage: next) {
+      (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
+
+      var successful: Bool = false
+      var indices: [Int]? = nil
+
+      defer {
+        closure?(successful, indices, category)
+      }
+
+      successful = resources != nil
+
+      switch category {
+      case .latest:
+        indices = self.handleLatest(results: resources, next: next)
+      case .editions:
+        indices = self.handleEdition(results: resources as? [Book], next: next)
+      case .relatedBooks:
+        indices = self.handleRelatedBooks(results: resources as? [Book], next: next)
+      case .followers:
+        indices = self.handleFollowers(results: resources as? [PenName], next: next)
+      case .content:
+        break
+      }
+    }
+  }
+}
+
 //MARK: - Follow / Unfollow
 extension TopicViewModel {
 
