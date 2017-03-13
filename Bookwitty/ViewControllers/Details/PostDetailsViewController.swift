@@ -57,7 +57,12 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
 
 extension PostDetailsViewController: PostDetailsNodeDelegate {
   func shouldShowPostDetailsAllPosts() {
-    //TODO: Open AllPosts VC
+    if let contentPostIdentifiers = viewModel.contentPostsIdentifiers {
+      if let contentPostsResources = viewModel.contentPostsResources {
+        let vc = PostsListViewController(title: viewModel.title ?? title, ids: contentPostIdentifiers.flatMap({ $0.id }), preloadedList: contentPostsResources)
+        self.navigationController?.pushViewController(vc, animated: true)
+      }
+    }
   }
 }
 
