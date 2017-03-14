@@ -88,6 +88,7 @@ class CardActionBarNode: ASCellNode {
     shareButton.addTarget(self, action: #selector(shareButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     commentButton.addTarget(self, action: #selector(commentButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     witButton.addTarget(self, action: #selector(witButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    numberOfDimsNode.addTarget(self, action: #selector(dimButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
 
     numberOfWitsNode.style.maxWidth = ASDimensionMake(60.0)
     numberOfWitsNode.maximumNumberOfLines = 1
@@ -124,6 +125,10 @@ class CardActionBarNode: ASCellNode {
   func toggleWitButton() {
     witButton.isSelected = !witButton.isSelected
     setNeedsLayout()
+  }
+
+  func dimButtonTouchUpInside(_ sender: ASButtonNode?) {
+    //TODO: Action
   }
 
   func witButtonTouchUpInside(_ sender: ASButtonNode?) {
