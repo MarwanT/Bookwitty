@@ -34,13 +34,16 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let headerNode: PostDetailsHeaderNode
   fileprivate let descriptionNode: DTAttributedTextContentNode
   fileprivate let postItemsNode: PostDetailsItemNode
-  fileprivate let separator: ASDisplayNode
+  fileprivate let separator: SeparatorNode
   fileprivate let conculsionNode: ASTextNode
   fileprivate let postItemsNodeLoader: LoaderNode
+  fileprivate let postItemsSeparator: SeparatorNode
   fileprivate let postItemsNodeViewAll: DisclosureNode
   fileprivate let booksHorizontalFlowLayout: UICollectionViewFlowLayout
   fileprivate let sectionTitleHeaderNode: SectionTitleHeaderNode
   fileprivate let relatedBooksViewAllNode: DisclosureNode
+  fileprivate let relatedBooksTopSeparator: SeparatorNode
+  fileprivate let relatedBooksSeparator: SeparatorNode
 
   let booksHorizontalCollectionNode: ASCollectionNode
 
@@ -98,7 +101,7 @@ class PostDetailsNode: ASScrollNode {
     headerNode = PostDetailsHeaderNode()
     descriptionNode = DTAttributedTextContentNode()
     postItemsNode = PostDetailsItemNode()
-    separator = ASDisplayNode()
+    separator = SeparatorNode()
     conculsionNode = ASTextNode()
     postItemsNodeLoader = LoaderNode()
     postItemsNodeViewAll = DisclosureNode()
@@ -109,7 +112,10 @@ class PostDetailsNode: ASScrollNode {
     booksHorizontalFlowLayout.minimumLineSpacing       = internalMargin
     booksHorizontalCollectionNode = ASCollectionNode(collectionViewLayout: booksHorizontalFlowLayout)
     sectionTitleHeaderNode = SectionTitleHeaderNode()
+    postItemsSeparator = SeparatorNode()
     relatedBooksViewAllNode = DisclosureNode()
+    relatedBooksSeparator = SeparatorNode()
+    relatedBooksTopSeparator = SeparatorNode()
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
@@ -117,7 +123,7 @@ class PostDetailsNode: ASScrollNode {
     headerNode = PostDetailsHeaderNode()
     descriptionNode = DTAttributedTextContentNode()
     postItemsNode = PostDetailsItemNode()
-    separator = ASDisplayNode()
+    separator = SeparatorNode()
     conculsionNode = ASTextNode()
     postItemsNodeLoader = LoaderNode()
     postItemsNodeViewAll = DisclosureNode()
@@ -128,7 +134,10 @@ class PostDetailsNode: ASScrollNode {
     booksHorizontalFlowLayout.minimumLineSpacing       = internalMargin
     booksHorizontalCollectionNode = ASCollectionNode(collectionViewLayout: booksHorizontalFlowLayout)
     sectionTitleHeaderNode = SectionTitleHeaderNode()
+    postItemsSeparator = SeparatorNode()
     relatedBooksViewAllNode = DisclosureNode()
+    relatedBooksSeparator = SeparatorNode()
+    relatedBooksTopSeparator = SeparatorNode()
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
@@ -148,11 +157,6 @@ class PostDetailsNode: ASScrollNode {
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     style.flexGrow = 1.0
     style.flexShrink = 1.0
-
-    separator.style.flexGrow = 1
-    separator.style.flexShrink = 1
-    separator.style.height = ASDimensionMake(1.0)
-    separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
 
     descriptionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 125)
     descriptionNode.style.flexGrow = 1.0
