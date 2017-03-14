@@ -54,7 +54,6 @@ class CardActionBarNode: ASCellNode {
   private let witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
 
-  private let normal = ASControlState(rawValue: 0)
   private let actionBarHeight: CGFloat = 60.0
   private let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
   private let iconSize: CGSize = CGSize(width: 40.0, height: 40.0)
@@ -79,10 +78,10 @@ class CardActionBarNode: ASCellNode {
 
     //Note: Had a Problem with the selected and highlighted states of the button images
     commentButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
-    commentButton.setImage(#imageLiteral(resourceName: "comment"), for: normal)
+    commentButton.setImage(#imageLiteral(resourceName: "comment"), for: .normal)
 
     shareButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
-    shareButton.setImage(#imageLiteral(resourceName: "shareOutside"), for: normal)
+    shareButton.setImage(#imageLiteral(resourceName: "shareOutside"), for: .normal)
 
     setupWitButtonStyling()
 
@@ -105,10 +104,10 @@ class CardActionBarNode: ASCellNode {
     let selectedTextColor = ThemeManager.shared.currentTheme.colorNumber23()
     let selectedButtonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultButtonColor())
 
-    witButton.setBackgroundImage(buttonBackgroundImage, for: normal)
+    witButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
     witButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
 
-    witButton.setTitle(Strings.wit_it(), with: buttonFont, with: textColor, for: normal)
+    witButton.setTitle(Strings.wit_it(), with: buttonFont, with: textColor, for: .normal)
     witButton.setTitle(Strings.witted(), with: buttonFont, with: selectedTextColor, for: .selected)
 
     witButton.cornerRadius = 4
