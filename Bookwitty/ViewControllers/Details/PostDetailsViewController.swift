@@ -41,6 +41,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.booksHorizontalCollectionNode.dataSource = self
     loadContentPosts()
     loadRelatedBooks()
+    loadRelatedPosts()
   }
 
   func loadContentPosts() {
@@ -62,6 +63,14 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
         self.postDetailsNode.booksHorizontalCollectionNode.reloadData()
       }
     }
+  }
+
+  func loadRelatedPosts() {
+    self.viewModel.getRelatedPosts(completionBlock: { (success) in
+      if success {
+        self.postDetailsNode.loadRelatedCards()
+      }
+    })
   }
 }
 
