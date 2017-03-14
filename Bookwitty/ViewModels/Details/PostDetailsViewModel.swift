@@ -154,3 +154,8 @@ class PostDetailsViewModel {
     })
   }
 }
+
+// MARK: - Related Books Section
+extension PostDetailsViewModel {
+
+}
