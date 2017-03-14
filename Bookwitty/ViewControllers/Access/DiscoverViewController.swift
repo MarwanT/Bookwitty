@@ -169,7 +169,7 @@ extension DiscoverViewController {
   }
 
   func reloadFooter(show: Bool) {
-    let bottomMargin: CGFloat = show ? -(externalMargin/2) : -(loaderNode.usedHeight - externalMargin/2)
+    let bottomMargin: CGFloat = show ? -(externalMargin/2) : -(LoaderNode.defaultNodeHeight - externalMargin/2)
     flowLayout.sectionInset = UIEdgeInsets(top: externalMargin, left: 0, bottom: bottomMargin, right: 0)
     loaderNode.updateLoaderVisibility(show: show)
   }
@@ -217,7 +217,7 @@ extension DiscoverViewController: ASCollectionDelegate {
   }
 
   public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-    return CGSize(width: UIScreen.main.bounds.width, height: loaderNode.usedHeight)
+    return CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.defaultNodeHeight)
   }
 
   public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
