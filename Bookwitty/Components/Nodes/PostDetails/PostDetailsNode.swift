@@ -24,6 +24,9 @@ extension PostDetailsNode: DisclosureNodeDelegate {
     } else if disclosureNode === relatedBooksViewAllNode {
       //Related Books View All
       delegate?.shouldShowPostDetailsAllRelatedBooks()
+    } else if disclosureNode === relatedPostsViewAllNode {
+      //Related Posts View All
+      delegate?.shouldShowPostDetailsAllRelatedPosts()
     }
   }
 }
@@ -31,6 +34,7 @@ extension PostDetailsNode: DisclosureNodeDelegate {
 protocol PostDetailsNodeDelegate {
   func shouldShowPostDetailsAllPosts()
   func shouldShowPostDetailsAllRelatedBooks()
+  func shouldShowPostDetailsAllRelatedPosts()
 }
 
 class PostDetailsNode: ASScrollNode {
