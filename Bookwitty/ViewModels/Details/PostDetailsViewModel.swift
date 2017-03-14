@@ -45,6 +45,9 @@ class PostDetailsViewModel {
   }
   var contentPostsResources: [Resource]?
 
+  //Resource Related Books
+  var relatedBooks: [Book] = []
+
   init(resource: Resource) {
     self.resource = resource
   }
