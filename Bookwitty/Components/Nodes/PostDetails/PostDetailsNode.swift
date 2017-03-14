@@ -31,6 +31,12 @@ extension PostDetailsNode: DisclosureNodeDelegate {
   }
 }
 
+extension PostDetailsNode: CardActionBarNodeDelegate {
+  func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    delegate?.cardActionBarNode(cardActionBar: cardActionBar, didRequestAction: action, forSender: sender, didFinishAction: didFinishAction)
+  }
+}
+
 protocol PostDetailsNodeDelegate {
   func shouldShowPostDetailsAllPosts()
   func shouldShowPostDetailsAllRelatedBooks()
@@ -38,6 +44,7 @@ protocol PostDetailsNodeDelegate {
   func hasRelatedPosts() -> Bool
   func hasRelatedBooks() -> Bool
   func hasContentItems() -> Bool
+  func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
 }
 
 class PostDetailsNode: ASScrollNode {
@@ -132,6 +139,11 @@ class PostDetailsNode: ASScrollNode {
       }
     }
   }
+  var wit: Bool = false {
+    didSet {
+      headerNode.actionBarNode.setWitButton(witted: wit)
+    }
+  }
 
   override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
     headerNode = PostDetailsHeaderNode()
@@ -205,6 +217,8 @@ class PostDetailsNode: ASScrollNode {
   }
 
   func initializeNode() {
+    headerNode.actionBarNode.delegate = self
+
     booksHorizontalCollectionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width,
                                                                height: horizontalCollectionNodeHeight)
     descriptionNode.delegate = self
