@@ -82,9 +82,9 @@ class TopicHeaderNode: ASCellNode {
     }
   }
 
-  var imageUrl: String? {
+  var coverImageUrl: String? {
     didSet {
-      if let imageUrl = imageUrl {
+      if let imageUrl = coverImageUrl {
         coverImageNode.url = URL(string: imageUrl)
         thumbnailImageNode.url = URL(string: imageUrl)
         setNeedsLayout()

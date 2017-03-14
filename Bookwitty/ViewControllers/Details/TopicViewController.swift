@@ -98,7 +98,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     let values = viewModel.valuesForHeader()
 
     headerNode.topicTitle = values.title
-    headerNode.imageUrl = values.coverImageUrl
+    headerNode.coverImageUrl = values.coverImageUrl
     headerNode.following = values.following
     headerNode.setTopicStatistics(numberOfFollowers: values.stats.followers, numberOfPosts: values.stats.posts)
     headerNode.setContributorsValues(numberOfContributors: values.contributors.count, imageUrls: values.contributors.imageUrls)
