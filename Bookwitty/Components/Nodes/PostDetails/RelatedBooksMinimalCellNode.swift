@@ -7,3 +7,12 @@
 //
 
 import Foundation
+import AsyncDisplayKit
+
+class RelatedBooksMinimalCellNode: ASCellNode {
+
+  override init() {
+    super.init()
+  }
+  
+}
