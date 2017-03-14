@@ -71,7 +71,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
 
   func initialize(withAuthor author: Author?) {
     viewModel.initialize(withAuthor: author)
-    self.mode = .normal(categories: self.book)
+    self.mode = .normal(categories: self.normal)
   }
 
   override func viewDidLoad() {
