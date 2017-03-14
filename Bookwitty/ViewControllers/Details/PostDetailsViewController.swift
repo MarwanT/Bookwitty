@@ -37,6 +37,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.penName = viewModel.penName
     postDetailsNode.conculsion = viewModel.conculsion
     postDetailsNode.dataSource = self
+    postDetailsNode.delegate = self
     loadContentPosts()
   }
 
@@ -45,9 +46,22 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
       return
     }
     //Start Loading
+    postDetailsNode.showPostsLoader = true
     viewModel.loadContentPosts { (success) in
       //Done Loading - Update UI
+      self.postDetailsNode.showPostsLoader = false
       self.postDetailsNode.loadPostItemsNode()
+    }
+  }
+}
+
+extension PostDetailsViewController: PostDetailsNodeDelegate {
+  func shouldShowPostDetailsAllPosts() {
+    if let contentPostIdentifiers = viewModel.contentPostsIdentifiers {
+      if let contentPostsResources = viewModel.contentPostsResources {
+        let vc = PostsListViewController(title: viewModel.title ?? title, ids: contentPostIdentifiers.flatMap({ $0.id }), preloadedList: contentPostsResources)
+        self.navigationController?.pushViewController(vc, animated: true)
+      }
     }
   }
 }
@@ -101,7 +115,7 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
 }
 
 extension PostDetailsViewController: PostDetailItemNodeDelegate {
-  func postDetailItemNodeButtonTouchUpInside(PostDetailItemNode: PostDetailItemNode, button: ASButtonNode) {
+  func postDetailItemNodeButtonTouchUpInside(postDetailItemNode: PostDetailItemNode, button: ASButtonNode) {
     guard let url = viewModel.canonicalURL else {
       return
     }

@@ -16,15 +16,27 @@ extension PostDetailsNode: DTAttributedTextContentNodeDelegate {
   }
 }
 
+extension PostDetailsNode: DisclosureNodeDelegate {
+  func disclosureNodeDidTap(disclosureNode: DisclosureNode, selected: Bool) {
+    delegate?.shouldShowPostDetailsAllPosts()
+  }
+}
+
+protocol PostDetailsNodeDelegate {
+  func shouldShowPostDetailsAllPosts()
+}
+
 class PostDetailsNode: ASScrollNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
 
   fileprivate let headerNode: PostDetailsHeaderNode
-  fileprivate let descriptionNode: DTAttributedTextContentNode//ASTextNode
+  fileprivate let descriptionNode: DTAttributedTextContentNode
   fileprivate let postItemsNode: PostDetailsItemNode
   fileprivate let separator: ASDisplayNode
   fileprivate let conculsionNode: ASTextNode
+  fileprivate let postItemsNodeLoader: LoaderNode
+  fileprivate let postItemsNodeViewAll: DisclosureNode
 
   var title: String? {
     didSet {
@@ -53,6 +65,7 @@ class PostDetailsNode: ASScrollNode {
       headerNode.penName = penName
     }
   }
+  var delegate: PostDetailsNodeDelegate?
   var dataSource: PostDetailsItemNodeDataSource! {
     didSet {
       postItemsNode.dataSource = dataSource
@@ -67,6 +80,13 @@ class PostDetailsNode: ASScrollNode {
       }
     }
   }
+  var showPostsLoader: Bool = false {
+    didSet {
+      if isNodeLoaded {
+        setNeedsLayout()
+      }
+    }
+  }
 
   override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
     headerNode = PostDetailsHeaderNode()
@@ -74,6 +94,8 @@ class PostDetailsNode: ASScrollNode {
     postItemsNode = PostDetailsItemNode()
     separator = ASDisplayNode()
     conculsionNode = ASTextNode()
+    postItemsNodeLoader = LoaderNode()
+    postItemsNodeViewAll = DisclosureNode()
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
@@ -83,6 +105,8 @@ class PostDetailsNode: ASScrollNode {
     postItemsNode = PostDetailsItemNode()
     separator = ASDisplayNode()
     conculsionNode = ASTextNode()
+    postItemsNodeLoader = LoaderNode()
+    postItemsNodeViewAll = DisclosureNode()
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
@@ -112,6 +136,10 @@ class PostDetailsNode: ASScrollNode {
 
     conculsionNode.style.flexGrow = 1.0
     conculsionNode.style.flexShrink = 1.0
+
+    postItemsNodeViewAll.configuration.style = .highlighted
+    postItemsNodeViewAll.text = Strings.view_all()
+    postItemsNodeViewAll.delegate = self
   }
 
   func sidesEdgeInset() -> UIEdgeInsets {
@@ -120,10 +148,22 @@ class PostDetailsNode: ASScrollNode {
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let vStackSpec = ASStackLayoutSpec.vertical()
-    vStackSpec.spacing = contentSpacing
+    vStackSpec.spacing = 0.0
+
     let descriptionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: descriptionNode)
     let separatorInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: separator)
-    vStackSpec.children = [headerNode, descriptionInsetSpec, separatorInsetSpec, postItemsNode]
+
+    vStackSpec.children = [headerNode, ASLayoutSpec.spacer(height: contentSpacing),
+                           descriptionInsetSpec, ASLayoutSpec.spacer(height: contentSpacing),
+                           separatorInsetSpec, ASLayoutSpec.spacer(height: contentSpacing)]
+    postItemsNodeLoader.updateLoaderVisibility(show: showPostsLoader)
+    if showPostsLoader {
+      let postItemsLoaderOverlaySpec = ASWrapperLayoutSpec(layoutElement: postItemsNodeLoader)
+      postItemsLoaderOverlaySpec.style.width = ASDimensionMake(constrainedSize.max.width)
+      vStackSpec.children?.append(postItemsLoaderOverlaySpec)
+    }
+    vStackSpec.children?.append(postItemsNode)
+    vStackSpec.children?.append(postItemsNodeViewAll)
 
     if !conculsion.isEmptyOrNil() {
       let conculsionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: conculsionNode)
