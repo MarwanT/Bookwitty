@@ -146,12 +146,20 @@ class CardActionBarNode: ASCellNode {
     //Setup other buttons
     commentButton.style.preferredSize = iconSize
     shareButton.style.preferredSize = iconSize
+    let textHorizontalStackSpec = ASStackLayoutSpec.horizontal()
+    textHorizontalStackSpec.justifyContent = .start
+    textHorizontalStackSpec.alignItems = .center
+    textHorizontalStackSpec.children = [ASLayoutSpec.spacer(width: internalMargin/2),
+                                        numberOfWitsNode,
+                                        ASLayoutSpec.spacer(width: internalMargin),
+                                        numberOfDimsNode]
 
     let horizontalStackSpec = ASStackLayoutSpec(direction: .horizontal,
                                                 spacing: 0,
                                                 justifyContent: .spaceAround,
-                                                alignItems: .stretch,
+                                                alignItems: .center,
                                                 children: [witButton,
+                                                          textHorizontalStackSpec,
                                                            spacer(),
                                                            commentButton,
                                                            spacer(width: 10),
