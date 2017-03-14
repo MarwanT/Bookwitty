@@ -281,7 +281,7 @@ extension BookDetailsViewModel {
   }
   
   var itemsInRecommendedReadingLists: Int {
-    guard let relatedReadingLists = relatedReadingLists else {
+    guard let relatedReadingLists = relatedReadingLists, relatedReadingLists.count > 0 else {
       return 0
     }
     let header: Int = 1
@@ -290,7 +290,7 @@ extension BookDetailsViewModel {
   }
   
   var itemsInRelatedTopics: Int {
-    guard let relatedTopics = relatedTopics else {
+    guard let relatedTopics = relatedTopics, relatedTopics.count > 0 else {
       return 0
     }
     let header: Int = 1
@@ -431,7 +431,7 @@ extension BookDetailsViewModel {
           completion(success, error)
         }
         
-        guard success, let resources = resources, resources.count > 0 else {
+        guard success, let resources = resources else {
           return
         }
         
