@@ -58,7 +58,9 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
   }
 
   func loadRelatedBooks() {
+    postDetailsNode.showRelatedBooksLoader = true
     viewModel.getRelatedBooks { (success) in
+      self.postDetailsNode.showRelatedBooksLoader = false
       if success {
         self.postDetailsNode.booksHorizontalCollectionNode.reloadData()
       }

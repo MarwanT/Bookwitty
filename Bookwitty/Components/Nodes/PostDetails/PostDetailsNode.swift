@@ -54,6 +54,7 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let relatedBooksViewAllNode: DisclosureNode
   fileprivate let relatedBooksTopSeparator: SeparatorNode
   fileprivate let relatedBooksSeparator: SeparatorNode
+  fileprivate let relatedBooksNodeLoader: LoaderNode
   fileprivate let relatedPostsSectionTitleHeaderNode: SectionTitleHeaderNode
   fileprivate let relatedPostsViewAllNode: DisclosureNode
   fileprivate let relatedPostsTopSeparator: SeparatorNode
@@ -121,6 +122,13 @@ class PostDetailsNode: ASScrollNode {
       }
     }
   }
+  var showRelatedBooksLoader: Bool = false {
+    didSet {
+      if isNodeLoaded {
+        setNeedsLayout()
+      }
+    }
+  }
 
   override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
     headerNode = PostDetailsHeaderNode()
@@ -147,6 +155,7 @@ class PostDetailsNode: ASScrollNode {
     relatedPostsTopSeparator = SeparatorNode()
     relatedPostsBottomSeparator = SeparatorNode()
     relatedPostsNodeLoader = LoaderNode()
+    relatedBooksNodeLoader = LoaderNode()
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
@@ -175,6 +184,7 @@ class PostDetailsNode: ASScrollNode {
     relatedPostsTopSeparator = SeparatorNode()
     relatedPostsBottomSeparator = SeparatorNode()
     relatedPostsNodeLoader = LoaderNode()
+    relatedBooksNodeLoader = LoaderNode()
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
@@ -227,6 +237,12 @@ class PostDetailsNode: ASScrollNode {
     return UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: internalMargin)
   }
 
+  func wrapNode(node: ASDisplayNode, width: CGFloat = UIScreen.main.bounds.width) -> ASLayoutSpec {
+    let wrapperSpec = ASWrapperLayoutSpec(layoutElement: node)
+    wrapperSpec.style.width = ASDimensionMake(width)
+    return wrapperSpec
+  }
+
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let vStackSpec = ASStackLayoutSpec.vertical()
     vStackSpec.spacing = 0.0
@@ -247,27 +263,44 @@ class PostDetailsNode: ASScrollNode {
     if showPostsLoader {
       let postItemsLoaderOverlaySpec = ASWrapperLayoutSpec(layoutElement: postItemsNodeLoader)
       postItemsLoaderOverlaySpec.style.width = ASDimensionMake(constrainedSize.max.width)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
       vStackSpec.children?.append(postItemsLoaderOverlaySpec)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(postItemsSeparator)
+    } else {
+      vStackSpec.children?.append(postItemsNode)
+      vStackSpec.children?.append(postItemsNodeViewAll)
+      vStackSpec.children?.append(postItemsSeparator)
     }
-    vStackSpec.children?.append(postItemsNode)
-    vStackSpec.children?.append(postItemsNodeViewAll)
-    vStackSpec.children?.append(postItemsSeparator)
 
-    vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
-    vStackSpec.children?.append(sectionTitleHeaderNode)
-    vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
-    vStackSpec.children?.append(booksHorizontalCollectionNode)
-    vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
-    vStackSpec.children?.append(relatedBooksTopSeparator)
-    vStackSpec.children?.append(relatedBooksViewAllNode)
-    vStackSpec.children?.append(relatedBooksSeparator)
+
+    relatedBooksNodeLoader.updateLoaderVisibility(show: showRelatedBooksLoader)
+    if showRelatedBooksLoader {
+      let wrapperSpec = wrapNode(node: relatedBooksNodeLoader, width: constrainedSize.max.width)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(wrapperSpec)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(relatedBooksSeparator)
+    } else {
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(sectionTitleHeaderNode)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(booksHorizontalCollectionNode)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(relatedBooksTopSeparator)
+      vStackSpec.children?.append(relatedBooksViewAllNode)
+      vStackSpec.children?.append(relatedBooksSeparator)
+    }
+    
 
     relatedPostsNodeLoader.updateLoaderVisibility(show: showRelatedPostsLoader)
     if showRelatedPostsLoader {
       let wrapperSpec = ASWrapperLayoutSpec(layoutElement: relatedPostsNodeLoader)
       wrapperSpec.style.width = ASDimensionMake(constrainedSize.max.width)
-      postItemsNodeLoader.style.width = ASDimensionMake(constrainedSize.max.width)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
       vStackSpec.children?.append(wrapperSpec)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(relatedPostsBottomSeparator)
     } else {
       vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
       vStackSpec.children?.append(relatedPostsSectionTitleHeaderNode)
