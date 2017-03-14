@@ -91,6 +91,24 @@ final class BookDetailsViewModel {
   }
 }
 
+// MARK: - Helpers 
+extension BookDetailsViewModel {
+  func resourcesCommonProperties(for indexPath: IndexPath) -> [ModelCommonProperties]? {
+    guard let section = Section(rawValue: indexPath.section) else {
+      return nil
+    }
+    
+    switch section {
+    case .recommendedReadingLists:
+      return relatedReadingLists
+    case .relatedTopics:
+      return relatedTopics
+    default:
+      return nil
+    }
+  }
+}
+
 // MARK: - Content Providers
 extension BookDetailsViewModel {
   func nodeForItem(at indexPath: IndexPath) -> ASCellNode {
@@ -240,6 +258,20 @@ extension BookDetailsViewModel {
     }
     
     return node
+  }
+  
+  func sharingContent(indexPath: IndexPath) -> [String]? {
+    guard let resourcesCommonProperties = resourcesCommonProperties(for: indexPath), resourcesCommonProperties.count > 0
+    else {
+      return nil
+    }
+    
+    let resourceProperty = resourcesCommonProperties[indexPath.row - 1]
+    let shortDesciption = resourceProperty.title ?? resourceProperty.shortDescription ?? ""
+    if let sharingUrl = resourceProperty.canonicalURL {
+      return [shortDesciption, sharingUrl.absoluteString]
+    }
+    return [shortDesciption]
   }
 }
 
@@ -466,6 +498,30 @@ extension BookDetailsViewModel {
           (self.relatedReadingLists?.count ?? 0 > 0) ? true : false
         self.shouldReloadRelatedTopicsSections =
           (self.relatedTopics?.count ?? 0 > 0) ? true : false
+    })
+  }
+  
+  // Wit And Unwit API calls
+  
+  func witContent(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let resourcesCommonProperties = resourcesCommonProperties(for: indexPath), let contentId = resourcesCommonProperties[indexPath.row - 1].id else {
+      completionBlock(false)
+      return
+    }
+    
+    _ = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
+      completionBlock(success)
+    })
+  }
+  
+  func unwitContent(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let resourcesCommonProperties = resourcesCommonProperties(for: indexPath), let contentId = resourcesCommonProperties[indexPath.row - 1].id else {
+      completionBlock(false)
+      return
+    }
+    
+    _ = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
+      completionBlock(success)
     })
   }
 }

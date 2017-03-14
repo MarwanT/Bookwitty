@@ -110,6 +110,11 @@ extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
       loaderNode.updateLoaderVisibility(show: true)
     }
     
+    // Check if cell conforms to protocol base card delegate
+    if let cardNode = node as? BaseCardPostNode {
+      cardNode.delegate = self
+    }
+    
     // If cell is reading list handle loading the images
     if let readingListCell = node as? ReadingListCardPostCellNode, let indexPath = node.indexPath,
       !readingListCell.node.isImageCollectionLoaded  {
@@ -246,5 +251,32 @@ extension BookDetailsViewController {
     case buyThisBook(URL)
     case share(bookTitle: String, url: URL)
     case addToWishlist
+  }
+}
+
+// MARK: - Base card post node delegate
+extension BookDetailsViewController: BaseCardPostNodeDelegate {
+  func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    guard let indexPath = card.indexPath else {
+      return
+    }
+    
+    switch(action) {
+    case .wit:
+      viewModel.witContent(indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    case .unwit:
+      viewModel.unwitContent(indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    case .share:
+      if let sharingInfo: [String] = viewModel.sharingContent(indexPath: indexPath) {
+        presentShareSheet(shareContent: sharingInfo)
+      }
+    default:
+      //TODO: handle comment
+      break
+    }
   }
 }
