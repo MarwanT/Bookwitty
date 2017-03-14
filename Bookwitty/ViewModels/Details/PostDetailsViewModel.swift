@@ -43,6 +43,9 @@ class PostDetailsViewModel {
   var canonicalURL: URL? {
     return resource.canonicalURL
   }
+  var isWitted: Bool {
+    return  (resource as? ModelCommonProperties)?.isWitted ?? false
+  }
   var identifier: String? {
     return resource.id
   }
@@ -158,6 +161,24 @@ class PostDetailsViewModel {
       resources = result
     })
   }
+
+  func witPost(completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let contentId = identifier else {
+      return completionBlock(false)
+    }
+    witContent(contentId: contentId, completionBlock: completionBlock)
+  }
+
+  func unwitPost(completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let contentId = identifier else {
+      return completionBlock(false)
+    }
+    unwitContent(contentId: contentId, completionBlock: completionBlock)
+  }
+
+  func sharingPost() -> [String]? {
+    return sharingContent(resource: resource)
+  }
 }
 
 // MARK: - Related Books Section
@@ -225,4 +246,54 @@ extension PostDetailsViewModel {
     }
   }
 
+  func witRelatedPost(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let contentId = relatedPost(at: index)?.id else {
+      return completionBlock(false)
+    }
+    witContent(contentId: contentId, completionBlock: completionBlock)
+  }
+
+  func unwitRelatedPost(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let contentId = relatedPost(at: index)?.id else {
+      return completionBlock(false)
+    }
+    unwitContent(contentId: contentId, completionBlock: completionBlock)
+  }
+
+  func sharingRelatedPost(index: Int) -> [String]? {
+    guard let resource = relatedPost(at: index) else {
+      return nil
+    }
+
+    return sharingContent(resource: resource)
+  }
+}
+
+// MARK: - Related Books Section
+extension PostDetailsViewModel {
+  func witContent(contentId: String, completionBlock: @escaping (_ success: Bool) -> ()) {
+    cancellableRequest = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
+      completionBlock(success)
+    })
+  }
+
+  func unwitContent(contentId: String, completionBlock: @escaping (_ success: Bool) -> ()) {
+    cancellableRequest = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
+      completionBlock(success)
+    })
+  }
+
+  func sharingContent(resource: Resource) -> [String]? {
+    guard let commonProperties = resource as? ModelCommonProperties else {
+        return nil
+    }
+
+    let shortDesciption = commonProperties.title ?? commonProperties.shortDescription ?? ""
+    if let sharingUrl = commonProperties.canonicalURL {
+      var sharingString = sharingUrl.absoluteString
+      sharingString += shortDesciption.isEmpty ? "" : "\n\n\(shortDesciption)"
+      return [sharingUrl.absoluteString, shortDesciption]
+    }
+    return [shortDesciption]
+  }
 }

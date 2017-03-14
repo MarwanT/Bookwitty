@@ -128,6 +128,26 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
   func hasContentItems() -> Bool {
     return viewModel.contentPostsItemCount() > 0
   }
+
+  func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    switch(action) {
+    case .wit:
+      viewModel.witPost(completionBlock: { (success) in
+          didFinishAction?(success)
+      })
+    case .unwit:
+      viewModel.unwitPost(completionBlock: { (success) in
+        didFinishAction?(success)
+      })
+    case .share:
+      if let sharingInfo: [String] = viewModel.sharingPost() {
+        presentShareSheet(shareContent: sharingInfo)
+      }
+    default:
+      //TODO: handle comment
+      break
+    }
+  }
 }
 
 extension PostDetailsViewController: PostDetailsItemNodeDataSource {
@@ -137,7 +157,9 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
       guard let resource = viewModel.relatedPost(at: index) else {
         return BaseCardPostNode()
       }
-      return CardFactory.shared.createCardFor(resource: resource) ?? BaseCardPostNode()
+      let card = CardFactory.shared.createCardFor(resource: resource)
+      card?.delegate = self
+      return  card ?? BaseCardPostNode()
     } else {
       return cellItemForPostDetails(at: index)
     }
@@ -199,5 +221,32 @@ extension PostDetailsViewController: PostDetailItemNodeDelegate {
       return
     }
     WebViewController.present(url: url, inViewController: self)
+  }
+}
+
+// MARK - BaseCardPostNode Delegate
+extension PostDetailsViewController: BaseCardPostNodeDelegate {
+  func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    guard let index = postDetailsNode.postCardsNode.index(of: card) else {
+      return
+    }
+
+    switch(action) {
+    case .wit:
+      viewModel.witRelatedPost(index: index) { (success) in
+        didFinishAction?(success)
+      }
+    case .unwit:
+      viewModel.unwitRelatedPost(index: index) { (success) in
+        didFinishAction?(success)
+      }
+    case .share:
+      if let sharingInfo: [String] = viewModel.sharingRelatedPost(index: index) {
+        presentShareSheet(shareContent: sharingInfo)
+      }
+    default:
+      //TODO: handle comment
+      break
+    }
   }
 }
