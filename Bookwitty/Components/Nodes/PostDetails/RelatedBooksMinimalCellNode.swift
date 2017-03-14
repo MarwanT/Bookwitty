@@ -12,7 +12,16 @@ import AsyncDisplayKit
 class RelatedBooksMinimalCellNode: ASCellNode {
   fileprivate let cellSize = CGSize.init(width: 90.0, height: 264.0)
 
+  fileprivate let imageNode: ASNetworkImageNode
+  fileprivate let titleNode: ASTextNode
+  fileprivate let subTitleNode: ASTextNode
+  fileprivate let priceNode: ASTextNode
+
   override init() {
+    imageNode = ASNetworkImageNode()
+    titleNode = ASTextNode()
+    subTitleNode = ASTextNode()
+    priceNode = ASTextNode()
     super.init()
     automaticallyManagesSubnodes = true
     initializeNode()
