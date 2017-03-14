@@ -49,7 +49,7 @@ protocol PostDetailsNodeDelegate {
 class PostDetailsNode: ASScrollNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
-  fileprivate let horizontalCollectionNodeHeight: CGFloat = 264.0
+  fileprivate let horizontalCollectionNodeHeight: CGFloat = RelatedBooksMinimalCellNode.cellHeight
 
   fileprivate let headerNode: PostDetailsHeaderNode
   fileprivate let descriptionNode: DTAttributedTextContentNode
