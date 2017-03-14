@@ -14,6 +14,7 @@ class RelatedBooksMinimalCellNode: ASCellNode {
 
   override init() {
     super.init()
+    automaticallyManagesSubnodes = true
     initializeNode()
   }
 
