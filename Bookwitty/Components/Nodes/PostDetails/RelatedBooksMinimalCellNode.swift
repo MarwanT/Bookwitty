@@ -17,6 +17,41 @@ class RelatedBooksMinimalCellNode: ASCellNode {
   fileprivate let subTitleNode: ASTextNode
   fileprivate let priceNode: ASTextNode
 
+  var url: String? {
+    didSet {
+      if let url = url {
+        imageNode.url = URL(string: url)
+      }
+    }
+  }
+  var title: String? {
+    didSet {
+      if let title = title {
+        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .subheadline)
+          .append(text: title).attributedString
+        setNeedsLayout()
+      }
+    }
+  }
+  var subTitle: String? {
+    didSet {
+      if let subTitle = subTitle {
+        subTitleNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption1)
+          .append(text: subTitle).attributedString
+        setNeedsLayout()
+      }
+    }
+  }
+  var price: String? {
+    didSet {
+      if let price = price {
+        priceNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
+          .append(text: price, color: ThemeManager.shared.currentTheme.defaultEcommerceButtonColor()).attributedString
+        setNeedsLayout()
+      }
+    }
+  }
+
   override init() {
     imageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
