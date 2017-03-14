@@ -10,9 +10,15 @@ import Foundation
 import AsyncDisplayKit
 
 class RelatedBooksMinimalCellNode: ASCellNode {
+  fileprivate let cellSize = CGSize.init(width: 90.0, height: 264.0)
 
   override init() {
     super.init()
+    initializeNode()
   }
-  
+
+  func initializeNode() {
+    style.preferredSize = cellSize
+  }
+
 }
