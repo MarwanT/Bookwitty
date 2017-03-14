@@ -139,6 +139,11 @@ class PostDetailsNode: ASScrollNode {
       }
     }
   }
+  var wit: Bool = false {
+    didSet {
+      headerNode.actionBarNode.setWitButton(witted: wit)
+    }
+  }
 
   override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
     headerNode = PostDetailsHeaderNode()
