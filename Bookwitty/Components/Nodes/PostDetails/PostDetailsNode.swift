@@ -39,6 +39,7 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let postItemsNodeLoader: LoaderNode
   fileprivate let postItemsNodeViewAll: DisclosureNode
   fileprivate let booksHorizontalFlowLayout: UICollectionViewFlowLayout
+  fileprivate let sectionTitleHeaderNode: SectionTitleHeaderNode
 
   let booksHorizontalCollectionNode: ASCollectionNode
 
@@ -106,6 +107,7 @@ class PostDetailsNode: ASScrollNode {
     booksHorizontalFlowLayout.minimumInteritemSpacing  = 0
     booksHorizontalFlowLayout.minimumLineSpacing       = internalMargin
     booksHorizontalCollectionNode = ASCollectionNode(collectionViewLayout: booksHorizontalFlowLayout)
+    sectionTitleHeaderNode = SectionTitleHeaderNode()
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
@@ -123,6 +125,7 @@ class PostDetailsNode: ASScrollNode {
     booksHorizontalFlowLayout.minimumInteritemSpacing  = 0
     booksHorizontalFlowLayout.minimumLineSpacing       = internalMargin
     booksHorizontalCollectionNode = ASCollectionNode(collectionViewLayout: booksHorizontalFlowLayout)
+    sectionTitleHeaderNode = SectionTitleHeaderNode()
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
@@ -158,6 +161,8 @@ class PostDetailsNode: ASScrollNode {
     postItemsNodeViewAll.configuration.style = .highlighted
     postItemsNodeViewAll.text = Strings.view_all()
     postItemsNodeViewAll.delegate = self
+
+    sectionTitleHeaderNode.setTitle(title: Strings.related_books(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber10(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber9())
   }
 
   func sidesEdgeInset() -> UIEdgeInsets {
