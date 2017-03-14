@@ -40,6 +40,7 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let postItemsNodeViewAll: DisclosureNode
   fileprivate let booksHorizontalFlowLayout: UICollectionViewFlowLayout
   fileprivate let sectionTitleHeaderNode: SectionTitleHeaderNode
+  fileprivate let relatedBooksViewAllNode: DisclosureNode
 
   let booksHorizontalCollectionNode: ASCollectionNode
 
@@ -108,6 +109,7 @@ class PostDetailsNode: ASScrollNode {
     booksHorizontalFlowLayout.minimumLineSpacing       = internalMargin
     booksHorizontalCollectionNode = ASCollectionNode(collectionViewLayout: booksHorizontalFlowLayout)
     sectionTitleHeaderNode = SectionTitleHeaderNode()
+    relatedBooksViewAllNode = DisclosureNode()
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
@@ -126,6 +128,7 @@ class PostDetailsNode: ASScrollNode {
     booksHorizontalFlowLayout.minimumLineSpacing       = internalMargin
     booksHorizontalCollectionNode = ASCollectionNode(collectionViewLayout: booksHorizontalFlowLayout)
     sectionTitleHeaderNode = SectionTitleHeaderNode()
+    relatedBooksViewAllNode = DisclosureNode()
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
@@ -161,6 +164,11 @@ class PostDetailsNode: ASScrollNode {
     postItemsNodeViewAll.configuration.style = .highlighted
     postItemsNodeViewAll.text = Strings.view_all()
     postItemsNodeViewAll.delegate = self
+
+    relatedBooksViewAllNode.configuration.style = .highlighted
+    relatedBooksViewAllNode.text = Strings.view_all_related_books()
+    relatedBooksViewAllNode.delegate = self
+
 
     sectionTitleHeaderNode.setTitle(title: Strings.related_books(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber10(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber9())
   }
