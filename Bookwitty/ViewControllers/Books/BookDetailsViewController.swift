@@ -42,9 +42,11 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
     
     loadNavigationBarButtons()
     
+    showBottomLoader(reloadSection: true)
     viewModel.loadContent { (success, errors) in
-      // TODO: Handle reloading the content
-      self.collectionNode.reloadData()
+      self.hideBottomLoader()
+      let sectionsNeedsReloading = self.viewModel.sectionsNeedsReloading()
+      self.reloadCollectionViewSections(sections: sectionsNeedsReloading)
     }
   }
   
@@ -55,6 +57,26 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
       target: self,
       action: #selector(shareOutsideButton(_:)))
     navigationItem.rightBarButtonItem = shareButton
+  }
+  
+  func showBottomLoader(reloadSection: Bool = false) {
+    viewModel.shouldShowBottomLoader = true
+    if reloadSection {
+      reloadCollectionViewSections(sections: [BookDetailsViewModel.Section.activityIndicator])
+    }
+  }
+  
+  func hideBottomLoader(reloadSection: Bool = false) {
+    viewModel.shouldShowBottomLoader = false
+    if reloadSection {
+      reloadCollectionViewSections(sections: [BookDetailsViewModel.Section.activityIndicator])
+    }
+  }
+  
+  func reloadCollectionViewSections(sections: [BookDetailsViewModel.Section]) {
+    let mutableIndexSet = NSMutableIndexSet()
+    sections.forEach({ mutableIndexSet.add($0.rawValue) })
+    collectionNode.reloadSections(mutableIndexSet as IndexSet)
   }
 }
 
@@ -70,6 +92,12 @@ extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
     return {
       return self.viewModel.nodeForItem(at: indexPath)
+    }
+  }
+  
+  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+    if let loaderNode = node as? LoaderNode {
+      loaderNode.updateLoaderVisibility(show: true)
     }
   }
   

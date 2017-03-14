@@ -20,6 +20,11 @@ final class BookDetailsViewModel {
   var bookCategories: [Category]? = nil
   weak var viewController: BookDetailsViewController? = nil
   
+  var shouldShowBottomLoader = false
+  fileprivate var shouldReloadBookDetailsSections = false
+  fileprivate var shouldReloadRelatedReadingListsSections = false
+  fileprivate var shouldReloadRelatedTopicsSections = false
+  
   var viewControllerTitle: String? {
     return ""
   }
@@ -63,8 +68,26 @@ final class BookDetailsViewModel {
       return itemsInRelatedTopics
     case .activityIndicator:
       return itemsInActivityIndicator
-  
     }
+  }
+  
+  /// Currently this method au-resets should reload flags when called
+  func sectionsNeedsReloading() -> [Section] {
+    var sections = [Section]()
+    if shouldReloadBookDetailsSections {
+      shouldReloadBookDetailsSections = false
+      sections += [.header, .format, .about, .eCommerce, .details, .categories]
+    }
+    if shouldReloadRelatedReadingListsSections {
+      shouldReloadRelatedReadingListsSections = false
+      sections += [.recommendedReadingLists]
+    }
+    if shouldReloadRelatedTopicsSections {
+      shouldReloadRelatedTopicsSections = false
+      sections += [.relatedTopics]
+    }
+    sections += [.activityIndicator]
+    return sections
   }
 }
 
@@ -415,6 +438,7 @@ extension BookDetailsViewModel {
     
     // TODO: Load book details From API
     success = true
+    shouldReloadBookDetailsSections = false
   }
   
   func loadRelatedContent(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
@@ -437,6 +461,11 @@ extension BookDetailsViewModel {
         
         self.relatedReadingLists = Array(resources.flatMap({ $0 as? ReadingList }).prefix(self.maximumNumberOfDetails))
         self.relatedTopics = Array(resources.flatMap({ $0 as? Topic }).prefix(self.maximumNumberOfDetails))
+        
+        self.shouldReloadRelatedReadingListsSections =
+          (self.relatedReadingLists?.count ?? 0 > 0) ? true : false
+        self.shouldReloadRelatedTopicsSections =
+          (self.relatedTopics?.count ?? 0 > 0) ? true : false
     })
   }
 }
