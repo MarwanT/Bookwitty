@@ -10,7 +10,11 @@ import Foundation
 import AsyncDisplayKit
 
 class RelatedBooksMinimalCellNode: ASCellNode {
-  fileprivate let cellSize = CGSize.init(width: 90.0, height: 264.0)
+  static let cellHeight: CGFloat = 300.0
+  fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+  fileprivate let cellSize = CGSize(width: 100.0, height: RelatedBooksMinimalCellNode.cellHeight)
+  fileprivate let imageSize = CGSize(width: 100.0, height: 150.0)
 
   fileprivate let imageNode: ASNetworkImageNode
   fileprivate let titleNode: ASTextNode
@@ -64,6 +68,11 @@ class RelatedBooksMinimalCellNode: ASCellNode {
 
   func initializeNode() {
     style.preferredSize = cellSize
+    imageNode.style.preferredSize = imageSize
+
+    titleNode.maximumNumberOfLines = 4
+    subTitleNode.maximumNumberOfLines = 1
+    priceNode.maximumNumberOfLines = 1
   }
 
 }
