@@ -129,7 +129,8 @@ class ReadingListCardContentNode: ASDisplayNode {
     }
 
     //Set the string value
-    descriptionNode.attributedText = attrStringBuilder.attributedString
+    topicStatsNode.attributedText = attrStringBuilder.attributedString
+    setNeedsLayout()
   }
 
   private func isValid(_ value: String?) -> Bool {
