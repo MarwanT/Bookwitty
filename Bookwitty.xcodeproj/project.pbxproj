@@ -166,6 +166,7 @@
 		F42686791E4F458A0085E581 /* CardActionBarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42686781E4F458A0085E581 /* CardActionBarNode.swift */; };
 		F426867B1E505CE60085E581 /* BaseCardPostNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426867A1E505CE60085E581 /* BaseCardPostNode.swift */; };
 		F426867F1E511B7C0085E581 /* ArticleCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426867E1E511B7C0085E581 /* ArticleCardPostCellNode.swift */; };
+		F42DFEBF1E77F39A0025CE65 /* RelatedBooksMinimalCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42DFEBE1E77F39A0025CE65 /* RelatedBooksMinimalCellNode.swift */; };
 		F42ED4F21E686BF9002B65DF /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42ED4F11E686BF9002B65DF /* OnBoardingViewController.swift */; };
 		F434F7911E4E16CE001812BD /* CellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F434F7901E4E16CE001812BD /* CellNode.swift */; };
 		F43996851E76C76700FE9D8B /* PostsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43996841E76C76700FE9D8B /* PostsListViewController.swift */; };
@@ -384,6 +385,7 @@
 		F42686781E4F458A0085E581 /* CardActionBarNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardActionBarNode.swift; sourceTree = "<group>"; };
 		F426867A1E505CE60085E581 /* BaseCardPostNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCardPostNode.swift; sourceTree = "<group>"; };
 		F426867E1E511B7C0085E581 /* ArticleCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleCardPostCellNode.swift; sourceTree = "<group>"; };
+		F42DFEBE1E77F39A0025CE65 /* RelatedBooksMinimalCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelatedBooksMinimalCellNode.swift; path = PostDetails/RelatedBooksMinimalCellNode.swift; sourceTree = "<group>"; };
 		F42ED4F11E686BF9002B65DF /* OnBoardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		F434F7901E4E16CE001812BD /* CellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellNode.swift; sourceTree = "<group>"; };
 		F43996841E76C76700FE9D8B /* PostsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostsListViewController.swift; sourceTree = "<group>"; };
@@ -1083,6 +1085,7 @@
 				F417B1CE1E71C3D400B0FAFE /* PostDetailsHeaderNode.swift */,
 				F417B1CF1E71C3D400B0FAFE /* PostDetailsItemNode.swift */,
 				F417B1D01E71C3D400B0FAFE /* PostDetailsNode.swift */,
+				F42DFEBE1E77F39A0025CE65 /* RelatedBooksMinimalCellNode.swift */,
 			);
 			name = PostDetails;
 			sourceTree = "<group>";
@@ -1514,6 +1517,7 @@
 				56E87D341E6EFFCA00AF6CFD /* BookNode.swift in Sources */,
 				59EC5BA91E6C5987006E1CB9 /* BookDetailsPricesNode.swift in Sources */,
 				594290391E549FF40006B2F1 /* UIColor.swift in Sources */,
+				F42DFEBF1E77F39A0025CE65 /* RelatedBooksMinimalCellNode.swift in Sources */,
 				59DA475D1E3B7A8F00BA90A5 /* IntroductionViewModel.swift in Sources */,
 				59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */,
 				59D6021B1E32597B00271315 /* AppKeys.swift in Sources */,
