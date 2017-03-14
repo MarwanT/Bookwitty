@@ -27,6 +27,30 @@ class CardActionBarNode: ASCellNode {
   var numberOfDimsNode: ASTextNode
   var delegate: CardActionBarNodeDelegate? = nil
 
+  var numberOfWits: Int? {
+    didSet {
+      if let numberOfWits = numberOfWits, numberOfWits > 0 {
+        numberOfWitsNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1)
+          .append(text: "(\(numberOfWits))", color: ThemeManager.shared.currentTheme.defaultButtonColor()).attributedString
+      } else {
+        numberOfWitsNode.attributedText = nil
+      }
+    }
+  }
+  var numberOfDims: Int? {
+    didSet {
+      if let numberOfDims = numberOfDims, numberOfDims > 0 {
+        numberOfDimsNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.footnote)
+          .append(text: Strings.dim())
+          .append(text: " ")
+          .append(text: "(\(numberOfDims))", fontDynamicType: FontDynamicType.caption1).attributedString
+      } else {
+        numberOfDimsNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.footnote)
+          .append(text: Strings.dim()).attributedString
+      }
+    }
+  }
+
   private let witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
 
