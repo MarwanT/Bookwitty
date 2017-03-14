@@ -11,6 +11,7 @@
 
 #import <Google/Analytics.h>
 #import <AsyncDisplayKit/AsyncDisplayKit.h>
+#import <DTCoreText/DTCoreText.h>
 
 #include "NSBundle+Language.h"
 
