@@ -50,6 +50,7 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let relatedBooksViewAllNode: DisclosureNode
   fileprivate let relatedBooksTopSeparator: SeparatorNode
   fileprivate let relatedBooksSeparator: SeparatorNode
+  fileprivate let relatedPostsSectionTitleHeaderNode: SectionTitleHeaderNode
 
   let postItemsNode: PostDetailsItemNode
   let postCardsNode: PostDetailsItemNode
@@ -126,6 +127,7 @@ class PostDetailsNode: ASScrollNode {
     relatedBooksSeparator = SeparatorNode()
     relatedBooksTopSeparator = SeparatorNode()
     postCardsNode = PostDetailsItemNode()
+    relatedPostsSectionTitleHeaderNode = SectionTitleHeaderNode()
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
@@ -149,6 +151,7 @@ class PostDetailsNode: ASScrollNode {
     relatedBooksSeparator = SeparatorNode()
     relatedBooksTopSeparator = SeparatorNode()
     postCardsNode = PostDetailsItemNode()
+    relatedPostsSectionTitleHeaderNode = SectionTitleHeaderNode()
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
@@ -191,6 +194,7 @@ class PostDetailsNode: ASScrollNode {
 
 
     sectionTitleHeaderNode.setTitle(title: Strings.related_books(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber10(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber9())
+    relatedPostsSectionTitleHeaderNode.setTitle(title: Strings.related_posts(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber4(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber3())
   }
 
   func sidesEdgeInset() -> UIEdgeInsets {
@@ -231,6 +235,8 @@ class PostDetailsNode: ASScrollNode {
     vStackSpec.children?.append(relatedBooksTopSeparator)
     vStackSpec.children?.append(relatedBooksViewAllNode)
     vStackSpec.children?.append(relatedBooksSeparator)
+    vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+    vStackSpec.children?.append(relatedPostsSectionTitleHeaderNode)
     vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
     vStackSpec.children?.append(postCardsNode)
 
