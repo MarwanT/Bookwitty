@@ -665,4 +665,9 @@ class Strings {
     return localizedString(key: "your_feed")
   }
 
+  /**
+   Discussion:
+   - Please keep this file sorted by keys, for easier maintenance
+   - Please add the strings directly to the google drive sheet
+   */
 }

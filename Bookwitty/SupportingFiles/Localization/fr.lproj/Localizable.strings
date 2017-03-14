@@ -170,3 +170,8 @@
 "you_dont_have_account" = "Vous n'avez pas de compte";
 "you_save" = "Vous économisez";
 "your_feed" = "Votre flux";
+/**
+ Discussion:
+ - Please keep this file sorted by keys, for easier maintenance
+ - Please add the strings directly to the google drive sheet
+ */

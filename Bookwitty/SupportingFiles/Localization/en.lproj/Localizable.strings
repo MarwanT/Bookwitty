@@ -170,3 +170,8 @@
 "you_dont_have_account" = "You don't have an account";
 "you_save" = "You save";
 "your_feed" = "Your feed";
+/**
+ Discussion:
+ - Please keep this file sorted by keys, for easier maintenance
+ - Please add the strings directly to the google drive sheet
+*/
