@@ -121,7 +121,7 @@ class PostDetailsNode: ASScrollNode {
     postItemsNodeViewAll = DisclosureNode()
     booksHorizontalFlowLayout = UICollectionViewFlowLayout()
     booksHorizontalFlowLayout.scrollDirection = .horizontal
-    booksHorizontalFlowLayout.sectionInset = UIEdgeInsets.zero
+    booksHorizontalFlowLayout.sectionInset = UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: internalMargin)
     booksHorizontalFlowLayout.minimumInteritemSpacing  = 0
     booksHorizontalFlowLayout.minimumLineSpacing       = internalMargin
     booksHorizontalCollectionNode = ASCollectionNode(collectionViewLayout: booksHorizontalFlowLayout)
@@ -138,7 +138,7 @@ class PostDetailsNode: ASScrollNode {
     postItemsNodeViewAll = DisclosureNode()
     booksHorizontalFlowLayout = UICollectionViewFlowLayout()
     booksHorizontalFlowLayout.scrollDirection = .horizontal
-    booksHorizontalFlowLayout.sectionInset = UIEdgeInsets.zero
+    booksHorizontalFlowLayout.sectionInset = UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: internalMargin)
     booksHorizontalFlowLayout.minimumInteritemSpacing  = 0
     booksHorizontalFlowLayout.minimumLineSpacing       = internalMargin
     booksHorizontalCollectionNode = ASCollectionNode(collectionViewLayout: booksHorizontalFlowLayout)
