@@ -40,7 +40,6 @@ class PostDetailsNode: ASScrollNode {
 
   fileprivate let headerNode: PostDetailsHeaderNode
   fileprivate let descriptionNode: DTAttributedTextContentNode
-  fileprivate let postItemsNode: PostDetailsItemNode
   fileprivate let separator: SeparatorNode
   fileprivate let conculsionNode: ASTextNode
   fileprivate let postItemsNodeLoader: LoaderNode
@@ -52,6 +51,8 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let relatedBooksTopSeparator: SeparatorNode
   fileprivate let relatedBooksSeparator: SeparatorNode
 
+  let postItemsNode: PostDetailsItemNode
+  let postCardsNode: PostDetailsItemNode
   let booksHorizontalCollectionNode: ASCollectionNode
 
   var title: String? {
@@ -85,6 +86,7 @@ class PostDetailsNode: ASScrollNode {
   var dataSource: PostDetailsItemNodeDataSource! {
     didSet {
       postItemsNode.dataSource = dataSource
+      postCardsNode.dataSource = dataSource
     }
   }
   var conculsion: String? {
@@ -123,6 +125,7 @@ class PostDetailsNode: ASScrollNode {
     relatedBooksViewAllNode = DisclosureNode()
     relatedBooksSeparator = SeparatorNode()
     relatedBooksTopSeparator = SeparatorNode()
+    postCardsNode = PostDetailsItemNode()
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
@@ -145,6 +148,7 @@ class PostDetailsNode: ASScrollNode {
     relatedBooksViewAllNode = DisclosureNode()
     relatedBooksSeparator = SeparatorNode()
     relatedBooksTopSeparator = SeparatorNode()
+    postCardsNode = PostDetailsItemNode()
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
@@ -153,6 +157,11 @@ class PostDetailsNode: ASScrollNode {
 
   func loadPostItemsNode() {
     postItemsNode.loadNodes()
+    setNeedsLayout()
+  }
+
+  func loadRelatedCards() {
+    postCardsNode.loadNodes()
     setNeedsLayout()
   }
 
@@ -222,6 +231,8 @@ class PostDetailsNode: ASScrollNode {
     vStackSpec.children?.append(relatedBooksTopSeparator)
     vStackSpec.children?.append(relatedBooksViewAllNode)
     vStackSpec.children?.append(relatedBooksSeparator)
+    vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+    vStackSpec.children?.append(postCardsNode)
 
     return vStackSpec
   }
