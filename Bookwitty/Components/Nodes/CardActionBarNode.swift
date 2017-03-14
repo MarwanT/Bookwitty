@@ -23,6 +23,8 @@ class CardActionBarNode: ASCellNode {
   var witButton: ASButtonNode
   var commentButton: ASButtonNode
   var shareButton: ASButtonNode
+  var numberOfWitsNode: ASTextNode
+  var numberOfDimsNode: ASTextNode
   var delegate: CardActionBarNodeDelegate? = nil
 
   private let witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
@@ -37,10 +39,14 @@ class CardActionBarNode: ASCellNode {
     witButton = ASButtonNode()
     commentButton = ASButtonNode()
     shareButton = ASButtonNode()
+    numberOfWitsNode = ASTextNode()
+    numberOfDimsNode = ASTextNode()
     super.init()
     addSubnode(witButton)
     addSubnode(commentButton)
     addSubnode(shareButton)
+    addSubnode(numberOfWitsNode)
+    addSubnode(numberOfDimsNode)
     self.initializeNode()
   }
 
