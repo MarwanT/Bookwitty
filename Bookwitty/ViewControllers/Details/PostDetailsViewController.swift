@@ -38,7 +38,9 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.conculsion = viewModel.conculsion
     postDetailsNode.dataSource = self
     postDetailsNode.delegate = self
+    postDetailsNode.booksHorizontalCollectionNode.dataSource = self
     loadContentPosts()
+    loadRelatedBooks()
   }
 
   func loadContentPosts() {
@@ -53,6 +55,35 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
       self.postDetailsNode.loadPostItemsNode()
     }
   }
+
+  func loadRelatedBooks() {
+    viewModel.getRelatedBooks { (success) in
+      if success {
+        self.postDetailsNode.booksHorizontalCollectionNode.reloadData()
+      }
+    }
+  }
+}
+
+extension PostDetailsViewController: ASCollectionDataSource {
+  public func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+    return viewModel.numberOfRelatedBooks()
+  }
+  public func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+    return 1
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> AsyncDisplayKit.ASCellNodeBlock {
+    let book = viewModel.relatedBook(at: indexPath.row)
+    return {
+      let cell = RelatedBooksMinimalCellNode()
+      cell.url = book?.thumbnailImageUrl
+      cell.price = book?.supplierInformation?.preferredPrice?.formattedValue
+      cell.subTitle = book?.productDetails?.author
+      cell.title = book?.title
+      return cell
+    }
+  }
 }
 
 extension PostDetailsViewController: PostDetailsNodeDelegate {
@@ -63,6 +94,10 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
         self.navigationController?.pushViewController(vc, animated: true)
       }
     }
+  }
+
+  func shouldShowPostDetailsAllRelatedBooks() {
+    //TODO: Push view controller
   }
 }
 

@@ -43,7 +43,13 @@ class PostDetailsViewModel {
   var canonicalURL: URL? {
     return resource.canonicalURL
   }
+  var identifier: String? {
+    return resource.id
+  }
   var contentPostsResources: [Resource]?
+
+  //Resource Related Books
+  var relatedBooks: [Book] = []
 
   init(resource: Resource) {
     self.resource = resource
@@ -149,5 +155,38 @@ class PostDetailsViewModel {
       }
       resources = result
     })
+  }
+}
+
+// MARK: - Related Books Section
+extension PostDetailsViewModel {
+  func numberOfRelatedBooks() -> Int {
+    return relatedBooks.count
+  }
+
+  func relatedBook(at item: Int) -> Book? {
+    guard item >= 0 && item < relatedBooks.count else {
+      return nil
+    }
+
+    return relatedBooks[item]
+  }
+
+  func getRelatedBooks(completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let identifier = identifier else {
+      return
+    }
+
+    _ = GeneralAPI.posts(contentIdentifier: identifier, type: [Book.resourceType]) {
+      (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
+      defer {
+        completionBlock(success)
+      }
+      if success {
+        self.relatedBooks.removeAll()
+        let books = resources?.filter({ $0.registeredResourceType == Book.resourceType })
+        self.relatedBooks += (books as? [Book]) ?? []
+      }
+    }
   }
 }
