@@ -68,6 +68,7 @@ class PostDetailsHeaderNode: ASCellNode {
     //Post Iamge
     imageNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 200.0)
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
+    imageNode.animatedImagePaused = true
     //Post Title
     textNode.style.flexGrow = 1
     textNode.style.flexShrink = 1

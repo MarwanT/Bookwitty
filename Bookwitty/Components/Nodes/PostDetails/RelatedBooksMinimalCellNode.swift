@@ -69,6 +69,7 @@ class RelatedBooksMinimalCellNode: ASCellNode {
   func initializeNode() {
     style.preferredSize = cellSize
     imageNode.style.preferredSize = imageSize
+    imageNode.animatedImagePaused = true
 
     titleNode.maximumNumberOfLines = 4
     subTitleNode.maximumNumberOfLines = 1
