@@ -65,6 +65,11 @@ class CardActionBarNode: ASCellNode {
     shareButton.addTarget(self, action: #selector(shareButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     commentButton.addTarget(self, action: #selector(commentButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     witButton.addTarget(self, action: #selector(witButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
+
+    numberOfWitsNode.style.maxWidth = ASDimensionMake(60.0)
+    numberOfWitsNode.maximumNumberOfLines = 1
+    numberOfDimsNode.style.maxWidth = ASDimensionMake(120.0)
+    numberOfDimsNode.maximumNumberOfLines = 1
   }
 
   private func setupWitButtonStyling() {
