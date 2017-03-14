@@ -50,6 +50,8 @@ class PostDetailsViewModel {
 
   //Resource Related Books
   var relatedBooks: [Book] = []
+  //Resource Related Posts
+  var relatedPosts: [Resource] = []
 
   init(resource: Resource) {
     self.resource = resource
@@ -189,4 +191,38 @@ extension PostDetailsViewModel {
       }
     }
   }
+}
+
+
+// MARK: - Related Books Section
+extension PostDetailsViewModel {
+  func numberOfRelatedPosts() -> Int {
+    return relatedPosts.count
+  }
+
+  func relatedPost(at item: Int) -> Resource? {
+    guard item >= 0 && item < relatedPosts.count else {
+      return nil
+    }
+
+    return relatedPosts[item]
+  }
+
+  func getRelatedPosts(completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let identifier = identifier else {
+      return
+    }
+
+    _ = GeneralAPI.posts(contentIdentifier: identifier, type: nil) {
+      (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
+      defer {
+        completionBlock(success)
+      }
+      if success {
+        self.relatedPosts.removeAll()
+        self.relatedPosts += resources ?? []
+      }
+    }
+  }
+
 }

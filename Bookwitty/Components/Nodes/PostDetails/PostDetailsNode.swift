@@ -24,6 +24,9 @@ extension PostDetailsNode: DisclosureNodeDelegate {
     } else if disclosureNode === relatedBooksViewAllNode {
       //Related Books View All
       delegate?.shouldShowPostDetailsAllRelatedBooks()
+    } else if disclosureNode === relatedPostsViewAllNode {
+      //Related Posts View All
+      delegate?.shouldShowPostDetailsAllRelatedPosts()
     }
   }
 }
@@ -31,6 +34,7 @@ extension PostDetailsNode: DisclosureNodeDelegate {
 protocol PostDetailsNodeDelegate {
   func shouldShowPostDetailsAllPosts()
   func shouldShowPostDetailsAllRelatedBooks()
+  func shouldShowPostDetailsAllRelatedPosts()
 }
 
 class PostDetailsNode: ASScrollNode {
@@ -40,7 +44,6 @@ class PostDetailsNode: ASScrollNode {
 
   fileprivate let headerNode: PostDetailsHeaderNode
   fileprivate let descriptionNode: DTAttributedTextContentNode
-  fileprivate let postItemsNode: PostDetailsItemNode
   fileprivate let separator: SeparatorNode
   fileprivate let conculsionNode: ASTextNode
   fileprivate let postItemsNodeLoader: LoaderNode
@@ -51,7 +54,15 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let relatedBooksViewAllNode: DisclosureNode
   fileprivate let relatedBooksTopSeparator: SeparatorNode
   fileprivate let relatedBooksSeparator: SeparatorNode
+  fileprivate let relatedBooksNodeLoader: LoaderNode
+  fileprivate let relatedPostsSectionTitleHeaderNode: SectionTitleHeaderNode
+  fileprivate let relatedPostsViewAllNode: DisclosureNode
+  fileprivate let relatedPostsTopSeparator: SeparatorNode
+  fileprivate let relatedPostsBottomSeparator: SeparatorNode
+  fileprivate let relatedPostsNodeLoader: LoaderNode
 
+  let postItemsNode: PostDetailsItemNode
+  let postCardsNode: PostDetailsItemNode
   let booksHorizontalCollectionNode: ASCollectionNode
 
   var title: String? {
@@ -85,6 +96,7 @@ class PostDetailsNode: ASScrollNode {
   var dataSource: PostDetailsItemNodeDataSource! {
     didSet {
       postItemsNode.dataSource = dataSource
+      postCardsNode.dataSource = dataSource
     }
   }
   var conculsion: String? {
@@ -97,6 +109,20 @@ class PostDetailsNode: ASScrollNode {
     }
   }
   var showPostsLoader: Bool = false {
+    didSet {
+      if isNodeLoaded {
+        setNeedsLayout()
+      }
+    }
+  }
+  var showRelatedPostsLoader: Bool = false {
+    didSet {
+      if isNodeLoaded {
+        setNeedsLayout()
+      }
+    }
+  }
+  var showRelatedBooksLoader: Bool = false {
     didSet {
       if isNodeLoaded {
         setNeedsLayout()
@@ -123,6 +149,13 @@ class PostDetailsNode: ASScrollNode {
     relatedBooksViewAllNode = DisclosureNode()
     relatedBooksSeparator = SeparatorNode()
     relatedBooksTopSeparator = SeparatorNode()
+    postCardsNode = PostDetailsItemNode()
+    relatedPostsSectionTitleHeaderNode = SectionTitleHeaderNode()
+    relatedPostsViewAllNode = DisclosureNode()
+    relatedPostsTopSeparator = SeparatorNode()
+    relatedPostsBottomSeparator = SeparatorNode()
+    relatedPostsNodeLoader = LoaderNode()
+    relatedBooksNodeLoader = LoaderNode()
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
@@ -145,6 +178,13 @@ class PostDetailsNode: ASScrollNode {
     relatedBooksViewAllNode = DisclosureNode()
     relatedBooksSeparator = SeparatorNode()
     relatedBooksTopSeparator = SeparatorNode()
+    postCardsNode = PostDetailsItemNode()
+    relatedPostsSectionTitleHeaderNode = SectionTitleHeaderNode()
+    relatedPostsViewAllNode = DisclosureNode()
+    relatedPostsTopSeparator = SeparatorNode()
+    relatedPostsBottomSeparator = SeparatorNode()
+    relatedPostsNodeLoader = LoaderNode()
+    relatedBooksNodeLoader = LoaderNode()
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
@@ -153,6 +193,11 @@ class PostDetailsNode: ASScrollNode {
 
   func loadPostItemsNode() {
     postItemsNode.loadNodes()
+    setNeedsLayout()
+  }
+
+  func loadRelatedCards() {
+    postCardsNode.loadNodes()
     setNeedsLayout()
   }
 
@@ -180,12 +225,22 @@ class PostDetailsNode: ASScrollNode {
     relatedBooksViewAllNode.text = Strings.view_all_related_books()
     relatedBooksViewAllNode.delegate = self
 
+    relatedPostsViewAllNode.configuration.style = .highlighted
+    relatedPostsViewAllNode.text = Strings.view_all_related_books()
+    relatedPostsViewAllNode.delegate = self
 
     sectionTitleHeaderNode.setTitle(title: Strings.related_books(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber10(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber9())
+    relatedPostsSectionTitleHeaderNode.setTitle(title: Strings.related_posts(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber4(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber3())
   }
 
   func sidesEdgeInset() -> UIEdgeInsets {
     return UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: internalMargin)
+  }
+
+  func wrapNode(node: ASDisplayNode, width: CGFloat = UIScreen.main.bounds.width) -> ASLayoutSpec {
+    let wrapperSpec = ASWrapperLayoutSpec(layoutElement: node)
+    wrapperSpec.style.width = ASDimensionMake(width)
+    return wrapperSpec
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -208,21 +263,55 @@ class PostDetailsNode: ASScrollNode {
     if showPostsLoader {
       let postItemsLoaderOverlaySpec = ASWrapperLayoutSpec(layoutElement: postItemsNodeLoader)
       postItemsLoaderOverlaySpec.style.width = ASDimensionMake(constrainedSize.max.width)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
       vStackSpec.children?.append(postItemsLoaderOverlaySpec)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(postItemsSeparator)
+    } else {
+      vStackSpec.children?.append(postItemsNode)
+      vStackSpec.children?.append(postItemsNodeViewAll)
+      vStackSpec.children?.append(postItemsSeparator)
     }
-    vStackSpec.children?.append(postItemsNode)
-    vStackSpec.children?.append(postItemsNodeViewAll)
-    vStackSpec.children?.append(postItemsSeparator)
 
-    vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
-    vStackSpec.children?.append(sectionTitleHeaderNode)
-    vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
-    vStackSpec.children?.append(booksHorizontalCollectionNode)
-    vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
-    vStackSpec.children?.append(relatedBooksTopSeparator)
-    vStackSpec.children?.append(relatedBooksViewAllNode)
-    vStackSpec.children?.append(relatedBooksSeparator)
 
+    relatedBooksNodeLoader.updateLoaderVisibility(show: showRelatedBooksLoader)
+    if showRelatedBooksLoader {
+      let wrapperSpec = wrapNode(node: relatedBooksNodeLoader, width: constrainedSize.max.width)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(wrapperSpec)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(relatedBooksSeparator)
+    } else {
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(sectionTitleHeaderNode)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(booksHorizontalCollectionNode)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(relatedBooksTopSeparator)
+      vStackSpec.children?.append(relatedBooksViewAllNode)
+      vStackSpec.children?.append(relatedBooksSeparator)
+    }
+    
+
+    relatedPostsNodeLoader.updateLoaderVisibility(show: showRelatedPostsLoader)
+    if showRelatedPostsLoader {
+      let wrapperSpec = ASWrapperLayoutSpec(layoutElement: relatedPostsNodeLoader)
+      wrapperSpec.style.width = ASDimensionMake(constrainedSize.max.width)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(wrapperSpec)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(relatedPostsBottomSeparator)
+    } else {
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(relatedPostsSectionTitleHeaderNode)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(postCardsNode)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(relatedPostsTopSeparator)
+      vStackSpec.children?.append(relatedPostsViewAllNode)
+      vStackSpec.children?.append(relatedPostsBottomSeparator)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+    }
     return vStackSpec
   }
 }

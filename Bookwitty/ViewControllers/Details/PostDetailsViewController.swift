@@ -41,6 +41,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.booksHorizontalCollectionNode.dataSource = self
     loadContentPosts()
     loadRelatedBooks()
+    loadRelatedPosts()
   }
 
   func loadContentPosts() {
@@ -57,11 +58,23 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
   }
 
   func loadRelatedBooks() {
+    postDetailsNode.showRelatedBooksLoader = true
     viewModel.getRelatedBooks { (success) in
+      self.postDetailsNode.showRelatedBooksLoader = false
       if success {
         self.postDetailsNode.booksHorizontalCollectionNode.reloadData()
       }
     }
+  }
+
+  func loadRelatedPosts() {
+    postDetailsNode.showRelatedPostsLoader = true
+    self.viewModel.getRelatedPosts(completionBlock: { (success) in
+      self.postDetailsNode.showRelatedPostsLoader = false
+      if success {
+        self.postDetailsNode.loadRelatedCards()
+      }
+    })
   }
 }
 
@@ -99,11 +112,34 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
   func shouldShowPostDetailsAllRelatedBooks() {
     //TODO: Push view controller
   }
+
+  func shouldShowPostDetailsAllRelatedPosts() {
+    //TODO: Push view controller
+  }
 }
 
 extension PostDetailsViewController: PostDetailsItemNodeDataSource {
 
   func postDetailsItem(_ postDetailsItem: PostDetailsItemNode, nodeForItemAt index: Int) -> ASDisplayNode {
+    if postDetailsNode.postCardsNode === postDetailsItem {
+      guard let resource = viewModel.relatedPost(at: index) else {
+        return BaseCardPostNode()
+      }
+      return CardFactory.shared.createCardFor(resource: resource) ?? BaseCardPostNode()
+    } else {
+      return cellItemForPostDetails(at: index)
+    }
+  }
+
+  func postDetailsItemCount(_ postDetailsItem: PostDetailsItemNode) -> Int {
+    if postDetailsNode.postCardsNode === postDetailsItem {
+      return viewModel.numberOfRelatedPosts()
+    } else {
+      return viewModel.contentPostsItemCount()
+    }
+  }
+
+  func cellItemForPostDetails(at index: Int) -> ASDisplayNode {
     guard let resource = viewModel.contentPostsItem(at: index) else {
       return ASDisplayNode()
     }
@@ -142,10 +178,6 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
     default :
       return ASDisplayNode()
     }
-  }
-
-  func postDetailsItemCount(_ postDetailsItem: PostDetailsItemNode) -> Int {
-    return viewModel.contentPostsItemCount()
   }
 }
 
