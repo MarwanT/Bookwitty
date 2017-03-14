@@ -15,6 +15,8 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
   
+  let loaderNode = LoaderNode()
+  
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -27,6 +29,8 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
     
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     viewModel.book = book
+    
+    loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
     
     super.init(node: collectionNode)
     
@@ -90,8 +94,14 @@ extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
   }
   
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
-    return {
-      return self.viewModel.nodeForItem(at: indexPath)
+    if indexPath.section == BookDetailsViewModel.Section.activityIndicator.rawValue {
+      return {
+        return self.loaderNode
+      }
+    } else {
+      return {
+        return self.viewModel.nodeForItem(at: indexPath)
+      }
     }
   }
   
