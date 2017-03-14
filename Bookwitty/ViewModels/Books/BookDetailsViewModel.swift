@@ -448,7 +448,7 @@ extension BookDetailsViewModel {
     
     _ = GeneralAPI.posts(
       contentIdentifier: bookId, type: [ReadingList.resourceType, Topic.resourceType], completion: {
-        (success, resources, error) in
+        (success, resources, nextPage, error) in
         var success: Bool = success
         var error: BookwittyAPIError? = error
         defer {
