@@ -255,6 +255,7 @@ class PostDetailsNode: ASScrollNode {
     vStackSpec.children?.append(relatedPostsSectionTitleHeaderNode)
     vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
     vStackSpec.children?.append(postCardsNode)
+    vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
     vStackSpec.children?.append(relatedPostsTopSeparator)
     vStackSpec.children?.append(relatedPostsViewAllNode)
     vStackSpec.children?.append(relatedPostsBottomSeparator)
