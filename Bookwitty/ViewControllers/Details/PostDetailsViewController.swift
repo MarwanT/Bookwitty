@@ -39,6 +39,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.dataSource = self
     postDetailsNode.delegate = self
     loadContentPosts()
+    loadRelatedBooks()
   }
 
   func loadContentPosts() {
@@ -53,6 +54,15 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
       self.postDetailsNode.loadPostItemsNode()
     }
   }
+
+  func loadRelatedBooks() {
+    viewModel.getRelatedBooks { (success) in
+      if success {
+        self.postDetailsNode.booksHorizontalCollectionNode.reloadData()
+      }
+    }
+  }
+}
 }
 
 extension PostDetailsViewController: PostDetailsNodeDelegate {
