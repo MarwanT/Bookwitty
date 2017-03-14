@@ -18,8 +18,10 @@ class TopicHeaderNode: ASCellNode {
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let imageHeight: CGFloat = 200.0
   fileprivate let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
+  fileprivate let thumbnailImageSize = CGSize(width: 100.0, height: 100.0)
 
   private var imageNode: ASNetworkImageNode
+  private var thumbnailImageNode: ASNetworkImageNode
   private var titleNode: ASTextNode
   private var topicStatsNode: ASTextNode
   private var actionButton: ASButtonNode
@@ -29,6 +31,7 @@ class TopicHeaderNode: ASCellNode {
 
   override init() {
     imageNode = ASNetworkImageNode()
+    thumbnailImageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
     topicStatsNode = ASTextNode()
     actionButton = ASButtonNode()
@@ -39,6 +42,7 @@ class TopicHeaderNode: ASCellNode {
     addSubnode(topicStatsNode)
     addSubnode(actionButton)
     addSubnode(contributorsNode)
+    addSubnode(thumbnailImageNode)
     setupNode()
   }
 
@@ -82,6 +86,16 @@ class TopicHeaderNode: ASCellNode {
     didSet {
       if let imageUrl = imageUrl {
         imageNode.url = URL(string: imageUrl)
+        thumbnailImageNode.url = URL(string: imageUrl)
+        setNeedsLayout()
+      }
+    }
+  }
+
+  var thumbnailImageUrl: String? {
+    didSet {
+      if let thumbnailImageUrl = thumbnailImageUrl {
+        thumbnailImageNode.url = URL(string: thumbnailImageUrl)
         setNeedsLayout()
       }
     }
@@ -132,9 +146,16 @@ class TopicHeaderNode: ASCellNode {
     let imageSize = CGSize(width: constrainedSize.max.width, height: imageHeight)
     imageNode.style.preferredSize = imageSize
 
-    if isValid(imageUrl) {
-      nodesArray.append(imageNode)
-    }
+    thumbnailImageNode.style.preferredSize = thumbnailImageSize
+
+    let imageLayoutSpec = ASStaticLayoutSpec(sizing: ASAbsoluteLayoutSpecSizing.sizeToFit, children: [imageNode])
+    let thumbnailNodeLayoutSpec = ASCenterLayoutSpec(centeringOptions: ASCenterLayoutSpecCenteringOptions.XY,
+                                                     sizingOptions: ASCenterLayoutSpecSizingOptions.minimumXY,
+                                                     child: thumbnailImageNode)
+    let imageOverlayLayoutSpec = ASOverlayLayoutSpec(child: imageLayoutSpec, overlay: thumbnailNodeLayoutSpec)
+
+
+    nodesArray.append(imageOverlayLayoutSpec)
 
     let titleNodeInset = ASInsetLayoutSpec(insets: sideInset(), child: titleNode)
     if isValid(topicTitle) {
