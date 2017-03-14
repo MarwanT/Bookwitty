@@ -58,6 +58,7 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let relatedPostsViewAllNode: DisclosureNode
   fileprivate let relatedPostsTopSeparator: SeparatorNode
   fileprivate let relatedPostsBottomSeparator: SeparatorNode
+  fileprivate let relatedPostsNodeLoader: LoaderNode
 
   let postItemsNode: PostDetailsItemNode
   let postCardsNode: PostDetailsItemNode
@@ -113,6 +114,13 @@ class PostDetailsNode: ASScrollNode {
       }
     }
   }
+  var showRelatedPostsLoader: Bool = false {
+    didSet {
+      if isNodeLoaded {
+        setNeedsLayout()
+      }
+    }
+  }
 
   override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
     headerNode = PostDetailsHeaderNode()
@@ -138,6 +146,7 @@ class PostDetailsNode: ASScrollNode {
     relatedPostsViewAllNode = DisclosureNode()
     relatedPostsTopSeparator = SeparatorNode()
     relatedPostsBottomSeparator = SeparatorNode()
+    relatedPostsNodeLoader = LoaderNode()
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
@@ -165,6 +174,7 @@ class PostDetailsNode: ASScrollNode {
     relatedPostsViewAllNode = DisclosureNode()
     relatedPostsTopSeparator = SeparatorNode()
     relatedPostsBottomSeparator = SeparatorNode()
+    relatedPostsNodeLoader = LoaderNode()
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
