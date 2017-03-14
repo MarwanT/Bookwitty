@@ -396,9 +396,15 @@ extension  CardFactory {
     card.articleCommentsSummary = "X commented on this"
     card.wit = resource.isWitted
 
-    let images = resource.posts?.map({ ($0 as? ModelCommonProperties)?.thumbnailImageUrl }) ?? []
-    card.node.imageCollection = images.flatMap({$0})
+    let imagesCount = resource.postsRelations?.count ?? 0
+    card.node.prepareImages(imageCount: imagesCount)
 
+    if let images = resource.posts?.map({ ($0 as? ModelCommonProperties)?.thumbnailImageUrl }) {
+      let imageCollection = images.flatMap({$0})
+      if imageCollection.count > 0 {
+        card.node.loadImages(with: imageCollection)
+      }
+    }
     return card
   }
 }

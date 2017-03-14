@@ -53,11 +53,23 @@ class ReadingListCardContentNode: ASDisplayNode {
       }
     }
   }
-  var imageCollection: [String] = [] {
-    didSet {
-      customHorizontalList.imageCollection = imageCollection
-      setNeedsLayout()
-    }
+  var isImageCollectionLoaded: Bool {
+    return customHorizontalList.isImageCollectionLoaded
+  }
+  var maxNumberOfImages: Int {
+    return customHorizontalList.maxItems
+  }
+
+  func reload() {
+    customHorizontalList.reload()
+  }
+
+  func prepareImages(imageCount count: Int) {
+    customHorizontalList.prepareImages(for: count)
+  }
+
+  func loadImages(with imageCollection: [String]) {
+    customHorizontalList.updateCollection(images: imageCollection, shouldLoadImages: true)
   }
 
   override init() {
@@ -66,10 +78,7 @@ class ReadingListCardContentNode: ASDisplayNode {
     descriptionNode = ASTextNode()
     customHorizontalList = ReadingListBooksNode()
     super.init()
-    addSubnode(titleNode)
-    addSubnode(topicStatsNode)
-    addSubnode(descriptionNode)
-    addSubnode(customHorizontalList)
+    automaticallyManagesSubnodes = true
     setupNode()
   }
 
@@ -83,7 +92,6 @@ class ReadingListCardContentNode: ASDisplayNode {
 
   func initializeImageCollectionNode() {
     customHorizontalList.imageNodeSize = collectionImageSize
-    customHorizontalList.imageCollection = imageCollection
   }
 
   func setTopicStatistics(numberOfPosts: String? = nil, numberOfBooks: String? = nil, numberOfFollowers: String? = nil) {
@@ -149,10 +157,8 @@ class ReadingListCardContentNode: ASDisplayNode {
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     var nodesArray: [ASLayoutElement] = []
 
-    if imageCollection.count > 0 {
-      let customLayoutSpec = ASCenterLayoutSpec(centeringOptions: ASCenterLayoutSpecCenteringOptions.XY, sizingOptions: ASCenterLayoutSpecSizingOptions.minimumXY, child: customHorizontalList)
-      nodesArray.append(customLayoutSpec)
-    }
+    let customLayoutSpec = ASCenterLayoutSpec(centeringOptions: ASCenterLayoutSpecCenteringOptions.XY, sizingOptions: ASCenterLayoutSpecSizingOptions.minimumXY, child: customHorizontalList)
+    nodesArray.append(customLayoutSpec)
 
     let titleNodeInset = ASInsetLayoutSpec(insets: cardSidesInset(), child: titleNode)
     let topicStatsNodeInset = ASInsetLayoutSpec(insets: cardSidesInset(), child: topicStatsNode)
