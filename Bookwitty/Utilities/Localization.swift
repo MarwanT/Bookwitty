@@ -15,6 +15,10 @@ func localizedString(key: String, defaultValue: String = "", count: Count = 0, c
 }
 
 
+protocol Localizable {
+  func applyLocalization()
+}
+
 final class Localization {
 
   enum Language: String {
