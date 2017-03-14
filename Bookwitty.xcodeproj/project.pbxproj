@@ -157,6 +157,7 @@
 		F422D82E1E51AC3900A32C2F /* VideoCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F422D82D1E51AC3900A32C2F /* VideoCardPostCellNode.swift */; };
 		F422D8301E51CD9D00A32C2F /* LinkCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F422D82F1E51CD9D00A32C2F /* LinkCardPostCellNode.swift */; };
 		F42441651E66FE260087E3B1 /* CardFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42441641E66FE260087E3B1 /* CardFactory.swift */; };
+		F42462B11E760E1500DB3A2C /* DTAttributedTextContentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42462B01E760E1500DB3A2C /* DTAttributedTextContentNode.swift */; };
 		F42600891E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42600881E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift */; };
 		F426008B1E6CD18800E14D93 /* OnBoardingCellSectionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426008A1E6CD18800E14D93 /* OnBoardingCellSectionNode.swift */; };
 		F426008D1E6D8D1200E14D93 /* OnBoardingLoadingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426008C1E6D8D1200E14D93 /* OnBoardingLoadingButton.swift */; };
@@ -372,6 +373,7 @@
 		F422D82D1E51AC3900A32C2F /* VideoCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCardPostCellNode.swift; sourceTree = "<group>"; };
 		F422D82F1E51CD9D00A32C2F /* LinkCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkCardPostCellNode.swift; sourceTree = "<group>"; };
 		F42441641E66FE260087E3B1 /* CardFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardFactory.swift; path = Factories/CardFactory.swift; sourceTree = "<group>"; };
+		F42462B01E760E1500DB3A2C /* DTAttributedTextContentNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTAttributedTextContentNode.swift; sourceTree = "<group>"; };
 		F42600881E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingItemHeaderNode.swift; sourceTree = "<group>"; };
 		F426008A1E6CD18800E14D93 /* OnBoardingCellSectionNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingCellSectionNode.swift; sourceTree = "<group>"; };
 		F426008C1E6D8D1200E14D93 /* OnBoardingLoadingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingLoadingButton.swift; sourceTree = "<group>"; };
@@ -667,6 +669,7 @@
 				F458C5F31E5AFEAA00AFD0FC /* PenNameCellNode.swift */,
 				F4CDDD361E60263800474CAA /* RotatingImageNode.swift */,
 				F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */,
+				F42462B01E760E1500DB3A2C /* DTAttributedTextContentNode.swift */,
 				F4670AFA1E54669300159F4F /* ReadingListBookNode.swift */,
 				F43A5E8D1E69858A008C018B /* OnBoardingInternalCellNode.swift */,
 				F426008A1E6CD18800E14D93 /* OnBoardingCellSectionNode.swift */,
@@ -1436,6 +1439,7 @@
 				593769D71E3689FB00F23226 /* Appearance.swift in Sources */,
 				591E15581E70FE37008CA78A /* GenericNodeViewController.swift in Sources */,
 				594290091E4FF0E30006B2F1 /* CategoriesTableViewModel.swift in Sources */,
+				F42462B11E760E1500DB3A2C /* DTAttributedTextContentNode.swift in Sources */,
 				F420B6A41E43D01A001F34CD /* PenNameViewController.swift in Sources */,
 				5929C2731E5B2FDB006E08F8 /* CuratedCollection+API.swift in Sources */,
 				F42041C11E72ACCA00E7D208 /* PostDetailsViewController.swift in Sources */,

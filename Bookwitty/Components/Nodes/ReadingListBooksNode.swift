@@ -13,39 +13,68 @@ class ReadingListBooksNode: ASDisplayNode {
   private static let defaultImageNodeSize: CGSize = CGSize(width: 60.0, height: 100.0)
 
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
-  private var maxItems: Int = 1
+
   private var imageListNodes: [ReadingListBookNode] = []
 
+  var maxItems: Int = 1
   var imageNodeSize: CGSize = defaultImageNodeSize
-  var imageCollection: [String]? {
-    didSet {
-      guard (imageListNodes.count == 0) else { return }
-      if let imageCollection = imageCollection, (imageCollection.count > 0) {
-        createImageNodes(imageCollection: imageCollection)
-      }
-    }
-  }
+  var isImageCollectionLoaded: Bool = false
+  private var imageCollection: [String]?
 
   override init() {
     super.init()
     maxItems = calculateMaxItems()
   }
 
-  private func calculateMaxItems() -> Int {
-    let screenWidth = UIScreen.main.bounds.width
-    return  Int(screenWidth / (imageNodeSize.width + internalMargin)) + 2
+  func reload() {
+    guard let imageCollection = imageCollection,
+      (imageCollection.count > 0 && imageListNodes.count > 0) else {
+      return
+    }
+
+    let tillIndex = (maxItems > imageCollection.count) ? imageCollection.count : maxItems
+    for index in 0 ..< tillIndex {
+      if imageListNodes[index].imageUrl.isEmptyOrNil() {
+        imageListNodes[index].imageUrl = imageCollection[index]
+      }
+    }
   }
 
-  private func createImageNodes(imageCollection: [String]) {
-    let tillIndex = (maxItems > imageCollection.count) ? imageCollection.count : maxItems
+  func updateCollection(images collection: [String]?, shouldLoadImages: Bool) {
+    guard let imageCollection = collection,
+      imageCollection.count > 0 else {
+        isImageCollectionLoaded = false
+        return
+    }
+    //Update Local collection
+    self.imageCollection = collection
 
-    for index in 0 ..< tillIndex {
-      let url = imageCollection[index]
+    //Load/Reload Images Into nodes
+    if shouldLoadImages {
+      prepareImages(for: imageCollection.count)
+      if !isImageCollectionLoaded {
+        isImageCollectionLoaded = true
+        reload()
+      }
+    }
+  }
+
+  func prepareImages(for count: Int) {
+    guard imageListNodes.count == 0 && count > 0 else {
+      return
+    }
+    let tillIndex = (maxItems > count) ? count : maxItems
+
+    for _ in 0 ..< tillIndex {
       let imageNode = ReadingListBookNode(imageNodeSize: imageNodeSize)
-      imageNode.imageUrl = url
       imageListNodes.append(imageNode)
       addSubnode(imageNode)
     }
+  }
+
+  private func calculateMaxItems() -> Int {
+    let screenWidth = UIScreen.main.bounds.width
+    return  Int(screenWidth / (imageNodeSize.width + internalMargin)) + 2
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
