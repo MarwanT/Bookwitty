@@ -116,6 +116,18 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
   func shouldShowPostDetailsAllRelatedPosts() {
     //TODO: Push view controller
   }
+
+  func hasRelatedPosts() -> Bool {
+    return viewModel.numberOfRelatedPosts() > 0
+  }
+
+  func hasRelatedBooks() -> Bool {
+    return viewModel.numberOfRelatedBooks() > 0
+  }
+
+  func hasContentItems() -> Bool {
+    return viewModel.contentPostsItemCount() > 0
+  }
 }
 
 extension PostDetailsViewController: PostDetailsItemNodeDataSource {

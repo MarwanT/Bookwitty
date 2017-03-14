@@ -35,6 +35,9 @@ protocol PostDetailsNodeDelegate {
   func shouldShowPostDetailsAllPosts()
   func shouldShowPostDetailsAllRelatedBooks()
   func shouldShowPostDetailsAllRelatedPosts()
+  func hasRelatedPosts() -> Bool
+  func hasRelatedBooks() -> Bool
+  func hasContentItems() -> Bool
 }
 
 class PostDetailsNode: ASScrollNode {
