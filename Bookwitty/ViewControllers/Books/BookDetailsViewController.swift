@@ -8,6 +8,7 @@
 
 import UIKit
 import AsyncDisplayKit
+import Spine
 
 class BookDetailsViewController: ASViewController<ASCollectionNode> {
   let viewModel = BookDetailsViewModel()
@@ -162,6 +163,10 @@ extension BookDetailsViewController {
       break
     case .viewShippingInfo(let url):
       viewShippingInfo(url)
+    case .goToReadingList(let readingList):
+      pushPostDetailsViewController(resource: readingList)
+    case .goToTopic(let topic):
+      viewTopicViewController(with: topic)
     }
   }
   
@@ -210,6 +215,17 @@ extension BookDetailsViewController {
     }
     perform(action: .share(bookTitle: self.viewModel.book.title ?? "", url: url))
   }
+  
+  func viewTopicViewController(with topic: Topic) {
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(withTopic: topic)
+    navigationController?.pushViewController(topicViewController, animated: true)
+  }
+  
+  func pushPostDetailsViewController(resource: Resource) {
+    let nodeVc = PostDetailsViewController(resource: resource)
+    navigationController?.pushViewController(nodeVc, animated: true)
+  }
 }
 
 // MARK: - Book details about node
@@ -251,6 +267,8 @@ extension BookDetailsViewController {
     case buyThisBook(URL)
     case share(bookTitle: String, url: URL)
     case addToWishlist
+    case goToReadingList(ReadingList)
+    case goToTopic(Topic)
   }
 }
 

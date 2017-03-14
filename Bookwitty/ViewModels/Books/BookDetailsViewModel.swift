@@ -388,6 +388,32 @@ extension BookDetailsViewModel {
       default:
         return true
       }
+    case .recommendedReadingLists:
+      guard let readingLists = relatedReadingLists else {
+        return false
+      }
+      switch indexPath.item {
+      case 0: // Header
+        return false
+      case (readingLists.count + 1): // Footer
+        // TODO: Handle this selection
+        return false
+      default:
+        return true
+      }
+    case .relatedTopics:
+      guard let relatedTopics = relatedTopics else {
+        return false
+      }
+      switch indexPath.item {
+      case 0: // Header
+        return false
+      case (relatedTopics.count + 1): // Footer
+        // TODO: Handle this selection
+        return false
+      default:
+        return true
+      }
     default:
       return false
     }
@@ -423,6 +449,32 @@ extension BookDetailsViewModel {
         return nil
       default:
         return .viewCategory(categories[indexPath.row - 1])
+      }
+    case .recommendedReadingLists:
+      guard let readingLists = relatedReadingLists else {
+        return nil
+      }
+      switch indexPath.row {
+      case 0: // Header
+        return nil
+      case readingLists.count + 1: // Footer
+        // TODO: Handle this selection
+        return nil
+      default:
+        return .goToReadingList(readingLists[indexPath.item - 1])
+      }
+    case .relatedTopics:
+      guard let relatedTopics = relatedTopics else {
+        return nil
+      }
+      switch indexPath.row {
+      case 0: // Header
+        return nil
+      case relatedTopics.count + 1: // Footer
+        // TODO: Handle this selection
+        return nil
+      default:
+        return .goToTopic(relatedTopics[indexPath.item - 1])
       }
     default:
       return nil
