@@ -75,4 +75,40 @@ class RelatedBooksMinimalCellNode: ASCellNode {
     priceNode.maximumNumberOfLines = 1
   }
 
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    var addSpacer: Bool = false
+    var vStackChildren: [ASLayoutElement] = []
+    vStackChildren.append(imageNode)
+
+    vStackChildren.append(ASLayoutSpec.spacer(height: 3))
+    vStackChildren.append(titleNode)
+
+    addSpacer = !title.isEmptyOrNil()
+
+    if !subTitle.isEmptyOrNil() {
+      if addSpacer {
+        addSpacer = false
+        vStackChildren.append(ASLayoutSpec.spacer(height: 3))
+      }
+      vStackChildren.append(subTitleNode)
+    }
+
+    if addSpacer {
+      addSpacer = false
+      vStackChildren.append(ASLayoutSpec.spacer(height: 3))
+    }
+    addSpacer = !subTitle.isEmptyOrNil()
+
+    if !price.isEmptyOrNil() {
+      if addSpacer {
+        addSpacer = false
+        vStackChildren.append(ASLayoutSpec.spacer(height: 3))
+      }
+      vStackChildren.append(priceNode)
+    }
+
+    let vStack = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: vStackChildren)
+    return vStack
+  }
+
 }
