@@ -261,15 +261,24 @@ class PostDetailsNode: ASScrollNode {
     vStackSpec.children?.append(relatedBooksTopSeparator)
     vStackSpec.children?.append(relatedBooksViewAllNode)
     vStackSpec.children?.append(relatedBooksSeparator)
-    vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
-    vStackSpec.children?.append(relatedPostsSectionTitleHeaderNode)
-    vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
-    vStackSpec.children?.append(postCardsNode)
-    vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
-    vStackSpec.children?.append(relatedPostsTopSeparator)
-    vStackSpec.children?.append(relatedPostsViewAllNode)
-    vStackSpec.children?.append(relatedPostsBottomSeparator)
-    vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+
+    relatedPostsNodeLoader.updateLoaderVisibility(show: showRelatedPostsLoader)
+    if showRelatedPostsLoader {
+      let wrapperSpec = ASWrapperLayoutSpec(layoutElement: relatedPostsNodeLoader)
+      wrapperSpec.style.width = ASDimensionMake(constrainedSize.max.width)
+      postItemsNodeLoader.style.width = ASDimensionMake(constrainedSize.max.width)
+      vStackSpec.children?.append(wrapperSpec)
+    } else {
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(relatedPostsSectionTitleHeaderNode)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(postCardsNode)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(relatedPostsTopSeparator)
+      vStackSpec.children?.append(relatedPostsViewAllNode)
+      vStackSpec.children?.append(relatedPostsBottomSeparator)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+    }
     return vStackSpec
   }
 }

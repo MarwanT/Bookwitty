@@ -66,7 +66,9 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
   }
 
   func loadRelatedPosts() {
+    postDetailsNode.showRelatedPostsLoader = true
     self.viewModel.getRelatedPosts(completionBlock: { (success) in
+      self.postDetailsNode.showRelatedPostsLoader = false
       if success {
         self.postDetailsNode.loadRelatedCards()
       }
