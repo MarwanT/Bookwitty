@@ -95,6 +95,10 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
       }
     }
   }
+
+  func shouldShowPostDetailsAllRelatedBooks() {
+    //TODO: Push view controller
+  }
 }
 
 extension PostDetailsViewController: PostDetailsItemNodeDataSource {

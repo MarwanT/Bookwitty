@@ -18,12 +18,19 @@ extension PostDetailsNode: DTAttributedTextContentNodeDelegate {
 
 extension PostDetailsNode: DisclosureNodeDelegate {
   func disclosureNodeDidTap(disclosureNode: DisclosureNode, selected: Bool) {
-    delegate?.shouldShowPostDetailsAllPosts()
+    if disclosureNode === postItemsNodeViewAll {
+      //Post Items View All
+      delegate?.shouldShowPostDetailsAllPosts()
+    } else if disclosureNode === relatedBooksViewAllNode {
+      //Related Books View All
+      delegate?.shouldShowPostDetailsAllRelatedBooks()
+    }
   }
 }
 
 protocol PostDetailsNodeDelegate {
   func shouldShowPostDetailsAllPosts()
+  func shouldShowPostDetailsAllRelatedBooks()
 }
 
 class PostDetailsNode: ASScrollNode {
