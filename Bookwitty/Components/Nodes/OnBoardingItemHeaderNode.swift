@@ -37,14 +37,10 @@ class OnBoardingItemHeaderNode: ASDisplayNode {
     rotatingImageNode = RotatingImageNode(image: #imageLiteral(resourceName: "downArrow"), size: CGSize(width: 45.0, height: 45.0), direction: .right)
     titleTextNode = ASTextNode()
     separator = ASDisplayNode()
-    loaderNode = LoaderNode(nodeHeight: 45.0)
+    loaderNode = LoaderNode()
     super.init()
     automaticallyManagesSubnodes = true
 
-    loaderNode.activityIndicatorNode.onDidLoad { (node) in
-      self.loaderNode.syncAnimationWithState()
-    }
-    
     rotatingImageNode.updateDirection(direction: RotatingImageNode.Direction.right, animated: false)
 
     titleTextNode.style.maxHeight = ASDimensionMake(OnBoardingItemHeaderNode.nodeHeight)

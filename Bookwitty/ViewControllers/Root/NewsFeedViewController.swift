@@ -63,7 +63,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     loaderNode = LoaderNode()
     super.init(node: collectionNode)
 
-    flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: loaderNode.usedHeight)
+    flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.defaultNodeHeight)
     collectionNode.onDidLoad { [weak self] (collectionNode) in
       guard let strongSelf = self,
         let asCollectionView = collectionNode.view as? ASCollectionView else {
@@ -191,7 +191,7 @@ extension NewsFeedViewController {
       bottomMargin = -(self.externalMargin/2)
     } else {
       //If we have Zero data items this means that we are only showing the pen-name-selection-node
-      bottomMargin = self.viewModel.data.count == 0 ? 0.0 : -(self.loaderNode.usedHeight - self.externalMargin/2)
+      bottomMargin = self.viewModel.data.count == 0 ? 0.0 : -(LoaderNode.defaultNodeHeight - self.externalMargin/2)
     }
 
     self.flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomMargin, right: 0)
