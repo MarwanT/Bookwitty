@@ -99,6 +99,17 @@ extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
     if let loaderNode = node as? LoaderNode {
       loaderNode.updateLoaderVisibility(show: true)
     }
+    
+    // If cell is reading list handle loading the images
+    if let readingListCell = node as? ReadingListCardPostCellNode, let indexPath = node.indexPath,
+      !readingListCell.node.isImageCollectionLoaded  {
+      let max = readingListCell.node.maxNumberOfImages
+      self.viewModel.loadReadingListImages(at: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
+        if let imageCollection = imageCollection, imageCollection.count > 0 {
+          readingListCell.node.loadImages(with: imageCollection)
+        }
+      })
+    }
   }
   
   func collectionNode(_ collectionNode: ASCollectionNode, shouldSelectItemAt indexPath: IndexPath) -> Bool {

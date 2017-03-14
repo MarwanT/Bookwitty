@@ -490,3 +490,49 @@ extension BookDetailsViewModel {
     }
   }
 }
+
+// MARK: - Handle Reading Lists Images
+extension BookDetailsViewModel {
+  func loadReadingListImages(at indexPath: IndexPath, maxNumberOfImages: Int, completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
+    guard let relatedReadingLists = relatedReadingLists else {
+      completionBlock(nil)
+      return
+    }
+    
+    let readingList = relatedReadingLists[indexPath.row - 1]
+    
+    var ids: [String] = []
+    if let list = readingList.postsRelations {
+      for item in list {
+        ids.append(item.id)
+      }
+    }
+    
+    if ids.count > 0 {
+      let limitToMaximumIds = Array(ids.prefix(maxNumberOfImages))
+      loadReadingListItems(readingListIds: limitToMaximumIds, completionBlock: completionBlock)
+    } else {
+      completionBlock(nil)
+    }
+  }
+  
+  private func loadReadingListItems(readingListIds: [String], completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
+    _ = UserAPI.batch(identifiers: readingListIds) { (success, resources, error) in
+      var imageCollection: [String]? = nil
+      defer {
+        completionBlock(imageCollection)
+      }
+      if success {
+        var images: [String] = []
+        resources?.forEach({ (resource) in
+          if let res = resource as? ModelCommonProperties {
+            if let imageUrl = res.thumbnailImageUrl {
+              images.append(imageUrl)
+            }
+          }
+        })
+        imageCollection = images
+      }
+    }
+  }
+}
