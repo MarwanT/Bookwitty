@@ -33,7 +33,7 @@ final class BookDetailsViewModel {
   }
   
   var numberOfSections: Int {
-    return 10
+    return Section.numberOfSections
   }
   
   func numberOfItemsForSection(section: Int) -> Int {
@@ -61,6 +61,9 @@ final class BookDetailsViewModel {
       return itemsInRecommendedReadingLists
     case .relatedTopics:
       return itemsInRelatedTopics
+    case .activityIndicator:
+      return itemsInActivityIndicator
+  
     }
   }
 }
@@ -207,6 +210,10 @@ extension BookDetailsViewModel {
         }
         return cardNode
       }
+    case .activityIndicator:
+      let loaderNode = LoaderNode()
+      loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
+      node = loaderNode
     }
     
     return node
@@ -289,6 +296,10 @@ extension BookDetailsViewModel {
     let header: Int = 1
     let footer: Int = 1
     return relatedTopics.count + header + footer
+  }
+  
+  var itemsInActivityIndicator: Int {
+    return shouldShowBottomLoader ? 1 : 0
   }
 }
 
@@ -443,5 +454,10 @@ extension BookDetailsViewModel {
     case categories
     case recommendedReadingLists
     case relatedTopics
+    case activityIndicator
+    
+    static var numberOfSections: Int {
+      return 11
+    }
   }
 }
