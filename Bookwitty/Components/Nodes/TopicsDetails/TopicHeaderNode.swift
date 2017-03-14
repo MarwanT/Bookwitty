@@ -20,7 +20,7 @@ class TopicHeaderNode: ASCellNode {
   fileprivate let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
   fileprivate let thumbnailImageSize = CGSize(width: 100.0, height: 100.0)
 
-  private var imageNode: ASNetworkImageNode
+  private var coverImageNode: ASNetworkImageNode
   private var thumbnailImageNode: ASNetworkImageNode
   private var titleNode: ASTextNode
   private var topicStatsNode: ASTextNode
@@ -30,14 +30,14 @@ class TopicHeaderNode: ASCellNode {
   weak var delegate: TopicHeaderNodeDelegate?
 
   override init() {
-    imageNode = ASNetworkImageNode()
+    coverImageNode = ASNetworkImageNode()
     thumbnailImageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
     topicStatsNode = ASTextNode()
     actionButton = ASButtonNode()
     contributorsNode = ContributorsNode()
     super.init()
-    addSubnode(imageNode)
+    addSubnode(coverImageNode)
     addSubnode(titleNode)
     addSubnode(topicStatsNode)
     addSubnode(actionButton)
@@ -47,8 +47,8 @@ class TopicHeaderNode: ASCellNode {
   }
 
   private func setupNode() {
-    imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
-    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
+    coverImageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
+    coverImageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
 
     titleNode.maximumNumberOfLines = 4
     topicStatsNode.maximumNumberOfLines = 1
@@ -85,7 +85,7 @@ class TopicHeaderNode: ASCellNode {
   var imageUrl: String? {
     didSet {
       if let imageUrl = imageUrl {
-        imageNode.url = URL(string: imageUrl)
+        coverImageNode.url = URL(string: imageUrl)
         thumbnailImageNode.url = URL(string: imageUrl)
         setNeedsLayout()
       }
@@ -144,11 +144,11 @@ class TopicHeaderNode: ASCellNode {
     var nodesArray: [ASLayoutElement] = []
 
     let imageSize = CGSize(width: constrainedSize.max.width, height: imageHeight)
-    imageNode.style.preferredSize = imageSize
+    coverImageNode.style.preferredSize = imageSize
 
     thumbnailImageNode.style.preferredSize = thumbnailImageSize
 
-    let imageLayoutSpec = ASStaticLayoutSpec(sizing: ASAbsoluteLayoutSpecSizing.sizeToFit, children: [imageNode])
+    let imageLayoutSpec = ASStaticLayoutSpec(sizing: ASAbsoluteLayoutSpecSizing.sizeToFit, children: [coverImageNode])
     let thumbnailNodeLayoutSpec = ASCenterLayoutSpec(centeringOptions: ASCenterLayoutSpecCenteringOptions.XY,
                                                      sizingOptions: ASCenterLayoutSpecSizingOptions.minimumXY,
                                                      child: thumbnailImageNode)
