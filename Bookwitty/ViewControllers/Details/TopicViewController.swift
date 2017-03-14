@@ -18,6 +18,12 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     case loading
   }
 
+  enum Section: Int {
+    case header = 0
+    case relatedData
+    case activityIndicator
+  }
+
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let segmentedNodeHeight: CGFloat = 45.0
@@ -113,12 +119,12 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     let category = self.category(withIndex: segmentedNode.selectedIndex)
     switch (callbackCategory, category) {
     case (.content, _):
-      self.collectionNode.reloadSections(IndexSet(integer: 0))
+      self.collectionNode.reloadSections(IndexSet(integer: Section.header.rawValue))
     case (.latest, .latest): fallthrough
     case (.editions, .editions): fallthrough
     case (.relatedBooks, .relatedBooks): fallthrough
     case (.followers, .editions):
-      self.collectionNode.reloadSections(IndexSet(integer: 1))
+      self.collectionNode.reloadSections(IndexSet(integer: Section.relatedData.rawValue))
     default:
       break
     }
@@ -259,7 +265,7 @@ extension TopicViewController: PenNameFollowNodeDelegate {
 
 extension TopicViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-    return section != 1 ? CGSize.zero : CGSize(width: collectionView.frame.size.width, height: segmentedNodeHeight)
+    return section != Section.relatedData.rawValue ? CGSize.zero : CGSize(width: collectionView.frame.size.width, height: segmentedNodeHeight)
   }
 }
 
@@ -270,11 +276,11 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
 
-    if section == 0 {
+    if section == Section.header.rawValue {
       return 1
     }
 
-    if section == 2 {
+    if section == Section.activityIndicator.rawValue {
       return loadingStatus != .none ? 1 : 0
     }
 
@@ -298,13 +304,13 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
-    if indexPath.section == 0 {
+    if indexPath.section == Section.header.rawValue {
       return {
         return self.headerNode
       }
     }
 
-    if indexPath.section == 2 {
+    if indexPath.section == Section.activityIndicator.rawValue {
       return {
         return self.loaderNode
       }
@@ -316,7 +322,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
-    guard indexPath.section == 1 else {
+    guard indexPath.section == Section.relatedData.rawValue else {
       return ASCellNode()
     }
 
@@ -333,9 +339,9 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
       return
     }
 
-    if indexPath.section == 0 {
+    if indexPath.section == Section.header.rawValue {
       self.fillHeaderNode()
-    } else if indexPath.section == 1 {
+    } else if indexPath.section == Section.relatedData.rawValue {
       let category = self.category(withIndex: segmentedNode.selectedIndex)
       switch category {
       case .latest:
