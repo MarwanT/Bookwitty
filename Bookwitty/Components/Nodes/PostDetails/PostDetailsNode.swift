@@ -51,6 +51,9 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let relatedBooksTopSeparator: SeparatorNode
   fileprivate let relatedBooksSeparator: SeparatorNode
   fileprivate let relatedPostsSectionTitleHeaderNode: SectionTitleHeaderNode
+  fileprivate let relatedPostsViewAllNode: DisclosureNode
+  fileprivate let relatedPostsTopSeparator: SeparatorNode
+  fileprivate let relatedPostsBottomSeparator: SeparatorNode
 
   let postItemsNode: PostDetailsItemNode
   let postCardsNode: PostDetailsItemNode
@@ -128,6 +131,9 @@ class PostDetailsNode: ASScrollNode {
     relatedBooksTopSeparator = SeparatorNode()
     postCardsNode = PostDetailsItemNode()
     relatedPostsSectionTitleHeaderNode = SectionTitleHeaderNode()
+    relatedPostsViewAllNode = DisclosureNode()
+    relatedPostsTopSeparator = SeparatorNode()
+    relatedPostsBottomSeparator = SeparatorNode()
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
@@ -152,6 +158,9 @@ class PostDetailsNode: ASScrollNode {
     relatedBooksTopSeparator = SeparatorNode()
     postCardsNode = PostDetailsItemNode()
     relatedPostsSectionTitleHeaderNode = SectionTitleHeaderNode()
+    relatedPostsViewAllNode = DisclosureNode()
+    relatedPostsTopSeparator = SeparatorNode()
+    relatedPostsBottomSeparator = SeparatorNode()
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
@@ -192,6 +201,9 @@ class PostDetailsNode: ASScrollNode {
     relatedBooksViewAllNode.text = Strings.view_all_related_books()
     relatedBooksViewAllNode.delegate = self
 
+    relatedPostsViewAllNode.configuration.style = .highlighted
+    relatedPostsViewAllNode.text = Strings.view_all_related_books()
+    relatedPostsViewAllNode.delegate = self
 
     sectionTitleHeaderNode.setTitle(title: Strings.related_books(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber10(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber9())
     relatedPostsSectionTitleHeaderNode.setTitle(title: Strings.related_posts(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber4(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber3())
@@ -239,7 +251,10 @@ class PostDetailsNode: ASScrollNode {
     vStackSpec.children?.append(relatedPostsSectionTitleHeaderNode)
     vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
     vStackSpec.children?.append(postCardsNode)
-
+    vStackSpec.children?.append(relatedPostsTopSeparator)
+    vStackSpec.children?.append(relatedPostsViewAllNode)
+    vStackSpec.children?.append(relatedPostsBottomSeparator)
+    vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
     return vStackSpec
   }
 }
