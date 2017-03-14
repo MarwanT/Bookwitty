@@ -213,7 +213,7 @@ class PostDetailsNode: ASScrollNode {
     style.flexGrow = 1.0
     style.flexShrink = 1.0
 
-    descriptionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 125)
+    descriptionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 25)
     descriptionNode.style.flexGrow = 1.0
     descriptionNode.style.flexShrink = 1.0
 
@@ -255,12 +255,7 @@ class PostDetailsNode: ASScrollNode {
 
     vStackSpec.children = [headerNode, ASLayoutSpec.spacer(height: contentSpacing),
                            descriptionInsetSpec, ASLayoutSpec.spacer(height: contentSpacing),
-                           separatorInsetSpec, ASLayoutSpec.spacer(height: contentSpacing)]
-    if !conculsion.isEmptyOrNil() {
-      let conculsionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: conculsionNode)
-      vStackSpec.children?.append(conculsionInsetSpec)
-      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
-    }
+                           separatorInsetSpec]
 
     postItemsNodeLoader.updateLoaderVisibility(show: showPostsLoader)
     if showPostsLoader {
@@ -270,12 +265,17 @@ class PostDetailsNode: ASScrollNode {
       vStackSpec.children?.append(postItemsLoaderOverlaySpec)
       vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
       vStackSpec.children?.append(postItemsSeparator)
-    } else {
+    } else if delegate?.hasContentItems() ?? false {
       vStackSpec.children?.append(postItemsNode)
       vStackSpec.children?.append(postItemsNodeViewAll)
       vStackSpec.children?.append(postItemsSeparator)
     }
 
+    if !conculsion.isEmptyOrNil() {
+      let conculsionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: conculsionNode)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(conculsionInsetSpec)
+    }
 
     relatedBooksNodeLoader.updateLoaderVisibility(show: showRelatedBooksLoader)
     if showRelatedBooksLoader {
@@ -284,7 +284,7 @@ class PostDetailsNode: ASScrollNode {
       vStackSpec.children?.append(wrapperSpec)
       vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
       vStackSpec.children?.append(relatedBooksSeparator)
-    } else {
+    } else if delegate?.hasRelatedBooks() ?? false {
       vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
       vStackSpec.children?.append(sectionTitleHeaderNode)
       vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
@@ -304,7 +304,7 @@ class PostDetailsNode: ASScrollNode {
       vStackSpec.children?.append(wrapperSpec)
       vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
       vStackSpec.children?.append(relatedPostsBottomSeparator)
-    } else {
+    } else if delegate?.hasRelatedPosts() ?? false {
       vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
       vStackSpec.children?.append(relatedPostsSectionTitleHeaderNode)
       vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
