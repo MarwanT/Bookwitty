@@ -66,7 +66,9 @@ class SettingsViewController: UIViewController {
         break
       case 1: //change password
         pushChangePasswordViewController()
-      case 2: //country/region
+      case 2:
+        presentChangeLanguageActionSheet()
+      case 3: //country/region
         pushCountryPickerViewController()
       default:
         break
