@@ -24,6 +24,10 @@ final class Localization {
   enum Language: String {
     case English = "en"
     case French = "fr"
+
+    static func all() -> [Language] {
+      return [.English, .French]
+    }
   }
 
   struct Notifications {
