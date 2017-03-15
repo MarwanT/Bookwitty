@@ -61,6 +61,11 @@ class BaseCardPostNode: ASCellNode {
       actionBarNode.setWitButton(witted: wit)
     }
   }
+  var dimmed: Bool = false {
+    didSet {
+      actionBarNode.setDimValue(dimmed: dimmed)
+    }
+  }
 
   override init() {
     infoNode = CardPostInfoNode()

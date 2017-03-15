@@ -123,8 +123,26 @@ class CardActionBarNode: ASCellNode {
 
   }
 
-  func setWitButton(witted: Bool) {
+  func setWitButton(witted: Bool, wits: Int? = nil) {
     witButton.isSelected = witted
+    if let wits = wits {
+      setNumberOfWits(wits: wits)
+    }
+  }
+
+  func setDimValue(dimmed: Bool, dims: Int? = nil) {
+    numberOfDimsNode.isSelected = dimmed
+    if let dims = dims {
+      setNumberOfDims(dims: dims)
+    }
+  }
+
+  private func setNumberOfWits(wits: Int) {
+    numberOfWits = wits
+  }
+
+  private func setNumberOfDims(dims: Int) {
+    numberOfDims = dims
   }
 
   func toggleWitButton() {
