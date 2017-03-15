@@ -41,6 +41,7 @@ class ReadingListBookNode: ASCellNode {
     imageNode.style.maxHeight = ASDimensionMake(imageSize.height)
     imageNode.defaultImage = UIImage(color: ASDisplayNodeDefaultPlaceholderColor(), size: imageSize)
     imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
+    imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
   }
 
   private func imageInset() -> UIEdgeInsets {

@@ -130,6 +130,8 @@ class TopicCardPostContentNode: ASDisplayNode {
     descriptionNode.maximumNumberOfLines = 3
     topicStatsNode.maximumNumberOfLines = 1
 
+    imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
+    
     subImageNode.style.preferredSize = subImageSize
     subImageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
   }

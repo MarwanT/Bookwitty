@@ -43,7 +43,7 @@ class CardDetailsViewController: GenericNodeViewController {
     case Topic.resourceType:
       title = Strings.topic()
     case Text.resourceType:
-      title = Strings.text()
+      title = Strings.article()
     case Book.resourceType:
       title = Strings.book()
     default:

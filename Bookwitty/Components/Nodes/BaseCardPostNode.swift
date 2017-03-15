@@ -25,7 +25,7 @@ protocol BaseCardPostNodeDelegate {
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
 }
 
-class BaseCardPostNode: ASCellNode {
+class BaseCardPostNode: ASCellNode, NodeTapProtocol {
 
   fileprivate let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
@@ -42,6 +42,7 @@ class BaseCardPostNode: ASCellNode {
     return !articleCommentsSummary.isEmptyOrNil()
   }
 
+  var tapDelegate: ItemNodeTapDelegate?
   var delegate: BaseCardPostNodeDelegate?
   var postInfoData: CardPostInfoNodeData? {
     didSet {
@@ -75,6 +76,18 @@ class BaseCardPostNode: ASCellNode {
     setupCellNode()
   }
 
+  override func didLoad() {
+    super.didLoad()
+    if tapDelegate != nil {
+      let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnView(_:)))
+      view.addGestureRecognizer(tapGesture)
+    }
+  }
+
+  func didTapOnView(_ sender: Any?) {
+    tapDelegate?.didTapOn(node: self)
+  }
+  
   private func setupCellNode() {
     actionBarNode.delegate = self
     manageNodes()
