@@ -12,8 +12,8 @@ import AsyncDisplayKit
 
 final class BookDetailsViewModel {
   var book: Book! = nil
-  var relatedReadingLists: [ReadingList]? = nil
-  var relatedTopics: [Topic]? = nil
+  var relatedReadingLists: (readingLists: [ReadingList]?, prefixed: [ReadingList]?, nextPageURL: URL?)? = nil
+  var relatedTopics: (topics: [Topic]?, prefixed: [Topic]?, nextPageURL: URL?)? = nil
   
   let maximumNumberOfDetails: Int = 3
   var bookDetailedInformation: [(key: String, value: String)]? = nil
@@ -100,9 +100,9 @@ extension BookDetailsViewModel {
     
     switch section {
     case .recommendedReadingLists:
-      return relatedReadingLists
+      return relatedReadingLists?.prefixed
     case .relatedTopics:
-      return relatedTopics
+      return relatedTopics?.prefixed
     default:
       return nil
     }
@@ -196,7 +196,7 @@ extension BookDetailsViewModel {
         node = disclosureNode
       }
     case .recommendedReadingLists:
-      guard let relatedReadingLists = relatedReadingLists, relatedReadingLists.count > 0 else {
+      guard let relatedReadingLists = relatedReadingLists?.prefixed, relatedReadingLists.count > 0 else {
         break
       }
       switch indexPath.row {
@@ -224,7 +224,7 @@ extension BookDetailsViewModel {
         return cardNode
       }
     case .relatedTopics:
-      guard let relatedTopics = relatedTopics, relatedTopics.count > 0 else {
+      guard let relatedTopics = relatedTopics?.prefixed, relatedTopics.count > 0 else {
         break
       }
       switch indexPath.row {
@@ -336,7 +336,7 @@ extension BookDetailsViewModel {
   }
   
   var itemsInRecommendedReadingLists: Int {
-    guard let relatedReadingLists = relatedReadingLists, relatedReadingLists.count > 0 else {
+    guard let relatedReadingLists = relatedReadingLists?.prefixed, relatedReadingLists.count > 0 else {
       return 0
     }
     let header: Int = 1
@@ -345,7 +345,7 @@ extension BookDetailsViewModel {
   }
   
   var itemsInRelatedTopics: Int {
-    guard let relatedTopics = relatedTopics, relatedTopics.count > 0 else {
+    guard let relatedTopics = relatedTopics?.prefixed, relatedTopics.count > 0 else {
       return 0
     }
     let header: Int = 1
@@ -389,7 +389,7 @@ extension BookDetailsViewModel {
         return true
       }
     case .recommendedReadingLists:
-      guard let readingLists = relatedReadingLists else {
+      guard let readingLists = relatedReadingLists?.prefixed else {
         return false
       }
       switch indexPath.item {
@@ -402,7 +402,7 @@ extension BookDetailsViewModel {
         return true
       }
     case .relatedTopics:
-      guard let relatedTopics = relatedTopics else {
+      guard let relatedTopics = relatedTopics?.prefixed else {
         return false
       }
       switch indexPath.item {
@@ -451,7 +451,7 @@ extension BookDetailsViewModel {
         return .viewCategory(categories[indexPath.row - 1])
       }
     case .recommendedReadingLists:
-      guard let readingLists = relatedReadingLists else {
+      guard let readingLists = relatedReadingLists?.prefixed else {
         return nil
       }
       switch indexPath.row {
@@ -464,7 +464,7 @@ extension BookDetailsViewModel {
         return .goToReadingList(readingLists[indexPath.item - 1])
       }
     case .relatedTopics:
-      guard let relatedTopics = relatedTopics else {
+      guard let relatedTopics = relatedTopics?.prefixed else {
         return nil
       }
       switch indexPath.row {
@@ -552,9 +552,10 @@ extension BookDetailsViewModel {
           return
         }
         
-        self.relatedReadingLists = Array(resources.flatMap({ $0 as? ReadingList }).prefix(self.maximumNumberOfDetails))
-        self.shouldReloadRelatedReadingListsSections =
-          (self.relatedReadingLists?.count ?? 0 > 0) ? true : false
+        let readingLists = resources.flatMap({ $0 as? ReadingList })
+        let displayedReadingLists = Array(readingLists.prefix(self.maximumNumberOfDetails))
+        self.relatedReadingLists = (readingLists, displayedReadingLists, nextPage)
+        self.shouldReloadRelatedReadingListsSections = (readingLists.count > 0) ? true : false
     })
   }
   
@@ -576,9 +577,10 @@ extension BookDetailsViewModel {
           return
         }
         
-        self.relatedTopics = Array(resources.flatMap({ $0 as? Topic }).prefix(self.maximumNumberOfDetails))
-        self.shouldReloadRelatedTopicsSections =
-          (self.relatedTopics?.count ?? 0 > 0) ? true : false
+        let topics = resources.flatMap({ $0 as? Topic })
+        let displayedTopics = Array(topics.prefix(self.maximumNumberOfDetails))
+        self.relatedTopics = (topics, displayedTopics, nextPage)
+        self.shouldReloadRelatedTopicsSections = (topics.count > 0) ? true : false
     })
   }
   
@@ -631,7 +633,7 @@ extension BookDetailsViewModel {
 // MARK: - Handle Reading Lists Images
 extension BookDetailsViewModel {
   func loadReadingListImages(at indexPath: IndexPath, maxNumberOfImages: Int, completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
-    guard let relatedReadingLists = relatedReadingLists else {
+    guard let relatedReadingLists = relatedReadingLists?.prefixed else {
       completionBlock(nil)
       return
     }
