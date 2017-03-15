@@ -180,6 +180,8 @@ class PostDetailItemNode: ASCellNode {
     //Image Setup
     imageNode.style.preferredSize = CGSize(width: smallImageHeight, height: smallImage ? smallImageHeight : largeImageHeight)
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
+    imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
+
     //Body Setup
     bodyNode.maximumNumberOfLines = 7
     //HeadLine Setup

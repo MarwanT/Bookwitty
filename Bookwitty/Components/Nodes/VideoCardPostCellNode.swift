@@ -96,6 +96,7 @@ class VideoCardContentNode: ASDisplayNode {
     playNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.colorNumber23().withAlphaComponent(0.9))
     playNode.style.preferredSize = playIconSize
 
+    imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
     imageNode.addTarget(self, action: #selector(videoImageTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
 

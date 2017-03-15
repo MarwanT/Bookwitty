@@ -92,6 +92,8 @@ class ProfileCardPostContentNode: ASDisplayNode {
     followersTextNode.maximumNumberOfLines = 1
     descriptionNode.maximumNumberOfLines = 4
 
+    userProfileImageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
+
     let profileBorderWidth: CGFloat = 0.0
     let profileBorderColor: UIColor? = nil
     userProfileImageNode.style.preferredSize = profileImageSize
