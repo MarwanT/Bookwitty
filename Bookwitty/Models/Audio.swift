@@ -23,7 +23,8 @@ class Audio: Resource {
   var media: [String: Any]?
   var penName: PenName?
   var vote: String?
-  
+  var counts: Counts?
+
   override class var resourceType: ResourceType {
     return "audios"
   }
@@ -41,6 +42,7 @@ class Audio: Resource {
       "title": Attribute().serializeAs("title"),
       "type": Attribute().serializeAs("type"),
       "media": Attribute().serializeAs("media"),
+      "counts" : CountsAttribute().serializeAs("counts"),
       "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
       ])
   }
