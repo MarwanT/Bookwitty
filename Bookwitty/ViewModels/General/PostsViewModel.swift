@@ -10,6 +10,14 @@ import Foundation
 
 final class PostsViewModel {
   
+  var posts = [ModelResource]()
+  fileprivate var loadingMode: DataLoadingMode? = nil
+  
+  /// Given an array of resources, they will be considered as
+  /// the items of the first page
+  func initialize(resources: [ModelResource]?, loadingMode: DataLoadingMode?) {
+    self.loadingMode = loadingMode
+  }
 }
 
 // MARK: - Declarations
