@@ -19,6 +19,10 @@ final class PostsViewModel {
   var hasNextPage: Bool {
     return !didReachLastPage
   }
+  var hasNoPosts: Bool {
+    return posts.count > 0
+  }
+  
   fileprivate var shouldReloadPostsSections = false
   
   /// Given an array of resources, they will be considered as

@@ -40,6 +40,13 @@ class PostsViewController: ASViewController<ASCollectionNode> {
     
     collectionNode.delegate = self
     collectionNode.dataSource = self
+    
+    if viewModel.hasNoPosts {
+      loadNextPage(completion: { (success) in
+        print("Fist Page Loaded")
+      })
+    }
+  }
   
   fileprivate func loadNextPage(completion: @escaping (_ success: Bool) -> Void) {
     guard !viewModel.isLoadingNextPage else {
