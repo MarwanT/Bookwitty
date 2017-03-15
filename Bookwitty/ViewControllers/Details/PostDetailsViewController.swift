@@ -326,7 +326,7 @@ extension PostDetailsViewController {
     self.navigationController?.pushViewController(nodeVc, animated: true)
   }
 
-  fileprivate func pushGenericViewControllerCard(resource: Resource, title: String?) {
+  fileprivate func pushGenericViewControllerCard(resource: Resource, title: String? = nil) {
     guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
       return
     }
@@ -387,7 +387,7 @@ extension PostDetailsViewController {
   }
 
   fileprivate func actionForImageResourceType(resource: ModelResource) {
-    pushGenericViewControllerCard(resource: resource, title: nil)
+    pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForAuthorResourceType(resource: ModelResource) {
@@ -407,19 +407,19 @@ extension PostDetailsViewController {
   }
 
   fileprivate func actionForQuoteResourceType(resource: ModelResource) {
-    pushGenericViewControllerCard(resource: resource, title: nil)
+    pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForVideoResourceType(resource: ModelResource) {
-    pushGenericViewControllerCard(resource: resource, title: nil)
+    pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForAudioResourceType(resource: ModelResource) {
-    pushGenericViewControllerCard(resource: resource, title: nil)
+    pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForLinkResourceType(resource: ModelResource) {
-    pushGenericViewControllerCard(resource: resource, title: nil)
+    pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForBookResourceType(resource: ModelResource) {
