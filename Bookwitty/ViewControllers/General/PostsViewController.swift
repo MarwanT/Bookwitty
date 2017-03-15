@@ -9,7 +9,30 @@
 import AsyncDisplayKit
 
 class PostsViewController: ASViewController<ASCollectionNode> {
+  let collectionNode: ASCollectionNode
+  let flowLayout: UICollectionViewFlowLayout
+  let loaderNode: LoaderNode
   
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  init() {
+    let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
+    flowLayout = UICollectionViewFlowLayout()
+    flowLayout.sectionInset = UIEdgeInsets(
+      top: externalMargin, left: 0,
+      bottom: externalMargin/2, right: 0)
+    flowLayout.minimumInteritemSpacing  = 0
+    flowLayout.minimumLineSpacing       = 0
+    
+    collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+    
+    loaderNode = LoaderNode()
+    
+    super.init(node: collectionNode)
+  }
 }
 
 // MARK: - Declarations
