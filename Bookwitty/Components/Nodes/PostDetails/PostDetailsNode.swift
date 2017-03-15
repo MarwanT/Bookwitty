@@ -103,12 +103,6 @@ class PostDetailsNode: ASScrollNode {
     }
   }
   var delegate: PostDetailsNodeDelegate?
-  var dataSource: PostDetailsItemNodeDataSource! {
-    didSet {
-      postItemsNode.dataSource = dataSource
-      postCardsNode.dataSource = dataSource
-    }
-  }
   var conculsion: String? {
     didSet {
       if let conculsion = conculsion {

@@ -36,7 +36,10 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.date = date
     postDetailsNode.penName = viewModel.penName
     postDetailsNode.conculsion = viewModel.conculsion
-    postDetailsNode.dataSource = self
+    postDetailsNode.postItemsNode.dataSource = self
+    postDetailsNode.postCardsNode.dataSource = self
+    postDetailsNode.postItemsNode.delegate = self
+    postDetailsNode.postCardsNode.delegate = self
     postDetailsNode.delegate = self
     postDetailsNode.setWitValue(witted: viewModel.isWitted, wits: viewModel.wits ?? 0)
     postDetailsNode.setDimValue(dimmed: viewModel.isDimmed, dims: viewModel.dims ?? 0)
@@ -164,6 +167,35 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
     default:
       //TODO: handle comment
       break
+    }
+  }
+}
+
+extension PostDetailsViewController: PostDetailsItemNodeDelegate {
+
+  func postDetails(_ postDetailsItem: PostDetailsItemNode, node: ASDisplayNode, didSelectItemAt index: Int) {
+    if postDetailsNode.postCardsNode === postDetailsItem {
+      //TODO: add cards action
+    } else {
+      guard let resource = viewModel.contentPostsItem(at: index) else {
+        return
+      }
+      handleContentPostsTap(resource: resource)
+    }
+  }
+
+  func handleContentPostsTap(resource: ModelResource) {
+    switch (resource.registeredResourceType) {
+    case Book.resourceType:
+      //TODO: handle Action
+      break
+    case Topic.resourceType:
+      //TODO: handle Action
+      break
+    case Text.resourceType:
+      //TODO: handle Action
+      break
+    default: break
     }
   }
 }
