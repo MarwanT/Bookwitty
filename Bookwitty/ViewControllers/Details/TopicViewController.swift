@@ -11,6 +11,19 @@ import AsyncDisplayKit
 
 class TopicViewController: ASViewController<ASCollectionNode> {
 
+  enum LoadingStatus {
+    case none
+    case loadMore
+    case reloading
+    case loading
+  }
+
+  enum Section: Int {
+    case header = 0
+    case relatedData
+    case activityIndicator
+  }
+
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let segmentedNodeHeight: CGFloat = 45.0
@@ -19,6 +32,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
 
   fileprivate var headerNode: TopicHeaderNode
   fileprivate var segmentedNode: SegmentedControlNode
+  fileprivate let loaderNode: LoaderNode
   fileprivate var flowLayout: UICollectionViewFlowLayout
 
   fileprivate var normal: [Category] = [.latest(index: 0), .relatedBooks(index: 1), .followers(index: 2) ]
@@ -28,6 +42,9 @@ class TopicViewController: ASViewController<ASCollectionNode> {
 
   fileprivate let viewModel = TopicViewModel()
 
+  fileprivate var loadingStatus: LoadingStatus = .none
+
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -35,6 +52,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   init() {
     headerNode = TopicHeaderNode()
     segmentedNode = SegmentedControlNode()
+    loaderNode = LoaderNode()
 
     flowLayout = UICollectionViewFlowLayout()
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
@@ -53,7 +71,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
 
   func initialize(withAuthor author: Author?) {
     viewModel.initialize(withAuthor: author)
-    self.mode = .normal(categories: self.book)
+    self.mode = .normal(categories: self.normal)
   }
 
   override func viewDidLoad() {
@@ -86,7 +104,8 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     let values = viewModel.valuesForHeader()
 
     headerNode.topicTitle = values.title
-    headerNode.imageUrl = values.coverImageUrl
+    headerNode.coverImageUrl = values.coverImageUrl
+    headerNode.thumbnailImageUrl = values.thumbnailImageUrl
     headerNode.following = values.following
     headerNode.setTopicStatistics(numberOfFollowers: values.stats.followers, numberOfPosts: values.stats.posts)
     headerNode.setContributorsValues(numberOfContributors: values.contributors.count, imageUrls: values.contributors.imageUrls)
@@ -100,12 +119,12 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     let category = self.category(withIndex: segmentedNode.selectedIndex)
     switch (callbackCategory, category) {
     case (.content, _):
-      self.collectionNode.reloadSections(IndexSet(integer: 0))
+      self.collectionNode.reloadSections(IndexSet(integer: Section.header.rawValue))
     case (.latest, .latest): fallthrough
     case (.editions, .editions): fallthrough
     case (.relatedBooks, .relatedBooks): fallthrough
     case (.followers, .editions):
-      self.collectionNode.reloadSections(IndexSet(integer: 1))
+      self.collectionNode.reloadSections(IndexSet(integer: Section.relatedData.rawValue))
     default:
       break
     }
@@ -176,6 +195,31 @@ extension TopicViewController {
   }
 }
 
+//MARK: - Loading Status Helper
+extension TopicViewController {
+  func setLoading(status: LoadingStatus) {
+    self.loadingStatus = status
+
+    let show: Bool
+    switch self.loadingStatus {
+    case .loading, .loadMore, .reloading:
+      show = true
+    case .none:
+      show = false
+    }
+
+    if Thread.current.isMainThread {
+      self.loaderNode.updateLoaderVisibility(show: show)
+      self.collectionNode.reloadSections(IndexSet(integer: 2))
+    } else {
+      DispatchQueue.main.sync {
+        self.loaderNode.updateLoaderVisibility(show: show)
+        self.collectionNode.reloadSections(IndexSet(integer: 2))
+      }
+    }
+  }
+}
+
 extension TopicViewController: TopicHeaderNodeDelegate {
   func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ASButtonNode) {
     if button.isSelected {
@@ -221,16 +265,25 @@ extension TopicViewController: PenNameFollowNodeDelegate {
 
 extension TopicViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-    return section == 0 ? CGSize.zero : CGSize(width: collectionView.frame.size.width, height: segmentedNodeHeight)
+    return section != Section.relatedData.rawValue ? CGSize.zero : CGSize(width: collectionView.frame.size.width, height: segmentedNodeHeight)
   }
 }
 
 extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
   func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
-    return 2
+    return 3
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+
+    if section == Section.header.rawValue {
+      return 1
+    }
+
+    if section == Section.activityIndicator.rawValue {
+      return loadingStatus != .none ? 1 : 0
+    }
+
     var contentNumberOfRows: Int
 
     let category = self.category(withIndex: segmentedNode.selectedIndex)
@@ -247,13 +300,19 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
       contentNumberOfRows = 0
     }
 
-    return section == 0 ? 1 : contentNumberOfRows
+    return contentNumberOfRows
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
-    if indexPath.section == 0 {
+    if indexPath.section == Section.header.rawValue {
       return {
         return self.headerNode
+      }
+    }
+
+    if indexPath.section == Section.activityIndicator.rawValue {
+      return {
+        return self.loaderNode
       }
     }
 
@@ -263,7 +322,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
-    guard indexPath.section == 1 else {
+    guard indexPath.section == Section.relatedData.rawValue else {
       return ASCellNode()
     }
 
@@ -280,9 +339,9 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
       return
     }
 
-    if indexPath.section == 0 {
+    if indexPath.section == Section.header.rawValue {
       self.fillHeaderNode()
-    } else if indexPath.section == 1 {
+    } else if indexPath.section == Section.relatedData.rawValue {
       let category = self.category(withIndex: segmentedNode.selectedIndex)
       switch category {
       case .latest:
@@ -298,6 +357,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
         cell.author = book?.productDetails?.author
         cell.format = book?.productDetails?.productFormat
         cell.price = book?.supplierInformation?.preferredPrice?.formattedValue
+        cell.imageUrl = book?.thumbnailImageUrl
       case .relatedBooks:
         guard let cell = node as? BookNode else {
           return
@@ -308,6 +368,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
         cell.author = book?.productDetails?.author
         cell.format = book?.productDetails?.productFormat
         cell.price = book?.supplierInformation?.preferredPrice?.formattedValue
+        cell.imageUrl = book?.thumbnailImageUrl
       case .followers:
         guard let cell = node as? PenNameFollowNode else {
           return
@@ -376,6 +437,72 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
       break
     case .none:
       break
+    }
+  }
+
+  func shouldBatchFetch(for collectionNode: ASCollectionNode) -> Bool {
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+    switch category {
+    case .latest:
+      return viewModel.hasNextLatest
+    case .relatedBooks:
+      return viewModel.hasNextRelatedBooks
+    case .editions:
+      return viewModel.hasNextEditions
+    case .followers:
+      return viewModel.hasNextFollowers
+    case .none:
+      return false
+    }
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
+
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+
+    guard context.isFetching() else {
+      return
+    }
+
+    context.beginBatchFetching()
+    self.setLoading(status: .loadMore)
+
+    var callBackCategory: TopicViewModel.CallbackCategory = .content
+    switch category {
+    case .latest:
+      callBackCategory = .latest
+    case .editions:
+      callBackCategory = .editions
+    case .relatedBooks:
+      callBackCategory = .relatedBooks
+    case .followers:
+      callBackCategory = .followers
+    default:
+      break
+    }
+
+    viewModel.loadNext(for: callBackCategory) {
+      (success: Bool, indices: [Int]?, callBackCategory) in
+      var insert: Bool = false
+
+      defer {
+        context.completeBatchFetching(true)
+        self.setLoading(status: .none)
+      }
+
+      if success {
+        switch callBackCategory {
+        case .latest, .editions, .relatedBooks, .followers:
+          insert = true
+        default:
+          insert = false
+        }
+
+        if insert {
+          let indexes: [IndexPath] = indices?.map({ IndexPath(item: $0, section: 1) }) ?? []
+          collectionNode.insertItems(at: indexes)
+        }
+      }
     }
   }
 }
