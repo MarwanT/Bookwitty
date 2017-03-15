@@ -72,7 +72,8 @@ class PostDetailItemNode: ASCellNode {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   private let largeImageHeight: CGFloat = 120.0
-  private let smallImageHeight: CGFloat = 90.0
+  private let smallImageHeight: CGFloat = 100.0
+  private let imageWidth: CGFloat = 90.0
 
   let imageNode: ASNetworkImageNode
   let headLineNode: ASTextNode
@@ -148,6 +149,7 @@ class PostDetailItemNode: ASCellNode {
       setNeedsLayout()
     }
   }
+
   private override init() {
     imageNode = ASNetworkImageNode()
     headLineNode = ASTextNode()
@@ -178,9 +180,12 @@ class PostDetailItemNode: ASCellNode {
     separator.style.flexGrow = 1
 
     //Image Setup
-    imageNode.style.preferredSize = CGSize(width: smallImageHeight, height: smallImage ? smallImageHeight : largeImageHeight)
-    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
+    let imageSize = CGSize(width: imageWidth, height: smallImage ? smallImageHeight : largeImageHeight)
+    imageNode.style.width = ASDimensionMake(imageSize.width)
+    imageNode.style.height = ASDimensionMake(imageSize.height)
+    imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
     imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
+    imageNode.contentMode = .scaleToFill
 
     //Body Setup
     bodyNode.maximumNumberOfLines = 7
