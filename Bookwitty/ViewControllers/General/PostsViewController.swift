@@ -54,12 +54,18 @@ class PostsViewController: ASViewController<ASCollectionNode> {
       return
     }
     
-    showBottomLoader(reloadSection: true)
-    viewModel.loadNextPage { (success) in
-      self.hideBottomLoader()
-      let sectionsNeedsReloading = self.viewModel.sectionsNeedsReloading()
-      self.reloadCollectionViewSections(sections: sectionsNeedsReloading)
-      completion(success)
+    DispatchQueue.main.async {
+      self.showBottomLoader(reloadSection: true)
+      DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
+        self.viewModel.loadNextPage { (success) in
+          DispatchQueue.main.async {
+            self.hideBottomLoader()
+            let sectionsNeedsReloading = self.viewModel.sectionsNeedsReloading()
+            self.reloadCollectionViewSections(sections: sectionsNeedsReloading)
+            completion(success)
+          }
+        }
+      }
     }
   }
 }
