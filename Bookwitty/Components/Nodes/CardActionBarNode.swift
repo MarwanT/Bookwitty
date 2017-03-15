@@ -41,14 +41,19 @@ class CardActionBarNode: ASCellNode {
   }
   fileprivate var numberOfDims: Int? {
     didSet {
-      if let numberOfDims = numberOfDims, numberOfDims > 0 {
-        numberOfDimsNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.footnote)
+      numberOfDimsNode.isHidden = hideDim
+      guard !hideDim else {
+        return
+      }
+
+      if let numberOfDims = numberOfDims {
+        let fontDynamicType = FontDynamicType.footnote
+        numberOfDimsNode.attributedText = AttributedStringBuilder(fontDynamicType: fontDynamicType)
           .append(text: dimText)
           .append(text: " ")
           .append(text: "(\(numberOfDims))", fontDynamicType: FontDynamicType.caption1).attributedString
       } else {
-        numberOfDimsNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.footnote)
-          .append(text: dimText).attributedString
+        numberOfDimsNode.attributedText = nil
       }
     }
   }
@@ -130,21 +135,16 @@ class CardActionBarNode: ASCellNode {
     witButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
     witButton.borderWidth = 2
     witButton.clipsToBounds = true
-
   }
 
   func setWitButton(witted: Bool, wits: Int? = nil) {
     witButton.isSelected = witted
-    if let wits = wits {
-      setNumberOfWits(wits: wits)
-    }
+    setNumberOfWits(wits: wits ?? 0)
   }
 
   func setDimValue(dimmed: Bool, dims: Int? = nil) {
     numberOfDimsNode.isSelected = dimmed
-    if let dims = dims {
-      setNumberOfDims(dims: dims)
-    }
+    setNumberOfDims(dims: dims ?? 0)
   }
 
   private func setNumberOfWits(wits: Int) {
