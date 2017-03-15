@@ -113,9 +113,9 @@ final class TopicViewModel {
     let thumbnail = topic.thumbnailImageUrl
     let cover = topic.coverImageUrl
     let counts = topic.counts
-    let followers = String(counting: counts.followers)
-    let posts = String(counting: counts.posts)
-    let contributors = String(counting: counts.contributors)
+    let followers = String(counting: counts?.followers)
+    let posts = String(counting: counts?.posts)
+    let contributors = String(counting: counts?.contributors)
     let contributorsImages: [String]? = topic.contributors?.flatMap({ $0.avatarUrl })
 
     let stats: (String?, String?) = (followers, posts)
@@ -134,9 +134,9 @@ final class TopicViewModel {
     let thumbnail = book.thumbnailImageUrl
     let cover = book.coverImageUrl
     let counts = book.counts
-    let followers = String(counting: counts.followers)
-    let posts = String(counting: counts.posts)
-    let contributors = String(counting: counts.contributors)
+    let followers = String(counting: counts?.followers)
+    let posts = String(counting: counts?.posts)
+    let contributors = String(counting: counts?.contributors)
     let contributorsImages: [String]? = book.contributors?.flatMap({ $0.avatarUrl })
 
     let stats: (String?, String?) = (followers, posts)
@@ -155,9 +155,9 @@ final class TopicViewModel {
     let thumbnail = author.thumbnailImageUrl
     let cover = author.coverImageUrl
     let counts = author.counts
-    let followers = String(counting: counts.followers)
-    let posts = String(counting: counts.posts)
-    let contributors = String(counting: counts.contributors)
+    let followers = String(counting: counts?.followers)
+    let posts = String(counting: counts?.posts)
+    let contributors = String(counting: counts?.contributors)
     let contributorsImages: [String]? = author.contributors?.flatMap({ $0.avatarUrl })
 
     let stats: (String?, String?) = (followers, posts)

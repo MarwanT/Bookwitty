@@ -21,6 +21,7 @@ class Video: Resource {
   var caption: String?
   var penName: PenName?
   var vote: String?
+  var counts: Counts?
   
   override class var resourceType: ResourceType {
     return "videos"
@@ -38,6 +39,7 @@ class Video: Resource {
       "title": Attribute().serializeAs("title"),
       "shortDescription": Attribute().serializeAs("short-description"),
       "caption": Attribute().serializeAs("caption"),
+      "counts" : CountsAttribute().serializeAs("counts"),
       "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
       ])
   }

@@ -37,6 +37,8 @@
 "done" = "Done";
 "dont_worry_you_can_change_it_later" = "Don't worry : you can always change it later";
 "drafts" = "Drafts";
+"dim" = "Dim it";
+"dimmed" = "Dimmed";
 "edit_pen_name" = "Edit pen name";
 "email" = "Email";
 "email_alread_registered" = "The email address you have entered is already registered!";
