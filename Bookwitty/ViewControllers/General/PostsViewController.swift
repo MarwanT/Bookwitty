@@ -80,9 +80,17 @@ class PostsViewController: ASViewController<ASCollectionNode> {
 // MARK: - Helpers
 extension PostsViewController {
   fileprivate func showBottomLoader(reloadSection: Bool = false) {
+    viewModel.shouldShowBottomLoader = true
+    if reloadSection {
+      reloadCollectionViewSections(sections: [PostsViewController.Section.activityIndicator])
+    }
   }
   
   fileprivate func hideBottomLoader(reloadSection: Bool = false) {
+    viewModel.shouldShowBottomLoader = false
+    if reloadSection {
+      reloadCollectionViewSections(sections: [PostsViewController.Section.activityIndicator])
+    }
   }
   
   func reloadCollectionViewSections(sections: [Section]) {
@@ -134,6 +142,12 @@ extension PostsViewController: ASCollectionDataSource, ASCollectionDelegate {
         baseCardNode.delegate = self
         return baseCardNode
       }
+    }
+  }
+  
+  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+    if let loaderNode = node as? LoaderNode {
+      loaderNode.updateLoaderVisibility(show: true)
     }
   }
 }

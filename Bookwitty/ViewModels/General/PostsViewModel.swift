@@ -24,6 +24,7 @@ final class PostsViewModel {
     return posts.count == 0
   }
   
+  var shouldShowBottomLoader = false
   fileprivate var shouldReloadPostsSections = false
   
   /// Given an array of resources, they will be considered as
@@ -110,7 +111,7 @@ extension PostsViewModel {
     case .posts:
       return posts.count
     case .activityIndicator:
-      return 0
+      return shouldShowBottomLoader ? 1 : 0
     }
   }
   
