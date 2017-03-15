@@ -155,13 +155,40 @@ class CardActionBarNode: ASCellNode {
     numberOfDims = dims
   }
 
-  func toggleWitButton() {
-    witButton.isSelected = !witButton.isSelected
-    setNeedsLayout()
+  func updateWitAndDim(for action: Action, success: Bool = true) {
+    let inverter = success ? 1 : -1
+
+    switch action {
+    case .dim:
+      let wits: Int? = (numberOfWits ?? 0 > 0) ? (numberOfWits! + (-1 * inverter)) : nil
+      setWitButton(witted: false, wits: wits)
+      let dims: Int? = (numberOfDims ?? 0) + (1 * inverter)
+      setDimValue(dimmed: true, dims: dims)
+    case .undim:
+      let dims: Int? = (numberOfDims ?? 0 > 0) ? (numberOfDims! + (-1 * inverter)) : nil
+      setDimValue(dimmed: false, dims: dims)
+    case .wit:
+      let dims: Int? = (numberOfDims ?? 0 > 0) ? (numberOfDims! + (-1 * inverter)) : nil
+      setDimValue(dimmed: false, dims: dims)
+      let wits: Int? = (numberOfWits ?? 0) + (1 * inverter)
+      setWitButton(witted: true, wits: wits)
+    case .unwit:
+      let wits: Int? = (numberOfWits ?? 0 > 0) ? (numberOfWits! + (-1 * inverter)) : nil
+      setWitButton(witted: false, wits: wits)
+    default: break
+    }
   }
 
-  func dimButtonTouchUpInside(_ sender: ASButtonNode?) {
-    //TODO: Action
+  func dimButtonTouchUpInside(_ sender: ASTextNode?) {
+    let action = !numberOfDimsNode.isSelected ? CardActionBarNode.Action.dim : CardActionBarNode.Action.undim
+    self.updateWitAndDim(for: action)
+
+    delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: action, forSender: witButton, didFinishAction: { [weak self] (success: Bool) in
+      guard let strongSelf = self else { return }
+      if !success { //Toggle back on failure
+        strongSelf.updateWitAndDim(for: action, success: false)
+      }
+    })
   }
 
   func witButtonTouchUpInside(_ sender: ASButtonNode?) {
@@ -169,12 +196,12 @@ class CardActionBarNode: ASCellNode {
     //Get action from witButton status
     let action = !witButton.isSelected ? CardActionBarNode.Action.wit : CardActionBarNode.Action.unwit
     //Assume success and Toggle button anyway, if witting/unwitting fails delegate should either call didFinishAction or  call toggleWitButton.
-    toggleWitButton()
+    self.updateWitAndDim(for: action)
 
     delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: action, forSender: sender, didFinishAction: { [weak self] (success: Bool) in
       guard let strongSelf = self else { return }
       if !success { //Toggle back on failure
-        strongSelf.toggleWitButton()
+        strongSelf.updateWitAndDim(for: action, success: false)
       }
     })
   }
