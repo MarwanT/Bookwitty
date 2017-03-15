@@ -291,9 +291,9 @@ class CardActionBarNode: ASCellNode {
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     //Setup Dynamic width Wit Button
-    witButton.titleNode.maximumNumberOfLines = 1
-    witButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-    witButton.style.height = ASDimensionMake(buttonSize.height)
+    actionButton.titleNode.maximumNumberOfLines = 1
+    actionButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    actionButton.style.height = ASDimensionMake(buttonSize.height)
 
     //Setup other buttons
     commentButton.style.preferredSize = iconSize
@@ -311,7 +311,7 @@ class CardActionBarNode: ASCellNode {
                                                 spacing: 0,
                                                 justifyContent: .spaceAround,
                                                 alignItems: .center,
-                                                children: [witButton,
+                                                children: [actionButton,
                                                           textHorizontalStackSpec,
                                                            spacer(),
                                                            commentButton,
