@@ -404,6 +404,10 @@ class Strings {
   class func terms_of_use_and_privacy_policy() -> String {
     return localizedString(key: "terms_of_use_and_privacy_policy")
   }
+  
+  class func text() -> String {
+    return localizedString(key: "text")
+  }
 
   class func topic() -> String {
     return localizedString(key: "topic")
