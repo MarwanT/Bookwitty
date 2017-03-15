@@ -488,9 +488,11 @@ extension BookDetailsViewModel {
     let queue = DispatchGroup()
     
     var loadBookDetailsSuccess: Bool = false
-    var loadRelatedContentSuccess: Bool = false
+    var loadRelatedReadingListsSuccess: Bool = false
+    var loadRelatedTopicsSuccess: Bool = false
     var loadBookDetailsError: BookwittyAPIError? = nil
-    var loadRelatedContentError: BookwittyAPIError? = nil
+    var loadRelatedReadingListsError: BookwittyAPIError? = nil
+    var loadRelatedTopicsError: BookwittyAPIError? = nil
     
     queue.enter()
     loadBookDetails { (success, error) in
@@ -500,16 +502,23 @@ extension BookDetailsViewModel {
     }
     
     queue.enter()
-    loadRelatedContent { (success, error) in
-      loadRelatedContentSuccess = success
-      loadRelatedContentError = error
+    loadRelatedReadingLists { (success, error) in
+      loadRelatedReadingListsSuccess = success
+      loadRelatedReadingListsError = error
+      queue.leave()
+    }
+    
+    queue.enter()
+    loadRelatedTopics { (success, error) in
+      loadRelatedTopicsSuccess = success
+      loadRelatedTopicsError = error
       queue.leave()
     }
     
     queue.notify(queue: DispatchQueue.main) { 
       completion(
-        loadBookDetailsSuccess && loadRelatedContentSuccess,
-        [loadBookDetailsError, loadRelatedContentError])
+        loadBookDetailsSuccess && (loadRelatedTopicsSuccess && loadRelatedReadingListsSuccess),
+        [loadBookDetailsError, loadRelatedReadingListsError, loadRelatedTopicsError])
     }
   }
   
@@ -525,13 +534,13 @@ extension BookDetailsViewModel {
     shouldReloadBookDetailsSections = false
   }
   
-  func loadRelatedContent(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+  func loadRelatedReadingLists(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
     guard let bookId = book.id else {
       return
     }
     
     _ = GeneralAPI.posts(
-      contentIdentifier: bookId, type: [ReadingList.resourceType, Topic.resourceType], completion: {
+      contentIdentifier: bookId, type: [ReadingList.resourceType], completion: {
         (success, resources, nextPage, error) in
         var success: Bool = success
         var error: BookwittyAPIError? = error
@@ -544,10 +553,30 @@ extension BookDetailsViewModel {
         }
         
         self.relatedReadingLists = Array(resources.flatMap({ $0 as? ReadingList }).prefix(self.maximumNumberOfDetails))
-        self.relatedTopics = Array(resources.flatMap({ $0 as? Topic }).prefix(self.maximumNumberOfDetails))
-        
         self.shouldReloadRelatedReadingListsSections =
           (self.relatedReadingLists?.count ?? 0 > 0) ? true : false
+    })
+  }
+  
+  func loadRelatedTopics(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    guard let bookId = book.id else {
+      return
+    }
+    
+    _ = GeneralAPI.posts(
+      contentIdentifier: bookId, type: [Topic.resourceType], completion: {
+        (success, resources, nextPage, error) in
+        var success: Bool = success
+        var error: BookwittyAPIError? = error
+        defer {
+          completion(success, error)
+        }
+        
+        guard success, let resources = resources else {
+          return
+        }
+        
+        self.relatedTopics = Array(resources.flatMap({ $0 as? Topic }).prefix(self.maximumNumberOfDetails))
         self.shouldReloadRelatedTopicsSections =
           (self.relatedTopics?.count ?? 0 > 0) ? true : false
     })
