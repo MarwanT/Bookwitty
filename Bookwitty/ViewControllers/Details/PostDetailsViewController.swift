@@ -38,7 +38,8 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.conculsion = viewModel.conculsion
     postDetailsNode.dataSource = self
     postDetailsNode.delegate = self
-    postDetailsNode.wit = viewModel.isWitted
+    postDetailsNode.setWitValue(witted: viewModel.isWitted, wits: viewModel.wits ?? 0)
+    postDetailsNode.setDimValue(dimmed: viewModel.isDimmed, dims: viewModel.dims ?? 0)
     postDetailsNode.booksHorizontalCollectionNode.dataSource = self
     loadContentPosts()
     loadRelatedBooks()
