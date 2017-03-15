@@ -58,14 +58,6 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     }
   }
 
-  func setWitValue(witted: Bool, wits: Int) {
-    actionBarNode.setWitButton(witted: witted, wits: wits)
-  }
-
-  func setDimValue(dimmed: Bool, dims: Int) {
-    actionBarNode.setDimValue(dimmed: dimmed, dims: dims)
-  }
-
   override init() {
     infoNode = CardPostInfoNode()
     actionBarNode = CardActionBarNode()
@@ -88,6 +80,15 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     tapDelegate?.didTapOn(node: self)
   }
   
+
+  func setWitValue(witted: Bool, wits: Int) {
+    actionBarNode.setWitButton(witted: witted, wits: wits)
+  }
+
+  func setDimValue(dimmed: Bool, dims: Int) {
+    actionBarNode.setDimValue(dimmed: dimmed, dims: dims)
+  }
+
   private func setupCellNode() {
     actionBarNode.delegate = self
     manageNodes()
