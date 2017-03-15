@@ -40,6 +40,34 @@ class PostsViewController: ASViewController<ASCollectionNode> {
     
     collectionNode.delegate = self
     collectionNode.dataSource = self
+  
+  fileprivate func loadNextPage(completion: @escaping (_ success: Bool) -> Void) {
+    guard !viewModel.isLoadingNextPage else {
+      return
+    }
+    
+    showBottomLoader(reloadSection: true)
+    viewModel.loadNextPage { (success) in
+      self.hideBottomLoader()
+      let sectionsNeedsReloading = self.viewModel.sectionsNeedsReloading()
+      self.reloadCollectionViewSections(sections: sectionsNeedsReloading)
+      completion(success)
+    }
+  }
+}
+
+// MARK: - Helpers
+extension PostsViewController {
+  fileprivate func showBottomLoader(reloadSection: Bool = false) {
+  }
+  
+  fileprivate func hideBottomLoader(reloadSection: Bool = false) {
+  }
+  
+  func reloadCollectionViewSections(sections: [Section]) {
+    let mutableIndexSet = NSMutableIndexSet()
+    sections.forEach({ mutableIndexSet.add($0.rawValue) })
+    collectionNode.reloadSections(mutableIndexSet as IndexSet)
   }
 }
 

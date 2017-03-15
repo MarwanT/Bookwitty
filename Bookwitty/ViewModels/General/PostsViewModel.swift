@@ -23,6 +23,17 @@ final class PostsViewModel {
   func initialize(resources: [ModelResource]?, loadingMode: DataLoadingMode?) {
     self.loadingMode = loadingMode
   }
+  
+  /// Currently this method resets 'should reload' flags when called
+  func sectionsNeedsReloading() -> [PostsViewController.Section] {
+    var sections:[PostsViewController.Section] = []
+    if shouldReloadPostsSections {
+      shouldReloadPostsSections = false
+      sections += [.posts]
+    }
+    sections += [.activityIndicator]
+    return sections
+  }
 }
 
 // MARK: - APIs
