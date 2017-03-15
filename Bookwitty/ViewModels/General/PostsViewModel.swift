@@ -93,8 +93,39 @@ extension PostsViewModel {
         self.loadingMode = .server(absoluteURL: nextPageURL)
         completion(success)
       })
+    case .local(let paginator):
+      guard let nextPageIds = paginator.nextPageIds(), nextPageIds.count > 0 else {
+        self.didReachLastPage = true
+        self.isLoadingNextPage = false
+        completion(false)
+        return
+      }
+      
+      isLoadingNextPage = false
+      
+      loadResourcesForIds(identifiers: nextPageIds, completion: {
+        (success) in
+        self.isLoadingNextPage = false
+        completion(success)
+      })
     }
   }
+  
+  fileprivate func loadResourcesForIds(identifiers: [String], completion: @escaping (_ success: Bool) -> Void) {
+    _ = UserAPI.batch(identifiers: identifiers, completion: {
+      (success, resources, error) in
+      defer {
+        completion(success)
+      }
+      
+      guard success, let resources = resources else {
+        return
+      }
+      self.shouldReloadPostsSections = resources.count > 0
+      self.posts.append(contentsOf: resources)
+    })
+  }
+  
 }
 
 // MARK: - Collection view data source and delegate
@@ -136,5 +167,6 @@ extension PostsViewModel {
 extension PostsViewModel {
   enum DataLoadingMode {
     case server(absoluteURL: URL?)
+    case local(paginator: Paginator)
   }
 }
