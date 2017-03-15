@@ -25,6 +25,7 @@ class Book: Resource {
 
   var productDetails: ProductDetails?
   var supplierInformation: SupplierInformation?
+  var counts: Counts?
 
   @objc
   private var followingNumber: NSNumber?
@@ -60,43 +61,12 @@ class Book: Resource {
       "createdAt" : DateAttribute().serializeAs("created-at"),
       "updatedAt" : DateAttribute().serializeAs("updated-at"),
       "coverImageUrl" : Attribute().serializeAs("cover-image-url"),
-      "countsDictionary": Attribute().serializeAs("counts"),
+      "counts" : CountsAttribute().serializeAs("counts"),
       "followingNumber": Attribute().serializeAs("following"),
       "contributorsCollection" : ToManyRelationship(PenName.self).serializeAs("contributors"),
       "productDetails" : ProductDetailsAttribute().serializeAs("product-details"),
       "supplierInformation" : SupplierInformationAttribute().serializeAs("supplier-information"),
       ])
-  }
-}
-
-//MARK: - Counts Helpers
-extension Book {
-  private struct CountsKey {
-    private init(){}
-    static let followers = "followers"
-    static let contributors = "contributors"
-    static let comments = "comments"
-    static let relatedLinks = "related-links"
-  }
-
-  var counts: (contributors: Int?, followers: Int?, posts: Int?) {
-    guard let counts = countsDictionary else {
-      return (nil, nil, nil)
-    }
-
-    let contributors = (counts[CountsKey.contributors] as? NSNumber)?.intValue
-    let followers = (counts[CountsKey.followers] as? NSNumber)?.intValue
-    let relatedLinks = counts[CountsKey.relatedLinks] as? [String : NSNumber]
-
-    var posts: Int? = nil
-
-    if let relatedLinks = relatedLinks {
-      let values = Array(relatedLinks.values)
-      posts = values.reduce(0) { (cumulative, current: NSNumber) -> Int in
-        return cumulative + current.intValue
-      }
-    }
-    return (contributors, followers, posts)
   }
 }
 
