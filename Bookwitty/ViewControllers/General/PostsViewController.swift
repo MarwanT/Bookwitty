@@ -13,6 +13,7 @@ class PostsViewController: ASViewController<ASCollectionNode> {
   let flowLayout: UICollectionViewFlowLayout
   let loaderNode: LoaderNode
   
+  let viewModel = PostsViewModel()
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
