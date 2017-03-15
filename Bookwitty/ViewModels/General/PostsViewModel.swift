@@ -10,6 +10,7 @@ import Foundation
 import Spine
 
 final class PostsViewModel {
+  var viewControllerTitle: String? = nil
   
   var posts = [ModelResource]()
   fileprivate var loadingMode: DataLoadingMode? = nil

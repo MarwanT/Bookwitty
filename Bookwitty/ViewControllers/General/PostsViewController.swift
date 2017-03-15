@@ -37,6 +37,7 @@ class PostsViewController: ASViewController<ASCollectionNode> {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = viewModel.viewControllerTitle
     
     collectionNode.delegate = self
     collectionNode.dataSource = self
