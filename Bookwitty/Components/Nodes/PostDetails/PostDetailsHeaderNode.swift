@@ -59,6 +59,9 @@ class PostDetailsHeaderNode: ASCellNode {
   }
 
   func initializeNode() {
+    //Enable dimming node
+    actionBarNode.hideDim = false
+    
     //Separator Styling
     separator.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 1.0)
     separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
