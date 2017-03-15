@@ -276,12 +276,12 @@ extension CategoryViewModel {
     return categoryBooks?.books
   }
   
-  var booksLoadingMode: DataLoadingMode? {
+  var booksLoadingMode: BooksTableViewController.DataLoadingMode? {
     guard let booksInfo = categoryBooks else {
       return nil
     }
     
-    return DataLoadingMode.server(nextPageURL: booksInfo.nextPage)
+    return BooksTableViewController.DataLoadingMode.server(nextPageURL: booksInfo.nextPage)
   }
 
   func book(for indexPath: IndexPath) -> Book? {

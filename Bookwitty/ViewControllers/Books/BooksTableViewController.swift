@@ -103,3 +103,10 @@ extension BooksTableViewController {
     tableView.tableFooterView = UIView(frame: CGRect.zero)
   }
 }
+
+extension BooksTableViewController {
+  enum DataLoadingMode {
+    case local(paginator: Paginator)
+    case server(nextPageURL: URL?)
+  }
+}

@@ -277,7 +277,7 @@ extension BookStoreViewModel {
     return featuredReadingListContent?.fetchedBooks
   }
   
-  var booksLoadingMode: DataLoadingMode? {
+  var booksLoadingMode: BooksTableViewController.DataLoadingMode? {
     guard let books = featuredReadingListContent else {
       return nil
     }
