@@ -39,6 +39,7 @@ class PostDetailsHeaderNode: ASCellNode {
     didSet {
       profileBarNode.penName = penName?.name
       profileBarNode.imageUrl = penName?.avatarUrl
+      profileBarNode.following = penName?.following ?? false
     }
   }
 
