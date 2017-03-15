@@ -13,6 +13,7 @@
 "bag" = "Bag";
 "book_categories" = "Book Categories";
 "book_details" = "Book details";
+"book_recommended_in_reading_lists" = "This book is recommended in the following reading lists";
 "books" = "Books";
 "bookwitty_suggests" = "Bookwitty Suggests";
 "buy_this_book" = "Acheter Ce Livre";
@@ -88,6 +89,7 @@
 "publisher" = "publisher";
 "reading_lists" = "Reading Lists";
 "register" = "Register";
+"related_bookwitty_topics" = "Related bookwitty topics";
 "clear_profile_photo" = "Clear profile photo";
 "settings" = "Settings";
 "shop_in_app_coming_soon_message" = "Soon you will be able to buy books in the Mobile App.";

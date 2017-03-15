@@ -36,6 +36,10 @@ class Strings {
   class func book_details() -> String {
     return localizedString(key: "book_details")
   }
+  
+  class func book_recommended_in_reading_lists() -> String {
+    return localizedString(key: "book_recommended_in_reading_lists")
+  }
 
   class func books() -> String {
     return localizedString(key: "books")
@@ -331,6 +335,10 @@ class Strings {
 
   class func register() -> String {
     return localizedString(key: "register")
+  }
+  
+  class func related_bookwitty_topics() -> String {
+    return localizedString(key: "related_bookwitty_topics")
   }
 
   class func clear_profile_photo() -> String {

@@ -8,12 +8,15 @@
 
 import UIKit
 import AsyncDisplayKit
+import Spine
 
 class BookDetailsViewController: ASViewController<ASCollectionNode> {
   let viewModel = BookDetailsViewModel()
   
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
+  
+  let loaderNode = LoaderNode()
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -28,6 +31,8 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     viewModel.book = book
     
+    loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
+    
     super.init(node: collectionNode)
     
     viewModel.viewController = self
@@ -41,6 +46,13 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
     collectionNode.dataSource = self
     
     loadNavigationBarButtons()
+    
+    showBottomLoader(reloadSection: true)
+    viewModel.loadContent { (success, errors) in
+      self.hideBottomLoader()
+      let sectionsNeedsReloading = self.viewModel.sectionsNeedsReloading()
+      self.reloadCollectionViewSections(sections: sectionsNeedsReloading)
+    }
   }
   
   private func loadNavigationBarButtons() {
@@ -50,6 +62,26 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
       target: self,
       action: #selector(shareOutsideButton(_:)))
     navigationItem.rightBarButtonItem = shareButton
+  }
+  
+  func showBottomLoader(reloadSection: Bool = false) {
+    viewModel.shouldShowBottomLoader = true
+    if reloadSection {
+      reloadCollectionViewSections(sections: [BookDetailsViewModel.Section.activityIndicator])
+    }
+  }
+  
+  func hideBottomLoader(reloadSection: Bool = false) {
+    viewModel.shouldShowBottomLoader = false
+    if reloadSection {
+      reloadCollectionViewSections(sections: [BookDetailsViewModel.Section.activityIndicator])
+    }
+  }
+  
+  func reloadCollectionViewSections(sections: [BookDetailsViewModel.Section]) {
+    let mutableIndexSet = NSMutableIndexSet()
+    sections.forEach({ mutableIndexSet.add($0.rawValue) })
+    collectionNode.reloadSections(mutableIndexSet as IndexSet)
   }
 }
 
@@ -63,8 +95,36 @@ extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
   }
   
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
-    return {
-      return self.viewModel.nodeForItem(at: indexPath)
+    if indexPath.section == BookDetailsViewModel.Section.activityIndicator.rawValue {
+      return {
+        return self.loaderNode
+      }
+    } else {
+      return {
+        return self.viewModel.nodeForItem(at: indexPath)
+      }
+    }
+  }
+  
+  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+    if let loaderNode = node as? LoaderNode {
+      loaderNode.updateLoaderVisibility(show: true)
+    }
+    
+    // Check if cell conforms to protocol base card delegate
+    if let cardNode = node as? BaseCardPostNode {
+      cardNode.delegate = self
+    }
+    
+    // If cell is reading list handle loading the images
+    if let readingListCell = node as? ReadingListCardPostCellNode, let indexPath = node.indexPath,
+      !readingListCell.node.isImageCollectionLoaded  {
+      let max = readingListCell.node.maxNumberOfImages
+      self.viewModel.loadReadingListImages(at: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
+        if let imageCollection = imageCollection, imageCollection.count > 0 {
+          readingListCell.node.loadImages(with: imageCollection)
+        }
+      })
     }
   }
   
@@ -103,6 +163,10 @@ extension BookDetailsViewController {
       break
     case .viewShippingInfo(let url):
       viewShippingInfo(url)
+    case .goToReadingList(let readingList):
+      pushPostDetailsViewController(resource: readingList)
+    case .goToTopic(let topic):
+      viewTopicViewController(with: topic)
     }
   }
   
@@ -151,6 +215,17 @@ extension BookDetailsViewController {
     }
     perform(action: .share(bookTitle: self.viewModel.book.title ?? "", url: url))
   }
+  
+  func viewTopicViewController(with topic: Topic) {
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(withTopic: topic)
+    navigationController?.pushViewController(topicViewController, animated: true)
+  }
+  
+  func pushPostDetailsViewController(resource: Resource) {
+    let nodeVc = PostDetailsViewController(resource: resource)
+    navigationController?.pushViewController(nodeVc, animated: true)
+  }
 }
 
 // MARK: - Book details about node
@@ -192,5 +267,34 @@ extension BookDetailsViewController {
     case buyThisBook(URL)
     case share(bookTitle: String, url: URL)
     case addToWishlist
+    case goToReadingList(ReadingList)
+    case goToTopic(Topic)
+  }
+}
+
+// MARK: - Base card post node delegate
+extension BookDetailsViewController: BaseCardPostNodeDelegate {
+  func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    guard let indexPath = card.indexPath else {
+      return
+    }
+    
+    switch(action) {
+    case .wit:
+      viewModel.witContent(indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    case .unwit:
+      viewModel.unwitContent(indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    case .share:
+      if let sharingInfo: [String] = viewModel.sharingContent(indexPath: indexPath) {
+        presentShareSheet(shareContent: sharingInfo)
+      }
+    default:
+      //TODO: handle comment
+      break
+    }
   }
 }
