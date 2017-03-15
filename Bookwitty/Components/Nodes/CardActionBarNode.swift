@@ -111,6 +111,7 @@ class CardActionBarNode: ASCellNode {
     shareButton.addTarget(self, action: #selector(shareButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     commentButton.addTarget(self, action: #selector(commentButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     witButton.addTarget(self, action: #selector(witButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    followButton.addTarget(self, action: #selector(followButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     numberOfDimsNode.addTarget(self, action: #selector(dimButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
 
     numberOfWitsNode.style.maxWidth = ASDimensionMake(60.0)
@@ -206,6 +207,16 @@ class CardActionBarNode: ASCellNode {
     }
   }
 
+  func updateFollow(for action: Action, success: Bool = true) {
+    switch action {
+    case .follow:
+      followButton.isSelected = success
+    case .unfollow:
+      followButton.isSelected = !success
+    default: break
+    }
+  }
+
   func dimButtonTouchUpInside(_ sender: ASTextNode?) {
     let action = !numberOfDimsNode.isSelected ? CardActionBarNode.Action.dim : CardActionBarNode.Action.undim
     self.updateWitAndDim(for: action)
@@ -229,6 +240,21 @@ class CardActionBarNode: ASCellNode {
       guard let strongSelf = self else { return }
       if !success { //Toggle back on failure
         strongSelf.updateWitAndDim(for: action, success: false)
+      }
+    })
+  }
+
+  func followButtonTouchUpInside(_ sender: ASButtonNode?) {
+    guard let sender = sender else { return }
+    //Get action from witButton status
+    let action = !followButton.isSelected ? CardActionBarNode.Action.follow : CardActionBarNode.Action.unfollow
+    //Assume success and Toggle button anyway, if follow/unfollow fails delegate should either call didFinishAction or  call toggle follow.
+    self.updateFollow(for: action)
+
+    delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: action, forSender: sender, didFinishAction: { [weak self] (success: Bool) in
+      guard let strongSelf = self else { return }
+      if !success { //Toggle back on failure
+        strongSelf.updateFollow(for: action, success: false)
       }
     })
   }
