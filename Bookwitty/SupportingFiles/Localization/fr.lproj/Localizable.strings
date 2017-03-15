@@ -82,8 +82,8 @@
 "interests" = "Intérêts";
 "isbn10" = "ISBN-10";
 "isbn13" = "ISBN-13";
-"language" = "Langue ";
-"language_of_text" = "Langue ";
+"language" = "Langue";
+"language_of_text" = "Langue";
 "last_name" = "Nom";
 "last_name_invalid" = "Veuillez inscrire votre e-mail";
 "latest" = "Nouveautés";
