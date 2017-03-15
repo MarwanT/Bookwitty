@@ -15,7 +15,7 @@ class PostDetailsHeaderNode: ASCellNode {
 
   fileprivate let imageNode: ASNetworkImageNode
   fileprivate let textNode: ASTextNode
-  fileprivate let profileBarNode: PenNameFollowNode
+  let profileBarNode: PenNameFollowNode
   let actionBarNode: CardActionBarNode
   fileprivate let separator: ASDisplayNode
   fileprivate let bottomSeparator: ASDisplayNode

@@ -40,6 +40,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.postCardsNode.dataSource = self
     postDetailsNode.postItemsNode.delegate = self
     postDetailsNode.postCardsNode.delegate = self
+    postDetailsNode.headerNode.profileBarNode.delegate = self
     postDetailsNode.delegate = self
     postDetailsNode.setWitValue(witted: viewModel.isWitted, wits: viewModel.wits ?? 0)
     postDetailsNode.setDimValue(dimmed: viewModel.isDimmed, dims: viewModel.dims ?? 0)
@@ -314,6 +315,12 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
     }
   }
 }
+// Mark: - Pen Name Header
+extension PostDetailsViewController: PenNameFollowNodeDelegate {
+  func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ASButtonNode) {
+  }
+}
+
 // MARK - Actions
 extension PostDetailsViewController {
   fileprivate func pushBookDetailsViewController(with book: Book) {

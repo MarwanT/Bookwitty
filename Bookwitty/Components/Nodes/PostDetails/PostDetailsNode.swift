@@ -52,7 +52,7 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let horizontalCollectionNodeHeight: CGFloat = RelatedBooksMinimalCellNode.cellHeight
 
-  fileprivate let headerNode: PostDetailsHeaderNode
+
   fileprivate let descriptionNode: DTAttributedTextContentNode
   fileprivate let separator: SeparatorNode
   fileprivate let conculsionNode: ASTextNode
@@ -71,6 +71,7 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let relatedPostsBottomSeparator: SeparatorNode
   fileprivate let relatedPostsNodeLoader: LoaderNode
 
+  let headerNode: PostDetailsHeaderNode
   let postItemsNode: PostDetailsItemNode
   let postCardsNode: PostDetailsItemNode
   let booksHorizontalCollectionNode: ASCollectionNode
