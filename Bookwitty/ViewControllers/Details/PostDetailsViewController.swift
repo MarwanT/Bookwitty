@@ -41,6 +41,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.setWitValue(witted: viewModel.isWitted, wits: viewModel.wits ?? 0)
     postDetailsNode.setDimValue(dimmed: viewModel.isDimmed, dims: viewModel.dims ?? 0)
     postDetailsNode.booksHorizontalCollectionNode.dataSource = self
+    postDetailsNode.booksHorizontalCollectionNode.delegate = self
     loadContentPosts()
     loadRelatedBooks()
     loadRelatedPosts()
@@ -175,6 +176,15 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
         return BaseCardPostNode()
       }
       let card = CardFactory.shared.createCardFor(resource: resource)
+      if let readingListCell = card as? ReadingListCardPostCellNode,
+        !readingListCell.node.isImageCollectionLoaded {
+        let max = readingListCell.node.maxNumberOfImages
+        self.viewModel.loadReadingListImages(atIndex: index, maxNumberOfImages: max, completionBlock: { (imageCollection) in
+          if let imageCollection = imageCollection, imageCollection.count > 0 {
+            readingListCell.node.loadImages(with: imageCollection)
+          }
+        })
+      }
       card?.delegate = self
       return  card ?? BaseCardPostNode()
     } else {
