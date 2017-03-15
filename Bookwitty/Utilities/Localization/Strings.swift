@@ -449,6 +449,10 @@ class Strings {
     return localizedString(key: "tutorial_third_page_title")
   }
   
+  class func video() -> String {
+    return localizedString(key: "video")
+  }
+  
   class func view_all() -> String {
     return localizedString(key: "view_all")
   }
