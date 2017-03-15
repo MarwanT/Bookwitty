@@ -63,6 +63,13 @@ class CardActionBarNode: ASCellNode {
   private let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
   private let iconSize: CGSize = CGSize(width: 40.0, height: 40.0)
 
+  var hideDim: Bool = false {
+    didSet {
+      numberOfDimsNode.isHidden = hideDim
+      setNeedsLayout()
+    }
+  }
+
   override init() {
     witButton = ASButtonNode()
     commentButton = ASButtonNode()
@@ -99,6 +106,9 @@ class CardActionBarNode: ASCellNode {
     numberOfWitsNode.maximumNumberOfLines = 1
     numberOfDimsNode.style.maxWidth = ASDimensionMake(120.0)
     numberOfDimsNode.maximumNumberOfLines = 1
+
+    //By default dim info should be hidden, needs to be explicitly set false to show
+    hideDim = true
   }
 
   private func setupWitButtonStyling() {
