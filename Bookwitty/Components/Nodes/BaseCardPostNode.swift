@@ -56,15 +56,13 @@ class BaseCardPostNode: ASCellNode {
       }
     }
   }
-  var wit: Bool = false {
-    didSet {
-      actionBarNode.setWitButton(witted: wit)
-    }
+
+  func setWitValue(witted: Bool, wits: Int) {
+    actionBarNode.setWitButton(witted: witted, wits: wits)
   }
-  var dimmed: Bool = false {
-    didSet {
-      actionBarNode.setDimValue(dimmed: dimmed)
-    }
+
+  func setDimValue(dimmed: Bool, dims: Int) {
+    actionBarNode.setDimValue(dimmed: dimmed, dims: dims)
   }
 
   override init() {
