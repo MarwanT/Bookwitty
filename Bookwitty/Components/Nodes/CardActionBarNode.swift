@@ -24,6 +24,7 @@ class CardActionBarNode: ASCellNode {
     case follow
     case unfollow
   }
+  var followButton: ASButtonNode
   var witButton: ASButtonNode
   var commentButton: ASButtonNode
   var shareButton: ASButtonNode
@@ -83,12 +84,14 @@ class CardActionBarNode: ASCellNode {
     shareButton = ASButtonNode()
     numberOfWitsNode = ASTextNode()
     numberOfDimsNode = ASTextNode()
+    followButton = ASButtonNode()
     super.init()
     addSubnode(witButton)
     addSubnode(commentButton)
     addSubnode(shareButton)
     addSubnode(numberOfWitsNode)
     addSubnode(numberOfDimsNode)
+    addSubnode(followButton)
     self.initializeNode()
   }
 
@@ -103,6 +106,7 @@ class CardActionBarNode: ASCellNode {
     shareButton.setImage(#imageLiteral(resourceName: "shareOutside"), for: .normal)
 
     setupWitButtonStyling()
+    setupFollowButtonStyling()
 
     shareButton.addTarget(self, action: #selector(shareButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     commentButton.addTarget(self, action: #selector(commentButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
@@ -116,6 +120,27 @@ class CardActionBarNode: ASCellNode {
 
     //By default dim info should be hidden, needs to be explicitly set false to show
     hideDim = true
+  }
+
+  private func setupFollowButtonStyling() {
+    let buttonFont = FontDynamicType.subheadline.font
+
+    let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultBackgroundColor())
+    let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+
+    let selectedTextColor = ThemeManager.shared.currentTheme.colorNumber23()
+    let selectedButtonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultButtonColor())
+
+    followButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
+    followButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
+
+    followButton.setTitle(Strings.follow(), with: buttonFont, with: textColor, for: .normal)
+    followButton.setTitle(Strings.followed(), with: buttonFont, with: selectedTextColor, for: .selected)
+
+    followButton.cornerRadius = 4
+    followButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
+    followButton.borderWidth = 2
+    followButton.clipsToBounds = true
   }
 
   private func setupWitButtonStyling() {
