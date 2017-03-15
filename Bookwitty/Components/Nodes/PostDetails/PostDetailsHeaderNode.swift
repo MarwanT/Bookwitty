@@ -15,7 +15,7 @@ class PostDetailsHeaderNode: ASCellNode {
 
   fileprivate let imageNode: ASNetworkImageNode
   fileprivate let textNode: ASTextNode
-  fileprivate let profileBarNode: PenNameFollowNode
+  let profileBarNode: PenNameFollowNode
   let actionBarNode: CardActionBarNode
   fileprivate let separator: ASDisplayNode
   fileprivate let bottomSeparator: ASDisplayNode
@@ -39,6 +39,7 @@ class PostDetailsHeaderNode: ASCellNode {
     didSet {
       profileBarNode.penName = penName?.name
       profileBarNode.imageUrl = penName?.avatarUrl
+      profileBarNode.following = penName?.following ?? false
     }
   }
 
