@@ -396,8 +396,7 @@ extension BookDetailsViewModel {
       case 0: // Header
         return false
       case (readingLists.count + 1): // Footer
-        // TODO: Handle this selection
-        return false
+        return true
       default:
         return true
       }
@@ -409,8 +408,7 @@ extension BookDetailsViewModel {
       case 0: // Header
         return false
       case (relatedTopics.count + 1): // Footer
-        // TODO: Handle this selection
-        return false
+        return true
       default:
         return true
       }
@@ -458,8 +456,9 @@ extension BookDetailsViewModel {
       case 0: // Header
         return nil
       case readingLists.count + 1: // Footer
-        // TODO: Handle this selection
-        return nil
+        return .viewRelatedReadingLists(
+          readingLists: relatedReadingLists?.readingLists,
+          url: relatedReadingLists?.nextPageURL)
       default:
         return .goToReadingList(readingLists[indexPath.item - 1])
       }
@@ -471,8 +470,9 @@ extension BookDetailsViewModel {
       case 0: // Header
         return nil
       case relatedTopics.count + 1: // Footer
-        // TODO: Handle this selection
-        return nil
+        return .viewRelatedTopics(
+          topics: self.relatedTopics?.topics,
+          url: self.relatedTopics?.nextPageURL)
       default:
         return .goToTopic(relatedTopics[indexPath.item - 1])
       }

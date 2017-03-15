@@ -167,6 +167,10 @@ extension BookDetailsViewController {
       pushPostDetailsViewController(resource: readingList)
     case .goToTopic(let topic):
       viewTopicViewController(with: topic)
+    case .viewRelatedReadingLists(let readingLists, let url):
+      pushPostsViewController(resources: readingLists, url: url)
+    case .viewRelatedTopics(let topics, let url):
+      pushPostsViewController(resources: topics, url: url)
     }
   }
   
@@ -226,6 +230,12 @@ extension BookDetailsViewController {
     let nodeVc = PostDetailsViewController(resource: resource)
     navigationController?.pushViewController(nodeVc, animated: true)
   }
+  
+  func pushPostsViewController(resources: [ModelResource]?, url: URL?) {
+    let postsViewController = PostsViewController()
+    postsViewController.initialize(title: nil, resources: resources, loadingMode: PostsViewModel.DataLoadingMode.server(absoluteURL: url))
+    navigationController?.pushViewController(postsViewController, animated: true)
+  }
 }
 
 // MARK: - Book details about node
@@ -269,6 +279,8 @@ extension BookDetailsViewController {
     case addToWishlist
     case goToReadingList(ReadingList)
     case goToTopic(Topic)
+    case viewRelatedReadingLists(readingLists: [ReadingList]?, url: URL?)
+    case viewRelatedTopics(topics: [Topic]?, url: URL?)
   }
 }
 
