@@ -106,6 +106,20 @@ class SettingsViewController: UIViewController {
     Analytics.shared.send(screenName: Analytics.ScreenNames.CountryList)
   }
 
+  private func presentChangeLanguageActionSheet() {
+    let alertController = UIAlertController(title: Strings.language(), message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+    let languages: [Localization.Language] = Localization.Language.all()
+    languages.forEach { (language: Localization.Language) in
+      let languageDisplayName: String = Locale.current.localizedString(forLanguageCode: language.rawValue) ?? language.rawValue
+      alertController.addAction(UIAlertAction(title: languageDisplayName.capitalized, style: UIAlertActionStyle.default, handler: {
+        (action: UIAlertAction) in
+        Localization.set(language: language)
+      }))
+    }
+    alertController.addAction(UIAlertAction(title: Strings.cancel(), style: UIAlertActionStyle.cancel, handler: nil))
+    navigationController?.present(alertController, animated: true, completion: nil)
+  }
+
   private func signOut() {
     NotificationCenter.default.post(name: AppNotification.signOut, object: nil)
   }
