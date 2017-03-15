@@ -340,6 +340,10 @@ class Strings {
   class func profile_picture() -> String {
     return localizedString(key: "profile_picture")
   }
+  
+  class func quote() -> String {
+    return localizedString(key: "quote")
+  }
 
   class func reading_lists() -> String {
     return localizedString(key: "reading_lists")
