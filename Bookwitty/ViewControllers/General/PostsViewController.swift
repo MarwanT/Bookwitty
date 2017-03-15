@@ -52,9 +52,7 @@ class PostsViewController: ASViewController<ASCollectionNode> {
     collectionNode.dataSource = self
     
     if viewModel.hasNoPosts {
-      loadNextPage(completion: { (success) in
-        print("Fist Page Loaded")
-      })
+      loadNextPage(completion: { _ in })
     }
   }
   
