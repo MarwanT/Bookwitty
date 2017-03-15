@@ -19,8 +19,7 @@ class CategoriesTableViewController: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = Strings.categories()
-    
+
     tableView.register(DisclosureTableViewCell.nib,
                        forCellReuseIdentifier: DisclosureTableViewCell.identifier)
     
@@ -35,6 +34,9 @@ class CategoriesTableViewController: UITableViewController {
     if delegate == nil {
       delegate = self
     }
+
+    observeLanguageChanges()
+    applyLocalization()
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.BrowseByCategory)
@@ -100,5 +102,22 @@ extension CategoriesTableViewController: CategoriesTableViewDelegate {
     let categoryViewController = Storyboard.Books.instantiate(CategoryViewController.self)
     categoryViewController.viewModel.category = category
     navigationController?.pushViewController(categoryViewController, animated: true)
+  }
+}
+
+//MARK: - Localizable implementation
+extension CategoriesTableViewController: Localizable {
+  func applyLocalization() {
+    title = Strings.categories()
+    tableView.reloadData()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }
