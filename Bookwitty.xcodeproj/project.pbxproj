@@ -83,6 +83,7 @@
 		595C4F0D1E3F8C0200BE3942 /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595C4F0C1E3F8C0200BE3942 /* InputField.swift */; };
 		595C4F0F1E3F8C9200BE3942 /* PasswordInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595C4F0E1E3F8C9200BE3942 /* PasswordInputField.swift */; };
 		595C4F111E3F9DA400BE3942 /* InformativeInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595C4F101E3F9DA400BE3942 /* InformativeInputField.swift */; };
+		596562E41E79EF9E00B93920 /* MisfortuneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596562E31E79EF9E00B93920 /* MisfortuneNode.swift */; };
 		5967E4581E4107EF0067093F /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5967E4571E4107EF0067093F /* NotificationView.xib */; };
 		5967E45A1E410A850067093F /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5967E4591E410A850067093F /* NotificationView.swift */; };
 		596FAD741E2E53AC0064F967 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596FAD731E2E53AC0064F967 /* Environment.swift */; };
@@ -300,6 +301,7 @@
 		595C4F0C1E3F8C0200BE3942 /* InputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
 		595C4F0E1E3F8C9200BE3942 /* PasswordInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordInputField.swift; sourceTree = "<group>"; };
 		595C4F101E3F9DA400BE3942 /* InformativeInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformativeInputField.swift; sourceTree = "<group>"; };
+		596562E31E79EF9E00B93920 /* MisfortuneNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MisfortuneNode.swift; sourceTree = "<group>"; };
 		5967E4571E4107EF0067093F /* NotificationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationView.xib; sourceTree = "<group>"; };
 		5967E4591E410A850067093F /* NotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		596FAD731E2E53AC0064F967 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
@@ -710,6 +712,7 @@
 				56D36E811E6DAB3400791098 /* PenNameFollowNode.swift */,
 				56E87D331E6EFFCA00AF6CFD /* BookNode.swift */,
 				59C048811E735C4500CADE38 /* BagNode.swift */,
+				596562E31E79EF9E00B93920 /* MisfortuneNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -1435,6 +1438,7 @@
 				F4670AF91E54556800159F4F /* ReadingListCardPostCellNode.swift in Sources */,
 				F4A426331E5628080090CD51 /* Quote.swift in Sources */,
 				562A31231E65D7F2002851DE /* TopicViewController.swift in Sources */,
+				596562E41E79EF9E00B93920 /* MisfortuneNode.swift in Sources */,
 				596FAD741E2E53AC0064F967 /* Environment.swift in Sources */,
 				56BEF6391E6836DB0012FDE5 /* ContributorsNode.swift in Sources */,
 				F422D82E1E51AC3900A32C2F /* VideoCardPostCellNode.swift in Sources */,
