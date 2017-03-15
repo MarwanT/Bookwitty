@@ -73,6 +73,41 @@ extension PostsViewModel {
   }
 }
 
+// MARK: - Collection view data source and delegate
+extension PostsViewModel {
+  var numberOfSections: Int {
+    return PostsViewController.Section.numberOfSections
+  }
+  
+  func numberOfItemsForSection(for section: Int) -> Int {
+    guard let section = PostsViewController.Section(rawValue: section) else {
+      return 0
+    }
+    switch section {
+    case .posts:
+      return 0
+    case .activityIndicator:
+      return 0
+    }
+  }
+  
+  func nodeForItem(at indexPath: IndexPath) -> BaseCardPostNode? {
+    var node: BaseCardPostNode? = nil
+    guard let section = PostsViewController.Section(rawValue: indexPath.section) else {
+      return nil
+    }
+    
+    switch section {
+    case .posts:
+      let resource = posts[indexPath.item]
+      node = CardFactory.shared.createCardFor(resource: resource)
+    case .activityIndicator:
+      return nil
+    }
+    return node
+  }
+}
+
 // MARK: - Declarations
 extension PostsViewModel {
   enum DataLoadingMode {
