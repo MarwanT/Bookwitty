@@ -368,3 +368,53 @@ extension PostDetailsViewModel {
     return [shortDesciption]
   }
 }
+
+
+// MARK: - PenName Follow/Unfollow
+extension PostDetailsViewModel {
+  func followPenName(completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let penName = penName, let identifier = penName.id else {
+      completionBlock(false)
+      return
+    }
+
+    followRequest(identifier: identifier) {
+      (success: Bool) in
+      defer {
+        completionBlock(success)
+      }
+      penName.following = true
+    }
+  }
+
+  func unfollowPenName(completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let penName = penName, let identifier = penName.id else {
+      completionBlock(false)
+      return
+    }
+
+    unfollowRequest(identifier: identifier) {
+      (success: Bool) in
+      defer {
+        completionBlock(success)
+      }
+      penName.following = false
+    }
+  }
+
+  fileprivate func followRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
+    _ = GeneralAPI.follow(identifer: identifier) { (success, error) in
+      defer {
+        completionBlock(success)
+      }
+    }
+  }
+
+  fileprivate func unfollowRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
+    _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
+      defer {
+        completionBlock(success)
+      }
+    }
+  }
+}

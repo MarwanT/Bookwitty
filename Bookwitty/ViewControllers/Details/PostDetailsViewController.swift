@@ -318,6 +318,19 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
 // Mark: - Pen Name Header
 extension PostDetailsViewController: PenNameFollowNodeDelegate {
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ASButtonNode) {
+    if button.isSelected {
+      viewModel.unfollowPenName(completionBlock: {
+        (success: Bool) in
+        node.following = false
+        button.isSelected = false
+      })
+    } else {
+      viewModel.followPenName(completionBlock: {
+        (success: Bool) in
+        node.following = true
+        button.isSelected = true
+      })
+    }
   }
 }
 
