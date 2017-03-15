@@ -29,6 +29,10 @@ class Strings {
     return localizedString(key: "bag")
   }
   
+  class func book() -> String {
+    return localizedString(key: "book")
+  }
+  
   class func book_categories() -> String {
     return localizedString(key: "book_categories")
   }
