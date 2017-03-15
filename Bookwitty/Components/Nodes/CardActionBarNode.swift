@@ -29,7 +29,7 @@ class CardActionBarNode: ASCellNode {
   var numberOfDimsNode: ASTextNode
   var delegate: CardActionBarNodeDelegate? = nil
 
-  var numberOfWits: Int? {
+  fileprivate var numberOfWits: Int? {
     didSet {
       if let numberOfWits = numberOfWits, numberOfWits > 0 {
         numberOfWitsNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1)
@@ -39,18 +39,21 @@ class CardActionBarNode: ASCellNode {
       }
     }
   }
-  var numberOfDims: Int? {
+  fileprivate var numberOfDims: Int? {
     didSet {
       if let numberOfDims = numberOfDims, numberOfDims > 0 {
         numberOfDimsNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.footnote)
-          .append(text: Strings.dim())
+          .append(text: dimText)
           .append(text: " ")
           .append(text: "(\(numberOfDims))", fontDynamicType: FontDynamicType.caption1).attributedString
       } else {
         numberOfDimsNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.footnote)
-          .append(text: Strings.dim()).attributedString
+          .append(text: dimText).attributedString
       }
     }
+  }
+  fileprivate var dimText: String {
+    return numberOfDimsNode.isSelected ? Strings.dimmed() : Strings.dim()
   }
 
   private let witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
