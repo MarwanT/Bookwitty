@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Spine
 
 final class PostsViewModel {
   
@@ -17,6 +18,16 @@ final class PostsViewModel {
   /// the items of the first page
   func initialize(resources: [ModelResource]?, loadingMode: DataLoadingMode?) {
     self.loadingMode = loadingMode
+  }
+}
+
+// MARK: - APIs
+extension PostsViewModel {
+  fileprivate func loadPostsForURL(url: URL, completion: @escaping (_ success: Bool, _ resources: [ModelResource]?, _ nextPage: URL?) -> Void) {
+    _ = GeneralAPI.nextPage(nextPage: url, completion: {
+      (success, resources, nextPageURL, error) in
+      completion(success, resources, nextPageURL)
+    })
   }
 }
 
