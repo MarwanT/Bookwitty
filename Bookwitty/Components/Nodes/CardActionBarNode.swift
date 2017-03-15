@@ -63,10 +63,13 @@ class CardActionBarNode: ASCellNode {
   fileprivate var dimText: String {
     return numberOfDimsNode.isSelected ? Strings.dimmed() : Strings.dim()
   }
-  fileprivate var followingMode: Bool = false
-
   fileprivate var actionButton: ASButtonNode {
     return followingMode ? followButton : witButton
+  }
+  fileprivate var followingMode: Bool = false {
+    didSet {
+      setNeedsLayout()
+    }
   }
   private let witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
