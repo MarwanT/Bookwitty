@@ -65,6 +65,9 @@ class CardActionBarNode: ASCellNode {
   }
   fileprivate var followingMode: Bool = false
 
+  fileprivate var actionButton: ASButtonNode {
+    return followingMode ? followButton : witButton
+  }
   private let witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
 
