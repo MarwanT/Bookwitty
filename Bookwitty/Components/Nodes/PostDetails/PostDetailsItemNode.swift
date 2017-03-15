@@ -14,6 +14,19 @@ protocol PostDetailsItemNodeDataSource {
   func postDetailsItemCount(_ postDetailsItem: PostDetailsItemNode) -> Int
 }
 
+
+protocol ItemNodeTapDelegate {
+  func didTapOn(node: ASDisplayNode)
+}
+
+/**
+ * Every Node that uses 'PostDetailsItemNode' should
+ * conform NodeTapProtocol to be able to delegate its tap.
+ */
+protocol NodeTapProtocol {
+  var tapDelegate: ItemNodeTapDelegate? { get set }
+}
+
 class PostDetailsItemNode: ASDisplayNode {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
