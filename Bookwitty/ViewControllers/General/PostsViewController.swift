@@ -71,6 +71,27 @@ extension PostsViewController {
   }
 }
 
+// MARK: - Load More
+extension PostsViewController {
+  func shouldBatchFetch(for collectionNode: ASCollectionNode) -> Bool {
+    return viewModel.hasNextPage
+  }
+  
+  func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
+    guard context.isFetching() else {
+      return
+    }
+    
+    context.beginBatchFetching()
+    
+    self.loadNextPage { (success) in
+      defer {
+        context.completeBatchFetching(true)
+      }
+    }
+  }
+}
+
 // MARK: - Collection view data source and delegate
 extension PostsViewController: ASCollectionDataSource, ASCollectionDelegate {
   func numberOfSections(in collectionNode: ASCollectionNode) -> Int {

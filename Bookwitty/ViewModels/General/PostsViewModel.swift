@@ -16,6 +16,9 @@ final class PostsViewModel {
   
   var isLoadingNextPage: Bool = false
   var didReachLastPage: Bool = false
+  var hasNextPage: Bool {
+    return !didReachLastPage
+  }
   fileprivate var shouldReloadPostsSections = false
   
   /// Given an array of resources, they will be considered as
