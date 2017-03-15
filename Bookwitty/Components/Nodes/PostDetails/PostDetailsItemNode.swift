@@ -94,7 +94,7 @@ protocol PostDetailItemNodeDelegate {
   func postDetailItemNodeButtonTouchUpInside(postDetailItemNode: PostDetailItemNode, button: ASButtonNode)
 }
 
-class PostDetailItemNode: ASCellNode {
+class PostDetailItemNode: ASCellNode, NodeTapProtocol {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   private let largeImageHeight: CGFloat = 120.0
@@ -110,6 +110,7 @@ class PostDetailItemNode: ASCellNode {
   let button: ASButtonNode
 
   var delegate: PostDetailItemNodeDelegate?
+  var tapDelegate: ItemNodeTapDelegate?
   var smallImage: Bool = true
   var showsSubheadline: Bool = true
   var showsButton: Bool = false
@@ -194,6 +195,18 @@ class PostDetailItemNode: ASCellNode {
     self.showsSubheadline = showsSubheadline
     self.showsButton = showsButton
     initializeNode()
+  }
+
+  override func didLoad() {
+    super.didLoad()
+    if tapDelegate != nil {
+      let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnView(_:)))
+      view.addGestureRecognizer(tapGesture)
+    }
+  }
+
+  func didTapOnView(_ sender: Any?) {
+    tapDelegate?.didTapOn(node: self)
   }
 
   func initializeNode() {
