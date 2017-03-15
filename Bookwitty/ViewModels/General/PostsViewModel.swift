@@ -21,7 +21,7 @@ final class PostsViewModel {
     return !didReachLastPage
   }
   var hasNoPosts: Bool {
-    return posts.count > 0
+    return posts.count == 0
   }
   
   fileprivate var shouldReloadPostsSections = false
