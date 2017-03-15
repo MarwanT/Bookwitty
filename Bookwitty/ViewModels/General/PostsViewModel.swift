@@ -107,7 +107,7 @@ extension PostsViewModel {
     }
     switch section {
     case .posts:
-      return 0
+      return posts.count
     case .activityIndicator:
       return 0
     }
