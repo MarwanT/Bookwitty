@@ -102,7 +102,7 @@ class CardActionBarNode: ASCellNode {
     self.initializeNode()
   }
 
-  func setup(for followingMode: Bool) {
+  func setup(forFollowingMode followingMode: Bool) {
     self.followingMode = followingMode
   }
 

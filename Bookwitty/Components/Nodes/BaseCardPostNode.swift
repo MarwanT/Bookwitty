@@ -79,7 +79,11 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
   func didTapOnView(_ sender: Any?) {
     tapDelegate?.didTapOn(node: self)
   }
-  
+
+
+  func setup(forFollowingMode followingMode: Bool) {
+    self.actionBarNode.setup(forFollowingMode: followingMode)
+  }
 
   func setWitValue(witted: Bool, wits: Int) {
     actionBarNode.setWitButton(witted: witted, wits: wits)
