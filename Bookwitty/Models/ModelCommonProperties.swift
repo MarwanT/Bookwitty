@@ -35,6 +35,7 @@ protocol ModelCommonProperties {
   var isWitted: Bool { get }
   var isDimmed: Bool { get }
   var canonicalURL: URL? { get }
+  var counts: Counts? { get }
 }
 
 extension Video: ModelCommonProperties {
