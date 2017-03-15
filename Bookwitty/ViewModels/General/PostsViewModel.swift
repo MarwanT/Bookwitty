@@ -14,6 +14,8 @@ final class PostsViewModel {
   var posts = [ModelResource]()
   fileprivate var loadingMode: DataLoadingMode? = nil
   
+  var isLoadingNextPage: Bool = false
+  var didReachLastPage: Bool = false
   fileprivate var shouldReloadPostsSections = false
   
   /// Given an array of resources, they will be considered as
@@ -38,6 +40,36 @@ extension PostsViewModel {
       self.shouldReloadPostsSections = resources.count > 0
       self.posts.append(contentsOf: resources)
     })
+  }
+}
+
+// MARK: - Load more
+extension PostsViewModel {
+  /// This method also loads the first page
+  func loadNextPage(completion: @escaping (_ success: Bool) -> Void) {
+    guard let loadingMode = loadingMode else {
+      completion(false)
+      return
+    }
+    
+    switch loadingMode {
+    case .server(let absoluteURL):
+      guard let url = absoluteURL else {
+        self.didReachLastPage = true
+        self.isLoadingNextPage = false
+        completion(false)
+        return
+      }
+      
+      isLoadingNextPage = true
+      
+      loadPostsForURL(url: url, completion: {
+        (success, nextPageURL) in
+        self.isLoadingNextPage = false
+        self.loadingMode = .server(absoluteURL: nextPageURL)
+        completion(success)
+      })
+    }
   }
 }
 
