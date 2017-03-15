@@ -14,6 +14,8 @@ final class PostsViewModel {
   var posts = [ModelResource]()
   fileprivate var loadingMode: DataLoadingMode? = nil
   
+  fileprivate var shouldReloadPostsSections = false
+  
   /// Given an array of resources, they will be considered as
   /// the items of the first page
   func initialize(resources: [ModelResource]?, loadingMode: DataLoadingMode?) {
@@ -23,10 +25,18 @@ final class PostsViewModel {
 
 // MARK: - APIs
 extension PostsViewModel {
-  fileprivate func loadPostsForURL(url: URL, completion: @escaping (_ success: Bool, _ resources: [ModelResource]?, _ nextPage: URL?) -> Void) {
+  fileprivate func loadPostsForURL(url: URL, completion: @escaping (_ success: Bool, _ nextPage: URL?) -> Void) {
     _ = GeneralAPI.nextPage(nextPage: url, completion: {
       (success, resources, nextPageURL, error) in
-      completion(success, resources, nextPageURL)
+      defer {
+        completion(success, nextPageURL)
+      }
+      
+      guard success, let resources = resources else {
+        return
+      }
+      self.shouldReloadPostsSections = resources.count > 0
+      self.posts.append(contentsOf: resources)
     })
   }
 }
