@@ -47,6 +47,19 @@ final class PostsViewModel {
     sections += [.activityIndicator]
     return sections
   }
+  
+  func resourceForIndexPath(indexPath: IndexPath) -> Resource? {
+    guard let section = PostsViewController.Section(rawValue: indexPath.section) else {
+      return nil
+    }
+    
+    switch section {
+    case .posts:
+      return posts[indexPath.item]
+    default:
+      return nil
+    }
+  }
 }
 
 // MARK: - APIs
@@ -160,6 +173,19 @@ extension PostsViewModel {
       return nil
     }
     return node
+  }
+  
+  func shouldSelectItem(at indexPath: IndexPath) -> Bool {
+    guard let section = PostsViewController.Section(rawValue: indexPath.section) else {
+      return false
+    }
+    
+    switch section {
+    case .posts:
+      return true
+    case .activityIndicator:
+      return false
+    }
   }
 }
 

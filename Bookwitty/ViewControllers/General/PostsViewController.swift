@@ -7,6 +7,7 @@
 //
 
 import AsyncDisplayKit
+import Spine
 
 class PostsViewController: ASViewController<ASCollectionNode> {
   let collectionNode: ASCollectionNode
@@ -160,12 +161,130 @@ extension PostsViewController: ASCollectionDataSource, ASCollectionDelegate {
       loaderNode.updateLoaderVisibility(show: true)
     }
   }
+  
+  func collectionNode(_ collectionNode: ASCollectionNode, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+    return viewModel.shouldSelectItem(at: indexPath)
+  }
+  
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    guard let resource = viewModel.resourceForIndexPath(indexPath: indexPath) else {
+      return
+    }
+    actionForCard(resource: resource)
+  }
 }
 
 // MARK: - Base card post node delegate
 extension PostsViewController: BaseCardPostNodeDelegate {
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
     // TODO: Implement Card action
+  }
+}
+
+// MARK: - Actions For Cards
+extension PostsViewController {
+  fileprivate func actionForCard(resource: ModelResource?) {
+    guard let resource = resource else {
+      return
+    }
+    let registeredType = resource.registeredResourceType
+    
+    switch registeredType {
+    case Image.resourceType:
+      actionForImageResourceType(resource: resource)
+    case Author.resourceType:
+      actionForAuthorResourceType(resource: resource)
+    case ReadingList.resourceType:
+      actionForReadingListResourceType(resource: resource)
+    case Topic.resourceType:
+      actionForTopicResourceType(resource: resource)
+    case Text.resourceType:
+      actionForTextResourceType(resource: resource)
+    case Quote.resourceType:
+      actionForQuoteResourceType(resource: resource)
+    case Video.resourceType:
+      actionForVideoResourceType(resource: resource)
+    case Audio.resourceType:
+      actionForAudioResourceType(resource: resource)
+    case Link.resourceType:
+      actionForLinkResourceType(resource: resource)
+    case Book.resourceType:
+      actionForBookResourceType(resource: resource)
+    default:
+      print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")
+      break
+    }
+  }
+  
+  fileprivate func pushPostDetailsViewController(resource: Resource) {
+    let nodeVc = PostDetailsViewController(resource: resource)
+    self.navigationController?.pushViewController(nodeVc, animated: true)
+  }
+  
+  fileprivate func pushGenericViewControllerCard(resource: Resource, title: String?) {
+    guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+      return
+    }
+    let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
+    navigationController?.pushViewController(genericVC, animated: true)
+  }
+  
+  fileprivate func actionForImageResourceType(resource: ModelResource) {
+    pushGenericViewControllerCard(resource: resource, title: "Image")
+  }
+  
+  fileprivate func actionForAuthorResourceType(resource: ModelResource) {
+    guard resource is Author else {
+      return
+    }
+    
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(withAuthor: resource as? Author)
+    navigationController?.pushViewController(topicViewController, animated: true)
+  }
+  
+  fileprivate func actionForReadingListResourceType(resource: ModelResource) {
+    pushPostDetailsViewController(resource: resource)
+  }
+  
+  fileprivate func actionForTopicResourceType(resource: ModelResource) {
+    guard resource is Topic else {
+      return
+    }
+    
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(withTopic: resource as? Topic)
+    navigationController?.pushViewController(topicViewController, animated: true)
+  }
+  
+  fileprivate func actionForTextResourceType(resource: ModelResource) {
+    pushPostDetailsViewController(resource: resource)
+  }
+  
+  fileprivate func actionForQuoteResourceType(resource: ModelResource) {
+    pushGenericViewControllerCard(resource: resource, title: "Quote")
+  }
+  
+  fileprivate func actionForVideoResourceType(resource: ModelResource) {
+    pushGenericViewControllerCard(resource: resource, title: "Video")
+  }
+  
+  fileprivate func actionForAudioResourceType(resource: ModelResource) {
+    pushGenericViewControllerCard(resource: resource, title: "Audio")
+  }
+  
+  fileprivate func actionForLinkResourceType(resource: ModelResource) {
+    pushGenericViewControllerCard(resource: resource, title: "Link")
+  }
+  
+  fileprivate func actionForBookResourceType(resource: ModelResource) {
+    guard resource is Book else {
+      return
+    }
+    
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(withBook: resource as? Book)
+    navigationController?.pushViewController(topicViewController, animated: true)
   }
 }
 
