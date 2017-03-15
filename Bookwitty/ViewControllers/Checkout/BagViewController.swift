@@ -22,7 +22,7 @@ class BagViewController: ASViewController<ASDisplayNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeNavigationItems()
-    navigationItem.title = Strings.bag()
+    observeLanguageChanges()  
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.Bag)
@@ -60,5 +60,21 @@ extension BagViewController: BagNodeDelegate {
         return
     }
     UIApplication.shared.openURL(url)
+  }
+}
+
+//MARK: - Localizable implementation
+extension BagViewController: Localizable {
+  func applyLocalization() {
+    title = Strings.bag()    
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }
