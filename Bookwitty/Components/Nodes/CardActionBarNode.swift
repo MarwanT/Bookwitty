@@ -19,16 +19,46 @@ class CardActionBarNode: ASCellNode {
     case unwit
     case comment
     case share
+    case dim
+    case undim
   }
   var witButton: ASButtonNode
   var commentButton: ASButtonNode
   var shareButton: ASButtonNode
+  var numberOfWitsNode: ASTextNode
+  var numberOfDimsNode: ASTextNode
   var delegate: CardActionBarNodeDelegate? = nil
+
+  fileprivate var numberOfWits: Int? {
+    didSet {
+      if let numberOfWits = numberOfWits, numberOfWits > 0 {
+        numberOfWitsNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1)
+          .append(text: "(\(numberOfWits))", color: ThemeManager.shared.currentTheme.defaultButtonColor()).attributedString
+      } else {
+        numberOfWitsNode.attributedText = nil
+      }
+    }
+  }
+  fileprivate var numberOfDims: Int? {
+    didSet {
+      if let numberOfDims = numberOfDims, numberOfDims > 0 {
+        numberOfDimsNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.footnote)
+          .append(text: dimText)
+          .append(text: " ")
+          .append(text: "(\(numberOfDims))", fontDynamicType: FontDynamicType.caption1).attributedString
+      } else {
+        numberOfDimsNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.footnote)
+          .append(text: dimText).attributedString
+      }
+    }
+  }
+  fileprivate var dimText: String {
+    return numberOfDimsNode.isSelected ? Strings.dimmed() : Strings.dim()
+  }
 
   private let witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
 
-  private let normal = ASControlState(rawValue: 0)
   private let actionBarHeight: CGFloat = 60.0
   private let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
   private let iconSize: CGSize = CGSize(width: 40.0, height: 40.0)
@@ -37,10 +67,14 @@ class CardActionBarNode: ASCellNode {
     witButton = ASButtonNode()
     commentButton = ASButtonNode()
     shareButton = ASButtonNode()
+    numberOfWitsNode = ASTextNode()
+    numberOfDimsNode = ASTextNode()
     super.init()
     addSubnode(witButton)
     addSubnode(commentButton)
     addSubnode(shareButton)
+    addSubnode(numberOfWitsNode)
+    addSubnode(numberOfDimsNode)
     self.initializeNode()
   }
 
@@ -49,16 +83,22 @@ class CardActionBarNode: ASCellNode {
 
     //Note: Had a Problem with the selected and highlighted states of the button images
     commentButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
-    commentButton.setImage(#imageLiteral(resourceName: "comment"), for: normal)
+    commentButton.setImage(#imageLiteral(resourceName: "comment"), for: .normal)
 
     shareButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
-    shareButton.setImage(#imageLiteral(resourceName: "shareOutside"), for: normal)
+    shareButton.setImage(#imageLiteral(resourceName: "shareOutside"), for: .normal)
 
     setupWitButtonStyling()
 
     shareButton.addTarget(self, action: #selector(shareButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     commentButton.addTarget(self, action: #selector(commentButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     witButton.addTarget(self, action: #selector(witButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    numberOfDimsNode.addTarget(self, action: #selector(dimButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
+
+    numberOfWitsNode.style.maxWidth = ASDimensionMake(60.0)
+    numberOfWitsNode.maximumNumberOfLines = 1
+    numberOfDimsNode.style.maxWidth = ASDimensionMake(120.0)
+    numberOfDimsNode.maximumNumberOfLines = 1
   }
 
   private func setupWitButtonStyling() {
@@ -70,10 +110,10 @@ class CardActionBarNode: ASCellNode {
     let selectedTextColor = ThemeManager.shared.currentTheme.colorNumber23()
     let selectedButtonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultButtonColor())
 
-    witButton.setBackgroundImage(buttonBackgroundImage, for: normal)
+    witButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
     witButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
 
-    witButton.setTitle(Strings.wit_it(), with: buttonFont, with: textColor, for: normal)
+    witButton.setTitle(Strings.wit_it(), with: buttonFont, with: textColor, for: .normal)
     witButton.setTitle(Strings.witted(), with: buttonFont, with: selectedTextColor, for: .selected)
 
     witButton.cornerRadius = 4
@@ -83,13 +123,35 @@ class CardActionBarNode: ASCellNode {
 
   }
 
-  func setWitButton(witted: Bool) {
+  func setWitButton(witted: Bool, wits: Int? = nil) {
     witButton.isSelected = witted
+    if let wits = wits {
+      setNumberOfWits(wits: wits)
+    }
+  }
+
+  func setDimValue(dimmed: Bool, dims: Int? = nil) {
+    numberOfDimsNode.isSelected = dimmed
+    if let dims = dims {
+      setNumberOfDims(dims: dims)
+    }
+  }
+
+  private func setNumberOfWits(wits: Int) {
+    numberOfWits = wits
+  }
+
+  private func setNumberOfDims(dims: Int) {
+    numberOfDims = dims
   }
 
   func toggleWitButton() {
     witButton.isSelected = !witButton.isSelected
     setNeedsLayout()
+  }
+
+  func dimButtonTouchUpInside(_ sender: ASButtonNode?) {
+    //TODO: Action
   }
 
   func witButtonTouchUpInside(_ sender: ASButtonNode?) {
@@ -135,12 +197,20 @@ class CardActionBarNode: ASCellNode {
     //Setup other buttons
     commentButton.style.preferredSize = iconSize
     shareButton.style.preferredSize = iconSize
+    let textHorizontalStackSpec = ASStackLayoutSpec.horizontal()
+    textHorizontalStackSpec.justifyContent = .start
+    textHorizontalStackSpec.alignItems = .center
+    textHorizontalStackSpec.children = [ASLayoutSpec.spacer(width: internalMargin/2),
+                                        numberOfWitsNode,
+                                        ASLayoutSpec.spacer(width: internalMargin),
+                                        numberOfDimsNode]
 
     let horizontalStackSpec = ASStackLayoutSpec(direction: .horizontal,
                                                 spacing: 0,
                                                 justifyContent: .spaceAround,
-                                                alignItems: .stretch,
+                                                alignItems: .center,
                                                 children: [witButton,
+                                                          textHorizontalStackSpec,
                                                            spacer(),
                                                            commentButton,
                                                            spacer(width: 10),
