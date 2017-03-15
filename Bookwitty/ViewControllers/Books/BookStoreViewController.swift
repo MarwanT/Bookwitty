@@ -274,7 +274,7 @@ class BookStoreViewController: UIViewController {
     self.present(alert, animated: true, completion: nil)
   }
   
-  func pushBooksTableView(with books: [Book]? = nil, loadingMode: DataLoadingMode? = nil) {
+  func pushBooksTableView(with books: [Book]? = nil, loadingMode: BooksTableViewController.DataLoadingMode? = nil) {
     let booksTableViewController = Storyboard.Books.instantiate(BooksTableViewController.self)
     booksTableViewController.initialize(with: books, loadingMode: loadingMode)
     navigationController?.pushViewController(booksTableViewController, animated: true)
