@@ -30,7 +30,7 @@ protocol NodeTapProtocol {
   var tapDelegate: ItemNodeTapDelegate? { get set }
 }
 
-class PostDetailsItemNode: ASDisplayNode {
+class PostDetailsItemNode: ASDisplayNode, ItemNodeTapDelegate {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
 
@@ -57,6 +57,8 @@ class PostDetailsItemNode: ASDisplayNode {
 
     for index in 0..<nodesCount {
       let node = dataSource.postDetailsItem(self, nodeForItemAt: index)
+      var tappableNode = (node as? NodeTapProtocol)
+      tappableNode?.tapDelegate = self
       nodes.append(node)
     }
     setNeedsLayout()
@@ -78,6 +80,13 @@ class PostDetailsItemNode: ASDisplayNode {
       }
     }
     return nil
+  }
+
+  func didTapOn(node: ASDisplayNode) {
+    guard let indexOfTappedNode = index(of: node) else {
+      return
+    }
+    delegate?.postDetails(self, node: node, didSelectItemAt: indexOfTappedNode)
   }
 }
 
