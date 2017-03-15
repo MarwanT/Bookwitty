@@ -35,6 +35,13 @@ class PostsViewController: ASViewController<ASCollectionNode> {
     super.init(node: collectionNode)
   }
   
+  /// Given an array of resources, they will be considered as
+  /// the items of the first page
+  func initialize(resources: [ModelResource]?, loadingMode: PostsViewModel.DataLoadingMode?) {
+    self.viewModel.initialize(resources: resources, loadingMode: loadingMode)
+    collectionNode.reloadData()
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     title = viewModel.viewControllerTitle
