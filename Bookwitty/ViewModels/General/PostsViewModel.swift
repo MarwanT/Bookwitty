@@ -11,3 +11,10 @@ import Foundation
 final class PostsViewModel {
   
 }
+
+// MARK: - Declarations
+extension PostsViewModel {
+  enum DataLoadingMode {
+    case server(absoluteURL: URL?)
+  }
+}
