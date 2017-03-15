@@ -14,6 +14,9 @@ protocol PostDetailsItemNodeDataSource {
   func postDetailsItemCount(_ postDetailsItem: PostDetailsItemNode) -> Int
 }
 
+protocol PostDetailsItemNodeDelegate {
+  func postDetails(_ postDetailsItem: PostDetailsItemNode, node: ASDisplayNode, didSelectItemAt index: Int)
+}
 
 protocol ItemNodeTapDelegate {
   func didTapOn(node: ASDisplayNode)
@@ -33,6 +36,7 @@ class PostDetailsItemNode: ASDisplayNode {
 
   var nodes: [ASDisplayNode]
   var dataSource: PostDetailsItemNodeDataSource!
+  var delegate: PostDetailsItemNodeDelegate?
 
   override init() {
     nodes = []
