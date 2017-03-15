@@ -139,6 +139,16 @@ extension PostsViewController: ASCollectionDataSource, ASCollectionDelegate {
     } else {
       return {
         let baseCardNode = self.viewModel.nodeForItem(at: indexPath) ?? BaseCardPostNode()
+        // Fetch the reading list cards images
+        if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
+          !readingListCell.node.isImageCollectionLoaded {
+          let max = readingListCell.node.maxNumberOfImages
+          self.viewModel.loadReadingListImages(at: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
+            if let imageCollection = imageCollection, imageCollection.count > 0 {
+              readingListCell.node.loadImages(with: imageCollection)
+            }
+          })
+        }
         baseCardNode.delegate = self
         return baseCardNode
       }

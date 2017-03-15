@@ -163,6 +163,50 @@ extension PostsViewModel {
   }
 }
 
+// MARK: - Handle Reading Lists Images
+extension PostsViewModel {
+  func loadReadingListImages(at indexPath: IndexPath, maxNumberOfImages: Int, completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
+    guard let readingList = posts[indexPath.item] as? ReadingList else {
+      completionBlock(nil)
+      return
+    }
+    
+    var ids: [String] = []
+    if let list = readingList.postsRelations {
+      for item in list {
+        ids.append(item.id)
+      }
+    }
+    
+    if ids.count > 0 {
+      let limitToMaximumIds = Array(ids.prefix(maxNumberOfImages))
+      loadReadingListItems(readingListIds: limitToMaximumIds, completionBlock: completionBlock)
+    } else {
+      completionBlock(nil)
+    }
+  }
+  
+  private func loadReadingListItems(readingListIds: [String], completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
+    _ = UserAPI.batch(identifiers: readingListIds) { (success, resources, error) in
+      var imageCollection: [String]? = nil
+      defer {
+        completionBlock(imageCollection)
+      }
+      if success {
+        var images: [String] = []
+        resources?.forEach({ (resource) in
+          if let res = resource as? ModelCommonProperties {
+            if let imageUrl = res.thumbnailImageUrl {
+              images.append(imageUrl)
+            }
+          }
+        })
+        imageCollection = images
+      }
+    }
+  }
+}
+
 // MARK: - Declarations
 extension PostsViewModel {
   enum DataLoadingMode {
