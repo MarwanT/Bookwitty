@@ -41,14 +41,19 @@ class CardActionBarNode: ASCellNode {
   }
   fileprivate var numberOfDims: Int? {
     didSet {
-      if let numberOfDims = numberOfDims, numberOfDims > 0 {
-        numberOfDimsNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.footnote)
+      numberOfDimsNode.isHidden = hideDim
+      guard !hideDim else {
+        return
+      }
+
+      if let numberOfDims = numberOfDims {
+        let fontDynamicType = FontDynamicType.footnote
+        numberOfDimsNode.attributedText = AttributedStringBuilder(fontDynamicType: fontDynamicType)
           .append(text: dimText)
           .append(text: " ")
           .append(text: "(\(numberOfDims))", fontDynamicType: FontDynamicType.caption1).attributedString
       } else {
-        numberOfDimsNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.footnote)
-          .append(text: dimText).attributedString
+        numberOfDimsNode.attributedText = nil
       }
     }
   }
@@ -62,6 +67,13 @@ class CardActionBarNode: ASCellNode {
   private let actionBarHeight: CGFloat = 60.0
   private let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
   private let iconSize: CGSize = CGSize(width: 40.0, height: 40.0)
+
+  var hideDim: Bool = false {
+    didSet {
+      numberOfDimsNode.isHidden = hideDim
+      setNeedsLayout()
+    }
+  }
 
   override init() {
     witButton = ASButtonNode()
@@ -99,6 +111,9 @@ class CardActionBarNode: ASCellNode {
     numberOfWitsNode.maximumNumberOfLines = 1
     numberOfDimsNode.style.maxWidth = ASDimensionMake(120.0)
     numberOfDimsNode.maximumNumberOfLines = 1
+
+    //By default dim info should be hidden, needs to be explicitly set false to show
+    hideDim = true
   }
 
   private func setupWitButtonStyling() {
@@ -120,21 +135,16 @@ class CardActionBarNode: ASCellNode {
     witButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
     witButton.borderWidth = 2
     witButton.clipsToBounds = true
-
   }
 
   func setWitButton(witted: Bool, wits: Int? = nil) {
     witButton.isSelected = witted
-    if let wits = wits {
-      setNumberOfWits(wits: wits)
-    }
+    setNumberOfWits(wits: wits ?? 0)
   }
 
   func setDimValue(dimmed: Bool, dims: Int? = nil) {
     numberOfDimsNode.isSelected = dimmed
-    if let dims = dims {
-      setNumberOfDims(dims: dims)
-    }
+    setNumberOfDims(dims: dims ?? 0)
   }
 
   private func setNumberOfWits(wits: Int) {
@@ -145,13 +155,40 @@ class CardActionBarNode: ASCellNode {
     numberOfDims = dims
   }
 
-  func toggleWitButton() {
-    witButton.isSelected = !witButton.isSelected
-    setNeedsLayout()
+  func updateWitAndDim(for action: Action, success: Bool = true) {
+    let inverter = success ? 1 : -1
+
+    switch action {
+    case .dim:
+      let wits: Int? = (numberOfWits ?? 0 > 0) ? (numberOfWits! + (-1 * inverter)) : nil
+      setWitButton(witted: false, wits: wits)
+      let dims: Int? = (numberOfDims ?? 0) + (1 * inverter)
+      setDimValue(dimmed: true, dims: dims)
+    case .undim:
+      let dims: Int? = (numberOfDims ?? 0 > 0) ? (numberOfDims! + (-1 * inverter)) : nil
+      setDimValue(dimmed: false, dims: dims)
+    case .wit:
+      let dims: Int? = (numberOfDims ?? 0 > 0) ? (numberOfDims! + (-1 * inverter)) : nil
+      setDimValue(dimmed: false, dims: dims)
+      let wits: Int? = (numberOfWits ?? 0) + (1 * inverter)
+      setWitButton(witted: true, wits: wits)
+    case .unwit:
+      let wits: Int? = (numberOfWits ?? 0 > 0) ? (numberOfWits! + (-1 * inverter)) : nil
+      setWitButton(witted: false, wits: wits)
+    default: break
+    }
   }
 
-  func dimButtonTouchUpInside(_ sender: ASButtonNode?) {
-    //TODO: Action
+  func dimButtonTouchUpInside(_ sender: ASTextNode?) {
+    let action = !numberOfDimsNode.isSelected ? CardActionBarNode.Action.dim : CardActionBarNode.Action.undim
+    self.updateWitAndDim(for: action)
+
+    delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: action, forSender: witButton, didFinishAction: { [weak self] (success: Bool) in
+      guard let strongSelf = self else { return }
+      if !success { //Toggle back on failure
+        strongSelf.updateWitAndDim(for: action, success: false)
+      }
+    })
   }
 
   func witButtonTouchUpInside(_ sender: ASButtonNode?) {
@@ -159,12 +196,12 @@ class CardActionBarNode: ASCellNode {
     //Get action from witButton status
     let action = !witButton.isSelected ? CardActionBarNode.Action.wit : CardActionBarNode.Action.unwit
     //Assume success and Toggle button anyway, if witting/unwitting fails delegate should either call didFinishAction or  call toggleWitButton.
-    toggleWitButton()
+    self.updateWitAndDim(for: action)
 
     delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: action, forSender: sender, didFinishAction: { [weak self] (success: Bool) in
       guard let strongSelf = self else { return }
       if !success { //Toggle back on failure
-        strongSelf.toggleWitButton()
+        strongSelf.updateWitAndDim(for: action, success: false)
       }
     })
   }
@@ -201,10 +238,11 @@ class CardActionBarNode: ASCellNode {
     textHorizontalStackSpec.justifyContent = .start
     textHorizontalStackSpec.alignItems = .center
     textHorizontalStackSpec.children = [ASLayoutSpec.spacer(width: internalMargin/2),
-                                        numberOfWitsNode,
-                                        ASLayoutSpec.spacer(width: internalMargin),
-                                        numberOfDimsNode]
-
+                                        numberOfWitsNode]
+    if !hideDim {
+      textHorizontalStackSpec.children?.append(ASLayoutSpec.spacer(width: internalMargin))
+      textHorizontalStackSpec.children?.append(numberOfDimsNode)
+    }
     let horizontalStackSpec = ASStackLayoutSpec(direction: .horizontal,
                                                 spacing: 0,
                                                 justifyContent: .spaceAround,
