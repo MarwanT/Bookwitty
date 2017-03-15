@@ -47,8 +47,8 @@ final class Localization {
     let oldLanguage = Language(rawValue: GeneralSettings.sharedInstance.preferredLanguage)
     
     Bundle.setLanguage(newLanguage.rawValue)
-    postNotificationIfNeeded(new: language, old: oldLanguage)
     GeneralSettings.sharedInstance.preferredLanguage = newLanguage.rawValue
+    postNotificationIfNeeded(new: language, old: oldLanguage)
   }
 
   //Post Language Changed Notification 
