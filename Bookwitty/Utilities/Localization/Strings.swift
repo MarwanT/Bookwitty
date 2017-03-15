@@ -129,6 +129,10 @@ class Strings {
     return localizedString(key: "dim")
   }
 
+  class func dimmed() -> String {
+    return localizedString(key: "dimmed")
+  }
+
   class func edit_pen_name() -> String {
     return localizedString(key: "edit_pen_name")
   }
