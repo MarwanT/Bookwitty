@@ -66,6 +66,7 @@
 "language_of_text" = "language Of Text";
 "last_name" = "Last name";
 "last_name_invalid" = "Oooops your email seems to be empty";
+"link" = "Lien";
 "list_price" = "liste de prix";
 "my_orders" = "My Orders";
 "new_password" = "New Password";

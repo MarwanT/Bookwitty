@@ -245,6 +245,10 @@ class Strings {
     return localizedString(key: "last_name_invalid")
   }
   
+  class func link() -> String {
+    return localizedString(key: "link")
+  }
+  
   class func list_price() -> String {
     return localizedString(key: "list_price")
   }
