@@ -11,6 +11,7 @@
 "address_book" = "Address Book";
 "author" = "Author";
 "bag" = "Bag";
+"book" = "Book";
 "book_categories" = "Book Categories";
 "book_details" = "Book details";
 "book_recommended_in_reading_lists" = "This book is recommended in the following reading lists";
@@ -56,6 +57,7 @@
 "format" = "Format";
 "free_shipping_internationally" = "Free shipping internationally";
 "help" = "Help";
+"image" = "Image";
 "imprint" = "Imprint";
 "in_stock" = "In stock";
 "interests" = "Interests";
@@ -64,6 +66,7 @@
 "language_of_text" = "language Of Text";
 "last_name" = "Last name";
 "last_name_invalid" = "Oooops your email seems to be empty";
+"link" = "Link";
 "list_price" = "List price";
 "my_orders" = "My Orders";
 "new_password" = "New Password";
@@ -87,6 +90,7 @@
 "product_format" = "Product Format";
 "profile_picture" = "Profile Picture";
 "publisher" = "publisher";
+"quote" = "Quote";
 "reading_lists" = "Reading Lists";
 "register" = "Register";
 "related_bookwitty_topics" = "Related bookwitty topics";
@@ -102,6 +106,7 @@
 "subtitle" = "Subtitle";
 "take_Profile_photo" = "Take profile photo";
 "terms_of_use_and_privacy_policy" = "By tapping Sign up : you agree to the\n•Terms of Use• and •Privacy Policy•";
+"text" = "Text";
 "topic" = "Topic";
 "tutorial_fifth_page_description" = "Whatever you want to dig deeper in a topic : explore new ideas or discuss with people : you're sure to find articles and reading lists about subjects you like";
 "tutorial_fifth_page_title" = "Join The Fun";
@@ -112,6 +117,7 @@
 "tutorial_second_page_description" = "Whatever you want to dig deeper in a topic : explore new ideas or discuss with people : you're sure to find articles and reading lists about subjects you like";
 "tutorial_second_page_title" = "Discover Ideas & People";
 "tutorial_third_page_title" = "Share Your Own Ideas";
+"video" = "Video";
 "view_all" = "View All";
 "view_all_books" = "View All Books";
 "view_all_categories" = "View All Categories";

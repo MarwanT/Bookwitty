@@ -29,6 +29,10 @@ class Strings {
     return localizedString(key: "bag")
   }
   
+  class func book() -> String {
+    return localizedString(key: "book")
+  }
+  
   class func book_categories() -> String {
     return localizedString(key: "book_categories")
   }
@@ -205,6 +209,10 @@ class Strings {
     return localizedString(key: "help")
   }
   
+  class func image() -> String {
+    return localizedString(key: "image")
+  }
+  
   class func imprint() -> String {
     return localizedString(key: "imprint")
   }
@@ -235,6 +243,10 @@ class Strings {
 
   class func last_name_invalid() -> String {
     return localizedString(key: "last_name_invalid")
+  }
+  
+  class func link() -> String {
+    return localizedString(key: "link")
   }
   
   class func list_price() -> String {
@@ -328,6 +340,10 @@ class Strings {
   class func profile_picture() -> String {
     return localizedString(key: "profile_picture")
   }
+  
+  class func quote() -> String {
+    return localizedString(key: "quote")
+  }
 
   class func reading_lists() -> String {
     return localizedString(key: "reading_lists")
@@ -388,6 +404,10 @@ class Strings {
   class func terms_of_use_and_privacy_policy() -> String {
     return localizedString(key: "terms_of_use_and_privacy_policy")
   }
+  
+  class func text() -> String {
+    return localizedString(key: "text")
+  }
 
   class func topic() -> String {
     return localizedString(key: "topic")
@@ -427,6 +447,10 @@ class Strings {
 
   class func tutorial_third_page_title() -> String {
     return localizedString(key: "tutorial_third_page_title")
+  }
+  
+  class func video() -> String {
+    return localizedString(key: "video")
   }
   
   class func view_all() -> String {

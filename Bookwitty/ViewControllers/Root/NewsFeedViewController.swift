@@ -442,7 +442,7 @@ extension NewsFeedViewController {
     self.navigationController?.pushViewController(nodeVc, animated: true)
   }
 
-  func pushGenericViewControllerCard(resource: Resource, title: String?) {
+  func pushGenericViewControllerCard(resource: Resource, title: String? = nil) {
     guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
       return
     }
@@ -451,7 +451,7 @@ extension NewsFeedViewController {
   }
 
   fileprivate func actionForImageResourceType(resource: ModelResource) {
-    pushGenericViewControllerCard(resource: resource, title: "Image")
+    pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForAuthorResourceType(resource: ModelResource) {
@@ -483,19 +483,19 @@ extension NewsFeedViewController {
   }
 
   fileprivate func actionForQuoteResourceType(resource: ModelResource) {
-    pushGenericViewControllerCard(resource: resource, title: "Quote")
+    pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForVideoResourceType(resource: ModelResource) {
-    pushGenericViewControllerCard(resource: resource, title: "Video")
+    pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForAudioResourceType(resource: ModelResource) {
-    pushGenericViewControllerCard(resource: resource, title: "Audio")
+    pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForLinkResourceType(resource: ModelResource) {
-    pushGenericViewControllerCard(resource: resource, title: "Link")
+    pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForBookResourceType(resource: ModelResource) {

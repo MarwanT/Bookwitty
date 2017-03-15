@@ -23,6 +23,32 @@ class CardDetailsViewController: GenericNodeViewController {
     super.init(node: node, title: title)
     node.delegate = self
     node.updateDimVisibility(visible: true)
+    viewControllerTitleForResouce(resource: resource)
+  }
+  
+  func viewControllerTitleForResouce(resource: ModelResource) {
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      title = Strings.image()
+    case Quote.resourceType:
+      title = Strings.quote()
+    case Video.resourceType:
+      title = Strings.video()
+    case Link.resourceType:
+      title = Strings.link()
+    case Author.resourceType:
+      title = Strings.author()
+    case ReadingList.resourceType:
+      title = Strings.reading_list()
+    case Topic.resourceType:
+      title = Strings.topic()
+    case Text.resourceType:
+      title = Strings.text()
+    case Book.resourceType:
+      title = Strings.book()
+    default:
+      title = nil
+    }
   }
 }
 
