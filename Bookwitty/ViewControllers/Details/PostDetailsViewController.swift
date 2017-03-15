@@ -80,7 +80,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
   }
 }
 
-extension PostDetailsViewController: ASCollectionDataSource {
+extension PostDetailsViewController: ASCollectionDataSource, ASCollectionDelegate {
   public func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
     return viewModel.numberOfRelatedBooks()
   }
@@ -98,6 +98,13 @@ extension PostDetailsViewController: ASCollectionDataSource {
       cell.title = book?.title
       return cell
     }
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    guard let book = viewModel.relatedBook(at: indexPath.row) else {
+      return
+    }
+    pushBookDetailsViewController(with: book)
   }
 }
 
@@ -259,4 +266,12 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
       break
     }
   }
+}
+// MARK - Actions
+extension PostDetailsViewController {
+  fileprivate func pushBookDetailsViewController(with book: Book) {
+    let bookDetailsViewController = BookDetailsViewController(with: book)
+    navigationController?.pushViewController(bookDetailsViewController, animated: true)
+  }
+
 }
