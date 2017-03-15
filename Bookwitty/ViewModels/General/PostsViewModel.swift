@@ -29,6 +29,9 @@ final class PostsViewModel {
   /// Given an array of resources, they will be considered as
   /// the items of the first page
   func initialize(resources: [ModelResource]?, loadingMode: DataLoadingMode?) {
+    if let resources = resources {
+      self.posts = resources
+    }
     self.loadingMode = loadingMode
   }
   
