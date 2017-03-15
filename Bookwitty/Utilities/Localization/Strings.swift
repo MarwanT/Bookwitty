@@ -480,4 +480,20 @@ class Strings {
   class func article() -> String {
     return localizedString(key: "article")
   }
+
+  class func related_books() -> String {
+    return localizedString(key: "related_books")
+  }
+
+  class func related_posts() -> String {
+    return localizedString(key: "related_posts")
+  }
+
+  class func view_all_related_books() -> String {
+    return localizedString(key: "view_all_related_books")
+  }
+
+  class func view_all_related_posts() -> String {
+    return localizedString(key: "view_all_related_posts")
+  }
 }

@@ -18,25 +18,62 @@ extension PostDetailsNode: DTAttributedTextContentNodeDelegate {
 
 extension PostDetailsNode: DisclosureNodeDelegate {
   func disclosureNodeDidTap(disclosureNode: DisclosureNode, selected: Bool) {
-    delegate?.shouldShowPostDetailsAllPosts()
+    if disclosureNode === postItemsNodeViewAll {
+      //Post Items View All
+      delegate?.shouldShowPostDetailsAllPosts()
+    } else if disclosureNode === relatedBooksViewAllNode {
+      //Related Books View All
+      delegate?.shouldShowPostDetailsAllRelatedBooks()
+    } else if disclosureNode === relatedPostsViewAllNode {
+      //Related Posts View All
+      delegate?.shouldShowPostDetailsAllRelatedPosts()
+    }
+  }
+}
+
+extension PostDetailsNode: CardActionBarNodeDelegate {
+  func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    delegate?.cardActionBarNode(cardActionBar: cardActionBar, didRequestAction: action, forSender: sender, didFinishAction: didFinishAction)
   }
 }
 
 protocol PostDetailsNodeDelegate {
   func shouldShowPostDetailsAllPosts()
+  func shouldShowPostDetailsAllRelatedBooks()
+  func shouldShowPostDetailsAllRelatedPosts()
+  func hasRelatedPosts() -> Bool
+  func hasRelatedBooks() -> Bool
+  func hasContentItems() -> Bool
+  func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
 }
 
 class PostDetailsNode: ASScrollNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+  fileprivate let horizontalCollectionNodeHeight: CGFloat = RelatedBooksMinimalCellNode.cellHeight
 
   fileprivate let headerNode: PostDetailsHeaderNode
   fileprivate let descriptionNode: DTAttributedTextContentNode
-  fileprivate let postItemsNode: PostDetailsItemNode
-  fileprivate let separator: ASDisplayNode
+  fileprivate let separator: SeparatorNode
   fileprivate let conculsionNode: ASTextNode
   fileprivate let postItemsNodeLoader: LoaderNode
+  fileprivate let postItemsSeparator: SeparatorNode
   fileprivate let postItemsNodeViewAll: DisclosureNode
+  fileprivate let booksHorizontalFlowLayout: UICollectionViewFlowLayout
+  fileprivate let sectionTitleHeaderNode: SectionTitleHeaderNode
+  fileprivate let relatedBooksViewAllNode: DisclosureNode
+  fileprivate let relatedBooksTopSeparator: SeparatorNode
+  fileprivate let relatedBooksSeparator: SeparatorNode
+  fileprivate let relatedBooksNodeLoader: LoaderNode
+  fileprivate let relatedPostsSectionTitleHeaderNode: SectionTitleHeaderNode
+  fileprivate let relatedPostsViewAllNode: DisclosureNode
+  fileprivate let relatedPostsTopSeparator: SeparatorNode
+  fileprivate let relatedPostsBottomSeparator: SeparatorNode
+  fileprivate let relatedPostsNodeLoader: LoaderNode
+
+  let postItemsNode: PostDetailsItemNode
+  let postCardsNode: PostDetailsItemNode
+  let booksHorizontalCollectionNode: ASCollectionNode
 
   var title: String? {
     didSet {
@@ -69,6 +106,7 @@ class PostDetailsNode: ASScrollNode {
   var dataSource: PostDetailsItemNodeDataSource! {
     didSet {
       postItemsNode.dataSource = dataSource
+      postCardsNode.dataSource = dataSource
     }
   }
   var conculsion: String? {
@@ -87,15 +125,52 @@ class PostDetailsNode: ASScrollNode {
       }
     }
   }
+  var showRelatedPostsLoader: Bool = false {
+    didSet {
+      if isNodeLoaded {
+        setNeedsLayout()
+      }
+    }
+  }
+  var showRelatedBooksLoader: Bool = false {
+    didSet {
+      if isNodeLoaded {
+        setNeedsLayout()
+      }
+    }
+  }
+  var wit: Bool = false {
+    didSet {
+      headerNode.actionBarNode.setWitButton(witted: wit)
+    }
+  }
 
   override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
     headerNode = PostDetailsHeaderNode()
     descriptionNode = DTAttributedTextContentNode()
     postItemsNode = PostDetailsItemNode()
-    separator = ASDisplayNode()
+    separator = SeparatorNode()
     conculsionNode = ASTextNode()
     postItemsNodeLoader = LoaderNode()
     postItemsNodeViewAll = DisclosureNode()
+    booksHorizontalFlowLayout = UICollectionViewFlowLayout()
+    booksHorizontalFlowLayout.scrollDirection = .horizontal
+    booksHorizontalFlowLayout.sectionInset = UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: internalMargin)
+    booksHorizontalFlowLayout.minimumInteritemSpacing  = 0
+    booksHorizontalFlowLayout.minimumLineSpacing       = internalMargin
+    booksHorizontalCollectionNode = ASCollectionNode(collectionViewLayout: booksHorizontalFlowLayout)
+    sectionTitleHeaderNode = SectionTitleHeaderNode()
+    postItemsSeparator = SeparatorNode()
+    relatedBooksViewAllNode = DisclosureNode()
+    relatedBooksSeparator = SeparatorNode()
+    relatedBooksTopSeparator = SeparatorNode()
+    postCardsNode = PostDetailsItemNode()
+    relatedPostsSectionTitleHeaderNode = SectionTitleHeaderNode()
+    relatedPostsViewAllNode = DisclosureNode()
+    relatedPostsTopSeparator = SeparatorNode()
+    relatedPostsBottomSeparator = SeparatorNode()
+    relatedPostsNodeLoader = LoaderNode()
+    relatedBooksNodeLoader = LoaderNode()
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
@@ -103,10 +178,28 @@ class PostDetailsNode: ASScrollNode {
     headerNode = PostDetailsHeaderNode()
     descriptionNode = DTAttributedTextContentNode()
     postItemsNode = PostDetailsItemNode()
-    separator = ASDisplayNode()
+    separator = SeparatorNode()
     conculsionNode = ASTextNode()
     postItemsNodeLoader = LoaderNode()
     postItemsNodeViewAll = DisclosureNode()
+    booksHorizontalFlowLayout = UICollectionViewFlowLayout()
+    booksHorizontalFlowLayout.scrollDirection = .horizontal
+    booksHorizontalFlowLayout.sectionInset = UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: internalMargin)
+    booksHorizontalFlowLayout.minimumInteritemSpacing  = 0
+    booksHorizontalFlowLayout.minimumLineSpacing       = internalMargin
+    booksHorizontalCollectionNode = ASCollectionNode(collectionViewLayout: booksHorizontalFlowLayout)
+    sectionTitleHeaderNode = SectionTitleHeaderNode()
+    postItemsSeparator = SeparatorNode()
+    relatedBooksViewAllNode = DisclosureNode()
+    relatedBooksSeparator = SeparatorNode()
+    relatedBooksTopSeparator = SeparatorNode()
+    postCardsNode = PostDetailsItemNode()
+    relatedPostsSectionTitleHeaderNode = SectionTitleHeaderNode()
+    relatedPostsViewAllNode = DisclosureNode()
+    relatedPostsTopSeparator = SeparatorNode()
+    relatedPostsBottomSeparator = SeparatorNode()
+    relatedPostsNodeLoader = LoaderNode()
+    relatedBooksNodeLoader = LoaderNode()
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
@@ -118,19 +211,23 @@ class PostDetailsNode: ASScrollNode {
     setNeedsLayout()
   }
 
+  func loadRelatedCards() {
+    postCardsNode.loadNodes()
+    setNeedsLayout()
+  }
+
   func initializeNode() {
+    headerNode.actionBarNode.delegate = self
+
+    booksHorizontalCollectionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width,
+                                                               height: horizontalCollectionNodeHeight)
     descriptionNode.delegate = self
 
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     style.flexGrow = 1.0
     style.flexShrink = 1.0
 
-    separator.style.flexGrow = 1
-    separator.style.flexShrink = 1
-    separator.style.height = ASDimensionMake(1.0)
-    separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
-
-    descriptionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 125)
+    descriptionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 25)
     descriptionNode.style.flexGrow = 1.0
     descriptionNode.style.flexShrink = 1.0
 
@@ -140,10 +237,27 @@ class PostDetailsNode: ASScrollNode {
     postItemsNodeViewAll.configuration.style = .highlighted
     postItemsNodeViewAll.text = Strings.view_all()
     postItemsNodeViewAll.delegate = self
+
+    relatedBooksViewAllNode.configuration.style = .highlighted
+    relatedBooksViewAllNode.text = Strings.view_all_related_books()
+    relatedBooksViewAllNode.delegate = self
+
+    relatedPostsViewAllNode.configuration.style = .highlighted
+    relatedPostsViewAllNode.text = Strings.view_all_related_books()
+    relatedPostsViewAllNode.delegate = self
+
+    sectionTitleHeaderNode.setTitle(title: Strings.related_books(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber10(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber9())
+    relatedPostsSectionTitleHeaderNode.setTitle(title: Strings.related_posts(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber4(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber3())
   }
 
   func sidesEdgeInset() -> UIEdgeInsets {
     return UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: internalMargin)
+  }
+
+  func wrapNode(node: ASDisplayNode, width: CGFloat = UIScreen.main.bounds.width) -> ASLayoutSpec {
+    let wrapperSpec = ASWrapperLayoutSpec(layoutElement: node)
+    wrapperSpec.style.width = ASDimensionMake(width)
+    return wrapperSpec
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -155,19 +269,65 @@ class PostDetailsNode: ASScrollNode {
 
     vStackSpec.children = [headerNode, ASLayoutSpec.spacer(height: contentSpacing),
                            descriptionInsetSpec, ASLayoutSpec.spacer(height: contentSpacing),
-                           separatorInsetSpec, ASLayoutSpec.spacer(height: contentSpacing)]
+                           separatorInsetSpec]
+
     postItemsNodeLoader.updateLoaderVisibility(show: showPostsLoader)
     if showPostsLoader {
       let postItemsLoaderOverlaySpec = ASWrapperLayoutSpec(layoutElement: postItemsNodeLoader)
       postItemsLoaderOverlaySpec.style.width = ASDimensionMake(constrainedSize.max.width)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
       vStackSpec.children?.append(postItemsLoaderOverlaySpec)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(postItemsSeparator)
+    } else if delegate?.hasContentItems() ?? false {
+      vStackSpec.children?.append(postItemsNode)
+      vStackSpec.children?.append(postItemsNodeViewAll)
+      vStackSpec.children?.append(postItemsSeparator)
     }
-    vStackSpec.children?.append(postItemsNode)
-    vStackSpec.children?.append(postItemsNodeViewAll)
 
     if !conculsion.isEmptyOrNil() {
       let conculsionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: conculsionNode)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
       vStackSpec.children?.append(conculsionInsetSpec)
+    }
+
+    relatedBooksNodeLoader.updateLoaderVisibility(show: showRelatedBooksLoader)
+    if showRelatedBooksLoader {
+      let wrapperSpec = wrapNode(node: relatedBooksNodeLoader, width: constrainedSize.max.width)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(wrapperSpec)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(relatedBooksSeparator)
+    } else if delegate?.hasRelatedBooks() ?? false {
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(sectionTitleHeaderNode)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(booksHorizontalCollectionNode)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(relatedBooksTopSeparator)
+      vStackSpec.children?.append(relatedBooksViewAllNode)
+      vStackSpec.children?.append(relatedBooksSeparator)
+    }
+    
+
+    relatedPostsNodeLoader.updateLoaderVisibility(show: showRelatedPostsLoader)
+    if showRelatedPostsLoader {
+      let wrapperSpec = ASWrapperLayoutSpec(layoutElement: relatedPostsNodeLoader)
+      wrapperSpec.style.width = ASDimensionMake(constrainedSize.max.width)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(wrapperSpec)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(relatedPostsBottomSeparator)
+    } else if delegate?.hasRelatedPosts() ?? false {
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(relatedPostsSectionTitleHeaderNode)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(postCardsNode)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(relatedPostsTopSeparator)
+      vStackSpec.children?.append(relatedPostsViewAllNode)
+      vStackSpec.children?.append(relatedPostsBottomSeparator)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
     }
     return vStackSpec
   }

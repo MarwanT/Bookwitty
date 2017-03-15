@@ -53,6 +53,15 @@ class PostDetailsItemNode: ASDisplayNode {
     vStack.children = nodes
     return vStack
   }
+
+  func index(of node: ASDisplayNode) -> Int? {
+    for (index, item) in nodes.enumerated() {
+      if node === item {
+        return index
+      }
+    }
+    return nil
+  }
 }
 
 protocol PostDetailItemNodeDelegate {

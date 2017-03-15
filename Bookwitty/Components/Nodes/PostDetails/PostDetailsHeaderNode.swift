@@ -16,7 +16,7 @@ class PostDetailsHeaderNode: ASCellNode {
   fileprivate let imageNode: ASNetworkImageNode
   fileprivate let textNode: ASTextNode
   fileprivate let profileBarNode: PenNameFollowNode
-  fileprivate let actionBarNode: CardActionBarNode
+  let actionBarNode: CardActionBarNode
   fileprivate let separator: ASDisplayNode
   fileprivate let bottomSeparator: ASDisplayNode
 
@@ -68,11 +68,11 @@ class PostDetailsHeaderNode: ASCellNode {
     //Post Iamge
     imageNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 200.0)
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
+    imageNode.animatedImagePaused = true
     //Post Title
     textNode.style.flexGrow = 1
     textNode.style.flexShrink = 1
-    //Action Bar
-    actionBarNode.delegate = self
+
   }
 
   func sidesEdgeInset() -> UIEdgeInsets {
@@ -93,11 +93,5 @@ class PostDetailsHeaderNode: ASCellNode {
     vStackSpec.children = [imageNode, ASLayoutSpec.spacer(height: contentSpacing),
                            textInsetSpec, profileBarNode, vStackActionBarSpec]
     return vStackSpec
-  }
-}
-
-extension PostDetailsHeaderNode: CardActionBarNodeDelegate {
-  func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
-    //TODO: delegate action to parent
   }
 }

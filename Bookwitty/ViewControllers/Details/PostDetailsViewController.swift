@@ -38,7 +38,11 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.conculsion = viewModel.conculsion
     postDetailsNode.dataSource = self
     postDetailsNode.delegate = self
+    postDetailsNode.wit = viewModel.isWitted
+    postDetailsNode.booksHorizontalCollectionNode.dataSource = self
     loadContentPosts()
+    loadRelatedBooks()
+    loadRelatedPosts()
   }
 
   func loadContentPosts() {
@@ -53,6 +57,47 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
       self.postDetailsNode.loadPostItemsNode()
     }
   }
+
+  func loadRelatedBooks() {
+    postDetailsNode.showRelatedBooksLoader = true
+    viewModel.getRelatedBooks { (success) in
+      self.postDetailsNode.showRelatedBooksLoader = false
+      if success {
+        self.postDetailsNode.booksHorizontalCollectionNode.reloadData()
+      }
+    }
+  }
+
+  func loadRelatedPosts() {
+    postDetailsNode.showRelatedPostsLoader = true
+    self.viewModel.getRelatedPosts(completionBlock: { (success) in
+      self.postDetailsNode.showRelatedPostsLoader = false
+      if success {
+        self.postDetailsNode.loadRelatedCards()
+      }
+    })
+  }
+}
+
+extension PostDetailsViewController: ASCollectionDataSource {
+  public func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+    return viewModel.numberOfRelatedBooks()
+  }
+  public func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+    return 1
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> AsyncDisplayKit.ASCellNodeBlock {
+    let book = viewModel.relatedBook(at: indexPath.row)
+    return {
+      let cell = RelatedBooksMinimalCellNode()
+      cell.url = book?.thumbnailImageUrl
+      cell.price = book?.supplierInformation?.preferredPrice?.formattedValue
+      cell.subTitle = book?.productDetails?.author
+      cell.title = book?.title
+      return cell
+    }
+  }
 }
 
 extension PostDetailsViewController: PostDetailsNodeDelegate {
@@ -64,11 +109,72 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
       }
     }
   }
+
+  func shouldShowPostDetailsAllRelatedBooks() {
+    //TODO: Push view controller
+  }
+
+  func shouldShowPostDetailsAllRelatedPosts() {
+    //TODO: Push view controller
+  }
+
+  func hasRelatedPosts() -> Bool {
+    return viewModel.numberOfRelatedPosts() > 0
+  }
+
+  func hasRelatedBooks() -> Bool {
+    return viewModel.numberOfRelatedBooks() > 0
+  }
+
+  func hasContentItems() -> Bool {
+    return viewModel.contentPostsItemCount() > 0
+  }
+
+  func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    switch(action) {
+    case .wit:
+      viewModel.witPost(completionBlock: { (success) in
+          didFinishAction?(success)
+      })
+    case .unwit:
+      viewModel.unwitPost(completionBlock: { (success) in
+        didFinishAction?(success)
+      })
+    case .share:
+      if let sharingInfo: [String] = viewModel.sharingPost() {
+        presentShareSheet(shareContent: sharingInfo)
+      }
+    default:
+      //TODO: handle comment
+      break
+    }
+  }
 }
 
 extension PostDetailsViewController: PostDetailsItemNodeDataSource {
 
   func postDetailsItem(_ postDetailsItem: PostDetailsItemNode, nodeForItemAt index: Int) -> ASDisplayNode {
+    if postDetailsNode.postCardsNode === postDetailsItem {
+      guard let resource = viewModel.relatedPost(at: index) else {
+        return BaseCardPostNode()
+      }
+      let card = CardFactory.shared.createCardFor(resource: resource)
+      card?.delegate = self
+      return  card ?? BaseCardPostNode()
+    } else {
+      return cellItemForPostDetails(at: index)
+    }
+  }
+
+  func postDetailsItemCount(_ postDetailsItem: PostDetailsItemNode) -> Int {
+    if postDetailsNode.postCardsNode === postDetailsItem {
+      return viewModel.numberOfRelatedPosts()
+    } else {
+      return viewModel.contentPostsItemCount()
+    }
+  }
+
+  func cellItemForPostDetails(at index: Int) -> ASDisplayNode {
     guard let resource = viewModel.contentPostsItem(at: index) else {
       return ASDisplayNode()
     }
@@ -108,10 +214,6 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
       return ASDisplayNode()
     }
   }
-
-  func postDetailsItemCount(_ postDetailsItem: PostDetailsItemNode) -> Int {
-    return viewModel.contentPostsItemCount()
-  }
 }
 
 extension PostDetailsViewController: PostDetailItemNodeDelegate {
@@ -120,5 +222,32 @@ extension PostDetailsViewController: PostDetailItemNodeDelegate {
       return
     }
     WebViewController.present(url: url, inViewController: self)
+  }
+}
+
+// MARK - BaseCardPostNode Delegate
+extension PostDetailsViewController: BaseCardPostNodeDelegate {
+  func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    guard let index = postDetailsNode.postCardsNode.index(of: card) else {
+      return
+    }
+
+    switch(action) {
+    case .wit:
+      viewModel.witRelatedPost(index: index) { (success) in
+        didFinishAction?(success)
+      }
+    case .unwit:
+      viewModel.unwitRelatedPost(index: index) { (success) in
+        didFinishAction?(success)
+      }
+    case .share:
+      if let sharingInfo: [String] = viewModel.sharingRelatedPost(index: index) {
+        presentShareSheet(shareContent: sharingInfo)
+      }
+    default:
+      //TODO: handle comment
+      break
+    }
   }
 }
