@@ -209,6 +209,10 @@ class Strings {
     return localizedString(key: "help")
   }
   
+  class func image() -> String {
+    return localizedString(key: "image")
+  }
+  
   class func imprint() -> String {
     return localizedString(key: "imprint")
   }
