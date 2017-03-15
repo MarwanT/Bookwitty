@@ -211,10 +211,11 @@ class CardActionBarNode: ASCellNode {
     textHorizontalStackSpec.justifyContent = .start
     textHorizontalStackSpec.alignItems = .center
     textHorizontalStackSpec.children = [ASLayoutSpec.spacer(width: internalMargin/2),
-                                        numberOfWitsNode,
-                                        ASLayoutSpec.spacer(width: internalMargin),
-                                        numberOfDimsNode]
-
+                                        numberOfWitsNode]
+    if !hideDim {
+      textHorizontalStackSpec.children?.append(ASLayoutSpec.spacer(width: internalMargin))
+      textHorizontalStackSpec.children?.append(numberOfDimsNode)
+    }
     let horizontalStackSpec = ASStackLayoutSpec(direction: .horizontal,
                                                 spacing: 0,
                                                 justifyContent: .spaceAround,
