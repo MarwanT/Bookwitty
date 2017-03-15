@@ -63,6 +63,7 @@ class CardActionBarNode: ASCellNode {
   fileprivate var dimText: String {
     return numberOfDimsNode.isSelected ? Strings.dimmed() : Strings.dim()
   }
+  fileprivate var followingMode: Bool = false
 
   private let witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
@@ -93,6 +94,10 @@ class CardActionBarNode: ASCellNode {
     addSubnode(numberOfDimsNode)
     addSubnode(followButton)
     self.initializeNode()
+  }
+
+  func setup(for followingMode: Bool) {
+    self.followingMode = followingMode
   }
 
   private func initializeNode() {
