@@ -102,7 +102,10 @@ public struct APIProvider {
       }
       headerParameters["Content-Type"] = "application/vnd.api+json";
       headerParameters["Accept"] = "application/vnd.api+json"
-      break
+
+      if let language = Localization.Language(rawValue: GeneralSettings.sharedInstance.preferredLanguage) {
+        headerParameters["Accept-Language"] = language.rawValue
+      }
     }
     
     // Add required header fields for target
