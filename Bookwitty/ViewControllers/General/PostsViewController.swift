@@ -61,9 +61,17 @@ extension PostsViewController: ASCollectionDataSource, ASCollectionDelegate {
     } else {
       return {
         let baseCardNode = self.viewModel.nodeForItem(at: indexPath) ?? BaseCardPostNode()
+        baseCardNode.delegate = self
         return baseCardNode
       }
     }
+  }
+}
+
+// MARK: - Base card post node delegate
+extension PostsViewController: BaseCardPostNodeDelegate {
+  func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
+    // TODO: Implement Card action
   }
 }
 
