@@ -22,6 +22,7 @@ class CardDetailsViewController: GenericNodeViewController {
     viewModel = CardDetailsViewModel(resource: resource)
     super.init(node: node, title: title)
     node.delegate = self
+    node.updateDimVisibility(visible: true)
   }
 }
 
@@ -37,6 +38,14 @@ extension CardDetailsViewController: BaseCardPostNodeDelegate {
       viewModel.unwitContent() { (success) in
         didFinishAction?(success)
       }
+    case .dim:
+      viewModel.dimContent(completionBlock: { (success) in
+        didFinishAction?(success)
+      })
+    case .undim:
+      viewModel.undimContent(completionBlock: { (success) in
+        didFinishAction?(success)
+      })
     case .share:
       if let sharingInfo: [String] = viewModel.sharingContent() {
         presentShareSheet(shareContent: sharingInfo)

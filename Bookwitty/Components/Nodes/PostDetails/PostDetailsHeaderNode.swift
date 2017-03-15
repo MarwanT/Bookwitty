@@ -59,6 +59,9 @@ class PostDetailsHeaderNode: ASCellNode {
   }
 
   func initializeNode() {
+    //Enable dimming node
+    actionBarNode.hideDim = false
+    
     //Separator Styling
     separator.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 1.0)
     separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
@@ -75,6 +78,14 @@ class PostDetailsHeaderNode: ASCellNode {
 
   }
 
+  func setWitValue(witted: Bool, wits: Int) {
+    actionBarNode.setWitButton(witted: witted, wits: wits)
+  }
+
+  func setDimValue(dimmed: Bool, dims: Int) {
+    actionBarNode.setDimValue(dimmed: dimmed, dims: dims)
+  }
+  
   func sidesEdgeInset() -> UIEdgeInsets {
     return UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: internalMargin)
   }

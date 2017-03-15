@@ -139,11 +139,6 @@ class PostDetailsNode: ASScrollNode {
       }
     }
   }
-  var wit: Bool = false {
-    didSet {
-      headerNode.actionBarNode.setWitButton(witted: wit)
-    }
-  }
 
   override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
     headerNode = PostDetailsHeaderNode()
@@ -248,6 +243,14 @@ class PostDetailsNode: ASScrollNode {
 
     sectionTitleHeaderNode.setTitle(title: Strings.related_books(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber10(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber9())
     relatedPostsSectionTitleHeaderNode.setTitle(title: Strings.related_posts(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber4(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber3())
+  }
+
+  func setWitValue(witted: Bool, wits: Int) {
+    headerNode.actionBarNode.setWitButton(witted: witted, wits: wits)
+  }
+
+  func setDimValue(dimmed: Bool, dims: Int) {
+    headerNode.actionBarNode.setDimValue(dimmed: dimmed, dims: dims)
   }
 
   func sidesEdgeInset() -> UIEdgeInsets {

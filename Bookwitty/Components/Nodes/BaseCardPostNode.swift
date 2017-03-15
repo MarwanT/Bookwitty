@@ -113,6 +113,10 @@ class BaseCardPostNode: ASCellNode {
     //Separator
     separatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
   }
+
+  func updateDimVisibility(visible: Bool) {
+    actionBarNode.hideDim = !visible
+  }
 }
 
 //MARK: - Layout Sizing

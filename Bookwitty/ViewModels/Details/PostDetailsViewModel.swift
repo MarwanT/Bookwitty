@@ -46,6 +46,15 @@ class PostDetailsViewModel {
   var isWitted: Bool {
     return  (resource as? ModelCommonProperties)?.isWitted ?? false
   }
+  var isDimmed: Bool {
+    return  (resource as? ModelCommonProperties)?.isDimmed ?? false
+  }
+  var wits: Int? {
+    return  (resource as? ModelCommonProperties)?.counts?.wits
+  }
+  var dims: Int? {
+    return  (resource as? ModelCommonProperties)?.counts?.dims
+  }
   var identifier: String? {
     return resource.id
   }
@@ -174,6 +183,26 @@ class PostDetailsViewModel {
       return completionBlock(false)
     }
     unwitContent(contentId: contentId, completionBlock: completionBlock)
+  }
+
+  func dimContent(completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let contentId = identifier else {
+      return completionBlock(false)
+    }
+
+    cancellableRequest = NewsfeedAPI.dim(contentId: contentId, completion: { (success, error) in
+      completionBlock(success)
+    })
+  }
+
+  func undimContent(completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let contentId = identifier else {
+      return completionBlock(false)
+    }
+
+    cancellableRequest = NewsfeedAPI.undim(contentId: contentId, completion: { (success, error) in
+      completionBlock(success)
+    })
   }
 
   func sharingPost() -> [String]? {
