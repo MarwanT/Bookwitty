@@ -55,4 +55,12 @@ class Counts: NSObject {
       }
     }
   }
+
+  override var debugDescription: String {
+    let str1: String = "comments/commenters:" + " " + String(comments ?? -1) + " / " + String(commenters ?? -1)
+    let str2: String =  "wits/dims:" + " " + String(wits ?? -1) + " / " + String(dims ?? -1)
+    let str3: String = "followers/contributors:" + " " + String(followers ?? -1) + " / " + String(contributors ?? -1)
+    let str: String = str1 + " || " + str2 + " || " + str3
+    return str
+  }
 }
