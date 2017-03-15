@@ -19,6 +19,8 @@ class CardActionBarNode: ASCellNode {
     case unwit
     case comment
     case share
+    case dim
+    case undim
   }
   var witButton: ASButtonNode
   var commentButton: ASButtonNode
