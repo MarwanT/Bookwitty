@@ -11,3 +11,15 @@ import AsyncDisplayKit
 class PostsViewController: ASViewController<ASCollectionNode> {
   
 }
+
+// MARK: - Declarations
+extension PostsViewController {
+  enum Section: Int {
+    case posts = 0
+    case activityIndicator
+    
+    static var numberOfSections: Int {
+      return 2
+    }
+  }
+}
