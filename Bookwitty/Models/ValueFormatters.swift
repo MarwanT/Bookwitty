@@ -53,3 +53,19 @@ class SupplierInformationValueFormatter: ValueFormatter {
     return ["" : ""]
   }
 }
+
+class CountsValueFormatter: ValueFormatter {
+  typealias FormattedType = [String : Any]
+  typealias UnformattedType = Counts
+  typealias AttributeType = CountsAttribute
+
+  func unformatValue(_ value: [String : Any], forAttribute: CountsAttribute) -> Counts {
+    return Counts(for: value)
+  }
+
+  func formatValue(_ value: Counts, forAttribute: CountsAttribute) -> [String : Any] {
+    // TODO: Implement this
+    return ["" : ""]
+  }
+}
+
