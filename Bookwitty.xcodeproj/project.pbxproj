@@ -91,6 +91,8 @@
 		597B8E371E3954B200C7811B /* Ubuntu-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 597B8E321E3954B200C7811B /* Ubuntu-Medium.ttf */; };
 		597B8E381E3954B200C7811B /* Ubuntu-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 597B8E331E3954B200C7811B /* Ubuntu-Regular.ttf */; };
 		597B8E391E3954B200C7811B /* Volkhov-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 597B8E351E3954B200C7811B /* Volkhov-Regular.ttf */; };
+		59871F1A1E78ADFB000A86CD /* PostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59871F191E78ADFB000A86CD /* PostsViewController.swift */; };
+		59871F1D1E78AF19000A86CD /* PostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59871F1C1E78AF19000A86CD /* PostsViewModel.swift */; };
 		59903FED1E3B9D90006043EF /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59903FEC1E3B9D90006043EF /* View.swift */; };
 		59A164CB1E561BBD00088D84 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59A164CA1E561BBD00088D84 /* LaunchScreen.xib */; };
 		59A341571E575D3100CF90B3 /* NewsFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A341561E575D3100CF90B3 /* NewsFeedViewModel.swift */; };
@@ -304,6 +306,8 @@
 		597B8E321E3954B200C7811B /* Ubuntu-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Medium.ttf"; sourceTree = "<group>"; };
 		597B8E331E3954B200C7811B /* Ubuntu-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Regular.ttf"; sourceTree = "<group>"; };
 		597B8E351E3954B200C7811B /* Volkhov-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Volkhov-Regular.ttf"; sourceTree = "<group>"; };
+		59871F191E78ADFB000A86CD /* PostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostsViewController.swift; sourceTree = "<group>"; };
+		59871F1C1E78AF19000A86CD /* PostsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostsViewModel.swift; sourceTree = "<group>"; };
 		59903FEC1E3B9D90006043EF /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		59A164CA1E561BBD00088D84 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		59A341561E575D3100CF90B3 /* NewsFeedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeedViewModel.swift; sourceTree = "<group>"; };
@@ -569,6 +573,7 @@
 				59D27D0D1E40D2C400468C29 /* Access */,
 				594290071E4FF0740006B2F1 /* Books */,
 				594B9F6D1E55F470007C49E1 /* Root */,
+				59871F1B1E78AF00000A86CD /* General */,
 				59C0487E1E735A6E00CADE38 /* Checkout */,
 				564EEC0F1E70298200700474 /* ReadingListsViewModel.swift */,
 			);
@@ -858,6 +863,14 @@
 			path = Volkhov;
 			sourceTree = "<group>";
 		};
+		59871F1B1E78AF00000A86CD /* General */ = {
+			isa = PBXGroup;
+			children = (
+				59871F1C1E78AF19000A86CD /* PostsViewModel.swift */,
+			);
+			path = General;
+			sourceTree = "<group>";
+		};
 		59B65FD11E251FE80093FF44 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -1052,6 +1065,7 @@
 			children = (
 				B4ECA3461E4E05E7004B3EE2 /* WebViewController.swift */,
 				591E15571E70FE37008CA78A /* GenericNodeViewController.swift */,
+				59871F191E78ADFB000A86CD /* PostsViewController.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -1397,6 +1411,7 @@
 				F496DE021E65BF56007E22B1 /* DiscoverViewController.swift in Sources */,
 				59DA47631E3B7A9B00BA90A5 /* IntroductionViewController.swift in Sources */,
 				F4A426391E562BAC0090CD51 /* Link.swift in Sources */,
+				59871F1A1E78ADFB000A86CD /* PostsViewController.swift in Sources */,
 				592ABB2E1E5C4E4A00975E83 /* Category+API.swift in Sources */,
 				56399DC21E51D0F0005192AC /* AccountViewModel.swift in Sources */,
 				F42DFEC11E7836EC0025CE65 /* SeparatorNode.swift in Sources */,
@@ -1501,6 +1516,7 @@
 				F43996871E770EB100FE9D8B /* PostsListViewModel.swift in Sources */,
 				59591F231E6EE3FE005592B8 /* DetailsInfoCellNode.swift in Sources */,
 				59CF44051E66FEDF006C16FC /* BookDetailsViewModel.swift in Sources */,
+				59871F1D1E78AF19000A86CD /* PostsViewModel.swift in Sources */,
 				594290141E51F2850006B2F1 /* BookStoreViewController.swift in Sources */,
 				594F4EA81E423B8600A947FA /* AppNotification.swift in Sources */,
 				F442CF871E65832000F59913 /* Date+Utils.swift in Sources */,
