@@ -31,6 +31,7 @@ class PostsViewController: ASViewController<ASCollectionNode> {
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     
     loaderNode = LoaderNode()
+    loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
     
     super.init(node: collectionNode)
   }
