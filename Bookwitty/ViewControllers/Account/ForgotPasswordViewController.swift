@@ -18,6 +18,7 @@ class ForgotPasswordViewController: UIViewController {
 
     // Do any additional setup after loading the view.
     initializeComponents()
+    applyTheme()
   }
 
   private func initializeComponents() {
@@ -42,6 +43,14 @@ class ForgotPasswordViewController: UIViewController {
     return { (email: String?) -> Bool in
       email?.isValidEmail() ?? false
     }
+  }
+}
+
+//MARK: - Themable implementation
+extension ForgotPasswordViewController: Themeable {
+  func applyTheme() {
+    view.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+    ThemeManager.shared.currentTheme.stylePrimaryButton(button: submitButton)
   }
 }
 
