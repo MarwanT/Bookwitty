@@ -9,6 +9,8 @@
 import AsyncDisplayKit
 
 protocol MisfortuneNodeDelegate {
+  func misfortuneNodeDidTapActionButton(node: MisfortuneNode, mode: MisfortuneNode.Mode)
+  func misfortuneNodeDidTapSettingsButton(node: MisfortuneNode, mode: MisfortuneNode.Mode)
 }
 
 class MisfortuneNode: ASDisplayNode {
