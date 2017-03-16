@@ -35,31 +35,8 @@ class SearchViewModel {
         return
       }
 
-      let resourceIds: [String] = resources.flatMap({ $0.id })
-      self.cancellableRequest = self.loadBatch(listOfIdentifiers: resourceIds, completion: { (success, resources, error) in
-        defer {
-          completion(success, error)
-        }
-        guard success, let resources = resources else {
-          return
-        }
-        self.data += resources
-      })
-    })
-  }
-
-  private func loadBatch(listOfIdentifiers: [String], completion: @escaping (_ success: Bool, _ resources: [ModelResource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
-    return UserAPI.batch(identifiers: listOfIdentifiers, completion: {
-      (success, resource, error) in
-      var resources: [ModelResource]?
-      defer {
-        completion(success, resources, error)
-      }
-
-      guard success, let result = resource else {
-        return
-      }
-      resources = result
+      self.data += resources
+      completion(success, error)
     })
   }
 }
