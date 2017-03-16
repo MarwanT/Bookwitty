@@ -27,6 +27,7 @@ class MisfortuneNode: ASDisplayNode {
     actionButtonNode = ASButtonNode()
     settingsTextNode = ASTextNode()
     super.init()
+    applyTheme()
   }
   
   // MARK: - Conetent setters
@@ -63,6 +64,12 @@ class MisfortuneNode: ASDisplayNode {
       settingsTextNode.attributedText = settingsAttributedText
       setNeedsLayout()
     }
+  }
+}
+
+// MARK: - Themeable
+extension MisfortuneNode: Themeable {
+  func applyTheme() {
   }
 }
 
