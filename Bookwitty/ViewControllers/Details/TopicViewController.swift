@@ -230,7 +230,7 @@ extension TopicViewController: TopicHeaderNodeDelegate {
         }
       })
     } else {
-      viewModel.unfollowContent(completionBlock: { (success: Bool) in
+      viewModel.followContent(completionBlock: { (success: Bool) in
         if success {
           node.following = true
           button.isSelected = true

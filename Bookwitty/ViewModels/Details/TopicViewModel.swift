@@ -538,7 +538,7 @@ extension TopicViewModel {
       return
     }
 
-    followRequest(identifier: identifier) {
+    unfollowRequest(identifier: identifier) {
       (success: Bool) in
       defer {
         completionBlock(success)
