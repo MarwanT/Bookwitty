@@ -100,6 +100,8 @@ class SignInViewController: UIViewController {
     forgotPasswordLabel.attributedText = forgotPasswordText
     forgotPasswordLabel.linkAttributes = ThemeManager.shared.currentTheme.styleTextLinkAttributes()
     forgotPasswordLabel.addLink(to: AttributedLinkReference.forgotPassword.url, with: range)
+
+    forgotPasswordLabel.delegate = self
   }
   
   deinit {
@@ -250,6 +252,8 @@ extension SignInViewController: TTTAttributedLabelDelegate {
     switch host {
     case AttributedLinkReference.register.rawValue:
       registerAction()
+    case AttributedLinkReference.forgotPassword.rawValue:
+      pushForgotPasswordViewController()
     default:
       break
     }
@@ -265,5 +269,10 @@ extension SignInViewController: TTTAttributedLabelDelegate {
     } else {
       pushRegisterViewController()
     }
+  }
+
+  fileprivate func pushForgotPasswordViewController() {
+    let forgotPasswordViewController = Storyboard.Account.instantiate(ForgotPasswordViewController.self)
+    navigationController?.pushViewController(forgotPasswordViewController, animated: true)
   }
 }
