@@ -154,5 +154,10 @@ extension MisfortuneNode {
 // MARK: - Configuration Declaration
 extension MisfortuneNode {
   fileprivate struct Configuration {
+    let contentVerticalMargin: CGFloat = ThemeManager.shared.currentTheme.generalExternalMargin()
+    let contentHerizontalMargin: CGFloat = ThemeManager.shared.currentTheme.generalExternalMargin()
+    let actionButtonContentEdgeInsets = UIEdgeInsets(
+      top: 0, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      bottom: 0, right: ThemeManager.shared.currentTheme.generalExternalMargin())
   }
 }
