@@ -150,3 +150,9 @@ extension MisfortuneNode {
     }
   }
 }
+
+// MARK: - Configuration Declaration
+extension MisfortuneNode {
+  fileprivate struct Configuration {
+  }
+}
