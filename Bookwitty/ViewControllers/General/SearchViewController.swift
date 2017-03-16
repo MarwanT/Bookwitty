@@ -45,7 +45,7 @@ class SearchViewController: ASViewController<ASCollectionNode> {
 
   func configureSearchController() {
     let navHeight: CGFloat = navigationController?.navigationBar.frame.size.height ?? 0.0
-    let sideMargin: CGFloat = 34.0
+    let sideMargin: CGFloat = 50.0
     let size: CGSize = CGSize(width: UIScreen.main.bounds.width - sideMargin, height: navHeight)
 
     searchBar = UISearchBar(frame: CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height))
@@ -58,7 +58,7 @@ class SearchViewController: ASViewController<ASCollectionNode> {
 
     if let searchBar = searchBar {
       let leftNavBarButton = UIBarButtonItem(customView: searchBar)
-      self.navigationItem.leftBarButtonItem = leftNavBarButton
+      self.navigationItem.rightBarButtonItem = leftNavBarButton
     }
   }
 
