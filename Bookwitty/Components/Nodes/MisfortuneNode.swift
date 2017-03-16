@@ -47,6 +47,84 @@ class MisfortuneNode: ASDisplayNode {
     actionButtonNode.contentEdgeInsets = configuration.actionButtonContentEdgeInsets
   }
   
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    // TOP PART OF THE NODE
+    //----------------------
+    imageNode.style.maxHeight = ASDimensionMake(constrainedSize.max.height/2)
+    imageNode.style.flexShrink = 1.0
+    
+    // BOTTOM HALF OF THE NODE
+    //-------------------------
+    let topContentVerticalStack = ASStackLayoutSpec(
+      direction: .vertical,
+      spacing: 10,
+      justifyContent: .start,
+      alignItems: .stretch,
+      children: [titleNode, descriptionNode])
+    let topContentStackInset = ASInsetLayoutSpec(
+      insets: UIEdgeInsets(
+        top: (configuration.contentVerticalMargin * 2), left: 0,
+        bottom: configuration.contentVerticalMargin, right: 0),
+      child: topContentVerticalStack)
+    
+    // Add bottom action nodes based on the visibility specified in the node
+    let actionButtonInsets = ASInsetLayoutSpec(
+      insets: UIEdgeInsets(
+        top: 0, left: 0,
+        bottom: configuration.contentVerticalMargin, right: 0),
+      child: actionButtonNode)
+    var bottomContentLayoutElements = [ASLayoutElement]()
+    if mode.actionButtonVisible {
+      bottomContentLayoutElements.append(actionButtonInsets)
+    }
+    if mode.settingsTextVisible {
+      bottomContentLayoutElements.append(settingsTextNode)
+    }
+    let bottomContentVerticalStack = ASStackLayoutSpec(
+      direction: .vertical,
+      spacing: 0,
+      justifyContent: .end,
+      alignItems: .center,
+      children: bottomContentLayoutElements)
+    let bottomContentStackInset = ASInsetLayoutSpec(
+      insets: UIEdgeInsets(
+        top: configuration.contentVerticalMargin, left: 0,
+        bottom: (configuration.contentVerticalMargin * 2), right: 0),
+      child: bottomContentVerticalStack)
+    
+    // If there were no views at all in the bottom part then do not include
+    // the layout element
+    var contentStackLayoutElements: [ASLayoutElement] = [topContentStackInset]
+    if bottomContentLayoutElements.count > 0 {
+      contentStackLayoutElements.append(bottomContentStackInset)
+    }
+    
+    // Get the bottom half layout of the base layout
+    let contentStack = ASStackLayoutSpec(
+      direction: .vertical,
+      spacing: 0,
+      justifyContent: .spaceBetween,
+      alignItems: .stretch,
+      children: contentStackLayoutElements)
+    contentStack.style.flexGrow = 1.0
+    let contentStackInset = ASInsetLayoutSpec(
+      insets: UIEdgeInsets(
+        top: 0, left: configuration.contentHerizontalMargin,
+        bottom: 0, right: configuration.contentHerizontalMargin),
+      child: contentStack)
+    
+    // Build the base vertical Layout
+    //--------------------------------
+    let verticalStack = ASStackLayoutSpec(
+      direction: .vertical,
+      spacing: 0,
+      justifyContent: ASStackLayoutJustifyContent.start,
+      alignItems: .stretch,
+      children: [imageNode, contentStackInset])
+    verticalStack.style.height = ASDimensionMake(constrainedSize.max.height)
+    return verticalStack
+  }
+  
   // MARK: - Conetent setters
   fileprivate var image: UIImage? {
     didSet {
