@@ -41,6 +41,9 @@ class MisfortuneNode: ASDisplayNode {
   private func initializeNode() {
     automaticallyManagesSubnodes = true
     
+    actionButtonNode.addTarget(self, action: #selector(actionButtonTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
+    settingsTextNode.addTarget(self, action: #selector(settingsTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
+    
     titleText = mode.titleText
     descriptionText = mode.descriptionText
     actionButtonText = mode.actionButtonText
@@ -130,6 +133,14 @@ class MisfortuneNode: ASDisplayNode {
       children: [imageNode, contentStackInset])
     verticalStack.style.height = ASDimensionMake(constrainedSize.max.height)
     return verticalStack
+  }
+  
+  // MARK: - Actions
+  func actionButtonTouchUpInside(_ sender: Any) {
+    delegate?.misfortuneNodeDidTapActionButton(node: self, mode: mode)
+  }
+  func settingsTouchUpInside(_ sender: Any) {
+    delegate?.misfortuneNodeDidTapSettingsButton(node: self, mode: mode)
   }
   
   // MARK: - Conetent setters
