@@ -286,7 +286,7 @@ extension MisfortuneNode {
       case .noResultsFound:
         return Strings.no_results_found_description()
       case .somethingWrong:
-        return "We can't load your\nfeed right now."
+        return Strings.something_wrong_error_description()
       }
     }
     var actionButtonText: String {

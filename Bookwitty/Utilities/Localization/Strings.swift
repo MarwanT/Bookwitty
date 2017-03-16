@@ -416,6 +416,10 @@ class Strings {
   class func some_thing_wrong_error() -> String {
     return localizedString(key: "some_thing_wrong_error")
   }
+  
+  class func something_wrong_error_description() -> String {
+    return localizedString(key: "something_wrong_error_description")
+  }
 
   class func something_wrong_in_credentials() -> String {
     return localizedString(key: "something_wrong_in_credentials")
