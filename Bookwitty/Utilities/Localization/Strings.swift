@@ -208,7 +208,11 @@ class Strings {
   class func forgot_password() -> String {
     return localizedString(key: "forgot_password")
   }
-  
+
+  class func forgot_your_password() -> String {
+    return localizedString(key: "forgot_your_password")
+  }
+
   class func format() -> String {
     return localizedString(key: "format")
   }
