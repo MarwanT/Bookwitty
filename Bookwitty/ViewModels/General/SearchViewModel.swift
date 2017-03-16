@@ -23,6 +23,12 @@ class SearchViewModel {
     }
   }
 
+  func clearSearchData() {
+    //Cancel any on-goin request
+    cancelActiveRequest()
+    self.data.removeAll(keepingCapacity: false)
+  }
+
   func search(query: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
     //Cancel any on-goin request
     cancelActiveRequest()

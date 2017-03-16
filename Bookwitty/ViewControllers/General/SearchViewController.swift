@@ -72,6 +72,8 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     searchBar?.showsCancelButton = false
     searchBar?.sizeToFit()
 
+    //UITextField.appearance(whenContainedInInstancesOf: [UITextField.self])
+
     if let searchBar = searchBar {
       let leftNavBarButton = UIBarButtonItem(customView: searchBar)
       self.navigationItem.rightBarButtonItem = leftNavBarButton
@@ -83,6 +85,8 @@ class SearchViewController: ASViewController<ASCollectionNode> {
       return
     }
     loadingStatus = .loading
+    viewModel.clearSearchData()
+    collectionNode.reloadData()
     viewModel.search(query: query) { (success, error) in
       //TODO: handle search result
       self.loadingStatus = .none
