@@ -314,6 +314,10 @@ class PostDetailsNode: ASScrollNode {
       vStackSpec.children?.append(relatedBooksTopSeparator)
       vStackSpec.children?.append(relatedBooksViewAllNode)
       vStackSpec.children?.append(relatedBooksSeparator)
+
+      let bannerInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: bannerImageNode)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(bannerInsetSpec)
     }
     
 
