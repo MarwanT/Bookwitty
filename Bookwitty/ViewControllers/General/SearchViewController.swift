@@ -10,11 +10,18 @@ import Foundation
 import AsyncDisplayKit
 
 class SearchViewController: ASViewController<ASCollectionNode> {
+  enum LoadingStatus {
+    case none
+    case loadMore
+    case reloading
+    case loading
+  }
   var flowLayout: UICollectionViewFlowLayout
   var collectionNode: ASCollectionNode
 
   var searchBar: UISearchBar?
   var viewModel: SearchViewModel = SearchViewModel()
+  var loadingStatus: LoadingStatus = .none
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
