@@ -57,6 +57,16 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     collectionNode.dataSource = self
     collectionNode.delegate = self
     configureSearchController()
+    searchBar?.becomeFirstResponder()
+
+    let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+    tap.cancelsTouchesInView = false
+    view.addGestureRecognizer(tap)
+  }
+
+  func dismissKeyboard() {
+    view.endEditing(true)
+    searchBar?.resignFirstResponder()
   }
 
   func configureSearchController() {
