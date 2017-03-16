@@ -94,6 +94,12 @@ class SignInViewController: UIViewController {
     
     //Set Delegates
     registerLabel.delegate = self
+
+    let forgotPasswordText = viewModel.styledForgotPasswordText()
+    let range = NSRange(location: 0, length: forgotPasswordText.length)
+    forgotPasswordLabel.attributedText = forgotPasswordText
+    forgotPasswordLabel.linkAttributes = ThemeManager.shared.currentTheme.styleTextLinkAttributes()
+    forgotPasswordLabel.addLink(to: AttributedLinkReference.forgotPassword.url, with: range)
   }
   
   deinit {
@@ -228,6 +234,7 @@ extension SignInViewController: TTTAttributedLabelDelegate {
   enum AttributedLinkReference: String {
     case register
     
+    case forgotPassword
     var url: URL {
       get {
         return URL(string: "bookwittyapp://" + self.rawValue)!
