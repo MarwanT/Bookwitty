@@ -64,3 +64,28 @@ class SearchViewModel {
     return (nextPage != nil)
   }
 }
+
+// Mark: - Collection helper
+extension SearchViewModel {
+  func numberOfSections() -> Int {
+    return data.count
+  }
+
+  func numberOfItemsInSection() -> Int {
+    return data.count
+  }
+
+  func resourceForIndex(indexPath: IndexPath) -> ModelResource? {
+    guard data.count > indexPath.row else { return nil }
+    let resource = data[indexPath.row]
+    return resource
+  }
+
+  func nodeForItem(atIndexPath indexPath: IndexPath) -> BaseCardPostNode? {
+    guard let resource = resourceForIndex(indexPath: indexPath) else {
+      return nil
+    }
+
+    return CardFactory.shared.createCardFor(resource: resource)
+  }
+}
