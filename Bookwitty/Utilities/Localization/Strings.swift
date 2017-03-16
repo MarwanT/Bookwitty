@@ -204,6 +204,10 @@ class Strings {
   class func first_name_invalid() -> String {
     return localizedString(key: "first_name_invalid")
   }
+
+  class func forgot_password() -> String {
+    return localizedString(key: "forgot_password")
+  }
   
   class func format() -> String {
     return localizedString(key: "format")
@@ -379,6 +383,10 @@ class Strings {
 
   class func reading_lists() -> String {
     return localizedString(key: "reading_lists")
+  }
+
+  class func reset_password() -> String {
+    return localizedString(key: "reset_password")
   }
 
   class func register() -> String {
