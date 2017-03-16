@@ -24,6 +24,8 @@ class MisfortuneNode: ASDisplayNode {
   
   fileprivate var configuration = Configuration()
   
+  var delegate: MisfortuneNodeDelegate?
+  
   init(mode: Mode) {
     self.mode = mode
     imageNode = ASImageNode()
