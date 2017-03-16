@@ -43,6 +43,7 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     searchBar = UISearchBar(frame: CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height))
     searchBar?.barStyle = .black
     searchBar?.searchBarStyle = .prominent
+    searchBar?.placeholder = Strings.search_placeholder()
     searchBar?.delegate = self
     searchBar?.showsCancelButton = false
     searchBar?.sizeToFit()
