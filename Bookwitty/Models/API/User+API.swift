@@ -254,4 +254,15 @@ extension UserAPI {
     ]
     return dictionary
   }
+
+  static func resetPasswordBody(email: String) -> [String : Any]? {
+    let dictionary = [
+      "data" : [
+        "attributes" : [
+          "email" : email
+        ]
+      ]
+    ]
+    return dictionary
+  }
 }
