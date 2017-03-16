@@ -173,10 +173,10 @@
             </objects>
             <point key="canvasLocation" x="1250" y="-348"/>
         </scene>
-        <!--View Controller-->
+        <!--Forgot Password View Controller-->
         <scene sceneID="asi-Pi-x7j">
             <objects>
-                <viewController id="KCx-CU-skL" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ForgotPasswordViewController" id="KCx-CU-skL" customClass="ForgotPasswordViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NaB-QU-3YF"/>
                         <viewControllerLayoutGuide type="bottom" id="B8I-Uo-JHJ"/>
