@@ -99,12 +99,54 @@ extension SearchViewController: ASCollectionDataSource {
           }
         })
       }
+      baseCardNode.delegate = self
       return baseCardNode
     }
   }
 }
 
+// MARK - BaseCardPostNode Delegate
+extension SearchViewController: BaseCardPostNodeDelegate {
+  func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+
+    switch(action) {
+    case .wit:
+      viewModel.witContent(indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    case .unwit:
+      viewModel.unwitContent(indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    case .share:
+      if let sharingInfo: [String] = viewModel.sharingContent(indexPath: indexPath) {
+        presentShareSheet(shareContent: sharingInfo)
+      }
+    case .follow:
+      viewModel.follow(indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    case .unfollow:
+      viewModel.unfollow(indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    default:
+      //TODO: handle comment
+      break
+    }
+  }
+}
+
 extension SearchViewController: ASCollectionDelegate {
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    //TODO: action For Cards
+    //let resource = viewModel.resourceForIndex(indexPath: indexPath)
+    //actionForCard(resource: resource)
+  }
+
   public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
     return ASSizeRange(
       min: CGSize(width: collectionNode.frame.width, height: 0),
