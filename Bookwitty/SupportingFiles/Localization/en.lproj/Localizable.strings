@@ -47,6 +47,7 @@
 "email_invalid" = "Oooops your email seems to be invalid";
 "email_notifications" = "Email Notifications";
 "empty_error_description" = "Select people, topics and tags of\ninterest to populate this section\nwith content you like.";
+"empty_error_title" = "Its empty in here";
 "enter_your_email" = "Enter your email";
 "enter_your_first_name" = "Enter your first name";
 "enter_your_last_name" = "Enter your last name";

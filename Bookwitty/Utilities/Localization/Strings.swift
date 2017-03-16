@@ -164,6 +164,10 @@ class Strings {
   class func empty_error_description() -> String {
     return localizedString(key: "empty_error_description")
   }
+  
+  class func empty_error_title() -> String {
+    return localizedString(key: "empty_error_title")
+  }
 
   class func enter_your_email() -> String {
     return localizedString(key: "enter_your_email")

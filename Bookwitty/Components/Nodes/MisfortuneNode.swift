@@ -268,7 +268,7 @@ extension MisfortuneNode {
     var titleText: String {
       switch self {
       case .empty:
-        return "Its empty in here"
+        return Strings.empty_error_title()
       case .noInternet:
         return "No Internet!"
       case .noResultsFound:
