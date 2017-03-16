@@ -23,4 +23,10 @@ class ForgotPasswordViewController: UIViewController {
   private func initializeComponents() {
 
   }
+
+  private func blockForEmailValidation() -> (String?) -> Bool {
+    return { (email: String?) -> Bool in
+      email?.isValidEmail() ?? false
+    }
+  }
 }
