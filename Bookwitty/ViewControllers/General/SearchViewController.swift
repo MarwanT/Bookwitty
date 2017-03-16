@@ -51,6 +51,10 @@ class SearchViewController: ASViewController<ASCollectionNode> {
       self.navigationItem.leftBarButtonItem = leftNavBarButton
     }
   }
+
+  fileprivate func searchAction(query: String?) {
+    //TODO: search action
+  }
 }
 
 extension SearchViewController: UISearchBarDelegate {
@@ -70,6 +74,7 @@ extension SearchViewController: UISearchBarDelegate {
 
   public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
     searchBar.endEditing(true)
+    searchAction(query: searchBar.text)
   }
 
   public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
