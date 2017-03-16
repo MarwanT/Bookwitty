@@ -184,7 +184,35 @@ extension PostsViewController: ASCollectionDataSource, ASCollectionDelegate {
 // MARK: - Base card post node delegate
 extension PostsViewController: BaseCardPostNodeDelegate {
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
-    // TODO: Implement Card action
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+
+    switch(action) {
+    case .wit:
+      viewModel.witContent(indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    case .unwit:
+      viewModel.unwitContent(indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    case .share:
+      if let sharingInfo: [String] = viewModel.sharingContent(indexPath: indexPath) {
+        presentShareSheet(shareContent: sharingInfo)
+      }
+    case .follow:
+      viewModel.follow(indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    case .unfollow:
+      viewModel.unfollow(indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    default:
+      //TODO: handle comment
+      break
+    }
   }
 }
 
