@@ -72,8 +72,8 @@ class MisfortuneNode: ASDisplayNode {
       overlay: imageBackgroundForegroundInset)
     
     let imageSpec = ASBackgroundLayoutSpec(child: imageNode, background: imageBackgroundOverlaySpec)
-    imageNode.style.maxHeight = ASDimensionMake(constrainedSize.max.height/2)
-    imageNode.style.flexShrink = 1.0
+    imageSpec.style.maxHeight = ASDimensionMake(constrainedSize.max.height/2)
+    imageSpec.style.flexShrink = 1.0
     
     // BOTTOM HALF OF THE NODE
     //-------------------------
