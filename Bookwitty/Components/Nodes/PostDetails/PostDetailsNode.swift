@@ -252,6 +252,7 @@ class PostDetailsNode: ASScrollNode {
   }
 
   func bannerTouchUpInside() {
+    delegate?.bannerTapAction(url: Environment.current.shipementInfoURL)
   }
 
   func setWitValue(witted: Bool, wits: Int) {
