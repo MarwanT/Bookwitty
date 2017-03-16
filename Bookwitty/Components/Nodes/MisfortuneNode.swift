@@ -27,7 +27,24 @@ class MisfortuneNode: ASDisplayNode {
     actionButtonNode = ASButtonNode()
     settingsTextNode = ASTextNode()
     super.init()
+    initializeNode()
     applyTheme()
+  }
+  
+  private func initializeNode() {
+    automaticallyManagesSubnodes = true
+    
+    titleText = mode.titleText
+    descriptionText = mode.descriptionText
+    actionButtonText = mode.actionButtonText
+    settingsAttributedText = mode.settingsAttributedText
+    image = mode.image
+    
+    imageNode.backgroundColor = mode.backgroundColor
+    
+    imageNode.contentMode = UIViewContentMode.scaleAspectFit
+    
+    actionButtonNode.contentEdgeInsets = configuration.actionButtonContentEdgeInsets
   }
   
   // MARK: - Conetent setters
