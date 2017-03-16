@@ -281,3 +281,83 @@ extension PostsViewModel {
   }
 }
 
+// MARK: - PenName Follow/Unfollow
+extension PostsViewModel {
+  func follow(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
+    let resource = posts[indexPath.item]
+    guard let resourceId = resource.id else {
+      completionBlock(false)
+      return
+    }
+    //Expected types: Topic - Author - Book - PenName
+    if resource.registeredResourceType == PenName.resourceType {
+      //Only If Resource is a pen-name
+      followPenName(penName: resource as? PenName, completionBlock: completionBlock)
+    } else {
+      //Types: Topic - Author - Book
+      followRequest(identifier: resourceId, completionBlock: completionBlock)
+    }
+  }
+
+  func unfollow(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
+    let resource = posts[indexPath.item]
+    guard let resourceId = resource.id else {
+      completionBlock(false)
+      return
+    }
+    //Expected types: Topic - Author - Book - PenName
+    if resource.registeredResourceType == PenName.resourceType {
+      //Only If Resource is a pen-name
+      unfollowPenName(penName: resource as? PenName, completionBlock: completionBlock)
+    } else {
+      //Types: Topic - Author - Book
+      unfollowRequest(identifier: resourceId, completionBlock: completionBlock)
+    }
+  }
+
+  func followPenName(penName: PenName?, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let penName = penName, let identifier = penName.id else {
+      completionBlock(false)
+      return
+    }
+
+    followRequest(identifier: identifier) {
+      (success: Bool) in
+      defer {
+        completionBlock(success)
+      }
+      penName.following = true
+    }
+  }
+
+  func unfollowPenName(penName: PenName?, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let penName = penName, let identifier = penName.id else {
+      completionBlock(false)
+      return
+    }
+
+    unfollowRequest(identifier: identifier) {
+      (success: Bool) in
+      defer {
+        completionBlock(success)
+      }
+      penName.following = false
+    }
+  }
+
+  fileprivate func followRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
+    _ = GeneralAPI.follow(identifer: identifier) { (success, error) in
+      defer {
+        completionBlock(success)
+      }
+    }
+  }
+
+  fileprivate func unfollowRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
+    _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
+      defer {
+        completionBlock(success)
+      }
+    }
+  }
+}
