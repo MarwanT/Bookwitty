@@ -65,8 +65,10 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     guard let query = query else {
       return
     }
+    loadingStatus = .loading
     viewModel.search(query: query) { (success, error) in
       //TODO: handle search result
+      self.loadingStatus = .none
     }
   }
 }
