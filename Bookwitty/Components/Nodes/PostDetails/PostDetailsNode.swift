@@ -241,6 +241,12 @@ class PostDetailsNode: ASScrollNode {
 
     sectionTitleHeaderNode.setTitle(title: Strings.related_books(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber10(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber9())
     relatedPostsSectionTitleHeaderNode.setTitle(title: Strings.related_posts(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber4(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber3())
+
+    bannerImageNode.style.height = ASDimensionMake(120.0)
+    bannerImageNode.style.flexGrow = 1
+    bannerImageNode.style.flexShrink = 1
+    bannerImageNode.contentMode = .scaleAspectFit
+    bannerImageNode.image = #imageLiteral(resourceName: "freeShippingBanner")
   }
 
   func setWitValue(witted: Bool, wits: Int) {
