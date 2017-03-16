@@ -285,6 +285,10 @@ class Strings {
     return localizedString(key: "no_results_found_description")
   }
   
+  class func no_results_found_title() -> String {
+    return localizedString(key: "no_results_found_title")
+  }
+  
   class func number_of_pages() -> String {
     return localizedString(key: "number_of_pages")
   }

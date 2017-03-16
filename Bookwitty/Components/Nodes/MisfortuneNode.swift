@@ -272,7 +272,7 @@ extension MisfortuneNode {
       case .noInternet:
         return Strings.no_internet_error_title()
       case .noResultsFound:
-        return "No results found"
+        return Strings.no_results_found_title()
       case .somethingWrong:
         return "Something's wrong!"
       }
