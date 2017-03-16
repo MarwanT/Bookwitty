@@ -198,6 +198,27 @@ struct UserAPI {
       success = statusCode == successStatusCode
     })
   }
+
+  static func resetPassword(email: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let successStatusCode = 204
+
+    return apiRequest(target: .resetPassword(email: email)) {
+      (data, statusCode, response, error) in
+      var success: Bool = false
+      var error: BookwittyAPIError? = error
+      defer {
+        completion(success, error)
+      }
+
+      // If status code != success then break
+      if statusCode != successStatusCode {
+        error = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      success = true
+    }
+  }
 }
 
 //MARK: - Moya Needed parameters
