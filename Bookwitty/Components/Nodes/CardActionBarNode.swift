@@ -21,7 +21,10 @@ class CardActionBarNode: ASCellNode {
     case share
     case dim
     case undim
+    case follow
+    case unfollow
   }
+  var followButton: ASButtonNode
   var witButton: ASButtonNode
   var commentButton: ASButtonNode
   var shareButton: ASButtonNode
@@ -60,7 +63,14 @@ class CardActionBarNode: ASCellNode {
   fileprivate var dimText: String {
     return numberOfDimsNode.isSelected ? Strings.dimmed() : Strings.dim()
   }
-
+  fileprivate var actionButton: ASButtonNode {
+    return followingMode ? followButton : witButton
+  }
+  fileprivate var followingMode: Bool = false {
+    didSet {
+      setNeedsLayout()
+    }
+  }
   private let witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
 
@@ -81,13 +91,19 @@ class CardActionBarNode: ASCellNode {
     shareButton = ASButtonNode()
     numberOfWitsNode = ASTextNode()
     numberOfDimsNode = ASTextNode()
+    followButton = ASButtonNode()
     super.init()
     addSubnode(witButton)
     addSubnode(commentButton)
     addSubnode(shareButton)
     addSubnode(numberOfWitsNode)
     addSubnode(numberOfDimsNode)
+    addSubnode(followButton)
     self.initializeNode()
+  }
+
+  func setup(forFollowingMode followingMode: Bool) {
+    self.followingMode = followingMode
   }
 
   private func initializeNode() {
@@ -101,10 +117,12 @@ class CardActionBarNode: ASCellNode {
     shareButton.setImage(#imageLiteral(resourceName: "shareOutside"), for: .normal)
 
     setupWitButtonStyling()
+    setupFollowButtonStyling()
 
     shareButton.addTarget(self, action: #selector(shareButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     commentButton.addTarget(self, action: #selector(commentButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     witButton.addTarget(self, action: #selector(witButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    followButton.addTarget(self, action: #selector(followButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     numberOfDimsNode.addTarget(self, action: #selector(dimButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
 
     numberOfWitsNode.style.maxWidth = ASDimensionMake(60.0)
@@ -114,6 +132,27 @@ class CardActionBarNode: ASCellNode {
 
     //By default dim info should be hidden, needs to be explicitly set false to show
     hideDim = true
+  }
+
+  private func setupFollowButtonStyling() {
+    let buttonFont = FontDynamicType.subheadline.font
+
+    let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultBackgroundColor())
+    let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+
+    let selectedTextColor = ThemeManager.shared.currentTheme.colorNumber23()
+    let selectedButtonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultButtonColor())
+
+    followButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
+    followButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
+
+    followButton.setTitle(Strings.follow(), with: buttonFont, with: textColor, for: .normal)
+    followButton.setTitle(Strings.followed(), with: buttonFont, with: selectedTextColor, for: .selected)
+
+    followButton.cornerRadius = 4
+    followButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
+    followButton.borderWidth = 2
+    followButton.clipsToBounds = true
   }
 
   private func setupWitButtonStyling() {
@@ -179,6 +218,16 @@ class CardActionBarNode: ASCellNode {
     }
   }
 
+  func updateFollow(for action: Action, success: Bool = true) {
+    switch action {
+    case .follow:
+      followButton.isSelected = success
+    case .unfollow:
+      followButton.isSelected = !success
+    default: break
+    }
+  }
+
   func dimButtonTouchUpInside(_ sender: ASTextNode?) {
     let action = !numberOfDimsNode.isSelected ? CardActionBarNode.Action.dim : CardActionBarNode.Action.undim
     self.updateWitAndDim(for: action)
@@ -206,6 +255,21 @@ class CardActionBarNode: ASCellNode {
     })
   }
 
+  func followButtonTouchUpInside(_ sender: ASButtonNode?) {
+    guard let sender = sender else { return }
+    //Get action from witButton status
+    let action = !followButton.isSelected ? CardActionBarNode.Action.follow : CardActionBarNode.Action.unfollow
+    //Assume success and Toggle button anyway, if follow/unfollow fails delegate should either call didFinishAction or  call toggle follow.
+    self.updateFollow(for: action)
+
+    delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: action, forSender: sender, didFinishAction: { [weak self] (success: Bool) in
+      guard let strongSelf = self else { return }
+      if !success { //Toggle back on failure
+        strongSelf.updateFollow(for: action, success: false)
+      }
+    })
+  }
+
   func commentButtonTouchUpInside(_ sender: ASButtonNode?) {
     guard let sender = sender else { return }
     delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: CardActionBarNode.Action.comment, forSender: sender, didFinishAction: nil)
@@ -227,9 +291,9 @@ class CardActionBarNode: ASCellNode {
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     //Setup Dynamic width Wit Button
-    witButton.titleNode.maximumNumberOfLines = 1
-    witButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-    witButton.style.height = ASDimensionMake(buttonSize.height)
+    actionButton.titleNode.maximumNumberOfLines = 1
+    actionButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    actionButton.style.height = ASDimensionMake(buttonSize.height)
 
     //Setup other buttons
     commentButton.style.preferredSize = iconSize
@@ -247,7 +311,7 @@ class CardActionBarNode: ASCellNode {
                                                 spacing: 0,
                                                 justifyContent: .spaceAround,
                                                 alignItems: .center,
-                                                children: [witButton,
+                                                children: [actionButton,
                                                           textHorizontalStackSpec,
                                                            spacer(),
                                                            commentButton,
