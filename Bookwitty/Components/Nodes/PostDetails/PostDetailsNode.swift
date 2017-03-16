@@ -248,6 +248,10 @@ class PostDetailsNode: ASScrollNode {
     bannerImageNode.style.flexShrink = 1
     bannerImageNode.contentMode = .scaleAspectFit
     bannerImageNode.image = #imageLiteral(resourceName: "freeShippingBanner")
+    bannerImageNode.addTarget(self, action: #selector(bannerTouchUpInside) , forControlEvents: .touchUpInside)
+  }
+
+  func bannerTouchUpInside() {
   }
 
   func setWitValue(witted: Bool, wits: Int) {
