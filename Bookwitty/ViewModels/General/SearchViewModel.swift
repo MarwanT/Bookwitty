@@ -12,6 +12,7 @@ import Moya
 class SearchViewModel {
   var data: [ModelResource] = []
   var cancellableRequest: Cancellable?
+  var nextPage: URL?
 
   func cancelActiveRequest() {
     guard let cancellableRequest = cancellableRequest else {
@@ -36,6 +37,7 @@ class SearchViewModel {
       }
 
       self.data += resources
+      self.nextPage = nextPage
       completion(success, error)
     })
   }
