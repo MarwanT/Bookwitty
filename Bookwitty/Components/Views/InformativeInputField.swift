@@ -82,6 +82,10 @@ class InformativeInputField: InputField {
   func textFieldTap(sender: Any?) {
     self.textField.becomeFirstResponder()
     self.textField.resignFirstResponder()
+    
+    // If the field was previousely labeled as invalid reset its status
+    // hence updating the ui to it's notmal/valid state
+    status = .valid
 
     informativeInputFieldDelegate?.informativeInputFieldDidTapField(informativeInputField: self)
   }
