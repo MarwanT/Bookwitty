@@ -128,6 +128,7 @@ class RegisterViewController: UIViewController {
     passwordField.validationBlock = passwordValidation()
     firstNameField.validationBlock = notEmptyValidation()
     lastNameField.validationBlock = notEmptyValidation()
+    countryField.validationBlock = notEmptyValidation()
 
     emailField.delegate = self
     passwordField.delegate = self
@@ -160,8 +161,10 @@ class RegisterViewController: UIViewController {
     let passwordValidationResult = passwordField.validateField()
     let firstNameValidationResult = firstNameField.validateField()
     let lastNameValidationResult = lastNameField.validateField()
+    let countryValidationResult = countryField.validateField()
     if(emailValidationResult.isValid && passwordValidationResult.isValid
-      && firstNameValidationResult.isValid && lastNameValidationResult.isValid) {
+      && firstNameValidationResult.isValid && lastNameValidationResult.isValid
+      && countryValidationResult.isValid) {
       let email = emailValidationResult.value!
       let password = passwordValidationResult.value!
       let firstName = firstNameValidationResult.value!
