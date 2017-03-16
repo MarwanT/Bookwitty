@@ -274,7 +274,7 @@ extension MisfortuneNode {
       case .noResultsFound:
         return Strings.no_results_found_title()
       case .somethingWrong:
-        return "Something's wrong!"
+        return Strings.something_wrong_error_title()
       }
     }
     var descriptionText: String {

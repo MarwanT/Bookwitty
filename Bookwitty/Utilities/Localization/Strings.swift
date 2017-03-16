@@ -420,6 +420,10 @@ class Strings {
   class func something_wrong_error_description() -> String {
     return localizedString(key: "something_wrong_error_description")
   }
+  
+  class func something_wrong_error_title() -> String {
+    return localizedString(key: "something_wrong_error_title")
+  }
 
   class func something_wrong_in_credentials() -> String {
     return localizedString(key: "something_wrong_in_credentials")

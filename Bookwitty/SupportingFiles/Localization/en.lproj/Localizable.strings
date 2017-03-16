@@ -110,6 +110,7 @@
 "sign_up" = "Sign up";
 "some_thing_wrong_error" = "Something went wrong";
 "something_wrong_error_description" = "We can't load your\nfeed right now.";
+"something_wrong_error_title" = "Something's wrong!";
 "something_wrong_in_credentials" = "Oooops it seems there is something wrong in your credentials";
 "subtitle" = "Subtitle";
 "take_Profile_photo" = "Take profile photo";
