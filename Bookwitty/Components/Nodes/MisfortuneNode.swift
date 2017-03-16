@@ -10,3 +10,13 @@ import AsyncDisplayKit
 
 class MisfortuneNode: ASDisplayNode {
 }
+
+// MARK: - Mode Declaration
+extension MisfortuneNode {
+  enum Mode {
+    case noInternet
+    case empty
+    case somethingWrong
+    case noResultsFound
+  }
+}
