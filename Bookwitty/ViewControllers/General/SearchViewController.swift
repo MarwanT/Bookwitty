@@ -16,12 +16,24 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     case reloading
     case loading
   }
-  var flowLayout: UICollectionViewFlowLayout
-  var collectionNode: ASCollectionNode
+  let flowLayout: UICollectionViewFlowLayout
+  let collectionNode: ASCollectionNode
+  let loaderNode: LoaderNode
 
   var searchBar: UISearchBar?
   var viewModel: SearchViewModel = SearchViewModel()
-  var loadingStatus: LoadingStatus = .none
+  var loadingStatus: LoadingStatus = .none {
+    didSet {
+      var showLoader: Bool = false
+      switch (loadingStatus) {
+      case .none:
+        showLoader = true
+      default:
+        showLoader = false
+      }
+      loaderNode.updateLoaderVisibility(show: showLoader)
+    }
+  }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -34,6 +46,8 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     flowLayout.minimumLineSpacing       = 0
 
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+    loaderNode = LoaderNode()
+    loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
     super.init(node: collectionNode)
   }
 
@@ -89,13 +103,17 @@ extension SearchViewController: ASCollectionDataSource {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    return viewModel.numberOfItemsInSection()
+    return viewModel.numberOfItemsInSection(section: section)
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
     let indexPath = indexPath
 
     return {
+      guard indexPath.section == Section.cards.rawValue else {
+        //Return the activity indicator
+        return self.loaderNode
+      }
       let baseCardNode = self.viewModel.nodeForItem(atIndexPath: indexPath) ?? BaseCardPostNode()
       if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
         !readingListCell.node.isImageCollectionLoaded {
@@ -108,6 +126,12 @@ extension SearchViewController: ASCollectionDataSource {
       }
       baseCardNode.delegate = self
       return baseCardNode
+    }
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+    if let loaderNode = node as? LoaderNode {
+      loaderNode.updateLoaderVisibility(show: !(loadingStatus == .none))
     }
   }
 }
@@ -175,7 +199,7 @@ extension SearchViewController: ASCollectionDelegate {
     context.beginBatchFetching()
     self.loadingStatus = .loadMore
 
-    let initialLastIndexPath: Int = viewModel.numberOfItemsInSection()
+    let initialLastIndexPath: Int = viewModel.numberOfItemsInSection(section: Section.cards.rawValue)
 
     // Fetch next page data
     viewModel.loadNextPage { [weak self] (success) in
@@ -186,7 +210,7 @@ extension SearchViewController: ASCollectionDelegate {
       guard let strongSelf = self else {
         return
       }
-      let finalLastIndexPath: Int = strongSelf.viewModel.numberOfItemsInSection()
+      let finalLastIndexPath: Int = strongSelf.viewModel.numberOfItemsInSection(section: Section.cards.rawValue)
 
       if success && finalLastIndexPath > initialLastIndexPath {
         let updateIndexRange = initialLastIndexPath..<finalLastIndexPath
@@ -331,5 +355,18 @@ extension SearchViewController {
     let topicViewController = TopicViewController()
     topicViewController.initialize(withBook: resource as? Book)
     navigationController?.pushViewController(topicViewController, animated: true)
+  }
+}
+
+
+// MARK: - Declarations
+extension SearchViewController {
+  enum Section: Int {
+    case cards = 0
+    case activityIndicator
+
+    static var numberOfSections: Int {
+      return 2
+    }
   }
 }

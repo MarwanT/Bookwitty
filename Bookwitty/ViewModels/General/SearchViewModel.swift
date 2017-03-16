@@ -68,11 +68,11 @@ class SearchViewModel {
 // Mark: - Collection helper
 extension SearchViewModel {
   func numberOfSections() -> Int {
-    return 1
+    return SearchViewController.Section.numberOfSections
   }
 
-  func numberOfItemsInSection() -> Int {
-    return data.count
+  func numberOfItemsInSection(section: Int) -> Int {
+    return SearchViewController.Section.activityIndicator.rawValue == section ? 1 : data.count
   }
 
   func resourceForIndex(indexPath: IndexPath) -> ModelResource? {
