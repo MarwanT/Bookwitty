@@ -114,6 +114,10 @@ extension PostDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
 }
 
 extension PostDetailsViewController: PostDetailsNodeDelegate {
+  func bannerTapAction(url: URL?) {
+      WebViewController.present(url: url, inViewController: self)
+  }
+
   func shouldShowPostDetailsAllPosts() {
     if let contentPostIdentifiers = viewModel.contentPostsIdentifiers {
       if let contentPostsResources = viewModel.contentPostsResources {

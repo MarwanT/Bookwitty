@@ -38,6 +38,7 @@ extension PostDetailsNode: CardActionBarNodeDelegate {
 }
 
 protocol PostDetailsNodeDelegate {
+  func bannerTapAction(url: URL?)
   func shouldShowPostDetailsAllPosts()
   func shouldShowPostDetailsAllRelatedBooks()
   func shouldShowPostDetailsAllRelatedPosts()
@@ -70,6 +71,7 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let relatedPostsTopSeparator: SeparatorNode
   fileprivate let relatedPostsBottomSeparator: SeparatorNode
   fileprivate let relatedPostsNodeLoader: LoaderNode
+  fileprivate let bannerImageNode: ASImageNode
 
   let headerNode: PostDetailsHeaderNode
   let postItemsNode: PostDetailsItemNode
@@ -161,6 +163,7 @@ class PostDetailsNode: ASScrollNode {
     relatedPostsBottomSeparator = SeparatorNode()
     relatedPostsNodeLoader = LoaderNode()
     relatedBooksNodeLoader = LoaderNode()
+    bannerImageNode = ASImageNode()
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
@@ -190,6 +193,7 @@ class PostDetailsNode: ASScrollNode {
     relatedPostsBottomSeparator = SeparatorNode()
     relatedPostsNodeLoader = LoaderNode()
     relatedBooksNodeLoader = LoaderNode()
+    bannerImageNode = ASImageNode()
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
@@ -238,6 +242,17 @@ class PostDetailsNode: ASScrollNode {
 
     sectionTitleHeaderNode.setTitle(title: Strings.related_books(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber10(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber9())
     relatedPostsSectionTitleHeaderNode.setTitle(title: Strings.related_posts(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber4(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber3())
+
+    bannerImageNode.style.height = ASDimensionMake(120.0)
+    bannerImageNode.style.flexGrow = 1
+    bannerImageNode.style.flexShrink = 1
+    bannerImageNode.contentMode = .scaleAspectFit
+    bannerImageNode.image = #imageLiteral(resourceName: "freeShippingBanner")
+    bannerImageNode.addTarget(self, action: #selector(bannerTouchUpInside) , forControlEvents: .touchUpInside)
+  }
+
+  func bannerTouchUpInside() {
+    delegate?.bannerTapAction(url: Environment.current.shipementInfoURL)
   }
 
   func setWitValue(witted: Bool, wits: Int) {
@@ -305,6 +320,10 @@ class PostDetailsNode: ASScrollNode {
       vStackSpec.children?.append(relatedBooksTopSeparator)
       vStackSpec.children?.append(relatedBooksViewAllNode)
       vStackSpec.children?.append(relatedBooksSeparator)
+
+      let bannerInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: bannerImageNode)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(bannerInsetSpec)
     }
     
 
