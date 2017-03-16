@@ -309,6 +309,15 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
       if let sharingInfo: [String] = viewModel.sharingRelatedPost(index: index) {
         presentShareSheet(shareContent: sharingInfo)
       }
+    case .follow:
+      viewModel.followRelatedPost(index: index) { (success) in
+        didFinishAction?(success)
+      }
+    case .unfollow:
+      viewModel.unfollowRelatedPost(index: index) { (success) in
+        didFinishAction?(success)
+      }
+
     default:
       //TODO: handle comment
       break
@@ -319,13 +328,13 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
 extension PostDetailsViewController: PenNameFollowNodeDelegate {
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ASButtonNode) {
     if button.isSelected {
-      viewModel.unfollowPenName(completionBlock: {
+      viewModel.unfollowPostPenName(completionBlock: {
         (success: Bool) in
         node.following = false
         button.isSelected = false
       })
     } else {
-      viewModel.followPenName(completionBlock: {
+      viewModel.followPostPenName(completionBlock: {
         (success: Bool) in
         node.following = true
         button.isSelected = true

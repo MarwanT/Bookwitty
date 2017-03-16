@@ -372,7 +372,61 @@ extension PostDetailsViewModel {
 
 // MARK: - PenName Follow/Unfollow
 extension PostDetailsViewModel {
-  func followPenName(completionBlock: @escaping (_ success: Bool) -> ()) {
+  func followRelatedPost(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let resource = relatedPost(at: index) else {
+      completionBlock(false)
+      return
+    }
+    follow(resource: resource, completionBlock: completionBlock)
+  }
+
+  func unfollowRelatedPost(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let resource = relatedPost(at: index) else {
+      completionBlock(false)
+      return
+    }
+    unfollow(resource: resource, completionBlock: completionBlock)
+  }
+
+  func follow(resource: Resource, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let resourceId = resource.id else {
+        completionBlock(false)
+        return
+    }
+    //Expected types: Topic - Author - Book - PenName
+    if resource.registeredResourceType == PenName.resourceType {
+      //Only If Resource is a pen-name
+      followPenName(penName: resource as? PenName, completionBlock: completionBlock)
+    } else {
+      //Types: Topic - Author - Book
+      followRequest(identifier: resourceId, completionBlock: completionBlock)
+    }
+  }
+
+  func unfollow(resource: Resource, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let resourceId = resource.id else {
+        completionBlock(false)
+        return
+    }
+    //Expected types: Topic - Author - Book - PenName
+    if resource.registeredResourceType == PenName.resourceType {
+      //Only If Resource is a pen-name
+      unfollowPenName(penName: resource as? PenName, completionBlock: completionBlock)
+    } else {
+      //Types: Topic - Author - Book
+      unfollowRequest(identifier: resourceId, completionBlock: completionBlock)
+    }
+  }
+
+  func followPostPenName(completionBlock: @escaping (_ success: Bool) -> ()) {
+    followPenName(penName: self.penName, completionBlock: completionBlock)
+  }
+
+  func unfollowPostPenName(completionBlock: @escaping (_ success: Bool) -> ()) {
+    unfollowPenName(penName: self.penName, completionBlock: completionBlock)
+  }
+
+  func followPenName(penName: PenName?, completionBlock: @escaping (_ success: Bool) -> ()) {
     guard let penName = penName, let identifier = penName.id else {
       completionBlock(false)
       return
@@ -387,7 +441,7 @@ extension PostDetailsViewModel {
     }
   }
 
-  func unfollowPenName(completionBlock: @escaping (_ success: Bool) -> ()) {
+  func unfollowPenName(penName: PenName?, completionBlock: @escaping (_ success: Bool) -> ()) {
     guard let penName = penName, let identifier = penName.id else {
       completionBlock(false)
       return
