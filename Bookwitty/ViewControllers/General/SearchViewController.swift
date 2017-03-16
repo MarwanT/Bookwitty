@@ -88,7 +88,6 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     viewModel.clearSearchData()
     collectionNode.reloadData()
     viewModel.search(query: query) { (success, error) in
-      //TODO: handle search result
       self.loadingStatus = .none
       self.collectionNode.reloadData()
     }
