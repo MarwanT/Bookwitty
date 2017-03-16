@@ -32,6 +32,7 @@ class ForgotPasswordViewController: UIViewController {
       autocorrectionType: .no,
       autocapitalizationType: .none)
     
+    emailField.delegate = self
     emailField.validationBlock = blockForEmailValidation()
 
     submitButton.setTitle(Strings.reset_password(), for: UIControlState.normal)
@@ -41,5 +42,15 @@ class ForgotPasswordViewController: UIViewController {
     return { (email: String?) -> Bool in
       email?.isValidEmail() ?? false
     }
+  }
+}
+
+// MARK: - Input fields delegate
+extension ForgotPasswordViewController: InputFieldDelegate {
+  func inputFieldShouldReturn(inputField: InputField) -> Bool {
+    if inputField === emailField {
+      //TODO: Call the reset password api
+    }
+    return true
   }
 }
