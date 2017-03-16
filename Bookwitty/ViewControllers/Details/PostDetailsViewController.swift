@@ -124,11 +124,11 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
   }
 
   func shouldShowPostDetailsAllRelatedBooks() {
-    //TODO: Push view controller
+    pushPostsViewController(resources: viewModel.relatedBooks, url: viewModel.relatedBooksNextPage)
   }
 
   func shouldShowPostDetailsAllRelatedPosts() {
-    //TODO: Push view controller
+    pushPostsViewController(resources: viewModel.relatedPosts, url: viewModel.relatedPostsNextPage)
   }
 
   func hasRelatedPosts() -> Bool {
@@ -345,6 +345,12 @@ extension PostDetailsViewController: PenNameFollowNodeDelegate {
 
 // MARK - Actions
 extension PostDetailsViewController {
+  fileprivate func pushPostsViewController(resources: [ModelResource]?, url: URL?) {
+    let postsViewController = PostsViewController()
+    postsViewController.initialize(title: nil, resources: resources, loadingMode: PostsViewModel.DataLoadingMode.server(absoluteURL: url))
+    navigationController?.pushViewController(postsViewController, animated: true)
+  }
+
   fileprivate func pushBookDetailsViewController(with book: Book) {
     let bookDetailsViewController = BookDetailsViewController(with: book)
     navigationController?.pushViewController(bookDetailsViewController, animated: true)
