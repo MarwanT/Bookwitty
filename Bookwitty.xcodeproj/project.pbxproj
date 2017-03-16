@@ -138,6 +138,7 @@
 		59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */; };
 		B4ECA3471E4E05E7004B3EE2 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4ECA3461E4E05E7004B3EE2 /* WebViewController.swift */; };
 		F400CDC61E7AD48D00B7EF26 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400CDC51E7AD48D00B7EF26 /* SearchViewController.swift */; };
+		F400CDC81E7AF62600B7EF26 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400CDC71E7AF62600B7EF26 /* SearchViewModel.swift */; };
 		F40700501E55992000DA48A4 /* ReadingListBooksNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */; };
 		F40700521E55F55A00DA48A4 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40700511E55F55A00DA48A4 /* Image.swift */; };
 		F417B1D11E71C3D400B0FAFE /* PostDetailsHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F417B1CE1E71C3D400B0FAFE /* PostDetailsHeaderNode.swift */; };
@@ -362,6 +363,7 @@
 		B75E5B87D9559EBD71824DD7 /* Pods-Bookwitty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookwitty.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bookwitty/Pods-Bookwitty.debug.xcconfig"; sourceTree = "<group>"; };
 		CB5E98B3C54E0B0AD22F5CB4 /* Pods-BookwittyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookwittyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests.release.xcconfig"; sourceTree = "<group>"; };
 		F400CDC51E7AD48D00B7EF26 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		F400CDC71E7AF62600B7EF26 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingListBooksNode.swift; sourceTree = "<group>"; };
 		F40700511E55F55A00DA48A4 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		F417B1CE1E71C3D400B0FAFE /* PostDetailsHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailsHeaderNode.swift; path = PostDetails/PostDetailsHeaderNode.swift; sourceTree = "<group>"; };
@@ -869,6 +871,7 @@
 			isa = PBXGroup;
 			children = (
 				59871F1C1E78AF19000A86CD /* PostsViewModel.swift */,
+				F400CDC71E7AF62600B7EF26 /* SearchViewModel.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -1452,6 +1455,7 @@
 				59DA475E1E3B7A8F00BA90A5 /* TutorialViewModel.swift in Sources */,
 				F496DE081E65DECB007E22B1 /* Paginator.swift in Sources */,
 				59CF44011E663C35006C16FC /* General+API.swift in Sources */,
+				F400CDC81E7AF62600B7EF26 /* SearchViewModel.swift in Sources */,
 				597B8E2D1E37F6BC00C7811B /* Image+Utils.swift in Sources */,
 				59CF764A1E5CB010003EAB6B /* BooksTableViewController.swift in Sources */,
 				F434F7911E4E16CE001812BD /* CellNode.swift in Sources */,
