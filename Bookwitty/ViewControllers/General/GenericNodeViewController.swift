@@ -13,8 +13,13 @@ class GenericNodeViewController: ASViewController<ASDisplayNode> {
     fatalError("init(coder:) has not been implemented")
   }
   
-  init(node: ASDisplayNode, title: String? = nil) {
-    let baseNode = GenericNodeViewController.encapsulateWithScrollNodeIfNeeded(node: node)
+  init(node: ASDisplayNode, title: String? = nil, scrollableContentIfNeeded: Bool = true) {
+    let baseNode: ASDisplayNode
+    if scrollableContentIfNeeded {
+      baseNode = GenericNodeViewController.encapsulateWithScrollNodeIfNeeded(node: node)
+    } else {
+      baseNode = node
+    }
     super.init(node: baseNode)
     self.title = title
     applyTheme()
