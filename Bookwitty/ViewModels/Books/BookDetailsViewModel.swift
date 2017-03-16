@@ -675,3 +675,43 @@ extension BookDetailsViewModel {
     }
   }
 }
+
+// MARK: - PenName Follow/Unfollow
+extension BookDetailsViewModel {
+  func follow(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let resources = resourcesCommonProperties(for: indexPath),
+          let resourceId = resources[indexPath.row - 1].id else {
+      completionBlock(false)
+      return
+    }
+    //Expected types: Topic
+    followRequest(identifier: resourceId, completionBlock: completionBlock)
+  }
+
+  func unfollow(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let resources = resourcesCommonProperties(for: indexPath),
+      let resourceId = resources[indexPath.row - 1].id else {
+        completionBlock(false)
+        return
+    }
+    //Expected types: Topic
+    unfollowRequest(identifier: resourceId, completionBlock: completionBlock)
+  }
+
+  fileprivate func followRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
+    _ = GeneralAPI.follow(identifer: identifier) { (success, error) in
+      defer {
+        completionBlock(success)
+      }
+    }
+  }
+
+  fileprivate func unfollowRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
+    _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
+      defer {
+        completionBlock(success)
+      }
+    }
+  }
+}
+
