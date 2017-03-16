@@ -68,7 +68,7 @@ class SearchViewModel {
 // Mark: - Collection helper
 extension SearchViewModel {
   func numberOfSections() -> Int {
-    return data.count
+    return 1
   }
 
   func numberOfItemsInSection() -> Int {
