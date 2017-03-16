@@ -38,6 +38,7 @@ extension PostDetailsNode: CardActionBarNodeDelegate {
 }
 
 protocol PostDetailsNodeDelegate {
+  func bannerTapAction(url: URL?)
   func shouldShowPostDetailsAllPosts()
   func shouldShowPostDetailsAllRelatedBooks()
   func shouldShowPostDetailsAllRelatedPosts()
