@@ -75,6 +75,7 @@
 "news" = "News";
 "no_internet_error_description" = "Your internet connection appears\nto be offline.";
 "no_internet_error_title" = "No Internet!";
+"no_results_found_description" = "We can't find what you were\nlooking for. Check the spelling or try a different search.";
 "number_of_pages" = "Number Of Pages";
 "follow" = "Follow";
 "followed" = "Followed";

@@ -281,6 +281,10 @@ class Strings {
     return localizedString(key: "no_internet_error_title")
   }
   
+  class func no_results_found_description() -> String {
+    return localizedString(key: "no_results_found_description")
+  }
+  
   class func number_of_pages() -> String {
     return localizedString(key: "number_of_pages")
   }

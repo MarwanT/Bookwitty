@@ -284,7 +284,7 @@ extension MisfortuneNode {
       case .noInternet:
         return Strings.no_internet_error_description()
       case .noResultsFound:
-        return "We can't find what you were\nlooking for. Check the spelling or try a different search."
+        return Strings.no_results_found_description()
       case .somethingWrong:
         return "We can't load your\nfeed right now."
       }
