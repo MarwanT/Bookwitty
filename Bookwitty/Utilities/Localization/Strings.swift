@@ -361,6 +361,10 @@ class Strings {
     return localizedString(key: "clear_profile_photo")
   }
 
+  class func search_placeholder() -> String {
+    return localizedString(key: "search_placeholder")
+  }
+
   class func settings() -> String {
     return localizedString(key: "settings")
   }
