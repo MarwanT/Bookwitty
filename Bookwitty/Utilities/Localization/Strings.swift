@@ -160,6 +160,10 @@ class Strings {
   class func email_notifications() -> String {
     return localizedString(key: "email_notifications")
   }
+  
+  class func empty_error_description() -> String {
+    return localizedString(key: "empty_error_description")
+  }
 
   class func enter_your_email() -> String {
     return localizedString(key: "enter_your_email")

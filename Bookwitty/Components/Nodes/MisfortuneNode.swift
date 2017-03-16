@@ -280,7 +280,7 @@ extension MisfortuneNode {
     var descriptionText: String {
       switch self {
       case .empty:
-        return "Select people, topics and tags of\ninterest to populate this section\nwith content you like."
+        return Strings.empty_error_description()
       case .noInternet:
         return "Your internet connection appears\nto be offline."
       case .noResultsFound:
