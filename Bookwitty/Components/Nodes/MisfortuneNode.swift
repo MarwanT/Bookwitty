@@ -282,7 +282,7 @@ extension MisfortuneNode {
       case .empty:
         return Strings.empty_error_description()
       case .noInternet:
-        return "Your internet connection appears\nto be offline."
+        return Strings.no_internet_error_description()
       case .noResultsFound:
         return "We can't find what you were\nlooking for. Check the spelling or try a different search."
       case .somethingWrong:
