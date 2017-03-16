@@ -39,6 +39,7 @@ class SearchViewController: ASViewController<ASCollectionNode> {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    applyTheme()
     collectionNode.dataSource = self
     collectionNode.delegate = self
     configureSearchController()
@@ -73,6 +74,12 @@ class SearchViewController: ASViewController<ASCollectionNode> {
       self.loadingStatus = .none
       self.collectionNode.reloadData()
     }
+  }
+}
+
+extension SearchViewController: Themeable {
+  func applyTheme() {
+   collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
   }
 }
 
