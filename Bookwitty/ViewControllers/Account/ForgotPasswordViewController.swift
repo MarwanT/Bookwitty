@@ -54,6 +54,13 @@ extension ForgotPasswordViewController: Themeable {
   }
 }
 
+//MARK: - IBActions
+extension ForgotPasswordViewController {
+  @IBAction fileprivate func submitButtonTouchUpInside(_ sender: UIButton) {
+    //TODO: call the reset password api
+  }
+}
+
 // MARK: - Input fields delegate
 extension ForgotPasswordViewController: InputFieldDelegate {
   func inputFieldShouldReturn(inputField: InputField) -> Bool {
