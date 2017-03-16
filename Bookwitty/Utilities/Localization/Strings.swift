@@ -160,6 +160,14 @@ class Strings {
   class func email_notifications() -> String {
     return localizedString(key: "email_notifications")
   }
+  
+  class func empty_error_description() -> String {
+    return localizedString(key: "empty_error_description")
+  }
+  
+  class func empty_error_title() -> String {
+    return localizedString(key: "empty_error_title")
+  }
 
   class func enter_your_email() -> String {
     return localizedString(key: "enter_your_email")
@@ -263,6 +271,22 @@ class Strings {
 
   class func news() -> String {
     return localizedString(key: "news")
+  }
+  
+  class func no_internet_error_description() -> String {
+    return localizedString(key: "no_internet_error_description")
+  }
+  
+  class func no_internet_error_title() -> String {
+    return localizedString(key: "no_internet_error_title")
+  }
+  
+  class func no_results_found_description() -> String {
+    return localizedString(key: "no_results_found_description")
+  }
+  
+  class func no_results_found_title() -> String {
+    return localizedString(key: "no_results_found_title")
   }
   
   class func number_of_pages() -> String {
@@ -391,6 +415,14 @@ class Strings {
 
   class func some_thing_wrong_error() -> String {
     return localizedString(key: "some_thing_wrong_error")
+  }
+  
+  class func something_wrong_error_description() -> String {
+    return localizedString(key: "something_wrong_error_description")
+  }
+  
+  class func something_wrong_error_title() -> String {
+    return localizedString(key: "something_wrong_error_title")
   }
 
   class func something_wrong_in_credentials() -> String {

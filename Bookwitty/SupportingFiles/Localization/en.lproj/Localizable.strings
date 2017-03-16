@@ -46,6 +46,8 @@
 "email_alread_registered" = "The email address you have entered is already registered!";
 "email_invalid" = "Oooops your email seems to be invalid";
 "email_notifications" = "Email Notifications";
+"empty_error_description" = "Select people, topics and tags of\ninterest to populate this section\nwith content you like.";
+"empty_error_title" = "Its empty in here";
 "enter_your_email" = "Enter your email";
 "enter_your_first_name" = "Enter your first name";
 "enter_your_last_name" = "Enter your last name";
@@ -71,6 +73,10 @@
 "my_orders" = "My Orders";
 "new_password" = "New Password";
 "news" = "News";
+"no_internet_error_description" = "Your internet connection appears\nto be offline.";
+"no_internet_error_title" = "No Internet!";
+"no_results_found_description" = "We can't find what you were\nlooking for. Check the spelling or try a different search.";
+"no_results_found_title" = "No results found";
 "number_of_pages" = "Number Of Pages";
 "follow" = "Follow";
 "followed" = "Followed";
@@ -103,6 +109,8 @@
 "sign_out" = "Sign Out";
 "sign_up" = "Sign up";
 "some_thing_wrong_error" = "Something went wrong";
+"something_wrong_error_description" = "We can't load your\nfeed right now.";
+"something_wrong_error_title" = "Something's wrong!";
 "something_wrong_in_credentials" = "Oooops it seems there is something wrong in your credentials";
 "subtitle" = "Subtitle";
 "take_Profile_photo" = "Take profile photo";
