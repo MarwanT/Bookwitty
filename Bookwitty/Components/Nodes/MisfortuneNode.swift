@@ -9,6 +9,23 @@
 import AsyncDisplayKit
 
 class MisfortuneNode: ASDisplayNode {
+  fileprivate let imageNode: ASImageNode
+  fileprivate let titleNode: ASTextNode
+  fileprivate let descriptionNode: ASTextNode
+  fileprivate let actionButtonNode: ASButtonNode
+  fileprivate let settingsTextNode: ASTextNode
+  
+  fileprivate var mode: Mode! = nil
+  
+  init(mode: Mode) {
+    self.mode = mode
+    imageNode = ASImageNode()
+    titleNode = ASTextNode()
+    descriptionNode = ASTextNode()
+    actionButtonNode = ASButtonNode()
+    settingsTextNode = ASTextNode()
+    super.init()
+  }
 }
 
 // MARK: - Mode Declaration
