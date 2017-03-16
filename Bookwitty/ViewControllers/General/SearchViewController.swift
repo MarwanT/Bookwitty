@@ -14,6 +14,7 @@ class SearchViewController: ASViewController<ASCollectionNode> {
   var collectionNode: ASCollectionNode
 
   var searchBar: UISearchBar?
+  var viewModel: SearchViewModel = SearchViewModel()
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -53,7 +54,12 @@ class SearchViewController: ASViewController<ASCollectionNode> {
   }
 
   fileprivate func searchAction(query: String?) {
-    //TODO: search action
+    guard let query = query else {
+      return
+    }
+    viewModel.search(query: query) { (success, error) in
+      //TODO: handle search result
+    }
   }
 }
 
