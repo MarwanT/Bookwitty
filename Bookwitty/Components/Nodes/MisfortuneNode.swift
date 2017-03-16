@@ -17,6 +17,8 @@ class MisfortuneNode: ASDisplayNode {
   
   fileprivate var mode: Mode! = nil
   
+  fileprivate var configuration = Configuration()
+  
   init(mode: Mode) {
     self.mode = mode
     imageNode = ASImageNode()
