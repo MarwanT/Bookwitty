@@ -270,7 +270,7 @@ extension MisfortuneNode {
       case .empty:
         return Strings.empty_error_title()
       case .noInternet:
-        return "No Internet!"
+        return Strings.no_internet_error_title()
       case .noResultsFound:
         return "No results found"
       case .somethingWrong:

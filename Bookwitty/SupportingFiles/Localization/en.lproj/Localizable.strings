@@ -74,6 +74,7 @@
 "new_password" = "New Password";
 "news" = "News";
 "no_internet_error_description" = "Your internet connection appears\nto be offline.";
+"no_internet_error_title" = "No Internet!";
 "number_of_pages" = "Number Of Pages";
 "follow" = "Follow";
 "followed" = "Followed";
