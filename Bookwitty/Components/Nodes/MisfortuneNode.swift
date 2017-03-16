@@ -28,6 +28,42 @@ class MisfortuneNode: ASDisplayNode {
     settingsTextNode = ASTextNode()
     super.init()
   }
+  
+  // MARK: - Conetent setters
+  fileprivate var image: UIImage? {
+    didSet {
+      imageNode.image = image
+    }
+  }
+  
+  fileprivate var titleText: String? {
+    didSet {
+      titleNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.headline)
+        .append(text: titleText ?? "", color: mode.titleTextColor).applyParagraphStyling(lineSpacing: 0, alignment: NSTextAlignment.center).attributedString
+      setNeedsLayout()
+    }
+  }
+  
+  fileprivate var descriptionText: String? {
+    didSet {
+      descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: descriptionText ?? "", color: mode.descriptionTextColor).applyParagraphStyling(lineSpacing: 0, alignment: NSTextAlignment.center).attributedString
+      setNeedsLayout()
+    }
+  }
+  
+  fileprivate var actionButtonText: String? {
+    didSet {
+      actionButtonNode.setTitle(actionButtonText ?? "", with: FontDynamicType.subheadline.font, with: mode.actionButtonColor, for: UIControlState.normal)
+      setNeedsLayout()
+    }
+  }
+  
+  fileprivate var settingsAttributedText: NSAttributedString? {
+    didSet {
+      settingsTextNode.attributedText = settingsAttributedText
+      setNeedsLayout()
+    }
+  }
 }
 
 // MARK: - Mode Declaration
