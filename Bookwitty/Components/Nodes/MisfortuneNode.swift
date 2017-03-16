@@ -70,6 +70,10 @@ class MisfortuneNode: ASDisplayNode {
 // MARK: - Themeable
 extension MisfortuneNode: Themeable {
   func applyTheme() {
+    ThemeManager.shared.currentTheme.styleSecondaryButton(
+      button: actionButtonNode,
+      withColor: mode.actionButtonColor,
+      highlightedColor: mode.actionButtonColor)
   }
 }
 
