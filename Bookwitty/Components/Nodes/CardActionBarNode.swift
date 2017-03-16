@@ -176,6 +176,10 @@ class CardActionBarNode: ASCellNode {
     witButton.clipsToBounds = true
   }
 
+  func setFollowingValue(following: Bool) {
+    followButton.isSelected = following
+  }
+
   func setWitButton(witted: Bool, wits: Int? = nil) {
     witButton.isSelected = witted
     setNumberOfWits(wits: wits ?? 0)
