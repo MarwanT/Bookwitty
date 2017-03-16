@@ -21,7 +21,20 @@ class ForgotPasswordViewController: UIViewController {
   }
 
   private func initializeComponents() {
+    title = Strings.forgot_password()
 
+    emailField.configuration = InputFieldConfiguration(
+      descriptionLabelText: Strings.email(),
+      textFieldPlaceholder: Strings.enter_your_email(),
+      invalidationErrorMessage: Strings.email_invalid(),
+      returnKeyType: UIReturnKeyType.send,
+      keyboardType: .emailAddress,
+      autocorrectionType: .no,
+      autocapitalizationType: .none)
+    
+    emailField.validationBlock = blockForEmailValidation()
+
+    submitButton.setTitle(Strings.reset_password(), for: UIControlState.normal)
   }
 
   private func blockForEmailValidation() -> (String?) -> Bool {
