@@ -240,3 +240,44 @@ extension PostsViewModel {
     case local(paginator: Paginator)
   }
 }
+
+// MARK: - Posts Actions
+extension PostsViewModel {
+  func witContent(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
+    let resource = posts[indexPath.item]
+    guard let contentId = resource.id else {
+        completionBlock(false)
+        return
+    }
+
+    _ = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
+      completionBlock(success)
+    })
+  }
+
+  func unwitContent(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
+    let resource = posts[indexPath.item]
+    guard let contentId = resource.id else {
+      completionBlock(false)
+      return
+    }
+
+    _ = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
+      completionBlock(success)
+    })
+  }
+
+  func sharingContent(indexPath: IndexPath) -> [String]? {
+    let resource = posts[indexPath.item]
+    guard let commonProperties = resource as? ModelCommonProperties else {
+      return nil
+    }
+
+    let shortDesciption = commonProperties.title ?? commonProperties.shortDescription ?? ""
+    if let sharingUrl = commonProperties.canonicalURL {
+      return [shortDesciption, sharingUrl.absoluteString]
+    }
+    return [shortDesciption]
+  }
+}
+
