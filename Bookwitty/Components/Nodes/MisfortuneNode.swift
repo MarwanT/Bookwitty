@@ -8,6 +8,9 @@
 
 import AsyncDisplayKit
 
+protocol MisfortuneNodeDelegate {
+}
+
 class MisfortuneNode: ASDisplayNode {
   fileprivate let imageNode: ASImageNode
   fileprivate let titleNode: ASTextNode
