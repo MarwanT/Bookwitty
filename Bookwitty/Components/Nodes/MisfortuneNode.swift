@@ -14,7 +14,6 @@ protocol MisfortuneNodeDelegate {
 }
 
 class MisfortuneNode: ASDisplayNode {
-  fileprivate let imageBackgroundNode: ASDisplayNode
   fileprivate let imageColoredBackgroundNode: ASDisplayNode
   fileprivate let imageWhiteBackgroundNode: ASDisplayNode
   fileprivate let imageNode: ASImageNode
@@ -31,7 +30,6 @@ class MisfortuneNode: ASDisplayNode {
   
   init(mode: Mode) {
     self.mode = mode
-    imageBackgroundNode = ASDisplayNode()
     imageColoredBackgroundNode = ASDisplayNode()
     imageWhiteBackgroundNode = ASDisplayNode()
     imageNode = ASImageNode()
@@ -56,39 +54,26 @@ class MisfortuneNode: ASDisplayNode {
     settingsAttributedText = mode.settingsAttributedText
     image = mode.image
     
-    imageBackgroundNode.addSubnode(imageColoredBackgroundNode)
-    imageBackgroundNode.addSubnode(imageWhiteBackgroundNode)
     imageWhiteBackgroundNode.backgroundColor = UIColor.white
     imageColoredBackgroundNode.backgroundColor = mode.backgroundColor
     imageNode.contentMode = UIViewContentMode.scaleAspectFit
-    
-    imageBackgroundNode.layoutSpecBlock = { (node, sizeRange) -> ASLayoutSpec in
-      let overlayInset = ASInsetLayoutSpec(
-        insets: UIEdgeInsets(top: CGFloat.infinity, left: 0, bottom: 0, right: 0), child: self.imageWhiteBackgroundNode)
-      self.imageWhiteBackgroundNode.style.height = ASDimensionMake("\(self.mode.imageBottomWhiteHeightDimension)%")
-      let overlaySpec = ASOverlayLayoutSpec(
-        child: self.imageColoredBackgroundNode,
-        overlay: overlayInset)
-      return overlaySpec
-    }
-    
     actionButtonNode.contentEdgeInsets = configuration.actionButtonContentEdgeInsets
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     // TOP PART OF THE NODE
     //----------------------
+    let imageBackgroundForegroundInset = ASInsetLayoutSpec(
+      insets: UIEdgeInsets(top: CGFloat.infinity, left: 0, bottom: 0, right: 0),
+      child: imageWhiteBackgroundNode)
+    imageWhiteBackgroundNode.style.height = ASDimensionMake("\(self.mode.imageBottomWhiteHeightDimension)%")
+    let imageBackgroundOverlaySpec = ASOverlayLayoutSpec(
+      child: imageColoredBackgroundNode,
+      overlay: imageBackgroundForegroundInset)
     
-    
-//    let imageBackgroundSpec = ASBackgroundLayoutSpec(
-//      child: imageWhiteBackgroundNode,
-//      background: imageColoredBackgroundNode)
-//    let imageBackgroundSpec = ASOverlayLayoutSpec(child: imageColoredBackgroundNode, overlay: imageWhiteBackgroundNode)
-    let imageSpec = ASBackgroundLayoutSpec(child: imageNode, background: imageBackgroundNode)
+    let imageSpec = ASBackgroundLayoutSpec(child: imageNode, background: imageBackgroundOverlaySpec)
     imageNode.style.maxHeight = ASDimensionMake(constrainedSize.max.height/2)
     imageNode.style.flexShrink = 1.0
-    
-    
     
     // BOTTOM HALF OF THE NODE
     //-------------------------
