@@ -40,6 +40,7 @@ class SearchViewController: ASViewController<ASCollectionNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionNode.dataSource = self
+    collectionNode.delegate = self
     configureSearchController()
   }
 
@@ -91,6 +92,15 @@ extension SearchViewController: ASCollectionDataSource {
       let baseCardNode = self.viewModel.nodeForItem(atIndexPath: indexPath) ?? BaseCardPostNode()
       return baseCardNode
     }
+  }
+}
+
+extension SearchViewController: ASCollectionDelegate {
+  public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
+    return ASSizeRange(
+      min: CGSize(width: collectionNode.frame.width, height: 0),
+      max: CGSize(width: collectionNode.frame.width, height: .infinity)
+    )
   }
 }
 
