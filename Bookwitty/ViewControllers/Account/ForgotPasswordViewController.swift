@@ -57,7 +57,13 @@ extension ForgotPasswordViewController: Themeable {
 //MARK: - IBActions
 extension ForgotPasswordViewController {
   @IBAction fileprivate func submitButtonTouchUpInside(_ sender: UIButton) {
-    //TODO: call the reset password api
+    let emailValidationResult = emailField.validateField()
+    if emailValidationResult.isValid, let email: String = emailValidationResult.value {
+      _ = UserAPI.resetPassword(email: email) {
+        (success: Bool, error: BookwittyAPIError?) in
+
+      }
+    }
   }
 }
 
