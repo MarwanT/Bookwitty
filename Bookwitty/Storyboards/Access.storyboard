@@ -73,13 +73,44 @@
                                             <constraint firstItem="Dh8-kZ-JBa" firstAttribute="leading" secondItem="gP5-6X-Oaa" secondAttribute="leading" id="w8m-49-NyC"/>
                                         </constraints>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fg3-up-cZv" userLabel="Long Separator View">
+                                        <rect key="frame" x="0.0" y="298" width="375" height="1"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="bIV-bj-9JP"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H53-wX-Ai4" userLabel="Forgot Password">
+                                        <rect key="frame" x="0.0" y="301" width="375" height="21"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Do-2q-d6T" customClass="TTTAttributedLabel">
+                                                <rect key="frame" x="15" y="0.0" width="345" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="0Do-2q-d6T" firstAttribute="leading" secondItem="H53-wX-Ai4" secondAttribute="leading" constant="15" id="4SN-9K-86x"/>
+                                            <constraint firstItem="0Do-2q-d6T" firstAttribute="top" secondItem="H53-wX-Ai4" secondAttribute="top" id="HSn-i2-8Mh"/>
+                                            <constraint firstAttribute="bottom" secondItem="0Do-2q-d6T" secondAttribute="bottom" id="QdA-Va-Sui"/>
+                                            <constraint firstAttribute="trailing" secondItem="0Do-2q-d6T" secondAttribute="trailing" constant="15" id="voE-9n-fPr"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="gP5-6X-Oaa" secondAttribute="bottom" id="9f7-ew-BCy"/>
+                                    <constraint firstItem="fg3-up-cZv" firstAttribute="leading" secondItem="icG-US-vNT" secondAttribute="leading" id="7Rk-p4-9J5"/>
+                                    <constraint firstAttribute="trailing" secondItem="fg3-up-cZv" secondAttribute="trailing" id="QSa-qg-4XE"/>
                                     <constraint firstItem="gP5-6X-Oaa" firstAttribute="top" secondItem="icG-US-vNT" secondAttribute="top" id="Snq-iG-shG"/>
                                     <constraint firstItem="gP5-6X-Oaa" firstAttribute="leading" secondItem="icG-US-vNT" secondAttribute="leading" id="Tih-SY-dXe"/>
                                     <constraint firstItem="gP5-6X-Oaa" firstAttribute="width" secondItem="icG-US-vNT" secondAttribute="width" id="XsM-s7-84W"/>
+                                    <constraint firstItem="fg3-up-cZv" firstAttribute="top" secondItem="gP5-6X-Oaa" secondAttribute="bottom" id="YX6-ue-NDd"/>
                                     <constraint firstAttribute="trailing" secondItem="gP5-6X-Oaa" secondAttribute="trailing" id="bvh-Fd-0ei"/>
+                                    <constraint firstAttribute="trailing" secondItem="H53-wX-Ai4" secondAttribute="trailing" id="mWU-EI-xkg"/>
+                                    <constraint firstAttribute="bottom" secondItem="H53-wX-Ai4" secondAttribute="bottom" id="nPE-wr-sdc"/>
+                                    <constraint firstItem="H53-wX-Ai4" firstAttribute="leading" secondItem="icG-US-vNT" secondAttribute="leading" id="tzB-ae-8jr"/>
+                                    <constraint firstItem="H53-wX-Ai4" firstAttribute="top" secondItem="fg3-up-cZv" secondAttribute="bottom" constant="2" id="xlr-VF-87S"/>
                                 </constraints>
                             </scrollView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STo-2f-EV2" customClass="TTTAttributedLabel">
@@ -120,6 +151,7 @@
                     </view>
                     <connections>
                         <outlet property="emailField" destination="654-el-WVd" id="cyi-ou-WbN"/>
+                        <outlet property="forgotPasswordLabel" destination="0Do-2q-d6T" id="3fG-5Y-qGu"/>
                         <outlet property="passwordField" destination="2MS-dN-n76" id="jxs-Dn-pN4"/>
                         <outlet property="registerLabel" destination="STo-2f-EV2" id="XQg-AN-rvN"/>
                         <outlet property="scrollViewBottomToButtonTopConstraint" destination="NWG-GI-3me" id="txE-m4-D8r"/>
@@ -325,11 +357,11 @@
                                 <rect key="frame" x="113" y="40" width="150" height="150"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6iX-oN-fFD">
-                                        <rect key="frame" x="-1" y="0.0" width="150" height="150"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                         <color key="backgroundColor" red="1" green="0.56093499820000003" blue="0.75360141889999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iKi-mB-A8s">
-                                        <rect key="frame" x="52" y="53" width="44" height="44"/>
+                                        <rect key="frame" x="53" y="53" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="iKi-mB-A8s" secondAttribute="height" multiplier="1:1" id="hgh-kz-qXp"/>
                                             <constraint firstAttribute="height" constant="44" id="i5T-3z-6ql"/>

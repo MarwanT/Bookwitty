@@ -16,6 +16,7 @@ class SignInViewController: UIViewController {
   @IBOutlet weak var passwordField: PasswordInputField!
   @IBOutlet weak var signInButton: UIButton!
   @IBOutlet weak var registerLabel: TTTAttributedLabel!
+  @IBOutlet weak var forgotPasswordLabel: TTTAttributedLabel!
   @IBOutlet var separators: [UIView]!
   
   @IBOutlet weak var scrollViewBottomToButtonTopConstraint: NSLayoutConstraint!
