@@ -128,6 +128,13 @@ extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
     }
   }
   
+  func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
+    return ASSizeRange(
+      min: CGSize(width: collectionNode.frame.width, height: 0),
+      max: CGSize(width: collectionNode.frame.width, height: .infinity)
+    )
+  }
+  
   func collectionNode(_ collectionNode: ASCollectionNode, shouldSelectItemAt indexPath: IndexPath) -> Bool {
     return viewModel.shouldSelectItem(at: indexPath)
   }
