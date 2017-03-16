@@ -62,8 +62,10 @@ class PostDetailsViewModel {
 
   //Resource Related Books
   var relatedBooks: [Book] = []
+  var relatedBooksNextPage: URL?
   //Resource Related Posts
   var relatedPosts: [Resource] = []
+  var relatedPostsNextPage: URL?
 
   init(resource: Resource) {
     self.resource = resource
@@ -238,6 +240,7 @@ extension PostDetailsViewModel {
         self.relatedBooks.removeAll()
         let books = resources?.filter({ $0.registeredResourceType == Book.resourceType })
         self.relatedBooks += (books as? [Book]) ?? []
+        self.relatedBooksNextPage = next
       }
     }
   }
@@ -271,6 +274,7 @@ extension PostDetailsViewModel {
       if success {
         self.relatedPosts.removeAll()
         self.relatedPosts += resources ?? []
+        self.relatedPostsNextPage = next
       }
     }
   }
