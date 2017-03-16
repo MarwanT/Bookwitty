@@ -108,6 +108,7 @@ extension  CardFactory {
     let date = Date.formatDate(date: resource.createdAt)
     let penNameprofileImage = resource.penName?.avatarUrl
     card.setup(forFollowingMode: true)
+    card.setFollowingValue(following: resource.following)
     card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
     card.node.articleTitle = resource.caption
     card.node.articleDescription = resource.shortDescription ?? resource.biography
@@ -199,6 +200,7 @@ extension  CardFactory {
     let date = Date.formatDate(date: resource.createdAt)
     let penNameprofileImage = resource.penName?.avatarUrl
     card.setup(forFollowingMode: true)
+    card.setFollowingValue(following: resource.following)
     card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
     card.node.articleTitle = nil
     card.node.articleDescription = resource.shortDescription
@@ -260,6 +262,7 @@ extension  CardFactory {
     let name = resource.productDetails?.author ?? "[No Name]"
     let date = Date.formatDate(date: resource.createdAt)
     card.setup(forFollowingMode: true)
+    card.setFollowingValue(following: resource.following)
     card.postInfoData = CardPostInfoNodeData(name, date, nil)
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.bookDescription
@@ -375,6 +378,7 @@ extension  CardFactory {
     }
 
     card.setup(forFollowingMode: true)
+    card.setFollowingValue(following: resource.following)
     card.node.imageUrl = resource.avatarUrl
     card.node.followersCount = String(resource.followersCount?.intValue ?? 0)
     card.node.userName = resource.name

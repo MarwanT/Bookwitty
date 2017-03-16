@@ -176,6 +176,10 @@ class CardActionBarNode: ASCellNode {
     witButton.clipsToBounds = true
   }
 
+  func setFollowingValue(following: Bool) {
+    followButton.isSelected = following
+  }
+
   func setWitButton(witted: Bool, wits: Int? = nil) {
     witButton.isSelected = witted
     setNumberOfWits(wits: wits ?? 0)
@@ -301,11 +305,13 @@ class CardActionBarNode: ASCellNode {
     let textHorizontalStackSpec = ASStackLayoutSpec.horizontal()
     textHorizontalStackSpec.justifyContent = .start
     textHorizontalStackSpec.alignItems = .center
-    textHorizontalStackSpec.children = [ASLayoutSpec.spacer(width: internalMargin/2),
-                                        numberOfWitsNode]
-    if !hideDim {
-      textHorizontalStackSpec.children?.append(ASLayoutSpec.spacer(width: internalMargin))
-      textHorizontalStackSpec.children?.append(numberOfDimsNode)
+    if !followingMode {
+      textHorizontalStackSpec.children = [ASLayoutSpec.spacer(width: internalMargin/2),
+                                          numberOfWitsNode]
+      if !hideDim {
+        textHorizontalStackSpec.children?.append(ASLayoutSpec.spacer(width: internalMargin))
+        textHorizontalStackSpec.children?.append(numberOfDimsNode)
+      }
     }
     let horizontalStackSpec = ASStackLayoutSpec(direction: .horizontal,
                                                 spacing: 0,

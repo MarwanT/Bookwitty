@@ -311,6 +311,14 @@ extension BookDetailsViewController: BaseCardPostNodeDelegate {
       if let sharingInfo: [String] = viewModel.sharingContent(indexPath: indexPath) {
         presentShareSheet(shareContent: sharingInfo)
       }
+    case .follow:
+      viewModel.follow(indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    case .unfollow:
+      viewModel.unfollow(indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
     default:
       //TODO: handle comment
       break

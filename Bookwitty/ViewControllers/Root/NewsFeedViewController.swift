@@ -309,6 +309,14 @@ extension NewsFeedViewController: BaseCardPostNodeDelegate {
       if let sharingInfo: [String] = viewModel.sharingContent(index: index) {
         presentShareSheet(shareContent: sharingInfo)
       }
+    case .follow:
+      viewModel.follow(index: index) { (success) in
+        didFinishAction?(success)
+      }
+    case .unfollow:
+      viewModel.unfollow(index: index) { (success) in
+        didFinishAction?(success)
+      }
     default:
       //TODO: handle comment
       break

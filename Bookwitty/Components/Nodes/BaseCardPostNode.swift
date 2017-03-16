@@ -85,6 +85,10 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     self.actionBarNode.setup(forFollowingMode: followingMode)
   }
 
+  func setFollowingValue(following: Bool) {
+    actionBarNode.setFollowingValue(following: following)
+  }
+
   func setWitValue(witted: Bool, wits: Int) {
     actionBarNode.setWitButton(witted: witted, wits: wits)
   }

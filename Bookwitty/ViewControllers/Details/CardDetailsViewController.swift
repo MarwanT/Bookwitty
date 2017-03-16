@@ -76,6 +76,14 @@ extension CardDetailsViewController: BaseCardPostNodeDelegate {
       if let sharingInfo: [String] = viewModel.sharingContent() {
         presentShareSheet(shareContent: sharingInfo)
       }
+    case .follow:
+      viewModel.follow() { (success) in
+        didFinishAction?(success)
+      }
+    case .unfollow:
+      viewModel.unfollow() { (success) in
+        didFinishAction?(success)
+      }
     default:
       //TODO: handle comment
       break
