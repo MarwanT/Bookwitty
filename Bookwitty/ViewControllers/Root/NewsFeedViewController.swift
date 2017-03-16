@@ -127,6 +127,14 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       UIBarButtonItemStyle.plain, target: self, action:
       #selector(self.settingsButtonTap(_:)))
     navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
+
+    let rightNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
+      UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+    rightNegativeSpacer.width = -10
+    let searchBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "search"), style:
+      UIBarButtonItemStyle.plain, target: self, action:
+      #selector(self.searchButtonTap(_:)))
+    navigationItem.rightBarButtonItems = [rightNegativeSpacer, searchBarButton]
   }
   
   func refreshViewControllerData() {
@@ -240,6 +248,12 @@ extension NewsFeedViewController {
     let settingsVC = Storyboard.Account.instantiate(AccountViewController.self)
     settingsVC.hidesBottomBarWhenPushed = true
     self.navigationController?.pushViewController(settingsVC, animated: true)
+  }
+
+  func searchButtonTap(_ sender: UIBarButtonItem) {
+    let searchVC = SearchViewController()
+    searchVC.hidesBottomBarWhenPushed = true
+    self.navigationController?.pushViewController(searchVC, animated: true)
   }
 }
 
