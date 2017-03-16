@@ -40,6 +40,7 @@ public enum BookwittyAPI {
   case followers(identifier: String)
   case posts(identifier: String, type: [String]?)
   case editions(identifier: String)
+  case resetPassword(email: String)
 }
 
 // MARK: - Target Type
@@ -124,6 +125,8 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(identifier)/posts"
     case .editions(let identifier):
       path = "/content/\(identifier)/editions"
+    case .resetPassword:
+      path = "/user/reset_password"
     }
     
     return apiBasePath + apiVersion + path
@@ -135,7 +138,7 @@ extension BookwittyAPI: TargetType {
       return .post
     case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions:
       return .get
-    case .register, .batch, .updatePreference, .wit, .follow, .dim:
+    case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword:
       return .post
     case .updateUser, .updatePenName:
       return .patch
@@ -176,6 +179,8 @@ extension BookwittyAPI: TargetType {
       return UserAPI.updatePostBody(preference: preference, value: value)
     case .posts(_, let type):
       return GeneralAPI.postsParameters(type: type)
+    case .resetPassword(let email):
+      return UserAPI.resetPasswordBody(email: email)
     case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim:
       return nil
     }
