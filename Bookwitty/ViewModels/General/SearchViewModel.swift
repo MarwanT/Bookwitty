@@ -41,4 +41,26 @@ class SearchViewModel {
       completion(success, error)
     })
   }
+
+  func loadNextPage(completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let nextPage = nextPage else {
+      completionBlock(false)
+      return
+    }
+    //Cancel any on-goin request
+    cancelActiveRequest()
+
+    cancellableRequest = GeneralAPI.nextPage(nextPage: nextPage) { (success, resources, nextPage, error) in
+      if let resources = resources, success {
+        self.data += resources
+        self.nextPage = nextPage
+      }
+      self.cancellableRequest = nil
+      completionBlock(success)
+    }
+  }
+
+  func hasNextPage() -> Bool {
+    return (nextPage != nil)
+  }
 }
