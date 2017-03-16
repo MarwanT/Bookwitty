@@ -39,6 +39,7 @@ class SearchViewController: ASViewController<ASCollectionNode> {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    collectionNode.dataSource = self
     configureSearchController()
   }
 
@@ -69,6 +70,26 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     viewModel.search(query: query) { (success, error) in
       //TODO: handle search result
       self.loadingStatus = .none
+      self.collectionNode.reloadData()
+    }
+  }
+}
+
+extension SearchViewController: ASCollectionDataSource {
+  func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+    return viewModel.numberOfSections()
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+    return viewModel.numberOfItemsInSection()
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+    let indexPath = indexPath
+
+    return {
+      let baseCardNode = self.viewModel.nodeForItem(atIndexPath: indexPath) ?? BaseCardPostNode()
+      return baseCardNode
     }
   }
 }
