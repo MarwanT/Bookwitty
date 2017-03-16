@@ -13,6 +13,8 @@ class SearchViewController: ASViewController<ASCollectionNode> {
   var flowLayout: UICollectionViewFlowLayout
   var collectionNode: ASCollectionNode
 
+  var searchBar: UISearchBar?
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -25,5 +27,27 @@ class SearchViewController: ASViewController<ASCollectionNode> {
 
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     super.init(node: collectionNode)
+  }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    configureSearchController()
+  }
+
+  func configureSearchController() {
+    let navHeight: CGFloat = navigationController?.navigationBar.frame.size.height ?? 0.0
+    let sideMargin: CGFloat = 34.0
+    let size: CGSize = CGSize(width: UIScreen.main.bounds.width - sideMargin, height: navHeight)
+
+    searchBar = UISearchBar(frame: CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height))
+    searchBar?.barStyle = .black
+    searchBar?.searchBarStyle = .prominent
+    searchBar?.showsCancelButton = false
+    searchBar?.sizeToFit()
+
+    if let searchBar = searchBar {
+      let leftNavBarButton = UIBarButtonItem(customView: searchBar)
+      self.navigationItem.leftBarButtonItem = leftNavBarButton
+    }
   }
 }
