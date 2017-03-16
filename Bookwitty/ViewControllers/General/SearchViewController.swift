@@ -42,6 +42,7 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     searchBar = UISearchBar(frame: CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height))
     searchBar?.barStyle = .black
     searchBar?.searchBarStyle = .prominent
+    searchBar?.delegate = self
     searchBar?.showsCancelButton = false
     searchBar?.sizeToFit()
 
@@ -49,5 +50,31 @@ class SearchViewController: ASViewController<ASCollectionNode> {
       let leftNavBarButton = UIBarButtonItem(customView: searchBar)
       self.navigationItem.leftBarButtonItem = leftNavBarButton
     }
+  }
+}
+
+extension SearchViewController: UISearchBarDelegate {
+  public func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+    return true
+  }
+
+  public func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+    searchBar.showsCancelButton = true
+  }
+
+  public func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+    searchBar.showsCancelButton = false
+    searchBar.endEditing(true)
+    return true
+  }
+
+  public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    searchBar.endEditing(true)
+  }
+
+  public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    searchBar.text = nil
+    searchBar.showsCancelButton = false
+    searchBar.endEditing(true)
   }
 }
