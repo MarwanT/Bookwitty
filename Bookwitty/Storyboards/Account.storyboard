@@ -214,6 +214,10 @@
                             <constraint firstItem="NGK-5m-okC" firstAttribute="centerX" secondItem="gzS-mv-hiv" secondAttribute="centerX" id="jdK-rU-MOV"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="emailField" destination="NGK-5m-okC" id="HO3-0M-jol"/>
+                        <outlet property="submitButton" destination="GkV-Gu-pvr" id="a4u-sB-kfK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ARd-9c-PNj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
