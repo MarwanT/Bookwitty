@@ -85,5 +85,57 @@ extension Analytics {
   }
   
   enum Action {
+    case SignIn
+    case ResetPassword
+    case Register
+    case EditPenName
+    case SwitchEmailNotification
+    case ChangePassword
+    case SignOut
+    //
+    case Wit
+    case Dim
+    case WitComment
+    case DimComment
+    //
+    case Comment
+    case ReplyToComment
+    //
+    case Share
+    //
+    case SelectPenNameFeed
+    //
+    case GoToCategory
+    case GoToDetails
+    case GoToPenName
+    case GoToComments
+    case GoToLatest
+    case GoToRelatedBooks
+    case GoToEditions
+    case GoToFollowers
+    case GoToFollowings
+    case GoToRelatedCategories
+    case GoToBagOnWebsite
+    //
+    case ViewBanner
+    //
+    case ViewAllTopics
+    case ViewAllReadingLists
+    case ViewAllReadingListContent
+    case ViewAllRelatedBooks
+    case ViewAllRelatedPosts
+    case ViewAllComments
+    case ViewAllCategories
+    case ViewAllBooks
+    //
+    case FollowTopic
+    case FollowBook
+    case FollowAuthor
+    case FollowPenName
+    //
+    case BuyThisBook
+    //
+    case PullToRefresh
+    case LoadMore
   }
 }
