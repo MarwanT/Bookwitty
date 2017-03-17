@@ -9,6 +9,7 @@
 import UIKit
 import EMCCountryPickerController
 import TTTAttributedLabel
+import SwiftLoader
 
 class RegisterViewController: UIViewController {
   @IBOutlet weak var stackView: UIStackView!
@@ -171,7 +172,9 @@ class RegisterViewController: UIViewController {
       let lastName = lastNameValidationResult.value!
       let country = viewModel.country!.code
 
+      showLoader()
       viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, completionBlock: { (success: Bool, user: User?, error: BookwittyAPIError?) in
+        self.hideLoader()
         let successBlock = {
           UserManager.shared.shouldEditPenName = true
           UserManager.shared.shouldDisplayOnboarding = true
@@ -232,6 +235,16 @@ class RegisterViewController: UIViewController {
       return text?.isValidText() ?? false
     }
   }
+  
+  // MARK: - Network indicator handling
+  private func showLoader() {
+    SwiftLoader.show(animated: true)
+  }
+  
+  private func hideLoader() {
+    SwiftLoader.hide()
+  }
+
 
   // MARK: - Keyboard Handling
   func keyboardWillShow(_ notification: NSNotification) {
