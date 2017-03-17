@@ -30,6 +30,7 @@ class ReadingListsViewController: ASViewController<ASCollectionNode> {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = Strings.reading_lists()
 
     collectionNode.dataSource = self
     collectionNode.delegate = self
