@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Moya
 
 class ProfileDetailsViewModel {
   let penName: PenName
@@ -14,10 +15,21 @@ class ProfileDetailsViewModel {
   var latestData: [ModelResource] = []
   var followers: [PenName] = []
   var following: [ModelResource] = []
-  var nextPage: URL?
-  
+  var latestNextPage: URL?
+  var followersNextPage: URL?
+  var followingNextPage: URL?
+  var cancellableRequest: Cancellable?
   init(penName: PenName) {
     self.penName = penName
+  }
+
+  func cancelActiveRequest() {
+    guard let cancellableRequest = cancellableRequest else {
+      return
+    }
+    if !cancellableRequest.isCancelled {
+      cancellableRequest.cancel()
+    }
   }
 }
 
@@ -68,9 +80,12 @@ extension ProfileDetailsViewModel {
       return
     }
 
-    _ = PenNameAPI.penNameContent(identifier: id) { (success, resources, nextUrl, error) in
+    //Cancel any on-goin request
+    cancelActiveRequest()
+
+    cancellableRequest = PenNameAPI.penNameContent(identifier: id) { (success, resources, nextUrl, error) in
       defer {
-        self.nextPage = nextUrl
+        self.latestNextPage = nextUrl
         completion(success, error)
       }
       self.latestData.removeAll(keepingCapacity: false)
@@ -84,9 +99,12 @@ extension ProfileDetailsViewModel {
       return
     }
 
-    _ = PenNameAPI.penNameFollowers(identifier: id) { (success, resources, nextUrl, error) in
+    //Cancel any on-goin request
+    cancelActiveRequest()
+
+    cancellableRequest = PenNameAPI.penNameFollowers(identifier: id) { (success, resources, nextUrl, error) in
       defer {
-        self.nextPage = nextUrl
+        self.followersNextPage = nextUrl
         completion(success, error)
       }
       self.followers.removeAll(keepingCapacity: false)
@@ -100,13 +118,70 @@ extension ProfileDetailsViewModel {
       return
     }
 
-    _ = PenNameAPI.penNameFollowing(identifier: id) { (success, resources, nextUrl, error) in
+    //Cancel any on-goin request
+    cancelActiveRequest()
+
+    cancellableRequest = PenNameAPI.penNameFollowing(identifier: id) { (success, resources, nextUrl, error) in
       defer {
-        self.nextPage = nextUrl
+        self.followingNextPage = nextUrl
         completion(success, error)
       }
       self.following.removeAll(keepingCapacity: false)
       self.following += resources ?? []
+    }
+  }
+}
+
+// Mark: - Load More
+extension ProfileDetailsViewModel {
+  func loadNextPage(for segment: ProfileDetailsViewController.Segment, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let nextPage = nextPage(segment: segment) else {
+      completionBlock(false)
+      return
+    }
+    //Cancel any on-goin request
+    cancelActiveRequest()
+
+    cancellableRequest = GeneralAPI.nextPage(nextPage: nextPage) { (success, resources, nextPage, error) in
+      if let resources = resources, success {
+        switch segment {
+        case .followers:
+          self.followers += resources.flatMap({ $0 as? PenName })
+        case .following:
+          self.following += resources
+        case .latest:
+          self.latestData += resources
+        default: break
+        }
+        self.setNextPage(segment: segment, url: nextPage)
+      }
+      self.cancellableRequest = nil
+      completionBlock(success)
+    }
+  }
+
+  func hasNextPage(segment: ProfileDetailsViewController.Segment) -> Bool {
+    return (nextPage(segment: segment) != nil)
+  }
+
+  func nextPage(segment: ProfileDetailsViewController.Segment) -> URL? {
+    switch segment {
+    case .latest: return latestNextPage
+    case .followers: return followersNextPage
+    case .following: return followingNextPage
+    default: return nil
+    }
+  }
+
+  private func setNextPage(segment: ProfileDetailsViewController.Segment, url: URL?) {
+    switch segment {
+    case .latest:
+      latestNextPage = url
+    case .followers:
+      followersNextPage = url
+    case .following:
+      followingNextPage = url
+    default: return
     }
   }
 }
