@@ -56,7 +56,7 @@ class PostDetailsNode: ASScrollNode {
 
   fileprivate let descriptionNode: DTAttributedTextContentNode
   fileprivate let separator: SeparatorNode
-  fileprivate let conculsionNode: ASTextNode
+  fileprivate let conculsionNode: DTAttributedTextContentNode
   fileprivate let postItemsNodeLoader: LoaderNode
   fileprivate let postItemsSeparator: SeparatorNode
   fileprivate let postItemsNodeViewAll: DisclosureNode
@@ -108,11 +108,7 @@ class PostDetailsNode: ASScrollNode {
   var delegate: PostDetailsNodeDelegate?
   var conculsion: String? {
     didSet {
-      if let conculsion = conculsion {
-        conculsionNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.body).append(text: conculsion, fromHtml: true).attributedString
-      } else {
-        conculsionNode.attributedText = nil
-      }
+        conculsionNode.htmlString(text: conculsion, fontDynamicType: FontDynamicType.body)
     }
   }
   var showPostsLoader: Bool = false {
@@ -142,7 +138,7 @@ class PostDetailsNode: ASScrollNode {
     descriptionNode = DTAttributedTextContentNode()
     postItemsNode = PostDetailsItemNode()
     separator = SeparatorNode()
-    conculsionNode = ASTextNode()
+    conculsionNode = DTAttributedTextContentNode()
     postItemsNodeLoader = LoaderNode()
     postItemsNodeViewAll = DisclosureNode()
     booksHorizontalFlowLayout = UICollectionViewFlowLayout()
@@ -172,7 +168,7 @@ class PostDetailsNode: ASScrollNode {
     descriptionNode = DTAttributedTextContentNode()
     postItemsNode = PostDetailsItemNode()
     separator = SeparatorNode()
-    conculsionNode = ASTextNode()
+    conculsionNode = DTAttributedTextContentNode()
     postItemsNodeLoader = LoaderNode()
     postItemsNodeViewAll = DisclosureNode()
     booksHorizontalFlowLayout = UICollectionViewFlowLayout()
@@ -216,15 +212,17 @@ class PostDetailsNode: ASScrollNode {
     booksHorizontalCollectionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width,
                                                                height: horizontalCollectionNodeHeight)
     descriptionNode.delegate = self
+    conculsionNode.delegate = self
 
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     style.flexGrow = 1.0
     style.flexShrink = 1.0
 
-    descriptionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 25)
+    descriptionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 25.0)
     descriptionNode.style.flexGrow = 1.0
     descriptionNode.style.flexShrink = 1.0
 
+    conculsionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 25.0)
     conculsionNode.style.flexGrow = 1.0
     conculsionNode.style.flexShrink = 1.0
 
