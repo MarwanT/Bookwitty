@@ -47,7 +47,7 @@
                                         <rect key="frame" x="0.0" y="88" width="375" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uJj-fX-8lD" id="As1-n2-LQh">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="yty-kW-dyQ">
@@ -172,6 +172,57 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5WF-ok-vrq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1250" y="-348"/>
+        </scene>
+        <!--Forgot Password View Controller-->
+        <scene sceneID="asi-Pi-x7j">
+            <objects>
+                <viewController storyboardIdentifier="ForgotPasswordViewController" id="KCx-CU-skL" customClass="ForgotPasswordViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="NaB-QU-3YF"/>
+                        <viewControllerLayoutGuide type="bottom" id="B8I-Uo-JHJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gzS-mv-hiv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NGK-5m-okC" userLabel="Email Input Field" customClass="InputField" customModule="Bookwitty" customModuleProvider="target">
+                                <rect key="frame" x="47.5" y="120" width="280" height="60"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="280" id="1WY-4w-EBQ"/>
+                                    <constraint firstAttribute="height" constant="60" id="gbN-38-H3Z"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GkV-Gu-pvr" userLabel="Change Button">
+                                <rect key="frame" x="47" y="200" width="280" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="my7-27-hCL"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="changePasswordButtonTouchUpInside:" destination="ErE-12-PjT" eventType="touchUpInside" id="Vfb-W8-BRN"/>
+                                    <action selector="submitButtonTouchUpInside:" destination="KCx-CU-skL" eventType="touchUpInside" id="8e7-W7-3ia"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="GkV-Gu-pvr" firstAttribute="trailing" secondItem="NGK-5m-okC" secondAttribute="trailing" id="1dc-tD-Qgh"/>
+                            <constraint firstItem="NGK-5m-okC" firstAttribute="top" secondItem="NaB-QU-3YF" secondAttribute="bottom" constant="100" id="C28-Cu-G00"/>
+                            <constraint firstItem="GkV-Gu-pvr" firstAttribute="leading" secondItem="NGK-5m-okC" secondAttribute="leading" id="FfP-ZE-gGy"/>
+                            <constraint firstItem="GkV-Gu-pvr" firstAttribute="top" secondItem="NGK-5m-okC" secondAttribute="bottom" constant="20" id="Q3p-te-1wF"/>
+                            <constraint firstItem="GkV-Gu-pvr" firstAttribute="width" secondItem="NGK-5m-okC" secondAttribute="width" id="RF1-gq-cds"/>
+                            <constraint firstItem="NGK-5m-okC" firstAttribute="centerX" secondItem="gzS-mv-hiv" secondAttribute="centerX" id="jdK-rU-MOV"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="emailField" destination="NGK-5m-okC" id="HO3-0M-jol"/>
+                        <outlet property="submitButton" destination="GkV-Gu-pvr" id="a4u-sB-kfK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ARd-9c-PNj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2068" y="-349"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="o33-TJ-VBZ">

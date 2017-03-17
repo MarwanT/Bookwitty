@@ -56,6 +56,8 @@
 "error_loading_data" = "Error Loading Data";
 "first_name" = "First name";
 "first_name_invalid" = "Oooops your first name seems to be empty";
+"forgot_password" = "Forgot Password";
+"forgot_your_password" = "Forgot your password?";
 "format" = "Forma";
 "free_shipping_internationally" = "Livraison international gratuite";
 "help" = "Help";
@@ -99,6 +101,8 @@
 "quote" = "Citation";
 "reading_lists" = "Reading Lists";
 "register" = "Register";
+"reset_password" = "Reset password";
+"reset_password_text" = "You will receive an email with instructions on how to reset your password in a few minutes.";
 "related_bookwitty_topics" = "Related bookwitty topics";
 "clear_profile_photo" = "Clear profile photo";
 "search_placeholder" = "Search here";

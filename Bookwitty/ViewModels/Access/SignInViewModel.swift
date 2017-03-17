@@ -19,6 +19,13 @@ final class SignInViewModel {
       .applyParagraphStyling(alignment: NSTextAlignment.center)
       .attributedString
   }
+
+  func styledForgotPasswordText() -> NSAttributedString {
+    let builder = AttributedStringBuilder(fontDynamicType: FontDynamicType.label)
+    return builder.append(text: Strings.forgot_your_password())
+      .applyParagraphStyling(alignment: NSTextAlignment.right)
+      .attributedString
+  }
   
   
   private var request: Cancellable? = nil
