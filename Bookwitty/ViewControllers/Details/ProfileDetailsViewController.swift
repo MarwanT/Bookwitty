@@ -270,11 +270,11 @@ extension ProfileDetailsViewController {
     var name: String {
       switch self {
       case .latest:
-        return "Latest"
+        return Strings.latest()
       case .followers:
         return Strings.followers()
       case .following:
-        return "Editions"
+        return Strings.following()
       case .none:
         return ""
       }
