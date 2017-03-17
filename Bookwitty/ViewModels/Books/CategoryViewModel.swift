@@ -99,6 +99,9 @@ final class CategoryViewModel {
       }
       
       self.curatedCollection = collection
+      self.banner = collection.sections?.banner
+      self.featuredContents = nil
+      self.readingLists = nil
       
       guard let sections = collection.sections  else {
         completion(true, nil, nil)
@@ -186,19 +189,19 @@ final class CategoryViewModel {
 
 extension CategoryViewModel {
   var hasBanner: Bool {
-    return true
+    return banner != nil
   }
   
   var bannerImageURL: URL? {
-    return URL(string: "http://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2013/09/12/101029496--sites-default-files-images-101029496-3176173-1748009911-hp.jp-1.jpg?v=1474281478")
+    return banner?.imageUrl
   }
   
   var bannerTitle: String? {
-    return "Bookwitty's Finest"
+    return banner?.caption
   }
   
   var bannerSubtitle: String? {
-    return "The perfect list for everyone on your list"
+    return nil
   }
 }
 
