@@ -80,6 +80,7 @@
 "number_of_pages" = "Number Of Pages";
 "follow" = "Follow";
 "followed" = "Followed";
+"follower" = "Follower";
 "followers" = "Followers";
 "ok" = "Ok";
 "ooops" = "Ooops";
@@ -92,6 +93,7 @@
 "pen_name_cant_be_empty" = "Oooops pen name can not be empty";
 "pen_names" = "Pen Names";
 "please_fill_required_field" = "Please fill the required fields";
+"post" = "Post";
 "posts" = "Posts";
 "product_format" = "Product Format";
 "profile_picture" = "Profile Picture";

@@ -301,6 +301,10 @@ class Strings {
     return localizedString(key: "followed")
   }
 
+  class func follower() -> String {
+    return localizedString(key: "follower")
+  }
+
   class func followers() -> String {
     return localizedString(key: "followers")
   }
@@ -347,6 +351,10 @@ class Strings {
 
   class func please_fill_required_field() -> String {
     return localizedString(key: "please_fill_required_field")
+  }
+
+  class func post() -> String {
+    return localizedString(key: "post")
   }
 
   class func posts() -> String {
