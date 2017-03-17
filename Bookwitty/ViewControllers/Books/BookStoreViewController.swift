@@ -171,9 +171,8 @@ class BookStoreViewController: UIViewController {
       banner.imageURL = viewModel.bannerImageURL
       banner.title = viewModel.bannerTitle
       banner.subtitle = viewModel.bannerSubtitle
-      UIView.animate(withDuration: 2, animations: {
-        self.stackView.addArrangedSubview(self.banner)
-      })
+      stackView.addArrangedSubview(self.banner)
+      banner.alignLeading("0", trailing: "0", toView: self.stackView)
     }
   }
   
