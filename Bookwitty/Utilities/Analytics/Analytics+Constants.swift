@@ -10,15 +10,16 @@ import Foundation
 
 extension Analytics {
   struct Event {
-    var category: String
-    var action: String
-    var name: String
-    var value: Double
+    let category: Category
+    let action: Action
+    let name: String
+    let value: Double
   }
   
-  struct Category {
+  enum Category {
+
   }
   
-  struct Action {
+  enum Action {
   }
 }
