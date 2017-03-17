@@ -395,7 +395,10 @@ extension CategoryViewController: UITableViewDataSource, UITableViewDelegate {
     tableView.deselectRow(at: indexPath, animated: true)
     
     if tableView === bookwittySuggestsTableView {
-      
+      guard let modelResource = viewModel.suggestedReadingList(for: indexPath) else {
+        return
+      }
+      actionForCard(resource: modelResource)
     } else {
       guard let book = viewModel.book(for: indexPath) else {
         return
