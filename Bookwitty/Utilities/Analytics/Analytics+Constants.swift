@@ -227,4 +227,63 @@ extension Analytics {
       }
     }
   }
+
+  struct ScreenName {
+    let name: String
+    fileprivate init(name: String) {
+      self.name = name
+    }
+  }
+
+  struct ScreenNames {
+    private init() {}
+    static let Intro1 = ScreenName(name: "Intro 1")
+    static let Intro2 = ScreenName(name: "Intro 2")
+    static let Intro3 = ScreenName(name: "Intro 3")
+    static let Intro4 = ScreenName(name: "Intro 4")
+    static let Intro5 = ScreenName(name: "Intro 5")
+    static let SignIn = ScreenName(name: "Sign In")
+    static let ForgotYourPassword = ScreenName(name: "Forgot Your Password")
+    static let Register = ScreenName(name: "Register")
+    static let CountryList = ScreenName(name: "Country List")
+    static let TermsOfUse = ScreenName(name: "Terms Of Use")
+    static let PrivacyPolicy = ScreenName(name: "Privacy Policy")
+    static let EditPenName = ScreenName(name: "Edit Pen Name")
+    static let OnboardingFollowPeopleAndTopics = ScreenName(name: "Onboarding Follow People & Topics")
+    static let NewsFeed = ScreenName(name: "News Feed")
+    static let NewsFeedNoInternet = ScreenName(name: "News Feed - No Internet")
+    static let NewsFeedError = ScreenName(name: "News Feed - Error")
+    static let NewsFeedNoContent = ScreenName(name: "News Feed - No Content")
+    static let Article = ScreenName(name: "Article")
+    static let Image = ScreenName(name: "Image")
+    static let Video = ScreenName(name: "Video")
+    static let Link = ScreenName(name: "Link")
+    static let Quote = ScreenName(name: "Quote")
+    static let Audio = ScreenName(name: "Audio")
+    static let ReadingList = ScreenName(name: "Reading List")
+    static let PenName = ScreenName(name: "Pen Name")
+    static let Topic  = ScreenName(name: "Topic")
+    static let Author = ScreenName(name: "Author")
+    static let TopicBook = ScreenName(name: "Topic Book")
+    static let Contributors = ScreenName(name: "Contributors")
+    static let Comments = ScreenName(name: "Comments")
+    static let BookStorefront = ScreenName(name: "Book Storefront")
+    static let BrowseByCategory = ScreenName(name: "Browse By Category")
+    static let Category = ScreenName(name: "Category")
+    static let BookProduct = ScreenName(name: "Book Product")
+    static let BookDescription = ScreenName(name: "Book Description")
+    static let BookDetails = ScreenName(name: "Book Details")
+    static let Discover = ScreenName(name: "Discover")
+    static let Bag = ScreenName(name: "Bag")
+    static let Search = ScreenName(name: "Search")
+    static let Account = ScreenName(name: "Account")
+    static let Settings = ScreenName(name: "Settings")
+    static let ChangePassword = ScreenName(name: "Change Password")
+    static let Help = ScreenName(name: "Help")
+    static let ReadingLists = ScreenName(name: "Reading Lists")
+    static let BooksListing = ScreenName(name: "Books Listing")
+
+    //Use in switch cases default clause
+    static let Default = ScreenName(name: "[DEFAULT]")
+  }
 }
