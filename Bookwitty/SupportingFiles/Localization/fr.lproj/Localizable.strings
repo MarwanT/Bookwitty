@@ -102,6 +102,7 @@
 "reading_lists" = "Reading Lists";
 "register" = "Register";
 "reset_password" = "Reset password";
+"reset_password_text" = "You will receive an email with instructions on how to reset your password in a few minutes.";
 "related_bookwitty_topics" = "Related bookwitty topics";
 "clear_profile_photo" = "Clear profile photo";
 "search_placeholder" = "Search here";

@@ -393,6 +393,10 @@ class Strings {
     return localizedString(key: "reset_password")
   }
 
+  class func reset_password_text() -> String {
+    return localizedString(key: "reset_password_text")
+  }
+
   class func register() -> String {
     return localizedString(key: "register")
   }
