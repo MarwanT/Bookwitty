@@ -14,6 +14,8 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   let collectionNode: ASCollectionNode
 
   fileprivate var viewModel: ProfileDetailsViewModel!
+  fileprivate var segments: [Segment] = [.latest(index: 0), .followers(index: 1), .following(index: 2)]
+  fileprivate var activeSegment: Segment
 
   class func create(with viewModel: ProfileDetailsViewModel) -> ProfileDetailsViewController {
     let profileVC = ProfileDetailsViewController()
@@ -28,6 +30,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   private init() {
     flowLayout = UICollectionViewFlowLayout()
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+    activeSegment = segments[0]
     super.init(node: collectionNode)
   }
 
