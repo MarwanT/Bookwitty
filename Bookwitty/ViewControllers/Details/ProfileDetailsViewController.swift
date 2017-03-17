@@ -47,6 +47,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     segmentedNode = SegmentedControlNode()
     loaderNode = LoaderNode()
+    loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
     activeSegment = segments[0]
     penNameHeaderNode = PenNameFollowNode(enlarged: true)
     super.init(node: collectionNode)
@@ -176,6 +177,7 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
         switch section {
         case Section.segmentedControl.rawValue : return self.segmentedNode
         case Section.profileInfo.rawValue: return self.penNameHeaderNode
+        case Section.activityIndicator.rawValue : return self.loaderNode
         default: return ASCellNode()
         }
       }
@@ -187,17 +189,24 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
     guard let indexPath = collectionNode.indexPath(for: node) else {
       return
     }
-    switch activeSegment {
-    case .followers:
-      guard let cell = node as? PenNameFollowNode else {
-        return
+    if indexPath.section == Section.activityIndicator.rawValue {
+      if let loaderNode = node as? LoaderNode {
+        let showLoader = (loadingStatus != .none)
+        loaderNode.updateLoaderVisibility(show: showLoader)
       }
-      let follower: PenName? = viewModel.itemForSegment(segment: activeSegment, index: indexPath.row) as? PenName
-      cell.penName = follower?.name
-      cell.biography = follower?.biography
-      cell.imageUrl = follower?.avatarUrl
-      cell.following = follower?.following ?? false
-    default: break
+    } else if indexPath.section == Section.cells.rawValue {
+      switch activeSegment {
+      case .followers:
+        guard let cell = node as? PenNameFollowNode else {
+          return
+        }
+        let follower: PenName? = viewModel.itemForSegment(segment: activeSegment, index: indexPath.row) as? PenName
+        cell.penName = follower?.name
+        cell.biography = follower?.biography
+        cell.imageUrl = follower?.avatarUrl
+        cell.following = follower?.following ?? false
+      default: break
+      }
     }
   }
 
