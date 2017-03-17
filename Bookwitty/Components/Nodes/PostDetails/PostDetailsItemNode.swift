@@ -156,7 +156,7 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
   var body: String? {
     didSet {
       if let body = body {
-        bodyNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.body).append(text: body).attributedString
+        bodyNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.body).append(text: body, fromHtml: true).attributedString
       } else {
         bodyNode.attributedText = nil
       }
