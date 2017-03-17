@@ -52,6 +52,7 @@ class CardPostInfoNode: ASDisplayNode {
     arrowDownImageNode.image = #imageLiteral(resourceName: "downArrow")
     arrowDownImageNode.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
     arrowDownImageNode.style.preferredSize = downArrowButtonSize
+    arrowDownImageNode.isHidden = true
 
     userNameTextNode.maximumNumberOfLines = 1
     postDateTextNode.maximumNumberOfLines = 1
