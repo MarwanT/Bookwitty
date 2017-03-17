@@ -205,6 +205,13 @@ extension BookStoreViewModel {
     }
     return (featuredContent.title, URL(string: (featuredContent.thumbnailImageUrl ?? "")))
   }
+  
+  func featuredResource(for indexPath: IndexPath) -> ModelResource? {
+    guard let resource = featuredContents?[indexPath.row] as? ModelResource else {
+      return nil
+    }
+    return resource
+  }
 }
 
 // MARK: Categories
