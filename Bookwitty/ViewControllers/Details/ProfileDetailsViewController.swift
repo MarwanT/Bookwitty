@@ -56,6 +56,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     super.viewDidLoad()
     initializeComponents()
     applyTheme()
+    loadData()
   }
 
   private func initializeComponents() {
@@ -81,9 +82,21 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
 
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
     self.activeSegment = segment(withIndex: index)
+    self.loadData()
+  }
+
+  func loadData() {
+    self.loadingStatus = .reloading
+    self.reloadCollectionSections()
     viewModel.data(for: activeSegment) { (success, error) in
-      self.collectionNode.reloadSections(IndexSet(integer: Section.cells.rawValue))
+      self.loadingStatus = .none
+      self.reloadCollectionSections()
     }
+  }
+
+  private func reloadCollectionSections() {
+    self.collectionNode.reloadSections(IndexSet(integer: Section.cells.rawValue))
+    self.collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
   }
 }
 
