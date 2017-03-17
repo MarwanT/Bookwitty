@@ -164,6 +164,13 @@ extension ProfileDetailsViewController: Themeable {
 
 // MARK: - Declarations
 extension ProfileDetailsViewController {
+  enum LoadingStatus {
+    case none
+    case loadMore
+    case reloading
+    case loading
+  }
+
   enum Section: Int {
     case profileInfo = 0
     case segmentedControl
