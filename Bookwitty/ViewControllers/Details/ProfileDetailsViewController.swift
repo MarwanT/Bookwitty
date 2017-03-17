@@ -223,8 +223,18 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
       return nil
     }
     switch segment {
-    case .latest: return CardFactory.shared.createCardFor(resource: resource)
-    case .following: return CardFactory.shared.createCardFor(resource: resource)
+    case .latest, .following:
+      let baseCardNode = CardFactory.shared.createCardFor(resource: resource)
+      if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
+        !readingListCell.node.isImageCollectionLoaded {
+        let max = readingListCell.node.maxNumberOfImages
+        self.viewModel.loadReadingListImages(segment: self.activeSegment, atIndexPath: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
+          if let imageCollection = imageCollection, imageCollection.count > 0 {
+            readingListCell.node.loadImages(with: imageCollection)
+          }
+        })
+      }
+      return baseCardNode
     case .followers:
       let penNameNode = PenNameFollowNode()
       penNameNode.showBottomSeparator = true
