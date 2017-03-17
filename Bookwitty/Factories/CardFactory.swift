@@ -142,7 +142,7 @@ extension  CardFactory {
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.imageUrl = resource.coverImageUrl ?? resource.thumbnailImageUrl
-    card.articleCommentsSummary = "XX commented on this"
+    card.articleCommentsSummary = nil
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
     card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
 
@@ -174,7 +174,7 @@ extension  CardFactory {
     } else if let qoute = resource.title, !qoute.isEmpty {
       card.node.articleQuote = "“ \(qoute) ”"
     }
-    card.articleCommentsSummary = "X commented on this"
+    card.articleCommentsSummary = nil
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
     card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
 
@@ -205,8 +205,8 @@ extension  CardFactory {
     card.node.articleTitle = nil
     card.node.articleDescription = resource.shortDescription
     card.node.imageUrl = resource.coverImageUrl
-    card.node.setTopicStatistics(numberOfPosts: "XX")
-    card.articleCommentsSummary = "X commented on this"
+    card.node.setTopicStatistics(numberOfPosts: resource.counts?.posts, numberOfBooks: nil, numberOfFollowers: resource.counts?.followers)
+    card.articleCommentsSummary = nil
     card.node.subImageUrl = resource.thumbnailImageUrl
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
     card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
@@ -266,8 +266,8 @@ extension  CardFactory {
     card.postInfoData = CardPostInfoNodeData(name, date, nil)
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.bookDescription
-    card.node.setTopicStatistics(numberOfPosts: "XX")
-    card.articleCommentsSummary = "X commented on this"
+    card.node.setTopicStatistics(numberOfPosts: resource.counts?.posts, numberOfBooks: nil, numberOfFollowers: resource.counts?.followers)
+    card.articleCommentsSummary = nil
     card.node.imageUrl = resource.coverImageUrl
     card.node.subImageUrl = resource.thumbnailImageUrl
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
@@ -325,7 +325,7 @@ extension  CardFactory {
     let penNameprofileImage = resource.penName?.avatarUrl
     card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
     card.node.imageUrl = resource.coverImageUrl
-    card.articleCommentsSummary = "X commented on this"
+    card.articleCommentsSummary = nil
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
     card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
     
@@ -355,7 +355,7 @@ extension  CardFactory {
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.imageUrl = resource.coverImageUrl
-    card.articleCommentsSummary = "XX commented on this"
+    card.articleCommentsSummary = nil
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
     card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
 
@@ -408,8 +408,9 @@ extension  CardFactory {
     card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
-    card.node.setTopicStatistics(numberOfPosts: "XX")
-    card.articleCommentsSummary = "X commented on this"
+
+    card.node.setTopicStatistics(numberOfPosts: resource.counts?.posts, numberOfBooks: nil, numberOfFollowers: resource.counts?.followers)
+    card.articleCommentsSummary = nil
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
     card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
 
