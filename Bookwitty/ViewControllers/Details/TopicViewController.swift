@@ -142,6 +142,14 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   }
   
   func shareOutsideButton(_ sender: Any?) {
+    guard let sharingContent = viewModel.externalySharedContent else {
+      return
+    }
+    
+    let activityViewController = UIActivityViewController(
+      activityItems: sharingContent,
+      applicationActivities: nil)
+    present(activityViewController, animated: true, completion: nil)
   }
 }
 

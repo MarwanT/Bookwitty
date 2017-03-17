@@ -66,6 +66,32 @@ final class TopicViewModel {
 
     return nil
   }
+  
+  var externalySharedContent: [Any]? {
+    var canonicalURL: URL? = nil
+    var title: String? = nil
+    var sharedContent = [Any]()
+    
+    if let topic = topic {
+      canonicalURL = topic.canonicalURL
+      title = topic.title
+    } else if let book = book {
+      canonicalURL = book.canonicalURL
+      title = book.title
+    } else if let author = author {
+      canonicalURL = author.canonicalURL
+      title = author.name
+    }
+    
+    if let canonicalURL = canonicalURL {
+      sharedContent.append(canonicalURL)
+    }
+    if let title = title {
+      sharedContent.append(title)
+    }
+    
+    return sharedContent.count > 0 ? sharedContent : nil
+  }
 
   private func initiateContentCalls() {
     if topic != nil {
