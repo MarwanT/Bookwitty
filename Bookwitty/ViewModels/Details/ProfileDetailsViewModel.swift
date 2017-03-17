@@ -7,3 +7,12 @@
 //
 
 import Foundation
+
+class ProfileDetailsViewModel {
+  let penName: PenName
+
+  init(penName: PenName) {
+    self.penName = penName
+  }
+
+}
