@@ -12,6 +12,7 @@ import AsyncDisplayKit
 class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   let flowLayout: UICollectionViewFlowLayout
   let collectionNode: ASCollectionNode
+  let penNameHeaderNode: PenNameFollowNode
   fileprivate var segmentedNode: SegmentedControlNode
 
   fileprivate var viewModel: ProfileDetailsViewModel!
@@ -33,6 +34,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     segmentedNode = SegmentedControlNode()
     activeSegment = segments[0]
+    penNameHeaderNode = PenNameFollowNode(enlarged: true)
     super.init(node: collectionNode)
   }
 
@@ -45,9 +47,20 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   }
 
   private func initializeComponents() {
+
+    initializeHeader()
+
     segmentedNode.initialize(with: segments.map({ $0.name }))
     segmentedNode.selectedSegmentChanged = segmentedNode(segmentedControlNode:didSelectSegmentIndex:)
     segmentedNode.style.preferredSize = CGSize(width: collectionNode.style.maxWidth.value, height: 45.0)
+  }
+
+  private func initializeHeader() {
+    penNameHeaderNode.showBottomSeparator = false
+    penNameHeaderNode.biography = viewModel.penName.biography
+    penNameHeaderNode.penName = viewModel.penName.name
+    penNameHeaderNode.following = viewModel.penName.following
+    penNameHeaderNode.imageUrl = viewModel.penName.avatarUrl
   }
 
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
