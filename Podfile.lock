@@ -133,7 +133,7 @@ DEPENDENCIES:
   - Segmentio (= 2.1.2)
   - Spine (from `https://github.com/Keeward/Spine.git`, tag `0.3.1`)
   - SwiftLinkPreview (= 2.0.0)
-  - SwiftLoader (from `https://github.com/keeward/SwiftLoader`, branch `swift-3`)
+  - SwiftLoader (from `https://github.com/keeward/SwiftLoader`, tag `0.3.1`)
   - SwiftMessages (= 3.1.4)
   - SwiftyJSON (= 3.1.4)
   - TTTAttributedLabel (= 2.0.0)
@@ -149,8 +149,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/Keeward/Spine.git
     :tag: 0.3.1
   SwiftLoader:
-    :branch: swift-3
     :git: https://github.com/keeward/SwiftLoader
+    :tag: 0.3.1
 
 CHECKOUT OPTIONS:
   EMCCountryPickerController:
@@ -160,8 +160,8 @@ CHECKOUT OPTIONS:
     :git: https://github.com/Keeward/Spine.git
     :tag: 0.3.1
   SwiftLoader:
-    :commit: c93daa42fa164f8d3cbd6bee1a06fcafd74f19e6
     :git: https://github.com/keeward/SwiftLoader
+    :tag: 0.3.1
 
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
@@ -205,6 +205,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   UIImageViewAlignedSwift: e57cc89b4738a82ffad1b76e8ab01f898215bbfb
 
-PODFILE CHECKSUM: c20f77a0fd3e5c54999b8b9cda478fe8c621b1fd
+PODFILE CHECKSUM: e7d476d5c304ea6adfb344572b2aada645e6ee2d
 
 COCOAPODS: 1.2.0
