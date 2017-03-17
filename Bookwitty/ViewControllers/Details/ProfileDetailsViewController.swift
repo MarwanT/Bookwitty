@@ -103,16 +103,14 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
     let indexPath = indexPath
     let section = indexPath.section
     return {
-      let cell =  ASCellNode()
-      cell.style.preferredSize = CGSize(width: collectionNode.style.maxWidth.value, height: 45.0)
       guard section == Section.cells.rawValue else {
         switch section {
         case Section.segmentedControl.rawValue : return self.segmentedNode
         case Section.profileInfo.rawValue: return self.penNameHeaderNode
-        default: return cell
+        default: return ASCellNode()
         }
       }
-      return self.nodeForSegment(with: indexPath) ?? cell
+      return self.nodeForSegment(with: indexPath) ?? ASCellNode()
     }
   }
 
