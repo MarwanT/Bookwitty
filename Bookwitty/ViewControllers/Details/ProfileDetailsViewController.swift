@@ -30,4 +30,16 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     super.init(node: collectionNode)
   }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    applyTheme()
+  }
+  
+}
+
+extension ProfileDetailsViewController: Themeable {
+  func applyTheme() {
+    collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+  }
 }
