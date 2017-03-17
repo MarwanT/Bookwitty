@@ -66,7 +66,10 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   }
 
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
-    collectionNode.reloadSections(IndexSet(integer: Section.cells.rawValue))
+    self.activeSegment = segment(withIndex: index)
+    viewModel.data(for: activeSegment) { (success, error) in
+      self.collectionNode.reloadSections(IndexSet(integer: Section.cells.rawValue))
+    }
   }
 }
 
@@ -206,7 +209,7 @@ extension ProfileDetailsViewController {
     }
   }
 
-  fileprivate func category(withIndex index: Int) -> Segment {
+  fileprivate func segment(withIndex index: Int) -> Segment {
     guard let segment = self.segments.filter({ $0.index == index }).first else {
       return .none
     }
