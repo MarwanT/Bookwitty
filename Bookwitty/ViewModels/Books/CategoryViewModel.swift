@@ -251,6 +251,11 @@ extension CategoryViewModel {
     }
     return readingListTitle
   }
+  
+  func suggestedReadingList(for indexPath: IndexPath) -> ModelResource? {
+    let resource = readingLists?[indexPath.row]
+    return resource
+  }
 }
 
 
