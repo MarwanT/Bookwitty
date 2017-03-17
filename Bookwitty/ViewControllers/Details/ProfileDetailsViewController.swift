@@ -62,10 +62,18 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     penNameHeaderNode.penName = viewModel.penName.name
     penNameHeaderNode.following = viewModel.penName.following
     penNameHeaderNode.imageUrl = viewModel.penName.avatarUrl
+    penNameHeaderNode.delegate = self
   }
 
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
     collectionNode.reloadSections(IndexSet(integer: Section.cells.rawValue))
+  }
+}
+
+
+extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
+  func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ASButtonNode) {
+    //TODO: handle action
   }
 }
 
@@ -140,6 +148,7 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
     case .followers:
       let penNameNode = PenNameFollowNode()
       penNameNode.showBottomSeparator = true
+      penNameNode.delegate = self
       return penNameNode
     default: return nil
     }
