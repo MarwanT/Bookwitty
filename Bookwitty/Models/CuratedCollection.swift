@@ -39,7 +39,7 @@ extension CuratedCollection: Parsable {
 
 
 // MARK: - Curated collection sections
-typealias Banner = (imageUrlString: URL, caption: String)
+typealias Banner = (imageUrl: URL, caption: String)
 typealias OnBoardingCollection =  [String : OnBoardingCollectionItem]
 
 class CuratedCollectionSections: NSObject {
