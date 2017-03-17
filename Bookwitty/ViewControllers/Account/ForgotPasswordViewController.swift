@@ -44,6 +44,15 @@ class ForgotPasswordViewController: UIViewController {
       email?.isValidEmail() ?? false
     }
   }
+
+  fileprivate func resetPassword() {
+    let emailValidationResult = emailField.validateField()
+    if emailValidationResult.isValid, let email: String = emailValidationResult.value {
+      _ = UserAPI.resetPassword(email: email) {
+        (success: Bool, error: BookwittyAPIError?) in
+      }
+    }
+  }
 }
 
 //MARK: - Themable implementation
@@ -57,13 +66,7 @@ extension ForgotPasswordViewController: Themeable {
 //MARK: - IBActions
 extension ForgotPasswordViewController {
   @IBAction fileprivate func submitButtonTouchUpInside(_ sender: UIButton) {
-    let emailValidationResult = emailField.validateField()
-    if emailValidationResult.isValid, let email: String = emailValidationResult.value {
-      _ = UserAPI.resetPassword(email: email) {
-        (success: Bool, error: BookwittyAPIError?) in
-
-      }
-    }
+    resetPassword()
   }
 }
 
@@ -71,7 +74,7 @@ extension ForgotPasswordViewController {
 extension ForgotPasswordViewController: InputFieldDelegate {
   func inputFieldShouldReturn(inputField: InputField) -> Bool {
     if inputField === emailField {
-      //TODO: Call the reset password api
+      resetPassword()
     }
     return true
   }
