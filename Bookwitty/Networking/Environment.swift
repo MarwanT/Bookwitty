@@ -33,6 +33,6 @@ struct Environment {
   }
 
   var shipementInfoURL: URL? {
-    return URL(string: "/shipping?layout=app", relativeTo: self.baseURL)
+    return URL(string: "/shipping?layout=mobile", relativeTo: self.baseURL)
   }
 }
