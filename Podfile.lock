@@ -109,6 +109,7 @@ PODS:
     - BrightFutures (~> 5.0)
     - SwiftyJSON (~> 3.1.4)
   - SwiftLinkPreview (2.0.0)
+  - SwiftLoader (0.2.5)
   - SwiftMessages (3.1.4)
   - SwiftyJSON (3.1.4)
   - TTTAttributedLabel (2.0.0)
@@ -132,6 +133,7 @@ DEPENDENCIES:
   - Segmentio (= 2.1.2)
   - Spine (from `https://github.com/Keeward/Spine.git`, tag `0.3.1`)
   - SwiftLinkPreview (= 2.0.0)
+  - SwiftLoader (from `https://github.com/keeward/SwiftLoader`, branch `swift-3`)
   - SwiftMessages (= 3.1.4)
   - SwiftyJSON (= 3.1.4)
   - TTTAttributedLabel (= 2.0.0)
@@ -146,6 +148,9 @@ EXTERNAL SOURCES:
   Spine:
     :git: https://github.com/Keeward/Spine.git
     :tag: 0.3.1
+  SwiftLoader:
+    :branch: swift-3
+    :git: https://github.com/keeward/SwiftLoader
 
 CHECKOUT OPTIONS:
   EMCCountryPickerController:
@@ -154,6 +159,9 @@ CHECKOUT OPTIONS:
   Spine:
     :git: https://github.com/Keeward/Spine.git
     :tag: 0.3.1
+  SwiftLoader:
+    :commit: c93daa42fa164f8d3cbd6bee1a06fcafd74f19e6
+    :git: https://github.com/keeward/SwiftLoader
 
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
@@ -191,11 +199,12 @@ SPEC CHECKSUMS:
   Segmentio: f85114993e305bd9c522952eef8c2c4db732fd17
   Spine: 9a5076f732897dc67c0303b4b3d871cfee903efa
   SwiftLinkPreview: 47a131fd165204f0c3f2531320e48a7da5856915
+  SwiftLoader: 0009cbba8d0610ec58403bd76f705cdd6ae63edb
   SwiftMessages: 08386e74abe1b32fa8ac2075edb4043c56db709d
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   UIImageViewAlignedSwift: e57cc89b4738a82ffad1b76e8ab01f898215bbfb
 
-PODFILE CHECKSUM: ac6a76ade68a16ccacbe2ff33e91bc1d446107b6
+PODFILE CHECKSUM: c20f77a0fd3e5c54999b8b9cda478fe8c621b1fd
 
 COCOAPODS: 1.2.0
