@@ -8,6 +8,7 @@
 
 import UIKit
 import TTTAttributedLabel
+import SwiftLoader
 
 class SignInViewController: UIViewController {
   @IBOutlet weak var stackView: UIStackView!
@@ -126,12 +127,12 @@ class SignInViewController: UIViewController {
     let passwordValidationResult = passwordField.validateField()
     
     if emailValidationResult.isValid && passwordValidationResult.isValid {
-      showNetworkActivity()
+      showLoader()
       viewModel.signIn(
         username: emailValidationResult.value!,
         password: passwordValidationResult.value!,
         completion: { (success, error) in
-          self.hideNetworkActivity()
+          self.hideLoader()
           if success {
             NotificationCenter.default.post(name: AppNotification.didSignIn, object: nil)
           } else {
@@ -178,12 +179,12 @@ class SignInViewController: UIViewController {
   
   // MARK: - Network indicator handling
   
-  private func showNetworkActivity() {
-    UIApplication.shared.isNetworkActivityIndicatorVisible = true
+  private func showLoader() {
+    SwiftLoader.show(animated: true)
   }
   
-  private func hideNetworkActivity() {
-    UIApplication.shared.isNetworkActivityIndicatorVisible = false
+  private func hideLoader() {
+    SwiftLoader.hide()
   }
   
   
