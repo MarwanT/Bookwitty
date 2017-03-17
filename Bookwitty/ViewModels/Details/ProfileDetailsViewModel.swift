@@ -14,7 +14,8 @@ class ProfileDetailsViewModel {
   var latestData: [ModelResource] = []
   var followers: [ModelResource] = []
   var following: [ModelResource] = []
-
+  var nextPage: URL?
+  
   init(penName: PenName) {
     self.penName = penName
   }
