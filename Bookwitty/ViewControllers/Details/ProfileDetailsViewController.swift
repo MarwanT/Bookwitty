@@ -105,6 +105,45 @@ extension ProfileDetailsViewController: ASCollectionDelegate {
       max: CGSize(width: collectionNode.frame.width, height: .infinity)
     )
   }
+
+  public func shouldBatchFetch(for collectionNode: ASCollectionNode) -> Bool {
+    return viewModel.hasNextPage(segment: activeSegment)
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
+    guard context.isFetching() else {
+      return
+    }
+    guard loadingStatus == .none else {
+      context.completeBatchFetching(true)
+      return
+    }
+    context.beginBatchFetching()
+    self.loadingStatus = .loadMore
+
+    let initialLastIndexPath: Int = viewModel.numberOfItemsInSection(section: Section.cells.rawValue, segment: activeSegment)
+
+    // Fetch next page data
+    viewModel.loadNextPage(for: activeSegment) { [weak self] (success) in
+      defer {
+        context.completeBatchFetching(true)
+        self!.loadingStatus = .none
+      }
+      guard let strongSelf = self else {
+        return
+      }
+      let finalLastIndexPath: Int = strongSelf.viewModel.numberOfItemsInSection(section: Section.cells.rawValue, segment: strongSelf.activeSegment)
+
+      if success && finalLastIndexPath > initialLastIndexPath {
+        let updateIndexRange = initialLastIndexPath..<finalLastIndexPath
+
+        let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
+          return IndexPath(row: index, section: Section.cells.rawValue)
+        })
+        collectionNode.insertItems(at: updatedIndexPathRange)
+      }
+    }
+  }
 }
 
 extension ProfileDetailsViewController: ASCollectionDataSource {
