@@ -12,7 +12,7 @@ class ProfileDetailsViewModel {
   let penName: PenName
 
   var latestData: [ModelResource] = []
-  var followers: [ModelResource] = []
+  var followers: [PenName] = []
   var following: [ModelResource] = []
   var nextPage: URL?
   
@@ -36,6 +36,38 @@ extension ProfileDetailsViewModel {
       }
       self.latestData.removeAll(keepingCapacity: false)
       self.latestData += resources ?? []
+    }
+  }
+
+  func fetchFollowers(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    guard let id = penName.id else {
+      completion(false, nil)
+      return
+    }
+
+    _ = PenNameAPI.penNameFollowers(identifier: id) { (success, resources, nextUrl, error) in
+      defer {
+        self.nextPage = nextUrl
+        completion(success, error)
+      }
+      self.followers.removeAll(keepingCapacity: false)
+      self.followers += resources ?? []
+    }
+  }
+
+  func fetchFollowing(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    guard let id = penName.id else {
+      completion(false, nil)
+      return
+    }
+
+    _ = PenNameAPI.penNameFollowing(identifier: id) { (success, resources, nextUrl, error) in
+      defer {
+        self.nextPage = nextUrl
+        completion(success, error)
+      }
+      self.following.removeAll(keepingCapacity: false)
+      self.following += resources ?? []
     }
   }
 }
