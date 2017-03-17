@@ -88,8 +88,8 @@ extension Analytics {
       return
     }
     
-    let gACategory: String = event.category
-    let gAAction: String = event.action
+    let gACategory: String = event.category.name
+    let gAAction: String = event.action.name
     let gALabel: String = event.name
     let gADictionaryBuilder: GAIDictionaryBuilder = GAIDictionaryBuilder.createEvent(withCategory: gACategory, action: gAAction, label: gALabel, value: NSNumber(value: event.value))
     let gADictionary: NSMutableDictionary = gADictionaryBuilder.build()
@@ -102,10 +102,10 @@ extension Analytics {
 
 extension Analytics {
   fileprivate func sendFacebook(event: Event) {
-    var eventName: String = event.category
+    var eventName: String = event.category.name
     
-    if !event.action.isEmpty {
-      eventName += "-" + event.action
+    if !event.action.name.isEmpty {
+      eventName += "-" + event.action.name
     }
     
     if !event.name.isEmpty {
