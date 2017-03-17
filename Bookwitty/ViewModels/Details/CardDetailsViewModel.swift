@@ -113,8 +113,7 @@ extension CardDetailsViewModel {
       return
     }
 
-    followRequest(identifier: identifier) {
-      (success: Bool) in
+    _ = GeneralAPI.followPenName(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
       }
@@ -128,8 +127,7 @@ extension CardDetailsViewModel {
       return
     }
 
-    unfollowRequest(identifier: identifier) {
-      (success: Bool) in
+    _ = GeneralAPI.unfollowPenName(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
       }

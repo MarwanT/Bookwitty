@@ -36,6 +36,8 @@ public enum BookwittyAPI {
   case onBoarding
   case follow(identifier: String)
   case unfollow(identifier: String)
+  case followPenName(identifier: String)
+  case unfollowPenName(identifier: String)
   case content(identifier: String, include: [String]?)
   case followers(identifier: String)
   case posts(identifier: String, type: [String]?)
@@ -120,6 +122,10 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(identifier)/follow"
     case .unfollow(let identifier):
       path = "/content/\(identifier)/follow"
+    case .followPenName(let identifier):
+        path = "/pen_names/\(identifier)/follow"
+    case .unfollowPenName(let identifier):
+        path = "/pen_names/\(identifier)/follow"
     case .content(let identifier, _):
       path = "/content/\(identifier)"
     case .followers(let identifier):
@@ -147,11 +153,11 @@ extension BookwittyAPI: TargetType {
       return .post
     case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing:
       return .get
-    case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword:
+    case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword, .followPenName:
       return .post
     case .updateUser, .updatePenName:
       return .patch
-    case .unwit, .unfollow, .undim:
+    case .unwit, .unfollow, .undim, .unfollowPenName:
       return .delete
     }
   }
@@ -190,7 +196,7 @@ extension BookwittyAPI: TargetType {
       return GeneralAPI.postsParameters(type: type)
     case .resetPassword(let email):
       return UserAPI.resetPasswordBody(email: email)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName:
       return nil
     }
   }
