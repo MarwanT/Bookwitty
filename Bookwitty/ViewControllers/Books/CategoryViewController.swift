@@ -136,6 +136,7 @@ class CategoryViewController: UIViewController {
       banner.title = viewModel.bannerTitle
       banner.subtitle = viewModel.bannerSubtitle
       self.stackView.addArrangedSubview(self.banner)
+      banner.alignLeading("0", trailing: "0", toView: stackView)
     }
   }
   
