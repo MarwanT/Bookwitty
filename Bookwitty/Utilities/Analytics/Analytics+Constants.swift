@@ -137,5 +137,94 @@ extension Analytics {
     //
     case PullToRefresh
     case LoadMore
+
+    var name: String {
+      switch self {
+      case .SignIn:
+        return "Sign In"
+      case .ResetPassword:
+        return "Reset Password"
+      case .Register:
+        return "Register"
+      case .EditPenName:
+        return "Edit Pen Name"
+      case .SwitchEmailNotification:
+        return "Switch Email Notification"
+      case .ChangePassword:
+        return "Change Password"
+      case .SignOut:
+        return "Sign Out"
+      case .Wit:
+        return "Wit"
+      case .Dim:
+        return "Dim"
+      case .WitComment:
+        return "Wit Comment"
+      case .DimComment:
+        return "Dim Comment"
+      case .Comment:
+        return "Comment"
+      case .ReplyToComment:
+        return "Reply To Comment"
+      case .Share:
+        return "Share"
+      case .SelectPenNameFeed:
+        return "Select Pen Name Feed"
+      case .GoToCategory:
+        return "Go To Category"
+      case .GoToDetails:
+        return "Go To Details"
+      case .GoToPenName:
+        return "Go To Pen Name"
+      case .GoToComments:
+        return "Go To Comments"
+      case .GoToLatest:
+        return "Go To Latest"
+      case .GoToRelatedBooks:
+        return "Go To Related Books"
+      case .GoToEditions:
+        return "Go To Editions"
+      case .GoToFollowers:
+        return "Go To Followers"
+      case .GoToFollowings:
+        return "Go To Followings"
+      case .GoToRelatedCategories:
+        return "Go To Related Categories"
+      case .GoToBagOnWebsite:
+        return "Go To Bag On Website"
+      case .ViewBanner:
+        return "View Banner"
+      case .ViewAllTopics:
+        return "View All Topics"
+      case .ViewAllReadingLists:
+        return "View All Reading Lists"
+      case .ViewAllReadingListContent:
+        return "View All Reading List Content"
+      case .ViewAllRelatedBooks:
+        return "View All Related Books"
+      case .ViewAllRelatedPosts:
+        return "View All Related Posts"
+      case .ViewAllComments:
+        return "View All Comments"
+      case .ViewAllCategories:
+        return "View All Categories"
+      case .ViewAllBooks:
+        return "View All Books"
+      case .FollowTopic:
+        return "Follow Topic"
+      case .FollowBook:
+        return "Follow Book"
+      case .FollowAuthor:
+        return "Follow Author"
+      case .FollowPenName:
+        return "Follow Pen Name"
+      case .BuyThisBook:
+        return "BuyT his Book"
+      case .PullToRefresh:
+        return "Pull To Refresh"
+      case .LoadMore:
+        return "Load More"
+      }
+    }
   }
 }
