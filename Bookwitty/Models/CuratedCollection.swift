@@ -39,7 +39,7 @@ extension CuratedCollection: Parsable {
 
 
 // MARK: - Curated collection sections
-typealias Banner = (imageUrlString: String?, caption: String?)
+typealias Banner = (imageUrl: URL, caption: String)
 typealias OnBoardingCollection =  [String : OnBoardingCollectionItem]
 
 class CuratedCollectionSections: NSObject {
@@ -74,7 +74,7 @@ class CuratedCollectionSections: NSObject {
   
   private static func sections(for dictionary: [String : Any]) -> (banner: Banner?, featuredContent: [String], categories: [Category], readingListIdentifiers: [String], booksIdentifiers: [String], pagesIdentifiers: [String], curatedCollectionOnBoardList: OnBoardingCollection?) {
     let json = JSON(dictionary)
-    let banner: Banner? = nil
+    let banner: Banner? = self.banner(json: json["banner-image"])
     let featuredContent = self.wittyIdentifiers(json: json["featured"])
     let categories = self.categories(json: json["categories"])
     let readingListsIdentifiers = self.wittyIdentifiers(json: json["reading-lists"])
@@ -82,6 +82,15 @@ class CuratedCollectionSections: NSObject {
     let pagesIdentifiers = self.wittyIdentifiers(json: json["pages"])
     let curatedCollectionOnBoardList: [String : OnBoardingCollectionItem]? = self.onBoardList(json: json["onboard-list"])
     return (banner, featuredContent, categories, readingListsIdentifiers, booksIdentifiers, pagesIdentifiers, curatedCollectionOnBoardList)
+  }
+  
+  private static func banner(json: JSON) -> Banner? {
+    guard let imageURLString = json["url"].string,
+      let imageURL = URL(string: imageURLString),
+      let caption = json["caption"].string else {
+        return nil
+    }
+    return (imageURL, caption)
   }
   
   private static func categories(json: JSON) -> [Category] {
