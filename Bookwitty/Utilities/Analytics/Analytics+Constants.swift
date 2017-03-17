@@ -17,6 +17,26 @@ extension Analytics {
   }
   
   enum Category {
+    case Account
+    case Quote
+    case Image
+    case Audio
+    case Video
+    case Link
+    case ReadingList
+    case Text
+    case Topic
+    case Author
+    case TopicBook
+    case BookProduct
+    case PenName
+    case NewsFeed
+    case Discover
+    case Search
+    case BookStorefront
+    case BookCategory
+    case CategoriesList
+    case Bag
 
   }
   
