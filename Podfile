@@ -37,6 +37,7 @@ target 'Bookwitty' do
   pod 'UIImageViewAlignedSwift', '0.3.1'
   pod 'Segmentio', '2.1.2'
   pod 'DTCoreText', '1.6.20'
+  pod 'SwiftLoader', :git => 'https://github.com/keeward/SwiftLoader', :tag => '0.3.1'
 
   target 'BookwittyTests' do
     inherit! :search_paths
