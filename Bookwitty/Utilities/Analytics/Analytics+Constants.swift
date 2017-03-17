@@ -119,7 +119,7 @@ extension Analytics {
     //
     case Share
     //
-    case SelectPenNameFeed
+    case SelectPenName  
     //
     case GoToCategory
     case GoToDetails
@@ -145,11 +145,11 @@ extension Analytics {
     case ViewAllBooks
     //
     case FollowTopic
-    case FollowBook
+    case FollowTopicBook
     case FollowAuthor
     case FollowPenName
     case UnfollowTopic
-    case UnfollowBook
+    case UnfollowTopicBook
     case UnfollowAuthor
     case UnfollowPenName
     //
@@ -157,6 +157,8 @@ extension Analytics {
     //
     case PullToRefresh
     case LoadMore
+    //
+    case SearchOnBookwitty
     //
     case Default
 
@@ -198,8 +200,8 @@ extension Analytics {
         return "Reply To Comment"
       case .Share:
         return "Share"
-      case .SelectPenNameFeed:
-        return "Select Pen Name Feed"
+      case .SelectPenName:
+        return "Select Pen Name"
       case .GoToCategory:
         return "Go To Category"
       case .GoToDetails:
@@ -242,26 +244,28 @@ extension Analytics {
         return "View All Books"
       case .FollowTopic:
         return "Follow Topic"
-      case .FollowBook:
-        return "Follow Book"
+      case .FollowTopicBook:
+        return "Follow Topic Book"
       case .FollowAuthor:
         return "Follow Author"
       case .FollowPenName:
         return "Follow Pen Name"
       case .UnfollowTopic:
         return "Unfollow Topic"
-      case .UnfollowBook:
-        return "Unfollow Topic"
+      case .UnfollowTopicBook:
+        return "Unfollow Topic Book"
       case .UnfollowAuthor:
-        return "Unfollow Topic"
+        return "Unfollow Author"
       case .UnfollowPenName:
-        return "Unfollow Topic"
+        return "Unfollow Pen Name"
       case .BuyThisBook:
-        return "BuyT his Book"
+        return "Buy This Book"
       case .PullToRefresh:
         return "Pull To Refresh"
       case .LoadMore:
         return "Load More"
+      case .SearchOnBookwitty:
+        return "Search On Bookwitty"
       case .Default:
         return "[DEFAULT]"
       }
