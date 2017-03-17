@@ -113,6 +113,93 @@ struct PenNameAPI {
       }
     }
   }
+
+  public static func penNameFollowers(identifier: String, completion: @escaping (_ success: Bool, _ resources: [PenName]?, _ nextPage: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    return signedAPIRequest(
+    target: BookwittyAPI.penNameFollowers(identifier: identifier)) {
+      (data, statusCode, response, error) in
+      DispatchQueue.global(qos: .background).async {
+        // Ensure the completion block is always called
+        var success: Bool = false
+        var completionError: BookwittyAPIError? = error
+        var penNames: [PenName]?
+        var nextPage: URL?
+        defer {
+          DispatchQueue.main.async {
+            completion(success, penNames, nextPage, error)
+          }
+        }
+
+        // If status code is not available then break
+        guard let statusCode = statusCode else {
+          completionError = BookwittyAPIError.invalidStatusCode
+          return
+        }
+
+        // If status code != success then break
+        if statusCode != 200 {
+          completionError = BookwittyAPIError.invalidStatusCode
+          return
+        }
+
+        // Parse Data
+        guard let data = data,
+          let parsedData = Parser.parseDataArray(data: data) else {
+            return
+        }
+
+        if let resources = parsedData.resources {
+          penNames = resources.flatMap({ $0 as? PenName })
+        }
+
+        success = penNames != nil
+        completionError = nil
+        nextPage = parsedData.next
+      }
+    }
+  }
+
+  public static func penNameFollowing(identifier: String, completion: @escaping (_ success: Bool, _ resources: [ModelResource]?, _ nextPage: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    return signedAPIRequest(
+    target: BookwittyAPI.penNameFollowing(identifier: identifier)) {
+      (data, statusCode, response, error) in
+      DispatchQueue.global(qos: .background).async {
+        // Ensure the completion block is always called
+        var success: Bool = false
+        var completionError: BookwittyAPIError? = error
+        var resources: [ModelResource]?
+        var nextPage: URL?
+        defer {
+          DispatchQueue.main.async {
+            completion(success, resources, nextPage, error)
+          }
+        }
+
+        // If status code is not available then break
+        guard let statusCode = statusCode else {
+          completionError = BookwittyAPIError.invalidStatusCode
+          return
+        }
+
+        // If status code != success then break
+        if statusCode != 200 {
+          completionError = BookwittyAPIError.invalidStatusCode
+          return
+        }
+
+        // Parse Data
+        guard let data = data,
+          let parsedData = Parser.parseDataArray(data: data) else {
+            return
+        }
+
+        resources = parsedData.resources
+        success = resources != nil
+        completionError = nil
+        nextPage = parsedData.next
+      }
+    }
+  }
 }
 
 //MARK: - Moya Needed parameters
