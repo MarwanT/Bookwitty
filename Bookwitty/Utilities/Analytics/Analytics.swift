@@ -45,7 +45,7 @@ internal final class Analytics {
     }
   }
   
-  func send(screenName: String) {
+  func send(screenName: ScreenName) {
     self.sendGoogle(screenName: screenName)
   }
 }
@@ -71,13 +71,13 @@ extension Analytics {
     }
   }
   
-  fileprivate func sendGoogle(screenName: String) {
+  fileprivate func sendGoogle(screenName: ScreenName) {
     
     guard GAI.sharedInstance().defaultTracker != nil else {
       return
     }
     
-    GAI.sharedInstance().defaultTracker.set(kGAIScreenName, value: screenName)
+    GAI.sharedInstance().defaultTracker.set(kGAIScreenName, value: screenName.name)
     let gADictionary: NSMutableDictionary = GAIDictionaryBuilder.createScreenView().build()
     
     GAI.sharedInstance().defaultTracker.send(gADictionary as [NSObject : AnyObject])
