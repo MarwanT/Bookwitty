@@ -11,13 +11,21 @@ import AsyncDisplayKit
 
 typealias CardPostInfoNodeData = (name: String, date: String, imageUrl: String?)
 
+protocol CardPostInfoNodeDelegate {
+  func cardInfoNode(cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any)
+}
+
 class CardPostInfoNode: ASDisplayNode {
+  enum Action {
+    case userProfile
+  }
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
 
   var userProfileImageNode: ASNetworkImageNode
   var arrowDownImageNode: ASImageNode
   var userNameTextNode: ASTextNode
   var postDateTextNode: ASTextNode
+  var delegate: CardPostInfoNodeDelegate?
 
   private let userProfileImageDimension: CGFloat = 45.0
   private let downArrowButtonSize: CGSize = CGSize(width: 45.0, height: 45.0)
