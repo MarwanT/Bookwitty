@@ -50,6 +50,11 @@ class ForgotPasswordViewController: UIViewController {
     if emailValidationResult.isValid, let email: String = emailValidationResult.value {
       _ = UserAPI.resetPassword(email: email) {
         (success: Bool, error: BookwittyAPIError?) in
+        if success {
+          let alertController = UIAlertController(title: nil, message: Strings.reset_password_text(), preferredStyle: UIAlertControllerStyle.alert)
+          alertController.addAction(UIAlertAction(title: Strings.ok(), style: UIAlertActionStyle.default, handler: nil))
+          self.present(alertController, animated: true, completion: nil)
+        }
       }
     }
   }
