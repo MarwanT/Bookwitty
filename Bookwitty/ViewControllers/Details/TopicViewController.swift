@@ -77,6 +77,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeComponents()
+    loadNavigationBarButtons()
   }
 
   private func initializeComponents() {
@@ -98,6 +99,15 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     flowLayout.sectionHeadersPinToVisibleBounds = true
 
     viewModel.callback = self.callback(for:)
+  }
+  
+  private func loadNavigationBarButtons() {
+    let shareButton = UIBarButtonItem(
+      image: #imageLiteral(resourceName: "shareOutside"),
+      style: UIBarButtonItemStyle.plain,
+      target: self,
+      action: #selector(shareOutsideButton(_:)))
+    navigationItem.rightBarButtonItem = shareButton
   }
 
   fileprivate func fillHeaderNode() {
@@ -129,6 +139,17 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     default:
       break
     }
+  }
+  
+  func shareOutsideButton(_ sender: Any?) {
+    guard let sharingContent = viewModel.externalySharedContent else {
+      return
+    }
+    
+    let activityViewController = UIActivityViewController(
+      activityItems: sharingContent,
+      applicationActivities: nil)
+    present(activityViewController, animated: true, completion: nil)
   }
 }
 
