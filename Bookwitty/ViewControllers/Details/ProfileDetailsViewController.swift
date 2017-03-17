@@ -33,9 +33,44 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    collectionNode.dataSource = self
+    collectionNode.delegate = self
     applyTheme()
   }
   
+}
+
+extension ProfileDetailsViewController: ASCollectionDelegate {
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    //TODO: actions
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
+    return ASSizeRange(
+      min: CGSize(width: collectionNode.frame.width, height: 0),
+      max: CGSize(width: collectionNode.frame.width, height: .infinity)
+    )
+  }
+}
+
+extension ProfileDetailsViewController: ASCollectionDataSource {
+  func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+    //TODO: replace with real value
+    return 0
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+    //TODO: replace with real value
+    return 0
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+    return {
+      //TODO: use real cells
+      return ASCellNode()
+    }
+  }
+
 }
 
 extension ProfileDetailsViewController: Themeable {
