@@ -108,6 +108,24 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
     }
   }
 
+  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+    guard let indexPath = collectionNode.indexPath(for: node) else {
+      return
+    }
+    switch activeSegment {
+    case .followers:
+      guard let cell = node as? PenNameFollowNode else {
+        return
+      }
+      let follower: PenName? = viewModel.itemForSegment(segment: activeSegment, index: indexPath.row) as? PenName
+      cell.penName = follower?.name
+      cell.biography = follower?.biography
+      cell.imageUrl = follower?.avatarUrl
+      cell.following = follower?.following ?? false
+    default: break
+    }
+  }
+
   func nodeForSegment(with indexPath: IndexPath) -> ASCellNode? {
     return nodeForItem(atIndexPath: indexPath, segment: activeSegment)
   }
@@ -118,8 +136,11 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
     }
     switch segment {
     case .latest: return CardFactory.shared.createCardFor(resource: resource)
-    case .followers: return nil //TODO: replace with pen name nodes
-    case .following: return nil //TODO: replace with pen name nodes
+    case .following: return CardFactory.shared.createCardFor(resource: resource)
+    case .followers:
+      let penNameNode = PenNameFollowNode()
+      penNameNode.showBottomSeparator = true
+      return penNameNode
     default: return nil
     }
   }
