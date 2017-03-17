@@ -91,4 +91,46 @@ extension ProfileDetailsViewController {
       return 4
     }
   }
+
+  enum Segment {
+    case latest(index: Int)
+    case followers(index: Int)
+    case following(index: Int)
+    case none
+
+    //TODO: Should be localized
+    var name: String {
+      switch self {
+      case .latest:
+        return "Latest"
+      case .followers:
+        return Strings.followers()
+      case .following:
+        return "Editions"
+      case .none:
+        return ""
+      }
+    }
+
+    var index: Int {
+      switch self {
+      case .latest(let index):
+        return index
+      case .followers(let index):
+        return index
+      case .following(let index):
+        return index
+      case .none:
+        return NSNotFound
+      }
+    }
+  }
+
+  fileprivate func category(withIndex index: Int) -> Segment {
+    guard let segment = self.segments.filter({ $0.index == index }).first else {
+      return .none
+    }
+
+    return segment
+  }
 }
