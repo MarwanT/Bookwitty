@@ -107,7 +107,8 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     headerNode.coverImageUrl = values.coverImageUrl
     headerNode.thumbnailImageUrl = values.thumbnailImageUrl
     headerNode.following = values.following
-    headerNode.setTopicStatistics(numberOfFollowers: values.stats.followers, numberOfPosts: values.stats.posts)
+
+    headerNode.setTopicStatistics(numberOfFollowers: Int(values.stats.followers ?? ""), numberOfPosts: Int(values.stats.posts ?? ""))
     headerNode.setContributorsValues(numberOfContributors: values.contributors.count, imageUrls: values.contributors.imageUrls)
   }
 

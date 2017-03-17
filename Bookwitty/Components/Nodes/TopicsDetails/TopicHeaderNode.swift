@@ -112,27 +112,31 @@ class TopicHeaderNode: ASCellNode {
     contributorsNode.numberOfContributors = numberOfContributors
   }
 
-  func setTopicStatistics(numberOfFollowers: String? = nil, numberOfPosts: String? = nil) {
+  func setTopicStatistics(numberOfFollowers: Int? = nil, numberOfPosts: Int? = nil) {
     let separator =  " | "
     var attrStringBuilder = AttributedStringBuilder(fontDynamicType: .footnote)
     var addSeparator: Bool = false
 
     //TODO: This should be handled with localization plurals
-    if isValid(numberOfFollowers) {
+    if let followersNumber = String(counting: numberOfFollowers) , (numberOfFollowers ?? 0 > 0) {
+      let plural = numberOfFollowers ?? 0 > 1
+      let str = plural ? Strings.followers() : Strings.follower()
       attrStringBuilder = attrStringBuilder
-        .append(text: numberOfFollowers!)
-        .append(text: " " + Strings.followers(), fontDynamicType: .caption2)
+        .append(text: followersNumber)
+        .append(text: " " + str, fontDynamicType: .caption2)
       addSeparator = true
     } else {
       addSeparator = false
     }
 
     //TODO: This should be handled with localization plurals
-    if isValid(numberOfPosts) {
+    if let postsNumber = String(counting: numberOfPosts), (numberOfPosts ?? 0 > 0) {
+      let plural = numberOfPosts ?? 0 > 1
+      let str = plural ? Strings.posts() : Strings.post()
       attrStringBuilder = attrStringBuilder
         .append(text: (addSeparator ? separator : ""), fontDynamicType: .caption2)
-        .append(text: numberOfPosts!)
-        .append(text: " " + Strings.posts(), fontDynamicType: .caption2)
+        .append(text: postsNumber)
+        .append(text: " " + str, fontDynamicType: .caption2)
     }
 
     //Set the string value
