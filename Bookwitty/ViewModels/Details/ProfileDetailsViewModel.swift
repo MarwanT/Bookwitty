@@ -23,6 +23,45 @@ class ProfileDetailsViewModel {
 
 // MARK: - API requests
 extension ProfileDetailsViewModel {
+  func data(for segment: ProfileDetailsViewController.Segment, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    switch segment {
+    case .latest:
+      if latestData.count > 0 {
+        completion(true, nil)
+        return
+      } else {
+        fetchData(for: segment, completion: completion)
+      }
+    case .followers:
+      if followers.count > 0 {
+        completion(true, nil)
+        return
+      } else {
+        fetchData(for: segment, completion: completion)
+      }
+    case .following:
+      if following.count > 0 {
+        completion(true, nil)
+        return
+      } else {
+        fetchData(for: segment, completion: completion)
+      }
+    default: return
+    }
+  }
+
+  func fetchData(for segment: ProfileDetailsViewController.Segment, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    switch segment {
+    case .latest:
+      fetchContent(completion: completion)
+    case .followers:
+      fetchFollowers(completion: completion)
+    case .following:
+      fetchFollowing(completion: completion)
+    default: return
+    }
+  }
+
   func fetchContent(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
     guard let id = penName.id else {
       completion(false, nil)
