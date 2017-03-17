@@ -21,6 +21,25 @@ class ProfileDetailsViewModel {
   }
 }
 
+// MARK: - API requests
+extension ProfileDetailsViewModel {
+  func fetchContent(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    guard let id = penName.id else {
+      completion(false, nil)
+      return
+    }
+
+    _ = PenNameAPI.penNameContent(identifier: id) { (success, resources, nextUrl, error) in
+      defer {
+        self.nextPage = nextUrl
+        completion(success, error)
+      }
+      self.latestData.removeAll(keepingCapacity: false)
+      self.latestData += resources ?? []
+    }
+  }
+}
+
 // Mark: - Segment helper
 extension ProfileDetailsViewModel {
   func countForSegment(segment: ProfileDetailsViewController.Segment) -> Int {
