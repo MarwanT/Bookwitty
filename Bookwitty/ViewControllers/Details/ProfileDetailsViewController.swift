@@ -78,3 +78,17 @@ extension ProfileDetailsViewController: Themeable {
     collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
   }
 }
+
+// MARK: - Declarations
+extension ProfileDetailsViewController {
+  enum Section: Int {
+    case profileInfo = 0
+    case segmentedControl
+    case cells
+    case activityIndicator
+
+    static var numberOfSections: Int {
+      return 4
+    }
+  }
+}
