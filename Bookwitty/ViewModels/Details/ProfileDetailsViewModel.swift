@@ -11,6 +11,10 @@ import Foundation
 class ProfileDetailsViewModel {
   let penName: PenName
 
+  var latestData: [ModelResource] = []
+  var followers: [ModelResource] = []
+  var following: [ModelResource] = []
+
   init(penName: PenName) {
     self.penName = penName
   }
