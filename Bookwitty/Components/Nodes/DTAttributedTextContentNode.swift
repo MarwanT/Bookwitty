@@ -30,11 +30,15 @@ class DTAttributedTextContentNode: ASCellNode {
     textContentView.delegate = self
   }
 
-  func htmlString(text: String, fontDynamicType: FontDynamicType? = nil,
+  func htmlString(text: String?, fontDynamicType: FontDynamicType? = nil,
                   color: UIColor =  ThemeManager.shared.currentTheme.defaultTextColor(),
                   underlineStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone,
                   strikeThroughStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone,
                   htmlImageWidth: CGFloat = UIScreen.main.bounds.width) {
+    guard let text = text else {
+      textContentView.attributedString = nil
+      return
+    }
     textContentView.attributedString = htmlAttributedString(text: text,
                                                             fontDynamicType: fontDynamicType,
                                                             color:  color,
