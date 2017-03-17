@@ -83,22 +83,45 @@ extension ProfileDetailsViewController: ASCollectionDelegate {
 
 extension ProfileDetailsViewController: ASCollectionDataSource {
   func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
-    //TODO: replace with real value
-    return 0
+    return viewModel.numberOfSections()
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    //TODO: replace with real value
-    return 0
+    return viewModel.numberOfItemsInSection(section: section, segment: activeSegment)
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+    let indexPath = indexPath
+    let section = indexPath.section
     return {
-      //TODO: use real cells
-      return ASCellNode()
+      let cell =  ASCellNode()
+      cell.style.preferredSize = CGSize(width: collectionNode.style.maxWidth.value, height: 45.0)
+      guard section == Section.cells.rawValue else {
+        switch section {
+        case Section.segmentedControl.rawValue : return self.segmentedNode
+        case Section.profileInfo.rawValue: return self.penNameHeaderNode
+        default: return cell
+        }
+      }
+      return self.nodeForSegment(with: indexPath) ?? cell
     }
   }
 
+  func nodeForSegment(with indexPath: IndexPath) -> ASCellNode? {
+    return nodeForItem(atIndexPath: indexPath, segment: activeSegment)
+  }
+
+  func nodeForItem(atIndexPath indexPath: IndexPath, segment: ProfileDetailsViewController.Segment) -> ASCellNode? {
+    guard let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: segment) else {
+      return nil
+    }
+    switch segment {
+    case .latest: return CardFactory.shared.createCardFor(resource: resource)
+    case .followers: return nil //TODO: replace with pen name nodes
+    case .following: return nil //TODO: replace with pen name nodes
+    default: return nil
+    }
+  }
 }
 
 extension ProfileDetailsViewController: Themeable {
