@@ -112,6 +112,7 @@ class CardActionBarNode: ASCellNode {
     //Note: Had a Problem with the selected and highlighted states of the button images
     commentButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
     commentButton.setImage(#imageLiteral(resourceName: "comment"), for: .normal)
+    commentButton.isHidden = true
 
     shareButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
     shareButton.setImage(#imageLiteral(resourceName: "shareOutside"), for: .normal)
