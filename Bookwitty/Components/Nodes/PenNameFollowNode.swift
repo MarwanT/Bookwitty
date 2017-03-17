@@ -16,6 +16,7 @@ protocol PenNameFollowNodeDelegate: class {
 class PenNameFollowNode: ASCellNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let imageSize: CGSize = CGSize(width: 45.0, height: 45.0)
+  fileprivate let largeImageSize: CGSize = CGSize(width: 60.0, height: 60.0)
   fileprivate let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
 
   private var imageNode: ASNetworkImageNode
@@ -23,10 +24,11 @@ class PenNameFollowNode: ASCellNode {
   private var biographyNode: ASTextNode
   private var actionButton: ASButtonNode
   private let separatorNode: ASDisplayNode
+  private var enlarged: Bool = false
 
   weak var delegate: PenNameFollowNodeDelegate?
 
-  override init() {
+  private override init() {
     imageNode = ASNetworkImageNode()
     nameNode = ASTextNode()
     biographyNode = ASTextNode()
@@ -38,13 +40,19 @@ class PenNameFollowNode: ASCellNode {
     addSubnode(biographyNode)
     addSubnode(actionButton)
     addSubnode(separatorNode)
+  }
+
+  convenience init(enlarged: Bool = false) {
+    self.init()
+    self.enlarged = enlarged
     setupNode()
   }
+
 
   var penName: String? {
     didSet {
       if let penName = penName {
-        nameNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
+        nameNode.attributedText = AttributedStringBuilder(fontDynamicType: enlarged ? .subheadline : .footnote)
           .append(text: penName, color: ThemeManager.shared.currentTheme.defaultButtonColor()).attributedString
         setNeedsLayout()
       }
@@ -54,7 +62,7 @@ class PenNameFollowNode: ASCellNode {
   var biography: String? {
     didSet {
       if let biography = biography {
-        biographyNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+        biographyNode.attributedText = AttributedStringBuilder(fontDynamicType: enlarged ? .caption1 : .caption2)
           .append(text: biography, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
         setNeedsLayout()
       }
@@ -85,7 +93,7 @@ class PenNameFollowNode: ASCellNode {
     imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0.0, nil)
 
     nameNode.maximumNumberOfLines = 1
-    biographyNode.maximumNumberOfLines = 3
+    biographyNode.maximumNumberOfLines = enlarged ? 5 : 3
 
     let buttonFont = FontDynamicType.subheadline.font
     let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()
@@ -104,7 +112,7 @@ class PenNameFollowNode: ASCellNode {
     actionButton.borderWidth = 2
     actionButton.clipsToBounds = true
 
-    imageNode.style.preferredSize = imageSize
+    imageNode.style.preferredSize = enlarged ? largeImageSize : imageSize
     actionButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
     actionButton.style.height = ASDimensionMake(buttonSize.height)
     actionButton.addTarget(self, action: #selector(actionButtonTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)

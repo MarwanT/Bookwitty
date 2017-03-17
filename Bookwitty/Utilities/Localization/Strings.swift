@@ -260,7 +260,11 @@ class Strings {
   class func last_name_invalid() -> String {
     return localizedString(key: "last_name_invalid")
   }
-  
+
+  class func latest() -> String {
+    return localizedString(key: "latest")
+  }
+
   class func link() -> String {
     return localizedString(key: "link")
   }
@@ -315,6 +319,10 @@ class Strings {
 
   class func followers() -> String {
     return localizedString(key: "followers")
+  }
+
+  class func following() -> String {
+    return localizedString(key: "following")
   }
 
   class func ok() -> String {

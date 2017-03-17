@@ -70,6 +70,7 @@
 "language_of_text" = "language Of Text";
 "last_name" = "Last name";
 "last_name_invalid" = "Oooops your email seems to be empty";
+"latest" = "Latest";
 "link" = "Link";
 "list_price" = "List price";
 "my_orders" = "My Orders";
@@ -84,6 +85,7 @@
 "followed" = "Followed";
 "follower" = "Follower";
 "followers" = "Followers";
+"following" = "Following";
 "ok" = "Ok";
 "ooops" = "Ooops";
 "our_selection_for_you" = "Our selection for you";
