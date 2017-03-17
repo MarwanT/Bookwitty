@@ -14,6 +14,13 @@ extension Analytics {
     let action: Action
     let name: String
     let value: Double
+
+    init(category: Category, action: Action, name: String = "", value: Double = 0.0) {
+      self.category = category
+      self.action = action
+      self.name = name
+      self.value = value
+    }
   }
   
   enum Category {
@@ -37,6 +44,9 @@ extension Analytics {
     case BookCategory
     case CategoriesList
     case Bag
+
+    //Use in switch cases default clause
+    case Default
 
     var name: String {
       switch self {
@@ -80,6 +90,8 @@ extension Analytics {
         return "Categories List"
       case .Bag:
         return "Bag"
+      case .Default:
+        return "[DEFAULT]"
       }
     }
   }
@@ -94,9 +106,13 @@ extension Analytics {
     case SignOut
     //
     case Wit
+    case Unwit
     case Dim
+    case Undim
     case WitComment
+    case UnwitComment
     case DimComment
+    case UndimComment
     //
     case Comment
     case ReplyToComment
@@ -132,11 +148,17 @@ extension Analytics {
     case FollowBook
     case FollowAuthor
     case FollowPenName
+    case UnfollowTopic
+    case UnfollowBook
+    case UnfollowAuthor
+    case UnfollowPenName
     //
     case BuyThisBook
     //
     case PullToRefresh
     case LoadMore
+    //
+    case Default
 
     var name: String {
       switch self {
@@ -156,12 +178,20 @@ extension Analytics {
         return "Sign Out"
       case .Wit:
         return "Wit"
+      case .Unwit:
+        return "Unwit"
       case .Dim:
         return "Dim"
+      case .Undim:
+        return "Undim"
       case .WitComment:
         return "Wit Comment"
+      case .UnwitComment:
+        return "Unwit Comment"
       case .DimComment:
         return "Dim Comment"
+      case .UndimComment:
+        return "Undim Comment"
       case .Comment:
         return "Comment"
       case .ReplyToComment:
@@ -218,12 +248,22 @@ extension Analytics {
         return "Follow Author"
       case .FollowPenName:
         return "Follow Pen Name"
+      case .UnfollowTopic:
+        return "Unfollow Topic"
+      case .UnfollowBook:
+        return "Unfollow Topic"
+      case .UnfollowAuthor:
+        return "Unfollow Topic"
+      case .UnfollowPenName:
+        return "Unfollow Topic"
       case .BuyThisBook:
         return "BuyT his Book"
       case .PullToRefresh:
         return "Pull To Refresh"
       case .LoadMore:
         return "Load More"
+      case .Default:
+        return "[DEFAULT]"
       }
     }
   }
@@ -285,5 +325,26 @@ extension Analytics {
 
     //Use in switch cases default clause
     static let Default = ScreenName(name: "[DEFAULT]")
+  }
+}
+
+extension Analytics.Action {
+  static func actionFrom(cardAction: CardActionBarNode.Action) -> Analytics.Action {
+    switch cardAction {
+    case .wit:
+      return .Wit
+    case .unwit:
+      return .Unwit
+    case .comment:
+      return .Comment
+    case .share:
+      return .Share
+    case .dim:
+      return .Dim
+    case .undim:
+      return .Undim
+    default:
+      return .Default
+    }
   }
 }
