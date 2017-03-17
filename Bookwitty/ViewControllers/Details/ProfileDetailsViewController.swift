@@ -234,6 +234,7 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
           }
         })
       }
+      baseCardNode?.delegate = self
       return baseCardNode
     case .followers:
       let penNameNode = PenNameFollowNode()
@@ -241,6 +242,41 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
       penNameNode.delegate = self
       return penNameNode
     default: return nil
+    }
+  }
+}
+
+// MARK - BaseCardPostNode Delegate
+extension ProfileDetailsViewController: BaseCardPostNodeDelegate {
+  func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+
+    switch(action) {
+    case .wit:
+      viewModel.witContent(segment: activeSegment, indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    case .unwit:
+      viewModel.unwitContent(segment: activeSegment, indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    case .share:
+      if let sharingInfo: [String] = viewModel.sharingContent(segment: activeSegment, indexPath: indexPath) {
+        presentShareSheet(shareContent: sharingInfo)
+      }
+    case .follow:
+      viewModel.follow(segment: activeSegment, indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    case .unfollow:
+      viewModel.unfollow(segment: activeSegment, indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    default:
+      //TODO: handle comment
+      break
     }
   }
 }
