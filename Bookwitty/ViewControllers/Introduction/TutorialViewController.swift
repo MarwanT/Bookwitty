@@ -34,6 +34,9 @@ class TutorialViewController: UIPageViewController {
         direction: UIPageViewControllerNavigationDirection.forward,
         animated: true, completion: nil)
       tutorialDelegate?.tutorialViewController(self, didSelectPageAtIndex: currentViewControllerIndex)
+
+      //MARK: [Analytics] Screen Name
+      Analytics.shared.send(screenName: Analytics.ScreenNames.Intro1)
     }
   }
   
@@ -115,6 +118,24 @@ extension TutorialViewController: UIPageViewControllerDelegate {
     let selectedViewControllerIndex = completed ? currentViewControllerIndex : previousViewControllersIndex
     
     tutorialDelegate?.tutorialViewController(self, didSelectPageAtIndex: selectedViewControllerIndex)
+
+
+    //MARK: [Analytics] Screen Name
+    let name: Analytics.ScreenName
+    switch selectedViewControllerIndex {
+    case 1:
+      name = Analytics.ScreenNames.Intro2
+    case 2:
+      name = Analytics.ScreenNames.Intro3
+    case 3:
+      name = Analytics.ScreenNames.Intro4
+    case 4:
+      name = Analytics.ScreenNames.Intro5
+    case 0: fallthrough
+    default:
+      name = Analytics.ScreenNames.Intro1
+    }
+    Analytics.shared.send(screenName: name)
   }
 }
 

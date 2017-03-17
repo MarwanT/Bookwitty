@@ -98,6 +98,9 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     animateRefreshControllerIfNeeded()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.NewsFeed)
   }
 
   /*

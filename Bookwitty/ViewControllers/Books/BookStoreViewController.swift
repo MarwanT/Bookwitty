@@ -57,6 +57,9 @@ class BookStoreViewController: UIViewController {
       refreshController.beginRefreshing()
       scrollView.contentOffset = offset
     }
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.BookStorefront)
   }
   
   private func initializeNavigationItems() {

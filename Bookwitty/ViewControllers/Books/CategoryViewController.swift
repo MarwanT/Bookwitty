@@ -34,6 +34,9 @@ class CategoryViewController: UIViewController {
     initializeSubviews()
     
     refreshViewController()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.Category)
   }
   
   override func viewWillAppear(_ animated: Bool) {

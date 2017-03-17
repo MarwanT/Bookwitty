@@ -62,16 +62,25 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   func initialize(withTopic topic: Topic?) {
     viewModel.initialize(withTopic: topic)
     self.mode = .normal(categories: self.normal)
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.Topic)
   }
 
   func initialize(withBook book: Book?) {
     viewModel.initialize(withBook: book)
     self.mode = .normal(categories: self.book)
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.TopicBook)
   }
 
   func initialize(withAuthor author: Author?) {
     viewModel.initialize(withAuthor: author)
     self.mode = .normal(categories: self.normal)
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.Author)
   }
 
   override func viewDidLoad() {

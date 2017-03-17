@@ -30,6 +30,9 @@ class PenNameViewController: UIViewController {
     super.viewDidLoad()
     awakeSelf()
     applyTheme()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.EditPenName)
   }
 
   /// Do the required setup

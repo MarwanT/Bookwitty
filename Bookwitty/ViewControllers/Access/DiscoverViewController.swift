@@ -91,6 +91,9 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
       })
     }
     animateRefreshControllerIfNeeded()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.BookStorefront)
   }
 
   private func initializeNavigationItems() {

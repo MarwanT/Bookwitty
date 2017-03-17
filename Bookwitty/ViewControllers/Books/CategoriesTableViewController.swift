@@ -35,6 +35,9 @@ class CategoriesTableViewController: UITableViewController {
     if delegate == nil {
       delegate = self
     }
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.BrowseByCategory)
   }
   
   

@@ -23,6 +23,9 @@ class BagViewController: ASViewController<ASDisplayNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeNavigationItems()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.Bag)
   }
   
   private func initializeNavigationItems() {

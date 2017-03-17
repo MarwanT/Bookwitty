@@ -26,6 +26,8 @@ class AccountViewController: UIViewController {
     initializeComponents()
     applyTheme()
     fillUserInformation()
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.Account)
   }
 
   private func initializeComponents() {
@@ -99,6 +101,9 @@ class AccountViewController: UIViewController {
 
     if let url = URL(string: helpUrl) {
       UIApplication.shared.openURL(url)
+
+      //MARK: [Analytics] Screen Name
+      Analytics.shared.send(screenName: Analytics.ScreenNames.Help)
     }
   }
 }

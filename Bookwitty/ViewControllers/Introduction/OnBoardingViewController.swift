@@ -33,6 +33,9 @@ class OnBoardingViewController: ASViewController<OnBoardingControllerNode> {
     }
     
     applyTheme()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.OnboardingFollowPeopleAndTopics)
   }
 
   override func viewDidAppear(_ animated: Bool) {

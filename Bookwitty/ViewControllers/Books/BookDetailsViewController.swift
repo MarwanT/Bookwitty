@@ -53,6 +53,9 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
       let sectionsNeedsReloading = self.viewModel.sectionsNeedsReloading()
       self.reloadCollectionViewSections(sections: sectionsNeedsReloading)
     }
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.BookProduct)
   }
   
   private func loadNavigationBarButtons() {
@@ -186,6 +189,9 @@ extension BookDetailsViewController {
     node.productDetails = productDetails
     let genericViewController = GenericNodeViewController(node: node, title: viewModel.book.title)
     self.navigationController?.pushViewController(genericViewController, animated: true)
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.BookDetails)
   }
   
   fileprivate func viewAboutDescription(_ description: String) {
@@ -197,6 +203,9 @@ extension BookDetailsViewController {
     node.dispayMode = .expanded
     let genericViewController = GenericNodeViewController(node: node, title: viewModel.book.title)
     self.navigationController?.pushViewController(genericViewController, animated: true)
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.BookDescription)
   }
   
   fileprivate func viewShippingInfo(_ url: URL) {

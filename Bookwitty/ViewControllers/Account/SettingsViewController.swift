@@ -22,6 +22,9 @@ class SettingsViewController: UIViewController {
     initializeComponents()
     setupNavigationBarButtons()
     applyTheme()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.Settings)
   }
 
   private func initializeComponents() {
@@ -91,6 +94,9 @@ class SettingsViewController: UIViewController {
     }
 
     self.navigationController?.pushViewController(countryPickerViewController, animated: true)
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.CountryList)
   }
 
   private func signOut() {

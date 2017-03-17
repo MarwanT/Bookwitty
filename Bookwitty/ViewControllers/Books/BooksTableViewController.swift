@@ -25,6 +25,9 @@ class BooksTableViewController: UITableViewController {
     tableView.register(BookTableViewCell.nib, forCellReuseIdentifier: BookTableViewCell.reuseIdentifier)
     
     initializeComponents()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.BooksListing)
   }
   
   private func initializeComponents() {

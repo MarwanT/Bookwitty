@@ -29,6 +29,9 @@ class SignInViewController: UIViewController {
     super.viewDidLoad()
     awakeSelf()
     applyTheme()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.SignIn)
   }
   
   override func viewWillAppear(_ animated: Bool) {

@@ -62,6 +62,9 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
     tap.cancelsTouchesInView = false
     view.addGestureRecognizer(tap)
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.Search)
   }
 
   func dismissKeyboard() {

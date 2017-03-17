@@ -49,6 +49,18 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     loadContentPosts()
     loadRelatedBooks()
     loadRelatedPosts()
+
+    //MARK: [Analytics] Screen Name
+    let name: Analytics.ScreenName
+    switch(viewModel.resource.registeredResourceType) {
+    case ReadingList.resourceType:
+      name = Analytics.ScreenNames.ReadingList
+    case Text.resourceType:
+      name = Analytics.ScreenNames.Article
+    default:
+      name = Analytics.ScreenNames.Default
+    }
+    Analytics.shared.send(screenName: name)
   }
 
   func loadContentPosts() {

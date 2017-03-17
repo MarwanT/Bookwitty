@@ -23,6 +23,9 @@ class ChangePasswordViewController: UIViewController {
     self.title = Strings.change_password()
     initializeComponents()
     applyTheme()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.ChangePassword)
   }
 
   private func initializeComponents() {
