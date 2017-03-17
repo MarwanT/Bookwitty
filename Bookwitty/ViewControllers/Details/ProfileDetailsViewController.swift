@@ -41,13 +41,14 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeComponents()
-    collectionNode.dataSource = self
-    collectionNode.delegate = self
     applyTheme()
   }
 
   private func initializeComponents() {
 
+    collectionNode.dataSource = self
+    collectionNode.delegate = self
+    
     initializeHeader()
 
     segmentedNode.initialize(with: segments.map({ $0.name }))
