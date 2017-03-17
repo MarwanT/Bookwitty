@@ -12,6 +12,7 @@ import AsyncDisplayKit
 class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   let flowLayout: UICollectionViewFlowLayout
   let collectionNode: ASCollectionNode
+  fileprivate var segmentedNode: SegmentedControlNode
 
   fileprivate var viewModel: ProfileDetailsViewModel!
   fileprivate var segments: [Segment] = [.latest(index: 0), .followers(index: 1), .following(index: 2)]
@@ -30,17 +31,28 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   private init() {
     flowLayout = UICollectionViewFlowLayout()
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+    segmentedNode = SegmentedControlNode()
     activeSegment = segments[0]
     super.init(node: collectionNode)
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    initializeComponents()
     collectionNode.dataSource = self
     collectionNode.delegate = self
     applyTheme()
   }
-  
+
+  private func initializeComponents() {
+    segmentedNode.initialize(with: segments.map({ $0.name }))
+    segmentedNode.selectedSegmentChanged = segmentedNode(segmentedControlNode:didSelectSegmentIndex:)
+    segmentedNode.style.preferredSize = CGSize(width: collectionNode.style.maxWidth.value, height: 45.0)
+  }
+
+  private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
+    collectionNode.reloadSections(IndexSet(integer: Section.cells.rawValue))
+  }
 }
 
 extension ProfileDetailsViewController: ASCollectionDelegate {
