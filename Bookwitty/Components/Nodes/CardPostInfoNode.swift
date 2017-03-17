@@ -64,6 +64,25 @@ class CardPostInfoNode: ASDisplayNode {
 
     userNameTextNode.maximumNumberOfLines = 1
     postDateTextNode.maximumNumberOfLines = 1
+
+    userNameTextNode.addTarget(self, action: #selector(userNameTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    postDateTextNode.addTarget(self, action: #selector(postDateTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    userProfileImageNode.addTarget(self, action: #selector(userProfileImageTouchUpInside(_:)), forControlEvents: .touchUpInside)
+  }
+
+  func userNameTouchUpInside(_ sender: Any?) {
+    guard let sender = sender else { return }
+    delegate?.cardInfoNode(cardPostInfoNode: self, didRequestAction: CardPostInfoNode.Action.userProfile, forSender: sender)
+  }
+
+  func postDateTouchUpInside(_ sender: Any?) {
+    guard let sender = sender else { return }
+    delegate?.cardInfoNode(cardPostInfoNode: self, didRequestAction: CardPostInfoNode.Action.userProfile, forSender: sender)
+  }
+
+  func userProfileImageTouchUpInside(_ sender: Any?) {
+    guard let sender = sender else { return }
+    delegate?.cardInfoNode(cardPostInfoNode: self, didRequestAction: CardPostInfoNode.Action.userProfile, forSender: sender)
   }
 
   private func loadData() {
