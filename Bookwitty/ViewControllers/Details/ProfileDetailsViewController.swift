@@ -19,6 +19,18 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   fileprivate var segments: [Segment] = [.latest(index: 0), .followers(index: 1), .following(index: 2)]
   fileprivate var activeSegment: Segment
   fileprivate var loaderNode: LoaderNode
+  var loadingStatus: LoadingStatus = .none {
+    didSet {
+      var showLoader: Bool = false
+      switch (loadingStatus) {
+      case .none:
+        showLoader = true
+      default:
+        showLoader = false
+      }
+      loaderNode.updateLoaderVisibility(show: showLoader)
+    }
+  }
 
   class func create(with viewModel: ProfileDetailsViewModel) -> ProfileDetailsViewController {
     let profileVC = ProfileDetailsViewController()
