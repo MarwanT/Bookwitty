@@ -104,7 +104,7 @@ extension  CardFactory {
       return nil
     }
 
-    let name = resource.penName?.name ?? "[No Name]"
+    let name = resource.penName?.name ?? ""
     let date = Date.formatDate(date: resource.createdAt)
     let penNameprofileImage = resource.penName?.avatarUrl
     card.setup(forFollowingMode: true)
@@ -135,7 +135,7 @@ extension  CardFactory {
       return nil
     }
 
-    let name = resource.penName?.name ?? "[No Name]"
+    let name = resource.penName?.name ?? ""
     let date = Date.formatDate(date: resource.createdAt)
     let penNameprofileImage = resource.penName?.avatarUrl
     card.postInfoData = (resource.penName != nil) ? CardPostInfoNodeData(name, date, penNameprofileImage) : nil
@@ -164,7 +164,7 @@ extension  CardFactory {
       return nil
     }
 
-    let name = resource.penName?.name ?? "[No Name]"
+    let name = resource.penName?.name ?? ""
     let date = Date.formatDate(date: resource.createdAt)
     let penNameprofileImage = resource.penName?.avatarUrl
     card.postInfoData = (resource.penName != nil) ? CardPostInfoNodeData(name, date, penNameprofileImage) : nil
@@ -196,7 +196,7 @@ extension  CardFactory {
       return nil
     }
 
-    let name = resource.penName?.name ?? "[No Name]"
+    let name = resource.penName?.name ?? ""
     let date = Date.formatDate(date: resource.createdAt)
     let penNameprofileImage = resource.penName?.avatarUrl
     card.setup(forFollowingMode: true)
@@ -229,7 +229,7 @@ extension  CardFactory {
       return nil
     }
 
-    let name = resource.penName?.name ?? "[No Name]"
+    let name = resource.penName?.name ?? ""
     let date = Date.formatDate(date: resource.createdAt)
     let penNameprofileImage = resource.penName?.avatarUrl
     card.postInfoData = (resource.penName != nil) ? CardPostInfoNodeData(name, date, penNameprofileImage) : nil
@@ -259,7 +259,7 @@ extension  CardFactory {
       return nil
     }
 
-    let name = resource.productDetails?.author ?? "[No Name]"
+    let name = resource.productDetails?.author ?? ""
     let date = Date.formatDate(date: resource.createdAt)
     card.setup(forFollowingMode: true)
     card.setFollowingValue(following: resource.following)
@@ -291,7 +291,7 @@ extension  CardFactory {
       return nil
     }
 
-    let name = resource.penName?.name ?? "[No Name]"
+    let name = resource.penName?.name ?? ""
     let date = Date.formatDate(date: resource.createdAt)
     let penNameprofileImage = resource.penName?.avatarUrl
     card.postInfoData = (resource.penName != nil) ? CardPostInfoNodeData(name, date, penNameprofileImage) : nil
@@ -320,7 +320,7 @@ extension  CardFactory {
       return nil
     }
 
-    let name = resource.penName?.name ?? "[No Name]"
+    let name = resource.penName?.name ?? ""
     let date = Date.formatDate(date: resource.createdAt)
     let penNameprofileImage = resource.penName?.avatarUrl
     card.postInfoData = (resource.penName != nil) ? CardPostInfoNodeData(name, date, penNameprofileImage) : nil
@@ -354,7 +354,7 @@ extension  CardFactory {
     }
 
     //TODO: Remove the static data
-    let name = resource.penName?.name ?? "[No Name]"
+    let name = resource.penName?.name ?? ""
     let date = Date.formatDate(date: resource.createdAt)
     let penNameprofileImage = resource.penName?.avatarUrl
     card.postInfoData = (resource.penName != nil) ? CardPostInfoNodeData(name, date, penNameprofileImage) : nil
@@ -408,7 +408,7 @@ extension  CardFactory {
       return nil
     }
 
-    let name = resource.penName?.name ?? "[No Name]"
+    let name = resource.penName?.name ?? ""
     let date = Date.formatDate(date: resource.createdAt)
     let penNameprofileImage = resource.penName?.avatarUrl
     card.postInfoData = (resource.penName != nil) ? CardPostInfoNodeData(name, date, penNameprofileImage) : nil
