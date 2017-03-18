@@ -38,6 +38,7 @@ protocol ModelCommonProperties {
   var counts: Counts? { get }
 
   var registeredResourceType: ResourceType { get }
+  var penName: PenName? { get }
 }
 
 extension Video: ModelCommonProperties {
@@ -190,6 +191,10 @@ extension Book: ModelCommonProperties {
   }
 
   var shortDescription: String? {
+    return nil
+  }
+
+  var penName: PenName? {
     return nil
   }
 }
