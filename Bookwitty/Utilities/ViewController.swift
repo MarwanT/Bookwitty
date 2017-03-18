@@ -46,6 +46,12 @@ extension UIViewController {
     let activityViewController = UIActivityViewController(activityItems: shareContent, applicationActivities: nil)
     present(activityViewController, animated: true, completion: {})
   }
+
+  func pushProfileViewController(penName: PenName) {
+    let viewModel = ProfileDetailsViewModel(penName: penName)
+    let profileVC = ProfileDetailsViewController.create(with: viewModel)
+    self.navigationController?.pushViewController(profileVC, animated: true)
+  }
 }
 
 extension UIViewController {

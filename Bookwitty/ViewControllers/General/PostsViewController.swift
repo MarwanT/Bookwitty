@@ -183,6 +183,19 @@ extension PostsViewController: ASCollectionDataSource, ASCollectionDelegate {
 
 // MARK: - Base card post node delegate
 extension PostsViewController: BaseCardPostNodeDelegate {
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+    let resource = viewModel.resourceForIndexPath(indexPath: indexPath)
+    if let resource = resource as? ModelCommonProperties,
+      let penName = resource.penName {
+      pushProfileViewController(penName: penName)
+    } else if let penName = resource as? PenName  {
+      pushProfileViewController(penName: penName)
+    }
+  }
+  
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
     guard let indexPath = collectionNode.indexPath(for: card) else {
       return
@@ -284,6 +297,10 @@ extension PostsViewController {
       actionForLinkResourceType(resource: resource)
     case Book.resourceType:
       actionForBookResourceType(resource: resource)
+    case PenName.resourceType:
+      if let penName = resource as? PenName {
+        pushProfileViewController(penName: penName)
+      }
     default:
       print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")
       break

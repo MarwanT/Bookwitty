@@ -319,6 +319,19 @@ extension NewsFeedViewController: ASCollectionDataSource {
 
 // MARK - BaseCardPostNode Delegate
 extension NewsFeedViewController: BaseCardPostNodeDelegate {
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+    let resource = viewModel.resourceForIndex(index: indexPath.item)
+    if let resource = resource as? ModelCommonProperties,
+      let penName = resource.penName {
+      pushProfileViewController(penName: penName)
+    } else if let penName = resource as? PenName  {
+      pushProfileViewController(penName: penName)
+    }
+  }
+  
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
     guard let index = collectionNode.indexPath(for: card)?.item else {
       return
@@ -512,6 +525,10 @@ extension NewsFeedViewController {
       actionForLinkResourceType(resource: resource)
     case Book.resourceType:
       actionForBookResourceType(resource: resource)
+    case PenName.resourceType:
+      if let penName = resource as? PenName {
+        pushProfileViewController(penName: penName)
+      }
     default:
       print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")
       break

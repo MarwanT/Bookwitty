@@ -107,7 +107,41 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
 
 extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ASButtonNode) {
-    //TODO: handle action
+    var penName: PenName?
+    if penNameHeaderNode === node {
+      penName = viewModel.penName
+    } else if let indexPath = collectionNode.indexPath(for: node),
+      let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment) {
+      penName = resource as? PenName
+    }
+
+    if let penName = penName {
+      if button.isSelected {
+        viewModel.unfollowPenName(penName: penName, completionBlock: {
+          (success: Bool) in
+          node.following = false
+          button.isSelected = false
+        })
+      } else {
+        viewModel.followPenName(penName: penName, completionBlock: {
+          (success: Bool) in
+          node.following = true
+          button.isSelected = true
+        })
+      }
+    }
+  }
+
+  func penName(node: PenNameFollowNode, actionPenNameFollowTouchUpInside button: Any?) {
+    if penNameHeaderNode === node {
+      //Note: Do not open the Pen Name profile view again we are already in it
+      return
+    } else if let indexPath = collectionNode.indexPath(for: node),
+      let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment) {
+      if let penName = resource as? PenName {
+        pushProfileViewController(penName: penName)
+      }
+    }
   }
 }
 
@@ -248,6 +282,19 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
 
 // MARK - BaseCardPostNode Delegate
 extension ProfileDetailsViewController: BaseCardPostNodeDelegate {
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+    let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment)
+    if let resource = resource as? ModelCommonProperties,
+      let penName = resource.penName {
+      pushProfileViewController(penName: penName)
+    } else if let penName = resource as? PenName  {
+      pushProfileViewController(penName: penName)
+    }
+  }
+  
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
     guard let indexPath = collectionNode.indexPath(for: card) else {
       return
@@ -311,6 +358,10 @@ extension ProfileDetailsViewController {
       actionForLinkResourceType(resource: resource)
     case Book.resourceType:
       actionForBookResourceType(resource: resource)
+    case PenName.resourceType:
+      if let penName = resource as? PenName {
+        pushProfileViewController(penName: penName)
+      }
     default:
       print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")
       break

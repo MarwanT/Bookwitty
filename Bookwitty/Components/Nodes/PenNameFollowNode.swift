@@ -11,6 +11,7 @@ import AsyncDisplayKit
 
 protocol PenNameFollowNodeDelegate: class {
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ASButtonNode)
+  func penName(node: PenNameFollowNode, actionPenNameFollowTouchUpInside button: Any?)
 }
 
 class PenNameFollowNode: ASCellNode {
@@ -117,6 +118,10 @@ class PenNameFollowNode: ASCellNode {
     actionButton.style.height = ASDimensionMake(buttonSize.height)
     actionButton.addTarget(self, action: #selector(actionButtonTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
 
+    nameNode.addTarget(self, action: #selector(actionPenNameFollowTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
+    imageNode.addTarget(self, action: #selector(actionPenNameFollowTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
+    biographyNode.addTarget(self, action: #selector(actionPenNameFollowTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
+
     separatorNode.style.height = ASDimensionMake(1)
     separatorNode.style.flexGrow = 1
     separatorNode.isLayerBacked = true
@@ -177,6 +182,10 @@ class PenNameFollowNode: ASCellNode {
 extension PenNameFollowNode {
   func actionButtonTouchUpInside(_ sender: ASButtonNode) {
     delegate?.penName(node: self, actionButtonTouchUpInside: sender)
+  }
+
+  func actionPenNameFollowTouchUpInside(_ sender: Any?) {
+    delegate?.penName(node: self, actionPenNameFollowTouchUpInside: sender)
   }
 }
 

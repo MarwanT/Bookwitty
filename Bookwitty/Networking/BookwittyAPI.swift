@@ -242,6 +242,8 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .user, .register:
       return [PenName.resourceType]
+    case .batch, .Search, .discover:
+      return ["pen-name"]
     case .newsFeed:
       return ["pen-name", "contributors", "commenters"]
     case .content(_, let include):

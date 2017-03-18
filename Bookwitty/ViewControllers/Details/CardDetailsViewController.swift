@@ -69,6 +69,15 @@ class CardDetailsViewController: GenericNodeViewController {
 
 // MARK - BaseCardPostNode Delegate
 extension CardDetailsViewController: BaseCardPostNodeDelegate {
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    if let resource = viewModel.resource as? ModelCommonProperties,
+      let penName = resource.penName {
+      pushProfileViewController(penName: penName)
+    } else if let penName = viewModel.resource as? PenName  {
+      pushProfileViewController(penName: penName)
+    }
+  }
+  
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
     switch(action) {
     case .wit:
