@@ -112,8 +112,6 @@ class TopicCardPostContentNode: ASDisplayNode {
         .append(text: booksNumber)
         .append(text: " " + str, fontDynamicType: .caption2)
       addSeparator = true
-    } else {
-      addSeparator = false
     }
 
     //TODO: This should be handled with localization plurals
