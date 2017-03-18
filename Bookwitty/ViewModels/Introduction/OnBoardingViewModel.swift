@@ -108,7 +108,7 @@ final class OnBoardingViewModel {
             if dictionary[key] == nil {
               dictionary[key] = []
             }
-            dictionary[key]? = [model]
+            dictionary[key]? += [model]
           }
         }
       }
