@@ -48,7 +48,14 @@ class OnBoardingInternalCellNode: ASCellNode {
       }
     }
   }
-
+  var following: Bool? {
+    didSet {
+      if let following = following {
+        self.selectionButtonNode.state = following ? .selected : .normal
+      }
+    }
+  }
+  
   override init() {
     titleTextNode = ASTextNode()
     shortDescriptionTextNode =  ASTextNode()

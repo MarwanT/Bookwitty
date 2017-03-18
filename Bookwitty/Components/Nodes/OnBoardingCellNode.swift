@@ -159,6 +159,7 @@ extension OnBoardingCellNode: ASCollectionDelegate, ASCollectionDataSource {
         return
     }
     let item: CellNodeDataItemModel? = viewModel.onBoardingCellNodeSectionItem(indexPath: indexPath)
+    node.following = item?.following
     node.text = item?.shortDescription ?? ""
     node.descriptionText = item?.longDescription ?? ""
     if let url = item?.imageUrl {
