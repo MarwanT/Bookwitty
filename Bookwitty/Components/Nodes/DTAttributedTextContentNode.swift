@@ -129,3 +129,94 @@ extension DTAttributedTextContentNode: DTLazyImageViewDelegate, DTAttributedText
   }
 }
 
+
+/** Use with text of html content that does not 
+ * need image layouting and needs max number of lines.
+ * 
+ * Use Only width and maxNumberOfLines to adjus the size of the node
+ * Note: Using style.* will have no effect
+ **/
+
+class DTAttributedLabelNode: ASCellNode {
+  fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+
+  var textContentView: DTAttributedLabel!
+  var delegate: DTAttributedTextContentNodeDelegate?
+  var maxNumberOfLines: Int = 0 {
+    didSet {
+      textContentView.numberOfLines = maxNumberOfLines
+      setNeedsLayout()
+    }
+  }
+  var width: CGFloat = 0.0 {
+    didSet {
+      style.preferredSize = CGSize(width: width, height: maxHeight)
+    }
+  }
+  private var maxHeight: CGFloat = 0.0 {
+    didSet {
+      //Height will be updated [shrinked if needed] when html is ready
+      style.preferredSize = CGSize(width: width, height: maxHeight)
+    }
+  }
+
+  override convenience init() {
+    self.init(viewBlock: { () -> UIView in
+      let textContentView = DTAttributedLabel()
+      return textContentView
+    })
+
+    textContentView = self.view as! DTAttributedLabel
+    textContentView.delegate = self
+
+  }
+
+  func htmlString(text: String?, fontDynamicType: FontDynamicType? = nil,
+                  color: UIColor =  ThemeManager.shared.currentTheme.defaultTextColor(),
+                  underlineStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone,
+                  strikeThroughStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone,
+                  htmlImageWidth: CGFloat = UIScreen.main.bounds.width) {
+    guard let text = text else {
+      textContentView.attributedString = nil
+      return
+    }
+
+    textContentView.attributedString = htmlAttributedString(text: text,
+                                                            fontDynamicType: fontDynamicType,
+                                                            color:  color,
+                                                            underlineStyle: underlineStyle,
+                                                            strikeThroughStyle: strikeThroughStyle,
+                                                            htmlImageWidth: htmlImageWidth)
+  }
+
+  private func htmlAttributedString(text: String, fontDynamicType: FontDynamicType? = nil,
+                                    color: UIColor =  ThemeManager.shared.currentTheme.defaultTextColor(),
+                                    underlineStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone,
+                                    strikeThroughStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone,
+                                    htmlImageWidth: CGFloat = UIScreen.main.bounds.width) -> NSAttributedString? {
+
+    let font: UIFont = fontDynamicType?.font ?? FontDynamicType.footnote.font
+    //Update max-height
+    self.maxHeight = CGFloat(font.lineHeight) * CGFloat(maxNumberOfLines)
+
+    let options: [String : Any] = [
+      DTDefaultFontSize: NSNumber(value: Float(font.pointSize)),
+      DTDefaultFontName: font.fontName,
+      DTDefaultFontFamily: font.familyName,
+      DTUseiOS6Attributes: NSNumber(value: true),
+      DTDefaultTextColor: color,
+      DTMaxImageSize: CGSize(width: htmlImageWidth, height: htmlImageWidth)]
+    guard let data = text.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+      return nil
+    }
+
+    guard let attributedString = NSAttributedString(htmlData: data, options: options, documentAttributes: nil) else {
+      return nil
+    }
+
+    let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
+    return mutableAttributedString
+  }
+}
+
+
