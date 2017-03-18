@@ -349,8 +349,6 @@ extension BookDetailsViewController: BaseCardPostNodeDelegate {
     if let resource = resourcesCommonProperties?[indexPath.row - 1],
       let penName = resource.penName {
       pushProfileViewController(penName: penName)
-    } else if let penName = resourcesCommonProperties as? PenName  {
-      pushProfileViewController(penName: penName)
     }
   }
   
