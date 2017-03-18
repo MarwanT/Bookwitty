@@ -107,7 +107,29 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
 
 extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ASButtonNode) {
-    //TODO: handle action
+    var penName: PenName?
+    if penNameHeaderNode === node {
+      penName = viewModel.penName
+    } else if let indexPath = collectionNode.indexPath(for: node),
+      let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment) {
+      penName = resource as? PenName
+    }
+
+    if let penName = penName {
+      if button.isSelected {
+        viewModel.unfollowPenName(penName: penName, completionBlock: {
+          (success: Bool) in
+          node.following = false
+          button.isSelected = false
+        })
+      } else {
+        viewModel.followPenName(penName: penName, completionBlock: {
+          (success: Bool) in
+          node.following = true
+          button.isSelected = true
+        })
+      }
+    }
   }
 }
 
