@@ -51,9 +51,12 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
 
   var tapDelegate: ItemNodeTapDelegate?
   var delegate: BaseCardPostNodeDelegate?
+  var forceHideInfoNode: Bool = false
   var postInfoData: CardPostInfoNodeData? {
     didSet {
       infoNode.data = postInfoData
+      forceHideInfoNode = postInfoData == nil
+      setNeedsLayout()
     }
   }
   var articleCommentsSummary: String? {
@@ -118,7 +121,7 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     guard subnodes.count == 0 else { return }
 
     //Order is important: backgroundNode must be the first
-    if(shouldShowInfoNode) {
+    if(shouldShowInfoNode && !forceHideInfoNode) {
       addSubnodes(arrayOfNodes: [backgroundNode, infoNode, contentNode, commentsSummaryNode, separatorNode, actionBarNode])
     } else {
       addSubnodes(arrayOfNodes: [backgroundNode, contentNode, commentsSummaryNode, separatorNode, actionBarNode])
@@ -162,7 +165,7 @@ extension BaseCardPostNode {
     let separatorNodeInset = ASInsetLayoutSpec(insets: separatorInset(), child: separatorNode)
 
     let contentSideInsets = contentShouldExtendBorders ? 0 : defaultInset.left
-    let contentTopInset = shouldShowInfoNode ? 0 : defaultInset.top
+    let contentTopInset = (shouldShowInfoNode && !forceHideInfoNode) ? 0 : defaultInset.top
     let contentInset = ASInsetLayoutSpec(insets: UIEdgeInsets(top: contentTopInset, left: contentSideInsets, bottom: 0, right: contentSideInsets), child: contentNode)
 
     let commentSummaryInset: ASLayoutElement = shouldShowCommentSummaryNode ? commentSummaryLayoutSpecs() : spacer(height: internalMargin)
@@ -170,7 +173,7 @@ extension BaseCardPostNode {
     let verticalStack = ASStackLayoutSpec.vertical()
     verticalStack.justifyContent = .center
     verticalStack.alignItems = .stretch
-    verticalStack.children = shouldShowInfoNode
+    verticalStack.children = (shouldShowInfoNode && !forceHideInfoNode)
       ? [infoNodeInset, contentInset, commentSummaryInset, separatorNodeInset, actionBarNodeInset]
       : [contentInset, commentSummaryInset, separatorNodeInset, actionBarNodeInset]
 
