@@ -46,6 +46,12 @@ class ForgotPasswordViewController: UIViewController {
   }
 
   fileprivate func resetPassword() {
+
+
+    let event: Analytics.Event = Analytics.Event(category: .Author,
+                                                 action: .ResetPassword)
+    Analytics.shared.send(event: event)
+
     let emailValidationResult = emailField.validateField()
     if emailValidationResult.isValid, let email: String = emailValidationResult.value {
       _ = UserAPI.resetPassword(email: email) {

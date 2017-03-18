@@ -29,6 +29,9 @@ class SignInViewController: UIViewController {
     super.viewDidLoad()
     awakeSelf()
     applyTheme()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.SignIn)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -128,6 +131,12 @@ class SignInViewController: UIViewController {
     
     if emailValidationResult.isValid && passwordValidationResult.isValid {
       showLoader()
+
+      //MARK: [Analytics] Event
+      let event: Analytics.Event = Analytics.Event(category: .Account,
+                                                   action: .SignIn)
+      Analytics.shared.send(event: event)
+
       viewModel.signIn(
         username: emailValidationResult.value!,
         password: passwordValidationResult.value!,

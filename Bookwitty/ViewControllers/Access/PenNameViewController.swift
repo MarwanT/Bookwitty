@@ -30,6 +30,9 @@ class PenNameViewController: UIViewController {
     super.viewDidLoad()
     awakeSelf()
     applyTheme()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.EditPenName)
   }
 
   /// Do the required setup
@@ -96,6 +99,12 @@ class PenNameViewController: UIViewController {
 
     let name = penNameInputField.textField.text
     let biography = biographyTextView.text
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .Account,
+                                                 action: .EditPenName)
+    Analytics.shared.send(event: event)
+
     self.viewModel.updatePenNameIfNeeded(name: name, biography: biography) {
       (success: Bool) in
       // TODO: Handle the fail here

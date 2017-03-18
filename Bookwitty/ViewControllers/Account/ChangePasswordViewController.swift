@@ -23,6 +23,9 @@ class ChangePasswordViewController: UIViewController {
     self.title = Strings.change_password()
     initializeComponents()
     applyTheme()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.ChangePassword)
   }
 
   private func initializeComponents() {
@@ -65,6 +68,12 @@ class ChangePasswordViewController: UIViewController {
     guard currentReult.isValid && newResult.isValid else {
       return
     }
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .Account,
+                                                 action: .ChangePassword)
+    Analytics.shared.send(event: event)
+
     let identifier: String = ""//TODO: grab the user identifier
     let current: String = currentReult.value ?? ""
     let new: String = newResult.value ?? ""

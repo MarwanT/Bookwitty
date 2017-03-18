@@ -23,6 +23,9 @@ class BagViewController: ASViewController<ASDisplayNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeNavigationItems()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.Bag)
   }
   
   private func initializeNavigationItems() {
@@ -44,6 +47,12 @@ class BagViewController: ASViewController<ASDisplayNode> {
 
 extension BagViewController: BagNodeDelegate {
   func bagNodeShopOnline(node: BagNode) {
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .Bag,
+                                                 action: .GoToBagOnWebsite)
+    Analytics.shared.send(event: event)
+
     UIApplication.shared.openURL(Environment.current.baseURL)
   }
 }

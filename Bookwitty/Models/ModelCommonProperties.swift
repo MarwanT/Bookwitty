@@ -36,6 +36,8 @@ protocol ModelCommonProperties {
   var isDimmed: Bool { get }
   var canonicalURL: URL? { get }
   var counts: Counts? { get }
+
+  var registeredResourceType: ResourceType { get }
 }
 
 extension Video: ModelCommonProperties {

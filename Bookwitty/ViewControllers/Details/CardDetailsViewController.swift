@@ -27,28 +27,43 @@ class CardDetailsViewController: GenericNodeViewController {
   }
   
   func viewControllerTitleForResouce(resource: ModelResource) {
+
+    //MARK: [Analytics] Screen Name
+    let name: Analytics.ScreenName
     switch resource.registeredResourceType {
     case Image.resourceType:
       title = Strings.image()
+      name = Analytics.ScreenNames.Image
     case Quote.resourceType:
       title = Strings.quote()
+      name = Analytics.ScreenNames.Quote
     case Video.resourceType:
       title = Strings.video()
+      name = Analytics.ScreenNames.Video
     case Link.resourceType:
       title = Strings.link()
+      name = Analytics.ScreenNames.Link
     case Author.resourceType:
       title = Strings.author()
+      name = Analytics.ScreenNames.Author
     case ReadingList.resourceType:
       title = Strings.reading_list()
+      name = Analytics.ScreenNames.ReadingList
     case Topic.resourceType:
       title = Strings.topic()
+      name = Analytics.ScreenNames.Topic
     case Text.resourceType:
       title = Strings.article()
+      name = Analytics.ScreenNames.Article
     case Book.resourceType:
       title = Strings.book()
+      name = Analytics.ScreenNames.BookDetails
     default:
       title = nil
+      name = Analytics.ScreenNames.Default
     }
+
+    Analytics.shared.send(screenName: name)
   }
 }
 
@@ -88,5 +103,41 @@ extension CardDetailsViewController: BaseCardPostNodeDelegate {
       //TODO: handle comment
       break
     }
+
+    //MARK: [Analytics] Event
+    let category: Analytics.Category
+    switch viewModel.resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+    default:
+      category = .Default
+    }
+
+    let name: String = (viewModel.resource as? ModelCommonProperties)?.title ?? ""
+    let analyticsAction = Analytics.Action.actionFrom(cardAction: action)
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: analyticsAction,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 }

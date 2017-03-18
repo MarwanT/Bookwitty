@@ -32,6 +32,9 @@ class RegisterViewController: UIViewController {
     super.viewDidLoad()
     awakeSelf()
     applyTheme()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.Register)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -173,6 +176,12 @@ class RegisterViewController: UIViewController {
       let country = viewModel.country!.code
 
       showLoader()
+      
+      //MARK: [Analytics] Event
+      let event: Analytics.Event = Analytics.Event(category: .Account,
+                                                   action: .Register)
+      Analytics.shared.send(event: event)
+
       viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, completionBlock: { (success: Bool, user: User?, error: BookwittyAPIError?) in
         self.hideLoader()
         let successBlock = {
@@ -277,6 +286,9 @@ extension RegisterViewController: InformativeInputFieldDelegate {
     countryPickerViewController.flagSize = 44
     
     self.navigationController?.pushViewController(countryPickerViewController, animated: true)
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.CountryList)
   }
 }
 
@@ -295,6 +307,19 @@ extension RegisterViewController:  EMCCountryDelegate {
 extension RegisterViewController: TTTAttributedLabelDelegate {
   func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
     WebViewController.present(url: url, inViewController: self)
+
+    let name: Analytics.ScreenName
+    switch url.relativeString {
+    case AttributedLinkReference.termsOfUse.rawValue:
+      name = Analytics.ScreenNames.TermsOfUse
+    case AttributedLinkReference.privacyPolicy.rawValue:
+      name = Analytics.ScreenNames.PrivacyPolicy
+    default:
+      name = Analytics.ScreenNames.Default
+    }
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: name)
   }
 }
 

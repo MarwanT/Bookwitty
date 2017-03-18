@@ -264,3 +264,14 @@ extension DiscoverViewModel {
   }
 }
 
+//MARK: - Analytics
+extension DiscoverViewModel {
+  func resource(at index: Int) -> ModelResource? {
+    guard let resource = resourceForIndex(index: index) else {
+        return nil
+    }
+
+    return resource
+  }
+}
+
