@@ -11,7 +11,7 @@ import AsyncDisplayKit
 import DTCoreText
 
 extension PostDetailsNode: DTAttributedTextContentNodeDelegate {
-  func attributedTextContentNodeNeedsLayout(node: DTAttributedTextContentNode) {
+  func attributedTextContentNodeNeedsLayout(node: ASCellNode) {
     setNeedsLayout()
   }
 }

@@ -11,7 +11,7 @@ import AsyncDisplayKit
 import DTCoreText
 
 protocol DTAttributedTextContentNodeDelegate {
-  func attributedTextContentNodeNeedsLayout(node: DTAttributedTextContentNode)
+  func attributedTextContentNodeNeedsLayout(node: ASCellNode)
 }
 
 class DTAttributedTextContentNode: ASCellNode {
@@ -129,6 +129,20 @@ extension DTAttributedTextContentNode: DTLazyImageViewDelegate, DTAttributedText
   }
 }
 
+extension DTAttributedLabelNode: DTAttributedTextContentViewDelegate {
+  public func attributedTextContentView(_ attributedTextContentView: DTAttributedTextContentView!, didDraw layoutFrame: DTCoreTextLayoutFrame!, in context: CGContext!) {
+    if style.width.value == 0.0 {
+      style.width = ASDimensionMake(UIScreen.main.bounds.width)
+    }
+    //Recalculate height and set it on the node then relayout
+    let size = attributedTextContentView.suggestedFrameSizeToFitEntireStringConstrainted(toWidth: style.preferredSize.width)
+    let newSize = attributedTextContentView.sizeThatFits(size)
+    style.preferredSize = newSize
+    setNeedsLayout()
+    delegate?.attributedTextContentNodeNeedsLayout(node: self)
+  }
+
+}
 
 /** Use with text of html content that does not 
  * need image layouting and needs max number of lines.
