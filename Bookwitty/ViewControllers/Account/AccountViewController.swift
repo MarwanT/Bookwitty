@@ -57,6 +57,8 @@ class AccountViewController: UIViewController {
       }
     case AccountViewModel.Sections.PenNames.rawValue:
       switch indexPath.row % viewModel.numberOfRowsPerPenName {
+      case 0:
+        pushProfileViewController(indexPath: indexPath)
       case 1:
         pushPenNameViewController(indexPath: indexPath)
       default:
@@ -75,7 +77,14 @@ class AccountViewController: UIViewController {
       break
     }
   }
-  
+
+  func pushProfileViewController(indexPath: IndexPath) {
+    guard let penName = viewModel.selectedPenName(atRow: indexPath.row) else {
+      return
+    }
+    pushProfileViewController(penName: penName)
+  }
+
   func pushSettingsViewController() {
     let settingsViewController = Storyboard.Account.instantiate(SettingsViewController.self)
     navigationController?.pushViewController(settingsViewController, animated: true)
