@@ -131,6 +131,18 @@ extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
       }
     }
   }
+
+  func penName(node: PenNameFollowNode, actionPenNameFollowTouchUpInside button: Any?) {
+    if penNameHeaderNode === node {
+      //Note: Do not open the Pen Name profile view again we are already in it
+      return
+    } else if let indexPath = collectionNode.indexPath(for: node),
+      let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment) {
+      if let penName = resource as? PenName {
+        pushProfileViewController(penName: penName)
+      }
+    }
+  }
 }
 
 extension ProfileDetailsViewController: ASCollectionDelegate {

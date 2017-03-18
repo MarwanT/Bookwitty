@@ -11,6 +11,7 @@ import AsyncDisplayKit
 
 protocol PenNameFollowNodeDelegate: class {
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ASButtonNode)
+  func penName(node: PenNameFollowNode, actionPenNameFollowTouchUpInside button: Any?)
 }
 
 class PenNameFollowNode: ASCellNode {
@@ -184,6 +185,7 @@ extension PenNameFollowNode {
   }
 
   func actionPenNameFollowTouchUpInside(_ sender: Any?) {
+    delegate?.penName(node: self, actionPenNameFollowTouchUpInside: sender)
   }
 }
 

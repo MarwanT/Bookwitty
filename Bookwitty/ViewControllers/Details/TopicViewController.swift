@@ -349,6 +349,14 @@ extension TopicViewController: PenNameFollowNodeDelegate {
       })
     }
   }
+
+  func penName(node: PenNameFollowNode, actionPenNameFollowTouchUpInside button: Any?) {
+    guard let indexPath = collectionNode.indexPath(for: node),
+      let penName = viewModel.follower(at: indexPath.row) else {
+        return
+    }
+    pushProfileViewController(penName: penName)
+  }
 }
 
 

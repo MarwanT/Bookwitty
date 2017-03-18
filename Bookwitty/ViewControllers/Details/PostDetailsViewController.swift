@@ -599,6 +599,12 @@ extension PostDetailsViewController: PenNameFollowNodeDelegate {
       })
     }
   }
+
+  func penName(node: PenNameFollowNode, actionPenNameFollowTouchUpInside button: Any?) {
+    if let penName = viewModel.penName {
+      pushProfileViewController(penName: penName)
+    }
+  }
 }
 
 // MARK - Actions
