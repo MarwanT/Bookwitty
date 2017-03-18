@@ -94,6 +94,12 @@ protocol PostDetailItemNodeDelegate {
   func postDetailItemNodeButtonTouchUpInside(postDetailItemNode: PostDetailItemNode, button: ASButtonNode)
 }
 
+extension PostDetailItemNode: DTAttributedTextContentNodeDelegate {
+  func attributedTextContentNodeNeedsLayout(node: ASCellNode) {
+    self.setNeedsLayout()
+  }
+}
+
 class PostDetailItemNode: ASCellNode, NodeTapProtocol {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
@@ -105,7 +111,7 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
   let headLineNode: ASTextNode
   let subheadLineNode: ASTextNode
   let captionNode: ASTextNode
-  let bodyNode: ASTextNode
+  let bodyNode: DTAttributedLabelNode
   let separator: ASDisplayNode
   let button: ASButtonNode
 
@@ -155,11 +161,7 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
   }
   var body: String? {
     didSet {
-      if let body = body {
-        bodyNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.body).append(text: body, fromHtml: true).attributedString
-      } else {
-        bodyNode.attributedText = nil
-      }
+      bodyNode.htmlString(text: body, fontDynamicType: .body)
       setNeedsLayout()
     }
   }
@@ -182,7 +184,7 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
     headLineNode = ASTextNode()
     subheadLineNode = ASTextNode()
     captionNode = ASTextNode()
-    bodyNode = ASTextNode()
+    bodyNode = DTAttributedLabelNode()
     separator = ASDisplayNode()
     button = ASButtonNode()
     super.init()
@@ -227,16 +229,18 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
     imageNode.contentMode = .scaleToFill
 
     //Body Setup
-    bodyNode.maximumNumberOfLines = 7
+    bodyNode.delegate = self
+
+    bodyNode.width = UIScreen.main.bounds.width - (internalMargin*2)
+    //bodyNode.style.minHeight  = ASDimensionMake(25.0)
+    //bodyNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width - (internalMargin*2), height: 25.0)
+    bodyNode.maxNumberOfLines = 7
     //HeadLine Setup
     headLineNode.maximumNumberOfLines = 3
     //subheadLine Setup
     subheadLineNode.maximumNumberOfLines = 2
     //caption Setup
     captionNode.maximumNumberOfLines = 1
-
-    bodyNode.style.flexGrow = 1
-    bodyNode.style.flexShrink = 1
 
     //Button Style-up
     button.style.height = ASDimensionMake(34.0)
@@ -253,6 +257,7 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+
     let outerMostVStack = ASStackLayoutSpec.vertical()
     outerMostVStack.spacing = 0
     outerMostVStack.justifyContent = .start
