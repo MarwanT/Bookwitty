@@ -45,6 +45,13 @@ class SettingsViewController: UIViewController {
       return
     }
 
+    //MARK: [Analytics] Event
+    let label: String = sender.isOn ? "On" : "Off"
+    let event: Analytics.Event = Analytics.Event(category: .Account,
+                                                 action: .SwitchEmailNotification,
+                                                 name: label)
+    Analytics.shared.send(event: event)
+
     viewModel.handleSwitchValueChanged(forRowAt: indexPath, newValue: sender.isOn) {
       () -> () in
       sender.isOn = GeneralSettings.sharedInstance.shouldSendEmailNotifications

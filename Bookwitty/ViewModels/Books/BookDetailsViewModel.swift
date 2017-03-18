@@ -457,6 +457,7 @@ extension BookDetailsViewModel {
         return nil
       case readingLists.count + 1: // Footer
         return .viewRelatedReadingLists(
+          bookTitle: book.title ?? "",
           readingLists: relatedReadingLists?.readingLists,
           url: relatedReadingLists?.nextPageURL)
       default:
@@ -471,6 +472,7 @@ extension BookDetailsViewModel {
         return nil
       case relatedTopics.count + 1: // Footer
         return .viewRelatedTopics(
+          bookTitle: book.title ?? "",
           topics: self.relatedTopics?.topics,
           url: self.relatedTopics?.nextPageURL)
       default:
@@ -712,6 +714,17 @@ extension BookDetailsViewModel {
         completionBlock(success)
       }
     }
+  }
+}
+
+extension BookDetailsViewModel {
+  func resource(at indexPath: IndexPath) -> ModelCommonProperties? {
+    guard let resources = resourcesCommonProperties(for: indexPath) else {
+        return nil
+    }
+
+    let resource = resources[indexPath.row - 1]
+    return resource
   }
 }
 

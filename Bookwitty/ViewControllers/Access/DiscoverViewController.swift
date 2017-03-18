@@ -143,6 +143,11 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
       return
     }
 
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .Discover,
+                                                 action: .PullToRefresh)
+    Analytics.shared.send(event: event)
+
     self.pullToRefresher.beginRefreshing()
     loadData(loadingStatus: .reloading, completionBlock: {
       self.pullToRefresher.endRefreshing()
@@ -257,6 +262,11 @@ extension DiscoverViewController: ASCollectionDelegate {
 
     let initialLastIndexPath: Int = viewModel.numberOfItemsInSection()
 
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .Discover,
+                                                 action: .LoadMore)
+    Analytics.shared.send(event: event)
+
     // Fetch next page data
     viewModel.loadNextPage { [weak self] (success) in
       defer {
@@ -312,6 +322,46 @@ extension DiscoverViewController: BaseCardPostNodeDelegate {
       //TODO: handle comment
       break
     }
+
+    //MARK: [Analytics] Event
+    guard let resource = viewModel.resource(at: index) else { return }
+    let category: Analytics.Category
+    var name: String = (resource as? ModelCommonProperties)?.title ?? ""
+    
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+      name = (resource as? Author)?.name ?? ""
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+      name = (resource as? PenName)?.name ?? ""
+    default:
+      category = .Default
+    }
+
+    let analyticsAction = Analytics.Action.actionFrom(cardAction: action)
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: analyticsAction,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 }
 
@@ -364,6 +414,12 @@ extension DiscoverViewController {
   }
   
   fileprivate func actionForImageResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Image)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Image,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushGenericViewControllerCard(resource: resource)
   }
 
@@ -372,12 +428,25 @@ extension DiscoverViewController {
       return
     }
 
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Author)?.name ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Topic,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+
     let topicViewController = TopicViewController()
     topicViewController.initialize(withAuthor: resource as? Author)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 
   fileprivate func actionForReadingListResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? ReadingList)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .ReadingList,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushPostDetailsViewController(resource: resource)
   }
 
@@ -386,28 +455,65 @@ extension DiscoverViewController {
       return
     }
 
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Topic)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Topic,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+
     let topicViewController = TopicViewController()
     topicViewController.initialize(withTopic: resource as? Topic)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 
   fileprivate func actionForTextResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Text)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Text,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushPostDetailsViewController(resource: resource)
   }
 
   fileprivate func actionForQuoteResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Quote)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Quote,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForVideoResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Video)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Video,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForAudioResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Audio)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Audio,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForLinkResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Link)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Link,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushGenericViewControllerCard(resource: resource)
   }
 
@@ -415,6 +521,13 @@ extension DiscoverViewController {
     guard resource is Book else {
       return
     }
+
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Book)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .TopicBook,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
     topicViewController.initialize(withBook: resource as? Book)

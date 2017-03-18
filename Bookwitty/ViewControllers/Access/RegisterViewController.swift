@@ -176,6 +176,12 @@ class RegisterViewController: UIViewController {
       let country = viewModel.country!.code
 
       showLoader()
+      
+      //MARK: [Analytics] Event
+      let event: Analytics.Event = Analytics.Event(category: .Account,
+                                                   action: .Register)
+      Analytics.shared.send(event: event)
+
       viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, completionBlock: { (success: Bool, user: User?, error: BookwittyAPIError?) in
         self.hideLoader()
         let successBlock = {

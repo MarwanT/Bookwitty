@@ -93,6 +93,22 @@ final class TopicViewModel {
     return sharedContent.count > 0 ? sharedContent : nil
   }
 
+  var resourceType: String? {
+    if let topic = topic {
+      return topic.registeredResourceType
+    }
+
+    if let book = book {
+      return book.registeredResourceType
+    }
+
+    if let author = author {
+      return author.registeredResourceType
+    }
+
+    return nil
+  }
+
   private func initiateContentCalls() {
     if topic != nil {
       getTopicContent()

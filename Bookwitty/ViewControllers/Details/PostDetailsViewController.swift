@@ -135,16 +135,130 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
       if let contentPostsResources = viewModel.contentPostsResources {
         let vc = PostsListViewController(title: viewModel.title ?? title, ids: contentPostIdentifiers.flatMap({ $0.id }), preloadedList: contentPostsResources)
         self.navigationController?.pushViewController(vc, animated: true)
+
+        //MARK: [Analytics] Event
+        let resource = viewModel.resource
+        let category: Analytics.Category
+        var name: String = (resource as? ModelCommonProperties)?.title ?? ""
+        switch resource.registeredResourceType {
+        case Image.resourceType:
+          category = .Image
+        case Quote.resourceType:
+          category = .Quote
+        case Video.resourceType:
+          category = .Video
+        case Audio.resourceType:
+          category = .Audio
+        case Link.resourceType:
+          category = .Link
+        case Author.resourceType:
+          category = .Author
+          name = (resource as? Author)?.name ?? ""
+        case ReadingList.resourceType:
+          category = .ReadingList
+        case Topic.resourceType:
+          category = .Topic
+        case Text.resourceType:
+          category = .Text
+        case Book.resourceType:
+          category = .TopicBook
+        case PenName.resourceType:
+          category = .PenName
+          name = (resource as? PenName)?.name ?? ""
+        default:
+          category = .Default
+        }
+
+        let event: Analytics.Event = Analytics.Event(category: category,
+                                                     action:.ViewAllReadingListContent,
+                                                     name: name)
+        Analytics.shared.send(event: event)
       }
     }
   }
 
   func shouldShowPostDetailsAllRelatedBooks() {
     pushPostsViewController(resources: viewModel.relatedBooks, url: viewModel.relatedBooksNextPage)
+
+    //MARK: [Analytics] Event
+    let resource = viewModel.resource
+    let category: Analytics.Category
+    var name: String = (resource as? ModelCommonProperties)?.title ?? ""
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+      name = (resource as? Author)?.name ?? ""
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+      name = (resource as? PenName)?.name ?? ""
+    default:
+      category = .Default
+    }
+
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action:.ViewAllRelatedBooks,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 
   func shouldShowPostDetailsAllRelatedPosts() {
     pushPostsViewController(resources: viewModel.relatedPosts, url: viewModel.relatedPostsNextPage)
+
+    //MARK: [Analytics] Event
+    let resource = viewModel.resource
+    let category: Analytics.Category
+    var name: String = (resource as? ModelCommonProperties)?.title ?? ""
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+      name = (resource as? Author)?.name ?? ""
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+      name = (resource as? PenName)?.name ?? ""
+    default:
+      category = .Default
+    }
+
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action:.ViewAllRelatedPosts,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 
   func hasRelatedPosts() -> Bool {
@@ -185,6 +299,45 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
       //TODO: handle comment
       break
     }
+
+    //MARK: [Analytics] Event
+    let resource = viewModel.resource
+    let category: Analytics.Category
+    var name: String = (resource as? ModelCommonProperties)?.title ?? ""
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+      name = (resource as? Author)?.name ?? ""
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+      name = (resource as? PenName)?.name ?? ""
+    default:
+      category = .Default
+    }
+
+    let analyticsAction = Analytics.Action.actionFrom(cardAction: action)
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: analyticsAction,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 }
 
@@ -302,6 +455,43 @@ extension PostDetailsViewController: PostDetailItemNodeDelegate {
       return
     }
     WebViewController.present(url: url, inViewController: self)
+
+
+    //MARK: [Analytics] Event
+    let resource = viewModel.resource
+    let category: Analytics.Category
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+    default:
+      category = .Default
+    }
+
+    let name = postDetailItemNode.headLine ?? ""
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: .BuyThisBook,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 }
 
@@ -338,6 +528,45 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
       //TODO: handle comment
       break
     }
+
+    //MARK: [Analytics] Event
+    guard let resource = viewModel.relatedPost(at: index) else { return }
+    let category: Analytics.Category
+    var name: String = (resource as? ModelCommonProperties)?.title ?? ""
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+      name = (resource as? Author)?.name ?? ""
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+      name = (resource as? PenName)?.name ?? ""
+    default:
+      category = .Default
+    }
+
+    let analyticsAction = Analytics.Action.actionFrom(cardAction: action)
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: analyticsAction,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 }
 // Mark: - Pen Name Header
@@ -438,42 +667,102 @@ extension PostDetailsViewController {
   }
 
   fileprivate func actionForImageResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Image)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Image,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForAuthorResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Author)?.name ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Author,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushTopicViewController(resource: resource)
   }
 
   fileprivate func actionForReadingListResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? ReadingList)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .ReadingList,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushPostDetailsViewController(resource: resource)
   }
 
   fileprivate func actionForTopicResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Topic)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Topic,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushTopicViewController(resource: resource)
   }
 
   fileprivate func actionForTextResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Text)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Text,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushPostDetailsViewController(resource: resource)
   }
 
   fileprivate func actionForQuoteResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Quote)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Quote,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForVideoResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Video)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Video,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForAudioResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Audio)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Audio,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForLinkResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Link)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Link,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForBookResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Book)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .TopicBook,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushTopicViewController(resource: resource)
   }
 }

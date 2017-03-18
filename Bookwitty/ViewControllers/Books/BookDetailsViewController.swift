@@ -167,8 +167,8 @@ extension BookDetailsViewController {
       viewDetails(productDetails)
     case .share(let title, let url):
       shareBook(title: title, url: url)
-    case .buyThisBook(let url):
-      buyThisBook(url)
+    case .buyThisBook(let bookTitle, let url):
+      buyThisBook(bookTitle: bookTitle, url: url)
     case .addToWishlist:
       break
     case .viewShippingInfo(let url):
@@ -177,10 +177,10 @@ extension BookDetailsViewController {
       pushPostDetailsViewController(resource: readingList)
     case .goToTopic(let topic):
       viewTopicViewController(with: topic)
-    case .viewRelatedReadingLists(let readingLists, let url):
-      pushPostsViewController(resources: readingLists, url: url)
-    case .viewRelatedTopics(let topics, let url):
-      pushPostsViewController(resources: topics, url: url)
+    case .viewRelatedReadingLists(let bookTitle, let readingLists, let url):
+      pushPostsViewController(bookTitle: bookTitle, resources: readingLists, url: url)
+    case .viewRelatedTopics(let bookTitle, let topics, let url):
+      pushPostsViewController(bookTitle: bookTitle, resources: topics, url: url)
     }
   }
   
@@ -189,6 +189,11 @@ extension BookDetailsViewController {
     node.productDetails = productDetails
     let genericViewController = GenericNodeViewController(node: node, title: viewModel.book.title)
     self.navigationController?.pushViewController(genericViewController, animated: true)
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .BookProduct,
+                                                 action: .GoToDetails)
+    Analytics.shared.send(event: event)
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.BookDetails)
@@ -212,14 +217,26 @@ extension BookDetailsViewController {
     WebViewController.present(url: url, inViewController: self)
   }
   
-  fileprivate func buyThisBook(_ url: URL) {
+  fileprivate func buyThisBook(bookTitle: String, url: URL) {
     WebViewController.present(url: url, inViewController: self)
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .BookProduct,
+                                                 action: .BuyThisBook,
+                                                 name: bookTitle)
+    Analytics.shared.send(event: event)
   }
   
   fileprivate func viewCategory(_ category: Category) {
     let categoryViewController = Storyboard.Books.instantiate(CategoryViewController.self)
     categoryViewController.viewModel.category = category
     navigationController?.pushViewController(categoryViewController, animated: true)
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .BookProduct,
+                                                 action: .GoToCategory,
+                                                 name: category.value ?? "")
+    Analytics.shared.send(event: event)
   }
   
   fileprivate func shareBook(title: String, url: URL) {
@@ -227,6 +244,12 @@ extension BookDetailsViewController {
       activityItems: [title, url],
       applicationActivities: nil)
     present(activityViewController, animated: true, completion: nil)
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .BookProduct,
+                                                 action: .Share,
+                                                 name: title)
+    Analytics.shared.send(event: event)
   }
   
   func shareOutsideButton(_ sender: Any?) {
@@ -247,10 +270,25 @@ extension BookDetailsViewController {
     navigationController?.pushViewController(nodeVc, animated: true)
   }
   
-  func pushPostsViewController(resources: [ModelResource]?, url: URL?) {
+  func pushPostsViewController(bookTitle: String, resources: [ModelResource]?, url: URL?) {
     let postsViewController = PostsViewController()
     postsViewController.initialize(title: nil, resources: resources, loadingMode: PostsViewModel.DataLoadingMode.server(absoluteURL: url))
     navigationController?.pushViewController(postsViewController, animated: true)
+
+    //MARK: [Analytics] Event
+    let action: Analytics.Action
+    if resources?.contains(where: { $0.registeredResourceType == ReadingList.resourceType }) ?? false {
+      action = .ViewAllReadingLists
+    } else if resources?.contains(where: { $0.registeredResourceType == ReadingList.resourceType }) ?? false {
+      action = .ViewAllTopics
+    } else {
+      action = .Default
+    }
+
+    let event: Analytics.Event = Analytics.Event(category: .BookProduct,
+                                                 action: action,
+                                                 name: bookTitle)
+    Analytics.shared.send(event: event)
   }
 }
 
@@ -270,7 +308,8 @@ extension BookDetailsViewController: BookDetailsECommerceNodeDelegate {
     guard let url = viewModel.bookCanonicalURL else {
       return
     }
-    perform(action: .buyThisBook(url))
+    let title = self.viewModel.book.title ?? ""
+    perform(action: .buyThisBook(bookTitle: title, url))
   }
   
   func eCommerceNodeDidTapOnShippingInformation(node: BookDetailsECommerceNode) {
@@ -290,13 +329,13 @@ extension BookDetailsViewController {
     case viewCategory(Category)
     case viewDescription(String)
     case viewShippingInfo(URL)
-    case buyThisBook(URL)
+    case buyThisBook(bookTitle: String, URL)
     case share(bookTitle: String, url: URL)
     case addToWishlist
     case goToReadingList(ReadingList)
     case goToTopic(Topic)
-    case viewRelatedReadingLists(readingLists: [ReadingList]?, url: URL?)
-    case viewRelatedTopics(topics: [Topic]?, url: URL?)
+    case viewRelatedReadingLists(bookTitle: String, readingLists: [ReadingList]?, url: URL?)
+    case viewRelatedTopics(bookTitle: String, topics: [Topic]?, url: URL?)
   }
 }
 
@@ -332,5 +371,42 @@ extension BookDetailsViewController: BaseCardPostNodeDelegate {
       //TODO: handle comment
       break
     }
+
+    //MARK: [Analytics] Event
+    guard let resource = viewModel.resource(at: indexPath) else { return }
+    let category: Analytics.Category
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+    default:
+      category = .Default
+    }
+
+    let name: String = resource.title ?? ""
+    let analyticsAction = Analytics.Action.actionFrom(cardAction: action)
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: analyticsAction,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 }

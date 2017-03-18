@@ -131,6 +131,13 @@ class SignInViewController: UIViewController {
     
     if emailValidationResult.isValid && passwordValidationResult.isValid {
       showLoader()
+      showNetworkActivity()
+
+      //MARK: [Analytics] Event
+      let event: Analytics.Event = Analytics.Event(category: .Account,
+                                                   action: .SignIn)
+      Analytics.shared.send(event: event)
+
       viewModel.signIn(
         username: emailValidationResult.value!,
         password: passwordValidationResult.value!,
