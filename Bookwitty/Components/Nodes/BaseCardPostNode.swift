@@ -21,8 +21,15 @@ extension BaseCardPostNode: CardActionBarNodeDelegate {
   }
 }
 
+extension BaseCardPostNode: CardPostInfoNodeDelegate {
+  func cardInfoNode(cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    delegate?.cardInfoNode(card: self, cardPostInfoNode: cardPostInfoNode, didRequestAction: action, forSender: sender)
+  }
+}
+
 protocol BaseCardPostNodeDelegate {
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any)
 }
 
 class BaseCardPostNode: ASCellNode, NodeTapProtocol {
@@ -99,6 +106,7 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
 
   private func setupCellNode() {
     actionBarNode.delegate = self
+    infoNode.delegate = self
     manageNodes()
     setupCardTheme()
     
