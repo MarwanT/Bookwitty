@@ -81,6 +81,7 @@ class AccountViewController: UIViewController {
 
   func pushPenNameViewController(indexPath: IndexPath) {
     let penNameViewController = Storyboard.Access.instantiate(PenNameViewController.self)
+    penNameViewController.showNoteLabel = false
     let penName = viewModel.selectedPenName(atRow: indexPath.row)
     penNameViewController.viewModel.initializeWith(penName: penName, andUser: UserManager.shared.signedInUser)
     navigationController?.pushViewController(penNameViewController, animated: true)

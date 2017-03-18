@@ -23,6 +23,8 @@ class PenNameViewController: UIViewController {
   @IBOutlet weak var topViewToTopConstraint: NSLayoutConstraint!
   let topViewToTopSpace: CGFloat = 40
   let viewModel: PenNameViewModel = PenNameViewModel()
+  
+  var showNoteLabel: Bool = true
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -48,6 +50,8 @@ class PenNameViewController: UIViewController {
     penNameInputField.delegate = self
 
     setupBiographyKeyboardToolbar()
+    
+    noteLabel.isHidden = !showNoteLabel
 
     //Make Cicular View tappable
     let tap = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnCircularView(_:)))
@@ -63,6 +67,9 @@ class PenNameViewController: UIViewController {
       self,
       selector: #selector(PenNameViewController.keyboardWillHide(_:)),
       name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    
+    // TODO: remove the following line
+    profileContainerView.isHidden = true
   }
 
   deinit {
