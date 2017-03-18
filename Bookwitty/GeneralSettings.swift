@@ -26,6 +26,7 @@ public class GeneralSettings {
     let defaultLanguage = Locale.current.languageCode ?? Localization.Language.English.rawValue
 
     let defaultValues: [String : Any] = [
+      Keys.PreferredLanguage : defaultLanguage,
       Keys.SendUsageData : true,
       Keys.SendEmailNotifications : true,
       Keys.ShouldShowIntroduction : true,      
