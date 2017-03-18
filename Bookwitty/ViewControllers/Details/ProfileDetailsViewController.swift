@@ -248,6 +248,19 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
 
 // MARK - BaseCardPostNode Delegate
 extension ProfileDetailsViewController: BaseCardPostNodeDelegate {
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+    let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment)
+    if let resource = resource as? ModelCommonProperties,
+      let penName = resource.penName {
+      pushProfileViewController(penName: penName)
+    } else if let penName = resource as? PenName  {
+      pushProfileViewController(penName: penName)
+    }
+  }
+  
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
     guard let indexPath = collectionNode.indexPath(for: card) else {
       return

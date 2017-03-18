@@ -341,6 +341,19 @@ extension BookDetailsViewController {
 
 // MARK: - Base card post node delegate
 extension BookDetailsViewController: BaseCardPostNodeDelegate {
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+    let resourcesCommonProperties = viewModel.resourcesCommonProperties(for: indexPath)
+    if let resource = resourcesCommonProperties?[indexPath.row - 1],
+      let penName = resource.penName {
+      pushProfileViewController(penName: penName)
+    } else if let penName = resourcesCommonProperties as? PenName  {
+      pushProfileViewController(penName: penName)
+    }
+  }
+  
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
     guard let indexPath = card.indexPath else {
       return
