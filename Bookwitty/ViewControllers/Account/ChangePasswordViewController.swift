@@ -74,7 +74,7 @@ class ChangePasswordViewController: UIViewController {
                                                  action: .ChangePassword)
     Analytics.shared.send(event: event)
 
-    let identifier: String = ""//TODO: grab the user identifier
+    let identifier: String = UserManager.shared.signedInUser.id ?? ""
     let current: String = currentReult.value ?? ""
     let new: String = newResult.value ?? ""
 

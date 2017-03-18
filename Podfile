@@ -12,7 +12,8 @@ target 'Bookwitty' do
       "BookwittyAPIClientSecret",
       "BookwittyEnvironment",
       "BookwittyServerBaseURL",
-      "BookwittyGoogleAnalyticsIdentifier"
+      "BookwittyGoogleAnalyticsIdentifier",
+      "BookwittyIFramelyKey"
     ]
   }
 

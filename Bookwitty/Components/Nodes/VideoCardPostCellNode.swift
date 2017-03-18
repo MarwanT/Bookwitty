@@ -69,6 +69,8 @@ class VideoCardContentNode: ASDisplayNode {
     }
   }
 
+  var videoUrl: URL?
+
   var hasImage: Bool {
     get {
       return !(imageUrl?.isEmpty ?? true)
@@ -101,6 +103,16 @@ class VideoCardContentNode: ASDisplayNode {
   }
 
   func videoImageTouchUpInside(_ sender: ASImageNode?) {
+    guard let videoUrl = videoUrl else {
+      return
+    }
+
+    guard let rootViewController = UIApplication.shared.delegate?.window??.rootViewController else {
+      return
+    }
+
+    WebViewController.present(url: videoUrl, inViewController: rootViewController)
+
     delegate?.videoImageTouchUpInside(sender: imageNode)
   }
 

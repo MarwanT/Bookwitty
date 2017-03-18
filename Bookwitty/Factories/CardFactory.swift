@@ -347,6 +347,12 @@ extension  CardFactory {
       return nil
     }
 
+    if let url = resource.url {
+      IFramely.shared.loadResponseFor(url: url, closure: { (response: Response?) in
+        card.node.videoUrl = response?.embedUrl
+      })
+    }
+
     //TODO: Remove the static data
     let name = resource.penName?.name ?? "[No Name]"
     let date = Date.formatDate(date: resource.createdAt)

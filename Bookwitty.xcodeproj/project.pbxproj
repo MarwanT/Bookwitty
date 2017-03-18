@@ -23,6 +23,10 @@
 		564EEC0A1E70194100700474 /* TopicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564EEC091E70194100700474 /* TopicViewModel.swift */; };
 		564EEC0E1E7027A100700474 /* ReadingListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564EEC0D1E7027A100700474 /* ReadingListsViewController.swift */; };
 		564EEC101E70298200700474 /* ReadingListsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564EEC0F1E70298200700474 /* ReadingListsViewModel.swift */; };
+		56535F331E7CB9ED0045E73D /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56535F2F1E7CB9ED0045E73D /* Response.swift */; };
+		56535F341E7CB9ED0045E73D /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56535F301E7CB9ED0045E73D /* Media.swift */; };
+		56535F351E7CB9ED0045E73D /* Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56535F311E7CB9ED0045E73D /* Thumbnail.swift */; };
+		56535F361E7CB9ED0045E73D /* IFramely.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56535F321E7CB9ED0045E73D /* IFramely.swift */; };
 		566EE82D1E5D7082004B990D /* Search+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EE82C1E5D7082004B990D /* Search+API.swift */; };
 		566EE87B1E5DC677004B990D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 566EE8781E5DC677004B990D /* Localizable.strings */; };
 		567EE1B11E7A9F1200A0CA0D /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567EE1B01E7A9F1200A0CA0D /* ForgotPasswordViewController.swift */; };
@@ -243,6 +247,10 @@
 		564EEC091E70194100700474 /* TopicViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicViewModel.swift; sourceTree = "<group>"; };
 		564EEC0D1E7027A100700474 /* ReadingListsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingListsViewController.swift; sourceTree = "<group>"; };
 		564EEC0F1E70298200700474 /* ReadingListsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingListsViewModel.swift; sourceTree = "<group>"; };
+		56535F2F1E7CB9ED0045E73D /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		56535F301E7CB9ED0045E73D /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
+		56535F311E7CB9ED0045E73D /* Thumbnail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thumbnail.swift; sourceTree = "<group>"; };
+		56535F321E7CB9ED0045E73D /* IFramely.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IFramely.swift; sourceTree = "<group>"; };
 		566EE82C1E5D7082004B990D /* Search+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Search+API.swift"; sourceTree = "<group>"; };
 		566EE8791E5DC677004B990D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		566EE87A1E5DC677004B990D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -547,6 +555,17 @@
 			path = Details;
 			sourceTree = "<group>";
 		};
+		56535F2E1E7CB9D80045E73D /* IFramely */ = {
+			isa = PBXGroup;
+			children = (
+				56535F2F1E7CB9ED0045E73D /* Response.swift */,
+				56535F301E7CB9ED0045E73D /* Media.swift */,
+				56535F311E7CB9ED0045E73D /* Thumbnail.swift */,
+				56535F321E7CB9ED0045E73D /* IFramely.swift */,
+			);
+			path = IFramely;
+			sourceTree = "<group>";
+		};
 		566EE8771E5DC677004B990D /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -640,6 +659,7 @@
 		59057FCE1E2530900036AAF3 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				56535F2E1E7CB9D80045E73D /* IFramely */,
 				56FC41941E58CB7E00D9B1CE /* Localization */,
 				59BD55741E302EB800D3B805 /* Analytics */,
 				595A649D1E2CF4EA00655067 /* String.swift */,
@@ -1413,6 +1433,7 @@
 				F42600891E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift in Sources */,
 				566EE82D1E5D7082004B990D /* Search+API.swift in Sources */,
 				59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */,
+				56535F351E7CB9ED0045E73D /* Thumbnail.swift in Sources */,
 				F43996851E76C76700FE9D8B /* PostsListViewController.swift in Sources */,
 				562A31201E659919002851DE /* Strings.swift in Sources */,
 				59EC5BAC1E6C5B51006E1CB9 /* SectionTitleHeaderNode.swift in Sources */,
@@ -1513,6 +1534,7 @@
 				594F4EAF1E440A4900A947FA /* User+API.swift in Sources */,
 				F4670AFD1E54ACF200159F4F /* ProfileCardPostCellNode.swift in Sources */,
 				56E09DBE1E546B2100B7C6E6 /* ChangePasswordViewModel.swift in Sources */,
+				56535F341E7CB9ED0045E73D /* Media.swift in Sources */,
 				591E15561E70E381008CA78A /* SectionSubtitleHeaderNode.swift in Sources */,
 				F42041C31E72E84C00E7D208 /* PostDetailsViewModel.swift in Sources */,
 				594290061E4FEEC10006B2F1 /* CategoriesTableViewController.swift in Sources */,
@@ -1559,6 +1581,7 @@
 				595A649E1E2CF4EA00655067 /* String.swift in Sources */,
 				F458C5F41E5AFEAA00AFD0FC /* PenNameCellNode.swift in Sources */,
 				F42ED4F21E686BF9002B65DF /* OnBoardingViewController.swift in Sources */,
+				56535F361E7CB9ED0045E73D /* IFramely.swift in Sources */,
 				F478D92E1E7C275D00B9EF18 /* ProfileDetailsViewModel.swift in Sources */,
 				594290161E51F4550006B2F1 /* BookStoreViewModel.swift in Sources */,
 				59DA47651E3B7A9B00BA90A5 /* TutorialViewController.swift in Sources */,
@@ -1571,6 +1594,7 @@
 				594290391E549FF40006B2F1 /* UIColor.swift in Sources */,
 				F42DFEBF1E77F39A0025CE65 /* RelatedBooksMinimalCellNode.swift in Sources */,
 				59DA475D1E3B7A8F00BA90A5 /* IntroductionViewModel.swift in Sources */,
+				56535F331E7CB9ED0045E73D /* Response.swift in Sources */,
 				59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */,
 				59D6021B1E32597B00271315 /* AppKeys.swift in Sources */,
 				594290111E51B7C00006B2F1 /* DisclosureTableViewCell.swift in Sources */,
