@@ -142,7 +142,7 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
   var subheadLine: String? {
     didSet {
       if let subheadLine = subheadLine {
-        subheadLineNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.subheadline).append(text: subheadLine).applyParagraphStyling(lineSpacing: 4.0).attributedString
+        subheadLineNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.subheadline).append(text: subheadLine).applyParagraphStyling().attributedString
       } else {
         subheadLineNode.attributedText = nil
       }
@@ -152,7 +152,7 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
   var caption: String? {
     didSet {
       if let caption = caption {
-        captionNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: caption).applyParagraphStyling(lineSpacing: 4.0).attributedString
+        captionNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: caption).applyParagraphStyling().attributedString
       } else {
         captionNode.attributedText = nil
       }

@@ -165,14 +165,14 @@ class MisfortuneNode: ASDisplayNode {
   fileprivate var titleText: String? {
     didSet {
       titleNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.headline)
-        .append(text: titleText ?? "", color: mode.titleTextColor).applyParagraphStyling(lineSpacing: 0, alignment: NSTextAlignment.center).attributedString
+        .append(text: titleText ?? "", color: mode.titleTextColor).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
       setNeedsLayout()
     }
   }
   
   fileprivate var descriptionText: String? {
     didSet {
-      descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: descriptionText ?? "", color: mode.descriptionTextColor).applyParagraphStyling(lineSpacing: 0, alignment: NSTextAlignment.center).attributedString
+      descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: descriptionText ?? "", color: mode.descriptionTextColor).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
       setNeedsLayout()
     }
   }
@@ -302,7 +302,7 @@ extension MisfortuneNode {
       }
     }
     var settingsAttributedText: NSAttributedString {
-      return AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: "or check your ", color: ThemeManager.shared.currentTheme.defaultTextColor()).append(text: "settings", fontDynamicType: FontDynamicType.footnote, color: ThemeManager.shared.currentTheme.colorNumber19()).applyParagraphStyling(lineSpacing: 0, alignment: NSTextAlignment.center).attributedString
+      return AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: "or check your ", color: ThemeManager.shared.currentTheme.defaultTextColor()).append(text: "settings", fontDynamicType: FontDynamicType.footnote, color: ThemeManager.shared.currentTheme.colorNumber19()).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
     }
     
     // Colors

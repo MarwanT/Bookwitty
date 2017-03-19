@@ -83,9 +83,8 @@ class AttributedStringBuilder {
    * Use this function as the last part of your builder to apply the paragraph styling on all parts.
    * Note: If this function was used in the beginning it will not work
    */
-  func applyParagraphStyling(lineSpacing: CGFloat = 10, alignment: NSTextAlignment = NSTextAlignment.natural) -> Self {
+  func applyParagraphStyling(lineHeightMultiple: CGFloat = AttributedStringBuilder.defaultLineHeightMultiple, alignment: NSTextAlignment = NSTextAlignment.natural) -> Self {
     let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
-    paragraphStyle.lineSpacing = lineSpacing
     paragraphStyle.alignment = alignment
     
     let range = NSRange(location: 0, length: attributedString.string.characters.count)
