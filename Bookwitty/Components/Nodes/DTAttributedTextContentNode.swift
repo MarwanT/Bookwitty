@@ -10,6 +10,34 @@ import Foundation
 import AsyncDisplayKit
 import DTCoreText
 
+extension DTAttributedTextContentView {
+  static func htmlAttributedString(text: String, fontDynamicType: FontDynamicType? = nil,
+                                   color: UIColor =  ThemeManager.shared.currentTheme.defaultTextColor(),
+                                   htmlImageWidth: CGFloat = UIScreen.main.bounds.width,
+                                   defaultLineHeightMultiple: CGFloat = 1.0) -> NSAttributedString? {
+    let font: UIFont = fontDynamicType?.font ?? FontDynamicType.footnote.font
+
+    let options: [String : Any] = [
+      DTDefaultFontSize: NSNumber(value: Float(font.pointSize)),
+      DTDefaultFontName: font.fontName,
+      DTDefaultFontFamily: font.familyName,
+      DTUseiOS6Attributes: NSNumber(value: true),
+      DTDefaultTextColor: color,
+      DTDefaultLineHeightMultiplier: defaultLineHeightMultiple,
+      DTMaxImageSize: CGSize(width: htmlImageWidth, height: htmlImageWidth)]
+    guard let data = text.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+      return nil
+    }
+
+    guard let attributedString = NSAttributedString(htmlData: data, options: options, documentAttributes: nil) else {
+      return nil
+    }
+
+    let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
+    return mutableAttributedString
+  }
+}
+
 protocol DTAttributedTextContentNodeDelegate {
   func attributedTextContentNodeNeedsLayout(node: ASCellNode)
 }
