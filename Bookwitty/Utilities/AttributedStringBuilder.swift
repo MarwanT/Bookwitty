@@ -23,7 +23,7 @@ class AttributedStringBuilder {
   func append(text: String, fontDynamicType: FontDynamicType? = nil, color: UIColor =  ThemeManager.shared.currentTheme.defaultTextColor(),
               underlineStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone,
               strikeThroughStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone,
-              fromHtml: Bool = false, htmlImageWidth: CGFloat = UIScreen.main.bounds.width) -> Self {
+              fromHtml: Bool = false, htmlImageWidth: CGFloat = UIScreen.main.bounds.width, lineHeightMultiple: CGFloat? = nil) -> Self {
     if fromHtml, let htmlAtrString = htmlAttributedString(text: text, fontDynamicType: fontDynamicType, color: color,
                                                           underlineStyle: underlineStyle, strikeThroughStyle: strikeThroughStyle,
                                                           htmlImageWidth: htmlImageWidth) {
@@ -40,7 +40,17 @@ class AttributedStringBuilder {
       ])
 
     attributedString.append(atrString)
-    return self
+    if let lineHeightMultiple = lineHeightMultiple {
+      //Apply lineHeightMultiple spacing since it was set explicitly
+      return applyParagraphStyling(lineHeightMultiple: lineHeightMultiple)
+    } else {
+      if (fontDynamicType?.font ?? self.fontDynamicType.font).pointSize > 18 {
+        //Do Not Apply lineHeightMultiple spacing for large fonts
+        return self
+      }
+      //Defualt lineHeightMultiple for spacing
+      return applyParagraphStyling(lineHeightMultiple: AttributedStringBuilder.defaultLineHeightMultiple)
+    }
   }
 
   private func htmlAttributedString(text: String, fontDynamicType: FontDynamicType? = nil, color: UIColor =  ThemeManager.shared.currentTheme.defaultTextColor(),
