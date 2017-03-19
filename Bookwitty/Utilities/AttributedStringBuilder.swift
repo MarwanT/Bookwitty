@@ -9,6 +9,9 @@
 import Foundation
 
 class AttributedStringBuilder {
+  static let defaultLineHeightMultiple: CGFloat = 1.25
+  static let defaultHTMLLineHeightMultiple: CGFloat = 1.30
+
   let attributedString: NSMutableAttributedString
   private let fontDynamicType: FontDynamicType
 
