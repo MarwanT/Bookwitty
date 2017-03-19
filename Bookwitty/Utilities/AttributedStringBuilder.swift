@@ -86,8 +86,10 @@ class AttributedStringBuilder {
   func applyParagraphStyling(lineHeightMultiple: CGFloat = AttributedStringBuilder.defaultLineHeightMultiple, alignment: NSTextAlignment = NSTextAlignment.natural) -> Self {
     let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
     paragraphStyle.alignment = alignment
-    
-    let range = NSRange(location: 0, length: attributedString.string.characters.count)
+    paragraphStyle.lineBreakMode = .byWordWrapping
+    paragraphStyle.lineHeightMultiple = lineHeightMultiple
+
+    let range = NSRange(location: 0, length: attributedString.length)
 
     attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: range)
     return self
