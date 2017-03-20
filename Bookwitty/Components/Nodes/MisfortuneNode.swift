@@ -212,6 +212,7 @@ extension MisfortuneNode {
     case empty
     case somethingWrong
     case noResultsFound
+    case appNeedsUpdate(URL?)
     
     // Visibility
     var actionButtonVisible: Bool {
@@ -223,6 +224,8 @@ extension MisfortuneNode {
       case .noResultsFound:
         return false
       case .somethingWrong:
+        return true
+      case .appNeedsUpdate:
         return true
       }
     }
@@ -236,6 +239,8 @@ extension MisfortuneNode {
         return false
       case .somethingWrong:
         return true
+      case .appNeedsUpdate:
+        return false
       }
     }
     
@@ -250,6 +255,9 @@ extension MisfortuneNode {
         return #imageLiteral(resourceName: "illustrationErrorEmptyContent")
       case .somethingWrong:
         return #imageLiteral(resourceName: "illustrationErrorSomethingsWrong")
+      case .appNeedsUpdate:
+        // TODO: Update with right Data
+        return #imageLiteral(resourceName: "illustrationErrorEmptyContent")
       }
     }
     
@@ -263,6 +271,8 @@ extension MisfortuneNode {
       case .noResultsFound:
         return 20
       case .somethingWrong:
+        return 20
+      case .appNeedsUpdate:
         return 20
       }
     }
@@ -278,6 +288,8 @@ extension MisfortuneNode {
         return Strings.no_results_found_title()
       case .somethingWrong:
         return Strings.something_wrong_error_title()
+      case .appNeedsUpdate:
+        return Strings.new_version_available_title()
       }
     }
     var descriptionText: String {
@@ -290,6 +302,8 @@ extension MisfortuneNode {
         return Strings.no_results_found_description()
       case .somethingWrong:
         return Strings.something_wrong_error_description()
+      case .appNeedsUpdate:
+        return Strings.new_version_available_description()
       }
     }
     var actionButtonText: String {
@@ -302,9 +316,12 @@ extension MisfortuneNode {
         return ""
       case .somethingWrong:
         return Strings.try_again()
+      case .appNeedsUpdate:
+        return Strings.update_now()
       }
     }
     var settingsAttributedText: NSAttributedString {
+      // TODO: Localize this
       return AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: "or check your ", color: ThemeManager.shared.currentTheme.defaultTextColor()).append(text: "settings", fontDynamicType: FontDynamicType.footnote, color: ThemeManager.shared.currentTheme.colorNumber19()).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
     }
     
@@ -325,6 +342,8 @@ extension MisfortuneNode {
         return ThemeManager.shared.currentTheme.colorNumber8()
       case .somethingWrong:
         return ThemeManager.shared.currentTheme.colorNumber10()
+      case .appNeedsUpdate:
+        return ThemeManager.shared.currentTheme.colorNumber8()
       }
     }
     var backgroundColor: UIColor {
@@ -337,6 +356,8 @@ extension MisfortuneNode {
         return ThemeManager.shared.currentTheme.colorNumber7()
       case .somethingWrong:
         return ThemeManager.shared.currentTheme.colorNumber9()
+      case .appNeedsUpdate:
+        return ThemeManager.shared.currentTheme.colorNumber7()
       }
     }
   }
