@@ -57,6 +57,8 @@
 "enter_your_password" = "Enter your password";
 "enter_your_pen_name" = "Enter your pen name";
 "error_loading_data" = "Error Loading Data";
+"fail_to_refresh_token_alert_message" = "It seems that your session expired and you need to sign in again";
+"fail_to_refresh_token_alert_title" = "Oooops, Sign in again";
 "first_name" = "First name";
 "first_name_invalid" = "Please enter your first name";
 "follow" = "Follow";

@@ -101,6 +101,8 @@ class RootTabBarController: UITabBarController {
       #selector(self.signIn(notification:)), name: AppNotification.didSignIn, object: nil)
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.didFinishBoarding(notification:)), name: AppNotification.didFinishBoarding, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.handleRefreshTokenFailure(notification:)), name: AppNotification.failToRefreshToken, object: nil)
   }
   
   private func addObserversWhenNotVisible() {
@@ -155,7 +157,11 @@ extension RootTabBarController: Themeable {
 
 //MARK: - Notifications
 extension RootTabBarController {
-  func signOut(notificaiton: Notification) {
+  func handleRefreshTokenFailure(notification: Notification) {
+    displayFailToRefreshTokenAlert()
+  }
+  
+  func signOut(notificaiton: Notification?) {
 
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .Account,
@@ -238,5 +244,22 @@ extension RootTabBarController {
       overlayView.alpha = alpha
       completion?()
     }
+  }
+}
+
+// MARK: - Refresh token handlers
+extension RootTabBarController {
+  fileprivate func displayFailToRefreshTokenAlert() {
+    let alertController = UIAlertController(
+      title: Strings.fail_to_refresh_token_alert_title(),
+      message: Strings.fail_to_refresh_token_alert_message(),
+      preferredStyle: .alert)
+    let okAction = UIAlertAction(
+      title: Strings.ok(),
+      style: UIAlertActionStyle.default) { _ in
+        self.signOut(notificaiton: nil)
+    }
+    alertController.addAction(okAction)
+    present(alertController, animated: true, completion: nil)
   }
 }
