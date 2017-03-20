@@ -105,6 +105,8 @@ class RootTabBarController: UITabBarController {
       #selector(self.handleRefreshTokenFailure(notification:)), name: AppNotification.failToRefreshToken, object: nil)
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.checkAppStatus(notification:)), name: AppNotification.didCheckAppStatus, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.accountNeedsConfirmation(notification:)), name: AppNotification.accountNeedsConfirmation, object: nil)
   }
   
   private func addObserversWhenNotVisible() {
@@ -174,8 +176,22 @@ extension RootTabBarController: Themeable {
   }
 }
 
+//MARK: - Actions
+extension RootTabBarController {
+  fileprivate func sendConfirmationEmail() {
+    _ = GeneralAPI.sendAccountConfirmation {
+      (success, error) in
+      print("Account confirmation \(success)")
+    }
+  }
+}
+
 //MARK: - Notifications
 extension RootTabBarController {
+  func accountNeedsConfirmation(notification: Notification?) {
+    displayAccountNeedsConfirmationAlert()
+  }
+  
   func checkAppStatus(notification: Notification) {
     switch AppManager.shared.appStatus {
     case .needsUpdate(let updateURL):
@@ -277,7 +293,7 @@ extension RootTabBarController {
   }
 }
 
-// MARK: - Refresh token handlers
+// MARK: - Alerts
 extension RootTabBarController {
   fileprivate func displayFailToRefreshTokenAlert() {
     let alertController = UIAlertController(
@@ -290,6 +306,24 @@ extension RootTabBarController {
         self.signOut(notificaiton: nil)
     }
     alertController.addAction(okAction)
+    present(alertController, animated: true, completion: nil)
+  }
+  
+  fileprivate func displayAccountNeedsConfirmationAlert() {
+    let alertController = UIAlertController(
+      title: Strings.account_needs_confirmation_alert_title(),
+      message: Strings.account_needs_confirmation_alert_message(),
+      preferredStyle: .alert)
+    let resendAction = UIAlertAction(
+      title: Strings.account_needs_confirmation_alert_resend_confirmation_button_title(),
+      style: UIAlertActionStyle.default) { _ in
+        self.sendConfirmationEmail()
+    }
+    let neutralAction = UIAlertAction(
+      title: Strings.account_needs_confirmation_alert_dismiss_button_title(),
+      style: UIAlertActionStyle.cancel, handler: nil)
+    alertController.addAction(resendAction)
+    alertController.addAction(neutralAction)
     present(alertController, animated: true, completion: nil)
   }
 }
