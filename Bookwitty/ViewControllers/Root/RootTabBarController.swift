@@ -158,6 +158,7 @@ extension RootTabBarController: Themeable {
 //MARK: - Notifications
 extension RootTabBarController {
   func handleRefreshTokenFailure(notification: Notification) {
+    displayFailToRefreshTokenAlert()
   }
   
   func signOut(notificaiton: Notification?) {
@@ -243,5 +244,22 @@ extension RootTabBarController {
       overlayView.alpha = alpha
       completion?()
     }
+  }
+}
+
+// MARK: - Refresh token handlers
+extension RootTabBarController {
+  fileprivate func displayFailToRefreshTokenAlert() {
+    let alertController = UIAlertController(
+      title: Strings.fail_to_refresh_token_alert_title(),
+      message: Strings.fail_to_refresh_token_alert_message(),
+      preferredStyle: .alert)
+    let okAction = UIAlertAction(
+      title: Strings.ok(),
+      style: UIAlertActionStyle.default) { _ in
+        self.signOut(notificaiton: nil)
+    }
+    alertController.addAction(okAction)
+    present(alertController, animated: true, completion: nil)
   }
 }
