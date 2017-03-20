@@ -7,3 +7,9 @@
 //
 
 import Foundation
+
+class AppError {
+  var status: Int?
+  var detail: String?
+  var meta: [String: Any]?
+}
