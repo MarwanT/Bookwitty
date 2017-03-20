@@ -27,6 +27,7 @@ class AppManager {
     _ = GeneralAPI.status { (success, appMeta, error) in
       defer {
         self.isCheckingStatus = false
+        self.flushNetworkOperations()
         NotificationCenter.default.post(
           name: AppNotification.didCheckAppStatus,
           object: self.appStatus)
@@ -50,5 +51,15 @@ class AppManager {
       }
     }
     
+  }
+  
+  private func flushNetworkOperations() {
+    switch appStatus {
+    case .valid:
+      executePendingOperations(success: true)
+    case .unspecified: fallthrough
+    case .needsUpdate: fallthrough
+    default: executePendingOperations(success: false)
+    }
   }
 }

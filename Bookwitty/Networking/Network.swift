@@ -278,7 +278,7 @@ public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -
   })
 }
 
-private func executePendingOperations(success: Bool) {
+func executePendingOperations(success: Bool) {
   let opQueue = operationQueue
   operationQueue.removeAll(keepingCapacity: false)
   if success {
