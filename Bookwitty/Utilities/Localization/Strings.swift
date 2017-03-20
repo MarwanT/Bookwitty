@@ -589,6 +589,10 @@ class Strings {
     return localizedString(key: "tutorial_third_page_title")
   }
   
+  static func update_now() -> String {
+    return localizedString(key: "update_now")
+  }
+  
   static func video() -> String {
     return localizedString(key: "video")
   }
