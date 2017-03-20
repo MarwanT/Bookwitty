@@ -15,6 +15,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     case loadMore
     case reloading
     case loading
+    case penNameSelection
   }
 
   let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
