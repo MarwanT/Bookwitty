@@ -217,6 +217,10 @@ class Strings {
     return localizedString(key: "fail_to_refresh_token_alert_message")
   }
   
+  static func fail_to_refresh_token_alert_title() -> String {
+    return localizedString(key: "fail_to_refresh_token_alert_title")
+  }
+  
   static func first_name() -> String {
     return localizedString(key: "first_name")
   }
