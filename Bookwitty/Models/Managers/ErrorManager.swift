@@ -12,4 +12,17 @@ class ErrorManager {
   static let shared = ErrorManager()
   private init() {}
   
+  func dataContainsAccountNeedsConfirmationError(data: Data) -> (hasError: Bool, error: AppError?) {
+    guard let errors = AppError.appErrors(for: data), errors.count > 0 else {
+      return (false, nil)
+    }
+    
+    for error in errors {
+      if let reasonMeta = error.meta?["reason"] as? String, reasonMeta == "account-unconfirmed" {
+        return (true, error)
+      }
+    }
+    
+    return (false, nil)
+  }
 }
