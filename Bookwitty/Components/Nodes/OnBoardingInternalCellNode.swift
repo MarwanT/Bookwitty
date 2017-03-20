@@ -110,7 +110,7 @@ class OnBoardingInternalCellNode: ASCellNode {
 
     let finalVStack = ASStackLayoutSpec.vertical()
     finalVStack.justifyContent = .spaceBetween
-    finalVStack.alignItems = .end
+    finalVStack.alignItems = .stretch
     finalVStack.children = [insetSpec, separator]
 
     return finalVStack
