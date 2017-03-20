@@ -148,14 +148,9 @@ extension DTAttributedLabelNode: DTAttributedTextContentViewDelegate {
 class DTAttributedLabelNode: ASCellNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
 
-  var textContentView: DTAttributedLabel!
+  var textContentView: DTAttributedLabel?
   var delegate: DTAttributedTextContentNodeDelegate?
-  var maxNumberOfLines: Int = 0 {
-    didSet {
-      textContentView.numberOfLines = maxNumberOfLines
-      setNeedsLayout()
-    }
-  }
+  var maxNumberOfLines: Int = 0
   var width: CGFloat = 0.0 {
     didSet {
       style.preferredSize = CGSize(width: width, height: maxHeight)
@@ -167,26 +162,29 @@ class DTAttributedLabelNode: ASCellNode {
       style.preferredSize = CGSize(width: width, height: maxHeight)
     }
   }
+  private var attributedString: NSAttributedString?
 
   override convenience init() {
     self.init(viewBlock: { () -> UIView in
       let textContentView = DTAttributedLabel()
       return textContentView
     })
+  }
 
+  override func didLoad() {
+    super.didLoad()
     textContentView = self.view as! DTAttributedLabel
-    textContentView.delegate = self
-
+    textContentView?.delegate = self
+    textContentView?.numberOfLines = maxNumberOfLines
+    textContentView?.attributedString = attributedString
   }
 
   func htmlString(text: String?, fontDynamicType: FontDynamicType? = nil,
                   color: UIColor =  ThemeManager.shared.currentTheme.defaultTextColor()) {
     guard let text = text else {
-      textContentView.attributedString = nil
       return
     }
-
-    textContentView.attributedString = htmlAttributedString(text: text,
+    attributedString = htmlAttributedString(text: text,
                                                             fontDynamicType: fontDynamicType,
                                                             color:  color)
   }
