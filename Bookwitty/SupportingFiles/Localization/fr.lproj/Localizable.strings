@@ -57,6 +57,7 @@
 "enter_your_password" = "Indiquez votre mot de passe";
 "enter_your_pen_name" = "Indiquez votre pseudo";
 "error_loading_data" = "Erreur dans le chargement des données";
+"fail_to_refresh_token_alert_message" = "It seems that your session expired and you need to sign in again";
 "first_name" = "Prénom";
 "first_name_invalid" = "Veuillez inscrire votre prénom";
 "follow" = "Suivre";
