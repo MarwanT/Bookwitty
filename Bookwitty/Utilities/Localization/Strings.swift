@@ -17,6 +17,22 @@ class Strings {
     return localizedString(key: "account")
   }
   
+  static func account_needs_confirmation_alert_dismiss_button_title() -> String {
+    return localizedString(key: "account_needs_confirmation_alert_dismiss_button_title")
+  }
+  
+  static func account_needs_confirmation_alert_message() -> String {
+    return localizedString(key: "account_needs_confirmation_alert_message")
+  }
+  
+  static func account_needs_confirmation_alert_resend_confirmation_button_title() -> String {
+    return localizedString(key: "account_needs_confirmation_alert_resend_confirmation_button_title")
+  }
+  
+  static func account_needs_confirmation_alert_title() -> String {
+    return localizedString(key: "account_needs_confirmation_alert_title")
+  }
+  
   static func address_book() -> String {
     return localizedString(key: "address_book")
   }
