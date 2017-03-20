@@ -40,10 +40,8 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     flowLayout.minimumLineSpacing       = 0
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     loaderNode = LoaderNode()
-
     super.init(node: collectionNode)
 
-    flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.defaultNodeHeight)
     collectionNode.onDidLoad { [weak self] (collectionNode) in
       guard let strongSelf = self,
         let asCollectionView = collectionNode.view as? ASCollectionView else {
@@ -53,7 +51,6 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
       strongSelf.collectionView?.addSubview(strongSelf.pullToRefresher)
       strongSelf.collectionView?.alwaysBounceVertical = true
     }
-    collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionFooter)
   }
 
   override func viewDidLoad() {
@@ -154,19 +151,6 @@ extension DiscoverViewController {
 // MARK: - Reload Footer
 extension DiscoverViewController {
   func updateBottomLoaderVisibility(show: Bool) {
-    if Thread.isMainThread {
-      reloadFooter(show: show)
-    } else {
-      DispatchQueue.main.async {
-        self.reloadFooter(show: show)
-      }
-    }
-  }
-
-  func reloadFooter(show: Bool) {
-    let bottomMargin: CGFloat = show ? -(externalMargin/2) : -(LoaderNode.defaultNodeHeight - externalMargin/2)
-    flowLayout.sectionInset = UIEdgeInsets(top: externalMargin, left: 0, bottom: bottomMargin, right: 0)
-    loaderNode.updateLoaderVisibility(show: show)
   }
 }
 
@@ -207,22 +191,12 @@ extension DiscoverViewController: ASCollectionDataSource {
     }
   }
 
-  public func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
-    switch kind {
-    case UICollectionElementKindSectionFooter: return loaderNode
-    default: return ASCellNode()
-    }
-  }
 }
 
 extension DiscoverViewController: ASCollectionDelegate {
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
     let resource = viewModel.resourceForIndex(index: indexPath.item)
     actionForCard(resource: resource)
-  }
-
-  public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-    return CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.defaultNodeHeight)
   }
 
   public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
