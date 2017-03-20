@@ -545,6 +545,10 @@ class Strings {
     return localizedString(key: "topics_to_follow")
   }
   
+  static func try_again() -> String {
+    return localizedString(key: "try_again")
+  }
+  
   static func tutorial_fifth_page_description() -> String {
     return localizedString(key: "tutorial_fifth_page_description")
   }
