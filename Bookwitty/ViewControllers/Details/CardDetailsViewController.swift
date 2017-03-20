@@ -22,6 +22,7 @@ class CardDetailsViewController: GenericNodeViewController {
     viewModel = CardDetailsViewModel(resource: resource)
     super.init(node: node, title: title)
     node.delegate = self
+    node.updateMode(fullMode: true)
     node.updateDimVisibility(visible: true)
     viewControllerTitleForResouce(resource: resource)
   }
