@@ -129,8 +129,10 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   func refreshViewControllerData() {
     if UserManager.shared.isSignedIn {
       viewModel.cancellableOnGoingRequest()
+      self.loadingStatus = .loading
       self.pullToRefresher.beginRefreshing()
-      loadData(withPenNames: true, loadingStatus: .loading, completionBlock: {
+      loadData(withPenNames: true, completionBlock: {
+        self.loadingStatus = .none
         self.pullToRefresher.endRefreshing()
       })
     }
@@ -146,26 +148,23 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
                                                  action: .PullToRefresh)
     Analytics.shared.send(event: event)
 
+    self.loadingStatus = .reloading
     self.pullToRefresher.beginRefreshing()
-    loadData(withPenNames: true, loadingStatus: .reloading, completionBlock: {
+    loadData(withPenNames: true, completionBlock: {
       self.pullToRefresher.endRefreshing()
+      self.loadingStatus = .none
     })
   }
 
-  func loadData(withPenNames reloadPenNames: Bool = true, loadingStatus: LoadingStatus, completionBlock: @escaping () -> ()) {
-    self.loadingStatus = loadingStatus
-
+  func loadData(withPenNames reloadPenNames: Bool = true, completionBlock: @escaping () -> ()) {
     viewModel.loadNewsfeed { [weak self] (success) in
       guard let strongSelf = self else { return }
-      strongSelf.loadingStatus = .none
-
       completionBlock()
       if success {
-        strongSelf.collectionNode.reloadData(completion: {
-          if reloadPenNames || !strongSelf.penNameSelectionNode.hasData() {
-            strongSelf.reloadPenNamesNode()
-          }
-        })
+        if reloadPenNames || !strongSelf.penNameSelectionNode.hasData() {
+          strongSelf.reloadPenNamesNode()
+        }
+        strongSelf.collectionNode.reloadData()
       }
     }
   }
@@ -189,10 +188,13 @@ extension NewsFeedViewController: PenNameSelectionNodeDelegate {
     }
     viewModel.cancellableOnGoingRequest()
     viewModel.data = []
+    self.loadingStatus = .penNameSelection
     collectionNode.reloadData()
     viewModel.didUpdateDefaultPenName(penName: penName, completionBlock: {  didSaveDefault in
       if didSaveDefault {
-        loadData(withPenNames: false, loadingStatus: .reloading, completionBlock: { })
+        loadData(withPenNames: false, completionBlock: {
+          self.loadingStatus = .none
+        })
       }
     })
   }
@@ -245,14 +247,21 @@ extension NewsFeedViewController: ASCollectionDataSource {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    return viewModel.numberOfItemsInSection()
+    guard NewsFeedViewController.Section.cards.rawValue == section else {
+      if NewsFeedViewController.Section.penNames.rawValue == section {
+        return 1
+      } else {
+        return (loadingStatus == .penNameSelection || loadingStatus == .loadMore) ? 1 : 0
+      }
+    }
+    return viewModel.numberOfItemsInSection(section: section)
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
     let index = indexPath.row
-    
+    let section = indexPath.section
     return {
-      if(index != 0) {
+      if section == Section.cards.rawValue {
         let baseCardNode = self.viewModel.nodeForItem(atIndex: index) ?? BaseCardPostNode()
         if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
           !readingListCell.node.isImageCollectionLoaded {
@@ -265,8 +274,10 @@ extension NewsFeedViewController: ASCollectionDataSource {
         }
         baseCardNode.delegate = self
         return baseCardNode
-      } else {
+      } else if section == Section.penNames.rawValue {
         return self.penNameSelectionNode
+      } else {
+        return self.loaderNode
       }
     }
   }
@@ -368,6 +379,9 @@ extension NewsFeedViewController: BaseCardPostNodeDelegate {
 
 extension NewsFeedViewController: ASCollectionDelegate {
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    guard indexPath.section == Section.cards.rawValue else {
+      return
+    }
     let resource = viewModel.resourceForIndex(index: indexPath.item)
     actionForCard(resource: resource)
   }
@@ -393,8 +407,11 @@ extension NewsFeedViewController: ASCollectionDelegate {
     }
     context.beginBatchFetching()
     self.loadingStatus = .loadMore
+    DispatchQueue.main.async {
+      self.updateBottomLoaderVisibility(show: true)
+    }
 
-    let initialLastIndexPath: Int = viewModel.numberOfItemsInSection()
+    let initialLastIndexPath: Int = viewModel.numberOfItemsInSection(section: Section.cards.rawValue)
 
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .NewsFeed,
@@ -406,17 +423,19 @@ extension NewsFeedViewController: ASCollectionDelegate {
       defer {
         context.completeBatchFetching(true)
         self!.loadingStatus = .none
+        self!.updateBottomLoaderVisibility(show: false)
+        collectionNode.reloadSections(IndexSet(integer: Section.penNames.rawValue))
       }
       guard let strongSelf = self else {
         return
       }
-      let finalLastIndexPath: Int = strongSelf.viewModel.numberOfItemsInSection()
+      let finalLastIndexPath: Int = strongSelf.viewModel.numberOfItemsInSection(section: Section.cards.rawValue)
 
       if success && finalLastIndexPath > initialLastIndexPath {
         let updateIndexRange = initialLastIndexPath..<finalLastIndexPath
 
         let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
-          return IndexPath(row: index, section: 0)
+          return IndexPath(row: index, section: Section.cards.rawValue)
         })
         collectionNode.insertItems(at: updatedIndexPathRange)
       }
