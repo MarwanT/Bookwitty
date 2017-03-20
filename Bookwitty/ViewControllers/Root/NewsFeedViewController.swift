@@ -231,6 +231,14 @@ extension NewsFeedViewController {
   }
 }
 
+// MARK: - Reload Footer
+extension NewsFeedViewController {
+  func updateBottomLoaderVisibility(show: Bool) {
+    self.loaderNode.updateLoaderVisibility(show: show)
+    collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
+  }
+}
+
 extension NewsFeedViewController: ASCollectionDataSource {
   func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
     return viewModel.numberOfSections()
