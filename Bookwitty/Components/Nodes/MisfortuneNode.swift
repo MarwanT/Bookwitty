@@ -295,13 +295,13 @@ extension MisfortuneNode {
     var actionButtonText: String {
       switch self {
       case .empty:
-        return "My interests"
+        return Strings.my_interests()
       case .noInternet:
-        return "Try again"
+        return Strings.try_again()
       case .noResultsFound:
         return ""
       case .somethingWrong:
-        return "Try again"
+        return Strings.try_again()
       }
     }
     var settingsAttributedText: NSAttributedString {
