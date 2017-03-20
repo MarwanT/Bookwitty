@@ -195,6 +195,11 @@ public func apiRequest(target: BookwittyAPI, completion: @escaping BookwittyAPIC
   return APIProvider.sharedProvider.request(target, completion: { (result) in
     switch result {
     case .success(let response):
+      // If account need confirmation send notification
+      if response.statusCode == 403, ErrorManager.shared.dataContainsAccountNeedsConfirmationError(data: response.data).hasError {
+        NotificationCenter.default.post(
+          name: AppNotification.accountNeedsConfirmation, object: nil)
+      }
       completion(response.data, response.statusCode, response.response, nil)
     case .failure(let error):
       completion(nil, nil, nil, BookwittyAPIError(moyaError: error))
