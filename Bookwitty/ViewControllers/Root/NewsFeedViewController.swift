@@ -51,7 +51,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     loaderNode = LoaderNode()
     super.init(node: collectionNode)
 
-    flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.defaultNodeHeight)
     collectionNode.onDidLoad { [weak self] (collectionNode) in
       guard let strongSelf = self,
         let asCollectionView = collectionNode.view as? ASCollectionView else {
@@ -61,7 +60,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       strongSelf.collectionView?.addSubview(strongSelf.pullToRefresher)
       strongSelf.collectionView?.alwaysBounceVertical = true
     }
-    collectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionFooter)
   }
 
   deinit {
@@ -294,13 +292,6 @@ extension NewsFeedViewController: ASCollectionDataSource {
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
     if node is PenNameSelectionNode {
       penNameSelectionNode.setNeedsLayout()
-    }
-  }
-
-  public func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
-    switch kind {
-    case UICollectionElementKindSectionFooter: return loaderNode
-    default: return ASCellNode()
     }
   }
 }
