@@ -76,7 +76,7 @@ extension OnBoardingViewController: OnBoardingControllerDataSource {
     if let node = node as? OnBoardingCellNode {
       let title = viewModel.onBoardingCellNodeTitle(index: indexPath.row)
       node.delegate = self
-      node.text = title
+      node.text = title.capitalized
       node.isLoading = true
       _ = viewModel.loadOnBoardingCellNodeData(indexPath: indexPath, completionBlock: { [weak self] (indexPath, success, cellCollectionDictionary) in
         guard let strongSelf = self else { return }
