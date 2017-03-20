@@ -10,5 +10,9 @@ import Foundation
 import SwiftyJSON
 
 class AppMeta {
+  var minimumAppVersion: String?
+  var storeURLString: String?
+  var latestAPIVersion: String?
+  var thisAPIVersion: String?
 }
 
