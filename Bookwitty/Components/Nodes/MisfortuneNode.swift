@@ -54,7 +54,8 @@ class MisfortuneNode: ASDisplayNode {
     settingsAttributedText = mode.settingsAttributedText
     image = mode.image
     
-    imageWhiteBackgroundNode.backgroundColor = UIColor.white
+    backgroundColor = UIColor.white
+    imageWhiteBackgroundNode.backgroundColor = backgroundColor
     imageColoredBackgroundNode.backgroundColor = mode.backgroundColor
     imageNode.contentMode = UIViewContentMode.scaleAspectFit
     actionButtonNode.contentEdgeInsets = configuration.actionButtonContentEdgeInsets
@@ -128,12 +129,14 @@ class MisfortuneNode: ASDisplayNode {
       justifyContent: .spaceBetween,
       alignItems: .stretch,
       children: contentStackLayoutElements)
-    contentStack.style.flexGrow = 1.0
+    contentStack.style.minHeight = ASDimensionMake(constrainedSize.max.height/2)
+    
     let contentStackInset = ASInsetLayoutSpec(
       insets: UIEdgeInsets(
         top: 0, left: configuration.contentHerizontalMargin,
         bottom: 0, right: configuration.contentHerizontalMargin),
       child: contentStack)
+    contentStackInset.style.flexGrow = 1.0
     
     // Build the base vertical Layout
     //--------------------------------
