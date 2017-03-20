@@ -161,10 +161,11 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       guard let strongSelf = self else { return }
       completionBlock()
       if success {
-        if reloadPenNames || !strongSelf.penNameSelectionNode.hasData() {
-          strongSelf.reloadPenNamesNode()
-        }
-        strongSelf.collectionNode.reloadData()
+        strongSelf.collectionNode.reloadData(completion: { 
+          if reloadPenNames || !strongSelf.penNameSelectionNode.hasData() {
+            strongSelf.reloadPenNamesNode()
+          }
+        })
       }
     }
   }
