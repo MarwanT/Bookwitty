@@ -51,7 +51,7 @@ class BagNode: ASDisplayNode {
   private var text: String? {
     didSet {
       textNode.attributedText = AttributedStringBuilder(fontDynamicType: .subheadline)
-        .append(text: text ?? "", color: configuration.defaultTextColor).applyParagraphStyling(lineSpacing: 5, alignment: NSTextAlignment.center).attributedString
+        .append(text: text ?? "", color: configuration.defaultTextColor).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
       setNeedsLayout()
     }
   }

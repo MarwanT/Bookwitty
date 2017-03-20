@@ -44,7 +44,7 @@ class OnBoardingInternalCellNode: ASCellNode {
       if let descriptionText = descriptionText {
         shortDescriptionTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
           .append(text: descriptionText, color: ThemeManager.shared.currentTheme.defaultTextColor())
-          .applyParagraphStyling(lineSpacing: 5).attributedString
+          .applyParagraphStyling().attributedString
       }
     }
   }
