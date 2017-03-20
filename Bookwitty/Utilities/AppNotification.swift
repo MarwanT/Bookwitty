@@ -17,4 +17,5 @@ struct AppNotification {
   static let shouldRefreshData: Notification.Name = Notification.Name(rawValue: "AppNotification.shouldRefreshData")
   static let didFinishBoarding: Notification.Name = Notification.Name(rawValue: "AppNotification.didFinishBoarding")
   static let didCheckAppStatus: Notification.Name = Notification.Name("AppNotification.didCheckAppStatus")
+  static let accountNeedsConfirmation: Notification.Name = Notification.Name("AppNotification.accountNeedsConfirmation")
 }

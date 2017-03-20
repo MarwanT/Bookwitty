@@ -275,6 +275,19 @@ struct GeneralAPI {
       success = meta != nil
     })
   }
+  
+  static func sendAccountConfirmation(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let senAccountConfirmationSuccess = 204
+    
+    return signedAPIRequest(target: .resendAccountConfirmation, completion: {
+      (data, statusCode, response, error) in
+      guard let statusCode = statusCode, statusCode == senAccountConfirmationSuccess else {
+        completion(false, error)
+        return
+      }
+      completion(true, nil)
+    })
+  }
 }
 
 extension GeneralAPI {

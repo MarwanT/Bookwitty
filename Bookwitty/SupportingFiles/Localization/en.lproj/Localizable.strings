@@ -8,6 +8,10 @@
 
 "about_this_book" = "About this book";
 "account" = "Account";
+"account_needs_confirmation_alert_dismiss_button_title" = "Cancel";
+"account_needs_confirmation_alert_message" = "Oooops, it seems you haven't confirmed your account yet!";
+"account_needs_confirmation_alert_resend_confirmation_button_title" = "Resend";
+"account_needs_confirmation_alert_title" = "Title";
 "address_book" = "Address Book";
 "article" = "Article";
 "author" = "Author";
