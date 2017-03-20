@@ -106,9 +106,6 @@ class VideoCardContentNode: ASDisplayNode {
   }
 
   func setupMode(fullViewMode: Bool) {
-    articleTitle = "Ride-hailing company Uber Technologies Inc will launch a standalone meal delivery service app, UberEATS, in select U.S. cities in the coming weeks, a company spokeswoman said. The UberEATS app, already available for over a month in Toronto, Canada, will launch in 10 cities including New York, Los Angeles and Chicago."
-    articleDescription = "The company's UberEATS service, a feature within the Uber ride-hailing app, currently provides a limited curated menu, Uber spokeswoman told Reuters. The new app will allow customers to order from other restaurants and the meals will be delivered by Uber drivers. The app will be available on devices that run on Apple Inc's iOS and Alphabet Inc's Android. The move will pit Uber against GrubHub Inc, Postmates Inc and DoorDash Inc in the intensely competitive food delivery business."
-
     titleNode.maximumNumberOfLines = fullViewMode ? 0 : 3
     descriptionNode.maximumNumberOfLines = fullViewMode ? 0 : 3
     setNeedsLayout()
