@@ -47,6 +47,7 @@ public enum BookwittyAPI {
   case penNameFollowers(identifier: String)
   case penNameFollowing(identifier: String)
   case status
+  case resendAccountConfirmation
 }
 
 // MARK: - Target Type
@@ -145,6 +146,8 @@ extension BookwittyAPI: TargetType {
       path = "/pen_names/\(identifier)/following"
     case .status:
       path = "/status"
+    case .resendAccountConfirmation:
+      path = "/user/resend_confirmation"
     }
     
     return apiBasePath + apiVersion + path
@@ -152,7 +155,7 @@ extension BookwittyAPI: TargetType {
   
   public var method: Moya.Method {
     switch self {
-    case .oAuth, .refreshToken:
+    case .oAuth, .refreshToken, .resendAccountConfirmation:
       return .post
     case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status:
       return .get
@@ -199,7 +202,7 @@ extension BookwittyAPI: TargetType {
       return GeneralAPI.postsParameters(type: type)
     case .resetPassword(let email):
       return UserAPI.resetPasswordBody(email: email)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation:
       return nil
     }
   }
