@@ -135,6 +135,16 @@ class LinkCardPostContentNode: ASDisplayNode {
 
   @objc
   private func videoImageTouchUpInside(_ sender: ASImageNode?) {
+    guard let linkUrl = linkUrl else {
+      return
+    }
+
+    guard let rootViewController = UIApplication.shared.delegate?.window??.rootViewController else {
+      return
+    }
+
+    WebViewController.present(url: linkUrl, inViewController: rootViewController)
+
     delegate?.linkImageTouchUpInside(sender: imageNode)
   }
 
