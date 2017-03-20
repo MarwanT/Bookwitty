@@ -31,7 +31,7 @@ class RelatedBooksMinimalCellNode: ASCellNode {
   var title: String? {
     didSet {
       if let title = title {
-        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .subheadline)
+        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title3)
           .append(text: title).attributedString
         setNeedsLayout()
       }
