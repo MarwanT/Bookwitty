@@ -341,6 +341,10 @@ class Strings {
     return localizedString(key: "new_version_available_description")
   }
   
+  static func new_version_available_title() -> String {
+    return localizedString(key: "new_version_available_title")
+  }
+  
   static func news() -> String {
     return localizedString(key: "news")
   }

@@ -89,6 +89,7 @@
 "my_orders" = "Mes commandes";
 "new_password" = "Nouveau mot de passe";
 "new_version_available_description" = "There is a newer version available for download! Please update thh app by visiting the Apple Store.";
+"new_version_available_title" = "New version available";
 "news" = "Informations";
 "no_internet_error_description" = "Vous n'êtes pas connecté à Internet";
 "no_internet_error_title" = "Pas d'internet";
