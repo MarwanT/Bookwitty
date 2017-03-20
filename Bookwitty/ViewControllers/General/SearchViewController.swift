@@ -84,10 +84,10 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     searchBar?.sizeToFit()
 
     searchBar?.setTextColor(color: ThemeManager.shared.currentTheme.defaultTextColor())
-    searchBar?.setTextFieldColor(color: ThemeManager.shared.currentTheme.colorNumber2().withAlphaComponent(0.6))
-    searchBar?.setPlaceholderTextColor(color: ThemeManager.shared.currentTheme.defaultTextColor())
-    searchBar?.setSearchImageColor(color: ThemeManager.shared.currentTheme.defaultTextColor())
-    searchBar?.setTextFieldClearButtonColor(color: ThemeManager.shared.currentTheme.defaultTextColor())
+    searchBar?.setTextFieldColor(color: ThemeManager.shared.currentTheme.colorNumber18().withAlphaComponent(0.7))
+    searchBar?.setPlaceholderTextColor(color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+    searchBar?.setSearchImageColor(color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+    searchBar?.setTextFieldClearButtonColor(color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
 
     if let searchBar = searchBar {
       let leftNavBarButton = UIBarButtonItem(customView: searchBar)
