@@ -150,11 +150,16 @@ class PenNameSelectionNode: ASCellNode {
     data = penNames ?? []
 
     guard data.count > minNumberOfCells else {
-      style.height = ASDimensionMake(0.0)
+      //Note: Need to set the Height to "0.1" NOT "0.0"
+      //Dicussion: Setting the height to "0.0" tells the node to have an infinite height
+      //So we need to set the height to a small value, here: "0.1"
+      //We are setting the hidden to true since the 0.1 height will make a thin visible line
+      isHidden = true
+      style.height = ASDimensionMake(0.1)
       setNeedsLayout()
       return
     }
-
+    isHidden = false
     expand = true
 
     if let selectedPenNameId = selectedPenName?.id {
