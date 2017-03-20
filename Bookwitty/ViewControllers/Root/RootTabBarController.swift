@@ -103,6 +103,8 @@ class RootTabBarController: UITabBarController {
       #selector(self.didFinishBoarding(notification:)), name: AppNotification.didFinishBoarding, object: nil)
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.handleRefreshTokenFailure(notification:)), name: AppNotification.failToRefreshToken, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.checkAppStatus(notification:)), name: AppNotification.didCheckAppStatus, object: nil)
   }
   
   private func addObserversWhenNotVisible() {
@@ -146,6 +148,23 @@ class RootTabBarController: UITabBarController {
   fileprivate func refreshToOriginalState() {
     initializeTabBarViewControllers()
   }
+  
+  fileprivate func displayAppNeedsUpdate(with updateURL: URL?) {
+    let forceUpdateNode = MisfortuneNode(mode: MisfortuneNode.Mode.appNeedsUpdate(updateURL))
+    forceUpdateNode.delegate = self
+    let forceUpdateViewController = GenericNodeViewController(
+      node: forceUpdateNode,
+      title: nil,
+      scrollableContentIfNeeded: false)
+    self.present(forceUpdateViewController, animated: true, completion: nil)
+  }
+  
+  fileprivate func openURL(url: URL?) {
+    guard let url = url else {
+      return
+    }
+    UIApplication.shared.openURL(url)
+  }
 }
 
 // MARK: - Themeable
@@ -157,6 +176,17 @@ extension RootTabBarController: Themeable {
 
 //MARK: - Notifications
 extension RootTabBarController {
+  func checkAppStatus(notification: Notification) {
+    switch AppManager.shared.appStatus {
+    case .needsUpdate(let updateURL):
+      displayAppNeedsUpdate(with: updateURL)
+    case .valid: fallthrough
+    case .unspecified: fallthrough
+    default:
+      break // Everyone lives happily ever after
+    }
+  }
+  
   func handleRefreshTokenFailure(notification: Notification) {
     displayFailToRefreshTokenAlert()
   }
@@ -262,4 +292,18 @@ extension RootTabBarController {
     alertController.addAction(okAction)
     present(alertController, animated: true, completion: nil)
   }
+}
+
+// MARK: - Misfortune Node Delegate
+extension RootTabBarController: MisfortuneNodeDelegate {
+  func misfortuneNodeDidTapActionButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {
+    switch mode {
+    case .appNeedsUpdate(let updateURL):
+      openURL(url: updateURL)
+    default:
+      break
+    }
+  }
+  
+  func misfortuneNodeDidTapSettingsButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {}
 }
