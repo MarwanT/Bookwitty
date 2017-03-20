@@ -648,3 +648,16 @@ extension NewsFeedViewController {
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 }
+
+// MARK: - Declarations
+extension NewsFeedViewController {
+  enum Section: Int {
+    case penNames = 0
+    case cards = 1
+    case activityIndicator = 2
+
+    static var numberOfSections: Int {
+      return 3
+    }
+  }
+}
