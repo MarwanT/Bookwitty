@@ -56,7 +56,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeNavigationItems()
-    title = Strings.discover()
+    navigationItem.title = Strings.discover()
 
     collectionNode.delegate = self
     collectionNode.dataSource = self

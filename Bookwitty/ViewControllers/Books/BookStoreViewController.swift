@@ -32,7 +32,7 @@ class BookStoreViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = Strings.books()
+    navigationItem.title = Strings.books()
     
     viewModel.dataLoaded = viewModelLoadedDataBlock()
     

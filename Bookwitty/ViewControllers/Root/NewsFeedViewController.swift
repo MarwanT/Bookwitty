@@ -68,7 +68,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = Strings.news()
+    navigationItem.title = Strings.news()
     addObservers()
     initializeNavigationItems()
 
