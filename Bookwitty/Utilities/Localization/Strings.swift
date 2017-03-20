@@ -325,12 +325,24 @@ class Strings {
     return localizedString(key: "list_price")
   }
   
+  static func my_interests() -> String {
+    return localizedString(key: "my_interests")
+  }
+  
   static func my_orders() -> String {
     return localizedString(key: "my_orders")
   }
   
   static func new_password() -> String {
     return localizedString(key: "new_password")
+  }
+  
+  static func new_version_available_description() -> String {
+    return localizedString(key: "new_version_available_description")
+  }
+  
+  static func new_version_available_title() -> String {
+    return localizedString(key: "new_version_available_title")
   }
   
   static func news() -> String {
@@ -533,6 +545,10 @@ class Strings {
     return localizedString(key: "topics_to_follow")
   }
   
+  static func try_again() -> String {
+    return localizedString(key: "try_again")
+  }
+  
   static func tutorial_fifth_page_description() -> String {
     return localizedString(key: "tutorial_fifth_page_description")
   }
@@ -571,6 +587,10 @@ class Strings {
   
   static func tutorial_third_page_title() -> String {
     return localizedString(key: "tutorial_third_page_title")
+  }
+  
+  static func update_now() -> String {
+    return localizedString(key: "update_now")
   }
   
   static func video() -> String {

@@ -46,6 +46,7 @@ public enum BookwittyAPI {
   case penNameContent(identifier: String)
   case penNameFollowers(identifier: String)
   case penNameFollowing(identifier: String)
+  case status
 }
 
 // MARK: - Target Type
@@ -142,6 +143,8 @@ extension BookwittyAPI: TargetType {
       path = "/pen_names/\(identifier)/followers"
     case .penNameFollowing(let identifier):
       path = "/pen_names/\(identifier)/following"
+    case .status:
+      path = "/status"
     }
     
     return apiBasePath + apiVersion + path
@@ -151,7 +154,7 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .oAuth, .refreshToken:
       return .post
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status:
       return .get
     case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword, .followPenName:
       return .post
@@ -196,7 +199,7 @@ extension BookwittyAPI: TargetType {
       return GeneralAPI.postsParameters(type: type)
     case .resetPassword(let email):
       return UserAPI.resetPasswordBody(email: email)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status:
       return nil
     }
   }

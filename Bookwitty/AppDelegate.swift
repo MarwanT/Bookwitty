@@ -35,6 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
 
     IFramely.shared.initializeWith(apiKey: AppKeys.shared.iframelyKey)
+    
+    AppManager.shared.checkAppStatus()
 
     return true
   }
@@ -73,3 +75,13 @@ extension AppDelegate: Themeable {
     ThemeManager.shared.currentTheme.initialize()
   }
 }
+
+// MARK: - Application Status
+extension AppDelegate {
+  enum Status {
+    case valid
+    case needsUpdate(URL?)
+    case unspecified
+  }
+}
+

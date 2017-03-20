@@ -206,8 +206,17 @@ public func signedAPIRequest(target: BookwittyAPI, completion: @escaping Bookwit
   let apiRequest = createAPIRequest(target: target, completion: completion)
   
   let accessToken = AccessToken.shared
+  let appManager = AppManager.shared
   
-  if (accessToken.isUpdating) {
+  if (accessToken.isUpdating || appManager.isCheckingStatus) {
+    operationQueue.append((target: target, completion: completion))
+    return nil
+  }
+  
+  guard case AppDelegate.Status.valid = appManager.appStatus else {
+    if case AppDelegate.Status.unspecified = appManager.appStatus {
+      appManager.checkAppStatus()
+    }
     operationQueue.append((target: target, completion: completion))
     return nil
   }
@@ -269,7 +278,7 @@ public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -
   })
 }
 
-private func executePendingOperations(success: Bool) {
+func executePendingOperations(success: Bool) {
   let opQueue = operationQueue
   operationQueue.removeAll(keepingCapacity: false)
   if success {

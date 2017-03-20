@@ -85,8 +85,11 @@
 "latest" = "Nouveautés";
 "link" = "Lien";
 "list_price" = "Tarif en vigueur";
+"my_interests" = "My interests";
 "my_orders" = "Mes commandes";
 "new_password" = "Nouveau mot de passe";
+"new_version_available_description" = "There is a newer version available for download! Please update thh app by visiting the Apple Store.";
+"new_version_available_title" = "New version available";
 "news" = "Informations";
 "no_internet_error_description" = "Vous n'êtes pas connecté à Internet";
 "no_internet_error_title" = "Pas d'internet";
@@ -137,6 +140,7 @@
 "text" = "Texte";
 "topic" = "Sujet";
 "topics_to_follow" = "Sujets à suivre";
+"try_again" = "Try again";
 "tutorial_fifth_page_description" = "Inscrivez-vous pour faire partie de notre communauté";
 "tutorial_fifth_page_title" = "Rejoignez notre communauté";
 "tutorial_first_page_description" = "";
@@ -147,6 +151,7 @@
 "tutorial_second_page_title" = "Faites des découvertes";
 "tutorial_third_page_description" = "Nous sommes tous experts des sujets qui nous passionnent. Partagez votre savoir.";
 "tutorial_third_page_title" = "Partagez vos propres idées";
+"update_now" = "Update now";
 "video" = "Vidéo";
 "view_all" = "Voir tout ";
 "view_all_books" = "Voir l'ensemble des livres";
