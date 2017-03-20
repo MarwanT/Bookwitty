@@ -513,3 +513,15 @@ extension DiscoverViewController {
   }
 }
 
+// MARK: - Declarations
+extension DiscoverViewController {
+  enum Section: Int {
+    case cards = 0
+    case activityIndicator = 1
+
+    static var numberOfSections: Int {
+      return 2
+    }
+  }
+}
+
