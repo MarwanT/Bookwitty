@@ -9,4 +9,7 @@
 import Foundation
 
 class ErrorManager {
+  static let shared = ErrorManager()
+  private init() {}
+  
 }
