@@ -35,7 +35,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
 
   init() {
     flowLayout = UICollectionViewFlowLayout()
-    flowLayout.sectionInset = UIEdgeInsets(top: externalMargin, left: 0, bottom: externalMargin/2, right: 0)
+    flowLayout.sectionInset = UIEdgeInsets(top: externalMargin/2, left: 0, bottom: externalMargin/2, right: 0)
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
