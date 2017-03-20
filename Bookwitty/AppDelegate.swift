@@ -35,6 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
 
     IFramely.shared.initializeWith(apiKey: AppKeys.shared.iframelyKey)
+    
+    AppManager.shared.checkAppStatus()
 
     return true
   }
