@@ -173,32 +173,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   func reloadPenNamesNode() {
     penNameSelectionNode.loadData(penNames: viewModel.penNames, withSelected: viewModel.defaultPenName)
   }
-
-}
-
-extension NewsFeedViewController {
-  func updateBottomLoaderVisibility(show: Bool) {
-    if Thread.isMainThread {
-      reloadFooter(show: show)
-    } else {
-      DispatchQueue.main.async {
-        self.reloadFooter(show: show)
-      }
-    }
-  }
-
-  func reloadFooter(show: Bool) {
-    let bottomMargin: CGFloat
-    if show {
-      bottomMargin = -(self.externalMargin/2)
-    } else {
-      //If we have Zero data items this means that we are only showing the pen-name-selection-node
-      bottomMargin = self.viewModel.data.count == 0 ? 0.0 : -(LoaderNode.defaultNodeHeight - self.externalMargin/2)
-    }
-
-    self.flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomMargin, right: 0)
-    self.loaderNode.updateLoaderVisibility(show: show)
-  }
 }
 
 extension NewsFeedViewController: PenNameSelectionNodeDelegate {
