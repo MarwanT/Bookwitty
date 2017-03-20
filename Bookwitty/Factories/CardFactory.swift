@@ -227,7 +227,7 @@ extension  CardFactory {
     card.postInfoData = cardPostInfoData
     card.setup(forFollowingMode: true)
     card.setFollowingValue(following: resource.following)
-    card.node.articleTitle = nil
+    card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.imageUrl = resource.coverImageUrl
     card.node.setTopicStatistics(numberOfPosts: resource.counts?.posts, numberOfBooks: nil, numberOfFollowers: resource.counts?.followers)
