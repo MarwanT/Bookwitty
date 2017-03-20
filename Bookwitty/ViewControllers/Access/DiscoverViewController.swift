@@ -68,7 +68,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    if UserManager.shared.isSignedIn && loadingStatus == .none && viewModel.numberOfItemsInSection() == 0 {
+    if UserManager.shared.isSignedIn && loadingStatus == .none && viewModel.numberOfItemsInSection(section: Section.cards.rawValue) == 0 {
       self.pullToRefresher.beginRefreshing()
       loadData(loadingStatus: .loading, completionBlock: {
         self.pullToRefresher.endRefreshing()
@@ -168,7 +168,10 @@ extension DiscoverViewController: ASCollectionDataSource {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    return viewModel.numberOfItemsInSection()
+    guard DiscoverViewController.Section.cards.rawValue == section else {
+      return loadingStatus == .none ? 0 : 1
+    }
+    return viewModel.numberOfItemsInSection(section: section)
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
@@ -221,7 +224,7 @@ extension DiscoverViewController: ASCollectionDelegate {
     context.beginBatchFetching()
     self.loadingStatus = .loadMore
 
-    let initialLastIndexPath: Int = viewModel.numberOfItemsInSection()
+    let initialLastIndexPath: Int = viewModel.numberOfItemsInSection(section: Section.cards.rawValue)
 
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .Discover,
@@ -237,13 +240,13 @@ extension DiscoverViewController: ASCollectionDelegate {
       guard let strongSelf = self else {
         return
       }
-      let finalLastIndexPath: Int = strongSelf.viewModel.numberOfItemsInSection()
+      let finalLastIndexPath: Int = strongSelf.viewModel.numberOfItemsInSection(section: Section.cards.rawValue)
 
       if success && finalLastIndexPath > initialLastIndexPath {
         let updateIndexRange = initialLastIndexPath..<finalLastIndexPath
 
         let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
-          return IndexPath(row: index, section: 0)
+          return IndexPath(row: index, section: Section.cards.rawValue)
         })
         collectionNode.insertItems(at: updatedIndexPathRange)
       }

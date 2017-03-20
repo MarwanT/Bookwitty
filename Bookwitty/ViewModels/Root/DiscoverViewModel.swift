@@ -80,11 +80,11 @@ extension DiscoverViewModel {
   }
 
   func numberOfSections() -> Int {
-    return data.count > 0 ? 1 : 0
+    return DiscoverViewController.Section.numberOfSections
   }
 
-  func numberOfItemsInSection() -> Int {
-    return data.count
+  func numberOfItemsInSection(section: Int) -> Int {
+    return DiscoverViewController.Section.cards.rawValue == section ? data.count : 1
   }
 
   func resourceForIndex(index: Int) -> ModelResource? {
