@@ -78,14 +78,16 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     let size: CGSize = CGSize(width: UIScreen.main.bounds.width - sideMargin, height: navHeight)
 
     searchBar = UISearchBar(frame: CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height))
-    searchBar?.barStyle = .black
-    searchBar?.searchBarStyle = .prominent
     searchBar?.placeholder = Strings.search_placeholder()
     searchBar?.delegate = self
     searchBar?.showsCancelButton = false
     searchBar?.sizeToFit()
 
-    //UITextField.appearance(whenContainedInInstancesOf: [UITextField.self])
+    searchBar?.setTextColor(color: ThemeManager.shared.currentTheme.defaultTextColor())
+    searchBar?.setTextFieldColor(color: ThemeManager.shared.currentTheme.colorNumber2().withAlphaComponent(0.6))
+    searchBar?.setPlaceholderTextColor(color: ThemeManager.shared.currentTheme.defaultTextColor())
+    searchBar?.setSearchImageColor(color: ThemeManager.shared.currentTheme.defaultTextColor())
+    searchBar?.setTextFieldClearButtonColor(color: ThemeManager.shared.currentTheme.defaultTextColor())
 
     if let searchBar = searchBar {
       let leftNavBarButton = UIBarButtonItem(customView: searchBar)
