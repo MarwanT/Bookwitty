@@ -18,8 +18,10 @@ class TopicHeaderNode: ASCellNode {
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let imageHeight: CGFloat = 200.0
   fileprivate let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
+  fileprivate let thumbnailImageSize = CGSize(width: 100.0, height: 100.0)
 
-  private var imageNode: ASNetworkImageNode
+  private var coverImageNode: ASNetworkImageNode
+  private var thumbnailImageNode: ASNetworkImageNode
   private var titleNode: ASTextNode
   private var topicStatsNode: ASTextNode
   private var actionButton: ASButtonNode
@@ -28,23 +30,25 @@ class TopicHeaderNode: ASCellNode {
   weak var delegate: TopicHeaderNodeDelegate?
 
   override init() {
-    imageNode = ASNetworkImageNode()
+    coverImageNode = ASNetworkImageNode()
+    thumbnailImageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
     topicStatsNode = ASTextNode()
     actionButton = ASButtonNode()
     contributorsNode = ContributorsNode()
     super.init()
-    addSubnode(imageNode)
+    addSubnode(coverImageNode)
     addSubnode(titleNode)
     addSubnode(topicStatsNode)
     addSubnode(actionButton)
     addSubnode(contributorsNode)
+    addSubnode(thumbnailImageNode)
     setupNode()
   }
 
   private func setupNode() {
-    imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
-    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
+    coverImageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
+    coverImageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
 
     titleNode.maximumNumberOfLines = 4
     topicStatsNode.maximumNumberOfLines = 1
@@ -78,10 +82,20 @@ class TopicHeaderNode: ASCellNode {
     }
   }
 
-  var imageUrl: String? {
+  var coverImageUrl: String? {
     didSet {
-      if let imageUrl = imageUrl {
-        imageNode.url = URL(string: imageUrl)
+      if let imageUrl = coverImageUrl {
+        coverImageNode.url = URL(string: imageUrl)
+        thumbnailImageNode.url = URL(string: imageUrl)
+        setNeedsLayout()
+      }
+    }
+  }
+
+  var thumbnailImageUrl: String? {
+    didSet {
+      if let thumbnailImageUrl = thumbnailImageUrl {
+        thumbnailImageNode.url = URL(string: thumbnailImageUrl)
         setNeedsLayout()
       }
     }
@@ -98,27 +112,31 @@ class TopicHeaderNode: ASCellNode {
     contributorsNode.numberOfContributors = numberOfContributors
   }
 
-  func setTopicStatistics(numberOfFollowers: String? = nil, numberOfPosts: String? = nil) {
+  func setTopicStatistics(numberOfFollowers: Int? = nil, numberOfPosts: Int? = nil) {
     let separator =  " | "
     var attrStringBuilder = AttributedStringBuilder(fontDynamicType: .footnote)
     var addSeparator: Bool = false
 
     //TODO: This should be handled with localization plurals
-    if isValid(numberOfFollowers) {
+    if let followersNumber = String(counting: numberOfFollowers) , (numberOfFollowers ?? 0 > 0) {
+      let plural = numberOfFollowers ?? 0 > 1
+      let str = plural ? Strings.followers() : Strings.follower()
       attrStringBuilder = attrStringBuilder
-        .append(text: numberOfFollowers!)
-        .append(text: " " + Strings.followers(), fontDynamicType: .caption2)
+        .append(text: followersNumber)
+        .append(text: " " + str, fontDynamicType: .caption2)
       addSeparator = true
     } else {
       addSeparator = false
     }
 
     //TODO: This should be handled with localization plurals
-    if isValid(numberOfPosts) {
+    if let postsNumber = String(counting: numberOfPosts), (numberOfPosts ?? 0 > 0) {
+      let plural = numberOfPosts ?? 0 > 1
+      let str = plural ? Strings.posts() : Strings.post()
       attrStringBuilder = attrStringBuilder
         .append(text: (addSeparator ? separator : ""), fontDynamicType: .caption2)
-        .append(text: numberOfPosts!)
-        .append(text: " " + Strings.posts(), fontDynamicType: .caption2)
+        .append(text: postsNumber)
+        .append(text: " " + str, fontDynamicType: .caption2)
     }
 
     //Set the string value
@@ -130,11 +148,18 @@ class TopicHeaderNode: ASCellNode {
     var nodesArray: [ASLayoutElement] = []
 
     let imageSize = CGSize(width: constrainedSize.max.width, height: imageHeight)
-    imageNode.style.preferredSize = imageSize
+    coverImageNode.style.preferredSize = imageSize
 
-    if isValid(imageUrl) {
-      nodesArray.append(imageNode)
-    }
+    thumbnailImageNode.style.preferredSize = thumbnailImageSize
+
+    let imageLayoutSpec = ASStaticLayoutSpec(sizing: ASAbsoluteLayoutSpecSizing.sizeToFit, children: [coverImageNode])
+    let thumbnailNodeLayoutSpec = ASCenterLayoutSpec(centeringOptions: ASCenterLayoutSpecCenteringOptions.XY,
+                                                     sizingOptions: ASCenterLayoutSpecSizingOptions.minimumXY,
+                                                     child: thumbnailImageNode)
+    let imageOverlayLayoutSpec = ASOverlayLayoutSpec(child: imageLayoutSpec, overlay: thumbnailNodeLayoutSpec)
+
+
+    nodesArray.append(imageOverlayLayoutSpec)
 
     let titleNodeInset = ASInsetLayoutSpec(insets: sideInset(), child: titleNode)
     if isValid(topicTitle) {

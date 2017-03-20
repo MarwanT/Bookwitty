@@ -10,6 +10,7 @@ import UIKit
 import Fabric
 import Crashlytics
 import FacebookCore
+import SwiftLoader
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -28,8 +29,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let preferredLanguage = GeneralSettings.sharedInstance.preferredLanguage
     Localization.set(language: Localization.Language(rawValue: preferredLanguage))
     
+    SwiftLoader.configure()
+    
     Fabric.with([Crashlytics.self])
     SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+
+    IFramely.shared.initializeWith(apiKey: AppKeys.shared.iframelyKey)
+
     return true
   }
 
@@ -67,4 +73,3 @@ extension AppDelegate: Themeable {
     ThemeManager.shared.currentTheme.initialize()
   }
 }
-

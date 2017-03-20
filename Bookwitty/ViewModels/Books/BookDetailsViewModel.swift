@@ -12,18 +12,25 @@ import AsyncDisplayKit
 
 final class BookDetailsViewModel {
   var book: Book! = nil
+  var relatedReadingLists: (readingLists: [ReadingList]?, prefixed: [ReadingList]?, nextPageURL: URL?)? = nil
+  var relatedTopics: (topics: [Topic]?, prefixed: [Topic]?, nextPageURL: URL?)? = nil
   
   let maximumNumberOfDetails: Int = 3
   var bookDetailedInformation: [(key: String, value: String)]? = nil
   var bookCategories: [Category]? = nil
   weak var viewController: BookDetailsViewController? = nil
   
+  var shouldShowBottomLoader = false
+  fileprivate var shouldReloadBookDetailsSections = false
+  fileprivate var shouldReloadRelatedReadingListsSections = false
+  fileprivate var shouldReloadRelatedTopicsSections = false
+  
   var viewControllerTitle: String? {
     return ""
   }
   
   var shipementInfoURL: URL? {
-    return URL(string: "/shipping?layout=app", relativeTo: Environment.current.baseURL)
+    return Environment.current.shipementInfoURL
   }
   
   var bookCanonicalURL: URL? {
@@ -31,7 +38,7 @@ final class BookDetailsViewModel {
   }
   
   var numberOfSections: Int {
-    return 10
+    return Section.numberOfSections
   }
   
   func numberOfItemsForSection(section: Int) -> Int {
@@ -59,6 +66,45 @@ final class BookDetailsViewModel {
       return itemsInRecommendedReadingLists
     case .relatedTopics:
       return itemsInRelatedTopics
+    case .activityIndicator:
+      return itemsInActivityIndicator
+    }
+  }
+  
+  /// Currently this method au-resets should reload flags when called
+  func sectionsNeedsReloading() -> [Section] {
+    var sections = [Section]()
+    if shouldReloadBookDetailsSections {
+      shouldReloadBookDetailsSections = false
+      sections += [.header, .format, .about, .eCommerce, .details, .categories]
+    }
+    if shouldReloadRelatedReadingListsSections {
+      shouldReloadRelatedReadingListsSections = false
+      sections += [.recommendedReadingLists]
+    }
+    if shouldReloadRelatedTopicsSections {
+      shouldReloadRelatedTopicsSections = false
+      sections += [.relatedTopics]
+    }
+    sections += [.activityIndicator]
+    return sections
+  }
+}
+
+// MARK: - Helpers 
+extension BookDetailsViewModel {
+  func resourcesCommonProperties(for indexPath: IndexPath) -> [ModelCommonProperties]? {
+    guard let section = Section(rawValue: indexPath.section) else {
+      return nil
+    }
+    
+    switch section {
+    case .recommendedReadingLists:
+      return relatedReadingLists?.prefixed
+    case .relatedTopics:
+      return relatedTopics?.prefixed
+    default:
+      return nil
     }
   }
 }
@@ -150,12 +196,82 @@ extension BookDetailsViewModel {
         node = disclosureNode
       }
     case .recommendedReadingLists:
-      break
+      guard let relatedReadingLists = relatedReadingLists?.prefixed, relatedReadingLists.count > 0 else {
+        break
+      }
+      switch indexPath.row {
+      case 0: // Header
+        let externalInsets = UIEdgeInsets(
+          top: ThemeManager.shared.currentTheme.generalExternalMargin() * 2,
+          left: 0, bottom: ThemeManager.shared.currentTheme.generalExternalMargin(), right: 0)
+        let headerNode = SectionTitleHeaderNode(externalInsets: externalInsets)
+        headerNode.setTitle(
+          title: Strings.book_recommended_in_reading_lists(),
+          verticalBarColor: ThemeManager.shared.currentTheme.colorNumber4(),
+          horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber3())
+        node = headerNode
+      case relatedReadingLists.count + 1: // Footer
+        let footerNode = DisclosureNodeCell()
+        footerNode.configuration.addInternalBottomSeparator = true
+        footerNode.text = Strings.view_all()
+        footerNode.configuration.style = .highlighted
+        node = footerNode
+      default:
+        let resource = relatedReadingLists[indexPath.row - 1]
+        guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+          break
+        }
+        return cardNode
+      }
     case .relatedTopics:
-      break
+      guard let relatedTopics = relatedTopics?.prefixed, relatedTopics.count > 0 else {
+        break
+      }
+      switch indexPath.row {
+      case 0: // Header
+        let externalInsets = UIEdgeInsets(
+          top: ThemeManager.shared.currentTheme.generalExternalMargin() * 2,
+          left: 0, bottom: ThemeManager.shared.currentTheme.generalExternalMargin(), right: 0)
+        let headerNode = SectionTitleHeaderNode(externalInsets: externalInsets)
+        headerNode.setTitle(
+          title: Strings.related_bookwitty_topics(),
+          verticalBarColor: ThemeManager.shared.currentTheme.colorNumber13(),
+          horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber2())
+        node = headerNode
+      case relatedTopics.count + 1: // Footer
+        let footerNode = DisclosureNodeCell()
+        footerNode.configuration.addInternalBottomSeparator = true
+        footerNode.text = Strings.view_all()
+        footerNode.configuration.style = .highlighted
+        node = footerNode
+      default:
+        let resource = relatedTopics[indexPath.row - 1]
+        guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+          break
+        }
+        return cardNode
+      }
+    case .activityIndicator:
+      let loaderNode = LoaderNode()
+      loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
+      node = loaderNode
     }
     
     return node
+  }
+  
+  func sharingContent(indexPath: IndexPath) -> [String]? {
+    guard let resourcesCommonProperties = resourcesCommonProperties(for: indexPath), resourcesCommonProperties.count > 0
+    else {
+      return nil
+    }
+    
+    let resourceProperty = resourcesCommonProperties[indexPath.row - 1]
+    let shortDesciption = resourceProperty.title ?? resourceProperty.shortDescription ?? ""
+    if let sharingUrl = resourceProperty.canonicalURL {
+      return [shortDesciption, sharingUrl.absoluteString]
+    }
+    return [shortDesciption]
   }
 }
 
@@ -220,11 +336,25 @@ extension BookDetailsViewModel {
   }
   
   var itemsInRecommendedReadingLists: Int {
-    return 0
+    guard let relatedReadingLists = relatedReadingLists?.prefixed, relatedReadingLists.count > 0 else {
+      return 0
+    }
+    let header: Int = 1
+    let footer: Int = 1
+    return relatedReadingLists.count + header + footer
   }
   
   var itemsInRelatedTopics: Int {
-    return 0
+    guard let relatedTopics = relatedTopics?.prefixed, relatedTopics.count > 0 else {
+      return 0
+    }
+    let header: Int = 1
+    let footer: Int = 1
+    return relatedTopics.count + header + footer
+  }
+  
+  var itemsInActivityIndicator: Int {
+    return shouldShowBottomLoader ? 1 : 0
   }
 }
 
@@ -255,6 +385,30 @@ extension BookDetailsViewModel {
       switch indexPath.row {
       case 0: // Header
         return false
+      default:
+        return true
+      }
+    case .recommendedReadingLists:
+      guard let readingLists = relatedReadingLists?.prefixed else {
+        return false
+      }
+      switch indexPath.item {
+      case 0: // Header
+        return false
+      case (readingLists.count + 1): // Footer
+        return true
+      default:
+        return true
+      }
+    case .relatedTopics:
+      guard let relatedTopics = relatedTopics?.prefixed else {
+        return false
+      }
+      switch indexPath.item {
+      case 0: // Header
+        return false
+      case (relatedTopics.count + 1): // Footer
+        return true
       default:
         return true
       }
@@ -294,9 +448,166 @@ extension BookDetailsViewModel {
       default:
         return .viewCategory(categories[indexPath.row - 1])
       }
+    case .recommendedReadingLists:
+      guard let readingLists = relatedReadingLists?.prefixed else {
+        return nil
+      }
+      switch indexPath.row {
+      case 0: // Header
+        return nil
+      case readingLists.count + 1: // Footer
+        return .viewRelatedReadingLists(
+          bookTitle: book.title ?? "",
+          readingLists: relatedReadingLists?.readingLists,
+          url: relatedReadingLists?.nextPageURL)
+      default:
+        return .goToReadingList(readingLists[indexPath.item - 1])
+      }
+    case .relatedTopics:
+      guard let relatedTopics = relatedTopics?.prefixed else {
+        return nil
+      }
+      switch indexPath.row {
+      case 0: // Header
+        return nil
+      case relatedTopics.count + 1: // Footer
+        return .viewRelatedTopics(
+          bookTitle: book.title ?? "",
+          topics: self.relatedTopics?.topics,
+          url: self.relatedTopics?.nextPageURL)
+      default:
+        return .goToTopic(relatedTopics[indexPath.item - 1])
+      }
     default:
       return nil
     }
+  }
+}
+
+// MARK: - API Calls
+extension BookDetailsViewModel {
+  func loadContent(completion: @escaping (_ success: Bool, _ error: [BookwittyAPIError?]) -> Void) {
+    let queue = DispatchGroup()
+    
+    var loadBookDetailsSuccess: Bool = false
+    var loadRelatedReadingListsSuccess: Bool = false
+    var loadRelatedTopicsSuccess: Bool = false
+    var loadBookDetailsError: BookwittyAPIError? = nil
+    var loadRelatedReadingListsError: BookwittyAPIError? = nil
+    var loadRelatedTopicsError: BookwittyAPIError? = nil
+    
+    queue.enter()
+    loadBookDetails { (success, error) in
+      loadBookDetailsSuccess = success
+      loadBookDetailsError = error
+      queue.leave()
+    }
+    
+    queue.enter()
+    loadRelatedReadingLists { (success, error) in
+      loadRelatedReadingListsSuccess = success
+      loadRelatedReadingListsError = error
+      queue.leave()
+    }
+    
+    queue.enter()
+    loadRelatedTopics { (success, error) in
+      loadRelatedTopicsSuccess = success
+      loadRelatedTopicsError = error
+      queue.leave()
+    }
+    
+    queue.notify(queue: DispatchQueue.main) { 
+      completion(
+        loadBookDetailsSuccess && (loadRelatedTopicsSuccess && loadRelatedReadingListsSuccess),
+        [loadBookDetailsError, loadRelatedReadingListsError, loadRelatedTopicsError])
+    }
+  }
+  
+  func loadBookDetails(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    var success: Bool = false
+    var error:BookwittyAPIError? = nil
+    defer {
+      completion(success, error)
+    }
+    
+    // TODO: Load book details From API
+    success = true
+    shouldReloadBookDetailsSections = false
+  }
+  
+  func loadRelatedReadingLists(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    guard let bookId = book.id else {
+      return
+    }
+    
+    _ = GeneralAPI.posts(
+      contentIdentifier: bookId, type: [ReadingList.resourceType], completion: {
+        (success, resources, nextPage, error) in
+        var success: Bool = success
+        var error: BookwittyAPIError? = error
+        defer {
+          completion(success, error)
+        }
+        
+        guard success, let resources = resources else {
+          return
+        }
+        
+        let readingLists = resources.flatMap({ $0 as? ReadingList })
+        let displayedReadingLists = Array(readingLists.prefix(self.maximumNumberOfDetails))
+        self.relatedReadingLists = (readingLists, displayedReadingLists, nextPage)
+        self.shouldReloadRelatedReadingListsSections = (readingLists.count > 0) ? true : false
+    })
+  }
+  
+  func loadRelatedTopics(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    guard let bookId = book.id else {
+      return
+    }
+    
+    _ = GeneralAPI.posts(
+      contentIdentifier: bookId, type: [Topic.resourceType], completion: {
+        (success, resources, nextPage, error) in
+        var success: Bool = success
+        var error: BookwittyAPIError? = error
+        defer {
+          completion(success, error)
+        }
+        
+        guard success, let resources = resources else {
+          return
+        }
+        
+        let topics = resources.flatMap({ $0 as? Topic })
+        let displayedTopics = Array(topics.prefix(self.maximumNumberOfDetails))
+        self.relatedTopics = (topics, displayedTopics, nextPage)
+        self.shouldReloadRelatedTopicsSections = (topics.count > 0) ? true : false
+    })
+  }
+  
+  // Wit And Unwit API calls
+  
+  func witContent(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let resourcesCommonProperties = resourcesCommonProperties(for: indexPath), let contentId = resourcesCommonProperties[indexPath.row - 1].id else {
+      completionBlock(false)
+      return
+    }
+    
+    _ = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
+      completionBlock(success)
+    })
+  }
+  
+  func unwitContent(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let resourcesCommonProperties = resourcesCommonProperties(for: indexPath), let contentId = resourcesCommonProperties[indexPath.row - 1].id else {
+      completionBlock(false)
+      return
+    }
+    
+    _ = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
+      completionBlock(success)
+    })
   }
 }
 
@@ -313,5 +624,107 @@ extension BookDetailsViewModel {
     case categories
     case recommendedReadingLists
     case relatedTopics
+    case activityIndicator
+    
+    static var numberOfSections: Int {
+      return 11
+    }
   }
 }
+
+// MARK: - Handle Reading Lists Images
+extension BookDetailsViewModel {
+  func loadReadingListImages(at indexPath: IndexPath, maxNumberOfImages: Int, completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
+    guard let relatedReadingLists = relatedReadingLists?.prefixed else {
+      completionBlock(nil)
+      return
+    }
+    
+    let readingList = relatedReadingLists[indexPath.row - 1]
+    
+    var ids: [String] = []
+    if let list = readingList.postsRelations {
+      for item in list {
+        ids.append(item.id)
+      }
+    }
+    
+    if ids.count > 0 {
+      let limitToMaximumIds = Array(ids.prefix(maxNumberOfImages))
+      loadReadingListItems(readingListIds: limitToMaximumIds, completionBlock: completionBlock)
+    } else {
+      completionBlock(nil)
+    }
+  }
+  
+  private func loadReadingListItems(readingListIds: [String], completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
+    _ = UserAPI.batch(identifiers: readingListIds) { (success, resources, error) in
+      var imageCollection: [String]? = nil
+      defer {
+        completionBlock(imageCollection)
+      }
+      if success {
+        var images: [String] = []
+        resources?.forEach({ (resource) in
+          if let res = resource as? ModelCommonProperties {
+            if let imageUrl = res.thumbnailImageUrl {
+              images.append(imageUrl)
+            }
+          }
+        })
+        imageCollection = images
+      }
+    }
+  }
+}
+
+// MARK: - PenName Follow/Unfollow
+extension BookDetailsViewModel {
+  func follow(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let resources = resourcesCommonProperties(for: indexPath),
+          let resourceId = resources[indexPath.row - 1].id else {
+      completionBlock(false)
+      return
+    }
+    //Expected types: Topic
+    followRequest(identifier: resourceId, completionBlock: completionBlock)
+  }
+
+  func unfollow(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let resources = resourcesCommonProperties(for: indexPath),
+      let resourceId = resources[indexPath.row - 1].id else {
+        completionBlock(false)
+        return
+    }
+    //Expected types: Topic
+    unfollowRequest(identifier: resourceId, completionBlock: completionBlock)
+  }
+
+  fileprivate func followRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
+    _ = GeneralAPI.follow(identifer: identifier) { (success, error) in
+      defer {
+        completionBlock(success)
+      }
+    }
+  }
+
+  fileprivate func unfollowRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
+    _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
+      defer {
+        completionBlock(success)
+      }
+    }
+  }
+}
+
+extension BookDetailsViewModel {
+  func resource(at indexPath: IndexPath) -> ModelCommonProperties? {
+    guard let resources = resourcesCommonProperties(for: indexPath) else {
+        return nil
+    }
+
+    let resource = resources[indexPath.row - 1]
+    return resource
+  }
+}
+

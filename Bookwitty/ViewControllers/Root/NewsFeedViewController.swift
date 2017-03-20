@@ -63,7 +63,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     loaderNode = LoaderNode()
     super.init(node: collectionNode)
 
-    flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: loaderNode.usedHeight)
+    flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.defaultNodeHeight)
     collectionNode.onDidLoad { [weak self] (collectionNode) in
       guard let strongSelf = self,
         let asCollectionView = collectionNode.view as? ASCollectionView else {
@@ -98,6 +98,9 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     animateRefreshControllerIfNeeded()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.NewsFeed)
   }
 
   /*
@@ -127,6 +130,14 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       UIBarButtonItemStyle.plain, target: self, action:
       #selector(self.settingsButtonTap(_:)))
     navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
+
+    let rightNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
+      UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+    rightNegativeSpacer.width = -10
+    let searchBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "search"), style:
+      UIBarButtonItemStyle.plain, target: self, action:
+      #selector(self.searchButtonTap(_:)))
+    navigationItem.rightBarButtonItems = [rightNegativeSpacer, searchBarButton]
   }
   
   func refreshViewControllerData() {
@@ -143,7 +154,12 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     guard loadingStatus != .reloading else {
       return
     }
-    
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .NewsFeed,
+                                                 action: .PullToRefresh)
+    Analytics.shared.send(event: event)
+
     self.pullToRefresher.beginRefreshing()
     loadData(withPenNames: true, loadingStatus: .reloading, completionBlock: {
       self.pullToRefresher.endRefreshing()
@@ -191,7 +207,7 @@ extension NewsFeedViewController {
       bottomMargin = -(self.externalMargin/2)
     } else {
       //If we have Zero data items this means that we are only showing the pen-name-selection-node
-      bottomMargin = self.viewModel.data.count == 0 ? 0.0 : -(self.loaderNode.usedHeight - self.externalMargin/2)
+      bottomMargin = self.viewModel.data.count == 0 ? 0.0 : -(LoaderNode.defaultNodeHeight - self.externalMargin/2)
     }
 
     self.flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomMargin, right: 0)
@@ -201,6 +217,12 @@ extension NewsFeedViewController {
 
 extension NewsFeedViewController: PenNameSelectionNodeDelegate {
   func didSelectPenName(penName: PenName, sender: PenNameSelectionNode) {
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .NewsFeed,
+                                                 action: .SelectPenName)
+    Analytics.shared.send(event: event)
+
     if let scrollView = scrollView {
       penNameSelectionNode.alpha = 1.0
       scrollView.contentOffset = CGPoint(x: 0, y: 0.0)
@@ -241,6 +263,12 @@ extension NewsFeedViewController {
     settingsVC.hidesBottomBarWhenPushed = true
     self.navigationController?.pushViewController(settingsVC, animated: true)
   }
+
+  func searchButtonTap(_ sender: UIBarButtonItem) {
+    let searchVC = SearchViewController()
+    searchVC.hidesBottomBarWhenPushed = true
+    self.navigationController?.pushViewController(searchVC, animated: true)
+  }
 }
 
 extension NewsFeedViewController: ASCollectionDataSource {
@@ -258,6 +286,15 @@ extension NewsFeedViewController: ASCollectionDataSource {
     return {
       if(index != 0) {
         let baseCardNode = self.viewModel.nodeForItem(atIndex: index) ?? BaseCardPostNode()
+        if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
+          !readingListCell.node.isImageCollectionLoaded {
+          let max = readingListCell.node.maxNumberOfImages
+          self.viewModel.loadReadingListImages(atIndex: index, maxNumberOfImages: max, completionBlock: { (imageCollection) in
+            if let imageCollection = imageCollection, imageCollection.count > 0 {
+              readingListCell.node.loadImages(with: imageCollection)
+            }
+          })
+        }
         baseCardNode.delegate = self
         return baseCardNode
       } else {
@@ -282,6 +319,19 @@ extension NewsFeedViewController: ASCollectionDataSource {
 
 // MARK - BaseCardPostNode Delegate
 extension NewsFeedViewController: BaseCardPostNodeDelegate {
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+    let resource = viewModel.resourceForIndex(index: indexPath.item)
+    if let resource = resource as? ModelCommonProperties,
+      let penName = resource.penName {
+      pushProfileViewController(penName: penName)
+    } else if let penName = resource as? PenName  {
+      pushProfileViewController(penName: penName)
+    }
+  }
+  
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
     guard let index = collectionNode.indexPath(for: card)?.item else {
       return
@@ -300,10 +350,58 @@ extension NewsFeedViewController: BaseCardPostNodeDelegate {
       if let sharingInfo: [String] = viewModel.sharingContent(index: index) {
         presentShareSheet(shareContent: sharingInfo)
       }
+    case .follow:
+      viewModel.follow(index: index) { (success) in
+        didFinishAction?(success)
+      }
+    case .unfollow:
+      viewModel.unfollow(index: index) { (success) in
+        didFinishAction?(success)
+      }
     default:
       //TODO: handle comment
       break
     }
+
+    //MARK: [Analytics] Event
+    guard let resource = viewModel.resourceForIndex(index: index) else { return }
+    let category: Analytics.Category
+    var name: String = (resource as? ModelCommonProperties)?.title ?? ""
+
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+      name = (resource as? Author)?.name ?? ""
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+      name = (resource as? PenName)?.name ?? ""
+    default:
+      category = .Default
+    }
+
+    let analyticsAction = Analytics.Action.actionFrom(cardAction: action)
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: analyticsAction,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 }
 
@@ -336,6 +434,11 @@ extension NewsFeedViewController: ASCollectionDelegate {
     self.loadingStatus = .loadMore
 
     let initialLastIndexPath: Int = viewModel.numberOfItemsInSection()
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .NewsFeed,
+                                                 action: .LoadMore)
+    Analytics.shared.send(event: event)
 
     // Fetch next page data
     viewModel.loadNextPage { [weak self] (success) in
@@ -422,6 +525,10 @@ extension NewsFeedViewController {
       actionForLinkResourceType(resource: resource)
     case Book.resourceType:
       actionForBookResourceType(resource: resource)
+    case PenName.resourceType:
+      if let penName = resource as? PenName {
+        pushProfileViewController(penName: penName)
+      }
     default:
       print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")
       break
@@ -433,7 +540,7 @@ extension NewsFeedViewController {
     self.navigationController?.pushViewController(nodeVc, animated: true)
   }
 
-  func pushGenericViewControllerCard(resource: Resource, title: String?) {
+  func pushGenericViewControllerCard(resource: Resource, title: String? = nil) {
     guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
       return
     }
@@ -442,7 +549,13 @@ extension NewsFeedViewController {
   }
 
   fileprivate func actionForImageResourceType(resource: ModelResource) {
-    pushGenericViewControllerCard(resource: resource, title: "Image")
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Image)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Image,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForAuthorResourceType(resource: ModelResource) {
@@ -450,12 +563,25 @@ extension NewsFeedViewController {
       return
     }
 
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Author)?.name ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Author,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+
     let topicViewController = TopicViewController()
     topicViewController.initialize(withAuthor: resource as? Author)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 
   fileprivate func actionForReadingListResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? ReadingList)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .ReadingList,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushPostDetailsViewController(resource: resource)
   }
 
@@ -464,35 +590,79 @@ extension NewsFeedViewController {
       return
     }
 
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Topic)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Topic,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+
     let topicViewController = TopicViewController()
     topicViewController.initialize(withTopic: resource as? Topic)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 
   fileprivate func actionForTextResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Text)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Text,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushPostDetailsViewController(resource: resource)
   }
 
   fileprivate func actionForQuoteResourceType(resource: ModelResource) {
-    pushGenericViewControllerCard(resource: resource, title: "Quote")
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Quote)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Quote,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForVideoResourceType(resource: ModelResource) {
-    pushGenericViewControllerCard(resource: resource, title: "Video")
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Video)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Video,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForAudioResourceType(resource: ModelResource) {
-    pushGenericViewControllerCard(resource: resource, title: "Audio")
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Audio)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Audio,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForLinkResourceType(resource: ModelResource) {
-    pushGenericViewControllerCard(resource: resource, title: "Link")
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Link)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Link,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForBookResourceType(resource: ModelResource) {
     guard resource is Book else {
       return
     }
+
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Book)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .TopicBook,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
     topicViewController.initialize(withBook: resource as? Book)

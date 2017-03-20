@@ -35,6 +35,10 @@ final class BookStoreViewModel {
         return
       }
       
+      // If data needs to be viewed partially here even before retrieving
+      // content details, a block trigering a change in the vc should be called here.
+      self.dataLoaded?(false)
+      
       guard let identifiers = identifiers, identifiers.count > 0 else {
         self.request = nil
         completion(true, nil)
@@ -73,10 +77,10 @@ final class BookStoreViewModel {
       }
       
       self.curatedCollection = collection
+      self.banner = collection.sections?.banner
       self.featuredContents = nil
       self.featuredReadingListContent = nil
       self.readingLists = nil
-      self.banner = nil
       
       guard let sections = collection.sections  else {
         completion(true, nil, nil)
@@ -172,19 +176,19 @@ final class BookStoreViewModel {
 
 extension BookStoreViewModel {
   var hasBanner: Bool {
-    return true
+    return banner != nil
   }
   
   var bannerImageURL: URL? {
-    return URL(string: "http://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2013/09/12/101029496--sites-default-files-images-101029496-3176173-1748009911-hp.jp-1.jpg?v=1474281478")
+    return banner?.imageUrl
   }
   
   var bannerTitle: String? {
-    return "Bookwitty's Finest"
+    return banner?.caption
   }
   
   var bannerSubtitle: String? {
-    return "The perfect list for everyone on your list"
+    return nil
   }
 }
 
@@ -204,6 +208,13 @@ extension BookStoreViewModel {
       return (nil, nil)
     }
     return (featuredContent.title, URL(string: (featuredContent.thumbnailImageUrl ?? "")))
+  }
+  
+  func featuredResource(for indexPath: IndexPath) -> ModelResource? {
+    guard let resource = featuredContents?[indexPath.row] as? ModelResource else {
+      return nil
+    }
+    return resource
   }
 }
 
@@ -238,6 +249,11 @@ extension BookStoreViewModel {
       return ""
     }
     return readingListTitle
+  }
+  
+  func suggestedReadingList(for indexPath: IndexPath) -> ModelResource? {
+    let resource = readingLists?[indexPath.row]
+    return resource
   }
 }
 
@@ -277,7 +293,7 @@ extension BookStoreViewModel {
     return featuredReadingListContent?.fetchedBooks
   }
   
-  var booksLoadingMode: DataLoadingMode? {
+  var booksLoadingMode: BooksTableViewController.DataLoadingMode? {
     guard let books = featuredReadingListContent else {
       return nil
     }

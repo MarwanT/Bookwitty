@@ -21,11 +21,18 @@ extension BaseCardPostNode: CardActionBarNodeDelegate {
   }
 }
 
-protocol BaseCardPostNodeDelegate {
-  func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
+extension BaseCardPostNode: CardPostInfoNodeDelegate {
+  func cardInfoNode(cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    delegate?.cardInfoNode(card: self, cardPostInfoNode: cardPostInfoNode, didRequestAction: action, forSender: sender)
+  }
 }
 
-class BaseCardPostNode: ASCellNode {
+protocol BaseCardPostNodeDelegate {
+  func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any)
+}
+
+class BaseCardPostNode: ASCellNode, NodeTapProtocol {
 
   fileprivate let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
@@ -42,10 +49,14 @@ class BaseCardPostNode: ASCellNode {
     return !articleCommentsSummary.isEmptyOrNil()
   }
 
+  var tapDelegate: ItemNodeTapDelegate?
   var delegate: BaseCardPostNodeDelegate?
+  var forceHideInfoNode: Bool = false
   var postInfoData: CardPostInfoNodeData? {
     didSet {
       infoNode.data = postInfoData
+      forceHideInfoNode = postInfoData == nil
+      setNeedsLayout()
     }
   }
   var articleCommentsSummary: String? {
@@ -54,11 +65,6 @@ class BaseCardPostNode: ASCellNode {
         commentsSummaryNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
           .append(text: articleCommentsSummary, color: ThemeManager.shared.currentTheme.colorNumber15()).attributedString
       }
-    }
-  }
-  var wit: Bool = false {
-    didSet {
-      actionBarNode.setWitButton(witted: wit)
     }
   }
 
@@ -72,8 +78,38 @@ class BaseCardPostNode: ASCellNode {
     setupCellNode()
   }
 
+  override func didLoad() {
+    super.didLoad()
+    if tapDelegate != nil {
+      let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnView(_:)))
+      view.addGestureRecognizer(tapGesture)
+    }
+  }
+
+  func didTapOnView(_ sender: Any?) {
+    tapDelegate?.didTapOn(node: self)
+  }
+
+
+  func setup(forFollowingMode followingMode: Bool) {
+    self.actionBarNode.setup(forFollowingMode: followingMode)
+  }
+
+  func setFollowingValue(following: Bool) {
+    actionBarNode.setFollowingValue(following: following)
+  }
+
+  func setWitValue(witted: Bool, wits: Int) {
+    actionBarNode.setWitButton(witted: witted, wits: wits)
+  }
+
+  func setDimValue(dimmed: Bool, dims: Int) {
+    actionBarNode.setDimValue(dimmed: dimmed, dims: dims)
+  }
+
   private func setupCellNode() {
     actionBarNode.delegate = self
+    infoNode.delegate = self
     manageNodes()
     setupCardTheme()
     
@@ -85,7 +121,7 @@ class BaseCardPostNode: ASCellNode {
     guard subnodes.count == 0 else { return }
 
     //Order is important: backgroundNode must be the first
-    if(shouldShowInfoNode) {
+    if(shouldShowInfoNode && !forceHideInfoNode) {
       addSubnodes(arrayOfNodes: [backgroundNode, infoNode, contentNode, commentsSummaryNode, separatorNode, actionBarNode])
     } else {
       addSubnodes(arrayOfNodes: [backgroundNode, contentNode, commentsSummaryNode, separatorNode, actionBarNode])
@@ -110,6 +146,10 @@ class BaseCardPostNode: ASCellNode {
     //Separator
     separatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
   }
+
+  func updateDimVisibility(visible: Bool) {
+    actionBarNode.hideDim = !visible
+  }
 }
 
 //MARK: - Layout Sizing
@@ -125,7 +165,7 @@ extension BaseCardPostNode {
     let separatorNodeInset = ASInsetLayoutSpec(insets: separatorInset(), child: separatorNode)
 
     let contentSideInsets = contentShouldExtendBorders ? 0 : defaultInset.left
-    let contentTopInset = shouldShowInfoNode ? 0 : defaultInset.top
+    let contentTopInset = (shouldShowInfoNode && !forceHideInfoNode) ? 0 : defaultInset.top
     let contentInset = ASInsetLayoutSpec(insets: UIEdgeInsets(top: contentTopInset, left: contentSideInsets, bottom: 0, right: contentSideInsets), child: contentNode)
 
     let commentSummaryInset: ASLayoutElement = shouldShowCommentSummaryNode ? commentSummaryLayoutSpecs() : spacer(height: internalMargin)
@@ -133,7 +173,7 @@ extension BaseCardPostNode {
     let verticalStack = ASStackLayoutSpec.vertical()
     verticalStack.justifyContent = .center
     verticalStack.alignItems = .stretch
-    verticalStack.children = shouldShowInfoNode
+    verticalStack.children = (shouldShowInfoNode && !forceHideInfoNode)
       ? [infoNodeInset, contentInset, commentSummaryInset, separatorNodeInset, actionBarNodeInset]
       : [contentInset, commentSummaryInset, separatorNodeInset, actionBarNodeInset]
 

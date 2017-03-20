@@ -14,7 +14,7 @@ typealias ModelResource = Resource
 protocol Parsable {
   associatedtype AbstractType: Resource
   static func parseData(data: Data?) -> AbstractType?
-  static func parseDataArray(data: Data?) -> Array<AbstractType>?
+  static func parseDataArray(data: Data?) -> (resources: Array<AbstractType>?, next: URL?, errors: [APIError]?)?
   func serializeData(options: SerializationOptions) -> [String : Any]?
 }
 
@@ -41,16 +41,17 @@ extension Parsable where Self: Resource {
     return nil
   }
 
-  static func parseDataArray(data: Data?) -> [AbstractType]? {
+  static func parseDataArray(data: Data?) -> (resources: [AbstractType]?, next: URL?, errors: [APIError]?)? {
     guard let data = data,
-    let parsedData = Parser.parseDataArray(data: data),
-    let resourceArray = parsedData.resources else {
+      let values = Parser.parseDataArray(data: data) else {
       return nil
     }
 
-    return resourceArray.flatMap { (resource) -> AbstractType? in
-      return resource as? AbstractType
-    }
+    let resources: [AbstractType]? = values.resources?.flatMap({ $0 as? AbstractType })
+    let next: URL? = values.next
+    let error: [APIError]? = values.errors
+
+    return (resources, next, error)
   }
 
   func serializeData(options: SerializationOptions) -> [String : Any]? {
@@ -99,6 +100,7 @@ class Parser {
     serializer.registerValueFormatter(CuratedCollectionSectionsValueFormatter())
     serializer.registerValueFormatter(ProductDetailsValueFormatter())
     serializer.registerValueFormatter(SupplierInformationValueFormatter())
+    serializer.registerValueFormatter(CountsValueFormatter())
   }
 
   static func parseData(data: Data?, mappingTargets: [Resource]? = nil) -> JSONAPIDocument? {

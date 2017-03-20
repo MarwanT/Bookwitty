@@ -11,18 +11,12 @@ import AsyncDisplayKit
 
 class LoaderNode: ASCellNode {
   static let defaultNodeHeight: CGFloat = 45.0
-  let activityIndicatorNode: ASCellNode
+  fileprivate var activityIndicatorView: UIActivityIndicatorView!
 
-  var usedHeight: CGFloat {
-    return nodeHeight ?? LoaderNode.defaultNodeHeight
-  }
-  var loaderView: UIActivityIndicatorView? {
-    return isNodeLoaded ? activityIndicatorNode.view as? UIActivityIndicatorView : nil
-  }
   private var nodeHeight: CGFloat?
 
-  override init() {
-    activityIndicatorNode = ASCellNode(viewBlock: { () -> UIView in
+  convenience override init() {
+    self.init(viewBlock: { () -> UIView in
       let activityIndicatorView = UIActivityIndicatorView()
       activityIndicatorView.activityIndicatorViewStyle = .white
       activityIndicatorView.color = UIColor.bwRuby
@@ -30,43 +24,24 @@ class LoaderNode: ASCellNode {
       activityIndicatorView.backgroundColor = UIColor.clear
       return activityIndicatorView
     })
-    super.init()
-    automaticallyManagesSubnodes = true
-    initializeNode()
-  }
 
-  convenience init(nodeHeight: CGFloat) {
-    self.init()
-    self.nodeHeight = nodeHeight
+    DispatchQueue.main.async {
+      self.activityIndicatorView = self.view as! UIActivityIndicatorView
+    }
     initializeNode()
   }
 
   func initializeNode() {
-    style.preferredSize = CGSize(width: usedHeight, height: usedHeight)
-  }
-
-  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    return ASCenterLayoutSpec(centeringOptions: ASCenterLayoutSpecCenteringOptions.XY,
-                              sizingOptions: ASCenterLayoutSpecSizingOptions(rawValue: 0),
-                              child: activityIndicatorNode)
+    style.preferredSize = CGSize(width: LoaderNode.defaultNodeHeight, height: LoaderNode.defaultNodeHeight)
   }
 
   func updateLoaderVisibility(show: Bool) {
     isHidden = !show
     if show {
-      loaderView?.startAnimating()
+      activityIndicatorView?.startAnimating()
     } else {
-      loaderView?.stopAnimating()
+      activityIndicatorView?.stopAnimating()
     }
     setNeedsLayout()
-  }
-
-  func syncAnimationWithState() {
-    let show = !isHidden
-    if show {
-      loaderView?.startAnimating()
-    } else {
-      loaderView?.stopAnimating()
-    }
   }
 }

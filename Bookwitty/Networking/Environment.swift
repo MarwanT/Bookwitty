@@ -31,4 +31,8 @@ struct Environment {
       googleAnalyticsIdentifier = AppKeys.shared.googleAnalyticsIdentifier
     }
   }
+
+  var shipementInfoURL: URL? {
+    return URL(string: "/shipping?layout=mobile", relativeTo: self.baseURL)
+  }
 }

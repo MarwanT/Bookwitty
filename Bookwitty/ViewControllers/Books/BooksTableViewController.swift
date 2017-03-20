@@ -25,6 +25,9 @@ class BooksTableViewController: UITableViewController {
     tableView.register(BookTableViewCell.nib, forCellReuseIdentifier: BookTableViewCell.reuseIdentifier)
     
     initializeComponents()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.BooksListing)
   }
   
   private func initializeComponents() {
@@ -101,5 +104,12 @@ extension BooksTableViewController {
   func hideActivityIndicator() {
     activityIndicator.stopAnimating()
     tableView.tableFooterView = UIView(frame: CGRect.zero)
+  }
+}
+
+extension BooksTableViewController {
+  enum DataLoadingMode {
+    case local(paginator: Paginator)
+    case server(nextPageURL: URL?)
   }
 }

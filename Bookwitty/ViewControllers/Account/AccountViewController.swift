@@ -26,6 +26,8 @@ class AccountViewController: UIViewController {
     initializeComponents()
     applyTheme()
     fillUserInformation()
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.Account)
   }
 
   private func initializeComponents() {
@@ -55,6 +57,8 @@ class AccountViewController: UIViewController {
       }
     case AccountViewModel.Sections.PenNames.rawValue:
       switch indexPath.row % viewModel.numberOfRowsPerPenName {
+      case 0:
+        pushProfileViewController(indexPath: indexPath)
       case 1:
         pushPenNameViewController(indexPath: indexPath)
       default:
@@ -73,7 +77,14 @@ class AccountViewController: UIViewController {
       break
     }
   }
-  
+
+  func pushProfileViewController(indexPath: IndexPath) {
+    guard let penName = viewModel.selectedPenName(atRow: indexPath.row) else {
+      return
+    }
+    pushProfileViewController(penName: penName)
+  }
+
   func pushSettingsViewController() {
     let settingsViewController = Storyboard.Account.instantiate(SettingsViewController.self)
     navigationController?.pushViewController(settingsViewController, animated: true)
@@ -81,6 +92,7 @@ class AccountViewController: UIViewController {
 
   func pushPenNameViewController(indexPath: IndexPath) {
     let penNameViewController = Storyboard.Access.instantiate(PenNameViewController.self)
+    penNameViewController.showNoteLabel = false
     let penName = viewModel.selectedPenName(atRow: indexPath.row)
     penNameViewController.viewModel.initializeWith(penName: penName, andUser: UserManager.shared.signedInUser)
     navigationController?.pushViewController(penNameViewController, animated: true)
@@ -98,6 +110,9 @@ class AccountViewController: UIViewController {
 
     if let url = URL(string: helpUrl) {
       UIApplication.shared.openURL(url)
+
+      //MARK: [Analytics] Screen Name
+      Analytics.shared.send(screenName: Analytics.ScreenNames.Help)
     }
   }
 }

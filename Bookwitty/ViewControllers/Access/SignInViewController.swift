@@ -8,6 +8,7 @@
 
 import UIKit
 import TTTAttributedLabel
+import SwiftLoader
 
 class SignInViewController: UIViewController {
   @IBOutlet weak var stackView: UIStackView!
@@ -16,6 +17,7 @@ class SignInViewController: UIViewController {
   @IBOutlet weak var passwordField: PasswordInputField!
   @IBOutlet weak var signInButton: UIButton!
   @IBOutlet weak var registerLabel: TTTAttributedLabel!
+  @IBOutlet weak var forgotPasswordLabel: TTTAttributedLabel!
   @IBOutlet var separators: [UIView]!
   
   @IBOutlet weak var scrollViewBottomToButtonTopConstraint: NSLayoutConstraint!
@@ -27,6 +29,9 @@ class SignInViewController: UIViewController {
     super.viewDidLoad()
     awakeSelf()
     applyTheme()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.SignIn)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -93,6 +98,14 @@ class SignInViewController: UIViewController {
     
     //Set Delegates
     registerLabel.delegate = self
+
+    let forgotPasswordText = viewModel.styledForgotPasswordText()
+    let range = NSRange(location: 0, length: forgotPasswordText.length)
+    forgotPasswordLabel.attributedText = forgotPasswordText
+    forgotPasswordLabel.linkAttributes = ThemeManager.shared.currentTheme.styleTextLinkAttributes()
+    forgotPasswordLabel.addLink(to: AttributedLinkReference.forgotPassword.url, with: range)
+
+    forgotPasswordLabel.delegate = self
   }
   
   deinit {
@@ -117,12 +130,18 @@ class SignInViewController: UIViewController {
     let passwordValidationResult = passwordField.validateField()
     
     if emailValidationResult.isValid && passwordValidationResult.isValid {
-      showNetworkActivity()
+      showLoader()
+
+      //MARK: [Analytics] Event
+      let event: Analytics.Event = Analytics.Event(category: .Account,
+                                                   action: .SignIn)
+      Analytics.shared.send(event: event)
+
       viewModel.signIn(
         username: emailValidationResult.value!,
         password: passwordValidationResult.value!,
         completion: { (success, error) in
-          self.hideNetworkActivity()
+          self.hideLoader()
           if success {
             NotificationCenter.default.post(name: AppNotification.didSignIn, object: nil)
           } else {
@@ -155,7 +174,7 @@ class SignInViewController: UIViewController {
     self.view.removeConstraint(scrollViewBottomToButtonTopConstraint)
     self.view.addConstraint(scrollViewBottomToSuperviewBottomConstraint)
     UIView.animate(withDuration: 0.44) {
-      self.view.layoutIfNeeded()
+      self.view.layoutSubviews()
     }
   }
   
@@ -163,18 +182,18 @@ class SignInViewController: UIViewController {
     self.view.removeConstraint(scrollViewBottomToSuperviewBottomConstraint)
     self.view.addConstraint(scrollViewBottomToButtonTopConstraint)
     UIView.animate(withDuration: 0.44) { 
-      self.view.layoutIfNeeded()
+      self.view.layoutSubviews()
     }
   }
   
   // MARK: - Network indicator handling
   
-  private func showNetworkActivity() {
-    UIApplication.shared.isNetworkActivityIndicatorVisible = true
+  private func showLoader() {
+    SwiftLoader.show(animated: true)
   }
   
-  private func hideNetworkActivity() {
-    UIApplication.shared.isNetworkActivityIndicatorVisible = false
+  private func hideLoader() {
+    SwiftLoader.hide()
   }
   
   
@@ -227,6 +246,7 @@ extension SignInViewController: TTTAttributedLabelDelegate {
   enum AttributedLinkReference: String {
     case register
     
+    case forgotPassword
     var url: URL {
       get {
         return URL(string: "bookwittyapp://" + self.rawValue)!
@@ -242,6 +262,8 @@ extension SignInViewController: TTTAttributedLabelDelegate {
     switch host {
     case AttributedLinkReference.register.rawValue:
       registerAction()
+    case AttributedLinkReference.forgotPassword.rawValue:
+      pushForgotPasswordViewController()
     default:
       break
     }
@@ -257,5 +279,10 @@ extension SignInViewController: TTTAttributedLabelDelegate {
     } else {
       pushRegisterViewController()
     }
+  }
+
+  fileprivate func pushForgotPasswordViewController() {
+    let forgotPasswordViewController = Storyboard.Account.instantiate(ForgotPasswordViewController.self)
+    navigationController?.pushViewController(forgotPasswordViewController, animated: true)
   }
 }

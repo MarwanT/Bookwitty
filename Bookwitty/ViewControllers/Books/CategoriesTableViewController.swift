@@ -35,6 +35,9 @@ class CategoriesTableViewController: UITableViewController {
     if delegate == nil {
       delegate = self
     }
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.BrowseByCategory)
   }
   
   
@@ -88,6 +91,12 @@ extension CategoriesTableViewController: Themeable {
 
 extension CategoriesTableViewController: CategoriesTableViewDelegate {
   func categoriesTableViewDidSelectCategory(_ viewController: CategoriesTableViewController, category: Category) {
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .CategoriesList,
+                                                 action: .GoToCategory)
+    Analytics.shared.send(event: event)
+
     let categoryViewController = Storyboard.Books.instantiate(CategoryViewController.self)
     categoryViewController.viewModel.category = category
     navigationController?.pushViewController(categoryViewController, animated: true)

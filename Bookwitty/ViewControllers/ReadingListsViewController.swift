@@ -30,9 +30,13 @@ class ReadingListsViewController: ASViewController<ASCollectionNode> {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = Strings.reading_lists()
 
     collectionNode.dataSource = self
     collectionNode.delegate = self
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.ReadingLists)
   }
 
   private func initializeComponents() {

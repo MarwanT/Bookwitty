@@ -22,7 +22,8 @@ class ReadingList: Resource {
   var body: String?
   var penName: PenName?
   var vote: String?
-  
+  var counts: Counts?
+
   var postsCollection: LinkedResourceCollection?
   lazy var postsRelations: [ResourceIdentifier]? = {
     return self.postsCollection?.linkage
@@ -49,6 +50,7 @@ class ReadingList: Resource {
       "title": Attribute().serializeAs("title"),
       "conclusion": Attribute().serializeAs("conclusion"),
       "body": Attribute().serializeAs("body"),
+      "counts" : CountsAttribute().serializeAs("counts"),
       "postsCollection" : ToManyRelationship(Resource.self).serializeAs("posts"),
       "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
       ])

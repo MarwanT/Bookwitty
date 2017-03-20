@@ -21,6 +21,7 @@ class Text: Resource {
   var type: String?
   var penName: PenName?
   var vote: String?
+  var counts: Counts?
   
   override class var resourceType: ResourceType {
     return "texts"
@@ -38,6 +39,7 @@ class Text: Resource {
       "shortDescription": Attribute().serializeAs("short-description"),
       "title": Attribute().serializeAs("title"),
       "type": Attribute().serializeAs("type"),
+      "counts" : CountsAttribute().serializeAs("counts"),
       "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
       ])
   }

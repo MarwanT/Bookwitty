@@ -25,9 +25,16 @@ final class TopicViewModel {
   var author: Author?
 
   fileprivate var latest: [ModelResource] = []
+  fileprivate var latestNextUrl: URL? = nil
+
   fileprivate var editions: [Book] = []
+  fileprivate var editionsNextUrl: URL? = nil
+
   fileprivate var relatedBooks: [Book] = []
+  fileprivate var relatedBooksNextUrl: URL? = nil
+
   fileprivate var followers: [PenName] = []
+  fileprivate var followersNextUrl: URL? = nil
 
   func initialize(withTopic topic: Topic?) {
     self.topic = topic
@@ -55,6 +62,48 @@ final class TopicViewModel {
 
     if let author = author {
       return author.id
+    }
+
+    return nil
+  }
+  
+  var externalySharedContent: [Any]? {
+    var canonicalURL: URL? = nil
+    var title: String? = nil
+    var sharedContent = [Any]()
+    
+    if let topic = topic {
+      canonicalURL = topic.canonicalURL
+      title = topic.title
+    } else if let book = book {
+      canonicalURL = book.canonicalURL
+      title = book.title
+    } else if let author = author {
+      canonicalURL = author.canonicalURL
+      title = author.name
+    }
+    
+    if let canonicalURL = canonicalURL {
+      sharedContent.append(canonicalURL)
+    }
+    if let title = title {
+      sharedContent.append(title)
+    }
+    
+    return sharedContent.count > 0 ? sharedContent : nil
+  }
+
+  var resourceType: String? {
+    if let topic = topic {
+      return topic.registeredResourceType
+    }
+
+    if let book = book {
+      return book.registeredResourceType
+    }
+
+    if let author = author {
+      return author.registeredResourceType
     }
 
     return nil
@@ -106,9 +155,9 @@ final class TopicViewModel {
     let thumbnail = topic.thumbnailImageUrl
     let cover = topic.coverImageUrl
     let counts = topic.counts
-    let followers = String(counting: counts.followers)
-    let posts = String(counting: counts.posts)
-    let contributors = String(counting: counts.contributors)
+    let followers = String(counting: counts?.followers)
+    let posts = String(counting: counts?.posts)
+    let contributors = String(counting: counts?.contributors)
     let contributorsImages: [String]? = topic.contributors?.flatMap({ $0.avatarUrl })
 
     let stats: (String?, String?) = (followers, posts)
@@ -127,9 +176,9 @@ final class TopicViewModel {
     let thumbnail = book.thumbnailImageUrl
     let cover = book.coverImageUrl
     let counts = book.counts
-    let followers = String(counting: counts.followers)
-    let posts = String(counting: counts.posts)
-    let contributors = String(counting: counts.contributors)
+    let followers = String(counting: counts?.followers)
+    let posts = String(counting: counts?.posts)
+    let contributors = String(counting: counts?.contributors)
     let contributorsImages: [String]? = book.contributors?.flatMap({ $0.avatarUrl })
 
     let stats: (String?, String?) = (followers, posts)
@@ -148,9 +197,9 @@ final class TopicViewModel {
     let thumbnail = author.thumbnailImageUrl
     let cover = author.coverImageUrl
     let counts = author.counts
-    let followers = String(counting: counts.followers)
-    let posts = String(counting: counts.posts)
-    let contributors = String(counting: counts.contributors)
+    let followers = String(counting: counts?.followers)
+    let posts = String(counting: counts?.posts)
+    let contributors = String(counting: counts?.contributors)
     let contributorsImages: [String]? = author.contributors?.flatMap({ $0.avatarUrl })
 
     let stats: (String?, String?) = (followers, posts)
@@ -216,6 +265,10 @@ final class TopicViewModel {
 
 //MARK: - Latest
 extension TopicViewModel {
+  var hasNextLatest: Bool {
+    return self.latestNextUrl != nil
+  }
+
   func numberOfLatest() -> Int {
     return latest.count
   }
@@ -228,26 +281,42 @@ extension TopicViewModel {
     return latest[item]
   }
 
-  func getLatest(loadMore: Bool = false) {
+  func getLatest() {
     guard let identifier = identifier else {
       return
     }
 
     _ = GeneralAPI.posts(contentIdentifier: identifier, type: nil) {
-      (success: Bool, resources: [ModelResource]?, error: BookwittyAPIError?) in
+      (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       if success {
-        if !loadMore {
-          self.latest.removeAll()
-        }
-        self.latest += resources ?? []
+        _ = self.handleLatest(results: resources, next: next, reset: true)
         self.callback?(.latest)
       }
     }
+  }
+
+  fileprivate func handleLatest(results: [ModelResource]?, next: URL?, reset: Bool = false) -> [Int]? {
+    guard let results = results else {
+      return nil
+    }
+
+    if reset {
+      self.latest.removeAll()
+    }
+
+    let lastIndex = self.latest.endIndex
+    self.latest += results
+    self.latestNextUrl = next
+    return Array(lastIndex..<self.latest.endIndex)
   }
 }
 
 //MARK: - Editions
 extension TopicViewModel {
+  var hasNextEditions: Bool {
+    return self.editionsNextUrl != nil
+  }
+
   func numberOfEditions() -> Int {
     return editions.count
   }
@@ -266,18 +335,36 @@ extension TopicViewModel {
     }
 
     _ = GeneralAPI.editions(contentIdentifier: identifier) {
-      (success: Bool, resources: [ModelResource]?, error: BookwittyAPIError?) in
+      (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       if success {
-        self.editions.removeAll()
-        self.editions += (resources as? [Book]) ?? []
+        _ = self.handleEdition(results: (resources as? [Book] ?? []), next: next, reset: true)
         self.callback?(.editions)
       }
     }
+  }
+
+  fileprivate func handleEdition(results: [Book]?, next: URL?, reset: Bool = false) -> [Int]? {
+    guard let results = results else {
+      return nil
+    }
+
+    if reset {
+      self.editions.removeAll()
+    }
+
+    let lastIndex = self.editions.endIndex
+    self.editions += results
+    self.editionsNextUrl = next
+    return Array(lastIndex..<self.editions.endIndex)
   }
 }
 
 //MARK: - Related Books
 extension TopicViewModel {
+  var hasNextRelatedBooks: Bool {
+    return self.relatedBooksNextUrl != nil
+  }
+
   func numberOfRelatedBooks() -> Int {
     return relatedBooks.count
   }
@@ -296,19 +383,37 @@ extension TopicViewModel {
     }
 
     _ = GeneralAPI.posts(contentIdentifier: identifier, type: [Book.resourceType]) {
-      (success: Bool, resources: [ModelResource]?, error: BookwittyAPIError?) in
+      (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       if success {
         self.relatedBooks.removeAll()
         let books = resources?.filter({ $0.registeredResourceType == Book.resourceType })
-        self.relatedBooks += (books as? [Book]) ?? []
+        _ = self.handleRelatedBooks(results: (books as? [Book] ?? []), next: next, reset: true)
         self.callback?(.relatedBooks)
       }
     }
+  }
+
+  fileprivate func handleRelatedBooks(results: [Book]?, next: URL?, reset: Bool = false) -> [Int]? {
+    guard let results = results else {
+      return nil
+    }
+
+    if reset {
+      self.relatedBooks.removeAll()
+    }
+    let lastIndex = self.relatedBooks.endIndex
+    self.relatedBooks += results
+    self.relatedBooksNextUrl = next
+    return Array(lastIndex..<self.relatedBooks.endIndex)
   }
 }
 
 //MARK: - Followers
 extension TopicViewModel {
+  var hasNextFollowers: Bool {
+    return self.followersNextUrl != nil
+  }
+
   func numberOfFollowers() -> Int {
     return followers.count
   }
@@ -327,11 +432,73 @@ extension TopicViewModel {
     }
 
     _ = PenNameAPI.followers(contentIdentifier: identifier) {
-      (success: Bool, penNames: [PenName]?, error: BookwittyAPIError?) in
+      (success: Bool, penNames: [PenName]?, next: URL?, error: BookwittyAPIError?) in
       if success {
-        self.followers.removeAll()
-        self.followers += penNames ?? []
+        _ = self.handleFollowers(results: penNames, next: next, reset: true)
         self.callback?(.followers)
+      }
+    }
+  }
+
+  fileprivate func handleFollowers(results: [PenName]?, next: URL?, reset: Bool = false) -> [Int]? {
+    guard let results = results else {
+      return nil
+    }
+
+    if reset {
+      self.followers.removeAll()
+    }
+    let lastIndex = self.followers.endIndex
+    self.followers += results
+    self.followersNextUrl = next
+    return Array(lastIndex..<self.followers.endIndex)
+  }
+}
+
+//MARK: - Next Page
+extension TopicViewModel {
+  func loadNext(for category: CallbackCategory, closure: ((_ success: Bool, _ indices: [Int]?, _ category: CallbackCategory)->())?) {
+    var url: URL? = nil
+    switch category {
+    case .latest:
+      url = self.latestNextUrl
+    case .relatedBooks:
+      url = self.relatedBooksNextUrl
+    case .editions:
+      url = self.editionsNextUrl
+    case .followers:
+      url = self.followersNextUrl
+    default:
+      url = nil
+    }
+
+    guard let next = url else {
+      return
+    }
+
+    _ = GeneralAPI.nextPage(nextPage: next) {
+      (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
+
+      var successful: Bool = false
+      var indices: [Int]? = nil
+
+      defer {
+        closure?(successful, indices, category)
+      }
+
+      successful = resources != nil
+
+      switch category {
+      case .latest:
+        indices = self.handleLatest(results: resources, next: next)
+      case .editions:
+        indices = self.handleEdition(results: resources as? [Book], next: next)
+      case .relatedBooks:
+        indices = self.handleRelatedBooks(results: resources as? [Book], next: next)
+      case .followers:
+        indices = self.handleFollowers(results: resources as? [PenName], next: next)
+      case .content:
+        break
       }
     }
   }
@@ -398,8 +565,7 @@ extension TopicViewModel {
       return
     }
 
-    followRequest(identifier: identifier) {
-      (success: Bool) in
+    _ = GeneralAPI.followPenName(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
       }
@@ -413,8 +579,7 @@ extension TopicViewModel {
       return
     }
 
-    followRequest(identifier: identifier) {
-      (success: Bool) in
+    _ = GeneralAPI.unfollowPenName(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
       }

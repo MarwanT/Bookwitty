@@ -15,37 +15,41 @@ struct NewsfeedAPI {
     return signedAPIRequest(
     target: BookwittyAPI.newsFeed()) {
       (data, statusCode, response, error) in
-      // Ensure the completion block is always called
-      var success: Bool = false
-      var completionError: BookwittyAPIError? = error
-      var resources: [Resource]?
-      var nextPage: URL?
-      defer {
-        completion(success, resources, nextPage, error)
-      }
+      DispatchQueue.global(qos: .background).async {
+        // Ensure the completion block is always called
+        var success: Bool = false
+        var completionError: BookwittyAPIError? = error
+        var resources: [Resource]?
+        var nextPage: URL?
+        defer {
+          DispatchQueue.main.async {
+            completion(success, resources, nextPage, error)
+          }
+        }
 
-      // If status code is not available then break
-      guard let statusCode = statusCode else {
-        completionError = BookwittyAPIError.invalidStatusCode
-        return
-      }
-
-      // If status code != success then break
-      if statusCode != 200 {
-        completionError = BookwittyAPIError.invalidStatusCode
-        return
-      }
-
-      // Parse Data
-      guard let data = data,
-        let parsedData = Parser.parseDataArray(data: data) else {
+        // If status code is not available then break
+        guard let statusCode = statusCode else {
+          completionError = BookwittyAPIError.invalidStatusCode
           return
-      }
+        }
 
-      resources = parsedData.resources
-      success = parsedData.resources != nil
-      completionError = nil
-      nextPage = parsedData.next
+        // If status code != success then break
+        if statusCode != 200 {
+          completionError = BookwittyAPIError.invalidStatusCode
+          return
+        }
+
+        // Parse Data
+        guard let data = data,
+          let parsedData = Parser.parseDataArray(data: data) else {
+            return
+        }
+
+        resources = parsedData.resources
+        success = parsedData.resources != nil
+        completionError = nil
+        nextPage = parsedData.next
+      }
     }
   }
 
@@ -58,35 +62,39 @@ struct NewsfeedAPI {
       var completionError: BookwittyAPIError? = error
       var resources: [Resource]?
       var nextPage: URL?
-      defer {
-        completion(success, resources, nextPage, error)
-      }
-
-      // If status code is not available then break
-      guard let statusCode = statusCode else {
-        completionError = BookwittyAPIError.invalidStatusCode
-        return
-      }
-
-      // If status code != success then break
-      if statusCode != 200 {
-        completionError = BookwittyAPIError.invalidStatusCode
-        return
-      }
-
-      // Retrieve Dictionary from data
-      do {
-        // Parse Data
-        guard let data = data,
-          let parsedData = Parser.parseDataArray(data: data) else {
-            return
+      DispatchQueue.global(qos: .background).async {
+        defer {
+          DispatchQueue.main.async {
+            completion(success, resources, nextPage, error)
+          }
         }
-        //TODO: handle parsedData.next and parsedData.errors if any
 
-        resources = parsedData.resources
-        success = parsedData.resources != nil
-        completionError = nil
-        nextPage = parsedData.next
+        // If status code is not available then break
+        guard let statusCode = statusCode else {
+          completionError = BookwittyAPIError.invalidStatusCode
+          return
+        }
+
+        // If status code != success then break
+        if statusCode != 200 {
+          completionError = BookwittyAPIError.invalidStatusCode
+          return
+        }
+
+        // Retrieve Dictionary from data
+        do {
+          // Parse Data
+          guard let data = data,
+            let parsedData = Parser.parseDataArray(data: data) else {
+              return
+          }
+          //TODO: handle parsedData.next and parsedData.errors if any
+
+          resources = parsedData.resources
+          success = parsedData.resources != nil
+          completionError = nil
+          nextPage = parsedData.next
+        }
       }
     }
   }
@@ -143,6 +151,61 @@ struct NewsfeedAPI {
       }
 
       success = (statusCode == unwitSuccessStatusNoContent || statusCode == unwitSuccessStatusAlreadyDeleted)
+    })
+  }
+
+  public static func dim(contentId: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let dimSuccessStatusNoContent = 204
+
+    return signedAPIRequest(target: BookwittyAPI.dim(contentId: contentId), completion: { (data, statusCode, response, error) in
+      // Ensure the completion block is always called
+      var success: Bool = false
+      var completionError: BookwittyAPIError? = error
+      defer {
+        completion(success, error)
+      }
+
+      // If status code is not available then break
+      guard let statusCode = statusCode else {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      // If status code != success then break
+      if statusCode != dimSuccessStatusNoContent {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      success = statusCode == dimSuccessStatusNoContent
+    })
+  }
+
+  public static func undim(contentId: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let undimSuccessStatusNoContent = 204
+    let undimSuccessStatusAlreadyDeleted = 404
+
+    return signedAPIRequest(target: BookwittyAPI.undim(contentId: contentId), completion: { (data, statusCode, response, error) in
+      // Ensure the completion block is always called
+      var success: Bool = false
+      var completionError: BookwittyAPIError? = error
+      defer {
+        completion(success, error)
+      }
+
+      // If status code is not available then break
+      guard let statusCode = statusCode else {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      // If status code != success then break
+      if statusCode != undimSuccessStatusNoContent && statusCode != undimSuccessStatusAlreadyDeleted {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      success = (statusCode == undimSuccessStatusNoContent || statusCode == undimSuccessStatusAlreadyDeleted)
     })
   }
 }

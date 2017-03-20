@@ -155,27 +155,30 @@ struct UserAPI {
       var success: Bool = false
       var resources: [Resource]? = nil
       var error: BookwittyAPIError? = error
-      defer {
-        completion(success, resources, error)
-      }
-      
-      guard statusCode == successStatusCode else {
-        error = BookwittyAPIError.invalidStatusCode
-        return
-      }
-      
-      if let data = data {
-        // Parse Data
-        guard let parsedData: (resources: [Resource]?, next: URL?, errors: [APIError]?) = Parser.parseDataArray(data: data) else {
-          error = BookwittyAPIError.failToParseData
+      DispatchQueue.global(qos: .background).async {
+        defer {
+          DispatchQueue.main.async {
+            completion(success, resources, error)
+          }
+        }
+
+        guard statusCode == successStatusCode else {
+          error = BookwittyAPIError.invalidStatusCode
           return
         }
-        //TODO: handle parsedData.next and parsedData.errors if any
 
-        resources = parsedData.resources
-        success = resources != nil
-      } else {
-        error = BookwittyAPIError.failToParseData
+        if let data = data {
+          // Parse Data
+          guard let parsedData: (resources: [Resource]?, next: URL?, errors: [APIError]?) = Parser.parseDataArray(data: data) else {
+            error = BookwittyAPIError.failToParseData
+            return
+          }
+          resources = parsedData.resources
+          success = resources != nil
+          //TODO: handle parsedData.next and parsedData.errors if any
+        } else {
+          error = BookwittyAPIError.failToParseData
+        }
       }
     })
   }
@@ -194,6 +197,27 @@ struct UserAPI {
 
       success = statusCode == successStatusCode
     })
+  }
+
+  static func resetPassword(email: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let successStatusCode = 204
+
+    return apiRequest(target: .resetPassword(email: email)) {
+      (data, statusCode, response, error) in
+      var success: Bool = false
+      var error: BookwittyAPIError? = error
+      defer {
+        completion(success, error)
+      }
+
+      // If status code != success then break
+      if statusCode != successStatusCode {
+        error = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      success = true
+    }
   }
 }
 
@@ -246,6 +270,17 @@ extension UserAPI {
         "attributes" : [
           "preference" : preference,
           "value" : value
+        ]
+      ]
+    ]
+    return dictionary
+  }
+
+  static func resetPasswordBody(email: String) -> [String : Any]? {
+    let dictionary = [
+      "data" : [
+        "attributes" : [
+          "email" : email
         ]
       ]
     ]

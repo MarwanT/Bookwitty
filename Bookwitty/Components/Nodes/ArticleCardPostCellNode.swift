@@ -81,6 +81,9 @@ class ArticleCardContentNode: ASDisplayNode {
   private func setupNode() {
     titleNode.maximumNumberOfLines = 3
     descriptionNode.maximumNumberOfLines = 3
+
+    imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
+    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
   }
 
   private func titleInset() -> UIEdgeInsets {
@@ -111,7 +114,6 @@ class ArticleCardContentNode: ASDisplayNode {
     let imageSize = CGSize(width: constrainedSize.max.width, height: 150)
     imageNode.style.preferredSize = imageSize
     imageNode.defaultImage = UIImage(color: ASDisplayNodeDefaultPlaceholderColor(), size: imageSize)
-    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
 
     let imageInsetLayoutSpec = ASInsetLayoutSpec(insets: imageInset(), child: imageNode)
     let titleInsetLayoutSpec = ASInsetLayoutSpec(insets: titleInset(), child: titleNode)

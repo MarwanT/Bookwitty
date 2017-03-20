@@ -23,11 +23,16 @@ class PenNameViewController: UIViewController {
   @IBOutlet weak var topViewToTopConstraint: NSLayoutConstraint!
   let topViewToTopSpace: CGFloat = 40
   let viewModel: PenNameViewModel = PenNameViewModel()
+  
+  var showNoteLabel: Bool = true
 
   override func viewDidLoad() {
     super.viewDidLoad()
     awakeSelf()
     applyTheme()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.EditPenName)
   }
 
   /// Do the required setup
@@ -48,6 +53,8 @@ class PenNameViewController: UIViewController {
     penNameInputField.delegate = self
 
     setupBiographyKeyboardToolbar()
+    
+    noteLabel.isHidden = !showNoteLabel
 
     //Make Cicular View tappable
     let tap = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnCircularView(_:)))
@@ -63,6 +70,9 @@ class PenNameViewController: UIViewController {
       self,
       selector: #selector(PenNameViewController.keyboardWillHide(_:)),
       name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    
+    // TODO: remove the following line
+    profileContainerView.isHidden = true
   }
 
   deinit {
@@ -89,6 +99,12 @@ class PenNameViewController: UIViewController {
 
     let name = penNameInputField.textField.text
     let biography = biographyTextView.text
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .Account,
+                                                 action: .EditPenName)
+    Analytics.shared.send(event: event)
+
     self.viewModel.updatePenNameIfNeeded(name: name, biography: biography) {
       (success: Bool) in
       // TODO: Handle the fail here

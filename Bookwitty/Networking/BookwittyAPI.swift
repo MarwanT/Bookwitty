@@ -29,15 +29,23 @@ public enum BookwittyAPI {
   case penNames
   case wit(contentId: String)
   case unwit(contentId: String)
+  case dim(contentId: String)
+  case undim(contentId: String)
   case absolute(url: URL)
   case discover
   case onBoarding
   case follow(identifier: String)
   case unfollow(identifier: String)
+  case followPenName(identifier: String)
+  case unfollowPenName(identifier: String)
   case content(identifier: String, include: [String]?)
   case followers(identifier: String)
   case posts(identifier: String, type: [String]?)
   case editions(identifier: String)
+  case resetPassword(email: String)
+  case penNameContent(identifier: String)
+  case penNameFollowers(identifier: String)
+  case penNameFollowing(identifier: String)
 }
 
 // MARK: - Target Type
@@ -100,6 +108,10 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(contentId)/wit"
     case .unwit(let contentId):
       path = "/content/\(contentId)/wit"
+    case .dim(let contentId):
+      path = "/content/\(contentId)/dim"
+    case .undim(let contentId):
+      path = "/content/\(contentId)/dim"
     case .discover:
       path = "/curated_collection/discover_page"
     case .onBoarding:
@@ -110,6 +122,10 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(identifier)/follow"
     case .unfollow(let identifier):
       path = "/content/\(identifier)/follow"
+    case .followPenName(let identifier):
+        path = "/pen_names/\(identifier)/follow"
+    case .unfollowPenName(let identifier):
+        path = "/pen_names/\(identifier)/follow"
     case .content(let identifier, _):
       path = "/content/\(identifier)"
     case .followers(let identifier):
@@ -118,6 +134,14 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(identifier)/posts"
     case .editions(let identifier):
       path = "/content/\(identifier)/editions"
+    case .resetPassword:
+      path = "/user/reset_password"
+    case .penNameContent(let identifier):
+      path = "/pen_names/\(identifier)/content"
+    case .penNameFollowers(let identifier):
+      path = "/pen_names/\(identifier)/followers"
+    case .penNameFollowing(let identifier):
+      path = "/pen_names/\(identifier)/following"
     }
     
     return apiBasePath + apiVersion + path
@@ -127,13 +151,13 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .oAuth, .refreshToken:
       return .post
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing:
       return .get
-    case .register, .batch, .updatePreference, .wit, .follow:
+    case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword, .followPenName:
       return .post
     case .updateUser, .updatePenName:
       return .patch
-    case .unwit, .unfollow:
+    case .unwit, .unfollow, .undim, .unfollowPenName:
       return .delete
     }
   }
@@ -170,7 +194,9 @@ extension BookwittyAPI: TargetType {
       return UserAPI.updatePostBody(preference: preference, value: value)
     case .posts(_, let type):
       return GeneralAPI.postsParameters(type: type)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions:
+    case .resetPassword(let email):
+      return UserAPI.resetPasswordBody(email: email)
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName:
       return nil
     }
   }
@@ -216,6 +242,8 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .user, .register:
       return [PenName.resourceType]
+    case .batch, .Search, .discover, .penNameContent, .penNameFollowing, .posts:
+      return ["pen-name"]
     case .newsFeed:
       return ["pen-name", "contributors", "commenters"]
     case .content(_, let include):

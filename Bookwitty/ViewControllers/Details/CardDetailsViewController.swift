@@ -22,11 +22,62 @@ class CardDetailsViewController: GenericNodeViewController {
     viewModel = CardDetailsViewModel(resource: resource)
     super.init(node: node, title: title)
     node.delegate = self
+    node.updateDimVisibility(visible: true)
+    viewControllerTitleForResouce(resource: resource)
+  }
+  
+  func viewControllerTitleForResouce(resource: ModelResource) {
+
+    //MARK: [Analytics] Screen Name
+    let name: Analytics.ScreenName
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      title = Strings.image()
+      name = Analytics.ScreenNames.Image
+    case Quote.resourceType:
+      title = Strings.quote()
+      name = Analytics.ScreenNames.Quote
+    case Video.resourceType:
+      title = Strings.video()
+      name = Analytics.ScreenNames.Video
+    case Link.resourceType:
+      title = Strings.link()
+      name = Analytics.ScreenNames.Link
+    case Author.resourceType:
+      title = Strings.author()
+      name = Analytics.ScreenNames.Author
+    case ReadingList.resourceType:
+      title = Strings.reading_list()
+      name = Analytics.ScreenNames.ReadingList
+    case Topic.resourceType:
+      title = Strings.topic()
+      name = Analytics.ScreenNames.Topic
+    case Text.resourceType:
+      title = Strings.article()
+      name = Analytics.ScreenNames.Article
+    case Book.resourceType:
+      title = Strings.book()
+      name = Analytics.ScreenNames.BookDetails
+    default:
+      title = nil
+      name = Analytics.ScreenNames.Default
+    }
+
+    Analytics.shared.send(screenName: name)
   }
 }
 
 // MARK - BaseCardPostNode Delegate
 extension CardDetailsViewController: BaseCardPostNodeDelegate {
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    if let resource = viewModel.resource as? ModelCommonProperties,
+      let penName = resource.penName {
+      pushProfileViewController(penName: penName)
+    } else if let penName = viewModel.resource as? PenName  {
+      pushProfileViewController(penName: penName)
+    }
+  }
+  
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
     switch(action) {
     case .wit:
@@ -37,13 +88,65 @@ extension CardDetailsViewController: BaseCardPostNodeDelegate {
       viewModel.unwitContent() { (success) in
         didFinishAction?(success)
       }
+    case .dim:
+      viewModel.dimContent(completionBlock: { (success) in
+        didFinishAction?(success)
+      })
+    case .undim:
+      viewModel.undimContent(completionBlock: { (success) in
+        didFinishAction?(success)
+      })
     case .share:
       if let sharingInfo: [String] = viewModel.sharingContent() {
         presentShareSheet(shareContent: sharingInfo)
+      }
+    case .follow:
+      viewModel.follow() { (success) in
+        didFinishAction?(success)
+      }
+    case .unfollow:
+      viewModel.unfollow() { (success) in
+        didFinishAction?(success)
       }
     default:
       //TODO: handle comment
       break
     }
+
+    //MARK: [Analytics] Event
+    let category: Analytics.Category
+    switch viewModel.resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+    default:
+      category = .Default
+    }
+
+    let name: String = (viewModel.resource as? ModelCommonProperties)?.title ?? ""
+    let analyticsAction = Analytics.Action.actionFrom(cardAction: action)
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: analyticsAction,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 }

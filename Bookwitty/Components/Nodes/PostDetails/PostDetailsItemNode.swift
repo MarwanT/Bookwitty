@@ -14,12 +14,29 @@ protocol PostDetailsItemNodeDataSource {
   func postDetailsItemCount(_ postDetailsItem: PostDetailsItemNode) -> Int
 }
 
-class PostDetailsItemNode: ASDisplayNode {
+protocol PostDetailsItemNodeDelegate {
+  func postDetails(_ postDetailsItem: PostDetailsItemNode, node: ASDisplayNode, didSelectItemAt index: Int)
+}
+
+protocol ItemNodeTapDelegate {
+  func didTapOn(node: ASDisplayNode)
+}
+
+/**
+ * Every Node that uses 'PostDetailsItemNode' should
+ * conform NodeTapProtocol to be able to delegate its tap.
+ */
+protocol NodeTapProtocol {
+  var tapDelegate: ItemNodeTapDelegate? { get set }
+}
+
+class PostDetailsItemNode: ASDisplayNode, ItemNodeTapDelegate {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
 
   var nodes: [ASDisplayNode]
   var dataSource: PostDetailsItemNodeDataSource!
+  var delegate: PostDetailsItemNodeDelegate?
 
   override init() {
     nodes = []
@@ -40,6 +57,8 @@ class PostDetailsItemNode: ASDisplayNode {
 
     for index in 0..<nodesCount {
       let node = dataSource.postDetailsItem(self, nodeForItemAt: index)
+      var tappableNode = (node as? NodeTapProtocol)
+      tappableNode?.tapDelegate = self
       nodes.append(node)
     }
     setNeedsLayout()
@@ -53,17 +72,34 @@ class PostDetailsItemNode: ASDisplayNode {
     vStack.children = nodes
     return vStack
   }
+
+  func index(of node: ASDisplayNode) -> Int? {
+    for (index, item) in nodes.enumerated() {
+      if node === item {
+        return index
+      }
+    }
+    return nil
+  }
+
+  func didTapOn(node: ASDisplayNode) {
+    guard let indexOfTappedNode = index(of: node) else {
+      return
+    }
+    delegate?.postDetails(self, node: node, didSelectItemAt: indexOfTappedNode)
+  }
 }
 
 protocol PostDetailItemNodeDelegate {
-  func postDetailItemNodeButtonTouchUpInside(PostDetailItemNode: PostDetailItemNode, button: ASButtonNode)
+  func postDetailItemNodeButtonTouchUpInside(postDetailItemNode: PostDetailItemNode, button: ASButtonNode)
 }
 
-class PostDetailItemNode: ASDisplayNode {
+class PostDetailItemNode: ASCellNode, NodeTapProtocol {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   private let largeImageHeight: CGFloat = 120.0
-  private let smallImageHeight: CGFloat = 90.0
+  private let smallImageHeight: CGFloat = 100.0
+  private let imageWidth: CGFloat = 90.0
 
   let imageNode: ASNetworkImageNode
   let headLineNode: ASTextNode
@@ -74,6 +110,7 @@ class PostDetailItemNode: ASDisplayNode {
   let button: ASButtonNode
 
   var delegate: PostDetailItemNodeDelegate?
+  var tapDelegate: ItemNodeTapDelegate?
   var smallImage: Bool = true
   var showsSubheadline: Bool = true
   var showsButton: Bool = false
@@ -119,7 +156,7 @@ class PostDetailItemNode: ASDisplayNode {
   var body: String? {
     didSet {
       if let body = body {
-        bodyNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.body).append(text: body).attributedString
+        bodyNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.body).append(text: body, fromHtml: true).attributedString
       } else {
         bodyNode.attributedText = nil
       }
@@ -139,6 +176,7 @@ class PostDetailItemNode: ASDisplayNode {
       setNeedsLayout()
     }
   }
+
   private override init() {
     imageNode = ASNetworkImageNode()
     headLineNode = ASTextNode()
@@ -159,6 +197,18 @@ class PostDetailItemNode: ASDisplayNode {
     initializeNode()
   }
 
+  override func didLoad() {
+    super.didLoad()
+    if tapDelegate != nil {
+      let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnView(_:)))
+      view.addGestureRecognizer(tapGesture)
+    }
+  }
+
+  func didTapOnView(_ sender: Any?) {
+    tapDelegate?.didTapOn(node: self)
+  }
+
   func initializeNode() {
     style.width = ASDimensionMake(UIScreen.main.bounds.width)
     style.height = ASDimensionAuto
@@ -169,8 +219,13 @@ class PostDetailItemNode: ASDisplayNode {
     separator.style.flexGrow = 1
 
     //Image Setup
-    imageNode.style.preferredSize = CGSize(width: smallImageHeight, height: smallImage ? smallImageHeight : largeImageHeight)
-    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
+    let imageSize = CGSize(width: imageWidth, height: smallImage ? smallImageHeight : largeImageHeight)
+    imageNode.style.width = ASDimensionMake(imageSize.width)
+    imageNode.style.height = ASDimensionMake(imageSize.height)
+    imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
+    imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
+    imageNode.contentMode = .scaleToFill
+
     //Body Setup
     bodyNode.maximumNumberOfLines = 7
     //HeadLine Setup
@@ -194,7 +249,7 @@ class PostDetailItemNode: ASDisplayNode {
   }
 
   func postDetailItemNodeButtonTouchUpInside() {
-    delegate?.postDetailItemNodeButtonTouchUpInside(PostDetailItemNode: self, button: button)
+    delegate?.postDetailItemNodeButtonTouchUpInside(postDetailItemNode: self, button: button)
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

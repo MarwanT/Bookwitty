@@ -15,6 +15,7 @@ internal final class AppKeys {
   let environmentString: String
   let bookwittyServerBaseURLAbsoluteString: String
   let googleAnalyticsIdentifier: String
+  let iframelyKey: String
   
   static let shared = AppKeys()
   
@@ -24,6 +25,7 @@ internal final class AppKeys {
     self.environmentString = keys.bookwittyEnvironment
     self.bookwittyServerBaseURLAbsoluteString = keys.bookwittyServerBaseURL
     self.googleAnalyticsIdentifier = keys.bookwittyGoogleAnalyticsIdentifier
+    self.iframelyKey = keys.bookwittyIFramelyKey
   }
   
   private convenience init() {

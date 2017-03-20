@@ -33,7 +33,6 @@ class DisclosureNodeCell: ASCellNode {
     style.height = ASDimensionMake(Configuration.nodeHeight)
     imageNode.image = #imageLiteral(resourceName: "rightArrow")
     separatorInset = configuration.separatorInsets
-    selectedBackgroundView = configuration.backgroundSelectionView
   }
   
   // MARK: Helpers
@@ -79,6 +78,11 @@ class DisclosureNodeCell: ASCellNode {
     }
 
     return layoutElements
+  }
+  
+  override func layout() {
+    super.layout()
+    selectedBackgroundView = configuration.backgroundSelectionView
   }
   
   // MARK: Helpers

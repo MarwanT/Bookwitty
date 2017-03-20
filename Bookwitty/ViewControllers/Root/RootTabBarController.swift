@@ -156,6 +156,12 @@ extension RootTabBarController: Themeable {
 //MARK: - Notifications
 extension RootTabBarController {
   func signOut(notificaiton: Notification) {
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .Account,
+                                                 action: .SignOut)
+    Analytics.shared.send(event: event)
+
     AccessToken.shared.deleteToken()
     presentIntroductionOrSignInViewController()
     UserManager.shared.deleteSignedInUser()
@@ -177,9 +183,7 @@ extension RootTabBarController {
   }
   
   func showRootViewController() {
-    self.dismiss(animated: true) {
-      self.dismissOverlay()
-    }
+    self.dismiss(animated: true)
   }
 }
 

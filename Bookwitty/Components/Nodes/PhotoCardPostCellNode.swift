@@ -46,6 +46,8 @@ class PhotoCardContentNode: ASDisplayNode {
     imageNode = ASNetworkImageNode()
     super.init()
     addSubnode(imageNode)
+    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
+    imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
   }
 
   private func imageInset() -> UIEdgeInsets {
@@ -62,7 +64,6 @@ class PhotoCardContentNode: ASDisplayNode {
     let imageSize = CGSize(width: constrainedSize.max.width, height: 150)
     imageNode.style.preferredSize = imageSize
     imageNode.defaultImage = UIImage(color: ASDisplayNodeDefaultPlaceholderColor(), size: imageSize)
-    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
 
     let imageInsetLayoutSpec = ASInsetLayoutSpec(insets: imageInset(), child: imageNode)
 

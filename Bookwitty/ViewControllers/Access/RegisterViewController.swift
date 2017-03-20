@@ -9,6 +9,7 @@
 import UIKit
 import EMCCountryPickerController
 import TTTAttributedLabel
+import SwiftLoader
 
 class RegisterViewController: UIViewController {
   @IBOutlet weak var stackView: UIStackView!
@@ -31,6 +32,9 @@ class RegisterViewController: UIViewController {
     super.viewDidLoad()
     awakeSelf()
     applyTheme()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.Register)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -128,6 +132,7 @@ class RegisterViewController: UIViewController {
     passwordField.validationBlock = passwordValidation()
     firstNameField.validationBlock = notEmptyValidation()
     lastNameField.validationBlock = notEmptyValidation()
+    countryField.validationBlock = notEmptyValidation()
 
     emailField.delegate = self
     passwordField.delegate = self
@@ -160,15 +165,25 @@ class RegisterViewController: UIViewController {
     let passwordValidationResult = passwordField.validateField()
     let firstNameValidationResult = firstNameField.validateField()
     let lastNameValidationResult = lastNameField.validateField()
+    let countryValidationResult = countryField.validateField()
     if(emailValidationResult.isValid && passwordValidationResult.isValid
-      && firstNameValidationResult.isValid && lastNameValidationResult.isValid) {
+      && firstNameValidationResult.isValid && lastNameValidationResult.isValid
+      && countryValidationResult.isValid) {
       let email = emailValidationResult.value!
       let password = passwordValidationResult.value!
       let firstName = firstNameValidationResult.value!
       let lastName = lastNameValidationResult.value!
       let country = viewModel.country!.code
 
+      showLoader()
+      
+      //MARK: [Analytics] Event
+      let event: Analytics.Event = Analytics.Event(category: .Account,
+                                                   action: .Register)
+      Analytics.shared.send(event: event)
+
       viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, completionBlock: { (success: Bool, user: User?, error: BookwittyAPIError?) in
+        self.hideLoader()
         let successBlock = {
           UserManager.shared.shouldEditPenName = true
           UserManager.shared.shouldDisplayOnboarding = true
@@ -229,10 +244,19 @@ class RegisterViewController: UIViewController {
       return text?.isValidText() ?? false
     }
   }
+  
+  // MARK: - Network indicator handling
+  private func showLoader() {
+    SwiftLoader.show(animated: true)
+  }
+  
+  private func hideLoader() {
+    SwiftLoader.hide()
+  }
+
 
   // MARK: - Keyboard Handling
   func keyboardWillShow(_ notification: NSNotification) {
-
     if let value = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
       let frame = value.cgRectValue
       scrollViewBottomToSuperviewBottomConstraint.constant = -frame.height
@@ -241,7 +265,7 @@ class RegisterViewController: UIViewController {
     self.view.removeConstraint(scrollViewBottomToLabelTopConstraint)
     self.view.addConstraint(scrollViewBottomToSuperviewBottomConstraint)
     UIView.animate(withDuration: 0.44) {
-      self.view.layoutIfNeeded()
+      self.view.layoutSubviews()
     }
   }
 
@@ -249,7 +273,7 @@ class RegisterViewController: UIViewController {
     self.view.removeConstraint(scrollViewBottomToSuperviewBottomConstraint)
     self.view.addConstraint(scrollViewBottomToLabelTopConstraint)
     UIView.animate(withDuration: 0.44) {
-      self.view.layoutIfNeeded()
+      self.view.layoutSubviews()
     }
   }
 }
@@ -262,6 +286,9 @@ extension RegisterViewController: InformativeInputFieldDelegate {
     countryPickerViewController.flagSize = 44
     
     self.navigationController?.pushViewController(countryPickerViewController, animated: true)
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.CountryList)
   }
 }
 
@@ -280,6 +307,19 @@ extension RegisterViewController:  EMCCountryDelegate {
 extension RegisterViewController: TTTAttributedLabelDelegate {
   func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
     WebViewController.present(url: url, inViewController: self)
+
+    let name: Analytics.ScreenName
+    switch url.relativeString {
+    case AttributedLinkReference.termsOfUse.rawValue:
+      name = Analytics.ScreenNames.TermsOfUse
+    case AttributedLinkReference.privacyPolicy.rawValue:
+      name = Analytics.ScreenNames.PrivacyPolicy
+    default:
+      name = Analytics.ScreenNames.Default
+    }
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: name)
   }
 }
 
@@ -314,8 +354,8 @@ extension RegisterViewController: InputFieldDelegate {
 }
 
 enum AttributedLinkReference: String {
- case termsOfUse = "/terms?layout=app"
- case privacyPolicy = "/privacy?layout=app"
+ case termsOfUse = "/terms?layout=mobile"
+ case privacyPolicy = "/privacy?layout=mobile"
 
   var url: URL {
     get {

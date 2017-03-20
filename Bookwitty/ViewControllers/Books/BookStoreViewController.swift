@@ -8,6 +8,7 @@
 
 import UIKit
 import FLKAutoLayout
+import Spine
 
 class BookStoreViewController: UIViewController {
   @IBOutlet weak var stackView: UIStackView!
@@ -56,6 +57,9 @@ class BookStoreViewController: UIViewController {
       refreshController.beginRefreshing()
       scrollView.contentOffset = offset
     }
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.BookStorefront)
   }
   
   private func initializeNavigationItems() {
@@ -170,9 +174,8 @@ class BookStoreViewController: UIViewController {
       banner.imageURL = viewModel.bannerImageURL
       banner.title = viewModel.bannerTitle
       banner.subtitle = viewModel.bannerSubtitle
-      UIView.animate(withDuration: 2, animations: {
-        self.stackView.addArrangedSubview(self.banner)
-      })
+      stackView.addArrangedSubview(self.banner)
+      banner.alignLeading("0", trailing: "0", toView: self.stackView)
     }
   }
   
@@ -258,6 +261,11 @@ class BookStoreViewController: UIViewController {
   }
   
   fileprivate func pushCategoriesViewController() {
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .BookStorefront,
+                                                 action: .ViewAllCategories)
+    Analytics.shared.send(event: event)
+
     let categoriesViewController = Storyboard.Books.instantiate(CategoriesTableViewController.self)
     self.navigationController?.pushViewController(categoriesViewController, animated: true)
   }
@@ -274,13 +282,23 @@ class BookStoreViewController: UIViewController {
     self.present(alert, animated: true, completion: nil)
   }
   
-  func pushBooksTableView(with books: [Book]? = nil, loadingMode: DataLoadingMode? = nil) {
+  func pushBooksTableView(with books: [Book]? = nil, loadingMode: BooksTableViewController.DataLoadingMode? = nil) {
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .BookStorefront,
+                                                 action: .ViewAllBooks)
+    Analytics.shared.send(event: event)
+
     let booksTableViewController = Storyboard.Books.instantiate(BooksTableViewController.self)
     booksTableViewController.initialize(with: books, loadingMode: loadingMode)
     navigationController?.pushViewController(booksTableViewController, animated: true)
   }
 
   fileprivate func pushReadingListsViewController(with readingLists: [ReadingList]) {
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .BookStorefront,
+                                                 action: .ViewAllReadingLists)
+    Analytics.shared.send(event: event)
+
     let readingListsViewController = ReadingListsViewController()
     readingListsViewController.initialize(with: readingLists)
     navigationController?.pushViewController(readingListsViewController, animated: true)
@@ -315,16 +333,17 @@ extension BookStoreViewController: UICollectionViewDataSource {
   }
 }
 
-// MARK: Featured Content Collection View Delegate
-
+// MARK: - Featured Content Collection View Delegate
 extension BookStoreViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    // TODO: Handle featured content selection
+    guard let modelResource = viewModel.featuredResource(for: indexPath) else {
+      return
+    }
+    actionForCard(resource: modelResource)
   }
 }
 
 // MARK: - Table View Delegates
-
 extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
   
   // MARK: Table View Data Source
@@ -453,7 +472,10 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
     tableView.deselectRow(at: indexPath, animated: true)
     
     if tableView === bookwittySuggestsTableView {
-      
+      guard let modelResource = viewModel.suggestedReadingList(for: indexPath) else {
+        return
+      }
+      actionForCard(resource: modelResource)
     } else {
       guard let book = viewModel.book(for: indexPath) else {
         return
@@ -464,7 +486,6 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 // MARK: - Disclosure view delegate
-
 extension BookStoreViewController: DisclosureViewDelegate {
   func disclosureViewTapped(_ disclosureView: DisclosureView) {
     switch disclosureView {
@@ -477,5 +498,179 @@ extension BookStoreViewController: DisclosureViewDelegate {
     default:
       break
     }
+  }
+}
+
+// MARK: - Actions For Selected Resource
+extension BookStoreViewController {
+  func actionForCard(resource: ModelResource?) {
+    guard let resource = resource else {
+      return
+    }
+    let registeredType = resource.registeredResourceType
+    
+    switch registeredType {
+    case Image.resourceType:
+      actionForImageResourceType(resource: resource)
+    case Author.resourceType:
+      actionForAuthorResourceType(resource: resource)
+    case ReadingList.resourceType:
+      actionForReadingListResourceType(resource: resource)
+    case Topic.resourceType:
+      actionForTopicResourceType(resource: resource)
+    case Text.resourceType:
+      actionForTextResourceType(resource: resource)
+    case Quote.resourceType:
+      actionForQuoteResourceType(resource: resource)
+    case Video.resourceType:
+      actionForVideoResourceType(resource: resource)
+    case Audio.resourceType:
+      actionForAudioResourceType(resource: resource)
+    case Link.resourceType:
+      actionForLinkResourceType(resource: resource)
+    case Book.resourceType:
+      actionForBookResourceType(resource: resource)
+    case PenName.resourceType:
+      if let penName = resource as? PenName {
+        pushProfileViewController(penName: penName)
+      }
+    default:
+      print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")
+      break
+    }
+  }
+  
+  func pushPostDetailsViewController(resource: Resource) {
+    let nodeVc = PostDetailsViewController(resource: resource)
+    self.navigationController?.pushViewController(nodeVc, animated: true)
+  }
+  
+  func pushGenericViewControllerCard(resource: Resource, title: String? = nil) {
+    guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+      return
+    }
+    let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
+    navigationController?.pushViewController(genericVC, animated: true)
+  }
+  
+  fileprivate func actionForImageResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Image)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Image,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushGenericViewControllerCard(resource: resource)
+  }
+  
+  fileprivate func actionForAuthorResourceType(resource: ModelResource) {
+    guard resource is Author else {
+      return
+    }
+
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Author)?.name ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Author,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(withAuthor: resource as? Author)
+    navigationController?.pushViewController(topicViewController, animated: true)
+  }
+  
+  fileprivate func actionForReadingListResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? ReadingList)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .ReadingList,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushPostDetailsViewController(resource: resource)
+  }
+  
+  fileprivate func actionForTopicResourceType(resource: ModelResource) {
+    guard resource is Topic else {
+      return
+    }
+
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Topic)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Topic,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(withTopic: resource as? Topic)
+    navigationController?.pushViewController(topicViewController, animated: true)
+  }
+  
+  fileprivate func actionForTextResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Text)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Text,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushPostDetailsViewController(resource: resource)
+  }
+  
+  fileprivate func actionForQuoteResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Quote)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Quote,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushGenericViewControllerCard(resource: resource)
+  }
+  
+  fileprivate func actionForVideoResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Video)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Video,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushGenericViewControllerCard(resource: resource)
+  }
+  
+  fileprivate func actionForAudioResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Audio)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Audio,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushGenericViewControllerCard(resource: resource)
+  }
+  
+  fileprivate func actionForLinkResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Link)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Link,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushGenericViewControllerCard(resource: resource)
+  }
+  
+  fileprivate func actionForBookResourceType(resource: ModelResource) {
+    guard resource is Book else {
+      return
+    }
+
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Book)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .TopicBook,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(withBook: resource as? Book)
+    navigationController?.pushViewController(topicViewController, animated: true)
   }
 }

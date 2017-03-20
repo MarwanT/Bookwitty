@@ -9,475 +9,616 @@
 import UIKit
 
 class Strings {
-  class func about_this_book() -> String {
+  static func about_this_book() -> String {
     return localizedString(key: "about_this_book")
   }
   
-  class func account() -> String {
+  static func account() -> String {
     return localizedString(key: "account")
   }
-
-  class func address_book() -> String {
+  
+  static func address_book() -> String {
     return localizedString(key: "address_book")
   }
   
-  class func author() -> String {
+  static func article() -> String {
+    return localizedString(key: "article")
+  }
+  
+  static func author() -> String {
     return localizedString(key: "author")
   }
   
-  class func bag() -> String {
+  static func bag() -> String {
     return localizedString(key: "bag")
   }
   
-  class func book_categories() -> String {
+  static func book() -> String {
+    return localizedString(key: "book")
+  }
+  
+  static func book_categories() -> String {
     return localizedString(key: "book_categories")
   }
   
-  class func book_details() -> String {
+  static func book_details() -> String {
     return localizedString(key: "book_details")
   }
-
-  class func books() -> String {
+  
+  static func book_recommended_in_reading_lists() -> String {
+    return localizedString(key: "book_recommended_in_reading_lists")
+  }
+  
+  static func books() -> String {
     return localizedString(key: "books")
   }
-
-  class func bookwitty_suggests() -> String {
+  
+  static func bookwitty_suggests() -> String {
     return localizedString(key: "bookwitty_suggests")
   }
-
-  class func buy_this_book() -> String {
+  
+  static func buy_this_book() -> String {
     return localizedString(key: "buy_this_book")
   }
   
-  class func cancel() -> String {
+  static func cancel() -> String {
     return localizedString(key: "cancel")
   }
-
-  class func categories() -> String {
+  
+  static func categories() -> String {
     return localizedString(key: "categories")
   }
-
-  class func category() -> String {
+  
+  static func category() -> String {
     return localizedString(key: "category")
   }
-
-  class func change_password() -> String {
+  
+  static func change_password() -> String {
     return localizedString(key: "change_password")
   }
-
-  class func change_password_error() -> String {
+  
+  static func change_password_error() -> String {
     return localizedString(key: "change_password_error")
   }
-
-  class func change_password_success() -> String {
+  
+  static func change_password_success() -> String {
     return localizedString(key: "change_password_success")
   }
-
-  class func choose_from_library() -> String {
+  
+  static func choose_from_library() -> String {
     return localizedString(key: "choose_from_library")
   }
-
-  class func choose_pen_name() -> String {
+  
+  static func choose_pen_name() -> String {
     return localizedString(key: "choose_pen_name")
   }
-
-  class func contact_us() -> String {
+  
+  static func clear_profile_photo() -> String {
+    return localizedString(key: "clear_profile_photo")
+  }
+  
+  static func contact_us() -> String {
     return localizedString(key: "contact_us")
   }
-
-  class func `continue`() -> String {
+  
+  static func `continue`() -> String {
     return localizedString(key: "continue")
   }
-
-  class func contributors() -> String {
+  
+  static func contributors() -> String {
     return localizedString(key: "contributors")
   }
-
-  class func country() -> String {
-    return localizedString(key: "country")
-  }
-
-  class func country_region() -> String {
-    return localizedString(key: "country_region")
-  }
-
-  class func create_new_pen_name() -> String {
-    return localizedString(key: "create_new_pen_name")
-  }
-
-  class func current_password() -> String {
-    return localizedString(key: "current_password")
-  }
-
-  class func customer_service() -> String {
-    return localizedString(key: "customer_service")
-  }
-
-  class func done() -> String {
-    return localizedString(key: "done")
-  }
-
-  class func dont_worry_you_can_change_it_later() -> String {
-    return localizedString(key: "dont_worry_you_can_change_it_later")
-  }
-
-  class func drafts() -> String {
-    return localizedString(key: "drafts")
-  }
-
-  class func edit_pen_name() -> String {
-    return localizedString(key: "edit_pen_name")
-  }
-
-  class func email() -> String {
-    return localizedString(key: "email")
-  }
-
-  class func email_already_registered() -> String {
-    return localizedString(key: "email_already_registered")
-  }
-
-  class func email_invalid() -> String {
-    return localizedString(key: "email_invalid")
-  }
-
-  class func email_notifications() -> String {
-    return localizedString(key: "email_notifications")
-  }
-
-  class func enter_your_email() -> String {
-    return localizedString(key: "enter_your_email")
-  }
-
-  class func enter_your_first_name() -> String {
-    return localizedString(key: "enter_your_first_name")
-  }
-
-  class func enter_your_last_name() -> String {
-    return localizedString(key: "enter_your_last_name")
-  }
-
-  class func enter_your_password() -> String {
-    return localizedString(key: "enter_your_password")
-  }
-
-  class func enter_your_pen_name() -> String {
-    return localizedString(key: "enter_your_pen_name")
-  }
-
-  class func error_loading_data() -> String {
-    return localizedString(key: "error_loading_data")
-  }
-
-  class func couldnt_load_your_data() -> String {
+  
+  static func couldnt_load_your_data() -> String {
     return localizedString(key: "couldnt_load_your_data")
   }
-
-  class func first_name() -> String {
+  
+  static func country() -> String {
+    return localizedString(key: "country")
+  }
+  
+  static func country_region() -> String {
+    return localizedString(key: "country_region")
+  }
+  
+  static func create_new_pen_name() -> String {
+    return localizedString(key: "create_new_pen_name")
+  }
+  
+  static func current_password() -> String {
+    return localizedString(key: "current_password")
+  }
+  
+  static func customer_service() -> String {
+    return localizedString(key: "customer_service")
+  }
+  
+  static func dim() -> String {
+    return localizedString(key: "dim")
+  }
+  
+  static func dimmed() -> String {
+    return localizedString(key: "dimmed")
+  }
+  
+  static func discover() -> String {
+    return localizedString(key: "discover")
+  }
+  
+  static func done() -> String {
+    return localizedString(key: "done")
+  }
+  
+  static func dont_worry_you_can_change_it_later() -> String {
+    return localizedString(key: "dont_worry_you_can_change_it_later")
+  }
+  
+  static func drafts() -> String {
+    return localizedString(key: "drafts")
+  }
+  
+  static func edit_pen_name() -> String {
+    return localizedString(key: "edit_pen_name")
+  }
+  
+  static func editions() -> String {
+    return localizedString(key: "editions")
+  }
+  
+  static func email() -> String {
+    return localizedString(key: "email")
+  }
+  
+  static func email_already_registered() -> String {
+    return localizedString(key: "email_already_registered")
+  }
+  
+  static func email_invalid() -> String {
+    return localizedString(key: "email_invalid")
+  }
+  
+  static func email_notifications() -> String {
+    return localizedString(key: "email_notifications")
+  }
+  
+  static func empty_error_description() -> String {
+    return localizedString(key: "empty_error_description")
+  }
+  
+  static func empty_error_title() -> String {
+    return localizedString(key: "empty_error_title")
+  }
+  
+  static func enter_your_email() -> String {
+    return localizedString(key: "enter_your_email")
+  }
+  
+  static func enter_your_first_name() -> String {
+    return localizedString(key: "enter_your_first_name")
+  }
+  
+  static func enter_your_last_name() -> String {
+    return localizedString(key: "enter_your_last_name")
+  }
+  
+  static func enter_your_password() -> String {
+    return localizedString(key: "enter_your_password")
+  }
+  
+  static func enter_your_pen_name() -> String {
+    return localizedString(key: "enter_your_pen_name")
+  }
+  
+  static func error_loading_data() -> String {
+    return localizedString(key: "error_loading_data")
+  }
+  
+  static func first_name() -> String {
     return localizedString(key: "first_name")
   }
-
-  class func first_name_invalid() -> String {
+  
+  static func first_name_invalid() -> String {
     return localizedString(key: "first_name_invalid")
   }
   
-  class func format() -> String {
+  static func follow() -> String {
+    return localizedString(key: "follow")
+  }
+  
+  static func follow_topics() -> String {
+    return localizedString(key: "follow_topics")
+  }
+  
+  static func followed() -> String {
+    return localizedString(key: "followed")
+  }
+  
+  static func follower() -> String {
+    return localizedString(key: "follower")
+  }
+  
+  static func followers() -> String {
+    return localizedString(key: "followers")
+  }
+  
+  static func following() -> String {
+    return localizedString(key: "following")
+  }
+  
+  static func forgot_password() -> String {
+    return localizedString(key: "forgot_password")
+  }
+  
+  static func forgot_your_password() -> String {
+    return localizedString(key: "forgot_your_password")
+  }
+  
+  static func format() -> String {
     return localizedString(key: "format")
   }
   
-  class func free_shipping_internationally() -> String {
+  static func free_shipping_internationally() -> String {
     return localizedString(key: "free_shipping_internationally")
   }
-
-  class func help() -> String {
+  
+  static func help() -> String {
     return localizedString(key: "help")
   }
   
-  class func imprint() -> String {
+  static func image() -> String {
+    return localizedString(key: "image")
+  }
+  
+  static func imprint() -> String {
     return localizedString(key: "imprint")
   }
   
-  class func in_stock() -> String {
+  static func in_stock() -> String {
     return localizedString(key: "in_stock")
   }
-
-  class func interests() -> String {
+  
+  static func interests() -> String {
     return localizedString(key: "interests")
   }
   
-  class func isbn10() -> String {
+  static func isbn10() -> String {
     return localizedString(key: "isbn10")
   }
-
-  class func isbn13() -> String {
+  
+  static func isbn13() -> String {
     return localizedString(key: "isbn13")
   }
   
-  class func language_of_text() -> String {
+  static func language() -> String {
+    return localizedString(key: "language")
+  }
+  
+  static func language_of_text() -> String {
     return localizedString(key: "language_of_text")
   }
   
-  class func last_name() -> String {
+  static func last_name() -> String {
     return localizedString(key: "last_name")
   }
-
-  class func last_name_invalid() -> String {
+  
+  static func last_name_invalid() -> String {
     return localizedString(key: "last_name_invalid")
   }
   
-  class func list_price() -> String {
+  static func latest() -> String {
+    return localizedString(key: "latest")
+  }
+  
+  static func link() -> String {
+    return localizedString(key: "link")
+  }
+  
+  static func list_price() -> String {
     return localizedString(key: "list_price")
   }
-
-  class func my_orders() -> String {
+  
+  static func my_orders() -> String {
     return localizedString(key: "my_orders")
   }
-
-  class func new_password() -> String {
+  
+  static func new_password() -> String {
     return localizedString(key: "new_password")
   }
-
-  class func news() -> String {
+  
+  static func news() -> String {
     return localizedString(key: "news")
   }
   
-  class func number_of_pages() -> String {
+  static func no_internet_error_description() -> String {
+    return localizedString(key: "no_internet_error_description")
+  }
+  
+  static func no_internet_error_title() -> String {
+    return localizedString(key: "no_internet_error_title")
+  }
+  
+  static func no_results_found_description() -> String {
+    return localizedString(key: "no_results_found_description")
+  }
+  
+  static func no_results_found_title() -> String {
+    return localizedString(key: "no_results_found_title")
+  }
+  
+  static func number_of_pages() -> String {
     return localizedString(key: "number_of_pages")
   }
-
-  class func follow() -> String {
-    return localizedString(key: "follow")
-  }
-
-  class func followed() -> String {
-    return localizedString(key: "followed")
-  }
-
-  class func followers() -> String {
-    return localizedString(key: "followers")
-  }
-
-  class func ok() -> String {
+  
+  static func ok() -> String {
     return localizedString(key: "ok")
   }
-
-  class func ooops() -> String {
+  
+  static func onboarding_view_header_title() -> String {
+    return localizedString(key: "onboarding_view_header_title")
+  }
+  
+  static func ooops() -> String {
     return localizedString(key: "ooops")
   }
-
-  class func our_selection_for_you() -> String {
+  
+  static func our_selection_for_you() -> String {
     return localizedString(key: "our_selection_for_you")
   }
   
-  class func out_of_stock() -> String {
+  static func out_of_stock() -> String {
     return localizedString(key: "out_of_stock")
   }
-
-  class func password() -> String {
+  
+  static func password() -> String {
     return localizedString(key: "password")
   }
-
-  class func password_invalid() -> String {
+  
+  static func password_invalid() -> String {
     return localizedString(key: "password_invalid")
   }
-
-  class func payment_methods() -> String {
+  
+  static func payment_methods() -> String {
     return localizedString(key: "payment_methods")
   }
-
-  class func pen_name() -> String {
+  
+  static func pen_name() -> String {
     return localizedString(key: "pen_name")
   }
-
-  class func pen_name_cant_be_empty() -> String {
+  
+  static func pen_name_cant_be_empty() -> String {
     return localizedString(key: "pen_name_cant_be_empty")
   }
-
-  class func pen_names() -> String {
+  
+  static func pen_names() -> String {
     return localizedString(key: "pen_names")
   }
-
-  class func please_fill_required_field() -> String {
+  
+  static func please_fill_required_field() -> String {
     return localizedString(key: "please_fill_required_field")
   }
-
-  class func posts() -> String {
+  
+  static func post() -> String {
+    return localizedString(key: "post")
+  }
+  
+  static func posts() -> String {
     return localizedString(key: "posts")
   }
   
-  class func product_format() -> String {
+  static func product_format() -> String {
     return localizedString(key: "product_format")
   }
   
-  class func publisher() -> String {
-    return localizedString(key: "publisher")
+  static func profile() -> String {
+    return localizedString(key: "profile")
   }
-
-  class func profile_picture() -> String {
+  
+  static func profile_picture() -> String {
     return localizedString(key: "profile_picture")
   }
-
-  class func reading_lists() -> String {
+  
+  static func publisher() -> String {
+    return localizedString(key: "publisher")
+  }
+  
+  static func quote() -> String {
+    return localizedString(key: "quote")
+  }
+  
+  static func reading_list() -> String {
+    return localizedString(key: "reading_list")
+  }
+  
+  static func reading_lists() -> String {
     return localizedString(key: "reading_lists")
   }
-
-  class func register() -> String {
+  
+  static func register() -> String {
     return localizedString(key: "register")
   }
-
-  class func clear_profile_photo() -> String {
-    return localizedString(key: "clear_profile_photo")
+  
+  static func related_books() -> String {
+    return localizedString(key: "related_books")
   }
-
-  class func settings() -> String {
+  
+  static func related_bookwitty_topics() -> String {
+    return localizedString(key: "related_bookwitty_topics")
+  }
+  
+  static func related_posts() -> String {
+    return localizedString(key: "related_posts")
+  }
+  
+  static func reset_password() -> String {
+    return localizedString(key: "reset_password")
+  }
+  
+  static func reset_password_text() -> String {
+    return localizedString(key: "reset_password_text")
+  }
+  
+  static func search_placeholder() -> String {
+    return localizedString(key: "search_placeholder")
+  }
+  
+  static func settings() -> String {
     return localizedString(key: "settings")
   }
   
-  class func shop_in_app_coming_soon_message() -> String {
+  static func shop_in_app_coming_soon_message() -> String {
     return localizedString(key: "shop_in_app_coming_soon_message")
   }
   
-  class func shop_online() -> String {
+  static func shop_online() -> String {
     return localizedString(key: "shop_online")
   }
-
-  class func sign_in() -> String {
+  
+  static func sign_in() -> String {
     return localizedString(key: "sign_in")
   }
-
-  class func sign_out() -> String {
+  
+  static func sign_out() -> String {
     return localizedString(key: "sign_out")
   }
-
-  class func sign_up() -> String {
+  
+  static func sign_up() -> String {
     return localizedString(key: "sign_up")
   }
-
-  class func some_thing_wrong_error() -> String {
+  
+  static func some_thing_wrong_error() -> String {
     return localizedString(key: "some_thing_wrong_error")
   }
-
-  class func something_wrong_in_credentials() -> String {
+  
+  static func something_wrong_error_description() -> String {
+    return localizedString(key: "something_wrong_error_description")
+  }
+  
+  static func something_wrong_error_title() -> String {
+    return localizedString(key: "something_wrong_error_title")
+  }
+  
+  static func something_wrong_in_credentials() -> String {
     return localizedString(key: "something_wrong_in_credentials")
   }
   
-  class func subtitle() -> String {
+  static func subtitle() -> String {
     return localizedString(key: "subtitle")
   }
-
-  class func take_Profile_photo() -> String {
+  
+  static func take_Profile_photo() -> String {
     return localizedString(key: "take_Profile_photo")
   }
-
-  class func terms_of_use_and_privacy_policy() -> String {
+  
+  static func terms_of_use_and_privacy_policy() -> String {
     return localizedString(key: "terms_of_use_and_privacy_policy")
   }
-
-  class func topic() -> String {
+  
+  static func text() -> String {
+    return localizedString(key: "text")
+  }
+  
+  static func topic() -> String {
     return localizedString(key: "topic")
   }
-
-  class func tutorial_fifth_page_description() -> String {
+  
+  static func topics_to_follow() -> String {
+    return localizedString(key: "topics_to_follow")
+  }
+  
+  static func tutorial_fifth_page_description() -> String {
     return localizedString(key: "tutorial_fifth_page_description")
   }
-
-  class func tutorial_fifth_page_title() -> String {
+  
+  static func tutorial_fifth_page_title() -> String {
     return localizedString(key: "tutorial_fifth_page_title")
   }
-
-  class func tutorial_first_page_description() -> String {
+  
+  static func tutorial_first_page_description() -> String {
     return localizedString(key: "tutorial_first_page_description")
   }
-
-  class func tutorial_first_page_title() -> String {
+  
+  static func tutorial_first_page_title() -> String {
     return localizedString(key: "tutorial_first_page_title")
   }
-
-  class func tutorial_forth_page_description() -> String {
+  
+  static func tutorial_forth_page_description() -> String {
     return localizedString(key: "tutorial_forth_page_description")
   }
-
-  class func tutorial_forth_page_title() -> String {
+  
+  static func tutorial_forth_page_title() -> String {
     return localizedString(key: "tutorial_forth_page_title")
   }
-
-  class func tutorial_second_page_description() -> String {
+  
+  static func tutorial_second_page_description() -> String {
     return localizedString(key: "tutorial_second_page_description")
   }
-
-  class func tutorial_second_page_title() -> String {
+  
+  static func tutorial_second_page_title() -> String {
     return localizedString(key: "tutorial_second_page_title")
   }
-
-  class func tutorial_third_page_title() -> String {
+  
+  static func tutorial_third_page_description() -> String {
+    return localizedString(key: "tutorial_third_page_description")
+  }
+  
+  static func tutorial_third_page_title() -> String {
     return localizedString(key: "tutorial_third_page_title")
   }
   
-  class func view_all() -> String {
+  static func video() -> String {
+    return localizedString(key: "video")
+  }
+  
+  static func view_all() -> String {
     return localizedString(key: "view_all")
   }
   
-  class func view_all_books() -> String {
+  static func view_all_books() -> String {
     return localizedString(key: "view_all_books")
   }
   
-  class func view_all_categories() -> String {
+  static func view_all_categories() -> String {
     return localizedString(key: "view_all_categories")
   }
-
-  class func view_subcategories() -> String {
-    return localizedString(key: "view_subcategories")
+  
+  static func view_all_related_books() -> String {
+    return localizedString(key: "view_all_related_books")
   }
-
-  class func view_all_selections() -> String {
+  
+  static func view_all_related_posts() -> String {
+    return localizedString(key: "view_all_related_posts")
+  }
+  
+  static func view_all_selections() -> String {
     return localizedString(key: "view_all_selections")
   }
   
-  class func view_whole_description() -> String {
+  static func view_subcategories() -> String {
+    return localizedString(key: "view_subcategories")
+  }
+  
+  static func view_whole_description() -> String {
     return localizedString(key: "view_whole_description")
   }
   
-  class func wit_it() -> String {
+  static func wit_it() -> String {
     return localizedString(key: "wit_it")
   }
   
-  class func witted() -> String {
+  static func witted() -> String {
     return localizedString(key: "witted")
   }
   
-  class func you_dont_have_account() -> String {
+  static func you_dont_have_account() -> String {
     return localizedString(key: "you_dont_have_account")
   }
   
-  class func you_save() -> String {
+  static func you_save() -> String {
     return localizedString(key: "you_save")
   }
-
-  class func your_feed() -> String {
+  
+  static func your_feed() -> String {
     return localizedString(key: "your_feed")
   }
 
-  class func discover() -> String {
-    return localizedString(key: "discover")
-  }
-
-  class func topics_to_follow() -> String {
-    return localizedString(key: "topics_to_follow")
-  }
-
-  class func follow_topics() -> String {
-    return localizedString(key: "follow_topics")
-  }
-
-  class func onboarding_view_header_title() -> String {
-    return localizedString(key: "onboarding_view_header_title")
-  }
-
-  class func reading_list() -> String {
-    return localizedString(key: "reading_list")
-  }
-
-  class func article() -> String {
-    return localizedString(key: "article")
-  }
 }

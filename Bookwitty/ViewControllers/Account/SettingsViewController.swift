@@ -22,6 +22,9 @@ class SettingsViewController: UIViewController {
     initializeComponents()
     setupNavigationBarButtons()
     applyTheme()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.Settings)
   }
 
   private func initializeComponents() {
@@ -41,6 +44,13 @@ class SettingsViewController: UIViewController {
     guard let indexPath = tableView.indexPathForRow(at: switchPoint) else {
       return
     }
+
+    //MARK: [Analytics] Event
+    let label: String = sender.isOn ? "On" : "Off"
+    let event: Analytics.Event = Analytics.Event(category: .Account,
+                                                 action: .SwitchEmailNotification,
+                                                 name: label)
+    Analytics.shared.send(event: event)
 
     viewModel.handleSwitchValueChanged(forRowAt: indexPath, newValue: sender.isOn) {
       () -> () in
@@ -91,6 +101,9 @@ class SettingsViewController: UIViewController {
     }
 
     self.navigationController?.pushViewController(countryPickerViewController, animated: true)
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.CountryList)
   }
 
   private func signOut() {

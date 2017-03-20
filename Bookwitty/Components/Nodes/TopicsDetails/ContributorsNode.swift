@@ -49,7 +49,7 @@ class ContributorsNode: ASDisplayNode {
       //TODO: This should be handled with localization plurals
       if isValid(numberOfContributors) {
         statsNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
-          .append(text: numberOfContributors! + " " + Strings.contributors(), color: ThemeManager.shared.currentTheme.defaultButtonColor())
+          .append(text: numberOfContributors! + " " + Strings.contributors())
           .attributedString
         setNeedsLayout()
       }

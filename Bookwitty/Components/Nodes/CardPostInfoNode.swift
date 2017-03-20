@@ -11,13 +11,21 @@ import AsyncDisplayKit
 
 typealias CardPostInfoNodeData = (name: String, date: String, imageUrl: String?)
 
+protocol CardPostInfoNodeDelegate {
+  func cardInfoNode(cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any)
+}
+
 class CardPostInfoNode: ASDisplayNode {
+  enum Action {
+    case userProfile
+  }
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
 
   var userProfileImageNode: ASNetworkImageNode
   var arrowDownImageNode: ASImageNode
   var userNameTextNode: ASTextNode
   var postDateTextNode: ASTextNode
+  var delegate: CardPostInfoNodeDelegate?
 
   private let userProfileImageDimension: CGFloat = 45.0
   private let downArrowButtonSize: CGSize = CGSize(width: 45.0, height: 45.0)
@@ -52,9 +60,29 @@ class CardPostInfoNode: ASDisplayNode {
     arrowDownImageNode.image = #imageLiteral(resourceName: "downArrow")
     arrowDownImageNode.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
     arrowDownImageNode.style.preferredSize = downArrowButtonSize
+    arrowDownImageNode.isHidden = true
 
     userNameTextNode.maximumNumberOfLines = 1
     postDateTextNode.maximumNumberOfLines = 1
+
+    userNameTextNode.addTarget(self, action: #selector(userNameTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    postDateTextNode.addTarget(self, action: #selector(postDateTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    userProfileImageNode.addTarget(self, action: #selector(userProfileImageTouchUpInside(_:)), forControlEvents: .touchUpInside)
+  }
+
+  func userNameTouchUpInside(_ sender: Any?) {
+    guard let sender = sender else { return }
+    delegate?.cardInfoNode(cardPostInfoNode: self, didRequestAction: CardPostInfoNode.Action.userProfile, forSender: sender)
+  }
+
+  func postDateTouchUpInside(_ sender: Any?) {
+    guard let sender = sender else { return }
+    delegate?.cardInfoNode(cardPostInfoNode: self, didRequestAction: CardPostInfoNode.Action.userProfile, forSender: sender)
+  }
+
+  func userProfileImageTouchUpInside(_ sender: Any?) {
+    guard let sender = sender else { return }
+    delegate?.cardInfoNode(cardPostInfoNode: self, didRequestAction: CardPostInfoNode.Action.userProfile, forSender: sender)
   }
 
   private func loadData() {

@@ -104,15 +104,24 @@ extension  CardFactory {
       return nil
     }
 
-    let name = resource.penName?.name ?? "[No Name]"
-    let date = Date.formatDate(date: resource.createdAt)
-    let penNameprofileImage = resource.penName?.avatarUrl
-    card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
+    let cardPostInfoData: CardPostInfoNodeData?
+    if let penName = resource.penName {
+      let name = penName.name ?? ""
+      let date = Date.formatDate(date: resource.createdAt)
+      let penNameprofileImage = penName.avatarUrl
+      cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
+    } else {
+      cardPostInfoData = nil
+    }
+    card.postInfoData = cardPostInfoData
+    card.setup(forFollowingMode: true)
+    card.setFollowingValue(following: resource.following)
     card.node.articleTitle = resource.caption
     card.node.articleDescription = resource.shortDescription ?? resource.biography
     card.node.subImageUrl = resource.thumbnailImageUrl ?? resource.profileImageUrl ?? resource.imageUrl
     card.node.imageUrl = resource.coverImageUrl
-    card.wit = resource.isWitted
+    card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
+    card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
 
     return card
   }
@@ -132,15 +141,23 @@ extension  CardFactory {
       return nil
     }
 
-    let name = resource.penName?.name ?? "[No Name]"
-    let date = Date.formatDate(date: resource.createdAt)
-    let penNameprofileImage = resource.penName?.avatarUrl
-    card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
+    let cardPostInfoData: CardPostInfoNodeData?
+    if let penName = resource.penName {
+      let name = penName.name ?? ""
+      let date = Date.formatDate(date: resource.createdAt)
+      let penNameprofileImage = penName.avatarUrl
+      cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
+    } else {
+      cardPostInfoData = nil
+    }
+    card.postInfoData = cardPostInfoData
+
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.imageUrl = resource.coverImageUrl ?? resource.thumbnailImageUrl
-    card.articleCommentsSummary = "XX commented on this"
-    card.wit = resource.isWitted
+    card.articleCommentsSummary = nil
+    card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
+    card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
 
     return card
   }
@@ -160,18 +177,25 @@ extension  CardFactory {
       return nil
     }
 
-    let name = resource.penName?.name ?? "[No Name]"
-    let date = Date.formatDate(date: resource.createdAt)
-    let penNameprofileImage = resource.penName?.avatarUrl
-    card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
+    let cardPostInfoData: CardPostInfoNodeData?
+    if let penName = resource.penName {
+      let name = penName.name ?? ""
+      let date = Date.formatDate(date: resource.createdAt)
+      let penNameprofileImage = penName.avatarUrl
+      cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
+    } else {
+      cardPostInfoData = nil
+    }
+    card.postInfoData = cardPostInfoData
     card.node.articleQuotePublisher = resource.author
     if let qoute = resource.body, !qoute.isEmpty {
       card.node.articleQuote = "“ \(qoute) ”"
     } else if let qoute = resource.title, !qoute.isEmpty {
       card.node.articleQuote = "“ \(qoute) ”"
     }
-    card.articleCommentsSummary = "X commented on this"
-    card.wit = resource.isWitted
+    card.articleCommentsSummary = nil
+    card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
+    card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
 
     return card
   }
@@ -191,17 +215,26 @@ extension  CardFactory {
       return nil
     }
 
-    let name = resource.penName?.name ?? "[No Name]"
-    let date = Date.formatDate(date: resource.createdAt)
-    let penNameprofileImage = resource.penName?.avatarUrl
-    card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
+    let cardPostInfoData: CardPostInfoNodeData?
+    if let penName = resource.penName {
+      let name = penName.name ?? ""
+      let date = Date.formatDate(date: resource.createdAt)
+      let penNameprofileImage = penName.avatarUrl
+      cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
+    } else {
+      cardPostInfoData = nil
+    }
+    card.postInfoData = cardPostInfoData
+    card.setup(forFollowingMode: true)
+    card.setFollowingValue(following: resource.following)
     card.node.articleTitle = nil
     card.node.articleDescription = resource.shortDescription
     card.node.imageUrl = resource.coverImageUrl
-    card.node.setTopicStatistics(numberOfPosts: "XX")
-    card.articleCommentsSummary = "X commented on this"
+    card.node.setTopicStatistics(numberOfPosts: resource.counts?.posts, numberOfBooks: nil, numberOfFollowers: resource.counts?.followers)
+    card.articleCommentsSummary = nil
     card.node.subImageUrl = resource.thumbnailImageUrl
-    card.wit = resource.isWitted
+    card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
+    card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
 
     return card
   }
@@ -221,16 +254,23 @@ extension  CardFactory {
       return nil
     }
 
-    let name = resource.penName?.name ?? "[No Name]"
-    let date = Date.formatDate(date: resource.createdAt)
-    let penNameprofileImage = resource.penName?.avatarUrl
-    card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
+    let cardPostInfoData: CardPostInfoNodeData?
+    if let penName = resource.penName {
+      let name = penName.name ?? ""
+      let date = Date.formatDate(date: resource.createdAt)
+      let penNameprofileImage = penName.avatarUrl
+      cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
+    } else {
+      cardPostInfoData = nil
+    }
+    card.postInfoData = cardPostInfoData
     card.node.linkUrl = resource.urlLink
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.imageNode.url = resource.coverImageUrl.isEmptyOrNil() ? nil : URL(string: resource.coverImageUrl!)
-    card.wit = resource.isWitted
-
+    card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
+    card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
+    
     return card
   }
 }
@@ -250,17 +290,26 @@ extension  CardFactory {
       return nil
     }
 
-    let name = resource.productDetails?.author ?? "[No Name]"
-    let date = Date.formatDate(date: resource.createdAt)
-    card.postInfoData = CardPostInfoNodeData(name, date, nil)
-
+    let cardPostInfoData: CardPostInfoNodeData?
+    if let penName = resource.penName {
+      let name = penName.name ?? ""
+      let date = Date.formatDate(date: resource.createdAt)
+      let penNameprofileImage = penName.avatarUrl
+      cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
+    } else {
+      cardPostInfoData = nil
+    }
+    card.postInfoData = cardPostInfoData
+    card.setup(forFollowingMode: true)
+    card.setFollowingValue(following: resource.following)
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.bookDescription
-    card.node.setTopicStatistics(numberOfPosts: "XX")
-    card.articleCommentsSummary = "X commented on this"
+    card.node.setTopicStatistics(numberOfPosts: resource.counts?.posts, numberOfBooks: nil, numberOfFollowers: resource.counts?.followers)
+    card.articleCommentsSummary = nil
     card.node.imageUrl = resource.coverImageUrl
     card.node.subImageUrl = resource.thumbnailImageUrl
-    card.wit = resource.isWitted
+    card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
+    card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
 
     return card
   }
@@ -280,15 +329,22 @@ extension  CardFactory {
       return nil
     }
 
-    let name = resource.penName?.name ?? "[No Name]"
-    let date = Date.formatDate(date: resource.createdAt)
-    let penNameprofileImage = resource.penName?.avatarUrl
-    card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
+    let cardPostInfoData: CardPostInfoNodeData?
+    if let penName = resource.penName {
+      let name = penName.name ?? ""
+      let date = Date.formatDate(date: resource.createdAt)
+      let penNameprofileImage = penName.avatarUrl
+      cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
+    } else {
+      cardPostInfoData = nil
+    }
+    card.postInfoData = cardPostInfoData
     card.node.linkUrl = nil
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.imageNode.url = resource.coverImageUrl.isEmptyOrNil() ? nil : URL(string: resource.coverImageUrl!)
-    card.wit = resource.isWitted
+    card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
+    card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
 
     return card
   }
@@ -308,13 +364,20 @@ extension  CardFactory {
       return nil
     }
 
-    let name = resource.penName?.name ?? "[No Name]"
-    let date = Date.formatDate(date: resource.createdAt)
-    let penNameprofileImage = resource.penName?.avatarUrl
-    card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
+    let cardPostInfoData: CardPostInfoNodeData?
+    if let penName = resource.penName {
+      let name = penName.name ?? ""
+      let date = Date.formatDate(date: resource.createdAt)
+      let penNameprofileImage = penName.avatarUrl
+      cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
+    } else {
+      cardPostInfoData = nil
+    }
+    card.postInfoData = cardPostInfoData
     card.node.imageUrl = resource.coverImageUrl
-    card.articleCommentsSummary = "X commented on this"
-    card.wit = resource.isWitted
+    card.articleCommentsSummary = nil
+    card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
+    card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
     
     return card
   }
@@ -334,16 +397,28 @@ extension  CardFactory {
       return nil
     }
 
-    //TODO: Remove the static data
-    let name = resource.penName?.name ?? "[No Name]"
-    let date = Date.formatDate(date: resource.createdAt)
-    let penNameprofileImage = resource.penName?.avatarUrl
-    card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
+    if let url = resource.url {
+      IFramely.shared.loadResponseFor(url: url, closure: { (response: Response?) in
+        card.node.videoUrl = response?.embedUrl
+      })
+    }
+
+    let cardPostInfoData: CardPostInfoNodeData?
+    if let penName = resource.penName {
+      let name = penName.name ?? ""
+      let date = Date.formatDate(date: resource.createdAt)
+      let penNameprofileImage = penName.avatarUrl
+      cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
+    } else {
+      cardPostInfoData = nil
+    }
+    card.postInfoData = cardPostInfoData
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.imageUrl = resource.coverImageUrl
-    card.articleCommentsSummary = "XX commented on this"
-    card.wit = resource.isWitted
+    card.articleCommentsSummary = nil
+    card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
+    card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
 
     return card
   }
@@ -363,6 +438,8 @@ extension  CardFactory {
       return nil
     }
 
+    card.setup(forFollowingMode: true)
+    card.setFollowingValue(following: resource.following)
     card.node.imageUrl = resource.avatarUrl
     card.node.followersCount = String(resource.followersCount?.intValue ?? 0)
     card.node.userName = resource.name
@@ -386,19 +463,34 @@ extension  CardFactory {
       return nil
     }
 
-    let name = resource.penName?.name ?? "[No Name]"
-    let date = Date.formatDate(date: resource.createdAt)
-    let penNameprofileImage = resource.penName?.avatarUrl
-    card.postInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
+    let cardPostInfoData: CardPostInfoNodeData?
+    if let penName = resource.penName {
+      let name = penName.name ?? ""
+      let date = Date.formatDate(date: resource.createdAt)
+      let penNameprofileImage = penName.avatarUrl
+      cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
+    } else {
+      cardPostInfoData = nil
+    }
+    card.postInfoData = cardPostInfoData
+
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
-    card.node.setTopicStatistics(numberOfPosts: "XX")
-    card.articleCommentsSummary = "X commented on this"
-    card.wit = resource.isWitted
 
-    let images = resource.posts?.map({ ($0 as? ModelCommonProperties)?.thumbnailImageUrl }) ?? []
-    card.node.imageCollection = images.flatMap({$0})
+    card.node.setTopicStatistics(numberOfPosts: resource.counts?.posts, numberOfBooks: nil, numberOfFollowers: resource.counts?.followers)
+    card.articleCommentsSummary = nil
+    card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
+    card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
 
+    let imagesCount = resource.postsRelations?.count ?? 0
+    card.node.prepareImages(imageCount: imagesCount)
+
+    if let images = resource.posts?.map({ ($0 as? ModelCommonProperties)?.thumbnailImageUrl }) {
+      let imageCollection = images.flatMap({$0})
+      if imageCollection.count > 0 {
+        card.node.loadImages(with: imageCollection)
+      }
+    }
     return card
   }
 }

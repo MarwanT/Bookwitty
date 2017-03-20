@@ -53,11 +53,23 @@ class ReadingListCardContentNode: ASDisplayNode {
       }
     }
   }
-  var imageCollection: [String] = [] {
-    didSet {
-      customHorizontalList.imageCollection = imageCollection
-      setNeedsLayout()
-    }
+  var isImageCollectionLoaded: Bool {
+    return customHorizontalList.isImageCollectionLoaded
+  }
+  var maxNumberOfImages: Int {
+    return customHorizontalList.maxItems
+  }
+
+  func reload() {
+    customHorizontalList.reload()
+  }
+
+  func prepareImages(imageCount count: Int) {
+    customHorizontalList.prepareImages(for: count)
+  }
+
+  func loadImages(with imageCollection: [String]) {
+    customHorizontalList.updateCollection(images: imageCollection, shouldLoadImages: true)
   }
 
   override init() {
@@ -66,10 +78,7 @@ class ReadingListCardContentNode: ASDisplayNode {
     descriptionNode = ASTextNode()
     customHorizontalList = ReadingListBooksNode()
     super.init()
-    addSubnode(titleNode)
-    addSubnode(topicStatsNode)
-    addSubnode(descriptionNode)
-    addSubnode(customHorizontalList)
+    automaticallyManagesSubnodes = true
     setupNode()
   }
 
@@ -83,45 +92,49 @@ class ReadingListCardContentNode: ASDisplayNode {
 
   func initializeImageCollectionNode() {
     customHorizontalList.imageNodeSize = collectionImageSize
-    customHorizontalList.imageCollection = imageCollection
   }
 
-  func setTopicStatistics(numberOfPosts: String? = nil, numberOfBooks: String? = nil, numberOfFollowers: String? = nil) {
+  func setTopicStatistics(numberOfPosts: Int? = nil, numberOfBooks: Int? = nil, numberOfFollowers: Int? = nil) {
     let separator =  " | "
     var attrStringBuilder = AttributedStringBuilder(fontDynamicType: .footnote)
     var addSeparator: Bool = false
 
     //TODO: This should be handled with localization plurals
-    if(isValid(numberOfPosts)) {
+    if let postsNumber = String(counting: numberOfPosts), (numberOfPosts ?? 0 > 0) {
+      let plural = numberOfPosts ?? 0 > 1
+      let str = plural ? Strings.posts() : Strings.post()
       attrStringBuilder = attrStringBuilder
-        .append(text: numberOfPosts!)
-        .append(text: " " + Strings.posts(), fontDynamicType: .caption2)
+        .append(text: postsNumber)
+        .append(text: " " + str, fontDynamicType: .caption2)
       addSeparator = true
     } else {
       addSeparator = false
     }
 
     //TODO: This should be handled with localization plurals
-    if(isValid(numberOfBooks)) {
+    if let booksNumber = String(counting: numberOfBooks), (numberOfBooks ?? 0 > 0) {
+      let plural = numberOfBooks ?? 0 > 1
+      let str = plural ? Strings.books() : Strings.book()
       attrStringBuilder = attrStringBuilder
         .append(text: (addSeparator ? separator : ""), fontDynamicType: .caption2)
-        .append(text: numberOfBooks!)
-        .append(text: " " + Strings.books(), fontDynamicType: .caption2)
+        .append(text: booksNumber)
+        .append(text: " " + str, fontDynamicType: .caption2)
       addSeparator = true
-    } else {
-      addSeparator = false
     }
 
     //TODO: This should be handled with localization plurals
-    if(isValid(numberOfFollowers)) {
+    if let followersNumber = String(counting: numberOfFollowers) , (numberOfFollowers ?? 0 > 0) {
+      let plural = numberOfFollowers ?? 0 > 1
+      let str = plural ? Strings.followers() : Strings.follower()
       attrStringBuilder = attrStringBuilder
         .append(text: (addSeparator ? separator : ""), fontDynamicType: .caption2)
-        .append(text: numberOfFollowers!)
-        .append(text: " " + Strings.followers(), fontDynamicType: .caption2)
+        .append(text: followersNumber)
+        .append(text: " " + str, fontDynamicType: .caption2)
     }
 
     //Set the string value
-    descriptionNode.attributedText = attrStringBuilder.attributedString
+    topicStatsNode.attributedText = attrStringBuilder.attributedString
+    setNeedsLayout()
   }
 
   private func isValid(_ value: String?) -> Bool {
@@ -149,10 +162,8 @@ class ReadingListCardContentNode: ASDisplayNode {
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     var nodesArray: [ASLayoutElement] = []
 
-    if imageCollection.count > 0 {
-      let customLayoutSpec = ASCenterLayoutSpec(centeringOptions: ASCenterLayoutSpecCenteringOptions.XY, sizingOptions: ASCenterLayoutSpecSizingOptions.minimumXY, child: customHorizontalList)
-      nodesArray.append(customLayoutSpec)
-    }
+    let customLayoutSpec = ASCenterLayoutSpec(centeringOptions: ASCenterLayoutSpecCenteringOptions.XY, sizingOptions: ASCenterLayoutSpecSizingOptions.minimumXY, child: customHorizontalList)
+    nodesArray.append(customLayoutSpec)
 
     let titleNodeInset = ASInsetLayoutSpec(insets: cardSidesInset(), child: titleNode)
     let topicStatsNodeInset = ASInsetLayoutSpec(insets: cardSidesInset(), child: topicStatsNode)

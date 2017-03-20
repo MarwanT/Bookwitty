@@ -80,7 +80,7 @@ struct GeneralAPI {
     })
   }
 
-  static func posts(contentIdentifier identifier: String, type: [String]?, completion: @escaping (_ success: Bool, _ resource: [ModelResource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  static func posts(contentIdentifier identifier: String, type: [String]?, completion: @escaping (_ success: Bool, _ resource: [ModelResource]?, _ next: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let successStatusCode: Int = 200
 
     return signedAPIRequest(target: .posts(identifier: identifier, type: type), completion: {
@@ -88,9 +88,10 @@ struct GeneralAPI {
       var success: Bool = statusCode == successStatusCode
       var resources: [ModelResource]? = nil
       var error: BookwittyAPIError? = error
+      var next: URL? = nil
 
       defer {
-        completion(success, resources, error)
+        completion(success, resources, next, error)
       }
 
       guard statusCode == successStatusCode else {
@@ -103,21 +104,25 @@ struct GeneralAPI {
         return
       }
 
-      resources = Parser.parseDataArray(data: data)?.resources
+      let values = Parser.parseDataArray(data: data)
+
+      resources = values?.resources
+      next = values?.next
     })
   }
 
-  static func editions(contentIdentifier identifier: String, completion: @escaping (_ success: Bool, _ resource: [ModelResource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  static func editions(contentIdentifier identifier: String, completion: @escaping (_ success: Bool, _ resource: [ModelResource]?, _ next: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let successStatusCode: Int = 200
 
     return signedAPIRequest(target: .editions(identifier: identifier), completion: {
       (data, statusCode, response, error) in
       var success: Bool = statusCode == successStatusCode
       var resources: [ModelResource]? = nil
+      var next: URL? = nil
       var error: BookwittyAPIError? = error
 
       defer {
-        completion(success, resources, error)
+        completion(success, resources, next, error)
       }
 
       guard statusCode == successStatusCode else {
@@ -130,7 +135,9 @@ struct GeneralAPI {
         return
       }
 
-      resources = Parser.parseDataArray(data: data)?.resources
+      let values = Parser.parseDataArray(data: data)
+      resources = values?.resources
+      next = values?.next
     })
   }
 
@@ -191,6 +198,65 @@ struct GeneralAPI {
       success = (statusCode == unfollowSuccessStatusNoContent || statusCode == unfollowSuccessStatusAlreadyDeleted)
     })
   }
+
+  static func followPenName(identifer: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+
+    let successStatusCode = 204
+
+    return signedAPIRequest(target: .followPenName(identifier: identifer), completion: {
+      (data, statusCode, response, error) in
+      // Ensure the completion block is always called
+      var success: Bool = false
+      var completionError: BookwittyAPIError? = error
+      defer {
+        completion(success, error)
+      }
+
+      // If status code is not available then break
+      guard let statusCode = statusCode else {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      // If status code != success then break
+      if statusCode != successStatusCode {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      success = statusCode == successStatusCode
+    })
+  }
+
+  static func unfollowPenName(identifer: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let unfollowSuccessStatusNoContent = 204
+    let unfollowSuccessStatusAlreadyDeleted = 404
+
+    return signedAPIRequest(target: .unfollowPenName(identifier: identifer), completion: {
+      (data, statusCode, response, error) in
+      // Ensure the completion block is always called
+      var success: Bool = false
+      var completionError: BookwittyAPIError? = error
+      defer {
+        completion(success, error)
+      }
+
+      // If status code is not available then break
+      guard let statusCode = statusCode else {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      // If status code != success then break
+      if statusCode != unfollowSuccessStatusNoContent && statusCode != unfollowSuccessStatusAlreadyDeleted {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      success = (statusCode == unfollowSuccessStatusNoContent || statusCode == unfollowSuccessStatusAlreadyDeleted)
+    })
+  }
+
 }
 
 extension GeneralAPI {
@@ -199,7 +265,7 @@ extension GeneralAPI {
 
     //Filters
     if let type = type {
-      dictionary["filter[type]"] = type
+      dictionary["filter[types]"] = type
     }
 
     return dictionary

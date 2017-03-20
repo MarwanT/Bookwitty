@@ -69,6 +69,8 @@ class VideoCardContentNode: ASDisplayNode {
     }
   }
 
+  var videoUrl: URL?
+
   var hasImage: Bool {
     get {
       return !(imageUrl?.isEmpty ?? true)
@@ -96,10 +98,21 @@ class VideoCardContentNode: ASDisplayNode {
     playNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.colorNumber23().withAlphaComponent(0.9))
     playNode.style.preferredSize = playIconSize
 
+    imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
     imageNode.addTarget(self, action: #selector(videoImageTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
 
   func videoImageTouchUpInside(_ sender: ASImageNode?) {
+    guard let videoUrl = videoUrl else {
+      return
+    }
+
+    guard let rootViewController = UIApplication.shared.delegate?.window??.rootViewController else {
+      return
+    }
+
+    WebViewController.present(url: videoUrl, inViewController: rootViewController)
+
     delegate?.videoImageTouchUpInside(sender: imageNode)
   }
 

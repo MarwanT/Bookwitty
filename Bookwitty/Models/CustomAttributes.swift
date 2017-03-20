@@ -32,3 +32,11 @@ class SupplierInformationAttribute: Attribute {
     self.supplierInformation = supplierInformation
   }
 }
+
+class CountsAttribute: Attribute {
+  let counts: [String : Any]?
+
+  init(counts: [String : Any]? = nil) {
+    self.counts = counts
+  }
+}

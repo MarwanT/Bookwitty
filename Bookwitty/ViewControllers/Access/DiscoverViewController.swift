@@ -56,7 +56,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
 
     super.init(node: collectionNode)
 
-    flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: loaderNode.usedHeight)
+    flowLayout.footerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.defaultNodeHeight)
     collectionNode.onDidLoad { [weak self] (collectionNode) in
       guard let strongSelf = self,
         let asCollectionView = collectionNode.view as? ASCollectionView else {
@@ -91,6 +91,9 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
       })
     }
     animateRefreshControllerIfNeeded()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.BookStorefront)
   }
 
   private func initializeNavigationItems() {
@@ -140,6 +143,11 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
       return
     }
 
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .Discover,
+                                                 action: .PullToRefresh)
+    Analytics.shared.send(event: event)
+
     self.pullToRefresher.beginRefreshing()
     loadData(loadingStatus: .reloading, completionBlock: {
       self.pullToRefresher.endRefreshing()
@@ -169,7 +177,7 @@ extension DiscoverViewController {
   }
 
   func reloadFooter(show: Bool) {
-    let bottomMargin: CGFloat = show ? -(externalMargin/2) : -(loaderNode.usedHeight - externalMargin/2)
+    let bottomMargin: CGFloat = show ? -(externalMargin/2) : -(LoaderNode.defaultNodeHeight - externalMargin/2)
     flowLayout.sectionInset = UIEdgeInsets(top: externalMargin, left: 0, bottom: bottomMargin, right: 0)
     loaderNode.updateLoaderVisibility(show: show)
   }
@@ -197,6 +205,16 @@ extension DiscoverViewController: ASCollectionDataSource {
 
     return {
       let baseCardNode = self.viewModel.nodeForItem(atIndex: index) ?? BaseCardPostNode()
+      // Fetch the reading list cards images
+      if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
+        !readingListCell.node.isImageCollectionLoaded {
+        let max = readingListCell.node.maxNumberOfImages
+        self.viewModel.loadReadingListImages(at: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
+          if let imageCollection = imageCollection, imageCollection.count > 0 {
+            readingListCell.node.loadImages(with: imageCollection)
+          }
+        })
+      }
       baseCardNode.delegate = self
       return baseCardNode
     }
@@ -217,7 +235,7 @@ extension DiscoverViewController: ASCollectionDelegate {
   }
 
   public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-    return CGSize(width: UIScreen.main.bounds.width, height: loaderNode.usedHeight)
+    return CGSize(width: UIScreen.main.bounds.width, height: LoaderNode.defaultNodeHeight)
   }
 
   public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
@@ -244,6 +262,11 @@ extension DiscoverViewController: ASCollectionDelegate {
 
     let initialLastIndexPath: Int = viewModel.numberOfItemsInSection()
 
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .Discover,
+                                                 action: .LoadMore)
+    Analytics.shared.send(event: event)
+
     // Fetch next page data
     viewModel.loadNextPage { [weak self] (success) in
       defer {
@@ -269,6 +292,19 @@ extension DiscoverViewController: ASCollectionDelegate {
 
 // MARK - BaseCardPostNode Delegate
 extension DiscoverViewController: BaseCardPostNodeDelegate {
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+    let resource = viewModel.resourceForIndex(index: indexPath.item)
+    if let resource = resource as? ModelCommonProperties,
+      let penName = resource.penName {
+      pushProfileViewController(penName: penName)
+    } else if let penName = resource as? PenName  {
+      pushProfileViewController(penName: penName)
+    }
+  }
+  
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
     guard let index = collectionNode.indexPath(for: card)?.item else {
       return
@@ -287,10 +323,58 @@ extension DiscoverViewController: BaseCardPostNodeDelegate {
       if let sharingInfo: [String] = viewModel.sharingContent(index: index) {
         presentShareSheet(shareContent: sharingInfo)
       }
+    case .follow:
+      viewModel.follow(index: index) { (success) in
+        didFinishAction?(success)
+      }
+    case .unfollow:
+      viewModel.unfollow(index: index) { (success) in
+        didFinishAction?(success)
+      }
     default:
       //TODO: handle comment
       break
     }
+
+    //MARK: [Analytics] Event
+    guard let resource = viewModel.resource(at: index) else { return }
+    let category: Analytics.Category
+    var name: String = (resource as? ModelCommonProperties)?.title ?? ""
+    
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+      name = (resource as? Author)?.name ?? ""
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+      name = (resource as? PenName)?.name ?? ""
+    default:
+      category = .Default
+    }
+
+    let analyticsAction = Analytics.Action.actionFrom(cardAction: action)
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: analyticsAction,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 }
 
@@ -323,6 +407,10 @@ extension DiscoverViewController {
       actionForLinkResourceType(resource: resource)
     case Book.resourceType:
       actionForBookResourceType(resource: resource)
+    case PenName.resourceType:
+      if let penName = resource as? PenName {
+        pushProfileViewController(penName: penName)
+      }
     default:
       print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")
       break
@@ -334,7 +422,7 @@ extension DiscoverViewController {
     self.navigationController?.pushViewController(nodeVc, animated: true)
   }
 
-  func pushGenericViewControllerCard(resource: Resource, title: String?) {
+  func pushGenericViewControllerCard(resource: Resource, title: String? = nil) {
     guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
       return
     }
@@ -343,7 +431,13 @@ extension DiscoverViewController {
   }
   
   fileprivate func actionForImageResourceType(resource: ModelResource) {
-    pushGenericViewControllerCard(resource: resource, title: "Image")
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Image)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Image,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForAuthorResourceType(resource: ModelResource) {
@@ -351,12 +445,25 @@ extension DiscoverViewController {
       return
     }
 
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Author)?.name ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Topic,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+
     let topicViewController = TopicViewController()
     topicViewController.initialize(withAuthor: resource as? Author)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 
   fileprivate func actionForReadingListResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? ReadingList)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .ReadingList,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushPostDetailsViewController(resource: resource)
   }
 
@@ -365,35 +472,79 @@ extension DiscoverViewController {
       return
     }
 
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Topic)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Topic,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+
     let topicViewController = TopicViewController()
     topicViewController.initialize(withTopic: resource as? Topic)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 
   fileprivate func actionForTextResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Text)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Text,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
     pushPostDetailsViewController(resource: resource)
   }
 
   fileprivate func actionForQuoteResourceType(resource: ModelResource) {
-    pushGenericViewControllerCard(resource: resource, title: "Quote")
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Quote)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Quote,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForVideoResourceType(resource: ModelResource) {
-    pushGenericViewControllerCard(resource: resource, title: "Video")
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Video)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Video,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForAudioResourceType(resource: ModelResource) {
-    pushGenericViewControllerCard(resource: resource, title: "Audio")
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Audio)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Audio,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForLinkResourceType(resource: ModelResource) {
-    pushGenericViewControllerCard(resource: resource, title: "Link")
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Link)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Link,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushGenericViewControllerCard(resource: resource)
   }
 
   fileprivate func actionForBookResourceType(resource: ModelResource) {
     guard resource is Book else {
       return
     }
+
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Book)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .TopicBook,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
     topicViewController.initialize(withBook: resource as? Book)
