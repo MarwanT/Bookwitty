@@ -101,6 +101,8 @@ class RootTabBarController: UITabBarController {
       #selector(self.signIn(notification:)), name: AppNotification.didSignIn, object: nil)
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.didFinishBoarding(notification:)), name: AppNotification.didFinishBoarding, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.handleRefreshTokenFailure(notification:)), name: AppNotification.failToRefreshToken, object: nil)
   }
   
   private func addObserversWhenNotVisible() {
@@ -155,7 +157,10 @@ extension RootTabBarController: Themeable {
 
 //MARK: - Notifications
 extension RootTabBarController {
-  func signOut(notificaiton: Notification) {
+  func handleRefreshTokenFailure(notification: Notification) {
+  }
+  
+  func signOut(notificaiton: Notification?) {
 
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .Account,
