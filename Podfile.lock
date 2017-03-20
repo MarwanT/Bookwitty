@@ -114,6 +114,7 @@ PODS:
   - SwiftyJSON (3.1.4)
   - TTTAttributedLabel (2.0.0)
   - UIImageViewAlignedSwift (0.3.1)
+  - Version (0.5.0)
 
 DEPENDENCIES:
   - ALCameraViewController (= 1.2.7)
@@ -138,6 +139,7 @@ DEPENDENCIES:
   - SwiftyJSON (= 3.1.4)
   - TTTAttributedLabel (= 2.0.0)
   - UIImageViewAlignedSwift (= 0.3.1)
+  - Version (from `https://github.com/opwoco/Version`)
 
 EXTERNAL SOURCES:
   EMCCountryPickerController:
@@ -151,6 +153,8 @@ EXTERNAL SOURCES:
   SwiftLoader:
     :git: https://github.com/keeward/SwiftLoader
     :tag: 0.3.1
+  Version:
+    :git: https://github.com/opwoco/Version
 
 CHECKOUT OPTIONS:
   EMCCountryPickerController:
@@ -162,6 +166,9 @@ CHECKOUT OPTIONS:
   SwiftLoader:
     :git: https://github.com/keeward/SwiftLoader
     :tag: 0.3.1
+  Version:
+    :commit: 40c9d8e1862fd2bb7f3aa854c762baa67ec14d9c
+    :git: https://github.com/opwoco/Version
 
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
@@ -204,7 +211,8 @@ SPEC CHECKSUMS:
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   UIImageViewAlignedSwift: e57cc89b4738a82ffad1b76e8ab01f898215bbfb
+  Version: 31221742495765fc798d08eae45de3c936dce0db
 
-PODFILE CHECKSUM: 7cdb7ab92ac64768d52e41de92d56e7d0c45aadb
+PODFILE CHECKSUM: 000f92b9ffe317b5f831d3023915939adae2a700
 
 COCOAPODS: 1.2.0

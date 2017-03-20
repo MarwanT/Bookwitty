@@ -39,6 +39,7 @@ target 'Bookwitty' do
   pod 'Segmentio', '2.1.2'
   pod 'DTCoreText', '1.6.20'
   pod 'SwiftLoader', :git => 'https://github.com/keeward/SwiftLoader', :tag => '0.3.1'
+  pod 'Version', :git => 'https://github.com/opwoco/Version'
 
   target 'BookwittyTests' do
     inherit! :search_paths
