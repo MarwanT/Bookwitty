@@ -10,4 +10,7 @@ import Foundation
 import Version
 
 class AppManager {
+  static let shared = AppManager()
+  
+  private init() {}
 }
