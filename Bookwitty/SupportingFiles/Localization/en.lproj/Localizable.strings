@@ -88,6 +88,7 @@
 "my_interests" = "My interests";
 "my_orders" = "My Orders";
 "new_password" = "New Password";
+"new_version_available_description" = "There is a newer version available for download! Please update the app by visiting the Apple Store.";
 "news" = "News";
 "no_internet_error_description" = "Your internet connection appears\nto be offline.";
 "no_internet_error_title" = "No Internet!";

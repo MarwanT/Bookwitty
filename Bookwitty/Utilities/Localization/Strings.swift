@@ -337,6 +337,10 @@ class Strings {
     return localizedString(key: "new_password")
   }
   
+  static func new_version_available_description() -> String {
+    return localizedString(key: "new_version_available_description")
+  }
+  
   static func news() -> String {
     return localizedString(key: "news")
   }
