@@ -25,20 +25,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let penNameSelectionNode = PenNameSelectionNode()
   let loaderNode: LoaderNode
 
-  var loadingStatus: LoadingStatus = .none {
-    didSet {
-      switch loadingStatus {
-      case .loading:
-        break
-      case .reloading:
-        updateBottomLoaderVisibility(show: true)
-      case .loadMore:
-        updateBottomLoaderVisibility(show: true)
-      case .none:
-        updateBottomLoaderVisibility(show: false)
-      }
-    }
-  }
+  var loadingStatus: LoadingStatus = .none
   var collectionView: ASCollectionView?
   var scrollView: UIScrollView? {
     if let collectionView = collectionView {
