@@ -27,20 +27,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
   var collectionView: ASCollectionView?
 
   let viewModel = DiscoverViewModel()
-  var loadingStatus: LoadingStatus = .none {
-    didSet {
-      switch loadingStatus {
-      case .loading:
-        break
-      case .reloading:
-        updateBottomLoaderVisibility(show: false)
-      case .loadMore:
-        updateBottomLoaderVisibility(show: true)
-      case .none:
-        updateBottomLoaderVisibility(show: false)
-      }
-    }
-  }
+  var loadingStatus: LoadingStatus = .none
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
