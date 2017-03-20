@@ -110,11 +110,8 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
   }
 
   func loadData(loadingStatus: LoadingStatus, completionBlock: @escaping () -> ()) {
-    self.loadingStatus = loadingStatus
-
     viewModel.loadDiscoverData { [weak self] (success) in
       guard let strongSelf = self else { return }
-      strongSelf.loadingStatus = .none
 
       completionBlock()
 
@@ -151,6 +148,8 @@ extension DiscoverViewController {
 // MARK: - Reload Footer
 extension DiscoverViewController {
   func updateBottomLoaderVisibility(show: Bool) {
+    self.loaderNode.updateLoaderVisibility(show: show)
+    collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
   }
 }
 
@@ -175,9 +174,13 @@ extension DiscoverViewController: ASCollectionDataSource {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+    let section = indexPath.section
     let index = indexPath.row
 
     return {
+      guard section == Section.cards.rawValue else {
+        return self.loaderNode
+      }
       let baseCardNode = self.viewModel.nodeForItem(atIndex: index) ?? BaseCardPostNode()
       // Fetch the reading list cards images
       if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
@@ -193,7 +196,6 @@ extension DiscoverViewController: ASCollectionDataSource {
       return baseCardNode
     }
   }
-
 }
 
 extension DiscoverViewController: ASCollectionDelegate {
@@ -223,6 +225,9 @@ extension DiscoverViewController: ASCollectionDelegate {
     }
     context.beginBatchFetching()
     self.loadingStatus = .loadMore
+    DispatchQueue.main.async {
+      self.updateBottomLoaderVisibility(show: true)
+    }
 
     let initialLastIndexPath: Int = viewModel.numberOfItemsInSection(section: Section.cards.rawValue)
 
@@ -236,6 +241,9 @@ extension DiscoverViewController: ASCollectionDelegate {
       defer {
         context.completeBatchFetching(true)
         self!.loadingStatus = .none
+        DispatchQueue.main.async {
+          self!.updateBottomLoaderVisibility(show: false)
+        }
       }
       guard let strongSelf = self else {
         return
