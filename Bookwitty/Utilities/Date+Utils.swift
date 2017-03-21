@@ -21,4 +21,10 @@ extension Date {
   func formatDate(dateStyle dStyle: DateFormatter.Style = .long, timeStyle tStyle: DateFormatter.Style = .none) -> String {
     return DateFormatter.localizedString(from: self, dateStyle: dStyle, timeStyle: tStyle)
   }
+  
+  static func formatter(_ format: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ") -> DateFormatter {
+    let formatter = DateFormatter()
+    formatter.dateFormat = format
+    return formatter
+  }
 }
