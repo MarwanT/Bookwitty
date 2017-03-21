@@ -50,6 +50,9 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     loadRelatedBooks()
     loadRelatedPosts()
 
+    applyLocalization()
+    observeLanguageChanges()
+
     //MARK: [Analytics] Screen Name
     let name: Analytics.ScreenName
     switch(viewModel.resource.registeredResourceType) {
@@ -790,3 +793,18 @@ extension PostDetailsViewController {
   }
 }
 
+//MARK: - Localizable implementation
+extension PostDetailsViewController: Localizable {
+  func applyLocalization() {
+    postDetailsNode.postItemsNode.loadNodes()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
+  }
+}
