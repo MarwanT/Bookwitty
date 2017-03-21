@@ -285,6 +285,10 @@ class Strings {
     return localizedString(key: "free_shipping_internationally")
   }
   
+  static func height() -> String {
+    return localizedString(key: "height")
+  }
+  
   static func help() -> String {
     return localizedString(key: "help")
   }
