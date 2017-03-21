@@ -222,13 +222,13 @@ extension TopicViewController {
     var name: String {
       switch self {
       case .latest:
-        return "Latest"
+        return Strings.latest()
       case .relatedBooks:
-        return "Related Books"
+        return Strings.related_books()
       case .editions:
-        return "Editions"
+        return Strings.editions()
       case .followers:
-        return "Followers"
+        return Strings.followers()
       case .none:
         return ""
       }
