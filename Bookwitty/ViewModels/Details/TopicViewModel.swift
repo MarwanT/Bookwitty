@@ -414,7 +414,7 @@ extension TopicViewModel {
     guard let penName = penName else {
       return false
     }
-    return UserManager.shared.signedInUser.isMy(penName: penName)
+    return UserManager.shared.isMy(penName: penName)
   }
 
   var hasNextFollowers: Bool {
