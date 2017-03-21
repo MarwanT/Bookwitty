@@ -30,6 +30,8 @@ class PenNameViewController: UIViewController {
     super.viewDidLoad()
     awakeSelf()
     applyTheme()
+    applyLocalization()
+    observeLanguageChanges()
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.EditPenName)
@@ -37,16 +39,6 @@ class PenNameViewController: UIViewController {
 
   /// Do the required setup
   private func awakeSelf() {
-    penNameInputField.configuration = InputFieldConfiguration(
-      textFieldPlaceholder: Strings.enter_your_pen_name(),
-      invalidationErrorMessage: Strings.pen_name_cant_be_empty(),
-      returnKeyType: UIReturnKeyType.done)
-    
-    self.title = Strings.choose_pen_name()
-    continueButton.setTitle(Strings.continue(), for: .normal)
-    penNameLabel.text = Strings.pen_name()
-    noteLabel.text = Strings.dont_worry_you_can_change_it_later()
-    penNameInputField.textField.text  = viewModel.penDisplayName()
 
     penNameInputField.validationBlock = notEmptyValidation
 
@@ -246,5 +238,32 @@ extension PenNameViewController: Themeable {
     view.clipsToBounds = true
     view.layer.borderColor = borderColor.cgColor
     view.layer.borderWidth = 1.0
+  }
+}
+
+//MARK: - Localizable implementation
+extension PenNameViewController: Localizable {
+  func applyLocalization() {
+    title = Strings.choose_pen_name()
+    penNameInputField.configuration = InputFieldConfiguration(
+      textFieldPlaceholder: Strings.enter_your_pen_name(),
+      invalidationErrorMessage: Strings.pen_name_cant_be_empty(),
+      returnKeyType: UIReturnKeyType.done)
+
+    continueButton.setTitle(Strings.continue(), for: .normal)
+    penNameLabel.text = Strings.pen_name()
+    noteLabel.text = Strings.dont_worry_you_can_change_it_later()
+    penNameInputField.textField.text  = viewModel.penDisplayName()
+
+    setupBiographyKeyboardToolbar()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }
