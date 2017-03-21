@@ -238,6 +238,12 @@ class CardActionBarNode: ASCellNode {
   }
 
   func dimButtonTouchUpInside(_ sender: ASTextNode?) {
+    guard UserManager.shared.isSignedIn else {
+      //If user is not signed In post notification and do not fall through
+      NotificationCenter.default.post( name: AppNotification.callToAction, object: CallToAction.dim)
+      return
+    }
+
     let action = !numberOfDimsNode.isSelected ? CardActionBarNode.Action.dim : CardActionBarNode.Action.undim
     self.updateWitAndDim(for: action)
     self.witButton.isEnabled = false
@@ -254,6 +260,12 @@ class CardActionBarNode: ASCellNode {
   }
 
   func witButtonTouchUpInside(_ sender: ASButtonNode?) {
+    guard UserManager.shared.isSignedIn else {
+      //If user is not signed In post notification and do not fall through
+      NotificationCenter.default.post( name: AppNotification.callToAction, object: CallToAction.wit)
+      return
+    }
+
     guard let sender = sender else { return }
     //Get action from witButton status
     let action = !witButton.isSelected ? CardActionBarNode.Action.wit : CardActionBarNode.Action.unwit
@@ -273,6 +285,12 @@ class CardActionBarNode: ASCellNode {
   }
 
   func followButtonTouchUpInside(_ sender: ASButtonNode?) {
+    guard UserManager.shared.isSignedIn else {
+      //If user is not signed In post notification and do not fall through
+      NotificationCenter.default.post( name: AppNotification.callToAction, object: CallToAction.follow)
+      return
+    }
+
     guard let sender = sender else { return }
     //Get action from witButton status
     let action = !followButton.isSelected ? CardActionBarNode.Action.follow : CardActionBarNode.Action.unfollow
