@@ -91,6 +91,12 @@ extension ReadingListsViewController: ASCollectionDataSource, ASCollectionDelega
     )
   }
 
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    let resource = viewModel.resourceForIndex(indexPath: indexPath)
+    actionForCard(resource: resource)
+  }
+}
+
 // MARK - BaseCardPostNode Delegate
 extension ReadingListsViewController: BaseCardPostNodeDelegate {
   func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
@@ -153,6 +159,40 @@ extension ReadingListsViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+  }
+}
+
+// MARK: - Actions For Cards
+extension ReadingListsViewController {
+
+  fileprivate func actionForCard(resource: ModelResource?) {
+    guard let resource = resource else {
+      return
+    }
+    let registeredType = resource.registeredResourceType
+
+    switch registeredType {
+    case ReadingList.resourceType:
+      actionForReadingListResourceType(resource: resource)
+    default:
+      print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")
+      break
+    }
+  }
+
+  fileprivate func pushPostDetailsViewController(resource: ModelResource) {
+    let nodeVc = PostDetailsViewController(resource: resource)
+    self.navigationController?.pushViewController(nodeVc, animated: true)
+  }
+
+  fileprivate func actionForReadingListResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? ReadingList)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .ReadingList,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushPostDetailsViewController(resource: resource)
   }
 }
 
