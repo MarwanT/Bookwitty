@@ -77,17 +77,12 @@ class RootTabBarController: UITabBarController {
       title: Strings.books().uppercased(),
       image: #imageLiteral(resourceName: "books"),
       tag:3)
-    bagViewController.tabBarItem = UITabBarItem(
-      title: Strings.bag().uppercased(),
-      image: #imageLiteral(resourceName: "emptyBasket"),
-      tag:4)
 
     // Set The View controller
     self.viewControllers = [
       UINavigationController(rootViewController: viewController1),
       UINavigationController(rootViewController: discoverViewController),
       UINavigationController(rootViewController: bookStoreViewController),
-      UINavigationController(rootViewController: bagViewController),
     ]
     
     // Set Default select tab index
