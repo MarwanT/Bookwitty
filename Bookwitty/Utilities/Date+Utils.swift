@@ -25,6 +25,7 @@ extension Date {
   static func formatter(_ format: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ") -> DateFormatter {
     let formatter = DateFormatter()
     formatter.dateFormat = format
+    formatter.locale = Locale.application
     return formatter
   }
   
