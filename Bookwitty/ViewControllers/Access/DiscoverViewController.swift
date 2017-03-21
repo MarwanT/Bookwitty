@@ -56,7 +56,6 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeNavigationItems()
-    navigationItem.title = Strings.discover()
 
     collectionNode.delegate = self
     collectionNode.dataSource = self
@@ -64,6 +63,8 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     pullToRefresher.addTarget(self, action: #selector(self.pullDownToReloadData), for: .valueChanged)
 
     applyTheme()
+    applyLocalization()
+    observeLanguageChanges()
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -533,6 +534,22 @@ extension DiscoverViewController {
     static var numberOfSections: Int {
       return 2
     }
+  }
+}
+
+//MARK: - Localizable implementation
+extension DiscoverViewController: Localizable {
+  func applyLocalization() {
+    title = Strings.discover()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }
 
