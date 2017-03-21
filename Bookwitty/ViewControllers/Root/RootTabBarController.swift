@@ -186,7 +186,14 @@ extension RootTabBarController {
 //MARK: - Notifications
 extension RootTabBarController {
   func callToActionHandler(notification: Notification?) {
-    //TODO: Handle callToAction logic
+    guard !UserManager.shared.isSignedIn else {
+      //If user is signed-in => do nothing
+      return
+    }
+    //Call-To-Action Value
+    let cta = notification?.object as? CallToAction
+    //Display Alert accordingly
+    dispalyUserNotSignedInAlert(cta: cta)
   }
 
   func accountNeedsConfirmation(notification: Notification?) {
@@ -326,6 +333,10 @@ extension RootTabBarController {
     alertController.addAction(resendAction)
     alertController.addAction(neutralAction)
     present(alertController, animated: true, completion: nil)
+  }
+
+  fileprivate func dispalyUserNotSignedInAlert(cta: CallToAction?) {
+    //TODO: Show alert
   }
 }
 
