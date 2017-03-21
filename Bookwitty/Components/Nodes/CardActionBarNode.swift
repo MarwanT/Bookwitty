@@ -236,12 +236,16 @@ class CardActionBarNode: ASCellNode {
   func dimButtonTouchUpInside(_ sender: ASTextNode?) {
     let action = !numberOfDimsNode.isSelected ? CardActionBarNode.Action.dim : CardActionBarNode.Action.undim
     self.updateWitAndDim(for: action)
+    self.witButton.isEnabled = false
+    self.numberOfDimsNode.isEnabled = false
 
     delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: action, forSender: witButton, didFinishAction: { [weak self] (success: Bool) in
       guard let strongSelf = self else { return }
       if !success { //Toggle back on failure
         strongSelf.updateWitAndDim(for: action, success: false)
       }
+      strongSelf.witButton.isEnabled = true
+      strongSelf.numberOfDimsNode.isEnabled = true
     })
   }
 
@@ -251,12 +255,16 @@ class CardActionBarNode: ASCellNode {
     let action = !witButton.isSelected ? CardActionBarNode.Action.wit : CardActionBarNode.Action.unwit
     //Assume success and Toggle button anyway, if witting/unwitting fails delegate should either call didFinishAction or  call toggleWitButton.
     self.updateWitAndDim(for: action)
+    self.witButton.isEnabled = false
+    self.numberOfDimsNode.isEnabled = false
 
     delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: action, forSender: sender, didFinishAction: { [weak self] (success: Bool) in
       guard let strongSelf = self else { return }
       if !success { //Toggle back on failure
         strongSelf.updateWitAndDim(for: action, success: false)
       }
+      strongSelf.witButton.isEnabled = true
+      strongSelf.numberOfDimsNode.isEnabled = true
     })
   }
 
