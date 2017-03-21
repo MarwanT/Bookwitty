@@ -118,4 +118,10 @@ extension ReadingListsViewModel {
 
     return dataArray[item]
   }
+
+  func resourceForIndex(indexPath: IndexPath) -> ReadingList? {
+    guard dataArray.count > indexPath.row else { return nil }
+    let resource = dataArray[indexPath.row]
+    return resource
+  }
 }
