@@ -649,6 +649,10 @@ class Strings {
     return localizedString(key: "view_whole_description")
   }
   
+  static func weight() -> String {
+    return localizedString(key: "weight")
+  }
+  
   static func wit_it() -> String {
     return localizedString(key: "wit_it")
   }
