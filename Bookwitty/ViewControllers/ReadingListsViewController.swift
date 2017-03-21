@@ -30,17 +30,19 @@ class ReadingListsViewController: ASViewController<ASCollectionNode> {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = Strings.reading_lists()
 
     collectionNode.dataSource = self
     collectionNode.delegate = self
+
+    applyLocalization()
+    observeLanguageChanges()
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.ReadingLists)
   }
 
   private func initializeComponents() {
-    
+    title = Strings.reading_lists()
   }
 
   func initialize(with lists: [ReadingList]) {
@@ -88,3 +90,20 @@ extension ReadingListsViewController: ASCollectionDataSource, ASCollectionDelega
     )
   }
 }
+
+//MARK: - Localizable implementation
+extension ReadingListsViewController: Localizable {
+  func applyLocalization() {
+    title = Strings.reading_lists()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
+  }
+}
+
