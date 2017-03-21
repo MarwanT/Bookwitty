@@ -114,7 +114,7 @@ class SettingsViewController: UIViewController {
     let alertController = UIAlertController(title: Strings.language(), message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
     let languages: [Localization.Language] = Localization.Language.all()
     languages.forEach { (language: Localization.Language) in
-      let languageDisplayName: String = Locale.current.localizedString(forLanguageCode: language.rawValue) ?? language.rawValue
+      let languageDisplayName: String = Locale.application.localizedString(forLanguageCode: language.rawValue) ?? language.rawValue
       alertController.addAction(UIAlertAction(title: languageDisplayName.capitalized, style: UIAlertActionStyle.default, handler: {
         (action: UIAlertAction) in
         Localization.set(language: language)

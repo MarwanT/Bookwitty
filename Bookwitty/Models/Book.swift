@@ -144,7 +144,8 @@ class ProductDetails: NSObject {
       associatedInformation.append((Strings.isbn13(), isbn13))
     }
     if let languageOfText = languageOfText {
-      associatedInformation.append((Strings.language_of_text(), languageOfText))
+      let language = Locale.application.localizedString(forLanguageCode: languageOfText) ?? languageOfText
+      associatedInformation.append((Strings.language_of_text(), language))
     }
     if let productFormat = productFormat {
       associatedInformation.append((Strings.product_format(), productFormat))

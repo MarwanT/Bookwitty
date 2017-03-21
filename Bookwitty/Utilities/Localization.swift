@@ -70,3 +70,10 @@ final class Localization {
     NotificationCenter.default.post(name: Notifications.Name.languageValueChanged, object: nil, userInfo: info)
   }
 }
+
+//MARK: - Application Locale depending on the preferred Language
+extension Locale {
+  static var application: Locale {
+    return Locale(identifier: GeneralSettings.sharedInstance.preferredLanguage)
+  }
+}

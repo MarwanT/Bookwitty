@@ -40,10 +40,10 @@ final class SettingsViewModel {
     case 1: //change password
       return (Strings.change_password(), "")
     case 2: //change language
-      let languageDisplayName: String = Locale.current.localizedString(forLanguageCode: GeneralSettings.sharedInstance.preferredLanguage) ?? ""
+      let languageDisplayName: String = Locale.application.localizedString(forLanguageCode: GeneralSettings.sharedInstance.preferredLanguage) ?? ""
       return (Strings.language(), languageDisplayName.capitalized)
     case 3: //country/region
-      let countryName = (Locale.current as NSLocale).displayName(forKey: NSLocale.Key.countryCode, value: countryCode) ?? ""
+      let countryName = Locale.application.localizedString(forRegionCode: countryCode) ?? ""
       return (Strings.country_region(), countryName)
     default:
       return ("", "")
