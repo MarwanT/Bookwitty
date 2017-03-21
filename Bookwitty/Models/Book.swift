@@ -156,6 +156,9 @@ class ProductDetails: NSObject {
     if let subtitle = subtitle {
       associatedInformation.append((Strings.subtitle(), subtitle))
     }
+    if let heightUnit = height?["unit"] as? String, let heightValue = height?["value"] as? CGFloat {
+      associatedInformation.append((Strings.height(), "\(heightValue) \(heightUnit)"))
+    }
     if let numberOfPages = numberOfPages {
       associatedInformation.append((Strings.number_of_pages(), numberOfPages))
     }
