@@ -87,15 +87,13 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     super.viewDidLoad()
     initializeComponents()
     loadNavigationBarButtons()
+
+    applyLocalization()
+    observeLanguageChanges()
   }
 
   private func initializeComponents() {
-    title = Strings.topic()
-
     headerNode.delegate = self
-
-    let segments: [String] = self.mode.categories.map({ $0.name })
-    segmentedNode.initialize(with: segments)
 
     segmentedNode.selectedSegmentChanged = segmentedNode(segmentedControlNode:didSelectSegmentIndex:)
 
@@ -222,13 +220,13 @@ extension TopicViewController {
     var name: String {
       switch self {
       case .latest:
-        return "Latest"
+        return Strings.latest()
       case .relatedBooks:
-        return "Related Books"
+        return Strings.related_books()
       case .editions:
-        return "Editions"
+        return Strings.editions()
       case .followers:
-        return "Followers"
+        return Strings.followers()
       case .none:
         return ""
       }
@@ -775,5 +773,28 @@ extension TopicViewController {
     let topicViewController = TopicViewController()
     topicViewController.initialize(withBook: resource as? Book)
     navigationController?.pushViewController(topicViewController, animated: true)
+  }
+}
+
+//MARK: - Localizable implementation
+extension TopicViewController: Localizable {
+  func applyLocalization() {
+    title = Strings.topic()
+
+    headerNode = TopicHeaderNode()
+
+    let segments: [String] = self.mode.categories.map({ $0.name })
+    segmentedNode.initialize(with: segments)
+
+    collectionNode.reloadData()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }
