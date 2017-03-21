@@ -15,11 +15,19 @@ func localizedString(key: String, defaultValue: String = "", count: Count = 0, c
 }
 
 
+protocol Localizable {
+  func applyLocalization()
+}
+
 final class Localization {
 
   enum Language: String {
     case English = "en"
     case French = "fr"
+
+    static func all() -> [Language] {
+      return [.English, .French]
+    }
   }
 
   struct Notifications {
@@ -39,8 +47,8 @@ final class Localization {
     let oldLanguage = Language(rawValue: GeneralSettings.sharedInstance.preferredLanguage)
     
     Bundle.setLanguage(newLanguage.rawValue)
-    postNotificationIfNeeded(new: language, old: oldLanguage)
     GeneralSettings.sharedInstance.preferredLanguage = newLanguage.rawValue
+    postNotificationIfNeeded(new: language, old: oldLanguage)
   }
 
   //Post Language Changed Notification 

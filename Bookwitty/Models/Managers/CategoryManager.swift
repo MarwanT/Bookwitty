@@ -13,6 +13,7 @@ class CategoryManager {
   
   static let shared: CategoryManager = CategoryManager()
   private init() {
+    observeLanguageChanges()
     loadCategoriesFromJSON()
   }
   
@@ -20,7 +21,7 @@ class CategoryManager {
     return GeneralSettings.sharedInstance.preferredLanguage
   }
   
-  private func loadCategoriesFromJSON() {
+  fileprivate func loadCategoriesFromJSON() {
     let language = categoriesLanguage()
     
     guard let url = Bundle.main.url(forResource: "Categories." + language, withExtension: "json") else {
@@ -118,5 +119,21 @@ class CategoryManager {
       }
       return leefCategory(index: index+1, categoryIdentifiers: categoryIdentifiers, categories: subcategories)
     }
+  }
+}
+
+//MARK: - Localizable implementation
+extension CategoryManager: Localizable {
+  func applyLocalization() {
+    loadCategoriesFromJSON()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

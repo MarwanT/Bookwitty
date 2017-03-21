@@ -11,7 +11,7 @@
 "account_needs_confirmation_alert_dismiss_button_title" = "Cancel";
 "account_needs_confirmation_alert_message" = "Oooops, it seems you haven't confirmed your account yet!";
 "account_needs_confirmation_alert_resend_confirmation_button_title" = "Resend";
-"account_needs_confirmation_alert_title" = "Title";
+"account_needs_confirmation_alert_title" = "Account";
 "address_book" = "Address Book";
 "article" = "Article";
 "author" = "Author";
@@ -153,8 +153,8 @@
 "tutorial_forth_page_title" = "For The Love Of Books";
 "tutorial_second_page_description" = "Dig deep into a topic, explore new ideas and discuss with people. You're sure to find articles and reading lists you like.";
 "tutorial_second_page_title" = "Discover Ideas & People";
-"tutorial_third_page_description" = "Everyone has knowledge, expertise or a topic they are passionate about.\nWrite about it.";
 "tutorial_third_page_title" = "Share Your Own Ideas";
+"tutorial_third_page_description" = "Everyone has knowledge, expertise or a topic they are passionate about.\nWrite about it.";
 "update_now" = "Update now";
 "video" = "Video";
 "view_all" = "View All";
@@ -170,3 +170,8 @@
 "you_dont_have_account" = "You don't have an account";
 "you_save" = "You save";
 "your_feed" = "Your feed";
+/**
+ Discussion:
+ - Please keep this file sorted by keys, for easier maintenance
+ - Please add the strings directly to the google drive sheet
+*/

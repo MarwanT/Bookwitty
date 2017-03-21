@@ -22,13 +22,15 @@ class SettingsViewController: UIViewController {
     initializeComponents()
     setupNavigationBarButtons()
     applyTheme()
+    
+    applyLocalization()
+    observeLanguageChanges()
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.Settings)
   }
 
   private func initializeComponents() {
-    self.title = Strings.settings()
     tableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
     tableView.register(TableViewSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: TableViewSectionHeaderView.reuseIdentifier)
 
@@ -66,7 +68,9 @@ class SettingsViewController: UIViewController {
         break
       case 1: //change password
         pushChangePasswordViewController()
-      case 2: //country/region
+      case 2:
+        presentChangeLanguageActionSheet()
+      case 3: //country/region
         pushCountryPickerViewController()
       default:
         break
@@ -104,6 +108,20 @@ class SettingsViewController: UIViewController {
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.CountryList)
+  }
+
+  private func presentChangeLanguageActionSheet() {
+    let alertController = UIAlertController(title: Strings.language(), message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+    let languages: [Localization.Language] = Localization.Language.all()
+    languages.forEach { (language: Localization.Language) in
+      let languageDisplayName: String = Locale.current.localizedString(forLanguageCode: language.rawValue) ?? language.rawValue
+      alertController.addAction(UIAlertAction(title: languageDisplayName.capitalized, style: UIAlertActionStyle.default, handler: {
+        (action: UIAlertAction) in
+        Localization.set(language: language)
+      }))
+    }
+    alertController.addAction(UIAlertAction(title: Strings.cancel(), style: UIAlertActionStyle.cancel, handler: nil))
+    navigationController?.present(alertController, animated: true, completion: nil)
   }
 
   private func signOut() {
@@ -181,5 +199,22 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     dispatchSelectionAt(indexPath)
+  }
+}
+
+//MARK: - Localizable implementation
+extension SettingsViewController: Localizable {
+  func applyLocalization() {
+    title = Strings.settings()
+    tableView.reloadData()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

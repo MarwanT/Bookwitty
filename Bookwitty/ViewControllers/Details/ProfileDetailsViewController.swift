@@ -61,6 +61,8 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     initializeComponents()
     applyTheme()
     loadData()
+    applyLocalization()
+    observeLanguageChanges()
   }
 
   private func initializeComponents() {
@@ -472,7 +474,6 @@ extension ProfileDetailsViewController {
     case following(index: Int)
     case none
 
-    //TODO: Should be localized
     var name: String {
       switch self {
       case .latest:
@@ -506,5 +507,22 @@ extension ProfileDetailsViewController {
     }
 
     return segment
+  }
+}
+
+
+//MARK: - Localizable implementation
+extension ProfileDetailsViewController: Localizable {
+  func applyLocalization() {
+    segmentedNode.initialize(with: segments.map({ $0.name }))
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

@@ -59,6 +59,9 @@ class PostsListViewController: ASViewController<ASCollectionNode> {
       self.loadingStatus = .none
       self.collectionNode.reloadData()
     }
+
+    applyLocalization()
+    observeLanguageChanges()
   }
 }
 
@@ -197,5 +200,21 @@ extension PostsListViewController {
         collectionNode.insertItems(at: updatedIndexPathRange)
       }
     }
+  }
+}
+
+//MARK: - Localizable implementation
+extension PostsListViewController: Localizable {
+  func applyLocalization() {
+    collectionNode.reloadData()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

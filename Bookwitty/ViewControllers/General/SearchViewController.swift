@@ -63,6 +63,9 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     tap.cancelsTouchesInView = false
     view.addGestureRecognizer(tap)
 
+    applyLocalization()
+    observeLanguageChanges()
+
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.Search)
   }
@@ -517,5 +520,21 @@ extension SearchViewController {
     static var numberOfSections: Int {
       return 2
     }
+  }
+}
+
+//MARK: - Localizable implementation
+extension SearchViewController: Localizable {
+  func applyLocalization() {
+    searchBar?.placeholder = Strings.search_placeholder()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

@@ -26,6 +26,8 @@ class AccountViewController: UIViewController {
     initializeComponents()
     applyTheme()
     fillUserInformation()
+    observeLanguageChanges()
+
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.Account)
   }
@@ -202,5 +204,23 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     dispatchSelectionAt(indexPath)
+  }
+}
+
+//MARK: - Localizable implementation
+extension AccountViewController: Localizable {
+  func applyLocalization() {
+    title = Strings.account()
+    viewModel.fillSectionTitles()
+    tableView.reloadData()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

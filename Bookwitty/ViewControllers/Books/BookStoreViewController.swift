@@ -32,15 +32,15 @@ class BookStoreViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    navigationItem.title = Strings.books()
-    
     viewModel.dataLoaded = viewModelLoadedDataBlock()
-    
+
     initializeNavigationItems()
     initializePullToRefresh()
     initializeSubviews()
+    applyLocalization()
     
     refreshViewController()
+    observeLanguageChanges()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -105,7 +105,6 @@ class BookStoreViewController: UIViewController {
     // View All Categories View
     viewAllCategories.configuration.style = .highlighted
     viewAllCategories.delegate = self
-    viewAllCategories.label.text = Strings.view_all_categories()
     viewAllCategories.constrainHeight("45")
     
     // Bookwitty Suggests View
@@ -128,13 +127,11 @@ class BookStoreViewController: UIViewController {
     // View All Books
     viewAllBooksView.configuration.style = .highlighted
     viewAllBooksView.delegate = self
-    viewAllBooksView.label.text = Strings.view_all_books()
     viewAllBooksView.constrainHeight("45")
     
     // View All Selections
     viewAllSelectionsView.configuration.style = .highlighted
     viewAllSelectionsView.delegate = self
-    viewAllSelectionsView.label.text = Strings.view_all_selections()
     viewAllSelectionsView.constrainHeight("45")
   }
   
@@ -672,5 +669,26 @@ extension BookStoreViewController {
     let topicViewController = TopicViewController()
     topicViewController.initialize(withBook: resource as? Book)
     navigationController?.pushViewController(topicViewController, animated: true)
+  }
+}
+
+//MARK: - Localizable implementation
+extension BookStoreViewController: Localizable {
+  func applyLocalization() {
+    title = Strings.books()
+    viewAllCategories.label.text = Strings.view_all_categories()
+    viewAllBooksView.label.text = Strings.view_all_books()
+    viewAllSelectionsView.label.text = Strings.view_all_selections()
+    bookwittySuggestsTableView.reloadData()
+    selectionTableView.reloadData()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

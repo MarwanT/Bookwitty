@@ -596,13 +596,13 @@ class Strings {
   static func tutorial_second_page_title() -> String {
     return localizedString(key: "tutorial_second_page_title")
   }
+
+  static func tutorial_third_page_title() -> String {
+    return localizedString(key: "tutorial_third_page_title")
+  }
   
   static func tutorial_third_page_description() -> String {
     return localizedString(key: "tutorial_third_page_description")
-  }
-  
-  static func tutorial_third_page_title() -> String {
-    return localizedString(key: "tutorial_third_page_title")
   }
   
   static func update_now() -> String {
@@ -665,4 +665,9 @@ class Strings {
     return localizedString(key: "your_feed")
   }
 
+  /**
+   Discussion:
+   - Please keep this file sorted by keys, for easier maintenance
+   - Please add the strings directly to the google drive sheet
+   */
 }

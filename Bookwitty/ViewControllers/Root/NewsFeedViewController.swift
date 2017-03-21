@@ -68,7 +68,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    navigationItem.title = Strings.news()
     addObservers()
     initializeNavigationItems()
 
@@ -79,6 +78,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     pullToRefresher.addTarget(self, action: #selector(self.pullDownToReloadData), for: .valueChanged)
 
     applyTheme()
+    applyLocalization()    
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -205,6 +205,8 @@ extension NewsFeedViewController {
   func addObservers() {
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.refreshData(_:)), name: AppNotification.shouldRefreshData, object: nil)
+
+    observeLanguageChanges()
   }
 
   func refreshData(_ notification: Notification) {
@@ -661,5 +663,21 @@ extension NewsFeedViewController {
     static var numberOfSections: Int {
       return 3
     }
+  }
+}
+
+//MARK: - Localizable implementation
+extension NewsFeedViewController: Localizable {
+  func applyLocalization() {
+    title = Strings.news()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }
