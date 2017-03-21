@@ -25,14 +25,16 @@ class OnBoardingViewController: ASViewController<OnBoardingControllerNode> {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = Strings.follow_topics()
+
     onBoardingNode.delegate = self
     onBoardingNode.dataSource = self
     viewModel.loadOnBoardingData { (success: Bool) in
       self.onBoardingNode.reloadCollection()
     }
-    
+
     applyTheme()
+    applyLocalization()
+    observeLanguageChanges()
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.OnboardingFollowPeopleAndTopics)
@@ -116,5 +118,21 @@ extension OnBoardingViewController: OnBoardingCellDelegate {
 extension OnBoardingViewController: Themeable {
   func applyTheme() {
     node.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+  }
+}
+
+//MARK: - Localizable implementation
+extension OnBoardingViewController: Localizable {
+  func applyLocalization() {
+    title = Strings.follow_topics()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }
