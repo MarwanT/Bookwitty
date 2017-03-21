@@ -27,4 +27,13 @@ extension Date {
     formatter.dateFormat = format
     return formatter
   }
+  
+  static func from(_ string: String, formatter: DateFormatter? = nil) -> Date? {
+    let dateFormatter = formatter != nil ? formatter! : Date.formatter()
+    
+    guard let date = dateFormatter.date(from: string) else {
+      return nil
+    }
+    return date
+  }
 }
