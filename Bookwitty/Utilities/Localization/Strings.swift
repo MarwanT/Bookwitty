@@ -596,13 +596,13 @@ class Strings {
   static func tutorial_second_page_title() -> String {
     return localizedString(key: "tutorial_second_page_title")
   }
+
+  static func tutorial_third_page_title() -> String {
+    return localizedString(key: "tutorial_third_page_title")
+  }
   
   static func tutorial_third_page_description() -> String {
     return localizedString(key: "tutorial_third_page_description")
-  }
-  
-  static func tutorial_third_page_title() -> String {
-    return localizedString(key: "tutorial_third_page_title")
   }
   
   static func update_now() -> String {
