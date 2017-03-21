@@ -22,14 +22,15 @@ class SettingsViewController: UIViewController {
     initializeComponents()
     setupNavigationBarButtons()
     applyTheme()
+    
+    applyLocalization()
+    observeLanguageChanges()
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.Settings)
-    observeLanguageChanges()
   }
 
   private func initializeComponents() {
-    self.title = Strings.settings()
     tableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
     tableView.register(TableViewSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: TableViewSectionHeaderView.reuseIdentifier)
 
