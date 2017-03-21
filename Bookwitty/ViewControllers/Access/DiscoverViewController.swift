@@ -541,6 +541,7 @@ extension DiscoverViewController {
 extension DiscoverViewController: Localizable {
   func applyLocalization() {
     navigationItem.title = Strings.discover()
+    tabBarItem.title = Strings.discover().uppercased()
   }
 
   fileprivate func observeLanguageChanges() {

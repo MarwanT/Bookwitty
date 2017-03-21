@@ -670,6 +670,7 @@ extension NewsFeedViewController {
 extension NewsFeedViewController: Localizable {
   func applyLocalization() {
     navigationItem.title = Strings.bookwitty()
+    tabBarItem.title = Strings.news().uppercased()
   }
 
   fileprivate func observeLanguageChanges() {

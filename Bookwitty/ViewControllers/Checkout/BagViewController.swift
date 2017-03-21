@@ -66,7 +66,8 @@ extension BagViewController: BagNodeDelegate {
 //MARK: - Localizable implementation
 extension BagViewController: Localizable {
   func applyLocalization() {
-    navigationItem.title = Strings.bag()    
+    navigationItem.title = Strings.bag()
+    tabBarItem.title = Strings.bag().uppercased()
   }
 
   fileprivate func observeLanguageChanges() {
