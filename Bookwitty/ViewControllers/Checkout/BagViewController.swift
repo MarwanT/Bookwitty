@@ -53,6 +53,12 @@ extension BagViewController: BagNodeDelegate {
                                                  action: .GoToBagOnWebsite)
     Analytics.shared.send(event: event)
 
-    UIApplication.shared.openURL(Environment.current.baseURL)
+    let language = Localization.Language(rawValue: GeneralSettings.sharedInstance.preferredLanguage) ??
+    Localization.Language.English
+    guard let url = URL(string: "/books/\(language.rawValue)",
+      relativeTo: Environment.current.baseURL) else {
+        return
+    }
+    UIApplication.shared.openURL(url)
   }
 }
