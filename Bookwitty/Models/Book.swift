@@ -88,7 +88,7 @@ class ProductDetails: NSObject {
   var languageOfText: String?
   var productForm: String?
   var productFormat: String?
-  var publishedAt: String?
+  var publishedAt: Date?
   var publisher: String?
   var title: String?
   var subtitle: String?
@@ -119,7 +119,7 @@ class ProductDetails: NSObject {
     self.languageOfText = json["language-of-text"].stringValue
     self.productForm = json["product-form"].stringValue
     self.productFormat = json["product-format"].stringValue
-    self.publishedAt = json["published-at"].stringValue
+    self.publishedAt = Date.from(json["published-at"].stringValue)
     self.publisher = json["publisher"].stringValue
     self.title = json["title"].stringValue
     self.subtitle = json["subtitle"].stringValue
