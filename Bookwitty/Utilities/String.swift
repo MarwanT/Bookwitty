@@ -61,3 +61,9 @@ extension Optional where Wrapped: StringType {
     return self!.get.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
   }
 }
+
+extension String {
+  var isBlank: Bool {
+    return self.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+  }
+}
