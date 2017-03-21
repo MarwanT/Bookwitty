@@ -7,3 +7,9 @@
 //
 
 import Foundation
+
+enum CallToAction {
+  case wit
+  case dim
+  case follow
+}
