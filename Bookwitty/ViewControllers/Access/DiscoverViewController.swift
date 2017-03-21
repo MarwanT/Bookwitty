@@ -540,7 +540,7 @@ extension DiscoverViewController {
 //MARK: - Localizable implementation
 extension DiscoverViewController: Localizable {
   func applyLocalization() {
-    title = Strings.discover()
+    navigationItem.title = Strings.discover()
   }
 
   fileprivate func observeLanguageChanges() {

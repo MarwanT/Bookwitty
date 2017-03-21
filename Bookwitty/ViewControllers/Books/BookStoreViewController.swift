@@ -675,7 +675,7 @@ extension BookStoreViewController {
 //MARK: - Localizable implementation
 extension BookStoreViewController: Localizable {
   func applyLocalization() {
-    title = Strings.books()
+    navigationItem.title = Strings.books()
     viewAllCategories.label.text = Strings.view_all_categories()
     viewAllBooksView.label.text = Strings.view_all_books()
     viewAllSelectionsView.label.text = Strings.view_all_selections()
