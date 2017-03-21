@@ -102,6 +102,8 @@ class RootTabBarController: UITabBarController {
       #selector(self.checkAppStatus(notification:)), name: AppNotification.didCheckAppStatus, object: nil)
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.accountNeedsConfirmation(notification:)), name: AppNotification.accountNeedsConfirmation, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.callToActionHandler(notification:)), name: AppNotification.callToAction, object: nil)
   }
   
   private func addObserversWhenNotVisible() {
@@ -183,6 +185,10 @@ extension RootTabBarController {
 
 //MARK: - Notifications
 extension RootTabBarController {
+  func callToActionHandler(notification: Notification?) {
+    //TODO: Handle callToAction logic
+  }
+
   func accountNeedsConfirmation(notification: Notification?) {
     displayAccountNeedsConfirmationAlert()
   }
