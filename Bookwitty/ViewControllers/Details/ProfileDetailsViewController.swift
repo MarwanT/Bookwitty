@@ -241,6 +241,11 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
           return
         }
         let follower: PenName? = viewModel.itemForSegment(segment: activeSegment, index: indexPath.row) as? PenName
+        var isMyPenName: Bool = false
+        if let follower = follower {
+          isMyPenName = viewModel.isMyPenName(follower)
+          cell.updateMode(disabled: isMyPenName)
+        }
         cell.penName = follower?.name
         cell.biography = follower?.biography
         cell.imageUrl = follower?.avatarUrl

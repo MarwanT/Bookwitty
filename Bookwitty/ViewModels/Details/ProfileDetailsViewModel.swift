@@ -214,6 +214,10 @@ extension ProfileDetailsViewModel {
     default: return nil
     }
   }
+
+  func isMyPenName(_ penName: PenName) -> Bool {
+    return UserManager.shared.signedInUser.isMy(penName: penName)
+  }
 }
 
 // Mark: - Collection helper
