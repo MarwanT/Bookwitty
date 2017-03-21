@@ -245,6 +245,18 @@ extension RootTabBarController {
   func showRootViewController() {
     self.dismiss(animated: true)
   }
+
+  func presentRegisterViewController() {
+    let registerVC = Storyboard.Access.instantiate(RegisterViewController.self)
+    let navigationController = UINavigationController(rootViewController: registerVC)
+    present(navigationController, animated: true, completion: nil)
+  }
+
+  func presentSignInViewController() {
+    let signInVC = Storyboard.Access.instantiate(SignInViewController.self)
+    let navigationController = UINavigationController(rootViewController: signInVC)
+    present(navigationController, animated: true, completion: nil)
+  }
 }
 
 // MARK: - Overlay Methods
@@ -344,12 +356,14 @@ extension RootTabBarController {
       title: Strings.sign_in(),
       style: UIAlertActionStyle.default) { _ in
         //TODO: handle Action
+        self.presentSignInViewController()
     }
 
     let registerAction = UIAlertAction(
       title: Strings.register(),
       style: UIAlertActionStyle.default) { _ in
         //TODO: handle Action
+        self.presentRegisterViewController()
     }
 
     let neutralAction = UIAlertAction(
