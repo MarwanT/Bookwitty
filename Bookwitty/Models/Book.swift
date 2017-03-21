@@ -88,7 +88,7 @@ class ProductDetails: NSObject {
   var languageOfText: String?
   var productForm: String?
   var productFormat: String?
-  var publishedAt: String?
+  var publishedAt: Date?
   var publisher: String?
   var title: String?
   var subtitle: String?
@@ -119,7 +119,7 @@ class ProductDetails: NSObject {
     self.languageOfText = json["language-of-text"].stringValue
     self.productForm = json["product-form"].stringValue
     self.productFormat = json["product-format"].stringValue
-    self.publishedAt = json["published-at"].stringValue
+    self.publishedAt = Date.from(json["published-at"].stringValue)
     self.publisher = json["publisher"].stringValue
     self.title = json["title"].stringValue
     self.subtitle = json["subtitle"].stringValue
@@ -153,8 +153,20 @@ class ProductDetails: NSObject {
     if let publisher = publisher {
       associatedInformation.append((Strings.publisher(), publisher))
     }
+    if let publishedAt = publishedAt {
+      associatedInformation.append((Strings.publication_date(), publishedAt.formatted().capitalized))
+    }
     if let subtitle = subtitle {
       associatedInformation.append((Strings.subtitle(), subtitle))
+    }
+    if let heightUnit = height?["unit"] as? String, let heightValue = height?["value"] as? CGFloat {
+      associatedInformation.append((Strings.height(), "\(heightValue) \(heightUnit)"))
+    }
+    if let weightUnit = weight?["unit"] as? String, let weightValue = weight?["value"] as? CGFloat {
+      associatedInformation.append((Strings.weight(), "\(weightValue) \(weightUnit)"))
+    }
+    if let widthUnit = width?["unit"] as? String, let widthValue = width?["value"] as? CGFloat {
+      associatedInformation.append((Strings.width(), "\(widthValue) \(widthUnit)"))
     }
     if let numberOfPages = numberOfPages {
       associatedInformation.append((Strings.number_of_pages(), numberOfPages))

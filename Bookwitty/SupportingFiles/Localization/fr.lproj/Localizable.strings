@@ -75,6 +75,7 @@
 "forgot_your_password" = "Mot de passe oublié ?";
 "format" = "Format";
 "free_shipping_internationally" = "Livraison gratuite où que vous soyez";
+"height" = "Hauteur";
 "help" = "Aide";
 "image" = "Image";
 "imprint" = "Éditeur";
@@ -117,6 +118,7 @@
 "product_format" = "Format";
 "profile" = "Profil";
 "profile_picture" = "Photo de profil";
+"publication_date" = "Date de publication";
 "publisher" = "Éditeur";
 "quote" = "Citation";
 "reading_list" = "Liste de lecture";
@@ -165,6 +167,8 @@
 "view_all_selections" = "Voir toutes les sélections";
 "view_subcategories" = "Voir les sous-catégories";
 "view_whole_description" = "Voir la description complète ";
+"weight" = "Poids";
+"width" = "Largeur";
 "wit_it" = "Wit";
 "witted" = "Witté";
 "you_dont_have_account" = "Vous n'avez pas de compte";

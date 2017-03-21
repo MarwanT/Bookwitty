@@ -285,6 +285,10 @@ class Strings {
     return localizedString(key: "free_shipping_internationally")
   }
   
+  static func height() -> String {
+    return localizedString(key: "height")
+  }
+  
   static func help() -> String {
     return localizedString(key: "help")
   }
@@ -451,6 +455,10 @@ class Strings {
   
   static func profile_picture() -> String {
     return localizedString(key: "profile_picture")
+  }
+  
+  static func publication_date() -> String {
+    return localizedString(key: "publication_date")
   }
   
   static func publisher() -> String {
@@ -643,6 +651,14 @@ class Strings {
   
   static func view_whole_description() -> String {
     return localizedString(key: "view_whole_description")
+  }
+  
+  static func weight() -> String {
+    return localizedString(key: "weight")
+  }
+  
+  static func width() -> String {
+    return localizedString(key: "width")
   }
   
   static func wit_it() -> String {

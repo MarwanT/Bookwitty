@@ -75,6 +75,7 @@
 "forgot_your_password" = "Forgot your password?";
 "format" = "Format";
 "free_shipping_internationally" = "Free shipping internationally";
+"height" = "Height";
 "help" = "Help";
 "image" = "Image";
 "imprint" = "Publisher";
@@ -117,6 +118,7 @@
 "product_format" = "Product Format";
 "profile" = "Profile";
 "profile_picture" = "Profile Picture";
+"publication_date" = "Publication date";
 "publisher" = "Publisher";
 "quote" = "Quote";
 "reading_list" = "Reading List";
@@ -165,6 +167,8 @@
 "view_all_selections" = "View All Selections";
 "view_subcategories" = "View Subcategories";
 "view_whole_description" = "View Whole Description";
+"weight" = "Weight";
+"width" = "Width";
 "wit_it" = "Wit";
 "witted" = "Witted";
 "you_dont_have_account" = "You don't have an account";
