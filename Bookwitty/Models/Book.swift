@@ -153,6 +153,9 @@ class ProductDetails: NSObject {
     if let publisher = publisher {
       associatedInformation.append((Strings.publisher(), publisher))
     }
+    if let publishedAt = publishedAt {
+      associatedInformation.append((Strings.publication_date(), publishedAt.formatted().capitalized))
+    }
     if let subtitle = subtitle {
       associatedInformation.append((Strings.subtitle(), subtitle))
     }
