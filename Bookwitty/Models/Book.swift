@@ -217,7 +217,7 @@ class SupplierInformation: NSObject {
 // MARK: - Price
 struct Price {
   var currency: String?
-  let value: Int?
+  let value: Float?
   
   init(for dictionary: [String : Any]?) {
     guard let dictionary = dictionary else {
@@ -227,10 +227,10 @@ struct Price {
     }
     let json = JSON(dictionary)
     currency = json["currency"].stringValue
-    value = json["value"].int
+    value = json["value"].floatValue
   }
   
-  init(currency: String?, value: Int?) {
+  init(currency: String?, value: Float?) {
     self.currency = currency
     self.value = value
   }
