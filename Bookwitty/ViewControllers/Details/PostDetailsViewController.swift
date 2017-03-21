@@ -41,6 +41,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.postItemsNode.delegate = self
     postDetailsNode.postCardsNode.delegate = self
     postDetailsNode.headerNode.profileBarNode.delegate = self
+    postDetailsNode.headerNode.profileBarNode.updateMode(disabled: viewModel.isMyPenName())
     postDetailsNode.delegate = self
     postDetailsNode.setWitValue(witted: viewModel.isWitted, wits: viewModel.wits ?? 0)
     postDetailsNode.setDimValue(dimmed: viewModel.isDimmed, dims: viewModel.dims ?? 0)

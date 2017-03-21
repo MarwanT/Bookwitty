@@ -410,6 +410,13 @@ extension TopicViewModel {
 
 //MARK: - Followers
 extension TopicViewModel {
+  func isMyPenName(_ penName: PenName?) -> Bool {
+    guard let penName = penName else {
+      return false
+    }
+    return UserManager.shared.signedInUser.isMy(penName: penName)
+  }
+
   var hasNextFollowers: Bool {
     return self.followersNextUrl != nil
   }
