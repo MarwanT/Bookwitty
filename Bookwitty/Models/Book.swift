@@ -162,6 +162,9 @@ class ProductDetails: NSObject {
     if let weightUnit = weight?["unit"] as? String, let weightValue = weight?["value"] as? CGFloat {
       associatedInformation.append((Strings.weight(), "\(weightValue) \(weightUnit)"))
     }
+    if let widthUnit = width?["unit"] as? String, let widthValue = width?["value"] as? CGFloat {
+      associatedInformation.append((Strings.width(), "\(widthValue) \(widthUnit)"))
+    }
     if let numberOfPages = numberOfPages {
       associatedInformation.append((Strings.number_of_pages(), numberOfPages))
     }
