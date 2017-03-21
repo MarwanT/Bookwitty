@@ -25,6 +25,10 @@ class DetailsInfoCellNode: ASCellNode {
     automaticallyManagesSubnodes = true
     style.minHeight = ASDimensionMake(Configuration.minimumHeight)
     separatorInset = configuration.separatorInsets
+  }
+  
+  override func layout() {
+    super.layout()
     selectedBackgroundView = configuration.backgroundSelectionView
   }
   

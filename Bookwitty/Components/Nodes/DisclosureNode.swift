@@ -72,23 +72,22 @@ class DisclosureNode: ASControlNode {
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     style.width = ASDimensionMake(constrainedSize.max.width)
     
+    let textInsetSpec = ASInsetLayoutSpec(
+      insets: configuration.textEdgeInsets, child: titleTextNode)
+    textInsetSpec.style.flexGrow = 1.0
+    textInsetSpec.style.flexShrink = 1.0
+    
     let horizontalStack = ASStackLayoutSpec(
       direction: .horizontal,
       spacing: 0,
-      justifyContent: .start,
+      justifyContent: .spaceBetween,
       alignItems: .center,
-      children: [titleTextNode, spacer(flexGrow: 1.0), imageNode])
-    horizontalStack.style.width = ASDimensionMake(constrainedSize.max.width)
+      children: [textInsetSpec, imageNode])
     let insetSpec = ASInsetLayoutSpec(
       insets: configuration.nodeEdgeInsets,
       child: horizontalStack)
-    let centerSpec = ASCenterLayoutSpec(
-      horizontalPosition: .start,
-      verticalPosition: .center,
-      sizingOption: ASRelativeLayoutSpecSizingOption.minimumHeight,
-      child: insetSpec)
     
-    return centerSpec
+    return insetSpec
   }
   
   // MARK: Helpers
@@ -159,7 +158,9 @@ extension DisclosureNode {
     var nodeEdgeInsets = UIEdgeInsets(
       top: 0, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: 0, right: 0)
-    
+    var textEdgeInsets = UIEdgeInsets(
+      top: 0, left: 0,
+      bottom: 5, right: 0)
     var normalBackgroundColor: UIColor = ThemeManager.shared.currentTheme.colorNumber23()
     var selectedBackgroundColor: UIColor = ThemeManager.shared.currentTheme.defaultSelectionColor()
     var isAutoDeselectable: Bool = true
