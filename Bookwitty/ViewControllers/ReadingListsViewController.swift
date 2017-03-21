@@ -70,6 +70,7 @@ extension ReadingListsViewController: ASCollectionDataSource, ASCollectionDelega
       guard let readingListNode = CardFactory.shared.createCardFor(resource: readingList) else {
         return ASCellNode()
       }
+      readingListNode.delegate = self
       return readingListNode
     }
   }
@@ -88,6 +89,54 @@ extension ReadingListsViewController: ASCollectionDataSource, ASCollectionDelega
       min: CGSize(width: collectionNode.frame.width, height: 0),
       max: CGSize(width: collectionNode.frame.width, height: .infinity)
     )
+  }
+
+// MARK - BaseCardPostNode Delegate
+extension ReadingListsViewController: BaseCardPostNodeDelegate {
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+    let resource = viewModel.resourceForIndex(indexPath: indexPath)
+    if let resource = resource,
+      let penName = resource.penName {
+      pushProfileViewController(penName: penName)
+    }
+  }
+
+  func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+
+    switch(action) {
+    case .wit:
+      viewModel.witContent(indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    case .unwit:
+      viewModel.unwitContent(indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    case .share:
+      if let sharingInfo: [String] = viewModel.sharingContent(indexPath: indexPath) {
+        presentShareSheet(shareContent: sharingInfo)
+      }
+    default:
+      //TODO: handle comment
+      break
+    }
+
+    //MARK: [Analytics] Event
+    guard let resource = viewModel.resourceForIndex(indexPath: indexPath) else { return }
+    let category: Analytics.Category = .ReadingList
+    let name: String = resource.title ?? ""
+
+    let analyticsAction = Analytics.Action.actionFrom(cardAction: action)
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: analyticsAction,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 }
 
