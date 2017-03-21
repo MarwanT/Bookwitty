@@ -336,7 +336,29 @@ extension RootTabBarController {
   }
 
   fileprivate func dispalyUserNotSignedInAlert(cta: CallToAction?) {
-    //TODO: Show alert
+    let alertController = UIAlertController(
+      title: "You Are Not Signed In!",
+      message: "You need to be signed to complete this action",
+      preferredStyle: .actionSheet)
+    let signInAction = UIAlertAction(
+      title: Strings.sign_in(),
+      style: UIAlertActionStyle.default) { _ in
+        //TODO: handle Action
+    }
+
+    let registerAction = UIAlertAction(
+      title: Strings.register(),
+      style: UIAlertActionStyle.default) { _ in
+        //TODO: handle Action
+    }
+
+    let neutralAction = UIAlertAction(
+      title: Strings.account_needs_confirmation_alert_dismiss_button_title(),
+      style: UIAlertActionStyle.cancel, handler: nil)
+    alertController.addAction(signInAction)
+    alertController.addAction(registerAction)
+    alertController.addAction(neutralAction)
+    present(alertController, animated: true, completion: nil)
   }
 }
 
