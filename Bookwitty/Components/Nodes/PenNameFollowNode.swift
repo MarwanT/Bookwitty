@@ -189,6 +189,12 @@ class PenNameFollowNode: ASCellNode {
 //Actions
 extension PenNameFollowNode {
   func actionButtonTouchUpInside(_ sender: ASButtonNode) {
+    guard UserManager.shared.isSignedIn else {
+      //If user is not signed In post notification and do not fall through
+      NotificationCenter.default.post( name: AppNotification.callToAction, object: CallToAction.follow)
+      return
+    }
+
     delegate?.penName(node: self, actionButtonTouchUpInside: sender)
   }
 
