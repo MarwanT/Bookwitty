@@ -207,18 +207,22 @@ class CardActionBarNode: ASCellNode {
       let wits: Int? = (numberOfWits ?? 0 > 0) ? (numberOfWits! + (-1 * inverter)) : nil
       setWitButton(witted: false, wits: wits)
       let dims: Int? = (numberOfDims ?? 0) + (1 * inverter)
-      setDimValue(dimmed: true, dims: dims)
+      setDimValue(dimmed: success, dims: dims)
+
     case .undim:
       let dims: Int? = (numberOfDims ?? 0 > 0) ? (numberOfDims! + (-1 * inverter)) : nil
       setDimValue(dimmed: false, dims: dims)
+
     case .wit:
       let dims: Int? = (numberOfDims ?? 0 > 0) ? (numberOfDims! + (-1 * inverter)) : nil
       setDimValue(dimmed: false, dims: dims)
       let wits: Int? = (numberOfWits ?? 0) + (1 * inverter)
-      setWitButton(witted: true, wits: wits)
+      setWitButton(witted: success, wits: wits)
+
     case .unwit:
       let wits: Int? = (numberOfWits ?? 0 > 0) ? (numberOfWits! + (-1 * inverter)) : nil
       setWitButton(witted: false, wits: wits)
+
     default: break
     }
   }
