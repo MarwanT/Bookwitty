@@ -32,6 +32,9 @@ final class DefaultTheme: Theme {
     UITabBar.appearance().tintColor = self.colorNumber19()
 
     UISwitch.appearance().onTintColor = self.colorNumber19()
+
+    let barAppearace = UIBarButtonItem.appearance()
+    barAppearace.setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -60), for:UIBarMetrics.default)
   }
 }
 

@@ -17,12 +17,12 @@ class BagViewController: ASViewController<ASDisplayNode> {
     let bagNode = BagNode()
     super.init(node: bagNode)
     bagNode.delegate = self
-    title = Strings.bag()
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeNavigationItems()
+    navigationItem.title = Strings.bag()
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.Bag)

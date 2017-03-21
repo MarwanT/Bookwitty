@@ -13,6 +13,8 @@ protocol BaseCardPostNodeContentProvider {
   var shouldShowInfoNode: Bool { get }
   var contentShouldExtendBorders: Bool { get }
   var contentNode: ASDisplayNode { get }
+
+  func updateMode(fullMode: Bool)
 }
 
 extension BaseCardPostNode: CardActionBarNodeDelegate {
@@ -268,5 +270,9 @@ extension BaseCardPostNode: BaseCardPostNodeContentProvider {
 
   internal var contentNode: ASDisplayNode {
     return ASDisplayNode()
+  }
+
+  func updateMode(fullMode: Bool) {
+    //Override in child
   }
 }

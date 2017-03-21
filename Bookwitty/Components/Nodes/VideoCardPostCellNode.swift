@@ -17,6 +17,10 @@ class VideoCardPostCellNode: BaseCardPostNode {
   override var contentShouldExtendBorders: Bool { return true }
   override var contentNode: ASDisplayNode { return node }
 
+  override func updateMode(fullMode: Bool) {
+    node.setupMode(fullViewMode: fullMode)
+  }
+
   override init() {
     node = VideoCardContentNode()
     super.init()
@@ -91,8 +95,7 @@ class VideoCardContentNode: ASDisplayNode {
   }
 
   private func setupNode() {
-    titleNode.maximumNumberOfLines = 3
-    descriptionNode.maximumNumberOfLines = 3
+    setupMode(fullViewMode: false)
 
     playNode.image = #imageLiteral(resourceName: "play")
     playNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.colorNumber23().withAlphaComponent(0.9))
@@ -100,6 +103,12 @@ class VideoCardContentNode: ASDisplayNode {
 
     imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
     imageNode.addTarget(self, action: #selector(videoImageTouchUpInside(_:)), forControlEvents: .touchUpInside)
+  }
+
+  func setupMode(fullViewMode: Bool) {
+    titleNode.maximumNumberOfLines = fullViewMode ? 0 : 3
+    descriptionNode.maximumNumberOfLines = fullViewMode ? 0 : 3
+    setNeedsLayout()
   }
 
   func videoImageTouchUpInside(_ sender: ASImageNode?) {

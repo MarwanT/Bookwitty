@@ -80,7 +80,7 @@ class RootTabBarController: UITabBarController {
     bagViewController.tabBarItem = UITabBarItem(
       title: Strings.bag().uppercased(),
       image: #imageLiteral(resourceName: "emptyBasket"),
-      tag:3)
+      tag:4)
 
     // Set The View controller
     self.viewControllers = [

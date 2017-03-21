@@ -68,7 +68,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = Strings.news()
+    navigationItem.title = Strings.news()
     addObservers()
     initializeNavigationItems()
 
@@ -161,10 +161,11 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       guard let strongSelf = self else { return }
       completionBlock()
       if success {
-        if reloadPenNames || !strongSelf.penNameSelectionNode.hasData() {
-          strongSelf.reloadPenNamesNode()
-        }
-        strongSelf.collectionNode.reloadData()
+        strongSelf.collectionNode.reloadData(completion: { 
+          if reloadPenNames || !strongSelf.penNameSelectionNode.hasData() {
+            strongSelf.reloadPenNamesNode()
+          }
+        })
       }
     }
   }

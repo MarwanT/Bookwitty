@@ -40,3 +40,11 @@ class CountsAttribute: Attribute {
     self.counts = counts
   }
 }
+
+class MediaAttribute: Attribute {
+  let media: [String : Any]?
+
+  init(media: [String : Any]? = nil) {
+    self.media = media
+  }
+}

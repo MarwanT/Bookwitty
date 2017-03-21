@@ -95,7 +95,7 @@ class PenNameDisplayNode: ASControlNode {
     let spec = ASCenterLayoutSpec(centeringOptions: .Y, sizingOptions: ASCenterLayoutSpecSizingOptions(rawValue: 0), child: penNameTextNode)
     let insetSpec = ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: 0), child: spec)
 
-    let horizontalSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start, alignItems: .stretch, children: [insetSpec, spacer(flexGrow: 1), downArrowImageNode])
+    let horizontalSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .spaceBetween, alignItems: .stretch, children: [insetSpec, spacer(width: internalMargin), downArrowImageNode])
     let verticalSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .center, alignItems: .stretch, children: [spacer(flexGrow: 1), horizontalSpec, spacer(flexGrow: 1), separatorNode])
     
     return verticalSpec

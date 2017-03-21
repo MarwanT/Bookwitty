@@ -123,7 +123,7 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
   var headLine: String? {
     didSet {
       if let headLine = headLine {
-        headLineNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.headline).append(text: headLine).attributedString
+        headLineNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.title3).append(text: headLine).attributedString
       } else {
         headLineNode.attributedText = nil
       }

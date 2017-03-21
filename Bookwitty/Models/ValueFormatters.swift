@@ -69,3 +69,18 @@ class CountsValueFormatter: ValueFormatter {
   }
 }
 
+class MediaValueFormatter: ValueFormatter {
+  typealias FormattedType = [String : Any]
+  typealias UnformattedType = MediaModel
+  typealias AttributeType = MediaAttribute
+
+  func unformatValue(_ value: [String : Any], forAttribute: MediaAttribute) -> MediaModel {
+    return MediaModel(for: value)
+  }
+
+  func formatValue(_ value: MediaModel, forAttribute: MediaAttribute) -> [String : Any] {
+    // TODO: Implement this
+    return ["" : ""]
+  }
+}
+
