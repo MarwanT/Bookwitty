@@ -90,7 +90,7 @@ class PenNameFollowNode: ASCellNode {
   private func setupNode() {
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
 
-    imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
+    imageNode.defaultImage = #imageLiteral(resourceName: "penNamePlaceholder ").imageMaskedAndTinted(with: ThemeManager.shared.currentTheme.colorNumber18())
     imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0.0, nil)
 
     nameNode.maximumNumberOfLines = 1
@@ -131,10 +131,8 @@ class PenNameFollowNode: ASCellNode {
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     var nodesArray: [ASLayoutElement] = []
 
-    if isValid(imageUrl) {
-      nodesArray.append(imageNode)
-      nodesArray.append(spacer(width: internalMargin))
-    }
+    nodesArray.append(imageNode)
+    nodesArray.append(spacer(width: internalMargin))
 
     var infoNodes: [ASLayoutElement] = []
 
