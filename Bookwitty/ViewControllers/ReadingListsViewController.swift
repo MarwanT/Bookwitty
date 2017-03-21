@@ -70,6 +70,7 @@ extension ReadingListsViewController: ASCollectionDataSource, ASCollectionDelega
       guard let readingListNode = CardFactory.shared.createCardFor(resource: readingList) else {
         return ASCellNode()
       }
+      readingListNode.delegate = self
       return readingListNode
     }
   }
@@ -89,6 +90,60 @@ extension ReadingListsViewController: ASCollectionDataSource, ASCollectionDelega
       max: CGSize(width: collectionNode.frame.width, height: .infinity)
     )
   }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    let resource = viewModel.resourceForIndex(indexPath: indexPath)
+    actionForCard(resource: resource)
+  }
+}
+
+// MARK - BaseCardPostNode Delegate
+extension ReadingListsViewController: BaseCardPostNodeDelegate {
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+    let resource = viewModel.resourceForIndex(indexPath: indexPath)
+    if let resource = resource,
+      let penName = resource.penName {
+      pushProfileViewController(penName: penName)
+    }
+  }
+
+  func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+
+    switch(action) {
+    case .wit:
+      viewModel.witContent(indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    case .unwit:
+      viewModel.unwitContent(indexPath: indexPath) { (success) in
+        didFinishAction?(success)
+      }
+    case .share:
+      if let sharingInfo: [String] = viewModel.sharingContent(indexPath: indexPath) {
+        presentShareSheet(shareContent: sharingInfo)
+      }
+    default:
+      //TODO: handle comment
+      break
+    }
+
+    //MARK: [Analytics] Event
+    guard let resource = viewModel.resourceForIndex(indexPath: indexPath) else { return }
+    let category: Analytics.Category = .ReadingList
+    let name: String = resource.title ?? ""
+
+    let analyticsAction = Analytics.Action.actionFrom(cardAction: action)
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: analyticsAction,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+  }
 }
 
 //MARK: - Localizable implementation
@@ -104,6 +159,40 @@ extension ReadingListsViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+  }
+}
+
+// MARK: - Actions For Cards
+extension ReadingListsViewController {
+
+  fileprivate func actionForCard(resource: ModelResource?) {
+    guard let resource = resource else {
+      return
+    }
+    let registeredType = resource.registeredResourceType
+
+    switch registeredType {
+    case ReadingList.resourceType:
+      actionForReadingListResourceType(resource: resource)
+    default:
+      print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")
+      break
+    }
+  }
+
+  fileprivate func pushPostDetailsViewController(resource: ModelResource) {
+    let nodeVc = PostDetailsViewController(resource: resource)
+    self.navigationController?.pushViewController(nodeVc, animated: true)
+  }
+
+  fileprivate func actionForReadingListResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? ReadingList)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .ReadingList,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushPostDetailsViewController(resource: resource)
   }
 }
 
