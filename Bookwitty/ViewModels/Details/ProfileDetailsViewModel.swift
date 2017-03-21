@@ -31,6 +31,10 @@ class ProfileDetailsViewModel {
       cancellableRequest.cancel()
     }
   }
+
+  func isMyPenName() -> Bool {
+    return UserManager.shared.signedInUser.isMy(penName: penName)
+  }
 }
 
 // MARK: - API requests

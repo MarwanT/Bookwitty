@@ -71,6 +71,13 @@ class PostDetailsViewModel {
     self.resource = resource
   }
 
+  func isMyPenName() -> Bool {
+    guard let penName = penName else {
+      return false
+    }
+    return UserManager.shared.signedInUser.isMy(penName: penName)
+  }
+
   private func conclusionFromResource(resource: Resource) -> String? {
     switch(resource.registeredResourceType) {
     case ReadingList.resourceType:

@@ -53,6 +53,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
     activeSegment = segments[0]
     penNameHeaderNode = PenNameFollowNode(enlarged: true)
+
     super.init(node: collectionNode)
   }
 
@@ -84,6 +85,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     penNameHeaderNode.following = viewModel.penName.following
     penNameHeaderNode.imageUrl = viewModel.penName.avatarUrl
     penNameHeaderNode.delegate = self
+    penNameHeaderNode.updateMode(disabled: viewModel.isMyPenName())
   }
 
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
