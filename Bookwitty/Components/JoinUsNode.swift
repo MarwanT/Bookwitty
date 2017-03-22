@@ -56,6 +56,13 @@ class JoinUsNode: ASDisplayNode {
       #selector(self.getStartedTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
     alreadyHaveAnAccountTextNode.addTarget(self, action:
       #selector(self.alreadyHaveAnAccountTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
+    
+    imageColoredBackgroundNode.isLayerBacked = true
+    imageWhiteBackgroundNode.isLayerBacked = true
+    imageNode.isLayerBacked = true
+    titleTextNode.isLayerBacked = true
+    descriptionTextNode.isLayerBacked = true
+    contentBackgroundNode.isLayerBacked = true
   }
   
   var imageBottomWhiteHeightDimension: CGFloat {
