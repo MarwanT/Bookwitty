@@ -255,6 +255,18 @@ extension RootTabBarController {
     let navigationController = UINavigationController(rootViewController: signInVC)
     present(navigationController, animated: true, completion: nil)
   }
+
+  private func cancelBarButton() -> UIBarButtonItem {
+    return UIBarButtonItem(
+      title: Strings.cancel(),
+      style: UIBarButtonItemStyle.plain,
+      target: self,
+      action: #selector(self.cancelBarButtonTouchUpInside(_:)))
+  }
+
+  func cancelBarButtonTouchUpInside(_ sender: Any?) {
+    self.dismiss(animated: true, completion: nil)
+  }
 }
 
 // MARK: - Alerts
