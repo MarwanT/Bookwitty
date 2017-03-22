@@ -30,10 +30,10 @@ class JoinUsNode: ASDisplayNode {
     automaticallyManagesSubnodes = true
     backgroundColor = configuration.backgroundColor
     
-    titleText = "Personalize your feed"
-    descriptionText = "View articles reading lists and book recommendations in your feed based on your interests."
-    getStartedButtonTitle = "Get started"
-    alreadyHaveAnAccountAttributedString = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: "Already have an account?\n", color: configuration.textColor).append(text: "Sign In", fontDynamicType: FontDynamicType.footnote, color: configuration.signInTextColor).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
+    titleText = Strings.join_us_to_personalize_feed_title()
+    descriptionText = Strings.join_us_to_personalize_feed_description()
+    getStartedButtonTitle = Strings.get_started()
+    alreadyHaveAnAccountAttributedString = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: "\(Strings.already_have_an_account())\n", color: configuration.textColor).append(text: Strings.sign_in(), fontDynamicType: FontDynamicType.footnote, color: configuration.signInTextColor).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
     
     getStartedButtonNode.addTarget(self, action:
       #selector(self.getStartedTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
