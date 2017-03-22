@@ -33,7 +33,7 @@ class ProfileDetailsViewModel {
   }
 
   func isMyPenName() -> Bool {
-    return UserManager.shared.signedInUser.isMy(penName: penName)
+    return UserManager.shared.isMy(penName: penName)
   }
 }
 
@@ -220,7 +220,7 @@ extension ProfileDetailsViewModel {
   }
 
   func isMyPenName(_ penName: PenName) -> Bool {
-    return UserManager.shared.signedInUser.isMy(penName: penName)
+    return UserManager.shared.isMy(penName: penName)
   }
 }
 

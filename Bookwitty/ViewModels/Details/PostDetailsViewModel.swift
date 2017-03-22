@@ -75,7 +75,7 @@ class PostDetailsViewModel {
     guard let penName = penName else {
       return false
     }
-    return UserManager.shared.signedInUser.isMy(penName: penName)
+    return UserManager.shared.isMy(penName: penName)
   }
 
   private func conclusionFromResource(resource: Resource) -> String? {
