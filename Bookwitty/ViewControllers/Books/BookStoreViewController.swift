@@ -37,9 +37,12 @@ class BookStoreViewController: UIViewController {
     initializeNavigationItems()
     initializePullToRefresh()
     initializeSubviews()
-    applyLocalization()
-    
     refreshViewController()
+  }
+
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    applyLocalization()
     observeLanguageChanges()
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.authenticationStatusChanged(_:)), name: AppNotification.authenticationStatusChanged, object: nil)

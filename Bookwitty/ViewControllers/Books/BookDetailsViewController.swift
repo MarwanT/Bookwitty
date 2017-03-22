@@ -54,6 +54,9 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
       self.reloadCollectionViewSections(sections: sectionsNeedsReloading)
     }
 
+    applyLocalization()
+    observeLanguageChanges()
+
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.BookProduct)
   }
@@ -419,5 +422,21 @@ extension BookDetailsViewController: BaseCardPostNodeDelegate {
                                                  action: analyticsAction,
                                                  name: name)
     Analytics.shared.send(event: event)
+  }
+}
+
+//MARK: - Localizable implementation
+extension BookDetailsViewController: Localizable {
+  func applyLocalization() {
+    collectionNode.reloadData()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

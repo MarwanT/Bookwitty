@@ -51,6 +51,9 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
       strongSelf.collectionView?.addSubview(strongSelf.pullToRefresher)
       strongSelf.collectionView?.alwaysBounceVertical = true
     }
+
+    applyLocalization()
+    observeLanguageChanges()
   }
 
   override func viewDidLoad() {
@@ -63,9 +66,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     pullToRefresher.addTarget(self, action: #selector(self.pullDownToReloadData), for: .valueChanged)
 
     applyTheme()
-    applyLocalization()
     addObservers()
-    observeLanguageChanges()
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.authenticationStatusChanged(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
   }
