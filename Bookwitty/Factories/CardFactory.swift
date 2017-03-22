@@ -119,7 +119,7 @@ extension  CardFactory {
     card.node.articleTitle = resource.caption
     card.node.articleDescription = resource.shortDescription ?? resource.biography
     card.node.subImageUrl = resource.thumbnailImageUrl ?? resource.profileImageUrl ?? resource.imageUrl
-    card.node.imageUrl = resource.coverImageUrl
+    card.node.imageUrl = nil
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
     card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
 
@@ -232,7 +232,7 @@ extension  CardFactory {
     card.node.imageUrl = resource.coverImageUrl
     card.node.setTopicStatistics(numberOfPosts: resource.counts?.posts, numberOfBooks: nil, numberOfFollowers: resource.counts?.followers)
     card.articleCommentsSummary = nil
-    card.node.subImageUrl = resource.thumbnailImageUrl
+    card.node.subImageUrl = nil
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
     card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
 
@@ -306,7 +306,7 @@ extension  CardFactory {
     card.node.articleDescription = resource.bookDescription
     card.node.setTopicStatistics(numberOfPosts: resource.counts?.posts, numberOfBooks: nil, numberOfFollowers: resource.counts?.followers)
     card.articleCommentsSummary = nil
-    card.node.imageUrl = resource.coverImageUrl
+    card.node.imageUrl = nil
     card.node.subImageUrl = resource.thumbnailImageUrl
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
     card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
