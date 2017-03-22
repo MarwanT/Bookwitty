@@ -64,16 +64,23 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
 
     applyTheme()
     applyLocalization()
+    addObservers()
     observeLanguageChanges()
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.authenticationStatusChanged(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
   }
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    if UserManager.shared.isSignedIn && loadingStatus == .none && viewModel.numberOfItemsInSection(section: Section.cards.rawValue) == 0 {
+    if loadingStatus == .none && viewModel.numberOfItemsInSection(section: Section.cards.rawValue) == 0 {
+      loadingStatus = .loading
       self.pullToRefresher.beginRefreshing()
-      loadData(loadingStatus: .loading, completionBlock: {
-        self.pullToRefresher.endRefreshing()
-      })
+      viewModel.loadDiscoverData { [weak self] (success) in
+        guard let strongSelf = self else { return }
+        strongSelf.loadingStatus = .none
+        strongSelf.pullToRefresher.endRefreshing()
+        strongSelf.collectionNode.reloadData()
+      }
     }
     animateRefreshControllerIfNeeded()
 
@@ -81,14 +88,30 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     Analytics.shared.send(screenName: Analytics.ScreenNames.BookStorefront)
   }
 
+  @objc private func authenticationStatusChanged(_: Notification) {
+    initializeNavigationItems()
+  }
+
   private func initializeNavigationItems() {
-    let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
+    if !UserManager.shared.isSignedIn {
+      navigationItem.leftBarButtonItems = nil
+    } else {
+      let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
+        UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+      leftNegativeSpacer.width = -10
+      let settingsBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "person"), style:
+        UIBarButtonItemStyle.plain, target: self, action:
+        #selector(self.settingsButtonTap(_:)))
+      navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
+    }
+
+    let rightNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
       UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
-    leftNegativeSpacer.width = -10
-    let settingsBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "person"), style:
+    rightNegativeSpacer.width = -10
+    let searchBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "search"), style:
       UIBarButtonItemStyle.plain, target: self, action:
-      #selector(self.settingsButtonTap(_:)))
-    navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
+      #selector(self.searchButtonTap(_:)))
+    navigationItem.rightBarButtonItems = [rightNegativeSpacer, searchBarButton]
   }
 
   /*
@@ -110,16 +133,6 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     }
   }
 
-  func loadData(loadingStatus: LoadingStatus, completionBlock: @escaping () -> ()) {
-    viewModel.loadDiscoverData { [weak self] (success) in
-      guard let strongSelf = self else { return }
-
-      completionBlock()
-
-      strongSelf.collectionNode.reloadData()
-    }
-  }
-
   func pullDownToReloadData() {
     guard loadingStatus != .reloading else {
       return
@@ -129,11 +142,28 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     let event: Analytics.Event = Analytics.Event(category: .Discover,
                                                  action: .PullToRefresh)
     Analytics.shared.send(event: event)
-
+    loadingStatus = .reloading
     self.pullToRefresher.beginRefreshing()
-    loadData(loadingStatus: .reloading, completionBlock: {
-      self.pullToRefresher.endRefreshing()
-    })
+    viewModel.loadDiscoverData { [weak self] (success) in
+      guard let strongSelf = self else { return }
+      strongSelf.loadingStatus = .none
+      strongSelf.pullToRefresher.endRefreshing()
+      strongSelf.collectionNode.reloadData()
+    }
+  }
+
+  func refreshViewControllerData() {
+    if loadingStatus == .none {
+      viewModel.cancellableOnGoingRequest()
+      self.loadingStatus = .loading
+      self.pullToRefresher.beginRefreshing()
+      viewModel.loadDiscoverData { [weak self] (success) in
+        guard let strongSelf = self else { return }
+        strongSelf.loadingStatus = .none
+        strongSelf.pullToRefresher.endRefreshing()
+        strongSelf.collectionNode.reloadData()
+      }
+    }
   }
 }
 
@@ -143,6 +173,12 @@ extension DiscoverViewController {
     let settingsVC = Storyboard.Account.instantiate(AccountViewController.self)
     settingsVC.hidesBottomBarWhenPushed = true
     self.navigationController?.pushViewController(settingsVC, animated: true)
+  }
+
+  func searchButtonTap(_ sender: UIBarButtonItem) {
+    let searchVC = SearchViewController()
+    searchVC.hidesBottomBarWhenPushed = true
+    self.navigationController?.pushViewController(searchVC, animated: true)
   }
 }
 
@@ -534,6 +570,18 @@ extension DiscoverViewController {
     static var numberOfSections: Int {
       return 2
     }
+  }
+}
+
+// MARK: - Notification
+extension DiscoverViewController {
+  func addObservers() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.refreshData(_:)), name: AppNotification.shouldRefreshData, object: nil)
+  }
+
+  func refreshData(_ notification: Notification) {
+    refreshViewControllerData()
   }
 }
 

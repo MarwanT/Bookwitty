@@ -103,7 +103,9 @@ extension PostsListViewController: ASCollectionDataSource, ASCollectionDelegate 
     switch (resource.registeredResourceType) {
     case Book.resourceType:
       let res = resource as? Book
-      let itemNode = PostDetailItemNode(smallImage: false, showsSubheadline: false, showsButton: true)
+      let showEcommerceButton: Bool = (res?.supplierInformation != nil) &&
+        !(res?.productDetails?.isElectronicFormat() ?? false)
+      let itemNode = PostDetailItemNode(smallImage: false, showsSubheadline: false, showsButton: showEcommerceButton)
       itemNode.imageUrl = res?.thumbnailImageUrl
       itemNode.body = res?.bookDescription
       itemNode.buttonTitle = Strings.buy_this_book()

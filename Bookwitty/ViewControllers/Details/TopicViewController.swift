@@ -451,7 +451,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
         cell.title = book?.title
         cell.author = book?.productDetails?.author
         cell.format = book?.productDetails?.productFormat
-        cell.price = book?.supplierInformation?.preferredPrice?.formattedValue
+        cell.price = (book?.productDetails?.isElectronicFormat() ?? false) ? nil : book?.supplierInformation?.preferredPrice?.formattedValue
         cell.imageUrl = book?.thumbnailImageUrl
       case .relatedBooks:
         guard let cell = node as? BookNode else {
@@ -462,7 +462,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
         cell.title = book?.title
         cell.author = book?.productDetails?.author
         cell.format = book?.productDetails?.productFormat
-        cell.price = book?.supplierInformation?.preferredPrice?.formattedValue
+        cell.price = (book?.productDetails?.isElectronicFormat() ?? false) ? nil : book?.supplierInformation?.preferredPrice?.formattedValue
         cell.imageUrl = book?.thumbnailImageUrl
       case .followers:
         guard let cell = node as? PenNameFollowNode else {

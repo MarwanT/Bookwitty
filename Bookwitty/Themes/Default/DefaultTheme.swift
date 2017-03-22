@@ -35,6 +35,9 @@ final class DefaultTheme: Theme {
 
     let barAppearace = UIBarButtonItem.appearance()
     barAppearace.setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -60), for:UIBarMetrics.default)
+    barAppearace.setTitleTextAttributes([
+      NSFontAttributeName: FontDynamicType.caption1.font,
+      NSForegroundColorAttributeName : self.defaultTextColor()], for: UIControlState.normal)
   }
 }
 

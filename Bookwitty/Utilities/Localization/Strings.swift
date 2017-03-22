@@ -37,6 +37,10 @@ class Strings {
     return localizedString(key: "address_book")
   }
   
+  static func already_have_an_account() -> String {
+    return localizedString(key: "already_have_an_account")
+  }
+  
   static func article() -> String {
     return localizedString(key: "article")
   }
@@ -293,6 +297,10 @@ class Strings {
     return localizedString(key: "free_shipping_internationally")
   }
   
+  static func get_started() -> String {
+    return localizedString(key: "get_started")
+  }
+  
   static func height() -> String {
     return localizedString(key: "height")
   }
@@ -323,6 +331,14 @@ class Strings {
   
   static func isbn13() -> String {
     return localizedString(key: "isbn13")
+  }
+  
+  static func join_us_to_personalize_feed_description() -> String {
+    return localizedString(key: "join_us_to_personalize_feed_description")
+  }
+  
+  static func join_us_to_personalize_feed_title() -> String {
+    return localizedString(key: "join_us_to_personalize_feed_title")
   }
   
   static func language() -> String {
@@ -623,6 +639,14 @@ class Strings {
   
   static func update_now() -> String {
     return localizedString(key: "update_now")
+  }
+  
+  static func user_not_signed_in_alert_message() -> String {
+    return localizedString(key: "user_not_signed_in_alert_message")
+  }
+  
+  static func user_not_signed_in_alert_title() -> String {
+    return localizedString(key: "user_not_signed_in_alert_title")
   }
   
   static func video() -> String {

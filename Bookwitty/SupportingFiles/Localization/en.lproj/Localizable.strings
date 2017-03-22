@@ -13,6 +13,7 @@
 "account_needs_confirmation_alert_resend_confirmation_button_title" = "Resend";
 "account_needs_confirmation_alert_title" = "Account";
 "address_book" = "Address Book";
+"already_have_an_account" = "Already have an account?";
 "article" = "Article";
 "author" = "Author";
 "bag" = "Bag";
@@ -77,6 +78,7 @@
 "forgot_your_password" = "Forgot your password?";
 "format" = "Format";
 "free_shipping_internationally" = "Free shipping internationally";
+"get_started" = "Get started";
 "height" = "Height";
 "help" = "Help";
 "image" = "Image";
@@ -85,6 +87,8 @@
 "interests" = "Interests";
 "isbn10" = "ISBN-10";
 "isbn13" = "ISBN-13";
+"join_us_to_personalize_feed_description" = "View articles reading lists and book recommendations in your feed based on your interests.";
+"join_us_to_personalize_feed_title" = "Personalize your feed";
 "language" = "Language";
 "language_of_text" = "Language";
 "last_name" = "Last name";
@@ -160,6 +164,8 @@
 "tutorial_third_page_title" = "Share Your Own Ideas";
 "tutorial_third_page_description" = "Everyone has knowledge, expertise or a topic they are passionate about.\nWrite about it.";
 "update_now" = "Update now";
+"user_not_signed_in_alert_message" = "You need to be signed to complete this action";
+"user_not_signed_in_alert_title" = "You Are Not Signed In!";
 "video" = "Video";
 "view_all" = "View All";
 "view_all_books" = "View All Books";
