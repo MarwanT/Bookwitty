@@ -125,6 +125,7 @@ class SettingsViewController: UIViewController {
   }
 
   private func signOut() {
+    _ = navigationController?.popToRootViewController(animated: true)
     NotificationCenter.default.post(name: AppNotification.signOut, object: nil)
   }
 }
