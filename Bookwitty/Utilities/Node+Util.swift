@@ -8,3 +8,9 @@
 
 import AsyncDisplayKit
 
+extension ASDisplayNode {
+  func viewController(title: String? = nil) -> UIViewController {
+    let genericViewController = GenericNodeViewController(node: self, title: title, scrollableContentIfNeeded: false)
+    return genericViewController
+  }
+}
