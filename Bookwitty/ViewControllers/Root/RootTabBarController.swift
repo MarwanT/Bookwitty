@@ -250,60 +250,6 @@ extension RootTabBarController {
   }
 }
 
-// MARK: - Overlay Methods
-extension RootTabBarController {
-  var animationDuration: TimeInterval {
-    return 0.44
-  }
-  
-  func initializeOverlay() {
-    let customizeOverlay = {
-      self.overlayView.alpha = 0
-      self.view.addSubview(self.overlayView)
-      self.overlayView.alignTop("0", leading: "0", bottom: "0", trailing: "0", toView: self.view)
-    }
-    
-    guard let launchView = Bundle.main.loadNibNamed("LaunchScreen", owner: nil, options: nil)?.first as? UIView else {
-      overlayView = UIView(frame: CGRect.zero)
-      overlayView.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
-      let logoImageView = UIImageView(image: #imageLiteral(resourceName: "bookwitty"))
-      logoImageView.constrainWidth("100", height: "100")
-      overlayView.addSubview(logoImageView)
-      logoImageView.alignCenter(withView: overlayView)
-      customizeOverlay()
-      return
-    }
-    overlayView = launchView
-    customizeOverlay()
-  }
-  
-  func displayOverlay(animated: Bool = true) {
-    overlayView.isHidden = false
-    changeOverlayAlphaValue(animated: animated, alpha: 1)
-  }
-  
-  func dismissOverlay(animated: Bool = true) {
-    changeOverlayAlphaValue(animated: animated, alpha: 0) {
-      self.overlayView.isHidden = true
-    }
-  }
-  
-  func changeOverlayAlphaValue(animated: Bool, alpha: CGFloat, completion: (() -> Void)? = nil) {
-    if animated {
-      UIView.animate(
-        withDuration: animationDuration,
-        animations: {
-          self.overlayView.alpha = alpha
-      }, completion: { (finished) in
-        completion?()
-      })
-    } else {
-      overlayView.alpha = alpha
-      completion?()
-    }
-  }
-}
-
 // MARK: - Alerts
 extension RootTabBarController {
   fileprivate func displayFailToRefreshTokenAlert() {
