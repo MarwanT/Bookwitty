@@ -641,6 +641,14 @@ class Strings {
     return localizedString(key: "update_now")
   }
   
+  static func user_not_signed_in_alert_message() -> String {
+    return localizedString(key: "user_not_signed_in_alert_message")
+  }
+  
+  static func user_not_signed_in_alert_title() -> String {
+    return localizedString(key: "user_not_signed_in_alert_title")
+  }
+  
   static func video() -> String {
     return localizedString(key: "video")
   }
