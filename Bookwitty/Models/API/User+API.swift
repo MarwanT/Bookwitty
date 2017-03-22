@@ -137,6 +137,7 @@ struct UserAPI {
         success = user != nil
 
         if let user = user {
+          user.penNames = UserManager.shared.signedInUser.penNames
           UserManager.shared.signedInUser = user
         }
 
