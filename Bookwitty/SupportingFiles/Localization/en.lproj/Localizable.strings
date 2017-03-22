@@ -9,7 +9,7 @@
 "about_this_book" = "About this book";
 "account" = "Account";
 "account_needs_confirmation_alert_dismiss_button_title" = "Cancel";
-"account_needs_confirmation_alert_message" = "Oooops, it seems you haven't confirmed your account yet!";
+"account_needs_confirmation_alert_message" = "You haven't yet confirmed your account.  Please check your email and click on the confirmation link.";
 "account_needs_confirmation_alert_resend_confirmation_button_title" = "Resend";
 "account_needs_confirmation_alert_title" = "Account";
 "address_book" = "Address Book";
@@ -17,7 +17,7 @@
 "article" = "Article";
 "author" = "Author";
 "bag" = "Bag";
-"biography" = "Biogrpahy";
+"biography" = "Biography";
 "book" = "Book";
 "book_categories" = "Book Categories";
 "book_details" = "Book Details";
@@ -65,7 +65,7 @@
 "enter_your_pen_name" = "Enter your pen name";
 "error_loading_data" = "Error Loading Data";
 "fail_to_refresh_token_alert_message" = "It seems that your session expired and you need to sign in again";
-"fail_to_refresh_token_alert_title" = "Oooops, Sign in again";
+"fail_to_refresh_token_alert_title" = "Please sign in again";
 "first_name" = "First name";
 "first_name_invalid" = "Please enter your first name";
 "follow" = "Follow";
@@ -161,10 +161,10 @@
 "tutorial_forth_page_title" = "For The Love Of Books";
 "tutorial_second_page_description" = "Dig deep into a topic, explore new ideas and discuss with people. You're sure to find articles and reading lists you like.";
 "tutorial_second_page_title" = "Discover Ideas & People";
-"tutorial_third_page_title" = "Share Your Own Ideas";
 "tutorial_third_page_description" = "Everyone has knowledge, expertise or a topic they are passionate about.\nWrite about it.";
+"tutorial_third_page_title" = "Share Your Own Ideas";
 "update_now" = "Update now";
-"user_not_signed_in_alert_message" = "You need to be signed to complete this action";
+"user_not_signed_in_alert_message" = "You need to be signed in to complete this action";
 "user_not_signed_in_alert_title" = "You Are Not Signed In!";
 "video" = "Video";
 "view_all" = "View All";
@@ -182,6 +182,7 @@
 "you_dont_have_account" = "You don't have an account";
 "you_save" = "You save";
 "your_feed" = "Your feed";
+
 /**
  Discussion:
  - Please keep this file sorted by keys, for easier maintenance

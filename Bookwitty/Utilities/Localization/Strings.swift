@@ -52,11 +52,11 @@ class Strings {
   static func bag() -> String {
     return localizedString(key: "bag")
   }
-
+  
   static func biography() -> String {
     return localizedString(key: "biography")
   }
-
+  
   static func book() -> String {
     return localizedString(key: "book")
   }
@@ -76,11 +76,11 @@ class Strings {
   static func books() -> String {
     return localizedString(key: "books")
   }
-
+  
   static func bookwitty() -> String {
     return localizedString(key: "bookwitty")
   }
-
+  
   static func bookwitty_suggests() -> String {
     return localizedString(key: "bookwitty_suggests")
   }
@@ -628,13 +628,13 @@ class Strings {
   static func tutorial_second_page_title() -> String {
     return localizedString(key: "tutorial_second_page_title")
   }
-
-  static func tutorial_third_page_title() -> String {
-    return localizedString(key: "tutorial_third_page_title")
-  }
   
   static func tutorial_third_page_description() -> String {
     return localizedString(key: "tutorial_third_page_description")
+  }
+  
+  static func tutorial_third_page_title() -> String {
+    return localizedString(key: "tutorial_third_page_title")
   }
   
   static func update_now() -> String {
@@ -712,7 +712,7 @@ class Strings {
   static func your_feed() -> String {
     return localizedString(key: "your_feed")
   }
-
+  
   /**
    Discussion:
    - Please keep this file sorted by keys, for easier maintenance
