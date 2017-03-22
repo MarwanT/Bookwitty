@@ -83,8 +83,10 @@ class PenNameViewController: UIViewController {
   }
 
   func prefillData() {
-    penNameInputField.textField.text  = viewModel.penDisplayName()
-    biographyTextView.text = viewModel.penBiography()
+    penNameInputField.textField.text = viewModel.penDisplayName()
+    biographyTextView.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.label)
+      .append(text: viewModel.penBiography(), color: ThemeManager.shared.currentTheme.defaultTextColor())
+      .attributedString
   }
 
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
@@ -106,7 +108,10 @@ class PenNameViewController: UIViewController {
     self.viewModel.updatePenNameIfNeeded(name: name, biography: biography) {
       (success: Bool) in
       // TODO: Handle the fail here
-      self.pushOnboardingViewController()
+
+      if UserManager.shared.shouldDisplayOnboarding {
+        self.pushOnboardingViewController()
+      }
     }
   }
   
@@ -232,8 +237,6 @@ extension PenNameViewController: Themeable {
     penNameInputField.textField.textAlignment = .center
 
     ThemeManager.shared.currentTheme.styleLabel(label: biographyLabel)
-    biographyTextView.attributedText = AttributedStringBuilder.init(fontDynamicType: FontDynamicType.label).append(text: "", color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
-
     noteLabel.textColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
 
     //biographyTextView
@@ -259,6 +262,7 @@ extension PenNameViewController: Localizable {
     continueButton.setTitle(Strings.continue(), for: .normal)
     penNameLabel.text = Strings.pen_name()
     noteLabel.text = Strings.dont_worry_you_can_change_it_later()
+    biographyLabel.text = Strings.biography()
 
     setupBiographyKeyboardToolbar()
   }

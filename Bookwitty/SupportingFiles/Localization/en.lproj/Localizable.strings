@@ -16,6 +16,7 @@
 "article" = "Article";
 "author" = "Author";
 "bag" = "Bag";
+"biography" = "Biogrpahy";
 "book" = "Book";
 "book_categories" = "Book Categories";
 "book_details" = "Book Details";
