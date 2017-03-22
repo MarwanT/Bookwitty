@@ -19,6 +19,10 @@ final class PenNameViewModel {
     return penName?.name ?? ""
   }
 
+  func penBiography() -> String {
+    return penName?.biography ?? ""
+  }
+
   func initializeWith(penName: PenName?, andUser user: User?) {
     self.penName = penName
     self.user = user

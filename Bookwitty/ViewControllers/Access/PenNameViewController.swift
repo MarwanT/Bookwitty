@@ -32,6 +32,7 @@ class PenNameViewController: UIViewController {
     applyTheme()
     applyLocalization()
     observeLanguageChanges()
+    prefillData()
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.EditPenName)
@@ -81,6 +82,11 @@ class PenNameViewController: UIViewController {
     showPhotoPickerActionSheet()
   }
 
+  func prefillData() {
+    penNameInputField.textField.text  = viewModel.penDisplayName()
+    biographyTextView.text = viewModel.penBiography()
+  }
+
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
     // Set the show pen name flag to false
     UserManager.shared.shouldEditPenName = false
@@ -111,7 +117,7 @@ class PenNameViewController: UIViewController {
 
   // MARK: - Keyboard Handling
   func keyboardWillShow(_ notification: NSNotification) {
-    topViewToTopConstraint.constant = -profileContainerView.frame.height/2
+    topViewToTopConstraint.constant = 15 //was `-profileContainerView.frame.height/2`
     profileContainerView.alpha = 0.2
     UIView.animate(withDuration: 0.44) {
       self.view.layoutIfNeeded()
@@ -253,7 +259,6 @@ extension PenNameViewController: Localizable {
     continueButton.setTitle(Strings.continue(), for: .normal)
     penNameLabel.text = Strings.pen_name()
     noteLabel.text = Strings.dont_worry_you_can_change_it_later()
-    penNameInputField.textField.text  = viewModel.penDisplayName()
 
     setupBiographyKeyboardToolbar()
   }
