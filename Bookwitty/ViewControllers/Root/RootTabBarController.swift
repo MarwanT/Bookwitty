@@ -12,8 +12,6 @@ import FLKAutoLayout
 class RootTabBarController: UITabBarController {
   let viewModel = RootTabBarViewModel()
   
-  fileprivate var overlayView: UIView!
-  
   deinit {
     NotificationCenter.default.removeObserver(self)
   }
@@ -21,11 +19,8 @@ class RootTabBarController: UITabBarController {
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeTabBarViewControllers()
-    initializeOverlay()
     applyTheme()
     addObservers()
-    
-    displayOverlay(animated: false)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -43,7 +38,6 @@ class RootTabBarController: UITabBarController {
     
     // Display Introduction VC if user is not signed in
     if !UserManager.shared.isSignedIn {
-      displayOverlay()
       presentIntroductionOrSignInViewController()
     } else {
       if UserManager.shared.shouldEditPenName {
@@ -51,7 +45,6 @@ class RootTabBarController: UITabBarController {
       } else if UserManager.shared.shouldDisplayOnboarding {
         presentOnboardingViewController()
       } else {
-        dismissOverlay()
         GeneralSettings.sharedInstance.shouldShowIntroduction = false
         NotificationCenter.default.post(
           name: AppNotification.shouldRefreshData, object: nil)
@@ -118,8 +111,6 @@ class RootTabBarController: UITabBarController {
   // MARK: Helpers
   
   fileprivate func presentIntroductionOrSignInViewController() {
-    displayOverlay()
-    
     if GeneralSettings.sharedInstance.shouldShowIntroduction {
       let introductionVC = Storyboard.Introduction.instantiate(IntroductionViewController.self)
       let navigationController = UINavigationController(rootViewController: introductionVC)
