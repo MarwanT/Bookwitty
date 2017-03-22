@@ -83,8 +83,10 @@ class PenNameViewController: UIViewController {
   }
 
   func prefillData() {
-    penNameInputField.textField.text  = viewModel.penDisplayName()
-    biographyTextView.text = viewModel.penBiography()
+    penNameInputField.textField.text = viewModel.penDisplayName()
+    biographyTextView.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.label)
+      .append(text: viewModel.penBiography(), color: ThemeManager.shared.currentTheme.defaultTextColor())
+      .attributedString
   }
 
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
@@ -232,8 +234,6 @@ extension PenNameViewController: Themeable {
     penNameInputField.textField.textAlignment = .center
 
     ThemeManager.shared.currentTheme.styleLabel(label: biographyLabel)
-    biographyTextView.attributedText = AttributedStringBuilder.init(fontDynamicType: FontDynamicType.label).append(text: "", color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
-
     noteLabel.textColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
 
     //biographyTextView
