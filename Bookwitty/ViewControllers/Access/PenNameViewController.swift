@@ -117,7 +117,7 @@ class PenNameViewController: UIViewController {
 
   // MARK: - Keyboard Handling
   func keyboardWillShow(_ notification: NSNotification) {
-    topViewToTopConstraint.constant = -profileContainerView.frame.height/2
+    topViewToTopConstraint.constant = 15 //was `-profileContainerView.frame.height/2`
     profileContainerView.alpha = 0.2
     UIView.animate(withDuration: 0.44) {
       self.view.layoutIfNeeded()

@@ -381,7 +381,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1JL-oh-BZV">
-                                <rect key="frame" x="0.0" y="220" width="375" height="447"/>
+                                <rect key="frame" x="0.0" y="90" width="375" height="577"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fv5-vg-VfX" userLabel="Pen Name Label">
                                         <rect key="frame" x="166" y="0.0" width="42" height="21"/>
@@ -452,7 +452,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="1JL-oh-BZV" firstAttribute="top" secondItem="JzI-kI-vUS" secondAttribute="bottom" constant="30" id="2Tj-OM-5hV"/>
+                            <constraint firstItem="1JL-oh-BZV" firstAttribute="top" secondItem="JzI-kI-vUS" secondAttribute="bottom" constant="-100" id="2Tj-OM-5hV"/>
                             <constraint firstItem="JzI-kI-vUS" firstAttribute="centerX" secondItem="ZPa-7X-GHg" secondAttribute="centerXWithinMargins" id="DPc-cA-r0n"/>
                             <constraint firstItem="1JL-oh-BZV" firstAttribute="leading" secondItem="ZPa-7X-GHg" secondAttribute="leading" id="JvL-aQ-MG6"/>
                             <constraint firstAttribute="bottomMargin" secondItem="1JL-oh-BZV" secondAttribute="bottom" id="Lok-m3-or3"/>
