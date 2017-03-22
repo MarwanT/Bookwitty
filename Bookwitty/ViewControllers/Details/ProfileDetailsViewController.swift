@@ -53,6 +53,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
     activeSegment = segments[0]
     penNameHeaderNode = PenNameFollowNode(enlarged: true)
+
     super.init(node: collectionNode)
   }
 
@@ -61,6 +62,10 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     initializeComponents()
     applyTheme()
     loadData()
+    applyLocalization()
+    observeLanguageChanges()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
 
   private func initializeComponents() {
@@ -82,6 +87,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     penNameHeaderNode.following = viewModel.penName.following
     penNameHeaderNode.imageUrl = viewModel.penName.avatarUrl
     penNameHeaderNode.delegate = self
+    penNameHeaderNode.updateMode(disabled: viewModel.isMyPenName())
   }
 
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
@@ -239,6 +245,11 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
           return
         }
         let follower: PenName? = viewModel.itemForSegment(segment: activeSegment, index: indexPath.row) as? PenName
+        var isMyPenName: Bool = false
+        if let follower = follower {
+          isMyPenName = viewModel.isMyPenName(follower)
+          cell.updateMode(disabled: isMyPenName)
+        }
         cell.penName = follower?.name
         cell.biography = follower?.biography
         cell.imageUrl = follower?.avatarUrl
@@ -472,7 +483,6 @@ extension ProfileDetailsViewController {
     case following(index: Int)
     case none
 
-    //TODO: Should be localized
     var name: String {
       switch self {
       case .latest:
@@ -506,5 +516,22 @@ extension ProfileDetailsViewController {
     }
 
     return segment
+  }
+}
+
+
+//MARK: - Localizable implementation
+extension ProfileDetailsViewController: Localizable {
+  func applyLocalization() {
+    segmentedNode.initialize(with: segments.map({ $0.name }))
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

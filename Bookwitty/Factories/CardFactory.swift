@@ -119,7 +119,7 @@ extension  CardFactory {
     card.node.articleTitle = resource.caption
     card.node.articleDescription = resource.shortDescription ?? resource.biography
     card.node.subImageUrl = resource.thumbnailImageUrl ?? resource.profileImageUrl ?? resource.imageUrl
-    card.node.imageUrl = resource.coverImageUrl
+    card.node.imageUrl = nil
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
     card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
 
@@ -227,12 +227,12 @@ extension  CardFactory {
     card.postInfoData = cardPostInfoData
     card.setup(forFollowingMode: true)
     card.setFollowingValue(following: resource.following)
-    card.node.articleTitle = nil
+    card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.imageUrl = resource.coverImageUrl
     card.node.setTopicStatistics(numberOfPosts: resource.counts?.posts, numberOfBooks: nil, numberOfFollowers: resource.counts?.followers)
     card.articleCommentsSummary = nil
-    card.node.subImageUrl = resource.thumbnailImageUrl
+    card.node.subImageUrl = nil
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
     card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
 
@@ -264,10 +264,10 @@ extension  CardFactory {
       cardPostInfoData = nil
     }
     card.postInfoData = cardPostInfoData
-    card.node.linkUrl = resource.urlLink
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.imageNode.url = resource.coverImageUrl.isEmptyOrNil() ? nil : URL(string: resource.coverImageUrl!)
+    card.node.linkUrl = resource.urlLink
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
     card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
     
@@ -306,7 +306,7 @@ extension  CardFactory {
     card.node.articleDescription = resource.bookDescription
     card.node.setTopicStatistics(numberOfPosts: resource.counts?.posts, numberOfBooks: nil, numberOfFollowers: resource.counts?.followers)
     card.articleCommentsSummary = nil
-    card.node.imageUrl = resource.coverImageUrl
+    card.node.imageUrl = nil
     card.node.subImageUrl = resource.thumbnailImageUrl
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
     card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
@@ -339,10 +339,14 @@ extension  CardFactory {
       cardPostInfoData = nil
     }
     card.postInfoData = cardPostInfoData
-    card.node.linkUrl = nil
+
+
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.imageNode.url = resource.coverImageUrl.isEmptyOrNil() ? nil : URL(string: resource.coverImageUrl!)
+    //linkUrl will override the imageNode url if it has an image
+    card.node.linkUrl = resource.media?.mediaLink
+
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
     card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
 
@@ -397,7 +401,8 @@ extension  CardFactory {
       return nil
     }
 
-    if let url = resource.url {
+    if let urlStr = resource.media?.mediaLink,
+      let url = URL(string: urlStr) {
       IFramely.shared.loadResponseFor(url: url, closure: { (response: Response?) in
         card.node.videoUrl = response?.embedUrl
       })

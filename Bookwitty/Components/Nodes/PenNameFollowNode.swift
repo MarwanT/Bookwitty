@@ -86,11 +86,12 @@ class PenNameFollowNode: ASCellNode {
   }
 
   var showBottomSeparator: Bool = false
+  var disabled: Bool = false
 
   private func setupNode() {
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
 
-    imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
+    imageNode.defaultImage = #imageLiteral(resourceName: "penNamePlaceholder ").imageMaskedAndTinted(with: ThemeManager.shared.currentTheme.colorNumber18())
     imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0.0, nil)
 
     nameNode.maximumNumberOfLines = 1
@@ -128,13 +129,18 @@ class PenNameFollowNode: ASCellNode {
     separatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
   }
 
+  func updateMode(disabled: Bool) {
+    self.disabled = disabled
+    actionButton.isHidden = disabled
+    actionButton.isEnabled = !disabled
+    setNeedsLayout()
+  }
+
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     var nodesArray: [ASLayoutElement] = []
 
-    if isValid(imageUrl) {
-      nodesArray.append(imageNode)
-      nodesArray.append(spacer(width: internalMargin))
-    }
+    nodesArray.append(imageNode)
+    nodesArray.append(spacer(width: internalMargin))
 
     var infoNodes: [ASLayoutElement] = []
 
@@ -156,7 +162,9 @@ class PenNameFollowNode: ASCellNode {
     nodesArray.append(verticalSpec)
     nodesArray.append(spacer(flexGrow: 1.0))
     nodesArray.append(spacer(width: internalMargin / 2.0))
-    nodesArray.append(actionButton)
+    if !disabled {
+      nodesArray.append(actionButton)
+    }
 
     let horizontalSpec = ASStackLayoutSpec(direction: .horizontal,
                                            spacing: 0,
@@ -181,6 +189,12 @@ class PenNameFollowNode: ASCellNode {
 //Actions
 extension PenNameFollowNode {
   func actionButtonTouchUpInside(_ sender: ASButtonNode) {
+    guard UserManager.shared.isSignedIn else {
+      //If user is not signed In post notification and do not fall through
+      NotificationCenter.default.post( name: AppNotification.callToAction, object: CallToAction.follow)
+      return
+    }
+
     delegate?.penName(node: self, actionButtonTouchUpInside: sender)
   }
 

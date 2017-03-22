@@ -30,6 +30,11 @@ class PenNameViewController: UIViewController {
     super.viewDidLoad()
     awakeSelf()
     applyTheme()
+    applyLocalization()
+    observeLanguageChanges()
+    prefillData()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.EditPenName)
@@ -37,16 +42,6 @@ class PenNameViewController: UIViewController {
 
   /// Do the required setup
   private func awakeSelf() {
-    penNameInputField.configuration = InputFieldConfiguration(
-      textFieldPlaceholder: Strings.enter_your_pen_name(),
-      invalidationErrorMessage: Strings.pen_name_cant_be_empty(),
-      returnKeyType: UIReturnKeyType.done)
-    
-    self.title = Strings.choose_pen_name()
-    continueButton.setTitle(Strings.continue(), for: .normal)
-    penNameLabel.text = Strings.pen_name()
-    noteLabel.text = Strings.dont_worry_you_can_change_it_later()
-    penNameInputField.textField.text  = viewModel.penDisplayName()
 
     penNameInputField.validationBlock = notEmptyValidation
 
@@ -89,6 +84,13 @@ class PenNameViewController: UIViewController {
     showPhotoPickerActionSheet()
   }
 
+  func prefillData() {
+    penNameInputField.textField.text = viewModel.penDisplayName()
+    biographyTextView.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.label)
+      .append(text: viewModel.penBiography(), color: ThemeManager.shared.currentTheme.defaultTextColor())
+      .attributedString
+  }
+
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
     // Set the show pen name flag to false
     UserManager.shared.shouldEditPenName = false
@@ -108,7 +110,10 @@ class PenNameViewController: UIViewController {
     self.viewModel.updatePenNameIfNeeded(name: name, biography: biography) {
       (success: Bool) in
       // TODO: Handle the fail here
-      self.pushOnboardingViewController()
+
+      if UserManager.shared.shouldDisplayOnboarding {
+        self.pushOnboardingViewController()
+      }
     }
   }
   
@@ -119,7 +124,7 @@ class PenNameViewController: UIViewController {
 
   // MARK: - Keyboard Handling
   func keyboardWillShow(_ notification: NSNotification) {
-    topViewToTopConstraint.constant = -profileContainerView.frame.height/2
+    topViewToTopConstraint.constant = 15 //was `-profileContainerView.frame.height/2`
     profileContainerView.alpha = 0.2
     UIView.animate(withDuration: 0.44) {
       self.view.layoutIfNeeded()
@@ -234,8 +239,6 @@ extension PenNameViewController: Themeable {
     penNameInputField.textField.textAlignment = .center
 
     ThemeManager.shared.currentTheme.styleLabel(label: biographyLabel)
-    biographyTextView.attributedText = AttributedStringBuilder.init(fontDynamicType: FontDynamicType.label).append(text: "", color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
-
     noteLabel.textColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
 
     //biographyTextView
@@ -246,5 +249,32 @@ extension PenNameViewController: Themeable {
     view.clipsToBounds = true
     view.layer.borderColor = borderColor.cgColor
     view.layer.borderWidth = 1.0
+  }
+}
+
+//MARK: - Localizable implementation
+extension PenNameViewController: Localizable {
+  func applyLocalization() {
+    title = Strings.choose_pen_name()
+    penNameInputField.configuration = InputFieldConfiguration(
+      textFieldPlaceholder: Strings.enter_your_pen_name(),
+      invalidationErrorMessage: Strings.pen_name_cant_be_empty(),
+      returnKeyType: UIReturnKeyType.done)
+
+    continueButton.setTitle(Strings.continue(), for: .normal)
+    penNameLabel.text = Strings.pen_name()
+    noteLabel.text = Strings.dont_worry_you_can_change_it_later()
+    biographyLabel.text = Strings.biography()
+
+    setupBiographyKeyboardToolbar()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

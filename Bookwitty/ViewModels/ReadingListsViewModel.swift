@@ -118,4 +118,49 @@ extension ReadingListsViewModel {
 
     return dataArray[item]
   }
+
+  func resourceForIndex(indexPath: IndexPath) -> ReadingList? {
+    guard dataArray.count > indexPath.row else { return nil }
+    let resource = dataArray[indexPath.row]
+    return resource
+  }
+}
+
+// MARK: - Posts Actions
+extension ReadingListsViewModel {
+  func witContent(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let resource = resourceForIndex(indexPath: indexPath),
+      let contentId = resource.id else {
+        completionBlock(false)
+        return
+    }
+
+    _ = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
+      completionBlock(success)
+    })
+  }
+
+  func unwitContent(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let resource = resourceForIndex(indexPath: indexPath),
+      let contentId = resource.id else {
+        completionBlock(false)
+        return
+    }
+
+    _ = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
+      completionBlock(success)
+    })
+  }
+
+  func sharingContent(indexPath: IndexPath) -> [String]? {
+    guard let resource = resourceForIndex(indexPath: indexPath) else {
+        return nil
+    }
+
+    let shortDesciption = resource.title ?? resource.shortDescription ?? ""
+    if let sharingUrl = resource.canonicalURL {
+      return [shortDesciption, sharingUrl.absoluteString]
+    }
+    return [shortDesciption]
+  }
 }

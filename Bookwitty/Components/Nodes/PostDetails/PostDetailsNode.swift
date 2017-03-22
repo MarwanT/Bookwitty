@@ -11,7 +11,7 @@ import AsyncDisplayKit
 import DTCoreText
 
 extension PostDetailsNode: DTAttributedTextContentNodeDelegate {
-  func attributedTextContentNodeNeedsLayout(node: DTAttributedTextContentNode) {
+  func attributedTextContentNodeNeedsLayout(node: ASCellNode) {
     setNeedsLayout()
   }
 }
@@ -235,7 +235,7 @@ class PostDetailsNode: ASScrollNode {
     relatedBooksViewAllNode.delegate = self
 
     relatedPostsViewAllNode.configuration.style = .highlighted
-    relatedPostsViewAllNode.text = Strings.view_all_related_books()
+    relatedPostsViewAllNode.text = Strings.view_all_related_posts()
     relatedPostsViewAllNode.delegate = self
 
     sectionTitleHeaderNode.setTitle(title: Strings.related_books(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber10(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber9())
@@ -245,8 +245,19 @@ class PostDetailsNode: ASScrollNode {
     bannerImageNode.style.flexGrow = 1
     bannerImageNode.style.flexShrink = 1
     bannerImageNode.contentMode = .scaleAspectFit
-    bannerImageNode.image = #imageLiteral(resourceName: "freeShippingBanner")
+    setBannerImage()
+
     bannerImageNode.addTarget(self, action: #selector(bannerTouchUpInside) , forControlEvents: .touchUpInside)
+  }
+
+  func setBannerImage() {
+    switch GeneralSettings.sharedInstance.preferredLanguage {
+    case Localization.Language.French.rawValue:
+      bannerImageNode.image = #imageLiteral(resourceName: "freeShippingBannerFr")
+    case Localization.Language.English.rawValue: fallthrough
+    default:
+      bannerImageNode.image = #imageLiteral(resourceName: "freeShippingBannerEn")
+    }
   }
 
   func bannerTouchUpInside() {

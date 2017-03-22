@@ -207,18 +207,22 @@ class CardActionBarNode: ASCellNode {
       let wits: Int? = (numberOfWits ?? 0 > 0) ? (numberOfWits! + (-1 * inverter)) : nil
       setWitButton(witted: false, wits: wits)
       let dims: Int? = (numberOfDims ?? 0) + (1 * inverter)
-      setDimValue(dimmed: true, dims: dims)
+      setDimValue(dimmed: success, dims: dims)
+
     case .undim:
       let dims: Int? = (numberOfDims ?? 0 > 0) ? (numberOfDims! + (-1 * inverter)) : nil
       setDimValue(dimmed: false, dims: dims)
+
     case .wit:
       let dims: Int? = (numberOfDims ?? 0 > 0) ? (numberOfDims! + (-1 * inverter)) : nil
       setDimValue(dimmed: false, dims: dims)
       let wits: Int? = (numberOfWits ?? 0) + (1 * inverter)
-      setWitButton(witted: true, wits: wits)
+      setWitButton(witted: success, wits: wits)
+
     case .unwit:
       let wits: Int? = (numberOfWits ?? 0 > 0) ? (numberOfWits! + (-1 * inverter)) : nil
       setWitButton(witted: false, wits: wits)
+
     default: break
     }
   }
@@ -234,33 +238,59 @@ class CardActionBarNode: ASCellNode {
   }
 
   func dimButtonTouchUpInside(_ sender: ASTextNode?) {
+    guard UserManager.shared.isSignedIn else {
+      //If user is not signed In post notification and do not fall through
+      NotificationCenter.default.post( name: AppNotification.callToAction, object: CallToAction.dim)
+      return
+    }
+
     let action = !numberOfDimsNode.isSelected ? CardActionBarNode.Action.dim : CardActionBarNode.Action.undim
     self.updateWitAndDim(for: action)
+    self.witButton.isEnabled = false
+    self.numberOfDimsNode.isEnabled = false
 
     delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: action, forSender: witButton, didFinishAction: { [weak self] (success: Bool) in
       guard let strongSelf = self else { return }
       if !success { //Toggle back on failure
         strongSelf.updateWitAndDim(for: action, success: false)
       }
+      strongSelf.witButton.isEnabled = true
+      strongSelf.numberOfDimsNode.isEnabled = true
     })
   }
 
   func witButtonTouchUpInside(_ sender: ASButtonNode?) {
+    guard UserManager.shared.isSignedIn else {
+      //If user is not signed In post notification and do not fall through
+      NotificationCenter.default.post( name: AppNotification.callToAction, object: CallToAction.wit)
+      return
+    }
+
     guard let sender = sender else { return }
     //Get action from witButton status
     let action = !witButton.isSelected ? CardActionBarNode.Action.wit : CardActionBarNode.Action.unwit
     //Assume success and Toggle button anyway, if witting/unwitting fails delegate should either call didFinishAction or  call toggleWitButton.
     self.updateWitAndDim(for: action)
+    self.witButton.isEnabled = false
+    self.numberOfDimsNode.isEnabled = false
 
     delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: action, forSender: sender, didFinishAction: { [weak self] (success: Bool) in
       guard let strongSelf = self else { return }
       if !success { //Toggle back on failure
         strongSelf.updateWitAndDim(for: action, success: false)
       }
+      strongSelf.witButton.isEnabled = true
+      strongSelf.numberOfDimsNode.isEnabled = true
     })
   }
 
   func followButtonTouchUpInside(_ sender: ASButtonNode?) {
+    guard UserManager.shared.isSignedIn else {
+      //If user is not signed In post notification and do not fall through
+      NotificationCenter.default.post( name: AppNotification.callToAction, object: CallToAction.follow)
+      return
+    }
+
     guard let sender = sender else { return }
     //Get action from witButton status
     let action = !followButton.isSelected ? CardActionBarNode.Action.follow : CardActionBarNode.Action.unfollow

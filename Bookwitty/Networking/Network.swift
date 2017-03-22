@@ -102,7 +102,10 @@ public struct APIProvider {
       }
       headerParameters["Content-Type"] = "application/vnd.api+json";
       headerParameters["Accept"] = "application/vnd.api+json"
-      break
+
+      if let language = Localization.Language(rawValue: GeneralSettings.sharedInstance.preferredLanguage) {
+        headerParameters["Accept-Language"] = language.rawValue
+      }
     }
     
     // Add required header fields for target
@@ -195,6 +198,11 @@ public func apiRequest(target: BookwittyAPI, completion: @escaping BookwittyAPIC
   return APIProvider.sharedProvider.request(target, completion: { (result) in
     switch result {
     case .success(let response):
+      // If account need confirmation send notification
+      if response.statusCode == 403, ErrorManager.shared.dataContainsAccountNeedsConfirmationError(data: response.data).hasError {
+        NotificationCenter.default.post(
+          name: AppNotification.accountNeedsConfirmation, object: nil)
+      }
       completion(response.data, response.statusCode, response.response, nil)
     case .failure(let error):
       completion(nil, nil, nil, BookwittyAPIError(moyaError: error))
@@ -202,12 +210,27 @@ public func apiRequest(target: BookwittyAPI, completion: @escaping BookwittyAPIC
   })
 }
 
+/*
+ *  TODO: Rename this method to apiRequest and refactor the above.
+ */
 public func signedAPIRequest(target: BookwittyAPI, completion: @escaping BookwittyAPICompletion) -> Cancellable? {
   let apiRequest = createAPIRequest(target: target, completion: completion)
   
   let accessToken = AccessToken.shared
+  if (!accessToken.hasTokens) {
+    return apiRequest()
+  }
+  let appManager = AppManager.shared
   
-  if (accessToken.isUpdating) {
+  if (accessToken.isUpdating || appManager.isCheckingStatus) {
+    operationQueue.append((target: target, completion: completion))
+    return nil
+  }
+  
+  guard case AppDelegate.Status.valid = appManager.appStatus else {
+    if case AppDelegate.Status.unspecified = appManager.appStatus {
+      appManager.checkAppStatus()
+    }
     operationQueue.append((target: target, completion: completion))
     return nil
   }
@@ -269,7 +292,7 @@ public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -
   })
 }
 
-private func executePendingOperations(success: Bool) {
+func executePendingOperations(success: Bool) {
   let opQueue = operationQueue
   operationQueue.removeAll(keepingCapacity: false)
   if success {

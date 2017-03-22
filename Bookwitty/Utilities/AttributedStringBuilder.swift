@@ -9,6 +9,9 @@
 import Foundation
 
 class AttributedStringBuilder {
+  static let defaultLineHeightMultiple: CGFloat = 1.25
+  static let defaultHTMLLineHeightMultiple: CGFloat = 1.30
+
   let attributedString: NSMutableAttributedString
   private let fontDynamicType: FontDynamicType
 
@@ -20,7 +23,7 @@ class AttributedStringBuilder {
   func append(text: String, fontDynamicType: FontDynamicType? = nil, color: UIColor =  ThemeManager.shared.currentTheme.defaultTextColor(),
               underlineStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone,
               strikeThroughStyle: NSUnderlineStyle = NSUnderlineStyle.styleNone,
-              fromHtml: Bool = false, htmlImageWidth: CGFloat = UIScreen.main.bounds.width) -> Self {
+              fromHtml: Bool = false, htmlImageWidth: CGFloat = UIScreen.main.bounds.width, lineHeightMultiple: CGFloat? = nil) -> Self {
     if fromHtml, let htmlAtrString = htmlAttributedString(text: text, fontDynamicType: fontDynamicType, color: color,
                                                           underlineStyle: underlineStyle, strikeThroughStyle: strikeThroughStyle,
                                                           htmlImageWidth: htmlImageWidth) {
@@ -37,7 +40,17 @@ class AttributedStringBuilder {
       ])
 
     attributedString.append(atrString)
-    return self
+    if let lineHeightMultiple = lineHeightMultiple {
+      //Apply lineHeightMultiple spacing since it was set explicitly
+      return applyParagraphStyling(lineHeightMultiple: lineHeightMultiple)
+    } else {
+      if (fontDynamicType?.font ?? self.fontDynamicType.font).pointSize > 18 {
+        //Do Not Apply lineHeightMultiple spacing for large fonts
+        return self
+      }
+      //Defualt lineHeightMultiple for spacing
+      return applyParagraphStyling(lineHeightMultiple: AttributedStringBuilder.defaultLineHeightMultiple)
+    }
   }
 
   private func htmlAttributedString(text: String, fontDynamicType: FontDynamicType? = nil, color: UIColor =  ThemeManager.shared.currentTheme.defaultTextColor(),
@@ -80,12 +93,13 @@ class AttributedStringBuilder {
    * Use this function as the last part of your builder to apply the paragraph styling on all parts.
    * Note: If this function was used in the beginning it will not work
    */
-  func applyParagraphStyling(lineSpacing: CGFloat = 10, alignment: NSTextAlignment = NSTextAlignment.natural) -> Self {
+  func applyParagraphStyling(lineHeightMultiple: CGFloat = AttributedStringBuilder.defaultLineHeightMultiple, alignment: NSTextAlignment = NSTextAlignment.natural) -> Self {
     let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
-    paragraphStyle.lineSpacing = lineSpacing
     paragraphStyle.alignment = alignment
-    
-    let range = NSRange(location: 0, length: attributedString.string.characters.count)
+    paragraphStyle.lineBreakMode = .byWordWrapping
+    paragraphStyle.lineHeightMultiple = lineHeightMultiple
+
+    let range = NSRange(location: 0, length: attributedString.length)
 
     attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: range)
     return self

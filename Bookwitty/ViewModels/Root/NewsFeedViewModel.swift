@@ -13,7 +13,13 @@ import Spine
 final class NewsFeedViewModel {
   var cancellableRequest:  Cancellable?
   var nextPage: URL?
-  var data: [ModelResource] = []
+  var data: [ModelResource] = [] {
+    didSet {
+      if data.count == 0 {
+        nextPage = nil
+      }
+    }
+  }
   var penNames: [PenName] {
     return UserManager.shared.penNames ?? []
   }
@@ -42,10 +48,8 @@ final class NewsFeedViewModel {
   }
 
   func witContent(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
-    let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
-    let dataIndex = index - showsPenNameSelectionHeader
-    guard data.count > dataIndex,
-      let contentId = data[dataIndex].id else {
+    guard data.count > index,
+      let contentId = data[index].id else {
       completionBlock(false)
       return
     }
@@ -56,10 +60,8 @@ final class NewsFeedViewModel {
   }
 
   func unwitContent(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
-    let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
-    let dataIndex = index - showsPenNameSelectionHeader
-    guard data.count > dataIndex,
-      let contentId = data[dataIndex].id else {
+    guard data.count > index,
+      let contentId = data[index].id else {
         completionBlock(false)
         return
     }
@@ -114,10 +116,8 @@ final class NewsFeedViewModel {
   }
 
   func sharingContent(index: Int) -> [String]? {
-    let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
-    let dataIndex = index - showsPenNameSelectionHeader
-    guard data.count > dataIndex,
-    let commonProperties = data[dataIndex] as? ModelCommonProperties else {
+    guard data.count > index,
+    let commonProperties = data[index] as? ModelCommonProperties else {
         return nil
     }
 
@@ -130,25 +130,17 @@ final class NewsFeedViewModel {
     return [shortDesciption]
   }
 
-  func hasPenNames() -> Bool {
-    return penNames.count > 0
-  }
-
   func numberOfSections() -> Int {
-    let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
-    return data.count > 0 ? 1 : showsPenNameSelectionHeader
+    return NewsFeedViewController.Section.numberOfSections
   }
 
-  func numberOfItemsInSection() -> Int {
-    let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
-    return data.count + showsPenNameSelectionHeader
+  func numberOfItemsInSection(section: Int) -> Int {
+    return data.count
   }
 
   func resourceForIndex(index: Int) -> ModelResource? {
-    let showsPenNameSelectionHeader = (hasPenNames() ? 1 : 0)
-    let dataIndex = index - showsPenNameSelectionHeader
-    guard data.count > dataIndex else { return nil }
-    let resource = data[dataIndex]
+    guard data.count > index else { return nil }
+    let resource = data[index]
     return resource
   }
 

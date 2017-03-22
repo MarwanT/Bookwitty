@@ -25,14 +25,18 @@ class OnBoardingViewController: ASViewController<OnBoardingControllerNode> {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = Strings.follow_topics()
+
     onBoardingNode.delegate = self
     onBoardingNode.dataSource = self
     viewModel.loadOnBoardingData { (success: Bool) in
       self.onBoardingNode.reloadCollection()
     }
-    
+
     applyTheme()
+    applyLocalization()
+    observeLanguageChanges()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.OnboardingFollowPeopleAndTopics)
@@ -76,7 +80,7 @@ extension OnBoardingViewController: OnBoardingControllerDataSource {
     if let node = node as? OnBoardingCellNode {
       let title = viewModel.onBoardingCellNodeTitle(index: indexPath.row)
       node.delegate = self
-      node.text = title
+      node.text = title.capitalized
       node.isLoading = true
       _ = viewModel.loadOnBoardingCellNodeData(indexPath: indexPath, completionBlock: { [weak self] (indexPath, success, cellCollectionDictionary) in
         guard let strongSelf = self else { return }
@@ -116,5 +120,21 @@ extension OnBoardingViewController: OnBoardingCellDelegate {
 extension OnBoardingViewController: Themeable {
   func applyTheme() {
     node.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+  }
+}
+
+//MARK: - Localizable implementation
+extension OnBoardingViewController: Localizable {
+  func applyLocalization() {
+    title = Strings.follow_topics()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

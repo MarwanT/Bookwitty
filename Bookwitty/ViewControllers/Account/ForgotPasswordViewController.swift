@@ -19,11 +19,13 @@ class ForgotPasswordViewController: UIViewController {
     // Do any additional setup after loading the view.
     initializeComponents()
     applyTheme()
+    applyLocalization()
+    observeLanguageChanges()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
 
   private func initializeComponents() {
-    title = Strings.forgot_password()
-
     emailField.configuration = InputFieldConfiguration(
       descriptionLabelText: Strings.email(),
       textFieldPlaceholder: Strings.enter_your_email(),
@@ -88,5 +90,30 @@ extension ForgotPasswordViewController: InputFieldDelegate {
       resetPassword()
     }
     return true
+  }
+}
+
+//MARK: - Localizable implementation
+extension ForgotPasswordViewController: Localizable {
+  func applyLocalization() {
+    title = Strings.forgot_password()
+
+    emailField.configuration = InputFieldConfiguration(
+      descriptionLabelText: Strings.email(),
+      textFieldPlaceholder: Strings.enter_your_email(),
+      invalidationErrorMessage: Strings.email_invalid(),
+      returnKeyType: UIReturnKeyType.send,
+      keyboardType: .emailAddress,
+      autocorrectionType: .no,
+      autocapitalizationType: .none)
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

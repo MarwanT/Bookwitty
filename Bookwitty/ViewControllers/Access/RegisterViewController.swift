@@ -33,6 +33,11 @@ class RegisterViewController: UIViewController {
     awakeSelf()
     applyTheme()
 
+    applyLocalization()
+    observeLanguageChanges()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
+
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.Register)
   }
@@ -48,7 +53,7 @@ class RegisterViewController: UIViewController {
     self.view.endEditing(true)
   }
 
-  private func setupAttributedTexts() {
+  fileprivate func setupAttributedTexts() {
     //Set Attributed Styled up Text
     let termsText = viewModel.styledTermsOfUseAndPrivacyPolicyText()
     let termsNSString = termsText.mutableString as NSMutableString
@@ -361,5 +366,58 @@ enum AttributedLinkReference: String {
     get {
       return URL(string: self.rawValue, relativeTo: Environment.current.baseURL)!
     }
+  }
+}
+
+
+//MARK: - Localizable implementation
+extension RegisterViewController: Localizable {
+  func applyLocalization() {
+    title = Strings.sign_up()
+
+    setupAttributedTexts()
+
+    firstNameField.configuration = InputFieldConfiguration(
+      descriptionLabelText: Strings.first_name(),
+      textFieldPlaceholder: Strings.enter_your_first_name(),
+      invalidationErrorMessage: Strings.first_name_invalid(),
+      returnKeyType: UIReturnKeyType.continue,
+      autocorrectionType: .no)
+
+    lastNameField.configuration = InputFieldConfiguration(
+      descriptionLabelText: Strings.last_name(),
+      textFieldPlaceholder: Strings.enter_your_last_name(),
+      invalidationErrorMessage: Strings.last_name_invalid(),
+      returnKeyType: UIReturnKeyType.continue,
+      autocorrectionType: .no)
+
+    emailField.configuration = InputFieldConfiguration(
+      descriptionLabelText: Strings.email(),
+      textFieldPlaceholder: Strings.enter_your_email(),
+      invalidationErrorMessage: Strings.email_invalid(),
+      returnKeyType: UIReturnKeyType.continue,
+      keyboardType: .emailAddress,
+      autocorrectionType: .no,
+      autocapitalizationType: .none)
+
+    passwordField.configuration = InputFieldConfiguration(
+      descriptionLabelText: Strings.password(),
+      textFieldPlaceholder: Strings.enter_your_password(),
+      invalidationErrorMessage: Strings.password_invalid(),
+      returnKeyType: UIReturnKeyType.done)
+
+    countryField.configuration = InputFieldConfiguration(
+      descriptionLabelText: Strings.country(),
+      textFieldPlaceholder: Strings.country(),
+      returnKeyType: UIReturnKeyType.default)
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

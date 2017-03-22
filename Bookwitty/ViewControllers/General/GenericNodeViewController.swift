@@ -22,7 +22,12 @@ class GenericNodeViewController: ASViewController<ASDisplayNode> {
     }
     super.init(node: baseNode)
     self.title = title
-    applyTheme()
+  }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
   
   private static func encapsulateWithScrollNodeIfNeeded(node: ASDisplayNode) -> ASDisplayNode {
@@ -43,11 +48,5 @@ class GenericNodeViewController: ASViewController<ASDisplayNode> {
       return stack
     }
     return scrollNode
-  }
-}
-
-extension GenericNodeViewController: Themeable {
-  func applyTheme() {
-    node.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
   }
 }

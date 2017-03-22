@@ -31,6 +31,10 @@ class ProfileDetailsViewModel {
       cancellableRequest.cancel()
     }
   }
+
+  func isMyPenName() -> Bool {
+    return UserManager.shared.isMy(penName: penName)
+  }
 }
 
 // MARK: - API requests
@@ -213,6 +217,10 @@ extension ProfileDetailsViewModel {
     case .following: return following[index]
     default: return nil
     }
+  }
+
+  func isMyPenName(_ penName: PenName) -> Bool {
+    return UserManager.shared.isMy(penName: penName)
   }
 }
 

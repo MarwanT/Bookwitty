@@ -30,6 +30,11 @@ class SignInViewController: UIViewController {
     awakeSelf()
     applyTheme()
 
+    applyLocalization()
+    observeLanguageChanges()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
+
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.SignIn)
   }
@@ -47,23 +52,6 @@ class SignInViewController: UIViewController {
   
   /// Do the required setup
   private func awakeSelf() {
-    title = Strings.sign_in()
-
-    emailField.configuration = InputFieldConfiguration(
-      descriptionLabelText: Strings.email(),
-      textFieldPlaceholder: Strings.enter_your_email(),
-      invalidationErrorMessage: Strings.email_invalid(),
-      returnKeyType: UIReturnKeyType.continue,
-      keyboardType: .emailAddress,
-      autocorrectionType: .no,
-      autocapitalizationType: .none)
-
-    passwordField.configuration = InputFieldConfiguration(
-      descriptionLabelText: Strings.password(),
-      textFieldPlaceholder: Strings.enter_your_password(),
-      invalidationErrorMessage: Strings.password_invalid(),
-      returnKeyType: UIReturnKeyType.done)
-
     emailField.validationBlock = emailValidation()
     passwordField.validationBlock = passwordValidation()
 
@@ -72,8 +60,6 @@ class SignInViewController: UIViewController {
     
     stackView.isLayoutMarginsRelativeArrangement = true
     stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
-    
-    setupAttributedTexts()
     
     NotificationCenter.default.addObserver(
       self,
@@ -85,7 +71,7 @@ class SignInViewController: UIViewController {
       name: NSNotification.Name.UIKeyboardWillHide, object: nil)
   }
   
-  private func setupAttributedTexts() {
+  fileprivate func setupAttributedTexts() {
     //Set Attributed Styled up Text
     registerLabel.attributedText = viewModel.styledRegisterText()
     //Attributed Label Links Styling
@@ -284,5 +270,38 @@ extension SignInViewController: TTTAttributedLabelDelegate {
   fileprivate func pushForgotPasswordViewController() {
     let forgotPasswordViewController = Storyboard.Account.instantiate(ForgotPasswordViewController.self)
     navigationController?.pushViewController(forgotPasswordViewController, animated: true)
+  }
+}
+
+//MARK: - Localizable implementation
+extension SignInViewController: Localizable {
+  func applyLocalization() {
+    title = Strings.sign_in()
+
+    setupAttributedTexts()
+
+    emailField.configuration = InputFieldConfiguration(
+      descriptionLabelText: Strings.email(),
+      textFieldPlaceholder: Strings.enter_your_email(),
+      invalidationErrorMessage: Strings.email_invalid(),
+      returnKeyType: UIReturnKeyType.continue,
+      keyboardType: .emailAddress,
+      autocorrectionType: .no,
+      autocapitalizationType: .none)
+
+    passwordField.configuration = InputFieldConfiguration(
+      descriptionLabelText: Strings.password(),
+      textFieldPlaceholder: Strings.enter_your_password(),
+      invalidationErrorMessage: Strings.password_invalid(),
+      returnKeyType: UIReturnKeyType.done)
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

@@ -8,10 +8,6 @@
 
 import Foundation
 
-protocol Localizable {
-  func applyLocalization()
-}
-
 extension UIViewController {
   func add(asChildViewController viewController: UIViewController, toView view: UIView) -> UIView {
     guard let childView = viewController.view else {

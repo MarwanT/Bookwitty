@@ -19,12 +19,14 @@ class BooksTableViewController: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = Strings.books()
-    
     tableView.tableFooterView = UIView(frame: CGRect.zero)
     tableView.register(BookTableViewCell.nib, forCellReuseIdentifier: BookTableViewCell.reuseIdentifier)
     
     initializeComponents()
+    observeLanguageChanges()
+    applyLocalization()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.BooksListing)
@@ -111,5 +113,21 @@ extension BooksTableViewController {
   enum DataLoadingMode {
     case local(paginator: Paginator)
     case server(nextPageURL: URL?)
+  }
+}
+
+//MARK: - Localizable implementation
+extension BooksTableViewController: Localizable {
+  func applyLocalization() {
+    title = Strings.books()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

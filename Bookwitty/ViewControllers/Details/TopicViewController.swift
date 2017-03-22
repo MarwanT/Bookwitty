@@ -87,15 +87,15 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     super.viewDidLoad()
     initializeComponents()
     loadNavigationBarButtons()
+
+    applyLocalization()
+    observeLanguageChanges()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
 
   private func initializeComponents() {
-    title = Strings.topic()
-
     headerNode.delegate = self
-
-    let segments: [String] = self.mode.categories.map({ $0.name })
-    segmentedNode.initialize(with: segments)
 
     segmentedNode.selectedSegmentChanged = segmentedNode(segmentedControlNode:didSelectSegmentIndex:)
 
@@ -222,13 +222,13 @@ extension TopicViewController {
     var name: String {
       switch self {
       case .latest:
-        return "Latest"
+        return Strings.latest()
       case .relatedBooks:
-        return "Related Books"
+        return Strings.related_books()
       case .editions:
-        return "Editions"
+        return Strings.editions()
       case .followers:
-        return "Followers"
+        return Strings.followers()
       case .none:
         return ""
       }
@@ -453,7 +453,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
         cell.title = book?.title
         cell.author = book?.productDetails?.author
         cell.format = book?.productDetails?.productFormat
-        cell.price = book?.supplierInformation?.preferredPrice?.formattedValue
+        cell.price = (book?.productDetails?.isElectronicFormat() ?? false) ? nil : book?.supplierInformation?.preferredPrice?.formattedValue
         cell.imageUrl = book?.thumbnailImageUrl
       case .relatedBooks:
         guard let cell = node as? BookNode else {
@@ -464,7 +464,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
         cell.title = book?.title
         cell.author = book?.productDetails?.author
         cell.format = book?.productDetails?.productFormat
-        cell.price = book?.supplierInformation?.preferredPrice?.formattedValue
+        cell.price = (book?.productDetails?.isElectronicFormat() ?? false) ? nil : book?.supplierInformation?.preferredPrice?.formattedValue
         cell.imageUrl = book?.thumbnailImageUrl
       case .followers:
         guard let cell = node as? PenNameFollowNode else {
@@ -476,6 +476,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
         cell.biography = follower?.biography
         cell.imageUrl = follower?.avatarUrl
         cell.following = follower?.following ?? false
+        cell.updateMode(disabled: viewModel.isMyPenName(follower))
       case .none:
         break
       }
@@ -775,5 +776,39 @@ extension TopicViewController {
     let topicViewController = TopicViewController()
     topicViewController.initialize(withBook: resource as? Book)
     navigationController?.pushViewController(topicViewController, animated: true)
+  }
+}
+
+//MARK: - Localizable implementation
+extension TopicViewController: Localizable {
+  func applyLocalization() {
+    if let resourceType = viewModel.resourceType {
+      switch resourceType {
+      case Topic.resourceType:
+        title = Strings.topic()
+      case Author.resourceType:
+        title = Strings.author()
+      case Book.resourceType:
+        title = Strings.book()
+      default:
+        break
+      }
+    }
+
+    headerNode = TopicHeaderNode()
+
+    let segments: [String] = self.mode.categories.map({ $0.name })
+    segmentedNode.initialize(with: segments)
+
+    collectionNode.reloadData()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

@@ -12,8 +12,6 @@ import FLKAutoLayout
 class RootTabBarController: UITabBarController {
   let viewModel = RootTabBarViewModel()
   
-  fileprivate var overlayView: UIView!
-  
   deinit {
     NotificationCenter.default.removeObserver(self)
   }
@@ -21,11 +19,10 @@ class RootTabBarController: UITabBarController {
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeTabBarViewControllers()
-    initializeOverlay()
     applyTheme()
     addObservers()
-    
-    displayOverlay(animated: false)
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -40,19 +37,12 @@ class RootTabBarController: UITabBarController {
 
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    
-    // Display Introduction VC if user is not signed in
-    if !UserManager.shared.isSignedIn {
-      displayOverlay()
-      presentIntroductionOrSignInViewController()
-    } else {
+    if UserManager.shared.isSignedIn {
       if UserManager.shared.shouldEditPenName {
         presentPenNameViewController(user: UserManager.shared.signedInUser)
       } else if UserManager.shared.shouldDisplayOnboarding {
         presentOnboardingViewController()
       } else {
-        dismissOverlay()
-        GeneralSettings.sharedInstance.shouldShowIntroduction = false
         NotificationCenter.default.post(
           name: AppNotification.shouldRefreshData, object: nil)
       }
@@ -60,12 +50,11 @@ class RootTabBarController: UITabBarController {
   }
   
   private func initializeTabBarViewControllers() {
-    let viewController1 = NewsFeedViewController()
+    let newsFeedViewController = newsFeedViewControllerCreator()
     let bookStoreViewController = Storyboard.Books.instantiate(BookStoreViewController.self)
     let discoverViewController = DiscoverViewController()
-    let bagViewController = BagViewController()
-
-    viewController1.tabBarItem = UITabBarItem(
+    
+    newsFeedViewController.viewController.tabBarItem = UITabBarItem(
       title: Strings.news().uppercased(),
       image: #imageLiteral(resourceName: "newsfeed"),
       tag: 1)
@@ -77,18 +66,16 @@ class RootTabBarController: UITabBarController {
       title: Strings.books().uppercased(),
       image: #imageLiteral(resourceName: "books"),
       tag:3)
-    bagViewController.tabBarItem = UITabBarItem(
-      title: Strings.bag().uppercased(),
-      image: #imageLiteral(resourceName: "emptyBasket"),
-      tag:3)
 
     // Set The View controller
     self.viewControllers = [
-      UINavigationController(rootViewController: viewController1),
+      UINavigationController(rootViewController: newsFeedViewController.viewController),
       UINavigationController(rootViewController: discoverViewController),
       UINavigationController(rootViewController: bookStoreViewController),
-      UINavigationController(rootViewController: bagViewController),
     ]
+    
+    // Hide navigation bar for news feed if necessary
+    newsFeedViewController.viewController.navigationController?.setNavigationBarHidden(newsFeedViewController.hideNavigationBar, animated: true)
     
     // Set Default select tab index
     self.selectedIndex = 0
@@ -101,6 +88,18 @@ class RootTabBarController: UITabBarController {
       #selector(self.signIn(notification:)), name: AppNotification.didSignIn, object: nil)
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.didFinishBoarding(notification:)), name: AppNotification.didFinishBoarding, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.handleRefreshTokenFailure(notification:)), name: AppNotification.failToRefreshToken, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.checkAppStatus(notification:)), name: AppNotification.didCheckAppStatus, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.accountNeedsConfirmation(notification:)), name: AppNotification.accountNeedsConfirmation, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.callToActionHandler(notification:)), name: AppNotification.callToAction, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.shouldDisplayRegistration(notification:)), name: AppNotification.shouldDisplayRegistration, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.shouldDisplaySignIn(notification:)), name: AppNotification.shouldDisplaySignIn, object: nil)
   }
   
   private func addObserversWhenNotVisible() {
@@ -113,10 +112,25 @@ class RootTabBarController: UITabBarController {
   }
   
   // MARK: Helpers
+  fileprivate func newsFeedViewControllerCreator() -> (viewController: UIViewController, hideNavigationBar: Bool) {
+    let viewController: UIViewController
+    let hideNavigationBar: Bool
+    
+    if UserManager.shared.isSignedIn {
+      viewController = NewsFeedViewController()
+      hideNavigationBar = false
+    } else {
+      viewController = JoinUsNode().viewController()
+      hideNavigationBar = true
+    }
+    
+    // Add search button
+    viewController.navigationItem.rightBarButtonItems = searchBarButton()
+    
+    return (viewController, hideNavigationBar)
+  }
   
   fileprivate func presentIntroductionOrSignInViewController() {
-    displayOverlay()
-    
     if GeneralSettings.sharedInstance.shouldShowIntroduction {
       let introductionVC = Storyboard.Introduction.instantiate(IntroductionViewController.self)
       let navigationController = UINavigationController(rootViewController: introductionVC)
@@ -141,8 +155,45 @@ class RootTabBarController: UITabBarController {
     present(navigationController, animated: true, completion: nil)
   }
   
-  fileprivate func refreshToOriginalState() {
-    initializeTabBarViewControllers()
+  fileprivate func refreshTabBarViewController() {
+    guard let newsNavigationController = viewControllers?.first as? UINavigationController else {
+      return
+    }
+
+    let newsFeedViewController = newsFeedViewControllerCreator()
+    newsFeedViewController.viewController.tabBarItem = UITabBarItem(
+      title: Strings.news().uppercased(),
+      image: #imageLiteral(resourceName: "newsfeed"),
+      tag: 1)
+    
+    newsNavigationController.setNavigationBarHidden(newsFeedViewController.hideNavigationBar, animated: true)
+    
+    newsNavigationController.viewControllers.replaceSubrange(0...0, with: [newsFeedViewController.viewController])
+    
+    if UserManager.shared.isSignedIn {
+      if let newsFeedViewController = newsFeedViewController.viewController as? NewsFeedViewController {
+        newsFeedViewController.refreshViewControllerData()
+      }
+    }
+
+    NotificationCenter.default.post(name: AppNotification.authenticationStatusChanged, object: nil)
+  }
+
+  fileprivate func displayAppNeedsUpdate(with updateURL: URL?) {
+    let forceUpdateNode = MisfortuneNode(mode: MisfortuneNode.Mode.appNeedsUpdate(updateURL))
+    forceUpdateNode.delegate = self
+    let forceUpdateViewController = GenericNodeViewController(
+      node: forceUpdateNode,
+      title: nil,
+      scrollableContentIfNeeded: false)
+    self.present(forceUpdateViewController, animated: true, completion: nil)
+  }
+  
+  fileprivate func openURL(url: URL?) {
+    guard let url = url else {
+      return
+    }
+    UIApplication.shared.openURL(url)
   }
 }
 
@@ -153,9 +204,57 @@ extension RootTabBarController: Themeable {
   }
 }
 
+//MARK: - Actions
+extension RootTabBarController {
+  fileprivate func sendConfirmationEmail() {
+    _ = GeneralAPI.sendAccountConfirmation {
+      (success, error) in
+      print("Account confirmation \(success)")
+    }
+  }
+}
+
 //MARK: - Notifications
 extension RootTabBarController {
-  func signOut(notificaiton: Notification) {
+  func shouldDisplaySignIn(notification: Notification?) {
+    presentSignInViewController()
+  }
+
+  func shouldDisplayRegistration(notification: Notification?) {
+    presentRegisterViewController()
+  }
+
+  func callToActionHandler(notification: Notification?) {
+    guard !UserManager.shared.isSignedIn else {
+      //If user is signed-in => do nothing
+      return
+    }
+    //Call-To-Action Value
+    let cta = notification?.object as? CallToAction
+    //Display Alert accordingly
+    dispalyUserNotSignedInAlert(cta: cta)
+  }
+
+  func accountNeedsConfirmation(notification: Notification?) {
+    displayAccountNeedsConfirmationAlert()
+  }
+  
+  func checkAppStatus(notification: Notification) {
+    switch AppManager.shared.appStatus {
+    case .needsUpdate(let updateURL):
+      displayAppNeedsUpdate(with: updateURL)
+    case .valid: fallthrough
+    case .unspecified: fallthrough
+    default:
+      break // Everyone lives happily ever after
+    }
+  }
+  
+  func handleRefreshTokenFailure(notification: Notification) {
+    displayFailToRefreshTokenAlert()
+  }
+  
+  func signOut(notificaiton: Notification?) {
 
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .Account,
@@ -163,9 +262,8 @@ extension RootTabBarController {
     Analytics.shared.send(event: event)
 
     AccessToken.shared.deleteToken()
-    presentIntroductionOrSignInViewController()
     UserManager.shared.deleteSignedInUser()
-    refreshToOriginalState()
+    refreshTabBarViewController()
   }
   
   func signIn(notification: Notification) {
@@ -183,60 +281,130 @@ extension RootTabBarController {
   }
   
   func showRootViewController() {
-    self.dismiss(animated: true)
+    self.dismiss(animated: true,completion: {
+      self.refreshTabBarViewController()
+    })
+  }
+
+  func presentRegisterViewController() {
+    let registerVC = Storyboard.Access.instantiate(RegisterViewController.self)
+    let navigationController = UINavigationController(rootViewController: registerVC)
+    registerVC.navigationItem.leftBarButtonItem = cancelBarButton()
+    present(navigationController, animated: true, completion: nil)
+  }
+
+  func presentSignInViewController() {
+    let signInVC = Storyboard.Access.instantiate(SignInViewController.self)
+    let navigationController = UINavigationController(rootViewController: signInVC)
+    signInVC.navigationItem.leftBarButtonItem = cancelBarButton()
+    present(navigationController, animated: true, completion: nil)
+  }
+
+  private func cancelBarButton() -> UIBarButtonItem {
+    return UIBarButtonItem(
+      title: Strings.cancel(),
+      style: UIBarButtonItemStyle.plain,
+      target: self,
+      action: #selector(self.cancelBarButtonTouchUpInside(_:)))
+  }
+
+  func cancelBarButtonTouchUpInside(_ sender: Any?) {
+    self.dismiss(animated: true, completion: nil)
+  }
+
+  func searchBarButton() -> [UIBarButtonItem] {
+    let rightNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
+      UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+    rightNegativeSpacer.width = -10
+    let searchBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "search"), style:
+      UIBarButtonItemStyle.plain, target: self, action:
+      #selector(self.searchButtonTap(_:)))
+    return [rightNegativeSpacer, searchBarButton]
+  }
+
+  func searchButtonTap(_ sender: UIBarButtonItem?) {
+    guard let newsNavigationController = viewControllers?.first as? UINavigationController else {
+      return
+    }
+    let searchVC = SearchViewController()
+    searchVC.hidesBottomBarWhenPushed = true
+    newsNavigationController.pushViewController(searchVC, animated: true)
   }
 }
 
-// MARK: - Overlay Methods
+// MARK: - Alerts
 extension RootTabBarController {
-  var animationDuration: TimeInterval {
-    return 0.44
+  fileprivate func displayFailToRefreshTokenAlert() {
+    let alertController = UIAlertController(
+      title: Strings.fail_to_refresh_token_alert_title(),
+      message: Strings.fail_to_refresh_token_alert_message(),
+      preferredStyle: .alert)
+    let okAction = UIAlertAction(
+      title: Strings.ok(),
+      style: UIAlertActionStyle.default) { _ in
+        self.signOut(notificaiton: nil)
+    }
+    alertController.addAction(okAction)
+    present(alertController, animated: true, completion: nil)
   }
   
-  func initializeOverlay() {
-    let customizeOverlay = {
-      self.overlayView.alpha = 0
-      self.view.addSubview(self.overlayView)
-      self.overlayView.alignTop("0", leading: "0", bottom: "0", trailing: "0", toView: self.view)
+  fileprivate func displayAccountNeedsConfirmationAlert() {
+    let alertController = UIAlertController(
+      title: Strings.account_needs_confirmation_alert_title(),
+      message: Strings.account_needs_confirmation_alert_message(),
+      preferredStyle: .alert)
+    let resendAction = UIAlertAction(
+      title: Strings.account_needs_confirmation_alert_resend_confirmation_button_title(),
+      style: UIAlertActionStyle.default) { _ in
+        self.sendConfirmationEmail()
     }
-    
-    guard let launchView = Bundle.main.loadNibNamed("LaunchScreen", owner: nil, options: nil)?.first as? UIView else {
-      overlayView = UIView(frame: CGRect.zero)
-      overlayView.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
-      let logoImageView = UIImageView(image: #imageLiteral(resourceName: "bookwitty"))
-      logoImageView.constrainWidth("100", height: "100")
-      overlayView.addSubview(logoImageView)
-      logoImageView.alignCenter(withView: overlayView)
-      customizeOverlay()
-      return
+    let neutralAction = UIAlertAction(
+      title: Strings.account_needs_confirmation_alert_dismiss_button_title(),
+      style: UIAlertActionStyle.cancel, handler: nil)
+    alertController.addAction(resendAction)
+    alertController.addAction(neutralAction)
+    present(alertController, animated: true, completion: nil)
+  }
+
+  fileprivate func dispalyUserNotSignedInAlert(cta: CallToAction?) {
+    let alertController = UIAlertController(
+      title: Strings.user_not_signed_in_alert_title(),
+      message: Strings.user_not_signed_in_alert_message(),
+      preferredStyle: .actionSheet)
+    let signInAction = UIAlertAction(
+      title: Strings.sign_in(),
+      style: UIAlertActionStyle.default) { _ in
+        //TODO: handle Action
+        self.presentSignInViewController()
     }
-    overlayView = launchView
-    customizeOverlay()
+
+    let registerAction = UIAlertAction(
+      title: Strings.register(),
+      style: UIAlertActionStyle.default) { _ in
+        //TODO: handle Action
+        self.presentRegisterViewController()
+    }
+
+    let neutralAction = UIAlertAction(
+      title: Strings.account_needs_confirmation_alert_dismiss_button_title(),
+      style: UIAlertActionStyle.cancel, handler: nil)
+    alertController.addAction(signInAction)
+    alertController.addAction(registerAction)
+    alertController.addAction(neutralAction)
+    present(alertController, animated: true, completion: nil)
+  }
+}
+
+// MARK: - Misfortune Node Delegate
+extension RootTabBarController: MisfortuneNodeDelegate {
+  func misfortuneNodeDidTapActionButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {
+    switch mode {
+    case .appNeedsUpdate(let updateURL):
+      openURL(url: updateURL)
+    default:
+      break
+    }
   }
   
-  func displayOverlay(animated: Bool = true) {
-    overlayView.isHidden = false
-    changeOverlayAlphaValue(animated: animated, alpha: 1)
-  }
-  
-  func dismissOverlay(animated: Bool = true) {
-    changeOverlayAlphaValue(animated: animated, alpha: 0) {
-      self.overlayView.isHidden = true
-    }
-  }
-  
-  func changeOverlayAlphaValue(animated: Bool, alpha: CGFloat, completion: (() -> Void)? = nil) {
-    if animated {
-      UIView.animate(
-        withDuration: animationDuration,
-        animations: {
-          self.overlayView.alpha = alpha
-      }, completion: { (finished) in
-        completion?()
-      })
-    } else {
-      overlayView.alpha = alpha
-      completion?()
-    }
-  }
+  func misfortuneNodeDidTapSettingsButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {}
 }

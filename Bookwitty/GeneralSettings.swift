@@ -29,7 +29,7 @@ public class GeneralSettings {
       Keys.PreferredLanguage : defaultLanguage,
       Keys.SendUsageData : true,
       Keys.SendEmailNotifications : true,
-      Keys.ShouldShowIntroduction : true,      
+      Keys.ShouldShowIntroduction : true,
     ]
 
     defaults.register(defaults: defaultValues)

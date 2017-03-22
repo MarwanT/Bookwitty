@@ -54,7 +54,8 @@ class MisfortuneNode: ASDisplayNode {
     settingsAttributedText = mode.settingsAttributedText
     image = mode.image
     
-    imageWhiteBackgroundNode.backgroundColor = UIColor.white
+    backgroundColor = UIColor.white
+    imageWhiteBackgroundNode.backgroundColor = backgroundColor
     imageColoredBackgroundNode.backgroundColor = mode.backgroundColor
     imageNode.contentMode = UIViewContentMode.scaleAspectFit
     actionButtonNode.contentEdgeInsets = configuration.actionButtonContentEdgeInsets
@@ -128,12 +129,14 @@ class MisfortuneNode: ASDisplayNode {
       justifyContent: .spaceBetween,
       alignItems: .stretch,
       children: contentStackLayoutElements)
-    contentStack.style.flexGrow = 1.0
+    contentStack.style.minHeight = ASDimensionMake(constrainedSize.max.height/2)
+    
     let contentStackInset = ASInsetLayoutSpec(
       insets: UIEdgeInsets(
         top: 0, left: configuration.contentHerizontalMargin,
         bottom: 0, right: configuration.contentHerizontalMargin),
       child: contentStack)
+    contentStackInset.style.flexGrow = 1.0
     
     // Build the base vertical Layout
     //--------------------------------
@@ -165,14 +168,14 @@ class MisfortuneNode: ASDisplayNode {
   fileprivate var titleText: String? {
     didSet {
       titleNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.headline)
-        .append(text: titleText ?? "", color: mode.titleTextColor).applyParagraphStyling(lineSpacing: 0, alignment: NSTextAlignment.center).attributedString
+        .append(text: titleText ?? "", color: mode.titleTextColor).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
       setNeedsLayout()
     }
   }
   
   fileprivate var descriptionText: String? {
     didSet {
-      descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: descriptionText ?? "", color: mode.descriptionTextColor).applyParagraphStyling(lineSpacing: 0, alignment: NSTextAlignment.center).attributedString
+      descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: descriptionText ?? "", color: mode.descriptionTextColor).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
       setNeedsLayout()
     }
   }
@@ -209,6 +212,7 @@ extension MisfortuneNode {
     case empty
     case somethingWrong
     case noResultsFound
+    case appNeedsUpdate(URL?)
     
     // Visibility
     var actionButtonVisible: Bool {
@@ -220,6 +224,8 @@ extension MisfortuneNode {
       case .noResultsFound:
         return false
       case .somethingWrong:
+        return true
+      case .appNeedsUpdate:
         return true
       }
     }
@@ -233,6 +239,8 @@ extension MisfortuneNode {
         return false
       case .somethingWrong:
         return true
+      case .appNeedsUpdate:
+        return false
       }
     }
     
@@ -247,6 +255,9 @@ extension MisfortuneNode {
         return #imageLiteral(resourceName: "illustrationErrorEmptyContent")
       case .somethingWrong:
         return #imageLiteral(resourceName: "illustrationErrorSomethingsWrong")
+      case .appNeedsUpdate:
+        // TODO: Update with right Data
+        return #imageLiteral(resourceName: "illustrationErrorEmptyContent")
       }
     }
     
@@ -260,6 +271,8 @@ extension MisfortuneNode {
       case .noResultsFound:
         return 20
       case .somethingWrong:
+        return 20
+      case .appNeedsUpdate:
         return 20
       }
     }
@@ -275,6 +288,8 @@ extension MisfortuneNode {
         return Strings.no_results_found_title()
       case .somethingWrong:
         return Strings.something_wrong_error_title()
+      case .appNeedsUpdate:
+        return Strings.new_version_available_title()
       }
     }
     var descriptionText: String {
@@ -287,22 +302,27 @@ extension MisfortuneNode {
         return Strings.no_results_found_description()
       case .somethingWrong:
         return Strings.something_wrong_error_description()
+      case .appNeedsUpdate:
+        return Strings.new_version_available_description()
       }
     }
     var actionButtonText: String {
       switch self {
       case .empty:
-        return "My interests"
+        return Strings.my_interests()
       case .noInternet:
-        return "Try again"
+        return Strings.try_again()
       case .noResultsFound:
         return ""
       case .somethingWrong:
-        return "Try again"
+        return Strings.try_again()
+      case .appNeedsUpdate:
+        return Strings.update_now()
       }
     }
     var settingsAttributedText: NSAttributedString {
-      return AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: "or check your ", color: ThemeManager.shared.currentTheme.defaultTextColor()).append(text: "settings", fontDynamicType: FontDynamicType.footnote, color: ThemeManager.shared.currentTheme.colorNumber19()).applyParagraphStyling(lineSpacing: 0, alignment: NSTextAlignment.center).attributedString
+      // TODO: Localize this
+      return AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: "or check your ", color: ThemeManager.shared.currentTheme.defaultTextColor()).append(text: "settings", fontDynamicType: FontDynamicType.footnote, color: ThemeManager.shared.currentTheme.colorNumber19()).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
     }
     
     // Colors
@@ -322,6 +342,8 @@ extension MisfortuneNode {
         return ThemeManager.shared.currentTheme.colorNumber8()
       case .somethingWrong:
         return ThemeManager.shared.currentTheme.colorNumber10()
+      case .appNeedsUpdate:
+        return ThemeManager.shared.currentTheme.colorNumber8()
       }
     }
     var backgroundColor: UIColor {
@@ -334,6 +356,8 @@ extension MisfortuneNode {
         return ThemeManager.shared.currentTheme.colorNumber7()
       case .somethingWrong:
         return ThemeManager.shared.currentTheme.colorNumber9()
+      case .appNeedsUpdate:
+        return ThemeManager.shared.currentTheme.colorNumber7()
       }
     }
   }

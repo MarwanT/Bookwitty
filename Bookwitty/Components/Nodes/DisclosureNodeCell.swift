@@ -30,7 +30,7 @@ class DisclosureNodeCell: ASCellNode {
   
   private func initializeNode() {
     automaticallyManagesSubnodes = true
-    style.height = ASDimensionMake(Configuration.nodeHeight)
+    style.minHeight = ASDimensionMake(Configuration.nodeHeight)
     imageNode.image = #imageLiteral(resourceName: "rightArrow")
     separatorInset = configuration.separatorInsets
   }
@@ -46,23 +46,22 @@ class DisclosureNodeCell: ASCellNode {
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     style.width = ASDimensionMake(constrainedSize.max.width)
     
+    let textInsetSpec = ASInsetLayoutSpec(
+      insets: configuration.textEdgeInsets, child: titleTextNode)
+    textInsetSpec.style.flexGrow = 1.0
+    textInsetSpec.style.flexShrink = 1.0
+    
     let horizontalStack = ASStackLayoutSpec(
       direction: .horizontal,
       spacing: 0,
-      justifyContent: .start,
+      justifyContent: .spaceBetween,
       alignItems: .center,
-      children: [titleTextNode, spacer(flexGrow: 1.0), imageNode])
-    horizontalStack.style.width = ASDimensionMake(constrainedSize.max.width)
+      children: [textInsetSpec, imageNode])
     let insetSpec = ASInsetLayoutSpec(
       insets: configuration.nodeEdgeInsets,
       child: horizontalStack)
-    let centerSpec = ASCenterLayoutSpec(
-      horizontalPosition: .start,
-      verticalPosition: .center,
-      sizingOption: ASRelativeLayoutSpecSizingOption.minimumHeight,
-      child: insetSpec)
     
-    var layoutElements: ASLayoutSpec = centerSpec
+    var layoutElements: ASLayoutSpec = insetSpec
     
     if configuration.addInternalBottomSeparator {
       let separatorInsetsSpec = ASInsetLayoutSpec(insets: configuration.separatorInsets, child: separator())
@@ -73,7 +72,7 @@ class DisclosureNodeCell: ASCellNode {
         alignItems: .stretch,
         children: [spacer(flexGrow: 1.0), separatorInsetsSpec])
       let backgroundSpec = ASBackgroundLayoutSpec(
-        child: centerSpec, background: verticalStack)
+        child: insetSpec, background: verticalStack)
       layoutElements = backgroundSpec
     }
 
@@ -140,6 +139,9 @@ extension DisclosureNodeCell {
     var nodeEdgeInsets = UIEdgeInsets(
       top: 0, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: 0, right: 0)
+    var textEdgeInsets = UIEdgeInsets(
+      top: 0, left: 0,
+      bottom: 5, right: 0)
     var style: Style = .normal
     var addInternalBottomSeparator: Bool = false
     var separatorInsets = UIEdgeInsets.zero

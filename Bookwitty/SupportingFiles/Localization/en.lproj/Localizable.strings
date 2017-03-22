@@ -8,15 +8,22 @@
 
 "about_this_book" = "About this book";
 "account" = "Account";
+"account_needs_confirmation_alert_dismiss_button_title" = "Cancel";
+"account_needs_confirmation_alert_message" = "You haven't yet confirmed your account.  Please check your email and click on the confirmation link.";
+"account_needs_confirmation_alert_resend_confirmation_button_title" = "Resend";
+"account_needs_confirmation_alert_title" = "Account";
 "address_book" = "Address Book";
+"already_have_an_account" = "Already have an account?";
 "article" = "Article";
 "author" = "Author";
 "bag" = "Bag";
+"biography" = "Biography";
 "book" = "Book";
 "book_categories" = "Book Categories";
 "book_details" = "Book Details";
 "book_recommended_in_reading_lists" = "Book recommended in reading lists";
 "books" = "Books";
+"bookwitty" = "Bookwitty";
 "bookwitty_suggests" = "Bookwitty Suggests";
 "buy_this_book" = "Buy This Book";
 "cancel" = "Cancel";
@@ -57,6 +64,8 @@
 "enter_your_password" = "Enter your password";
 "enter_your_pen_name" = "Enter your pen name";
 "error_loading_data" = "Error Loading Data";
+"fail_to_refresh_token_alert_message" = "It seems that your session expired and you need to sign in again";
+"fail_to_refresh_token_alert_title" = "Please sign in again";
 "first_name" = "First name";
 "first_name_invalid" = "Please enter your first name";
 "follow" = "Follow";
@@ -69,6 +78,8 @@
 "forgot_your_password" = "Forgot your password?";
 "format" = "Format";
 "free_shipping_internationally" = "Free shipping internationally";
+"get_started" = "Get started";
+"height" = "Height";
 "help" = "Help";
 "image" = "Image";
 "imprint" = "Publisher";
@@ -76,6 +87,8 @@
 "interests" = "Interests";
 "isbn10" = "ISBN-10";
 "isbn13" = "ISBN-13";
+"join_us_to_personalize_feed_description" = "View articles reading lists and book recommendations in your feed based on your interests.";
+"join_us_to_personalize_feed_title" = "Personalize your feed";
 "language" = "Language";
 "language_of_text" = "Language";
 "last_name" = "Last name";
@@ -83,8 +96,11 @@
 "latest" = "Latest";
 "link" = "Link";
 "list_price" = "List price";
+"my_interests" = "My interests";
 "my_orders" = "My Orders";
 "new_password" = "New Password";
+"new_version_available_description" = "There is a newer version available for download! Please update the app by visiting the Apple Store.";
+"new_version_available_title" = "New version available";
 "news" = "News";
 "no_internet_error_description" = "Your internet connection appears\nto be offline.";
 "no_internet_error_title" = "No Internet!";
@@ -108,6 +124,7 @@
 "product_format" = "Product Format";
 "profile" = "Profile";
 "profile_picture" = "Profile Picture";
+"publication_date" = "Publication date";
 "publisher" = "Publisher";
 "quote" = "Quote";
 "reading_list" = "Reading List";
@@ -135,6 +152,7 @@
 "text" = "Text";
 "topic" = "Topic";
 "topics_to_follow" = "Topics to Follow";
+"try_again" = "Try again";
 "tutorial_fifth_page_description" = "Sign up to be a part of this vibrant community.";
 "tutorial_fifth_page_title" = "Join The Fun";
 "tutorial_first_page_description" = "";
@@ -145,6 +163,9 @@
 "tutorial_second_page_title" = "Discover Ideas & People";
 "tutorial_third_page_description" = "Everyone has knowledge, expertise or a topic they are passionate about.\nWrite about it.";
 "tutorial_third_page_title" = "Share Your Own Ideas";
+"update_now" = "Update now";
+"user_not_signed_in_alert_message" = "You need to be signed in to complete this action";
+"user_not_signed_in_alert_title" = "You Are Not Signed In!";
 "video" = "Video";
 "view_all" = "View All";
 "view_all_books" = "View All Books";
@@ -154,8 +175,16 @@
 "view_all_selections" = "View All Selections";
 "view_subcategories" = "View Subcategories";
 "view_whole_description" = "View Whole Description";
+"weight" = "Weight";
+"width" = "Width";
 "wit_it" = "Wit";
 "witted" = "Witted";
 "you_dont_have_account" = "You don't have an account";
 "you_save" = "You save";
 "your_feed" = "Your feed";
+
+/**
+ Discussion:
+ - Please keep this file sorted by keys, for easier maintenance
+ - Please add the strings directly to the google drive sheet
+*/

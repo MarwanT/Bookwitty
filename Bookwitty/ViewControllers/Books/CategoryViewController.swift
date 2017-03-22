@@ -28,12 +28,15 @@ class CategoryViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = viewModel.viewControllerTitle
-    
     initializePullToRefresh()
     initializeSubviews()
-    
+
+    applyLocalization()
+    observeLanguageChanges()
+
     refreshViewController()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.Category)
@@ -96,12 +99,10 @@ class CategoryViewController: UIViewController {
     // View All Books
     viewAllBooksView.configuration.style = .highlighted
     viewAllBooksView.delegate = self
-    viewAllBooksView.label.text = Strings.view_all_books()
-    
+
     // View Subcategories
     viewSubcategories.configuration.style = .highlighted
     viewSubcategories.delegate = self
-    viewSubcategories.label.text = Strings.view_subcategories()
   }
   
   private func initializePullToRefresh() {
@@ -608,5 +609,24 @@ extension CategoryViewController {
     let topicViewController = TopicViewController()
     topicViewController.initialize(withBook: resource as? Book)
     navigationController?.pushViewController(topicViewController, animated: true)
+  }
+}
+
+//MARK: - Localizable implementation
+extension CategoryViewController: Localizable {
+  func applyLocalization() {
+    title = viewModel.viewControllerTitle
+    viewAllBooksView.label.text = Strings.view_all_books()
+    viewSubcategories.label.text = Strings.view_subcategories()
+    selectionTableView.reloadData()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

@@ -18,6 +18,10 @@ class LinkCardPostCellNode: BaseCardPostNode {
   override var contentShouldExtendBorders: Bool { return true }
   override var contentNode: ASDisplayNode { return node }
 
+  override func updateMode(fullMode: Bool) {
+    node.setupMode(fullViewMode: fullMode)
+  }
+  
   override init() {
     node = LinkCardPostContentNode()
     super.init()
@@ -42,6 +46,7 @@ class LinkCardPostContentNode: ASDisplayNode {
   var imageNode: ASNetworkImageNode
   var titleNode: ASTextNode
   var descriptionNode: ASTextNode
+  var fullViewMode: Bool = false
 
   var delegate: LinkCardPostContentDelegate?
 
@@ -83,7 +88,6 @@ class LinkCardPostContentNode: ASDisplayNode {
     }
   }
 
-
   override init() {
     imageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
@@ -96,11 +100,16 @@ class LinkCardPostContentNode: ASDisplayNode {
   }
 
   private func setupNode() {
-    titleNode.maximumNumberOfLines = 3
-    descriptionNode.maximumNumberOfLines = 3
+    setupMode(fullViewMode: false)
 
     imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
     imageNode.addTarget(self, action: #selector(videoImageTouchUpInside(_:)), forControlEvents: .touchUpInside)
+  }
+
+  func setupMode(fullViewMode: Bool) {
+    titleNode.maximumNumberOfLines = fullViewMode ? 0 : 3
+    descriptionNode.maximumNumberOfLines = fullViewMode ? 0 : 3
+    setNeedsLayout()
   }
 
   private func loadImageFromUrl(url: String) {
@@ -126,6 +135,16 @@ class LinkCardPostContentNode: ASDisplayNode {
 
   @objc
   private func videoImageTouchUpInside(_ sender: ASImageNode?) {
+    guard let linkUrl = linkUrl else {
+      return
+    }
+
+    guard let rootViewController = UIApplication.shared.delegate?.window??.rootViewController else {
+      return
+    }
+
+    WebViewController.present(url: linkUrl, inViewController: rootViewController)
+
     delegate?.linkImageTouchUpInside(sender: imageNode)
   }
 

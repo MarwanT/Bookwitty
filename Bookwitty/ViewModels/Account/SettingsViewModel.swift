@@ -39,8 +39,11 @@ final class SettingsViewModel {
       return (Strings.email_notifications(), sendEmailNotification)
     case 1: //change password
       return (Strings.change_password(), "")
-    case 2: //country/region
-      let countryName = (Locale.current as NSLocale).displayName(forKey: NSLocale.Key.countryCode, value: countryCode) ?? ""
+    case 2: //change language
+      let languageDisplayName: String = Locale.application.localizedString(forLanguageCode: GeneralSettings.sharedInstance.preferredLanguage) ?? ""
+      return (Strings.language(), languageDisplayName.capitalized)
+    case 3: //country/region
+      let countryName = Locale.application.localizedString(forRegionCode: countryCode) ?? ""
       return (Strings.country_region(), countryName)
     default:
       return ("", "")
@@ -53,7 +56,9 @@ final class SettingsViewModel {
       return .Switch
     case 1: //change password
       return .Disclosure
-    case 2: //country/region
+    case 2: //change language
+      return .Disclosure
+    case 3: //country/region
       return .Disclosure
     default:
       return .None
@@ -141,8 +146,8 @@ final class SettingsViewModel {
     var numberOfRows = 0
     switch section {
     case Sections.General.rawValue:
-      //email notifications, change password, country/region
-      numberOfRows = 3
+      //email notifications, change password, change language, country/region
+      numberOfRows = 4
     case Sections.SignOut.rawValue:
       //sign out
       numberOfRows = 1

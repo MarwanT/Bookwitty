@@ -257,6 +257,37 @@ struct GeneralAPI {
     })
   }
 
+  static func status(completion: @escaping (_ success: Bool, _ appMeta: AppMeta?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    return apiRequest(target: .status, completion: {
+      (data, statusCode, response, error) in
+      var success = false
+      var meta: AppMeta? = nil
+      var error: BookwittyAPIError? = nil
+      defer {
+        completion(success, meta, error)
+      }
+      
+      guard let data = data else {
+        return
+      }
+      
+      meta = AppMeta.appMeta(for: data)
+      success = meta != nil
+    })
+  }
+  
+  static func sendAccountConfirmation(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let senAccountConfirmationSuccess = 204
+    
+    return signedAPIRequest(target: .resendAccountConfirmation, completion: {
+      (data, statusCode, response, error) in
+      guard let statusCode = statusCode, statusCode == senAccountConfirmationSuccess else {
+        completion(false, error)
+        return
+      }
+      completion(true, nil)
+    })
+  }
 }
 
 extension GeneralAPI {

@@ -20,7 +20,7 @@ class Audio: Resource {
   var shortDescription: String?
   var caption: String?
   //TODO: Check if media_link is a related object or a dictionary
-  var media: [String: Any]?
+  var media: MediaModel?
   var penName: PenName?
   var vote: String?
   var counts: Counts?
@@ -41,7 +41,7 @@ class Audio: Resource {
       "shortDescription": Attribute().serializeAs("short-description"),
       "title": Attribute().serializeAs("title"),
       "type": Attribute().serializeAs("type"),
-      "media": Attribute().serializeAs("media"),
+      "media": MediaAttribute().serializeAs("media"),
       "counts" : CountsAttribute().serializeAs("counts"),
       "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
       ])

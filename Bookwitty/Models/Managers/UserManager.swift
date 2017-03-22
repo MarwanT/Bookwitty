@@ -157,4 +157,11 @@ class UserManager {
 
     saveSignedInUserPenNames(penNames: signedInUser.penNames ?? [])
   }
+
+  func isMy(penName: PenName) -> Bool {
+    guard isSignedIn else {
+      return false
+    }
+    return signedInUser.isMy(penName: penName)
+  }
 }

@@ -32,15 +32,22 @@ class BookStoreViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = Strings.books()
-    
     viewModel.dataLoaded = viewModelLoadedDataBlock()
-    
+
     initializeNavigationItems()
     initializePullToRefresh()
     initializeSubviews()
-    
     refreshViewController()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
+  }
+
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    applyLocalization()
+    observeLanguageChanges()
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.authenticationStatusChanged(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -62,14 +69,30 @@ class BookStoreViewController: UIViewController {
     Analytics.shared.send(screenName: Analytics.ScreenNames.BookStorefront)
   }
   
+  @objc private func authenticationStatusChanged(_: Notification) {
+    initializeNavigationItems()
+  }
+
   private func initializeNavigationItems() {
-    let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
+    if !UserManager.shared.isSignedIn {
+      navigationItem.leftBarButtonItems = nil
+    } else {
+      let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
+        UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+      leftNegativeSpacer.width = -10
+      let settingsBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "person"), style:
+        UIBarButtonItemStyle.plain, target: self, action:
+        #selector(self.settingsButtonTap(_:)))
+      navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
+    }
+    
+    let rightNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
       UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
-    leftNegativeSpacer.width = -10
-    let settingsBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "person"), style:
+    rightNegativeSpacer.width = -10
+    let searchBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "search"), style:
       UIBarButtonItemStyle.plain, target: self, action:
-      #selector(self.settingsButtonTap(_:)))
-    navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
+      #selector(self.searchButtonTap(_:)))
+    navigationItem.rightBarButtonItems = [rightNegativeSpacer, searchBarButton]
   }
   
   private func initializePullToRefresh() {
@@ -105,7 +128,6 @@ class BookStoreViewController: UIViewController {
     // View All Categories View
     viewAllCategories.configuration.style = .highlighted
     viewAllCategories.delegate = self
-    viewAllCategories.label.text = Strings.view_all_categories()
     viewAllCategories.constrainHeight("45")
     
     // Bookwitty Suggests View
@@ -128,13 +150,11 @@ class BookStoreViewController: UIViewController {
     // View All Books
     viewAllBooksView.configuration.style = .highlighted
     viewAllBooksView.delegate = self
-    viewAllBooksView.label.text = Strings.view_all_books()
     viewAllBooksView.constrainHeight("45")
     
     // View All Selections
     viewAllSelectionsView.configuration.style = .highlighted
     viewAllSelectionsView.delegate = self
-    viewAllSelectionsView.label.text = Strings.view_all_selections()
     viewAllSelectionsView.constrainHeight("45")
   }
   
@@ -311,6 +331,12 @@ extension BookStoreViewController {
     let settingsVC = Storyboard.Account.instantiate(AccountViewController.self)
     settingsVC.hidesBottomBarWhenPushed = true
     self.navigationController?.pushViewController(settingsVC, animated: true)
+  }
+
+  func searchButtonTap(_ sender: UIBarButtonItem) {
+    let searchVC = SearchViewController()
+    searchVC.hidesBottomBarWhenPushed = true
+    self.navigationController?.pushViewController(searchVC, animated: true)
   }
 }
 
@@ -672,5 +698,27 @@ extension BookStoreViewController {
     let topicViewController = TopicViewController()
     topicViewController.initialize(withBook: resource as? Book)
     navigationController?.pushViewController(topicViewController, animated: true)
+  }
+}
+
+//MARK: - Localizable implementation
+extension BookStoreViewController: Localizable {
+  func applyLocalization() {
+    navigationItem.title = Strings.books()
+    tabBarItem.title = Strings.books().uppercased()
+    viewAllCategories.label.text = Strings.view_all_categories()
+    viewAllBooksView.label.text = Strings.view_all_books()
+    viewAllSelectionsView.label.text = Strings.view_all_selections()
+    bookwittySuggestsTableView.reloadData()
+    selectionTableView.reloadData()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

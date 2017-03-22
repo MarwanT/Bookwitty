@@ -32,6 +32,11 @@ final class DefaultTheme: Theme {
     UITabBar.appearance().tintColor = self.colorNumber19()
 
     UISwitch.appearance().onTintColor = self.colorNumber19()
+
+    let barAppearace = UIBarButtonItem.appearance()
+    barAppearace.setTitleTextAttributes([
+      NSFontAttributeName: FontDynamicType.caption1.font,
+      NSForegroundColorAttributeName : self.defaultTextColor()], for: UIControlState.normal)
   }
 }
 

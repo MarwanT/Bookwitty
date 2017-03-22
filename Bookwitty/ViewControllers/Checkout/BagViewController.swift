@@ -17,18 +17,23 @@ class BagViewController: ASViewController<ASDisplayNode> {
     let bagNode = BagNode()
     super.init(node: bagNode)
     bagNode.delegate = self
-    title = Strings.bag()
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeNavigationItems()
+    observeLanguageChanges()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.Bag)
   }
   
   private func initializeNavigationItems() {
+    if !UserManager.shared.isSignedIn {
+      return
+    }
     let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
       UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
     leftNegativeSpacer.width = -10
@@ -53,6 +58,29 @@ extension BagViewController: BagNodeDelegate {
                                                  action: .GoToBagOnWebsite)
     Analytics.shared.send(event: event)
 
-    UIApplication.shared.openURL(Environment.current.baseURL)
+    let language = Localization.Language(rawValue: GeneralSettings.sharedInstance.preferredLanguage) ??
+    Localization.Language.English
+    guard let url = URL(string: "/books/\(language.rawValue)",
+      relativeTo: Environment.current.baseURL) else {
+        return
+    }
+    UIApplication.shared.openURL(url)
+  }
+}
+
+//MARK: - Localizable implementation
+extension BagViewController: Localizable {
+  func applyLocalization() {
+    navigationItem.title = Strings.bag()
+    tabBarItem.title = Strings.bag().uppercased()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

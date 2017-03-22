@@ -63,6 +63,11 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     tap.cancelsTouchesInView = false
     view.addGestureRecognizer(tap)
 
+    applyLocalization()
+    observeLanguageChanges()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
+
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.Search)
   }
@@ -78,14 +83,16 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     let size: CGSize = CGSize(width: UIScreen.main.bounds.width - sideMargin, height: navHeight)
 
     searchBar = UISearchBar(frame: CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height))
-    searchBar?.barStyle = .black
-    searchBar?.searchBarStyle = .prominent
     searchBar?.placeholder = Strings.search_placeholder()
     searchBar?.delegate = self
     searchBar?.showsCancelButton = false
     searchBar?.sizeToFit()
 
-    //UITextField.appearance(whenContainedInInstancesOf: [UITextField.self])
+    searchBar?.setTextColor(color: ThemeManager.shared.currentTheme.defaultTextColor())
+    searchBar?.setTextFieldColor(color: ThemeManager.shared.currentTheme.colorNumber18().withAlphaComponent(0.7))
+    searchBar?.setPlaceholderTextColor(color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+    searchBar?.setSearchImageColor(color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+    searchBar?.setTextFieldClearButtonColor(color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
 
     if let searchBar = searchBar {
       let leftNavBarButton = UIBarButtonItem(customView: searchBar)
@@ -515,5 +522,21 @@ extension SearchViewController {
     static var numberOfSections: Int {
       return 2
     }
+  }
+}
+
+//MARK: - Localizable implementation
+extension SearchViewController: Localizable {
+  func applyLocalization() {
+    searchBar?.placeholder = Strings.search_placeholder()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

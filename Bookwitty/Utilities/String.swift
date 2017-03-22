@@ -55,6 +55,15 @@ extension String: StringType {
 
 extension Optional where Wrapped: StringType {
   func isEmptyOrNil() -> Bool {
-    return (self == nil) || self!.get.isEmpty
+    guard self != nil else {
+      return true
+    }
+    return self!.get.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+  }
+}
+
+extension String {
+  var isBlank: Bool {
+    return self.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
   }
 }

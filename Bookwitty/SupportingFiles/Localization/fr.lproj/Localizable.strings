@@ -8,15 +8,22 @@
 
 "about_this_book" = "À propos de ce livre";
 "account" = "Compte";
+"account_needs_confirmation_alert_dismiss_button_title" = "Annuler";
+"account_needs_confirmation_alert_message" = "Vous devez confirmer votre compte en cliquant le lien de confirmation que vous avez reçu par email.";
+"account_needs_confirmation_alert_resend_confirmation_button_title" = "Envoyer à nouveau";
+"account_needs_confirmation_alert_title" = "Mon compte";
 "address_book" = "Adresses de livraison";
+"already_have_an_account" = "Vous avez déjà un compte?";
 "article" = "Article";
 "author" = "Auteur";
 "bag" = "Panier";
+"biography" = "Biographie";
 "book" = "Livre";
 "book_categories" = "Catégories";
-"book_details" = "Caractéristiques détaillées";
-"book_recommended_in_reading_lists" = "Livre recommandé en listes de lecture";
+"book_details" = "Détails";
+"book_recommended_in_reading_lists" = "Livre recommandé dans nos listes de lecture ";
 "books" = "Livres";
+"bookwitty" = "Bookwitty";
 "bookwitty_suggests" = "Bookwitty vous suggère";
 "buy_this_book" = "Acheter ce livre";
 "cancel" = "Annuler";
@@ -40,7 +47,7 @@
 "dim" = "Dim";
 "dimmed" = "Dimmé";
 "discover" = "Découvrir";
-"done" = "Terminer";
+"done" = "Terminé";
 "dont_worry_you_can_change_it_later" = "Pas d'inquiétude : vous pourrez toujours le modifier ultérieurement";
 "drafts" = "Brouillons";
 "edit_pen_name" = "Modifier votre pseudo";
@@ -50,13 +57,15 @@
 "email_invalid" = "Oups, votre e-mail semble invalide";
 "email_notifications" = "Notifications par e-mail";
 "empty_error_description" = "Sélectionnez des sujets et des contributeurs qui vous intéressent pour nourrir votre fil d'actualité.";
-"empty_error_title" = "Its empty in here";
+"empty_error_title" = "Cet espace est vide pour l'instant";
 "enter_your_email" = "Indiquez votre e-mail";
 "enter_your_first_name" = "Indiquez votre prénom";
 "enter_your_last_name" = "Indiquez votre nom";
 "enter_your_password" = "Indiquez votre mot de passe";
 "enter_your_pen_name" = "Indiquez votre pseudo";
 "error_loading_data" = "Erreur dans le chargement des données";
+"fail_to_refresh_token_alert_message" = "Votre session est expirée et vous devez vous connecter de nouveau";
+"fail_to_refresh_token_alert_title" = "Veuillez vous connecter";
 "first_name" = "Prénom";
 "first_name_invalid" = "Veuillez inscrire votre prénom";
 "follow" = "Suivre";
@@ -69,6 +78,8 @@
 "forgot_your_password" = "Mot de passe oublié ?";
 "format" = "Format";
 "free_shipping_internationally" = "Livraison gratuite où que vous soyez";
+"get_started" = "Débuter";
+"height" = "Hauteur";
 "help" = "Aide";
 "image" = "Image";
 "imprint" = "Éditeur";
@@ -76,18 +87,23 @@
 "interests" = "Intérêts";
 "isbn10" = "ISBN-10";
 "isbn13" = "ISBN-13";
+"join_us_to_personalize_feed_description" = "Afficher des articles, des listes de lecture et des recommendations dans votre fil d'actualité basés sur vos préférences. ";
+"join_us_to_personalize_feed_title" = "Personnaliser cette page";
 "language" = "Langue ";
 "language_of_text" = "Langue ";
 "last_name" = "Nom";
 "last_name_invalid" = "Veuillez inscrire votre e-mail";
 "latest" = "Nouveautés";
 "link" = "Lien";
-"list_price" = "Tarif en vigueur";
+"list_price" = "Prix conseillé";
+"my_interests" = "Mes intérêts";
 "my_orders" = "Mes commandes";
 "new_password" = "Nouveau mot de passe";
+"new_version_available_description" = "Une nouvelle version de l'application Bookwitty est disponible. Télécharger-là maintenant dans l'App Store.";
+"new_version_available_title" = "Mise à jour disponible";
 "news" = "Informations";
 "no_internet_error_description" = "Vous n'êtes pas connecté à Internet";
-"no_internet_error_title" = "Pas d'internet";
+"no_internet_error_title" = "Pas d'Internet";
 "no_results_found_description" = "Nous n'avons pas trouvé de résultats pour votre recherche. Veuillez vérifier l'orthographe ou faites une nouvelle recherche.";
 "no_results_found_title" = "Aucun résultat";
 "number_of_pages" = "Nombre de pages";
@@ -105,16 +121,17 @@
 "please_fill_required_field" = "Veuillez remplir les champs obligatoires";
 "post" = "Post";
 "posts" = "Posts";
-"product_format" = "Format de produit";
+"product_format" = "Format";
 "profile" = "Profil";
 "profile_picture" = "Photo de profil";
+"publication_date" = "Date de publication";
 "publisher" = "Éditeur";
 "quote" = "Citation";
 "reading_list" = "Liste de lecture";
 "reading_lists" = "Listes de lecture";
 "register" = "S'inscrire";
 "related_books" = "Livres associés";
-"related_bookwitty_topics" = "Related bookwitty topics";
+"related_bookwitty_topics" = "Sujets associés";
 "related_posts" = "Posts associés";
 "reset_password" = "Réinitialiser mon mot de passe";
 "reset_password_text" = "Dans quelques minutes, vous recevrez un e-mail pour réinitialiser votre mot de passe.";
@@ -126,25 +143,29 @@
 "sign_out" = "Se déconnecter";
 "sign_up" = "S'inscrire";
 "some_thing_wrong_error" = "Il y a eu un problème";
-"something_wrong_error_description" = "Nous ne pouvons télécharger votre flux de lecture en ce moment.";
-"something_wrong_error_title" = "Nous avons un souci passager";
+"something_wrong_error_description" = "Nous ne pouvons télécharger votre fil d'actualité pour l'instant.";
+"something_wrong_error_title" = "Il y a quelque chose qui cloche";
 "something_wrong_in_credentials" = "Votre e-mail ou votre mot de passe est erroné";
 "subtitle" = "Sous-titre";
 "take_Profile_photo" = "Prenez une photo de profil";
-"terms_of_use_and_privacy_policy" = "En cliquant sur \"S'inscrire\" vous acceptez nos \n•Termes d'utilisation• et notre •Politique de confidentialité•";
+"terms_of_use_and_privacy_policy" = "En cliquant sur S'inscrire vous acceptez nos \n•Termes d'utilisation• et notre •Politique de confidentialité•";
 "text" = "Texte";
 "topic" = "Sujet";
 "topics_to_follow" = "Sujets à suivre";
+"try_again" = "Essayez à nouveau";
 "tutorial_fifth_page_description" = "Inscrivez-vous pour faire partie de notre communauté";
 "tutorial_fifth_page_title" = "Rejoignez notre communauté";
 "tutorial_first_page_description" = "";
 "tutorial_first_page_title" = "Aiguisez votre curiosité";
 "tutorial_forth_page_description" = "Bookwitty est une gigantesque librairie. Notre catalogue comprend 26 millions de livres. Nous vendons et livrons ces livres à des prix raisonnables.";
 "tutorial_forth_page_title" = "Pour l'amour des livres";
-"tutorial_second_page_description" = "Approfondissez un sujet, explorez de nouvelles idées ou discutez avec d'autres utilisateurs de sujets qui vous passionnent.";
+"tutorial_second_page_description" = "Approfondissez un sujet, explorez de nouvelles idées ou discutez avec d'autres utilisateurs de sujets qui vous passionnent.  ";
 "tutorial_second_page_title" = "Faites des découvertes";
 "tutorial_third_page_description" = "Nous sommes tous experts des sujets qui nous passionnent. Partagez votre savoir.";
-"tutorial_third_page_title" = "Partagez vos propres idées";
+"tutorial_third_page_title" = "Partagez vos idées";
+"update_now" = "Mettre à jour maintenant";
+"user_not_signed_in_alert_message" = "Vous devez être connecté pour effectuer cette action";
+"user_not_signed_in_alert_title" = "Vous n'êtes pas connecté!";
 "video" = "Vidéo";
 "view_all" = "Voir tout ";
 "view_all_books" = "Voir l'ensemble des livres";
@@ -154,8 +175,16 @@
 "view_all_selections" = "Voir toutes les sélections";
 "view_subcategories" = "Voir les sous-catégories";
 "view_whole_description" = "Voir la description complète ";
+"weight" = "Poids";
+"width" = "Largeur";
 "wit_it" = "Wit";
 "witted" = "Witté";
 "you_dont_have_account" = "Vous n'avez pas de compte";
 "you_save" = "Vous économisez";
 "your_feed" = "Votre flux";
+
+/**
+ Discussion:
+ - Please keep this file sorted by keys, for easier maintenance
+ - Please add the strings directly to the google drive sheet
+ */

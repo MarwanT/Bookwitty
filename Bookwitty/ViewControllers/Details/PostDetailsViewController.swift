@@ -41,6 +41,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.postItemsNode.delegate = self
     postDetailsNode.postCardsNode.delegate = self
     postDetailsNode.headerNode.profileBarNode.delegate = self
+    postDetailsNode.headerNode.profileBarNode.updateMode(disabled: viewModel.isMyPenName())
     postDetailsNode.delegate = self
     postDetailsNode.setWitValue(witted: viewModel.isWitted, wits: viewModel.wits ?? 0)
     postDetailsNode.setDimValue(dimmed: viewModel.isDimmed, dims: viewModel.dims ?? 0)
@@ -49,6 +50,11 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     loadContentPosts()
     loadRelatedBooks()
     loadRelatedPosts()
+
+    applyLocalization()
+    observeLanguageChanges()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
 
     //MARK: [Analytics] Screen Name
     let name: Analytics.ScreenName
@@ -110,7 +116,7 @@ extension PostDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
     return {
       let cell = RelatedBooksMinimalCellNode()
       cell.url = book?.thumbnailImageUrl
-      cell.price = book?.supplierInformation?.preferredPrice?.formattedValue
+      cell.price = (book?.productDetails?.isElectronicFormat() ?? false) ? nil : book?.supplierInformation?.preferredPrice?.formattedValue
       cell.subTitle = book?.productDetails?.author
       cell.title = book?.title
       return cell
@@ -414,7 +420,10 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
     switch (resource.registeredResourceType) {
     case Book.resourceType:
       let res = resource as? Book
-      let itemNode = PostDetailItemNode(smallImage: false, showsSubheadline: false, showsButton: true)
+      let showEcommerceButton: Bool = (res?.supplierInformation != nil) &&
+        !(res?.productDetails?.isElectronicFormat() ?? false)
+
+      let itemNode = PostDetailItemNode(smallImage: false, showsSubheadline: false, showsButton: showEcommerceButton)
       itemNode.imageUrl = res?.thumbnailImageUrl
       itemNode.body = res?.bookDescription
       itemNode.buttonTitle = Strings.buy_this_book()
@@ -790,3 +799,18 @@ extension PostDetailsViewController {
   }
 }
 
+//MARK: - Localizable implementation
+extension PostDetailsViewController: Localizable {
+  func applyLocalization() {
+    postDetailsNode.postItemsNode.loadNodes()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
+  }
+}

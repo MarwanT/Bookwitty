@@ -62,6 +62,13 @@ class User: Resource {
 
 }
 
+// MARK: - Utils
+extension User {
+  func isMy(penName: PenName) -> Bool {
+   return self.penNames?.contains(where: { $0.id == penName.id }) ?? false
+  }
+}
+
 // MARK: - Parser
 extension User: Parsable {
   typealias AbstractType = User

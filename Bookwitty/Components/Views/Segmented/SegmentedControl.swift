@@ -55,15 +55,15 @@ final class SegmentedControl: UIView {
 
 
     let defaultState = SegmentioState(backgroundColor: .clear,
-                                      titleFont: FontDynamicType.footnote.font,
+                                      titleFont: FontDynamicType.caption2.font,
                                       titleTextColor: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
 
     let selectedState = SegmentioState(backgroundColor: .clear,
-                                       titleFont: FontDynamicType.footnote.font,
+                                       titleFont: FontDynamicType.caption2.font,
                                        titleTextColor: ThemeManager.shared.currentTheme.defaultTextColor())
 
     let highlightedState = SegmentioState(backgroundColor: .clear,
-                                          titleFont: FontDynamicType.footnote.font,
+                                          titleFont: FontDynamicType.caption2.font,
                                           titleTextColor: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
 
     let states = (defaultState, selectedState, highlightedState)

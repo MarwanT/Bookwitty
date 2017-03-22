@@ -20,9 +20,12 @@ class ChangePasswordViewController: UIViewController {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
-    self.title = Strings.change_password()
     initializeComponents()
     applyTheme()
+    applyLocalization()
+    observeLanguageChanges()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.ChangePassword)
@@ -120,3 +123,28 @@ extension ChangePasswordViewController: InputFieldDelegate {
   }
 }
 
+//MARK: - Localizable implementation
+extension ChangePasswordViewController: Localizable {
+  func applyLocalization() {
+    title = Strings.change_password()
+
+    changePasswordButton.setTitle(Strings.change_password(), for: .normal)
+
+    currentPasswordInputField.configuration = InputFieldConfiguration(
+      descriptionLabelText: Strings.current_password(),
+      textFieldPlaceholder: Strings.current_password(),
+      invalidationErrorMessage: "",
+      returnKeyType: UIReturnKeyType.next,
+      autocorrectionType: .no,
+      autocapitalizationType: .none)
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
+  }
+}

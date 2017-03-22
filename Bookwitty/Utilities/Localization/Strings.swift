@@ -17,8 +17,28 @@ class Strings {
     return localizedString(key: "account")
   }
   
+  static func account_needs_confirmation_alert_dismiss_button_title() -> String {
+    return localizedString(key: "account_needs_confirmation_alert_dismiss_button_title")
+  }
+  
+  static func account_needs_confirmation_alert_message() -> String {
+    return localizedString(key: "account_needs_confirmation_alert_message")
+  }
+  
+  static func account_needs_confirmation_alert_resend_confirmation_button_title() -> String {
+    return localizedString(key: "account_needs_confirmation_alert_resend_confirmation_button_title")
+  }
+  
+  static func account_needs_confirmation_alert_title() -> String {
+    return localizedString(key: "account_needs_confirmation_alert_title")
+  }
+  
   static func address_book() -> String {
     return localizedString(key: "address_book")
+  }
+  
+  static func already_have_an_account() -> String {
+    return localizedString(key: "already_have_an_account")
   }
   
   static func article() -> String {
@@ -31,6 +51,10 @@ class Strings {
   
   static func bag() -> String {
     return localizedString(key: "bag")
+  }
+  
+  static func biography() -> String {
+    return localizedString(key: "biography")
   }
   
   static func book() -> String {
@@ -51,6 +75,10 @@ class Strings {
   
   static func books() -> String {
     return localizedString(key: "books")
+  }
+  
+  static func bookwitty() -> String {
+    return localizedString(key: "bookwitty")
   }
   
   static func bookwitty_suggests() -> String {
@@ -213,6 +241,14 @@ class Strings {
     return localizedString(key: "error_loading_data")
   }
   
+  static func fail_to_refresh_token_alert_message() -> String {
+    return localizedString(key: "fail_to_refresh_token_alert_message")
+  }
+  
+  static func fail_to_refresh_token_alert_title() -> String {
+    return localizedString(key: "fail_to_refresh_token_alert_title")
+  }
+  
   static func first_name() -> String {
     return localizedString(key: "first_name")
   }
@@ -261,6 +297,14 @@ class Strings {
     return localizedString(key: "free_shipping_internationally")
   }
   
+  static func get_started() -> String {
+    return localizedString(key: "get_started")
+  }
+  
+  static func height() -> String {
+    return localizedString(key: "height")
+  }
+  
   static func help() -> String {
     return localizedString(key: "help")
   }
@@ -287,6 +331,14 @@ class Strings {
   
   static func isbn13() -> String {
     return localizedString(key: "isbn13")
+  }
+  
+  static func join_us_to_personalize_feed_description() -> String {
+    return localizedString(key: "join_us_to_personalize_feed_description")
+  }
+  
+  static func join_us_to_personalize_feed_title() -> String {
+    return localizedString(key: "join_us_to_personalize_feed_title")
   }
   
   static func language() -> String {
@@ -317,12 +369,24 @@ class Strings {
     return localizedString(key: "list_price")
   }
   
+  static func my_interests() -> String {
+    return localizedString(key: "my_interests")
+  }
+  
   static func my_orders() -> String {
     return localizedString(key: "my_orders")
   }
   
   static func new_password() -> String {
     return localizedString(key: "new_password")
+  }
+  
+  static func new_version_available_description() -> String {
+    return localizedString(key: "new_version_available_description")
+  }
+  
+  static func new_version_available_title() -> String {
+    return localizedString(key: "new_version_available_title")
   }
   
   static func news() -> String {
@@ -415,6 +479,10 @@ class Strings {
   
   static func profile_picture() -> String {
     return localizedString(key: "profile_picture")
+  }
+  
+  static func publication_date() -> String {
+    return localizedString(key: "publication_date")
   }
   
   static func publisher() -> String {
@@ -525,6 +593,10 @@ class Strings {
     return localizedString(key: "topics_to_follow")
   }
   
+  static func try_again() -> String {
+    return localizedString(key: "try_again")
+  }
+  
   static func tutorial_fifth_page_description() -> String {
     return localizedString(key: "tutorial_fifth_page_description")
   }
@@ -565,6 +637,18 @@ class Strings {
     return localizedString(key: "tutorial_third_page_title")
   }
   
+  static func update_now() -> String {
+    return localizedString(key: "update_now")
+  }
+  
+  static func user_not_signed_in_alert_message() -> String {
+    return localizedString(key: "user_not_signed_in_alert_message")
+  }
+  
+  static func user_not_signed_in_alert_title() -> String {
+    return localizedString(key: "user_not_signed_in_alert_title")
+  }
+  
   static func video() -> String {
     return localizedString(key: "video")
   }
@@ -601,6 +685,14 @@ class Strings {
     return localizedString(key: "view_whole_description")
   }
   
+  static func weight() -> String {
+    return localizedString(key: "weight")
+  }
+  
+  static func width() -> String {
+    return localizedString(key: "width")
+  }
+  
   static func wit_it() -> String {
     return localizedString(key: "wit_it")
   }
@@ -620,5 +712,10 @@ class Strings {
   static func your_feed() -> String {
     return localizedString(key: "your_feed")
   }
-
+  
+  /**
+   Discussion:
+   - Please keep this file sorted by keys, for easier maintenance
+   - Please add the strings directly to the google drive sheet
+   */
 }

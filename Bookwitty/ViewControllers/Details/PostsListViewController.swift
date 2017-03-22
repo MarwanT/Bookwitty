@@ -59,6 +59,11 @@ class PostsListViewController: ASViewController<ASCollectionNode> {
       self.loadingStatus = .none
       self.collectionNode.reloadData()
     }
+
+    applyLocalization()
+    observeLanguageChanges()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
 }
 
@@ -100,7 +105,9 @@ extension PostsListViewController: ASCollectionDataSource, ASCollectionDelegate 
     switch (resource.registeredResourceType) {
     case Book.resourceType:
       let res = resource as? Book
-      let itemNode = PostDetailItemNode(smallImage: false, showsSubheadline: false, showsButton: true)
+      let showEcommerceButton: Bool = (res?.supplierInformation != nil) &&
+        !(res?.productDetails?.isElectronicFormat() ?? false)
+      let itemNode = PostDetailItemNode(smallImage: false, showsSubheadline: false, showsButton: showEcommerceButton)
       itemNode.imageUrl = res?.thumbnailImageUrl
       itemNode.body = res?.bookDescription
       itemNode.buttonTitle = Strings.buy_this_book()
@@ -197,5 +204,21 @@ extension PostsListViewController {
         collectionNode.insertItems(at: updatedIndexPathRange)
       }
     }
+  }
+}
+
+//MARK: - Localizable implementation
+extension PostsListViewController: Localizable {
+  func applyLocalization() {
+    collectionNode.reloadData()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }
