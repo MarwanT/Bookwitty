@@ -108,7 +108,10 @@ class PenNameViewController: UIViewController {
     self.viewModel.updatePenNameIfNeeded(name: name, biography: biography) {
       (success: Bool) in
       // TODO: Handle the fail here
-      self.pushOnboardingViewController()
+
+      if UserManager.shared.shouldDisplayOnboarding {
+        self.pushOnboardingViewController()
+      }
     }
   }
   
