@@ -64,6 +64,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
 
     applyTheme()
     applyLocalization()
+    addObservers()
     observeLanguageChanges()
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.authenticationStatusChanged(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
@@ -71,7 +72,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    if UserManager.shared.isSignedIn && loadingStatus == .none && viewModel.numberOfItemsInSection(section: Section.cards.rawValue) == 0 {
+    if loadingStatus == .none && viewModel.numberOfItemsInSection(section: Section.cards.rawValue) == 0 {
       self.pullToRefresher.beginRefreshing()
       loadData(loadingStatus: .loading, completionBlock: {
         self.pullToRefresher.endRefreshing()
@@ -90,16 +91,23 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
   private func initializeNavigationItems() {
     if !UserManager.shared.isSignedIn {
       navigationItem.leftBarButtonItems = nil
-      return
+    } else {
+      let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
+        UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+      leftNegativeSpacer.width = -10
+      let settingsBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "person"), style:
+        UIBarButtonItemStyle.plain, target: self, action:
+        #selector(self.settingsButtonTap(_:)))
+      navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
     }
 
-    let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
+    let rightNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
       UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
-    leftNegativeSpacer.width = -10
-    let settingsBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "person"), style:
+    rightNegativeSpacer.width = -10
+    let searchBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "search"), style:
       UIBarButtonItemStyle.plain, target: self, action:
-      #selector(self.settingsButtonTap(_:)))
-    navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
+      #selector(self.searchButtonTap(_:)))
+    navigationItem.rightBarButtonItems = [rightNegativeSpacer, searchBarButton]
   }
 
   /*
@@ -146,6 +154,16 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
       self.pullToRefresher.endRefreshing()
     })
   }
+
+  func refreshViewControllerData() {
+    if loadingStatus == .none {
+      viewModel.cancellableOnGoingRequest()
+      self.pullToRefresher.beginRefreshing()
+      loadData(loadingStatus: .loading, completionBlock: {
+        self.pullToRefresher.endRefreshing()
+      })
+    }
+  }
 }
 
 // MARK: - Action
@@ -154,6 +172,12 @@ extension DiscoverViewController {
     let settingsVC = Storyboard.Account.instantiate(AccountViewController.self)
     settingsVC.hidesBottomBarWhenPushed = true
     self.navigationController?.pushViewController(settingsVC, animated: true)
+  }
+
+  func searchButtonTap(_ sender: UIBarButtonItem) {
+    let searchVC = SearchViewController()
+    searchVC.hidesBottomBarWhenPushed = true
+    self.navigationController?.pushViewController(searchVC, animated: true)
   }
 }
 
@@ -545,6 +569,18 @@ extension DiscoverViewController {
     static var numberOfSections: Int {
       return 2
     }
+  }
+}
+
+// MARK: - Notification
+extension DiscoverViewController {
+  func addObservers() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.refreshData(_:)), name: AppNotification.shouldRefreshData, object: nil)
+  }
+
+  func refreshData(_ notification: Notification) {
+    refreshViewControllerData()
   }
 }
 

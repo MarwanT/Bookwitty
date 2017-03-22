@@ -121,14 +121,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       UIBarButtonItemStyle.plain, target: self, action:
       #selector(self.settingsButtonTap(_:)))
     navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
-
-    let rightNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
-      UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
-    rightNegativeSpacer.width = -10
-    let searchBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "search"), style:
-      UIBarButtonItemStyle.plain, target: self, action:
-      #selector(self.searchButtonTap(_:)))
-    navigationItem.rightBarButtonItems = [rightNegativeSpacer, searchBarButton]
   }
   
   func refreshViewControllerData() {
@@ -209,6 +201,8 @@ extension NewsFeedViewController: PenNameSelectionNodeDelegate {
 extension NewsFeedViewController {
   func addObservers() {
     NotificationCenter.default.addObserver(self, selector:
+      #selector(self.signOut(_:)), name: AppNotification.signOut, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
       #selector(self.refreshData(_:)), name: AppNotification.shouldRefreshData, object: nil)
     
     NotificationCenter.default.addObserver(self, selector:
@@ -220,6 +214,17 @@ extension NewsFeedViewController {
   func refreshData(_ notification: Notification) {
     initializeNavigationItems()
     refreshViewControllerData()
+  }
+
+  func signOut(_ notification: Notification) {
+    if let scrollView = scrollView {
+      penNameSelectionNode.alpha = 1.0
+      scrollView.contentOffset = CGPoint(x: 0, y: 0.0)
+    }
+
+    viewModel.cancellableOnGoingRequest()
+    viewModel.data = []
+    collectionNode.reloadData()
   }
 }
 // MARK: - Themeable
@@ -236,12 +241,6 @@ extension NewsFeedViewController {
     let settingsVC = Storyboard.Account.instantiate(AccountViewController.self)
     settingsVC.hidesBottomBarWhenPushed = true
     self.navigationController?.pushViewController(settingsVC, animated: true)
-  }
-
-  func searchButtonTap(_ sender: UIBarButtonItem) {
-    let searchVC = SearchViewController()
-    searchVC.hidesBottomBarWhenPushed = true
-    self.navigationController?.pushViewController(searchVC, animated: true)
   }
 }
 

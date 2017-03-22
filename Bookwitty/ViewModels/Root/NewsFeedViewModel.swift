@@ -13,7 +13,13 @@ import Spine
 final class NewsFeedViewModel {
   var cancellableRequest:  Cancellable?
   var nextPage: URL?
-  var data: [ModelResource] = []
+  var data: [ModelResource] = [] {
+    didSet {
+      if data.count == 0 {
+        nextPage = nil
+      }
+    }
+  }
   var penNames: [PenName] {
     return UserManager.shared.penNames ?? []
   }
