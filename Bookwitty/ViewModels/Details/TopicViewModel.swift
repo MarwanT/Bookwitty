@@ -152,7 +152,7 @@ final class TopicViewModel {
 
     let title  = topic.title
     let following = topic.following
-    let thumbnail = topic.thumbnailImageUrl
+    let thumbnail: String? = nil
     let cover = topic.coverImageUrl
     let counts = topic.counts
     let followers = String(counting: counts?.followers)
@@ -174,7 +174,7 @@ final class TopicViewModel {
     let title  = book.title
     let following = book.following
     let thumbnail = book.thumbnailImageUrl
-    let cover = book.coverImageUrl
+    let cover: String? = nil
     let counts = book.counts
     let followers = String(counting: counts?.followers)
     let posts = String(counting: counts?.posts)
@@ -195,7 +195,7 @@ final class TopicViewModel {
     let title  = author.name
     let following = author.following
     let thumbnail = author.thumbnailImageUrl
-    let cover = author.coverImageUrl
+    let cover: String? = nil
     let counts = author.counts
     let followers = String(counting: counts?.followers)
     let posts = String(counting: counts?.posts)

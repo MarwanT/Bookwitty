@@ -18,7 +18,7 @@ class TopicHeaderNode: ASCellNode {
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let imageHeight: CGFloat = 200.0
   fileprivate let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
-  fileprivate let thumbnailImageSize = CGSize(width: 100.0, height: 100.0)
+  fileprivate let thumbnailImageSize = CGSize(width: 100.0, height: 180.0)
 
   private var coverImageNode: ASNetworkImageNode
   private var thumbnailImageNode: ASNetworkImageNode
@@ -48,7 +48,7 @@ class TopicHeaderNode: ASCellNode {
 
   private func setupNode() {
     coverImageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
-    coverImageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
+    thumbnailImageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
 
     titleNode.maximumNumberOfLines = 4
     topicStatsNode.maximumNumberOfLines = 1
@@ -86,7 +86,6 @@ class TopicHeaderNode: ASCellNode {
     didSet {
       if let imageUrl = coverImageUrl {
         coverImageNode.url = URL(string: imageUrl)
-        thumbnailImageNode.url = URL(string: imageUrl)
         setNeedsLayout()
       }
     }
@@ -151,6 +150,7 @@ class TopicHeaderNode: ASCellNode {
     coverImageNode.style.preferredSize = imageSize
 
     thumbnailImageNode.style.preferredSize = thumbnailImageSize
+    thumbnailImageNode.contentMode = .scaleAspectFit
 
     let imageLayoutSpec = ASStaticLayoutSpec(sizing: ASAbsoluteLayoutSpecSizing.sizeToFit, children: [coverImageNode])
     let thumbnailNodeLayoutSpec = ASCenterLayoutSpec(centeringOptions: ASCenterLayoutSpecCenteringOptions.XY,
