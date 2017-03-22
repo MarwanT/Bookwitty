@@ -40,6 +40,7 @@
 		56E09DBE1E546B2100B7C6E6 /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E09DBD1E546B2100B7C6E6 /* ChangePasswordViewModel.swift */; };
 		56E87D341E6EFFCA00AF6CFD /* BookNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E87D331E6EFFCA00AF6CFD /* BookNode.swift */; };
 		56E8B6441E6971C900D8E71E /* TopicControllerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E8B6431E6971C900D8E71E /* TopicControllerNode.swift */; };
+		56F9FDCC1E82F39B00A48CEB /* UIBarButtonItem+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F9FDCB1E82F39B00A48CEB /* UIBarButtonItem+Utils.swift */; };
 		56FC41971E58CBA100D9B1CE /* NSBundle+Language.m in Sources */ = {isa = PBXBuildFile; fileRef = 56FC41961E58CBA100D9B1CE /* NSBundle+Language.m */; };
 		59049B111E81E36000EDF796 /* Node+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59049B101E81E36000EDF796 /* Node+Util.swift */; };
 		59049B131E81E44400EDF796 /* JoinUsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59049B121E81E44400EDF796 /* JoinUsNode.swift */; };
@@ -274,6 +275,7 @@
 		56E09DBD1E546B2100B7C6E6 /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
 		56E87D331E6EFFCA00AF6CFD /* BookNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookNode.swift; sourceTree = "<group>"; };
 		56E8B6431E6971C900D8E71E /* TopicControllerNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicControllerNode.swift; sourceTree = "<group>"; };
+		56F9FDCB1E82F39B00A48CEB /* UIBarButtonItem+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Utils.swift"; sourceTree = "<group>"; };
 		56FC41951E58CBA100D9B1CE /* NSBundle+Language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+Language.h"; sourceTree = "<group>"; };
 		56FC41961E58CBA100D9B1CE /* NSBundle+Language.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+Language.m"; sourceTree = "<group>"; };
 		59049B101E81E36000EDF796 /* Node+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Node+Util.swift"; sourceTree = "<group>"; };
@@ -699,6 +701,7 @@
 				594290381E549FF40006B2F1 /* UIColor.swift */,
 				59B67CDF1E7C57F000CB823F /* Loader.swift */,
 				59049B101E81E36000EDF796 /* Node+Util.swift */,
+				56F9FDCB1E82F39B00A48CEB /* UIBarButtonItem+Utils.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1632,6 +1635,7 @@
 				59CBE4F81E8090280068C7AD /* AppError.swift in Sources */,
 				59D6021B1E32597B00271315 /* AppKeys.swift in Sources */,
 				59049B111E81E36000EDF796 /* Node+Util.swift in Sources */,
+				56F9FDCC1E82F39B00A48CEB /* UIBarButtonItem+Utils.swift in Sources */,
 				594290111E51B7C00006B2F1 /* DisclosureTableViewCell.swift in Sources */,
 				F43A5E8E1E69858A008C018B /* OnBoardingInternalCellNode.swift in Sources */,
 				F49AF6B31E81E5B40045F604 /* CallToAction.swift in Sources */,
