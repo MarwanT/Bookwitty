@@ -32,6 +32,7 @@ class PenNameViewController: UIViewController {
     applyTheme()
     applyLocalization()
     observeLanguageChanges()
+    prefillData()
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.EditPenName)
@@ -79,6 +80,11 @@ class PenNameViewController: UIViewController {
     //Hide keyboard if visible
     _ = penNameInputField.resignFirstResponder()
     showPhotoPickerActionSheet()
+  }
+
+  func prefillData() {
+    penNameInputField.textField.text  = viewModel.penDisplayName()
+    biographyTextView.text = viewModel.penBiography()
   }
 
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
@@ -253,7 +259,6 @@ extension PenNameViewController: Localizable {
     continueButton.setTitle(Strings.continue(), for: .normal)
     penNameLabel.text = Strings.pen_name()
     noteLabel.text = Strings.dont_worry_you_can_change_it_later()
-    penNameInputField.textField.text  = viewModel.penDisplayName()
 
     setupBiographyKeyboardToolbar()
   }
