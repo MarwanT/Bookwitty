@@ -224,7 +224,6 @@ extension NewsFeedViewController {
 
     viewModel.cancellableOnGoingRequest()
     viewModel.data = []
-    loadingStatus = .none
     collectionNode.reloadData()
   }
 }
