@@ -48,9 +48,10 @@ class RootTabBarController: UITabBarController {
   }
   
   private func initializeTabBarViewControllers() {
-    let newsFeedViewController = UserManager.shared.isSignedIn ? NewsFeedViewController() : JoinUsNode().viewController()
+    let newsFeedViewController = newsFeedViewControllerCreator()
     let bookStoreViewController = Storyboard.Books.instantiate(BookStoreViewController.self)
     let discoverViewController = DiscoverViewController()
+
 
     newsFeedViewController.tabBarItem = UITabBarItem(
       title: Strings.news().uppercased(),
@@ -107,7 +108,12 @@ class RootTabBarController: UITabBarController {
   }
   
   // MARK: Helpers
-  
+  fileprivate func newsFeedViewControllerCreator() -> UIViewController {
+    let newsFeedViewController = UserManager.shared.isSignedIn ? NewsFeedViewController() : JoinUsNode().viewController()
+    newsFeedViewController.navigationItem.rightBarButtonItems = searchBarButton()
+    return newsFeedViewController
+  }
+
   fileprivate func presentIntroductionOrSignInViewController() {
     if GeneralSettings.sharedInstance.shouldShowIntroduction {
       let introductionVC = Storyboard.Introduction.instantiate(IntroductionViewController.self)
@@ -137,7 +143,8 @@ class RootTabBarController: UITabBarController {
     guard let newsNavigationController = viewControllers?.first as? UINavigationController else {
       return
     }
-    let newsFeedViewController = UserManager.shared.isSignedIn ? NewsFeedViewController() : JoinUsNode().viewController()
+
+    let newsFeedViewController = newsFeedViewControllerCreator()
     newsFeedViewController.tabBarItem = UITabBarItem(
       title: Strings.news().uppercased(),
       image: #imageLiteral(resourceName: "newsfeed"),
@@ -152,7 +159,7 @@ class RootTabBarController: UITabBarController {
 
     NotificationCenter.default.post(name: AppNotification.authenticationStatusChanged, object: nil)
   }
-  
+
   fileprivate func displayAppNeedsUpdate(with updateURL: URL?) {
     let forceUpdateNode = MisfortuneNode(mode: MisfortuneNode.Mode.appNeedsUpdate(updateURL))
     forceUpdateNode.delegate = self
@@ -284,6 +291,25 @@ extension RootTabBarController {
 
   func cancelBarButtonTouchUpInside(_ sender: Any?) {
     self.dismiss(animated: true, completion: nil)
+  }
+
+  func searchBarButton() -> [UIBarButtonItem] {
+    let rightNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
+      UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+    rightNegativeSpacer.width = -10
+    let searchBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "search"), style:
+      UIBarButtonItemStyle.plain, target: self, action:
+      #selector(self.searchButtonTap(_:)))
+    return [rightNegativeSpacer, searchBarButton]
+  }
+
+  func searchButtonTap(_ sender: UIBarButtonItem?) {
+    guard let newsNavigationController = viewControllers?.first as? UINavigationController else {
+      return
+    }
+    let searchVC = SearchViewController()
+    searchVC.hidesBottomBarWhenPushed = true
+    newsNavigationController.pushViewController(searchVC, animated: true)
   }
 }
 
