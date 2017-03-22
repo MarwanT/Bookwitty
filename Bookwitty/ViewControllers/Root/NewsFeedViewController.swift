@@ -107,8 +107,13 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       collectionView.contentOffset = offset
     }
   }
-  
-  private func initializeNavigationItems() {
+
+  fileprivate func initializeNavigationItems() {
+    if !UserManager.shared.isSignedIn {
+      navigationItem.leftBarButtonItems = nil
+      return
+    }
+
     let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
       UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
     leftNegativeSpacer.width = -10
@@ -205,11 +210,15 @@ extension NewsFeedViewController {
   func addObservers() {
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.refreshData(_:)), name: AppNotification.shouldRefreshData, object: nil)
+    
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(refreshData(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
 
     observeLanguageChanges()
   }
 
   func refreshData(_ notification: Notification) {
+    initializeNavigationItems()
     refreshViewControllerData()
   }
 }

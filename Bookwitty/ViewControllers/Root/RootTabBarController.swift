@@ -149,6 +149,8 @@ class RootTabBarController: UITabBarController {
         newsFeedViewController.refreshViewControllerData()
       }
     }
+
+    NotificationCenter.default.post(name: AppNotification.authenticationStatusChanged, object: nil)
   }
   
   fileprivate func displayAppNeedsUpdate(with updateURL: URL?) {

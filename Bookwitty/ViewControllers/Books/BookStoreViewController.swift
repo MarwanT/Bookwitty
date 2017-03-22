@@ -41,6 +41,8 @@ class BookStoreViewController: UIViewController {
     
     refreshViewController()
     observeLanguageChanges()
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.authenticationStatusChanged(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -62,7 +64,16 @@ class BookStoreViewController: UIViewController {
     Analytics.shared.send(screenName: Analytics.ScreenNames.BookStorefront)
   }
   
+  @objc private func authenticationStatusChanged(_: Notification) {
+    initializeNavigationItems()
+  }
+
   private func initializeNavigationItems() {
+    if !UserManager.shared.isSignedIn {
+      navigationItem.leftBarButtonItems = nil
+      return
+    }
+
     let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
       UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
     leftNegativeSpacer.width = -10

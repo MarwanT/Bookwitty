@@ -29,6 +29,9 @@ class BagViewController: ASViewController<ASDisplayNode> {
   }
   
   private func initializeNavigationItems() {
+    if !UserManager.shared.isSignedIn {
+      return
+    }
     let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
       UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
     leftNegativeSpacer.width = -10
