@@ -51,9 +51,8 @@ class RootTabBarController: UITabBarController {
     let newsFeedViewController = newsFeedViewControllerCreator()
     let bookStoreViewController = Storyboard.Books.instantiate(BookStoreViewController.self)
     let discoverViewController = DiscoverViewController()
-
-
-    newsFeedViewController.tabBarItem = UITabBarItem(
+    
+    newsFeedViewController.viewController.tabBarItem = UITabBarItem(
       title: Strings.news().uppercased(),
       image: #imageLiteral(resourceName: "newsfeed"),
       tag: 1)
@@ -68,10 +67,13 @@ class RootTabBarController: UITabBarController {
 
     // Set The View controller
     self.viewControllers = [
-      UINavigationController(rootViewController: newsFeedViewController),
+      UINavigationController(rootViewController: newsFeedViewController.viewController),
       UINavigationController(rootViewController: discoverViewController),
       UINavigationController(rootViewController: bookStoreViewController),
     ]
+    
+    // Hide navigation bar for news feed if necessary
+    newsFeedViewController.viewController.navigationController?.setNavigationBarHidden(newsFeedViewController.hideNavigationBar, animated: true)
     
     // Set Default select tab index
     self.selectedIndex = 0
@@ -108,12 +110,24 @@ class RootTabBarController: UITabBarController {
   }
   
   // MARK: Helpers
-  fileprivate func newsFeedViewControllerCreator() -> UIViewController {
-    let newsFeedViewController = UserManager.shared.isSignedIn ? NewsFeedViewController() : JoinUsNode().viewController()
-    newsFeedViewController.navigationItem.rightBarButtonItems = searchBarButton()
-    return newsFeedViewController
+  fileprivate func newsFeedViewControllerCreator() -> (viewController: UIViewController, hideNavigationBar: Bool) {
+    let viewController: UIViewController
+    let hideNavigationBar: Bool
+    
+    if UserManager.shared.isSignedIn {
+      viewController = NewsFeedViewController()
+      hideNavigationBar = false
+    } else {
+      viewController = JoinUsNode().viewController()
+      hideNavigationBar = true
+    }
+    
+    // Add search button
+    viewController.navigationItem.rightBarButtonItems = searchBarButton()
+    
+    return (viewController, hideNavigationBar)
   }
-
+  
   fileprivate func presentIntroductionOrSignInViewController() {
     if GeneralSettings.sharedInstance.shouldShowIntroduction {
       let introductionVC = Storyboard.Introduction.instantiate(IntroductionViewController.self)
@@ -145,14 +159,17 @@ class RootTabBarController: UITabBarController {
     }
 
     let newsFeedViewController = newsFeedViewControllerCreator()
-    newsFeedViewController.tabBarItem = UITabBarItem(
+    newsFeedViewController.viewController.tabBarItem = UITabBarItem(
       title: Strings.news().uppercased(),
       image: #imageLiteral(resourceName: "newsfeed"),
       tag: 1)
-    newsNavigationController.viewControllers.replaceSubrange(0...0, with: [newsFeedViewController])
-
+    
+    newsNavigationController.setNavigationBarHidden(newsFeedViewController.hideNavigationBar, animated: true)
+    
+    newsNavigationController.viewControllers.replaceSubrange(0...0, with: [newsFeedViewController.viewController])
+    
     if UserManager.shared.isSignedIn {
-      if let newsFeedViewController = newsFeedViewController as? NewsFeedViewController {
+      if let newsFeedViewController = newsFeedViewController.viewController as? NewsFeedViewController {
         newsFeedViewController.refreshViewControllerData()
       }
     }
