@@ -37,6 +37,8 @@ class JoinUsNode: ASDisplayNode {
     
     getStartedButtonNode.addTarget(self, action:
       #selector(self.getStartedTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
+    alreadyHaveAnAccountTextNode.addTarget(self, action:
+      #selector(self.alreadyHaveAnAccountTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -93,14 +95,21 @@ extension JoinUsNode {
     NotificationCenter.default.post(
       name: AppNotification.shouldDisplayRegistration, object: nil)
   }
+  
+  func alreadyHaveAnAccountTouchUpInside(_ sender: Any) {
+    NotificationCenter.default.post(
+      name: AppNotification.shouldDisplaySignIn, object: nil)
+  }
 }
 
+// MARK: - Themeable
 extension JoinUsNode: Themeable {
   func applyTheme() {
     ThemeManager.shared.currentTheme.styleECommercePrimaryButton(button: getStartedButtonNode)
   }
 }
 
+// MARK: - Declaration
 extension JoinUsNode {
   struct Configuration {
     let textColor = ThemeManager.shared.currentTheme.defaultTextColor()
