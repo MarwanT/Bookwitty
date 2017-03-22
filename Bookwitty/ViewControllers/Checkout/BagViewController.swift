@@ -22,7 +22,9 @@ class BagViewController: ASViewController<ASDisplayNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeNavigationItems()
-    observeLanguageChanges()  
+    observeLanguageChanges()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.Bag)

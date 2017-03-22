@@ -38,6 +38,8 @@ class BookStoreViewController: UIViewController {
     initializePullToRefresh()
     initializeSubviews()
     refreshViewController()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
 
   override func awakeFromNib() {

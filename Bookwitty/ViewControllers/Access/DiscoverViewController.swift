@@ -67,6 +67,9 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
 
     applyTheme()
     addObservers()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
+
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.authenticationStatusChanged(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
   }

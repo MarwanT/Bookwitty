@@ -64,6 +64,8 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     loadData()
     applyLocalization()
     observeLanguageChanges()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
 
   private func initializeComponents() {

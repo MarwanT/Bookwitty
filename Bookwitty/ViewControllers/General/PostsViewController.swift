@@ -51,7 +51,9 @@ class PostsViewController: ASViewController<ASCollectionNode> {
     
     collectionNode.delegate = self
     collectionNode.dataSource = self
-    
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
+
     if viewModel.hasNoPosts {
       loadNextPage(completion: { _ in })
     }

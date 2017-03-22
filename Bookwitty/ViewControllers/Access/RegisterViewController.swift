@@ -36,6 +36,8 @@ class RegisterViewController: UIViewController {
     applyLocalization()
     observeLanguageChanges()
 
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
+
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.Register)
   }

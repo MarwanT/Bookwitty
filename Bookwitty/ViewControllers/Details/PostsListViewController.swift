@@ -62,6 +62,8 @@ class PostsListViewController: ASViewController<ASCollectionNode> {
 
     applyLocalization()
     observeLanguageChanges()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
 }
 

@@ -90,6 +90,8 @@ class TopicViewController: ASViewController<ASCollectionNode> {
 
     applyLocalization()
     observeLanguageChanges()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
 
   private func initializeComponents() {

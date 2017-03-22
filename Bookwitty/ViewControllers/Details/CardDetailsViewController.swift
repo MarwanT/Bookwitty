@@ -26,6 +26,12 @@ class CardDetailsViewController: GenericNodeViewController {
     node.updateDimVisibility(visible: true)
     viewControllerTitleForResouce(resource: resource)
   }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
+  }
   
   func viewControllerTitleForResouce(resource: ModelResource) {
 

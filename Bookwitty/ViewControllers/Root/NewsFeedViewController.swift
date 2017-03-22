@@ -78,7 +78,9 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     pullToRefresher.addTarget(self, action: #selector(self.pullDownToReloadData), for: .valueChanged)
 
     applyTheme()
-    applyLocalization()    
+    applyLocalization()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
 
   override func viewWillAppear(_ animated: Bool) {

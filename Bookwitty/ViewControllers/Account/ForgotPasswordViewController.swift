@@ -21,6 +21,8 @@ class ForgotPasswordViewController: UIViewController {
     applyTheme()
     applyLocalization()
     observeLanguageChanges()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
 
   private func initializeComponents() {

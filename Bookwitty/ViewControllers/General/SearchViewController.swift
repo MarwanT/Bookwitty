@@ -66,6 +66,8 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     applyLocalization()
     observeLanguageChanges()
 
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
+
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.Search)
   }
