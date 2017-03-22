@@ -780,7 +780,18 @@ extension TopicViewController {
 //MARK: - Localizable implementation
 extension TopicViewController: Localizable {
   func applyLocalization() {
-    title = Strings.topic()
+    if let resourceType = viewModel.resourceType {
+      switch resourceType {
+      case Topic.resourceType:
+        title = Strings.topic()
+      case Author.resourceType:
+        title = Strings.author()
+      case Book.resourceType:
+        title = Strings.book()
+      default:
+        break
+      }
+    }
 
     headerNode = TopicHeaderNode()
 
