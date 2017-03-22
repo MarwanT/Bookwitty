@@ -247,12 +247,14 @@ extension RootTabBarController {
   func presentRegisterViewController() {
     let registerVC = Storyboard.Access.instantiate(RegisterViewController.self)
     let navigationController = UINavigationController(rootViewController: registerVC)
+    registerVC.navigationItem.leftBarButtonItem = cancelBarButton()
     present(navigationController, animated: true, completion: nil)
   }
 
   func presentSignInViewController() {
     let signInVC = Storyboard.Access.instantiate(SignInViewController.self)
     let navigationController = UINavigationController(rootViewController: signInVC)
+    signInVC.navigationItem.leftBarButtonItem = cancelBarButton()
     present(navigationController, animated: true, completion: nil)
   }
 
