@@ -36,8 +36,14 @@ class RootTabBarController: UITabBarController {
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     if UserManager.shared.isSignedIn {
-      NotificationCenter.default.post(
-        name: AppNotification.shouldRefreshData, object: nil)
+      if UserManager.shared.shouldEditPenName {
+        presentPenNameViewController(user: UserManager.shared.signedInUser)
+      } else if UserManager.shared.shouldDisplayOnboarding {
+        presentOnboardingViewController()
+      } else {
+        NotificationCenter.default.post(
+          name: AppNotification.shouldRefreshData, object: nil)
+      }
     }
   }
   
