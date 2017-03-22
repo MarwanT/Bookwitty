@@ -23,6 +23,33 @@ class JoinUsNode: ASDisplayNode {
     alreadyHaveAnAccountTextNode = ASTextNode()
     super.init()
   }
+  
+  var titleText: String? {
+    didSet {
+      titleTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .title1)
+        .append(text: titleText ?? "", color: configuration.textColor).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
+      setNeedsLayout()
+    }
+  }
+  var descriptionText: String? {
+    didSet {
+      descriptionTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .callout)
+        .append(text: descriptionText ?? "", color: configuration.textColor).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
+      setNeedsLayout()
+    }
+  }
+  var getStartedButtonTitle: String? {
+    didSet {
+      getStartedButtonNode.setTitle(getStartedButtonTitle ?? "", with: FontDynamicType.subheadline.font, with: configuration.buttonTextColor, for: UIControlState.normal)
+      setNeedsLayout()
+    }
+  }
+  var alreadyHaveAnAccountAttributedString: NSAttributedString? {
+    didSet {
+      alreadyHaveAnAccountTextNode.attributedText = alreadyHaveAnAccountAttributedString
+      setNeedsLayout()
+    }
+  }
 }
 
 extension JoinUsNode {
