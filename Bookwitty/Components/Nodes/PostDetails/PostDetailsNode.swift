@@ -235,7 +235,7 @@ class PostDetailsNode: ASScrollNode {
     relatedBooksViewAllNode.delegate = self
 
     relatedPostsViewAllNode.configuration.style = .highlighted
-    relatedPostsViewAllNode.text = Strings.view_all_related_books()
+    relatedPostsViewAllNode.text = Strings.view_all_related_posts()
     relatedPostsViewAllNode.delegate = self
 
     sectionTitleHeaderNode.setTitle(title: Strings.related_books(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber10(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber9())
