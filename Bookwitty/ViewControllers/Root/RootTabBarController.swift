@@ -85,6 +85,10 @@ class RootTabBarController: UITabBarController {
       #selector(self.accountNeedsConfirmation(notification:)), name: AppNotification.accountNeedsConfirmation, object: nil)
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.callToActionHandler(notification:)), name: AppNotification.callToAction, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.shouldDisplayRegistration(notification:)), name: AppNotification.shouldDisplayRegistration, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.shouldDisplaySignIn(notification:)), name: AppNotification.shouldDisplaySignIn, object: nil)
   }
   
   private func addObserversWhenNotVisible() {
@@ -172,6 +176,14 @@ extension RootTabBarController {
 
 //MARK: - Notifications
 extension RootTabBarController {
+  func shouldDisplaySignIn(notification: Notification?) {
+    presentSignInViewController()
+  }
+
+  func shouldDisplayRegistration(notification: Notification?) {
+    presentRegisterViewController()
+  }
+
   func callToActionHandler(notification: Notification?) {
     guard !UserManager.shared.isSignedIn else {
       //If user is signed-in => do nothing
