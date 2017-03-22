@@ -30,7 +30,7 @@ class ContributorsNode: ASDisplayNode {
     didSet {
       imagesNodes.removeAll()
       if let imagesUrls = imagesUrls {
-        let limit = min(10, imagesUrls.count)
+        let limit = min(5, imagesUrls.count)
         for index in 0..<limit {
           let imageNode = ASNetworkImageNode()
           imageNode.style.preferredSize = imageSize
