@@ -164,6 +164,8 @@
 "tutorial_third_page_title" = "Share Your Own Ideas";
 "tutorial_third_page_description" = "Everyone has knowledge, expertise or a topic they are passionate about.\nWrite about it.";
 "update_now" = "Update now";
+"user_not_signed_in_alert_message" = "You need to be signed to complete this action";
+"user_not_signed_in_alert_title" = "You Are Not Signed In!";
 "video" = "Video";
 "view_all" = "View All";
 "view_all_books" = "View All Books";

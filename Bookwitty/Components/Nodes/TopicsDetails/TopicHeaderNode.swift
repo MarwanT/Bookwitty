@@ -210,6 +210,12 @@ class TopicHeaderNode: ASCellNode {
 //Actions
 extension TopicHeaderNode {
   func actionButtonTouchUpInside(_ sender: ASButtonNode) {
+    guard UserManager.shared.isSignedIn else {
+      //If user is not signed In post notification and do not fall through
+      NotificationCenter.default.post( name: AppNotification.callToAction, object: CallToAction.follow)
+      return
+    }
+
     delegate?.topicHeader(node: self, actionButtonTouchUpInside: sender)
   }
 }

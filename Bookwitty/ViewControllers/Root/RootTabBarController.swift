@@ -102,6 +102,8 @@ class RootTabBarController: UITabBarController {
       #selector(self.checkAppStatus(notification:)), name: AppNotification.didCheckAppStatus, object: nil)
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.accountNeedsConfirmation(notification:)), name: AppNotification.accountNeedsConfirmation, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.callToActionHandler(notification:)), name: AppNotification.callToAction, object: nil)
   }
   
   private func addObserversWhenNotVisible() {
@@ -183,6 +185,17 @@ extension RootTabBarController {
 
 //MARK: - Notifications
 extension RootTabBarController {
+  func callToActionHandler(notification: Notification?) {
+    guard !UserManager.shared.isSignedIn else {
+      //If user is signed-in => do nothing
+      return
+    }
+    //Call-To-Action Value
+    let cta = notification?.object as? CallToAction
+    //Display Alert accordingly
+    dispalyUserNotSignedInAlert(cta: cta)
+  }
+
   func accountNeedsConfirmation(notification: Notification?) {
     displayAccountNeedsConfirmationAlert()
   }
@@ -231,6 +244,18 @@ extension RootTabBarController {
   
   func showRootViewController() {
     self.dismiss(animated: true)
+  }
+
+  func presentRegisterViewController() {
+    let registerVC = Storyboard.Access.instantiate(RegisterViewController.self)
+    let navigationController = UINavigationController(rootViewController: registerVC)
+    present(navigationController, animated: true, completion: nil)
+  }
+
+  func presentSignInViewController() {
+    let signInVC = Storyboard.Access.instantiate(SignInViewController.self)
+    let navigationController = UINavigationController(rootViewController: signInVC)
+    present(navigationController, animated: true, completion: nil)
   }
 }
 
@@ -318,6 +343,34 @@ extension RootTabBarController {
       title: Strings.account_needs_confirmation_alert_dismiss_button_title(),
       style: UIAlertActionStyle.cancel, handler: nil)
     alertController.addAction(resendAction)
+    alertController.addAction(neutralAction)
+    present(alertController, animated: true, completion: nil)
+  }
+
+  fileprivate func dispalyUserNotSignedInAlert(cta: CallToAction?) {
+    let alertController = UIAlertController(
+      title: "You Are Not Signed In!",
+      message: "You need to be signed to complete this action",
+      preferredStyle: .actionSheet)
+    let signInAction = UIAlertAction(
+      title: Strings.sign_in(),
+      style: UIAlertActionStyle.default) { _ in
+        //TODO: handle Action
+        self.presentSignInViewController()
+    }
+
+    let registerAction = UIAlertAction(
+      title: Strings.register(),
+      style: UIAlertActionStyle.default) { _ in
+        //TODO: handle Action
+        self.presentRegisterViewController()
+    }
+
+    let neutralAction = UIAlertAction(
+      title: Strings.account_needs_confirmation_alert_dismiss_button_title(),
+      style: UIAlertActionStyle.cancel, handler: nil)
+    alertController.addAction(signInAction)
+    alertController.addAction(registerAction)
     alertController.addAction(neutralAction)
     present(alertController, animated: true, completion: nil)
   }
