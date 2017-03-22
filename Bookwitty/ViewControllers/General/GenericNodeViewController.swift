@@ -23,6 +23,12 @@ class GenericNodeViewController: ASViewController<ASDisplayNode> {
     super.init(node: baseNode)
     self.title = title
   }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
+  }
   
   private static func encapsulateWithScrollNodeIfNeeded(node: ASDisplayNode) -> ASDisplayNode {
     guard !(node.view is UIScrollView) else {

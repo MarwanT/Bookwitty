@@ -25,7 +25,9 @@ class TutorialViewController: UIPageViewController {
     
     dataSource = self
     delegate = self
-    
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
+
     orderedViewControllers.append(contentsOf: tutorialPagesViewControllers())
     
     if let firstViewController = orderedViewControllers.first {

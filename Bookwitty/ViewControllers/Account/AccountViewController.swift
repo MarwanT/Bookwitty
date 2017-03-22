@@ -28,6 +28,8 @@ class AccountViewController: UIViewController {
     fillUserInformation()
     observeLanguageChanges()
 
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
+
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.Account)
   }

@@ -25,6 +25,8 @@ class TutorialPageViewController: UIViewController {
     stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
     
     fillContent()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
   
   private func fillContent() {

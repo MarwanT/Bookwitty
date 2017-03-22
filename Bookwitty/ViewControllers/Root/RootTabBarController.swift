@@ -21,6 +21,8 @@ class RootTabBarController: UITabBarController {
     initializeTabBarViewControllers()
     applyTheme()
     addObservers()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
   
   override func viewWillAppear(_ animated: Bool) {

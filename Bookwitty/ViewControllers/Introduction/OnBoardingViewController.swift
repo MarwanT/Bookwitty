@@ -36,6 +36,8 @@ class OnBoardingViewController: ASViewController<OnBoardingControllerNode> {
     applyLocalization()
     observeLanguageChanges()
 
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
+
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.OnboardingFollowPeopleAndTopics)
   }

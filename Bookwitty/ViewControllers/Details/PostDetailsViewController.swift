@@ -54,6 +54,8 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     applyLocalization()
     observeLanguageChanges()
 
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
+
     //MARK: [Analytics] Screen Name
     let name: Analytics.ScreenName
     switch(viewModel.resource.registeredResourceType) {

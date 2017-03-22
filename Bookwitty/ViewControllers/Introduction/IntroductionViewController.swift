@@ -34,6 +34,8 @@ class IntroductionViewController: UIViewController {
     tutorialViewController.viewModel.tutorialPageData = viewModel.tutorialData
     let tutorialChildView = add(asChildViewController: tutorialViewController, toView: tutorialContainer)
     tutorialChildView.alignTop("0", leading: "0", bottom: "0", trailing: "0", toView: tutorialChildView.superview!)
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
   
   override func viewWillAppear(_ animated: Bool) {
