@@ -22,6 +22,17 @@ class JoinUsNode: ASDisplayNode {
     getStartedButtonNode = ASButtonNode()
     alreadyHaveAnAccountTextNode = ASTextNode()
     super.init()
+    initializeComponent()
+  }
+  
+  private func initializeComponent() {
+    automaticallyManagesSubnodes = true
+    backgroundColor = configuration.backgroundColor
+    
+    titleText = "Personalize your feed"
+    descriptionText = "View articles reading lists and book recommendations in your feed based on your interests."
+    getStartedButtonTitle = "Get started"
+    alreadyHaveAnAccountAttributedString = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: "Already have an account?\n", color: configuration.textColor).append(text: "Sign In", fontDynamicType: FontDynamicType.footnote, color: configuration.signInTextColor).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
   }
   
   var titleText: String? {
