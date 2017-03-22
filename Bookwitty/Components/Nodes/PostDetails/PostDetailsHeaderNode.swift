@@ -102,8 +102,18 @@ class PostDetailsHeaderNode: ASCellNode {
     let vStackActionBarSpec = ASStackLayoutSpec.vertical()
     vStackActionBarSpec.children = [separatorInset, actionBarNode, bottomSeparatorInset]
 
-    vStackSpec.children = [imageNode, ASLayoutSpec.spacer(height: contentSpacing),
-                           textInsetSpec, profileBarNode, vStackActionBarSpec]
+    var nodesArray: [ASLayoutElement]
+
+    if penName?.id == nil {
+      nodesArray = [imageNode, ASLayoutSpec.spacer(height: contentSpacing),
+                    textInsetSpec, vStackActionBarSpec]
+    } else {
+      nodesArray = [imageNode, ASLayoutSpec.spacer(height: contentSpacing),
+                    textInsetSpec, profileBarNode, vStackActionBarSpec]
+    }
+
+
+    vStackSpec.children = nodesArray
     return vStackSpec
   }
 }
