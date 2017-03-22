@@ -114,7 +114,7 @@ extension PostDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
     return {
       let cell = RelatedBooksMinimalCellNode()
       cell.url = book?.thumbnailImageUrl
-      cell.price = book?.supplierInformation?.preferredPrice?.formattedValue
+      cell.price = (book?.productDetails?.isElectronicFormat() ?? false) ? nil : book?.supplierInformation?.preferredPrice?.formattedValue
       cell.subTitle = book?.productDetails?.author
       cell.title = book?.title
       return cell
