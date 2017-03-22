@@ -45,7 +45,6 @@ class RootTabBarController: UITabBarController {
     let newsFeedViewController = UserManager.shared.isSignedIn ? NewsFeedViewController() : JoinUsNode().viewController()
     let bookStoreViewController = Storyboard.Books.instantiate(BookStoreViewController.self)
     let discoverViewController = DiscoverViewController()
-    let bagViewController = BagViewController()
 
     newsFeedViewController.tabBarItem = UITabBarItem(
       title: Strings.news().uppercased(),
