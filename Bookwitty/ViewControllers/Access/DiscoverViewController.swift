@@ -73,10 +73,14 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     if loadingStatus == .none && viewModel.numberOfItemsInSection(section: Section.cards.rawValue) == 0 {
+      loadingStatus = .loading
       self.pullToRefresher.beginRefreshing()
-      loadData(loadingStatus: .loading, completionBlock: {
-        self.pullToRefresher.endRefreshing()
-      })
+      viewModel.loadDiscoverData { [weak self] (success) in
+        guard let strongSelf = self else { return }
+        strongSelf.loadingStatus = .none
+        strongSelf.pullToRefresher.endRefreshing()
+        strongSelf.collectionNode.reloadData()
+      }
     }
     animateRefreshControllerIfNeeded()
 
@@ -129,16 +133,6 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     }
   }
 
-  func loadData(loadingStatus: LoadingStatus, completionBlock: @escaping () -> ()) {
-    viewModel.loadDiscoverData { [weak self] (success) in
-      guard let strongSelf = self else { return }
-
-      completionBlock()
-
-      strongSelf.collectionNode.reloadData()
-    }
-  }
-
   func pullDownToReloadData() {
     guard loadingStatus != .reloading else {
       return
@@ -148,20 +142,27 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     let event: Analytics.Event = Analytics.Event(category: .Discover,
                                                  action: .PullToRefresh)
     Analytics.shared.send(event: event)
-
+    loadingStatus = .reloading
     self.pullToRefresher.beginRefreshing()
-    loadData(loadingStatus: .reloading, completionBlock: {
-      self.pullToRefresher.endRefreshing()
-    })
+    viewModel.loadDiscoverData { [weak self] (success) in
+      guard let strongSelf = self else { return }
+      strongSelf.loadingStatus = .none
+      strongSelf.pullToRefresher.endRefreshing()
+      strongSelf.collectionNode.reloadData()
+    }
   }
 
   func refreshViewControllerData() {
     if loadingStatus == .none {
       viewModel.cancellableOnGoingRequest()
+      self.loadingStatus = .loading
       self.pullToRefresher.beginRefreshing()
-      loadData(loadingStatus: .loading, completionBlock: {
-        self.pullToRefresher.endRefreshing()
-      })
+      viewModel.loadDiscoverData { [weak self] (success) in
+        guard let strongSelf = self else { return }
+        strongSelf.loadingStatus = .none
+        strongSelf.pullToRefresher.endRefreshing()
+        strongSelf.collectionNode.reloadData()
+      }
     }
   }
 }
