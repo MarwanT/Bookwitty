@@ -71,17 +71,16 @@ class BookStoreViewController: UIViewController {
   private func initializeNavigationItems() {
     if !UserManager.shared.isSignedIn {
       navigationItem.leftBarButtonItems = nil
-      return
+    } else {
+      let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
+        UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+      leftNegativeSpacer.width = -10
+      let settingsBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "person"), style:
+        UIBarButtonItemStyle.plain, target: self, action:
+        #selector(self.settingsButtonTap(_:)))
+      navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
     }
-
-    let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
-      UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
-    leftNegativeSpacer.width = -10
-    let settingsBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "person"), style:
-      UIBarButtonItemStyle.plain, target: self, action:
-      #selector(self.settingsButtonTap(_:)))
-    navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
-
+    
     let rightNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
       UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
     rightNegativeSpacer.width = -10
