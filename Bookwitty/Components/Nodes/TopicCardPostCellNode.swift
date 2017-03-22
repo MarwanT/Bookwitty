@@ -31,8 +31,8 @@ class TopicCardPostCellNode: BaseCardPostNode {
 class TopicCardPostContentNode: ASDisplayNode {
   private let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
-  private let imageHeight: CGFloat = 150.0
-  private let subImageSize = CGSize(width: 100.0, height: 100.0)
+  private let imageHeight: CGFloat = 180.0
+  private let subImageSize = CGSize(width: 100.0, height: 180.0)
 
   private var imageNode: ASNetworkImageNode
   private var subImageNode: ASNetworkImageNode
@@ -135,9 +135,11 @@ class TopicCardPostContentNode: ASDisplayNode {
     topicStatsNode.maximumNumberOfLines = 1
 
     imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
-    
+    imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
+
     subImageNode.style.preferredSize = subImageSize
     subImageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
+    subImageNode.contentMode = .scaleAspectFit
   }
 
   private func isValid(_ value: String?) -> Bool {
@@ -166,8 +168,6 @@ class TopicCardPostContentNode: ASDisplayNode {
 
     let imageSize = CGSize(width: constrainedSize.max.width, height: imageHeight)
     imageNode.style.preferredSize = imageSize
-    imageNode.defaultImage = UIImage(color: ASDisplayNodeDefaultPlaceholderColor(), size: imageSize)
-    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
     //Add Image Node and space after it
 
     let imageInsetLayoutSpec = ASInsetLayoutSpec(insets: imageInset(), child: imageNode)
@@ -178,9 +178,8 @@ class TopicCardPostContentNode: ASDisplayNode {
     let topicStatsNodeInset = ASInsetLayoutSpec(insets: cardSidesInset(), child: topicStatsNode)
     let descriptionNodeInset = ASInsetLayoutSpec(insets: cardSidesInset(), child: descriptionNode)
 
-    if(isValid(imageUrl)) {
-      nodesArray.append(imageOverlayLayoutSpec)
-    }
+    nodesArray.append(imageOverlayLayoutSpec)
+
     if(isValid(articleTitle)) {
       nodesArray.append(spacer(height: internalMargin))
       nodesArray.append(titleNodeInset)
