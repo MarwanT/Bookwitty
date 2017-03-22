@@ -13,6 +13,7 @@
 "account_needs_confirmation_alert_resend_confirmation_button_title" = "Resend";
 "account_needs_confirmation_alert_title" = "Account";
 "address_book" = "Adresses de livraison";
+"already_have_an_account" = "Already have an account?";
 "article" = "Article";
 "author" = "Auteur";
 "bag" = "Panier";
@@ -77,6 +78,7 @@
 "forgot_your_password" = "Mot de passe oublié ?";
 "format" = "Format";
 "free_shipping_internationally" = "Livraison gratuite où que vous soyez";
+"get_started" = "Get started";
 "height" = "Hauteur";
 "help" = "Aide";
 "image" = "Image";
@@ -85,6 +87,8 @@
 "interests" = "Intérêts";
 "isbn10" = "ISBN-10";
 "isbn13" = "ISBN-13";
+"join_us_to_personalize_feed_description" = "View articles reading lists and book recommendations in your feed based on your interests.";
+"join_us_to_personalize_feed_title" = "Personalize your feed";
 "language" = "Langue ";
 "language_of_text" = "Langue ";
 "last_name" = "Nom";
