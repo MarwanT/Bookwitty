@@ -245,8 +245,19 @@ class PostDetailsNode: ASScrollNode {
     bannerImageNode.style.flexGrow = 1
     bannerImageNode.style.flexShrink = 1
     bannerImageNode.contentMode = .scaleAspectFit
-    bannerImageNode.image = #imageLiteral(resourceName: "freeShippingBanner")
+    setBannerImage()
+
     bannerImageNode.addTarget(self, action: #selector(bannerTouchUpInside) , forControlEvents: .touchUpInside)
+  }
+
+  func setBannerImage() {
+    switch GeneralSettings.sharedInstance.preferredLanguage {
+    case Localization.Language.French.rawValue:
+      bannerImageNode.image = #imageLiteral(resourceName: "freeShippingBannerFr")
+    case Localization.Language.English.rawValue: fallthrough
+    default:
+      bannerImageNode.image = #imageLiteral(resourceName: "freeShippingBannerEn")
+    }
   }
 
   func bannerTouchUpInside() {
