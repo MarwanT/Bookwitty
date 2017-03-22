@@ -35,30 +35,18 @@ class RootTabBarController: UITabBarController {
 
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    
-    // Display Introduction VC if user is not signed in
-    if !UserManager.shared.isSignedIn {
-      presentIntroductionOrSignInViewController()
-    } else {
-      if UserManager.shared.shouldEditPenName {
-        presentPenNameViewController(user: UserManager.shared.signedInUser)
-      } else if UserManager.shared.shouldDisplayOnboarding {
-        presentOnboardingViewController()
-      } else {
-        GeneralSettings.sharedInstance.shouldShowIntroduction = false
-        NotificationCenter.default.post(
-          name: AppNotification.shouldRefreshData, object: nil)
-      }
+    if UserManager.shared.isSignedIn {
+      //TODO: Post shouldRefreshData Notification
     }
   }
   
   private func initializeTabBarViewControllers() {
-    let viewController1 = NewsFeedViewController()
+    let newsFeedViewController = UserManager.shared.isSignedIn ? NewsFeedViewController() : JoinUsNode().viewController()
     let bookStoreViewController = Storyboard.Books.instantiate(BookStoreViewController.self)
     let discoverViewController = DiscoverViewController()
     let bagViewController = BagViewController()
 
-    viewController1.tabBarItem = UITabBarItem(
+    newsFeedViewController.tabBarItem = UITabBarItem(
       title: Strings.news().uppercased(),
       image: #imageLiteral(resourceName: "newsfeed"),
       tag: 1)
@@ -73,7 +61,7 @@ class RootTabBarController: UITabBarController {
 
     // Set The View controller
     self.viewControllers = [
-      UINavigationController(rootViewController: viewController1),
+      UINavigationController(rootViewController: newsFeedViewController),
       UINavigationController(rootViewController: discoverViewController),
       UINavigationController(rootViewController: bookStoreViewController),
     ]
@@ -135,8 +123,16 @@ class RootTabBarController: UITabBarController {
     present(navigationController, animated: true, completion: nil)
   }
   
-  fileprivate func refreshToOriginalState() {
-    initializeTabBarViewControllers()
+  fileprivate func refreshTabBarViewController() {
+    guard let newsNavigationController = viewControllers?.first as? UINavigationController else {
+      return
+    }
+    let newsFeedViewController = UserManager.shared.isSignedIn ? NewsFeedViewController() : JoinUsNode().viewController()
+    newsFeedViewController.tabBarItem = UITabBarItem(
+      title: Strings.news().uppercased(),
+      image: #imageLiteral(resourceName: "newsfeed"),
+      tag: 1)
+    newsNavigationController.viewControllers.replaceSubrange(0...0, with: [newsFeedViewController])
   }
   
   fileprivate func displayAppNeedsUpdate(with updateURL: URL?) {
@@ -214,9 +210,8 @@ extension RootTabBarController {
     Analytics.shared.send(event: event)
 
     AccessToken.shared.deleteToken()
-    presentIntroductionOrSignInViewController()
     UserManager.shared.deleteSignedInUser()
-    refreshToOriginalState()
+    refreshTabBarViewController()
   }
   
   func signIn(notification: Notification) {
