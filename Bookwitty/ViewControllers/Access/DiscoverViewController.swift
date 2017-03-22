@@ -64,6 +64,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
 
     applyTheme()
     applyLocalization()
+    addObservers()
     observeLanguageChanges()
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.authenticationStatusChanged(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
@@ -71,7 +72,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    if UserManager.shared.isSignedIn && loadingStatus == .none && viewModel.numberOfItemsInSection(section: Section.cards.rawValue) == 0 {
+    if loadingStatus == .none && viewModel.numberOfItemsInSection(section: Section.cards.rawValue) == 0 {
       self.pullToRefresher.beginRefreshing()
       loadData(loadingStatus: .loading, completionBlock: {
         self.pullToRefresher.endRefreshing()
@@ -153,6 +154,16 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     loadData(loadingStatus: .reloading, completionBlock: {
       self.pullToRefresher.endRefreshing()
     })
+  }
+
+  func refreshViewControllerData() {
+    if loadingStatus == .none {
+      viewModel.cancellableOnGoingRequest()
+      self.pullToRefresher.beginRefreshing()
+      loadData(loadingStatus: .loading, completionBlock: {
+        self.pullToRefresher.endRefreshing()
+      })
+    }
   }
 }
 
@@ -559,6 +570,18 @@ extension DiscoverViewController {
     static var numberOfSections: Int {
       return 2
     }
+  }
+}
+
+// MARK: - Notification
+extension DiscoverViewController {
+  func addObservers() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.refreshData(_:)), name: AppNotification.shouldRefreshData, object: nil)
+  }
+
+  func refreshData(_ notification: Notification) {
+    refreshViewControllerData()
   }
 }
 
