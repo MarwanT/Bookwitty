@@ -23,6 +23,7 @@ class JoinUsNode: ASDisplayNode {
     alreadyHaveAnAccountTextNode = ASTextNode()
     super.init()
     initializeComponent()
+    applyTheme()
   }
   
   private func initializeComponent() {
@@ -60,6 +61,12 @@ class JoinUsNode: ASDisplayNode {
       alreadyHaveAnAccountTextNode.attributedText = alreadyHaveAnAccountAttributedString
       setNeedsLayout()
     }
+  }
+}
+
+extension JoinUsNode: Themeable {
+  func applyTheme() {
+    ThemeManager.shared.currentTheme.styleECommercePrimaryButton(button: getStartedButtonNode)
   }
 }
 
