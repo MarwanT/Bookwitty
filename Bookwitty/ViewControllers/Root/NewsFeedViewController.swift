@@ -89,6 +89,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.NewsFeed)
+    reloadPenNamesNode()
   }
 
   /*
@@ -171,6 +172,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
   func reloadPenNamesNode() {
     penNameSelectionNode.loadData(penNames: viewModel.penNames, withSelected: viewModel.defaultPenName)
+    collectionNode.reloadSections(IndexSet(integer: Section.penNames.rawValue))
   }
 }
 
@@ -216,6 +218,7 @@ extension NewsFeedViewController {
   func refreshData(_ notification: Notification) {
     initializeNavigationItems()
     refreshViewControllerData()
+    reloadPenNamesNode()
   }
 
   func signOut(_ notification: Notification) {
@@ -227,6 +230,7 @@ extension NewsFeedViewController {
     viewModel.cancellableOnGoingRequest()
     viewModel.data = []
     collectionNode.reloadData()
+    reloadPenNamesNode()
   }
 }
 // MARK: - Themeable
