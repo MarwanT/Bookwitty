@@ -34,6 +34,9 @@ class JoinUsNode: ASDisplayNode {
     descriptionText = "View articles reading lists and book recommendations in your feed based on your interests."
     getStartedButtonTitle = "Get started"
     alreadyHaveAnAccountAttributedString = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: "Already have an account?\n", color: configuration.textColor).append(text: "Sign In", fontDynamicType: FontDynamicType.footnote, color: configuration.signInTextColor).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
+    
+    getStartedButtonNode.addTarget(self, action:
+      #selector(self.getStartedTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -81,6 +84,14 @@ class JoinUsNode: ASDisplayNode {
       alreadyHaveAnAccountTextNode.attributedText = alreadyHaveAnAccountAttributedString
       setNeedsLayout()
     }
+  }
+}
+
+// MARK: - Actions
+extension JoinUsNode {
+  func getStartedTouchUpInside(_ sender: Any) {
+    NotificationCenter.default.post(
+      name: AppNotification.shouldDisplayRegistration, object: nil)
   }
 }
 
