@@ -262,6 +262,7 @@ extension PenNameViewController: Localizable {
     continueButton.setTitle(Strings.continue(), for: .normal)
     penNameLabel.text = Strings.pen_name()
     noteLabel.text = Strings.dont_worry_you_can_change_it_later()
+    biographyLabel.text = Strings.biography()
 
     setupBiographyKeyboardToolbar()
   }
