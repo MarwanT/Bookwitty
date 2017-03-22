@@ -36,6 +36,26 @@ class JoinUsNode: ASDisplayNode {
     alreadyHaveAnAccountAttributedString = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: "Already have an account?\n", color: configuration.textColor).append(text: "Sign In", fontDynamicType: FontDynamicType.footnote, color: configuration.signInTextColor).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
   }
   
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let stackSpec = ASStackLayoutSpec(
+      direction: .vertical, spacing: 0,
+      justifyContent: .center,
+      alignItems: .stretch,
+      children: [
+        titleTextNode,
+        ASLayoutSpec.spacer(height: 15),
+        descriptionTextNode,
+        ASLayoutSpec.spacer(height: 50),
+        getStartedButtonNode,
+        ASLayoutSpec.spacer(height: 50),
+        alreadyHaveAnAccountTextNode
+      ])
+    let externalInsetSpec = ASInsetLayoutSpec(
+      insets: configuration.externalEdgeInsets,
+      child: stackSpec)
+    return externalInsetSpec
+  }
+  
   var titleText: String? {
     didSet {
       titleTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .title1)
