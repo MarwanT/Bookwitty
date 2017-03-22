@@ -241,7 +241,9 @@ extension RootTabBarController {
   }
   
   func showRootViewController() {
-    self.dismiss(animated: true)
+    self.dismiss(animated: true,completion: {
+      self.refreshTabBarViewController()
+    })
   }
 
   func presentRegisterViewController() {
