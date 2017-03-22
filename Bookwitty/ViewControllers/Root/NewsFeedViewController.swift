@@ -201,6 +201,8 @@ extension NewsFeedViewController: PenNameSelectionNodeDelegate {
 extension NewsFeedViewController {
   func addObservers() {
     NotificationCenter.default.addObserver(self, selector:
+      #selector(self.signOut(_:)), name: AppNotification.signOut, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
       #selector(self.refreshData(_:)), name: AppNotification.shouldRefreshData, object: nil)
     
     NotificationCenter.default.addObserver(self, selector:
@@ -212,6 +214,18 @@ extension NewsFeedViewController {
   func refreshData(_ notification: Notification) {
     initializeNavigationItems()
     refreshViewControllerData()
+  }
+
+  func signOut(_ notification: Notification) {
+    if let scrollView = scrollView {
+      penNameSelectionNode.alpha = 1.0
+      scrollView.contentOffset = CGPoint(x: 0, y: 0.0)
+    }
+
+    viewModel.cancellableOnGoingRequest()
+    viewModel.data = []
+    loadingStatus = .none
+    collectionNode.reloadData()
   }
 }
 // MARK: - Themeable
