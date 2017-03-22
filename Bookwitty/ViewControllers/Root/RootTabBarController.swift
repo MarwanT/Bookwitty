@@ -36,7 +36,8 @@ class RootTabBarController: UITabBarController {
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     if UserManager.shared.isSignedIn {
-      //TODO: Post shouldRefreshData Notification
+      NotificationCenter.default.post(
+        name: AppNotification.shouldRefreshData, object: nil)
     }
   }
   
@@ -137,6 +138,12 @@ class RootTabBarController: UITabBarController {
       image: #imageLiteral(resourceName: "newsfeed"),
       tag: 1)
     newsNavigationController.viewControllers.replaceSubrange(0...0, with: [newsFeedViewController])
+
+    if UserManager.shared.isSignedIn {
+      if let newsFeedViewController = newsFeedViewController as? NewsFeedViewController {
+        newsFeedViewController.refreshViewControllerData()
+      }
+    }
   }
   
   fileprivate func displayAppNeedsUpdate(with updateURL: URL?) {
