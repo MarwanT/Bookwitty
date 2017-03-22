@@ -10,4 +10,11 @@ import UIKit
 
 extension UIBarButtonItem {
 
+  /**
+   A convenience var to ease the creation of the navigation bar back button
+   - returns: a `UIBarButtonItem` instance with empty title
+   */
+  public static var back: UIBarButtonItem {
+    return UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+  }
 }
