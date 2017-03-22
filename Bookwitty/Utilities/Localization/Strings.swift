@@ -48,7 +48,11 @@ class Strings {
   static func bag() -> String {
     return localizedString(key: "bag")
   }
-  
+
+  static func biography() -> String {
+    return localizedString(key: "biography")
+  }
+
   static func book() -> String {
     return localizedString(key: "book")
   }
