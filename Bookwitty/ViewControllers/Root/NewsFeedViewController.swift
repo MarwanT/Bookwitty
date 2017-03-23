@@ -89,6 +89,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.NewsFeed)
+    reloadPenNamesNode()
   }
 
   /*
@@ -171,6 +172,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
   func reloadPenNamesNode() {
     penNameSelectionNode.loadData(penNames: viewModel.penNames, withSelected: viewModel.defaultPenName)
+    collectionNode.reloadSections(IndexSet(integer: Section.penNames.rawValue))
   }
 }
 
@@ -216,6 +218,7 @@ extension NewsFeedViewController {
   func refreshData(_ notification: Notification) {
     initializeNavigationItems()
     refreshViewControllerData()
+    reloadPenNamesNode()
   }
 
   func signOut(_ notification: Notification) {
@@ -227,6 +230,7 @@ extension NewsFeedViewController {
     viewModel.cancellableOnGoingRequest()
     viewModel.data = []
     collectionNode.reloadData()
+    reloadPenNamesNode()
   }
 }
 // MARK: - Themeable
@@ -312,8 +316,48 @@ extension NewsFeedViewController: BaseCardPostNodeDelegate {
     if let resource = resource as? ModelCommonProperties,
       let penName = resource.penName {
       pushProfileViewController(penName: penName)
+
+      //MARK: [Analytics] Event
+      let category: Analytics.Category
+      switch resource.registeredResourceType {
+      case Image.resourceType:
+        category = .Image
+      case Quote.resourceType:
+        category = .Quote
+      case Video.resourceType:
+        category = .Video
+      case Audio.resourceType:
+        category = .Audio
+      case Link.resourceType:
+        category = .Link
+      case Author.resourceType:
+        category = .Author
+      case ReadingList.resourceType:
+        category = .ReadingList
+      case Topic.resourceType:
+        category = .Topic
+      case Text.resourceType:
+        category = .Text
+      case Book.resourceType:
+        category = .TopicBook
+      case PenName.resourceType:
+        category = .PenName
+      default:
+        category = .Default
+      }
+
+      let event: Analytics.Event = Analytics.Event(category: category,
+                                                   action: .GoToPenName,
+                                                   name: penName.name ?? "")
+      Analytics.shared.send(event: event)
     } else if let penName = resource as? PenName  {
       pushProfileViewController(penName: penName)
+
+      //MARK: [Analytics] Event
+      let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                   action: .GoToDetails,
+                                                   name: penName.name ?? "")
+      Analytics.shared.send(event: event)
     }
   }
   
@@ -382,7 +426,7 @@ extension NewsFeedViewController: BaseCardPostNodeDelegate {
       category = .Default
     }
 
-    let analyticsAction = Analytics.Action.actionFrom(cardAction: action)
+    let analyticsAction = Analytics.Action.actionFrom(cardAction: action, with: category)
     let event: Analytics.Event = Analytics.Event(category: category,
                                                  action: analyticsAction,
                                                  name: name)
@@ -521,6 +565,12 @@ extension NewsFeedViewController {
     case PenName.resourceType:
       if let penName = resource as? PenName {
         pushProfileViewController(penName: penName)
+
+        //MARK: [Analytics] Event
+        let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                     action: .GoToDetails,
+                                                     name: penName.name ?? "")
+        Analytics.shared.send(event: event)
       }
     default:
       print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")

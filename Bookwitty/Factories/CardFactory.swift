@@ -487,14 +487,15 @@ extension  CardFactory {
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
     card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
 
-    let imagesCount = resource.postsRelations?.count ?? 0
-    card.node.prepareImages(imageCount: imagesCount)
-
-    if let images = resource.posts?.map({ ($0 as? ModelCommonProperties)?.thumbnailImageUrl }) {
+    let hasPosts = resource.posts?.count ?? 0 > 0
+    if hasPosts, let images = resource.posts?.map({ ($0 as? ModelCommonProperties)?.thumbnailImageUrl }) {
       let imageCollection = images.flatMap({$0})
       if imageCollection.count > 0 {
         card.node.loadImages(with: imageCollection)
       }
+    } else if let imagesCount = resource.postsRelations?.count,
+      imagesCount > 0 {
+      card.node.prepareImages(imageCount: imagesCount)
     }
     return card
   }

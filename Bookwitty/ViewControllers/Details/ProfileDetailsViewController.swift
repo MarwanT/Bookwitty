@@ -93,6 +93,24 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
     self.activeSegment = segment(withIndex: index)
     self.loadData()
+
+    //MARK: [Analytics] Event
+    var analyticsAction: Analytics.Action = .Default
+    switch activeSegment {
+    case .latest:
+      analyticsAction = .GoToLatest
+    case .followers:
+      analyticsAction = .GoToFollowers
+    case .following:
+      analyticsAction = .GoToFollowings
+    default:
+      break
+    }
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                 action: analyticsAction,
+                                                 name: viewModel.penName.name ?? "")
+    Analytics.shared.send(event: event)
   }
 
   func loadData() {
@@ -146,6 +164,12 @@ extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
       let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment) {
       if let penName = resource as? PenName {
         pushProfileViewController(penName: penName)
+
+        //MARK: [Analytics] Event
+        let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                     action: .GoToDetails,
+                                                     name: penName.name ?? "")
+        Analytics.shared.send(event: event)
       }
     }
   }
@@ -301,8 +325,48 @@ extension ProfileDetailsViewController: BaseCardPostNodeDelegate {
     if let resource = resource as? ModelCommonProperties,
       let penName = resource.penName {
       pushProfileViewController(penName: penName)
+
+      //MARK: [Analytics] Event
+      let category: Analytics.Category
+      switch resource.registeredResourceType {
+      case Image.resourceType:
+        category = .Image
+      case Quote.resourceType:
+        category = .Quote
+      case Video.resourceType:
+        category = .Video
+      case Audio.resourceType:
+        category = .Audio
+      case Link.resourceType:
+        category = .Link
+      case Author.resourceType:
+        category = .Author
+      case ReadingList.resourceType:
+        category = .ReadingList
+      case Topic.resourceType:
+        category = .Topic
+      case Text.resourceType:
+        category = .Text
+      case Book.resourceType:
+        category = .TopicBook
+      case PenName.resourceType:
+        category = .PenName
+      default:
+        category = .Default
+      }
+
+      let event: Analytics.Event = Analytics.Event(category: category,
+                                                   action: .GoToPenName,
+                                                   name: penName.name ?? "")
+      Analytics.shared.send(event: event)
     } else if let penName = resource as? PenName  {
       pushProfileViewController(penName: penName)
+
+      //MARK: [Analytics] Event
+      let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                   action: .GoToDetails,
+                                                   name: penName.name ?? "")
+      Analytics.shared.send(event: event)
     }
   }
   
@@ -336,6 +400,46 @@ extension ProfileDetailsViewController: BaseCardPostNodeDelegate {
       //TODO: handle comment
       break
     }
+
+    //MARK: [Analytics] Event
+
+    guard let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment) else { return }
+    let category: Analytics.Category
+    var name: String = (resource as? ModelCommonProperties)?.title ?? ""
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+      name = (resource as? Author)?.name ?? ""
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+      name = (resource as? PenName)?.name ?? ""
+    default:
+      category = .Default
+    }
+
+    let analyticsAction = Analytics.Action.actionFrom(cardAction: action, with: category)
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: analyticsAction,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 }
 
@@ -372,6 +476,12 @@ extension ProfileDetailsViewController {
     case PenName.resourceType:
       if let penName = resource as? PenName {
         pushProfileViewController(penName: penName)
+
+        //MARK: [Analytics] Event
+        let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                     action: .GoToDetails,
+                                                     name: penName.name ?? "")
+        Analytics.shared.send(event: event)
       }
     default:
       print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")

@@ -9,6 +9,12 @@
 import Foundation
 
 extension Analytics {
+
+  enum Field: Int {
+    case ApplicationVersion
+    case UserIdentifier
+  }
+
   struct Event {
     let category: Category
     let action: Action
@@ -44,6 +50,7 @@ extension Analytics {
     case BookCategory
     case CategoriesList
     case Bag
+    case Onboarding
 
     //Use in switch cases default clause
     case Default
@@ -90,6 +97,8 @@ extension Analytics {
         return "Categories List"
       case .Bag:
         return "Bag"
+      case .Onboarding:
+        return "Onboarding"
       case .Default:
         return "[DEFAULT]"
       }
@@ -144,10 +153,12 @@ extension Analytics {
     case ViewAllCategories
     case ViewAllBooks
     //
+    case Follow
     case FollowTopic
     case FollowTopicBook
     case FollowAuthor
     case FollowPenName
+    case Unfollow
     case UnfollowTopic
     case UnfollowTopicBook
     case UnfollowAuthor
@@ -242,6 +253,8 @@ extension Analytics {
         return "View All Categories"
       case .ViewAllBooks:
         return "View All Books"
+      case .Follow:
+        return "Follow"
       case .FollowTopic:
         return "Follow Topic"
       case .FollowTopicBook:
@@ -250,6 +263,8 @@ extension Analytics {
         return "Follow Author"
       case .FollowPenName:
         return "Follow Pen Name"
+      case .Unfollow:
+        return "Unfollow"
       case .UnfollowTopic:
         return "Unfollow Topic"
       case .UnfollowTopicBook:
@@ -333,7 +348,7 @@ extension Analytics {
 }
 
 extension Analytics.Action {
-  static func actionFrom(cardAction: CardActionBarNode.Action) -> Analytics.Action {
+  static func actionFrom(cardAction: CardActionBarNode.Action, with category: Analytics.Category) -> Analytics.Action {
     switch cardAction {
     case .wit:
       return .Wit
@@ -347,8 +362,32 @@ extension Analytics.Action {
       return .Dim
     case .undim:
       return .Undim
-    default:
-      return .Default
+    case .follow:
+      switch category {
+      case .Topic:
+        return .FollowTopic
+      case .TopicBook:
+        return .FollowTopicBook
+      case .Author:
+        return .FollowAuthor
+      case .PenName:
+        return .FollowPenName
+      default:
+        return .Follow
+      }
+    case .unfollow:
+      switch category {
+      case .Topic:
+        return .UnfollowTopic
+      case .TopicBook:
+        return .UnfollowTopicBook
+      case .Author:
+        return .UnfollowAuthor
+      case .PenName:
+        return .UnfollowPenName
+      default:
+        return .Unfollow
+      }
     }
   }
 }
