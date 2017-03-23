@@ -345,7 +345,7 @@ extension Analytics {
 }
 
 extension Analytics.Action {
-  static func actionFrom(cardAction: CardActionBarNode.Action) -> Analytics.Action {
+  static func actionFrom(cardAction: CardActionBarNode.Action, with category: Analytics.Category) -> Analytics.Action {
     switch cardAction {
     case .wit:
       return .Wit
@@ -359,8 +359,32 @@ extension Analytics.Action {
       return .Dim
     case .undim:
       return .Undim
-    default:
-      return .Default
+    case .follow:
+      switch category {
+      case .Topic:
+        return .FollowTopic
+      case .TopicBook:
+        return .FollowTopicBook
+      case .Author:
+        return .FollowAuthor
+      case .PenName:
+        return .FollowPenName
+      default:
+        return .Follow
+      }
+    case .unfollow:
+      switch category {
+      case .Topic:
+        return .UnfollowTopic
+      case .TopicBook:
+        return .UnfollowTopicBook
+      case .Author:
+        return .UnfollowAuthor
+      case .PenName:
+        return .UnfollowPenName
+      default:
+        return .Unfollow
+      }
     }
   }
 }
