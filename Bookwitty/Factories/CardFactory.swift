@@ -379,7 +379,8 @@ extension  CardFactory {
     }
     card.postInfoData = cardPostInfoData
     card.node.imageUrl = resource.coverImageUrl
-    card.articleCommentsSummary = nil
+    card.node.articleTitle = resource.title
+    card.node.articleDescription = resource.shortDescription
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
     card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
     
