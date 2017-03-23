@@ -72,8 +72,9 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
 
     collectionNode.dataSource = self
     collectionNode.delegate = self
-    
+
     initializeHeader()
+    reloadPenName()
 
     segmentedNode.initialize(with: segments.map({ $0.name }))
     segmentedNode.selectedSegmentChanged = segmentedNode(segmentedControlNode:didSelectSegmentIndex:)
@@ -111,6 +112,12 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
                                                  action: analyticsAction,
                                                  name: viewModel.penName.name ?? "")
     Analytics.shared.send(event: event)
+  }
+
+  func reloadPenName() {
+    viewModel.loadPenName { (success) in
+      self.initializeHeader()
+    }
   }
 
   func loadData() {
