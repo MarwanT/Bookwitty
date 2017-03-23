@@ -382,6 +382,46 @@ extension ProfileDetailsViewController: BaseCardPostNodeDelegate {
       //TODO: handle comment
       break
     }
+
+    //MARK: [Analytics] Event
+
+    guard let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment) else { return }
+    let category: Analytics.Category
+    var name: String = (resource as? ModelCommonProperties)?.title ?? ""
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+      name = (resource as? Author)?.name ?? ""
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+      name = (resource as? PenName)?.name ?? ""
+    default:
+      category = .Default
+    }
+
+    let analyticsAction = Analytics.Action.actionFrom(cardAction: action)
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: analyticsAction,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 }
 
