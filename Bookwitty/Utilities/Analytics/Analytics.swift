@@ -49,6 +49,10 @@ internal final class Analytics {
   func send(screenName: ScreenName) {
     self.sendGoogle(screenName: screenName)
   }
+
+  func set(field: Field, value: String) {
+    self.setGoogle(field: field, value: value)
+  }
 }
 
 // MARK: - Google Analytics
@@ -96,6 +100,18 @@ extension Analytics {
     let gADictionary: NSMutableDictionary = gADictionaryBuilder.build()
     
     GAI.sharedInstance().defaultTracker.send(gADictionary as [NSObject : AnyObject])
+  }
+
+  fileprivate func setGoogle(field: Field, value: String) {
+    var key: String = ""
+    switch field {
+    case .ApplicationVersion:
+      key = kGAIAppVersion
+    case .UserIdentifier:
+      key = kGAIUserId
+    }
+
+    GAI.sharedInstance().defaultTracker.set(key, value: value)
   }
 }
 
