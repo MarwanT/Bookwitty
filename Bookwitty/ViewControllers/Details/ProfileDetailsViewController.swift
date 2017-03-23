@@ -93,6 +93,24 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
     self.activeSegment = segment(withIndex: index)
     self.loadData()
+
+    //MARK: [Analytics] Event
+    var analyticsAction: Analytics.Action = .Default
+    switch activeSegment {
+    case .latest:
+      analyticsAction = .GoToLatest
+    case .followers:
+      analyticsAction = .GoToFollowers
+    case .following:
+      analyticsAction = .GoToFollowings
+    default:
+      break
+    }
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                 action: analyticsAction,
+                                                 name: viewModel.penName.name ?? "")
+    Analytics.shared.send(event: event)
   }
 
   func loadData() {
