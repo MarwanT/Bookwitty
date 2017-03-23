@@ -150,10 +150,12 @@ extension Analytics {
     case ViewAllCategories
     case ViewAllBooks
     //
+    case Follow
     case FollowTopic
     case FollowTopicBook
     case FollowAuthor
     case FollowPenName
+    case Unfollow
     case UnfollowTopic
     case UnfollowTopicBook
     case UnfollowAuthor
@@ -248,6 +250,8 @@ extension Analytics {
         return "View All Categories"
       case .ViewAllBooks:
         return "View All Books"
+      case .Follow:
+        return "Follow"
       case .FollowTopic:
         return "Follow Topic"
       case .FollowTopicBook:
@@ -256,6 +260,8 @@ extension Analytics {
         return "Follow Author"
       case .FollowPenName:
         return "Follow Pen Name"
+      case .Unfollow:
+        return "Unfollow"
       case .UnfollowTopic:
         return "Unfollow Topic"
       case .UnfollowTopicBook:
