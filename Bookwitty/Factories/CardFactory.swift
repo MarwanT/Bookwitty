@@ -446,7 +446,7 @@ extension  CardFactory {
     card.setup(forFollowingMode: true)
     card.setFollowingValue(following: resource.following)
     card.node.imageUrl = resource.avatarUrl
-    card.node.followersCount = String(resource.followersCount?.intValue ?? 0)
+    card.node.followersCount = String(resource.counts?.followers ?? 0)
     card.node.userName = resource.name
     card.node.articleDescription = resource.biography
 
