@@ -20,7 +20,14 @@ class GenericNodeViewController: ASViewController<ASDisplayNode> {
     } else {
       baseNode = node
     }
+    
+    // Set White background if base node has no background set
+    if baseNode.backgroundColor == nil {
+      baseNode.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+    }
+   
     super.init(node: baseNode)
+    
     self.title = title
   }
 
