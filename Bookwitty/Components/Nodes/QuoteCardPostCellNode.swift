@@ -27,6 +27,10 @@ class QuoteCardPostCellNode: BaseCardPostNode {
     self.init()
     showsInfoNode = shouldShowInfoNode
   }
+
+  override func updateMode(fullMode: Bool) {
+    node.setupMode(fullViewMode: fullMode)
+  }
 }
 
 class QuoteCardPostContentNode: ASDisplayNode {
@@ -63,8 +67,13 @@ class QuoteCardPostContentNode: ASDisplayNode {
   }
 
   private func setupNode() {
-    quoteTextNode.maximumNumberOfLines = 3
-    nameTextNode.maximumNumberOfLines = 1
+    setupMode(fullViewMode: false)
+  }
+
+  func setupMode(fullViewMode: Bool) {
+    quoteTextNode.maximumNumberOfLines = fullViewMode ? 0 : 3
+    nameTextNode.maximumNumberOfLines = fullViewMode ? 0 : 1
+    setNeedsLayout()
   }
 
   private func spacer(height: CGFloat = 0, width: CGFloat = 0) -> ASLayoutSpec {

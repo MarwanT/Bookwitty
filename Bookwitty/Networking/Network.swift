@@ -191,11 +191,15 @@ public func absoluteString(for target: TargetType) -> String {
 // MARK: - Request API
 
 public func createAPIRequest(target: BookwittyAPI, completion: @escaping BookwittyAPICompletion) -> (() -> Cancellable) {
-  return { return apiRequest(target: target, completion: completion) }
+  return {
+    return apiRequest(target: target, completion: completion)
+  }
 }
 
 public func apiRequest(target: BookwittyAPI, completion: @escaping BookwittyAPICompletion) -> Cancellable {
+  showActivityIndicator()
   return APIProvider.sharedProvider.request(target, completion: { (result) in
+    hideActivityIndicator()
     switch result {
     case .success(let response):
       // If account need confirmation send notification
@@ -303,5 +307,18 @@ func executePendingOperations(success: Bool) {
     for op in opQueue {
       op.completion(nil, 500, nil, BookwittyAPIError.refreshToken)
     }
+  }
+}
+
+// MARK: - Activity Indicator
+func showActivityIndicator() {
+  DispatchQueue.main.async {
+    UIApplication.shared.isNetworkActivityIndicatorVisible = true
+  }
+}
+
+func hideActivityIndicator() {
+  DispatchQueue.main.async {
+    UIApplication.shared.isNetworkActivityIndicatorVisible = false
   }
 }

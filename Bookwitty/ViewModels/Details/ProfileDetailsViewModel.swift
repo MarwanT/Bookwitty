@@ -10,7 +10,7 @@ import Foundation
 import Moya
 
 class ProfileDetailsViewModel {
-  let penName: PenName
+  var penName: PenName
 
   var latestData: [ModelResource] = []
   var followers: [PenName] = []
@@ -39,6 +39,21 @@ class ProfileDetailsViewModel {
 
 // MARK: - API requests
 extension ProfileDetailsViewModel {
+  func loadPenName(completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let penNameId = penName.id else {
+      completionBlock(false)
+      return
+    }
+    _ = PenNameAPI.penNameDetails(identifier: penNameId, completionBlock: { (success, penName, error) in
+      defer {
+        completionBlock(success)
+      }
+      if let penName = penName, success {
+        self.penName = penName
+      }
+    })
+  }
+
   func data(for segment: ProfileDetailsViewController.Segment, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
     switch segment {
     case .latest:

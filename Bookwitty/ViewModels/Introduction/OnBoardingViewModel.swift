@@ -10,7 +10,7 @@ import Foundation
 import Moya
 import Spine
 
-typealias CellNodeDataItemModel = (id: String?, shortDescription: String?, longDescription: String?, imageUrl: String?, following: Bool?)
+typealias CellNodeDataItemModel = (id: String?, shortDescription: String?, longDescription: String?, imageUrl: String?, following: Bool?, resourceType: String)
 
 final class OnBoardingViewModel {
   var cancellableRequest: Cancellable?
@@ -102,7 +102,7 @@ final class OnBoardingViewModel {
       //init dictionary
       for resource in resources {
         if let topic = resource as? Topic {
-          let model: CellNodeDataItemModel = (topic.id, topic.title, topic.shortDescription, topic.thumbnailImageUrl, topic.following)
+          let model: CellNodeDataItemModel = (topic.id, topic.title, topic.shortDescription, topic.thumbnailImageUrl, topic.following, topic.registeredResourceType)
           if let id = topic.id,
             let key = self.getRelatedKey(for: id, from: items) {
             if dictionary[key] == nil {

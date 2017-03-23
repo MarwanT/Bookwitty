@@ -379,7 +379,8 @@ extension  CardFactory {
     }
     card.postInfoData = cardPostInfoData
     card.node.imageUrl = resource.coverImageUrl
-    card.articleCommentsSummary = nil
+    card.node.articleTitle = resource.title
+    card.node.articleDescription = resource.shortDescription
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
     card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
     
@@ -405,6 +406,7 @@ extension  CardFactory {
       let url = URL(string: urlStr) {
       IFramely.shared.loadResponseFor(url: url, closure: { (response: Response?) in
         card.node.videoUrl = response?.embedUrl
+        card.node.imageUrl = response?.thumbnails?.first?.url?.absoluteString ?? resource.coverImageUrl
       })
     }
 
@@ -420,7 +422,6 @@ extension  CardFactory {
     card.postInfoData = cardPostInfoData
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
-    card.node.imageUrl = resource.coverImageUrl
     card.articleCommentsSummary = nil
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
     card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
@@ -446,7 +447,7 @@ extension  CardFactory {
     card.setup(forFollowingMode: true)
     card.setFollowingValue(following: resource.following)
     card.node.imageUrl = resource.avatarUrl
-    card.node.followersCount = String(resource.followersCount?.intValue ?? 0)
+    card.node.followersCount = String(resource.counts?.followers ?? 0)
     card.node.userName = resource.name
     card.node.articleDescription = resource.biography
 
@@ -487,14 +488,15 @@ extension  CardFactory {
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
     card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
 
-    let imagesCount = resource.postsRelations?.count ?? 0
-    card.node.prepareImages(imageCount: imagesCount)
-
-    if let images = resource.posts?.map({ ($0 as? ModelCommonProperties)?.thumbnailImageUrl }) {
+    let hasPosts = resource.posts?.count ?? 0 > 0
+    if hasPosts, let images = resource.posts?.map({ ($0 as? ModelCommonProperties)?.thumbnailImageUrl }) {
       let imageCollection = images.flatMap({$0})
       if imageCollection.count > 0 {
         card.node.loadImages(with: imageCollection)
       }
+    } else if let imagesCount = resource.postsRelations?.count,
+      imagesCount > 0 {
+      card.node.prepareImages(imageCount: imagesCount)
     }
     return card
   }

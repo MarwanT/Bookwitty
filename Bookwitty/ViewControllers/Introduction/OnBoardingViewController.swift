@@ -114,6 +114,20 @@ extension OnBoardingViewController: OnBoardingCellDelegate {
         doneCompletionBlock(succes)
       })
     }
+
+    //MARK: [Analytics] Event
+    let analyticsAction: Analytics.Action
+    switch dataItem.resourceType {
+    case Topic.resourceType:
+      analyticsAction = shouldSelect ? .FollowTopic : .UnfollowTopic
+    case PenName.resourceType:
+      analyticsAction = shouldSelect ? .FollowPenName : .UnfollowPenName
+    default:
+      analyticsAction = shouldSelect ? .Follow : .Unfollow
+    }
+    let event: Analytics.Event = Analytics.Event(category: .Onboarding,
+                                                 action: analyticsAction)
+    Analytics.shared.send(event: event)
   }
 }
 

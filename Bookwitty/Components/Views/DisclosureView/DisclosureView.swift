@@ -112,6 +112,7 @@ extension DisclosureView: Themeable {
       top: 0, left: leftMargin, bottom: 0, right: 0)
     
     disclosureImageView.image = #imageLiteral(resourceName: "rightArrow")
+    disclosureImageView.contentMode = UIViewContentMode.scaleAspectFit
     
     refreshStyling()
     refreshBackground(animated: false, completion: {})

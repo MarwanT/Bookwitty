@@ -25,6 +25,10 @@ class PhotoCardPostCellNode: BaseCardPostNode {
     self.init()
     showsInfoNode = shouldShowInfoNode
   }
+
+  override func updateMode(fullMode: Bool) {
+    node.setupMode(fullViewMode: fullMode)
+  }
 }
 
 class PhotoCardContentNode: ASDisplayNode {
@@ -33,6 +37,8 @@ class PhotoCardContentNode: ASDisplayNode {
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
 
   var imageNode: ASNetworkImageNode
+  var titleNode: ASTextNode
+  var descriptionNode: ASTextNode
 
   var imageUrl: String? {
     didSet {
@@ -41,17 +47,55 @@ class PhotoCardContentNode: ASDisplayNode {
       }
     }
   }
-  
-  override init() {
-    imageNode = ASNetworkImageNode()
-    super.init()
-    addSubnode(imageNode)
-    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
-    imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
+  var articleTitle: String? {
+    didSet {
+      if let articleTitle = articleTitle {
+        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
+          .append(text: articleTitle, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+      }
+    }
+  }
+  var articleDescription: String? {
+    didSet {
+      if let articleDescription = articleDescription {
+        descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
+          .append(text: articleDescription, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+      }
+    }
+  }
+  var hasImage: Bool {
+    get {
+      return !(imageUrl?.isEmpty ?? true)
+    }
   }
 
-  private func imageInset() -> UIEdgeInsets {
-    return UIEdgeInsets(top: 0, left: 0, bottom: 0 , right: 0)
+  override init() {
+    imageNode = ASNetworkImageNode()
+    titleNode = ASTextNode()
+    descriptionNode = ASTextNode()
+    super.init()
+    addSubnode(imageNode)
+    addSubnode(titleNode)
+    addSubnode(descriptionNode)
+    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
+    imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
+    setupNode()
+  }
+
+  private func setupNode() {
+    setupMode(fullViewMode: false)
+
+    imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
+    imageNode.addTarget(self, action: #selector(photoImageTouchUpInside(_:)), forControlEvents: .touchUpInside)
+  }
+
+  func setupMode(fullViewMode: Bool) {  
+    titleNode.maximumNumberOfLines = fullViewMode ? 0 : 3
+    descriptionNode.maximumNumberOfLines = fullViewMode ? 0 : 3
+    setNeedsLayout()
+  }
+
+  func photoImageTouchUpInside(_ sender: ASImageNode?) {
   }
 
   private func spacer(height: CGFloat) -> ASLayoutSpec {
@@ -60,14 +104,40 @@ class PhotoCardContentNode: ASDisplayNode {
     }
   }
 
+  private func titleInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0,
+                        left: externalMargin + internalMargin,
+                        bottom: 0,
+                        right: externalMargin + internalMargin)
+  }
+
+  private func descriptionInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0,
+                        left: externalMargin + internalMargin,
+                        bottom: 0,
+                        right: externalMargin + internalMargin)
+  }
+
+  private func imageInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0, left: 0, bottom: 0 , right: 0)
+  }
+
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let imageSize = CGSize(width: constrainedSize.max.width, height: 150)
     imageNode.style.preferredSize = imageSize
     imageNode.defaultImage = UIImage(color: ASDisplayNodeDefaultPlaceholderColor(), size: imageSize)
+    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
 
     let imageInsetLayoutSpec = ASInsetLayoutSpec(insets: imageInset(), child: imageNode)
+    let titleInsetLayoutSpec = ASInsetLayoutSpec(insets: titleInset(), child: titleNode)
+    let descriptionInsetLayoutSpec = ASInsetLayoutSpec(insets: descriptionInset(), child: descriptionNode)
 
-    let nodesArray: [ASLayoutElement] = [imageInsetLayoutSpec]
+    let nodesArray: [ASLayoutElement]
+    if (hasImage) {
+      nodesArray = [imageInsetLayoutSpec, spacer(height: internalMargin), titleInsetLayoutSpec, spacer(height: internalMargin), descriptionInsetLayoutSpec]
+    } else {
+      nodesArray = [titleInsetLayoutSpec, spacer(height: internalMargin), descriptionInsetLayoutSpec]
+    }
 
     let verticalStack = ASStackLayoutSpec(direction: .vertical,
                                           spacing: 0,
@@ -76,5 +146,6 @@ class PhotoCardContentNode: ASDisplayNode {
                                           children: nodesArray)
 
     return verticalStack
+
   }
 }

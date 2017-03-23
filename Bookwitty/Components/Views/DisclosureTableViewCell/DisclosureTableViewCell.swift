@@ -39,5 +39,6 @@ extension DisclosureTableViewCell: Themeable {
     detailsLabel.textColor = ThemeManager.shared.currentTheme.colorNumber15()
     
     disclosureImageView.image = #imageLiteral(resourceName: "rightArrow")
+    disclosureImageView.contentMode = UIViewContentMode.scaleAspectFit
   }
 }

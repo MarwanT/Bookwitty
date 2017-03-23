@@ -51,6 +51,8 @@ class DisclosureNode: ASControlNode {
     automaticallyManagesSubnodes = true
     style.height = ASDimensionMake(Configuration.nodeHeight)
     imageNode.image = #imageLiteral(resourceName: "rightArrow")
+    imageNode.contentMode = UIViewContentMode.scaleAspectFit
+    imageNode.style.preferredSize = CGSize(width: 10, height: 14)
     addTarget(self, action: #selector(nodeTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
   }
   
@@ -77,12 +79,15 @@ class DisclosureNode: ASControlNode {
     textInsetSpec.style.flexGrow = 1.0
     textInsetSpec.style.flexShrink = 1.0
     
+    let imageInsetSpec = ASInsetLayoutSpec(
+      insets: configuration.imageNodeInsets, child: imageNode)
+    
     let horizontalStack = ASStackLayoutSpec(
       direction: .horizontal,
       spacing: 0,
       justifyContent: .spaceBetween,
       alignItems: .center,
-      children: [textInsetSpec, imageNode])
+      children: [textInsetSpec, imageInsetSpec])
     let insetSpec = ASInsetLayoutSpec(
       insets: configuration.nodeEdgeInsets,
       child: horizontalStack)
@@ -161,6 +166,7 @@ extension DisclosureNode {
     var textEdgeInsets = UIEdgeInsets(
       top: 0, left: 0,
       bottom: 5, right: 0)
+    var imageNodeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 19)
     var normalBackgroundColor: UIColor = ThemeManager.shared.currentTheme.colorNumber23()
     var selectedBackgroundColor: UIColor = ThemeManager.shared.currentTheme.defaultSelectionColor()
     var isAutoDeselectable: Bool = true

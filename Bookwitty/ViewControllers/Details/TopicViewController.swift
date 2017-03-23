@@ -36,7 +36,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   fileprivate var flowLayout: UICollectionViewFlowLayout
 
   fileprivate var normal: [Category] = [.latest(index: 0), .relatedBooks(index: 1), .followers(index: 2) ]
-  fileprivate var book: [Category] = [.latest(index: 0), .relatedBooks(index: 1), .editions(index: 2), .followers(index: 3)]
+  fileprivate var book: [Category] = [.latest(index: 0), .editions(index: 1), .relatedBooks(index: 2), .followers(index: 3)]
 
   fileprivate lazy var mode: Mode = .normal(categories: self.normal)
 
@@ -356,6 +356,12 @@ extension TopicViewController: PenNameFollowNodeDelegate {
         return
     }
     pushProfileViewController(penName: penName)
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                 action: .GoToDetails,
+                                                 name: penName.name ?? "")
+    Analytics.shared.send(event: event)
   }
 }
 
@@ -637,6 +643,12 @@ extension TopicViewController {
     case PenName.resourceType:
       if let penName = resource as? PenName {
         pushProfileViewController(penName: penName)
+
+        //MARK: [Analytics] Event
+        let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                     action: .GoToDetails,
+                                                     name: penName.name ?? "")
+        Analytics.shared.send(event: event)
       }
     default:
       print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")

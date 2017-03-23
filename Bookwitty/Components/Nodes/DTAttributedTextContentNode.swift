@@ -65,13 +65,26 @@ class DTAttributedTextContentNode: ASCellNode {
       textContentView.attributedString = nil
       return
     }
-    textContentView.attributedString = DTAttributedTextContentView.htmlAttributedString(text: text, fontDynamicType: fontDynamicType, color: color, htmlImageWidth: htmlImageWidth, defaultLineHeightMultiple: AttributedStringBuilder.defaultHTMLLineHeightMultiple)
+    let attrStr = DTAttributedTextContentView.htmlAttributedString(text: text, fontDynamicType: fontDynamicType, color: color, htmlImageWidth: htmlImageWidth, defaultLineHeightMultiple: AttributedStringBuilder.defaultHTMLLineHeightMultiple)
+    if let html: NSMutableAttributedString = attrStr?.mutableCopy() as? NSMutableAttributedString {
+      let range = NSRange(location: 0, length: html.length)
+      html.enumerateAttribute(NSFontAttributeName, in: range, options: [], using: { (value, range, stop) in
+        if let font = value as? UIFont, font.pointSize < 4.0 {
+          html.removeAttribute(NSFontAttributeName, range: range)
+          html.addAttribute(NSFontAttributeName, value: font.withSize(12.0), range: range)
+        }
+      })
+      textContentView.attributedString = html
+    }
   }
 }
 
 extension DTAttributedTextContentNode: DTLazyImageViewDelegate, DTAttributedTextContentViewDelegate {
   public func attributedTextContentView(_ attributedTextContentView: DTAttributedTextContentView!, didDraw layoutFrame: DTCoreTextLayoutFrame!, in context: CGContext!) {
-    style.preferredSize = attributedTextContentView.intrinsicContentSize()
+    let intrinsicContentSize = attributedTextContentView.intrinsicContentSize()
+    if intrinsicContentSize.height != -1 && intrinsicContentSize.width != -1 {
+      style.preferredSize = intrinsicContentSize
+    }
     setNeedsLayout()
     delegate?.attributedTextContentNodeNeedsLayout(node: self)
   }

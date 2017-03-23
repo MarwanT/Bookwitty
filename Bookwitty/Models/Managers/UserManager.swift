@@ -83,6 +83,9 @@ class UserManager {
     UserDefaults.standard.set(userDictionary, forKey: Key.SignedInUser)
     UserDefaults.standard.set(penNamesArray, forKey: Key.SignedInUserPenNames)
 
+    //MARK: [Analytics] Field
+    Analytics.shared.set(field: Analytics.Field.UserIdentifier, value: user.id ?? "")
+
     if let firstPenName = user.penNames?.first {
       //On sign-in save the first name as the default one
       saveDefaultPenName(penName: firstPenName)

@@ -23,8 +23,7 @@ class PenName: Resource {
   var linkedinUrl: String?
   var wordpressUrl: String?
   var websiteUrl: String?
-  var followersCount: NSNumber?
-  var followingCount: NSNumber?
+  var counts: Counts?
 
   @objc
   private var followingNumber: NSNumber?
@@ -57,8 +56,7 @@ class PenName: Resource {
       "wordpressUrl": Attribute().serializeAs("wordpress-url"),
       "websiteUrl": Attribute().serializeAs("website-url"),
       "followingNumber": Attribute().serializeAs("following"),
-      "followersCount": Attribute().serializeAs("followers-count"),
-      "followingCount": Attribute().serializeAs("following-count")
+      "counts" : CountsAttribute().serializeAs("counts")
       ])
   }
 }

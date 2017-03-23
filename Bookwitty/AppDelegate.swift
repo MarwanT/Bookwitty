@@ -35,7 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
 
     IFramely.shared.initializeWith(apiKey: AppKeys.shared.iframelyKey)
-    
+
+    //MARK: [Analytics] Field
+    Analytics.shared.set(field: .ApplicationVersion, value: AppManager.shared.versionDescription)
+
     AppManager.shared.checkAppStatus()
 
     return true
