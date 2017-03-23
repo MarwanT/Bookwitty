@@ -32,7 +32,8 @@ internal final class Analytics {
     NotificationCenter.default.removeObserver(self)
   }
   
-  @objc func sendUsageDataValueChanged(notification: NSNotification) {
+  @objc
+  fileprivate func sendUsageDataValueChanged(notification: NSNotification) {
     GAI.sharedInstance().optOut = !self.enabled
   }
   
