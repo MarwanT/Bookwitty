@@ -406,6 +406,7 @@ extension  CardFactory {
       let url = URL(string: urlStr) {
       IFramely.shared.loadResponseFor(url: url, closure: { (response: Response?) in
         card.node.videoUrl = response?.embedUrl
+        card.node.imageUrl = response?.thumbnails?.first?.url?.absoluteString ?? resource.coverImageUrl
       })
     }
 
@@ -421,7 +422,6 @@ extension  CardFactory {
     card.postInfoData = cardPostInfoData
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
-    card.node.imageUrl = resource.coverImageUrl
     card.articleCommentsSummary = nil
     card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
     card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)

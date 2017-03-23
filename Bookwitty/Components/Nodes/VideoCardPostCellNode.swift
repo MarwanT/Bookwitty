@@ -70,6 +70,7 @@ class VideoCardContentNode: ASDisplayNode {
       if let imageUrl = imageUrl {
         imageNode.url = URL(string: imageUrl)
       }
+      setNeedsLayout()
     }
   }
 
