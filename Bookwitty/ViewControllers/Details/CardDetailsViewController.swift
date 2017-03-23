@@ -190,7 +190,7 @@ extension CardDetailsViewController: BaseCardPostNodeDelegate {
     }
 
     let name: String = (viewModel.resource as? ModelCommonProperties)?.title ?? ""
-    let analyticsAction = Analytics.Action.actionFrom(cardAction: action)
+    let analyticsAction = Analytics.Action.actionFrom(cardAction: action, with: category)
     let event: Analytics.Event = Analytics.Event(category: category,
                                                  action: analyticsAction,
                                                  name: name)

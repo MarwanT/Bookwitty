@@ -339,7 +339,7 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
       category = .Default
     }
 
-    let analyticsAction = Analytics.Action.actionFrom(cardAction: action)
+    let analyticsAction = Analytics.Action.actionFrom(cardAction: action, with: category)
     let event: Analytics.Event = Analytics.Event(category: category,
                                                  action: analyticsAction,
                                                  name: name)
@@ -624,7 +624,7 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
       category = .Default
     }
 
-    let analyticsAction = Analytics.Action.actionFrom(cardAction: action)
+    let analyticsAction = Analytics.Action.actionFrom(cardAction: action, with: category)
     let event: Analytics.Event = Analytics.Event(category: category,
                                                  action: analyticsAction,
                                                  name: name)
