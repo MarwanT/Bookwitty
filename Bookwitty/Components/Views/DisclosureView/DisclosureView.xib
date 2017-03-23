@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -16,16 +16,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PG1-kK-OvX">
-                    <rect key="frame" x="0.0" y="32" width="330" height="21"/>
+                    <rect key="frame" x="0.0" y="32" width="336" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TOB-IC-tDf">
-                    <rect key="frame" x="330" y="19.5" width="45" height="45"/>
+                    <rect key="frame" x="346" y="35.5" width="10" height="14"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="45" id="2n4-SY-z2E"/>
-                        <constraint firstAttribute="width" constant="45" id="WB9-mi-eN9"/>
+                        <constraint firstAttribute="height" constant="14" id="2n4-SY-z2E"/>
+                        <constraint firstAttribute="width" constant="10" id="WB9-mi-eN9"/>
                     </constraints>
                 </imageView>
             </subviews>
@@ -33,9 +33,9 @@
             <constraints>
                 <constraint firstItem="PG1-kK-OvX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="7V4-pJ-HXl"/>
                 <constraint firstItem="TOB-IC-tDf" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="IgD-YJ-2tx"/>
-                <constraint firstItem="TOB-IC-tDf" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailingMargin" id="Rl7-pc-N7A"/>
+                <constraint firstItem="TOB-IC-tDf" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailingMargin" constant="-19" id="Rl7-pc-N7A"/>
                 <constraint firstItem="PG1-kK-OvX" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="V3t-Nw-4y2"/>
-                <constraint firstItem="TOB-IC-tDf" firstAttribute="leading" secondItem="PG1-kK-OvX" secondAttribute="trailing" id="mbW-Pg-HyV"/>
+                <constraint firstItem="TOB-IC-tDf" firstAttribute="leading" secondItem="PG1-kK-OvX" secondAttribute="trailing" constant="10" id="mbW-Pg-HyV"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
