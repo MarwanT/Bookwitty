@@ -32,6 +32,8 @@ class DisclosureNodeCell: ASCellNode {
     automaticallyManagesSubnodes = true
     style.minHeight = ASDimensionMake(Configuration.nodeHeight)
     imageNode.image = #imageLiteral(resourceName: "rightArrow")
+    imageNode.contentMode = UIViewContentMode.scaleAspectFit
+    imageNode.style.preferredSize = CGSize(width: 10, height: 14)
     separatorInset = configuration.separatorInsets
   }
   
@@ -51,12 +53,15 @@ class DisclosureNodeCell: ASCellNode {
     textInsetSpec.style.flexGrow = 1.0
     textInsetSpec.style.flexShrink = 1.0
     
+    let imageInsetSpec = ASInsetLayoutSpec(
+      insets: configuration.imageNodeInsets, child: imageNode)
+    
     let horizontalStack = ASStackLayoutSpec(
       direction: .horizontal,
       spacing: 0,
       justifyContent: .spaceBetween,
       alignItems: .center,
-      children: [textInsetSpec, imageNode])
+      children: [textInsetSpec, imageInsetSpec])
     let insetSpec = ASInsetLayoutSpec(
       insets: configuration.nodeEdgeInsets,
       child: horizontalStack)
@@ -142,6 +147,7 @@ extension DisclosureNodeCell {
     var textEdgeInsets = UIEdgeInsets(
       top: 0, left: 0,
       bottom: 5, right: 0)
+    var imageNodeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 19)
     var style: Style = .normal
     var addInternalBottomSeparator: Bool = false
     var separatorInsets = UIEdgeInsets.zero
