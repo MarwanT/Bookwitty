@@ -14,9 +14,15 @@ class AppManager {
   var isCheckingStatus: Bool = false
   
   static let shared = AppManager()
-  
+
+  var version: Version? = Bundle.main.version
+
+  var versionDescription: String {
+    return version?.description ?? ""
+  }
+
   private init() {}
-  
+
   /// Listen to AppNotificaiton.didCheckAppStatus for updates
   func checkAppStatus() {
     guard !isCheckingStatus else {
@@ -34,23 +40,20 @@ class AppManager {
       }
       
       guard success, let meta = appMeta,
+        let version = self.version,
         let minimumAppVersionString = meta.minimumAppVersion,
-        let appVersionString = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String,
-        let appVersion = Version(appVersionString),
         let minimumSupportedVersion = Version(minimumAppVersionString)
       else {
         return
       }
       
       // Store app meta somewhere if needed
-      
-      if appVersion >= minimumSupportedVersion {
+      if version >= minimumSupportedVersion {
         self.appStatus = .valid
       } else {
         self.appStatus = .needsUpdate(URL(string: meta.storeURLString ?? ""))
       }
     }
-    
   }
   
   private func flushNetworkOperations() {
