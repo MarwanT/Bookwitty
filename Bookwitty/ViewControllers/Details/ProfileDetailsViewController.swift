@@ -48,6 +48,9 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+    collectionNode.onDidLoad { (node) in
+      (node.view as? ASCollectionView)?.leadingScreensForBatching = 6
+    }
     segmentedNode = SegmentedControlNode()
     loaderNode = LoaderNode()
     loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
