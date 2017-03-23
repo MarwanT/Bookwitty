@@ -35,7 +35,12 @@ class PostDetailsViewModel {
     return (resource as? ModelCommonProperties)?.createdAt
   }
   var penName: PenName? {
-    return penNameFromResource(resource: resource)
+    get {
+      return penNameFromResource(resource: resource)
+    }
+    set {
+      setPenNameFromResource(resource: resource, penName: newValue)
+    }
   }
   var contentPostsIdentifiers: [ResourceIdentifier]? {
     return contentPostsFromResource(resource: resource)
@@ -109,6 +114,19 @@ class PostDetailsViewModel {
     }
   }
 
+  private func setPenNameFromResource(resource: Resource, penName: PenName?) {
+    guard let penName = penName else {
+      return
+    }
+    switch(resource.registeredResourceType) {
+    case ReadingList.resourceType:
+      (resource as? ReadingList)?.penName = penName
+    case Text.resourceType:
+      (resource as? Text)?.penName = penName
+    default: return
+    }
+  }
+
   private func contentPostsFromResource(resource: Resource) -> [ResourceIdentifier]? {
     switch(resource.registeredResourceType) {
     case ReadingList.resourceType:
@@ -147,6 +165,21 @@ class PostDetailsViewModel {
 
   func contentPostsItemCount() -> Int {
     return contentPostsResources?.count ?? 0
+  }
+
+  func loadPenName(completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let penNameId = penName?.id else {
+      completionBlock(false)
+      return
+    }
+    _ = PenNameAPI.penNameDetails(identifier: penNameId, completionBlock: { (success, penName, error) in
+      defer {
+        completionBlock(success)
+      }
+      if let penName = penName, success {
+        self.penName = penName
+      }
+    })
   }
 
   func loadContentPosts(completionBlock: @escaping (_ success: Bool) -> ()) {

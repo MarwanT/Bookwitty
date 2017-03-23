@@ -48,6 +48,9 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+    collectionNode.onDidLoad { (node) in
+      (node.view as? ASCollectionView)?.leadingScreensForBatching = 6
+    }
     segmentedNode = SegmentedControlNode()
     loaderNode = LoaderNode()
     loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
@@ -72,8 +75,9 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
 
     collectionNode.dataSource = self
     collectionNode.delegate = self
-    
+
     initializeHeader()
+    reloadPenName()
 
     segmentedNode.initialize(with: segments.map({ $0.name }))
     segmentedNode.selectedSegmentChanged = segmentedNode(segmentedControlNode:didSelectSegmentIndex:)
@@ -111,6 +115,12 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
                                                  action: analyticsAction,
                                                  name: viewModel.penName.name ?? "")
     Analytics.shared.send(event: event)
+  }
+
+  func reloadPenName() {
+    viewModel.loadPenName { (success) in
+      self.initializeHeader()
+    }
   }
 
   func loadData() {

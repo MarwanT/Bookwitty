@@ -47,10 +47,12 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.setDimValue(dimmed: viewModel.isDimmed, dims: viewModel.dims ?? 0)
     postDetailsNode.booksHorizontalCollectionNode.dataSource = self
     postDetailsNode.booksHorizontalCollectionNode.delegate = self
+    viewModel.loadPenName { (success) in
+      self.postDetailsNode.penName = self.viewModel.penName
+    }
     loadContentPosts()
     loadRelatedBooks()
     loadRelatedPosts()
-
     applyLocalization()
     observeLanguageChanges()
 
