@@ -324,8 +324,10 @@ extension SearchViewController: ASCollectionDelegate {
     let initialLastIndexPath: Int = viewModel.numberOfItemsInSection(section: Section.cards.rawValue)
 
     //MARK: [Analytics] Event
+    let query = searchBar?.text ?? ""
     let event: Analytics.Event = Analytics.Event(category: .Search,
-                                                 action: .LoadMore)
+                                                 action: .LoadMore,
+                                                 name: query)
     Analytics.shared.send(event: event)
 
     // Fetch next page data
