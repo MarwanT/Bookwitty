@@ -52,6 +52,25 @@ struct PenNameAPI {
     })
   }
 
+  public static func penNameDetails(identifier: String, completionBlock: @escaping (_ success: Bool, _ penName: PenName?, _ error: BookwittyAPIError?)->()) -> Cancellable? {
+    return signedAPIRequest(target: BookwittyAPI.penName(identifier: identifier), completion: {
+      (data, statusCode, response, error) in
+      var success: Bool = false
+      var penName: PenName? = nil
+      var error: BookwittyAPIError? = error
+      defer {
+        completionBlock(success, penName, error)
+      }
+
+      if let data = data {
+        penName = PenName.parseData(data: data)
+        success = penName != nil
+      } else {
+        error = BookwittyAPIError.failToParseData
+      }
+    })
+  }
+
   public static func followers(contentIdentifier identifier: String, completionBlock: @escaping (_ success: Bool, _ penNames: [PenName]?, _ next: URL?, _ error: BookwittyAPIError?)->()) -> Cancellable? {
     return signedAPIRequest(target: BookwittyAPI.followers(identifier: identifier), completion: { (data: Data?, statusCode: Int?, response: URLResponse?, error: BookwittyAPIError?) in
       var penNames: [PenName]? = nil
