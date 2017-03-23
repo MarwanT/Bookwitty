@@ -141,6 +141,12 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     }
   }
 
+  func reloadPenName() {
+    viewModel.loadPenName { (success) in
+      self.initializeHeader()
+    }
+  }
+
   func loadData() {
     self.loadingStatus = .reloading
     self.reloadCollectionSections()
