@@ -9,6 +9,12 @@
 import Foundation
 
 extension Analytics {
+
+  enum Field: Int {
+    case ApplicationVersion
+    case UserIdentifier
+  }
+
   struct Event {
     let category: Category
     let action: Action
