@@ -86,7 +86,14 @@ class AccountViewController: UIViewController {
     guard let penName = viewModel.selectedPenName(atRow: indexPath.row) else {
       return
     }
+
     pushProfileViewController(penName: penName)
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .Account,
+                                                 action: .GoToPenName,
+                                                 name: penName.name ?? "")
+    Analytics.shared.send(event: event)
   }
 
   func pushSettingsViewController() {

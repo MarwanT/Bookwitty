@@ -470,6 +470,12 @@ extension CategoryViewController {
     case PenName.resourceType:
       if let penName = resource as? PenName {
         pushProfileViewController(penName: penName)
+
+        //MARK: [Analytics] Event
+        let event: Analytics.Event = Analytics.Event(category:.PenName,
+                                                     action:.GoToDetails,
+                                                     name: penName.name ?? "")
+        Analytics.shared.send(event: event)
       }
     default:
       print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")

@@ -353,7 +353,41 @@ extension BookDetailsViewController: BaseCardPostNodeDelegate {
     let resourcesCommonProperties = viewModel.resourcesCommonProperties(for: indexPath)
     if let resource = resourcesCommonProperties?[indexPath.row - 1],
       let penName = resource.penName {
+
       pushProfileViewController(penName: penName)
+
+      //MARK: [Analytics] Event
+      let category: Analytics.Category
+      switch resource.registeredResourceType {
+      case Image.resourceType:
+        category = .Image
+      case Quote.resourceType:
+        category = .Quote
+      case Video.resourceType:
+        category = .Video
+      case Audio.resourceType:
+        category = .Audio
+      case Link.resourceType:
+        category = .Link
+      case Author.resourceType:
+        category = .Author
+      case ReadingList.resourceType:
+        category = .ReadingList
+      case Topic.resourceType:
+        category = .Topic
+      case Text.resourceType:
+        category = .Text
+      case Book.resourceType:
+        category = .TopicBook
+      case PenName.resourceType:
+        category = .PenName
+      default:
+        category = .Default
+      }
+      let event: Analytics.Event = Analytics.Event(category: category,
+                                                   action: .GoToPenName,
+                                                   name: penName.name ?? "")
+      Analytics.shared.send(event: event)
     }
   }
   
