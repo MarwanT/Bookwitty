@@ -51,6 +51,7 @@ public enum BookwittyAPI {
   case penNameFollowing(identifier: String)
   case status
   case resendAccountConfirmation
+  case uploadPolicy(file: (name: String, size: Int), fileType: UploadAPI.FileType, assetType: UploadAPI.AssetType)
 }
 
 // MARK: - Target Type
@@ -157,6 +158,8 @@ extension BookwittyAPI: TargetType {
       path = "/status"
     case .resendAccountConfirmation:
       path = "/user/resend_confirmation"
+    case .uploadPolicy:
+      path = "/upload_policies"
     }
     
     return apiBasePath + apiVersion + path
@@ -168,7 +171,7 @@ extension BookwittyAPI: TargetType {
       return .post
   case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent:
       return .get
-    case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword, .followPenName:
+    case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword, .followPenName, .uploadPolicy:
       return .post
     case .updateUser, .updatePenName:
       return .patch
@@ -226,6 +229,8 @@ extension BookwittyAPI: TargetType {
       return UserAPI.resetPasswordBody(email: email)
     case .postsContent(_ , let page):
       return GeneralAPI.postsContentParameters(page: page)
+    case .uploadPolicy(let file, let fileType, let assetType):
+      return UploadAPI.uploadPolicyParameters(file: file, fileType: fileType, assetType: assetType)
     case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName:
       return nil
     }
