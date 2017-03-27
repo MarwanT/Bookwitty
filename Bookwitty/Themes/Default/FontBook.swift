@@ -41,11 +41,11 @@ enum FontDynamicType: String {
     
     switch (fontDynamicType, weight) {
     case (FontDynamicType.title1, _):
-      selectedFont = Font.volkhov
+      selectedFont = Font.volkhovRegular
     case (FontDynamicType.title2, _):
-      selectedFont = Font.volkhov
+      selectedFont = Font.volkhovRegular
     case (FontDynamicType.title3, _):
-      selectedFont = Font.volkhov
+      selectedFont = Font.volkhovRegular
     case (FontDynamicType.body, _):
       selectedFont = Font.georgiaRegular
     case (FontDynamicType.headline, _):
