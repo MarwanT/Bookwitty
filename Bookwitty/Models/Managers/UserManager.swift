@@ -94,8 +94,9 @@ class UserManager {
   }
 
   func saveDefaultPenName(penName: PenName) {
-    let serializedPenName = penName.serializeData(options:  [.IncludeID, .OmitNullValues, .IncludeToOne, .IncludeToMany])
-    UserDefaults.standard.set(serializedPenName, forKey: Key.SignedInUserDefaultPenName)
+    if let id = penName.id {
+      UserDefaults.standard.set(id, forKey: Key.SignedInUserDefaultPenName)
+    }
   }
   
   func deleteSignedInUser() {
@@ -104,14 +105,18 @@ class UserManager {
   }
 
   private func getUserDefaultPenName() -> PenName? {
-    guard let defaultPenNameDictionary = UserDefaults.standard.value(forKey: Key.SignedInUserDefaultPenName) as? [String : Any] else {
+    guard let penNames = penNames, penNames.count > 0 else {
       return nil
     }
-    guard let data = try? JSONSerialization.data(withJSONObject: defaultPenNameDictionary, options: JSONSerialization.WritingOptions.prettyPrinted),
-      let penName = PenName.parseData(data: data) else {
-        return nil
+    guard let defaultPenNameId = UserDefaults.standard.value(forKey: Key.SignedInUserDefaultPenName) as? String else {
+      //If No PenName is set, set the default at index 0
+      return penNames.first
     }
-    return penName
+
+    guard let index = penNames.index(where: { $0.id == defaultPenNameId }) else {
+      return penNames.first
+    }
+    return penNames[index]
   }
 
   private func getSignedInUser() -> User? {
