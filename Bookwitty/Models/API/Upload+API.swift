@@ -9,6 +9,13 @@
 import Foundation
 
 public struct UploadAPI {
+  public enum FileType: String {
+    case image = "image/jpeg"
+  }
+
+  public enum AssetType: String {
+    case profile = "profile"
+  }
 
 }
 
