@@ -195,6 +195,7 @@ extension NewsFeedViewController: PenNameSelectionNodeDelegate {
     }
     viewModel.cancellableOnGoingRequest()
     viewModel.data = []
+    viewModel.nextPage = nil
     self.loadingStatus = .penNameSelection
     collectionNode.reloadData()
     viewModel.didUpdateDefaultPenName(penName: penName, completionBlock: {  didSaveDefault in
