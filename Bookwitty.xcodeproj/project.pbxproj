@@ -46,6 +46,7 @@
 		59049B131E81E44400EDF796 /* JoinUsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59049B121E81E44400EDF796 /* JoinUsNode.swift */; };
 		59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59057FDF1E25340A0036AAF3 /* Introduction.storyboard */; };
 		59139E041E895CDA002022F6 /* Volkhov-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59139E021E895CCD002022F6 /* Volkhov-Bold.ttf */; };
+		59139E051E895CDC002022F6 /* Volkhov-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59139E031E895CCD002022F6 /* Volkhov-BoldItalic.ttf */; };
 		591E15561E70E381008CA78A /* SectionSubtitleHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591E15551E70E381008CA78A /* SectionSubtitleHeaderNode.swift */; };
 		591E15581E70FE37008CA78A /* GenericNodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591E15571E70FE37008CA78A /* GenericNodeViewController.swift */; };
 		592974BF1E5F57AE0083A4C2 /* ModelCommonProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592974BE1E5F57AE0083A4C2 /* ModelCommonProperties.swift */; };
@@ -283,6 +284,7 @@
 		59049B121E81E44400EDF796 /* JoinUsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JoinUsNode.swift; path = ../JoinUsNode.swift; sourceTree = "<group>"; };
 		59057FDF1E25340A0036AAF3 /* Introduction.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Introduction.storyboard; sourceTree = "<group>"; };
 		59139E021E895CCD002022F6 /* Volkhov-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Volkhov-Bold.ttf"; sourceTree = "<group>"; };
+		59139E031E895CCD002022F6 /* Volkhov-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Volkhov-BoldItalic.ttf"; sourceTree = "<group>"; };
 		591E15551E70E381008CA78A /* SectionSubtitleHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionSubtitleHeaderNode.swift; sourceTree = "<group>"; };
 		591E15571E70FE37008CA78A /* GenericNodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericNodeViewController.swift; sourceTree = "<group>"; };
 		592974BE1E5F57AE0083A4C2 /* ModelCommonProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelCommonProperties.swift; sourceTree = "<group>"; };
@@ -929,6 +931,7 @@
 			children = (
 				597B8E351E3954B200C7811B /* Volkhov-Regular.ttf */,
 				59139E021E895CCD002022F6 /* Volkhov-Bold.ttf */,
+				59139E031E895CCD002022F6 /* Volkhov-BoldItalic.ttf */,
 			);
 			path = Volkhov;
 			sourceTree = "<group>";
@@ -1307,6 +1310,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				59DA47671E3B84ED00BA90A5 /* Access.storyboard in Resources */,
+				59139E051E895CDC002022F6 /* Volkhov-BoldItalic.ttf in Resources */,
 				5942902A1E5347670006B2F1 /* DisclosureView.xib in Resources */,
 				59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */,
 				594290211E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib in Resources */,
