@@ -150,10 +150,15 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
     self.loadingStatus = .reloading
     self.pullToRefresher.beginRefreshing()
-    loadData(withPenNames: true, completionBlock: {
-      self.pullToRefresher.endRefreshing()
-      self.loadingStatus = .none
-    })
+
+    viewModel.penNameRequest { (success) in
+      self.reloadPenNamesNode()
+      self.viewModel.nextPage = nil
+      self.loadData(withPenNames: false, completionBlock: {
+        self.pullToRefresher.endRefreshing()
+        self.loadingStatus = .none
+      })
+    }
   }
 
   func loadData(withPenNames reloadPenNames: Bool = true, completionBlock: @escaping () -> ()) {
