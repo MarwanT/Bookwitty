@@ -64,6 +64,7 @@ class UserManager {
       guard let penNames = newValue else {
         return
       }
+      signedInUser.penNames = penNames
       saveSignedInUserPenNames(penNames: penNames)
     }
   }
