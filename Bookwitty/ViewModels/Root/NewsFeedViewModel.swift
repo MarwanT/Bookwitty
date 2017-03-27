@@ -77,6 +77,12 @@ final class NewsFeedViewModel {
     }
   }
 
+  func penNameRequest(completionBlock: @escaping (_ success: Bool) -> ()) {
+    _ = PenNameAPI.getPenNames { (success, penNames, error) in
+      completionBlock(success)
+    }
+  }
+
   func loadNewsfeed(completionBlock: @escaping (_ success: Bool) -> ()) {
     if let cancellableRequest = cancellableRequest {
       cancellableRequest.cancel()
