@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Moya
 
 public struct UploadAPI {
   public enum FileType: String {
@@ -17,6 +18,26 @@ public struct UploadAPI {
     case profile = "profile"
   }
 
+  public static func uploadPolicy(file: (name: String, size: Int), fileType: FileType, assetType: AssetType, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let successStatusCode: Int = 200
+
+    return signedAPIRequest(target: BookwittyAPI.uploadPolicy(file: file, fileType: fileType, assetType: assetType)) {
+      (data, statusCode, response, error) in
+      var success: Bool = statusCode == successStatusCode
+      var error: BookwittyAPIError? = error
+      
+      defer {
+        completion(success, error)
+      }
+      
+      guard statusCode == successStatusCode else {
+        error = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      //TODO: Parse the data
+    }
+  }
 }
 
 extension UploadAPI {
