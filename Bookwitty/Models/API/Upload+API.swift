@@ -11,3 +11,18 @@ import Foundation
 public struct UploadAPI {
 
 }
+
+extension UploadAPI {
+  static func uploadPolicyParameters(file: (name: String, size: Int), fileType: FileType, assetType: AssetType) -> [String : Any]? {
+    return [
+      "data": [
+        "attributes": [
+          "content_type": fileType.rawValue,
+          "file_size": file.size,
+          "file_name": file.name,
+          "asset_type": assetType.rawValue
+        ]
+      ]
+    ]
+  }
+}
