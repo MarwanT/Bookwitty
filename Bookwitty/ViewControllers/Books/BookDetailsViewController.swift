@@ -219,11 +219,11 @@ extension BookDetailsViewController {
   }
   
   fileprivate func viewShippingInfo(_ url: URL) {
-    WebViewController.present(url: url, inViewController: self)
+    WebViewController.present(url: url)
   }
   
   fileprivate func buyThisBook(bookTitle: String, url: URL) {
-    WebViewController.present(url: url, inViewController: self)
+    WebViewController.present(url: url)
 
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .BookProduct,
