@@ -100,8 +100,6 @@ class RootTabBarController: UITabBarController {
       #selector(self.shouldDisplayRegistration(notification:)), name: AppNotification.shouldDisplayRegistration, object: nil)
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.shouldDisplaySignIn(notification:)), name: AppNotification.shouldDisplaySignIn, object: nil)
-    NotificationCenter.default.addObserver(self, selector:
-      #selector(self.openURLInWebView(notification:)), name: AppNotification.openURLInWebView, object: nil)
   }
   
   private func addObserversWhenNotVisible() {
