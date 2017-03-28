@@ -29,9 +29,10 @@ struct InputFieldConfiguration {
   var keyboardType: UIKeyboardType
   var autocorrectionType: UITextAutocorrectionType
   var autocapitalizationType: UITextAutocapitalizationType
-
+  var textFieldMinimumHeight: CGFloat
+  var rightMargin: CGFloat
   
-  init(descriptionLabelText: String? = nil, desriptionLabelDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor(), desriptionLabelInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.defaultErrorColor(), textFieldPlaceholder: String? = nil, textFieldDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor(), textFieldInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.defaultErrorColor(), textFieldDefaultText: String? = nil, invalidationIcon: UIImage? = nil, invalidationErrorMessage: String? = "Invalid Field", returnKeyType: UIReturnKeyType = UIReturnKeyType.default, rightSideViewWidth: CGFloat = 44 , rightSideViewHeight: CGFloat = 44, keyboardType: UIKeyboardType = .default, autocorrectionType: UITextAutocorrectionType = .default, autocapitalizationType: UITextAutocapitalizationType = UITextAutocapitalizationType.sentences) {
+  init(descriptionLabelText: String? = nil, desriptionLabelDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor(), desriptionLabelInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.defaultErrorColor(), textFieldPlaceholder: String? = nil, textFieldDefaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor(), textFieldInvalidTextColor: UIColor = ThemeManager.shared.currentTheme.defaultErrorColor(), textFieldDefaultText: String? = nil, textFieldMinimumHeight: CGFloat = 44, invalidationIcon: UIImage? = nil, invalidationErrorMessage: String? = "Invalid Field", returnKeyType: UIReturnKeyType = UIReturnKeyType.default, rightSideViewWidth: CGFloat = 44 , rightSideViewHeight: CGFloat = 44, rightMargin: CGFloat = 0, keyboardType: UIKeyboardType = .default, autocorrectionType: UITextAutocorrectionType = .default, autocapitalizationType: UITextAutocapitalizationType = UITextAutocapitalizationType.sentences) {
     self.descriptionLabelText = descriptionLabelText
     self.desriptionLabelDefaultTextColor = desriptionLabelDefaultTextColor
     self.desriptionLabelInvalidTextColor = desriptionLabelInvalidTextColor
@@ -47,6 +48,8 @@ struct InputFieldConfiguration {
     self.keyboardType = keyboardType
     self.autocorrectionType = autocorrectionType
     self.autocapitalizationType = autocapitalizationType
+    self.textFieldMinimumHeight = textFieldMinimumHeight
+    self.rightMargin = rightMargin
   }
 }
 
@@ -111,11 +114,11 @@ class InputField: UIView {
     // Setup basic layout
     self.addSubview(descriptionLabel)
     self.addSubview(textField)
-    descriptionLabel.alignLeading("0", trailing: "0", toView: self)
+    descriptionLabel.alignLeading("0", trailing: "\(-configuration.rightMargin)", toView: self)
     descriptionLabel.alignTopEdge(withView: self, predicate: "0")
     textField.alignLeading("0", trailing: "0", toView: descriptionLabel)
     textField.constrainTopSpace(toView: descriptionLabel, predicate: "0")
-    textField.constrainHeight(">=\(configuration.rightSideViewHeight)")
+    textField.constrainHeight(">=\(configuration.textFieldMinimumHeight)")
     self.alignBottomEdge(withView: textField, predicate: "0")
     
     // TODO: Remove this later | Only for visualization purposes
