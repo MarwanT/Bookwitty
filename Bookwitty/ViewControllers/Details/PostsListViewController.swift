@@ -53,13 +53,6 @@ class PostsListViewController: ASViewController<ASCollectionNode> {
     collectionNode.delegate = self
     collectionNode.dataSource = self
 
-    loadingStatus = .loading
-    viewModel.loadContentPosts { (success) in
-      //Done Loading - Update UI
-      self.loadingStatus = .none
-      self.collectionNode.reloadData()
-    }
-
     applyLocalization()
     observeLanguageChanges()
 
