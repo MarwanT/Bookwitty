@@ -192,7 +192,7 @@ extension PostsListViewController {
         let updateIndexRange = initialLastIndexPath..<finalLastIndexPath
 
         let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
-          return IndexPath(row: index, section: strongSelf.collectionNodeLoadingSection)
+          return IndexPath(row: index, section: strongSelf.collectionNodeItemsSection)
         })
         collectionNode.insertItems(at: updatedIndexPathRange)
       }
