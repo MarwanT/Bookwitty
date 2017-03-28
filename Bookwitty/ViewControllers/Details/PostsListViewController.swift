@@ -31,8 +31,8 @@ class PostsListViewController: ASViewController<ASCollectionNode> {
     fatalError("init(coder:) has not been implemented")
   }
 
-  init(title: String? = nil, ids: [String], preloadedList: [Resource]) {
-    viewModel = PostsListViewModel(ids: ids, preloadedList: preloadedList)
+  init(title: String? = nil, nextPage: URL?, preloadedList: [Resource]) {
+    viewModel = PostsListViewModel(nextPage: nextPage, preloadedList: preloadedList)
     flowLayout = UICollectionViewFlowLayout()
     flowLayout.sectionInset = UIEdgeInsets.zero
     flowLayout.minimumInteritemSpacing  = 0
