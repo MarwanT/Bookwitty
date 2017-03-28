@@ -80,6 +80,37 @@ struct GeneralAPI {
     })
   }
 
+  static func postsContent(contentIdentifier identifier: String, page: (number: String?, size: String?)?, completion: @escaping (_ success: Bool, _ resource: [ModelResource]?, _ next: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let successStatusCode: Int = 200
+
+    return signedAPIRequest(target: .postsContent(identifier: identifier, page: page), completion: {
+      (data, statusCode, response, error) in
+      var success: Bool = statusCode == successStatusCode
+      var resources: [ModelResource]? = nil
+      var error: BookwittyAPIError? = error
+      var next: URL? = nil
+
+      defer {
+        completion(success, resources, next, error)
+      }
+
+      guard statusCode == successStatusCode else {
+        error = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      guard let data = data else {
+        error = BookwittyAPIError.failToParseData
+        return
+      }
+
+      let values = Parser.parseDataArray(data: data)
+
+      resources = values?.resources
+      next = values?.next
+    })
+  }
+
   static func posts(contentIdentifier identifier: String, type: [String]?, completion: @escaping (_ success: Bool, _ resource: [ModelResource]?, _ next: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let successStatusCode: Int = 200
 
@@ -299,6 +330,21 @@ extension GeneralAPI {
       dictionary["filter[types]"] = type
     }
 
+    return dictionary
+  }
+
+  static func postsContentParameters(page: (number: String?, size: String?)?) -> [String : Any]? {
+    var dictionary = [String : Any]()
+    //Pagination
+    if let page = page {
+      if let number = page.number {
+        dictionary["page[number]"] = number
+      }
+
+      if let size = page.size {
+        dictionary["page[size]"] = size
+      }
+    }
     return dictionary
   }
 }
