@@ -15,7 +15,7 @@ class AppManager {
   
   static let shared = AppManager()
 
-  var version: Version? = Bundle.main.version
+  var version: Version? = Bundle.main.shortVersion
 
   var versionDescription: String {
     return version?.description ?? ""
