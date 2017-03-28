@@ -29,22 +29,19 @@ final class PenNameViewModel {
   }
 
   func updatePenNameIfNeeded(name: String?, biography: String?, completion: ((Bool)->())?) {
-    var successful = false
-    defer {
-      completion?(successful)
-    }
-
     guard let penName = penName else {
+      completion?(false)
       return
     }
 
     guard let identifier = penName.id else {
+      completion?(false)
       return
     }
 
     //no needed update if nothing changed
     if name == penName.name && penName.biography == biography {
-      successful = true
+      completion?(true)
       return
     }
 
@@ -54,7 +51,10 @@ final class PenNameViewModel {
 
     updateRequest = PenNameAPI.updatePenName(identifier: identifier, name: name, biography: biography, avatarUrl: nil, facebookUrl: nil, tumblrUrl: nil, googlePlusUrl: nil, twitterUrl: nil, instagramUrl: nil, pinterestUrl: nil, youtubeUrl: nil, linkedinUrl: nil, wordpressUrl: nil, websiteUrl: nil) {
       (success: Bool, penName: PenName?, error: BookwittyAPIError?) in
-      successful = success
+      defer {
+        completion?(success)
+      }
+      
       if let penName = penName {
         self.penName = penName
         if let index = self.user?.penNames?.index(where: { $0.id == penName.id }) {

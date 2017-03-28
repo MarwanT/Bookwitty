@@ -17,6 +17,25 @@ class InformativeInputField: InputField {
   
   weak var informativeInputFieldDelegate: InformativeInputFieldDelegate?
   
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    initializeInformativeField()
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+    initializeInformativeField()
+  }
+  
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    initializeInformativeField()
+  }
+  
+  private func initializeInformativeField() {
+    configuration = InputFieldConfiguration(rightSideViewWidth: 10, rightSideViewHeight: 14, rightMargin: 15)
+  }
+  
   var text: String? {
     get {
       return textField.text
@@ -34,8 +53,9 @@ class InformativeInputField: InputField {
     indicatorButton.frame = CGRect(
       x: 0, y: 0, width: configuration.rightSideViewWidth,
       height: configuration.rightSideViewHeight)
-    indicatorButton.setBackgroundImage(#imageLiteral(resourceName: "rightArrow"), for: UIControlState.normal)
-    indicatorButton.setBackgroundImage(#imageLiteral(resourceName: "rightArrow"), for: UIControlState.selected)
+    indicatorButton.setImage(#imageLiteral(resourceName: "rightArrow"), for: UIControlState.normal)
+    indicatorButton.setImage(#imageLiteral(resourceName: "rightArrow"), for: UIControlState.selected)
+    indicatorButton.imageView?.contentMode = UIViewContentMode.scaleAspectFit
     indicatorButton.addTarget(self, action: #selector(self.indicatorButtonTouchUpInside(_:)), for: UIControlEvents.touchUpInside)
     indicatorButton.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
     

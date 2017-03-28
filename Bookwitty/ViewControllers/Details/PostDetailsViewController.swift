@@ -135,7 +135,7 @@ extension PostDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
 
 extension PostDetailsViewController: PostDetailsNodeDelegate {
   func bannerTapAction(url: URL?) {
-      WebViewController.present(url: url, inViewController: self)
+      WebViewController.present(url: url)
   }
 
   func shouldShowPostDetailsAllPosts() {
@@ -465,7 +465,7 @@ extension PostDetailsViewController: PostDetailItemNodeDelegate {
     guard let url = viewModel.canonicalURL else {
       return
     }
-    WebViewController.present(url: url, inViewController: self)
+    WebViewController.present(url: url)
 
 
     //MARK: [Analytics] Event

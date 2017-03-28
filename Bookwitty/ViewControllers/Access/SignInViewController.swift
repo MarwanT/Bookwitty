@@ -185,12 +185,6 @@ class SignInViewController: UIViewController {
   
   // MARK: - Helper methods
   
-  func showAlertWith(title: String, message: String) {
-    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-    alert.addAction(UIAlertAction(title: Strings.ok(), style: UIAlertActionStyle.default, handler: nil))
-    self.present(alert, animated: true, completion: nil)
-  }
-  
   fileprivate func pushRegisterViewController() {
     let registerViewController = Storyboard.Access.instantiate(RegisterViewController.self)
     navigationController?.pushViewController(registerViewController, animated: true)
