@@ -8,6 +8,7 @@
 
 import UIKit
 import ALCameraViewController
+import SwiftLoader
 
 class PenNameViewController: UIViewController {
   @IBOutlet weak var profileContainerView: UIView!
@@ -107,12 +108,17 @@ class PenNameViewController: UIViewController {
                                                  action: .EditPenName)
     Analytics.shared.send(event: event)
 
+    showLoader()
     self.viewModel.updatePenNameIfNeeded(name: name, biography: biography) {
       (success: Bool) in
+      self.hideLoader()
+      
       // TODO: Handle the fail here
 
       if UserManager.shared.shouldDisplayOnboarding {
         self.pushOnboardingViewController()
+      } else {
+        _ = self.navigationController?.popViewController(animated: true)
       }
     }
   }
@@ -207,6 +213,15 @@ class PenNameViewController: UIViewController {
   func toolbarDoneButtonAction() {
     //Close keyboard when done button is pressed
     biographyTextView.resignFirstResponder()
+  }
+  
+  // MARK: - Network indicator handling
+  private func showLoader() {
+    SwiftLoader.show(animated: true)
+  }
+  
+  private func hideLoader() {
+    SwiftLoader.hide()
   }
 }
 
