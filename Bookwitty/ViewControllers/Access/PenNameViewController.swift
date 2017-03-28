@@ -113,6 +113,8 @@ class PenNameViewController: UIViewController {
 
       if UserManager.shared.shouldDisplayOnboarding {
         self.pushOnboardingViewController()
+      } else {
+        _ = self.navigationController?.popViewController(animated: true)
       }
     }
   }
