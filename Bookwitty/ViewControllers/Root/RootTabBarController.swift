@@ -195,10 +195,6 @@ class RootTabBarController: UITabBarController {
     }
     UIApplication.shared.openURL(url)
   }
-  
-  func openURLInWebView(url: URL) {
-    WebViewController.present(url: url, inViewController: self)
-  }
 }
 
 // MARK: - Themeable
@@ -220,13 +216,6 @@ extension RootTabBarController {
 
 //MARK: - Notifications
 extension RootTabBarController {
-  func openURLInWebView(notification: Notification) {
-    guard let url = notification.object as? URL else {
-      return
-    }
-    openURLInWebView(url: url)
-  }
-  
   func shouldDisplaySignIn(notification: Notification?) {
     presentSignInViewController()
   }

@@ -219,11 +219,11 @@ extension BookDetailsViewController {
   }
   
   fileprivate func viewShippingInfo(_ url: URL) {
-    NotificationCenter.default.post(name: AppNotification.openURLInWebView, object: url)
+    WebViewController.present(url: url)
   }
   
   fileprivate func buyThisBook(bookTitle: String, url: URL) {
-    NotificationCenter.default.post(name: AppNotification.openURLInWebView, object: url)
+    WebViewController.present(url: url)
 
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .BookProduct,

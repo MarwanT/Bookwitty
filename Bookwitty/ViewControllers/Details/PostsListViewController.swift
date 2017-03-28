@@ -162,7 +162,7 @@ extension PostsListViewController: PostDetailItemNodeDelegate {
     guard let url = viewModel.contentPostsItem(at: indexPath.row)?.canonicalURL else {
       return
     }
-    WebViewController.present(url: url, inViewController: self)
+    WebViewController.present(url: url)
   }
 }
 

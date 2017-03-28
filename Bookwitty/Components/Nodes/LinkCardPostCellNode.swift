@@ -139,12 +139,8 @@ class LinkCardPostContentNode: ASDisplayNode {
       return
     }
 
-    guard let rootViewController = UIApplication.shared.delegate?.window??.rootViewController else {
-      return
-    }
-
-    WebViewController.present(url: linkUrl, inViewController: rootViewController)
-
+    WebViewController.present(url: linkUrl)
+    
     delegate?.linkImageTouchUpInside(sender: imageNode)
   }
 

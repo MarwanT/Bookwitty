@@ -117,11 +117,7 @@ class VideoCardContentNode: ASDisplayNode {
       return
     }
 
-    guard let rootViewController = UIApplication.shared.delegate?.window??.rootViewController else {
-      return
-    }
-
-    WebViewController.present(url: videoUrl, inViewController: rootViewController)
+    WebViewController.present(url: videoUrl)
 
     delegate?.videoImageTouchUpInside(sender: imageNode)
   }
