@@ -12,7 +12,9 @@ enum Font: String {
   case georgiaRegular = "Georgia"
   case ubuntuRegular = "Ubuntu"
   case ubuntuMedium = "Ubuntu-Medium"
-  case volkhov = "Volkhov-Regular"
+  case volkhovRegular = "Volkhov-Regular"
+  case volkhovBold = "Volkhov-Bold"
+  case volkhovBoldItalic = "Volkhov-BoldItalic"
   
   enum Weight {
     case regular
