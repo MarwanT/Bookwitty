@@ -186,16 +186,7 @@ class CategoryViewController: UIViewController {
       viewSubcategories.alignLeading("0", trailing: "0", toView: stackView)
       addSeparator()
     }
-  }
-  
-  
-  // MARK: Alerts
-  private func showAlertWith(title: String, message: String) {
-    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-    alert.addAction(UIAlertAction(title: Strings.ok(), style: UIAlertActionStyle.default, handler: nil))
-    self.present(alert, animated: true, completion: nil)
-  }
-  
+  }  
   
   // MARK: Helpers
   fileprivate func separatorViewInstance() -> UIView {
