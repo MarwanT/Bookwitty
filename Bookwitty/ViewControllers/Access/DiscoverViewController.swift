@@ -198,7 +198,6 @@ extension DiscoverViewController {
 extension DiscoverViewController: Themeable {
   func applyTheme() {
     collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
-    pullToRefresher.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
   }
 }
 

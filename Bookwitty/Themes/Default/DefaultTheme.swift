@@ -37,6 +37,9 @@ final class DefaultTheme: Theme {
     barAppearace.setTitleTextAttributes([
       NSFontAttributeName: FontDynamicType.caption1.font,
       NSForegroundColorAttributeName : self.defaultTextColor()], for: UIControlState.normal)
+    
+    let refreshControlAppearance = UIRefreshControl.appearance()
+    refreshControlAppearance.tintColor = self.colorNumber19()
   }
 }
 
