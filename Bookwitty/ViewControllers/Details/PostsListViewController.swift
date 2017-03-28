@@ -60,7 +60,78 @@ class PostsListViewController: ASViewController<ASCollectionNode> {
   }
 }
 
+//MARK: Actions
+extension PostsListViewController {
+  fileprivate func pushPostDetailsViewController(resource: Resource) {
+    let nodeVc = PostDetailsViewController(resource: resource)
+    self.navigationController?.pushViewController(nodeVc, animated: true)
+  }
+
+  fileprivate func pushTopicViewController(resource: Resource) {
+    let topicViewController = TopicViewController()
+
+    switch resource.registeredResourceType {
+    case Author.resourceType:
+      topicViewController.initialize(withAuthor: resource as? Author)
+    case Book.resourceType:
+      topicViewController.initialize(withBook: resource as? Book)
+    case Topic.resourceType:
+      topicViewController.initialize(withTopic: resource as? Topic)
+    default: break
+    }
+
+    navigationController?.pushViewController(topicViewController, animated: true)
+  }
+
+  fileprivate func actionForTopicResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Topic)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Topic,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushTopicViewController(resource: resource)
+  }
+
+  fileprivate func actionForTextResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Text)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Text,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushPostDetailsViewController(resource: resource)
+  }
+
+  fileprivate func pushBookDetailsViewController(with book: Book) {
+    let bookDetailsViewController = BookDetailsViewController(with: book)
+    navigationController?.pushViewController(bookDetailsViewController, animated: true)
+  }
+}
 extension PostsListViewController: ASCollectionDataSource, ASCollectionDelegate {
+  func handleContentPostsTap(resource: ModelResource) {
+    switch (resource.registeredResourceType) {
+    case Book.resourceType:
+      if let book = resource as? Book {
+        pushBookDetailsViewController(with: book)
+      }
+      break
+    case Topic.resourceType:
+      actionForTopicResourceType(resource: resource)
+      break
+    case Text.resourceType:
+      actionForTextResourceType(resource: resource)
+      break
+    default: break
+    }
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    guard let resource = viewModel.contentPostsItem(at: indexPath.item) else {
+      return
+    }
+    handleContentPostsTap(resource: resource)
+  }
 
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
     if node is LoaderNode {
