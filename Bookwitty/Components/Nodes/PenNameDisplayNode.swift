@@ -49,10 +49,8 @@ class PenNameDisplayNode: ASControlNode {
   func setupNodes() {
     style.height = ASDimensionMake(nodeHeight)
 
-    penNameTextNode.style.minWidth = ASDimensionMake(120)
+    penNameTextNode.style.minWidth = ASDimensionMake(100)
     penNameTextNode.maximumNumberOfLines = 1
-    penNameTextNode.style.flexGrow = 1
-    penNameTextNode.style.flexShrink = 1
     
     separatorNode.style.height = ASDimensionMake(1)
     separatorNode.style.flexGrow = 1
@@ -91,12 +89,11 @@ class PenNameDisplayNode: ASControlNode {
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let insetSpec = ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: 0), child: penNameTextNode)
+    insetSpec.style.flexGrow = 1.0
+    insetSpec.style.flexShrink = 1.0
 
-
-    let spec = ASCenterLayoutSpec(centeringOptions: .Y, sizingOptions: ASCenterLayoutSpecSizingOptions(rawValue: 0), child: penNameTextNode)
-    let insetSpec = ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: 0), child: spec)
-
-    let horizontalSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .spaceBetween, alignItems: .stretch, children: [insetSpec, spacer(width: internalMargin), downArrowImageNode])
+    let horizontalSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .spaceBetween, alignItems: .center, children: [insetSpec, spacer(width: internalMargin/2), downArrowImageNode])
     let verticalSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .center, alignItems: .stretch, children: [spacer(flexGrow: 1), horizontalSpec, spacer(flexGrow: 1), separatorNode])
     
     return verticalSpec
