@@ -25,6 +25,9 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let loaderNode: LoaderNode
 
   var loadingStatus: LoadingStatus = .none
+  var shouldShowLoader: Bool {
+    return (loadingStatus != .none)
+  }
   var collectionView: ASCollectionView?
   var scrollView: UIScrollView? {
     if let collectionView = collectionView {
@@ -283,7 +286,7 @@ extension NewsFeedViewController: ASCollectionDataSource {
       if NewsFeedViewController.Section.penNames.rawValue == section {
         return 1
       } else {
-        return (loadingStatus == .penNameSelection || loadingStatus == .loadMore) ? 1 : 0
+        return shouldShowLoader ? 1 : 0
       }
     }
     return viewModel.numberOfItemsInSection(section: section)
@@ -317,6 +320,8 @@ extension NewsFeedViewController: ASCollectionDataSource {
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
     if node is PenNameSelectionNode {
       penNameSelectionNode.setNeedsLayout()
+    } else if node is LoaderNode {
+      loaderNode.updateLoaderVisibility(show: shouldShowLoader)
     }
   }
 }
