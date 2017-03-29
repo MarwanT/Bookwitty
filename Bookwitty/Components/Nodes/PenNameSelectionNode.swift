@@ -139,7 +139,7 @@ class PenNameSelectionNode: ASCellNode {
       //This transition will trigger the node's height change and required change from layoutSpecThatFits
       //In our case the alpha for the collectionNode will change since it is being added and removed from
       //the parent node.
-      //TODO: Needed Action When Animation Is Done
+      self.header.setNeedsLayout()
     }
   }
 
