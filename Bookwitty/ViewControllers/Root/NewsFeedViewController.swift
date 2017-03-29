@@ -15,7 +15,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     case loadMore
     case reloading
     case loading
-    case penNameSelection
   }
 
   let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
@@ -89,9 +88,12 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.NewsFeed)
-    reloadPenNamesNode()
-  }
 
+    reloadPenNamesNode()
+    if viewModel.numberOfItemsInSection(section: Section.cards.rawValue) == 0 {
+      refreshViewControllerData()
+    }
+  }
   /*
    When the refresh controller is still refreshing, and we navigate away and
    back to this view controller, the activity indicator stops animating.
@@ -130,11 +132,11 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     if UserManager.shared.isSignedIn {
       viewModel.cancellableOnGoingRequest()
       self.loadingStatus = .loading
-      self.pullToRefresher.beginRefreshing()
-      loadData(withPenNames: true, completionBlock: {
+      self.updateCollection(with: nil, loaderSection: true, penNamesSection: false, orReloadAll: false, completionBlock: nil)
+      self.viewModel.loadNewsfeed { (success) in
         self.loadingStatus = .none
-        self.pullToRefresher.endRefreshing()
-      })
+        self.updateCollection(with: nil, loaderSection: false, penNamesSection: false, orReloadAll: true, completionBlock: nil)
+      }
     }
   }
 
@@ -152,38 +154,30 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     self.pullToRefresher.beginRefreshing()
 
     viewModel.penNameRequest { (success) in
-      self.reloadPenNamesNode()
       self.viewModel.nextPage = nil
-      self.loadData(withPenNames: false, completionBlock: {
+      self.updateCollection(with: nil, loaderSection: true, penNamesSection: false, orReloadAll: false, completionBlock: nil)
+      self.reloadPenNamesNode()
+      self.viewModel.loadNewsfeed { (success) in
         self.pullToRefresher.endRefreshing()
         self.loadingStatus = .none
-      })
-    }
-  }
-
-  func loadData(withPenNames reloadPenNames: Bool = true, completionBlock: @escaping () -> ()) {
-    viewModel.loadNewsfeed { [weak self] (success) in
-      guard let strongSelf = self else { return }
-      completionBlock()
-      if success {
-        strongSelf.collectionNode.reloadData(completion: { 
-          if reloadPenNames || !strongSelf.penNameSelectionNode.hasData() {
-            strongSelf.reloadPenNamesNode()
-          }
-        })
+        self.updateCollection(with: nil, loaderSection: false, penNamesSection: false, orReloadAll: true, completionBlock: nil)
       }
     }
   }
 
   func reloadPenNamesNode() {
     penNameSelectionNode.loadData(penNames: viewModel.penNames, withSelected: viewModel.defaultPenName)
-    collectionNode.reloadSections(IndexSet(integer: Section.penNames.rawValue))
   }
 }
 
 extension NewsFeedViewController: PenNameSelectionNodeDelegate {
-  func didSelectPenName(penName: PenName, sender: PenNameSelectionNode) {
+  func penNameSelectionNodeNeeds(node: PenNameSelectionNode, reload: Bool) {
+    if reload {
+      self.updateCollection(with: nil, loaderSection: false, penNamesSection: true, orReloadAll: false, completionBlock: nil)
+    }
+  }
 
+  func didSelectPenName(penName: PenName, sender: PenNameSelectionNode) {
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .NewsFeed,
                                                  action: .SelectPenName)
@@ -196,13 +190,15 @@ extension NewsFeedViewController: PenNameSelectionNodeDelegate {
     viewModel.cancellableOnGoingRequest()
     viewModel.data = []
     viewModel.nextPage = nil
-    self.loadingStatus = .penNameSelection
-    collectionNode.reloadData()
+    self.loadingStatus = .reloading
+    //collectionNode.reloadData()
+    self.updateCollection(with: nil, loaderSection: false, penNamesSection: false, orReloadAll: true, completionBlock: nil)
     viewModel.didUpdateDefaultPenName(penName: penName, completionBlock: {  didSaveDefault in
       if didSaveDefault {
-        loadData(withPenNames: false, completionBlock: {
+        self.viewModel.loadNewsfeed { (success) in
           self.loadingStatus = .none
-        })
+          self.updateCollection(with: nil, loaderSection: false, penNamesSection: false, orReloadAll: true, completionBlock: nil)
+        }
       }
     })
   }
@@ -233,10 +229,11 @@ extension NewsFeedViewController {
       scrollView.contentOffset = CGPoint(x: 0, y: 0.0)
     }
 
+    reloadPenNamesNode()
     viewModel.cancellableOnGoingRequest()
     viewModel.data = []
-    collectionNode.reloadData()
-    reloadPenNamesNode()
+    viewModel.nextPage = nil
+    self.updateCollection(with: nil, loaderSection: false, penNamesSection: false, orReloadAll: true, completionBlock: nil)
   }
 }
 // MARK: - Themeable
@@ -483,7 +480,9 @@ extension NewsFeedViewController: ASCollectionDelegate {
     context.beginBatchFetching()
     self.loadingStatus = .loadMore
     DispatchQueue.main.async {
+      self.updateCollection(loaderSection: true)
     }
+
 
     let initialLastIndexPath: Int = viewModel.numberOfItemsInSection(section: Section.cards.rawValue)
 
@@ -494,10 +493,11 @@ extension NewsFeedViewController: ASCollectionDelegate {
 
     // Fetch next page data
     viewModel.loadNextPage { [weak self] (success) in
+      var updatedIndexPathRange: [IndexPath]? = nil
       defer {
+        self?.loadingStatus = .none
+        self?.updateCollection(with: updatedIndexPathRange, loaderSection: true, penNamesSection: true, orReloadAll: false, completionBlock: nil)
         context.completeBatchFetching(true)
-        self!.loadingStatus = .none
-        collectionNode.reloadSections(IndexSet(integer: Section.penNames.rawValue))
       }
       guard let strongSelf = self else {
         return
@@ -507,10 +507,9 @@ extension NewsFeedViewController: ASCollectionDelegate {
       if success && finalLastIndexPath > initialLastIndexPath {
         let updateIndexRange = initialLastIndexPath..<finalLastIndexPath
 
-        let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
+        updatedIndexPathRange = updateIndexRange.flatMap({ (index) -> IndexPath in
           return IndexPath(row: index, section: Section.cards.rawValue)
         })
-        collectionNode.insertItems(at: updatedIndexPathRange)
       }
     }
   }
