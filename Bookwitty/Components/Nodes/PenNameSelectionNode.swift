@@ -156,6 +156,7 @@ class PenNameSelectionNode: ASCellNode {
       //We are setting the hidden to true since the 0.1 height will make a thin visible line
       isHidden = true
       style.height = ASDimensionMake(0.1)
+      collectionNode.reloadData()
       setNeedsLayout()
       return
     }
