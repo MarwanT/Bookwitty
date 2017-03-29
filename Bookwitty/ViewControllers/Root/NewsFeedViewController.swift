@@ -210,23 +210,20 @@ extension NewsFeedViewController: PenNameSelectionNodeDelegate {
 extension NewsFeedViewController {
   func addObservers() {
     NotificationCenter.default.addObserver(self, selector:
-      #selector(self.signOut(_:)), name: AppNotification.signOut, object: nil)
-    NotificationCenter.default.addObserver(self, selector:
-      #selector(self.refreshData(_:)), name: AppNotification.shouldRefreshData, object: nil)
-    
-    NotificationCenter.default.addObserver(self, selector:
       #selector(refreshData(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
 
     observeLanguageChanges()
   }
 
   func refreshData(_ notification: Notification) {
-    initializeNavigationItems()
-    refreshViewControllerData()
-    reloadPenNamesNode()
+    if UserManager.shared.isSignedIn {
+      initializeNavigationItems()
+    } else {
+      signOutAction()
+    }
   }
 
-  func signOut(_ notification: Notification) {
+  func signOutAction() {
     if let scrollView = scrollView {
       penNameSelectionNode.alpha = 1.0
       scrollView.contentOffset = CGPoint(x: 0, y: 0.0)
