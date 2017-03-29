@@ -257,9 +257,22 @@ extension NewsFeedViewController {
 
 // MARK: - Reload Footer
 extension NewsFeedViewController {
-  func updateBottomLoaderVisibility(show: Bool) {
-    self.loaderNode.updateLoaderVisibility(show: show)
-    collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
+  func updateCollection(with itemIndices: [IndexPath]? = nil, loaderSection: Bool = false, penNamesSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
+    if reloadAll {
+      collectionNode.reloadData()
+    } else {
+      collectionNode.performBatchUpdates({
+        if loaderSection {
+          collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
+        }
+        if penNamesSection {
+          collectionNode.reloadSections(IndexSet(integer: Section.penNames.rawValue))
+        }
+        if let itemIndices = itemIndices {
+          collectionNode.insertItems(at: itemIndices)
+        }
+      }, completion: completionBlock)
+    }
   }
 }
 
@@ -470,7 +483,6 @@ extension NewsFeedViewController: ASCollectionDelegate {
     context.beginBatchFetching()
     self.loadingStatus = .loadMore
     DispatchQueue.main.async {
-      self.updateBottomLoaderVisibility(show: true)
     }
 
     let initialLastIndexPath: Int = viewModel.numberOfItemsInSection(section: Section.cards.rawValue)
@@ -485,7 +497,6 @@ extension NewsFeedViewController: ASCollectionDelegate {
       defer {
         context.completeBatchFetching(true)
         self!.loadingStatus = .none
-        self!.updateBottomLoaderVisibility(show: false)
         collectionNode.reloadSections(IndexSet(integer: Section.penNames.rawValue))
       }
       guard let strongSelf = self else {
