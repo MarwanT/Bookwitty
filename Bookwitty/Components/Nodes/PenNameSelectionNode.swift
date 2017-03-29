@@ -11,6 +11,7 @@ import AsyncDisplayKit
 
 protocol PenNameSelectionNodeDelegate {
   func didSelectPenName(penName: PenName, sender: PenNameSelectionNode)
+  func penNameSelectionNodeNeeds(node: PenNameSelectionNode, reload: Bool)
 }
 
 class PenNameSelectionNode: ASCellNode {
@@ -158,6 +159,7 @@ class PenNameSelectionNode: ASCellNode {
       style.height = ASDimensionMake(0.1)
       collectionNode.reloadData()
       setNeedsLayout()
+      delegate?.penNameSelectionNodeNeeds(node: self, reload: true)
       return
     }
     isHidden = false
@@ -186,6 +188,7 @@ class PenNameSelectionNode: ASCellNode {
     collectionNode.reloadData()
 
     setNeedsLayout()
+    delegate?.penNameSelectionNodeNeeds(node: self, reload: true)
   }
 }
 
