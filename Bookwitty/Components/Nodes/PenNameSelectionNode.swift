@@ -173,17 +173,8 @@ class PenNameSelectionNode: ASCellNode {
     var penNameChanged: Bool = true
 
     if let selectedPenNameId = selectedPenName?.id {
-      _ = data.enumerated().filter({ (item: (offset: Int, penName: PenName)) -> Bool in
-        guard let id = item.penName.id else {
-          return false
-        }
-        let found = selectedPenNameId == id
-        if found {
-          self.selectedIndexPath = IndexPath(row: item.offset, section: 0)
-        }
-        return found
-      })
-
+      let index = data.index(where: { $0.id == selectedPenNameId }) ?? 0
+      self.selectedIndexPath = IndexPath(row: index, section: 0)
       //Check if PenName selection Changed
       //Note: If old value was not found it will be empty or nil so value will
       //have changed [Item must have been deleted] OR if Id changed
