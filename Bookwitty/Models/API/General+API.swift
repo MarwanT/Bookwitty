@@ -142,6 +142,38 @@ struct GeneralAPI {
     })
   }
 
+  static func postsLinkedContent(contentIdentifier identifier: String, type: [String]?, completion: @escaping (_ success: Bool, _ resource: [ModelResource]?, _ next: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let successStatusCode: Int = 200
+
+    return signedAPIRequest(target: .postsLinkedContent(identifier: identifier, type: type), completion: {
+      (data, statusCode, response, error) in
+      var success: Bool = statusCode == successStatusCode
+      var resources: [ModelResource]? = nil
+      var error: BookwittyAPIError? = error
+      var next: URL? = nil
+
+      defer {
+        completion(success, resources, next, error)
+      }
+
+      guard statusCode == successStatusCode else {
+        error = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      guard let data = data else {
+        error = BookwittyAPIError.failToParseData
+        return
+      }
+
+      let values = Parser.parseDataArray(data: data)
+
+      resources = values?.resources
+      next = values?.next
+    })
+  }
+
+
   static func editions(contentIdentifier identifier: String, completion: @escaping (_ success: Bool, _ resource: [ModelResource]?, _ next: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let successStatusCode: Int = 200
 
