@@ -78,6 +78,7 @@ final class NewsFeedViewModel {
   }
 
   func penNameRequest(completionBlock: @escaping (_ success: Bool) -> ()) {
+    cancellableOnGoingRequest()
     _ = PenNameAPI.getPenNames { (success, penNames, error) in
       completionBlock(success)
     }
