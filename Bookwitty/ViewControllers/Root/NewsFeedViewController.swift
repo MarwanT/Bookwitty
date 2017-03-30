@@ -180,9 +180,9 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 }
 
 extension NewsFeedViewController: PenNameSelectionNodeDelegate {
-  func penNameSelectionNodeNeeds(node: PenNameSelectionNode, reload: Bool) {
+  func penNameSelectionNodeNeeds(node: PenNameSelectionNode, reload: Bool, penNameChanged: Bool) {
     if reload {
-      self.updateCollection(with: nil, loaderSection: false, penNamesSection: true, orReloadAll: false, completionBlock: nil)
+      self.updateCollection(with: nil, loaderSection: false, penNamesSection: true, orReloadAll: penNameChanged, completionBlock: nil)
     }
   }
 
