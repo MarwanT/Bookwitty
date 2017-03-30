@@ -79,6 +79,7 @@ class PenNameDisplayNode: ASControlNode {
     } else {
       penNameTextNode.attributedText = nil
     }
+    penNameTextNode.setNeedsLayout()
   }
 
   private func spacer(flexGrow: CGFloat = 0.0, height: CGFloat = 0.0, width: CGFloat = 0.0) -> ASLayoutSpec {
