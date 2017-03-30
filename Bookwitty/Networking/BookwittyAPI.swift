@@ -42,6 +42,7 @@ public enum BookwittyAPI {
   case content(identifier: String, include: [String]?)
   case followers(identifier: String)
   case posts(identifier: String, type: [String]?)
+  case postsLinkedContent(identifier: String, type: [String]?)
   case editions(identifier: String)
   case resetPassword(email: String)
   case penName(identifier: String)
@@ -138,6 +139,8 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(identifier)/content"
     case .posts(let identifier, _):
       path = "/content/\(identifier)/posts"
+    case .postsLinkedContent(let identifier, _):
+      path = "/content/\(identifier)/linked_content"
     case .editions(let identifier):
       path = "/content/\(identifier)/editions"
     case .resetPassword:
@@ -163,7 +166,7 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .oAuth, .refreshToken, .resendAccountConfirmation:
       return .post
-  case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent:
+  case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent:
       return .get
     case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword, .followPenName:
       return .post
@@ -205,6 +208,8 @@ extension BookwittyAPI: TargetType {
     case .updatePreference(let preference, let value):
       return UserAPI.updatePostBody(preference: preference, value: value)
     case .posts(_, let type):
+      return GeneralAPI.postsParameters(type: type)
+    case .postsLinkedContent(_, let type):
       return GeneralAPI.postsParameters(type: type)
     case .resetPassword(let email):
       return UserAPI.resetPasswordBody(email: email)
@@ -256,7 +261,7 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .user, .register:
       return [PenName.resourceType]
-    case .batch, .Search, .discover, .penNameContent, .penNameFollowing, .posts:
+    case .batch, .Search, .discover, .penNameContent, .penNameFollowing, .posts, .postsLinkedContent:
       return ["pen-name"]
     case .newsFeed:
       return ["pen-name", "contributors", "commenters"]
