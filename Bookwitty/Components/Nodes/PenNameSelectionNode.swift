@@ -11,7 +11,7 @@ import AsyncDisplayKit
 
 protocol PenNameSelectionNodeDelegate {
   func didSelectPenName(penName: PenName, sender: PenNameSelectionNode)
-  func penNameSelectionNodeNeeds(node: PenNameSelectionNode, reload: Bool)
+  func penNameSelectionNodeNeeds(node: PenNameSelectionNode, reload: Bool, penNameChanged: Bool)
 }
 
 class PenNameSelectionNode: ASCellNode {
@@ -139,7 +139,7 @@ class PenNameSelectionNode: ASCellNode {
       //This transition will trigger the node's height change and required change from layoutSpecThatFits
       //In our case the alpha for the collectionNode will change since it is being added and removed from
       //the parent node.
-      //TODO: Needed Action When Animation Is Done
+      self.header.setNeedsLayout()
     }
   }
 
@@ -148,6 +148,12 @@ class PenNameSelectionNode: ASCellNode {
   }
 
   func loadData(penNames: [PenName]?, withSelected selectedPenName: PenName?) {
+    //Hold the old selected Pen Name Id
+    var oldSelectedPenNameId: String? = nil
+    if let selectedIndexPath = selectedIndexPath, data.count > selectedIndexPath.item {
+      oldSelectedPenNameId = data[selectedIndexPath.item].id
+    }
+
     data = penNames ?? []
 
     guard data.count > minNumberOfCells else {
@@ -159,23 +165,20 @@ class PenNameSelectionNode: ASCellNode {
       style.height = ASDimensionMake(0.1)
       collectionNode.reloadData()
       setNeedsLayout()
-      delegate?.penNameSelectionNodeNeeds(node: self, reload: true)
+      delegate?.penNameSelectionNodeNeeds(node: self, reload: true, penNameChanged: false)
       return
     }
     isHidden = false
     expand = true
+    var penNameChanged: Bool = true
 
     if let selectedPenNameId = selectedPenName?.id {
-      _ = data.enumerated().filter({ (item: (offset: Int, penName: PenName)) -> Bool in
-        guard let id = item.penName.id else {
-          return false
-        }
-        let found = selectedPenNameId == id
-        if found {
-          self.selectedIndexPath = IndexPath(row: item.offset, section: 0)
-        }
-        return found
-      })
+      let index = data.index(where: { $0.id == selectedPenNameId }) ?? 0
+      self.selectedIndexPath = IndexPath(row: index, section: 0)
+      //Check if PenName selection Changed
+      //Note: If old value was not found it will be empty or nil so value will
+      //have changed [Item must have been deleted] OR if Id changed
+      penNameChanged = ( oldSelectedPenNameId.isEmptyOrNil() || (selectedPenNameId != oldSelectedPenNameId) )
     } else {
       self.selectedIndexPath = IndexPath(row: 0, section: 0)
     }
@@ -188,7 +191,7 @@ class PenNameSelectionNode: ASCellNode {
     collectionNode.reloadData()
 
     setNeedsLayout()
-    delegate?.penNameSelectionNodeNeeds(node: self, reload: true)
+    delegate?.penNameSelectionNodeNeeds(node: self, reload: true, penNameChanged: penNameChanged)
   }
 }
 

@@ -143,8 +143,13 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     }
   }
 
+  /**
+   * User should not directly call this should, it should be triggered from
+   * UIRefreshControl's valueChanged target action
+   */
   func pullDownToReloadData() {
-    guard loadingStatus != .reloading else {
+    guard pullToRefresher.isRefreshing else {
+      //Making sure that only UIRefreshControl will trigger this on valueChanged
       return
     }
 
@@ -161,9 +166,10 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       self.updateCollection(with: nil, loaderSection: true, penNamesSection: false, orReloadAll: false, completionBlock: nil)
       self.reloadPenNamesNode()
       self.viewModel.loadNewsfeed { (success) in
-        self.pullToRefresher.endRefreshing()
         self.loadingStatus = .none
-        self.updateCollection(with: nil, loaderSection: false, penNamesSection: false, orReloadAll: true, completionBlock: nil)
+        self.updateCollection(with: nil, loaderSection: false, penNamesSection: false, orReloadAll: true, completionBlock: { (sucess) in
+          self.pullToRefresher.endRefreshing()
+        })
       }
     }
   }
@@ -174,9 +180,9 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 }
 
 extension NewsFeedViewController: PenNameSelectionNodeDelegate {
-  func penNameSelectionNodeNeeds(node: PenNameSelectionNode, reload: Bool) {
+  func penNameSelectionNodeNeeds(node: PenNameSelectionNode, reload: Bool, penNameChanged: Bool) {
     if reload {
-      self.updateCollection(with: nil, loaderSection: false, penNamesSection: true, orReloadAll: false, completionBlock: nil)
+      self.updateCollection(with: nil, loaderSection: false, penNamesSection: true, orReloadAll: penNameChanged, completionBlock: nil)
     }
   }
 
@@ -194,7 +200,6 @@ extension NewsFeedViewController: PenNameSelectionNodeDelegate {
     viewModel.data = []
     viewModel.nextPage = nil
     self.loadingStatus = .reloading
-    //collectionNode.reloadData()
     self.updateCollection(with: nil, loaderSection: false, penNamesSection: false, orReloadAll: true, completionBlock: nil)
     viewModel.didUpdateDefaultPenName(penName: penName, completionBlock: {  didSaveDefault in
       if didSaveDefault {
@@ -256,7 +261,9 @@ extension NewsFeedViewController {
 extension NewsFeedViewController {
   func updateCollection(with itemIndices: [IndexPath]? = nil, loaderSection: Bool = false, penNamesSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
     if reloadAll {
-      collectionNode.reloadData()
+      collectionNode.reloadData(completion: { 
+        completionBlock?(true)
+      })
     } else {
       collectionNode.performBatchUpdates({
         if loaderSection {
