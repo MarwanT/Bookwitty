@@ -542,7 +542,7 @@ extension BookDetailsViewModel {
       return
     }
     
-    _ = GeneralAPI.posts(
+    _ = GeneralAPI.postsLinkedContent(
       contentIdentifier: bookId, type: [ReadingList.resourceType], completion: {
         (success, resources, nextPage, error) in
         var success: Bool = success
@@ -567,7 +567,7 @@ extension BookDetailsViewModel {
       return
     }
     
-    _ = GeneralAPI.posts(
+    _ = GeneralAPI.postsLinkedContent(
       contentIdentifier: bookId, type: [Topic.resourceType], completion: {
         (success, resources, nextPage, error) in
         var success: Bool = success
