@@ -716,8 +716,22 @@ class Strings {
   /**
    * Formatted Strings
    */
-  
-  
+  static func contributors(number: Int) -> String {
+    return localizedString(key: "f_number_of_contributors", formatVariable: number)
+  }
+
+  static func followers(number: Int) -> String {
+    return localizedString(key: "f_number_of_followers", formatVariable: number)
+  }
+
+  static func posts(number: Int) -> String {
+    return localizedString(key: "f_number_of_posts", formatVariable: number)
+  }
+
+  static func books(number: Int) -> String {
+    return localizedString(key: "f_number_of_books", formatVariable: number)
+  }
+
   /**
    Discussion:
    - Please keep this file sorted by keys, for easier maintenance
