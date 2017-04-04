@@ -184,6 +184,10 @@
 "your_feed" = "Votre flux";
 
 /**
+ * Formatted Strings
+ */
+
+/**
  Discussion:
  - Please keep this file sorted by keys, for easier maintenance
  - Please add the strings directly to the google drive sheet

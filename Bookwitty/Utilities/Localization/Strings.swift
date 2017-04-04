@@ -712,6 +712,11 @@ class Strings {
   static func your_feed() -> String {
     return localizedString(key: "your_feed")
   }
+
+  /**
+   * Formatted Strings
+   */
+  
   
   /**
    Discussion:
