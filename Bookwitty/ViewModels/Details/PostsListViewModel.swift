@@ -12,24 +12,16 @@ import Moya
 
 class PostsListViewModel {
   var data: [Resource] = []
-  var paginator: Paginator!
   var cancellableRequest: Cancellable?
+  var nextPage: URL?
 
-  init(ids: [String], preloadedList: [Resource]) {
-    let pageSize = 10
-    let startPage = 0
-    let resourceIdSet = Set(ids)
-    let loadedIds: [String] = preloadedList.flatMap { (_ resource: Resource) -> String? in
-      return resource.id
-    }
-    let preloadListSet = Set(loadedIds)
-    let result: [String] = Array(resourceIdSet.subtracting(preloadListSet))
+  init(nextPage: URL?, preloadedList: [Resource]) {
+    self.nextPage = nextPage
     data = preloadedList
-    paginator = Paginator(ids: result, pageSize: pageSize, startPage: startPage)
   }
 
   func hasNextPage() -> Bool {
-    return paginator?.hasMorePages() ?? false
+    return nextPage != nil
   }
 
   func contentPostsItem(at index: Int) -> Resource? {
@@ -41,33 +33,18 @@ class PostsListViewModel {
   }
 
   func loadContentPosts(completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard let listOfIdentifiers = self.paginator?.nextPageIds() else {
-      completionBlock(false)
+    guard let nextPage = nextPage else {
       return
     }
 
-    cancellableRequest = loadBatch(listOfIdentifiers: listOfIdentifiers, completion: { (success: Bool, resources: [Resource]?, error: BookwittyAPIError?) in
+    cancellableRequest = GeneralAPI.nextPage(nextPage: nextPage, completion: { (success, resources, next, error) in
       defer {
         completionBlock(success)
       }
       if let resources = resources, success {
         self.data += resources
+        self.nextPage = next
       }
-    })
-  }
-
-  private func loadBatch(listOfIdentifiers: [String], completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
-    return UserAPI.batch(identifiers: listOfIdentifiers, completion: {
-      (success, resource, error) in
-      var resources: [Resource]?
-      defer {
-        completion(success, resources, error)
-      }
-
-      guard success, let result = resource else {
-        return
-      }
-      resources = result
     })
   }
 }

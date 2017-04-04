@@ -64,6 +64,7 @@ class PostDetailsViewModel {
     return resource.id
   }
   var contentPostsResources: [Resource]?
+  var contentPostsNextPage: URL?
 
   //Resource Related Books
   var relatedBooks: [Book] = []
@@ -183,19 +184,21 @@ class PostDetailsViewModel {
   }
 
   func loadContentPosts(completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard let listOfIdentifiers = contentPostsIdentifiers?.prefix(20).flatMap({ $0.id }) else {
-      completionBlock(false)
+    guard let identifier = identifier else {
       return
     }
-
-    cancellableRequest = loadBatch(listOfIdentifiers: listOfIdentifiers, completion: { (success: Bool, resources: [Resource]?, error: BookwittyAPIError?) in
+    let pageSize: String = String(20)
+    let page: (number: String?, size: String?) = (nil, pageSize)
+    _ = GeneralAPI.postsContent(contentIdentifier: identifier, page: page) {
+      (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       defer {
         completionBlock(success)
       }
       if let resources = resources, success {
         self.contentPostsResources = resources
+        self.contentPostsNextPage = next
       }
-    })
+    }
   }
 
   private func loadBatch(listOfIdentifiers: [String], completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
@@ -271,7 +274,7 @@ extension PostDetailsViewModel {
       return
     }
 
-    _ = GeneralAPI.posts(contentIdentifier: identifier, type: [Book.resourceType]) {
+    _ = GeneralAPI.postsLinkedContent(contentIdentifier: identifier, type: [Book.resourceType]) {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       defer {
         completionBlock(success)
@@ -306,7 +309,7 @@ extension PostDetailsViewModel {
       return
     }
 
-    _ = GeneralAPI.posts(contentIdentifier: identifier, type: nil) {
+    _ = GeneralAPI.postsLinkedContent(contentIdentifier: identifier, type: nil) {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       defer {
         completionBlock(success)

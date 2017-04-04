@@ -139,9 +139,9 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
   }
 
   func shouldShowPostDetailsAllPosts() {
-    if let contentPostIdentifiers = viewModel.contentPostsIdentifiers {
+    if viewModel.contentPostsIdentifiers?.count ?? 0 > 0 {
       if let contentPostsResources = viewModel.contentPostsResources {
-        let vc = PostsListViewController(title: viewModel.title ?? title, ids: contentPostIdentifiers.flatMap({ $0.id }), preloadedList: contentPostsResources)
+        let vc = PostsListViewController(title: viewModel.title ?? title, nextPage: viewModel.contentPostsNextPage, preloadedList: contentPostsResources)
         self.navigationController?.pushViewController(vc, animated: true)
 
         //MARK: [Analytics] Event
