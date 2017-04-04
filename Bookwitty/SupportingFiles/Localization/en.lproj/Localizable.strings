@@ -186,7 +186,10 @@
 /**
  * Formatted Strings
  */
-
+"f_number_of_contributors" = "%d contributors";
+"f_number_of_followers" = "%d followers";
+"f_number_of_posts" = "%d posts";
+"f_number_of_books" = "%d books";
 
 
 /**
