@@ -274,7 +274,7 @@ extension PostDetailsViewModel {
       return
     }
 
-    _ = GeneralAPI.posts(contentIdentifier: identifier, type: [Book.resourceType]) {
+    _ = GeneralAPI.postsLinkedContent(contentIdentifier: identifier, type: [Book.resourceType]) {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       defer {
         completionBlock(success)
@@ -309,7 +309,7 @@ extension PostDetailsViewModel {
       return
     }
 
-    _ = GeneralAPI.posts(contentIdentifier: identifier, type: nil) {
+    _ = GeneralAPI.postsLinkedContent(contentIdentifier: identifier, type: nil) {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       defer {
         completionBlock(success)
