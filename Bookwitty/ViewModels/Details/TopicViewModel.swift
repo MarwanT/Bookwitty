@@ -286,7 +286,7 @@ extension TopicViewModel {
       return
     }
 
-    _ = GeneralAPI.posts(contentIdentifier: identifier, type: nil) {
+    _ = GeneralAPI.postsLinkedContent(contentIdentifier: identifier, type: nil) {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       if success {
         _ = self.handleLatest(results: resources, next: next, reset: true)
@@ -382,7 +382,7 @@ extension TopicViewModel {
       return
     }
 
-    _ = GeneralAPI.posts(contentIdentifier: identifier, type: [Book.resourceType]) {
+    _ = GeneralAPI.postsLinkedContent(contentIdentifier: identifier, type: [Book.resourceType]) {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       if success {
         self.relatedBooks.removeAll()
