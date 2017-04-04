@@ -8,9 +8,11 @@
 
 import Foundation
 
-typealias Count = Int
-
-func localizedString(key: String, defaultValue: String = "", count: Count = 0, comment: String = "") -> String {
+func localizedString(key: String, defaultValue: String = "", comment: String = "", formatVariable: CustomStringConvertible? = nil) -> String {
+  if let formatVariable = formatVariable {
+    let localized: String = NSLocalizedString(key, value: defaultValue, comment: comment)
+    return String.localizedStringWithFormat(localized, formatVariable as! CVarArg)
+  }
   return NSLocalizedString(key, value: defaultValue, comment: comment)
 }
 
