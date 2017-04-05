@@ -14,6 +14,10 @@ class UploadPolicy: Resource {
   var asset: [String : Any]?
   var form: [String : Any]?
 
+  var uuid: String? {
+    return asset?["uuid"] as? String
+  }
+
   override class var resourceType: ResourceType {
     return "upload-policies"
   }
