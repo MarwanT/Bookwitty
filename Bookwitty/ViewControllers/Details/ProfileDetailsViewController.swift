@@ -140,7 +140,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
 
 
 extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
-  func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ASButtonNode) {
+  func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader) {
     var penName: PenName?
     if penNameHeaderNode === node {
       penName = viewModel.penName
@@ -148,19 +148,19 @@ extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
       let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment) {
       penName = resource as? PenName
     }
-
+    button.state = .loading
     if let penName = penName {
       if button.isSelected {
         viewModel.unfollowPenName(penName: penName, completionBlock: {
           (success: Bool) in
-          node.following = false
-          button.isSelected = false
+          node.following = !success
+          button.state = success ? .normal : .selected
         })
       } else {
         viewModel.followPenName(penName: penName, completionBlock: {
           (success: Bool) in
-          node.following = true
-          button.isSelected = true
+          node.following = success
+          button.state = success ? .selected : .normal
         })
       }
     }
