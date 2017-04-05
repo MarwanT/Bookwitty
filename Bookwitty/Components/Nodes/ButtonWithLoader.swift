@@ -17,10 +17,27 @@ class ButtonWithLoader: ASDisplayNode {
   fileprivate let smallButtonHeight: CGFloat = 36.0
   fileprivate let largeButtonHeight: CGFloat = 44.0
 
+  enum State {
+    case normal
+    case loading
+    case selected
+  }
+
   fileprivate let loaderNode: LoaderNode
   fileprivate let button: ASButtonNode
 
   var delegate: ButtonWithLoaderDelegate?
+  var isLoading: Bool {
+    return state == .loading
+  }
+  var state: State = .normal {
+    didSet {
+      //TODO: update view state
+    }
+  }
+  var isSelected: Bool {
+    return button.isSelected
+  }
 
   override init() {
     loaderNode = LoaderNode()
