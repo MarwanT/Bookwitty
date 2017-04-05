@@ -51,6 +51,8 @@ public enum BookwittyAPI {
   case penNameFollowing(identifier: String)
   case status
   case resendAccountConfirmation
+  case uploadPolicy(file: (name: String, size: Int), fileType: UploadAPI.FileType, assetType: UploadAPI.AssetType)
+  case uploadMultipart(url: URL, parameters: [String : String]?, multipart: (data: Data, name: String))
 }
 
 // MARK: - Target Type
@@ -70,6 +72,10 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .absolute(let fullUrl):
       return fullUrl
+    case .uploadMultipart(let url, _, _):
+      var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
+      components?.scheme = "https"
+      return components?.url ?? url
     default:
       return Environment.current.baseURL
     }
@@ -157,6 +163,14 @@ extension BookwittyAPI: TargetType {
       path = "/status"
     case .resendAccountConfirmation:
       path = "/user/resend_confirmation"
+    case .uploadPolicy:
+      path = "/upload_policies"
+    case .uploadMultipart:
+      /*
+      * Uploading to Amazon S3 servers, 
+      * upload absolute url is provided as parameter
+      */
+      return ""
     }
     
     return apiBasePath + apiVersion + path
@@ -168,7 +182,7 @@ extension BookwittyAPI: TargetType {
       return .post
   case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent:
       return .get
-    case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword, .followPenName:
+    case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart:
       return .post
     case .updateUser, .updatePenName:
       return .patch
@@ -226,7 +240,9 @@ extension BookwittyAPI: TargetType {
       return UserAPI.resetPasswordBody(email: email)
     case .postsContent(_ , let page):
       return GeneralAPI.postsContentParameters(page: page)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName:
+    case .uploadPolicy(let file, let fileType, let assetType):
+      return UploadAPI.uploadPolicyParameters(file: file, fileType: fileType, assetType: assetType)
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart:
       return nil
     }
   }
@@ -247,6 +263,17 @@ extension BookwittyAPI: TargetType {
   /// The type of HTTP task to be performed.
   public var task: Task {
     switch self {
+    case .uploadMultipart(_, let parameters, let multipart):
+      var multipartArray: [MultipartFormData] = []
+      if let parameters = parameters {
+        parameters.forEach({ (kvp: (key: String, value: String)) in
+          if let valueData: Data = kvp.value.data(using: .utf8) {
+            multipartArray.append(MultipartFormData(provider: .data(valueData), name: kvp.key))
+          }
+        })
+      }
+      multipartArray.append(MultipartFormData(provider: .data(multipart.data), name: multipart.name))
+      return .upload(.multipart(multipartArray))
     default:
       return .request
     }
