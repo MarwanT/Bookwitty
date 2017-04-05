@@ -41,12 +41,8 @@ class AccessToken {
     let expiresIn = json["expires_in"].doubleValue as TimeInterval
     let expiry = Date(timeIntervalSinceNow: expiresIn)
     
-    guard let token = tokenValue, let refresh = refreshValue else {
-      return
-    }
-    
-    defaults.set(token, forKey: Keys.token.rawValue)
-    defaults.set(refresh, forKey: Keys.refreshToken.rawValue)
+    defaults.set(tokenValue, forKey: Keys.token.rawValue)
+    defaults.set(refreshValue, forKey: Keys.refreshToken.rawValue)
     defaults.set(expiry, forKey: Keys.expiryDate.rawValue)
     defaults.set(false, forKey: Keys.updating.rawValue)
   }
