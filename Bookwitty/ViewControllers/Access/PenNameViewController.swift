@@ -91,6 +91,9 @@ class PenNameViewController: UIViewController {
     biographyTextView.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.label)
       .append(text: viewModel.penBiography(), color: ThemeManager.shared.currentTheme.defaultTextColor())
       .attributedString
+    if let avatarUrl = viewModel.penAvatarUrl(), let url = URL(string: avatarUrl) {
+      self.profileImageView.sd_setImage(with: url, placeholderImage: placeholder)
+    }
   }
 
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {

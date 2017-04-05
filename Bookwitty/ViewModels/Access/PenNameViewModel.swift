@@ -23,6 +23,10 @@ final class PenNameViewModel {
     return penName?.biography ?? ""
   }
 
+  func penAvatarUrl() -> String? {
+    return penName?.avatarUrl
+  }
+
   func initializeWith(penName: PenName?, andUser user: User?) {
     self.penName = penName
     self.user = user
