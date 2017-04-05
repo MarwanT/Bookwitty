@@ -27,6 +27,8 @@ class PenNameViewController: UIViewController {
   
   var showNoteLabel: Bool = true
 
+  fileprivate let placeholder: UIImage = #imageLiteral(resourceName: "penNamePlaceholder ").imageMaskedAndTinted(with: ThemeManager.shared.currentTheme.colorNumber18())
+
   override func viewDidLoad() {
     super.viewDidLoad()
     awakeSelf()
@@ -51,6 +53,8 @@ class PenNameViewController: UIViewController {
     setupBiographyKeyboardToolbar()
     
     noteLabel.isHidden = !showNoteLabel
+
+    profileImageView.image = placeholder
 
     //Make Cicular View tappable
     let tap = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnCircularView(_:)))
@@ -154,7 +158,7 @@ class PenNameViewController: UIViewController {
       self.openCamera()
     })
     let  removePhotoButton = UIAlertAction(title: Strings.clear_profile_photo(), style: .default, handler: { (action) -> Void in
-      self.profileImageView.image = nil
+      self.profileImageView.image = self.placeholder
       self.plusImageView.alpha = 1
     })
 
