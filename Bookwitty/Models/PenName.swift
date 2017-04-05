@@ -12,6 +12,7 @@ import Spine
 class PenName: Resource {
   var name: String?
   var biography: String?
+  var avatarId: String?
   var avatarUrl: String?
   var facebookUrl: String?
   var tumblrUrl: String?
@@ -44,6 +45,7 @@ class PenName: Resource {
     return fieldsFromDictionary([
       "name": Attribute().serializeAs("name"),
       "biography": Attribute().serializeAs("biography"),
+      "avatarId": Attribute().serializeAs("avatar-id"),
       "avatarUrl": Attribute().serializeAs("avatar-url"),
       "facebookUrl": Attribute().serializeAs("facebook-url"),
       "tumblrUrl": Attribute().serializeAs("tumblr-url"),
