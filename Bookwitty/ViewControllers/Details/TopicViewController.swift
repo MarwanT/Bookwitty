@@ -331,22 +331,22 @@ extension TopicViewController: TopicHeaderNodeDelegate {
 }
 
 extension TopicViewController: PenNameFollowNodeDelegate {
-  func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ASButtonNode) {
+  func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader) {
     guard let indexPath = collectionNode.indexPath(for: node) else {
       return
     }
-
+    button.state = .loading
     if button.isSelected {
       viewModel.unfollowPenName(at: indexPath.item, completionBlock: {
         (success: Bool) in
-        node.following = false
-        button.isSelected = false
+        node.following = !success
+        button.state = success ? .normal : .selected
       })
     } else {
       viewModel.followPenName(at: indexPath.item, completionBlock: {
         (success: Bool) in
-        node.following = true
-        button.isSelected = true
+        node.following = success
+        button.state = success ? .selected : .normal
       })
     }
   }
