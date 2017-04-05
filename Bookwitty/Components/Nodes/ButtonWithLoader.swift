@@ -42,7 +42,12 @@ class ButtonWithLoader: ASDisplayNode {
   var isSelected: Bool {
     return button.isSelected
   }
-
+  var isEnabled: Bool = true {
+    didSet {
+      button.isEnabled = isEnabled
+    }
+  }
+  
   private override init() {
     loaderNode = LoaderNode()
     button = ASButtonNode()
