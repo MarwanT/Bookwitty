@@ -221,9 +221,6 @@ public func signedAPIRequest(target: BookwittyAPI, completion: @escaping Bookwit
   let apiRequest = createAPIRequest(target: target, completion: completion)
   
   let accessToken = AccessToken.shared
-  if (!accessToken.hasTokens) {
-    return apiRequest()
-  }
   let appManager = AppManager.shared
   
   if (accessToken.isUpdating || appManager.isCheckingStatus) {

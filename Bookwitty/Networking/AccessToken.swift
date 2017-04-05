@@ -16,7 +16,20 @@ private extension Date {
   }
 }
 
-
+/**
+ In case the user is signed in, then this means we have:
+ - Token
+ - Refresh Token
+ - Expiry Date
+ 
+ In case the user is not signed in, then we should be retrieving an access token
+ and use it for signing requests, in that case the token would not have
+ a refresh token. what we would be left with is
+ - Token
+ - Expiry Date
+ 
+ 
+ */
 class AccessToken {
   enum Keys: String {
     case token = "AccessToken.Keys.token"
@@ -80,15 +93,30 @@ class AccessToken {
     return expiryDate.isInPast
   }
   
-  var hasTokens: Bool {
-    guard let token = token, let refreshToken = refreshToken else {
+  var hasToken: Bool {
+    guard let token = token else {
       return false
     }
-    return (token.characters.count > 0) && (refreshToken.characters.count > 0)
+    return token.characters.count > 0
   }
   
+  var hasRefreshToken: Bool {
+    guard let refreshToken = refreshToken else {
+      return false
+    }
+    return refreshToken.characters.count > 0
+  }
+  
+  /**
+   Checks if the user
+   - (Have token) & (Not expired)
+   
+   The access token is not checked here for this only determines if the user
+   is signed in or not, for sign in token there must be a refresh token.
+   For guest user no refresh token is required
+   */
   var isValid: Bool {
-    return hasTokens && !isExpired
+    return hasToken && !isExpired
   }
   
   var isUpdating: Bool {
