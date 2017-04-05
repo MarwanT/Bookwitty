@@ -9,6 +9,10 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol ButtonWithLoaderDelegate {
+  func buttonTouchUpInside(buttonWithLoader: ButtonWithLoader)
+}
+
 class ButtonWithLoader: ASDisplayNode {
   fileprivate let smallButtonHeight: CGFloat = 36.0
   fileprivate let largeButtonHeight: CGFloat = 44.0
