@@ -43,6 +43,49 @@ class ButtonWithLoader: ASDisplayNode {
   }
 }
 
+// MARK: - Public Setters: Charactristics
+extension ButtonWithLoader {
+  func setAttributedTitle(title: NSAttributedString, for state: UIControlState) {
+    button.setAttributedTitle(title, for: state)
+  }
+
+  func setTitle(title: String, with font: UIFont?, with color: UIColor?, for state: UIControlState) {
+    button.setTitle(title, with: font, with: color, for: state)
+  }
+
+  func setupSelectionButton(defaultBackgroundColor: UIColor =  ThemeManager.shared.currentTheme.defaultBackgroundColor(),
+                            selectedBackgroundColor: UIColor = ThemeManager.shared.currentTheme.defaultButtonColor(),
+                            defaultImage: UIImage? = nil,
+                            selectedImage: UIImage? = nil,
+                            borderStroke: Bool = true,
+                            borderColor: UIColor = ThemeManager.shared.currentTheme.defaultButtonColor(),
+                            borderWidth: CGFloat = 2.0,
+                            cornerRadius: CGFloat = 4.0) {
+
+    let buttonWhiteBackgroundColor = UIImage(color: defaultBackgroundColor)
+    let buttonBackgroundImage = UIImage(color: selectedBackgroundColor)
+
+    if let selectedImage = selectedImage {
+      button.setImage(selectedImage, for: .selected)
+    }
+    button.setBackgroundImage(buttonBackgroundImage, for: .selected)
+
+    //Default state Button Image, tint and background color
+    if let defaultImage = defaultImage {
+      button.setImage(defaultImage, for: .normal)
+    }
+    button.setBackgroundImage(buttonWhiteBackgroundColor, for: .normal)
+    button.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.defaultButtonColor())
+
+    if borderStroke {
+      self.borderColor = borderColor.cgColor
+      self.borderWidth = borderWidth
+    }
+    self.cornerRadius = cornerRadius
+    self.clipsToBounds = true
+  }
+}
+
 // MARK: - Actions
 extension ButtonWithLoader {
   func touchUpInsideButton() {
