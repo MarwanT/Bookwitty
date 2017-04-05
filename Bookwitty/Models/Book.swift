@@ -258,7 +258,16 @@ struct Price {
     guard let currency = currency, let value = value, !currency.isEmpty else {
       return nil
     }
-    return currency + " \(value)"
+    let currencyFormatter = self.currencyFormatter
+    currencyFormatter.currencyCode = currency
+    return currencyFormatter.string(for: value)
+  }
+  
+  private var currencyFormatter: NumberFormatter {
+    let numberFormatter = NumberFormatter()
+    numberFormatter.locale = Locale.application
+    numberFormatter.numberStyle = .currency
+    return numberFormatter
   }
 }
 
