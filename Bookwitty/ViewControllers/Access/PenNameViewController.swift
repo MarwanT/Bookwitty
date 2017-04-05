@@ -66,9 +66,6 @@ class PenNameViewController: UIViewController {
       self,
       selector: #selector(PenNameViewController.keyboardWillHide(_:)),
       name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-    
-    // TODO: remove the following line
-    profileContainerView.isHidden = true
   }
 
   deinit {
