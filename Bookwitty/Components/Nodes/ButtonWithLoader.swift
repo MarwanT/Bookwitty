@@ -80,6 +80,16 @@ class ButtonWithLoader: ASDisplayNode {
   }
 }
 
+// MARK: - Node Layout
+extension ButtonWithLoader {
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let spec = ASOverlayLayoutSpec(child: loaderNode, overlay: button)
+    spec.style.flexGrow = 1.0
+    spec.style.flexShrink = 1.0
+    return spec
+  }
+}
+
 // MARK: - Public Setters: Charactristics
 extension ButtonWithLoader {
   func setAttributedTitle(title: NSAttributedString, for state: UIControlState) {
