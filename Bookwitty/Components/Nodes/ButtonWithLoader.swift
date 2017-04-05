@@ -14,8 +14,9 @@ protocol ButtonWithLoaderDelegate {
 }
 
 class ButtonWithLoader: ASDisplayNode {
-  fileprivate let smallButtonHeight: CGFloat = 36.0
-  fileprivate let largeButtonHeight: CGFloat = 44.0
+  fileprivate static let defaultHeight: CGFloat = 36.0
+  fileprivate static let defaultMinWidth: CGFloat = 90.0
+  fileprivate static let defaultMaxWidth: CGFloat = 130.0
 
   enum State {
     case normal
@@ -25,6 +26,9 @@ class ButtonWithLoader: ASDisplayNode {
 
   fileprivate let loaderNode: LoaderNode
   fileprivate let button: ASButtonNode
+
+  fileprivate var buttonHeight: CGFloat
+  fileprivate var buttonSizeWidthRange: ASSizeRange
 
   var delegate: ButtonWithLoaderDelegate?
   var isLoading: Bool {
@@ -39,25 +43,45 @@ class ButtonWithLoader: ASDisplayNode {
     return button.isSelected
   }
 
-  override init() {
+  private override init() {
     loaderNode = LoaderNode()
     button = ASButtonNode()
+    //Default Height
+    buttonHeight = ButtonWithLoader.defaultHeight
+    //Default Width Range
+    buttonSizeWidthRange = ASSizeRange(min: CGSize(width: ButtonWithLoader.defaultMinWidth, height: 0.0), max: CGSize(width: ButtonWithLoader.defaultMaxWidth, height: 0.0))
     super.init()
     automaticallyManagesSubnodes = true
+  }
+
+  convenience init(buttonHeight: CGFloat = ButtonWithLoader.defaultHeight, minWidth: CGFloat = ButtonWithLoader.defaultMinWidth, maxWidth: CGFloat = ButtonWithLoader.defaultMaxWidth) {
+    self.init()
+    self.buttonHeight = buttonHeight
+    self.buttonSizeWidthRange = ASSizeRange(min: CGSize(width: minWidth, height: 0.0), max: CGSize(width: maxWidth, height: 0.0))
     setupNode()
   }
 
-  private func setupNode() {
-    style.flexGrow = 1.0
-    style.flexShrink = 1.0
+  override func didLoad() {
+    super.didLoad()
+  }
 
+  private func setupNode() {
     button.titleNode.maximumNumberOfLines = 1
-    button.style.height = ASDimensionMake(smallButtonHeight)
+    button.style.height = ASDimensionMake(buttonHeight)
     button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    button.style.flexGrow = 1.0
+    button.style.flexShrink = 1.0
 
     //Set Button Action Listener
     button.addTarget(self, action: #selector(buttonTouchUpInsideButton), forControlEvents: ASControlNodeEvent.touchUpInside)
     setupSelectionButton()
+
+    state = .normal
+  }
+
+  fileprivate func updateSizeToFitButton() {
+    let buttonLayoutSpec = button.calculateLayoutThatFits(buttonSizeWidthRange)
+    style.width = ASDimensionMake(buttonLayoutSpec.size.width)
   }
 
   private func updateButtonAppearance() {
@@ -70,6 +94,7 @@ class ButtonWithLoader: ASDisplayNode {
     case .normal, .selected:
       button.isHidden = false
       button.isSelected = (state == .selected)
+      updateSizeToFitButton()
       updateButtonAppearance()
     case .loading:
       button.isHidden = true
@@ -83,10 +108,13 @@ class ButtonWithLoader: ASDisplayNode {
 // MARK: - Node Layout
 extension ButtonWithLoader {
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    updateSizeToFitButton()
+
     let spec = ASOverlayLayoutSpec(child: loaderNode, overlay: button)
     spec.style.flexGrow = 1.0
     spec.style.flexShrink = 1.0
-    return spec
+    let hSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .center, alignItems: .center, children: [spec])
+    return hSpec
   }
 }
 
