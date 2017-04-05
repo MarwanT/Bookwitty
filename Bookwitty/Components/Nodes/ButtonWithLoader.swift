@@ -32,7 +32,7 @@ class ButtonWithLoader: ASDisplayNode {
   }
   var state: State = .normal {
     didSet {
-      //TODO: update view state
+      updateViewState()
     }
   }
   var isSelected: Bool {
@@ -58,6 +58,25 @@ class ButtonWithLoader: ASDisplayNode {
     //Set Button Action Listener
     button.addTarget(self, action: #selector(touchUpInsideButton), forControlEvents: ASControlNodeEvent.touchUpInside)
     setupSelectionButton()
+  }
+
+  private func updateButtonAppearance() {
+    let color = button.isSelected ? ThemeManager.shared.currentTheme.defaultBackgroundColor() : ThemeManager.shared.currentTheme.defaultButtonColor()
+    button.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(color)
+  }
+
+  fileprivate func updateViewState() {
+    switch state {
+    case .normal, .selected:
+      button.isHidden = false
+      button.isSelected = (state == .selected)
+      updateButtonAppearance()
+    case .loading:
+      button.isHidden = true
+      updateButtonAppearance()
+      loaderNode.updateLoaderVisibility(show: true)
+    }
+    setNeedsLayout()
   }
 }
 
