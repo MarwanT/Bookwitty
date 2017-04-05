@@ -809,6 +809,7 @@ extension TopicViewController: Localizable {
     }
 
     headerNode = TopicHeaderNode()
+    headerNode.delegate = self
 
     let segments: [String] = self.mode.categories.map({ $0.name })
     segmentedNode.initialize(with: segments)
