@@ -102,6 +102,7 @@ class PenNameViewController: UIViewController {
 
     let name = penNameInputField.textField.text
     let biography = biographyTextView.text
+    let avatarId: String? = nil
 
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .Account,
@@ -109,7 +110,7 @@ class PenNameViewController: UIViewController {
     Analytics.shared.send(event: event)
 
     showLoader()
-    self.viewModel.updatePenNameIfNeeded(name: name, biography: biography) {
+    self.viewModel.updatePenNameIfNeeded(name: name, biography: biography, avatarId: avatarId) {
       (success: Bool) in
       self.hideLoader()
       
