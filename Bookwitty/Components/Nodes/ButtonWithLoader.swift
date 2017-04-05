@@ -20,6 +20,8 @@ class ButtonWithLoader: ASDisplayNode {
   fileprivate let loaderNode: LoaderNode
   fileprivate let button: ASButtonNode
 
+  var delegate: ButtonWithLoaderDelegate?
+
   override init() {
     loaderNode = LoaderNode()
     button = ASButtonNode()
@@ -44,6 +46,6 @@ class ButtonWithLoader: ASDisplayNode {
 // MARK: - Actions
 extension ButtonWithLoader {
   func touchUpInsideButton() {
-    //TODO: delegate action
+    delegate?.buttonTouchUpInside(buttonWithLoader: self)
   }
 }
