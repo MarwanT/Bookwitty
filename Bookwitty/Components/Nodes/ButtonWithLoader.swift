@@ -31,5 +31,15 @@ class ButtonWithLoader: ASDisplayNode {
     button.titleNode.maximumNumberOfLines = 1
     button.style.height = ASDimensionMake(smallButtonHeight)
     button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+
+    //Set Button Action Listener
+    button.addTarget(self, action: #selector(touchUpInsideButton), forControlEvents: ASControlNodeEvent.touchUpInside)
+  }
+}
+
+// MARK: - Actions
+extension ButtonWithLoader {
+  func touchUpInsideButton() {
+    //TODO: delegate action
   }
 }
