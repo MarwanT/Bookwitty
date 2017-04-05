@@ -30,7 +30,7 @@ class ButtonWithLoader: ASDisplayNode {
     setupNode()
   }
 
-  func setupNode() {
+  private func setupNode() {
     style.flexGrow = 1.0
     style.flexShrink = 1.0
 
@@ -40,6 +40,7 @@ class ButtonWithLoader: ASDisplayNode {
 
     //Set Button Action Listener
     button.addTarget(self, action: #selector(touchUpInsideButton), forControlEvents: ASControlNodeEvent.touchUpInside)
+    setupSelectionButton()
   }
 }
 
