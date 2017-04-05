@@ -15,7 +15,7 @@ class UploadPolicy: Resource {
   var form: [String : Any]?
 
   override class var resourceType: ResourceType {
-    return "upload-policy"
+    return "upload-policies"
   }
 
   override class var fields: [Field] {
