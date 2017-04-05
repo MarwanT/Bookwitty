@@ -88,6 +88,8 @@ public struct APIProvider {
     // Add Header Fields to Endpoint
     var headerParameters = [String : String]();
     switch target{
+    case .uploadMultipart:
+      break
     case .oAuth, .register, .refreshToken:
       headerParameters["Content-Type"] = "application/json";
       headerParameters["Accept"] = "application/json"
