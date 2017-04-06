@@ -56,12 +56,9 @@ class ProfileCardPostContentNode: ASDisplayNode {
   }
   var followersCount: String? {
     didSet {
-      //TODO: This should be handled with localization plurals
-      if let followersCount = followersCount {
+      if let followersCount = followersCount, let number: Int = Int(followersCount) {
         followersTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
-          .append(text: followersCount)
-          .append(text: " ")
-          .append(text: Strings.followers(), fontDynamicType: .caption2)
+          .append(text: Strings.followers(number: number), fontDynamicType: .caption2)
           .attributedString
       }
     }

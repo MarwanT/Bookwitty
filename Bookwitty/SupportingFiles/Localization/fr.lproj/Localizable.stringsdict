@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>f_number_of_contributors</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@value@</string>
+		<key>value</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>%d Contributeurs</string>
+			<key>one</key>
+			<string>%d Contributeur</string>
+			<key>two</key>
+			<string>%d Contributeurs</string>
+			<key>few</key>
+			<string>%d Contributeurs</string>
+			<key>many</key>
+			<string>%d Contributeurs</string>
+			<key>other</key>
+			<string>%d Contributeurs</string>
+		</dict>
+	</dict>
+	<key>f_number_of_followers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@value@</string>
+		<key>value</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>%d Abonnés</string>
+			<key>one</key>
+			<string>%d Abonné</string>
+			<key>two</key>
+			<string>%d Abonnés</string>
+			<key>few</key>
+			<string>%d Abonnés</string>
+			<key>many</key>
+			<string>%d Abonnés</string>
+			<key>other</key>
+			<string>%d Abonnés</string>
+		</dict>
+	</dict>
+	<key>f_number_of_posts</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@value@</string>
+		<key>value</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>%d Posts</string>
+			<key>one</key>
+			<string>%d Post</string>
+			<key>two</key>
+			<string>%d Posts</string>
+			<key>few</key>
+			<string>%d Posts</string>
+			<key>many</key>
+			<string>%d Posts</string>
+			<key>other</key>
+			<string>%d Posts</string>
+		</dict>
+	</dict>
+	<key>f_number_of_books</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@value@</string>
+		<key>value</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>%d Livres</string>
+			<key>one</key>
+			<string>%d Livre</string>
+			<key>two</key>
+			<string>%d Livres</string>
+			<key>few</key>
+			<string>%d Livres</string>
+			<key>many</key>
+			<string>%d Livres</string>
+			<key>other</key>
+			<string>%d Livres</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

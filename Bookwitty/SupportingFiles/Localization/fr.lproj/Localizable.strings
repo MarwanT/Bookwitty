@@ -184,6 +184,17 @@
 "your_feed" = "Votre flux";
 
 /**
+ * Formatted Strings
+ * For This Part use `f_` as prefix to indicate that the localizable string is a formatted one
+ * And this will also allow us to avoid conflict with similar sentences
+ */
+"f_number_of_contributors" = "%d contributors";
+"f_number_of_followers" = "%d followers";
+"f_number_of_posts" = "%d posts";
+"f_number_of_books" = "%d books";
+
+
+/**
  Discussion:
  - Please keep this file sorted by keys, for easier maintenance
  - Please add the strings directly to the google drive sheet

@@ -113,26 +113,18 @@ class TopicHeaderNode: ASCellNode {
     var attrStringBuilder = AttributedStringBuilder(fontDynamicType: .footnote)
     var addSeparator: Bool = false
 
-    //TODO: This should be handled with localization plurals
-    if let followersNumber = String(counting: numberOfFollowers) , (numberOfFollowers ?? 0 > 0) {
-      let plural = numberOfFollowers ?? 0 > 1
-      let str = plural ? Strings.followers() : Strings.follower()
+    if let numberOfFollowers = numberOfFollowers {
       attrStringBuilder = attrStringBuilder
-        .append(text: followersNumber)
-        .append(text: " " + str, fontDynamicType: .caption2)
+        .append(text: Strings.followers(number: numberOfFollowers), fontDynamicType: .caption2)
       addSeparator = true
     } else {
       addSeparator = false
     }
 
-    //TODO: This should be handled with localization plurals
-    if let postsNumber = String(counting: numberOfPosts), (numberOfPosts ?? 0 > 0) {
-      let plural = numberOfPosts ?? 0 > 1
-      let str = plural ? Strings.posts() : Strings.post()
+    if let numberOfPosts = numberOfPosts {
       attrStringBuilder = attrStringBuilder
         .append(text: (addSeparator ? separator : ""), fontDynamicType: .caption2)
-        .append(text: postsNumber)
-        .append(text: " " + str, fontDynamicType: .caption2)
+        .append(text: Strings.posts(number: numberOfPosts), fontDynamicType: .caption2)
     }
 
     //Set the string value
