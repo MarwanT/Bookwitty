@@ -101,7 +101,7 @@ class OnBoardingInternalCellNode: ASCellNode {
     let hStack = ASStackLayoutSpec(direction: .horizontal, spacing: 0,
                                    justifyContent: .start, alignItems: .stretch,
                                    children: [imageNode, textInsetSpec, endStack])
-    let insetSpec = ASInsetLayoutSpec(insets: UIEdgeInsets(top: internalMargin, left: internalMargin, bottom: internalMargin, right: internalMargin), child: hStack)
+    let insetSpec = ASInsetLayoutSpec(insets: UIEdgeInsets(top: contentSpacing, left: internalMargin, bottom: contentSpacing, right: internalMargin), child: hStack)
 
     let separatorWidth = fullSeparator ?
       constrainedSize.max.width :
