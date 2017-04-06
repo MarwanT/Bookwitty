@@ -55,7 +55,7 @@ class CardPostInfoNode: ASDisplayNode {
     let profileBorderColor: UIColor? = nil
     userProfileImageNode.style.preferredSize = profileImageSize
     userProfileImageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(profileBorderWidth, profileBorderColor)
-    userProfileImageNode.defaultImage = UIImage(color: ASDisplayNodeDefaultPlaceholderColor(), size: profileImageSize)
+    userProfileImageNode.defaultImage = #imageLiteral(resourceName: "penNamePlaceholder").imageMaskedAndTinted(with: ThemeManager.shared.currentTheme.colorNumber18())
 
     arrowDownImageNode.image = #imageLiteral(resourceName: "downArrow")
     arrowDownImageNode.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
