@@ -13,7 +13,7 @@ import Moya
 // MARK: - Enum Declaration
 
 public enum BookwittyAPI {
-  case oAuth(username: String, password: String)
+  case oAuth(credentials: (username: String, password: String)?)
   case refreshToken(refreshToken: String)
   case allAddresses
   case register(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String?, countryISO3166: String, password: String, language: String)
@@ -179,15 +179,26 @@ extension BookwittyAPI: TargetType {
   
   public var parameters: [String: Any]? {
     switch self {
-    case .oAuth(let username, let password):
-      return [
-        "client_id": AppKeys.shared.apiKey,
-        "client_secret": AppKeys.shared.apiSecret,
-        "username": username,
-        "password":  password,
-        "grant_type": "password",
-        "scopes": "openid email profile"
-      ]
+    case .oAuth(let credentials):
+      let params: [String: Any]
+      if let credentials = credentials {
+        params = [
+          "client_id": AppKeys.shared.apiKey,
+          "client_secret": AppKeys.shared.apiSecret,
+          "username": credentials.username,
+          "password":  credentials.password,
+          "grant_type": "password",
+          "scopes": "openid email profile"
+        ]
+      } else {
+        params = [
+          "client_id": AppKeys.shared.apiKey,
+          "client_secret": AppKeys.shared.apiSecret,
+          "grant_type": "client_credentials",
+          "scopes": "openid email profile"
+        ]
+      }
+      return params
     case .refreshToken(let refreshToken):
       return [
         "client_id": AppKeys.shared.apiKey,

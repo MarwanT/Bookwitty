@@ -35,7 +35,7 @@ class UserManager {
   }
   
   var isSignedIn: Bool {
-    return AccessToken.shared.hasTokens && signedInUser != nil
+    return AccessToken.shared.hasToken && AccessToken.shared.hasRefreshToken && signedInUser != nil
   }
   
   var shouldEditPenName: Bool {

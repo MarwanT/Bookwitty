@@ -221,9 +221,6 @@ public func signedAPIRequest(target: BookwittyAPI, completion: @escaping Bookwit
   let apiRequest = createAPIRequest(target: target, completion: completion)
   
   let accessToken = AccessToken.shared
-  if (!accessToken.hasTokens) {
-    return apiRequest()
-  }
   let appManager = AppManager.shared
   
   if (accessToken.isUpdating || appManager.isCheckingStatus) {
@@ -240,7 +237,7 @@ public func signedAPIRequest(target: BookwittyAPI, completion: @escaping Bookwit
   }
   
   if !accessToken.isValid {
-    return refreshAccessToken(completion: { (success) in
+    return fetchValidToken(completion: { (success) in
       if success {
         _ = apiRequest()
       } else {
@@ -252,6 +249,14 @@ public func signedAPIRequest(target: BookwittyAPI, completion: @escaping Bookwit
   }
   
   return apiRequest()
+}
+
+public func fetchValidToken(completion: @escaping (_ success: Bool) -> Void) -> Cancellable? {
+  if UserManager.shared.isSignedIn {
+    return refreshAccessToken(completion: completion)
+  } else {
+    return fetchGuestToken(completion: completion)
+  }
 }
 
 public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -> Cancellable? {
@@ -294,6 +299,38 @@ public func refreshAccessToken(completion: @escaping (_ success:Bool) -> Void) -
       print("Error Refreshing token: \(error)")
     }
   })
+}
+
+public func fetchGuestToken(completion:@escaping (_ success:Bool) -> Void) -> Cancellable? {
+  let accessToken = AccessToken.shared
+  
+  accessToken.updating = true
+  
+  return apiRequest(
+  target: BookwittyAPI.oAuth(credentials: nil)) {
+    (data, statusCode, response, error) in
+    // Ensure the completion block is always called
+    var success: Bool = false
+    defer {
+      accessToken.updating = false
+      completion(success)
+    }
+    
+    // If status code is not available then break
+    guard let statusCode = statusCode, statusCode == 200 else {
+      return
+    }
+    
+    // Retrieve Dictionary from data
+    do {
+      guard let data = data, let dictionary = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as? NSDictionary else {
+        return
+      }
+      // Save token
+      AccessToken.shared.save(dictionary: dictionary)
+      success = true
+    } catch {}
+  }
 }
 
 func executePendingOperations(success: Bool) {
