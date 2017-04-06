@@ -285,20 +285,21 @@ extension TopicViewController {
 }
 
 extension TopicViewController: TopicHeaderNodeDelegate {
-  func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ASButtonNode) {
+  func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ButtonWithLoader) {
+    button.state = .loading
     if button.isSelected {
       viewModel.unfollowContent(completionBlock: { (success: Bool) in
         if success {
           node.following = false
-          button.isSelected = false
         }
+        button.state = success ? .normal : .selected
       })
     } else {
       viewModel.followContent(completionBlock: { (success: Bool) in
         if success {
           node.following = true
-          button.isSelected = true
         }
+        button.state = success ? .selected : .normal
       })
     }
 
@@ -808,6 +809,7 @@ extension TopicViewController: Localizable {
     }
 
     headerNode = TopicHeaderNode()
+    headerNode.delegate = self
 
     let segments: [String] = self.mode.categories.map({ $0.name })
     segmentedNode.initialize(with: segments)

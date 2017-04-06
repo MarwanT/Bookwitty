@@ -10,7 +10,7 @@ import UIKit
 import AsyncDisplayKit
 
 protocol TopicHeaderNodeDelegate: class {
-  func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ASButtonNode)
+  func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ButtonWithLoader)
 }
 
 class TopicHeaderNode: ASCellNode {
@@ -24,7 +24,7 @@ class TopicHeaderNode: ASCellNode {
   private var thumbnailImageNode: ASNetworkImageNode
   private var titleNode: ASTextNode
   private var topicStatsNode: ASTextNode
-  private var actionButton: ASButtonNode
+  private var actionButton: ButtonWithLoader
   private var contributorsNode: ContributorsNode
 
   weak var delegate: TopicHeaderNodeDelegate?
@@ -34,7 +34,7 @@ class TopicHeaderNode: ASCellNode {
     thumbnailImageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
     topicStatsNode = ASTextNode()
-    actionButton = ASButtonNode()
+    actionButton = ButtonWithLoader()
     contributorsNode = ContributorsNode()
     super.init()
     addSubnode(coverImageNode)
@@ -56,20 +56,17 @@ class TopicHeaderNode: ASCellNode {
     let buttonFont = FontDynamicType.subheadline.font
     let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()
     let selectedTextColor = ThemeManager.shared.currentTheme.colorNumber23()
-    let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultBackgroundColor())
-    let selectedButtonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultButtonColor())
-    actionButton.titleNode.maximumNumberOfLines = 1
-    actionButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
-    actionButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
-    actionButton.isSelected = self.following
-
-    actionButton.setTitle(Strings.follow(), with: buttonFont, with: textColor, for: .normal)
-    actionButton.setTitle(Strings.followed(), with: buttonFont, with: selectedTextColor, for: .selected)
-    actionButton.cornerRadius = 2
-    actionButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
-    actionButton.borderWidth = 2
-    actionButton.clipsToBounds = true
-    actionButton.addTarget(self, action: #selector(actionButtonTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
+    actionButton.setupSelectionButton(defaultBackgroundColor: ThemeManager.shared.currentTheme.defaultBackgroundColor(),
+                                      selectedBackgroundColor: ThemeManager.shared.currentTheme.defaultButtonColor(),
+                                      borderStroke: true,
+                                      borderColor: ThemeManager.shared.currentTheme.defaultButtonColor(),
+                                      borderWidth: 2.0,
+                                      cornerRadius: 2.0)
+    actionButton.setTitle(title: Strings.follow(), with: buttonFont, with: textColor, for: .normal)
+    actionButton.setTitle(title: Strings.followed(), with: buttonFont, with: selectedTextColor, for: .selected)
+    actionButton.state = self.following ? .selected : .normal
+    actionButton.style.height = ASDimensionMake(buttonSize.height)
+    actionButton.delegate = self
   }
 
   var topicTitle: String? {
@@ -102,7 +99,7 @@ class TopicHeaderNode: ASCellNode {
 
   var following: Bool = false {
     didSet {
-      actionButton.isSelected = following
+      actionButton.state = following ? .selected : .normal
     }
   }
 
@@ -166,9 +163,6 @@ class TopicHeaderNode: ASCellNode {
       nodesArray.append(titleNodeInset)
     }
 
-    actionButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-    actionButton.style.height = ASDimensionMake(buttonSize.height)
-
     var statsAndActionNodes: [ASLayoutElement] = []
 
     if isValid(topicStatsNode.attributedText?.string) {
@@ -208,15 +202,15 @@ class TopicHeaderNode: ASCellNode {
 }
 
 //Actions
-extension TopicHeaderNode {
-  func actionButtonTouchUpInside(_ sender: ASButtonNode) {
+extension TopicHeaderNode: ButtonWithLoaderDelegate {
+  func buttonTouchUpInside(buttonWithLoader: ButtonWithLoader) {
     guard UserManager.shared.isSignedIn else {
       //If user is not signed In post notification and do not fall through
       NotificationCenter.default.post( name: AppNotification.callToAction, object: CallToAction.follow)
       return
     }
 
-    delegate?.topicHeader(node: self, actionButtonTouchUpInside: sender)
+    delegate?.topicHeader(node: self, actionButtonTouchUpInside: buttonWithLoader)
   }
 }
 
