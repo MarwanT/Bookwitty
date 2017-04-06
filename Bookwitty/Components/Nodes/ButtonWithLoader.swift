@@ -56,7 +56,7 @@ class ButtonWithLoader: ASDisplayNode {
     button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 
     //Set Button Action Listener
-    button.addTarget(self, action: #selector(touchUpInsideButton), forControlEvents: ASControlNodeEvent.touchUpInside)
+    button.addTarget(self, action: #selector(buttonTouchUpInsideButton), forControlEvents: ASControlNodeEvent.touchUpInside)
     setupSelectionButton()
   }
 
@@ -135,7 +135,8 @@ extension ButtonWithLoader {
 
 // MARK: - Actions
 extension ButtonWithLoader {
-  func touchUpInsideButton() {
+  @objc
+  fileprivate func buttonTouchUpInsideButton(sender: UIButton) {
     delegate?.buttonTouchUpInside(buttonWithLoader: self)
   }
 }
