@@ -14,7 +14,7 @@ protocol OnBoardingInternalCellNodeDelegate {
 }
 
 class OnBoardingInternalCellNode: ASCellNode {
-  static let cellHeight: CGFloat = 115.0
+  static let cellHeight: CGFloat = 125.0
 
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
