@@ -367,9 +367,18 @@ extension TopicViewController: PenNameFollowNodeDelegate {
 }
 
 
+//MARK: - UICollectionViewDelegateFlowLayout implementation
 extension TopicViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
     return section != Section.relatedData.rawValue ? CGSize.zero : CGSize(width: collectionView.frame.size.width, height: segmentedNodeHeight)
+  }
+
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    guard section == Section.relatedData.rawValue else {
+      return UIEdgeInsets.zero
+    }
+
+    return UIEdgeInsets(top: 5.0, left: 0.0, bottom: 0.0, right: 0.0)
   }
 }
 
