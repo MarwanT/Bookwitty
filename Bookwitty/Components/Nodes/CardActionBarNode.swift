@@ -150,7 +150,7 @@ class CardActionBarNode: ASCellNode {
     followButton.setTitle(Strings.follow(), with: buttonFont, with: textColor, for: .normal)
     followButton.setTitle(Strings.following(), with: buttonFont, with: selectedTextColor, for: .selected)
 
-    followButton.cornerRadius = 4
+    followButton.cornerRadius = 2.0
     followButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
     followButton.borderWidth = 2
     followButton.clipsToBounds = true
@@ -171,7 +171,7 @@ class CardActionBarNode: ASCellNode {
     witButton.setTitle(Strings.wit_it(), with: buttonFont, with: textColor, for: .normal)
     witButton.setTitle(Strings.witted(), with: buttonFont, with: selectedTextColor, for: .selected)
 
-    witButton.cornerRadius = 4
+    witButton.cornerRadius = 2.0
     witButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
     witButton.borderWidth = 2
     witButton.clipsToBounds = true

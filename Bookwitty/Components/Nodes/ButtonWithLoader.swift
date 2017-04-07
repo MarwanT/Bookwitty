@@ -140,7 +140,7 @@ extension ButtonWithLoader {
                             borderStroke: Bool = true,
                             borderColor: UIColor = ThemeManager.shared.currentTheme.defaultButtonColor(),
                             borderWidth: CGFloat = 2.0,
-                            cornerRadius: CGFloat = 4.0) {
+                            cornerRadius: CGFloat = 2.0) {
 
     let buttonWhiteBackgroundColor = UIImage(color: defaultBackgroundColor)
     let buttonBackgroundImage = UIImage(color: selectedBackgroundColor)
