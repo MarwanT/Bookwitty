@@ -106,7 +106,7 @@ class PostDetailsHeaderNode: ASCellNode {
 
     if penName?.id == nil {
       nodesArray = [imageNode, ASLayoutSpec.spacer(height: contentSpacing),
-                    textInsetSpec, vStackActionBarSpec]
+                    textInsetSpec, ASLayoutSpec.spacer(height: contentSpacing), vStackActionBarSpec]
     } else {
       nodesArray = [imageNode, ASLayoutSpec.spacer(height: contentSpacing),
                     textInsetSpec, profileBarNode, vStackActionBarSpec]
