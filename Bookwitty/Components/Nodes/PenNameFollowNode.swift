@@ -94,7 +94,7 @@ class PenNameFollowNode: ASCellNode {
   private func setupNode() {
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
 
-    imageNode.defaultImage = #imageLiteral(resourceName: "penNamePlaceholder ").imageMaskedAndTinted(with: ThemeManager.shared.currentTheme.colorNumber18())
+    imageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
     imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0.0, nil)
 
     nameNode.maximumNumberOfLines = 1

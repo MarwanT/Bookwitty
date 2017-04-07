@@ -352,3 +352,11 @@ extension DefaultTheme {
     ]
   }
 }
+
+// MARK - Image Styling
+extension DefaultTheme {
+  var penNamePlaceholder: UIImage {
+    return #imageLiteral(resourceName: "penNamePlaceholder").imageMaskedAndTinted(with: ThemeManager.shared.currentTheme.colorNumber18())
+  }
+}
+
