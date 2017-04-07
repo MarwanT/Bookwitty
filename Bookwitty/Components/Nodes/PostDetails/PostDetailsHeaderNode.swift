@@ -46,7 +46,7 @@ class PostDetailsHeaderNode: ASCellNode {
   override init() {
     imageNode = ASNetworkImageNode()
     textNode = ASTextNode()
-    profileBarNode = PenNameFollowNode()
+    profileBarNode = PenNameFollowNode(largePadding: true)
     actionBarNode = CardActionBarNode()
     separator = ASDisplayNode()
     bottomSeparator = ASDisplayNode()
@@ -70,7 +70,7 @@ class PostDetailsHeaderNode: ASCellNode {
     bottomSeparator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
 
     //Post Iamge
-    imageNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 200.0)
+    imageNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 250.0)
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
     imageNode.animatedImagePaused = true
     //Post Title
@@ -106,7 +106,7 @@ class PostDetailsHeaderNode: ASCellNode {
 
     if penName?.id == nil {
       nodesArray = [imageNode, ASLayoutSpec.spacer(height: contentSpacing),
-                    textInsetSpec, vStackActionBarSpec]
+                    textInsetSpec, ASLayoutSpec.spacer(height: contentSpacing), vStackActionBarSpec]
     } else {
       nodesArray = [imageNode, ASLayoutSpec.spacer(height: contentSpacing),
                     textInsetSpec, profileBarNode, vStackActionBarSpec]

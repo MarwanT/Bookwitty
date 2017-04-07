@@ -103,6 +103,8 @@ extension PostDetailItemNode: DTAttributedTextContentNodeDelegate {
 class PostDetailItemNode: ASCellNode, NodeTapProtocol {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+  private let largeVerticalSpacing = ThemeManager.shared.currentTheme.booksVerticalSpacing()
+
   private let largeImageHeight: CGFloat = 120.0
   private let smallImageHeight: CGFloat = 100.0
   private let imageWidth: CGFloat = 90.0
@@ -306,9 +308,9 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
       outerVStackChildren.append(buttonHStack)
     }
 
-    outerVStackChildren.append(ASLayoutSpec.spacer(height: contentSpacing))
+    outerVStackChildren.append(ASLayoutSpec.spacer(height: largeVerticalSpacing))
     outerVStackChildren.append(separator)
     outerMostVStack.children = outerVStackChildren
-    return ASInsetLayoutSpec(insets: UIEdgeInsets(top: contentSpacing, left: internalMargin, bottom: 0, right: internalMargin), child: outerMostVStack)
+    return ASInsetLayoutSpec(insets: UIEdgeInsets(top: largeVerticalSpacing, left: internalMargin, bottom: 0, right: internalMargin), child: outerMostVStack)
   }
 }

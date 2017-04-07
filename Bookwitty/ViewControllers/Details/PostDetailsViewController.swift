@@ -56,7 +56,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     applyLocalization()
     observeLanguageChanges()
 
-    navigationItem.backBarButtonItem = UIBarButtonItem.back
+    loadNavigationBarButtons()
 
     //MARK: [Analytics] Screen Name
     let name: Analytics.ScreenName
@@ -69,6 +69,25 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
       name = Analytics.ScreenNames.Default
     }
     Analytics.shared.send(screenName: name)
+  }
+
+
+  private func loadNavigationBarButtons() {
+    //Set the back button item to remove the back-title
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
+    //Set the sharing icon and action in the navigation bar
+    let shareButton = UIBarButtonItem(
+      image: #imageLiteral(resourceName: "shareOutside"),
+      style: UIBarButtonItemStyle.plain,
+      target: self,
+      action: #selector(shareOutsideButton(_:)))
+    navigationItem.rightBarButtonItem = shareButton
+  }
+
+  func shareOutsideButton(_ sender: Any?) {
+    if let sharingInfo: [String] = viewModel.sharingPost() {
+      presentShareSheet(shareContent: sharingInfo)
+    }
   }
 
   func loadContentPosts() {
