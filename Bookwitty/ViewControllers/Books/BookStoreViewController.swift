@@ -146,6 +146,9 @@ class BookStoreViewController: UIViewController {
     selectionTableView.delegate = self
     selectionTableView.register(SectionTitleHeaderView.nib, forHeaderFooterViewReuseIdentifier: SectionTitleHeaderView.reuseIdentifier)
     selectionTableView.register(BookTableViewCell.nib, forCellReuseIdentifier: BookTableViewCell.reuseIdentifier)
+    selectionTableView.sectionHeaderHeight = UITableViewAutomaticDimension
+    selectionTableView.estimatedSectionHeaderHeight = SectionTitleHeaderView.minimumHeight
+    selectionTableView.isScrollEnabled = false
     
     // View All Books
     viewAllBooksView.configuration.style = .highlighted
@@ -467,7 +470,7 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
     if tableView === bookwittySuggestsTableView {
       return 45
     } else {
-      return SectionTitleHeaderView.minimumHeight
+      return UITableViewAutomaticDimension
     }
   }
   
