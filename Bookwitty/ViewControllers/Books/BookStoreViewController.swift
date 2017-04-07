@@ -63,6 +63,8 @@ class BookStoreViewController: UIViewController {
       refreshController.endRefreshing()
       refreshController.beginRefreshing()
       scrollView.contentOffset = offset
+    } else {
+      refreshController.endRefreshing()
     }
 
     //MARK: [Analytics] Screen Name
