@@ -70,7 +70,7 @@ class PostDetailsHeaderNode: ASCellNode {
     bottomSeparator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
 
     //Post Iamge
-    imageNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 200.0)
+    imageNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 250.0)
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
     imageNode.animatedImagePaused = true
     //Post Title
