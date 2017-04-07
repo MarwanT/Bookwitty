@@ -105,7 +105,11 @@ protocol ThemeAttributedTextStyle {
   func styleTextLinkAttributes() -> [AnyHashable : Any]
 }
 
-protocol Theme: ThemeSpacing, ThemeColor, ThemeButtonsStyle, ThemeLabelsStyle, ThemeTextFieldsStyle, ThemeAttributedTextStyle {
+protocol ThemeImageStyling {
+  var penNamePlaceholder: UIImage { get }
+}
+
+protocol Theme: ThemeSpacing, ThemeColor, ThemeButtonsStyle, ThemeLabelsStyle, ThemeTextFieldsStyle, ThemeAttributedTextStyle, ThemeImageStyling {
   func initialize()
 }
 
