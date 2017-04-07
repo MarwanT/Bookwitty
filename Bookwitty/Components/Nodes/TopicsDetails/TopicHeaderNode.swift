@@ -63,7 +63,7 @@ class TopicHeaderNode: ASCellNode {
                                       borderWidth: 2.0,
                                       cornerRadius: 2.0)
     actionButton.setTitle(title: Strings.follow(), with: buttonFont, with: textColor, for: .normal)
-    actionButton.setTitle(title: Strings.followed(), with: buttonFont, with: selectedTextColor, for: .selected)
+    actionButton.setTitle(title: Strings.following(), with: buttonFont, with: selectedTextColor, for: .selected)
     actionButton.state = self.following ? .selected : .normal
     actionButton.style.height = ASDimensionMake(buttonSize.height)
     actionButton.delegate = self

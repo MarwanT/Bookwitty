@@ -148,7 +148,7 @@ class CardActionBarNode: ASCellNode {
     followButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
 
     followButton.setTitle(Strings.follow(), with: buttonFont, with: textColor, for: .normal)
-    followButton.setTitle(Strings.followed(), with: buttonFont, with: selectedTextColor, for: .selected)
+    followButton.setTitle(Strings.following(), with: buttonFont, with: selectedTextColor, for: .selected)
 
     followButton.cornerRadius = 4
     followButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
