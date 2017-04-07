@@ -49,7 +49,12 @@ final class DiscoverViewModel {
           completionBlock(success)
         }
         if let resources = resources, success {
-          self.data += resources
+          //Get the Initial Order of resources result from the dataIndentifers original ids
+          for id in self.dataIdentifiers {
+            if let index = resources.index(where: { $0.id ?? "" == id }) {
+              self.data.append(resources[index])
+            }
+          }
         }
       })
     } else {
