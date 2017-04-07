@@ -20,7 +20,7 @@ class CardDetailsViewController: GenericNodeViewController {
 
   init(node: BaseCardPostNode, title: String? = nil, resource: ModelResource) {
     viewModel = CardDetailsViewModel(resource: resource)
-    super.init(node: node, title: title)
+    super.init(node: node, title: nil)
     node.delegate = self
     node.updateMode(fullMode: true)
     node.updateDimVisibility(visible: true)

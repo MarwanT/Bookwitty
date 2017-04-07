@@ -185,7 +185,7 @@ extension ReadingListsViewController: BaseCardPostNodeDelegate {
 //MARK: - Localizable implementation
 extension ReadingListsViewController: Localizable {
   func applyLocalization() {
-    title = Strings.reading_lists()
+    
   }
 
   fileprivate func observeLanguageChanges() {
