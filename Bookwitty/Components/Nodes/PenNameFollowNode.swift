@@ -16,6 +16,7 @@ protocol PenNameFollowNodeDelegate: class {
 
 class PenNameFollowNode: ASCellNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let imageSize: CGSize = CGSize(width: 45.0, height: 45.0)
   fileprivate let largeImageSize: CGSize = CGSize(width: 60.0, height: 60.0)
   fileprivate let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
@@ -26,6 +27,7 @@ class PenNameFollowNode: ASCellNode {
   private var actionButton: ButtonWithLoader
   private let separatorNode: ASDisplayNode
   private var enlarged: Bool = false
+  fileprivate var largePadding: Bool = false
 
   weak var delegate: PenNameFollowNodeDelegate?
 
@@ -43,9 +45,10 @@ class PenNameFollowNode: ASCellNode {
     addSubnode(separatorNode)
   }
 
-  convenience init(enlarged: Bool = false) {
+  convenience init(enlarged: Bool = false, largePadding: Bool = false) {
     self.init()
     self.enlarged = enlarged
+    self.largePadding = largePadding
     setupNode()
   }
 
@@ -205,9 +208,9 @@ extension PenNameFollowNode: ButtonWithLoaderDelegate {
 //Helpers
 extension PenNameFollowNode {
   fileprivate func edgeInset() -> UIEdgeInsets {
-    return UIEdgeInsets(top: internalMargin,
+    return UIEdgeInsets(top: largePadding ? contentSpacing : internalMargin,
                         left: internalMargin,
-                        bottom: internalMargin,
+                        bottom: largePadding ? contentSpacing : internalMargin,
                         right: internalMargin)
   }
 
