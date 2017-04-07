@@ -169,7 +169,7 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
       }
 
       currentCell.label.text = values.title
-      currentCell.profileImageView.sd_setImage(with: URL(string: values.imageUrl ?? ""), placeholderImage: #imageLiteral(resourceName: "penNamePlaceholder").imageMaskedAndTinted(with: ThemeManager.shared.currentTheme.colorNumber18()))
+      currentCell.profileImageView.sd_setImage(with: URL(string: values.imageUrl ?? ""), placeholderImage: ThemeManager.shared.currentTheme.penNamePlaceholder)
       currentCell.disclosureIndicatorImageView.isHidden = true
 
     } else {
