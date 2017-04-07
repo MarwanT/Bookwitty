@@ -46,7 +46,7 @@ class PostDetailsHeaderNode: ASCellNode {
   override init() {
     imageNode = ASNetworkImageNode()
     textNode = ASTextNode()
-    profileBarNode = PenNameFollowNode()
+    profileBarNode = PenNameFollowNode(largePadding: true)
     actionBarNode = CardActionBarNode()
     separator = ASDisplayNode()
     bottomSeparator = ASDisplayNode()
