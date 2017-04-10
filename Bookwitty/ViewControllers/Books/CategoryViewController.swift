@@ -345,7 +345,7 @@ extension CategoryViewController: UITableViewDataSource, UITableViewDelegate {
       guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: SectionTitleHeaderView.reuseIdentifier) as? SectionTitleHeaderView else {
         return nil
       }
-      headerView.label.text = Strings.our_selection_for_you()
+      headerView.label.text = Strings.most_popular()
       let headerConfiguration = SectionTitleHeaderView.Configuration(
         verticalBarColor: ThemeManager.shared.currentTheme.colorNumber6(),
         horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber5())
