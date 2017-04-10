@@ -123,4 +123,82 @@ class BookCardPostContentNode: ASDisplayNode {
     topicStatsNode.maximumNumberOfLines = 1
   }
 
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    var nodesArray: [ASLayoutElement] = []
+    nodesArray.append(imageNode)
+
+    var infoArray: [ASLayoutElement] = []
+
+    var topNodes: [ASLayoutElement] = []
+    if isValid(title) {
+      topNodes.append(titleNode)
+    }
+
+    if isValid(author) {
+      topNodes.append(authorNode)
+    }
+
+    let titleAuthorVerticalSpec = ASStackLayoutSpec(direction: .vertical,
+                                                    spacing: 0,
+                                                    justifyContent: .start,
+                                                    alignItems: .start,
+                                                    children: topNodes)
+
+    var bottomNodes: [ASLayoutElement] = []
+    if isValid(format) {
+      bottomNodes.append(formatNode)
+    }
+
+    if isValid(price?.description) {
+      bottomNodes.append(priceNode)
+    }
+    let formatPriceVerticalSpec = ASStackLayoutSpec(direction: .vertical,
+                                                    spacing: 0,
+                                                    justifyContent: .end,
+                                                    alignItems: .start,
+                                                    children: bottomNodes)
+
+    infoArray.append(titleAuthorVerticalSpec)
+    infoArray.append(ASLayoutSpec.spacer(height: internalMargin))
+    if isProduct {
+      infoArray.append(formatPriceVerticalSpec)
+    } else {
+      infoArray.append(topicStatsNode)
+    }
+
+    let verticalSpec = ASStackLayoutSpec(direction: .vertical,
+                                         spacing: 0,
+                                         justifyContent: .start,
+                                         alignItems: .start,
+                                         children: infoArray)
+
+    verticalSpec.style.flexShrink = 1.0
+    verticalSpec.style.flexGrow = 1.0
+
+    nodesArray.append(ASLayoutSpec.spacer(width: internalMargin))
+    nodesArray.append(verticalSpec)
+
+    let horizontalSpec = ASStackLayoutSpec(direction: .horizontal,
+                                           spacing: 0,
+                                           justifyContent: .start,
+                                           alignItems: .stretch,
+                                           children: nodesArray)
+
+    let insetSpec = ASInsetLayoutSpec(insets: edgeInset(), child: horizontalSpec)
+    return insetSpec
+  }
+}
+
+//Helpers
+extension BookCardPostContentNode {
+  fileprivate func edgeInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: internalMargin,
+                        left: internalMargin,
+                        bottom: internalMargin,
+                        right: internalMargin)
+  }
+
+  fileprivate func isValid(_ value: String?) -> Bool {
+    return !value.isEmptyOrNil()
+  }
 }
