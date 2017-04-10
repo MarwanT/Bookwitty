@@ -38,4 +38,21 @@ class BookCardPostContentNode: ASDisplayNode {
   private var formatNode: ASTextNode
   private var priceNode: ASTextNode
   private let topicStatsNode: ASTextNode
+
+  override init() {
+    imageNode = ASNetworkImageNode()
+    titleNode = ASTextNode()
+    authorNode = ASTextNode()
+    formatNode = ASTextNode()
+    priceNode = ASTextNode()
+    topicStatsNode = ASTextNode()
+    super.init()
+    addSubnode(imageNode)
+    addSubnode(titleNode)
+    addSubnode(authorNode)
+    addSubnode(formatNode)
+    addSubnode(priceNode)
+    addSubnode(topicStatsNode)
+  }
+
 }
