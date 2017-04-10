@@ -37,7 +37,7 @@ class BookNode: ASCellNode {
   var title: String? {
     didSet {
       if let title = title {
-        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title3)
           .append(text: title, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
         setNeedsLayout()
       }
