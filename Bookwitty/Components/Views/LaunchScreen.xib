@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,22 +15,41 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bookwitty" translatesAutoresizingMaskIntoConstraints="NO" id="BSN-M6-L2t">
-                    <rect key="frame" x="137" y="283.5" width="100" height="100"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q6U-al-fZO" userLabel="Logo colored background">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="244.5"/>
+                    <color key="backgroundColor" red="0.93725490196078431" green="0.90196078431372551" blue="0.85098039215686272" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bookwitty" translatesAutoresizingMaskIntoConstraints="NO" id="BSN-M6-L2t" userLabel="Bookwitty simbol logo">
+                    <rect key="frame" x="137" y="183.5" width="100" height="100"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="J8z-Vl-fnG"/>
                         <constraint firstAttribute="height" constant="100" id="XF1-S0-WVb"/>
                     </constraints>
                 </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppNameIcon" translatesAutoresizingMaskIntoConstraints="NO" id="IQ0-GW-xfc" userLabel="Bookwitty word logo">
+                    <rect key="frame" x="40" y="293.5" width="295" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="CmD-sa-mCY"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="BSN-M6-L2t" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="V3l-Os-1zf"/>
+                <constraint firstItem="IQ0-GW-xfc" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" constant="-40" id="1mq-uR-teM"/>
+                <constraint firstItem="IQ0-GW-xfc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="40" id="4I7-qs-16Z"/>
+                <constraint firstItem="q6U-al-fZO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="AKy-BV-fCi"/>
+                <constraint firstItem="q6U-al-fZO" firstAttribute="bottom" secondItem="BSN-M6-L2t" secondAttribute="bottom" constant="-39" id="Mkf-7K-9YF"/>
+                <constraint firstAttribute="trailing" secondItem="q6U-al-fZO" secondAttribute="trailing" id="Qgb-hO-S47"/>
+                <constraint firstItem="q6U-al-fZO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="UgQ-BO-8Af"/>
+                <constraint firstItem="BSN-M6-L2t" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" multiplier="0.7" id="V3l-Os-1zf"/>
                 <constraint firstItem="BSN-M6-L2t" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="hck-ZR-1He"/>
+                <constraint firstItem="IQ0-GW-xfc" firstAttribute="top" secondItem="BSN-M6-L2t" secondAttribute="bottom" constant="10" id="rVk-G6-612"/>
             </constraints>
+            <point key="canvasLocation" x="47.5" y="53.5"/>
         </view>
     </objects>
     <resources>
+        <image name="AppNameIcon" width="270" height="30"/>
         <image name="bookwitty" width="90" height="90"/>
     </resources>
 </document>
