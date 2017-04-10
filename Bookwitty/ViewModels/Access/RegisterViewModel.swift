@@ -8,6 +8,7 @@
 
 import Foundation
 import Moya
+import CoreTelephony
 
 final class RegisterViewModel {
   var country: (code: String, name: String)?
@@ -16,14 +17,21 @@ final class RegisterViewModel {
     self.country = loadDeviceDefaultCountry()
   }
 
+  /*
+  * Discussion:
+  * Locale.current.regionCode provides the Regions selected in the Device's Settings
+  * This value might not be accurate
+  * For greater Precision, we're getting the country code from the Telephony Carrier
+  */
   func loadDeviceDefaultCountry() -> (code: String, name: String)? {
-    let countryLocale = Locale.current as NSLocale
+    //The Cellular Service Carrier
+    let carrier = CTTelephonyNetworkInfo().subscriberCellularProvider
 
-    guard let code = countryLocale.object(forKey: .countryCode) as? String else {
+    guard let code = carrier?.isoCountryCode ?? Locale.current.regionCode else {
       return nil
     }
 
-    if let name = countryLocale.displayName(forKey: .countryCode, value: code) {
+    if let name = Locale.application.localizedString(forRegionCode: code) {
       return (code: code, name: name)
     }
 
