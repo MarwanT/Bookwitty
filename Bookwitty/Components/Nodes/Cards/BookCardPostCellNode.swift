@@ -109,6 +109,37 @@ class BookCardPostContentNode: ASDisplayNode {
     }
   }
 
+  func setTopicStatistics(numberOfPosts: Int? = nil, numberOfBooks: Int? = nil, numberOfFollowers: Int? = nil) {
+    let separator =  " | "
+    var attrStringBuilder = AttributedStringBuilder(fontDynamicType: .footnote)
+    var addSeparator: Bool = false
+
+    if let numberOfPosts = numberOfPosts {
+      attrStringBuilder = attrStringBuilder
+        .append(text: Strings.posts(number: numberOfPosts), fontDynamicType: .caption2)
+      addSeparator = true
+    } else {
+      addSeparator = false
+    }
+
+    if let numberOfBooks = numberOfBooks {
+      attrStringBuilder = attrStringBuilder
+        .append(text: (addSeparator ? separator : ""), fontDynamicType: .caption2)
+        .append(text: Strings.books(number: numberOfBooks), fontDynamicType: .caption2)
+      addSeparator = true
+    }
+
+    if let numberOfFollowers = numberOfFollowers {
+      attrStringBuilder = attrStringBuilder
+        .append(text: (addSeparator ? separator : ""), fontDynamicType: .caption2)
+        .append(text: Strings.followers(number: numberOfFollowers), fontDynamicType: .caption2)
+    }
+
+    //Set the string value
+    topicStatsNode.attributedText = attrStringBuilder.attributedString
+    setNeedsLayout()
+  }
+
   private func setupNode() {
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
 
