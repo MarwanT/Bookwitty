@@ -30,10 +30,12 @@ class RegisterViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    applyLocalization()
+    
     awakeSelf()
     applyTheme()
 
-    applyLocalization()
     observeLanguageChanges()
 
     navigationItem.backBarButtonItem = UIBarButtonItem.back
