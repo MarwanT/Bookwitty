@@ -70,8 +70,8 @@
                                             <constraint firstAttribute="height" constant="1" id="bIV-bj-9JP"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H53-wX-Ai4" userLabel="Forgot Password">
-                                        <rect key="frame" x="0.0" y="301" width="375" height="21"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H53-wX-Ai4" userLabel="Forgot Password">
+                                        <rect key="frame" x="0.0" y="313" width="375" height="21"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Do-2q-d6T" customClass="TTTAttributedLabel">
                                                 <rect key="frame" x="15" y="0.0" width="345" height="21"/>
@@ -100,7 +100,7 @@
                                     <constraint firstAttribute="trailing" secondItem="H53-wX-Ai4" secondAttribute="trailing" id="mWU-EI-xkg"/>
                                     <constraint firstAttribute="bottom" secondItem="H53-wX-Ai4" secondAttribute="bottom" id="nPE-wr-sdc"/>
                                     <constraint firstItem="H53-wX-Ai4" firstAttribute="leading" secondItem="icG-US-vNT" secondAttribute="leading" id="tzB-ae-8jr"/>
-                                    <constraint firstItem="H53-wX-Ai4" firstAttribute="top" secondItem="fg3-up-cZv" secondAttribute="bottom" constant="2" id="xlr-VF-87S"/>
+                                    <constraint firstItem="H53-wX-Ai4" firstAttribute="top" secondItem="fg3-up-cZv" secondAttribute="bottom" constant="15" id="xlr-VF-87S"/>
                                 </constraints>
                             </scrollView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STo-2f-EV2" customClass="TTTAttributedLabel">
