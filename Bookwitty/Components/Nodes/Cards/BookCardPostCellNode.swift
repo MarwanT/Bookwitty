@@ -29,4 +29,13 @@ class BookCardPostCellNode: BaseCardPostNode {
 }
 
 class BookCardPostContentNode: ASDisplayNode {
+  fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let imageSize: CGSize = CGSize(width: 100.0, height: 150.0)
+
+  private var imageNode: ASNetworkImageNode
+  private var titleNode: ASTextNode
+  private var authorNode: ASTextNode
+  private var formatNode: ASTextNode
+  private var priceNode: ASTextNode
+  private let topicStatsNode: ASTextNode
 }
