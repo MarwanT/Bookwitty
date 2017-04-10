@@ -53,6 +53,7 @@ class BookCardPostContentNode: ASDisplayNode {
     addSubnode(formatNode)
     addSubnode(priceNode)
     addSubnode(topicStatsNode)
+    setupNode()
   }
 
   var title: String? {
@@ -107,4 +108,19 @@ class BookCardPostContentNode: ASDisplayNode {
       setNeedsLayout()
     }
   }
+
+  private func setupNode() {
+    backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+
+    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
+    imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
+    imageNode.style.preferredSize = imageSize
+    imageNode.contentMode = UIViewContentMode.scaleAspectFit
+    
+    authorNode.maximumNumberOfLines = 1
+    formatNode.maximumNumberOfLines = 1
+    priceNode.maximumNumberOfLines = 1
+    topicStatsNode.maximumNumberOfLines = 1
+  }
+
 }
