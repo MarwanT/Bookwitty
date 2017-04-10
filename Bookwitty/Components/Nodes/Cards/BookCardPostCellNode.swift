@@ -55,4 +55,56 @@ class BookCardPostContentNode: ASDisplayNode {
     addSubnode(topicStatsNode)
   }
 
+  var title: String? {
+    didSet {
+      if let title = title {
+        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .callout)
+          .append(text: title, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+        setNeedsLayout()
+      }
+    }
+  }
+
+  var author: String? {
+    didSet {
+      if let author = author {
+        authorNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
+          .append(text: author, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+        setNeedsLayout()
+      }
+    }
+  }
+
+  var format: String? {
+    didSet {
+      if let format = format {
+        formatNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+          .append(text: format, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+        setNeedsLayout()
+      }
+    }
+  }
+
+  var price: String? {
+    didSet {
+      if let price = price {
+        priceNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
+          .append(text: price, color: ThemeManager.shared.currentTheme.defaultECommerceColor()).attributedString
+      }
+    }
+  }
+
+  var imageUrl: String? {
+    didSet {
+      if let imageUrl = imageUrl {
+        imageNode.url = URL(string: imageUrl)
+        setNeedsLayout()
+      }
+    }
+  }
+  var isProduct: Bool = false {
+    didSet {
+      setNeedsLayout()
+    }
+  }
 }
