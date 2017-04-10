@@ -58,11 +58,11 @@ class SectionSubtitleHeaderNode: ASCellNode {
 extension SectionSubtitleHeaderNode {
   struct Configuration {
     var externalEdgeInsets = UIEdgeInsets(
-      top: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      top: ThemeManager.shared.currentTheme.generalExternalMargin() - 5,
       left: 0, bottom: 0, right: 0)
     fileprivate var defaultTextColor = ThemeManager.shared.currentTheme.defaultTextColor()
     fileprivate var minimumHeight: CGFloat {
-      return 60.0 + externalEdgeInsets.bottom + externalEdgeInsets.top
+      return 50.0 + externalEdgeInsets.bottom + externalEdgeInsets.top
     }
     fileprivate var titleEdgeInsets = UIEdgeInsets(
       top: 10, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
