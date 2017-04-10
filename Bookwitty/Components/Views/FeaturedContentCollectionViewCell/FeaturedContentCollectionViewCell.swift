@@ -13,7 +13,7 @@ class FeaturedContentCollectionViewCell: UICollectionViewCell {
   static let reuseIdentifier = "FeaturedContentCollectionViewCell"
   static let nib = UINib(nibName: reuseIdentifier, bundle: nil)
   
-  static let defaultSize = CGSize(width: 150, height: 100)
+  static let defaultSize = CGSize(width: 160, height: 100)
   
   @IBOutlet weak var imageView: UIImageView!
   @IBOutlet weak var overlayView: UIView!
