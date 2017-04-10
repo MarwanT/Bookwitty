@@ -32,6 +32,11 @@ class SectionTitleHeaderView: UITableViewHeaderFooterView {
   override func awakeFromNib() {
     super.awakeFromNib()
     applyTheme()
+    initializeComponents()
+  }
+  
+  private func initializeComponents() {
+    label.numberOfLines = 0
   }
 }
 
