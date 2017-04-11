@@ -369,6 +369,10 @@ class Strings {
     return localizedString(key: "list_price")
   }
   
+  static func most_popular() -> String {
+    return localizedString(key: "most_popular")
+  }
+  
   static func my_interests() -> String {
     return localizedString(key: "my_interests")
   }
