@@ -170,7 +170,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZjL-En-ybs">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="562"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="542"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xhg-sU-c3s" userLabel="Stack View Background">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="665"/>
@@ -293,7 +293,7 @@
                             <constraint firstItem="y56-bB-NU4" firstAttribute="top" secondItem="xOV-DI-7aZ" secondAttribute="bottom" constant="20" id="0KU-bd-2gO"/>
                             <constraint firstItem="ZjL-En-ybs" firstAttribute="leading" secondItem="IxC-wb-xde" secondAttribute="leading" id="2FW-XG-aG4"/>
                             <constraint firstAttribute="trailing" secondItem="y56-bB-NU4" secondAttribute="trailing" constant="20" id="3xb-Z8-L0e"/>
-                            <constraint firstItem="xOV-DI-7aZ" firstAttribute="top" secondItem="ZjL-En-ybs" secondAttribute="bottom" id="8vx-Lz-d41"/>
+                            <constraint firstItem="ZjL-En-ybs" firstAttribute="bottom" secondItem="xOV-DI-7aZ" secondAttribute="top" constant="-20" id="8vx-Lz-d41"/>
                             <constraint firstItem="xOV-DI-7aZ" firstAttribute="leading" secondItem="IxC-wb-xde" secondAttribute="leading" constant="20" id="AKy-PV-8JX"/>
                             <constraint firstItem="ZjL-En-ybs" firstAttribute="bottom" secondItem="jJy-JC-mq7" secondAttribute="top" id="Sv0-M8-Ot4"/>
                             <constraint firstItem="y56-bB-NU4" firstAttribute="leading" secondItem="IxC-wb-xde" secondAttribute="leading" constant="20" id="miL-4c-OqT"/>
