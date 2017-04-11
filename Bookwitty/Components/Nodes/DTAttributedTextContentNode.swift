@@ -84,6 +84,18 @@ class DTAttributedTextContentNode: ASCellNode {
 }
 
 extension DTAttributedTextContentNode: DTLazyImageViewDelegate, DTAttributedTextContentViewDelegate {
+  public func attributedTextContentView(_ attributedTextContentView: DTAttributedTextContentView!, viewForLink url: URL!, identifier: String!, frame: CGRect) -> UIView! {
+    let button = DTLinkButton(type: UIButtonType.custom)
+    button.url = url
+    button.frame = frame
+    button.addTarget(self, action: #selector(didTapOnLinkButton(_:)), for: UIControlEvents.touchUpInside)
+    return button
+  }
+
+  func didTapOnLinkButton(_ sender: DTLinkButton?) {
+    //TODO: Tap on Link action delegation
+  }
+
   public func attributedTextContentView(_ attributedTextContentView: DTAttributedTextContentView!, didDraw layoutFrame: DTCoreTextLayoutFrame!, in context: CGContext!) {
     let intrinsicContentSize = attributedTextContentView.intrinsicContentSize()
     if intrinsicContentSize.height != -1 && intrinsicContentSize.width != -1 {
@@ -153,6 +165,17 @@ extension DTAttributedLabelNode: DTAttributedTextContentViewDelegate {
     delegate?.attributedTextContentNodeNeedsLayout(node: self)
   }
 
+  public func attributedTextContentView(_ attributedTextContentView: DTAttributedTextContentView!, viewForLink url: URL!, identifier: String!, frame: CGRect) -> UIView! {
+    let button = DTLinkButton(type: UIButtonType.custom)
+    button.url = url
+    button.frame = frame
+    button.addTarget(self, action: #selector(didTapOnLinkButton(_:)), for: UIControlEvents.touchUpInside)
+    return button
+  }
+
+  func didTapOnLinkButton(_ sender: DTLinkButton?) {
+    //TODO: Tap on Link action delegation
+  }
 }
 
 /** Use with text of html content that does not 
