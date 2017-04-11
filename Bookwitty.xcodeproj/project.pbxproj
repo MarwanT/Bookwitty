@@ -164,6 +164,7 @@
 		F400CDC81E7AF62600B7EF26 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400CDC71E7AF62600B7EF26 /* SearchViewModel.swift */; };
 		F40700501E55992000DA48A4 /* ReadingListBooksNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */; };
 		F40700521E55F55A00DA48A4 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40700511E55F55A00DA48A4 /* Image.swift */; };
+		F40986C01E9B85A2009239C2 /* BookCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40986BF1E9B85A2009239C2 /* BookCardPostCellNode.swift */; };
 		F417B1D11E71C3D400B0FAFE /* PostDetailsHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F417B1CE1E71C3D400B0FAFE /* PostDetailsHeaderNode.swift */; };
 		F417B1D21E71C3D400B0FAFE /* PostDetailsItemNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F417B1CF1E71C3D400B0FAFE /* PostDetailsItemNode.swift */; };
 		F417B1D31E71C3D400B0FAFE /* PostDetailsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F417B1D01E71C3D400B0FAFE /* PostDetailsNode.swift */; };
@@ -419,6 +420,7 @@
 		F400CDC71E7AF62600B7EF26 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingListBooksNode.swift; sourceTree = "<group>"; };
 		F40700511E55F55A00DA48A4 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		F40986BF1E9B85A2009239C2 /* BookCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BookCardPostCellNode.swift; path = Cards/BookCardPostCellNode.swift; sourceTree = "<group>"; };
 		F417B1CE1E71C3D400B0FAFE /* PostDetailsHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailsHeaderNode.swift; path = PostDetails/PostDetailsHeaderNode.swift; sourceTree = "<group>"; };
 		F417B1CF1E71C3D400B0FAFE /* PostDetailsItemNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailsItemNode.swift; path = PostDetails/PostDetailsItemNode.swift; sourceTree = "<group>"; };
 		F417B1D01E71C3D400B0FAFE /* PostDetailsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailsNode.swift; path = PostDetails/PostDetailsNode.swift; sourceTree = "<group>"; };
@@ -1192,6 +1194,7 @@
 				F422D82D1E51AC3900A32C2F /* VideoCardPostCellNode.swift */,
 				F45A50141E536591005E5C56 /* TopicCardPostCellNode.swift */,
 				F4670AFC1E54ACF200159F4F /* ProfileCardPostCellNode.swift */,
+				F40986BF1E9B85A2009239C2 /* BookCardPostCellNode.swift */,
 				F45A50121E530AA2005E5C56 /* QuoteCardPostCellNode.swift */,
 				F422D82F1E51CD9D00A32C2F /* LinkCardPostCellNode.swift */,
 				F422D82B1E51992800A32C2F /* PhotoCardPostCellNode.swift */,
@@ -1682,6 +1685,7 @@
 				F49AF6B31E81E5B40045F604 /* CallToAction.swift in Sources */,
 				594F4EA61E42255200A947FA /* AccessToken.swift in Sources */,
 				F458C5F21E5AFD4300AFD0FC /* PenNameDisplayNode.swift in Sources */,
+				F40986C01E9B85A2009239C2 /* BookCardPostCellNode.swift in Sources */,
 				59D8FCB31E4C86CD001C1EDB /* Category.swift in Sources */,
 				59C048801E735AAB00CADE38 /* BagViewController.swift in Sources */,
 			);

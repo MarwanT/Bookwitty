@@ -52,9 +52,9 @@ class CardActionBarNode: ASCellNode {
       if let numberOfDims = numberOfDims {
         let fontDynamicType = FontDynamicType.footnote
         numberOfDimsNode.attributedText = AttributedStringBuilder(fontDynamicType: fontDynamicType)
-          .append(text: dimText)
+          .append(text: dimText, color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
           .append(text: " ")
-          .append(text: "(\(numberOfDims))", fontDynamicType: FontDynamicType.caption1).attributedString
+          .append(text: "(\(numberOfDims))", fontDynamicType: FontDynamicType.caption1, color: ThemeManager.shared.currentTheme.defaultGrayedTextColor()).attributedString
       } else {
         numberOfDimsNode.attributedText = nil
       }

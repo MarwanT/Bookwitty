@@ -50,7 +50,7 @@ class CardFactory {
       LinkCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
     }
     register(resource: Book.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
-      TopicCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
+      BookCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
     }
   }
 
@@ -277,7 +277,7 @@ extension  CardFactory {
 
 // MARK: - Book Card
 extension  CardFactory {
-  fileprivate func createBookCard(_ resource: ModelResource) -> TopicCardPostCellNode? {
+  fileprivate func createBookCard(_ resource: ModelResource) -> BookCardPostCellNode? {
     guard let entry = registry[resource.registeredResourceType] else {
       return nil
     }
@@ -286,7 +286,7 @@ extension  CardFactory {
     }
 
     let cardCanditate = entry(resource.productDetails?.author != nil)
-    guard let card = cardCanditate as? TopicCardPostCellNode else {
+    guard let card = cardCanditate as? BookCardPostCellNode else {
       return nil
     }
 
@@ -302,14 +302,15 @@ extension  CardFactory {
     card.postInfoData = cardPostInfoData
     card.setup(forFollowingMode: true)
     card.setFollowingValue(following: resource.following)
-    card.node.articleTitle = resource.title
-    card.node.articleDescription = resource.bookDescription
+    card.node.title = resource.title
+    card.node.imageUrl = resource.thumbnailImageUrl
+    //TODO: When the book item starts returning the number of editions we will enable the price, formatting and author details
+    //If the number of Editions is greater than 0 then this is a book-product then set isProduct = true.
+    card.node.isProduct = false
     card.node.setTopicStatistics(numberOfPosts: resource.counts?.posts, numberOfBooks: nil, numberOfFollowers: resource.counts?.followers)
-    card.articleCommentsSummary = nil
-    card.node.imageUrl = nil
-    card.node.subImageUrl = resource.thumbnailImageUrl
-    card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
-    card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
+    card.node.author = resource.productDetails?.author
+    card.node.price = (resource.productDetails?.isElectronicFormat() ?? false) ? nil : resource.supplierInformation?.preferredPrice?.formattedValue
+    card.node.format = resource.productDetails?.productFormat
 
     return card
   }
