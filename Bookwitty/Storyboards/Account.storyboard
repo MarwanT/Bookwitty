@@ -47,7 +47,7 @@
                                         <rect key="frame" x="0.0" y="88" width="375" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uJj-fX-8lD" id="As1-n2-LQh">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="yty-kW-dyQ">
@@ -125,8 +125,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="thb-Zs-qMe">
+                                <rect key="frame" x="0.0" y="20" width="375" height="150"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="illustrationPassword" translatesAutoresizingMaskIntoConstraints="NO" id="5xf-js-I7R">
+                                        <rect key="frame" x="112" y="11" width="150" height="128"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="150" id="AN3-Gb-Yxr"/>
+                                            <constraint firstAttribute="height" constant="128" id="DCw-Fd-v3i"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="5hJ-c8-gkU"/>
+                                    <constraint firstItem="5xf-js-I7R" firstAttribute="centerX" secondItem="thb-Zs-qMe" secondAttribute="centerX" id="RNg-bn-lBS"/>
+                                    <constraint firstItem="5xf-js-I7R" firstAttribute="centerY" secondItem="thb-Zs-qMe" secondAttribute="centerY" id="SLL-Ge-j4Q"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4nn-xZ-nGd" userLabel="Long Separator View">
+                                <rect key="frame" x="0.0" y="170" width="375" height="1"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="zTb-6H-tA0"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AKP-ta-2Og" userLabel="Stack View Background">
-                                <rect key="frame" x="0.0" y="20" width="375" height="297"/>
+                                <rect key="frame" x="0.0" y="171" width="375" height="297"/>
                                 <subviews>
                                     <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="XXG-pY-xqL">
                                         <rect key="frame" x="0.0" y="10" width="375" height="277"/>
@@ -164,7 +189,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o8q-1n-RgY" userLabel="Long Separator View">
-                                <rect key="frame" x="0.0" y="317" width="375" height="1"/>
+                                <rect key="frame" x="0.0" y="468" width="375" height="1"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="P6T-ha-rOb"/>
@@ -186,12 +211,18 @@
                             <constraint firstAttribute="trailing" secondItem="lo8-2y-CqX" secondAttribute="trailing" constant="20" id="7S9-LN-dmR"/>
                             <constraint firstAttribute="trailing" secondItem="o8q-1n-RgY" secondAttribute="trailing" id="8lB-El-pk5"/>
                             <constraint firstAttribute="trailing" secondItem="AKP-ta-2Og" secondAttribute="trailing" id="HNM-w4-Rpt"/>
+                            <constraint firstItem="thb-Zs-qMe" firstAttribute="bottom" secondItem="4nn-xZ-nGd" secondAttribute="top" id="HzR-fS-peX"/>
+                            <constraint firstItem="thb-Zs-qMe" firstAttribute="top" secondItem="x2w-Rw-IJi" secondAttribute="bottom" id="M7J-0O-d5f"/>
                             <constraint firstItem="hac-Ze-CZf" firstAttribute="top" secondItem="lo8-2y-CqX" secondAttribute="bottom" constant="20" id="MOk-VI-Qps"/>
+                            <constraint firstItem="4nn-xZ-nGd" firstAttribute="leading" secondItem="MkN-CL-LH5" secondAttribute="leading" id="T6f-xJ-mtk"/>
+                            <constraint firstItem="thb-Zs-qMe" firstAttribute="leading" secondItem="MkN-CL-LH5" secondAttribute="leading" id="TJR-9Y-dBz"/>
                             <constraint firstItem="AKP-ta-2Og" firstAttribute="leading" secondItem="MkN-CL-LH5" secondAttribute="leading" id="VFA-dg-S2D"/>
+                            <constraint firstItem="4nn-xZ-nGd" firstAttribute="bottom" secondItem="AKP-ta-2Og" secondAttribute="top" id="WnB-bN-jlN"/>
+                            <constraint firstAttribute="trailing" secondItem="4nn-xZ-nGd" secondAttribute="trailing" id="XYc-Ea-kwG"/>
                             <constraint firstItem="lo8-2y-CqX" firstAttribute="leading" secondItem="MkN-CL-LH5" secondAttribute="leading" constant="20" id="fcX-JN-TFh"/>
                             <constraint firstItem="o8q-1n-RgY" firstAttribute="leading" secondItem="MkN-CL-LH5" secondAttribute="leading" id="ibH-gm-wo1"/>
-                            <constraint firstItem="AKP-ta-2Og" firstAttribute="top" secondItem="x2w-Rw-IJi" secondAttribute="bottom" id="onu-Of-FBE"/>
                             <constraint firstItem="o8q-1n-RgY" firstAttribute="top" secondItem="AKP-ta-2Og" secondAttribute="bottom" id="vSv-bQ-V3z"/>
+                            <constraint firstAttribute="trailing" secondItem="thb-Zs-qMe" secondAttribute="trailing" id="zcX-Ls-bQe"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
@@ -203,6 +234,7 @@
                         <outlet property="stackViewBackgroundView" destination="AKP-ta-2Og" id="FLz-Lv-0UY"/>
                         <outletCollection property="separators" destination="0k4-Lj-kKK" collectionClass="NSMutableArray" id="tJj-ej-ON3"/>
                         <outletCollection property="separators" destination="o8q-1n-RgY" collectionClass="NSMutableArray" id="w3M-7e-FbJ"/>
+                        <outletCollection property="separators" destination="4nn-xZ-nGd" collectionClass="NSMutableArray" id="aGW-hF-wOZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5WF-ok-vrq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -299,6 +331,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="illustrationPassword" width="190" height="293"/>
         <image name="placeholder" width="104" height="104"/>
         <image name="rightArrow" width="10" height="21"/>
     </resources>
