@@ -10,8 +10,11 @@ import UIKit
 
 class ForgotPasswordViewController: UIViewController {
 
+  @IBOutlet weak var stackView: UIStackView!
+  @IBOutlet weak var stackViewBackgroundView: UIView!
   @IBOutlet weak var emailField: InputField!
   @IBOutlet weak var submitButton: UIButton!
+  @IBOutlet var separators: [UIView]!
 
   override func viewDidLoad() {
     super.viewDidLoad()
