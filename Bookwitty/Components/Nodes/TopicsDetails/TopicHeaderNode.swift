@@ -72,7 +72,7 @@ class TopicHeaderNode: ASCellNode {
   var topicTitle: String? {
     didSet {
       if let topicTitle = topicTitle {
-        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
+        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title1)
           .append(text: topicTitle, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
         setNeedsLayout()
       }
