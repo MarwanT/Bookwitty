@@ -20,7 +20,7 @@ extension DTAttributedTextContentView {
     let font: UIFont = fontDynamicType?.font ?? FontDynamicType.footnote.font
 
     let options: [String : Any] = [
-      DTDefaultFontSize: NSNumber(value: Float(font.pointSize)),
+      DTDefaultFontSize: CGFloat(font.pointSize),
       DTDefaultFontName: font.fontName,
       DTDefaultFontFamily: font.familyName,
       DTUseiOS6Attributes: NSNumber(value: true),
@@ -28,7 +28,9 @@ extension DTAttributedTextContentView {
       DTDefaultLinkColor: linkColor,
       DTDefaultLinkDecoration: linkDecoration,
       DTDefaultLineHeightMultiplier: defaultLineHeightMultiple,
-      DTMaxImageSize: CGSize(width: htmlImageWidth, height: htmlImageWidth)]
+      NSTextSizeMultiplierDocumentOption: CGFloat(1.0),
+      DTMaxImageSize: CGSize(width: htmlImageWidth, height: htmlImageWidth),
+      DTDocumentPreserveTrailingSpaces: false,
     guard let data = text.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
       return nil
     }
@@ -38,7 +40,22 @@ extension DTAttributedTextContentView {
     }
 
     let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
-    return mutableAttributedString
+
+    return fixSmallFontIssues(attributedHtml: mutableAttributedString, usedFont: font)
+  }
+
+  static func fixSmallFontIssues(attributedHtml: NSMutableAttributedString?, usedFont: UIFont) -> NSMutableAttributedString? {
+    if let attributedHtml = attributedHtml {
+      let range = NSRange(location: 0, length: attributedHtml.length)
+      attributedHtml.enumerateAttribute(NSFontAttributeName, in: range, options: [], using: { (value, range, stop) in
+        if let font = value as? UIFont, font.pointSize < 4.0 {
+          attributedHtml.removeAttribute(NSFontAttributeName, range: range)
+          attributedHtml.addAttribute(NSFontAttributeName, value: font.withSize(usedFont.pointSize), range: range)
+        }
+      })
+      return attributedHtml
+    }
+    return nil
   }
 }
 
@@ -70,17 +87,9 @@ class DTAttributedTextContentNode: ASCellNode {
       textContentView.attributedString = nil
       return
     }
+
     let attrStr = DTAttributedTextContentView.htmlAttributedString(text: text, fontDynamicType: fontDynamicType, color: color, htmlImageWidth: htmlImageWidth, defaultLineHeightMultiple: AttributedStringBuilder.defaultHTMLLineHeightMultiple)
-    if let html: NSMutableAttributedString = attrStr?.mutableCopy() as? NSMutableAttributedString {
-      let range = NSRange(location: 0, length: html.length)
-      html.enumerateAttribute(NSFontAttributeName, in: range, options: [], using: { (value, range, stop) in
-        if let font = value as? UIFont, font.pointSize < 4.0 {
-          html.removeAttribute(NSFontAttributeName, range: range)
-          html.addAttribute(NSFontAttributeName, value: font.withSize(12.0), range: range)
-        }
-      })
-      textContentView.attributedString = html
-    }
+    textContentView.attributedString = attrStr
   }
 }
 
