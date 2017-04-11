@@ -219,7 +219,7 @@ class DTAttributedLabelNode: ASCellNode {
 
   override func didLoad() {
     super.didLoad()
-    textContentView = self.view as! DTAttributedLabel
+    textContentView = self.view as? DTAttributedLabel
     textContentView?.delegate = self
     textContentView?.numberOfLines = maxNumberOfLines
     textContentView?.attributedString = attributedString
