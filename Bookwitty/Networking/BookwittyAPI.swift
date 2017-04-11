@@ -264,6 +264,10 @@ extension BookwittyAPI: TargetType {
   public var task: Task {
     switch self {
     case .uploadMultipart(_, let parameters, let multipart):
+      /* Discussion
+       * Amazon Requires the parameters to be appended before the `file`
+       * [DO NOT] change the order, it would break the amazon update
+       */
       var multipartArray: [MultipartFormData] = []
       if let parameters = parameters {
         parameters.forEach({ (kvp: (key: String, value: String)) in
