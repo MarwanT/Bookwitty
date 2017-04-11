@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1421" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -47,7 +47,7 @@
                                         <rect key="frame" x="0.0" y="88" width="375" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uJj-fX-8lD" id="As1-n2-LQh">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="yty-kW-dyQ">
@@ -125,22 +125,55 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NVo-1u-LDm" userLabel="Current Password Input Field" customClass="PasswordInputField" customModule="Bookwitty" customModuleProvider="target">
-                                <rect key="frame" x="47" y="70" width="280" height="60"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AKP-ta-2Og" userLabel="Stack View Background">
+                                <rect key="frame" x="0.0" y="20" width="375" height="297"/>
+                                <subviews>
+                                    <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="XXG-pY-xqL">
+                                        <rect key="frame" x="0.0" y="10" width="375" height="277"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NVo-1u-LDm" userLabel="Current Password Input Field" customClass="PasswordInputField" customModule="Bookwitty" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="128" placeholder="YES" id="FJ7-RU-hBu"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0k4-Lj-kKK" userLabel="Separator View">
+                                                <rect key="frame" x="0.0" y="138" width="375" height="1"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="YOL-yY-NU2"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cak-Hh-4cb" userLabel="New Password Input Field" customClass="PasswordInputField" customModule="Bookwitty" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="149" width="375" height="128"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="128" placeholder="YES" id="R8x-d3-Y4Z"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="FJ7-RU-hBu"/>
-                                    <constraint firstAttribute="width" constant="280" id="eyF-qt-UIv"/>
+                                    <constraint firstAttribute="trailing" secondItem="XXG-pY-xqL" secondAttribute="trailing" id="11G-1d-PwJ"/>
+                                    <constraint firstItem="XXG-pY-xqL" firstAttribute="leading" secondItem="AKP-ta-2Og" secondAttribute="leading" id="A41-wz-S46"/>
+                                    <constraint firstAttribute="bottom" secondItem="XXG-pY-xqL" secondAttribute="bottom" constant="10" id="brA-yv-Qxb"/>
+                                    <constraint firstItem="XXG-pY-xqL" firstAttribute="top" secondItem="AKP-ta-2Og" secondAttribute="top" constant="10" id="wPw-IW-H3t"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cak-Hh-4cb" userLabel="New Password Input Field" customClass="PasswordInputField" customModule="Bookwitty" customModuleProvider="target">
-                                <rect key="frame" x="47" y="149" width="280" height="60"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o8q-1n-RgY" userLabel="Long Separator View">
+                                <rect key="frame" x="0.0" y="317" width="375" height="1"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="P6T-ha-rOb"/>
+                                </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lo8-2y-CqX" userLabel="Change Button">
-                                <rect key="frame" x="47" y="228" width="280" height="48"/>
+                                <rect key="frame" x="20" y="603" width="335" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="znB-Rh-VS2"/>
+                                    <constraint firstAttribute="height" constant="44" id="znB-Rh-VS2"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <connections>
@@ -150,23 +183,26 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="lo8-2y-CqX" firstAttribute="top" secondItem="Cak-Hh-4cb" secondAttribute="bottom" constant="19" id="8KZ-EV-e9p"/>
-                            <constraint firstItem="Cak-Hh-4cb" firstAttribute="trailing" secondItem="NVo-1u-LDm" secondAttribute="trailing" id="I4s-Jg-0pI"/>
-                            <constraint firstItem="Cak-Hh-4cb" firstAttribute="height" secondItem="NVo-1u-LDm" secondAttribute="height" id="Njt-XZ-Nhl"/>
-                            <constraint firstItem="Cak-Hh-4cb" firstAttribute="top" secondItem="NVo-1u-LDm" secondAttribute="bottom" constant="19" id="PVo-5u-AJR"/>
-                            <constraint firstItem="NVo-1u-LDm" firstAttribute="centerX" secondItem="MkN-CL-LH5" secondAttribute="centerX" id="WOD-qq-dSo"/>
-                            <constraint firstItem="Cak-Hh-4cb" firstAttribute="width" secondItem="NVo-1u-LDm" secondAttribute="width" id="WvO-K9-zzo"/>
-                            <constraint firstItem="lo8-2y-CqX" firstAttribute="width" secondItem="Cak-Hh-4cb" secondAttribute="width" id="d1A-Re-zbm"/>
-                            <constraint firstItem="lo8-2y-CqX" firstAttribute="trailing" secondItem="Cak-Hh-4cb" secondAttribute="trailing" id="ggT-8m-xHb"/>
-                            <constraint firstItem="NVo-1u-LDm" firstAttribute="top" secondItem="x2w-Rw-IJi" secondAttribute="bottom" constant="50" id="ium-Jw-vWZ"/>
-                            <constraint firstItem="lo8-2y-CqX" firstAttribute="leading" secondItem="Cak-Hh-4cb" secondAttribute="leading" id="x9a-R5-J0H"/>
-                            <constraint firstItem="Cak-Hh-4cb" firstAttribute="leading" secondItem="NVo-1u-LDm" secondAttribute="leading" id="yol-FP-nDN"/>
+                            <constraint firstAttribute="trailing" secondItem="lo8-2y-CqX" secondAttribute="trailing" constant="20" id="7S9-LN-dmR"/>
+                            <constraint firstAttribute="trailing" secondItem="o8q-1n-RgY" secondAttribute="trailing" id="8lB-El-pk5"/>
+                            <constraint firstAttribute="trailing" secondItem="AKP-ta-2Og" secondAttribute="trailing" id="HNM-w4-Rpt"/>
+                            <constraint firstItem="hac-Ze-CZf" firstAttribute="top" secondItem="lo8-2y-CqX" secondAttribute="bottom" constant="20" id="MOk-VI-Qps"/>
+                            <constraint firstItem="AKP-ta-2Og" firstAttribute="leading" secondItem="MkN-CL-LH5" secondAttribute="leading" id="VFA-dg-S2D"/>
+                            <constraint firstItem="lo8-2y-CqX" firstAttribute="leading" secondItem="MkN-CL-LH5" secondAttribute="leading" constant="20" id="fcX-JN-TFh"/>
+                            <constraint firstItem="o8q-1n-RgY" firstAttribute="leading" secondItem="MkN-CL-LH5" secondAttribute="leading" id="ibH-gm-wo1"/>
+                            <constraint firstItem="AKP-ta-2Og" firstAttribute="top" secondItem="x2w-Rw-IJi" secondAttribute="bottom" id="onu-Of-FBE"/>
+                            <constraint firstItem="o8q-1n-RgY" firstAttribute="top" secondItem="AKP-ta-2Og" secondAttribute="bottom" id="vSv-bQ-V3z"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <connections>
                         <outlet property="changePasswordButton" destination="lo8-2y-CqX" id="q00-CG-Cjc"/>
                         <outlet property="currentPasswordInputField" destination="NVo-1u-LDm" id="uJ9-KA-Z0G"/>
                         <outlet property="newPasswordInputField" destination="Cak-Hh-4cb" id="rap-ih-S0H"/>
+                        <outlet property="stackView" destination="XXG-pY-xqL" id="t6e-WM-8vA"/>
+                        <outlet property="stackViewBackgroundView" destination="AKP-ta-2Og" id="FLz-Lv-0UY"/>
+                        <outletCollection property="separators" destination="0k4-Lj-kKK" collectionClass="NSMutableArray" id="tJj-ej-ON3"/>
+                        <outletCollection property="separators" destination="o8q-1n-RgY" collectionClass="NSMutableArray" id="w3M-7e-FbJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5WF-ok-vrq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -264,6 +300,6 @@
     </scenes>
     <resources>
         <image name="placeholder" width="104" height="104"/>
-        <image name="rightArrow" width="90" height="90"/>
+        <image name="rightArrow" width="10" height="21"/>
     </resources>
 </document>

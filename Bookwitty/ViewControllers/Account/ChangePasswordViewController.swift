@@ -10,8 +10,11 @@ import UIKit
 
 class ChangePasswordViewController: UIViewController {
 
+  @IBOutlet weak var stackView: UIStackView!
+  @IBOutlet weak var stackViewBackgroundView: UIView!
   @IBOutlet weak var currentPasswordInputField: PasswordInputField!
   @IBOutlet weak var newPasswordInputField: PasswordInputField!
+  @IBOutlet var separators: [UIView]!
   @IBOutlet var changePasswordButton: UIButton!
 
   private let viewModel = ChangePasswordViewModel()
