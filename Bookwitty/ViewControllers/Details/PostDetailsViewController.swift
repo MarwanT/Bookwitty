@@ -22,8 +22,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
   init(title: String? = nil, resource: Resource) {
     viewModel = PostDetailsViewModel(resource: resource)
     postDetailsNode = PostDetailsNode()
-    super.init(node: postDetailsNode)
-    self.title = title ?? viewModel.vcTitle
+    super.init(node: postDetailsNode)    
   }
 
   override func viewDidLoad() {
