@@ -214,9 +214,7 @@ class BookCardPostContentNode: ASDisplayNode {
                                            justifyContent: .start,
                                            alignItems: .stretch,
                                            children: nodesArray)
-
-    let insetSpec = ASInsetLayoutSpec(insets: edgeInset(), child: horizontalSpec)
-    return insetSpec
+    return horizontalSpec
   }
 }
 
