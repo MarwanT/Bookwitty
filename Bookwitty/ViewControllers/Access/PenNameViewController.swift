@@ -27,6 +27,8 @@ class PenNameViewController: UIViewController {
   
   var showNoteLabel: Bool = true
 
+  fileprivate let placeholder: UIImage = #imageLiteral(resourceName: "penNamePlaceholder ").imageMaskedAndTinted(with: ThemeManager.shared.currentTheme.colorNumber18())
+
   override func viewDidLoad() {
     super.viewDidLoad()
     awakeSelf()
@@ -52,6 +54,8 @@ class PenNameViewController: UIViewController {
     
     noteLabel.isHidden = !showNoteLabel
 
+    profileImageView.image = placeholder
+
     //Make Cicular View tappable
     let tap = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnCircularView(_:)))
     profileContainerView.addGestureRecognizer(tap)
@@ -66,9 +70,6 @@ class PenNameViewController: UIViewController {
       self,
       selector: #selector(PenNameViewController.keyboardWillHide(_:)),
       name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-    
-    // TODO: remove the following line
-    profileContainerView.isHidden = true
   }
 
   deinit {
@@ -90,6 +91,9 @@ class PenNameViewController: UIViewController {
     biographyTextView.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.label)
       .append(text: viewModel.penBiography(), color: ThemeManager.shared.currentTheme.defaultTextColor())
       .attributedString
+    if let avatarUrl = viewModel.penAvatarUrl(), let url = URL(string: avatarUrl) {
+      self.profileImageView.sd_setImage(with: url, placeholderImage: placeholder)
+    }
   }
 
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
@@ -102,6 +106,7 @@ class PenNameViewController: UIViewController {
 
     let name = penNameInputField.textField.text
     let biography = biographyTextView.text
+    let avatarId: String? = nil
 
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .Account,
@@ -109,7 +114,7 @@ class PenNameViewController: UIViewController {
     Analytics.shared.send(event: event)
 
     showLoader()
-    self.viewModel.updatePenNameIfNeeded(name: name, biography: biography) {
+    self.viewModel.updatePenNameIfNeeded(name: name, biography: biography, avatarId: avatarId) {
       (success: Bool) in
       self.hideLoader()
       
@@ -156,7 +161,7 @@ class PenNameViewController: UIViewController {
       self.openCamera()
     })
     let  removePhotoButton = UIAlertAction(title: Strings.clear_profile_photo(), style: .default, handler: { (action) -> Void in
-      self.profileImageView.image = nil
+      self.profileImageView.image = self.placeholder
       self.plusImageView.alpha = 1
     })
 

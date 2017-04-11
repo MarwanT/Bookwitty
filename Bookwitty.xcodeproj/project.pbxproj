@@ -28,6 +28,9 @@
 		56535F341E7CB9ED0045E73D /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56535F301E7CB9ED0045E73D /* Media.swift */; };
 		56535F351E7CB9ED0045E73D /* Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56535F311E7CB9ED0045E73D /* Thumbnail.swift */; };
 		56535F361E7CB9ED0045E73D /* IFramely.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56535F321E7CB9ED0045E73D /* IFramely.swift */; };
+		56620FC81E89470600BD92BB /* Upload+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56620FC71E89470600BD92BB /* Upload+API.swift */; };
+		56620FCC1E8954CA00BD92BB /* UploadPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56620FCB1E8954CA00BD92BB /* UploadPolicy.swift */; };
+		5657A5431E8BCF02000EE647 /* Utilities+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5657A5421E8BCF02000EE647 /* Utilities+API.swift */; };
 		566EE82D1E5D7082004B990D /* Search+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EE82C1E5D7082004B990D /* Search+API.swift */; };
 		566EE87B1E5DC677004B990D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 566EE8781E5DC677004B990D /* Localizable.strings */; };
 		567EE1B11E7A9F1200A0CA0D /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567EE1B01E7A9F1200A0CA0D /* ForgotPasswordViewController.swift */; };
@@ -270,6 +273,9 @@
 		56535F301E7CB9ED0045E73D /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		56535F311E7CB9ED0045E73D /* Thumbnail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thumbnail.swift; sourceTree = "<group>"; };
 		56535F321E7CB9ED0045E73D /* IFramely.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IFramely.swift; sourceTree = "<group>"; };
+		56620FC71E89470600BD92BB /* Upload+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Upload+API.swift"; sourceTree = "<group>"; };
+		56620FCB1E8954CA00BD92BB /* UploadPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadPolicy.swift; sourceTree = "<group>"; };
+		5657A5421E8BCF02000EE647 /* Utilities+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Utilities+API.swift"; sourceTree = "<group>"; };
 		566EE82C1E5D7082004B990D /* Search+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Search+API.swift"; sourceTree = "<group>"; };
 		566EE8791E5DC677004B990D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		566EE87A1E5DC677004B990D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -695,6 +701,7 @@
 				592974BE1E5F57AE0083A4C2 /* ModelCommonProperties.swift */,
 				59D106CF1E804D2100BB9695 /* AppMeta.swift */,
 				59CBE4F71E8090280068C7AD /* AppError.swift */,
+				56620FCB1E8954CA00BD92BB /* UploadPolicy.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -901,6 +908,8 @@
 				56D5F73C1E5B7D0000F6A164 /* PenName+API.swift */,
 				566EE82C1E5D7082004B990D /* Search+API.swift */,
 				59CF44001E663C35006C16FC /* General+API.swift */,
+				56620FC71E89470600BD92BB /* Upload+API.swift */,
+				5657A5421E8BCF02000EE647 /* Utilities+API.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1524,12 +1533,14 @@
 				F4A426351E5629210090CD51 /* Video.swift in Sources */,
 				5929C2751E5B89B1006E08F8 /* ValueFormatters.swift in Sources */,
 				59DA47591E3AA8E100BA90A5 /* Localization.swift in Sources */,
+				56620FC81E89470600BD92BB /* Upload+API.swift in Sources */,
 				564EEC0E1E7027A100700474 /* ReadingListsViewController.swift in Sources */,
 				59D602201E36387A00271315 /* Color.swift in Sources */,
 				F4670AF91E54556800159F4F /* ReadingListCardPostCellNode.swift in Sources */,
 				59D106D01E804D2100BB9695 /* AppMeta.swift in Sources */,
 				F4A426331E5628080090CD51 /* Quote.swift in Sources */,
 				562A31231E65D7F2002851DE /* TopicViewController.swift in Sources */,
+				56620FCC1E8954CA00BD92BB /* UploadPolicy.swift in Sources */,
 				596562E41E79EF9E00B93920 /* MisfortuneNode.swift in Sources */,
 				596FAD741E2E53AC0064F967 /* Environment.swift in Sources */,
 				56BEF6391E6836DB0012FDE5 /* ContributorsNode.swift in Sources */,
@@ -1593,6 +1604,7 @@
 				593769D81E3689FB00F23226 /* DefaultTheme.swift in Sources */,
 				59EC5BAA1E6C5987006E1CB9 /* BookDetailsStockNode.swift in Sources */,
 				59A341571E575D3100CF90B3 /* NewsFeedViewModel.swift in Sources */,
+				5657A5431E8BCF02000EE647 /* Utilities+API.swift in Sources */,
 				594290291E5347670006B2F1 /* DisclosureView.swift in Sources */,
 				594F4EAF1E440A4900A947FA /* User+API.swift in Sources */,
 				F4670AFD1E54ACF200159F4F /* ProfileCardPostCellNode.swift in Sources */,

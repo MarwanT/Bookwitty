@@ -23,7 +23,7 @@ public enum BookwittyAPI {
   case categoryCuratedContent(categoryIdentifier: String)
   case newsFeed()
   case Search(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?)
-  case updatePenName(identifier: String, name: String?, biography: String?, avatarUrl: String?, facebookUrl: String?, tumblrUrl: String?, googlePlusUrl: String?, twitterUrl: String?, instagramUrl: String?, pinterestUrl: String?, youtubeUrl: String?, linkedinUrl: String?, wordpressUrl: String?, websiteUrl: String?)
+  case updatePenName(identifier: String, name: String?, biography: String?, avatarId: String?, avatarUrl: String?, facebookUrl: String?, tumblrUrl: String?, googlePlusUrl: String?, twitterUrl: String?, instagramUrl: String?, pinterestUrl: String?, youtubeUrl: String?, linkedinUrl: String?, wordpressUrl: String?, websiteUrl: String?)
   case batch(identifiers: [String])
   case updatePreference(preference: String, value: String)
   case penNames
@@ -51,6 +51,8 @@ public enum BookwittyAPI {
   case penNameFollowing(identifier: String)
   case status
   case resendAccountConfirmation
+  case uploadPolicy(file: (name: String, size: Int), fileType: UploadAPI.FileType, assetType: UploadAPI.AssetType)
+  case uploadMultipart(url: URL, parameters: [String : String]?, multipart: (data: Data, name: String))
 }
 
 // MARK: - Target Type
@@ -70,6 +72,10 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .absolute(let fullUrl):
       return fullUrl
+    case .uploadMultipart(let url, _, _):
+      var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
+      components?.scheme = "https"
+      return components?.url ?? url
     default:
       return Environment.current.baseURL
     }
@@ -101,7 +107,7 @@ extension BookwittyAPI: TargetType {
       path = "/pen_name/feed"
     case .Search:
       path = "/search"
-    case .updatePenName(let identifier, _, _, _, _, _, _, _, _, _, _, _, _, _):
+    case .updatePenName(let identifier, _, _, _, _, _, _, _, _, _, _, _, _, _, _):
       path = "/pen_names/\(identifier)"
     case .batch:
       path = "/content/batch"
@@ -157,6 +163,14 @@ extension BookwittyAPI: TargetType {
       path = "/status"
     case .resendAccountConfirmation:
       path = "/user/resend_confirmation"
+    case .uploadPolicy:
+      path = "/upload_policies"
+    case .uploadMultipart:
+      /*
+      * Uploading to Amazon S3 servers, 
+      * upload absolute url is provided as parameter
+      */
+      return ""
     }
     
     return apiBasePath + apiVersion + path
@@ -168,7 +182,7 @@ extension BookwittyAPI: TargetType {
       return .post
   case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent:
       return .get
-    case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword, .followPenName:
+    case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart:
       return .post
     case .updateUser, .updatePenName:
       return .patch
@@ -214,8 +228,8 @@ extension BookwittyAPI: TargetType {
       return UserAPI.updatePostBody(identifier: identifier, firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirth, email: email, currentPassword: currentPassword, password: password, country: country, badges: badges, preferences: preferences)
     case .Search(let filter, let page):
       return SearchAPI.parameters(filter: filter, page: page)
-    case .updatePenName(let identifier, let name, let biography, let avatarUrl, let facebookUrl, let tumblrUrl, let googlePlusUrl, let twitterUrl, let instagramUrl, let pinterestUrl, let youtubeUrl, let linkedinUrl, let wordpressUrl, let websiteUrl):
-      return PenNameAPI.updatePostBody(identifier: identifier, name: name, biography: biography, avatarUrl: avatarUrl, facebookUrl: facebookUrl, tumblrUrl: tumblrUrl, googlePlusUrl: googlePlusUrl, twitterUrl: twitterUrl, instagramUrl: instagramUrl, pinterestUrl: pinterestUrl, youtubeUrl: youtubeUrl, linkedinUrl: linkedinUrl, wordpressUrl: wordpressUrl, websiteUrl: websiteUrl)
+    case .updatePenName(let identifier, let name, let biography, let avatarId, let avatarUrl, let facebookUrl, let tumblrUrl, let googlePlusUrl, let twitterUrl, let instagramUrl, let pinterestUrl, let youtubeUrl, let linkedinUrl, let wordpressUrl, let websiteUrl):
+      return PenNameAPI.updatePostBody(identifier: identifier, name: name, biography: biography, avatarId: avatarId, avatarUrl: avatarUrl, facebookUrl: facebookUrl, tumblrUrl: tumblrUrl, googlePlusUrl: googlePlusUrl, twitterUrl: twitterUrl, instagramUrl: instagramUrl, pinterestUrl: pinterestUrl, youtubeUrl: youtubeUrl, linkedinUrl: linkedinUrl, wordpressUrl: wordpressUrl, websiteUrl: websiteUrl)
     case .updatePreference(let preference, let value):
       return UserAPI.updatePostBody(preference: preference, value: value)
     case .posts(_, let type):
@@ -226,7 +240,9 @@ extension BookwittyAPI: TargetType {
       return UserAPI.resetPasswordBody(email: email)
     case .postsContent(_ , let page):
       return GeneralAPI.postsContentParameters(page: page)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName:
+    case .uploadPolicy(let file, let fileType, let assetType):
+      return UploadAPI.uploadPolicyParameters(file: file, fileType: fileType, assetType: assetType)
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart:
       return nil
     }
   }
@@ -247,6 +263,21 @@ extension BookwittyAPI: TargetType {
   /// The type of HTTP task to be performed.
   public var task: Task {
     switch self {
+    case .uploadMultipart(_, let parameters, let multipart):
+      /* Discussion
+       * Amazon Requires the parameters to be appended before the `file`
+       * [DO NOT] change the order, it would break the amazon update
+       */
+      var multipartArray: [MultipartFormData] = []
+      if let parameters = parameters {
+        parameters.forEach({ (kvp: (key: String, value: String)) in
+          if let valueData: Data = kvp.value.data(using: .utf8) {
+            multipartArray.append(MultipartFormData(provider: .data(valueData), name: kvp.key))
+          }
+        })
+      }
+      multipartArray.append(MultipartFormData(provider: .data(multipart.data), name: multipart.name))
+      return .upload(.multipart(multipartArray))
     default:
       return .request
     }
