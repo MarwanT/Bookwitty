@@ -234,7 +234,6 @@ extension TopicViewController {
     case followers(index: Int)
     case none
 
-    //TODO: Should be localized
     var name: String {
       switch self {
       case .latest:
