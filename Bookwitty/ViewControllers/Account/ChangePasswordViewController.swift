@@ -101,7 +101,17 @@ class ChangePasswordViewController: UIViewController {
 //MARK: - Themable implementation
 extension ChangePasswordViewController: Themeable {
   func applyTheme() {
-    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
+
+    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
+
+    stackView.isLayoutMarginsRelativeArrangement = true
+    stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+    stackViewBackgroundView.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+
+    for separator in separators {
+      separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    }
+
     ThemeManager.shared.currentTheme.stylePrimaryButton(button: changePasswordButton)
   }
 }
