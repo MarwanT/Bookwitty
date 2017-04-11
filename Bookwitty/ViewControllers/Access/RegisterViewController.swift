@@ -289,6 +289,7 @@ extension RegisterViewController: InformativeInputFieldDelegate {
   func informativeInputFieldDidTapField(informativeInputField: InformativeInputField) {
     let countryPickerViewController: EMCCountryPickerController = EMCCountryPickerController()
     countryPickerViewController.labelFont = FontDynamicType.subheadline.font
+    countryPickerViewController.countryNameDisplayLocale = Locale.application
     countryPickerViewController.countryDelegate = self
     countryPickerViewController.flagSize = 44
     
