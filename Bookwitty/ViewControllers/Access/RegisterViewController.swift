@@ -61,7 +61,9 @@ class RegisterViewController: UIViewController {
     let termsNSString = termsText.mutableString as NSMutableString
 
     //Attributed Label Links Styling
-    termsLabel.linkAttributes = ThemeManager.shared.currentTheme.styleTextLinkAttributes()
+    var attributes = ThemeManager.shared.currentTheme.styleTextLinkAttributes()
+    attributes.updateValue(FontDynamicType.footnote.font, forKey: NSFontAttributeName)
+    termsLabel.linkAttributes = attributes
 
     let range: NSRange = NSRange(location: 0, length: termsNSString.length)
     let regular = try! NSRegularExpression(pattern: "•(.*?)•", options: [])
