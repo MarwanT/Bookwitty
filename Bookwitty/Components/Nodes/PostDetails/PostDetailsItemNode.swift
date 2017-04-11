@@ -8,6 +8,7 @@
 
 import UIKit
 import AsyncDisplayKit
+import DTCoreText
 
 protocol PostDetailsItemNodeDataSource {
   func postDetailsItem(_ postDetailsItem: PostDetailsItemNode, nodeForItemAt index: Int) -> ASDisplayNode
@@ -95,6 +96,10 @@ protocol PostDetailItemNodeDelegate {
 }
 
 extension PostDetailItemNode: DTAttributedTextContentNodeDelegate {
+  func attributedTextContentNode(node: ASCellNode, button: DTLinkButton, didTapOnLink link: URL) {
+    WebViewController.present(url: link)
+  }
+
   func attributedTextContentNodeNeedsLayout(node: ASCellNode) {
     self.setNeedsLayout()
   }

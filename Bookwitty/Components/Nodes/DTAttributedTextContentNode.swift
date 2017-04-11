@@ -44,6 +44,7 @@ extension DTAttributedTextContentView {
 
 protocol DTAttributedTextContentNodeDelegate {
   func attributedTextContentNodeNeedsLayout(node: ASCellNode)
+  func attributedTextContentNode(node: ASCellNode, button: DTLinkButton, didTapOnLink link: URL)
 }
 
 class DTAttributedTextContentNode: ASCellNode {
@@ -93,7 +94,9 @@ extension DTAttributedTextContentNode: DTLazyImageViewDelegate, DTAttributedText
   }
 
   func didTapOnLinkButton(_ sender: DTLinkButton?) {
-    //TODO: Tap on Link action delegation
+    if let sender = sender, let url = sender.url {
+      delegate?.attributedTextContentNode(node: self, button: sender, didTapOnLink: url)
+    }
   }
 
   public func attributedTextContentView(_ attributedTextContentView: DTAttributedTextContentView!, didDraw layoutFrame: DTCoreTextLayoutFrame!, in context: CGContext!) {
@@ -175,6 +178,9 @@ extension DTAttributedLabelNode: DTAttributedTextContentViewDelegate {
 
   func didTapOnLinkButton(_ sender: DTLinkButton?) {
     //TODO: Tap on Link action delegation
+    if let sender = sender, let url = sender.url {
+      delegate?.attributedTextContentNode(node: self, button: sender, didTapOnLink: url)
+    }
   }
 }
 
