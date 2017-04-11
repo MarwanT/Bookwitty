@@ -13,6 +13,8 @@ import DTCoreText
 extension DTAttributedTextContentView {
   static func htmlAttributedString(text: String, fontDynamicType: FontDynamicType? = nil,
                                    color: UIColor =  ThemeManager.shared.currentTheme.defaultTextColor(),
+                                   linkColor: UIColor =  ThemeManager.shared.currentTheme.colorNumber19(),
+                                   linkDecoration: Bool = false,
                                    htmlImageWidth: CGFloat = UIScreen.main.bounds.width,
                                    defaultLineHeightMultiple: CGFloat = 1.0) -> NSAttributedString? {
     let font: UIFont = fontDynamicType?.font ?? FontDynamicType.footnote.font
@@ -23,6 +25,8 @@ extension DTAttributedTextContentView {
       DTDefaultFontFamily: font.familyName,
       DTUseiOS6Attributes: NSNumber(value: true),
       DTDefaultTextColor: color,
+      DTDefaultLinkColor: linkColor,
+      DTDefaultLinkDecoration: linkDecoration,
       DTDefaultLineHeightMultiplier: defaultLineHeightMultiple,
       DTMaxImageSize: CGSize(width: htmlImageWidth, height: htmlImageWidth)]
     guard let data = text.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
