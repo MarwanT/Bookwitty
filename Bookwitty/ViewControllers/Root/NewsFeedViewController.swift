@@ -23,6 +23,8 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let pullToRefresher = UIRefreshControl()
   let penNameSelectionNode = PenNameSelectionNode()
   let loaderNode: LoaderNode
+  let misfortuneNode = MisfortuneNode(mode: MisfortuneNode.Mode.empty)
+  
 
   var loadingStatus: LoadingStatus = .none
   var shouldShowLoader: Bool {
