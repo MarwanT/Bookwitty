@@ -654,6 +654,12 @@ extension SearchViewController: Localizable {
 // MARK: - Misfortune node delegate
 extension SearchViewController: MisfortuneNodeDelegate {
   func misfortuneNodeDidTapActionButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {
+    switch mode {
+    case .noInternet:
+      searchAction(query: searchBar?.text)
+    default:
+      break
+    }
   }
   
   func misfortuneNodeDidTapSettingsButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {
