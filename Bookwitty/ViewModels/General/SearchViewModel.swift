@@ -13,6 +13,8 @@ class SearchViewModel {
   var data: [ModelResource] = []
   var cancellableRequest: Cancellable?
   var nextPage: URL?
+  
+  var misfortuneNodeMode: MisfortuneNode.Mode? = nil
 
   func cancelActiveRequest() {
     guard let cancellableRequest = cancellableRequest else {
@@ -38,6 +40,16 @@ class SearchViewModel {
     cancellableRequest = SearchAPI.search(filter: (query, nil), page: nil, completion: {
       (success, resources, nextPage, error) in
       defer {
+        // Set misfortune node mode
+        if self.data.count > 0 {
+          self.misfortuneNodeMode = nil
+        } else {
+          if let isReachable = AppManager.shared.reachability?.isReachable, !isReachable {
+            self.misfortuneNodeMode = MisfortuneNode.Mode.noInternet
+          } else {
+            self.misfortuneNodeMode = MisfortuneNode.Mode.noResultsFound
+          }
+        }
         completion(success, error)
       }
       

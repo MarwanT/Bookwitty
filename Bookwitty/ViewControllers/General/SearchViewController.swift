@@ -19,6 +19,7 @@ class SearchViewController: ASViewController<ASCollectionNode> {
   let flowLayout: UICollectionViewFlowLayout
   let collectionNode: ASCollectionNode
   let loaderNode: LoaderNode
+  let misfortuneNode: MisfortuneNode
 
   var searchBar: UISearchBar?
   var viewModel: SearchViewModel = SearchViewModel()
@@ -44,14 +45,21 @@ class SearchViewController: ASViewController<ASCollectionNode> {
   
   init() {
     flowLayout = UICollectionViewFlowLayout()
-    flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    flowLayout.sectionInset = UIEdgeInsets.zero
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
 
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     loaderNode = LoaderNode()
     loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
+    
+    misfortuneNode = MisfortuneNode(mode: MisfortuneNode.Mode.empty)
+    misfortuneNode.style.height = ASDimensionMake(0)
+    misfortuneNode.style.width = ASDimensionMake(0)
+    
     super.init(node: collectionNode)
+    
+    misfortuneNode.delegate = self
   }
 
   override func viewDidLoad() {
@@ -612,5 +620,14 @@ extension SearchViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+  }
+}
+
+// MARK: - Misfortune node delegate
+extension SearchViewController: MisfortuneNodeDelegate {
+  func misfortuneNodeDidTapActionButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {
+  }
+  
+  func misfortuneNodeDidTapSettingsButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {
   }
 }
