@@ -34,6 +34,9 @@ class SearchViewController: ASViewController<ASCollectionNode> {
       loaderNode.updateLoaderVisibility(show: showLoader)
     }
   }
+  var shouldShowLoader: Bool {
+    return (loadingStatus != .none)
+  }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -105,12 +108,13 @@ class SearchViewController: ASViewController<ASCollectionNode> {
       return
     }
     loadingStatus = .loading
+    self.updateCollection(with: nil, loaderSection: true, dataSection: false)
     viewModel.clearSearchData()
     collectionNode.reloadData()
 
     viewModel.search(query: query) { (success, error) in
       self.loadingStatus = .none
-      self.collectionNode.reloadData()
+      self.updateCollection(with: nil, loaderSection: true, dataSection: true)
     }
 
     //MARK: [Analytics] Event
@@ -133,29 +137,33 @@ extension SearchViewController: ASCollectionDataSource {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    return viewModel.numberOfItemsInSection(section: section)
+    if section == Section.activityIndicator.rawValue {
+      return shouldShowLoader ? 1 : 0
+    }
+      return viewModel.numberOfItemsInSection(section: section)
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
     let indexPath = indexPath
 
     return {
-      guard indexPath.section == Section.cards.rawValue else {
+      if indexPath.section == Section.activityIndicator.rawValue {
         //Return the activity indicator
         return self.loaderNode
+      } else {
+        let baseCardNode = self.viewModel.nodeForItem(atIndexPath: indexPath) ?? BaseCardPostNode()
+        if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
+          !readingListCell.node.isImageCollectionLoaded {
+          let max = readingListCell.node.maxNumberOfImages
+          self.viewModel.loadReadingListImages(atIndexPath: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
+            if let imageCollection = imageCollection, imageCollection.count > 0 {
+              readingListCell.node.loadImages(with: imageCollection)
+            }
+          })
+        }
+        baseCardNode.delegate = self
+        return baseCardNode
       }
-      let baseCardNode = self.viewModel.nodeForItem(atIndexPath: indexPath) ?? BaseCardPostNode()
-      if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
-        !readingListCell.node.isImageCollectionLoaded {
-        let max = readingListCell.node.maxNumberOfImages
-        self.viewModel.loadReadingListImages(atIndexPath: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
-          if let imageCollection = imageCollection, imageCollection.count > 0 {
-            readingListCell.node.loadImages(with: imageCollection)
-          }
-        })
-      }
-      baseCardNode.delegate = self
-      return baseCardNode
     }
   }
 
@@ -350,6 +358,24 @@ extension SearchViewController: ASCollectionDelegate {
         collectionNode.insertItems(at: updatedIndexPathRange)
       }
     }
+  }
+}
+
+extension SearchViewController {
+  func updateCollection(with itemIndices: [IndexPath]? = nil, loaderSection: Bool = false, dataSection: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
+    collectionNode.performBatchUpdates({
+      // Always relaod misfortune section
+      collectionNode.reloadSections(IndexSet(integer: Section.misfortune.rawValue))
+      
+      if loaderSection {
+        collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
+      }
+      if dataSection {
+        collectionNode.reloadSections(IndexSet(integer: Section.cards.rawValue))
+      } else if let itemIndices = itemIndices {
+        collectionNode.insertItems(at: itemIndices)
+      }
+    }, completion: completionBlock)
   }
 }
 
