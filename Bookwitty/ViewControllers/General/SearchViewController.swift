@@ -663,5 +663,6 @@ extension SearchViewController: MisfortuneNodeDelegate {
   }
   
   func misfortuneNodeDidTapSettingsButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {
+    AppDelegate.openSettings()
   }
 }
