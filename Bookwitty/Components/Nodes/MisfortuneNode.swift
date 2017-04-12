@@ -22,7 +22,11 @@ class MisfortuneNode: ASCellNode {
   fileprivate let actionButtonNode: ASButtonNode
   fileprivate let settingsTextNode: ASTextNode
   
-  fileprivate var mode: Mode! = nil
+  var mode: Mode! = nil {
+    didSet {
+      reloadNode()
+    }
+  }
   
   fileprivate var configuration = Configuration()
   
@@ -39,6 +43,7 @@ class MisfortuneNode: ASCellNode {
     settingsTextNode = ASTextNode()
     super.init()
     initializeNode()
+    reloadNode()
     applyTheme()
   }
   
@@ -48,17 +53,19 @@ class MisfortuneNode: ASCellNode {
     actionButtonNode.addTarget(self, action: #selector(actionButtonTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
     settingsTextNode.addTarget(self, action: #selector(settingsTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
     
-    titleText = mode.titleText
-    descriptionText = mode.descriptionText
-    actionButtonText = mode.actionButtonText
-    settingsAttributedText = mode.settingsAttributedText
-    image = mode.image
-    
     backgroundColor = UIColor.white
     imageWhiteBackgroundNode.backgroundColor = backgroundColor
     imageColoredBackgroundNode.backgroundColor = mode.backgroundColor
     imageNode.contentMode = UIViewContentMode.scaleAspectFit
     actionButtonNode.contentEdgeInsets = configuration.actionButtonContentEdgeInsets
+  }
+  
+  private func reloadNode() {
+    titleText = mode.titleText
+    descriptionText = mode.descriptionText
+    actionButtonText = mode.actionButtonText
+    settingsAttributedText = mode.settingsAttributedText
+    image = mode.image
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
