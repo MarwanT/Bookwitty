@@ -101,7 +101,11 @@ final class NewsFeedViewModel {
       if self.data.count > 0 {
         self.misfortuneNodeMode = nil
       } else {
-        self.misfortuneNodeMode = MisfortuneNode.Mode.empty
+        if let isReachable = AppManager.shared.reachability?.isReachable, !isReachable {
+          self.misfortuneNodeMode = MisfortuneNode.Mode.noInternet
+        } else {
+          self.misfortuneNodeMode = MisfortuneNode.Mode.empty
+        }
       }
       
       completionBlock(success)
