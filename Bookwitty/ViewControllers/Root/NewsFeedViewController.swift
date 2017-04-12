@@ -97,6 +97,9 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.NewsFeed)
 
+    self.misfortuneNode.style.height = ASDimensionMake(collectionNode.frame.height)
+    self.misfortuneNode.style.width = ASDimensionMake(collectionNode.frame.width)
+    
     reloadPenNamesNode()
     if viewModel.numberOfItemsInSection(section: Section.cards.rawValue) == 0 {
       refreshViewControllerData()
