@@ -8,6 +8,7 @@
 
 import Foundation
 import Version
+import ReachabilitySwift
 
 class AppManager {
   private(set) var appStatus: AppDelegate.Status = AppDelegate.Status.unspecified
@@ -20,6 +21,8 @@ class AppManager {
   var versionDescription: String {
     return version?.description ?? ""
   }
+  
+  var reachability = Reachability()
 
   private init() {}
 
