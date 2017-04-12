@@ -26,6 +26,7 @@ final class NewsFeedViewModel {
   var defaultPenName: PenName? {
     return UserManager.shared.defaultPenName
   }
+  var misfortuneNodeMode: MisfortuneNode.Mode? = MisfortuneNode.Mode.empty
 
   func didUpdateDefaultPenName(penName: PenName, completionBlock: (_ didSaveDefault: Bool) -> ()) {
     var didSaveDefault: Bool = false
@@ -95,6 +96,14 @@ final class NewsFeedViewModel {
         self.nextPage = nextPage
       }
       self.cancellableRequest = nil
+      
+      // Set misfortune node mode
+      if self.data.count > 0 {
+        self.misfortuneNodeMode = nil
+      } else {
+        self.misfortuneNodeMode = MisfortuneNode.Mode.empty
+      }
+      
       completionBlock(success)
     }
   }

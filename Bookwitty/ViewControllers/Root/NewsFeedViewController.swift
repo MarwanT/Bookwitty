@@ -30,6 +30,13 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   var shouldShowLoader: Bool {
     return (loadingStatus != .none)
   }
+  var shouldDisplayMisfortuneNode: Bool {
+    guard let misfortuneMode = viewModel.misfortuneNodeMode, !shouldShowLoader else {
+       return false
+    }
+    misfortuneNode.mode = misfortuneMode
+    return true
+  }
   var collectionView: ASCollectionView?
   var scrollView: UIScrollView? {
     if let collectionView = collectionView {
@@ -274,6 +281,9 @@ extension NewsFeedViewController {
       })
     } else {
       collectionNode.performBatchUpdates({
+        // Always relaod misfortune section
+        collectionNode.reloadSections(IndexSet(integer: Section.misfortune.rawValue))
+        
         if loaderSection {
           collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
         }
@@ -297,8 +307,10 @@ extension NewsFeedViewController: ASCollectionDataSource {
     guard NewsFeedViewController.Section.cards.rawValue == section else {
       if NewsFeedViewController.Section.penNames.rawValue == section {
         return 1
-      } else {
+      } else if NewsFeedViewController.Section.activityIndicator.rawValue == section {
         return shouldShowLoader ? 1 : 0
+      } else  { // NewsFeedViewController.Section.misfortune
+        return shouldDisplayMisfortuneNode ? 1 : 0
       }
     }
     return viewModel.numberOfItemsInSection(section: section)
@@ -323,8 +335,10 @@ extension NewsFeedViewController: ASCollectionDataSource {
         return baseCardNode
       } else if section == Section.penNames.rawValue {
         return self.penNameSelectionNode
-      } else {
+      } else if section == Section.activityIndicator.rawValue {
         return self.loaderNode
+      } else { // Section.misfortune
+        return self.misfortuneNode
       }
     }
   }
@@ -334,6 +348,8 @@ extension NewsFeedViewController: ASCollectionDataSource {
       penNameSelectionNode.setNeedsLayout()
     } else if node is LoaderNode {
       loaderNode.updateLoaderVisibility(show: shouldShowLoader)
+    } else if node is MisfortuneNode {
+      misfortuneNode.mode = viewModel.misfortuneNodeMode ?? MisfortuneNode.Mode.empty
     }
   }
 }
@@ -756,9 +772,10 @@ extension NewsFeedViewController {
     case penNames = 0
     case cards = 1
     case activityIndicator = 2
+    case misfortune = 3
 
     static var numberOfSections: Int {
-      return 3
+      return 4
     }
   }
 }
