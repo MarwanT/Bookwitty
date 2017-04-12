@@ -90,8 +90,9 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     //Listen to pullToRefresh valueChange and call loadData
     pullToRefresher.addTarget(self, action: #selector(self.pullDownToReloadData), for: .valueChanged)
     
-    self.misfortuneNode.style.height = ASDimensionMake(collectionNode.frame.height)
-    self.misfortuneNode.style.width = ASDimensionMake(collectionNode.frame.width)
+    misfortuneNode.delegate = self
+    misfortuneNode.style.height = ASDimensionMake(collectionNode.frame.height)
+    misfortuneNode.style.width = ASDimensionMake(collectionNode.frame.width)
     
     applyTheme()
     applyLocalization()
@@ -796,5 +797,15 @@ extension NewsFeedViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+  }
+}
+
+// MARK: - 
+extension NewsFeedViewController: MisfortuneNodeDelegate {
+  func misfortuneNodeDidTapActionButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {
+  }
+  
+  func misfortuneNodeDidTapSettingsButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {
+    AppDelegate.openSettings()
   }
 }
