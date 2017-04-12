@@ -37,14 +37,16 @@ class SearchViewModel {
 
     cancellableRequest = SearchAPI.search(filter: (query, nil), page: nil, completion: {
       (success, resources, nextPage, error) in
-      guard success, let resources = resources else {
+      defer {
         completion(success, error)
+      }
+      
+      guard success, let resources = resources else {
         return
       }
 
       self.data += resources
       self.nextPage = nextPage
-      completion(success, error)
     })
   }
 
