@@ -38,6 +38,13 @@ class SearchViewController: ASViewController<ASCollectionNode> {
   var shouldShowLoader: Bool {
     return (loadingStatus != .none)
   }
+  var shouldDisplayMisfortuneNode: Bool {
+    guard let misfortuneMode = viewModel.misfortuneNodeMode, !shouldShowLoader else {
+      return false
+    }
+    misfortuneNode.mode = misfortuneMode
+    return true
+  }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -155,7 +162,11 @@ extension SearchViewController: ASCollectionDataSource {
     if section == Section.activityIndicator.rawValue {
       return shouldShowLoader ? 1 : 0
     }
+    else if section == Section.misfortune.rawValue {
+      return shouldDisplayMisfortuneNode ? 1 : 0
+    } else {
       return viewModel.numberOfItemsInSection(section: section)
+    }
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
@@ -165,6 +176,8 @@ extension SearchViewController: ASCollectionDataSource {
       if indexPath.section == Section.activityIndicator.rawValue {
         //Return the activity indicator
         return self.loaderNode
+      } else if indexPath.section == Section.misfortune.rawValue {
+        return self.misfortuneNode
       } else {
         let baseCardNode = self.viewModel.nodeForItem(atIndexPath: indexPath) ?? BaseCardPostNode()
         if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
@@ -183,8 +196,10 @@ extension SearchViewController: ASCollectionDataSource {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
-    if let loaderNode = node as? LoaderNode {
+    if node is LoaderNode {
       loaderNode.updateLoaderVisibility(show: !(loadingStatus == .none))
+    } else if node is MisfortuneNode {
+      misfortuneNode.mode = viewModel.misfortuneNodeMode ?? MisfortuneNode.Mode.empty
     }
   }
 }
@@ -343,6 +358,9 @@ extension SearchViewController: ASCollectionDelegate {
     }
     context.beginBatchFetching()
     self.loadingStatus = .loadMore
+    DispatchQueue.main.async {
+      self.updateCollection(with: nil, loaderSection: true, dataSection: false)
+    }
 
     let initialLastIndexPath: Int = viewModel.numberOfItemsInSection(section: Section.cards.rawValue)
 
@@ -355,10 +373,13 @@ extension SearchViewController: ASCollectionDelegate {
 
     // Fetch next page data
     viewModel.loadNextPage { [weak self] (success) in
+      var updatedIndexPathRange: [IndexPath]? = nil
       defer {
+        self?.loadingStatus = .none
+        self?.updateCollection(with: updatedIndexPathRange, loaderSection: true, completionBlock: nil)
         context.completeBatchFetching(true)
-        self!.loadingStatus = .none
       }
+      
       guard let strongSelf = self else {
         return
       }
@@ -367,10 +388,9 @@ extension SearchViewController: ASCollectionDelegate {
       if success && finalLastIndexPath > initialLastIndexPath {
         let updateIndexRange = initialLastIndexPath..<finalLastIndexPath
 
-        let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
+        updatedIndexPathRange = updateIndexRange.flatMap({ (index) -> IndexPath in
           return IndexPath(row: index, section: 0)
         })
-        collectionNode.insertItems(at: updatedIndexPathRange)
       }
     }
   }
@@ -607,9 +627,10 @@ extension SearchViewController {
   enum Section: Int {
     case cards = 0
     case activityIndicator
+    case misfortune
 
     static var numberOfSections: Int {
-      return 2
+      return 3
     }
   }
 }
