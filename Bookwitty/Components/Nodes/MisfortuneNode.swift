@@ -13,7 +13,7 @@ protocol MisfortuneNodeDelegate {
   func misfortuneNodeDidTapSettingsButton(node: MisfortuneNode, mode: MisfortuneNode.Mode)
 }
 
-class MisfortuneNode: ASDisplayNode {
+class MisfortuneNode: ASCellNode {
   fileprivate let imageColoredBackgroundNode: ASDisplayNode
   fileprivate let imageWhiteBackgroundNode: ASDisplayNode
   fileprivate let imageNode: ASImageNode
