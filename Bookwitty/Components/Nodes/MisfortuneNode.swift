@@ -225,7 +225,7 @@ extension MisfortuneNode {
     var actionButtonVisible: Bool {
       switch self {
       case .empty:
-        return true
+        return false
       case .noInternet:
         return true
       case .noResultsFound:
