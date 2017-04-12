@@ -55,7 +55,6 @@ class MisfortuneNode: ASCellNode {
     
     backgroundColor = UIColor.white
     imageWhiteBackgroundNode.backgroundColor = backgroundColor
-    imageColoredBackgroundNode.backgroundColor = mode.backgroundColor
     imageNode.contentMode = UIViewContentMode.scaleAspectFit
     actionButtonNode.contentEdgeInsets = configuration.actionButtonContentEdgeInsets
   }
@@ -65,7 +64,12 @@ class MisfortuneNode: ASCellNode {
     descriptionText = mode.descriptionText
     actionButtonText = mode.actionButtonText
     settingsAttributedText = mode.settingsAttributedText
+    imageColoredBackgroundNode.backgroundColor = mode.backgroundColor
     image = mode.image
+    ThemeManager.shared.currentTheme.styleSecondaryButton(
+      button: actionButtonNode,
+      withColor: mode.actionButtonColor,
+      highlightedColor: mode.actionButtonColor)
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
