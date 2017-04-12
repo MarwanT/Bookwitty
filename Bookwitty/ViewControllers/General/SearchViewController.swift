@@ -82,6 +82,13 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.Search)
   }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    misfortuneNode.style.height = ASDimensionMake(collectionNode.frame.height)
+    misfortuneNode.style.width = ASDimensionMake(collectionNode.frame.width)
+    misfortuneNode.setNeedsLayout()
+  }
 
   func dismissKeyboard() {
     view.endEditing(true)
