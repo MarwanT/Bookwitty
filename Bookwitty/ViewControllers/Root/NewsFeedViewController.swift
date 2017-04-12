@@ -80,7 +80,10 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     penNameSelectionNode.delegate = self
     //Listen to pullToRefresh valueChange and call loadData
     pullToRefresher.addTarget(self, action: #selector(self.pullDownToReloadData), for: .valueChanged)
-
+    
+    self.misfortuneNode.style.height = ASDimensionMake(collectionNode.frame.height)
+    self.misfortuneNode.style.width = ASDimensionMake(collectionNode.frame.width)
+    
     applyTheme()
     applyLocalization()
 
