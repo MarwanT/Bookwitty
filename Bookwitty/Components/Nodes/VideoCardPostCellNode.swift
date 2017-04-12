@@ -147,7 +147,7 @@ class VideoCardContentNode: ASDisplayNode {
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    let imageSize = CGSize(width: constrainedSize.max.width, height: 150)
+    let imageSize = CGSize(width: constrainedSize.max.width, height: 210.0)
     imageNode.style.preferredSize = imageSize
     imageNode.defaultImage = UIImage(color: ASDisplayNodeDefaultPlaceholderColor(), size: imageSize)
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()

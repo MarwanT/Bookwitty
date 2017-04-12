@@ -31,8 +31,8 @@ class TopicCardPostCellNode: BaseCardPostNode {
 class TopicCardPostContentNode: ASDisplayNode {
   private let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
-  private let imageHeight: CGFloat = 180.0
-  private let subImageSize = CGSize(width: 100.0, height: 180.0)
+  private let imageHeight: CGFloat = 190.0
+  private let subImageSize = CGSize(width: 100.0, height: 190.0)
 
   private var imageNode: ASNetworkImageNode
   private var subImageNode: ASNetworkImageNode
