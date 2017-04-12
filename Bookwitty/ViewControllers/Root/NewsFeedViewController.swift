@@ -32,9 +32,11 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   }
   var shouldDisplayMisfortuneNode: Bool {
     guard let misfortuneMode = viewModel.misfortuneNodeMode, !shouldShowLoader else {
+      flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: externalMargin/2, right: 0)
        return false
     }
     misfortuneNode.mode = misfortuneMode
+    flowLayout.sectionInset = UIEdgeInsets.zero
     return true
   }
   var collectionView: ASCollectionView?
@@ -54,7 +56,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
   init() {
     flowLayout = UICollectionViewFlowLayout()
-    flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: externalMargin/2, right: 0)
+    flowLayout.sectionInset = UIEdgeInsets.zero
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
 
