@@ -635,6 +635,12 @@ extension CategoryViewController: Localizable {
 //MARK: - Localizable implementation
 extension CategoryViewController: MisfortuneNodeDelegate {
   func misfortuneNodeDidTapActionButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {
+    switch mode {
+    case .noInternet:
+      refreshViewController()
+    default:
+      break
+    }
   }
   
   func misfortuneNodeDidTapSettingsButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {
