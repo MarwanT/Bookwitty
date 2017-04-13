@@ -60,6 +60,9 @@ class CategoryViewController: UIViewController {
   }
   
   private func initializeSubviews() {
+    // Initialize Misfortune Node
+    misfortuneNode.delegate = self
+    
     // Featured Content View
     let itemSize = FeaturedContentCollectionViewCell.defaultSize
     let interItemSpacing: CGFloat = 10
@@ -626,5 +629,14 @@ extension CategoryViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+  }
+}
+
+//MARK: - Localizable implementation
+extension CategoryViewController: MisfortuneNodeDelegate {
+  func misfortuneNodeDidTapActionButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {
+  }
+  
+  func misfortuneNodeDidTapSettingsButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {
   }
 }
