@@ -9,8 +9,7 @@
 import AsyncDisplayKit
 
 protocol MisfortuneNodeDelegate {
-  func misfortuneNodeDidTapActionButton(node: MisfortuneNode, mode: MisfortuneNode.Mode)
-  func misfortuneNodeDidTapSettingsButton(node: MisfortuneNode, mode: MisfortuneNode.Mode)
+  func misfortuneNodeDidPerformAction(node: MisfortuneNode, action: MisfortuneNode.Action?)
 }
 
 class MisfortuneNode: ASCellNode {
@@ -163,10 +162,10 @@ class MisfortuneNode: ASCellNode {
   
   // MARK: - Actions
   func actionButtonTouchUpInside(_ sender: Any) {
-    delegate?.misfortuneNodeDidTapActionButton(node: self, mode: mode)
+    delegate?.misfortuneNodeDidPerformAction(node: self, action: self.mode.action)
   }
   func settingsTouchUpInside(_ sender: Any) {
-    delegate?.misfortuneNodeDidTapSettingsButton(node: self, mode: mode)
+    delegate?.misfortuneNodeDidPerformAction(node: self, action: Action.settings)
   }
   
   // MARK: - Conetent setters
@@ -218,6 +217,13 @@ extension MisfortuneNode: Themeable {
 
 // MARK: - Mode Declaration
 extension MisfortuneNode {
+  enum Action {
+    case tryAgain
+    case updateApp
+    case myInterests
+    case settings
+  }
+  
   enum Mode {
     case noInternet
     case empty
@@ -240,6 +246,22 @@ extension MisfortuneNode {
         return true
       }
     }
+    
+    var action: Action? {
+      switch self {
+      case .empty:
+        return Action.myInterests
+      case .noInternet:
+        return Action.tryAgain
+      case .noResultsFound:
+        return nil
+      case .somethingWrong:
+        return Action.tryAgain
+      case .appNeedsUpdate:
+        return Action.updateApp
+      }
+    }
+    
     var settingsTextVisible: Bool {
       switch self {
       case .empty:

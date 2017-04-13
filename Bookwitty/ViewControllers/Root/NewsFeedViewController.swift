@@ -802,10 +802,16 @@ extension NewsFeedViewController: Localizable {
 
 // MARK: - 
 extension NewsFeedViewController: MisfortuneNodeDelegate {
-  func misfortuneNodeDidTapActionButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {
-  }
-  
-  func misfortuneNodeDidTapSettingsButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {
-    AppDelegate.openSettings()
+  func misfortuneNodeDidPerformAction(node: MisfortuneNode, action: MisfortuneNode.Action?) {
+    guard let action = action else {
+      return
+    }
+    
+    switch action {
+    case .settings:
+      AppDelegate.openSettings()
+    default:
+      break
+    }
   }
 }
