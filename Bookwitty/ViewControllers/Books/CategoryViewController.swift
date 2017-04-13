@@ -20,6 +20,7 @@ class CategoryViewController: UIViewController {
   let viewAllBooksView = UIView.loadFromView(DisclosureView.self, owner: nil)
   let viewSubcategories = UIView.loadFromView(DisclosureView.self, owner: nil)
   let refreshController = UIRefreshControl()
+  let misfortuneNode = MisfortuneNode(mode: MisfortuneNode.Mode.empty)
   
   fileprivate let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
   fileprivate let sectionSpacing = ThemeManager.shared.currentTheme.sectionSpacing()
