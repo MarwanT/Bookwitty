@@ -27,6 +27,14 @@ class CategoryViewController: UIViewController {
   
   let viewModel = CategoryViewModel()
   
+  var shouldDisplayMisfortuneNode: Bool {
+    guard let misfortuneMode = viewModel.misfortuneNodeMode, !refreshController.isRefreshing else {
+      return false
+    }
+    misfortuneNode.mode = misfortuneMode
+    return true
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     initializePullToRefresh()
@@ -135,6 +143,7 @@ class CategoryViewController: UIViewController {
     loadBookwittySuggest()
     loadSelectionSection()
     loadSubcategoriesSection()
+    loadMisfortuneSection()
   }
   
   private func loadBannerSection() {
@@ -190,7 +199,20 @@ class CategoryViewController: UIViewController {
       viewSubcategories.alignLeading("0", trailing: "0", toView: stackView)
       addSeparator()
     }
-  }  
+  }
+  
+  private func loadMisfortuneSection() {
+    if shouldDisplayMisfortuneNode {
+      if misfortuneNode.view.superview == nil {
+        // TODO: Add height constraint if needed
+        misfortuneNode.view.constrainHeight("\(scrollView.frame.height)")
+        stackView.addArrangedSubview(misfortuneNode.view)
+        misfortuneNode.view.alignLeading("0", trailing: "0", toView: stackView)
+      }
+    } else {
+      misfortuneNode.view.removeFromSuperview()
+    }
+  }
   
   // MARK: Helpers
   fileprivate func separatorViewInstance() -> UIView {
