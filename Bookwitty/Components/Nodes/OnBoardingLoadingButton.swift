@@ -42,7 +42,7 @@ class OnBoardingLoadingButton: ASDisplayNode {
 
   func setupSelectionButton() {
     let plusImage: UIImage = #imageLiteral(resourceName: "plus")
-    let tickImage: UIImage = #imageLiteral(resourceName: "tick")
+    let tickImage: UIImage = #imageLiteral(resourceName: "largeTick")
     let buttonWhiteBackgroundColor = UIImage(color: ThemeManager.shared.currentTheme.defaultBackgroundColor())
     let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultButtonColor())
 
