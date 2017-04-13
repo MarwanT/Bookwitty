@@ -13,7 +13,7 @@ protocol MisfortuneNodeDelegate {
   func misfortuneNodeDidTapSettingsButton(node: MisfortuneNode, mode: MisfortuneNode.Mode)
 }
 
-class MisfortuneNode: ASDisplayNode {
+class MisfortuneNode: ASCellNode {
   fileprivate let imageColoredBackgroundNode: ASDisplayNode
   fileprivate let imageWhiteBackgroundNode: ASDisplayNode
   fileprivate let imageNode: ASImageNode
@@ -22,7 +22,11 @@ class MisfortuneNode: ASDisplayNode {
   fileprivate let actionButtonNode: ASButtonNode
   fileprivate let settingsTextNode: ASTextNode
   
-  fileprivate var mode: Mode! = nil
+  var mode: Mode! = nil {
+    didSet {
+      reloadNode()
+    }
+  }
   
   fileprivate var configuration = Configuration()
   
@@ -39,6 +43,7 @@ class MisfortuneNode: ASDisplayNode {
     settingsTextNode = ASTextNode()
     super.init()
     initializeNode()
+    reloadNode()
     applyTheme()
   }
   
@@ -48,17 +53,23 @@ class MisfortuneNode: ASDisplayNode {
     actionButtonNode.addTarget(self, action: #selector(actionButtonTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
     settingsTextNode.addTarget(self, action: #selector(settingsTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
     
+    backgroundColor = UIColor.white
+    imageWhiteBackgroundNode.backgroundColor = backgroundColor
+    imageNode.contentMode = UIViewContentMode.scaleAspectFit
+    actionButtonNode.contentEdgeInsets = configuration.actionButtonContentEdgeInsets
+  }
+  
+  private func reloadNode() {
     titleText = mode.titleText
     descriptionText = mode.descriptionText
     actionButtonText = mode.actionButtonText
     settingsAttributedText = mode.settingsAttributedText
-    image = mode.image
-    
-    backgroundColor = UIColor.white
-    imageWhiteBackgroundNode.backgroundColor = backgroundColor
     imageColoredBackgroundNode.backgroundColor = mode.backgroundColor
-    imageNode.contentMode = UIViewContentMode.scaleAspectFit
-    actionButtonNode.contentEdgeInsets = configuration.actionButtonContentEdgeInsets
+    image = mode.image
+    ThemeManager.shared.currentTheme.styleSecondaryButton(
+      button: actionButtonNode,
+      withColor: mode.actionButtonColor,
+      highlightedColor: mode.actionButtonColor)
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -218,7 +229,7 @@ extension MisfortuneNode {
     var actionButtonVisible: Bool {
       switch self {
       case .empty:
-        return true
+        return false
       case .noInternet:
         return true
       case .noResultsFound:
