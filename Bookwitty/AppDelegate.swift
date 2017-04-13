@@ -88,3 +88,15 @@ extension AppDelegate {
   }
 }
 
+// MARK: - General
+extension AppDelegate {
+  static func openSettings() {
+    guard let identifier = Bundle.main.bundleIdentifier, let settingsUrl = URL(string: UIApplicationOpenSettingsURLString+identifier) else {
+      return
+    }
+    
+    if UIApplication.shared.canOpenURL(settingsUrl) {
+      UIApplication.shared.openURL(settingsUrl)
+    }
+  }
+}
