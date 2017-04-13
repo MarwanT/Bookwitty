@@ -40,7 +40,8 @@ target 'Bookwitty' do
   pod 'DTCoreText', '1.6.20'
   pod 'SwiftLoader', :git => 'https://github.com/keeward/SwiftLoader', :tag => '0.3.1'
   pod 'Version', :git => 'https://github.com/opwoco/Version'
-
+  pod 'AMScrollingNavbar', '3.2.0'
+  
   target 'BookwittyTests' do
     inherit! :search_paths
     # Pods for testing
