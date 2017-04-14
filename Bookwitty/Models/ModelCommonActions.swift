@@ -199,3 +199,26 @@ extension Quote: ModelCommonActions {
   }
 }
 
+// MARK: - Book
+extension Book: ModelCommonActions {
+  var voteValue: String? {
+    get { return nil }
+    set { /* Do Nothing - Action not valid on model */ }
+  }
+
+  var isFollowing: Bool {
+    get { return following }
+    set {
+      following = isFollowing
+      guard let counts = counts else {
+        return
+      }
+      if following {
+        counts.followers = (counts.followers ?? 0) + 1
+      } else {
+        counts.followers = (counts.followers ?? 1) - 1
+      }
+    }
+  }
+}
+
