@@ -186,3 +186,16 @@ extension Text: ModelCommonActions {
   }
 }
 
+// MARK: - Quote
+extension Quote: ModelCommonActions {
+  var voteValue: String? {
+    get { return vote }
+    set { vote = newValue }
+  }
+
+  var isFollowing: Bool {
+    get { return false }
+    set { /* */ }
+  }
+}
+
