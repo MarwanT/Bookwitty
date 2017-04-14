@@ -22,4 +22,13 @@ class DataManager {
   func fetchResources(with identifiers: [String]) -> [ModelResource] {
     return identifiers.flatMap(fetchResource(with:))
   }
+
+  //MARK: - Update Resources
+  @discardableResult
+  func update(resource: ModelResource) {
+    guard let identifier = resource.id else {
+      return
+    }
+    pool.updateValue(resource, forKey: identifier)
+  }
 }
