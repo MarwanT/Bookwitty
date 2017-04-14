@@ -60,7 +60,11 @@ final class NewsFeedViewModel {
       return
     }
 
-    cancellableRequest = NewsfeedAPI.wit(contentId: data[index], completion: { (success, error) in
+    let id = data[index]
+    cancellableRequest = NewsfeedAPI.wit(contentId: id, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: id, after: DataManager.Action.wit)
+      }
       completionBlock(success)
     })
   }
@@ -70,8 +74,11 @@ final class NewsFeedViewModel {
         completionBlock(false)
         return
     }
-
-    cancellableRequest = NewsfeedAPI.unwit(contentId: data[index], completion: { (success, error) in
+    let id = data[index]
+    cancellableRequest = NewsfeedAPI.unwit(contentId: id, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: id, after: DataManager.Action.unwit)
+      }
       completionBlock(success)
     })
   }
@@ -254,6 +261,9 @@ extension NewsFeedViewModel {
       defer {
         completionBlock(success)
       }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
+      }
       penName.following = true
     }
   }
@@ -268,6 +278,9 @@ extension NewsFeedViewModel {
       defer {
         completionBlock(success)
       }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
+      }
       penName.following = false
     }
   }
@@ -277,6 +290,9 @@ extension NewsFeedViewModel {
       defer {
         completionBlock(success)
       }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
+      }
     }
   }
 
@@ -284,6 +300,9 @@ extension NewsFeedViewModel {
     _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
+      }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
       }
     }
   }
