@@ -17,27 +17,27 @@ class CardFactory {
 
     switch(resourceType) {
     case Author.resourceType:
-      return createAuthorCard(resource)
+      return createAuthorCard(resource.registeredResourceType)
     case Text.resourceType:
-      return createTextCard(resource)
+      return createTextCard(resource.registeredResourceType)
     case Quote.resourceType:
-      return createQuoteCard(resource)
+      return createQuoteCard(resource.registeredResourceType)
     case Topic.resourceType:
-      return createTopicCard(resource)
+      return createTopicCard(resource.registeredResourceType)
     case Audio.resourceType:
-      return createAudioCard(resource)
+      return createAudioCard(resource.registeredResourceType)
     case Image.resourceType:
-      return createImageCard(resource)
+      return createImageCard(resource.registeredResourceType)
     case Video.resourceType:
-      return createVideoCard(resource)
+      return createVideoCard(resource.registeredResourceType)
     case PenName.resourceType:
-      return createPenNameCard(resource)
+      return createPenNameCard(resource.registeredResourceType)
     case ReadingList.resourceType:
-      return createReadingListCard(resource)
+      return createReadingListCard(resource.registeredResourceType)
     case Link.resourceType:
-      return createLinkCard(resource)
+      return createLinkCard(resource.registeredResourceType)
     case Book.resourceType:
-      return createBookCard(resource)
+      return createBookCard(resource.registeredResourceType)
     default:
       return nil
     }
@@ -46,344 +46,121 @@ class CardFactory {
 
 // MARK: - Author Card
 extension  CardFactory {
-  fileprivate func createAuthorCard(_ resource: ModelResource) -> TopicCardPostCellNode? {
-    guard let resource = resource as? Author else {
+  fileprivate func createAuthorCard(_ resourceType: ResourceType) -> TopicCardPostCellNode? {
+    guard resourceType == Author.resourceType else {
       return nil
     }
 
-    let card = TopicCardPostCellNode()
-    let cardPostInfoData: CardPostInfoNodeData?
-    if let penName = resource.penName {
-      let name = penName.name ?? ""
-      let date = Date.formatDate(date: resource.createdAt)
-      let penNameprofileImage = penName.avatarUrl
-      cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
-    } else {
-      cardPostInfoData = nil
-    }
-    card.postInfoData = cardPostInfoData
-    card.setup(forFollowingMode: true)
-    card.setFollowingValue(following: resource.following)
-    card.node.articleTitle = resource.caption
-    card.node.articleDescription = resource.shortDescription ?? resource.biography
-    card.node.subImageUrl = resource.thumbnailImageUrl ?? resource.profileImageUrl ?? resource.imageUrl
-    card.node.imageUrl = nil
-    card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
-    card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
-
-    return card
+    return TopicCardPostCellNode()
   }
 }
 
 // MARK: - Article/Text Card
 extension  CardFactory {
-  fileprivate func createTextCard(_ resource: ModelResource) -> ArticleCardPostCellNode? {
-    guard let resource = resource as? Text else {
+  fileprivate func createTextCard(_ resourceType: ResourceType) -> ArticleCardPostCellNode? {
+    guard resourceType == Text.resourceType else {
       return nil
     }
 
-    let card = ArticleCardPostCellNode(shouldShowInfoNode: resource.penName?.name != nil)
-    let cardPostInfoData: CardPostInfoNodeData?
-    if let penName = resource.penName {
-      let name = penName.name ?? ""
-      let date = Date.formatDate(date: resource.createdAt)
-      let penNameprofileImage = penName.avatarUrl
-      cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
-    } else {
-      cardPostInfoData = nil
-    }
-    card.postInfoData = cardPostInfoData
-
-    card.node.articleTitle = resource.title
-    card.node.articleDescription = resource.shortDescription
-    card.node.imageUrl = resource.coverImageUrl ?? resource.thumbnailImageUrl
-    card.articleCommentsSummary = nil
-    card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
-    card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
-
-    return card
+    return ArticleCardPostCellNode()
   }
 }
 
 // MARK: - Quote Card
 extension  CardFactory {
-  fileprivate func createQuoteCard(_ resource: ModelResource) -> QuoteCardPostCellNode? {
-    guard let resource = resource as? Quote else {
+  fileprivate func createQuoteCard(_ resourceType: ResourceType) -> QuoteCardPostCellNode? {
+    guard resourceType == Quote.resourceType else {
       return nil
     }
 
-    let card = QuoteCardPostCellNode(shouldShowInfoNode: resource.penName?.name != nil)
-    let cardPostInfoData: CardPostInfoNodeData?
-    if let penName = resource.penName {
-      let name = penName.name ?? ""
-      let date = Date.formatDate(date: resource.createdAt)
-      let penNameprofileImage = penName.avatarUrl
-      cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
-    } else {
-      cardPostInfoData = nil
-    }
-    card.postInfoData = cardPostInfoData
-    card.node.articleQuotePublisher = resource.author
-    if let qoute = resource.body, !qoute.isEmpty {
-      card.node.articleQuote = "“ \(qoute) ”"
-    } else if let qoute = resource.title, !qoute.isEmpty {
-      card.node.articleQuote = "“ \(qoute) ”"
-    }
-    card.articleCommentsSummary = nil
-    card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
-    card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
-
-    return card
+    return QuoteCardPostCellNode()
   }
 }
 
 // MARK: - Topic Card
 extension  CardFactory {
-  fileprivate func createTopicCard(_ resource: ModelResource) -> TopicCardPostCellNode? {
-    guard let resource = resource as? Topic else {
+  fileprivate func createTopicCard(_ resourceType: ResourceType) -> TopicCardPostCellNode? {
+    guard resourceType == Topic.resourceType else {
       return nil
     }
 
-    let card = TopicCardPostCellNode(shouldShowInfoNode: resource.penName?.name != nil)
-    let cardPostInfoData: CardPostInfoNodeData?
-    if let penName = resource.penName {
-      let name = penName.name ?? ""
-      let date = Date.formatDate(date: resource.createdAt)
-      let penNameprofileImage = penName.avatarUrl
-      cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
-    } else {
-      cardPostInfoData = nil
-    }
-    card.postInfoData = cardPostInfoData
-    card.setup(forFollowingMode: true)
-    card.setFollowingValue(following: resource.following)
-    card.node.articleTitle = resource.title
-    card.node.articleDescription = resource.shortDescription
-    card.node.imageUrl = resource.coverImageUrl
-    card.node.setTopicStatistics(numberOfPosts: resource.counts?.posts, numberOfBooks: nil, numberOfFollowers: resource.counts?.followers)
-    card.articleCommentsSummary = nil
-    card.node.subImageUrl = nil
-    card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
-    card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
-
-    return card
+    return TopicCardPostCellNode()
   }
 }
 
 // MARK: - Link/Link Card
 extension  CardFactory {
-  fileprivate func createLinkCard(_ resource: ModelResource) -> LinkCardPostCellNode? {
-    guard let resource = resource as? Link else {
+  fileprivate func createLinkCard(_ resourceType: ResourceType) -> LinkCardPostCellNode? {
+    guard resourceType == Link.resourceType else {
       return nil
     }
 
-    let card = LinkCardPostCellNode(shouldShowInfoNode: resource.penName?.name != nil)
-    let cardPostInfoData: CardPostInfoNodeData?
-    if let penName = resource.penName {
-      let name = penName.name ?? ""
-      let date = Date.formatDate(date: resource.createdAt)
-      let penNameprofileImage = penName.avatarUrl
-      cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
-    } else {
-      cardPostInfoData = nil
-    }
-    card.postInfoData = cardPostInfoData
-    card.node.articleTitle = resource.title
-    card.node.articleDescription = resource.shortDescription
-    card.node.imageNode.url = resource.coverImageUrl.isEmptyOrNil() ? nil : URL(string: resource.coverImageUrl!)
-    card.node.linkUrl = resource.urlLink
-    card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
-    card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
-    
-    return card
+    return LinkCardPostCellNode()
   }
 }
 
 // MARK: - Book Card
 extension  CardFactory {
-  fileprivate func createBookCard(_ resource: ModelResource) -> BookCardPostCellNode? {
-    guard let resource = resource as? Book else {
+  fileprivate func createBookCard(_ resourceType: ResourceType) -> BookCardPostCellNode? {
+    guard resourceType == Book.resourceType else {
       return nil
     }
 
-    let card = BookCardPostCellNode(shouldShowInfoNode: resource.penName?.name != nil)
-    let cardPostInfoData: CardPostInfoNodeData?
-    if let penName = resource.penName {
-      let name = penName.name ?? ""
-      let date = Date.formatDate(date: resource.createdAt)
-      let penNameprofileImage = penName.avatarUrl
-      cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
-    } else {
-      cardPostInfoData = nil
-    }
-    card.postInfoData = cardPostInfoData
-    card.setup(forFollowingMode: true)
-    card.setFollowingValue(following: resource.following)
-    card.node.title = resource.title
-    card.node.imageUrl = resource.thumbnailImageUrl
-    //TODO: When the book item starts returning the number of editions we will enable the price, formatting and author details
-    //If the number of Editions is greater than 0 then this is a book-product then set isProduct = true.
-    card.node.isProduct = false
-    card.node.setTopicStatistics(numberOfPosts: resource.counts?.posts, numberOfBooks: nil, numberOfFollowers: resource.counts?.followers)
-    card.node.author = resource.productDetails?.author
-    card.node.price = (resource.productDetails?.isElectronicFormat() ?? false) ? nil : resource.supplierInformation?.preferredPrice?.formattedValue
-    card.node.format = resource.productDetails?.productFormat
-
-    return card
+    return BookCardPostCellNode()
   }
 }
 
 // MARK: - Link/Audio Card
 extension  CardFactory {
-  fileprivate func createAudioCard(_ resource: ModelResource) -> LinkCardPostCellNode? {
-    guard let resource = resource as? Audio else {
+  fileprivate func createAudioCard(_ resourceType: ResourceType) -> LinkCardPostCellNode? {
+    guard resourceType == Audio.resourceType else {
       return nil
     }
 
-    let card = LinkCardPostCellNode(shouldShowInfoNode: resource.penName?.name != nil)
-    let cardPostInfoData: CardPostInfoNodeData?
-    if let penName = resource.penName {
-      let name = penName.name ?? ""
-      let date = Date.formatDate(date: resource.createdAt)
-      let penNameprofileImage = penName.avatarUrl
-      cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
-    } else {
-      cardPostInfoData = nil
-    }
-    card.postInfoData = cardPostInfoData
-    card.node.articleTitle = resource.title
-    card.node.articleDescription = resource.shortDescription
-    card.node.imageNode.url = resource.coverImageUrl.isEmptyOrNil() ? nil : URL(string: resource.coverImageUrl!)
-    //linkUrl will override the imageNode url if it has an image
-    card.node.linkUrl = resource.media?.mediaLink
-
-    card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
-    card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
-
-    return card
+    return LinkCardPostCellNode()
   }
 }
 
 // MARK: - Photo/Image Card
 extension  CardFactory {
-  fileprivate func createImageCard(_ resource: ModelResource) -> PhotoCardPostCellNode? {
-    guard let resource = resource as? Image else {
+  fileprivate func createImageCard(_ resourceType: ResourceType) -> PhotoCardPostCellNode? {
+    guard resourceType == Image.resourceType else {
       return nil
     }
 
-    let card = PhotoCardPostCellNode(shouldShowInfoNode: resource.penName?.name != nil)
-    let cardPostInfoData: CardPostInfoNodeData?
-    if let penName = resource.penName {
-      let name = penName.name ?? ""
-      let date = Date.formatDate(date: resource.createdAt)
-      let penNameprofileImage = penName.avatarUrl
-      cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
-    } else {
-      cardPostInfoData = nil
-    }
-    card.postInfoData = cardPostInfoData
-    card.node.imageUrl = resource.coverImageUrl
-    card.node.articleTitle = resource.title
-    card.node.articleDescription = resource.shortDescription
-    card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
-    card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
-    
-    return card
+    return PhotoCardPostCellNode()
   }
 }
 
 // MARK: - Video Card
 extension  CardFactory {
-  fileprivate func createVideoCard(_ resource: ModelResource) -> VideoCardPostCellNode? {
-    guard let resource = resource as? Video else {
+  fileprivate func createVideoCard(_ resourceType: ResourceType) -> VideoCardPostCellNode? {
+    guard resourceType == Video.resourceType else {
       return nil
     }
 
-    let card = VideoCardPostCellNode(shouldShowInfoNode: resource.penName?.name != nil)
-    if let urlStr = resource.media?.mediaLink,
-      let url = URL(string: urlStr) {
-      IFramely.shared.loadResponseFor(url: url, closure: { (response: Response?) in
-        card.node.videoUrl = response?.embedUrl
-        card.node.imageUrl = response?.thumbnails?.first?.url?.absoluteString ?? resource.coverImageUrl
-      })
-    }
-
-    let cardPostInfoData: CardPostInfoNodeData?
-    if let penName = resource.penName {
-      let name = penName.name ?? ""
-      let date = Date.formatDate(date: resource.createdAt)
-      let penNameprofileImage = penName.avatarUrl
-      cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
-    } else {
-      cardPostInfoData = nil
-    }
-    card.postInfoData = cardPostInfoData
-    card.node.articleTitle = resource.title
-    card.node.articleDescription = resource.shortDescription
-    card.articleCommentsSummary = nil
-    card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
-    card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
-
-    return card
+    return VideoCardPostCellNode()
   }
 }
 
 // MARK: - Profile/PenName Card
 extension  CardFactory {
-  fileprivate func createPenNameCard(_ resource: ModelResource) -> ProfileCardPostCellNode? {
-    guard let resource = resource as? PenName else {
+  fileprivate func createPenNameCard(_ resourceType: ResourceType) -> ProfileCardPostCellNode? {
+    guard resourceType == PenName.resourceType else {
       return nil
     }
 
-    let card = ProfileCardPostCellNode()
-    card.setup(forFollowingMode: true)
-    card.setFollowingValue(following: resource.following)
-    card.node.imageUrl = resource.avatarUrl
-    card.node.followersCount = String(resource.counts?.followers ?? 0)
-    card.node.userName = resource.name
-    card.node.articleDescription = resource.biography
-
-    return card
+    return ProfileCardPostCellNode()
   }
 }
 
 // MARK: - ReadingList Card
 extension  CardFactory {
-  fileprivate func createReadingListCard(_ resource: ModelResource) -> ReadingListCardPostCellNode? {
-    guard let resource = resource as? ReadingList else {
+  fileprivate func createReadingListCard(_ resourceType: ResourceType) -> ReadingListCardPostCellNode? {
+    guard resourceType == ReadingList.resourceType else {
       return nil
     }
 
-    let card = ReadingListCardPostCellNode(shouldShowInfoNode: resource.penName?.name != nil)
-    let cardPostInfoData: CardPostInfoNodeData?
-    if let penName = resource.penName {
-      let name = penName.name ?? ""
-      let date = Date.formatDate(date: resource.createdAt)
-      let penNameprofileImage = penName.avatarUrl
-      cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
-    } else {
-      cardPostInfoData = nil
-    }
-    card.postInfoData = cardPostInfoData
-
-    card.node.articleTitle = resource.title
-    card.node.articleDescription = resource.shortDescription
-
-    card.node.setTopicStatistics(numberOfPosts: resource.counts?.posts, numberOfBooks: nil, numberOfFollowers: resource.counts?.followers)
-    card.articleCommentsSummary = nil
-    card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
-    card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
-
-    let hasPosts = resource.posts?.count ?? 0 > 0
-    if hasPosts, let images = resource.posts?.map({ ($0 as? ModelCommonProperties)?.thumbnailImageUrl }) {
-      let imageCollection = images.flatMap({$0})
-      if imageCollection.count > 0 {
-        card.node.loadImages(with: imageCollection)
-      }
-    } else if let imagesCount = resource.postsRelations?.count,
-      imagesCount > 0 {
-      card.node.prepareImages(imageCount: imagesCount)
-    }
-    return card
+    return ReadingListCardPostCellNode()
   }
 }
