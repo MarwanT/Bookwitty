@@ -10,53 +10,7 @@ import Foundation
 import Spine
 
 class CardFactory {
-  //TODO: Refactor to Follow the original Factory pattern
-  typealias RegEntry = (_ shouldShowInfoNode: Bool) -> BaseCardPostNode
-
   static let shared: CardFactory = CardFactory()
-
-  fileprivate var registry = [String : RegEntry]()
-
-  private init() {
-    //Making Constructor Not Reachable
-    register(resource: Author.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
-      TopicCardPostCellNode()
-    }
-    register(resource: Text.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
-      ArticleCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
-    }
-    register(resource: Quote.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
-      QuoteCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
-    }
-    register(resource: Topic.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
-      TopicCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
-    }
-    register(resource: Audio.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
-      LinkCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
-    }
-    register(resource: Image.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
-      PhotoCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
-    }
-    register(resource: Video.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
-      VideoCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
-    }
-    register(resource: PenName.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
-      ProfileCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
-    }
-    register(resource: ReadingList.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
-      ReadingListCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
-    }
-    register(resource: Link.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
-      LinkCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
-    }
-    register(resource: Book.self) { (shouldShowInfoNode: Bool) -> BaseCardPostNode in
-      BookCardPostCellNode(shouldShowInfoNode: shouldShowInfoNode)
-    }
-  }
-
-  func register(resource : ModelResource.Type, creator : @escaping (_ shouldShowInfoNode: Bool) -> BaseCardPostNode) {
-    registry[resource.resourceType] = creator
-  }
 
   func createCardFor(resource : ModelResource) -> BaseCardPostNode? {
     let resourceType: ResourceType = resource.registeredResourceType
@@ -93,17 +47,11 @@ class CardFactory {
 // MARK: - Author Card
 extension  CardFactory {
   fileprivate func createAuthorCard(_ resource: ModelResource) -> TopicCardPostCellNode? {
-    guard let entry = registry[resource.registeredResourceType] else {
-      return nil
-    }
     guard let resource = resource as? Author else {
       return nil
     }
-    let cardCanditate = entry(resource.penName?.name != nil)
-    guard let card = cardCanditate as? TopicCardPostCellNode else {
-      return nil
-    }
 
+    let card = TopicCardPostCellNode()
     let cardPostInfoData: CardPostInfoNodeData?
     if let penName = resource.penName {
       let name = penName.name ?? ""
@@ -130,17 +78,11 @@ extension  CardFactory {
 // MARK: - Article/Text Card
 extension  CardFactory {
   fileprivate func createTextCard(_ resource: ModelResource) -> ArticleCardPostCellNode? {
-    guard let entry = registry[resource.registeredResourceType] else {
-      return nil
-    }
     guard let resource = resource as? Text else {
       return nil
     }
-    let cardCanditate = entry(resource.penName?.name != nil)
-    guard let card = cardCanditate as? ArticleCardPostCellNode else {
-      return nil
-    }
 
+    let card = ArticleCardPostCellNode(shouldShowInfoNode: resource.penName?.name != nil)
     let cardPostInfoData: CardPostInfoNodeData?
     if let penName = resource.penName {
       let name = penName.name ?? ""
@@ -166,17 +108,11 @@ extension  CardFactory {
 // MARK: - Quote Card
 extension  CardFactory {
   fileprivate func createQuoteCard(_ resource: ModelResource) -> QuoteCardPostCellNode? {
-    guard let entry = registry[resource.registeredResourceType] else {
-      return nil
-    }
     guard let resource = resource as? Quote else {
       return nil
     }
-    let cardCanditate = entry(resource.penName?.name != nil)
-    guard let card = cardCanditate as? QuoteCardPostCellNode else {
-      return nil
-    }
 
+    let card = QuoteCardPostCellNode(shouldShowInfoNode: resource.penName?.name != nil)
     let cardPostInfoData: CardPostInfoNodeData?
     if let penName = resource.penName {
       let name = penName.name ?? ""
@@ -204,17 +140,11 @@ extension  CardFactory {
 // MARK: - Topic Card
 extension  CardFactory {
   fileprivate func createTopicCard(_ resource: ModelResource) -> TopicCardPostCellNode? {
-    guard let entry = registry[resource.registeredResourceType] else {
-      return nil
-    }
     guard let resource = resource as? Topic else {
       return nil
     }
-    let cardCanditate = entry(resource.penName?.name != nil)
-    guard let card = cardCanditate as? TopicCardPostCellNode else {
-      return nil
-    }
 
+    let card = TopicCardPostCellNode(shouldShowInfoNode: resource.penName?.name != nil)
     let cardPostInfoData: CardPostInfoNodeData?
     if let penName = resource.penName {
       let name = penName.name ?? ""
@@ -243,17 +173,11 @@ extension  CardFactory {
 // MARK: - Link/Link Card
 extension  CardFactory {
   fileprivate func createLinkCard(_ resource: ModelResource) -> LinkCardPostCellNode? {
-    guard let entry = registry[resource.registeredResourceType] else {
-      return nil
-    }
     guard let resource = resource as? Link else {
       return nil
     }
-    let cardCanditate = entry(resource.penName?.name != nil)
-    guard let card = cardCanditate as? LinkCardPostCellNode else {
-      return nil
-    }
 
+    let card = LinkCardPostCellNode(shouldShowInfoNode: resource.penName?.name != nil)
     let cardPostInfoData: CardPostInfoNodeData?
     if let penName = resource.penName {
       let name = penName.name ?? ""
@@ -278,18 +202,11 @@ extension  CardFactory {
 // MARK: - Book Card
 extension  CardFactory {
   fileprivate func createBookCard(_ resource: ModelResource) -> BookCardPostCellNode? {
-    guard let entry = registry[resource.registeredResourceType] else {
-      return nil
-    }
     guard let resource = resource as? Book else {
       return nil
     }
 
-    let cardCanditate = entry(resource.productDetails?.author != nil)
-    guard let card = cardCanditate as? BookCardPostCellNode else {
-      return nil
-    }
-
+    let card = BookCardPostCellNode(shouldShowInfoNode: resource.penName?.name != nil)
     let cardPostInfoData: CardPostInfoNodeData?
     if let penName = resource.penName {
       let name = penName.name ?? ""
@@ -319,17 +236,11 @@ extension  CardFactory {
 // MARK: - Link/Audio Card
 extension  CardFactory {
   fileprivate func createAudioCard(_ resource: ModelResource) -> LinkCardPostCellNode? {
-    guard let entry = registry[resource.registeredResourceType] else {
-      return nil
-    }
     guard let resource = resource as? Audio else {
       return nil
     }
-    let cardCanditate = entry(resource.penName?.name != nil)
-    guard let card = cardCanditate as? LinkCardPostCellNode else {
-      return nil
-    }
 
+    let card = LinkCardPostCellNode(shouldShowInfoNode: resource.penName?.name != nil)
     let cardPostInfoData: CardPostInfoNodeData?
     if let penName = resource.penName {
       let name = penName.name ?? ""
@@ -340,8 +251,6 @@ extension  CardFactory {
       cardPostInfoData = nil
     }
     card.postInfoData = cardPostInfoData
-
-
     card.node.articleTitle = resource.title
     card.node.articleDescription = resource.shortDescription
     card.node.imageNode.url = resource.coverImageUrl.isEmptyOrNil() ? nil : URL(string: resource.coverImageUrl!)
@@ -358,17 +267,11 @@ extension  CardFactory {
 // MARK: - Photo/Image Card
 extension  CardFactory {
   fileprivate func createImageCard(_ resource: ModelResource) -> PhotoCardPostCellNode? {
-    guard let entry = registry[resource.registeredResourceType] else {
-      return nil
-    }
     guard let resource = resource as? Image else {
       return nil
     }
-    let cardCanditate = entry(resource.penName?.name != nil)
-    guard let card = cardCanditate as? PhotoCardPostCellNode else {
-      return nil
-    }
 
+    let card = PhotoCardPostCellNode(shouldShowInfoNode: resource.penName?.name != nil)
     let cardPostInfoData: CardPostInfoNodeData?
     if let penName = resource.penName {
       let name = penName.name ?? ""
@@ -392,17 +295,11 @@ extension  CardFactory {
 // MARK: - Video Card
 extension  CardFactory {
   fileprivate func createVideoCard(_ resource: ModelResource) -> VideoCardPostCellNode? {
-    guard let entry = registry[resource.registeredResourceType] else {
-      return nil
-    }
     guard let resource = resource as? Video else {
       return nil
     }
-    let cardCanditate = entry(resource.penName?.name != nil)
-    guard let card = cardCanditate as? VideoCardPostCellNode else {
-      return nil
-    }
 
+    let card = VideoCardPostCellNode(shouldShowInfoNode: resource.penName?.name != nil)
     if let urlStr = resource.media?.mediaLink,
       let url = URL(string: urlStr) {
       IFramely.shared.loadResponseFor(url: url, closure: { (response: Response?) in
@@ -434,17 +331,11 @@ extension  CardFactory {
 // MARK: - Profile/PenName Card
 extension  CardFactory {
   fileprivate func createPenNameCard(_ resource: ModelResource) -> ProfileCardPostCellNode? {
-    guard let entry = registry[resource.registeredResourceType] else {
-      return nil
-    }
     guard let resource = resource as? PenName else {
       return nil
     }
-    let cardCanditate = entry(false)
-    guard let card = cardCanditate as? ProfileCardPostCellNode else {
-      return nil
-    }
 
+    let card = ProfileCardPostCellNode()
     card.setup(forFollowingMode: true)
     card.setFollowingValue(following: resource.following)
     card.node.imageUrl = resource.avatarUrl
@@ -459,17 +350,11 @@ extension  CardFactory {
 // MARK: - ReadingList Card
 extension  CardFactory {
   fileprivate func createReadingListCard(_ resource: ModelResource) -> ReadingListCardPostCellNode? {
-    guard let entry = registry[resource.registeredResourceType] else {
-      return nil
-    }
     guard let resource = resource as? ReadingList else {
       return nil
     }
-    let cardCanditate = entry(resource.penName?.name != nil)
-    guard let card = cardCanditate as? ReadingListCardPostCellNode else {
-      return nil
-    }
 
+    let card = ReadingListCardPostCellNode(shouldShowInfoNode: resource.penName?.name != nil)
     let cardPostInfoData: CardPostInfoNodeData?
     if let penName = resource.penName {
       let name = penName.name ?? ""
