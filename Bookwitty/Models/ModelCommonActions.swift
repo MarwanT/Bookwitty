@@ -16,3 +16,49 @@ protocol ModelCommonActions {
   var counts: Counts? { get }
 }
 
+extension ModelCommonActions {
+  var wit: Bool {
+    get {
+      guard let vote = voteValue else {
+        return false
+      }
+      return Vote.isWitted(vote: vote)
+    }
+    set {
+      let wasDimmed = dim
+      //Set Value
+      voteValue = Vote.witted.rawValue
+
+      guard let counts = counts else {
+        return
+      }
+      counts.wits = (counts.wits ?? 0) + 1
+      if wasDimmed {
+        counts.dims = (counts.dims ?? 1) - 1
+      }
+    }
+  }
+
+  var dim: Bool {
+    get {
+      guard let vote = voteValue else {
+        return false
+      }
+      return Vote.isDimmed(vote: vote)
+    }
+    set {
+      let wasWitted = wit
+      //Set Value
+      voteValue = Vote.dimmed.rawValue
+
+      guard let counts = counts else {
+        return
+      }
+      counts.dims = (counts.dims ?? 0) + 1
+      if wasWitted {
+        counts.wits = (counts.wits ?? 1) - 1
+      }
+    }
+  }
+}
+
