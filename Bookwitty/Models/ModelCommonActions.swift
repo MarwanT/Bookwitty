@@ -147,3 +147,16 @@ extension Link: ModelCommonActions {
   }
 }
 
+// MARK: - ReadingList
+extension ReadingList: ModelCommonActions {
+  var voteValue: String? {
+    get { return vote }
+    set { vote = newValue }
+  }
+
+  var isFollowing: Bool {
+    get { return false }
+    set { /* */ }
+  }
+}
+
