@@ -478,6 +478,7 @@ extension DiscoverViewController {
 
   func pushPostDetailsViewController(resource: Resource) {
     let nodeVc = PostDetailsViewController(resource: resource)
+    nodeVc.hidesBottomBarWhenPushed = true
     self.navigationController?.pushViewController(nodeVc, animated: true)
   }
 
@@ -486,6 +487,7 @@ extension DiscoverViewController {
       return
     }
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
+    genericVC.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(genericVC, animated: true)
   }
   
@@ -513,6 +515,7 @@ extension DiscoverViewController {
 
     let topicViewController = TopicViewController()
     topicViewController.initialize(withAuthor: resource as? Author)
+    topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 
@@ -540,6 +543,7 @@ extension DiscoverViewController {
 
     let topicViewController = TopicViewController()
     topicViewController.initialize(withTopic: resource as? Topic)
+    topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 
@@ -607,6 +611,7 @@ extension DiscoverViewController {
 
     let topicViewController = TopicViewController()
     topicViewController.initialize(withBook: resource as? Book)
+    topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 }

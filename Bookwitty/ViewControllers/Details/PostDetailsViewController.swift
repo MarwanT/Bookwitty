@@ -10,6 +10,7 @@ import Foundation
 import AsyncDisplayKit
 import Spine
 import Moya
+import AMScrollingNavbar
 
 class PostDetailsViewController: ASViewController<PostDetailsNode> {
   let postDetailsNode: PostDetailsNode
@@ -70,6 +71,20 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     Analytics.shared.send(screenName: name)
   }
 
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    if let navigationController = navigationController as? ScrollingNavigationController {
+      navigationController.followScrollView(postDetailsNode.view, delay: 50.0)
+    }
+  }
+
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    if let navigationController = navigationController as? ScrollingNavigationController {
+      navigationController.stopFollowingScrollView()
+      navigationController.showNavbar(animated: true)
+    }
+  }
 
   private func loadNavigationBarButtons() {
     //Set the back button item to remove the back-title

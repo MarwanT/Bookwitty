@@ -292,11 +292,13 @@ class BookStoreViewController: UIViewController {
     Analytics.shared.send(event: event)
 
     let categoriesViewController = Storyboard.Books.instantiate(CategoriesTableViewController.self)
+    categoriesViewController.hidesBottomBarWhenPushed = true
     self.navigationController?.pushViewController(categoriesViewController, animated: true)
   }
   
   fileprivate func pushBookDetailsViewController(with book: Book) {
     let bookDetailsViewController = BookDetailsViewController(with: book)
+    bookDetailsViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(bookDetailsViewController, animated: true)
   }
   
@@ -310,6 +312,7 @@ class BookStoreViewController: UIViewController {
 
     let booksTableViewController = Storyboard.Books.instantiate(BooksTableViewController.self)
     booksTableViewController.initialize(with: books, loadingMode: loadingMode)
+    booksTableViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(booksTableViewController, animated: true)
   }
 
@@ -574,6 +577,7 @@ extension BookStoreViewController {
   
   func pushPostDetailsViewController(resource: Resource) {
     let nodeVc = PostDetailsViewController(resource: resource)
+    nodeVc.hidesBottomBarWhenPushed = true
     self.navigationController?.pushViewController(nodeVc, animated: true)
   }
   
@@ -582,6 +586,7 @@ extension BookStoreViewController {
       return
     }
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
+    genericVC.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(genericVC, animated: true)
   }
   
@@ -609,6 +614,7 @@ extension BookStoreViewController {
 
     let topicViewController = TopicViewController()
     topicViewController.initialize(withAuthor: resource as? Author)
+    topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }
   
@@ -636,6 +642,7 @@ extension BookStoreViewController {
 
     let topicViewController = TopicViewController()
     topicViewController.initialize(withTopic: resource as? Topic)
+    topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }
   
@@ -703,6 +710,7 @@ extension BookStoreViewController {
 
     let topicViewController = TopicViewController()
     topicViewController.initialize(withBook: resource as? Book)
+    topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 }
