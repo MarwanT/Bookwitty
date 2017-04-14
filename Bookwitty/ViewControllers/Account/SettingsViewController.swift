@@ -91,9 +91,9 @@ class SettingsViewController: UIViewController {
 
   private func pushCountryPickerViewController() {
     let countryPickerViewController: EMCCountryPickerController = EMCCountryPickerController()
-    countryPickerViewController.labelFont = FontDynamicType.subheadline.font
+    countryPickerViewController.labelFont = FontDynamicType.caption2.font
     countryPickerViewController.countryNameDisplayLocale = Locale.application
-    countryPickerViewController.flagSize = 44
+    countryPickerViewController.flagSize = 35
 
     countryPickerViewController.onCountrySelected = { country in
       guard let country = country else {
