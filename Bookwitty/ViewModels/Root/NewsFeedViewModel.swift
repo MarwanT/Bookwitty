@@ -103,7 +103,7 @@ final class NewsFeedViewModel {
     cancellableRequest = NewsfeedAPI.feed() { (success, resources, nextPage, error) in
       if success {
         self.data.removeAll(keepingCapacity: false)
-        if let resources = resources {
+        if let resources = resources, success {
           self.data = resources.flatMap({ $0.id })
           DataManager.shared.update(resources: resources)
         } else {
