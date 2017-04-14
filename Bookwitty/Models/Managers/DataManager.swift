@@ -34,7 +34,6 @@ class DataManager {
   }
 
   //MARK: - Update Resources
-  @discardableResult
   func update(resource: ModelResource) {
     guard let identifier = resource.id else {
       return
