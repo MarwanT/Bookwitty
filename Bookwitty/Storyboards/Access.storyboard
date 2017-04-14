@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="RSO-OY-1rR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1421" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="RSO-OY-1rR">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -371,7 +371,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1JL-oh-BZV">
-                                <rect key="frame" x="0.0" y="220" width="375" height="447"/>
+                                <rect key="frame" x="0.0" y="210" width="375" height="457"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fv5-vg-VfX" userLabel="Pen Name Label">
                                         <rect key="frame" x="166" y="0.0" width="42" height="21"/>
@@ -384,7 +384,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="280" id="IEm-99-dgo"/>
-                                            <constraint firstAttribute="height" constant="48" id="xfl-5V-6Aj"/>
+                                            <constraint firstAttribute="height" constant="48" placeholder="YES" id="xfl-5V-6Aj"/>
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yM2-qz-0QU" userLabel="Bio Label">
@@ -429,7 +429,7 @@
                                     <constraint firstItem="5wv-rg-5ef" firstAttribute="centerX" secondItem="1JL-oh-BZV" secondAttribute="centerX" id="CyJ-0v-y42"/>
                                     <constraint firstItem="yM2-qz-0QU" firstAttribute="top" secondItem="zaG-Ys-Sfi" secondAttribute="bottom" constant="5" id="GVh-Hx-qAS"/>
                                     <constraint firstItem="DF6-JY-1Yh" firstAttribute="top" secondItem="OZg-0c-tp4" secondAttribute="bottom" constant="20" id="ShA-Wb-7Ua"/>
-                                    <constraint firstItem="Fv5-vg-VfX" firstAttribute="top" secondItem="1JL-oh-BZV" secondAttribute="top" priority="750" id="Zxo-82-fBv"/>
+                                    <constraint firstItem="Fv5-vg-VfX" firstAttribute="top" secondItem="1JL-oh-BZV" secondAttribute="top" id="Zxo-82-fBv"/>
                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="DF6-JY-1Yh" secondAttribute="bottom" constant="10" id="cbK-Y6-UGZ"/>
                                     <constraint firstItem="DF6-JY-1Yh" firstAttribute="centerX" secondItem="1JL-oh-BZV" secondAttribute="centerX" id="eFw-bc-o4l"/>
                                     <constraint firstItem="5wv-rg-5ef" firstAttribute="top" secondItem="yM2-qz-0QU" secondAttribute="bottom" constant="10" id="gU3-pJ-YPs"/>
@@ -441,7 +441,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="1JL-oh-BZV" firstAttribute="top" secondItem="JzI-kI-vUS" secondAttribute="bottom" constant="30" id="2Tj-OM-5hV"/>
+                            <constraint firstItem="1JL-oh-BZV" firstAttribute="top" secondItem="JzI-kI-vUS" secondAttribute="bottom" constant="20" id="2Tj-OM-5hV"/>
                             <constraint firstItem="JzI-kI-vUS" firstAttribute="centerX" secondItem="ZPa-7X-GHg" secondAttribute="centerXWithinMargins" id="DPc-cA-r0n"/>
                             <constraint firstItem="1JL-oh-BZV" firstAttribute="leading" secondItem="ZPa-7X-GHg" secondAttribute="leading" id="JvL-aQ-MG6"/>
                             <constraint firstAttribute="bottomMargin" secondItem="1JL-oh-BZV" secondAttribute="bottom" id="Lok-m3-or3"/>
