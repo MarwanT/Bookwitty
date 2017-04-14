@@ -13,7 +13,7 @@ import Spine
 final class NewsFeedViewModel {
   var cancellableRequest:  Cancellable?
   var nextPage: URL?
-  var data: [ModelResource] = [] {
+  var data: [String] = [] {
     didSet {
       if data.count == 0 {
         nextPage = nil
@@ -55,25 +55,23 @@ final class NewsFeedViewModel {
   }
 
   func witContent(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard data.count > index,
-      let contentId = data[index].id else {
+    guard data.count > index else {
       completionBlock(false)
       return
     }
 
-    cancellableRequest = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
+    cancellableRequest = NewsfeedAPI.wit(contentId: data[index], completion: { (success, error) in
       completionBlock(success)
     })
   }
 
   func unwitContent(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard data.count > index,
-      let contentId = data[index].id else {
+    guard data.count > index else {
         completionBlock(false)
         return
     }
 
-    cancellableRequest = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
+    cancellableRequest = NewsfeedAPI.unwit(contentId: data[index], completion: { (success, error) in
       completionBlock(success)
     })
   }
@@ -98,7 +96,12 @@ final class NewsFeedViewModel {
     cancellableRequest = NewsfeedAPI.feed() { (success, resources, nextPage, error) in
       if success {
         self.data.removeAll(keepingCapacity: false)
-        self.data = resources ?? []
+        if let resources = resources {
+          self.data = resources.flatMap({ $0.id })
+          DataManager.shared.update(resources: resources)
+        } else {
+          self.data = []
+        }
         self.nextPage = nextPage
       }
       self.cancellableRequest = nil
@@ -121,7 +124,8 @@ final class NewsFeedViewModel {
 
     cancellableRequest = NewsfeedAPI.nextFeedPage(nextPage: nextPage) { (success, resources, nextPage, error) in
       if let resources = resources, success {
-        self.data += resources
+        self.data += resources.flatMap({ $0.id })
+        DataManager.shared.update(resources: resources)
         self.nextPage = nextPage
       }
       self.cancellableRequest = nil
@@ -154,7 +158,7 @@ final class NewsFeedViewModel {
 
   func resourceForIndex(index: Int) -> ModelResource? {
     guard data.count > index else { return nil }
-    let resource = data[index]
+    let resource = resourceFor(id: data[index])
     return resource
   }
 
