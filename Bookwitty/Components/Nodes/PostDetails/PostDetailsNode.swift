@@ -14,6 +14,10 @@ extension PostDetailsNode: DTAttributedTextContentNodeDelegate {
   func attributedTextContentNodeNeedsLayout(node: ASCellNode) {
     setNeedsLayout()
   }
+
+  func attributedTextContentNode(node: ASCellNode, button: DTLinkButton, didTapOnLink link: URL) {
+    WebViewController.present(url: link)
+  }
 }
 
 extension PostDetailsNode: DisclosureNodeDelegate {
