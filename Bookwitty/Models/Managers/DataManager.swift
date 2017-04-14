@@ -11,4 +11,6 @@ import Foundation
 class DataManager {
   static let shared = DataManager()
   private init() {}
+
+  fileprivate var pool: [String : ModelResource] = [:]
 }
