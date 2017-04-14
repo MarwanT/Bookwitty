@@ -13,4 +13,13 @@ class DataManager {
   private init() {}
 
   fileprivate var pool: [String : ModelResource] = [:]
+
+  //MARK: - Accessing Resources
+  func fetchResource(with identifier: String) -> ModelResource? {
+    return pool[identifier]
+  }
+
+  func fetchResources(with identifiers: [String]) -> [ModelResource] {
+    return identifiers.flatMap(fetchResource(with:))
+  }
 }
