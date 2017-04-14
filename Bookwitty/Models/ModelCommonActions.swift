@@ -160,3 +160,16 @@ extension ReadingList: ModelCommonActions {
   }
 }
 
+// MARK: - Audio
+extension Audio: ModelCommonActions {
+  var voteValue: String? {
+    get { return vote }
+    set { vote = newValue }
+  }
+
+  var isFollowing: Bool {
+    get { return false }
+    set { /* */ }
+  }
+}
+
