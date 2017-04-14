@@ -98,3 +98,16 @@ extension Topic: ModelCommonActions {
   }
 }
 
+// MARK: - Image
+extension Image: ModelCommonActions {
+  var voteValue: String? {
+    get { return vote }
+    set { vote = newValue }
+  }
+
+  var isFollowing: Bool {
+    get { return false }
+    set { /* */ }
+  }
+}
+
