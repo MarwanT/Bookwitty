@@ -27,6 +27,13 @@ final class NewsFeedViewModel {
     return UserManager.shared.defaultPenName
   }
 
+  func resourceFor(id: String?) -> ModelResource? {
+    guard let id = id else {
+      return nil
+    }
+    return DataManager.shared.fetchResource(with: id)
+  }
+
   func didUpdateDefaultPenName(penName: PenName, completionBlock: (_ didSaveDefault: Bool) -> ()) {
     var didSaveDefault: Bool = false
     defer {
