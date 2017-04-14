@@ -42,6 +42,10 @@ class DataManager {
     pool.updateValue(resource, forKey: identifier)
   }
 
+  func update(resources: [ModelResource]) {
+    resources.forEach(self.update(resource:))
+  }
+
   func updateResource(with identifier: String, after action: Action) {
     guard let resource = self.fetchResource(with: identifier) else {
       return
