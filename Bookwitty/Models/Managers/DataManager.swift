@@ -75,26 +75,32 @@ class DataManager {
 //MARK: - Update After Action Implementations
 extension DataManager {
   fileprivate func wit(_ resource: ModelResource) {
-    //TODO: implement the update
+    var actionableRes = resource as? ModelCommonActions
+    actionableRes?.wit = true
   }
 
   fileprivate func unwit(_ resource: ModelResource) {
-    //TODO: implement the update
+    var actionableRes = resource as? ModelCommonActions
+    actionableRes?.wit = false
   }
 
   fileprivate func dim(_ resource: ModelResource) {
-    //TODO: implement the update
+    var actionableRes = resource as? ModelCommonActions
+    actionableRes?.dim = true
   }
 
   fileprivate func undim(_ resource: ModelResource) {
-    //TODO: implement the update
+    var actionableRes = resource as? ModelCommonActions
+    actionableRes?.dim = false
   }
 
   fileprivate func follow(_ resource: ModelResource) {
-    //TODO: implement the update
+    var actionableRes = resource as? ModelCommonActions
+    actionableRes?.isFollowing = true
   }
 
   fileprivate func unfollow(_ resource: ModelResource) {
-    //TODO: implement the update
+    var actionableRes = resource as? ModelCommonActions
+    actionableRes?.isFollowing = false
   }
 }
