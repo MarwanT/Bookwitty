@@ -10,8 +10,11 @@ import UIKit
 
 class ForgotPasswordViewController: UIViewController {
 
+  @IBOutlet weak var stackView: UIStackView!
+  @IBOutlet weak var stackViewBackgroundView: UIView!
   @IBOutlet weak var emailField: InputField!
   @IBOutlet weak var submitButton: UIButton!
+  @IBOutlet var separators: [UIView]!
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -71,7 +74,15 @@ class ForgotPasswordViewController: UIViewController {
 //MARK: - Themable implementation
 extension ForgotPasswordViewController: Themeable {
   func applyTheme() {
-    view.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
+
+    stackView.isLayoutMarginsRelativeArrangement = true
+    stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+    stackViewBackgroundView.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+    for separator in separators {
+      separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    }
+
     ThemeManager.shared.currentTheme.stylePrimaryButton(button: submitButton)
   }
 }
