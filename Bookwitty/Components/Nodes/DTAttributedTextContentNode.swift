@@ -30,7 +30,8 @@ extension DTAttributedTextContentView {
       DTDefaultLineHeightMultiplier: defaultLineHeightMultiple,
       NSTextSizeMultiplierDocumentOption: CGFloat(1.0),
       DTMaxImageSize: CGSize(width: htmlImageWidth, height: htmlImageWidth),
-      DTDocumentPreserveTrailingSpaces: false,
+      DTDocumentPreserveTrailingSpaces: false]
+
     guard let data = text.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
       return nil
     }
