@@ -75,3 +75,26 @@ extension Video: ModelCommonActions {
   }
 }
 
+// MARK: - Topic
+extension Topic: ModelCommonActions {
+  var voteValue: String? {
+    get { return vote }
+    set { vote = newValue }
+  }
+
+  var isFollowing: Bool {
+    get { return following }
+    set {
+      following = isFollowing
+      guard let counts = counts else {
+        return
+      }
+      if following {
+        counts.followers = (counts.followers ?? 0) + 1
+      } else {
+        counts.followers = (counts.followers ?? 1) - 1
+      }
+    }
+  }
+}
+
