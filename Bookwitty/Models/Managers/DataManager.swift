@@ -31,4 +31,7 @@ class DataManager {
     }
     pool.updateValue(resource, forKey: identifier)
   }
+
+  //MARK: - Remove Resources
+  //TODO: Will be discussed and implemented later
 }
