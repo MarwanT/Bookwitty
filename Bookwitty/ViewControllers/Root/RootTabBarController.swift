@@ -392,14 +392,20 @@ extension RootTabBarController {
 
 // MARK: - Misfortune Node Delegate
 extension RootTabBarController: MisfortuneNodeDelegate {
-  func misfortuneNodeDidTapActionButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {
-    switch mode {
-    case .appNeedsUpdate(let updateURL):
-      openURL(url: updateURL)
+  func misfortuneNodeDidPerformAction(node: MisfortuneNode, action: MisfortuneNode.Action?) {
+    guard let action = action else {
+      return
+    }
+    
+    switch action {
+    case .updateApp:
+      if let mode = node.mode {
+        if case MisfortuneNode.Mode.appNeedsUpdate(let url) = mode {
+          openURL(url: url)
+        }
+      }
     default:
       break
     }
   }
-  
-  func misfortuneNodeDidTapSettingsButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {}
 }

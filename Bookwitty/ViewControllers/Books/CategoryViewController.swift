@@ -20,11 +20,20 @@ class CategoryViewController: UIViewController {
   let viewAllBooksView = UIView.loadFromView(DisclosureView.self, owner: nil)
   let viewSubcategories = UIView.loadFromView(DisclosureView.self, owner: nil)
   let refreshController = UIRefreshControl()
+  let misfortuneNode = MisfortuneNode(mode: MisfortuneNode.Mode.empty)
   
   fileprivate let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
   fileprivate let sectionSpacing = ThemeManager.shared.currentTheme.sectionSpacing()
   
   let viewModel = CategoryViewModel()
+  
+  var shouldDisplayMisfortuneNode: Bool {
+    guard let misfortuneMode = viewModel.misfortuneNodeMode, !refreshController.isRefreshing else {
+      return false
+    }
+    misfortuneNode.mode = misfortuneMode
+    return true
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -59,6 +68,9 @@ class CategoryViewController: UIViewController {
   }
   
   private func initializeSubviews() {
+    // Initialize Misfortune Node
+    misfortuneNode.delegate = self
+    
     // Featured Content View
     let itemSize = FeaturedContentCollectionViewCell.defaultSize
     let interItemSpacing: CGFloat = 10
@@ -131,6 +143,7 @@ class CategoryViewController: UIViewController {
     loadBookwittySuggest()
     loadSelectionSection()
     loadSubcategoriesSection()
+    loadMisfortuneSection()
   }
   
   private func loadBannerSection() {
@@ -186,7 +199,20 @@ class CategoryViewController: UIViewController {
       viewSubcategories.alignLeading("0", trailing: "0", toView: stackView)
       addSeparator()
     }
-  }  
+  }
+  
+  private func loadMisfortuneSection() {
+    if shouldDisplayMisfortuneNode {
+      if misfortuneNode.view.superview == nil {
+        // TODO: Add height constraint if needed
+        misfortuneNode.view.constrainHeight("\(scrollView.frame.height)")
+        stackView.addArrangedSubview(misfortuneNode.view)
+        misfortuneNode.view.alignLeading("0", trailing: "0", toView: stackView)
+      }
+    } else {
+      misfortuneNode.view.removeFromSuperview()
+    }
+  }
   
   // MARK: Helpers
   fileprivate func separatorViewInstance() -> UIView {
@@ -625,5 +651,23 @@ extension CategoryViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+  }
+}
+
+//MARK: - Localizable implementation
+extension CategoryViewController: MisfortuneNodeDelegate {
+  func misfortuneNodeDidPerformAction(node: MisfortuneNode, action: MisfortuneNode.Action?) {
+    guard let action = action else {
+      return
+    }
+    
+    switch action {
+    case .tryAgain:
+      refreshViewController()
+    case .settings:
+      AppDelegate.openSettings()
+    default:
+      break
+    }
   }
 }

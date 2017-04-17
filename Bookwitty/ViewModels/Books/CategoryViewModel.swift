@@ -17,6 +17,8 @@ final class CategoryViewModel {
   fileprivate var readingLists: [ReadingList]? = nil
   fileprivate var banner: Banner? = nil
   
+  var misfortuneNodeMode: MisfortuneNode.Mode? = nil
+  
   let maximumNumberOfBooks: Int = 3
   
   var category: Category! = nil
@@ -78,7 +80,17 @@ final class CategoryViewModel {
     })
     
     
-    group.notify(queue: DispatchQueue.main) { 
+    group.notify(queue: DispatchQueue.main) {
+      // Set misfortune node mode
+      if self.hasBanner || self.hasSubcategories || self.hasFeaturedContent || self.hasSelectionSection || self.hasBookwittySuggests {
+        self.misfortuneNodeMode = nil
+      } else {
+        if let isReachable = AppManager.shared.reachability?.isReachable, !isReachable {
+          self.misfortuneNodeMode = MisfortuneNode.Mode.noInternet
+        } else {
+          self.misfortuneNodeMode = MisfortuneNode.Mode.empty
+        }
+      }
       completion(curatedAPISuccess && categoryBooksAPISuccess, [curatedAPIError, categoryBooksAPIError])
     }
   }
