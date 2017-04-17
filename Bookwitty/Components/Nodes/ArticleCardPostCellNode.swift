@@ -157,6 +157,14 @@ class ArticleCardContentNode: ASDisplayNode {
 
 extension ArticleCardPostCellNode: ArticleCardViewModelDelegate {
   func resourceUpdated(viewModel: ArticleCardViewModel) {
-    
+    let values = viewModel.values()
+    showsInfoNode = values.infoNode
+    postInfoData = values.postInfo
+    node.articleTitle = values.content.title
+    node.articleDescription = values.content.description
+    node.imageUrl = values.content.imageUrl
+    articleCommentsSummary = values.content.comments
+    setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
+    setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
   }
 }
