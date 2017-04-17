@@ -17,27 +17,27 @@ class CardFactory {
 
     switch(resourceType) {
     case Author.resourceType:
-      return createAuthorCard(resource.registeredResourceType)
+      return createAuthorCard()
     case Text.resourceType:
-      return createTextCard(resource.registeredResourceType)
+      return createTextCard()
     case Quote.resourceType:
-      return createQuoteCard(resource.registeredResourceType)
+      return createQuoteCard()
     case Topic.resourceType:
-      return createTopicCard(resource.registeredResourceType)
+      return createTopicCard()
     case Audio.resourceType:
-      return createAudioCard(resource.registeredResourceType)
+      return createAudioCard()
     case Image.resourceType:
-      return createImageCard(resource.registeredResourceType)
+      return createImageCard()
     case Video.resourceType:
-      return createVideoCard(resource.registeredResourceType)
+      return createVideoCard()
     case PenName.resourceType:
-      return createPenNameCard(resource.registeredResourceType)
+      return createPenNameCard()
     case ReadingList.resourceType:
-      return createReadingListCard(resource.registeredResourceType)
+      return createReadingListCard()
     case Link.resourceType:
-      return createLinkCard(resource.registeredResourceType)
+      return createLinkCard()
     case Book.resourceType:
-      return createBookCard(resource.registeredResourceType)
+      return createBookCard()
     default:
       return nil
     }
@@ -46,121 +46,77 @@ class CardFactory {
 
 // MARK: - Author Card
 extension  CardFactory {
-  fileprivate func createAuthorCard(_ resourceType: ResourceType) -> TopicCardPostCellNode? {
-    guard resourceType == Author.resourceType else {
-      return nil
-    }
-
+  fileprivate func createAuthorCard() -> TopicCardPostCellNode? {
     return TopicCardPostCellNode()
   }
 }
 
 // MARK: - Article/Text Card
 extension  CardFactory {
-  fileprivate func createTextCard(_ resourceType: ResourceType) -> ArticleCardPostCellNode? {
-    guard resourceType == Text.resourceType else {
-      return nil
-    }
-
+  fileprivate func createTextCard() -> ArticleCardPostCellNode? {
     return ArticleCardPostCellNode()
   }
 }
 
 // MARK: - Quote Card
 extension  CardFactory {
-  fileprivate func createQuoteCard(_ resourceType: ResourceType) -> QuoteCardPostCellNode? {
-    guard resourceType == Quote.resourceType else {
-      return nil
-    }
-
+  fileprivate func createQuoteCard() -> QuoteCardPostCellNode? {
     return QuoteCardPostCellNode()
   }
 }
 
 // MARK: - Topic Card
 extension  CardFactory {
-  fileprivate func createTopicCard(_ resourceType: ResourceType) -> TopicCardPostCellNode? {
-    guard resourceType == Topic.resourceType else {
-      return nil
-    }
-
+  fileprivate func createTopicCard() -> TopicCardPostCellNode? {
     return TopicCardPostCellNode()
   }
 }
 
 // MARK: - Link/Link Card
 extension  CardFactory {
-  fileprivate func createLinkCard(_ resourceType: ResourceType) -> LinkCardPostCellNode? {
-    guard resourceType == Link.resourceType else {
-      return nil
-    }
-
+  fileprivate func createLinkCard() -> LinkCardPostCellNode? {
     return LinkCardPostCellNode()
   }
 }
 
 // MARK: - Book Card
 extension  CardFactory {
-  fileprivate func createBookCard(_ resourceType: ResourceType) -> BookCardPostCellNode? {
-    guard resourceType == Book.resourceType else {
-      return nil
-    }
-
+  fileprivate func createBookCard() -> BookCardPostCellNode? {
     return BookCardPostCellNode()
   }
 }
 
 // MARK: - Link/Audio Card
 extension  CardFactory {
-  fileprivate func createAudioCard(_ resourceType: ResourceType) -> LinkCardPostCellNode? {
-    guard resourceType == Audio.resourceType else {
-      return nil
-    }
-
+  fileprivate func createAudioCard() -> LinkCardPostCellNode? {
     return LinkCardPostCellNode()
   }
 }
 
 // MARK: - Photo/Image Card
 extension  CardFactory {
-  fileprivate func createImageCard(_ resourceType: ResourceType) -> PhotoCardPostCellNode? {
-    guard resourceType == Image.resourceType else {
-      return nil
-    }
-
+  fileprivate func createImageCard() -> PhotoCardPostCellNode? {
     return PhotoCardPostCellNode()
   }
 }
 
 // MARK: - Video Card
 extension  CardFactory {
-  fileprivate func createVideoCard(_ resourceType: ResourceType) -> VideoCardPostCellNode? {
-    guard resourceType == Video.resourceType else {
-      return nil
-    }
-
+  fileprivate func createVideoCard() -> VideoCardPostCellNode? {
     return VideoCardPostCellNode()
   }
 }
 
 // MARK: - Profile/PenName Card
 extension  CardFactory {
-  fileprivate func createPenNameCard(_ resourceType: ResourceType) -> ProfileCardPostCellNode? {
-    guard resourceType == PenName.resourceType else {
-      return nil
-    }
-
+  fileprivate func createPenNameCard() -> ProfileCardPostCellNode? {
     return ProfileCardPostCellNode()
   }
 }
 
 // MARK: - ReadingList Card
 extension  CardFactory {
-  fileprivate func createReadingListCard(_ resourceType: ResourceType) -> ReadingListCardPostCellNode? {
-    guard resourceType == ReadingList.resourceType else {
-      return nil
-    }
-
+  fileprivate func createReadingListCard() -> ReadingListCardPostCellNode? {
     return ReadingListCardPostCellNode()
   }
 }
