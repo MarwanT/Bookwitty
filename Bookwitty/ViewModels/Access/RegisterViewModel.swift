@@ -39,7 +39,7 @@ final class RegisterViewModel {
   }
 
   func styledTermsOfUseAndPrivacyPolicyText() -> NSMutableAttributedString {
-    let builder = AttributedStringBuilder(fontDynamicType: FontDynamicType.label)
+    let builder = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1)
     return builder.append(text: Strings.terms_of_use_and_privacy_policy())
       .applyParagraphStyling(alignment: NSTextAlignment.center)
       .attributedString

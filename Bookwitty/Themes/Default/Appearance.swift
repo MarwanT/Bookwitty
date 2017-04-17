@@ -90,6 +90,7 @@ protocol ThemeButtonsStyle {
   func styleSecondaryButton(button: ASButtonNode, withColor color: UIColor, highlightedColor: UIColor)
 }
 
+// TODO: Needs to be revised
 protocol ThemeLabelsStyle {
   func styleCallout(label: UILabel)
   func styleCaption1(label: UILabel)

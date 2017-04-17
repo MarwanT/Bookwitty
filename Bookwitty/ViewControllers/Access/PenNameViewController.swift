@@ -249,11 +249,16 @@ extension PenNameViewController: Themeable {
 
     self.view.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     ThemeManager.shared.currentTheme.stylePrimaryButton(button: continueButton)
-    ThemeManager.shared.currentTheme.styleLabel(label: penNameLabel)
-    ThemeManager.shared.currentTheme.styleCaption2(label: noteLabel)
     penNameInputField.textField.textAlignment = .center
-
-    ThemeManager.shared.currentTheme.styleLabel(label: biographyLabel)
+    penNameInputField.textField.font = FontDynamicType.callout.font
+    
+    penNameLabel.font = FontDynamicType.caption1.font
+    penNameLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    noteLabel.font = FontDynamicType.caption1.font
+    noteLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    biographyLabel.font = FontDynamicType.caption2.font
+    biographyLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    
     noteLabel.textColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
 
     //biographyTextView

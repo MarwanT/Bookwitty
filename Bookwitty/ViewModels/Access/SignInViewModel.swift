@@ -12,16 +12,16 @@ import Moya
 final class SignInViewModel {
   func styledRegisterText() -> NSMutableAttributedString {
     //TODO: Should remove the concatenation
-    let builder = AttributedStringBuilder(fontDynamicType: FontDynamicType.label)
+    let builder = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1)
     return builder.append(text: Strings.you_dont_have_account())
       .append(text: "\n")
-      .append(text: Strings.register())
+      .append(text: Strings.register(), fontDynamicType: FontDynamicType.footnote)
       .applyParagraphStyling(alignment: NSTextAlignment.center)
       .attributedString
   }
 
   func styledForgotPasswordText() -> NSAttributedString {
-    let builder = AttributedStringBuilder(fontDynamicType: FontDynamicType.label)
+    let builder = AttributedStringBuilder(fontDynamicType: FontDynamicType.footnote)
     return builder.append(text: Strings.forgot_your_password())
       .applyParagraphStyling(alignment: NSTextAlignment.right)
       .attributedString
