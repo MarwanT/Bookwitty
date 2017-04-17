@@ -27,6 +27,7 @@ class VideoCardPostCellNode: BaseCardPostNode {
     node = VideoCardContentNode()
     viewModel = VideoCardViewModel()
     super.init()
+    viewModel.delegate = self
   }
 
   convenience init(shouldShowInfoNode: Bool) {
@@ -177,5 +178,12 @@ class VideoCardContentNode: ASDisplayNode {
                                           children: nodesArray)
     
     return verticalStack
+  }
+}
+
+//MARK: - VideoCardViewModelDelegate implementation
+extension VideoCardPostCellNode: VideoCardViewModelDelegate {
+  func resourceUpdated(viewModel: VideoCardViewModel) {
+    
   }
 }
