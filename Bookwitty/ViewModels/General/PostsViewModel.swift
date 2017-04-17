@@ -168,7 +168,7 @@ extension PostsViewModel {
     switch section {
     case .posts:
       let resource = posts[indexPath.item]
-      node = CardFactory.createCardFor(resource: resource)
+      node = CardFactory.createCardFor(resourceType: resource.registeredResourceType)
     case .activityIndicator:
       return nil
     }

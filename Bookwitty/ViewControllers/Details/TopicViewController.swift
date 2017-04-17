@@ -525,7 +525,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
   private func cellNodeBlockFor(item: Int, category: Category) -> ASCellNode {
     switch category {
     case .latest:
-      guard let post = viewModel.latest(at: item), let node = CardFactory.createCardFor(resource: post) else {
+      guard let post = viewModel.latest(at: item), let node = CardFactory.createCardFor(resourceType: post.registeredResourceType) else {
         return ASCellNode()
       }
       return node
@@ -688,7 +688,7 @@ extension TopicViewController {
   }
 
   func pushGenericViewControllerCard(resource: ModelResource, title: String? = nil) {
-    guard let cardNode = CardFactory.createCardFor(resource: resource) else {
+    guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)

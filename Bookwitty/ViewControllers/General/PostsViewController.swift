@@ -361,7 +361,7 @@ extension PostsViewController {
   }
   
   fileprivate func pushGenericViewControllerCard(resource: Resource, title: String? = nil) {
-    guard let cardNode = CardFactory.createCardFor(resource: resource) else {
+    guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)

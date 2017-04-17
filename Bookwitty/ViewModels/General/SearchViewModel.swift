@@ -92,7 +92,7 @@ extension SearchViewModel {
       return nil
     }
 
-    return CardFactory.createCardFor(resource: resource)
+    return CardFactory.createCardFor(resourceType: resource.registeredResourceType)
   }
 }
 

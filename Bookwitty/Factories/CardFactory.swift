@@ -10,9 +10,7 @@ import Foundation
 import Spine
 
 class CardFactory {
-  class func createCardFor(resource : ModelResource) -> BaseCardPostNode? {
-    let resourceType: ResourceType = resource.registeredResourceType
-
+  class func createCardFor(resourceType: ResourceType) -> BaseCardPostNode? {
     switch(resourceType) {
     case Author.resourceType:
       return createAuthorCard()
