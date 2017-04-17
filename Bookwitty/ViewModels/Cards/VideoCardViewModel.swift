@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol VideoCardViewModelDelegate: class {
+  func resourceUpdated(viewModel: VideoCardViewModel)
+}
+
 class VideoCardViewModel {
 
 }
