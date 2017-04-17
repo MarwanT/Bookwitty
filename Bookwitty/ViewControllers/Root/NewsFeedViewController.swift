@@ -259,7 +259,7 @@ extension NewsFeedViewController {
 
 // MARK: - Reload Footer
 extension NewsFeedViewController {
-  func updateCollection(with itemIndices: [IndexPath]? = nil, loaderSection: Bool = false, penNamesSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
+  func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, loaderSection: Bool = false, penNamesSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
     if reloadAll {
       collectionNode.reloadData(completion: { 
         completionBlock?(true)
@@ -272,8 +272,12 @@ extension NewsFeedViewController {
         if penNamesSection {
           collectionNode.reloadSections(IndexSet(integer: Section.penNames.rawValue))
         }
-        if let itemIndices = itemIndices {
-          collectionNode.insertItems(at: itemIndices)
+        if let itemIndices = itemIndices, itemIndices.count > 0 {
+          if reloadItems {
+            collectionNode.reloadItems(at: itemIndices)
+          }else {
+            collectionNode.insertItems(at: itemIndices)
+          }
         }
       }, completion: completionBlock)
     }
