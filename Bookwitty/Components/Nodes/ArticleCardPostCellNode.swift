@@ -46,22 +46,36 @@ class ArticleCardContentNode: ASDisplayNode {
       if let articleTitle = articleTitle {
         titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
           .append(text: articleTitle, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+      } else {
+        titleNode.attributedText = nil
       }
+
+      titleNode.setNeedsLayout()
     }
   }
+
   var articleDescription: String? {
     didSet {
       if let articleDescription = articleDescription {
         descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
           .append(text: articleDescription, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+      } else {
+        descriptionNode.attributedText = nil
       }
+
+      descriptionNode.setNeedsLayout()
     }
   }
+
   var imageUrl: String? {
     didSet {
       if let imageUrl = imageUrl {
         imageNode.url = URL(string: imageUrl)
+      } else {
+        imageNode.url = nil
       }
+
+      imageNode.setNeedsLayout()
     }
   }
 
