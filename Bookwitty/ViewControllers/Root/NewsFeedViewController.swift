@@ -326,6 +326,13 @@ extension NewsFeedViewController: ASCollectionDataSource {
       penNameSelectionNode.setNeedsLayout()
     } else if node is LoaderNode {
       loaderNode.updateLoaderVisibility(show: shouldShowLoader)
+    } else if let card = node as? BaseCardPostNode {
+      guard let indexPath = collectionNode.indexPath(for: node),
+        let resource = viewModel.resourceForIndex(index: indexPath.row) as? ModelCommonProperties else {
+        return
+      }
+      card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
+      card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
     }
   }
 }
