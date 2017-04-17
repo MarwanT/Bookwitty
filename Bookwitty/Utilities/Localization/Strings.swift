@@ -429,6 +429,10 @@ class Strings {
     return localizedString(key: "ooops")
   }
   
+  static func or_check_your_settings() -> String {
+    return localizedString(key: "or_check_your_settings")
+  }
+  
   static func our_selection_for_you() -> String {
     return localizedString(key: "our_selection_for_you")
   }
