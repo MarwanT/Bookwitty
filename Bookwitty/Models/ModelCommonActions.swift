@@ -27,12 +27,12 @@ extension ModelCommonActions {
     set {
       let wasDimmed = dim
       //Set Value
-      voteValue = Vote.witted.rawValue
+      voteValue = newValue ? Vote.witted.rawValue : ""
 
       guard let counts = counts else {
         return
       }
-      counts.wits = (counts.wits ?? 0) + 1
+      counts.wits = (counts.wits ?? 0) + (newValue ? 1 : -1)
       if wasDimmed {
         counts.dims = (counts.dims ?? 1) - 1
       }
@@ -49,12 +49,12 @@ extension ModelCommonActions {
     set {
       let wasWitted = wit
       //Set Value
-      voteValue = Vote.dimmed.rawValue
+      voteValue = newValue ? Vote.dimmed.rawValue : ""
 
       guard let counts = counts else {
         return
       }
-      counts.dims = (counts.dims ?? 0) + 1
+      counts.dims = (counts.dims ?? 0) + (newValue ? 1 : -1)
       if wasWitted {
         counts.wits = (counts.wits ?? 1) - 1
       }
