@@ -218,7 +218,7 @@ extension BookDetailsViewModel {
         node = footerNode
       default:
         let resource = relatedReadingLists[indexPath.row - 1]
-        guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+        guard let cardNode = CardFactory.createCardFor(resource: resource) else {
           break
         }
         return cardNode
@@ -246,7 +246,7 @@ extension BookDetailsViewModel {
         node = footerNode
       default:
         let resource = relatedTopics[indexPath.row - 1]
-        guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+        guard let cardNode = CardFactory.createCardFor(resource: resource) else {
           break
         }
         return cardNode

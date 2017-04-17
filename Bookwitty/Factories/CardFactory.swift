@@ -10,34 +10,32 @@ import Foundation
 import Spine
 
 class CardFactory {
-  static let shared: CardFactory = CardFactory()
-
-  func createCardFor(resource : ModelResource) -> BaseCardPostNode? {
+  class func createCardFor(resource : ModelResource) -> BaseCardPostNode? {
     let resourceType: ResourceType = resource.registeredResourceType
 
     switch(resourceType) {
     case Author.resourceType:
-      return CardFactory.createAuthorCard()
+      return createAuthorCard()
     case Text.resourceType:
-      return CardFactory.createTextCard()
+      return createTextCard()
     case Quote.resourceType:
-      return CardFactory.createQuoteCard()
+      return createQuoteCard()
     case Topic.resourceType:
-      return CardFactory.createTopicCard()
+      return createTopicCard()
     case Audio.resourceType:
-      return CardFactory.createAudioCard()
+      return createAudioCard()
     case Image.resourceType:
-      return CardFactory.createImageCard()
+      return createImageCard()
     case Video.resourceType:
-      return CardFactory.createVideoCard()
+      return createVideoCard()
     case PenName.resourceType:
-      return CardFactory.createPenNameCard()
+      return createPenNameCard()
     case ReadingList.resourceType:
-      return CardFactory.createReadingListCard()
+      return createReadingListCard()
     case Link.resourceType:
-      return CardFactory.createLinkCard()
+      return createLinkCard()
     case Book.resourceType:
-      return CardFactory.createBookCard()
+      return createBookCard()
     default:
       return nil
     }

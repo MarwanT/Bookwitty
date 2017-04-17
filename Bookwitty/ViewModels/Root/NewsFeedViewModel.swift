@@ -180,7 +180,7 @@ final class NewsFeedViewModel {
       return nil
     }
 
-    return CardFactory.shared.createCardFor(resource: resource)
+    return CardFactory.createCardFor(resource: resource)
   }
 
   func loadReadingListImages(atIndex index: Int, maxNumberOfImages: Int, completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
