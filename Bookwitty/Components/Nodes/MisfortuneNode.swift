@@ -175,7 +175,7 @@ class MisfortuneNode: ASCellNode {
   fileprivate var image: UIImage? {
     didSet {
       imageNode.image = image
-      setNeedsLayout()
+      imageNode.setNeedsDisplay()
     }
   }
   
