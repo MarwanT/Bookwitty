@@ -13,7 +13,12 @@ protocol ArticleCardViewModelDelegate: class {
 }
 
 class ArticleCardViewModel {
-  var resource: ModelCommonProperties?
+  var resource: ModelCommonProperties? {
+    didSet {
+      notifyChange()
+    }
+  }
+
   weak var delegate: ArticleCardViewModelDelegate?
 
   private func notifyChange() {
