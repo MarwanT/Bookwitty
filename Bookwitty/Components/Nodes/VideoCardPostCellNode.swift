@@ -17,12 +17,15 @@ class VideoCardPostCellNode: BaseCardPostNode {
   override var contentShouldExtendBorders: Bool { return true }
   override var contentNode: ASDisplayNode { return node }
 
+  let viewModel: VideoCardViewModel
+
   override func updateMode(fullMode: Bool) {
     node.setupMode(fullViewMode: fullMode)
   }
 
   override init() {
     node = VideoCardContentNode()
+    viewModel = VideoCardViewModel()
     super.init()
   }
 
