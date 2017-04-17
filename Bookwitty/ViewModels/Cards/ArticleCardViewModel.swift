@@ -13,5 +13,10 @@ protocol ArticleCardViewModelDelegate: class {
 }
 
 class ArticleCardViewModel {
+  var resource: ModelCommonProperties?
+  weak var delegate: ArticleCardViewModelDelegate?
 
+  private func notifyChange() {
+    delegate?.resourceUpdated(viewModel: self)
+  }
 }
