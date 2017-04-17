@@ -17,27 +17,27 @@ class CardFactory {
 
     switch(resourceType) {
     case Author.resourceType:
-      return createAuthorCard()
+      return CardFactory.createAuthorCard()
     case Text.resourceType:
-      return createTextCard()
+      return CardFactory.createTextCard()
     case Quote.resourceType:
-      return createQuoteCard()
+      return CardFactory.createQuoteCard()
     case Topic.resourceType:
-      return createTopicCard()
+      return CardFactory.createTopicCard()
     case Audio.resourceType:
-      return createAudioCard()
+      return CardFactory.createAudioCard()
     case Image.resourceType:
-      return createImageCard()
+      return CardFactory.createImageCard()
     case Video.resourceType:
-      return createVideoCard()
+      return CardFactory.createVideoCard()
     case PenName.resourceType:
-      return createPenNameCard()
+      return CardFactory.createPenNameCard()
     case ReadingList.resourceType:
-      return createReadingListCard()
+      return CardFactory.createReadingListCard()
     case Link.resourceType:
-      return createLinkCard()
+      return CardFactory.createLinkCard()
     case Book.resourceType:
-      return createBookCard()
+      return CardFactory.createBookCard()
     default:
       return nil
     }
@@ -46,77 +46,77 @@ class CardFactory {
 
 // MARK: - Author Card
 extension  CardFactory {
-  fileprivate func createAuthorCard() -> TopicCardPostCellNode? {
+  fileprivate class func createAuthorCard() -> TopicCardPostCellNode? {
     return TopicCardPostCellNode()
   }
 }
 
 // MARK: - Article/Text Card
 extension  CardFactory {
-  fileprivate func createTextCard() -> ArticleCardPostCellNode? {
+  fileprivate class func createTextCard() -> ArticleCardPostCellNode? {
     return ArticleCardPostCellNode()
   }
 }
 
 // MARK: - Quote Card
 extension  CardFactory {
-  fileprivate func createQuoteCard() -> QuoteCardPostCellNode? {
+  fileprivate class func createQuoteCard() -> QuoteCardPostCellNode? {
     return QuoteCardPostCellNode()
   }
 }
 
 // MARK: - Topic Card
 extension  CardFactory {
-  fileprivate func createTopicCard() -> TopicCardPostCellNode? {
+  fileprivate class func createTopicCard() -> TopicCardPostCellNode? {
     return TopicCardPostCellNode()
   }
 }
 
 // MARK: - Link/Link Card
 extension  CardFactory {
-  fileprivate func createLinkCard() -> LinkCardPostCellNode? {
+  fileprivate class func createLinkCard() -> LinkCardPostCellNode? {
     return LinkCardPostCellNode()
   }
 }
 
 // MARK: - Book Card
 extension  CardFactory {
-  fileprivate func createBookCard() -> BookCardPostCellNode? {
+  fileprivate class func createBookCard() -> BookCardPostCellNode? {
     return BookCardPostCellNode()
   }
 }
 
 // MARK: - Link/Audio Card
 extension  CardFactory {
-  fileprivate func createAudioCard() -> LinkCardPostCellNode? {
+  fileprivate class func createAudioCard() -> LinkCardPostCellNode? {
     return LinkCardPostCellNode()
   }
 }
 
 // MARK: - Photo/Image Card
 extension  CardFactory {
-  fileprivate func createImageCard() -> PhotoCardPostCellNode? {
+  fileprivate class func createImageCard() -> PhotoCardPostCellNode? {
     return PhotoCardPostCellNode()
   }
 }
 
 // MARK: - Video Card
 extension  CardFactory {
-  fileprivate func createVideoCard() -> VideoCardPostCellNode? {
+  fileprivate class func createVideoCard() -> VideoCardPostCellNode? {
     return VideoCardPostCellNode()
   }
 }
 
 // MARK: - Profile/PenName Card
 extension  CardFactory {
-  fileprivate func createPenNameCard() -> ProfileCardPostCellNode? {
+  fileprivate class func createPenNameCard() -> ProfileCardPostCellNode? {
     return ProfileCardPostCellNode()
   }
 }
 
 // MARK: - ReadingList Card
 extension  CardFactory {
-  fileprivate func createReadingListCard() -> ReadingListCardPostCellNode? {
+  fileprivate class func createReadingListCard() -> ReadingListCardPostCellNode? {
     return ReadingListCardPostCellNode()
   }
 }
