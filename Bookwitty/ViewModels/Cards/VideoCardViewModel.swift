@@ -14,4 +14,15 @@ protocol VideoCardViewModelDelegate: class {
 
 class VideoCardViewModel {
 
+  var resource: ModelCommonProperties? {
+    didSet {
+      notifyChange()
+    }
+  }
+
+  weak var delegate: VideoCardViewModelDelegate?
+
+  private func notifyChange() {
+    delegate?.resourceUpdated(viewModel: self)
+  }
 }
