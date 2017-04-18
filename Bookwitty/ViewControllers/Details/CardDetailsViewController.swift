@@ -27,10 +27,36 @@ class CardDetailsViewController: GenericNodeViewController {
     viewControllerTitleForResouce(resource: resource)
   }
 
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     
     navigationItem.backBarButtonItem = UIBarButtonItem.back
+
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+  }
+
+  func updatedResources(_ notification: NSNotification) {
+    guard let resourceId = viewModel.resource.id,
+      let identifiers = notification.object as? [String],
+      identifiers.count > 0,
+      identifiers.contains( where: { $0 == resourceId } ) else {
+        return
+    }
+
+    guard let resource = DataManager.shared.fetchResource(with: resourceId) as? ModelCommonProperties else {
+        return
+    }
+    if let index = node.subnodes.index( where: { $0 is BaseCardPostNode } ) {
+      if let card = node.subnodes[index] as? BaseCardPostNode {
+        card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
+        card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
+      }
+    }
   }
   
   func viewControllerTitleForResouce(resource: ModelResource) {
