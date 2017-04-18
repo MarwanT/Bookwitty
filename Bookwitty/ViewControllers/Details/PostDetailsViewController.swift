@@ -29,24 +29,8 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    postDetailsNode.title = viewModel.title
-    postDetailsNode.coverImage = viewModel.image
-    postDetailsNode.body = viewModel.body
-    let date = Date.formatDate(date: viewModel.date)
-    postDetailsNode.date = date
-    postDetailsNode.penName = viewModel.penName
-    postDetailsNode.conculsion = viewModel.conculsion
-    postDetailsNode.postItemsNode.dataSource = self
-    postDetailsNode.postCardsNode.dataSource = self
-    postDetailsNode.postItemsNode.delegate = self
-    postDetailsNode.postCardsNode.delegate = self
-    postDetailsNode.headerNode.profileBarNode.delegate = self
-    postDetailsNode.headerNode.profileBarNode.updateMode(disabled: viewModel.isMyPenName())
-    postDetailsNode.delegate = self
-    postDetailsNode.setWitValue(witted: viewModel.isWitted, wits: viewModel.wits ?? 0)
-    postDetailsNode.setDimValue(dimmed: viewModel.isDimmed, dims: viewModel.dims ?? 0)
-    postDetailsNode.booksHorizontalCollectionNode.dataSource = self
-    postDetailsNode.booksHorizontalCollectionNode.delegate = self
+    initialize()
+    addDelegatesAndDataSources()
     viewModel.loadPenName { (success) in
       self.postDetailsNode.penName = self.viewModel.penName
     }
@@ -84,6 +68,31 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
       navigationController.stopFollowingScrollView()
       navigationController.showNavbar(animated: true)
     }
+  }
+
+  fileprivate func initialize() {
+    postDetailsNode.title = viewModel.title
+    postDetailsNode.coverImage = viewModel.image
+    postDetailsNode.body = viewModel.body
+
+    let date = Date.formatDate(date: viewModel.date)
+    postDetailsNode.date = date
+    postDetailsNode.penName = viewModel.penName
+    postDetailsNode.conculsion = viewModel.conculsion
+    postDetailsNode.headerNode.profileBarNode.updateMode(disabled: viewModel.isMyPenName())
+    postDetailsNode.setWitValue(witted: viewModel.isWitted, wits: viewModel.wits ?? 0)
+    postDetailsNode.setDimValue(dimmed: viewModel.isDimmed, dims: viewModel.dims ?? 0)
+  }
+
+  fileprivate func addDelegatesAndDataSources() {
+    postDetailsNode.postItemsNode.dataSource = self
+    postDetailsNode.postCardsNode.dataSource = self
+    postDetailsNode.postItemsNode.delegate = self
+    postDetailsNode.postCardsNode.delegate = self
+    postDetailsNode.headerNode.profileBarNode.delegate = self
+    postDetailsNode.delegate = self
+    postDetailsNode.booksHorizontalCollectionNode.dataSource = self
+    postDetailsNode.booksHorizontalCollectionNode.delegate = self
   }
 
   private func loadNavigationBarButtons() {
