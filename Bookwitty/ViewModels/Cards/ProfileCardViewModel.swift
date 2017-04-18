@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol ProfileCardViewModelDelegate: class {
+  func resourceUpdated(viewModel: ProfileCardViewModel)
+}
+
 class ProfileCardViewModel {
 
 }
