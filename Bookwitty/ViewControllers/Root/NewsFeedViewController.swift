@@ -217,7 +217,25 @@ extension NewsFeedViewController {
     NotificationCenter.default.addObserver(self, selector:
       #selector(refreshData(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
 
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+
     observeLanguageChanges()
+  }
+
+  func updatedResources(_ notification: NSNotification) {
+    let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.cards.rawValue })
+
+    guard let identifiers = notification.object as? [String],
+      identifiers.count > 0,
+      visibleItemsIndexPaths.count > 0 else {
+      return
+    }
+
+    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+    if indexPathForAffectedItems.count > 0 {
+      updateCollection(with: indexPathForAffectedItems, shouldReloadItems: true, loaderSection: false, penNamesSection: false, orReloadAll: false, completionBlock: nil)
+    }
   }
 
   func refreshData(_ notification: Notification) {
