@@ -23,6 +23,7 @@ class ProfileCardPostCellNode: BaseCardPostNode {
     node = ProfileCardPostContentNode()
     viewModel = ProfileCardViewModel()
     super.init()
+    viewModel.delegate = self
   }
 
   convenience init(shouldShowInfoNode: Bool) {
@@ -148,4 +149,11 @@ class ProfileCardPostContentNode: ASDisplayNode {
     return ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), child: verticalParentStackSpec)
   }
 
+}
+
+//MARK: - ProfileCardViewModelDelegate implementation
+extension ProfileCardPostCellNode: ProfileCardViewModelDelegate {
+  func resourceUpdated(viewModel: ProfileCardViewModel) {
+
+  }
 }
