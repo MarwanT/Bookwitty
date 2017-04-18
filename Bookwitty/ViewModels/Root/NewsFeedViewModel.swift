@@ -101,18 +101,21 @@ final class NewsFeedViewModel {
       cancellableRequest.cancel()
     }
     cancellableRequest = NewsfeedAPI.feed() { (success, resources, nextPage, error) in
+      defer {
+        completionBlock(success)
+        DataManager.shared.update(resources: resources ?? [])
+      }
+
       if success {
         self.data.removeAll(keepingCapacity: false)
         if let resources = resources, success {
           self.data = resources.flatMap({ $0.id })
-          DataManager.shared.update(resources: resources)
         } else {
           self.data = []
         }
         self.nextPage = nextPage
       }
       self.cancellableRequest = nil
-      completionBlock(success)
     }
   }
 
@@ -130,13 +133,16 @@ final class NewsFeedViewModel {
     }
 
     cancellableRequest = NewsfeedAPI.nextFeedPage(nextPage: nextPage) { (success, resources, nextPage, error) in
+      defer {
+        completionBlock(success)
+        DataManager.shared.update(resources: resources ?? [])
+      }
+
       if let resources = resources, success {
         self.data += resources.flatMap({ $0.id })
-        DataManager.shared.update(resources: resources)
         self.nextPage = nextPage
       }
       self.cancellableRequest = nil
-      completionBlock(success)
     }
   }
 
