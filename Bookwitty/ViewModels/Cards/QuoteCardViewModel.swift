@@ -13,5 +13,15 @@ protocol QuoteCardViewModelDelegate: class {
 }
 
 class QuoteCardViewModel {
+  var resource: ModelCommonProperties? {
+    didSet {
+      notifyChange()
+    }
+  }
 
+  weak var delegate: QuoteCardViewModelDelegate?
+
+  private func notifyChange() {
+    delegate?.resourceUpdated(viewModel: self)
+  }
 }
