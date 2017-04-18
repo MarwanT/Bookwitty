@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol LinkCardViewModelDelegate: class {
+  func resourceUpdated(viewModel: LinkCardViewModel)
+}
+
 class LinkCardViewModel {
 
 }
