@@ -17,8 +17,11 @@ class TopicCardPostCellNode: BaseCardPostNode {
   override var contentShouldExtendBorders: Bool { return true }
   override var contentNode: ASDisplayNode { return node }
 
+  let viewModel: TopicCardViewModel
+
   override init() {
     node = TopicCardPostContentNode()
+    viewModel = TopicCardViewModel()
     super.init()
   }
 
