@@ -169,6 +169,12 @@ class ProfileCardPostContentNode: ASDisplayNode {
 //MARK: - ProfileCardViewModelDelegate implementation
 extension ProfileCardPostCellNode: ProfileCardViewModelDelegate {
   func resourceUpdated(viewModel: ProfileCardViewModel) {
-
+    let values = viewModel.values()
+    setup(forFollowingMode: true)
+    setFollowingValue(following: values.following)
+    node.userName = values.name
+    node.articleDescription = values.biography
+    node.followersCount = String(counting: values.followers)
+    node.imageUrl = values.imageUrl
   }
 }
