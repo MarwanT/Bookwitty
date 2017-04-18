@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+protocol QuoteCardViewModelDelegate: class {
+  func resourceUpdated(viewModel: QuoteCardViewModel)
+}
+
+class QuoteCardViewModel {
+
+}
