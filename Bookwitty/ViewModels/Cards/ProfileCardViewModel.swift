@@ -13,5 +13,15 @@ protocol ProfileCardViewModelDelegate: class {
 }
 
 class ProfileCardViewModel {
+  var resource: ModelCommonProperties? {
+    didSet {
+      notifyChange()
+    }
+  }
 
+  weak var delegate: ProfileCardViewModelDelegate?
+
+  private func notifyChange() {
+    delegate?.resourceUpdated(viewModel: self)
+  }
 }
