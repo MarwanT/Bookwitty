@@ -13,5 +13,15 @@ protocol PhotoCardViewModelDelegate: class {
 }
 
 class PhotoCardViewModel {
+  var resource: ModelCommonProperties? {
+    didSet {
+      notifyChange()
+    }
+  }
 
+  weak var delegate: PhotoCardViewModelDelegate?
+
+  private func notifyChange() {
+    delegate?.resourceUpdated(viewModel: self)
+  }
 }
