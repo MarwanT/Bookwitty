@@ -226,6 +226,14 @@ class LinkCardPostContentNode: ASDisplayNode {
 //MARK: - LinkCardViewModelDelegate implementation
 extension LinkCardPostCellNode: LinkCardViewModelDelegate {
   func resourceUpdated(viewModel: LinkCardViewModel) {
-
+    let values = viewModel.values()
+    showsInfoNode = values.infoNode
+    postInfoData = values.postInfo
+    node.articleTitle = values.content.title
+    node.articleDescription = values.content.description
+    node.imageNode.url = URL(string: values.content.imageUrl ?? "")
+    articleCommentsSummary = values.content.comments
+    setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
+    setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
   }
 }
