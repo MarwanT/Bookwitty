@@ -18,12 +18,15 @@ class LinkCardPostCellNode: BaseCardPostNode {
   override var contentShouldExtendBorders: Bool { return true }
   override var contentNode: ASDisplayNode { return node }
 
+  let viewModel: LinkCardViewModel
+
   override func updateMode(fullMode: Bool) {
     node.setupMode(fullViewMode: fullMode)
   }
   
   override init() {
     node = LinkCardPostContentNode()
+    viewModel = LinkCardViewModel()
     super.init()
   }
 
