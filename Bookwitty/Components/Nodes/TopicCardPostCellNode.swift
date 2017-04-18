@@ -219,6 +219,18 @@ class TopicCardPostContentNode: ASDisplayNode {
 //MARK: - TopicCardViewModelDelegate implementation
 extension TopicCardPostCellNode: TopicCardViewModelDelegate {
   func resourceUpdated(viewModel: TopicCardViewModel) {
-
+    let values = viewModel.values()
+    setup(forFollowingMode: true)
+    showsInfoNode = values.infoNode
+    postInfoData = values.postInfo
+    node.articleTitle = values.content.title
+    node.articleDescription = values.content.description
+    node.imageUrl = values.content.image.cover
+    node.subImageUrl = values.content.image.thumbnail
+    node.setTopicStatistics(numberOfPosts: values.content.statistics.posts, numberOfBooks: values.content.statistics.relatedBooks, numberOfFollowers: values.content.statistics.followers)
+    articleCommentsSummary = values.content.comments
+    setFollowingValue(following: values.content.following)
+    setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
+    setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
   }
 }
