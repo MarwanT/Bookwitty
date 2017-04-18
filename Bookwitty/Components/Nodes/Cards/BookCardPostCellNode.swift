@@ -254,6 +254,18 @@ extension BookCardPostContentNode {
 //MARK: - BookCardViewModelDelegate implementation
 extension BookCardPostCellNode: BookCardViewModelDelegate {
   func resourceUpdated(viewModel: BookCardViewModel) {
-
+    let values = viewModel.values()
+    showsInfoNode = values.infoNode
+    postInfoData = values.postInfo
+    setup(forFollowingMode: true)
+    setFollowingValue(following: values.content.following)
+    node.title = values.content.title
+    node.imageUrl = values.content.image.thumbnail
+    node.isProduct = false
+    node.author = values.content.info.author
+    node.price = values.content.info.price
+    node.format = values.content.info.format
+    node.setTopicStatistics(numberOfPosts: values.content.statistics.posts, numberOfBooks: values.content.statistics.relatedBooks, numberOfFollowers: values.content.statistics.followers)
+    articleCommentsSummary = values.content.comments    
   }
 }
