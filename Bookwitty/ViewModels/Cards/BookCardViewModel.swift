@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol BookCardViewModelDelegate: class {
+  func resourceUpdated(viewModel: BookCardViewModel)
+}
+
 class BookCardViewModel {
 
 }
