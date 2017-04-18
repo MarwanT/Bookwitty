@@ -110,6 +110,15 @@ class QuoteCardPostContentNode: ASDisplayNode {
 //MARK: - QuoteCardViewModelDelegate implementation
 extension QuoteCardPostCellNode: QuoteCardViewModelDelegate {
   func resourceUpdated(viewModel: QuoteCardViewModel) {
-
+    let values = viewModel.values()
+    showsInfoNode = values.infoNode
+    postInfoData = values.postInfo
+    node.articleQuotePublisher = values.content.publisher
+    if let quote = values.content.quote {
+      node.articleQuote = "“ \(quote) ”"
+    }
+    articleCommentsSummary = values.content.comments
+    setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
+    setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
   }
 }
