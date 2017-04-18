@@ -17,8 +17,11 @@ class ProfileCardPostCellNode: BaseCardPostNode {
   override var contentShouldExtendBorders: Bool { return false }
   override var contentNode: ASDisplayNode { return node }
 
+  let viewModel: ProfileCardViewModel
+
   override init() {
     node = ProfileCardPostContentNode()
+    viewModel = ProfileCardViewModel()
     super.init()
   }
 
