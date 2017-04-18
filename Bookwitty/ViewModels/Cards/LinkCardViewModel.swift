@@ -13,5 +13,15 @@ protocol LinkCardViewModelDelegate: class {
 }
 
 class LinkCardViewModel {
+  var resource: ModelCommonProperties? {
+    didSet {
+      notifyChange()
+    }
+  }
 
+  weak var delegate: LinkCardViewModelDelegate?
+
+  private func notifyChange() {
+    delegate?.resourceUpdated(viewModel: self)
+  }
 }
