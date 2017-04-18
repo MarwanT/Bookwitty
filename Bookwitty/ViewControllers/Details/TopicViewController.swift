@@ -59,30 +59,6 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     super.init(node: collectionNode)
   }
-
-  func initialize(withTopic topic: Topic?) {
-    viewModel.initialize(with: topic)
-    self.mode = .normal(categories: self.normal)
-
-    //MARK: [Analytics] Screen Name
-    Analytics.shared.send(screenName: Analytics.ScreenNames.Topic)
-  }
-
-  func initialize(withBook book: Book?) {
-    viewModel.initialize(with: book)
-    self.mode = .normal(categories: self.book)
-
-    //MARK: [Analytics] Screen Name
-    Analytics.shared.send(screenName: Analytics.ScreenNames.TopicBook)
-  }
-
-  func initialize(withAuthor author: Author?) {
-    viewModel.initialize(with: author)
-    self.mode = .normal(categories: self.normal)
-
-    //MARK: [Analytics] Screen Name
-    Analytics.shared.send(screenName: Analytics.ScreenNames.Author)
-  }
   
   func initialize(with resource: ModelCommonProperties?) {
     viewModel.initialize(with: resource)
@@ -736,7 +712,7 @@ extension TopicViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withAuthor: resource as? Author)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 
@@ -763,7 +739,7 @@ extension TopicViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withTopic: resource as? Topic)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 
@@ -830,7 +806,7 @@ extension TopicViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withBook: resource as? Book)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 }

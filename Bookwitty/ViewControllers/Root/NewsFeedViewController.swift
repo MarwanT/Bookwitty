@@ -667,7 +667,7 @@ extension NewsFeedViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withAuthor: resource as? Author)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }
@@ -695,7 +695,7 @@ extension NewsFeedViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withTopic: resource as? Topic)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }
@@ -763,7 +763,7 @@ extension NewsFeedViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withBook: resource as? Book)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }

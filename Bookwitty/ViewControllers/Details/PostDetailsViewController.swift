@@ -761,12 +761,8 @@ extension PostDetailsViewController {
     let topicViewController = TopicViewController()
 
     switch resource.registeredResourceType {
-    case Author.resourceType:
-      topicViewController.initialize(withAuthor: resource as? Author)
-    case Book.resourceType:
-      topicViewController.initialize(withBook: resource as? Book)
-    case Topic.resourceType:
-      topicViewController.initialize(withTopic: resource as? Topic)
+    case Author.resourceType, Book.resourceType, Topic.resourceType:
+      topicViewController.initialize(with: resource as? ModelCommonProperties)
     default: break
     }
 

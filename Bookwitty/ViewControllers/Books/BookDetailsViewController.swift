@@ -266,7 +266,7 @@ extension BookDetailsViewController {
   
   func viewTopicViewController(with topic: Topic) {
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withTopic: topic)
+    topicViewController.initialize(with: topic as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
   
