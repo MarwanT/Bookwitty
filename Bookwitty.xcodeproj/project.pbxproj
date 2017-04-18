@@ -10,6 +10,7 @@
 		19C00714F09A1D3937F9AAE7 /* Pods_BookwittyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */; };
 		2D1D0880B4A8EB8C8A6AD1A8 /* Pods_Bookwitty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */; };
 		561229E11EA5E440004CE079 /* TopicCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561229E01EA5E440004CE079 /* TopicCardViewModel.swift */; };
+		561229E31EA5FA5D004CE079 /* ProfileCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561229E21EA5FA5D004CE079 /* ProfileCardViewModel.swift */; };
 		5613402E1E5221730085B8A5 /* AccountPenNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5613402D1E5221730085B8A5 /* AccountPenNameTableViewCell.swift */; };
 		56205DEB1E5324BC000CA4D7 /* TableViewSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56205DE91E5324BC000CA4D7 /* TableViewSectionHeaderView.swift */; };
 		56205DEC1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56205DEA1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib */; };
@@ -260,6 +261,7 @@
 /* Begin PBXFileReference section */
 		2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bookwitty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		561229E01EA5E440004CE079 /* TopicCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCardViewModel.swift; sourceTree = "<group>"; };
+		561229E21EA5FA5D004CE079 /* ProfileCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCardViewModel.swift; sourceTree = "<group>"; };
 		5613402D1E5221730085B8A5 /* AccountPenNameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountPenNameTableViewCell.swift; sourceTree = "<group>"; };
 		56205DE91E5324BC000CA4D7 /* TableViewSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewSectionHeaderView.swift; sourceTree = "<group>"; };
 		56205DEA1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewSectionHeaderView.xib; sourceTree = "<group>"; };
@@ -642,6 +644,7 @@
 				56AC22C81EA50D2700484449 /* ArticleCardViewModel.swift */,
 				5639A4071EA5359600528D6F /* VideoCardViewModel.swift */,
 				561229E01EA5E440004CE079 /* TopicCardViewModel.swift */,
+				561229E21EA5FA5D004CE079 /* ProfileCardViewModel.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -1632,6 +1635,7 @@
 				561229E11EA5E440004CE079 /* TopicCardViewModel.swift in Sources */,
 				593769D81E3689FB00F23226 /* DefaultTheme.swift in Sources */,
 				59EC5BAA1E6C5987006E1CB9 /* BookDetailsStockNode.swift in Sources */,
+				561229E31EA5FA5D004CE079 /* ProfileCardViewModel.swift in Sources */,
 				59A341571E575D3100CF90B3 /* NewsFeedViewModel.swift in Sources */,
 				5657A5431E8BCF02000EE647 /* Utilities+API.swift in Sources */,
 				594290291E5347670006B2F1 /* DisclosureView.swift in Sources */,
