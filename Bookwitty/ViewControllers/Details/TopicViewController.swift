@@ -61,7 +61,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   }
 
   func initialize(withTopic topic: Topic?) {
-    viewModel.initialize(withTopic: topic)
+    viewModel.initialize(with: topic)
     self.mode = .normal(categories: self.normal)
 
     //MARK: [Analytics] Screen Name
@@ -69,7 +69,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   }
 
   func initialize(withBook book: Book?) {
-    viewModel.initialize(withBook: book)
+    viewModel.initialize(with: book)
     self.mode = .normal(categories: self.book)
 
     //MARK: [Analytics] Screen Name
@@ -77,11 +77,29 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   }
 
   func initialize(withAuthor author: Author?) {
-    viewModel.initialize(withAuthor: author)
+    viewModel.initialize(with: author)
     self.mode = .normal(categories: self.normal)
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.Author)
+  }
+  
+  func initialize(with resource: ModelCommonProperties?) {
+    viewModel.initialize(with: resource)
+    self.mode = .normal(categories: self.normal)
+    
+    //MARK: [Analytics] Screen Name
+    if let resourceType = viewModel.resourceType {
+      switch resourceType {
+      case Topic.resourceType:
+        Analytics.shared.send(screenName: Analytics.ScreenNames.Topic)
+      case Author.resourceType:
+        Analytics.shared.send(screenName: Analytics.ScreenNames.Author)
+      case Book.resourceType:
+        Analytics.shared.send(screenName: Analytics.ScreenNames.TopicBook)
+      default: break
+      }
+    }
   }
 
   override func viewDidLoad() {

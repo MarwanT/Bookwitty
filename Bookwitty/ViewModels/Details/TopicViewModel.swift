@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Spine
 
 final class TopicViewModel {
 
@@ -19,10 +20,8 @@ final class TopicViewModel {
   }
 
   var callback: ((CallbackCategory) -> ())?
-
-  var topic: Topic?
-  var book: Book?
-  var author: Author?
+  
+  var resource: ModelCommonProperties?
 
   fileprivate var latest: [ModelResource] = []
   fileprivate var latestNextUrl: URL? = nil
@@ -35,36 +34,14 @@ final class TopicViewModel {
 
   fileprivate var followers: [PenName] = []
   fileprivate var followersNextUrl: URL? = nil
-
-  func initialize(withTopic topic: Topic?) {
-    self.topic = topic
-    initiateContentCalls()
-  }
-
-  func initialize(withBook book: Book?) {
-    self.book = book
-    initiateContentCalls()
-  }
-
-  func initialize(withAuthor author: Author?) {
-    self.author = author
+  
+  func initialize(with resource: ModelCommonProperties?) {
+    self.resource = resource
     initiateContentCalls()
   }
 
   var identifier: String? {
-    if let topic = topic {
-      return topic.id
-    }
-
-    if let book = book {
-      return book.id
-    }
-
-    if let author = author {
-      return author.id
-    }
-
-    return nil
+    return resource?.id
   }
   
   var externalySharedContent: [Any]? {
@@ -72,16 +49,8 @@ final class TopicViewModel {
     var title: String? = nil
     var sharedContent = [Any]()
     
-    if let topic = topic {
-      canonicalURL = topic.canonicalURL
-      title = topic.title
-    } else if let book = book {
-      canonicalURL = book.canonicalURL
-      title = book.title
-    } else if let author = author {
-      canonicalURL = author.canonicalURL
-      title = author.name
-    }
+    canonicalURL = resource?.canonicalURL
+    title = resourceTitle
     
     if let canonicalURL = canonicalURL {
       sharedContent.append(canonicalURL)
@@ -93,36 +62,77 @@ final class TopicViewModel {
     return sharedContent.count > 0 ? sharedContent : nil
   }
 
-  var resourceType: String? {
-    if let topic = topic {
-      return topic.registeredResourceType
+  var resourceType: ResourceType? {
+    return resource?.registeredResourceType
+  }
+  
+  var resourceTitle: String? {
+    guard let resource = resource else {
+      return nil
     }
-
-    if let book = book {
-      return book.registeredResourceType
+    
+    switch resource {
+    case let author as Author:
+      return author.name
+    default:
+      return resource.title
     }
-
-    if let author = author {
-      return author.registeredResourceType
+  }
+  
+  var contributorsImages: [String]? {
+    guard let resource = resource else {
+      return nil
     }
-
-    return nil
+    
+    switch resource {
+    case let author as Author:
+      return author.contributors?.flatMap({ $0.avatarUrl })
+    case let book as Book:
+      return book.contributors?.flatMap({ $0.avatarUrl })
+    case let topic as Topic:
+      return topic.contributors?.flatMap({ $0.avatarUrl })
+    default: return nil
+    }
+  }
+  
+  var resourceCover: String? {
+    guard let resourceType = resourceType else {
+      return nil
+    }
+    
+    switch resourceType {
+    case Topic.resourceType:
+      return resource?.coverImageUrl
+    default: return nil
+    }
+  }
+  
+  var resourceThumbnail: String? {
+    guard let resourceType = resourceType else {
+      return nil
+    }
+    
+    switch resourceType {
+    case Author.resourceType, Book.resourceType:
+      return resource?.thumbnailImageUrl
+    default: return nil
+    }
   }
 
   private func initiateContentCalls() {
-    if topic != nil {
-      getTopicContent()
+    if let resourceType = resourceType {
+      switch resourceType {
+      case Topic.resourceType:
+        getTopicContent()
+      case Author.resourceType:
+        getAuthorContent()
+      case Book.resourceType:
+        getBookContent()
+        getEditions()
+      default: break
+      }
     }
-
-    if author != nil {
-      getAuthorContent()
-    }
-
-    if book != nil {
-      getBookContent()
-      getEditions()
-    }
-
+    
     getLatest()
     getRelatedBooks()
     getFollowers()
@@ -130,78 +140,20 @@ final class TopicViewModel {
 
 
   func valuesForHeader() -> (title: String?, following: Bool, thumbnailImageUrl: String?, coverImageUrl: String?, stats: (followers: String?, posts: String?), contributors: (count: String?, imageUrls: [String]?)) {
-    if topic != nil {
-      return valuesForTopic()
-    }
-
-    if book != nil {
-      return valuesForBook()
-    }
-
-    if author != nil {
-      return valuesForAuthor()
-    }
-
-    return (nil, false, nil, nil, stats: (nil, nil), contributors: (nil, nil))
-  }
-
-  private func valuesForTopic() -> (title: String?, following: Bool, thumbnailImageUrl: String?, coverImageUrl: String?, stats: (followers: String?, posts: String?), contributors: (count: String?, imageUrls: [String]?)) {
-    guard let topic = topic else {
+    guard let resource = resource else {
       return (nil, false, nil, nil, stats: (nil, nil), contributors: (nil, nil))
     }
-
-    let title  = topic.title
-    let following = topic.following
-    let thumbnail: String? = nil
-    let cover = topic.coverImageUrl
-    let counts = topic.counts
+    
+    let title  = resourceTitle
+    let following = false //TODO: [DataManager]
+    let thumbnail = self.resourceThumbnail
+    let cover = self.resourceCover
+    let counts = resource.counts
     let followers = String(counting: counts?.followers)
     let posts = String(counting: counts?.posts)
     let contributors = String(counting: counts?.contributors)
-    let contributorsImages: [String]? = topic.contributors?.flatMap({ $0.avatarUrl })
-
-    let stats: (String?, String?) = (followers, posts)
-    let contributorsValues: (String?, [String]?) = (contributors, contributorsImages)
-
-    return (title: title, following: following, thumbnailImageUrl: thumbnail, coverImageUrl: cover, stats: stats, contributors: contributorsValues)
-  }
-
-  private func valuesForBook() -> (title: String?, following: Bool, thumbnailImageUrl: String?, coverImageUrl: String?, stats: (followers: String?, posts: String?), contributors: (count: String?, imageUrls: [String]?)) {
-    guard let book = book else {
-      return (nil, false, nil, nil, stats: (nil, nil), contributors: (nil, nil))
-    }
-
-    let title  = book.title
-    let following = book.following
-    let thumbnail = book.thumbnailImageUrl
-    let cover: String? = nil
-    let counts = book.counts
-    let followers = String(counting: counts?.followers)
-    let posts = String(counting: counts?.posts)
-    let contributors = String(counting: counts?.contributors)
-    let contributorsImages: [String]? = book.contributors?.flatMap({ $0.avatarUrl })
-
-    let stats: (String?, String?) = (followers, posts)
-    let contributorsValues: (String?, [String]?) = (contributors, contributorsImages)
-
-    return (title: title, following: following, thumbnailImageUrl: thumbnail, coverImageUrl: cover, stats: stats, contributors: contributorsValues)
-  }
-
-  private func valuesForAuthor() -> (title: String?, following: Bool, thumbnailImageUrl: String?, coverImageUrl: String?, stats: (followers: String?, posts: String?), contributors: (count: String?, imageUrls: [String]?)) {
-    guard let author = author else {
-      return (nil, false, nil, nil, stats: (nil, nil), contributors: (nil, nil))
-    }
-
-    let title  = author.name
-    let following = author.following
-    let thumbnail = author.thumbnailImageUrl
-    let cover: String? = nil
-    let counts = author.counts
-    let followers = String(counting: counts?.followers)
-    let posts = String(counting: counts?.posts)
-    let contributors = String(counting: counts?.contributors)
-    let contributorsImages: [String]? = author.contributors?.flatMap({ $0.avatarUrl })
-
+    let contributorsImages: [String]? = self.contributorsImages
+    
     let stats: (String?, String?) = (followers, posts)
     let contributorsValues: (String?, [String]?) = (contributors, contributorsImages)
 
@@ -220,7 +172,7 @@ final class TopicViewModel {
           return
         }
 
-        self.topic = topic
+        self.resource = topic
         self.callback?(.content)
       }
     }
@@ -238,7 +190,7 @@ final class TopicViewModel {
           return
         }
 
-        self.book = book
+        self.resource = book
         self.callback?(.content)
       }
     }
@@ -256,7 +208,7 @@ final class TopicViewModel {
           return
         }
 
-        self.author = author
+        self.resource = author
         self.callback?(.content)
       }
     }
@@ -525,17 +477,8 @@ extension TopicViewModel {
       }
 
       if success {
-        if let topic = self.topic {
-          topic.following = true
-        }
-
-        if let book = self.book {
-          book.following = true
-        }
-
-        if let author = self.author {
-          author.following = true
-        }
+        //TODO: [DataManager] uncomment the following
+        // resource.isFollowing = true
       }
     }
   }
@@ -551,17 +494,8 @@ extension TopicViewModel {
       }
 
       if success {
-        if let topic = self.topic {
-          topic.following = false
-        }
-
-        if let book = self.book {
-          book.following = false
-        }
-
-        if let author = self.author {
-          author.following = false
-        }
+        //TODO: [DataManager] uncomment the following
+        // resource.isFollowing = false
       }
     }
   }
