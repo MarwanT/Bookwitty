@@ -18,8 +18,11 @@ class QuoteCardPostCellNode: BaseCardPostNode {
   override var contentShouldExtendBorders: Bool { return false }
   override var contentNode: ASDisplayNode { return node }
 
+  let viewModel: QuoteCardViewModel
+
   override init() {
     node = QuoteCardPostContentNode()
+    viewModel = QuoteCardViewModel()
     super.init()
   }
 
