@@ -217,7 +217,23 @@ extension NewsFeedViewController {
     NotificationCenter.default.addObserver(self, selector:
       #selector(refreshData(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
 
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+
     observeLanguageChanges()
+  }
+
+  func updatedResources(_ notification: NSNotification) {
+    let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.cards.rawValue })
+
+    guard let identifiers = notification.object as? [String],
+      identifiers.count > 0,
+      visibleItemsIndexPaths.count > 0 else {
+      return
+    }
+
+    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+    updateCollection(with: indexPathForAffectedItems, shouldReloadItems: true, loaderSection: false, penNamesSection: false, orReloadAll: false, completionBlock: nil)
   }
 
   func refreshData(_ notification: Notification) {
@@ -259,7 +275,7 @@ extension NewsFeedViewController {
 
 // MARK: - Reload Footer
 extension NewsFeedViewController {
-  func updateCollection(with itemIndices: [IndexPath]? = nil, loaderSection: Bool = false, penNamesSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
+  func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, loaderSection: Bool = false, penNamesSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
     if reloadAll {
       collectionNode.reloadData(completion: { 
         completionBlock?(true)
@@ -272,8 +288,12 @@ extension NewsFeedViewController {
         if penNamesSection {
           collectionNode.reloadSections(IndexSet(integer: Section.penNames.rawValue))
         }
-        if let itemIndices = itemIndices {
-          collectionNode.insertItems(at: itemIndices)
+        if let itemIndices = itemIndices, itemIndices.count > 0 {
+          if reloadItems {
+            collectionNode.reloadItems(at: itemIndices)
+          }else {
+            collectionNode.insertItems(at: itemIndices)
+          }
         }
       }, completion: completionBlock)
     }
@@ -326,6 +346,13 @@ extension NewsFeedViewController: ASCollectionDataSource {
       penNameSelectionNode.setNeedsLayout()
     } else if node is LoaderNode {
       loaderNode.updateLoaderVisibility(show: shouldShowLoader)
+    } else if let card = node as? BaseCardPostNode {
+      guard let indexPath = collectionNode.indexPath(for: node),
+        let resource = viewModel.resourceForIndex(index: indexPath.row) as? ModelCommonProperties else {
+        return
+      }
+      card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
+      card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
     }
   }
 }

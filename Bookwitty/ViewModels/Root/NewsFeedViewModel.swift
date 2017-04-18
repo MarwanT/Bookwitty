@@ -13,7 +13,7 @@ import Spine
 final class NewsFeedViewModel {
   var cancellableRequest:  Cancellable?
   var nextPage: URL?
-  var data: [ModelResource] = [] {
+  var data: [String] = [] {
     didSet {
       if data.count == 0 {
         nextPage = nil
@@ -25,6 +25,13 @@ final class NewsFeedViewModel {
   }
   var defaultPenName: PenName? {
     return UserManager.shared.defaultPenName
+  }
+
+  func resourceFor(id: String?) -> ModelResource? {
+    guard let id = id else {
+      return nil
+    }
+    return DataManager.shared.fetchResource(with: id)
   }
 
   func didUpdateDefaultPenName(penName: PenName, completionBlock: (_ didSaveDefault: Bool) -> ()) {
@@ -48,25 +55,30 @@ final class NewsFeedViewModel {
   }
 
   func witContent(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard data.count > index,
-      let contentId = data[index].id else {
+    guard data.count > index else {
       completionBlock(false)
       return
     }
 
-    cancellableRequest = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
+    let id = data[index]
+    cancellableRequest = NewsfeedAPI.wit(contentId: id, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: id, after: DataManager.Action.wit)
+      }
       completionBlock(success)
     })
   }
 
   func unwitContent(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard data.count > index,
-      let contentId = data[index].id else {
+    guard data.count > index else {
         completionBlock(false)
         return
     }
-
-    cancellableRequest = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
+    let id = data[index]
+    cancellableRequest = NewsfeedAPI.unwit(contentId: id, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: id, after: DataManager.Action.unwit)
+      }
       completionBlock(success)
     })
   }
@@ -89,13 +101,21 @@ final class NewsFeedViewModel {
       cancellableRequest.cancel()
     }
     cancellableRequest = NewsfeedAPI.feed() { (success, resources, nextPage, error) in
+      defer {
+        completionBlock(success)
+        DataManager.shared.update(resources: resources ?? [])
+      }
+
       if success {
         self.data.removeAll(keepingCapacity: false)
-        self.data = resources ?? []
+        if let resources = resources, success {
+          self.data = resources.flatMap({ $0.id })
+        } else {
+          self.data = []
+        }
         self.nextPage = nextPage
       }
       self.cancellableRequest = nil
-      completionBlock(success)
     }
   }
 
@@ -113,12 +133,16 @@ final class NewsFeedViewModel {
     }
 
     cancellableRequest = NewsfeedAPI.nextFeedPage(nextPage: nextPage) { (success, resources, nextPage, error) in
+      defer {
+        completionBlock(success)
+        DataManager.shared.update(resources: resources ?? [])
+      }
+
       if let resources = resources, success {
-        self.data += resources
+        self.data += resources.flatMap({ $0.id })
         self.nextPage = nextPage
       }
       self.cancellableRequest = nil
-      completionBlock(success)
     }
   }
 
@@ -147,7 +171,7 @@ final class NewsFeedViewModel {
 
   func resourceForIndex(index: Int) -> ModelResource? {
     guard data.count > index else { return nil }
-    let resource = data[index]
+    let resource = resourceFor(id: data[index])
     return resource
   }
 
@@ -197,6 +221,16 @@ final class NewsFeedViewModel {
       }
     }
   }
+
+  func indexPathForAffectedItems(resourcesIdentifiers: [String], visibleItemsIndexPaths: [IndexPath]) -> [IndexPath] {
+    return visibleItemsIndexPaths.filter({
+      indexPath in
+      guard let resource = resourceForIndex(index: indexPath.row) as? ModelCommonProperties, let identifier = resource.id else {
+        return false
+      }
+      return resourcesIdentifiers.contains(identifier)
+    })
+  }
 }
 
 // MARK: - PenName Follow/Unfollow
@@ -243,6 +277,9 @@ extension NewsFeedViewModel {
       defer {
         completionBlock(success)
       }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
+      }
       penName.following = true
     }
   }
@@ -257,6 +294,9 @@ extension NewsFeedViewModel {
       defer {
         completionBlock(success)
       }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
+      }
       penName.following = false
     }
   }
@@ -266,6 +306,9 @@ extension NewsFeedViewModel {
       defer {
         completionBlock(success)
       }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
+      }
     }
   }
 
@@ -273,6 +316,9 @@ extension NewsFeedViewModel {
     _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
+      }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
       }
     }
   }
