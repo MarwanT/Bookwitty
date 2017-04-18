@@ -23,6 +23,7 @@ class BookCardPostCellNode: BaseCardPostNode {
     node = BookCardPostContentNode()
     viewModel = BookCardViewModel()
     super.init()
+    viewModel.delegate = self
   }
 
   convenience init(shouldShowInfoNode: Bool) {
@@ -232,5 +233,12 @@ extension BookCardPostContentNode {
 
   fileprivate func isValid(_ value: String?) -> Bool {
     return !value.isEmptyOrNil()
+  }
+}
+
+//MARK: - BookCardViewModelDelegate implementation
+extension BookCardPostCellNode: BookCardViewModelDelegate {
+  func resourceUpdated(viewModel: BookCardViewModel) {
+
   }
 }
