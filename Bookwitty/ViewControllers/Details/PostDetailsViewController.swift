@@ -39,6 +39,8 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     loadRelatedPosts()
     applyLocalization()
     observeLanguageChanges()
+    //Observe Data Changes in the Data Center
+    observeDataChanges()
 
     loadNavigationBarButtons()
 
@@ -53,6 +55,10 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
       name = Analytics.ScreenNames.Default
     }
     Analytics.shared.send(screenName: name)
+  }
+
+  deinit {
+    NotificationCenter.default.removeObserver(self)
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -893,6 +899,18 @@ extension PostDetailsViewController {
                                                  name: name)
     Analytics.shared.send(event: event)
     pushTopicViewController(resource: resource)
+  }
+}
+
+//MARK: - Observe Data Changes
+extension PostDetailsViewController {
+  fileprivate func observeDataChanges() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+  }
+
+  @objc
+  fileprivate func updatedResources(_ notification: NSNotification) {
   }
 }
 
