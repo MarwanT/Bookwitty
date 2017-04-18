@@ -48,15 +48,24 @@ class QuoteCardPostContentNode: ASDisplayNode {
       if let articleQuote = articleQuote {
         quoteTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
           .append(text: articleQuote, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      } else {
+        quoteTextNode.attributedText = nil
       }
+
+      quoteTextNode.setNeedsLayout()
     }
   }
+
   var articleQuotePublisher: String? {
     didSet {
       if let articleQuotePublisher = articleQuotePublisher {
         nameTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
           .append(text: articleQuotePublisher, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      } else {
+        nameTextNode.attributedText = nil
       }
+
+      nameTextNode.setNeedsLayout()
     }
   }
 
