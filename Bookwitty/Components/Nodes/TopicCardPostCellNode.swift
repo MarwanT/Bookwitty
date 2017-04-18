@@ -23,6 +23,7 @@ class TopicCardPostCellNode: BaseCardPostNode {
     node = TopicCardPostContentNode()
     viewModel = TopicCardViewModel()
     super.init()
+    viewModel.delegate = self
   }
 
   convenience init(shouldShowInfoNode: Bool) {
@@ -193,5 +194,12 @@ class TopicCardPostContentNode: ASDisplayNode {
                                           children: nodesArray)
 
     return verticalStack
+  }
+}
+
+//MARK: - TopicCardViewModelDelegate implementation
+extension TopicCardPostCellNode: TopicCardViewModelDelegate {
+  func resourceUpdated(viewModel: TopicCardViewModel) {
+
   }
 }
