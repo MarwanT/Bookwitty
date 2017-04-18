@@ -176,6 +176,9 @@ class PostDetailsViewModel {
     _ = PenNameAPI.penNameDetails(identifier: penNameId, completionBlock: { (success, penName, error) in
       defer {
         completionBlock(success)
+        if let penName = penName, success {
+          DataManager.shared.update(resource: penName)
+        }
       }
       if let penName = penName, success {
         self.penName = penName
@@ -193,6 +196,7 @@ class PostDetailsViewModel {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       defer {
         completionBlock(success)
+        DataManager.shared.update(resources: resources ?? [])
       }
       if let resources = resources, success {
         self.contentPostsResources = resources
@@ -207,6 +211,7 @@ class PostDetailsViewModel {
       var resources: [Resource]?
       defer {
         completion(success, resources, error)
+        DataManager.shared.update(resources: resources ?? [])
       }
 
       guard success, let result = resource else {
@@ -237,6 +242,9 @@ class PostDetailsViewModel {
 
     cancellableRequest = NewsfeedAPI.dim(contentId: contentId, completion: { (success, error) in
       completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: .dim)
+      }
     })
   }
 
@@ -247,6 +255,9 @@ class PostDetailsViewModel {
 
     cancellableRequest = NewsfeedAPI.undim(contentId: contentId, completion: { (success, error) in
       completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: .undim)
+      }
     })
   }
 
@@ -278,6 +289,9 @@ extension PostDetailsViewModel {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       defer {
         completionBlock(success)
+        if success {
+          DataManager.shared.update(resources: resources ?? [])
+        }
       }
       if success {
         self.relatedBooks.removeAll()
@@ -313,6 +327,9 @@ extension PostDetailsViewModel {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       defer {
         completionBlock(success)
+        if success {
+          DataManager.shared.update(resources: resources ?? [])
+        }
       }
       if success {
         self.relatedPosts.removeAll()
@@ -371,6 +388,9 @@ extension PostDetailsViewModel {
       var imageCollection: [String]? = nil
       defer {
         completionBlock(imageCollection)
+        if success {
+          DataManager.shared.update(resources: resources ?? [])
+        }
       }
       if success {
         var images: [String] = []
@@ -392,12 +412,18 @@ extension PostDetailsViewModel {
   func witContent(contentId: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     cancellableRequest = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
       completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: .wit)
+      }
     })
   }
 
   func unwitContent(contentId: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     cancellableRequest = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
       completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: .unwit)
+      }
     })
   }
 
@@ -482,8 +508,10 @@ extension PostDetailsViewModel {
     _ = GeneralAPI.followPenName(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
+        if success {
+          DataManager.shared.updateResource(with: identifier, after: .follow)
+        }
       }
-      penName.following = true
     }
   }
 
@@ -496,8 +524,10 @@ extension PostDetailsViewModel {
     _ = GeneralAPI.unfollowPenName(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
+        if success {
+          DataManager.shared.updateResource(with: identifier, after: .unfollow)
+        }
       }
-      penName.following = false
     }
   }
 
@@ -505,6 +535,9 @@ extension PostDetailsViewModel {
     _ = GeneralAPI.follow(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
+        if success {
+          DataManager.shared.updateResource(with: identifier, after: .follow)
+        }
       }
     }
   }
@@ -513,6 +546,9 @@ extension PostDetailsViewModel {
     _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
+        if success {
+          DataManager.shared.updateResource(with: identifier, after: .unfollow)
+        }
       }
     }
   }
