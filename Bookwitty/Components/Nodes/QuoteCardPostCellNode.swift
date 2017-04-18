@@ -97,3 +97,10 @@ class QuoteCardPostContentNode: ASDisplayNode {
     return verticalStack
   }
 }
+
+//MARK: - QuoteCardViewModelDelegate implementation
+extension QuoteCardPostCellNode: QuoteCardViewModelDelegate {
+  func resourceUpdated(viewModel: QuoteCardViewModel) {
+
+  }
+}
