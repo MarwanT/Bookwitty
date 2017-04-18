@@ -13,5 +13,15 @@ protocol ReadingListCardViewModelDelegate: class {
 }
 
 class ReadingListCardViewModel {
+  var resource: ModelCommonProperties? {
+    didSet {
+      notifyChange()
+    }
+  }
 
+  weak var delegate: ReadingListCardViewModelDelegate?
+
+  private func notifyChange() {
+    delegate?.resourceUpdated(viewModel: self)
+  }
 }
