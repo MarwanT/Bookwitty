@@ -34,7 +34,7 @@ class DataManager {
   }
 
   //MARK: - Update Resources
-  func update(resource: ModelResource) {
+  private func poolUpdate(resource: ModelResource) {
     guard let identifier = resource.id else {
       return
     }
@@ -42,8 +42,19 @@ class DataManager {
     pool.updateValue(resource, forKey: identifier)
   }
 
+  func update(resource: ModelResource) {
+    poolUpdate(resource: resource)
+
+    if let identifier = resource.id {
+      notifyUpdate(resources: [identifier])
+    }
+  }
+
   func update(resources: [ModelResource]) {
-    resources.forEach(self.update(resource:))
+    resources.forEach(self.poolUpdate(resource:))
+
+    let identifiers = resources.flatMap({ $0.id })
+    notifyUpdate(resources: identifiers)
   }
 
   func updateResource(with identifier: String, after action: Action) {
@@ -65,6 +76,12 @@ class DataManager {
     case .unfollow:
       unfollow(resource)
     }
+
+    notifyUpdate(resources: [identifier])
+  }
+
+  private func notifyUpdate(resources: [String]) {
+    NotificationCenter.default.post(name: Notifications.Name.UpdateResource, object: resources)
   }
 
   //MARK: - Remove Resources
