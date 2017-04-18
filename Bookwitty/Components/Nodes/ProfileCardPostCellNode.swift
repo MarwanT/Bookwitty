@@ -47,31 +47,46 @@ class ProfileCardPostContentNode: ASDisplayNode {
       if let articleDescription = articleDescription {
         descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
           .append(text: articleDescription, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      } else {
+        descriptionNode.attributedText = nil
       }
+      descriptionNode.setNeedsLayout()
     }
   }
+
   var userName: String? {
     didSet {
       if let userName = userName {
         userNameTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
           .append(text: userName, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      } else {
+        userNameTextNode.attributedText = nil
       }
+      userNameTextNode.setNeedsLayout()
     }
   }
+
   var followersCount: String? {
     didSet {
       if let followersCount = followersCount, let number: Int = Int(followersCount) {
         followersTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
           .append(text: Strings.followers(number: number), fontDynamicType: .caption2)
           .attributedString
+      } else {
+        followersTextNode.attributedText = nil
       }
+      followersTextNode.setNeedsLayout()
     }
   }
+
   var imageUrl: String? {
     didSet {
       if let imageUrl = imageUrl {
         userProfileImageNode.url = URL(string: imageUrl)
+      } else {
+        userProfileImageNode.url = nil
       }
+      userProfileImageNode.setNeedsLayout()
     }
   }
 
