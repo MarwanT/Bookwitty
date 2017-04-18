@@ -22,6 +22,7 @@ class ReadingListCardPostCellNode: BaseCardPostNode {
     node = ReadingListCardContentNode()
     viewModel = ReadingListCardViewModel()
     super.init()
+    viewModel.delegate = self
   }
 
   convenience init(shouldShowInfoNode: Bool) {
@@ -186,4 +187,11 @@ class ReadingListCardContentNode: ASDisplayNode {
     return verticalStack
   }
 
+}
+
+//MARK: - ReadingListsViewModelDelegate implementation
+extension ReadingListCardPostCellNode: ReadingListCardViewModelDelegate {
+  func resourceUpdated(viewModel: ReadingListCardViewModel) {
+
+  }
 }
