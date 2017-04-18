@@ -17,8 +17,11 @@ class BookCardPostCellNode: BaseCardPostNode {
   override var contentShouldExtendBorders: Bool { return false }
   override var contentNode: ASDisplayNode { return node }
 
+  let viewModel: BookCardViewModel
+
   override init() {
     node = BookCardPostContentNode()
+    viewModel = BookCardViewModel()
     super.init()
   }
 
