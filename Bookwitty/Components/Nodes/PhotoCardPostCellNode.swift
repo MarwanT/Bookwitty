@@ -169,6 +169,14 @@ class PhotoCardContentNode: ASDisplayNode {
 //MARK: - PhotoCardViewModelDelegate implementation
 extension PhotoCardPostCellNode: PhotoCardViewModelDelegate {
   func resourceUpdated(viewModel: PhotoCardViewModel) {
-
+    let values = viewModel.values()
+    showsInfoNode = values.infoNode
+    postInfoData = values.postInfo
+    node.articleTitle = values.content.title
+    node.articleDescription = values.content.description
+    node.imageUrl = values.content.imageUrl
+    articleCommentsSummary = values.content.comments
+    setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
+    setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
   }
 }
