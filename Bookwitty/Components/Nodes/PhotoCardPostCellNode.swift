@@ -22,6 +22,7 @@ class PhotoCardPostCellNode: BaseCardPostNode {
     node = PhotoCardContentNode()
     viewModel = PhotoCardViewModel()
     super.init()
+    viewModel.delegate = self
   }
 
   convenience init(shouldShowInfoNode: Bool) {
@@ -149,6 +150,13 @@ class PhotoCardContentNode: ASDisplayNode {
                                           children: nodesArray)
 
     return verticalStack
+
+  }
+}
+
+//MARK: - PhotoCardViewModelDelegate implementation
+extension PhotoCardPostCellNode: PhotoCardViewModelDelegate {
+  func resourceUpdated(viewModel: PhotoCardViewModel) {
 
   }
 }
