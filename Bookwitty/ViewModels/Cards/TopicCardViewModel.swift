@@ -13,5 +13,15 @@ protocol TopicCardViewModelDelegate: class {
 }
 
 class TopicCardViewModel {
-  
+  var resource: ModelCommonProperties? {
+    didSet {
+      notifyChange()
+    }
+  }
+
+  weak var delegate: TopicCardViewModelDelegate?
+
+  private func notifyChange() {
+    delegate?.resourceUpdated(viewModel: self)
+  }
 }
