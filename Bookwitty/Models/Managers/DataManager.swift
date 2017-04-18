@@ -104,3 +104,12 @@ extension DataManager {
     actionableRes?.isFollowing = false
   }
 }
+
+//MARK: - Notifications
+extension DataManager {
+  struct Notifications {
+    struct Name {
+      static let UpdateResource = Notification.Name("DataManager.Notifications.Name.UpdateResource")
+    }
+  }
+}
