@@ -911,6 +911,18 @@ extension PostDetailsViewController {
 
   @objc
   fileprivate func updatedResources(_ notification: NSNotification) {
+    guard let resourceId = viewModel.resource.id,
+      let identifiers = notification.object as? [String],
+      identifiers.count > 0,
+      identifiers.contains( where: { $0 == resourceId } ) else {
+        return
+    }
+
+    guard let resource = DataManager.shared.fetchResource(with: resourceId) else {
+      return
+    }
+    viewModel.resource = resource
+    initialize()
   }
 }
 

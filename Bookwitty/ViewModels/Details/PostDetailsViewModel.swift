@@ -11,7 +11,7 @@ import Spine
 import Moya
 
 class PostDetailsViewModel {
-  let resource: Resource
+  var resource: Resource
 
   var cancellableRequest: Cancellable?
 
