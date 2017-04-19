@@ -84,6 +84,31 @@ class PostDetailsItemNode: ASDisplayNode, ItemNodeTapDelegate {
     return nil
   }
 
+  func visibleNodes() -> [Int] {
+    var visibleIndices: [Int] = []
+
+    for (itemIndex, item) in nodes.enumerated() {
+      if item.isVisible {
+        visibleIndices.append(itemIndex)
+      }
+    }
+
+    return visibleIndices
+  }
+
+  func updateNodes(with indices: [Int]? = nil) {
+    if let indices = indices {
+      indices.forEach({ (index) in
+        dataSource?.shouldUpdateItem(self, at: index, displayNode: nodes[index])
+      })
+    } else {
+      for index in 0..<nodes.count {
+        dataSource?.shouldUpdateItem(self, at: index, displayNode: nodes[index])
+      }
+    }
+    setNeedsLayout()
+  }
+
   func didTapOn(node: ASDisplayNode) {
     guard let indexOfTappedNode = index(of: node) else {
       return
