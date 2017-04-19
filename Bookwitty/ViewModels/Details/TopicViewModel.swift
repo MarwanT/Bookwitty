@@ -26,7 +26,7 @@ final class TopicViewModel {
   fileprivate var latest: [ModelResource] = []
   fileprivate var latestNextUrl: URL? = nil
 
-  fileprivate var editions: [Book] = []
+  fileprivate var editions: [String] = []
   fileprivate var editionsNextUrl: URL? = nil
 
   fileprivate var relatedBooks: [Book] = []
@@ -138,6 +138,12 @@ final class TopicViewModel {
     getFollowers()
   }
 
+  func resourceFor(id: String?) -> ModelResource? {
+    guard let id = id else {
+      return nil
+    }
+    return DataManager.shared.fetchResource(with: id)
+  }
 
   func valuesForHeader() -> (title: String?, following: Bool, thumbnailImageUrl: String?, coverImageUrl: String?, stats: (followers: String?, posts: String?), contributors: (count: String?, imageUrls: [String]?)) {
     guard let resource = resource else {
@@ -277,8 +283,21 @@ extension TopicViewModel {
     guard item >= 0 && item < editions.count else {
       return nil
     }
-
-    return editions[item]
+    
+    let editionId = editions[item]
+    guard let book = DataManager.shared.fetchResource(with: editionId) as? Book else {
+      return nil
+    }
+    
+    return book
+  }
+  
+  func valuesForEdition(at item: Int) -> (title: String?, author: String?, format: String?, price: String?, imageUrl: String?)? {
+    guard let book = edition(at: item) else {
+      return nil
+    }
+    
+    return (book.title, book.productDetails?.author, book.productDetails?.productFormat, book.preferredPrice?.formattedValue, book.thumbnailImageUrl)
   }
 
   func getEditions() {
@@ -289,14 +308,16 @@ extension TopicViewModel {
     _ = GeneralAPI.editions(contentIdentifier: identifier) {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       if success {
-        _ = self.handleEdition(results: (resources as? [Book] ?? []), next: next, reset: true)
+        let resourcesIds: [String] = resources?.flatMap({ $0.id }) ?? []
+        _ = self.handleEdition(results: resourcesIds, next: next, reset: true)
         self.callback?(.editions)
+        DataManager.shared.update(resources: resources ?? [])
       }
     }
   }
 
-  fileprivate func handleEdition(results: [Book]?, next: URL?, reset: Bool = false) -> [Int]? {
-    guard let results = results else {
+  fileprivate func handleEdition(results: [String]?, next: URL?, reset: Bool = false) -> [Int]? {
+    guard let results = results, results.count > 0 else {
       return nil
     }
 
@@ -451,7 +472,7 @@ extension TopicViewModel {
       case .latest:
         indices = self.handleLatest(results: resources, next: next)
       case .editions:
-        indices = self.handleEdition(results: resources as? [Book], next: next)
+        indices = self.handleEdition(results: resources?.flatMap({ $0.id }) , next: next)
       case .relatedBooks:
         indices = self.handleRelatedBooks(results: resources as? [Book], next: next)
       case .followers:

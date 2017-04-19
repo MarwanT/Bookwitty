@@ -475,12 +475,12 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
           return
         }
 
-        let book = viewModel.edition(at: indexPath.item)
-        cell.title = book?.title
-        cell.author = book?.productDetails?.author
-        cell.format = book?.productDetails?.productFormat
-        cell.price = (book?.productDetails?.isElectronicFormat() ?? false) ? nil : book?.supplierInformation?.preferredPrice?.formattedValue
-        cell.imageUrl = book?.thumbnailImageUrl
+        let bookValues = viewModel.valuesForEdition(at: indexPath.item)
+        cell.title = bookValues?.title
+        cell.author = bookValues?.author
+        cell.format = bookValues?.format
+        cell.price = bookValues?.price
+        cell.imageUrl = bookValues?.imageUrl
       case .relatedBooks:
         guard let cell = node as? BookNode else {
           return
@@ -553,6 +553,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
         navigationController?.pushViewController(vc, animated: true)
       }
     case .editions:
+      //TODO: [DataManager]
       if let resource = viewModel.edition(at: indexPath.item) {
         let vc = BookDetailsViewController(with: resource)
         navigationController?.pushViewController(vc, animated: true)
