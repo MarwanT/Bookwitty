@@ -12,7 +12,7 @@ protocol VideoCardViewModelDelegate: class {
   func resourceUpdated(viewModel: VideoCardViewModel)
 }
 
-class VideoCardViewModel {
+class VideoCardViewModel: CardViewModelProtocol {
 
   var resource: ModelCommonProperties? {
     didSet {

@@ -12,7 +12,7 @@ protocol ReadingListCardViewModelDelegate: class {
   func resourceUpdated(viewModel: ReadingListCardViewModel)
 }
 
-class ReadingListCardViewModel {
+class ReadingListCardViewModel: CardViewModelProtocol {
   var resource: ModelCommonProperties? {
     didSet {
       notifyChange()
