@@ -55,13 +55,14 @@ class PostDetailsItemNode: ASDisplayNode, ItemNodeTapDelegate {
   func loadNodes() {
     nodes.removeAll(keepingCapacity: false)
 
-    let nodesCount: Int = dataSource.postDetailsItemCount(self)
+    let nodesCount: Int = dataSource?.postDetailsItemCount(self) ?? 0
 
     for index in 0..<nodesCount {
-      let node = dataSource.postDetailsItem(self, nodeForItemAt: index)
-      var tappableNode = (node as? NodeTapProtocol)
-      tappableNode?.tapDelegate = self
-      nodes.append(node)
+      if let node = dataSource?.postDetailsItem(self, nodeForItemAt: index) {
+        weak var tappableNode = (node as? NodeTapProtocol)
+        tappableNode?.tapDelegate = self
+        nodes.append(node)
+      }
     }
     setNeedsLayout()
   }
