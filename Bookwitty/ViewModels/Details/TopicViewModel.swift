@@ -548,11 +548,6 @@ extension TopicViewModel {
       defer {
         completionBlock(success)
       }
-
-      if success {
-        //TODO: [DataManager] uncomment the following
-        // resource.isFollowing = true
-      }
     }
   }
 
@@ -564,11 +559,6 @@ extension TopicViewModel {
     unfollowRequest(identifier: identifier) { (success: Bool) in
       defer {
         completionBlock(success)
-      }
-
-      if success {
-        //TODO: [DataManager] uncomment the following
-        // resource.isFollowing = false
       }
     }
   }

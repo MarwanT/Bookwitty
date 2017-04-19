@@ -575,7 +575,6 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
   private func cellNodeBlockFor(item: Int, category: Category) -> ASCellNode {
     switch category {
     case .latest:
-      //TODO: [DataManager] get values from view model
       guard let post = viewModel.latest(at: item),
         let node = CardFactory.createCardFor(resourceType: post.registeredResourceType) else {
         return ASCellNode()
