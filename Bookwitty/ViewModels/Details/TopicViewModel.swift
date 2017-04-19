@@ -23,7 +23,7 @@ final class TopicViewModel {
   
   var resource: ModelCommonProperties?
 
-  fileprivate var latest: [ModelResource] = []
+  fileprivate var latest: [String] = []
   fileprivate var latestNextUrl: URL? = nil
 
   fileprivate var editions: [String] = []
@@ -235,8 +235,13 @@ extension TopicViewModel {
     guard item >= 0 && item < latest.count else {
       return nil
     }
+    
+    let latestResourceId = latest[item]
+    guard let resource = DataManager.shared.fetchResource(with: latestResourceId) else {
+      return nil
+    }
 
-    return latest[item]
+    return resource
   }
 
   func getLatest() {
@@ -247,13 +252,15 @@ extension TopicViewModel {
     _ = GeneralAPI.postsLinkedContent(contentIdentifier: identifier, type: nil) {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       if success {
-        _ = self.handleLatest(results: resources, next: next, reset: true)
+        let resourcesIds: [String] = resources?.flatMap({ $0.id }) ?? []
+        _ = self.handleLatest(results: resourcesIds, next: next, reset: true)
         self.callback?(.latest)
+        DataManager.shared.update(resources: resources ?? [])
       }
     }
   }
 
-  fileprivate func handleLatest(results: [ModelResource]?, next: URL?, reset: Bool = false) -> [Int]? {
+  fileprivate func handleLatest(results: [String]?, next: URL?, reset: Bool = false) -> [Int]? {
     guard let results = results else {
       return nil
     }
@@ -497,16 +504,18 @@ extension TopicViewModel {
       }
 
       successful = resources != nil
+      
+      let resourcesIdentifiers: [String]? = resources?.flatMap({ $0.id })
 
       switch category {
       case .latest:
-        indices = self.handleLatest(results: resources, next: next)
+        indices = self.handleLatest(results: resourcesIdentifiers, next: next)
       case .editions:
-        indices = self.handleEdition(results: resources?.flatMap({ $0.id }) , next: next)
+        indices = self.handleEdition(results: resourcesIdentifiers, next: next)
       case .relatedBooks:
-        indices = self.handleRelatedBooks(results: resources?.flatMap({ $0.id }), next: next)
+        indices = self.handleRelatedBooks(results: resourcesIdentifiers, next: next)
       case .followers:
-        indices = self.handleFollowers(results: resources?.flatMap({ $0.id }), next: next)
+        indices = self.handleFollowers(results: resourcesIdentifiers, next: next)
       case .content:
         break
       }
