@@ -18,13 +18,20 @@ class LinkCardPostCellNode: BaseCardPostNode {
   override var contentShouldExtendBorders: Bool { return true }
   override var contentNode: ASDisplayNode { return node }
 
+  let viewModel: LinkCardViewModel
+  override var baseViewModel: CardViewModelProtocol? {
+    return viewModel
+  }
+  
   override func updateMode(fullMode: Bool) {
     node.setupMode(fullViewMode: fullMode)
   }
   
   override init() {
     node = LinkCardPostContentNode()
+    viewModel = LinkCardViewModel()
     super.init()
+    viewModel.delegate = self
   }
 
   convenience init(shouldShowInfoNode: Bool) {
@@ -55,21 +62,31 @@ class LinkCardPostContentNode: ASDisplayNode {
       if let articleTitle = articleTitle {
         titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
           .append(text: articleTitle, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+      } else {
+        titleNode.attributedText = nil
       }
+      titleNode.setNeedsLayout()
     }
   }
+
   var articleDescription: String? {
     didSet {
       if let articleDescription = articleDescription {
         descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
           .append(text: articleDescription, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+      } else {
+        descriptionNode.attributedText = nil
       }
+      descriptionNode.setNeedsLayout()
     }
   }
+
   var linkUrl: String? {
     didSet {
       if let linkUrl = linkUrl{
         loadImageFromUrl(url: linkUrl)
+      } else {
+        imageUrl = nil
       }
     }
   }
@@ -78,7 +95,10 @@ class LinkCardPostContentNode: ASDisplayNode {
     didSet {
       if let imageUrl = imageUrl {
         imageNode.url = URL(string: imageUrl)
+      } else {
+        imageNode.url = nil
       }
+      imageNode.setNeedsLayout()
     }
   }
 
@@ -203,5 +223,20 @@ class LinkCardPostContentNode: ASDisplayNode {
                                           children: nodesArray)
     
     return verticalStack
+  }
+}
+
+//MARK: - LinkCardViewModelDelegate implementation
+extension LinkCardPostCellNode: LinkCardViewModelDelegate {
+  func resourceUpdated(viewModel: LinkCardViewModel) {
+    let values = viewModel.values()
+    showsInfoNode = values.infoNode
+    postInfoData = values.postInfo
+    node.articleTitle = values.content.title
+    node.articleDescription = values.content.description
+    node.imageNode.url = URL(string: values.content.imageUrl ?? "")
+    articleCommentsSummary = values.content.comments
+    setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
+    setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
   }
 }

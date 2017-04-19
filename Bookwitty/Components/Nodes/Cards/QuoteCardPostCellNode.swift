@@ -18,8 +18,14 @@ class QuoteCardPostCellNode: BaseCardPostNode {
   override var contentShouldExtendBorders: Bool { return false }
   override var contentNode: ASDisplayNode { return node }
 
+  let viewModel: QuoteCardViewModel
+  override var baseViewModel: CardViewModelProtocol? {
+    return viewModel
+  }
+  
   override init() {
     node = QuoteCardPostContentNode()
+    viewModel = QuoteCardViewModel()
     super.init()
   }
 
@@ -45,15 +51,24 @@ class QuoteCardPostContentNode: ASDisplayNode {
       if let articleQuote = articleQuote {
         quoteTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
           .append(text: articleQuote, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      } else {
+        quoteTextNode.attributedText = nil
       }
+
+      quoteTextNode.setNeedsLayout()
     }
   }
+
   var articleQuotePublisher: String? {
     didSet {
       if let articleQuotePublisher = articleQuotePublisher {
         nameTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
           .append(text: articleQuotePublisher, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      } else {
+        nameTextNode.attributedText = nil
       }
+
+      nameTextNode.setNeedsLayout()
     }
   }
 
@@ -92,5 +107,21 @@ class QuoteCardPostContentNode: ASDisplayNode {
                                           alignItems: .stretch,
                                           children: layoutSpecs)
     return verticalStack
+  }
+}
+
+//MARK: - QuoteCardViewModelDelegate implementation
+extension QuoteCardPostCellNode: QuoteCardViewModelDelegate {
+  func resourceUpdated(viewModel: QuoteCardViewModel) {
+    let values = viewModel.values()
+    showsInfoNode = values.infoNode
+    postInfoData = values.postInfo
+    node.articleQuotePublisher = values.content.publisher
+    if let quote = values.content.quote {
+      node.articleQuote = "“ \(quote) ”"
+    }
+    articleCommentsSummary = values.content.comments
+    setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
+    setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
   }
 }

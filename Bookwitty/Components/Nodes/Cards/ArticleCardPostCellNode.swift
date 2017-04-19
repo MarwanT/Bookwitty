@@ -1,5 +1,5 @@
 //
-//  PhotoCardPostCellNode.swift
+//  ArticleCardPostCellNode.swift
 //  Bookwitty
 //
 //  Created by Shafic Hariri on 2/13/17.
@@ -9,66 +9,85 @@
 import Foundation
 import AsyncDisplayKit
 
-class PhotoCardPostCellNode: BaseCardPostNode {
-  let node: PhotoCardContentNode
+class ArticleCardPostCellNode: BaseCardPostNode {
+
+  let node: ArticleCardContentNode
   var showsInfoNode: Bool = true
   override var shouldShowInfoNode: Bool { return showsInfoNode }
   override var contentShouldExtendBorders: Bool { return true }
   override var contentNode: ASDisplayNode { return node }
 
+  let viewModel: ArticleCardViewModel
+  override var baseViewModel: CardViewModelProtocol? {
+    return viewModel
+  }
+
   override init() {
-    node = PhotoCardContentNode()
+    node = ArticleCardContentNode()
+    viewModel = ArticleCardViewModel()
     super.init()
+    viewModel.delegate = self
   }
 
   convenience init(shouldShowInfoNode: Bool) {
     self.init()
     showsInfoNode = shouldShowInfoNode
   }
-
-  override func updateMode(fullMode: Bool) {
-    node.setupMode(fullViewMode: fullMode)
-  }
 }
 
-class PhotoCardContentNode: ASDisplayNode {
+class ArticleCardContentNode: ASDisplayNode {
   private let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
-
+  
   var imageNode: ASNetworkImageNode
   var titleNode: ASTextNode
   var descriptionNode: ASTextNode
 
-  var imageUrl: String? {
-    didSet {
-      if let imageUrl = imageUrl {
-        imageNode.url = URL(string: imageUrl)
-      }
-    }
-  }
   var articleTitle: String? {
     didSet {
       if let articleTitle = articleTitle {
         titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
           .append(text: articleTitle, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+      } else {
+        titleNode.attributedText = nil
       }
+
+      titleNode.setNeedsLayout()
     }
   }
+
   var articleDescription: String? {
     didSet {
       if let articleDescription = articleDescription {
         descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
           .append(text: articleDescription, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+      } else {
+        descriptionNode.attributedText = nil
       }
+
+      descriptionNode.setNeedsLayout()
     }
   }
+
+  var imageUrl: String? {
+    didSet {
+      if let imageUrl = imageUrl {
+        imageNode.url = URL(string: imageUrl)
+      } else {
+        imageNode.url = nil
+      }
+
+      imageNode.setNeedsLayout()
+    }
+  }
+
   var hasImage: Bool {
     get {
       return !(imageUrl?.isEmpty ?? true)
     }
   }
-
+  
   override init() {
     imageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
@@ -77,31 +96,15 @@ class PhotoCardContentNode: ASDisplayNode {
     addSubnode(imageNode)
     addSubnode(titleNode)
     addSubnode(descriptionNode)
-    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
-    imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
     setupNode()
   }
 
   private func setupNode() {
-    setupMode(fullViewMode: false)
+    titleNode.maximumNumberOfLines = 3
+    descriptionNode.maximumNumberOfLines = 3
 
     imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
-    imageNode.addTarget(self, action: #selector(photoImageTouchUpInside(_:)), forControlEvents: .touchUpInside)
-  }
-
-  func setupMode(fullViewMode: Bool) {  
-    titleNode.maximumNumberOfLines = fullViewMode ? 0 : 3
-    descriptionNode.maximumNumberOfLines = fullViewMode ? 0 : 3
-    setNeedsLayout()
-  }
-
-  func photoImageTouchUpInside(_ sender: ASImageNode?) {
-  }
-
-  private func spacer(height: CGFloat) -> ASLayoutSpec {
-    return ASLayoutSpec().styled { (style) in
-      style.height = ASDimensionMake(height)
-    }
+    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
   }
 
   private func titleInset() -> UIEdgeInsets {
@@ -122,11 +125,16 @@ class PhotoCardContentNode: ASDisplayNode {
     return UIEdgeInsets(top: 0, left: 0, bottom: 0 , right: 0)
   }
 
+  private func spacer(height: CGFloat) -> ASLayoutSpec {
+    return ASLayoutSpec().styled { (style) in
+      style.height = ASDimensionMake(height)
+    }
+  }
+
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let imageSize = CGSize(width: constrainedSize.max.width, height: 190.0)
     imageNode.style.preferredSize = imageSize
     imageNode.defaultImage = UIImage(color: ASDisplayNodeDefaultPlaceholderColor(), size: imageSize)
-    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
 
     let imageInsetLayoutSpec = ASInsetLayoutSpec(insets: imageInset(), child: imageNode)
     let titleInsetLayoutSpec = ASInsetLayoutSpec(insets: titleInset(), child: titleNode)
@@ -146,6 +154,20 @@ class PhotoCardContentNode: ASDisplayNode {
                                           children: nodesArray)
 
     return verticalStack
+  }
+}
 
+
+extension ArticleCardPostCellNode: ArticleCardViewModelDelegate {
+  func resourceUpdated(viewModel: ArticleCardViewModel) {
+    let values = viewModel.values()
+    showsInfoNode = values.infoNode
+    postInfoData = values.postInfo
+    node.articleTitle = values.content.title
+    node.articleDescription = values.content.description
+    node.imageUrl = values.content.imageUrl
+    articleCommentsSummary = values.content.comments
+    setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
+    setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
   }
 }

@@ -319,7 +319,7 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
     }
     switch segment {
     case .latest, .following:
-      let baseCardNode = CardFactory.shared.createCardFor(resource: resource)
+      let baseCardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType)
       if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
         !readingListCell.node.isImageCollectionLoaded {
         let max = readingListCell.node.maxNumberOfImages
@@ -521,7 +521,7 @@ extension ProfileDetailsViewController {
   }
 
   fileprivate func pushGenericViewControllerCard(resource: ModelResource, title: String? = nil) {
-    guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+    guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)

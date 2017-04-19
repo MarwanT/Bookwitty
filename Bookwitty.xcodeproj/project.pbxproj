@@ -9,15 +9,35 @@
 /* Begin PBXBuildFile section */
 		19C00714F09A1D3937F9AAE7 /* Pods_BookwittyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */; };
 		2D1D0880B4A8EB8C8A6AD1A8 /* Pods_Bookwitty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */; };
+		561229E11EA5E440004CE079 /* TopicCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561229E01EA5E440004CE079 /* TopicCardViewModel.swift */; };
+		561229E31EA5FA5D004CE079 /* ProfileCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561229E21EA5FA5D004CE079 /* ProfileCardViewModel.swift */; };
+		561229E51EA60423004CE079 /* BookCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561229E41EA60423004CE079 /* BookCardViewModel.swift */; };
+		561229E71EA628E9004CE079 /* QuoteCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561229E61EA628E9004CE079 /* QuoteCardViewModel.swift */; };
+		561229E91EA65451004CE079 /* LinkCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561229E81EA65451004CE079 /* LinkCardViewModel.swift */; };
+		561229EB1EA65F21004CE079 /* PhotoCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561229EA1EA65F21004CE079 /* PhotoCardViewModel.swift */; };
+		561229ED1EA66D82004CE079 /* ReadingListCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561229EC1EA66D82004CE079 /* ReadingListCardViewModel.swift */; };
 		5613402E1E5221730085B8A5 /* AccountPenNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5613402D1E5221730085B8A5 /* AccountPenNameTableViewCell.swift */; };
 		56205DEB1E5324BC000CA4D7 /* TableViewSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56205DE91E5324BC000CA4D7 /* TableViewSectionHeaderView.swift */; };
 		56205DEC1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56205DEA1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib */; };
 		562A31201E659919002851DE /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562A311F1E659919002851DE /* Strings.swift */; };
 		562A31231E65D7F2002851DE /* TopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562A31221E65D7F2002851DE /* TopicViewController.swift */; };
 		562A31261E65E214002851DE /* TopicHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562A31251E65E214002851DE /* TopicHeaderNode.swift */; };
+		56320C871EA748FB00642934 /* ArticleCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C7A1EA748FB00642934 /* ArticleCardPostCellNode.swift */; };
+		56320C881EA748FB00642934 /* BaseCardPostNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C7B1EA748FB00642934 /* BaseCardPostNode.swift */; };
+		56320C891EA748FB00642934 /* BookCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C7C1EA748FB00642934 /* BookCardPostCellNode.swift */; };
+		56320C8A1EA748FB00642934 /* CardActionBarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C7E1EA748FB00642934 /* CardActionBarNode.swift */; };
+		56320C8B1EA748FB00642934 /* CardPostInfoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C7F1EA748FB00642934 /* CardPostInfoNode.swift */; };
+		56320C8C1EA748FB00642934 /* LinkCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C801EA748FB00642934 /* LinkCardPostCellNode.swift */; };
+		56320C8D1EA748FB00642934 /* PhotoCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C811EA748FB00642934 /* PhotoCardPostCellNode.swift */; };
+		56320C8E1EA748FB00642934 /* ProfileCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C821EA748FB00642934 /* ProfileCardPostCellNode.swift */; };
+		56320C8F1EA748FB00642934 /* QuoteCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C831EA748FB00642934 /* QuoteCardPostCellNode.swift */; };
+		56320C901EA748FB00642934 /* ReadingListCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C841EA748FB00642934 /* ReadingListCardPostCellNode.swift */; };
+		56320C911EA748FB00642934 /* TopicCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C851EA748FB00642934 /* TopicCardPostCellNode.swift */; };
+		56320C921EA748FB00642934 /* VideoCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C861EA748FB00642934 /* VideoCardPostCellNode.swift */; };
 		56399DBC1E51CF2D005192AC /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56399DBB1E51CF2D005192AC /* Account.storyboard */; };
 		56399DBF1E51D006005192AC /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56399DBE1E51D006005192AC /* AccountViewController.swift */; };
 		56399DC21E51D0F0005192AC /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56399DC11E51D0F0005192AC /* AccountViewModel.swift */; };
+		5639A4081EA5359600528D6F /* VideoCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5639A4071EA5359600528D6F /* VideoCardViewModel.swift */; };
 		563C1EA71E93D14600675B42 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 563C1EA91E93D14600675B42 /* Localizable.stringsdict */; };
 		5644F21A1E55A2F100B7D8E7 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5644F2191E55A2F100B7D8E7 /* SettingsViewController.swift */; };
 		5644F21C1E55A77100B7D8E7 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5644F21B1E55A77100B7D8E7 /* SettingsViewModel.swift */; };
@@ -36,6 +56,7 @@
 		567EE1B11E7A9F1200A0CA0D /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567EE1B01E7A9F1200A0CA0D /* ForgotPasswordViewController.swift */; };
 		56929CE61E671BE700B3D00A /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56929CE51E671BE700B3D00A /* SegmentedControl.swift */; };
 		56A623B61EA0C02D00D930A7 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A623B51EA0C02D00D930A7 /* DataManager.swift */; };
+		56AC22C91EA50D2700484449 /* ArticleCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56AC22C81EA50D2700484449 /* ArticleCardViewModel.swift */; };
 		56BEF6371E6825C80012FDE5 /* SegmentedControlNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BEF6361E6825C80012FDE5 /* SegmentedControlNode.swift */; };
 		56BEF6391E6836DB0012FDE5 /* ContributorsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BEF6381E6836DB0012FDE5 /* ContributorsNode.swift */; };
 		56D36E821E6DAB3400791098 /* PenNameFollowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D36E811E6DAB3400791098 /* PenNameFollowNode.swift */; };
@@ -165,7 +186,6 @@
 		F400CDC81E7AF62600B7EF26 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400CDC71E7AF62600B7EF26 /* SearchViewModel.swift */; };
 		F40700501E55992000DA48A4 /* ReadingListBooksNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */; };
 		F40700521E55F55A00DA48A4 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40700511E55F55A00DA48A4 /* Image.swift */; };
-		F40986C01E9B85A2009239C2 /* BookCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40986BF1E9B85A2009239C2 /* BookCardPostCellNode.swift */; };
 		F417B1D11E71C3D400B0FAFE /* PostDetailsHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F417B1CE1E71C3D400B0FAFE /* PostDetailsHeaderNode.swift */; };
 		F417B1D21E71C3D400B0FAFE /* PostDetailsItemNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F417B1CF1E71C3D400B0FAFE /* PostDetailsItemNode.swift */; };
 		F417B1D31E71C3D400B0FAFE /* PostDetailsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F417B1D01E71C3D400B0FAFE /* PostDetailsNode.swift */; };
@@ -182,19 +202,12 @@
 		F420B6A21E43C570001F34CD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420B6A11E43C570001F34CD /* User.swift */; };
 		F420B6A41E43D01A001F34CD /* PenNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420B6A31E43D01A001F34CD /* PenNameViewController.swift */; };
 		F420B6A61E43D05E001F34CD /* PenNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F420B6A51E43D05E001F34CD /* PenNameViewModel.swift */; };
-		F422D82C1E51992800A32C2F /* PhotoCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F422D82B1E51992800A32C2F /* PhotoCardPostCellNode.swift */; };
-		F422D82E1E51AC3900A32C2F /* VideoCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F422D82D1E51AC3900A32C2F /* VideoCardPostCellNode.swift */; };
-		F422D8301E51CD9D00A32C2F /* LinkCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F422D82F1E51CD9D00A32C2F /* LinkCardPostCellNode.swift */; };
 		F42441651E66FE260087E3B1 /* CardFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42441641E66FE260087E3B1 /* CardFactory.swift */; };
 		F42462B11E760E1500DB3A2C /* DTAttributedTextContentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42462B01E760E1500DB3A2C /* DTAttributedTextContentNode.swift */; };
 		F42600891E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42600881E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift */; };
 		F426008B1E6CD18800E14D93 /* OnBoardingCellSectionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426008A1E6CD18800E14D93 /* OnBoardingCellSectionNode.swift */; };
 		F426008D1E6D8D1200E14D93 /* OnBoardingLoadingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426008C1E6D8D1200E14D93 /* OnBoardingLoadingButton.swift */; };
 		F426008F1E6DCD8B00E14D93 /* OnBoardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426008E1E6DCD8B00E14D93 /* OnBoardingViewModel.swift */; };
-		F42686771E4EF83C0085E581 /* CardPostInfoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */; };
-		F42686791E4F458A0085E581 /* CardActionBarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42686781E4F458A0085E581 /* CardActionBarNode.swift */; };
-		F426867B1E505CE60085E581 /* BaseCardPostNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426867A1E505CE60085E581 /* BaseCardPostNode.swift */; };
-		F426867F1E511B7C0085E581 /* ArticleCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426867E1E511B7C0085E581 /* ArticleCardPostCellNode.swift */; };
 		F42A0AFF1E80829600ED52D2 /* UISearchBar+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42A0AFE1E80829600ED52D2 /* UISearchBar+Utils.swift */; };
 		F42DFEBF1E77F39A0025CE65 /* RelatedBooksMinimalCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42DFEBE1E77F39A0025CE65 /* RelatedBooksMinimalCellNode.swift */; };
 		F42DFEC11E7836EC0025CE65 /* SeparatorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42DFEC01E7836EC0025CE65 /* SeparatorNode.swift */; };
@@ -210,12 +223,8 @@
 		F458C5F21E5AFD4300AFD0FC /* PenNameDisplayNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F458C5F11E5AFD4300AFD0FC /* PenNameDisplayNode.swift */; };
 		F458C5F41E5AFEAA00AFD0FC /* PenNameCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F458C5F31E5AFEAA00AFD0FC /* PenNameCellNode.swift */; };
 		F458C5F61E5B25D900AFD0FC /* Newsfeed+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = F458C5F51E5B25D900AFD0FC /* Newsfeed+API.swift */; };
-		F45A50131E530AA2005E5C56 /* QuoteCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45A50121E530AA2005E5C56 /* QuoteCardPostCellNode.swift */; };
-		F45A50151E536591005E5C56 /* TopicCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45A50141E536591005E5C56 /* TopicCardPostCellNode.swift */; };
 		F461B25C1E4B73B0005EA5A8 /* NewsFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F461B25B1E4B73B0005EA5A8 /* NewsFeedViewController.swift */; };
-		F4670AF91E54556800159F4F /* ReadingListCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4670AF81E54556800159F4F /* ReadingListCardPostCellNode.swift */; };
 		F4670AFB1E54669300159F4F /* ReadingListBookNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4670AFA1E54669300159F4F /* ReadingListBookNode.swift */; };
-		F4670AFD1E54ACF200159F4F /* ProfileCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4670AFC1E54ACF200159F4F /* ProfileCardPostCellNode.swift */; };
 		F47188181E4B1EB50076F93C /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47188171E4B1EB50076F93C /* Root.storyboard */; };
 		F4737D3F1EA0FE240065617D /* ModelCommonActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4737D3E1EA0FE240065617D /* ModelCommonActions.swift */; };
 		F478D92C1E7C26BA00B9EF18 /* ProfileDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F478D92B1E7C26BA00B9EF18 /* ProfileDetailsViewController.swift */; };
@@ -256,15 +265,35 @@
 
 /* Begin PBXFileReference section */
 		2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bookwitty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		561229E01EA5E440004CE079 /* TopicCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCardViewModel.swift; sourceTree = "<group>"; };
+		561229E21EA5FA5D004CE079 /* ProfileCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCardViewModel.swift; sourceTree = "<group>"; };
+		561229E41EA60423004CE079 /* BookCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookCardViewModel.swift; sourceTree = "<group>"; };
+		561229E61EA628E9004CE079 /* QuoteCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteCardViewModel.swift; sourceTree = "<group>"; };
+		561229E81EA65451004CE079 /* LinkCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkCardViewModel.swift; sourceTree = "<group>"; };
+		561229EA1EA65F21004CE079 /* PhotoCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCardViewModel.swift; sourceTree = "<group>"; };
+		561229EC1EA66D82004CE079 /* ReadingListCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingListCardViewModel.swift; sourceTree = "<group>"; };
 		5613402D1E5221730085B8A5 /* AccountPenNameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountPenNameTableViewCell.swift; sourceTree = "<group>"; };
 		56205DE91E5324BC000CA4D7 /* TableViewSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewSectionHeaderView.swift; sourceTree = "<group>"; };
 		56205DEA1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewSectionHeaderView.xib; sourceTree = "<group>"; };
 		562A311F1E659919002851DE /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		562A31221E65D7F2002851DE /* TopicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicViewController.swift; sourceTree = "<group>"; };
 		562A31251E65E214002851DE /* TopicHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicHeaderNode.swift; sourceTree = "<group>"; };
+		56320C7A1EA748FB00642934 /* ArticleCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArticleCardPostCellNode.swift; path = Cards/ArticleCardPostCellNode.swift; sourceTree = "<group>"; };
+		56320C7B1EA748FB00642934 /* BaseCardPostNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseCardPostNode.swift; path = Cards/BaseCardPostNode.swift; sourceTree = "<group>"; };
+		56320C7C1EA748FB00642934 /* BookCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BookCardPostCellNode.swift; path = Cards/BookCardPostCellNode.swift; sourceTree = "<group>"; };
+		56320C7E1EA748FB00642934 /* CardActionBarNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardActionBarNode.swift; sourceTree = "<group>"; };
+		56320C7F1EA748FB00642934 /* CardPostInfoNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPostInfoNode.swift; sourceTree = "<group>"; };
+		56320C801EA748FB00642934 /* LinkCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LinkCardPostCellNode.swift; path = Cards/LinkCardPostCellNode.swift; sourceTree = "<group>"; };
+		56320C811EA748FB00642934 /* PhotoCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoCardPostCellNode.swift; path = Cards/PhotoCardPostCellNode.swift; sourceTree = "<group>"; };
+		56320C821EA748FB00642934 /* ProfileCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileCardPostCellNode.swift; path = Cards/ProfileCardPostCellNode.swift; sourceTree = "<group>"; };
+		56320C831EA748FB00642934 /* QuoteCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QuoteCardPostCellNode.swift; path = Cards/QuoteCardPostCellNode.swift; sourceTree = "<group>"; };
+		56320C841EA748FB00642934 /* ReadingListCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReadingListCardPostCellNode.swift; path = Cards/ReadingListCardPostCellNode.swift; sourceTree = "<group>"; };
+		56320C851EA748FB00642934 /* TopicCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopicCardPostCellNode.swift; path = Cards/TopicCardPostCellNode.swift; sourceTree = "<group>"; };
+		56320C861EA748FB00642934 /* VideoCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoCardPostCellNode.swift; path = Cards/VideoCardPostCellNode.swift; sourceTree = "<group>"; };
 		56399DBB1E51CF2D005192AC /* Account.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Account.storyboard; sourceTree = "<group>"; };
 		56399DBE1E51D006005192AC /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		56399DC11E51D0F0005192AC /* AccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
+		5639A4071EA5359600528D6F /* VideoCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCardViewModel.swift; sourceTree = "<group>"; };
 		563C1EA81E93D14600675B42 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		563C1EAA1E93D14900675B42 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = fr; path = fr.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		5644F2191E55A2F100B7D8E7 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -285,6 +314,7 @@
 		567EE1B01E7A9F1200A0CA0D /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		56929CE51E671BE700B3D00A /* SegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		56A623B51EA0C02D00D930A7 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		56AC22C81EA50D2700484449 /* ArticleCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleCardViewModel.swift; sourceTree = "<group>"; };
 		56BEF6361E6825C80012FDE5 /* SegmentedControlNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlNode.swift; sourceTree = "<group>"; };
 		56BEF6381E6836DB0012FDE5 /* ContributorsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContributorsNode.swift; path = TopicsDetails/ContributorsNode.swift; sourceTree = "<group>"; };
 		56D36E811E6DAB3400791098 /* PenNameFollowNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameFollowNode.swift; sourceTree = "<group>"; };
@@ -423,7 +453,6 @@
 		F400CDC71E7AF62600B7EF26 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingListBooksNode.swift; sourceTree = "<group>"; };
 		F40700511E55F55A00DA48A4 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
-		F40986BF1E9B85A2009239C2 /* BookCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BookCardPostCellNode.swift; path = Cards/BookCardPostCellNode.swift; sourceTree = "<group>"; };
 		F417B1CE1E71C3D400B0FAFE /* PostDetailsHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailsHeaderNode.swift; path = PostDetails/PostDetailsHeaderNode.swift; sourceTree = "<group>"; };
 		F417B1CF1E71C3D400B0FAFE /* PostDetailsItemNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailsItemNode.swift; path = PostDetails/PostDetailsItemNode.swift; sourceTree = "<group>"; };
 		F417B1D01E71C3D400B0FAFE /* PostDetailsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostDetailsNode.swift; path = PostDetails/PostDetailsNode.swift; sourceTree = "<group>"; };
@@ -440,19 +469,12 @@
 		F420B6A11E43C570001F34CD /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F420B6A31E43D01A001F34CD /* PenNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameViewController.swift; sourceTree = "<group>"; };
 		F420B6A51E43D05E001F34CD /* PenNameViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameViewModel.swift; sourceTree = "<group>"; };
-		F422D82B1E51992800A32C2F /* PhotoCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCardPostCellNode.swift; sourceTree = "<group>"; };
-		F422D82D1E51AC3900A32C2F /* VideoCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCardPostCellNode.swift; sourceTree = "<group>"; };
-		F422D82F1E51CD9D00A32C2F /* LinkCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkCardPostCellNode.swift; sourceTree = "<group>"; };
 		F42441641E66FE260087E3B1 /* CardFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardFactory.swift; path = Factories/CardFactory.swift; sourceTree = "<group>"; };
 		F42462B01E760E1500DB3A2C /* DTAttributedTextContentNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTAttributedTextContentNode.swift; sourceTree = "<group>"; };
 		F42600881E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingItemHeaderNode.swift; sourceTree = "<group>"; };
 		F426008A1E6CD18800E14D93 /* OnBoardingCellSectionNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingCellSectionNode.swift; sourceTree = "<group>"; };
 		F426008C1E6D8D1200E14D93 /* OnBoardingLoadingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingLoadingButton.swift; sourceTree = "<group>"; };
 		F426008E1E6DCD8B00E14D93 /* OnBoardingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingViewModel.swift; sourceTree = "<group>"; };
-		F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardPostInfoNode.swift; sourceTree = "<group>"; };
-		F42686781E4F458A0085E581 /* CardActionBarNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardActionBarNode.swift; sourceTree = "<group>"; };
-		F426867A1E505CE60085E581 /* BaseCardPostNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCardPostNode.swift; sourceTree = "<group>"; };
-		F426867E1E511B7C0085E581 /* ArticleCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleCardPostCellNode.swift; sourceTree = "<group>"; };
 		F42A0AFE1E80829600ED52D2 /* UISearchBar+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Utils.swift"; sourceTree = "<group>"; };
 		F42DFEBE1E77F39A0025CE65 /* RelatedBooksMinimalCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelatedBooksMinimalCellNode.swift; path = PostDetails/RelatedBooksMinimalCellNode.swift; sourceTree = "<group>"; };
 		F42DFEC01E7836EC0025CE65 /* SeparatorNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorNode.swift; sourceTree = "<group>"; };
@@ -468,12 +490,8 @@
 		F458C5F11E5AFD4300AFD0FC /* PenNameDisplayNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameDisplayNode.swift; sourceTree = "<group>"; };
 		F458C5F31E5AFEAA00AFD0FC /* PenNameCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameCellNode.swift; sourceTree = "<group>"; };
 		F458C5F51E5B25D900AFD0FC /* Newsfeed+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Newsfeed+API.swift"; sourceTree = "<group>"; };
-		F45A50121E530AA2005E5C56 /* QuoteCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteCardPostCellNode.swift; sourceTree = "<group>"; };
-		F45A50141E536591005E5C56 /* TopicCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCardPostCellNode.swift; sourceTree = "<group>"; };
 		F461B25B1E4B73B0005EA5A8 /* NewsFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewsFeedViewController.swift; path = Bookwitty/ViewControllers/Root/NewsFeedViewController.swift; sourceTree = SOURCE_ROOT; };
-		F4670AF81E54556800159F4F /* ReadingListCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingListCardPostCellNode.swift; sourceTree = "<group>"; };
 		F4670AFA1E54669300159F4F /* ReadingListBookNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingListBookNode.swift; sourceTree = "<group>"; };
-		F4670AFC1E54ACF200159F4F /* ProfileCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCardPostCellNode.swift; sourceTree = "<group>"; };
 		F47188171E4B1EB50076F93C /* Root.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Root.storyboard; sourceTree = "<group>"; };
 		F4737D3E1EA0FE240065617D /* ModelCommonActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelCommonActions.swift; sourceTree = "<group>"; };
 		F478D92B1E7C26BA00B9EF18 /* ProfileDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileDetailsViewController.swift; sourceTree = "<group>"; };
@@ -569,6 +587,16 @@
 			path = TopicsDetails;
 			sourceTree = "<group>";
 		};
+		56320C7D1EA748FB00642934 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				56320C7E1EA748FB00642934 /* CardActionBarNode.swift */,
+				56320C7F1EA748FB00642934 /* CardPostInfoNode.swift */,
+			);
+			name = Components;
+			path = Cards/Components;
+			sourceTree = "<group>";
+		};
 		56399DBD1E51CFF2005192AC /* Account */ = {
 			isa = PBXGroup;
 			children = (
@@ -630,6 +658,22 @@
 			path = Segmented;
 			sourceTree = "<group>";
 		};
+		56AC22C71EA50B6E00484449 /* Cards */ = {
+			isa = PBXGroup;
+			children = (
+				56AC22C81EA50D2700484449 /* ArticleCardViewModel.swift */,
+				5639A4071EA5359600528D6F /* VideoCardViewModel.swift */,
+				561229E01EA5E440004CE079 /* TopicCardViewModel.swift */,
+				561229E21EA5FA5D004CE079 /* ProfileCardViewModel.swift */,
+				561229E41EA60423004CE079 /* BookCardViewModel.swift */,
+				561229E61EA628E9004CE079 /* QuoteCardViewModel.swift */,
+				561229E81EA65451004CE079 /* LinkCardViewModel.swift */,
+				561229EA1EA65F21004CE079 /* PhotoCardViewModel.swift */,
+				561229EC1EA66D82004CE079 /* ReadingListCardViewModel.swift */,
+			);
+			path = Cards;
+			sourceTree = "<group>";
+		};
 		56E8B6421E6971B900D8E71E /* ControllerNodes */ = {
 			isa = PBXGroup;
 			children = (
@@ -651,6 +695,7 @@
 		59057FC51E252C500036AAF3 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				56AC22C71EA50B6E00484449 /* Cards */,
 				564EEC081E70192300700474 /* Details */,
 				56399DC01E51D0DA005192AC /* Account */,
 				59DA475A1E3B7A8F00BA90A5 /* Introduction */,
@@ -1194,18 +1239,17 @@
 		F417B1C41E712C7100B0FAFE /* Cards */ = {
 			isa = PBXGroup;
 			children = (
-				F426867A1E505CE60085E581 /* BaseCardPostNode.swift */,
-				F426867E1E511B7C0085E581 /* ArticleCardPostCellNode.swift */,
-				F4670AF81E54556800159F4F /* ReadingListCardPostCellNode.swift */,
-				F422D82D1E51AC3900A32C2F /* VideoCardPostCellNode.swift */,
-				F45A50141E536591005E5C56 /* TopicCardPostCellNode.swift */,
-				F4670AFC1E54ACF200159F4F /* ProfileCardPostCellNode.swift */,
-				F40986BF1E9B85A2009239C2 /* BookCardPostCellNode.swift */,
-				F45A50121E530AA2005E5C56 /* QuoteCardPostCellNode.swift */,
-				F422D82F1E51CD9D00A32C2F /* LinkCardPostCellNode.swift */,
-				F422D82B1E51992800A32C2F /* PhotoCardPostCellNode.swift */,
-				F42686781E4F458A0085E581 /* CardActionBarNode.swift */,
-				F42686761E4EF83C0085E581 /* CardPostInfoNode.swift */,
+				56320C7D1EA748FB00642934 /* Components */,
+				56320C7A1EA748FB00642934 /* ArticleCardPostCellNode.swift */,
+				56320C7B1EA748FB00642934 /* BaseCardPostNode.swift */,
+				56320C7C1EA748FB00642934 /* BookCardPostCellNode.swift */,
+				56320C801EA748FB00642934 /* LinkCardPostCellNode.swift */,
+				56320C811EA748FB00642934 /* PhotoCardPostCellNode.swift */,
+				56320C821EA748FB00642934 /* ProfileCardPostCellNode.swift */,
+				56320C831EA748FB00642934 /* QuoteCardPostCellNode.swift */,
+				56320C841EA748FB00642934 /* ReadingListCardPostCellNode.swift */,
+				56320C851EA748FB00642934 /* TopicCardPostCellNode.swift */,
+				56320C861EA748FB00642934 /* VideoCardPostCellNode.swift */,
 			);
 			name = Cards;
 			sourceTree = "<group>";
@@ -1495,7 +1539,6 @@
 				59903FED1E3B9D90006043EF /* View.swift in Sources */,
 				59DCFD7D1E96754C00C94D21 /* Price.swift in Sources */,
 				F42041C71E73088500E7D208 /* CardDetailsViewModel.swift in Sources */,
-				F42686771E4EF83C0085E581 /* CardPostInfoNode.swift in Sources */,
 				564EEC101E70298200700474 /* ReadingListsViewModel.swift in Sources */,
 				59CF76481E5C8079003EAB6B /* UserManager.swift in Sources */,
 				594290201E5316380006B2F1 /* FeaturedContentCollectionViewCell.swift in Sources */,
@@ -1516,10 +1559,8 @@
 				F4A4262F1E5622190090CD51 /* Topic.swift in Sources */,
 				56D5F73B1E5B60BF00F6A164 /* Book.swift in Sources */,
 				56D36E821E6DAB3400791098 /* PenNameFollowNode.swift in Sources */,
-				F42686791E4F458A0085E581 /* CardActionBarNode.swift in Sources */,
 				F417B1D31E71C3D400B0FAFE /* PostDetailsNode.swift in Sources */,
 				5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */,
-				F426867B1E505CE60085E581 /* BaseCardPostNode.swift in Sources */,
 				59DCFD811E967BE700C94D21 /* ProductDetails.swift in Sources */,
 				594290181E522D980006B2F1 /* BannerView.swift in Sources */,
 				F420AD9F1E4231E000C78AEB /* AttributedStringBuilder.swift in Sources */,
@@ -1535,9 +1576,8 @@
 				F42DFEC11E7836EC0025CE65 /* SeparatorNode.swift in Sources */,
 				59D27D0F1E40D2EE00468C29 /* SignInViewModel.swift in Sources */,
 				59CF764C1E5CB15E003EAB6B /* BooksTableViewModel.swift in Sources */,
-				F426867F1E511B7C0085E581 /* ArticleCardPostCellNode.swift in Sources */,
 				F43A690D1E79441D001C3657 /* Counts.swift in Sources */,
-				F422D82C1E51992800A32C2F /* PhotoCardPostCellNode.swift in Sources */,
+				561229EB1EA65F21004CE079 /* PhotoCardViewModel.swift in Sources */,
 				5644F21C1E55A77100B7D8E7 /* SettingsViewModel.swift in Sources */,
 				F4A426351E5629210090CD51 /* Video.swift in Sources */,
 				5929C2751E5B89B1006E08F8 /* ValueFormatters.swift in Sources */,
@@ -1545,7 +1585,6 @@
 				56620FC81E89470600BD92BB /* Upload+API.swift in Sources */,
 				564EEC0E1E7027A100700474 /* ReadingListsViewController.swift in Sources */,
 				59D602201E36387A00271315 /* Color.swift in Sources */,
-				F4670AF91E54556800159F4F /* ReadingListCardPostCellNode.swift in Sources */,
 				59D106D01E804D2100BB9695 /* AppMeta.swift in Sources */,
 				F4A426331E5628080090CD51 /* Quote.swift in Sources */,
 				562A31231E65D7F2002851DE /* TopicViewController.swift in Sources */,
@@ -1553,7 +1592,6 @@
 				596562E41E79EF9E00B93920 /* MisfortuneNode.swift in Sources */,
 				596FAD741E2E53AC0064F967 /* Environment.swift in Sources */,
 				56BEF6391E6836DB0012FDE5 /* ContributorsNode.swift in Sources */,
-				F422D82E1E51AC3900A32C2F /* VideoCardPostCellNode.swift in Sources */,
 				F49AE93E1E47CFEA0031B355 /* Parser.swift in Sources */,
 				595C4F0D1E3F8C0200BE3942 /* InputField.swift in Sources */,
 				59049B131E81E44400EDF796 /* JoinUsNode.swift in Sources */,
@@ -1563,22 +1601,25 @@
 				59D106CC1E802C2F00BB9695 /* AppManager.swift in Sources */,
 				F417B1D21E71C3D400B0FAFE /* PostDetailsItemNode.swift in Sources */,
 				59BD55781E302EB800D3B805 /* Analytics.swift in Sources */,
-				F422D8301E51CD9D00A32C2F /* LinkCardPostCellNode.swift in Sources */,
 				56205DEB1E5324BC000CA4D7 /* TableViewSectionHeaderView.swift in Sources */,
 				56929CE61E671BE700B3D00A /* SegmentedControl.swift in Sources */,
 				594B9F6F1E55F557007C49E1 /* RootTabBarViewModel.swift in Sources */,
 				59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */,
 				F4CDDD371E60263800474CAA /* RotatingImageNode.swift in Sources */,
 				59CF44031E66E01A006C16FC /* BookDetailsViewController.swift in Sources */,
+				56320C8C1EA748FB00642934 /* LinkCardPostCellNode.swift in Sources */,
 				59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */,
 				59DA475E1E3B7A8F00BA90A5 /* TutorialViewModel.swift in Sources */,
+				56320C8A1EA748FB00642934 /* CardActionBarNode.swift in Sources */,
 				F496DE081E65DECB007E22B1 /* Paginator.swift in Sources */,
 				59CF44011E663C35006C16FC /* General+API.swift in Sources */,
 				F400CDC81E7AF62600B7EF26 /* SearchViewModel.swift in Sources */,
 				59DCFD7F1E96785B00C94D21 /* SupplierInformation.swift in Sources */,
+				56320C8E1EA748FB00642934 /* ProfileCardPostCellNode.swift in Sources */,
 				597B8E2D1E37F6BC00C7811B /* Image+Utils.swift in Sources */,
 				59CF764A1E5CB010003EAB6B /* BooksTableViewController.swift in Sources */,
 				F434F7911E4E16CE001812BD /* CellNode.swift in Sources */,
+				56320C911EA748FB00642934 /* TopicCardPostCellNode.swift in Sources */,
 				56A623B61EA0C02D00D930A7 /* DataManager.swift in Sources */,
 				F4670AFB1E54669300159F4F /* ReadingListBookNode.swift in Sources */,
 				F4207B941E58466A00216A2E /* PenNameSelectionNode.swift in Sources */,
@@ -1591,33 +1632,39 @@
 				564EEC0A1E70194100700474 /* TopicViewModel.swift in Sources */,
 				594290361E548FA10006B2F1 /* BookTableViewCell.swift in Sources */,
 				59EC5BA71E6C5987006E1CB9 /* BookDetailsHeaderNode.swift in Sources */,
+				561229E51EA60423004CE079 /* BookCardViewModel.swift in Sources */,
 				562A31261E65E214002851DE /* TopicHeaderNode.swift in Sources */,
 				F41D52A21E40EB780021A4AE /* RegisterViewModel.swift in Sources */,
 				F4A426271E560ED00090CD51 /* Author.swift in Sources */,
 				59CBE4FA1E8094070068C7AD /* ErrorManager.swift in Sources */,
 				56FC41971E58CBA100D9B1CE /* NSBundle+Language.m in Sources */,
-				F45A50131E530AA2005E5C56 /* QuoteCardPostCellNode.swift in Sources */,
+				561229E91EA65451004CE079 /* LinkCardViewModel.swift in Sources */,
 				59D6021E1E36363400271315 /* Font.swift in Sources */,
 				593769D71E3689FB00F23226 /* Appearance.swift in Sources */,
 				591E15581E70FE37008CA78A /* GenericNodeViewController.swift in Sources */,
 				594290091E4FF0E30006B2F1 /* CategoriesTableViewModel.swift in Sources */,
+				56320C921EA748FB00642934 /* VideoCardPostCellNode.swift in Sources */,
 				F42462B11E760E1500DB3A2C /* DTAttributedTextContentNode.swift in Sources */,
 				F420B6A41E43D01A001F34CD /* PenNameViewController.swift in Sources */,
 				5929C2731E5B2FDB006E08F8 /* CuratedCollection+API.swift in Sources */,
 				F42041C11E72ACCA00E7D208 /* PostDetailsViewController.swift in Sources */,
 				59EC5BA61E6C5987006E1CB9 /* BookDetailsFormatNode.swift in Sources */,
 				F43A5E921E69A840008C018B /* OnBoardingControllerNode.swift in Sources */,
+				56AC22C91EA50D2700484449 /* ArticleCardViewModel.swift in Sources */,
 				5967E45A1E410A850067093F /* NotificationView.swift in Sources */,
 				B4ECA3471E4E05E7004B3EE2 /* WebViewController.swift in Sources */,
 				59591F1F1E6EB065005592B8 /* BookDetailsInformationNode.swift in Sources */,
 				56E8B6441E6971C900D8E71E /* TopicControllerNode.swift in Sources */,
+				561229E11EA5E440004CE079 /* TopicCardViewModel.swift in Sources */,
 				593769D81E3689FB00F23226 /* DefaultTheme.swift in Sources */,
 				59EC5BAA1E6C5987006E1CB9 /* BookDetailsStockNode.swift in Sources */,
+				561229E31EA5FA5D004CE079 /* ProfileCardViewModel.swift in Sources */,
 				59A341571E575D3100CF90B3 /* NewsFeedViewModel.swift in Sources */,
 				5657A5431E8BCF02000EE647 /* Utilities+API.swift in Sources */,
+				561229ED1EA66D82004CE079 /* ReadingListCardViewModel.swift in Sources */,
 				594290291E5347670006B2F1 /* DisclosureView.swift in Sources */,
+				56320C8F1EA748FB00642934 /* QuoteCardPostCellNode.swift in Sources */,
 				594F4EAF1E440A4900A947FA /* User+API.swift in Sources */,
-				F4670AFD1E54ACF200159F4F /* ProfileCardPostCellNode.swift in Sources */,
 				56E09DBE1E546B2100B7C6E6 /* ChangePasswordViewModel.swift in Sources */,
 				56535F341E7CB9ED0045E73D /* Media.swift in Sources */,
 				591E15561E70E381008CA78A /* SectionSubtitleHeaderNode.swift in Sources */,
@@ -1631,12 +1678,16 @@
 				5945FAC91E6475C80010CF77 /* CategoryViewController.swift in Sources */,
 				56BEF6371E6825C80012FDE5 /* SegmentedControlNode.swift in Sources */,
 				F4A426371E562A9F0090CD51 /* Audio.swift in Sources */,
+				56320C891EA748FB00642934 /* BookCardPostCellNode.swift in Sources */,
 				59D8FCBC1E4DA394001C1EDB /* CategoryManager.swift in Sources */,
+				56320C881EA748FB00642934 /* BaseCardPostNode.swift in Sources */,
 				F42A0AFF1E80829600ED52D2 /* UISearchBar+Utils.swift in Sources */,
 				F41F3AB71E6785CB004622D3 /* LoaderNode.swift in Sources */,
 				F496DE061E65CB30007E22B1 /* Discover+API.swift in Sources */,
+				561229E71EA628E9004CE079 /* QuoteCardViewModel.swift in Sources */,
 				F420B6A21E43C570001F34CD /* User.swift in Sources */,
 				59591F251E6F01C7005592B8 /* DisclosureNodeCell.swift in Sources */,
+				56320C901EA748FB00642934 /* ReadingListCardPostCellNode.swift in Sources */,
 				5644F21A1E55A2F100B7D8E7 /* SettingsViewController.swift in Sources */,
 				F426008D1E6D8D1200E14D93 /* OnBoardingLoadingButton.swift in Sources */,
 				56D5F73D1E5B7D0000F6A164 /* PenName+API.swift in Sources */,
@@ -1658,7 +1709,7 @@
 				5929C2711E5B25BC006E08F8 /* CuratedCollection.swift in Sources */,
 				59591F1D1E6DAF5D005592B8 /* BookDetailsAboutNode.swift in Sources */,
 				F400CDC61E7AD48D00B7EF26 /* SearchViewController.swift in Sources */,
-				F45A50151E536591005E5C56 /* TopicCardPostCellNode.swift in Sources */,
+				56320C8B1EA748FB00642934 /* CardPostInfoNode.swift in Sources */,
 				F48278BB1E4B21CA003D82F2 /* RootTabBarController.swift in Sources */,
 				F420B6A61E43D05E001F34CD /* PenNameViewModel.swift in Sources */,
 				F417B1D11E71C3D400B0FAFE /* PostDetailsHeaderNode.swift in Sources */,
@@ -1672,6 +1723,7 @@
 				56535F361E7CB9ED0045E73D /* IFramely.swift in Sources */,
 				F478D92E1E7C275D00B9EF18 /* ProfileDetailsViewModel.swift in Sources */,
 				594290161E51F4550006B2F1 /* BookStoreViewModel.swift in Sources */,
+				56320C8D1EA748FB00642934 /* PhotoCardPostCellNode.swift in Sources */,
 				59DA47651E3B7A9B00BA90A5 /* TutorialViewController.swift in Sources */,
 				F426008B1E6CD18800E14D93 /* OnBoardingCellSectionNode.swift in Sources */,
 				59B67CE01E7C57F000CB823F /* Loader.swift in Sources */,
@@ -1681,10 +1733,12 @@
 				59EC5BA91E6C5987006E1CB9 /* BookDetailsPricesNode.swift in Sources */,
 				594290391E549FF40006B2F1 /* UIColor.swift in Sources */,
 				F42DFEBF1E77F39A0025CE65 /* RelatedBooksMinimalCellNode.swift in Sources */,
+				5639A4081EA5359600528D6F /* VideoCardViewModel.swift in Sources */,
 				59DA475D1E3B7A8F00BA90A5 /* IntroductionViewModel.swift in Sources */,
 				56535F331E7CB9ED0045E73D /* Response.swift in Sources */,
 				59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */,
 				59CBE4F81E8090280068C7AD /* AppError.swift in Sources */,
+				56320C871EA748FB00642934 /* ArticleCardPostCellNode.swift in Sources */,
 				59D6021B1E32597B00271315 /* AppKeys.swift in Sources */,
 				59049B111E81E36000EDF796 /* Node+Util.swift in Sources */,
 				56F9FDCC1E82F39B00A48CEB /* UIBarButtonItem+Utils.swift in Sources */,
@@ -1693,7 +1747,6 @@
 				F49AF6B31E81E5B40045F604 /* CallToAction.swift in Sources */,
 				594F4EA61E42255200A947FA /* AccessToken.swift in Sources */,
 				F458C5F21E5AFD4300AFD0FC /* PenNameDisplayNode.swift in Sources */,
-				F40986C01E9B85A2009239C2 /* BookCardPostCellNode.swift in Sources */,
 				59D8FCB31E4C86CD001C1EDB /* Category.swift in Sources */,
 				59C048801E735AAB00CADE38 /* BagViewController.swift in Sources */,
 			);

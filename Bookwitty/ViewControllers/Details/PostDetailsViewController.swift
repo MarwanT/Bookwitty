@@ -423,7 +423,7 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
       guard let resource = viewModel.relatedPost(at: index) else {
         return BaseCardPostNode()
       }
-      let card = CardFactory.shared.createCardFor(resource: resource)
+      let card = CardFactory.createCardFor(resourceType: resource.registeredResourceType)
       if let readingListCell = card as? ReadingListCardPostCellNode,
         !readingListCell.node.isImageCollectionLoaded {
         let max = readingListCell.node.maxNumberOfImages
@@ -717,7 +717,7 @@ extension PostDetailsViewController {
   }
 
   fileprivate func pushGenericViewControllerCard(resource: Resource, title: String? = nil) {
-    guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+    guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)

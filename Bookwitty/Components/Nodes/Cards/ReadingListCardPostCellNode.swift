@@ -16,9 +16,16 @@ class ReadingListCardPostCellNode: BaseCardPostNode {
   override var contentShouldExtendBorders: Bool { return true }
   override var contentNode: ASDisplayNode { return node }
 
+  let viewModel: ReadingListCardViewModel
+  override var baseViewModel: CardViewModelProtocol? {
+    return viewModel
+  }
+  
   override init() {
     node = ReadingListCardContentNode()
+    viewModel = ReadingListCardViewModel()
     super.init()
+    viewModel.delegate = self
   }
 
   convenience init(shouldShowInfoNode: Bool) {
@@ -42,20 +49,30 @@ class ReadingListCardContentNode: ASDisplayNode {
       if let articleTitle = articleTitle {
         titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
           .append(text: articleTitle, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+      } else {
+        titleNode.attributedText = nil
       }
+      titleNode.setNeedsLayout()
     }
   }
+
   var articleDescription: String? {
     didSet {
       if let articleDescription = articleDescription {
         descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
           .append(text: articleDescription, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+      } else {
+        descriptionNode.attributedText = nil
       }
+
+      descriptionNode.setNeedsLayout()
     }
   }
+
   var isImageCollectionLoaded: Bool {
     return customHorizontalList.isImageCollectionLoaded
   }
+  
   var maxNumberOfImages: Int {
     return customHorizontalList.maxItems
   }
@@ -183,4 +200,25 @@ class ReadingListCardContentNode: ASDisplayNode {
     return verticalStack
   }
 
+}
+
+//MARK: - ReadingListsViewModelDelegate implementation
+extension ReadingListCardPostCellNode: ReadingListCardViewModelDelegate {
+  func resourceUpdated(viewModel: ReadingListCardViewModel) {
+    let values = viewModel.values()
+    showsInfoNode = values.infoNode
+    postInfoData = values.postInfo
+    node.articleTitle = values.content.title
+    node.articleDescription = values.content.description
+    node.setTopicStatistics(numberOfPosts: values.content.statistics.posts, numberOfBooks: values.content.statistics.relatedBooks, numberOfFollowers: values.content.statistics.followers)
+    articleCommentsSummary = values.content.comments
+    setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
+    setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
+
+    if values.content.relatedContent.posts.count > 0 {
+      node.loadImages(with: values.content.relatedContent.posts)
+    } else if values.content.relatedContent.count > 0 {
+      node.prepareImages(imageCount: values.content.relatedContent.count)
+    }
+  }
 }

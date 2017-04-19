@@ -17,9 +17,16 @@ class BookCardPostCellNode: BaseCardPostNode {
   override var contentShouldExtendBorders: Bool { return false }
   override var contentNode: ASDisplayNode { return node }
 
+  let viewModel: BookCardViewModel
+  override var baseViewModel: CardViewModelProtocol? {
+    return viewModel
+  }
+
   override init() {
     node = BookCardPostContentNode()
+    viewModel = BookCardViewModel()
     super.init()
+    viewModel.delegate = self
   }
 
   convenience init(shouldShowInfoNode: Bool) {
@@ -62,7 +69,10 @@ class BookCardPostContentNode: ASDisplayNode {
         titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .callout)
           .append(text: title, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
         setNeedsLayout()
+      } else {
+        titleNode.attributedText = nil
       }
+      titleNode.setNeedsLayout()
     }
   }
 
@@ -72,7 +82,10 @@ class BookCardPostContentNode: ASDisplayNode {
         authorNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
           .append(text: author, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
         setNeedsLayout()
+      } else {
+        authorNode.attributedText = nil
       }
+      authorNode.setNeedsLayout()
     }
   }
 
@@ -82,7 +95,10 @@ class BookCardPostContentNode: ASDisplayNode {
         formatNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
           .append(text: format, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
         setNeedsLayout()
+      } else {
+        formatNode.attributedText = nil
       }
+      formatNode.setNeedsLayout()
     }
   }
 
@@ -91,7 +107,10 @@ class BookCardPostContentNode: ASDisplayNode {
       if let price = price {
         priceNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
           .append(text: price, color: ThemeManager.shared.currentTheme.defaultECommerceColor()).attributedString
+      } else {
+        priceNode.attributedText = nil
       }
+      priceNode.setNeedsLayout()
     }
   }
 
@@ -99,10 +118,13 @@ class BookCardPostContentNode: ASDisplayNode {
     didSet {
       if let imageUrl = imageUrl {
         imageNode.url = URL(string: imageUrl)
-        setNeedsLayout()
+      } else {
+        imageNode.url = nil
       }
+      imageNode.setNeedsLayout()
     }
   }
+
   var isProduct: Bool = false {
     didSet {
       setNeedsLayout()
@@ -137,7 +159,7 @@ class BookCardPostContentNode: ASDisplayNode {
 
     //Set the string value
     topicStatsNode.attributedText = attrStringBuilder.attributedString
-    setNeedsLayout()
+    topicStatsNode.setNeedsLayout()
   }
 
   private func setupNode() {
@@ -229,5 +251,24 @@ extension BookCardPostContentNode {
 
   fileprivate func isValid(_ value: String?) -> Bool {
     return !value.isEmptyOrNil()
+  }
+}
+
+//MARK: - BookCardViewModelDelegate implementation
+extension BookCardPostCellNode: BookCardViewModelDelegate {
+  func resourceUpdated(viewModel: BookCardViewModel) {
+    let values = viewModel.values()
+    showsInfoNode = values.infoNode
+    postInfoData = values.postInfo
+    setup(forFollowingMode: true)
+    setFollowingValue(following: values.content.following)
+    node.title = values.content.title
+    node.imageUrl = values.content.image.thumbnail
+    node.isProduct = false
+    node.author = values.content.info.author
+    node.price = values.content.info.price
+    node.format = values.content.info.format
+    node.setTopicStatistics(numberOfPosts: values.content.statistics.posts, numberOfBooks: values.content.statistics.relatedBooks, numberOfFollowers: values.content.statistics.followers)
+    articleCommentsSummary = values.content.comments    
   }
 }

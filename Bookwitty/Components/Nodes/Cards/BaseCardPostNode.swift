@@ -9,6 +9,16 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol CardViewModelProtocol: class {
+  var resource: ModelCommonProperties? { get set }
+}
+
+extension CardViewModelProtocol {
+  var resource: ModelCommonProperties? {
+    return nil
+  }
+}
+
 protocol BaseCardPostNodeContentProvider {
   var shouldShowInfoNode: Bool { get }
   var contentShouldExtendBorders: Bool { get }
@@ -35,6 +45,10 @@ protocol BaseCardPostNodeDelegate {
 }
 
 class BaseCardPostNode: ASCellNode, NodeTapProtocol {
+
+  var baseViewModel: CardViewModelProtocol? {
+    return nil
+  }
 
   fileprivate let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
