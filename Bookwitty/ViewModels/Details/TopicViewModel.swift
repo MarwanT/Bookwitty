@@ -223,6 +223,13 @@ final class TopicViewModel {
       }
     }
   }
+  
+  func updateResourceIfNeeded() {
+    guard let resourceId = self.resource?.id, let resource = DataManager.shared.fetchResource(with: resourceId) as? ModelCommonProperties else {
+      return
+    }
+    self.resource = resource
+  }
 }
 
 //MARK: - Latest
