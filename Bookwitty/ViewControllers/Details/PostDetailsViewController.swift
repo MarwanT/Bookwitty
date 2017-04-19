@@ -76,6 +76,11 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     }
   }
 
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    postDetailsNode.postCardsNode.updateNodes()
+  }
+
   fileprivate func initialize() {
     postDetailsNode.title = viewModel.title
     postDetailsNode.coverImage = viewModel.image
@@ -399,6 +404,16 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
 
 extension PostDetailsViewController: PostDetailsItemNodeDelegate {
   func shouldUpdateItem(_ postDetailsItem: PostDetailsItemNode, at index: Int, displayNode: ASDisplayNode) {
+    if let card = displayNode as? BaseCardPostNode {
+      if let resourceValues = viewModel.relatedPostsResourceValues(for: index) {
+
+        card.setup(forFollowingMode: resourceValues.followingMode)
+        card.setFollowingValue(following: resourceValues.following)
+        card.setWitValue(witted: resourceValues.isWitted, wits: resourceValues.wits)
+        card.setDimValue(dimmed: resourceValues.isDimmed, dims: resourceValues.dims)
+        card.setNeedsLayout()
+      }
+    }
   }
 
   func postDetails(_ postDetailsItem: PostDetailsItemNode, node: ASDisplayNode, didSelectItemAt index: Int) {
