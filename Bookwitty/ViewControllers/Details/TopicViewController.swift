@@ -84,7 +84,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     loadNavigationBarButtons()
 
     applyLocalization()
-    observeLanguageChanges()
+    addObservers()
 
     navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
@@ -202,6 +202,62 @@ class TopicViewController: ASViewController<ASCollectionNode> {
       activityItems: sharingContent,
       applicationActivities: nil)
     present(activityViewController, animated: true, completion: nil)
+  }
+}
+
+//MARK: - Notifications
+extension TopicViewController {
+  fileprivate func addObservers() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+    
+    observeLanguageChanges()
+  }
+  
+  func updatedResources(_ notification: Notification) {
+    let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.header.rawValue || $0.section == Section.relatedData.rawValue })
+
+    guard let identifiers = notification.object as? [String],
+      identifiers.count > 0,
+      visibleItemsIndexPaths.count > 0 else {
+        return
+    }
+
+    let indexPathForAffectedItems = visibleItemsIndexPaths.filter({
+      indexPath in
+      guard let resourceIdentifier = resourceIdentifierForIndex(indexPath: indexPath) else {
+        return false
+      }
+      return identifiers.contains(resourceIdentifier)
+    })
+    
+    collectionNode.reloadItems(at: indexPathForAffectedItems)
+  }
+  
+  func resourceIdentifierForIndex(indexPath: IndexPath) -> String? {
+    if indexPath.section == Section.header.rawValue {
+      let values = viewModel.valuesForHeader()
+      return values.identifier
+    } else if indexPath.section == Section.relatedData.rawValue {
+      let category = self.category(withIndex: segmentedNode.selectedIndex)
+      switch category {
+      case .latest:
+        let values = viewModel.valuesForLatest(at: indexPath.item)
+        return values?.identifier
+      case .editions:
+        let values = viewModel.valuesForEdition(at: indexPath.item)
+        return values?.identifier
+      case .relatedBooks:
+        let values = viewModel.valuesForRelatedBook(at: indexPath.item)
+        return values?.identifier
+      case .followers:
+        let values = viewModel.valuesForFollower(at: indexPath.item)
+        return values?.identifier
+      case .none:
+        return nil
+      }
+    }
+    return nil
   }
 }
 
