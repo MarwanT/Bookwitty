@@ -398,6 +398,8 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
 }
 
 extension PostDetailsViewController: PostDetailsItemNodeDelegate {
+  func shouldUpdateItem(_ postDetailsItem: PostDetailsItemNode, at index: Int, displayNode: ASDisplayNode) {
+  }
 
   func postDetails(_ postDetailsItem: PostDetailsItemNode, node: ASDisplayNode, didSelectItemAt index: Int) {
     if postDetailsNode.postCardsNode === postDetailsItem {

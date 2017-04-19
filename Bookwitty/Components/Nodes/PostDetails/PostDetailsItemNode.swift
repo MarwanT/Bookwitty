@@ -12,6 +12,7 @@ import DTCoreText
 
 protocol PostDetailsItemNodeDataSource: class {
   func postDetailsItem(_ postDetailsItem: PostDetailsItemNode, nodeForItemAt index: Int) -> ASDisplayNode
+  func shouldUpdateItem(_ postDetailsItem: PostDetailsItemNode, at index: Int, displayNode: ASDisplayNode)
   func postDetailsItemCount(_ postDetailsItem: PostDetailsItemNode) -> Int
 }
 
