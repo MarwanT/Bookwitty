@@ -698,6 +698,7 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
     Analytics.shared.send(event: event)
   }
 }
+
 // Mark: - Pen Name Header
 extension PostDetailsViewController: PenNameFollowNodeDelegate {
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader) {
