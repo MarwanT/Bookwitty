@@ -152,7 +152,7 @@ final class TopicViewModel {
     
     let identifier = resource.id
     let title  = resourceTitle
-    let following = false //TODO: [DataManager]
+    let following = resource.following
     let thumbnail = self.resourceThumbnail
     let cover = self.resourceCover
     let counts = resource.counts
