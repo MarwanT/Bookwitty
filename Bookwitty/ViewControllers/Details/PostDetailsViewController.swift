@@ -281,7 +281,7 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
   }
 
   func shouldShowPostDetailsAllRelatedPosts() {
-    pushPostsViewController(resources: viewModel.relatedPosts, url: viewModel.relatedPostsNextPage)
+    pushPostsViewController(resources: viewModel.relatedPostsResources(), url: viewModel.relatedPostsNextPage)
 
     //MARK: [Analytics] Event
     let resource = viewModel.resource
