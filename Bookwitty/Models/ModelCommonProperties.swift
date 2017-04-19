@@ -34,6 +34,7 @@ protocol ModelCommonProperties {
   var vote: String? { get }
   var isWitted: Bool { get }
   var isDimmed: Bool { get }
+  var following: Bool { get }
   var canonicalURL: URL? { get }
   var counts: Counts? { get }
 
@@ -53,6 +54,10 @@ extension Video: ModelCommonProperties {
       return false
     }
     return Vote.isDimmed(vote: vote)
+  }
+
+  var following: Bool {
+    return false
   }
 }
 
@@ -84,6 +89,10 @@ extension Image: ModelCommonProperties {
     }
     return Vote.isDimmed(vote: vote)
   }
+
+  var following: Bool {
+    return false
+  }
 }
 
 extension Author: ModelCommonProperties {
@@ -114,6 +123,10 @@ extension Link: ModelCommonProperties {
     }
     return Vote.isDimmed(vote: vote)
   }
+
+  var following: Bool {
+    return false
+  }
 }
 
 extension ReadingList: ModelCommonProperties {
@@ -128,6 +141,10 @@ extension ReadingList: ModelCommonProperties {
       return false
     }
     return Vote.isDimmed(vote: vote)
+  }
+
+  var following: Bool {
+    return false
   }
 }
 
@@ -144,6 +161,10 @@ extension Audio: ModelCommonProperties {
     }
     return Vote.isDimmed(vote: vote)
   }
+
+  var following: Bool {
+    return false
+  }
 }
 
 extension Text: ModelCommonProperties {
@@ -159,6 +180,10 @@ extension Text: ModelCommonProperties {
     }
     return Vote.isDimmed(vote: vote)
   }
+
+  var following: Bool {
+    return false
+  }
 }
 
 extension Quote: ModelCommonProperties {
@@ -173,6 +198,10 @@ extension Quote: ModelCommonProperties {
       return false
     }
     return Vote.isDimmed(vote: vote)
+  }
+
+  var following: Bool {
+    return false
   }
 
   var shortDescription: String? { return nil }
