@@ -202,6 +202,20 @@ class ReadingListCardContentNode: ASDisplayNode {
 //MARK: - ReadingListsViewModelDelegate implementation
 extension ReadingListCardPostCellNode: ReadingListCardViewModelDelegate {
   func resourceUpdated(viewModel: ReadingListCardViewModel) {
+    let values = viewModel.values()
+    showsInfoNode = values.infoNode
+    postInfoData = values.postInfo
+    node.articleTitle = values.content.title
+    node.articleDescription = values.content.description
+    node.setTopicStatistics(numberOfPosts: values.content.statistics.posts, numberOfBooks: values.content.statistics.relatedBooks, numberOfFollowers: values.content.statistics.followers)
+    articleCommentsSummary = values.content.comments
+    setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
+    setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
 
+    if values.content.relatedContent.posts.count > 0 {
+      node.loadImages(with: values.content.relatedContent.posts)
+    } else if values.content.relatedContent.count > 0 {
+      node.prepareImages(imageCount: values.content.relatedContent.count)
+    }
   }
 }
