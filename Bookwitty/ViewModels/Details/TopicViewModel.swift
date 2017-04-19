@@ -145,11 +145,12 @@ final class TopicViewModel {
     return DataManager.shared.fetchResource(with: id)
   }
 
-  func valuesForHeader() -> (title: String?, following: Bool, thumbnailImageUrl: String?, coverImageUrl: String?, stats: (followers: String?, posts: String?), contributors: (count: String?, imageUrls: [String]?)) {
+  func valuesForHeader() -> (identifier: String?, title: String?, following: Bool, thumbnailImageUrl: String?, coverImageUrl: String?, stats: (followers: String?, posts: String?), contributors: (count: String?, imageUrls: [String]?)) {
     guard let resource = resource else {
-      return (nil, false, nil, nil, stats: (nil, nil), contributors: (nil, nil))
+      return (nil, nil, false, nil, nil, stats: (nil, nil), contributors: (nil, nil))
     }
     
+    let identifier = resource.id
     let title  = resourceTitle
     let following = false //TODO: [DataManager]
     let thumbnail = self.resourceThumbnail
@@ -163,7 +164,7 @@ final class TopicViewModel {
     let stats: (String?, String?) = (followers, posts)
     let contributorsValues: (String?, [String]?) = (contributors, contributorsImages)
 
-    return (title: title, following: following, thumbnailImageUrl: thumbnail, coverImageUrl: cover, stats: stats, contributors: contributorsValues)
+    return (identifier: identifier, title: title, following: following, thumbnailImageUrl: thumbnail, coverImageUrl: cover, stats: stats, contributors: contributorsValues)
   }
 
   private func getTopicContent() {
@@ -246,6 +247,14 @@ extension TopicViewModel {
 
     return resource
   }
+  
+  func valuesForLatest(at item: Int) -> (identifier: String?, resourceType: ResourceType?)? {
+    guard let latestResource = latest(at: item) else {
+      return nil
+    }
+    
+    return (latestResource.id, latestResource.registeredResourceType)
+  }
 
   func getLatest() {
     guard let identifier = identifier else {
@@ -302,12 +311,12 @@ extension TopicViewModel {
     return book
   }
   
-  func valuesForEdition(at item: Int) -> (title: String?, author: String?, format: String?, price: String?, imageUrl: String?)? {
+  func valuesForEdition(at item: Int) -> (identifier: String?, title: String?, author: String?, format: String?, price: String?, imageUrl: String?)? {
     guard let book = edition(at: item) else {
       return nil
     }
     
-    return (book.title, book.productDetails?.author, book.productDetails?.productFormat, book.preferredPrice?.formattedValue, book.thumbnailImageUrl)
+    return (book.id, book.title, book.productDetails?.author, book.productDetails?.productFormat, book.preferredPrice?.formattedValue, book.thumbnailImageUrl)
   }
 
   func getEditions() {
@@ -365,12 +374,12 @@ extension TopicViewModel {
     return book
   }
   
-  func valuesForRelatedBook(at item: Int) -> (title: String?, author: String?, format: String?, price: String?, imageUrl: String?)? {
+  func valuesForRelatedBook(at item: Int) -> (identifier: String?, title: String?, author: String?, format: String?, price: String?, imageUrl: String?)? {
     guard let book = relatedBook(at: item) else {
       return nil
     }
     
-    return (book.title, book.productDetails?.author, book.productDetails?.productFormat, book.preferredPrice?.formattedValue, book.thumbnailImageUrl)
+    return (book.id, book.title, book.productDetails?.author, book.productDetails?.productFormat, book.preferredPrice?.formattedValue, book.thumbnailImageUrl)
   }
 
   func getRelatedBooks() {
@@ -436,12 +445,12 @@ extension TopicViewModel {
     return follower
   }
   
-  func valuesForFollower(at item: Int) -> (penName: String?, biography: String?, imageUrl: String?, following: Bool?, isMyPenName: Bool?)? {
+  func valuesForFollower(at item: Int) -> (identifier: String?, penName: String?, biography: String?, imageUrl: String?, following: Bool, isMyPenName: Bool)? {
     guard let penName = follower(at: item) else {
       return nil
     }
     
-    return (penName.name, penName.biography, penName.avatarUrl, penName.following ?? false, isMyPenName(penName))
+    return (penName.id, penName.name, penName.biography, penName.avatarUrl, penName.following, isMyPenName(penName))
   }
 
   func getFollowers() {
