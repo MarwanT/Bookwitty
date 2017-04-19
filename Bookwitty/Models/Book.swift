@@ -50,6 +50,11 @@ class Book: Resource {
   override class var resourceType: ResourceType {
     return "books"
   }
+  
+  // TODO: Use this variable when displaying a book price across the app
+  var preferredPrice: Price? {
+    return (productDetails?.isElectronicFormat() ?? false) ? nil : supplierInformation?.preferredPrice
+  }
 
   override class var fields: [Field] {
     return fieldsFromDictionary([
