@@ -178,6 +178,7 @@ final class TopicViewModel {
           return
         }
 
+        DataManager.shared.update(resource: topic)
         self.resource = topic
         self.callback?(.content)
       }
@@ -196,6 +197,7 @@ final class TopicViewModel {
           return
         }
 
+        DataManager.shared.update(resource: book)
         self.resource = book
         self.callback?(.content)
       }
@@ -214,6 +216,7 @@ final class TopicViewModel {
           return
         }
 
+        DataManager.shared.update(resource: author)
         self.resource = author
         self.callback?(.content)
       }
@@ -501,6 +504,7 @@ extension TopicViewModel {
 
       defer {
         closure?(successful, indices, category)
+        DataManager.shared.update(resources: resources ?? [])
       }
 
       successful = resources != nil
