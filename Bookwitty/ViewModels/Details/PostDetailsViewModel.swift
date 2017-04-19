@@ -70,11 +70,18 @@ class PostDetailsViewModel {
   var relatedBooks: [Book] = []
   var relatedBooksNextPage: URL?
   //Resource Related Posts
-  var relatedPosts: [Resource] = []
+  var relatedPosts: [String] = []
   var relatedPostsNextPage: URL?
 
   init(resource: Resource) {
     self.resource = resource
+  }
+
+  func resourceFor(id: String?) -> ModelResource? {
+    guard let id = id else {
+      return nil
+    }
+    return DataManager.shared.fetchResource(with: id)
   }
 
   func isMyPenName() -> Bool {
@@ -306,6 +313,13 @@ extension PostDetailsViewModel {
 
 // MARK: - Related Books Section
 extension PostDetailsViewModel {
+
+  func relatedPostsResourceForIndex(index: Int) -> ModelResource? {
+    guard relatedPosts.count > index else { return nil }
+    let resource = resourceFor(id: relatedPosts[index])
+    return resource
+  }
+
   func numberOfRelatedPosts() -> Int {
     return relatedPosts.count
   }
@@ -315,7 +329,7 @@ extension PostDetailsViewModel {
       return nil
     }
 
-    return relatedPosts[item]
+    return relatedPostsResourceForIndex(index: item)
   }
 
   func getRelatedPosts(completionBlock: @escaping (_ success: Bool) -> ()) {
@@ -333,7 +347,7 @@ extension PostDetailsViewModel {
       }
       if success {
         self.relatedPosts.removeAll()
-        self.relatedPosts += resources ?? []
+        self.relatedPosts += resources?.flatMap( { $0.id }) ?? []
         self.relatedPostsNextPage = next
       }
     }
