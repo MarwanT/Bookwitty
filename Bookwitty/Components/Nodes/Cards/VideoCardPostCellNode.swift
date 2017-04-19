@@ -18,6 +18,9 @@ class VideoCardPostCellNode: BaseCardPostNode {
   override var contentNode: ASDisplayNode { return node }
 
   let viewModel: VideoCardViewModel
+  override var baseViewModel: CardViewModelProtocol? {
+    return viewModel
+  }
 
   override func updateMode(fullMode: Bool) {
     node.setupMode(fullViewMode: fullMode)

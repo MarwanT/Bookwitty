@@ -19,7 +19,10 @@ class LinkCardPostCellNode: BaseCardPostNode {
   override var contentNode: ASDisplayNode { return node }
 
   let viewModel: LinkCardViewModel
-
+  override var baseViewModel: CardViewModelProtocol? {
+    return viewModel
+  }
+  
   override func updateMode(fullMode: Bool) {
     node.setupMode(fullViewMode: fullMode)
   }

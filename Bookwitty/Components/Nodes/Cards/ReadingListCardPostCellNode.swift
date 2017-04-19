@@ -17,7 +17,10 @@ class ReadingListCardPostCellNode: BaseCardPostNode {
   override var contentNode: ASDisplayNode { return node }
 
   let viewModel: ReadingListCardViewModel
-
+  override var baseViewModel: CardViewModelProtocol? {
+    return viewModel
+  }
+  
   override init() {
     node = ReadingListCardContentNode()
     viewModel = ReadingListCardViewModel()

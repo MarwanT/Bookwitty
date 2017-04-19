@@ -18,6 +18,9 @@ class TopicCardPostCellNode: BaseCardPostNode {
   override var contentNode: ASDisplayNode { return node }
 
   let viewModel: TopicCardViewModel
+  override var baseViewModel: CardViewModelProtocol? {
+    return viewModel
+  }
 
   override init() {
     node = TopicCardPostContentNode()

@@ -17,7 +17,10 @@ class PhotoCardPostCellNode: BaseCardPostNode {
   override var contentNode: ASDisplayNode { return node }
 
   let viewModel: PhotoCardViewModel
-
+  override var baseViewModel: CardViewModelProtocol? {
+    return viewModel
+  }
+  
   override init() {
     node = PhotoCardContentNode()
     viewModel = PhotoCardViewModel()

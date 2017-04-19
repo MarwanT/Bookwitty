@@ -18,7 +18,10 @@ class ProfileCardPostCellNode: BaseCardPostNode {
   override var contentNode: ASDisplayNode { return node }
 
   let viewModel: ProfileCardViewModel
-
+  override var baseViewModel: CardViewModelProtocol? {
+    return viewModel
+  }
+  
   override init() {
     node = ProfileCardPostContentNode()
     viewModel = ProfileCardViewModel()

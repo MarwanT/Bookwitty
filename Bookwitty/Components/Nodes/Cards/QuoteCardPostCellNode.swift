@@ -19,7 +19,10 @@ class QuoteCardPostCellNode: BaseCardPostNode {
   override var contentNode: ASDisplayNode { return node }
 
   let viewModel: QuoteCardViewModel
-
+  override var baseViewModel: CardViewModelProtocol? {
+    return viewModel
+  }
+  
   override init() {
     node = QuoteCardPostContentNode()
     viewModel = QuoteCardViewModel()
