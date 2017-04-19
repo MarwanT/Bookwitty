@@ -574,6 +574,9 @@ extension TopicViewModel {
       defer {
         completionBlock(success)
       }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
+      }
       penName.following = true
     }
   }
@@ -588,6 +591,9 @@ extension TopicViewModel {
       defer {
         completionBlock(success)
       }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
+      }
       penName.following = false
     }
   }
@@ -597,6 +603,9 @@ extension TopicViewModel {
       defer {
         completionBlock(success)
       }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
+      }
     }
   }
 
@@ -604,6 +613,9 @@ extension TopicViewModel {
     _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
+      }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
       }
     }
   }
