@@ -64,7 +64,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     if let navigationController = navigationController as? ScrollingNavigationController {
-      navigationController.followScrollView(postDetailsNode.view, delay: 50.0)
+      navigationController.followScrollView(postDetailsNode.view)
     }
   }
 
