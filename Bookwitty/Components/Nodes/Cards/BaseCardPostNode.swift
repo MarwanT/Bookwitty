@@ -46,6 +46,10 @@ protocol BaseCardPostNodeDelegate {
 
 class BaseCardPostNode: ASCellNode, NodeTapProtocol {
 
+  var baseViewModel: CardViewModelProtocol? {
+    return nil
+  }
+
   fileprivate let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
