@@ -313,6 +313,62 @@ extension PostDetailsViewModel {
 
 // MARK: - Related Books Section
 extension PostDetailsViewModel {
+  func updateAffectedPostDetails(resourcesIdentifiers: [String]) -> Bool {
+    guard resourcesIdentifiers.count > 0 else {
+      return false
+    }
+
+    if let resourceId = resource.id {
+      return resourcesIdentifiers.contains( where: { $0 == resourceId } )
+    }
+    return false
+  }
+  
+  func relatedPostsResourceValues(for index: Int) -> (followingMode: Bool, following: Bool, isWitted: Bool,wits: Int, isDimmed: Bool, dims: Int)? {
+    guard let modelResource = relatedPostsResourceForIndex(index: index), let resource = modelResource as? ModelCommonProperties else {
+      return nil
+    }
+
+    func canFollowedResource(resource: ModelResource) -> Bool { return (resource.registeredResourceType == Topic.resourceType) || (resource.registeredResourceType == Author.resourceType) || (resource.registeredResourceType == Book.resourceType) || (resource.registeredResourceType == PenName.resourceType) }
+
+    func isFollowingResource(resource: ModelResource) -> Bool {
+      switch (resource.registeredResourceType) {
+      case Topic.resourceType:
+        return (resource as? Topic)?.following ?? false
+      case PenName.resourceType:
+        return (resource as? PenName)?.following ?? false
+      case Book.resourceType:
+        return (resource as? Book)?.following ?? false
+      case Author.resourceType:
+        return (resource as? Author)?.following ?? false
+      default: return false
+      }
+    }
+
+    //TODO: Replace with resource.canBeFollowed when implemented
+    let canBeFollowed = canFollowedResource(resource: modelResource)
+    //TODO: Replace with resource.following when implemented
+    let following = isFollowingResource(resource: modelResource)
+
+    let wits = resource.counts?.wits ?? 0
+    let dims = resource.counts?.dims ?? 0
+    return (followingMode: canBeFollowed, following: following, isWitted: resource.isWitted, wits: wits, isDimmed: resource.isDimmed, dims: dims)
+  }
+
+  func relatedPostsAffectedItems(identifiers: [String], visibleItemsIndices: [Int]) -> [Int] {
+    //let affectedCardItems = relatedPosts.filter({ identifiers.contains($0) }).flatMap({ relatedPosts.index(of: $0) })
+    return visibleItemsIndices.filter({
+      index in
+      guard let resource = relatedPostsResourceForIndex(index: index) as? ModelCommonProperties, let identifier = resource.id else {
+        return false
+      }
+      return identifiers.contains(identifier)
+    })
+  }
+
+  func relatedPostsResources() -> [ModelResource] {
+    return DataManager.shared.fetchResources(with: relatedPosts)
+  }
 
   func relatedPostsResourceForIndex(index: Int) -> ModelResource? {
     guard relatedPosts.count > index else { return nil }
