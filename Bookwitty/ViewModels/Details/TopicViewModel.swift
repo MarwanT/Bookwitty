@@ -32,7 +32,7 @@ final class TopicViewModel {
   fileprivate var relatedBooks: [String] = []
   fileprivate var relatedBooksNextUrl: URL? = nil
 
-  fileprivate var followers: [PenName] = []
+  fileprivate var followers: [String] = []
   fileprivate var followersNextUrl: URL? = nil
   
   func initialize(with resource: ModelCommonProperties?) {
@@ -417,8 +417,21 @@ extension TopicViewModel {
     guard item >= 0 && item < followers.count else {
       return nil
     }
-
-    return followers[item]
+    
+    let followersId = followers[item]
+    guard let follower = DataManager.shared.fetchResource(with: followersId) as? PenName else {
+      return nil
+    }
+    
+    return follower
+  }
+  
+  func valuesForFollower(at item: Int) -> (penName: String?, biography: String?, imageUrl: String?, following: Bool?, isMyPenName: Bool?)? {
+    guard let penName = follower(at: item) else {
+      return nil
+    }
+    
+    return (penName.name, penName.biography, penName.avatarUrl, penName.following ?? false, isMyPenName(penName))
   }
 
   func getFollowers() {
@@ -429,13 +442,15 @@ extension TopicViewModel {
     _ = PenNameAPI.followers(contentIdentifier: identifier) {
       (success: Bool, penNames: [PenName]?, next: URL?, error: BookwittyAPIError?) in
       if success {
-        _ = self.handleFollowers(results: penNames, next: next, reset: true)
+        let followersIds: [String] = penNames?.flatMap({ $0.id }) ?? []
+        _ = self.handleFollowers(results: followersIds, next: next, reset: true)
         self.callback?(.followers)
+        DataManager.shared.update(resources: penNames ?? [])
       }
     }
   }
 
-  fileprivate func handleFollowers(results: [PenName]?, next: URL?, reset: Bool = false) -> [Int]? {
+  fileprivate func handleFollowers(results: [String]?, next: URL?, reset: Bool = false) -> [Int]? {
     guard let results = results else {
       return nil
     }
@@ -491,7 +506,7 @@ extension TopicViewModel {
       case .relatedBooks:
         indices = self.handleRelatedBooks(results: resources?.flatMap({ $0.id }), next: next)
       case .followers:
-        indices = self.handleFollowers(results: resources as? [PenName], next: next)
+        indices = self.handleFollowers(results: resources?.flatMap({ $0.id }), next: next)
       case .content:
         break
       }

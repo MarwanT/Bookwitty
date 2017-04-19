@@ -497,12 +497,12 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
           return
         }
 
-        let follower = viewModel.follower(at: indexPath.item)
-        cell.penName = follower?.name
-        cell.biography = follower?.biography
-        cell.imageUrl = follower?.avatarUrl
-        cell.following = follower?.following ?? false
-        cell.updateMode(disabled: viewModel.isMyPenName(follower))
+        let followerValues = viewModel.valuesForFollower(at: indexPath.item)
+        cell.penName = followerValues?.penName
+        cell.biography = followerValues?.biography
+        cell.imageUrl = followerValues?.imageUrl
+        cell.following = followerValues?.following ?? false
+        cell.updateMode(disabled: followerValues?.isMyPenName ?? false)
       case .none:
         break
       }
