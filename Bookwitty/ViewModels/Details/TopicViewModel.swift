@@ -29,7 +29,7 @@ final class TopicViewModel {
   fileprivate var editions: [String] = []
   fileprivate var editionsNextUrl: URL? = nil
 
-  fileprivate var relatedBooks: [Book] = []
+  fileprivate var relatedBooks: [String] = []
   fileprivate var relatedBooksNextUrl: URL? = nil
 
   fileprivate var followers: [PenName] = []
@@ -346,8 +346,21 @@ extension TopicViewModel {
     guard item >= 0 && item < relatedBooks.count else {
       return nil
     }
-
-    return relatedBooks[item]
+    
+    let relatedBooksId = relatedBooks[item]
+    guard let book = DataManager.shared.fetchResource(with: relatedBooksId) as? Book else {
+      return nil
+    }
+    
+    return book
+  }
+  
+  func valuesForRelatedBook(at item: Int) -> (title: String?, author: String?, format: String?, price: String?, imageUrl: String?)? {
+    guard let book = relatedBook(at: item) else {
+      return nil
+    }
+    
+    return (book.title, book.productDetails?.author, book.productDetails?.productFormat, book.preferredPrice?.formattedValue, book.thumbnailImageUrl)
   }
 
   func getRelatedBooks() {
@@ -360,14 +373,16 @@ extension TopicViewModel {
       if success {
         self.relatedBooks.removeAll()
         let books = resources?.filter({ $0.registeredResourceType == Book.resourceType })
-        _ = self.handleRelatedBooks(results: (books as? [Book] ?? []), next: next, reset: true)
+        let resourcesIds: [String] = books?.flatMap({ $0.id }) ?? []
+        _ = self.handleRelatedBooks(results: resourcesIds, next: next, reset: true)
         self.callback?(.relatedBooks)
+        DataManager.shared.update(resources: resources ?? [])
       }
     }
   }
 
-  fileprivate func handleRelatedBooks(results: [Book]?, next: URL?, reset: Bool = false) -> [Int]? {
-    guard let results = results else {
+  fileprivate func handleRelatedBooks(results: [String]?, next: URL?, reset: Bool = false) -> [Int]? {
+    guard let results = results, results.count > 0 else {
       return nil
     }
 
@@ -474,7 +489,7 @@ extension TopicViewModel {
       case .editions:
         indices = self.handleEdition(results: resources?.flatMap({ $0.id }) , next: next)
       case .relatedBooks:
-        indices = self.handleRelatedBooks(results: resources as? [Book], next: next)
+        indices = self.handleRelatedBooks(results: resources?.flatMap({ $0.id }), next: next)
       case .followers:
         indices = self.handleFollowers(results: resources as? [PenName], next: next)
       case .content:

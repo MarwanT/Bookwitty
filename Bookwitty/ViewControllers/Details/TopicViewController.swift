@@ -486,12 +486,12 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
           return
         }
 
-        let book = viewModel.relatedBook(at: indexPath.item)
-        cell.title = book?.title
-        cell.author = book?.productDetails?.author
-        cell.format = book?.productDetails?.productFormat
-        cell.price = (book?.productDetails?.isElectronicFormat() ?? false) ? nil : book?.supplierInformation?.preferredPrice?.formattedValue
-        cell.imageUrl = book?.thumbnailImageUrl
+        let bookValues = viewModel.valuesForRelatedBook(at: indexPath.item)
+        cell.title = bookValues?.title
+        cell.author = bookValues?.author
+        cell.format = bookValues?.format
+        cell.price = bookValues?.price
+        cell.imageUrl = bookValues?.imageUrl
       case .followers:
         guard let cell = node as? PenNameFollowNode else {
           return
@@ -548,6 +548,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
       let resource = viewModel.latest(at: indexPath.item)
       actionForCard(resource: resource)
     case .relatedBooks:
+      //TODO: [DataManager]
       if let resource = viewModel.relatedBook(at: indexPath.item) {
         let vc = BookDetailsViewController(with: resource)
         navigationController?.pushViewController(vc, animated: true)
