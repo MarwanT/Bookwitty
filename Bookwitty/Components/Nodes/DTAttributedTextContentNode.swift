@@ -60,7 +60,7 @@ extension DTAttributedTextContentView {
   }
 }
 
-protocol DTAttributedTextContentNodeDelegate {
+protocol DTAttributedTextContentNodeDelegate: class {
   func attributedTextContentNodeNeedsLayout(node: ASCellNode)
   func attributedTextContentNode(node: ASCellNode, button: DTLinkButton, didTapOnLink link: URL)
 }
@@ -69,7 +69,7 @@ class DTAttributedTextContentNode: ASCellNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
 
   var textContentView: DTAttributedTextContentView!
-  var delegate: DTAttributedTextContentNodeDelegate?
+  weak var delegate: DTAttributedTextContentNodeDelegate?
 
   convenience override init() {
     self.init(viewBlock: { () -> UIView in

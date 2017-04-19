@@ -10,16 +10,16 @@ import UIKit
 import AsyncDisplayKit
 import DTCoreText
 
-protocol PostDetailsItemNodeDataSource {
+protocol PostDetailsItemNodeDataSource: class {
   func postDetailsItem(_ postDetailsItem: PostDetailsItemNode, nodeForItemAt index: Int) -> ASDisplayNode
   func postDetailsItemCount(_ postDetailsItem: PostDetailsItemNode) -> Int
 }
 
-protocol PostDetailsItemNodeDelegate {
+protocol PostDetailsItemNodeDelegate: class {
   func postDetails(_ postDetailsItem: PostDetailsItemNode, node: ASDisplayNode, didSelectItemAt index: Int)
 }
 
-protocol ItemNodeTapDelegate {
+protocol ItemNodeTapDelegate: class {
   func didTapOn(node: ASDisplayNode)
 }
 
@@ -27,8 +27,8 @@ protocol ItemNodeTapDelegate {
  * Every Node that uses 'PostDetailsItemNode' should
  * conform NodeTapProtocol to be able to delegate its tap.
  */
-protocol NodeTapProtocol {
-  var tapDelegate: ItemNodeTapDelegate? { get set }
+protocol NodeTapProtocol: class {
+  weak var tapDelegate: ItemNodeTapDelegate? { get set }
 }
 
 class PostDetailsItemNode: ASDisplayNode, ItemNodeTapDelegate {
@@ -36,8 +36,8 @@ class PostDetailsItemNode: ASDisplayNode, ItemNodeTapDelegate {
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
 
   var nodes: [ASDisplayNode]
-  var dataSource: PostDetailsItemNodeDataSource!
-  var delegate: PostDetailsItemNodeDelegate?
+  weak var dataSource: PostDetailsItemNodeDataSource?
+  weak var delegate: PostDetailsItemNodeDelegate?
 
   override init() {
     nodes = []
@@ -91,7 +91,7 @@ class PostDetailsItemNode: ASDisplayNode, ItemNodeTapDelegate {
   }
 }
 
-protocol PostDetailItemNodeDelegate {
+protocol PostDetailItemNodeDelegate: class {
   func postDetailItemNodeButtonTouchUpInside(postDetailItemNode: PostDetailItemNode, button: ASButtonNode)
 }
 
@@ -122,8 +122,8 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
   let separator: ASDisplayNode
   let button: ASButtonNode
 
-  var delegate: PostDetailItemNodeDelegate?
-  var tapDelegate: ItemNodeTapDelegate?
+  weak var delegate: PostDetailItemNodeDelegate?
+  weak var tapDelegate: ItemNodeTapDelegate?
   var smallImage: Bool = true
   var showsSubheadline: Bool = true
   var showsButton: Bool = false
