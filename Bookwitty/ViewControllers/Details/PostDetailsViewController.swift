@@ -915,16 +915,27 @@ extension PostDetailsViewController {
   fileprivate func updatedResources(_ notification: NSNotification) {
     guard let resourceId = viewModel.resource.id,
       let identifiers = notification.object as? [String],
-      identifiers.count > 0,
-      identifiers.contains( where: { $0 == resourceId } ) else {
+      identifiers.count > 0 else {
         return
     }
-
-    guard let resource = DataManager.shared.fetchResource(with: resourceId) else {
-      return
+    
+    if viewModel.updateAffectedPostDetails(resourcesIdentifiers: identifiers) {
+      guard let resource = DataManager.shared.fetchResource(with: resourceId) else {
+        return
+      }
+      viewModel.resource = resource
+      initialize()
     }
-    viewModel.resource = resource
-    initialize()
+
+    //Update the cards custom collection only.
+    let visibleCardIndices: [Int] = postDetailsNode.postCardsNode.visibleNodes()
+    let affectedCardItems = viewModel.relatedPostsAffectedItems(identifiers: identifiers, visibleItemsIndices: visibleCardIndices)
+    if affectedCardItems.count > 0 {
+      postDetailsNode.postCardsNode.updateNodes(with: affectedCardItems)
+    }
+
+    //Note: Do not update the books sections
+    //TODO: Refactor this view controller => Use Only Collection and Sections
   }
 }
 
