@@ -85,7 +85,7 @@ extension Topic: ModelCommonActions {
   var isFollowing: Bool {
     get { return following }
     set {
-      following = isFollowing
+      following = newValue
       guard let counts = counts else {
         return
       }
@@ -209,7 +209,7 @@ extension Book: ModelCommonActions {
   var isFollowing: Bool {
     get { return following }
     set {
-      following = isFollowing
+      following = newValue
       guard let counts = counts else {
         return
       }
@@ -232,7 +232,7 @@ extension PenName: ModelCommonActions {
   var isFollowing: Bool {
     get { return following }
     set {
-      following = isFollowing
+      following = newValue
       guard let counts = counts else {
         return
       }

@@ -9,7 +9,7 @@
 import Foundation
 import AsyncDisplayKit
 
-protocol CardActionBarNodeDelegate {
+protocol CardActionBarNodeDelegate: class {
   func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
 }
 
@@ -30,7 +30,7 @@ class CardActionBarNode: ASCellNode {
   var shareButton: ASButtonNode
   var numberOfWitsNode: ASTextNode
   var numberOfDimsNode: ASTextNode
-  var delegate: CardActionBarNodeDelegate? = nil
+  weak var delegate: CardActionBarNodeDelegate? = nil
 
   fileprivate var numberOfWits: Int? {
     didSet {

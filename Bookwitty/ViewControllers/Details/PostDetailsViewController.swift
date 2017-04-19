@@ -29,24 +29,8 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    postDetailsNode.title = viewModel.title
-    postDetailsNode.coverImage = viewModel.image
-    postDetailsNode.body = viewModel.body
-    let date = Date.formatDate(date: viewModel.date)
-    postDetailsNode.date = date
-    postDetailsNode.penName = viewModel.penName
-    postDetailsNode.conculsion = viewModel.conculsion
-    postDetailsNode.postItemsNode.dataSource = self
-    postDetailsNode.postCardsNode.dataSource = self
-    postDetailsNode.postItemsNode.delegate = self
-    postDetailsNode.postCardsNode.delegate = self
-    postDetailsNode.headerNode.profileBarNode.delegate = self
-    postDetailsNode.headerNode.profileBarNode.updateMode(disabled: viewModel.isMyPenName())
-    postDetailsNode.delegate = self
-    postDetailsNode.setWitValue(witted: viewModel.isWitted, wits: viewModel.wits ?? 0)
-    postDetailsNode.setDimValue(dimmed: viewModel.isDimmed, dims: viewModel.dims ?? 0)
-    postDetailsNode.booksHorizontalCollectionNode.dataSource = self
-    postDetailsNode.booksHorizontalCollectionNode.delegate = self
+    initialize()
+    addDelegatesAndDataSources()
     viewModel.loadPenName { (success) in
       self.postDetailsNode.penName = self.viewModel.penName
     }
@@ -55,6 +39,8 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     loadRelatedPosts()
     applyLocalization()
     observeLanguageChanges()
+    //Observe Data Changes in the Data Center
+    observeDataChanges()
 
     loadNavigationBarButtons()
 
@@ -71,10 +57,14 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     Analytics.shared.send(screenName: name)
   }
 
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     if let navigationController = navigationController as? ScrollingNavigationController {
-      navigationController.followScrollView(postDetailsNode.view, delay: 50.0)
+      navigationController.followScrollView(postDetailsNode.view)
     }
   }
 
@@ -84,6 +74,36 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
       navigationController.stopFollowingScrollView()
       navigationController.showNavbar(animated: true)
     }
+  }
+
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    postDetailsNode.postCardsNode.updateNodes()
+  }
+
+  fileprivate func initialize() {
+    postDetailsNode.title = viewModel.title
+    postDetailsNode.coverImage = viewModel.image
+    postDetailsNode.body = viewModel.body
+
+    let date = Date.formatDate(date: viewModel.date)
+    postDetailsNode.date = date
+    postDetailsNode.penName = viewModel.penName
+    postDetailsNode.conculsion = viewModel.conculsion
+    postDetailsNode.headerNode.profileBarNode.updateMode(disabled: viewModel.isMyPenName())
+    postDetailsNode.setWitValue(witted: viewModel.isWitted, wits: viewModel.wits ?? 0)
+    postDetailsNode.setDimValue(dimmed: viewModel.isDimmed, dims: viewModel.dims ?? 0)
+  }
+
+  fileprivate func addDelegatesAndDataSources() {
+    postDetailsNode.postItemsNode.dataSource = self
+    postDetailsNode.postCardsNode.dataSource = self
+    postDetailsNode.postItemsNode.delegate = self
+    postDetailsNode.postCardsNode.delegate = self
+    postDetailsNode.headerNode.profileBarNode.delegate = self
+    postDetailsNode.delegate = self
+    postDetailsNode.booksHorizontalCollectionNode.dataSource = self
+    postDetailsNode.booksHorizontalCollectionNode.delegate = self
   }
 
   private func loadNavigationBarButtons() {
@@ -261,7 +281,7 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
   }
 
   func shouldShowPostDetailsAllRelatedPosts() {
-    pushPostsViewController(resources: viewModel.relatedPosts, url: viewModel.relatedPostsNextPage)
+    pushPostsViewController(resources: viewModel.relatedPostsResources(), url: viewModel.relatedPostsNextPage)
 
     //MARK: [Analytics] Event
     let resource = viewModel.resource
@@ -383,6 +403,18 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
 }
 
 extension PostDetailsViewController: PostDetailsItemNodeDelegate {
+  func shouldUpdateItem(_ postDetailsItem: PostDetailsItemNode, at index: Int, displayNode: ASDisplayNode) {
+    if let card = displayNode as? BaseCardPostNode {
+      if let resourceValues = viewModel.relatedPostsResourceValues(for: index) {
+
+        card.setup(forFollowingMode: resourceValues.followingMode)
+        card.setFollowingValue(following: resourceValues.following)
+        card.setWitValue(witted: resourceValues.isWitted, wits: resourceValues.wits)
+        card.setDimValue(dimmed: resourceValues.isDimmed, dims: resourceValues.dims)
+        card.setNeedsLayout()
+      }
+    }
+  }
 
   func postDetails(_ postDetailsItem: PostDetailsItemNode, node: ASDisplayNode, didSelectItemAt index: Int) {
     if postDetailsNode.postCardsNode === postDetailsItem {
@@ -666,6 +698,7 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
     Analytics.shared.send(event: event)
   }
 }
+
 // Mark: - Pen Name Header
 extension PostDetailsViewController: PenNameFollowNodeDelegate {
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader) {
@@ -884,6 +917,41 @@ extension PostDetailsViewController {
                                                  name: name)
     Analytics.shared.send(event: event)
     pushTopicViewController(resource: resource)
+  }
+}
+
+//MARK: - Observe Data Changes
+extension PostDetailsViewController {
+  fileprivate func observeDataChanges() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+  }
+
+  @objc
+  fileprivate func updatedResources(_ notification: NSNotification) {
+    guard let resourceId = viewModel.resource.id,
+      let identifiers = notification.object as? [String],
+      identifiers.count > 0 else {
+        return
+    }
+    
+    if viewModel.updateAffectedPostDetails(resourcesIdentifiers: identifiers) {
+      guard let resource = DataManager.shared.fetchResource(with: resourceId) else {
+        return
+      }
+      viewModel.resource = resource
+      initialize()
+    }
+
+    //Update the cards custom collection only.
+    let visibleCardIndices: [Int] = postDetailsNode.postCardsNode.visibleNodes()
+    let affectedCardItems = viewModel.relatedPostsAffectedItems(identifiers: identifiers, visibleItemsIndices: visibleCardIndices)
+    if affectedCardItems.count > 0 {
+      postDetailsNode.postCardsNode.updateNodes(with: affectedCardItems)
+    }
+
+    //Note: Do not update the books sections
+    //TODO: Refactor this view controller => Use Only Collection and Sections
   }
 }
 

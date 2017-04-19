@@ -39,7 +39,7 @@ extension BaseCardPostNode: CardPostInfoNodeDelegate {
   }
 }
 
-protocol BaseCardPostNodeDelegate {
+protocol BaseCardPostNodeDelegate: class {
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
   func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any)
 }
@@ -65,8 +65,8 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     return !articleCommentsSummary.isEmptyOrNil()
   }
 
-  var tapDelegate: ItemNodeTapDelegate?
-  var delegate: BaseCardPostNodeDelegate?
+  weak var tapDelegate: ItemNodeTapDelegate?
+  weak var delegate: BaseCardPostNodeDelegate?
   var forceHideInfoNode: Bool = false
   var postInfoData: CardPostInfoNodeData? {
     didSet {
