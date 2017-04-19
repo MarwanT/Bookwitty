@@ -9,6 +9,16 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol CardViewModelProtocol: class {
+  var resource: ModelCommonProperties? { get set }
+}
+
+extension CardViewModelProtocol {
+  var resource: ModelCommonProperties? {
+    return nil
+  }
+}
+
 protocol BaseCardPostNodeContentProvider {
   var shouldShowInfoNode: Bool { get }
   var contentShouldExtendBorders: Bool { get }
