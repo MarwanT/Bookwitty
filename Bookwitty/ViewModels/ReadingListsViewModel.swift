@@ -99,6 +99,9 @@ final class ReadingListsViewModel {
             }
             return cumulative + [index]
           })
+
+          //update the reading lists in the data manager
+          DataManager.shared.update(resources: readingListsContainingResource)
         })
       }
     }
@@ -137,6 +140,10 @@ extension ReadingListsViewModel {
 
     _ = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
       completionBlock(success)
+
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.wit)
+      }
     })
   }
 
@@ -149,6 +156,10 @@ extension ReadingListsViewModel {
 
     _ = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
       completionBlock(success)
+
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.unwit)
+      }
     })
   }
 
