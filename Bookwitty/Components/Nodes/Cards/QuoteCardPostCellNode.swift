@@ -27,6 +27,7 @@ class QuoteCardPostCellNode: BaseCardPostNode {
     node = QuoteCardPostContentNode()
     viewModel = QuoteCardViewModel()
     super.init()
+    viewModel.delegate = self
   }
 
   convenience init(shouldShowInfoNode: Bool) {
