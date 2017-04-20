@@ -304,17 +304,21 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
         cell.biography = follower?.biography
         cell.imageUrl = follower?.avatarUrl
         cell.following = follower?.following ?? false
+      case .following:
+        fallthrough
+      case .latest:
+        if let card = node as? BaseCardPostNode {
+          guard let indexPath = collectionNode.indexPath(for: node),
+            let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment) as? ModelCommonProperties else {
+              return
+          }
+
+          if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
+            card.baseViewModel?.resource = resource
+          }
+        }
       default: break
       } 
-    } else if let card = node as? BaseCardPostNode {
-      guard let indexPath = collectionNode.indexPath(for: node),
-        let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment) as? ModelCommonProperties else {
-          return
-      }
-
-      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
-        card.baseViewModel?.resource = resource
-      }
     }
   }
 
