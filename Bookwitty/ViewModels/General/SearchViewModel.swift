@@ -45,6 +45,10 @@ class SearchViewModel {
       self.data += resources
       self.nextPage = nextPage
       completion(success, error)
+
+      if success {
+        DataManager.shared.update(resources: resources)
+      }
     })
   }
 
@@ -63,6 +67,10 @@ class SearchViewModel {
       }
       self.cancellableRequest = nil
       completionBlock(success)
+
+      if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
+      }
     }
   }
 
