@@ -581,6 +581,8 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
         let node = CardFactory.createCardFor(resourceType: post.registeredResourceType) else {
         return ASCellNode()
       }
+
+      node.baseViewModel?.resource = post as? ModelCommonProperties
       return node
     case .editions:
       return BookNode()
@@ -746,6 +748,8 @@ extension TopicViewController {
     guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
+
+    cardNode.baseViewModel?.resource = resource as? ModelCommonProperties
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
     navigationController?.pushViewController(genericVC, animated: true)
   }

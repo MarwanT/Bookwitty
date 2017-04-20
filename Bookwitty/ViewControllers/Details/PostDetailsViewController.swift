@@ -465,6 +465,8 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
           }
         })
       }
+
+      card?.baseViewModel?.resource = resource as? ModelCommonProperties
       card?.delegate = self
       return  card ?? BaseCardPostNode()
     } else {
@@ -753,6 +755,8 @@ extension PostDetailsViewController {
     guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
+    
+    cardNode.baseViewModel?.resource = resource as? ModelCommonProperties
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
     navigationController?.pushViewController(genericVC, animated: true)
   }

@@ -169,6 +169,7 @@ extension PostsViewModel {
     case .posts:
       let resource = posts[indexPath.item]
       node = CardFactory.createCardFor(resourceType: resource.registeredResourceType)
+      node?.baseViewModel?.resource = resource as? ModelCommonProperties
     case .activityIndicator:
       return nil
     }

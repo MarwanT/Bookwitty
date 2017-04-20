@@ -72,6 +72,8 @@ extension ReadingListsViewController: ASCollectionDataSource, ASCollectionDelega
       guard let readingListNode = CardFactory.createCardFor(resourceType: readingList.registeredResourceType) else {
         return ASCellNode()
       }
+
+      readingListNode.baseViewModel?.resource = readingList
       readingListNode.delegate = self
       return readingListNode
     }
