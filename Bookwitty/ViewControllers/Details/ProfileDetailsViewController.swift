@@ -32,6 +32,9 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
       loaderNode.updateLoaderVisibility(show: showLoader)
     }
   }
+  var shouldShowLoader: Bool {
+    return (loadingStatus != .none)
+  }
 
   class func create(with viewModel: ProfileDetailsViewModel) -> ProfileDetailsViewController {
     let profileVC = ProfileDetailsViewController()
@@ -234,6 +237,9 @@ extension ProfileDetailsViewController: ASCollectionDelegate {
     }
     context.beginBatchFetching()
     self.loadingStatus = .loadMore
+    DispatchQueue.main.async {
+      self.updateCollection(loaderSection: true)
+    }
 
     let initialLastIndexPath: Int = viewModel.numberOfItemsInSection(section: Section.cells.rawValue, segment: activeSegment)
 
@@ -267,7 +273,11 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    return viewModel.numberOfItemsInSection(section: section, segment: activeSegment)
+    if section == Section.activityIndicator.rawValue {
+      return shouldShowLoader ? 1 : 0
+    } else {
+      return viewModel.numberOfItemsInSection(section: section, segment: activeSegment)
+    }
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
@@ -292,8 +302,7 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
     }
     if indexPath.section == Section.activityIndicator.rawValue {
       if let loaderNode = node as? LoaderNode {
-        let showLoader = (loadingStatus != .none)
-        loaderNode.updateLoaderVisibility(show: showLoader)
+        loaderNode.updateLoaderVisibility(show: shouldShowLoader)
       }
     } else if indexPath.section == Section.cells.rawValue {
       switch activeSegment {
