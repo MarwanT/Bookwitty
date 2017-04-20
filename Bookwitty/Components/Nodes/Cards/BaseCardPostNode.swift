@@ -135,14 +135,8 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
 
   private func manageNodes() {
     guard subnodes.count == 0 else { return }
-
-    //Order is important: backgroundNode must be the first
-    if(shouldShowInfoNode && !forceHideInfoNode) {
-      addSubnodes(arrayOfNodes: [backgroundNode, infoNode, contentNode, commentsSummaryNode, separatorNode, actionBarNode])
-    } else {
-      addSubnodes(arrayOfNodes: [backgroundNode, contentNode, commentsSummaryNode, separatorNode, actionBarNode])
-    }
-
+    automaticallyManagesSubnodes = true
+    
     separatorNode.isLayerBacked = true
     backgroundNode.isLayerBacked = true
   }
