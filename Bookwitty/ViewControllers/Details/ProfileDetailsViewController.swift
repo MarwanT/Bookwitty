@@ -156,8 +156,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   }
 
   private func reloadCollectionSections() {
-    self.collectionNode.reloadSections(IndexSet(integer: Section.cells.rawValue))
-    self.collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
+    updateCollection(with: nil, shouldReloadItems: false, loaderSection: true, cellsSection: true, orReloadAll: false, completionBlock: nil)
   }
 }
 
@@ -240,9 +239,11 @@ extension ProfileDetailsViewController: ASCollectionDelegate {
 
     // Fetch next page data
     viewModel.loadNextPage(for: activeSegment) { [weak self] (success) in
+      var updatedIndexPathRange: [IndexPath]?
       defer {
         context.completeBatchFetching(true)
         self!.loadingStatus = .none
+        self?.updateCollection(with: updatedIndexPathRange, shouldReloadItems: false, loaderSection: true, cellsSection: false, orReloadAll: false, completionBlock: nil)
       }
       guard let strongSelf = self else {
         return
@@ -252,10 +253,9 @@ extension ProfileDetailsViewController: ASCollectionDelegate {
       if success && finalLastIndexPath > initialLastIndexPath {
         let updateIndexRange = initialLastIndexPath..<finalLastIndexPath
 
-        let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
+        updatedIndexPathRange = updateIndexRange.flatMap({ (index) -> IndexPath in
           return IndexPath(row: index, section: Section.cells.rawValue)
         })
-        collectionNode.insertItems(at: updatedIndexPathRange)
       }
     }
   }
@@ -706,5 +706,32 @@ extension ProfileDetailsViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+  }
+}
+
+// MARK: - Reload Footer
+extension ProfileDetailsViewController {
+  func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, loaderSection: Bool = false, cellsSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
+    if reloadAll {
+      collectionNode.reloadData(completion: {
+        completionBlock?(true)
+      })
+    } else {
+      collectionNode.performBatchUpdates({
+        if loaderSection {
+          collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
+        }
+        if cellsSection {
+          collectionNode.reloadSections(IndexSet(integer: Section.cells.rawValue))
+        }
+        if let itemIndices = itemIndices, itemIndices.count > 0 {
+          if reloadItems {
+            collectionNode.reloadItems(at: itemIndices)
+          }else {
+            collectionNode.insertItems(at: itemIndices)
+          }
+        }
+      }, completion: completionBlock)
+    }
   }
 }
