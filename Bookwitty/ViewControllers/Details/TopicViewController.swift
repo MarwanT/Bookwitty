@@ -581,7 +581,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
         let node = CardFactory.createCardFor(resourceType: post.registeredResourceType) else {
         return ASCellNode()
       }
-
+      node.delegate = self
       node.baseViewModel?.resource = post as? ModelCommonProperties
       return node
     case .editions:
@@ -691,6 +691,168 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
         }
       }
     }
+  }
+}
+
+// MARK - BaseCardPostNode Delegate
+extension TopicViewController: BaseCardPostNodeDelegate {
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+    let index: Int = indexPath.row
+    var resource: ModelResource?
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+    switch category {
+    case .latest:
+      resource = viewModel.latest(at: index)
+    case .editions:
+      resource = viewModel.edition(at: index)
+    case .relatedBooks:
+      resource = viewModel.relatedBook(at: index)
+    case .followers:
+      resource = viewModel.follower(at: index)
+    case .none:
+      return
+    }
+
+    if let resource = resource as? ModelCommonProperties,
+      let penName = resource.penName {
+      pushProfileViewController(penName: penName)
+
+      //MARK: [Analytics] Event
+      let category: Analytics.Category
+      switch resource.registeredResourceType {
+      case Image.resourceType:
+        category = .Image
+      case Quote.resourceType:
+        category = .Quote
+      case Video.resourceType:
+        category = .Video
+      case Audio.resourceType:
+        category = .Audio
+      case Link.resourceType:
+        category = .Link
+      case Author.resourceType:
+        category = .Author
+      case ReadingList.resourceType:
+        category = .ReadingList
+      case Topic.resourceType:
+        category = .Topic
+      case Text.resourceType:
+        category = .Text
+      case Book.resourceType:
+        category = .TopicBook
+      case PenName.resourceType:
+        category = .PenName
+      default:
+        category = .Default
+      }
+
+      let event: Analytics.Event = Analytics.Event(category: category,
+                                                   action: .GoToPenName,
+                                                   name: penName.name ?? "")
+      Analytics.shared.send(event: event)
+    } else if let penName = resource as? PenName  {
+      pushProfileViewController(penName: penName)
+
+      //MARK: [Analytics] Event
+      let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                   action: .GoToDetails,
+                                                   name: penName.name ?? "")
+      Analytics.shared.send(event: event)
+    }
+  }
+
+  func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      didFinishAction?(false)
+      return
+    }
+    let index: Int = indexPath.row
+    var candidateResource: ModelResource?
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+    switch category {
+    case .latest:
+      candidateResource = viewModel.latest(at: index)
+    case .editions:
+      candidateResource = viewModel.edition(at: index)
+    case .relatedBooks:
+      candidateResource = viewModel.relatedBook(at: index)
+    case .followers:
+      candidateResource = viewModel.follower(at: index)
+    case .none:
+      return
+    }
+    guard let resource = candidateResource else {
+      didFinishAction?(false)
+      return
+    }
+
+    switch(action) {
+    case .wit:
+      viewModel.witContent(contentId: resource.id) { (success) in
+        didFinishAction?(success)
+      }
+    case .unwit:
+      viewModel.unwitContent(contentId: resource.id) { (success) in
+        didFinishAction?(success)
+      }
+    case .share:
+      if let sharingInfo: [String] = viewModel.sharingContent(resource: resource) {
+        presentShareSheet(shareContent: sharingInfo)
+      }
+    case .follow:
+      viewModel.follow(resource: resource) { (success) in
+        didFinishAction?(success)
+      }
+    case .unfollow:
+      viewModel.unfollow(resource: resource) { (success) in
+        didFinishAction?(success)
+      }
+
+    default:
+      //TODO: handle comment
+      break
+    }
+
+    //MARK: [Analytics] Event
+    let analyticsCategory: Analytics.Category
+    var name: String = (resource as? ModelCommonProperties)?.title ?? ""
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      analyticsCategory = .Image
+    case Quote.resourceType:
+      analyticsCategory = .Quote
+    case Video.resourceType:
+      analyticsCategory = .Video
+    case Audio.resourceType:
+      analyticsCategory = .Audio
+    case Link.resourceType:
+      analyticsCategory = .Link
+    case Author.resourceType:
+      analyticsCategory = .Author
+      name = (resource as? Author)?.name ?? ""
+    case ReadingList.resourceType:
+      analyticsCategory = .ReadingList
+    case Topic.resourceType:
+      analyticsCategory = .Topic
+    case Text.resourceType:
+      analyticsCategory = .Text
+    case Book.resourceType:
+      analyticsCategory = .TopicBook
+    case PenName.resourceType:
+      analyticsCategory = .PenName
+      name = (resource as? PenName)?.name ?? ""
+    default:
+      analyticsCategory = .Default
+    }
+
+    let analyticsAction = Analytics.Action.actionFrom(cardAction: action, with: analyticsCategory)
+    let event: Analytics.Event = Analytics.Event(category: analyticsCategory,
+                                                 action: analyticsAction,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 }
 
