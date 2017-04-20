@@ -12,7 +12,7 @@ import Moya
 class ProfileDetailsViewModel {
   var penName: PenName
 
-  var latestData: [ModelResource] = []
+  var latestData: [String] = []
   var followers: [PenName] = []
   var following: [ModelResource] = []
   var latestNextPage: URL?
@@ -34,6 +34,20 @@ class ProfileDetailsViewModel {
 
   func isMyPenName() -> Bool {
     return UserManager.shared.isMy(penName: penName)
+  }
+
+  func resourcesFor(array: [String]?) -> [ModelResource]? {
+    guard let array = array else {
+      return nil
+    }
+    return DataManager.shared.fetchResources(with: array)
+  }
+
+  func resourceFor(id: String?) -> ModelResource? {
+    guard let id = id else {
+      return nil
+    }
+    return DataManager.shared.fetchResource(with: id)
   }
 
   func indexPathForAffectedItems(resourcesIdentifiers: [String], visibleItemsIndexPaths: [IndexPath], segment: ProfileDetailsViewController.Segment) -> [IndexPath] {
@@ -124,7 +138,7 @@ extension ProfileDetailsViewModel {
         }
       }
       self.latestData.removeAll(keepingCapacity: false)
-      self.latestData += resources ?? []
+      self.latestData += (resources ?? []).flatMap({ $0.id })
     }
   }
 
@@ -194,7 +208,7 @@ extension ProfileDetailsViewModel {
         case .following:
           self.following += resources
         case .latest:
-          self.latestData += resources
+          self.latestData += resources.flatMap({ $0.id })
         default: break
         }
         self.setNextPage(segment: segment, url: nextPage)
@@ -241,7 +255,7 @@ extension ProfileDetailsViewModel {
 
   func dataForSegment(segment: ProfileDetailsViewController.Segment) -> [ModelResource]? {
     switch segment {
-    case .latest: return latestData
+    case .latest: return resourcesFor(array: latestData)
     case .followers: return followers
     case .following: return following
     default: return nil
@@ -250,7 +264,7 @@ extension ProfileDetailsViewModel {
 
   func itemForSegment(segment: ProfileDetailsViewController.Segment, index: Int) -> ModelResource? {
     switch segment {
-    case .latest: return latestData[index]
+    case .latest: return resourceFor(id: latestData[index])
     case .followers: return followers[index]
     case .following: return following[index]
     default: return nil
