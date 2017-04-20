@@ -697,7 +697,16 @@ extension ProfileDetailsViewController {
 
   @objc
   private func updatedResources(_ notification: NSNotification) {
-    //TODO: Implementation
+    let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.cells.rawValue })
+
+    guard let identifiers = notification.object as? [String],
+      identifiers.count > 0,
+      visibleItemsIndexPaths.count > 0 else {
+        return
+    }
+
+    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths, segment: activeSegment)
+    updateCollection(with: indexPathForAffectedItems, shouldReloadItems: true, loaderSection: true, cellsSection: false, orReloadAll: false, completionBlock: nil)
   }
 
 }

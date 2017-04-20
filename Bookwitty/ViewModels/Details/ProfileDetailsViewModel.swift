@@ -35,6 +35,16 @@ class ProfileDetailsViewModel {
   func isMyPenName() -> Bool {
     return UserManager.shared.isMy(penName: penName)
   }
+
+  func indexPathForAffectedItems(resourcesIdentifiers: [String], visibleItemsIndexPaths: [IndexPath], segment: ProfileDetailsViewController.Segment) -> [IndexPath] {
+    return visibleItemsIndexPaths.filter({
+      indexPath in
+      guard let resource = resourceForIndex(indexPath: indexPath, segment: segment) as? ModelCommonProperties, let identifier = resource.id else {
+        return false
+      }
+      return resourcesIdentifiers.contains(identifier)
+    })
+  }
 }
 
 // MARK: - API requests
