@@ -40,6 +40,17 @@ protocol ModelCommonProperties {
 
   var registeredResourceType: ResourceType { get }
   var penName: PenName? { get }
+
+  func sameInstanceAs(newResource: ModelCommonProperties?) -> Bool?
+}
+
+extension ModelCommonProperties {
+  func sameInstanceAs(newResource: ModelCommonProperties?) -> Bool? {
+    guard let existingResource = self as? ModelResource, let newResource = newResource as? ModelResource else {
+      return nil
+    }
+    return existingResource === newResource
+  }
 }
 
 extension Video: ModelCommonProperties {
