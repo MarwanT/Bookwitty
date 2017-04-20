@@ -127,6 +127,20 @@ extension ReadingListsViewModel {
     let resource = dataArray[indexPath.row]
     return resource
   }
+
+  func indexPathForAffectedItems(resourcesIdentifiers: [String], visibleItemsIndexPaths: [IndexPath]) -> [IndexPath] {
+    let readingLists = DataManager.shared.fetchResources(with: dataArray.flatMap({ $0.id }))
+    dataArray.removeAll()
+    dataArray += readingLists as? [ReadingList] ?? []
+
+    return visibleItemsIndexPaths.filter({
+      indexPath in
+      guard let resource = resourceForIndex(indexPath: indexPath) as? ModelCommonProperties, let identifier = resource.id else {
+        return false
+      }
+      return resourcesIdentifiers.contains(identifier)
+    })
+  }
 }
 
 // MARK: - Posts Actions
