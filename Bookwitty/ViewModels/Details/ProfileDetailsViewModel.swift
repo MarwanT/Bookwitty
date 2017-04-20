@@ -47,6 +47,9 @@ extension ProfileDetailsViewModel {
     _ = PenNameAPI.penNameDetails(identifier: penNameId, completionBlock: { (success, penName, error) in
       defer {
         completionBlock(success)
+        if let penName = penName, success {
+          DataManager.shared.update(resource: penName)
+        }
       }
       if let penName = penName, success {
         self.penName = penName
@@ -106,6 +109,9 @@ extension ProfileDetailsViewModel {
       defer {
         self.latestNextPage = nextUrl
         completion(success, error)
+        if let resources = resources, success {
+          DataManager.shared.update(resources: resources)
+        }
       }
       self.latestData.removeAll(keepingCapacity: false)
       self.latestData += resources ?? []
@@ -125,6 +131,7 @@ extension ProfileDetailsViewModel {
       defer {
         self.followersNextPage = nextUrl
         completion(success, error)
+        DataManager.shared.update(resources: resources ?? [])
       }
       self.followers.removeAll(keepingCapacity: false)
       self.followers += resources ?? []
@@ -144,6 +151,9 @@ extension ProfileDetailsViewModel {
       defer {
         self.followingNextPage = nextUrl
         completion(success, error)
+        if let resources = resources, success {
+          DataManager.shared.update(resources: resources)
+        }
       }
       self.following.removeAll(keepingCapacity: false)
       self.following += resources ?? []
@@ -162,6 +172,11 @@ extension ProfileDetailsViewModel {
     cancelActiveRequest()
 
     cancellableRequest = GeneralAPI.nextPage(nextPage: nextPage) { (success, resources, nextPage, error) in
+      defer {
+        self.cancellableRequest = nil
+        completionBlock(success)
+        DataManager.shared.update(resources: resources ?? [])
+      }
       if let resources = resources, success {
         switch segment {
         case .followers:
@@ -174,8 +189,6 @@ extension ProfileDetailsViewModel {
         }
         self.setNextPage(segment: segment, url: nextPage)
       }
-      self.cancellableRequest = nil
-      completionBlock(success)
     }
   }
 
@@ -310,6 +323,9 @@ extension ProfileDetailsViewModel {
 
     cancellableRequest = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
       completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: .wit)
+      }
     })
   }
 
@@ -322,6 +338,9 @@ extension ProfileDetailsViewModel {
 
     cancellableRequest = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
       completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: .unwit)
+      }
     })
   }
 
@@ -382,6 +401,9 @@ extension ProfileDetailsViewModel {
     _ = GeneralAPI.followPenName(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
+        if success {
+          DataManager.shared.updateResource(with: identifier, after: .follow)
+        }
       }
       penName.following = true
     }
@@ -396,6 +418,9 @@ extension ProfileDetailsViewModel {
     _ = GeneralAPI.unfollowPenName(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
+        if success {
+          DataManager.shared.updateResource(with: identifier, after: .unfollow)
+        }
       }
       penName.following = false
     }
@@ -405,6 +430,9 @@ extension ProfileDetailsViewModel {
     _ = GeneralAPI.follow(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
+        if success {
+          DataManager.shared.updateResource(with: identifier, after: .follow)
+        }
       }
     }
   }
@@ -413,6 +441,9 @@ extension ProfileDetailsViewModel {
     _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
+        if success {
+          DataManager.shared.updateResource(with: identifier, after: .unfollow)
+        }
       }
     }
   }
