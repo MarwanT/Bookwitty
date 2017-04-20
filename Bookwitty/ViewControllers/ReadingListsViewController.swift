@@ -85,6 +85,14 @@ extension ReadingListsViewController: ASCollectionDataSource, ASCollectionDelega
         (success, indices) in
         self.collectionNode.reloadItems(at: indices.map({ IndexPath(item: $0, section: 0) }))
       })
+
+      guard let card = node as? BaseCardPostNode, let resource = viewModel.readingList(at: indexPath.item) else {
+        return
+      }
+
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
+        card.baseViewModel?.resource = resource
+      }
     }
   }
 
