@@ -97,7 +97,9 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     reloadPenName()
 
     segmentedNode.initialize(with: segments.map({ $0.name }))
-    segmentedNode.selectedSegmentChanged = segmentedNode(segmentedControlNode:didSelectSegmentIndex:)
+    segmentedNode.selectedSegmentChanged = { [weak self] (segmentedControlNode: SegmentedControlNode, index: Int) in
+      self?.segmentedNode(segmentedControlNode: segmentedControlNode, didSelectSegmentIndex: index)
+    }
     segmentedNode.style.preferredSize = CGSize(width: collectionNode.style.maxWidth.value, height: 45.0)
   }
 
