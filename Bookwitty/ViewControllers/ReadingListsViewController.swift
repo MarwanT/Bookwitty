@@ -28,6 +28,10 @@ class ReadingListsViewController: ASViewController<ASCollectionNode> {
     super.init(node: collectionNode)
   }
 
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -36,6 +40,7 @@ class ReadingListsViewController: ASViewController<ASCollectionNode> {
 
     applyLocalization()
     observeLanguageChanges()
+    addObservers()
 
     navigationItem.backBarButtonItem = UIBarButtonItem.back
 
@@ -50,6 +55,17 @@ class ReadingListsViewController: ASViewController<ASCollectionNode> {
   func initialize(with lists: [ReadingList]) {
     viewModel.initialize(with: lists)
     collectionNode.reloadData()
+  }
+
+  private func addObservers() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+  }
+
+
+  @objc
+  private func updatedResources(_ notification: NSNotification) {
+
   }
 }
 
