@@ -13,7 +13,7 @@ class ProfileDetailsViewModel {
   var penName: PenName
 
   var latestData: [String] = []
-  var followers: [PenName] = []
+  var followers: [String] = []
   var following: [String] = []
   var latestNextPage: URL?
   var followersNextPage: URL?
@@ -158,7 +158,7 @@ extension ProfileDetailsViewModel {
         DataManager.shared.update(resources: resources ?? [])
       }
       self.followers.removeAll(keepingCapacity: false)
-      self.followers += resources ?? []
+      self.followers += (resources ?? []).flatMap({ $0.id })
     }
   }
 
@@ -204,7 +204,7 @@ extension ProfileDetailsViewModel {
       if let resources = resources, success {
         switch segment {
         case .followers:
-          self.followers += resources.flatMap({ $0 as? PenName })
+          self.followers += resources.flatMap({ $0.id })
         case .following:
           self.following += resources.flatMap({ $0.id })
         case .latest:
@@ -256,7 +256,7 @@ extension ProfileDetailsViewModel {
   func dataForSegment(segment: ProfileDetailsViewController.Segment) -> [ModelResource]? {
     switch segment {
     case .latest: return resourcesFor(array: latestData)
-    case .followers: return followers
+    case .followers: return resourcesFor(array: followers)
     case .following: return resourcesFor(array: following)
     default: return nil
     }
@@ -265,7 +265,7 @@ extension ProfileDetailsViewModel {
   func itemForSegment(segment: ProfileDetailsViewController.Segment, index: Int) -> ModelResource? {
     switch segment {
     case .latest: return resourceFor(id: latestData[index])
-    case .followers: return followers[index]
+    case .followers: return resourceFor(id: followers[index])
     case .following: return resourceFor(id: following[index])
     default: return nil
     }
