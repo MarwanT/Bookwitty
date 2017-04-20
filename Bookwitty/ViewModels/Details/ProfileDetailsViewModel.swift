@@ -14,7 +14,7 @@ class ProfileDetailsViewModel {
 
   var latestData: [String] = []
   var followers: [PenName] = []
-  var following: [ModelResource] = []
+  var following: [String] = []
   var latestNextPage: URL?
   var followersNextPage: URL?
   var followingNextPage: URL?
@@ -180,7 +180,7 @@ extension ProfileDetailsViewModel {
         }
       }
       self.following.removeAll(keepingCapacity: false)
-      self.following += resources ?? []
+      self.following += (resources ?? []).flatMap({ $0.id })
     }
   }
 }
@@ -206,7 +206,7 @@ extension ProfileDetailsViewModel {
         case .followers:
           self.followers += resources.flatMap({ $0 as? PenName })
         case .following:
-          self.following += resources
+          self.following += resources.flatMap({ $0.id })
         case .latest:
           self.latestData += resources.flatMap({ $0.id })
         default: break
@@ -257,7 +257,7 @@ extension ProfileDetailsViewModel {
     switch segment {
     case .latest: return resourcesFor(array: latestData)
     case .followers: return followers
-    case .following: return following
+    case .following: return resourcesFor(array: following)
     default: return nil
     }
   }
@@ -266,7 +266,7 @@ extension ProfileDetailsViewModel {
     switch segment {
     case .latest: return resourceFor(id: latestData[index])
     case .followers: return followers[index]
-    case .following: return following[index]
+    case .following: return resourceFor(id: following[index])
     default: return nil
     }
   }
