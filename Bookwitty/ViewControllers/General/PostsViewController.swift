@@ -161,6 +161,15 @@ extension PostsViewController: ASCollectionDataSource, ASCollectionDelegate {
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
     if let loaderNode = node as? LoaderNode {
       loaderNode.updateLoaderVisibility(show: true)
+    } else if let card = node as? BaseCardPostNode {
+      guard let indexPath = collectionNode.indexPath(for: node),
+        let resource = viewModel.resourceForIndexPath(indexPath: indexPath) as? ModelCommonProperties else {
+          return
+      }
+
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
+        card.baseViewModel?.resource = resource
+      }
     }
   }
   

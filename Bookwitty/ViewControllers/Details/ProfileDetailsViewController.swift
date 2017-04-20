@@ -305,6 +305,15 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
         cell.imageUrl = follower?.avatarUrl
         cell.following = follower?.following ?? false
       default: break
+      } 
+    } else if let card = node as? BaseCardPostNode {
+      guard let indexPath = collectionNode.indexPath(for: node),
+        let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment) as? ModelCommonProperties else {
+          return
+      }
+
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
+        card.baseViewModel?.resource = resource
       }
     }
   }

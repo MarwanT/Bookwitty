@@ -351,6 +351,10 @@ extension NewsFeedViewController: ASCollectionDataSource {
         let resource = viewModel.resourceForIndex(index: indexPath.row) as? ModelCommonProperties else {
         return
       }
+
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
+        card.baseViewModel?.resource = resource
+      }
     }
   }
 }

@@ -405,14 +405,11 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
 extension PostDetailsViewController: PostDetailsItemNodeDelegate {
   func shouldUpdateItem(_ postDetailsItem: PostDetailsItemNode, at index: Int, displayNode: ASDisplayNode) {
     if let card = displayNode as? BaseCardPostNode {
-      if let resourceValues = viewModel.relatedPostsResourceValues(for: index) {
-
-        card.setup(forFollowingMode: resourceValues.followingMode)
-        card.setFollowingValue(following: resourceValues.following)
-        card.setWitValue(witted: resourceValues.isWitted, wits: resourceValues.wits)
-        card.setDimValue(dimmed: resourceValues.isDimmed, dims: resourceValues.dims)
-        card.setNeedsLayout()
+      guard let resource = viewModel.relatedPostsResourceForIndex(index: index) as? ModelCommonProperties else {
+        return
       }
+      card.baseViewModel?.resource = resource
+      card.setNeedsLayout()
     }
   }
 
