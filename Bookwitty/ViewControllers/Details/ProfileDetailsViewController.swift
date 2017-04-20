@@ -68,6 +68,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     loadData()
     applyLocalization()
     observeLanguageChanges()
+    addDataObserver()
 
     navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
@@ -672,6 +673,19 @@ extension ProfileDetailsViewController {
   }
 }
 
+//MARK: - Localizable implementation
+extension ProfileDetailsViewController {
+  fileprivate func addDataObserver() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+  }
+
+  @objc
+  private func updatedResources(_ notification: NSNotification) {
+    //TODO: Implementation
+  }
+
+}
 
 //MARK: - Localizable implementation
 extension ProfileDetailsViewController: Localizable {
