@@ -56,6 +56,8 @@ class CardPostInfoNode: ASDisplayNode {
     userProfileImageNode.style.preferredSize = profileImageSize
     userProfileImageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(profileBorderWidth, profileBorderColor)
     userProfileImageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
+    userProfileImageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
+    userProfileImageNode.animatedImagePaused = true
 
     arrowDownImageNode.image = #imageLiteral(resourceName: "downArrow")
     arrowDownImageNode.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
