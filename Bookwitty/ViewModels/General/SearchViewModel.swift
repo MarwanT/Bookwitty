@@ -151,6 +151,10 @@ extension SearchViewModel {
 
     cancellableRequest = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
       completionBlock(success)
+
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.wit)
+      }
     })
   }
 
@@ -163,6 +167,10 @@ extension SearchViewModel {
 
     cancellableRequest = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
       completionBlock(success)
+
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.unwit)
+      }
     })
   }
 
@@ -223,6 +231,10 @@ extension SearchViewModel {
     _ = GeneralAPI.followPenName(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
+
+        if success {
+          DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
+        }
       }
       penName.following = true
     }
@@ -237,6 +249,10 @@ extension SearchViewModel {
     _ = GeneralAPI.unfollowPenName(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
+
+        if success {
+          DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
+        }
       }
       penName.following = false
     }
@@ -246,6 +262,10 @@ extension SearchViewModel {
     _ = GeneralAPI.follow(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
+
+        if success {
+          DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
+        }
       }
     }
   }
@@ -254,6 +274,10 @@ extension SearchViewModel {
     _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
+
+        if success {
+          DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
+        }
       }
     }
   }
