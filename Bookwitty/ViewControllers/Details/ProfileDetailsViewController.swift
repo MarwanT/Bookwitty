@@ -73,6 +73,10 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
 
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     if let navigationController = navigationController as? ScrollingNavigationController {
