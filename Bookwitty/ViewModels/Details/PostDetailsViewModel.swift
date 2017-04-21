@@ -183,11 +183,9 @@ class PostDetailsViewModel {
     _ = PenNameAPI.penNameDetails(identifier: penNameId, completionBlock: { (success, penName, error) in
       defer {
         completionBlock(success)
-        if let penName = penName, success {
-          DataManager.shared.update(resource: penName)
-        }
       }
       if let penName = penName, success {
+         DataManager.shared.update(resource: penName)
         self.penName = penName
       }
     })
@@ -203,9 +201,9 @@ class PostDetailsViewModel {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       defer {
         completionBlock(success)
-        DataManager.shared.update(resources: resources ?? [])
       }
       if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
         self.contentPostsResources = resources
         self.contentPostsNextPage = next
       }
@@ -218,12 +216,12 @@ class PostDetailsViewModel {
       var resources: [Resource]?
       defer {
         completion(success, resources, error)
-        DataManager.shared.update(resources: resources ?? [])
       }
 
       guard success, let result = resource else {
         return
       }
+      DataManager.shared.update(resources: result)
       resources = result
     })
   }
@@ -296,13 +294,11 @@ extension PostDetailsViewModel {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       defer {
         completionBlock(success)
-        if success {
-          DataManager.shared.update(resources: resources ?? [])
-        }
       }
-      if success {
+      if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
         self.relatedBooks.removeAll()
-        let books = resources?.filter({ $0.registeredResourceType == Book.resourceType })
+        let books = resources.filter({ $0.registeredResourceType == Book.resourceType })
         self.relatedBooks += (books as? [Book]) ?? []
         self.relatedBooksNextPage = next
       }
@@ -397,13 +393,11 @@ extension PostDetailsViewModel {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       defer {
         completionBlock(success)
-        if success {
-          DataManager.shared.update(resources: resources ?? [])
-        }
       }
-      if success {
+      if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
         self.relatedPosts.removeAll()
-        self.relatedPosts += resources?.flatMap( { $0.id }) ?? []
+        self.relatedPosts += resources.flatMap( { $0.id })
         self.relatedPostsNextPage = next
       }
     }
@@ -458,13 +452,11 @@ extension PostDetailsViewModel {
       var imageCollection: [String]? = nil
       defer {
         completionBlock(imageCollection)
-        if success {
-          DataManager.shared.update(resources: resources ?? [])
-        }
       }
-      if success {
+      if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
         var images: [String] = []
-        resources?.forEach({ (resource) in
+        resources.forEach({ (resource) in
           if let res = resource as? ModelCommonProperties {
             if let imageUrl = res.thumbnailImageUrl {
               images.append(imageUrl)
@@ -481,19 +473,19 @@ extension PostDetailsViewModel {
 extension PostDetailsViewModel {
   func witContent(contentId: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     cancellableRequest = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
-      completionBlock(success)
       if success {
         DataManager.shared.updateResource(with: contentId, after: .wit)
       }
+      completionBlock(success)
     })
   }
 
   func unwitContent(contentId: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     cancellableRequest = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
-      completionBlock(success)
       if success {
         DataManager.shared.updateResource(with: contentId, after: .unwit)
       }
+      completionBlock(success)
     })
   }
 
@@ -576,12 +568,10 @@ extension PostDetailsViewModel {
     }
 
     _ = GeneralAPI.followPenName(identifer: identifier) { (success, error) in
-      defer {
-        completionBlock(success)
-        if success {
-          DataManager.shared.updateResource(with: identifier, after: .follow)
-        }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .follow)
       }
+      completionBlock(success)
     }
   }
 
@@ -592,34 +582,28 @@ extension PostDetailsViewModel {
     }
 
     _ = GeneralAPI.unfollowPenName(identifer: identifier) { (success, error) in
-      defer {
-        completionBlock(success)
-        if success {
-          DataManager.shared.updateResource(with: identifier, after: .unfollow)
-        }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .unfollow)
       }
+      completionBlock(success)
     }
   }
 
   fileprivate func followRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     _ = GeneralAPI.follow(identifer: identifier) { (success, error) in
-      defer {
-        completionBlock(success)
-        if success {
-          DataManager.shared.updateResource(with: identifier, after: .follow)
-        }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .follow)
       }
+      completionBlock(success)
     }
   }
 
   fileprivate func unfollowRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
-      defer {
-        completionBlock(success)
-        if success {
-          DataManager.shared.updateResource(with: identifier, after: .unfollow)
-        }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .unfollow)
       }
+      completionBlock(success)
     }
   }
 }
