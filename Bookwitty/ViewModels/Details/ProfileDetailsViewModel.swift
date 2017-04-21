@@ -71,11 +71,9 @@ extension ProfileDetailsViewModel {
     _ = PenNameAPI.penNameDetails(identifier: penNameId, completionBlock: { (success, penName, error) in
       defer {
         completionBlock(success)
-        if let penName = penName, success {
-          DataManager.shared.update(resource: penName)
-        }
       }
       if let penName = penName, success {
+         DataManager.shared.update(resource: penName)
         self.penName = penName
       }
     })
@@ -133,12 +131,12 @@ extension ProfileDetailsViewModel {
       defer {
         self.latestNextPage = nextUrl
         completion(success, error)
-        if let resources = resources, success {
-          DataManager.shared.update(resources: resources)
-        }
       }
-      self.latestData.removeAll(keepingCapacity: false)
-      self.latestData += (resources ?? []).flatMap({ $0.id })
+      if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
+        self.latestData.removeAll(keepingCapacity: false)
+        self.latestData += resources.flatMap({ $0.id })
+      }
     }
   }
 
@@ -155,10 +153,12 @@ extension ProfileDetailsViewModel {
       defer {
         self.followersNextPage = nextUrl
         completion(success, error)
-        DataManager.shared.update(resources: resources ?? [])
       }
-      self.followers.removeAll(keepingCapacity: false)
-      self.followers += (resources ?? []).flatMap({ $0.id })
+      if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
+        self.followers.removeAll(keepingCapacity: false)
+        self.followers += (resources).flatMap({ $0.id })
+      }
     }
   }
 
@@ -175,12 +175,13 @@ extension ProfileDetailsViewModel {
       defer {
         self.followingNextPage = nextUrl
         completion(success, error)
-        if let resources = resources, success {
-          DataManager.shared.update(resources: resources)
-        }
       }
-      self.following.removeAll(keepingCapacity: false)
-      self.following += (resources ?? []).flatMap({ $0.id })
+      if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
+        self.following.removeAll(keepingCapacity: false)
+        self.following += resources.flatMap({ $0.id })
+      }
+
     }
   }
 }
@@ -199,9 +200,9 @@ extension ProfileDetailsViewModel {
       defer {
         self.cancellableRequest = nil
         completionBlock(success)
-        DataManager.shared.update(resources: resources ?? [])
       }
       if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
         switch segment {
         case .followers:
           self.followers += resources.flatMap({ $0.id })
