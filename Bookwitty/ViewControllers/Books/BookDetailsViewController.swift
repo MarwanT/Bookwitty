@@ -55,12 +55,18 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
     }
 
     applyLocalization()
-    observeLanguageChanges()
 
     navigationItem.backBarButtonItem = UIBarButtonItem.back
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.BookProduct)
+  }
+
+  private func addObservers() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+
+    observeLanguageChanges()
   }
   
   private func loadNavigationBarButtons() {
@@ -91,6 +97,11 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
     sections.forEach({ mutableIndexSet.add($0.rawValue) })
     collectionNode.reloadSections(mutableIndexSet as IndexSet)
   }
+
+  @objc
+  fileprivate func updatedResources(_ notification: NSNotification) {
+  }
+
 }
 
 extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegate {
