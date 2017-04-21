@@ -49,6 +49,9 @@ final class DiscoverViewModel {
           completionBlock(success)
         }
         if let resources = resources, success {
+
+          DataManager.shared.update(resources: resources)
+
           //Get the Initial Order of resources result from the dataIndentifers original ids
           for id in self.dataIdentifiers {
             if let index = resources.index(where: { $0.id ?? "" == id }) {
@@ -74,6 +77,16 @@ final class DiscoverViewModel {
         return
       }
       resources = result
+    })
+  }
+
+  func indexPathForAffectedItems(resourcesIdentifiers: [String], visibleItemsIndexPaths: [IndexPath]) -> [IndexPath] {
+    return visibleItemsIndexPaths.filter({
+      indexPath in
+      guard let resource = resourceForIndex(index: indexPath.row) as? ModelCommonProperties, let identifier = resource.id else {
+        return false
+      }
+      return resourcesIdentifiers.contains(identifier)
     })
   }
 }
@@ -119,6 +132,9 @@ extension DiscoverViewModel {
     }
 
     cancellableRequest = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.follow)
+      }
       completionBlock(success)
     })
   }
@@ -131,6 +147,9 @@ extension DiscoverViewModel {
     }
 
     cancellableRequest = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.follow)
+      }
       completionBlock(success)
     })
   }
@@ -183,47 +202,51 @@ extension DiscoverViewModel {
     }
   }
 
-  func followPenName(penName: PenName?, completionBlock: @escaping (_ success: Bool) -> ()) {
+  fileprivate func followPenName(penName: PenName?, completionBlock: @escaping (_ success: Bool) -> ()) {
     guard let penName = penName, let identifier = penName.id else {
       completionBlock(false)
       return
     }
 
     _ = GeneralAPI.followPenName(identifer: identifier) { (success, error) in
-      defer {
-        completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
+        penName.following = true
       }
-      penName.following = true
+      completionBlock(success)
     }
   }
 
-  func unfollowPenName(penName: PenName?, completionBlock: @escaping (_ success: Bool) -> ()) {
+  fileprivate func unfollowPenName(penName: PenName?, completionBlock: @escaping (_ success: Bool) -> ()) {
     guard let penName = penName, let identifier = penName.id else {
       completionBlock(false)
       return
     }
 
     _ = GeneralAPI.unfollowPenName(identifer: identifier) { (success, error) in
-      defer {
-        completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
+        penName.following = false
       }
-      penName.following = false
+      completionBlock(success)
     }
   }
 
   fileprivate func followRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     _ = GeneralAPI.follow(identifer: identifier) { (success, error) in
-      defer {
-        completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
       }
+      completionBlock(success)
     }
   }
 
   fileprivate func unfollowRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
-      defer {
-        completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
       }
+      completionBlock(success)
     }
   }
 }

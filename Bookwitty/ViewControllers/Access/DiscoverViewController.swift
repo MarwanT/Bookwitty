@@ -647,10 +647,29 @@ extension DiscoverViewController {
   func addObservers() {
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.refreshData(_:)), name: AppNotification.shouldRefreshData, object: nil)
+
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
   }
 
   func refreshData(_ notification: Notification) {
     refreshViewControllerData()
+  }
+
+  @objc
+  fileprivate func updatedResources(_ notification: NSNotification) {
+    let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.cards.rawValue })
+
+    guard let identifiers = notification.object as? [String],
+      identifiers.count > 0,
+      visibleItemsIndexPaths.count > 0 else {
+        return
+    }
+
+    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+    collectionNode.performBatchUpdates({ 
+      collectionNode.reloadItems(at: indexPathForAffectedItems)
+    }, completion: nil)
   }
 }
 
