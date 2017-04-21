@@ -26,13 +26,13 @@ class ProfileCardViewModel: CardViewModelProtocol {
   }
 
   func values() -> (name: String?, biography: String?, imageUrl: String?, following: Bool, followers: Int?) {
-    guard let resource = resource else {
+    guard let resource = resource, let penName = resource as? PenName else {
       return (nil, nil, nil, false, nil)
     }
 
-    let name = resource.title
-    let biography = resource.shortDescription
-    let imageUrl = resource.coverImageUrl
+    let name = penName.name
+    let biography = penName.biography
+    let imageUrl = penName.avatarUrl
     let following = resource.following
     let followers = resource.counts?.followers
 
