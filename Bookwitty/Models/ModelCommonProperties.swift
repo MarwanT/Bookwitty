@@ -238,3 +238,45 @@ extension Book: ModelCommonProperties {
     return nil
   }
 }
+
+extension PenName: ModelCommonProperties {
+  var title: String? {
+    return name
+  }
+
+  var shortDescription: String? {
+    return biography
+  }
+
+  var thumbnailImageUrl: String? {
+    return avatarUrl
+  }
+
+  var createdAt: NSDate? {
+    return nil
+  }
+
+  var updatedAt: NSDate? {
+    return nil
+  }
+
+  var coverImageUrl: String? {
+    return nil
+  }
+
+  var vote: String? {
+    return nil
+  }
+
+  var isWitted: Bool {
+    return false
+  }
+
+  var isDimmed: Bool {
+    return false
+  }
+
+  var penName: PenName? {
+    return nil
+  }
+}
