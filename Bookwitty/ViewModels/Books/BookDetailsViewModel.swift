@@ -94,12 +94,7 @@ final class BookDetailsViewModel {
     return visibleItemsIndexPaths.filter({
       indexPath in
 
-      guard let resourcesCommonProperties = resourcesCommonProperties(for: indexPath), resourcesCommonProperties.count > 0 else {
-        return false
-      }
-      let resource = resourcesCommonProperties[indexPath.row - 1]
-
-      guard let identifier = resource.id else {
+      guard let resource = resource(at: indexPath), let identifier = resource.id else {
         return false
       }
 
@@ -755,6 +750,10 @@ extension BookDetailsViewModel {
   func resource(at indexPath: IndexPath) -> ModelCommonProperties? {
     guard let resources = resourcesCommonProperties(for: indexPath) else {
         return nil
+    }
+
+    guard indexPath.row > 0 && indexPath.row < resources.count else {
+      return nil
     }
 
     let resource = resources[indexPath.row - 1]
