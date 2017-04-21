@@ -66,6 +66,8 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     applyLocalization()
     observeLanguageChanges()
 
+    addObservers()
+
     navigationItem.backBarButtonItem = UIBarButtonItem.back
 
     //MARK: [Analytics] Screen Name
@@ -118,6 +120,27 @@ class SearchViewController: ASViewController<ASCollectionNode> {
                                                  action: .SearchOnBookwitty,
                                                  name: query)
     Analytics.shared.send(event: event)
+  }
+
+
+  private func addObservers() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+  }
+
+
+  @objc
+  private func updatedResources(_ notification: NSNotification) {
+    let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems
+
+    guard let identifiers = notification.object as? [String],
+      identifiers.count > 0,
+      visibleItemsIndexPaths.count > 0 else {
+        return
+    }
+
+    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+    collectionNode.reloadItems(at: indexPathForAffectedItems)
   }
 }
 
