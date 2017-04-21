@@ -347,10 +347,10 @@ extension ProfileDetailsViewModel {
     }
 
     cancellableRequest = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
-      completionBlock(success)
       if success {
         DataManager.shared.updateResource(with: contentId, after: .wit)
       }
+      completionBlock(success)
     })
   }
 
@@ -362,10 +362,10 @@ extension ProfileDetailsViewModel {
     }
 
     cancellableRequest = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
-      completionBlock(success)
       if success {
         DataManager.shared.updateResource(with: contentId, after: .unwit)
       }
+      completionBlock(success)
     })
   }
 
@@ -426,11 +426,11 @@ extension ProfileDetailsViewModel {
     _ = GeneralAPI.followPenName(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
-        if success {
-          DataManager.shared.updateResource(with: identifier, after: .follow)
-        }
       }
-      penName.following = true
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .follow)
+        penName.following = true
+      }
     }
   }
 
@@ -443,11 +443,11 @@ extension ProfileDetailsViewModel {
     _ = GeneralAPI.unfollowPenName(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
-        if success {
-          DataManager.shared.updateResource(with: identifier, after: .unfollow)
-        }
       }
-      penName.following = false
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .unfollow)
+        penName.following = false
+      }
     }
   }
 
@@ -455,9 +455,9 @@ extension ProfileDetailsViewModel {
     _ = GeneralAPI.follow(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
-        if success {
-          DataManager.shared.updateResource(with: identifier, after: .follow)
-        }
+      }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .follow)
       }
     }
   }
@@ -466,9 +466,9 @@ extension ProfileDetailsViewModel {
     _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
-        if success {
-          DataManager.shared.updateResource(with: identifier, after: .unfollow)
-        }
+      }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .unfollow)
       }
     }
   }
