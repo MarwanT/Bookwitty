@@ -42,7 +42,6 @@ class PostsViewController: ASViewController<ASCollectionNode> {
   func initialize(title: String?, resources: [ModelResource]?, loadingMode: PostsViewModel.DataLoadingMode?) {
     self.title = title
     self.viewModel.initialize(title: title, resources: resources, loadingMode: loadingMode)
-    collectionNode.reloadData()
   }
   
   override func viewDidLoad() {
@@ -66,16 +65,14 @@ class PostsViewController: ASViewController<ASCollectionNode> {
     
     DispatchQueue.main.async {
       self.showBottomLoader(reloadSection: true)
-      DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
-        self.viewModel.loadNextPage { (success) in
-          DispatchQueue.main.async {
-            self.hideBottomLoader()
-            let sectionsNeedsReloading = self.viewModel.sectionsNeedsReloading()
-            self.reloadCollectionViewSections(sections: sectionsNeedsReloading)
-            completion(success)
-          }
-        }
+    }
+    self.viewModel.loadNextPage { (success) in
+      self.hideBottomLoader()
+      let sectionsNeedsReloading = self.viewModel.sectionsNeedsReloading()
+      DispatchQueue.main.async {
+        self.reloadCollectionViewSections(sections: sectionsNeedsReloading)
       }
+      completion(success)
     }
   }
 }
