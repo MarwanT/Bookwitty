@@ -101,8 +101,11 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
 
   @objc
   fileprivate func updatedResources(_ notification: NSNotification) {
-    let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems
-
+    let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({
+      ($0.section == BookDetailsViewModel.Section.recommendedReadingLists.rawValue
+        || $0.section == BookDetailsViewModel.Section.relatedTopics.rawValue)
+    })
+    
     guard let identifiers = notification.object as? [String],
       identifiers.count > 0,
       visibleItemsIndexPaths.count > 0 else {
