@@ -42,13 +42,12 @@ class PostsViewController: ASViewController<ASCollectionNode> {
   func initialize(title: String?, resources: [ModelResource]?, loadingMode: PostsViewModel.DataLoadingMode?) {
     self.title = title
     self.viewModel.initialize(title: title, resources: resources, loadingMode: loadingMode)
-    collectionNode.reloadData()
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     title = viewModel.viewControllerTitle
-    
+    addObservers()
     collectionNode.delegate = self
     collectionNode.dataSource = self
 
@@ -66,16 +65,14 @@ class PostsViewController: ASViewController<ASCollectionNode> {
     
     DispatchQueue.main.async {
       self.showBottomLoader(reloadSection: true)
-      DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
-        self.viewModel.loadNextPage { (success) in
-          DispatchQueue.main.async {
-            self.hideBottomLoader()
-            let sectionsNeedsReloading = self.viewModel.sectionsNeedsReloading()
-            self.reloadCollectionViewSections(sections: sectionsNeedsReloading)
-            completion(success)
-          }
-        }
+    }
+    self.viewModel.loadNextPage { (success) in
+      self.hideBottomLoader()
+      let sectionsNeedsReloading = self.viewModel.sectionsNeedsReloading()
+      DispatchQueue.main.async {
+        self.reloadCollectionViewSections(sections: sectionsNeedsReloading)
       }
+      completion(success)
     }
   }
 }
@@ -498,6 +495,28 @@ extension PostsViewController {
     let topicViewController = TopicViewController()
     topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
+  }
+}
+
+// MARK: Notifications
+extension PostsViewController {
+  func addObservers() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+  }
+
+  func updatedResources(_ notification: NSNotification) {
+    let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.posts.rawValue })
+
+    guard let identifiers = notification.object as? [String],
+      identifiers.count > 0,
+      visibleItemsIndexPaths.count > 0 else {
+        return
+    }
+
+    //TODO: Update items instead of the whole sections using:
+    //REPLACE: let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+    reloadCollectionViewSections(sections: [PostsViewController.Section.posts])
   }
 }
 
