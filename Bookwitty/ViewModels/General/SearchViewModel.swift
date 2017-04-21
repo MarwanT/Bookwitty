@@ -77,6 +77,16 @@ class SearchViewModel {
   func hasNextPage() -> Bool {
     return (nextPage != nil)
   }
+
+  func indexPathForAffectedItems(resourcesIdentifiers: [String], visibleItemsIndexPaths: [IndexPath]) -> [IndexPath] {
+    return visibleItemsIndexPaths.filter({
+      indexPath in
+      guard let resource = resourceForIndex(indexPath: indexPath) as? ModelCommonProperties, let identifier = resource.id else {
+        return false
+      }
+      return resourcesIdentifiers.contains(identifier)
+    })
+  }
 }
 
 // Mark: - Collection helper
