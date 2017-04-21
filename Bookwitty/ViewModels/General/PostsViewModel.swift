@@ -252,6 +252,9 @@ extension PostsViewModel {
     }
 
     _ = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: .wit)
+      }
       completionBlock(success)
     })
   }
@@ -264,6 +267,9 @@ extension PostsViewModel {
     }
 
     _ = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: .unwit)
+      }
       completionBlock(success)
     })
   }
@@ -326,7 +332,10 @@ extension PostsViewModel {
       defer {
         completionBlock(success)
       }
-      penName.following = true
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .follow)
+        penName.following = true
+      }
     }
   }
 
@@ -340,7 +349,10 @@ extension PostsViewModel {
       defer {
         completionBlock(success)
       }
-      penName.following = false
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .unfollow)
+        penName.following = false
+      }
     }
   }
 
@@ -349,6 +361,9 @@ extension PostsViewModel {
       defer {
         completionBlock(success)
       }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .follow)
+      }
     }
   }
 
@@ -356,6 +371,9 @@ extension PostsViewModel {
     _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
+      }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .unfollow)
       }
     }
   }
