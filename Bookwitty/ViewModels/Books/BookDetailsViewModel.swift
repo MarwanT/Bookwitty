@@ -558,7 +558,9 @@ extension BookDetailsViewModel {
         guard success, let resources = resources else {
           return
         }
-        
+
+        DataManager.shared.update(resources: resources)
+
         let readingLists = resources.flatMap({ $0 as? ReadingList })
         let displayedReadingLists = Array(readingLists.prefix(self.maximumNumberOfDetails))
         self.relatedReadingLists = (readingLists, displayedReadingLists, nextPage)
@@ -583,6 +585,8 @@ extension BookDetailsViewModel {
         guard success, let resources = resources else {
           return
         }
+
+        DataManager.shared.update(resources: resources)
         
         let topics = resources.flatMap({ $0 as? Topic })
         let displayedTopics = Array(topics.prefix(self.maximumNumberOfDetails))
@@ -600,6 +604,9 @@ extension BookDetailsViewModel {
     }
     
     _ = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.wit)
+      }
       completionBlock(success)
     })
   }
@@ -611,6 +618,9 @@ extension BookDetailsViewModel {
     }
     
     _ = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.unwit)
+      }
       completionBlock(success)
     })
   }
@@ -707,17 +717,19 @@ extension BookDetailsViewModel {
 
   fileprivate func followRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     _ = GeneralAPI.follow(identifer: identifier) { (success, error) in
-      defer {
-        completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
       }
+      completionBlock(success)
     }
   }
 
   fileprivate func unfollowRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
-      defer {
-        completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
       }
+      completionBlock(success)
     }
   }
 }
