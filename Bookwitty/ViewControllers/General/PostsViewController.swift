@@ -514,6 +514,8 @@ extension PostsViewController {
         return
     }
 
+    //TODO: Update items instead of the whole sections using:
+    //REPLACE: let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
     reloadCollectionViewSections(sections: [PostsViewController.Section.posts])
   }
 }
