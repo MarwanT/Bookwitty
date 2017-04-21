@@ -270,11 +270,11 @@ extension TopicViewModel {
 
     _ = GeneralAPI.postsLinkedContent(contentIdentifier: identifier, type: nil) {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
-      if success {
-        let resourcesIds: [String] = resources?.flatMap({ $0.id }) ?? []
+      if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
+        let resourcesIds: [String] = resources.flatMap({ $0.id })
         _ = self.handleLatest(results: resourcesIds, next: next, reset: true)
         self.callback?(.latest)
-        DataManager.shared.update(resources: resources ?? [])
       }
     }
   }
@@ -333,11 +333,11 @@ extension TopicViewModel {
 
     _ = GeneralAPI.editions(contentIdentifier: identifier) {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
-      if success {
-        let resourcesIds: [String] = resources?.flatMap({ $0.id }) ?? []
+      if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
+        let resourcesIds: [String] = resources.flatMap({ $0.id })
         _ = self.handleEdition(results: resourcesIds, next: next, reset: true)
         self.callback?(.editions)
-        DataManager.shared.update(resources: resources ?? [])
       }
     }
   }
@@ -396,13 +396,13 @@ extension TopicViewModel {
 
     _ = GeneralAPI.postsLinkedContent(contentIdentifier: identifier, type: [Book.resourceType]) {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
-      if success {
+      if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
         self.relatedBooks.removeAll()
-        let books = resources?.filter({ $0.registeredResourceType == Book.resourceType })
-        let resourcesIds: [String] = books?.flatMap({ $0.id }) ?? []
+        let books = resources.filter({ $0.registeredResourceType == Book.resourceType })
+        let resourcesIds: [String] = books.flatMap({ $0.id })
         _ = self.handleRelatedBooks(results: resourcesIds, next: next, reset: true)
         self.callback?(.relatedBooks)
-        DataManager.shared.update(resources: resources ?? [])
       }
     }
   }
@@ -467,11 +467,11 @@ extension TopicViewModel {
 
     _ = PenNameAPI.followers(contentIdentifier: identifier) {
       (success: Bool, penNames: [PenName]?, next: URL?, error: BookwittyAPIError?) in
-      if success {
-        let followersIds: [String] = penNames?.flatMap({ $0.id }) ?? []
+      if let penNames = penNames, success {
+        DataManager.shared.update(resources: penNames)
+        let followersIds: [String] = penNames.flatMap({ $0.id })
         _ = self.handleFollowers(results: followersIds, next: next, reset: true)
         self.callback?(.followers)
-        DataManager.shared.update(resources: penNames ?? [])
       }
     }
   }
@@ -520,11 +520,11 @@ extension TopicViewModel {
 
       defer {
         closure?(successful, indices, category)
-        DataManager.shared.update(resources: resources ?? [])
       }
 
       successful = resources != nil
-      
+
+      DataManager.shared.update(resources: resources ?? [])
       let resourcesIdentifiers: [String]? = resources?.flatMap({ $0.id })
 
       switch category {
