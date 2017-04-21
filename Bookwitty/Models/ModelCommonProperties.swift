@@ -39,7 +39,7 @@ protocol ModelCommonProperties {
   var counts: Counts? { get }
 
   var registeredResourceType: ResourceType { get }
-  var penName: PenName? { get }
+  var penName: PenName? { get set }
 
   func sameInstanceAs(newResource: ModelCommonProperties?) -> Bool?
 }
@@ -235,7 +235,12 @@ extension Book: ModelCommonProperties {
   }
 
   var penName: PenName? {
-    return nil
+    get {
+      return nil
+    }
+    set {
+      //Property does not apply
+    }
   }
 }
 
@@ -277,6 +282,11 @@ extension PenName: ModelCommonProperties {
   }
 
   var penName: PenName? {
-    return nil
+    get {
+      return nil
+    }
+    set {
+      //Property does not apply
+    }
   }
 }

@@ -32,6 +32,9 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
       loaderNode.updateLoaderVisibility(show: showLoader)
     }
   }
+  var shouldShowLoader: Bool {
+    return (loadingStatus != .none)
+  }
 
   class func create(with viewModel: ProfileDetailsViewModel) -> ProfileDetailsViewController {
     let profileVC = ProfileDetailsViewController()
@@ -68,8 +71,13 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     loadData()
     applyLocalization()
     observeLanguageChanges()
+    addDataObserver()
 
     navigationItem.backBarButtonItem = UIBarButtonItem.back
+  }
+
+  deinit {
+    NotificationCenter.default.removeObserver(self)
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -96,7 +104,9 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     reloadPenName()
 
     segmentedNode.initialize(with: segments.map({ $0.name }))
-    segmentedNode.selectedSegmentChanged = segmentedNode(segmentedControlNode:didSelectSegmentIndex:)
+    segmentedNode.selectedSegmentChanged = { [weak self] (segmentedControlNode: SegmentedControlNode, index: Int) in
+      self?.segmentedNode(segmentedControlNode: segmentedControlNode, didSelectSegmentIndex: index)
+    }
     segmentedNode.style.preferredSize = CGSize(width: collectionNode.style.maxWidth.value, height: 45.0)
   }
 
@@ -149,8 +159,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   }
 
   private func reloadCollectionSections() {
-    self.collectionNode.reloadSections(IndexSet(integer: Section.cells.rawValue))
-    self.collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
+    updateCollection(with: nil, shouldReloadItems: false, loaderSection: true, cellsSection: true, orReloadAll: false, completionBlock: nil)
   }
 }
 
@@ -228,14 +237,19 @@ extension ProfileDetailsViewController: ASCollectionDelegate {
     }
     context.beginBatchFetching()
     self.loadingStatus = .loadMore
+    DispatchQueue.main.async {
+      self.updateCollection(loaderSection: true)
+    }
 
     let initialLastIndexPath: Int = viewModel.numberOfItemsInSection(section: Section.cells.rawValue, segment: activeSegment)
 
     // Fetch next page data
     viewModel.loadNextPage(for: activeSegment) { [weak self] (success) in
+      var updatedIndexPathRange: [IndexPath]?
       defer {
         context.completeBatchFetching(true)
         self!.loadingStatus = .none
+        self?.updateCollection(with: updatedIndexPathRange, shouldReloadItems: false, loaderSection: true, cellsSection: false, orReloadAll: false, completionBlock: nil)
       }
       guard let strongSelf = self else {
         return
@@ -245,10 +259,9 @@ extension ProfileDetailsViewController: ASCollectionDelegate {
       if success && finalLastIndexPath > initialLastIndexPath {
         let updateIndexRange = initialLastIndexPath..<finalLastIndexPath
 
-        let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
+        updatedIndexPathRange = updateIndexRange.flatMap({ (index) -> IndexPath in
           return IndexPath(row: index, section: Section.cells.rawValue)
         })
-        collectionNode.insertItems(at: updatedIndexPathRange)
       }
     }
   }
@@ -260,7 +273,11 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    return viewModel.numberOfItemsInSection(section: section, segment: activeSegment)
+    if section == Section.activityIndicator.rawValue {
+      return shouldShowLoader ? 1 : 0
+    } else {
+      return viewModel.numberOfItemsInSection(section: section, segment: activeSegment)
+    }
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
@@ -285,8 +302,7 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
     }
     if indexPath.section == Section.activityIndicator.rawValue {
       if let loaderNode = node as? LoaderNode {
-        let showLoader = (loadingStatus != .none)
-        loaderNode.updateLoaderVisibility(show: showLoader)
+        loaderNode.updateLoaderVisibility(show: shouldShowLoader)
       }
     } else if indexPath.section == Section.cells.rawValue {
       switch activeSegment {
@@ -295,26 +311,22 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
           return
         }
         let follower: PenName? = viewModel.itemForSegment(segment: activeSegment, index: indexPath.row) as? PenName
-        var isMyPenName: Bool = false
-        if let follower = follower {
-          isMyPenName = viewModel.isMyPenName(follower)
-          cell.updateMode(disabled: isMyPenName)
+        setupPenNameData(in: cell, with: follower)
+      case .following:
+        fallthrough
+      case .latest:
+        if let card = node as? BaseCardPostNode {
+          guard let indexPath = collectionNode.indexPath(for: node),
+            let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment) as? ModelCommonProperties else {
+              return
+          }
+
+          if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
+            card.baseViewModel?.resource = resource
+          }
         }
-        cell.penName = follower?.name
-        cell.biography = follower?.biography
-        cell.imageUrl = follower?.avatarUrl
-        cell.following = follower?.following ?? false
       default: break
       } 
-    } else if let card = node as? BaseCardPostNode {
-      guard let indexPath = collectionNode.indexPath(for: node),
-        let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment) as? ModelCommonProperties else {
-          return
-      }
-
-      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
-        card.baseViewModel?.resource = resource
-      }
     }
   }
 
@@ -346,9 +358,24 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
       let penNameNode = PenNameFollowNode()
       penNameNode.showBottomSeparator = true
       penNameNode.delegate = self
+      let follower: PenName? = viewModel.itemForSegment(segment: activeSegment, index: indexPath.row) as? PenName
+      setupPenNameData(in: penNameNode, with: follower)
       return penNameNode
     default: return nil
     }
+  }
+
+
+  func setupPenNameData(in penNameNode: PenNameFollowNode,with follower: PenName?) {
+    var isMyPenName: Bool = false
+    if let follower = follower {
+      isMyPenName = viewModel.isMyPenName(follower)
+      penNameNode.updateMode(disabled: isMyPenName)
+    }
+    penNameNode.penName = follower?.name
+    penNameNode.biography = follower?.biography
+    penNameNode.imageUrl = follower?.avatarUrl
+    penNameNode.following = follower?.following ?? false
   }
 }
 
@@ -668,6 +695,28 @@ extension ProfileDetailsViewController {
   }
 }
 
+//MARK: - Localizable implementation
+extension ProfileDetailsViewController {
+  fileprivate func addDataObserver() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+  }
+
+  @objc
+  private func updatedResources(_ notification: NSNotification) {
+    let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.cells.rawValue })
+
+    guard let identifiers = notification.object as? [String],
+      identifiers.count > 0,
+      visibleItemsIndexPaths.count > 0 else {
+        return
+    }
+
+    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths, segment: activeSegment)
+    updateCollection(with: indexPathForAffectedItems, shouldReloadItems: true, loaderSection: true, cellsSection: false, orReloadAll: false, completionBlock: nil)
+  }
+
+}
 
 //MARK: - Localizable implementation
 extension ProfileDetailsViewController: Localizable {
@@ -682,5 +731,32 @@ extension ProfileDetailsViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+  }
+}
+
+// MARK: - Reload Footer
+extension ProfileDetailsViewController {
+  func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, loaderSection: Bool = false, cellsSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
+    if reloadAll {
+      collectionNode.reloadData(completion: {
+        completionBlock?(true)
+      })
+    } else {
+      collectionNode.performBatchUpdates({
+        if loaderSection {
+          collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
+        }
+        if cellsSection {
+          collectionNode.reloadSections(IndexSet(integer: Section.cells.rawValue))
+        }
+        if let itemIndices = itemIndices, itemIndices.count > 0 {
+          if reloadItems {
+            collectionNode.reloadItems(at: itemIndices)
+          }else {
+            collectionNode.insertItems(at: itemIndices)
+          }
+        }
+      }, completion: completionBlock)
+    }
   }
 }

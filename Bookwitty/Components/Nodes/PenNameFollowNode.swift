@@ -96,6 +96,8 @@ class PenNameFollowNode: ASCellNode {
 
     imageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
     imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0.0, nil)
+    imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
+    imageNode.animatedImagePaused = true
 
     nameNode.maximumNumberOfLines = 1
     biographyNode.maximumNumberOfLines = enlarged ? 5 : 3

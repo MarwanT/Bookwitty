@@ -38,7 +38,13 @@ class DataManager {
     guard let identifier = resource.id else {
       return
     }
-    
+
+    if var newResource = resource as? ModelCommonProperties,
+      newResource.penName == nil,
+      let existingResource = pool[identifier] {
+      newResource.penName = (existingResource as? ModelCommonProperties)?.penName
+    }
+
     pool.updateValue(resource, forKey: identifier)
   }
 
