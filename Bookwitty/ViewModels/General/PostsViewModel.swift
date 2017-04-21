@@ -75,6 +75,7 @@ extension PostsViewModel {
         return
       }
       self.shouldReloadPostsSections = resources.count > 0
+      DataManager.shared.update(resources: resources)
       self.posts.append(contentsOf: resources)
     })
   }
@@ -135,6 +136,7 @@ extension PostsViewModel {
         return
       }
       self.shouldReloadPostsSections = resources.count > 0
+      DataManager.shared.update(resources: resources)
       self.posts.append(contentsOf: resources)
     })
   }
