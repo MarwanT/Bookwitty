@@ -153,11 +153,10 @@ extension ReadingListsViewModel {
     }
 
     _ = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
-      completionBlock(success)
-
       if success {
         DataManager.shared.updateResource(with: contentId, after: DataManager.Action.wit)
       }
+      completionBlock(success)
     })
   }
 
@@ -169,11 +168,10 @@ extension ReadingListsViewModel {
     }
 
     _ = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
-      completionBlock(success)
-
       if success {
         DataManager.shared.updateResource(with: contentId, after: DataManager.Action.unwit)
       }
+      completionBlock(success)
     })
   }
 

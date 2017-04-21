@@ -103,17 +103,15 @@ final class NewsFeedViewModel {
     cancellableRequest = NewsfeedAPI.feed() { (success, resources, nextPage, error) in
       defer {
         completionBlock(success)
-        DataManager.shared.update(resources: resources ?? [])
       }
 
-      if success {
+      if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
         self.data.removeAll(keepingCapacity: false)
-        if let resources = resources, success {
-          self.data = resources.flatMap({ $0.id })
-        } else {
-          self.data = []
-        }
+        self.data = resources.flatMap({ $0.id })
         self.nextPage = nextPage
+      } else {
+        self.data = []
       }
       self.cancellableRequest = nil
     }
@@ -135,10 +133,10 @@ final class NewsFeedViewModel {
     cancellableRequest = NewsfeedAPI.nextFeedPage(nextPage: nextPage) { (success, resources, nextPage, error) in
       defer {
         completionBlock(success)
-        DataManager.shared.update(resources: resources ?? [])
       }
 
       if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
         self.data += resources.flatMap({ $0.id })
         self.nextPage = nextPage
       }
@@ -281,8 +279,8 @@ extension NewsFeedViewModel {
       }
       if success {
         DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
+        penName.following = true
       }
-      penName.following = true
     }
   }
 
@@ -298,8 +296,8 @@ extension NewsFeedViewModel {
       }
       if success {
         DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
+        penName.following = false
       }
-      penName.following = false
     }
   }
 

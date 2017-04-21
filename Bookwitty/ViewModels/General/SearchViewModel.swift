@@ -42,13 +42,10 @@ class SearchViewModel {
         return
       }
 
+      DataManager.shared.update(resources: resources)
       self.data += resources
       self.nextPage = nextPage
       completion(success, error)
-
-      if success {
-        DataManager.shared.update(resources: resources)
-      }
     })
   }
 
@@ -62,15 +59,12 @@ class SearchViewModel {
 
     cancellableRequest = GeneralAPI.nextPage(nextPage: nextPage) { (success, resources, nextPage, error) in
       if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
         self.data += resources
         self.nextPage = nextPage
       }
       self.cancellableRequest = nil
       completionBlock(success)
-
-      if let resources = resources, success {
-        DataManager.shared.update(resources: resources)
-      }
     }
   }
 
@@ -168,11 +162,10 @@ extension SearchViewModel {
     }
 
     cancellableRequest = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
-      completionBlock(success)
-
       if success {
         DataManager.shared.updateResource(with: contentId, after: DataManager.Action.wit)
       }
+      completionBlock(success)
     })
   }
 
@@ -184,11 +177,10 @@ extension SearchViewModel {
     }
 
     cancellableRequest = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
-      completionBlock(success)
-
       if success {
         DataManager.shared.updateResource(with: contentId, after: DataManager.Action.unwit)
       }
+      completionBlock(success)
     })
   }
 
@@ -249,12 +241,11 @@ extension SearchViewModel {
     _ = GeneralAPI.followPenName(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
-
-        if success {
-          DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
-        }
       }
-      penName.following = true
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
+        penName.following = true
+      }
     }
   }
 
@@ -267,12 +258,11 @@ extension SearchViewModel {
     _ = GeneralAPI.unfollowPenName(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
-
-        if success {
-          DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
-        }
       }
-      penName.following = false
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
+        penName.following = false
+      }
     }
   }
 
@@ -280,10 +270,9 @@ extension SearchViewModel {
     _ = GeneralAPI.follow(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
-
-        if success {
-          DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
-        }
+      }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
       }
     }
   }
@@ -292,10 +281,9 @@ extension SearchViewModel {
     _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
-
-        if success {
-          DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
-        }
+      }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
       }
     }
   }
