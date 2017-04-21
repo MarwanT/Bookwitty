@@ -311,15 +311,7 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
           return
         }
         let follower: PenName? = viewModel.itemForSegment(segment: activeSegment, index: indexPath.row) as? PenName
-        var isMyPenName: Bool = false
-        if let follower = follower {
-          isMyPenName = viewModel.isMyPenName(follower)
-          cell.updateMode(disabled: isMyPenName)
-        }
-        cell.penName = follower?.name
-        cell.biography = follower?.biography
-        cell.imageUrl = follower?.avatarUrl
-        cell.following = follower?.following ?? false
+        setupPenNameData(in: cell, with: follower)
       case .following:
         fallthrough
       case .latest:
@@ -366,9 +358,24 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
       let penNameNode = PenNameFollowNode()
       penNameNode.showBottomSeparator = true
       penNameNode.delegate = self
+      let follower: PenName? = viewModel.itemForSegment(segment: activeSegment, index: indexPath.row) as? PenName
+      setupPenNameData(in: penNameNode, with: follower)
       return penNameNode
     default: return nil
     }
+  }
+
+
+  func setupPenNameData(in penNameNode: PenNameFollowNode,with follower: PenName?) {
+    var isMyPenName: Bool = false
+    if let follower = follower {
+      isMyPenName = viewModel.isMyPenName(follower)
+      penNameNode.updateMode(disabled: isMyPenName)
+    }
+    penNameNode.penName = follower?.name
+    penNameNode.biography = follower?.biography
+    penNameNode.imageUrl = follower?.avatarUrl
+    penNameNode.following = follower?.following ?? false
   }
 }
 
