@@ -48,7 +48,7 @@ class PostsViewController: ASViewController<ASCollectionNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     title = viewModel.viewControllerTitle
-    
+    addObservers()
     collectionNode.delegate = self
     collectionNode.dataSource = self
 
@@ -498,6 +498,18 @@ extension PostsViewController {
     let topicViewController = TopicViewController()
     topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
+  }
+}
+
+// MARK: Notifications
+extension PostsViewController {
+  func addObservers() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+  }
+
+  func updatedResources(_ notification: NSNotification) {
+    //TODO: Update collection
   }
 }
 
