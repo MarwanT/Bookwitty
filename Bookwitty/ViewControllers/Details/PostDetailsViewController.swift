@@ -405,14 +405,11 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
 extension PostDetailsViewController: PostDetailsItemNodeDelegate {
   func shouldUpdateItem(_ postDetailsItem: PostDetailsItemNode, at index: Int, displayNode: ASDisplayNode) {
     if let card = displayNode as? BaseCardPostNode {
-      if let resourceValues = viewModel.relatedPostsResourceValues(for: index) {
-
-        card.setup(forFollowingMode: resourceValues.followingMode)
-        card.setFollowingValue(following: resourceValues.following)
-        card.setWitValue(witted: resourceValues.isWitted, wits: resourceValues.wits)
-        card.setDimValue(dimmed: resourceValues.isDimmed, dims: resourceValues.dims)
-        card.setNeedsLayout()
+      guard let resource = viewModel.relatedPostsResourceForIndex(index: index) as? ModelCommonProperties else {
+        return
       }
+      card.baseViewModel?.resource = resource
+      card.setNeedsLayout()
     }
   }
 
@@ -465,6 +462,8 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
           }
         })
       }
+
+      card?.baseViewModel?.resource = resource as? ModelCommonProperties
       card?.delegate = self
       return  card ?? BaseCardPostNode()
     } else {
@@ -753,6 +752,8 @@ extension PostDetailsViewController {
     guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
+    
+    cardNode.baseViewModel?.resource = resource as? ModelCommonProperties
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
     navigationController?.pushViewController(genericVC, animated: true)
   }

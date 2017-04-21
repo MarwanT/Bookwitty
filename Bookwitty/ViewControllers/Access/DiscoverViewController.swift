@@ -236,6 +236,19 @@ extension DiscoverViewController: ASCollectionDataSource {
       return baseCardNode
     }
   }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+    if let card = node as? BaseCardPostNode {
+      guard let indexPath = collectionNode.indexPath(for: node),
+        let resource = viewModel.resourceForIndex(index: indexPath.row) as? ModelCommonProperties else {
+          return
+      }
+
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
+        card.baseViewModel?.resource = resource
+      }
+    }
+  }
 }
 
 extension DiscoverViewController: ASCollectionDelegate {
@@ -486,6 +499,7 @@ extension DiscoverViewController {
     guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
+    cardNode.baseViewModel?.resource = resource as? ModelCommonProperties
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
     genericVC.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(genericVC, animated: true)

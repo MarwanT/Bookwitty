@@ -180,7 +180,9 @@ final class NewsFeedViewModel {
       return nil
     }
 
-    return CardFactory.createCardFor(resourceType: resource.registeredResourceType)
+    let card = CardFactory.createCardFor(resourceType: resource.registeredResourceType)
+    card?.baseViewModel?.resource = resource as? ModelCommonProperties
+    return card
   }
 
   func loadReadingListImages(atIndex index: Int, maxNumberOfImages: Int, completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {

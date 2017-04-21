@@ -162,6 +162,15 @@ extension SearchViewController: ASCollectionDataSource {
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
     if let loaderNode = node as? LoaderNode {
       loaderNode.updateLoaderVisibility(show: !(loadingStatus == .none))
+    } else if let card = node as? BaseCardPostNode {
+      guard let indexPath = collectionNode.indexPath(for: node),
+        let resource = viewModel.resourceForIndex(indexPath: indexPath) as? ModelCommonProperties else {
+          return
+      }
+
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
+        card.baseViewModel?.resource = resource
+      }
     }
   }
 }
@@ -434,6 +443,8 @@ extension SearchViewController {
     guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
+    
+    cardNode.baseViewModel?.resource = resource as? ModelCommonProperties
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
     navigationController?.pushViewController(genericVC, animated: true)
   }

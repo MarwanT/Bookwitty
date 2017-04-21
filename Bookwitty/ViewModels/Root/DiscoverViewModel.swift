@@ -102,7 +102,10 @@ extension DiscoverViewModel {
     guard let resource = resourceForIndex(index: index) else {
       return nil
     }
-    return CardFactory.createCardFor(resourceType: resource.registeredResourceType)
+    
+    let card = CardFactory.createCardFor(resourceType: resource.registeredResourceType)
+    card?.baseViewModel?.resource = resource as? ModelCommonProperties
+    return card
   }
 }
 

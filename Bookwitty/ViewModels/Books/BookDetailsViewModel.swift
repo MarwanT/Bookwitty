@@ -221,6 +221,8 @@ extension BookDetailsViewModel {
         guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
           break
         }
+        
+        cardNode.baseViewModel?.resource = resource
         return cardNode
       }
     case .relatedTopics:
@@ -249,6 +251,8 @@ extension BookDetailsViewModel {
         guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
           break
         }
+
+        cardNode.baseViewModel?.resource = resource
         return cardNode
       }
     case .activityIndicator:

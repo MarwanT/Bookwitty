@@ -305,6 +305,15 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
         cell.imageUrl = follower?.avatarUrl
         cell.following = follower?.following ?? false
       default: break
+      } 
+    } else if let card = node as? BaseCardPostNode {
+      guard let indexPath = collectionNode.indexPath(for: node),
+        let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment) as? ModelCommonProperties else {
+          return
+      }
+
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
+        card.baseViewModel?.resource = resource
       }
     }
   }
@@ -329,6 +338,8 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
           }
         })
       }
+
+      baseCardNode?.baseViewModel?.resource = resource as? ModelCommonProperties
       baseCardNode?.delegate = self
       return baseCardNode
     case .followers:
@@ -524,6 +535,8 @@ extension ProfileDetailsViewController {
     guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
+    
+    cardNode.baseViewModel?.resource = resource as? ModelCommonProperties
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
     navigationController?.pushViewController(genericVC, animated: true)
   }

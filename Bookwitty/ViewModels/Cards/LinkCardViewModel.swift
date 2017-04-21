@@ -26,7 +26,7 @@ class LinkCardViewModel: CardViewModelProtocol {
   }
 
   func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, linkUrl: String?, imageUrl: String?, comments: String?, wit: (is: Bool, count: Int), dim: (is: Bool, count: Int))) {
-    guard let resource = resource, let link = resource as? Link else {
+    guard let resource = resource else {
       return (false, nil, content: (nil, nil, nil, nil, nil, wit: (false, 0), dim: (false, 0)))
     }
 
@@ -45,7 +45,14 @@ class LinkCardViewModel: CardViewModelProtocol {
     let description = resource.shortDescription
     let imageUrl = resource.coverImageUrl
     let comments: String? = nil
-    let linkUrl = link.urlLink
+
+    var linkUrl: String? = nil
+    if let link = resource as? Link {
+      linkUrl = link.urlLink
+    } else if let audio = resource as? Audio {
+      linkUrl = audio.media?.mediaLink
+    }
+
     let wit = (is: resource.isWitted, count: resource.counts?.wits ?? 0)
     let dim = (is: resource.isDimmed, count: resource.counts?.dims ?? 0)
 

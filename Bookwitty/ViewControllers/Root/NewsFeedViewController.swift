@@ -351,8 +351,10 @@ extension NewsFeedViewController: ASCollectionDataSource {
         let resource = viewModel.resourceForIndex(index: indexPath.row) as? ModelCommonProperties else {
         return
       }
-      card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
-      card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
+
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
+        card.baseViewModel?.resource = resource
+      }
     }
   }
 }
@@ -639,6 +641,8 @@ extension NewsFeedViewController {
     guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
+
+    cardNode.baseViewModel?.resource = resource as? ModelCommonProperties
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
     genericVC.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(genericVC, animated: true)

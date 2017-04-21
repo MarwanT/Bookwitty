@@ -541,10 +541,104 @@ extension TopicViewModel {
       }
     }
   }
+
+  func sharingContent(resource: Resource?) -> [String]? {
+    guard let commonProperties = resource as? ModelCommonProperties else {
+        return nil
+    }
+
+    let shortDesciption = commonProperties.title ?? commonProperties.shortDescription ?? ""
+    if let sharingUrl = commonProperties.canonicalURL {
+      var sharingString = sharingUrl.absoluteString
+      sharingString += shortDesciption.isEmpty ? "" : "\n\n\(shortDesciption)"
+      return [sharingUrl.absoluteString, shortDesciption]
+    }
+    return [shortDesciption]
+  }
+}
+
+//MARK: - wit / unwit
+extension TopicViewModel {
+  func witContent(contentId: String?, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let id = contentId else {
+      completionBlock(false)
+      return
+    }
+
+    _ = NewsfeedAPI.wit(contentId: id, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: id, after: DataManager.Action.wit)
+      }
+      completionBlock(success)
+    })
+  }
+
+  func unwitContent(contentId: String?, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let id = contentId else {
+      completionBlock(false)
+      return
+    }
+
+    _ = NewsfeedAPI.unwit(contentId: id, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: id, after: DataManager.Action.unwit)
+      }
+      completionBlock(success)
+    })
+  }
 }
 
 //MARK: - Follow / Unfollow
 extension TopicViewModel {
+  func follow(resource: Resource?, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let resource = resource, let id = resource.id else {
+      completionBlock(false)
+      return
+    }
+
+    if let penName = resource as? PenName {
+      _ = GeneralAPI.followPenName(identifer: id) { (success, error) in
+        defer {
+          completionBlock(success)
+        }
+        if success {
+          DataManager.shared.updateResource(with: id, after: DataManager.Action.follow)
+          penName.following = true
+        }
+      }
+    } else {
+      followRequest(identifier: id) { (success: Bool) in
+        defer {
+          completionBlock(success)
+        }
+      }
+    }
+  }
+
+  func unfollow(resource: Resource?, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let resource = resource, let id = resource.id else {
+      completionBlock(false)
+      return
+    }
+
+    if let penName = resource as? PenName {
+      _ = GeneralAPI.unfollowPenName(identifer: id) { (success, error) in
+        defer {
+          completionBlock(success)
+        }
+        if success {
+          DataManager.shared.updateResource(with: id, after: DataManager.Action.follow)
+          penName.following = false
+        }
+      }
+    } else {
+      unfollowRequest(identifier: id) { (success: Bool) in
+        defer {
+          completionBlock(success)
+        }
+      }
+    }
+  }
 
   func followContent(completionBlock: @escaping (_ success: Bool) -> ()) {
     guard let identifier = identifier else {
