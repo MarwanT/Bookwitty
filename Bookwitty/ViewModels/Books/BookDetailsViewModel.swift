@@ -93,9 +93,16 @@ final class BookDetailsViewModel {
   func indexPathForAffectedItems(resourcesIdentifiers: [String], visibleItemsIndexPaths: [IndexPath]) -> [IndexPath] {
     return visibleItemsIndexPaths.filter({
       indexPath in
-      guard let resource = resourceForIndex(index: indexPath.row) as? ModelCommonProperties, let identifier = resource.id else {
+
+      guard let resourcesCommonProperties = resourcesCommonProperties(for: indexPath), resourcesCommonProperties.count > 0 else {
         return false
       }
+      let resource = resourcesCommonProperties[indexPath.row - 1]
+
+      guard let identifier = resource.id else {
+        return false
+      }
+
       return resourcesIdentifiers.contains(identifier)
     })
   }
