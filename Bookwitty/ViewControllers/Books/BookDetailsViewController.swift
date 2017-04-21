@@ -55,6 +55,7 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
     }
 
     applyLocalization()
+    addObservers()
 
     navigationItem.backBarButtonItem = UIBarButtonItem.back
 
