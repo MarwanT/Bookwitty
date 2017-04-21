@@ -506,7 +506,15 @@ extension PostsViewController {
   }
 
   func updatedResources(_ notification: NSNotification) {
-    //TODO: Update collection
+    let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.posts.rawValue })
+
+    guard let identifiers = notification.object as? [String],
+      identifiers.count > 0,
+      visibleItemsIndexPaths.count > 0 else {
+        return
+    }
+
+    reloadCollectionViewSections(sections: [PostsViewController.Section.posts])
   }
 }
 
