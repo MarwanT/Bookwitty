@@ -57,6 +57,7 @@ class SearchViewModel {
         return
       }
 
+      DataManager.shared.update(resources: resources)
       self.data += resources
       self.nextPage = nextPage
     })
@@ -72,6 +73,7 @@ class SearchViewModel {
 
     cancellableRequest = GeneralAPI.nextPage(nextPage: nextPage) { (success, resources, nextPage, error) in
       if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
         self.data += resources
         self.nextPage = nextPage
       }
@@ -82,6 +84,16 @@ class SearchViewModel {
 
   func hasNextPage() -> Bool {
     return (nextPage != nil)
+  }
+
+  func indexPathForAffectedItems(resourcesIdentifiers: [String], visibleItemsIndexPaths: [IndexPath]) -> [IndexPath] {
+    return visibleItemsIndexPaths.filter({
+      indexPath in
+      guard let resource = resourceForIndex(indexPath: indexPath) as? ModelCommonProperties, let identifier = resource.id else {
+        return false
+      }
+      return resourcesIdentifiers.contains(identifier)
+    })
   }
 }
 
@@ -106,7 +118,9 @@ extension SearchViewModel {
       return nil
     }
 
-    return CardFactory.shared.createCardFor(resource: resource)
+    let card = CardFactory.createCardFor(resourceType: resource.registeredResourceType)
+    card?.baseViewModel?.resource = resource as? ModelCommonProperties
+    return card
   }
 }
 
@@ -162,6 +176,9 @@ extension SearchViewModel {
     }
 
     cancellableRequest = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.wit)
+      }
       completionBlock(success)
     })
   }
@@ -174,6 +191,9 @@ extension SearchViewModel {
     }
 
     cancellableRequest = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.unwit)
+      }
       completionBlock(success)
     })
   }
@@ -236,7 +256,10 @@ extension SearchViewModel {
       defer {
         completionBlock(success)
       }
-      penName.following = true
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
+        penName.following = true
+      }
     }
   }
 
@@ -250,7 +273,10 @@ extension SearchViewModel {
       defer {
         completionBlock(success)
       }
-      penName.following = false
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
+        penName.following = false
+      }
     }
   }
 
@@ -259,6 +285,9 @@ extension SearchViewModel {
       defer {
         completionBlock(success)
       }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
+      }
     }
   }
 
@@ -266,6 +295,9 @@ extension SearchViewModel {
     _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
+      }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
       }
     }
   }

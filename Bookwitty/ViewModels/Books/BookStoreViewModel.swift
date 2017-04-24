@@ -118,6 +118,7 @@ final class BookStoreViewModel {
         let filteredReadingLists = self.filterReadingLists(readingListsIdentifiers: readingListsIdentifiers, resources: resources)
         readingList = filteredReadingLists.featuredList
         self.readingLists = filteredReadingLists.readingLists
+        DataManager.shared.update(resources: self.readingLists ?? [])
       }
     })
   }

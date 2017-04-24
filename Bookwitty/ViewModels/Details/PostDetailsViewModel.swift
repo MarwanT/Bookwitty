@@ -11,7 +11,7 @@ import Spine
 import Moya
 
 class PostDetailsViewModel {
-  let resource: Resource
+  var resource: Resource
 
   var cancellableRequest: Cancellable?
 
@@ -70,11 +70,18 @@ class PostDetailsViewModel {
   var relatedBooks: [Book] = []
   var relatedBooksNextPage: URL?
   //Resource Related Posts
-  var relatedPosts: [Resource] = []
+  var relatedPosts: [String] = []
   var relatedPostsNextPage: URL?
 
   init(resource: Resource) {
     self.resource = resource
+  }
+
+  func resourceFor(id: String?) -> ModelResource? {
+    guard let id = id else {
+      return nil
+    }
+    return DataManager.shared.fetchResource(with: id)
   }
 
   func isMyPenName() -> Bool {
@@ -178,6 +185,7 @@ class PostDetailsViewModel {
         completionBlock(success)
       }
       if let penName = penName, success {
+         DataManager.shared.update(resource: penName)
         self.penName = penName
       }
     })
@@ -195,6 +203,7 @@ class PostDetailsViewModel {
         completionBlock(success)
       }
       if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
         self.contentPostsResources = resources
         self.contentPostsNextPage = next
       }
@@ -212,6 +221,7 @@ class PostDetailsViewModel {
       guard success, let result = resource else {
         return
       }
+      DataManager.shared.update(resources: result)
       resources = result
     })
   }
@@ -237,6 +247,9 @@ class PostDetailsViewModel {
 
     cancellableRequest = NewsfeedAPI.dim(contentId: contentId, completion: { (success, error) in
       completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: .dim)
+      }
     })
   }
 
@@ -247,6 +260,9 @@ class PostDetailsViewModel {
 
     cancellableRequest = NewsfeedAPI.undim(contentId: contentId, completion: { (success, error) in
       completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: .undim)
+      }
     })
   }
 
@@ -279,9 +295,10 @@ extension PostDetailsViewModel {
       defer {
         completionBlock(success)
       }
-      if success {
+      if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
         self.relatedBooks.removeAll()
-        let books = resources?.filter({ $0.registeredResourceType == Book.resourceType })
+        let books = resources.filter({ $0.registeredResourceType == Book.resourceType })
         self.relatedBooks += (books as? [Book]) ?? []
         self.relatedBooksNextPage = next
       }
@@ -292,6 +309,69 @@ extension PostDetailsViewModel {
 
 // MARK: - Related Books Section
 extension PostDetailsViewModel {
+  func updateAffectedPostDetails(resourcesIdentifiers: [String]) -> Bool {
+    guard resourcesIdentifiers.count > 0 else {
+      return false
+    }
+
+    if let resourceId = resource.id {
+      return resourcesIdentifiers.contains( where: { $0 == resourceId } )
+    }
+    return false
+  }
+  
+  func relatedPostsResourceValues(for index: Int) -> (followingMode: Bool, following: Bool, isWitted: Bool,wits: Int, isDimmed: Bool, dims: Int)? {
+    guard let modelResource = relatedPostsResourceForIndex(index: index), let resource = modelResource as? ModelCommonProperties else {
+      return nil
+    }
+
+    func canFollowedResource(resource: ModelResource) -> Bool { return (resource.registeredResourceType == Topic.resourceType) || (resource.registeredResourceType == Author.resourceType) || (resource.registeredResourceType == Book.resourceType) || (resource.registeredResourceType == PenName.resourceType) }
+
+    func isFollowingResource(resource: ModelResource) -> Bool {
+      switch (resource.registeredResourceType) {
+      case Topic.resourceType:
+        return (resource as? Topic)?.following ?? false
+      case PenName.resourceType:
+        return (resource as? PenName)?.following ?? false
+      case Book.resourceType:
+        return (resource as? Book)?.following ?? false
+      case Author.resourceType:
+        return (resource as? Author)?.following ?? false
+      default: return false
+      }
+    }
+
+    //TODO: Replace with resource.canBeFollowed when implemented
+    let canBeFollowed = canFollowedResource(resource: modelResource)
+    //TODO: Replace with resource.following when implemented
+    let following = isFollowingResource(resource: modelResource)
+
+    let wits = resource.counts?.wits ?? 0
+    let dims = resource.counts?.dims ?? 0
+    return (followingMode: canBeFollowed, following: following, isWitted: resource.isWitted, wits: wits, isDimmed: resource.isDimmed, dims: dims)
+  }
+
+  func relatedPostsAffectedItems(identifiers: [String], visibleItemsIndices: [Int]) -> [Int] {
+    //let affectedCardItems = relatedPosts.filter({ identifiers.contains($0) }).flatMap({ relatedPosts.index(of: $0) })
+    return visibleItemsIndices.filter({
+      index in
+      guard let resource = relatedPostsResourceForIndex(index: index) as? ModelCommonProperties, let identifier = resource.id else {
+        return false
+      }
+      return identifiers.contains(identifier)
+    })
+  }
+
+  func relatedPostsResources() -> [ModelResource] {
+    return DataManager.shared.fetchResources(with: relatedPosts)
+  }
+
+  func relatedPostsResourceForIndex(index: Int) -> ModelResource? {
+    guard relatedPosts.count > index else { return nil }
+    let resource = resourceFor(id: relatedPosts[index])
+    return resource
+  }
+
   func numberOfRelatedPosts() -> Int {
     return relatedPosts.count
   }
@@ -301,7 +381,7 @@ extension PostDetailsViewModel {
       return nil
     }
 
-    return relatedPosts[item]
+    return relatedPostsResourceForIndex(index: item)
   }
 
   func getRelatedPosts(completionBlock: @escaping (_ success: Bool) -> ()) {
@@ -314,9 +394,10 @@ extension PostDetailsViewModel {
       defer {
         completionBlock(success)
       }
-      if success {
+      if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
         self.relatedPosts.removeAll()
-        self.relatedPosts += resources ?? []
+        self.relatedPosts += resources.flatMap( { $0.id })
         self.relatedPostsNextPage = next
       }
     }
@@ -372,9 +453,10 @@ extension PostDetailsViewModel {
       defer {
         completionBlock(imageCollection)
       }
-      if success {
+      if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
         var images: [String] = []
-        resources?.forEach({ (resource) in
+        resources.forEach({ (resource) in
           if let res = resource as? ModelCommonProperties {
             if let imageUrl = res.thumbnailImageUrl {
               images.append(imageUrl)
@@ -391,12 +473,18 @@ extension PostDetailsViewModel {
 extension PostDetailsViewModel {
   func witContent(contentId: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     cancellableRequest = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: .wit)
+      }
       completionBlock(success)
     })
   }
 
   func unwitContent(contentId: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     cancellableRequest = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: .unwit)
+      }
       completionBlock(success)
     })
   }
@@ -480,10 +568,10 @@ extension PostDetailsViewModel {
     }
 
     _ = GeneralAPI.followPenName(identifer: identifier) { (success, error) in
-      defer {
-        completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .follow)
       }
-      penName.following = true
+      completionBlock(success)
     }
   }
 
@@ -494,26 +582,28 @@ extension PostDetailsViewModel {
     }
 
     _ = GeneralAPI.unfollowPenName(identifer: identifier) { (success, error) in
-      defer {
-        completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .unfollow)
       }
-      penName.following = false
+      completionBlock(success)
     }
   }
 
   fileprivate func followRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     _ = GeneralAPI.follow(identifer: identifier) { (success, error) in
-      defer {
-        completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .follow)
       }
+      completionBlock(success)
     }
   }
 
   fileprivate func unfollowRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
-      defer {
-        completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .unfollow)
       }
+      completionBlock(success)
     }
   }
 }

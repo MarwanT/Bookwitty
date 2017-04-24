@@ -506,9 +506,11 @@ extension CategoryViewController {
   }
   
   func pushGenericViewControllerCard(resource: Resource, title: String? = nil) {
-    guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+    guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
+    
+    cardNode.baseViewModel?.resource = resource as? ModelCommonProperties
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
     navigationController?.pushViewController(genericVC, animated: true)
   }
@@ -536,7 +538,7 @@ extension CategoryViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withAuthor: resource as? Author)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
   
@@ -563,7 +565,7 @@ extension CategoryViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withTopic: resource as? Topic)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
   
@@ -630,7 +632,7 @@ extension CategoryViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withBook: resource as? Book)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 }

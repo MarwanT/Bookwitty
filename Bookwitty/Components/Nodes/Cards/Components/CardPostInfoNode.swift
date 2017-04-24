@@ -11,7 +11,7 @@ import AsyncDisplayKit
 
 typealias CardPostInfoNodeData = (name: String, date: String, imageUrl: String?)
 
-protocol CardPostInfoNodeDelegate {
+protocol CardPostInfoNodeDelegate: class {
   func cardInfoNode(cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any)
 }
 
@@ -25,7 +25,7 @@ class CardPostInfoNode: ASDisplayNode {
   var arrowDownImageNode: ASImageNode
   var userNameTextNode: ASTextNode
   var postDateTextNode: ASTextNode
-  var delegate: CardPostInfoNodeDelegate?
+  weak var delegate: CardPostInfoNodeDelegate?
 
   private let userProfileImageDimension: CGFloat = 45.0
   private let downArrowButtonSize: CGSize = CGSize(width: 45.0, height: 45.0)
@@ -56,6 +56,8 @@ class CardPostInfoNode: ASDisplayNode {
     userProfileImageNode.style.preferredSize = profileImageSize
     userProfileImageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(profileBorderWidth, profileBorderColor)
     userProfileImageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
+    userProfileImageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
+    userProfileImageNode.animatedImagePaused = true
 
     arrowDownImageNode.image = #imageLiteral(resourceName: "downArrow")
     arrowDownImageNode.tintColor = ThemeManager.shared.currentTheme.colorNumber20()

@@ -12,9 +12,9 @@ import Moya
 class ProfileDetailsViewModel {
   var penName: PenName
 
-  var latestData: [ModelResource] = []
-  var followers: [PenName] = []
-  var following: [ModelResource] = []
+  var latestData: [String] = []
+  var followers: [String] = []
+  var following: [String] = []
   var latestNextPage: URL?
   var followersNextPage: URL?
   var followingNextPage: URL?
@@ -35,6 +35,30 @@ class ProfileDetailsViewModel {
   func isMyPenName() -> Bool {
     return UserManager.shared.isMy(penName: penName)
   }
+
+  func resourcesFor(array: [String]?) -> [ModelResource]? {
+    guard let array = array else {
+      return nil
+    }
+    return DataManager.shared.fetchResources(with: array)
+  }
+
+  func resourceFor(id: String?) -> ModelResource? {
+    guard let id = id else {
+      return nil
+    }
+    return DataManager.shared.fetchResource(with: id)
+  }
+
+  func indexPathForAffectedItems(resourcesIdentifiers: [String], visibleItemsIndexPaths: [IndexPath], segment: ProfileDetailsViewController.Segment) -> [IndexPath] {
+    return visibleItemsIndexPaths.filter({
+      indexPath in
+      guard let resource = resourceForIndex(indexPath: indexPath, segment: segment) as? ModelCommonProperties, let identifier = resource.id else {
+        return false
+      }
+      return resourcesIdentifiers.contains(identifier)
+    })
+  }
 }
 
 // MARK: - API requests
@@ -49,6 +73,7 @@ extension ProfileDetailsViewModel {
         completionBlock(success)
       }
       if let penName = penName, success {
+         DataManager.shared.update(resource: penName)
         self.penName = penName
       }
     })
@@ -107,8 +132,11 @@ extension ProfileDetailsViewModel {
         self.latestNextPage = nextUrl
         completion(success, error)
       }
-      self.latestData.removeAll(keepingCapacity: false)
-      self.latestData += resources ?? []
+      if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
+        self.latestData.removeAll(keepingCapacity: false)
+        self.latestData += resources.flatMap({ $0.id })
+      }
     }
   }
 
@@ -126,8 +154,11 @@ extension ProfileDetailsViewModel {
         self.followersNextPage = nextUrl
         completion(success, error)
       }
-      self.followers.removeAll(keepingCapacity: false)
-      self.followers += resources ?? []
+      if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
+        self.followers.removeAll(keepingCapacity: false)
+        self.followers += (resources).flatMap({ $0.id })
+      }
     }
   }
 
@@ -145,8 +176,12 @@ extension ProfileDetailsViewModel {
         self.followingNextPage = nextUrl
         completion(success, error)
       }
-      self.following.removeAll(keepingCapacity: false)
-      self.following += resources ?? []
+      if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
+        self.following.removeAll(keepingCapacity: false)
+        self.following += resources.flatMap({ $0.id })
+      }
+
     }
   }
 }
@@ -162,20 +197,23 @@ extension ProfileDetailsViewModel {
     cancelActiveRequest()
 
     cancellableRequest = GeneralAPI.nextPage(nextPage: nextPage) { (success, resources, nextPage, error) in
+      defer {
+        self.cancellableRequest = nil
+        completionBlock(success)
+      }
       if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
         switch segment {
         case .followers:
-          self.followers += resources.flatMap({ $0 as? PenName })
+          self.followers += resources.flatMap({ $0.id })
         case .following:
-          self.following += resources
+          self.following += resources.flatMap({ $0.id })
         case .latest:
-          self.latestData += resources
+          self.latestData += resources.flatMap({ $0.id })
         default: break
         }
         self.setNextPage(segment: segment, url: nextPage)
       }
-      self.cancellableRequest = nil
-      completionBlock(success)
     }
   }
 
@@ -218,18 +256,18 @@ extension ProfileDetailsViewModel {
 
   func dataForSegment(segment: ProfileDetailsViewController.Segment) -> [ModelResource]? {
     switch segment {
-    case .latest: return latestData
-    case .followers: return followers
-    case .following: return following
+    case .latest: return resourcesFor(array: latestData)
+    case .followers: return resourcesFor(array: followers)
+    case .following: return resourcesFor(array: following)
     default: return nil
     }
   }
 
   func itemForSegment(segment: ProfileDetailsViewController.Segment, index: Int) -> ModelResource? {
     switch segment {
-    case .latest: return latestData[index]
-    case .followers: return followers[index]
-    case .following: return following[index]
+    case .latest: return resourceFor(id: latestData[index])
+    case .followers: return resourceFor(id: followers[index])
+    case .following: return resourceFor(id: following[index])
     default: return nil
     }
   }
@@ -309,6 +347,9 @@ extension ProfileDetailsViewModel {
     }
 
     cancellableRequest = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: .wit)
+      }
       completionBlock(success)
     })
   }
@@ -321,6 +362,9 @@ extension ProfileDetailsViewModel {
     }
 
     cancellableRequest = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: .unwit)
+      }
       completionBlock(success)
     })
   }
@@ -383,7 +427,10 @@ extension ProfileDetailsViewModel {
       defer {
         completionBlock(success)
       }
-      penName.following = true
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .follow)
+        penName.following = true
+      }
     }
   }
 
@@ -397,7 +444,10 @@ extension ProfileDetailsViewModel {
       defer {
         completionBlock(success)
       }
-      penName.following = false
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .unfollow)
+        penName.following = false
+      }
     }
   }
 
@@ -406,6 +456,9 @@ extension ProfileDetailsViewModel {
       defer {
         completionBlock(success)
       }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .follow)
+      }
     }
   }
 
@@ -413,6 +466,9 @@ extension ProfileDetailsViewModel {
     _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
+      }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .unfollow)
       }
     }
   }

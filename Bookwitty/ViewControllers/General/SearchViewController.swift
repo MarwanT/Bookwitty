@@ -84,6 +84,8 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     applyLocalization()
     observeLanguageChanges()
 
+    addObservers()
+
     navigationItem.backBarButtonItem = UIBarButtonItem.back
 
     //MARK: [Analytics] Screen Name
@@ -145,6 +147,27 @@ class SearchViewController: ASViewController<ASCollectionNode> {
                                                  name: query)
     Analytics.shared.send(event: event)
   }
+
+
+  private func addObservers() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+  }
+
+
+  @objc
+  private func updatedResources(_ notification: NSNotification) {
+    let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems
+
+    guard let identifiers = notification.object as? [String],
+      identifiers.count > 0,
+      visibleItemsIndexPaths.count > 0 else {
+        return
+    }
+
+    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+    collectionNode.reloadItems(at: indexPathForAffectedItems)
+  }
 }
 
 extension SearchViewController: Themeable {
@@ -200,6 +223,15 @@ extension SearchViewController: ASCollectionDataSource {
       loaderNode.updateLoaderVisibility(show: !(loadingStatus == .none))
     } else if node is MisfortuneNode {
       misfortuneNode.mode = viewModel.misfortuneNodeMode ?? MisfortuneNode.Mode.empty
+    } else if let card = node as? BaseCardPostNode {
+      guard let indexPath = collectionNode.indexPath(for: node),
+        let resource = viewModel.resourceForIndex(indexPath: indexPath) as? ModelCommonProperties else {
+          return
+      }
+
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
+        card.baseViewModel?.resource = resource
+      }
     }
   }
 }
@@ -492,9 +524,11 @@ extension SearchViewController {
   }
 
   fileprivate func pushGenericViewControllerCard(resource: ModelResource, title: String? = nil) {
-    guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+    guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
+    
+    cardNode.baseViewModel?.resource = resource as? ModelCommonProperties
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
     navigationController?.pushViewController(genericVC, animated: true)
   }
@@ -522,7 +556,7 @@ extension SearchViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withAuthor: resource as? Author)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 
@@ -549,7 +583,7 @@ extension SearchViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withTopic: resource as? Topic)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 
@@ -616,7 +650,7 @@ extension SearchViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withBook: resource as? Book)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 }

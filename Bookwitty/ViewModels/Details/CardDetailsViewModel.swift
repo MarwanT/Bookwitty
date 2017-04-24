@@ -25,6 +25,9 @@ class CardDetailsViewModel {
       return
     }
     cancellableRequest = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.wit)
+      }
       completionBlock(success)
     })
   }
@@ -36,6 +39,9 @@ class CardDetailsViewModel {
     }
 
     cancellableRequest = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.unwit)
+      }
       completionBlock(success)
     })
   }
@@ -59,6 +65,9 @@ class CardDetailsViewModel {
     }
 
     cancellableRequest = NewsfeedAPI.dim(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.dim)
+      }
       completionBlock(success)
     })
   }
@@ -69,6 +78,9 @@ class CardDetailsViewModel {
     }
 
     cancellableRequest = NewsfeedAPI.undim(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.undim)
+      }
       completionBlock(success)
     })
   }
@@ -117,7 +129,9 @@ extension CardDetailsViewModel {
       defer {
         completionBlock(success)
       }
-      penName.following = true
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
+      }
     }
   }
 
@@ -131,7 +145,9 @@ extension CardDetailsViewModel {
       defer {
         completionBlock(success)
       }
-      penName.following = false
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
+      }
     }
   }
 
@@ -140,6 +156,9 @@ extension CardDetailsViewModel {
       defer {
         completionBlock(success)
       }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
+      }
     }
   }
 
@@ -147,6 +166,9 @@ extension CardDetailsViewModel {
     _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
+      }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
       }
     }
   }

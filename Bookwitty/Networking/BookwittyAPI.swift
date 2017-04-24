@@ -308,9 +308,13 @@ extension BookwittyAPI: TargetType {
     case .newsFeed:
       return ["pen-name", "contributors", "commenters"]
     case .content(_, let include):
+      var includes = include ?? []
+      if !includes.contains("pen-name") {
+        includes.append("pen-name")
+      }
       return include
     default:
-      return nil
+      return ["pen-name"]
     }
   }
 }

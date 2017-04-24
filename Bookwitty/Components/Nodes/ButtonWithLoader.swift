@@ -9,7 +9,7 @@
 import Foundation
 import AsyncDisplayKit
 
-protocol ButtonWithLoaderDelegate {
+protocol ButtonWithLoaderDelegate: class {
   func buttonTouchUpInside(buttonWithLoader: ButtonWithLoader)
 }
 
@@ -30,7 +30,7 @@ class ButtonWithLoader: ASDisplayNode {
   fileprivate var buttonHeight: CGFloat
   fileprivate var buttonSizeWidthRange: ASSizeRange
 
-  var delegate: ButtonWithLoaderDelegate?
+  weak var delegate: ButtonWithLoaderDelegate?
   var isLoading: Bool {
     return state == .loading
   }

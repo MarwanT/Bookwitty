@@ -8,7 +8,7 @@
 
 import AsyncDisplayKit
 
-protocol DisclosureNodeDelegate {
+protocol DisclosureNodeDelegate: class {
   func disclosureNodeDidTap(disclosureNode: DisclosureNode, selected: Bool)
 }
 
@@ -28,7 +28,7 @@ class DisclosureNode: ASControlNode {
     }
   }
   
-  var delegate: DisclosureNodeDelegate?
+  weak var delegate: DisclosureNodeDelegate?
   
   override init() {
     imageNode = ASImageNode()

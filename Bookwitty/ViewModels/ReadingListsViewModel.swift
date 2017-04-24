@@ -99,6 +99,9 @@ final class ReadingListsViewModel {
             }
             return cumulative + [index]
           })
+
+          //update the reading lists in the data manager
+          DataManager.shared.update(resources: readingListsContainingResource)
         })
       }
     }
@@ -124,6 +127,20 @@ extension ReadingListsViewModel {
     let resource = dataArray[indexPath.row]
     return resource
   }
+
+  func indexPathForAffectedItems(resourcesIdentifiers: [String], visibleItemsIndexPaths: [IndexPath]) -> [IndexPath] {
+    let readingLists = DataManager.shared.fetchResources(with: dataArray.flatMap({ $0.id }))
+    dataArray.removeAll()
+    dataArray += readingLists as? [ReadingList] ?? []
+
+    return visibleItemsIndexPaths.filter({
+      indexPath in
+      guard let resource = resourceForIndex(indexPath: indexPath) as? ModelCommonProperties, let identifier = resource.id else {
+        return false
+      }
+      return resourcesIdentifiers.contains(identifier)
+    })
+  }
 }
 
 // MARK: - Posts Actions
@@ -136,6 +153,9 @@ extension ReadingListsViewModel {
     }
 
     _ = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.wit)
+      }
       completionBlock(success)
     })
   }
@@ -148,6 +168,9 @@ extension ReadingListsViewModel {
     }
 
     _ = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.unwit)
+      }
       completionBlock(success)
     })
   }

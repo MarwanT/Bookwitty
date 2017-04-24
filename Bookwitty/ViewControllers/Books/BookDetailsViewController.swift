@@ -55,12 +55,19 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
     }
 
     applyLocalization()
-    observeLanguageChanges()
+    addObservers()
 
     navigationItem.backBarButtonItem = UIBarButtonItem.back
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.BookProduct)
+  }
+
+  private func addObservers() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+
+    observeLanguageChanges()
   }
   
   private func loadNavigationBarButtons() {
@@ -91,6 +98,26 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
     sections.forEach({ mutableIndexSet.add($0.rawValue) })
     collectionNode.reloadSections(mutableIndexSet as IndexSet)
   }
+
+  @objc
+  fileprivate func updatedResources(_ notification: NSNotification) {
+    let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({
+      ($0.section == BookDetailsViewModel.Section.recommendedReadingLists.rawValue
+        || $0.section == BookDetailsViewModel.Section.relatedTopics.rawValue)
+    })
+    
+    guard let identifiers = notification.object as? [String],
+      identifiers.count > 0,
+      visibleItemsIndexPaths.count > 0 else {
+        return
+    }
+
+    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+    collectionNode.performBatchUpdates({
+      collectionNode.reloadItems(at: indexPathForAffectedItems)
+    }, completion: nil)
+  }
+
 }
 
 extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegate {
@@ -266,7 +293,7 @@ extension BookDetailsViewController {
   
   func viewTopicViewController(with topic: Topic) {
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withTopic: topic)
+    topicViewController.initialize(with: topic as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
   

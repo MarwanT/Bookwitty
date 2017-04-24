@@ -34,11 +34,23 @@ protocol ModelCommonProperties {
   var vote: String? { get }
   var isWitted: Bool { get }
   var isDimmed: Bool { get }
+  var following: Bool { get }
   var canonicalURL: URL? { get }
   var counts: Counts? { get }
 
   var registeredResourceType: ResourceType { get }
-  var penName: PenName? { get }
+  var penName: PenName? { get set }
+
+  func sameInstanceAs(newResource: ModelCommonProperties?) -> Bool?
+}
+
+extension ModelCommonProperties {
+  func sameInstanceAs(newResource: ModelCommonProperties?) -> Bool? {
+    guard let existingResource = self as? ModelResource, let newResource = newResource as? ModelResource else {
+      return nil
+    }
+    return existingResource === newResource
+  }
 }
 
 extension Video: ModelCommonProperties {
@@ -53,6 +65,10 @@ extension Video: ModelCommonProperties {
       return false
     }
     return Vote.isDimmed(vote: vote)
+  }
+
+  var following: Bool {
+    return false
   }
 }
 
@@ -84,6 +100,10 @@ extension Image: ModelCommonProperties {
     }
     return Vote.isDimmed(vote: vote)
   }
+
+  var following: Bool {
+    return false
+  }
 }
 
 extension Author: ModelCommonProperties {
@@ -114,6 +134,10 @@ extension Link: ModelCommonProperties {
     }
     return Vote.isDimmed(vote: vote)
   }
+
+  var following: Bool {
+    return false
+  }
 }
 
 extension ReadingList: ModelCommonProperties {
@@ -128,6 +152,10 @@ extension ReadingList: ModelCommonProperties {
       return false
     }
     return Vote.isDimmed(vote: vote)
+  }
+
+  var following: Bool {
+    return false
   }
 }
 
@@ -144,6 +172,10 @@ extension Audio: ModelCommonProperties {
     }
     return Vote.isDimmed(vote: vote)
   }
+
+  var following: Bool {
+    return false
+  }
 }
 
 extension Text: ModelCommonProperties {
@@ -159,6 +191,10 @@ extension Text: ModelCommonProperties {
     }
     return Vote.isDimmed(vote: vote)
   }
+
+  var following: Bool {
+    return false
+  }
 }
 
 extension Quote: ModelCommonProperties {
@@ -173,6 +209,10 @@ extension Quote: ModelCommonProperties {
       return false
     }
     return Vote.isDimmed(vote: vote)
+  }
+
+  var following: Bool {
+    return false
   }
 
   var shortDescription: String? { return nil }
@@ -195,6 +235,58 @@ extension Book: ModelCommonProperties {
   }
 
   var penName: PenName? {
+    get {
+      return nil
+    }
+    set {
+      //Property does not apply
+    }
+  }
+}
+
+extension PenName: ModelCommonProperties {
+  var title: String? {
+    return name
+  }
+
+  var shortDescription: String? {
+    return biography
+  }
+
+  var thumbnailImageUrl: String? {
+    return avatarUrl
+  }
+
+  var createdAt: NSDate? {
     return nil
+  }
+
+  var updatedAt: NSDate? {
+    return nil
+  }
+
+  var coverImageUrl: String? {
+    return nil
+  }
+
+  var vote: String? {
+    return nil
+  }
+
+  var isWitted: Bool {
+    return false
+  }
+
+  var isDimmed: Bool {
+    return false
+  }
+
+  var penName: PenName? {
+    get {
+      return nil
+    }
+    set {
+      //Property does not apply
+    }
   }
 }

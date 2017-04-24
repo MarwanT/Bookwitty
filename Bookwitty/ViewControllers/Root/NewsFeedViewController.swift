@@ -235,7 +235,23 @@ extension NewsFeedViewController {
     NotificationCenter.default.addObserver(self, selector:
       #selector(refreshData(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
 
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+
     observeLanguageChanges()
+  }
+
+  func updatedResources(_ notification: NSNotification) {
+    let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.cards.rawValue })
+
+    guard let identifiers = notification.object as? [String],
+      identifiers.count > 0,
+      visibleItemsIndexPaths.count > 0 else {
+      return
+    }
+
+    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+    updateCollection(with: indexPathForAffectedItems, shouldReloadItems: true, loaderSection: false, penNamesSection: false, orReloadAll: false, completionBlock: nil)
   }
 
   func refreshData(_ notification: Notification) {
@@ -277,7 +293,7 @@ extension NewsFeedViewController {
 
 // MARK: - Reload Footer
 extension NewsFeedViewController {
-  func updateCollection(with itemIndices: [IndexPath]? = nil, loaderSection: Bool = false, penNamesSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
+  func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, loaderSection: Bool = false, penNamesSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
     if reloadAll {
       collectionNode.reloadData(completion: { 
         completionBlock?(true)
@@ -293,8 +309,12 @@ extension NewsFeedViewController {
         if penNamesSection {
           collectionNode.reloadSections(IndexSet(integer: Section.penNames.rawValue))
         }
-        if let itemIndices = itemIndices {
-          collectionNode.insertItems(at: itemIndices)
+        if let itemIndices = itemIndices, itemIndices.count > 0 {
+          if reloadItems {
+            collectionNode.reloadItems(at: itemIndices)
+          }else {
+            collectionNode.insertItems(at: itemIndices)
+          }
         }
       }, completion: completionBlock)
     }
@@ -353,6 +373,15 @@ extension NewsFeedViewController: ASCollectionDataSource {
       loaderNode.updateLoaderVisibility(show: shouldShowLoader)
     } else if node is MisfortuneNode {
       misfortuneNode.mode = viewModel.misfortuneNodeMode ?? MisfortuneNode.Mode.empty
+    } else if let card = node as? BaseCardPostNode {
+      guard let indexPath = collectionNode.indexPath(for: node),
+        let resource = viewModel.resourceForIndex(index: indexPath.row) as? ModelCommonProperties else {
+        return
+      }
+
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
+        card.baseViewModel?.resource = resource
+      }
     }
   }
 }
@@ -636,9 +665,11 @@ extension NewsFeedViewController {
   }
 
   func pushGenericViewControllerCard(resource: Resource, title: String? = nil) {
-    guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+    guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
+
+    cardNode.baseViewModel?.resource = resource as? ModelCommonProperties
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
     genericVC.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(genericVC, animated: true)
@@ -667,7 +698,7 @@ extension NewsFeedViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withAuthor: resource as? Author)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }
@@ -695,7 +726,7 @@ extension NewsFeedViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withTopic: resource as? Topic)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }
@@ -763,7 +794,7 @@ extension NewsFeedViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withBook: resource as? Book)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }
