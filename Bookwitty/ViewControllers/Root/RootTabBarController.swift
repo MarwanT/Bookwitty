@@ -8,7 +8,6 @@
 
 import Foundation
 import FLKAutoLayout
-import AMScrollingNavbar
 
 class RootTabBarController: UITabBarController {
   let viewModel = RootTabBarViewModel()
@@ -70,9 +69,9 @@ class RootTabBarController: UITabBarController {
 
     // Set The View controller
     self.viewControllers = [
-      ScrollingNavigationController(rootViewController: newsFeedViewController.viewController),
-      ScrollingNavigationController(rootViewController: discoverViewController),
-      ScrollingNavigationController(rootViewController: bookStoreViewController),
+      UINavigationController(rootViewController: newsFeedViewController.viewController),
+      UINavigationController(rootViewController: discoverViewController),
+      UINavigationController(rootViewController: bookStoreViewController),
     ]
     
     // Hide navigation bar for news feed if necessary
