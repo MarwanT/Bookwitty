@@ -580,6 +580,16 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
         let node = CardFactory.createCardFor(resourceType: post.registeredResourceType) else {
         return ASCellNode()
       }
+      // Fetch the reading list cards images
+      if let readingListCell = node as? ReadingListCardPostCellNode,
+        !readingListCell.node.isImageCollectionLoaded {
+        let max = readingListCell.node.maxNumberOfImages
+        self.viewModel.loadReadingListImages(at: item, maxNumberOfImages: max, completionBlock: { (imageCollection) in
+          if let imageCollection = imageCollection, imageCollection.count > 0 {
+            readingListCell.node.loadImages(with: imageCollection)
+          }
+        })
+      }
       node.delegate = self
       node.baseViewModel?.resource = post as? ModelCommonProperties
       return node
