@@ -67,9 +67,9 @@ class PostsViewController: ASViewController<ASCollectionNode> {
       self.showBottomLoader(reloadSection: true)
     }
     self.viewModel.loadNextPage { (success) in
-      self.hideBottomLoader()
-      let sectionsNeedsReloading = self.viewModel.sectionsNeedsReloading()
       DispatchQueue.main.async {
+        self.hideBottomLoader()
+        let sectionsNeedsReloading = self.viewModel.sectionsNeedsReloading()
         self.reloadCollectionViewSections(sections: sectionsNeedsReloading)
       }
       completion(success)
@@ -93,10 +93,26 @@ extension PostsViewController {
     }
   }
   
-  func reloadCollectionViewSections(sections: [Section]) {
-    let mutableIndexSet = NSMutableIndexSet()
-    sections.forEach({ mutableIndexSet.add($0.rawValue) })
-    collectionNode.reloadSections(mutableIndexSet as IndexSet)
+  func reloadCollectionViewSections(sections: [Section]? = nil, with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, orReloadAll reloadAll: Bool = false) {
+    if reloadAll {
+      collectionNode.reloadData()
+    } else {
+      collectionNode.performBatchUpdates({
+        if let sections = sections {
+          let mutableIndexSet = NSMutableIndexSet()
+          sections.forEach({ mutableIndexSet.add($0.rawValue) })
+          collectionNode.reloadSections(mutableIndexSet as IndexSet)
+        }
+
+        if let itemIndices = itemIndices, itemIndices.count > 0 {
+          if reloadItems {
+            collectionNode.reloadItems(at: itemIndices)
+          } else {
+            collectionNode.insertItems(at: itemIndices)
+          }
+        }
+      }, completion: nil)
+    }
   }
 }
 
@@ -157,7 +173,7 @@ extension PostsViewController: ASCollectionDataSource, ASCollectionDelegate {
   
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
     if let loaderNode = node as? LoaderNode {
-      loaderNode.updateLoaderVisibility(show: true)
+      loaderNode.updateLoaderVisibility(show: viewModel.shouldShowBottomLoader)
     } else if let card = node as? BaseCardPostNode {
       guard let indexPath = collectionNode.indexPath(for: node),
         let resource = viewModel.resourceForIndexPath(indexPath: indexPath) as? ModelCommonProperties else {
@@ -514,9 +530,8 @@ extension PostsViewController {
         return
     }
 
-    //TODO: Update items instead of the whole sections using:
-    //REPLACE: let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
-    reloadCollectionViewSections(sections: [PostsViewController.Section.posts])
+    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+    reloadCollectionViewSections(with: indexPathForAffectedItems, shouldReloadItems: true, orReloadAll: false)
   }
 }
 
