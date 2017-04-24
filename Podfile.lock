@@ -1,7 +1,6 @@
 PODS:
   - Alamofire (4.2.0)
   - ALCameraViewController (1.2.7)
-  - AMScrollingNavbar (3.2.0)
   - AsyncDisplayKit (2.2):
     - AsyncDisplayKit/PINRemoteImage (= 2.2)
   - AsyncDisplayKit/Core (2.2)
@@ -120,7 +119,6 @@ PODS:
 
 DEPENDENCIES:
   - ALCameraViewController (= 1.2.7)
-  - AMScrollingNavbar (= 3.2.0)
   - AsyncDisplayKit (= 2.2)
   - Crashlytics (= 3.8.3)
   - DTCoreText (= 1.6.20)
@@ -177,7 +175,6 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
   ALCameraViewController: 4a513b8d5ecfdb3f34c50b1d469c373aae1ec7b4
-  AMScrollingNavbar: cf603d4d5f11061d466a0878b9ada136248927b2
   AsyncDisplayKit: 1585f6cd0531ae9b30476f5912f577b73ebcb0e4
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   BrightFutures: 62aafb1a63520eda91c9286bf4be33e58e043938
@@ -219,6 +216,6 @@ SPEC CHECKSUMS:
   UIImageViewAlignedSwift: e57cc89b4738a82ffad1b76e8ab01f898215bbfb
   Version: 31221742495765fc798d08eae45de3c936dce0db
 
-PODFILE CHECKSUM: 4ed7a27dd8404dabe7d6d0e1ece75984ede6648e
+PODFILE CHECKSUM: c407f8b3e9051845aebdce7ba0f7440fc19e78e9
 
 COCOAPODS: 1.2.0

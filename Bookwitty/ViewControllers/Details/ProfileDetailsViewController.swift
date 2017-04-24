@@ -8,7 +8,6 @@
 
 import Foundation
 import AsyncDisplayKit
-import AMScrollingNavbar
 
 class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   let flowLayout: UICollectionViewFlowLayout
@@ -78,21 +77,6 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
 
   deinit {
     NotificationCenter.default.removeObserver(self)
-  }
-
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    if let navigationController = navigationController as? ScrollingNavigationController {
-      navigationController.followScrollView(collectionNode.view, delay: 50.0)
-    }
-  }
-
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-    if let navigationController = navigationController as? ScrollingNavigationController {
-      navigationController.stopFollowingScrollView()
-      navigationController.showNavbar(animated: true)
-    }
   }
   
   private func initializeComponents() {
