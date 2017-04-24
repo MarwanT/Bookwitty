@@ -46,10 +46,9 @@ class ContributorsNode: ASDisplayNode {
 
   var numberOfContributors: String? {
     didSet {
-      //TODO: This should be handled with localization plurals
-      if isValid(numberOfContributors) {
+      if let numberOfContributors = numberOfContributors, let number: Int = Int(numberOfContributors) {
         statsNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
-          .append(text: numberOfContributors! + " " + Strings.contributors())
+          .append(text: Strings.contributors(number: number))
           .attributedString
         setNeedsLayout()
       }

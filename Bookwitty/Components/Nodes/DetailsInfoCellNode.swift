@@ -76,7 +76,7 @@ class DetailsInfoCellNode: ASCellNode {
   
   var key: String? {
     didSet {
-      keyTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption1)
+      keyTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
         .append(text: key ?? "", color: configuration.defaultTextColor).attributedString
       setNeedsLayout()
     }
@@ -84,7 +84,7 @@ class DetailsInfoCellNode: ASCellNode {
   
   var value: String? {
     didSet {
-      valueTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+      valueTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption1)
         .append(text: value ?? "", color: configuration.defaultTextColor).applyParagraphStyling(alignment: NSTextAlignment.right).attributedString
       setNeedsLayout()
     }

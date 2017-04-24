@@ -89,6 +89,18 @@ final class BookDetailsViewModel {
     sections += [.activityIndicator]
     return sections
   }
+
+  func indexPathForAffectedItems(resourcesIdentifiers: [String], visibleItemsIndexPaths: [IndexPath]) -> [IndexPath] {
+    return visibleItemsIndexPaths.filter({
+      indexPath in
+
+      guard let resource = resource(at: indexPath), let identifier = resource.id else {
+        return false
+      }
+
+      return resourcesIdentifiers.contains(identifier)
+    })
+  }
 }
 
 // MARK: - Helpers 
@@ -218,9 +230,11 @@ extension BookDetailsViewModel {
         node = footerNode
       default:
         let resource = relatedReadingLists[indexPath.row - 1]
-        guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+        guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
           break
         }
+        
+        cardNode.baseViewModel?.resource = resource
         return cardNode
       }
     case .relatedTopics:
@@ -246,9 +260,11 @@ extension BookDetailsViewModel {
         node = footerNode
       default:
         let resource = relatedTopics[indexPath.row - 1]
-        guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+        guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
           break
         }
+
+        cardNode.baseViewModel?.resource = resource
         return cardNode
       }
     case .activityIndicator:
@@ -542,7 +558,7 @@ extension BookDetailsViewModel {
       return
     }
     
-    _ = GeneralAPI.posts(
+    _ = GeneralAPI.postsLinkedContent(
       contentIdentifier: bookId, type: [ReadingList.resourceType], completion: {
         (success, resources, nextPage, error) in
         var success: Bool = success
@@ -554,7 +570,9 @@ extension BookDetailsViewModel {
         guard success, let resources = resources else {
           return
         }
-        
+
+        DataManager.shared.update(resources: resources)
+
         let readingLists = resources.flatMap({ $0 as? ReadingList })
         let displayedReadingLists = Array(readingLists.prefix(self.maximumNumberOfDetails))
         self.relatedReadingLists = (readingLists, displayedReadingLists, nextPage)
@@ -567,7 +585,7 @@ extension BookDetailsViewModel {
       return
     }
     
-    _ = GeneralAPI.posts(
+    _ = GeneralAPI.postsLinkedContent(
       contentIdentifier: bookId, type: [Topic.resourceType], completion: {
         (success, resources, nextPage, error) in
         var success: Bool = success
@@ -579,6 +597,8 @@ extension BookDetailsViewModel {
         guard success, let resources = resources else {
           return
         }
+
+        DataManager.shared.update(resources: resources)
         
         let topics = resources.flatMap({ $0 as? Topic })
         let displayedTopics = Array(topics.prefix(self.maximumNumberOfDetails))
@@ -596,6 +616,9 @@ extension BookDetailsViewModel {
     }
     
     _ = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.wit)
+      }
       completionBlock(success)
     })
   }
@@ -607,6 +630,9 @@ extension BookDetailsViewModel {
     }
     
     _ = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.unwit)
+      }
       completionBlock(success)
     })
   }
@@ -703,17 +729,19 @@ extension BookDetailsViewModel {
 
   fileprivate func followRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     _ = GeneralAPI.follow(identifer: identifier) { (success, error) in
-      defer {
-        completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
       }
+      completionBlock(success)
     }
   }
 
   fileprivate func unfollowRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
-      defer {
-        completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
       }
+      completionBlock(success)
     }
   }
 }
@@ -722,6 +750,10 @@ extension BookDetailsViewModel {
   func resource(at indexPath: IndexPath) -> ModelCommonProperties? {
     guard let resources = resourcesCommonProperties(for: indexPath) else {
         return nil
+    }
+
+    guard indexPath.row > 0 && indexPath.row < resources.count else {
+      return nil
     }
 
     let resource = resources[indexPath.row - 1]

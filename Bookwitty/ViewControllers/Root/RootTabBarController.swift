@@ -169,14 +169,8 @@ class RootTabBarController: UITabBarController {
     newsNavigationController.setNavigationBarHidden(newsFeedViewController.hideNavigationBar, animated: true)
     
     newsNavigationController.viewControllers.replaceSubrange(0...0, with: [newsFeedViewController.viewController])
-    
-    if UserManager.shared.isSignedIn {
-      if let newsFeedViewController = newsFeedViewController.viewController as? NewsFeedViewController {
-        newsFeedViewController.refreshViewControllerData()
-      }
-    }
 
-    NotificationCenter.default.post(name: AppNotification.authenticationStatusChanged, object: nil)
+    NotificationCenter.default.post(name: AppNotification.authenticationStatusChanged, object: nil, userInfo: [AppNotification.Key.status : UserManager.shared.isSignedIn])
   }
 
   fileprivate func displayAppNeedsUpdate(with updateURL: URL?) {
@@ -397,14 +391,20 @@ extension RootTabBarController {
 
 // MARK: - Misfortune Node Delegate
 extension RootTabBarController: MisfortuneNodeDelegate {
-  func misfortuneNodeDidTapActionButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {
-    switch mode {
-    case .appNeedsUpdate(let updateURL):
-      openURL(url: updateURL)
+  func misfortuneNodeDidPerformAction(node: MisfortuneNode, action: MisfortuneNode.Action?) {
+    guard let action = action else {
+      return
+    }
+    
+    switch action {
+    case .updateApp:
+      if let mode = node.mode {
+        if case MisfortuneNode.Mode.appNeedsUpdate(let url) = mode {
+          openURL(url: url)
+        }
+      }
     default:
       break
     }
   }
-  
-  func misfortuneNodeDidTapSettingsButton(node: MisfortuneNode, mode: MisfortuneNode.Mode) {}
 }

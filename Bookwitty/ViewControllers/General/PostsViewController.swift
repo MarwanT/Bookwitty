@@ -42,13 +42,12 @@ class PostsViewController: ASViewController<ASCollectionNode> {
   func initialize(title: String?, resources: [ModelResource]?, loadingMode: PostsViewModel.DataLoadingMode?) {
     self.title = title
     self.viewModel.initialize(title: title, resources: resources, loadingMode: loadingMode)
-    collectionNode.reloadData()
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     title = viewModel.viewControllerTitle
-    
+    addObservers()
     collectionNode.delegate = self
     collectionNode.dataSource = self
 
@@ -66,16 +65,14 @@ class PostsViewController: ASViewController<ASCollectionNode> {
     
     DispatchQueue.main.async {
       self.showBottomLoader(reloadSection: true)
-      DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
-        self.viewModel.loadNextPage { (success) in
-          DispatchQueue.main.async {
-            self.hideBottomLoader()
-            let sectionsNeedsReloading = self.viewModel.sectionsNeedsReloading()
-            self.reloadCollectionViewSections(sections: sectionsNeedsReloading)
-            completion(success)
-          }
-        }
+    }
+    self.viewModel.loadNextPage { (success) in
+      DispatchQueue.main.async {
+        self.hideBottomLoader()
+        let sectionsNeedsReloading = self.viewModel.sectionsNeedsReloading()
+        self.reloadCollectionViewSections(sections: sectionsNeedsReloading)
       }
+      completion(success)
     }
   }
 }
@@ -96,10 +93,26 @@ extension PostsViewController {
     }
   }
   
-  func reloadCollectionViewSections(sections: [Section]) {
-    let mutableIndexSet = NSMutableIndexSet()
-    sections.forEach({ mutableIndexSet.add($0.rawValue) })
-    collectionNode.reloadSections(mutableIndexSet as IndexSet)
+  func reloadCollectionViewSections(sections: [Section]? = nil, with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, orReloadAll reloadAll: Bool = false) {
+    if reloadAll {
+      collectionNode.reloadData()
+    } else {
+      collectionNode.performBatchUpdates({
+        if let sections = sections {
+          let mutableIndexSet = NSMutableIndexSet()
+          sections.forEach({ mutableIndexSet.add($0.rawValue) })
+          collectionNode.reloadSections(mutableIndexSet as IndexSet)
+        }
+
+        if let itemIndices = itemIndices, itemIndices.count > 0 {
+          if reloadItems {
+            collectionNode.reloadItems(at: itemIndices)
+          } else {
+            collectionNode.insertItems(at: itemIndices)
+          }
+        }
+      }, completion: nil)
+    }
   }
 }
 
@@ -160,7 +173,16 @@ extension PostsViewController: ASCollectionDataSource, ASCollectionDelegate {
   
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
     if let loaderNode = node as? LoaderNode {
-      loaderNode.updateLoaderVisibility(show: true)
+      loaderNode.updateLoaderVisibility(show: viewModel.shouldShowBottomLoader)
+    } else if let card = node as? BaseCardPostNode {
+      guard let indexPath = collectionNode.indexPath(for: node),
+        let resource = viewModel.resourceForIndexPath(indexPath: indexPath) as? ModelCommonProperties else {
+          return
+      }
+
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
+        card.baseViewModel?.resource = resource
+      }
     }
   }
   
@@ -361,9 +383,11 @@ extension PostsViewController {
   }
   
   fileprivate func pushGenericViewControllerCard(resource: Resource, title: String? = nil) {
-    guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+    guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
+    
+    cardNode.baseViewModel?.resource = resource as? ModelCommonProperties
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
     navigationController?.pushViewController(genericVC, animated: true)
   }
@@ -391,7 +415,7 @@ extension PostsViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withAuthor: resource as? Author)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
   
@@ -418,7 +442,7 @@ extension PostsViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withTopic: resource as? Topic)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
   
@@ -485,8 +509,29 @@ extension PostsViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withBook: resource as? Book)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
+  }
+}
+
+// MARK: Notifications
+extension PostsViewController {
+  func addObservers() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+  }
+
+  func updatedResources(_ notification: NSNotification) {
+    let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.posts.rawValue })
+
+    guard let identifiers = notification.object as? [String],
+      identifiers.count > 0,
+      visibleItemsIndexPaths.count > 0 else {
+        return
+    }
+
+    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+    reloadCollectionViewSections(with: indexPathForAffectedItems, shouldReloadItems: true, orReloadAll: false)
   }
 }
 

@@ -14,6 +14,10 @@ extension PostDetailsNode: DTAttributedTextContentNodeDelegate {
   func attributedTextContentNodeNeedsLayout(node: ASCellNode) {
     setNeedsLayout()
   }
+
+  func attributedTextContentNode(node: ASCellNode, button: DTLinkButton, didTapOnLink link: URL) {
+    WebViewController.present(url: link)
+  }
 }
 
 extension PostDetailsNode: DisclosureNodeDelegate {
@@ -37,7 +41,7 @@ extension PostDetailsNode: CardActionBarNodeDelegate {
   }
 }
 
-protocol PostDetailsNodeDelegate {
+protocol PostDetailsNodeDelegate: class {
   func bannerTapAction(url: URL?)
   func shouldShowPostDetailsAllPosts()
   func shouldShowPostDetailsAllRelatedBooks()
@@ -105,7 +109,7 @@ class PostDetailsNode: ASScrollNode {
       headerNode.penName = penName
     }
   }
-  var delegate: PostDetailsNodeDelegate?
+  weak var delegate: PostDetailsNodeDelegate?
   var conculsion: String? {
     didSet {
         conculsionNode.htmlString(text: conculsion, fontDynamicType: FontDynamicType.body)

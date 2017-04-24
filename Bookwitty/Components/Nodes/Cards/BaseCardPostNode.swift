@@ -9,6 +9,16 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol CardViewModelProtocol: class {
+  var resource: ModelCommonProperties? { get set }
+}
+
+extension CardViewModelProtocol {
+  var resource: ModelCommonProperties? {
+    return nil
+  }
+}
+
 protocol BaseCardPostNodeContentProvider {
   var shouldShowInfoNode: Bool { get }
   var contentShouldExtendBorders: Bool { get }
@@ -29,12 +39,16 @@ extension BaseCardPostNode: CardPostInfoNodeDelegate {
   }
 }
 
-protocol BaseCardPostNodeDelegate {
+protocol BaseCardPostNodeDelegate: class {
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
   func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any)
 }
 
 class BaseCardPostNode: ASCellNode, NodeTapProtocol {
+
+  var baseViewModel: CardViewModelProtocol? {
+    return nil
+  }
 
   fileprivate let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
@@ -51,8 +65,8 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     return !articleCommentsSummary.isEmptyOrNil()
   }
 
-  var tapDelegate: ItemNodeTapDelegate?
-  var delegate: BaseCardPostNodeDelegate?
+  weak var tapDelegate: ItemNodeTapDelegate?
+  weak var delegate: BaseCardPostNodeDelegate?
   var forceHideInfoNode: Bool = false
   var postInfoData: CardPostInfoNodeData? {
     didSet {
@@ -121,14 +135,8 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
 
   private func manageNodes() {
     guard subnodes.count == 0 else { return }
-
-    //Order is important: backgroundNode must be the first
-    if(shouldShowInfoNode && !forceHideInfoNode) {
-      addSubnodes(arrayOfNodes: [backgroundNode, infoNode, contentNode, commentsSummaryNode, separatorNode, actionBarNode])
-    } else {
-      addSubnodes(arrayOfNodes: [backgroundNode, contentNode, commentsSummaryNode, separatorNode, actionBarNode])
-    }
-
+    automaticallyManagesSubnodes = true
+    
     separatorNode.isLayerBacked = true
     backgroundNode.isLayerBacked = true
   }

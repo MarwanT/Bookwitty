@@ -15,7 +15,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     case loadMore
     case reloading
     case loading
-    case penNameSelection
   }
 
   let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
@@ -24,8 +23,22 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let pullToRefresher = UIRefreshControl()
   let penNameSelectionNode = PenNameSelectionNode()
   let loaderNode: LoaderNode
+  let misfortuneNode = MisfortuneNode(mode: MisfortuneNode.Mode.empty)
+  
 
   var loadingStatus: LoadingStatus = .none
+  var shouldShowLoader: Bool {
+    return (loadingStatus != .none)
+  }
+  var shouldDisplayMisfortuneNode: Bool {
+    guard let misfortuneMode = viewModel.misfortuneNodeMode, !shouldShowLoader else {
+      flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: externalMargin/2, right: 0)
+       return false
+    }
+    misfortuneNode.mode = misfortuneMode
+    flowLayout.sectionInset = UIEdgeInsets.zero
+    return true
+  }
   var collectionView: ASCollectionView?
   var scrollView: UIScrollView? {
     if let collectionView = collectionView {
@@ -43,7 +56,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
   init() {
     flowLayout = UICollectionViewFlowLayout()
-    flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: externalMargin/2, right: 0)
+    flowLayout.sectionInset = UIEdgeInsets.zero
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
 
@@ -76,7 +89,11 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     penNameSelectionNode.delegate = self
     //Listen to pullToRefresh valueChange and call loadData
     pullToRefresher.addTarget(self, action: #selector(self.pullDownToReloadData), for: .valueChanged)
-
+    
+    misfortuneNode.delegate = self
+    misfortuneNode.style.height = ASDimensionMake(collectionNode.frame.height)
+    misfortuneNode.style.width = ASDimensionMake(collectionNode.frame.width)
+    
     applyTheme()
     applyLocalization()
 
@@ -89,9 +106,15 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.NewsFeed)
-    reloadPenNamesNode()
-  }
 
+    self.misfortuneNode.style.height = ASDimensionMake(collectionNode.frame.height)
+    self.misfortuneNode.style.width = ASDimensionMake(collectionNode.frame.width)
+    
+    reloadPenNamesNode()
+    if viewModel.numberOfItemsInSection(section: Section.cards.rawValue) == 0 {
+      refreshViewControllerData()
+    }
+  }
   /*
    When the refresh controller is still refreshing, and we navigate away and
    back to this view controller, the activity indicator stops animating.
@@ -130,16 +153,21 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     if UserManager.shared.isSignedIn {
       viewModel.cancellableOnGoingRequest()
       self.loadingStatus = .loading
-      self.pullToRefresher.beginRefreshing()
-      loadData(withPenNames: true, completionBlock: {
+      self.updateCollection(with: nil, loaderSection: true, penNamesSection: false, orReloadAll: false, completionBlock: nil)
+      self.viewModel.loadNewsfeed { (success) in
         self.loadingStatus = .none
-        self.pullToRefresher.endRefreshing()
-      })
+        self.updateCollection(with: nil, loaderSection: false, penNamesSection: false, orReloadAll: true, completionBlock: nil)
+      }
     }
   }
 
+  /**
+   * User should not directly call this should, it should be triggered from
+   * UIRefreshControl's valueChanged target action
+   */
   func pullDownToReloadData() {
-    guard loadingStatus != .reloading else {
+    guard pullToRefresher.isRefreshing else {
+      //Making sure that only UIRefreshControl will trigger this on valueChanged
       return
     }
 
@@ -150,21 +178,15 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
     self.loadingStatus = .reloading
     self.pullToRefresher.beginRefreshing()
-    loadData(withPenNames: true, completionBlock: {
-      self.pullToRefresher.endRefreshing()
-      self.loadingStatus = .none
-    })
-  }
 
-  func loadData(withPenNames reloadPenNames: Bool = true, completionBlock: @escaping () -> ()) {
-    viewModel.loadNewsfeed { [weak self] (success) in
-      guard let strongSelf = self else { return }
-      completionBlock()
-      if success {
-        strongSelf.collectionNode.reloadData(completion: { 
-          if reloadPenNames || !strongSelf.penNameSelectionNode.hasData() {
-            strongSelf.reloadPenNamesNode()
-          }
+    viewModel.penNameRequest { (success) in
+      self.viewModel.nextPage = nil
+      self.updateCollection(with: nil, loaderSection: true, penNamesSection: false, orReloadAll: false, completionBlock: nil)
+      self.reloadPenNamesNode()
+      self.viewModel.loadNewsfeed { (success) in
+        self.loadingStatus = .none
+        self.updateCollection(with: nil, loaderSection: false, penNamesSection: false, orReloadAll: true, completionBlock: { (sucess) in
+          self.pullToRefresher.endRefreshing()
         })
       }
     }
@@ -172,13 +194,17 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
   func reloadPenNamesNode() {
     penNameSelectionNode.loadData(penNames: viewModel.penNames, withSelected: viewModel.defaultPenName)
-    collectionNode.reloadSections(IndexSet(integer: Section.penNames.rawValue))
   }
 }
 
 extension NewsFeedViewController: PenNameSelectionNodeDelegate {
-  func didSelectPenName(penName: PenName, sender: PenNameSelectionNode) {
+  func penNameSelectionNodeNeeds(node: PenNameSelectionNode, reload: Bool, penNameChanged: Bool) {
+    if reload {
+      self.updateCollection(with: nil, loaderSection: false, penNamesSection: true, orReloadAll: penNameChanged, completionBlock: nil)
+    }
+  }
 
+  func didSelectPenName(penName: PenName, sender: PenNameSelectionNode) {
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .NewsFeed,
                                                  action: .SelectPenName)
@@ -190,13 +216,15 @@ extension NewsFeedViewController: PenNameSelectionNodeDelegate {
     }
     viewModel.cancellableOnGoingRequest()
     viewModel.data = []
-    self.loadingStatus = .penNameSelection
-    collectionNode.reloadData()
+    viewModel.nextPage = nil
+    self.loadingStatus = .reloading
+    self.updateCollection(with: nil, loaderSection: false, penNamesSection: false, orReloadAll: true, completionBlock: nil)
     viewModel.didUpdateDefaultPenName(penName: penName, completionBlock: {  didSaveDefault in
       if didSaveDefault {
-        loadData(withPenNames: false, completionBlock: {
+        self.viewModel.loadNewsfeed { (success) in
           self.loadingStatus = .none
-        })
+          self.updateCollection(with: nil, loaderSection: false, penNamesSection: false, orReloadAll: true, completionBlock: nil)
+        }
       }
     })
   }
@@ -205,32 +233,46 @@ extension NewsFeedViewController: PenNameSelectionNodeDelegate {
 extension NewsFeedViewController {
   func addObservers() {
     NotificationCenter.default.addObserver(self, selector:
-      #selector(self.signOut(_:)), name: AppNotification.signOut, object: nil)
-    NotificationCenter.default.addObserver(self, selector:
-      #selector(self.refreshData(_:)), name: AppNotification.shouldRefreshData, object: nil)
-    
-    NotificationCenter.default.addObserver(self, selector:
       #selector(refreshData(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
+
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
 
     observeLanguageChanges()
   }
 
-  func refreshData(_ notification: Notification) {
-    initializeNavigationItems()
-    refreshViewControllerData()
-    reloadPenNamesNode()
+  func updatedResources(_ notification: NSNotification) {
+    let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.cards.rawValue })
+
+    guard let identifiers = notification.object as? [String],
+      identifiers.count > 0,
+      visibleItemsIndexPaths.count > 0 else {
+      return
+    }
+
+    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+    updateCollection(with: indexPathForAffectedItems, shouldReloadItems: true, loaderSection: false, penNamesSection: false, orReloadAll: false, completionBlock: nil)
   }
 
-  func signOut(_ notification: Notification) {
+  func refreshData(_ notification: Notification) {
+    if UserManager.shared.isSignedIn {
+      initializeNavigationItems()
+    } else {
+      signOutAction()
+    }
+  }
+
+  func signOutAction() {
     if let scrollView = scrollView {
       penNameSelectionNode.alpha = 1.0
       scrollView.contentOffset = CGPoint(x: 0, y: 0.0)
     }
 
+    reloadPenNamesNode()
     viewModel.cancellableOnGoingRequest()
     viewModel.data = []
-    collectionNode.reloadData()
-    reloadPenNamesNode()
+    viewModel.nextPage = nil
+    self.updateCollection(with: nil, loaderSection: false, penNamesSection: false, orReloadAll: true, completionBlock: nil)
   }
 }
 // MARK: - Themeable
@@ -251,9 +293,31 @@ extension NewsFeedViewController {
 
 // MARK: - Reload Footer
 extension NewsFeedViewController {
-  func updateBottomLoaderVisibility(show: Bool) {
-    self.loaderNode.updateLoaderVisibility(show: show)
-    collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
+  func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, loaderSection: Bool = false, penNamesSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
+    if reloadAll {
+      collectionNode.reloadData(completion: { 
+        completionBlock?(true)
+      })
+    } else {
+      collectionNode.performBatchUpdates({
+        // Always relaod misfortune section
+        collectionNode.reloadSections(IndexSet(integer: Section.misfortune.rawValue))
+        
+        if loaderSection {
+          collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
+        }
+        if penNamesSection {
+          collectionNode.reloadSections(IndexSet(integer: Section.penNames.rawValue))
+        }
+        if let itemIndices = itemIndices, itemIndices.count > 0 {
+          if reloadItems {
+            collectionNode.reloadItems(at: itemIndices)
+          }else {
+            collectionNode.insertItems(at: itemIndices)
+          }
+        }
+      }, completion: completionBlock)
+    }
   }
 }
 
@@ -266,8 +330,10 @@ extension NewsFeedViewController: ASCollectionDataSource {
     guard NewsFeedViewController.Section.cards.rawValue == section else {
       if NewsFeedViewController.Section.penNames.rawValue == section {
         return 1
-      } else {
-        return (loadingStatus == .penNameSelection || loadingStatus == .loadMore) ? 1 : 0
+      } else if NewsFeedViewController.Section.activityIndicator.rawValue == section {
+        return shouldShowLoader ? 1 : 0
+      } else  { // NewsFeedViewController.Section.misfortune
+        return shouldDisplayMisfortuneNode ? 1 : 0
       }
     }
     return viewModel.numberOfItemsInSection(section: section)
@@ -292,8 +358,10 @@ extension NewsFeedViewController: ASCollectionDataSource {
         return baseCardNode
       } else if section == Section.penNames.rawValue {
         return self.penNameSelectionNode
-      } else {
+      } else if section == Section.activityIndicator.rawValue {
         return self.loaderNode
+      } else { // Section.misfortune
+        return self.misfortuneNode
       }
     }
   }
@@ -301,6 +369,19 @@ extension NewsFeedViewController: ASCollectionDataSource {
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
     if node is PenNameSelectionNode {
       penNameSelectionNode.setNeedsLayout()
+    } else if node is LoaderNode {
+      loaderNode.updateLoaderVisibility(show: shouldShowLoader)
+    } else if node is MisfortuneNode {
+      misfortuneNode.mode = viewModel.misfortuneNodeMode ?? MisfortuneNode.Mode.empty
+    } else if let card = node as? BaseCardPostNode {
+      guard let indexPath = collectionNode.indexPath(for: node),
+        let resource = viewModel.resourceForIndex(index: indexPath.row) as? ModelCommonProperties else {
+        return
+      }
+
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
+        card.baseViewModel?.resource = resource
+      }
     }
   }
 }
@@ -464,8 +545,9 @@ extension NewsFeedViewController: ASCollectionDelegate {
     context.beginBatchFetching()
     self.loadingStatus = .loadMore
     DispatchQueue.main.async {
-      self.updateBottomLoaderVisibility(show: true)
+      self.updateCollection(loaderSection: true)
     }
+
 
     let initialLastIndexPath: Int = viewModel.numberOfItemsInSection(section: Section.cards.rawValue)
 
@@ -476,11 +558,11 @@ extension NewsFeedViewController: ASCollectionDelegate {
 
     // Fetch next page data
     viewModel.loadNextPage { [weak self] (success) in
+      var updatedIndexPathRange: [IndexPath]? = nil
       defer {
+        self?.loadingStatus = .none
+        self?.updateCollection(with: updatedIndexPathRange, loaderSection: true, penNamesSection: true, orReloadAll: false, completionBlock: nil)
         context.completeBatchFetching(true)
-        self!.loadingStatus = .none
-        self!.updateBottomLoaderVisibility(show: false)
-        collectionNode.reloadSections(IndexSet(integer: Section.penNames.rawValue))
       }
       guard let strongSelf = self else {
         return
@@ -490,10 +572,9 @@ extension NewsFeedViewController: ASCollectionDelegate {
       if success && finalLastIndexPath > initialLastIndexPath {
         let updateIndexRange = initialLastIndexPath..<finalLastIndexPath
 
-        let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
+        updatedIndexPathRange = updateIndexRange.flatMap({ (index) -> IndexPath in
           return IndexPath(row: index, section: Section.cards.rawValue)
         })
-        collectionNode.insertItems(at: updatedIndexPathRange)
       }
     }
   }
@@ -579,14 +660,18 @@ extension NewsFeedViewController {
 
   func pushPostDetailsViewController(resource: Resource) {
     let nodeVc = PostDetailsViewController(resource: resource)
+    nodeVc.hidesBottomBarWhenPushed = true
     self.navigationController?.pushViewController(nodeVc, animated: true)
   }
 
   func pushGenericViewControllerCard(resource: Resource, title: String? = nil) {
-    guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+    guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
+
+    cardNode.baseViewModel?.resource = resource as? ModelCommonProperties
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
+    genericVC.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(genericVC, animated: true)
   }
 
@@ -613,7 +698,8 @@ extension NewsFeedViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withAuthor: resource as? Author)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
+    topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 
@@ -640,7 +726,8 @@ extension NewsFeedViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withTopic: resource as? Topic)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
+    topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 
@@ -707,7 +794,8 @@ extension NewsFeedViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withBook: resource as? Book)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
+    topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 }
@@ -718,9 +806,10 @@ extension NewsFeedViewController {
     case penNames = 0
     case cards = 1
     case activityIndicator = 2
+    case misfortune = 3
 
     static var numberOfSections: Int {
-      return 3
+      return 4
     }
   }
 }
@@ -739,5 +828,21 @@ extension NewsFeedViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+  }
+}
+
+// MARK: - 
+extension NewsFeedViewController: MisfortuneNodeDelegate {
+  func misfortuneNodeDidPerformAction(node: MisfortuneNode, action: MisfortuneNode.Action?) {
+    guard let action = action else {
+      return
+    }
+    
+    switch action {
+    case .settings:
+      AppDelegate.openSettings()
+    default:
+      break
+    }
   }
 }

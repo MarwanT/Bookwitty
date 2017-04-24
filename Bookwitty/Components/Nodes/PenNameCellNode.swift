@@ -65,8 +65,7 @@ class PenNameCellNode: ASCellNode {
 
     penNameImageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0, ASDisplayNodeDefaultPlaceholderColor())
     penNameImageNode.style.preferredSize = imageSize
-    penNameImageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
-    penNameImageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
+    penNameImageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
 
     selectedImageNode.style.preferredSize = downArrowImageSize
     selectedImageNode.image = #imageLiteral(resourceName: "tick")

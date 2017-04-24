@@ -20,11 +20,20 @@ class CategoryViewController: UIViewController {
   let viewAllBooksView = UIView.loadFromView(DisclosureView.self, owner: nil)
   let viewSubcategories = UIView.loadFromView(DisclosureView.self, owner: nil)
   let refreshController = UIRefreshControl()
+  let misfortuneNode = MisfortuneNode(mode: MisfortuneNode.Mode.empty)
   
   fileprivate let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
   fileprivate let sectionSpacing = ThemeManager.shared.currentTheme.sectionSpacing()
   
   let viewModel = CategoryViewModel()
+  
+  var shouldDisplayMisfortuneNode: Bool {
+    guard let misfortuneMode = viewModel.misfortuneNodeMode, !refreshController.isRefreshing else {
+      return false
+    }
+    misfortuneNode.mode = misfortuneMode
+    return true
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -59,6 +68,9 @@ class CategoryViewController: UIViewController {
   }
   
   private func initializeSubviews() {
+    // Initialize Misfortune Node
+    misfortuneNode.delegate = self
+    
     // Featured Content View
     let itemSize = FeaturedContentCollectionViewCell.defaultSize
     let interItemSpacing: CGFloat = 10
@@ -131,6 +143,7 @@ class CategoryViewController: UIViewController {
     loadBookwittySuggest()
     loadSelectionSection()
     loadSubcategoriesSection()
+    loadMisfortuneSection()
   }
   
   private func loadBannerSection() {
@@ -186,7 +199,20 @@ class CategoryViewController: UIViewController {
       viewSubcategories.alignLeading("0", trailing: "0", toView: stackView)
       addSeparator()
     }
-  }  
+  }
+  
+  private func loadMisfortuneSection() {
+    if shouldDisplayMisfortuneNode {
+      if misfortuneNode.view.superview == nil {
+        // TODO: Add height constraint if needed
+        misfortuneNode.view.constrainHeight("\(scrollView.frame.height)")
+        stackView.addArrangedSubview(misfortuneNode.view)
+        misfortuneNode.view.alignLeading("0", trailing: "0", toView: stackView)
+      }
+    } else {
+      misfortuneNode.view.removeFromSuperview()
+    }
+  }
   
   // MARK: Helpers
   fileprivate func separatorViewInstance() -> UIView {
@@ -345,7 +371,7 @@ extension CategoryViewController: UITableViewDataSource, UITableViewDelegate {
       guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: SectionTitleHeaderView.reuseIdentifier) as? SectionTitleHeaderView else {
         return nil
       }
-      headerView.label.text = Strings.our_selection_for_you()
+      headerView.label.text = Strings.most_popular()
       let headerConfiguration = SectionTitleHeaderView.Configuration(
         verticalBarColor: ThemeManager.shared.currentTheme.colorNumber6(),
         horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber5())
@@ -480,9 +506,11 @@ extension CategoryViewController {
   }
   
   func pushGenericViewControllerCard(resource: Resource, title: String? = nil) {
-    guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+    guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
+    
+    cardNode.baseViewModel?.resource = resource as? ModelCommonProperties
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
     navigationController?.pushViewController(genericVC, animated: true)
   }
@@ -510,7 +538,7 @@ extension CategoryViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withAuthor: resource as? Author)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
   
@@ -537,7 +565,7 @@ extension CategoryViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withTopic: resource as? Topic)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
   
@@ -604,7 +632,7 @@ extension CategoryViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withBook: resource as? Book)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 }
@@ -625,5 +653,23 @@ extension CategoryViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+  }
+}
+
+//MARK: - Localizable implementation
+extension CategoryViewController: MisfortuneNodeDelegate {
+  func misfortuneNodeDidPerformAction(node: MisfortuneNode, action: MisfortuneNode.Action?) {
+    guard let action = action else {
+      return
+    }
+    
+    switch action {
+    case .tryAgain:
+      refreshViewController()
+    case .settings:
+      AppDelegate.openSettings()
+    default:
+      break
+    }
   }
 }

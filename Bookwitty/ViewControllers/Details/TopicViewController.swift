@@ -58,29 +58,23 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     super.init(node: collectionNode)
   }
-
-  func initialize(withTopic topic: Topic?) {
-    viewModel.initialize(withTopic: topic)
+  
+  func initialize(with resource: ModelCommonProperties?) {
+    viewModel.initialize(with: resource)
     self.mode = .normal(categories: self.normal)
-
+    
     //MARK: [Analytics] Screen Name
-    Analytics.shared.send(screenName: Analytics.ScreenNames.Topic)
-  }
-
-  func initialize(withBook book: Book?) {
-    viewModel.initialize(withBook: book)
-    self.mode = .normal(categories: self.book)
-
-    //MARK: [Analytics] Screen Name
-    Analytics.shared.send(screenName: Analytics.ScreenNames.TopicBook)
-  }
-
-  func initialize(withAuthor author: Author?) {
-    viewModel.initialize(withAuthor: author)
-    self.mode = .normal(categories: self.normal)
-
-    //MARK: [Analytics] Screen Name
-    Analytics.shared.send(screenName: Analytics.ScreenNames.Author)
+    if let resourceType = viewModel.resourceType {
+      switch resourceType {
+      case Topic.resourceType:
+        Analytics.shared.send(screenName: Analytics.ScreenNames.Topic)
+      case Author.resourceType:
+        Analytics.shared.send(screenName: Analytics.ScreenNames.Author)
+      case Book.resourceType:
+        Analytics.shared.send(screenName: Analytics.ScreenNames.TopicBook)
+      default: break
+      }
+    }
   }
 
   override func viewDidLoad() {
@@ -89,7 +83,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     loadNavigationBarButtons()
 
     applyLocalization()
-    observeLanguageChanges()
+    addObservers()
 
     navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
@@ -195,6 +189,64 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   }
 }
 
+//MARK: - Notifications
+extension TopicViewController {
+  fileprivate func addObservers() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+    
+    observeLanguageChanges()
+  }
+  
+  func updatedResources(_ notification: Notification) {
+    viewModel.updateResourceIfNeeded()
+    
+    let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.header.rawValue || $0.section == Section.relatedData.rawValue })
+
+    guard let identifiers = notification.object as? [String],
+      identifiers.count > 0,
+      visibleItemsIndexPaths.count > 0 else {
+        return
+    }
+
+    let indexPathForAffectedItems = visibleItemsIndexPaths.filter({
+      indexPath in
+      guard let resourceIdentifier = resourceIdentifierForIndex(indexPath: indexPath) else {
+        return false
+      }
+      return identifiers.contains(resourceIdentifier)
+    })
+    
+    collectionNode.reloadItems(at: indexPathForAffectedItems)
+  }
+  
+  func resourceIdentifierForIndex(indexPath: IndexPath) -> String? {
+    if indexPath.section == Section.header.rawValue {
+      let values = viewModel.valuesForHeader()
+      return values.identifier
+    } else if indexPath.section == Section.relatedData.rawValue {
+      let category = self.category(withIndex: segmentedNode.selectedIndex)
+      switch category {
+      case .latest:
+        let values = viewModel.valuesForLatest(at: indexPath.item)
+        return values?.identifier
+      case .editions:
+        let values = viewModel.valuesForEdition(at: indexPath.item)
+        return values?.identifier
+      case .relatedBooks:
+        let values = viewModel.valuesForRelatedBook(at: indexPath.item)
+        return values?.identifier
+      case .followers:
+        let values = viewModel.valuesForFollower(at: indexPath.item)
+        return values?.identifier
+      case .none:
+        return nil
+      }
+    }
+    return nil
+  }
+}
+
 //MARK: - Mode Helpers
 extension TopicViewController {
   fileprivate enum Mode {
@@ -218,7 +270,6 @@ extension TopicViewController {
     case followers(index: Int)
     case none
 
-    //TODO: Should be localized
     var name: String {
       switch self {
       case .latest:
@@ -285,20 +336,21 @@ extension TopicViewController {
 }
 
 extension TopicViewController: TopicHeaderNodeDelegate {
-  func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ASButtonNode) {
+  func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ButtonWithLoader) {
+    button.state = .loading
     if button.isSelected {
       viewModel.unfollowContent(completionBlock: { (success: Bool) in
         if success {
           node.following = false
-          button.isSelected = false
         }
+        button.state = success ? .normal : .selected
       })
     } else {
       viewModel.followContent(completionBlock: { (success: Bool) in
         if success {
           node.following = true
-          button.isSelected = true
         }
+        button.state = success ? .selected : .normal
       })
     }
 
@@ -330,22 +382,22 @@ extension TopicViewController: TopicHeaderNodeDelegate {
 }
 
 extension TopicViewController: PenNameFollowNodeDelegate {
-  func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ASButtonNode) {
+  func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader) {
     guard let indexPath = collectionNode.indexPath(for: node) else {
       return
     }
-
+    button.state = .loading
     if button.isSelected {
       viewModel.unfollowPenName(at: indexPath.item, completionBlock: {
         (success: Bool) in
-        node.following = false
-        button.isSelected = false
+        node.following = !success
+        button.state = success ? .normal : .selected
       })
     } else {
       viewModel.followPenName(at: indexPath.item, completionBlock: {
         (success: Bool) in
-        node.following = true
-        button.isSelected = true
+        node.following = success
+        button.state = success ? .selected : .normal
       })
     }
   }
@@ -366,9 +418,18 @@ extension TopicViewController: PenNameFollowNodeDelegate {
 }
 
 
+//MARK: - UICollectionViewDelegateFlowLayout implementation
 extension TopicViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
     return section != Section.relatedData.rawValue ? CGSize.zero : CGSize(width: collectionView.frame.size.width, height: segmentedNodeHeight)
+  }
+
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    guard section == Section.relatedData.rawValue else {
+      return UIEdgeInsets.zero
+    }
+
+    return UIEdgeInsets(top: 5.0, left: 0.0, bottom: 0.0, right: 0.0)
   }
 }
 
@@ -455,34 +516,34 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
           return
         }
 
-        let book = viewModel.edition(at: indexPath.item)
-        cell.title = book?.title
-        cell.author = book?.productDetails?.author
-        cell.format = book?.productDetails?.productFormat
-        cell.price = (book?.productDetails?.isElectronicFormat() ?? false) ? nil : book?.supplierInformation?.preferredPrice?.formattedValue
-        cell.imageUrl = book?.thumbnailImageUrl
+        let bookValues = viewModel.valuesForEdition(at: indexPath.item)
+        cell.title = bookValues?.title
+        cell.author = bookValues?.author
+        cell.format = bookValues?.format
+        cell.price = bookValues?.price
+        cell.imageUrl = bookValues?.imageUrl
       case .relatedBooks:
         guard let cell = node as? BookNode else {
           return
         }
 
-        let book = viewModel.relatedBook(at: indexPath.item)
-        cell.title = book?.title
-        cell.author = book?.productDetails?.author
-        cell.format = book?.productDetails?.productFormat
-        cell.price = (book?.productDetails?.isElectronicFormat() ?? false) ? nil : book?.supplierInformation?.preferredPrice?.formattedValue
-        cell.imageUrl = book?.thumbnailImageUrl
+        let bookValues = viewModel.valuesForRelatedBook(at: indexPath.item)
+        cell.title = bookValues?.title
+        cell.author = bookValues?.author
+        cell.format = bookValues?.format
+        cell.price = bookValues?.price
+        cell.imageUrl = bookValues?.imageUrl
       case .followers:
         guard let cell = node as? PenNameFollowNode else {
           return
         }
 
-        let follower = viewModel.follower(at: indexPath.item)
-        cell.penName = follower?.name
-        cell.biography = follower?.biography
-        cell.imageUrl = follower?.avatarUrl
-        cell.following = follower?.following ?? false
-        cell.updateMode(disabled: viewModel.isMyPenName(follower))
+        let followerValues = viewModel.valuesForFollower(at: indexPath.item)
+        cell.penName = followerValues?.penName
+        cell.biography = followerValues?.biography
+        cell.imageUrl = followerValues?.imageUrl
+        cell.following = followerValues?.following ?? false
+        cell.updateMode(disabled: followerValues?.isMyPenName ?? false)
       case .none:
         break
       }
@@ -499,9 +560,22 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
   private func cellNodeBlockFor(item: Int, category: Category) -> ASCellNode {
     switch category {
     case .latest:
-      guard let post = viewModel.latest(at: item), let node = CardFactory.shared.createCardFor(resource: post) else {
+      guard let post = viewModel.latest(at: item),
+        let node = CardFactory.createCardFor(resourceType: post.registeredResourceType) else {
         return ASCellNode()
       }
+      // Fetch the reading list cards images
+      if let readingListCell = node as? ReadingListCardPostCellNode,
+        !readingListCell.node.isImageCollectionLoaded {
+        let max = readingListCell.node.maxNumberOfImages
+        self.viewModel.loadReadingListImages(at: item, maxNumberOfImages: max, completionBlock: { (imageCollection) in
+          if let imageCollection = imageCollection, imageCollection.count > 0 {
+            readingListCell.node.loadImages(with: imageCollection)
+          }
+        })
+      }
+      node.delegate = self
+      node.baseViewModel?.resource = post as? ModelCommonProperties
       return node
     case .editions:
       return BookNode()
@@ -528,11 +602,13 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
       let resource = viewModel.latest(at: indexPath.item)
       actionForCard(resource: resource)
     case .relatedBooks:
+      //TODO: [DataManager]
       if let resource = viewModel.relatedBook(at: indexPath.item) {
         let vc = BookDetailsViewController(with: resource)
         navigationController?.pushViewController(vc, animated: true)
       }
     case .editions:
+      //TODO: [DataManager]
       if let resource = viewModel.edition(at: indexPath.item) {
         let vc = BookDetailsViewController(with: resource)
         navigationController?.pushViewController(vc, animated: true)
@@ -611,6 +687,168 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
   }
 }
 
+// MARK - BaseCardPostNode Delegate
+extension TopicViewController: BaseCardPostNodeDelegate {
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+    let index: Int = indexPath.row
+    var resource: ModelResource?
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+    switch category {
+    case .latest:
+      resource = viewModel.latest(at: index)
+    case .editions:
+      resource = viewModel.edition(at: index)
+    case .relatedBooks:
+      resource = viewModel.relatedBook(at: index)
+    case .followers:
+      resource = viewModel.follower(at: index)
+    case .none:
+      return
+    }
+
+    if let resource = resource as? ModelCommonProperties,
+      let penName = resource.penName {
+      pushProfileViewController(penName: penName)
+
+      //MARK: [Analytics] Event
+      let category: Analytics.Category
+      switch resource.registeredResourceType {
+      case Image.resourceType:
+        category = .Image
+      case Quote.resourceType:
+        category = .Quote
+      case Video.resourceType:
+        category = .Video
+      case Audio.resourceType:
+        category = .Audio
+      case Link.resourceType:
+        category = .Link
+      case Author.resourceType:
+        category = .Author
+      case ReadingList.resourceType:
+        category = .ReadingList
+      case Topic.resourceType:
+        category = .Topic
+      case Text.resourceType:
+        category = .Text
+      case Book.resourceType:
+        category = .TopicBook
+      case PenName.resourceType:
+        category = .PenName
+      default:
+        category = .Default
+      }
+
+      let event: Analytics.Event = Analytics.Event(category: category,
+                                                   action: .GoToPenName,
+                                                   name: penName.name ?? "")
+      Analytics.shared.send(event: event)
+    } else if let penName = resource as? PenName  {
+      pushProfileViewController(penName: penName)
+
+      //MARK: [Analytics] Event
+      let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                   action: .GoToDetails,
+                                                   name: penName.name ?? "")
+      Analytics.shared.send(event: event)
+    }
+  }
+
+  func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      didFinishAction?(false)
+      return
+    }
+    let index: Int = indexPath.row
+    var candidateResource: ModelResource?
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+    switch category {
+    case .latest:
+      candidateResource = viewModel.latest(at: index)
+    case .editions:
+      candidateResource = viewModel.edition(at: index)
+    case .relatedBooks:
+      candidateResource = viewModel.relatedBook(at: index)
+    case .followers:
+      candidateResource = viewModel.follower(at: index)
+    case .none:
+      return
+    }
+    guard let resource = candidateResource else {
+      didFinishAction?(false)
+      return
+    }
+
+    switch(action) {
+    case .wit:
+      viewModel.witContent(contentId: resource.id) { (success) in
+        didFinishAction?(success)
+      }
+    case .unwit:
+      viewModel.unwitContent(contentId: resource.id) { (success) in
+        didFinishAction?(success)
+      }
+    case .share:
+      if let sharingInfo: [String] = viewModel.sharingContent(resource: resource) {
+        presentShareSheet(shareContent: sharingInfo)
+      }
+    case .follow:
+      viewModel.follow(resource: resource) { (success) in
+        didFinishAction?(success)
+      }
+    case .unfollow:
+      viewModel.unfollow(resource: resource) { (success) in
+        didFinishAction?(success)
+      }
+
+    default:
+      //TODO: handle comment
+      break
+    }
+
+    //MARK: [Analytics] Event
+    let analyticsCategory: Analytics.Category
+    var name: String = (resource as? ModelCommonProperties)?.title ?? ""
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      analyticsCategory = .Image
+    case Quote.resourceType:
+      analyticsCategory = .Quote
+    case Video.resourceType:
+      analyticsCategory = .Video
+    case Audio.resourceType:
+      analyticsCategory = .Audio
+    case Link.resourceType:
+      analyticsCategory = .Link
+    case Author.resourceType:
+      analyticsCategory = .Author
+      name = (resource as? Author)?.name ?? ""
+    case ReadingList.resourceType:
+      analyticsCategory = .ReadingList
+    case Topic.resourceType:
+      analyticsCategory = .Topic
+    case Text.resourceType:
+      analyticsCategory = .Text
+    case Book.resourceType:
+      analyticsCategory = .TopicBook
+    case PenName.resourceType:
+      analyticsCategory = .PenName
+      name = (resource as? PenName)?.name ?? ""
+    default:
+      analyticsCategory = .Default
+    }
+
+    let analyticsAction = Analytics.Action.actionFrom(cardAction: action, with: analyticsCategory)
+    let event: Analytics.Event = Analytics.Event(category: analyticsCategory,
+                                                 action: analyticsAction,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+  }
+}
+
 // MARK: - Actions For Cards
 extension TopicViewController {
   func actionForCard(resource: ModelResource?) {
@@ -662,9 +900,11 @@ extension TopicViewController {
   }
 
   func pushGenericViewControllerCard(resource: ModelResource, title: String? = nil) {
-    guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+    guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
+
+    cardNode.baseViewModel?.resource = resource as? ModelCommonProperties
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
     navigationController?.pushViewController(genericVC, animated: true)
   }
@@ -692,7 +932,7 @@ extension TopicViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withAuthor: resource as? Author)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 
@@ -719,7 +959,7 @@ extension TopicViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withTopic: resource as? Topic)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 
@@ -786,7 +1026,7 @@ extension TopicViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withBook: resource as? Book)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 }
@@ -794,20 +1034,8 @@ extension TopicViewController {
 //MARK: - Localizable implementation
 extension TopicViewController: Localizable {
   func applyLocalization() {
-    if let resourceType = viewModel.resourceType {
-      switch resourceType {
-      case Topic.resourceType:
-        title = Strings.topic()
-      case Author.resourceType:
-        title = Strings.author()
-      case Book.resourceType:
-        title = Strings.book()
-      default:
-        break
-      }
-    }
-
     headerNode = TopicHeaderNode()
+    headerNode.delegate = self
 
     let segments: [String] = self.mode.categories.map({ $0.name })
     segmentedNode.initialize(with: segments)

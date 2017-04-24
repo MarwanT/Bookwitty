@@ -93,6 +93,7 @@ class Parser {
     serializer.registerResource(Link.self)
     serializer.registerResource(CuratedCollection.self)
     serializer.registerResource(Book.self)
+    serializer.registerResource(UploadPolicy.self)
   }
 
   private func registerValueFormatters() {

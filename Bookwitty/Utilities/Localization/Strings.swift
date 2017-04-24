@@ -369,6 +369,10 @@ class Strings {
     return localizedString(key: "list_price")
   }
   
+  static func most_popular() -> String {
+    return localizedString(key: "most_popular")
+  }
+  
   static func my_interests() -> String {
     return localizedString(key: "my_interests")
   }
@@ -423,6 +427,10 @@ class Strings {
   
   static func ooops() -> String {
     return localizedString(key: "ooops")
+  }
+  
+  static func or_check_your_settings() -> String {
+    return localizedString(key: "or_check_your_settings")
   }
   
   static func our_selection_for_you() -> String {
@@ -712,7 +720,26 @@ class Strings {
   static func your_feed() -> String {
     return localizedString(key: "your_feed")
   }
-  
+
+  /**
+   * Formatted Strings
+   */
+  static func contributors(number: Int) -> String {
+    return localizedString(key: "f_number_of_contributors", formatVariable: number)
+  }
+
+  static func followers(number: Int) -> String {
+    return localizedString(key: "f_number_of_followers", formatVariable: number)
+  }
+
+  static func posts(number: Int) -> String {
+    return localizedString(key: "f_number_of_posts", formatVariable: number)
+  }
+
+  static func books(number: Int) -> String {
+    return localizedString(key: "f_number_of_books", formatVariable: number)
+  }
+
   /**
    Discussion:
    - Please keep this file sorted by keys, for easier maintenance

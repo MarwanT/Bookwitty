@@ -28,6 +28,10 @@ class ReadingListsViewController: ASViewController<ASCollectionNode> {
     super.init(node: collectionNode)
   }
 
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -36,6 +40,7 @@ class ReadingListsViewController: ASViewController<ASCollectionNode> {
 
     applyLocalization()
     observeLanguageChanges()
+    addObservers()
 
     navigationItem.backBarButtonItem = UIBarButtonItem.back
 
@@ -50,6 +55,26 @@ class ReadingListsViewController: ASViewController<ASCollectionNode> {
   func initialize(with lists: [ReadingList]) {
     viewModel.initialize(with: lists)
     collectionNode.reloadData()
+  }
+
+  private func addObservers() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+  }
+
+
+  @objc
+  private func updatedResources(_ notification: NSNotification) {
+    let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems
+
+    guard let identifiers = notification.object as? [String],
+      identifiers.count > 0,
+      visibleItemsIndexPaths.count > 0 else {
+        return
+    }
+
+    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+    collectionNode.reloadItems(at: indexPathForAffectedItems)
   }
 }
 
@@ -69,9 +94,11 @@ extension ReadingListsViewController: ASCollectionDataSource, ASCollectionDelega
     }
 
     return {
-      guard let readingListNode = CardFactory.shared.createCardFor(resource: readingList) else {
+      guard let readingListNode = CardFactory.createCardFor(resourceType: readingList.registeredResourceType) else {
         return ASCellNode()
       }
+
+      readingListNode.baseViewModel?.resource = readingList
       readingListNode.delegate = self
       return readingListNode
     }
@@ -83,6 +110,14 @@ extension ReadingListsViewController: ASCollectionDataSource, ASCollectionDelega
         (success, indices) in
         self.collectionNode.reloadItems(at: indices.map({ IndexPath(item: $0, section: 0) }))
       })
+
+      guard let card = node as? BaseCardPostNode, let resource = viewModel.readingList(at: indexPath.item) else {
+        return
+      }
+
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
+        card.baseViewModel?.resource = resource
+      }
     }
   }
 
@@ -185,7 +220,7 @@ extension ReadingListsViewController: BaseCardPostNodeDelegate {
 //MARK: - Localizable implementation
 extension ReadingListsViewController: Localizable {
   func applyLocalization() {
-    title = Strings.reading_lists()
+    
   }
 
   fileprivate func observeLanguageChanges() {

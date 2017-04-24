@@ -63,6 +63,8 @@ class BookStoreViewController: UIViewController {
       refreshController.endRefreshing()
       refreshController.beginRefreshing()
       scrollView.contentOffset = offset
+    } else {
+      refreshController.endRefreshing()
     }
 
     //MARK: [Analytics] Screen Name
@@ -146,6 +148,9 @@ class BookStoreViewController: UIViewController {
     selectionTableView.delegate = self
     selectionTableView.register(SectionTitleHeaderView.nib, forHeaderFooterViewReuseIdentifier: SectionTitleHeaderView.reuseIdentifier)
     selectionTableView.register(BookTableViewCell.nib, forCellReuseIdentifier: BookTableViewCell.reuseIdentifier)
+    selectionTableView.sectionHeaderHeight = UITableViewAutomaticDimension
+    selectionTableView.estimatedSectionHeaderHeight = SectionTitleHeaderView.minimumHeight
+    selectionTableView.isScrollEnabled = false
     
     // View All Books
     viewAllBooksView.configuration.style = .highlighted
@@ -287,11 +292,13 @@ class BookStoreViewController: UIViewController {
     Analytics.shared.send(event: event)
 
     let categoriesViewController = Storyboard.Books.instantiate(CategoriesTableViewController.self)
+    categoriesViewController.hidesBottomBarWhenPushed = true
     self.navigationController?.pushViewController(categoriesViewController, animated: true)
   }
   
   fileprivate func pushBookDetailsViewController(with book: Book) {
     let bookDetailsViewController = BookDetailsViewController(with: book)
+    bookDetailsViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(bookDetailsViewController, animated: true)
   }
   
@@ -305,6 +312,7 @@ class BookStoreViewController: UIViewController {
 
     let booksTableViewController = Storyboard.Books.instantiate(BooksTableViewController.self)
     booksTableViewController.initialize(with: books, loadingMode: loadingMode)
+    booksTableViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(booksTableViewController, animated: true)
   }
 
@@ -467,7 +475,7 @@ extension BookStoreViewController: UITableViewDataSource, UITableViewDelegate {
     if tableView === bookwittySuggestsTableView {
       return 45
     } else {
-      return SectionTitleHeaderView.minimumHeight
+      return UITableViewAutomaticDimension
     }
   }
   
@@ -569,14 +577,18 @@ extension BookStoreViewController {
   
   func pushPostDetailsViewController(resource: Resource) {
     let nodeVc = PostDetailsViewController(resource: resource)
+    nodeVc.hidesBottomBarWhenPushed = true
     self.navigationController?.pushViewController(nodeVc, animated: true)
   }
   
   func pushGenericViewControllerCard(resource: Resource, title: String? = nil) {
-    guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+    guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
+    
+    cardNode.baseViewModel?.resource = resource as? ModelCommonProperties
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
+    genericVC.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(genericVC, animated: true)
   }
   
@@ -603,7 +615,8 @@ extension BookStoreViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withAuthor: resource as? Author)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
+    topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }
   
@@ -630,7 +643,8 @@ extension BookStoreViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withTopic: resource as? Topic)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
+    topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }
   
@@ -697,7 +711,8 @@ extension BookStoreViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withBook: resource as? Book)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
+    topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 }

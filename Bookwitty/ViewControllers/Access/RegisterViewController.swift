@@ -30,10 +30,12 @@ class RegisterViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    applyLocalization()
+    
     awakeSelf()
     applyTheme()
 
-    applyLocalization()
     observeLanguageChanges()
 
     navigationItem.backBarButtonItem = UIBarButtonItem.back
@@ -59,7 +61,9 @@ class RegisterViewController: UIViewController {
     let termsNSString = termsText.mutableString as NSMutableString
 
     //Attributed Label Links Styling
-    termsLabel.linkAttributes = ThemeManager.shared.currentTheme.styleTextLinkAttributes()
+    var attributes = ThemeManager.shared.currentTheme.styleTextLinkAttributes()
+    attributes.updateValue(FontDynamicType.footnote.font, forKey: NSFontAttributeName)
+    termsLabel.linkAttributes = attributes
 
     let range: NSRange = NSRange(location: 0, length: termsNSString.length)
     let regular = try! NSRegularExpression(pattern: "•(.*?)•", options: [])
@@ -286,9 +290,10 @@ class RegisterViewController: UIViewController {
 extension RegisterViewController: InformativeInputFieldDelegate {
   func informativeInputFieldDidTapField(informativeInputField: InformativeInputField) {
     let countryPickerViewController: EMCCountryPickerController = EMCCountryPickerController()
-    countryPickerViewController.labelFont = FontDynamicType.subheadline.font
+    countryPickerViewController.labelFont = FontDynamicType.caption2.font
+    countryPickerViewController.countryNameDisplayLocale = Locale.application
     countryPickerViewController.countryDelegate = self
-    countryPickerViewController.flagSize = 44
+    countryPickerViewController.flagSize = 35
     
     self.navigationController?.pushViewController(countryPickerViewController, animated: true)
 

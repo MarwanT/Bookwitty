@@ -19,6 +19,7 @@ class SearchViewController: ASViewController<ASCollectionNode> {
   let flowLayout: UICollectionViewFlowLayout
   let collectionNode: ASCollectionNode
   let loaderNode: LoaderNode
+  let misfortuneNode: MisfortuneNode
 
   var searchBar: UISearchBar?
   var viewModel: SearchViewModel = SearchViewModel()
@@ -34,6 +35,16 @@ class SearchViewController: ASViewController<ASCollectionNode> {
       loaderNode.updateLoaderVisibility(show: showLoader)
     }
   }
+  var shouldShowLoader: Bool {
+    return (loadingStatus != .none)
+  }
+  var shouldDisplayMisfortuneNode: Bool {
+    guard let misfortuneMode = viewModel.misfortuneNodeMode, !shouldShowLoader else {
+      return false
+    }
+    misfortuneNode.mode = misfortuneMode
+    return true
+  }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -41,14 +52,21 @@ class SearchViewController: ASViewController<ASCollectionNode> {
   
   init() {
     flowLayout = UICollectionViewFlowLayout()
-    flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    flowLayout.sectionInset = UIEdgeInsets.zero
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
 
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     loaderNode = LoaderNode()
     loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
+    
+    misfortuneNode = MisfortuneNode(mode: MisfortuneNode.Mode.empty)
+    misfortuneNode.style.height = ASDimensionMake(0)
+    misfortuneNode.style.width = ASDimensionMake(0)
+    
     super.init(node: collectionNode)
+    
+    misfortuneNode.delegate = self
   }
 
   override func viewDidLoad() {
@@ -66,10 +84,19 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     applyLocalization()
     observeLanguageChanges()
 
+    addObservers()
+
     navigationItem.backBarButtonItem = UIBarButtonItem.back
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.Search)
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    misfortuneNode.style.height = ASDimensionMake(collectionNode.frame.height)
+    misfortuneNode.style.width = ASDimensionMake(collectionNode.frame.width)
+    misfortuneNode.setNeedsLayout()
   }
 
   func dismissKeyboard() {
@@ -105,12 +132,13 @@ class SearchViewController: ASViewController<ASCollectionNode> {
       return
     }
     loadingStatus = .loading
+    self.updateCollection(with: nil, loaderSection: true, dataSection: false)
     viewModel.clearSearchData()
     collectionNode.reloadData()
 
     viewModel.search(query: query) { (success, error) in
       self.loadingStatus = .none
-      self.collectionNode.reloadData()
+      self.updateCollection(with: nil, loaderSection: true, dataSection: true)
     }
 
     //MARK: [Analytics] Event
@@ -118,6 +146,27 @@ class SearchViewController: ASViewController<ASCollectionNode> {
                                                  action: .SearchOnBookwitty,
                                                  name: query)
     Analytics.shared.send(event: event)
+  }
+
+
+  private func addObservers() {
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+  }
+
+
+  @objc
+  private func updatedResources(_ notification: NSNotification) {
+    let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems
+
+    guard let identifiers = notification.object as? [String],
+      identifiers.count > 0,
+      visibleItemsIndexPaths.count > 0 else {
+        return
+    }
+
+    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+    collectionNode.reloadItems(at: indexPathForAffectedItems)
   }
 }
 
@@ -133,35 +182,56 @@ extension SearchViewController: ASCollectionDataSource {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    return viewModel.numberOfItemsInSection(section: section)
+    if section == Section.activityIndicator.rawValue {
+      return shouldShowLoader ? 1 : 0
+    }
+    else if section == Section.misfortune.rawValue {
+      return shouldDisplayMisfortuneNode ? 1 : 0
+    } else {
+      return viewModel.numberOfItemsInSection(section: section)
+    }
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
     let indexPath = indexPath
 
     return {
-      guard indexPath.section == Section.cards.rawValue else {
+      if indexPath.section == Section.activityIndicator.rawValue {
         //Return the activity indicator
         return self.loaderNode
+      } else if indexPath.section == Section.misfortune.rawValue {
+        return self.misfortuneNode
+      } else {
+        let baseCardNode = self.viewModel.nodeForItem(atIndexPath: indexPath) ?? BaseCardPostNode()
+        if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
+          !readingListCell.node.isImageCollectionLoaded {
+          let max = readingListCell.node.maxNumberOfImages
+          self.viewModel.loadReadingListImages(atIndexPath: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
+            if let imageCollection = imageCollection, imageCollection.count > 0 {
+              readingListCell.node.loadImages(with: imageCollection)
+            }
+          })
+        }
+        baseCardNode.delegate = self
+        return baseCardNode
       }
-      let baseCardNode = self.viewModel.nodeForItem(atIndexPath: indexPath) ?? BaseCardPostNode()
-      if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
-        !readingListCell.node.isImageCollectionLoaded {
-        let max = readingListCell.node.maxNumberOfImages
-        self.viewModel.loadReadingListImages(atIndexPath: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
-          if let imageCollection = imageCollection, imageCollection.count > 0 {
-            readingListCell.node.loadImages(with: imageCollection)
-          }
-        })
-      }
-      baseCardNode.delegate = self
-      return baseCardNode
     }
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
-    if let loaderNode = node as? LoaderNode {
+    if node is LoaderNode {
       loaderNode.updateLoaderVisibility(show: !(loadingStatus == .none))
+    } else if node is MisfortuneNode {
+      misfortuneNode.mode = viewModel.misfortuneNodeMode ?? MisfortuneNode.Mode.empty
+    } else if let card = node as? BaseCardPostNode {
+      guard let indexPath = collectionNode.indexPath(for: node),
+        let resource = viewModel.resourceForIndex(indexPath: indexPath) as? ModelCommonProperties else {
+          return
+      }
+
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
+        card.baseViewModel?.resource = resource
+      }
     }
   }
 }
@@ -320,6 +390,9 @@ extension SearchViewController: ASCollectionDelegate {
     }
     context.beginBatchFetching()
     self.loadingStatus = .loadMore
+    DispatchQueue.main.async {
+      self.updateCollection(with: nil, loaderSection: true, dataSection: false)
+    }
 
     let initialLastIndexPath: Int = viewModel.numberOfItemsInSection(section: Section.cards.rawValue)
 
@@ -332,10 +405,13 @@ extension SearchViewController: ASCollectionDelegate {
 
     // Fetch next page data
     viewModel.loadNextPage { [weak self] (success) in
+      var updatedIndexPathRange: [IndexPath]? = nil
       defer {
+        self?.loadingStatus = .none
+        self?.updateCollection(with: updatedIndexPathRange, loaderSection: true, completionBlock: nil)
         context.completeBatchFetching(true)
-        self!.loadingStatus = .none
       }
+      
       guard let strongSelf = self else {
         return
       }
@@ -344,12 +420,29 @@ extension SearchViewController: ASCollectionDelegate {
       if success && finalLastIndexPath > initialLastIndexPath {
         let updateIndexRange = initialLastIndexPath..<finalLastIndexPath
 
-        let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
+        updatedIndexPathRange = updateIndexRange.flatMap({ (index) -> IndexPath in
           return IndexPath(row: index, section: 0)
         })
-        collectionNode.insertItems(at: updatedIndexPathRange)
       }
     }
+  }
+}
+
+extension SearchViewController {
+  func updateCollection(with itemIndices: [IndexPath]? = nil, loaderSection: Bool = false, dataSection: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
+    collectionNode.performBatchUpdates({
+      // Always relaod misfortune section
+      collectionNode.reloadSections(IndexSet(integer: Section.misfortune.rawValue))
+      
+      if loaderSection {
+        collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
+      }
+      if dataSection {
+        collectionNode.reloadSections(IndexSet(integer: Section.cards.rawValue))
+      } else if let itemIndices = itemIndices {
+        collectionNode.insertItems(at: itemIndices)
+      }
+    }, completion: completionBlock)
   }
 }
 
@@ -431,9 +524,11 @@ extension SearchViewController {
   }
 
   fileprivate func pushGenericViewControllerCard(resource: ModelResource, title: String? = nil) {
-    guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+    guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
+    
+    cardNode.baseViewModel?.resource = resource as? ModelCommonProperties
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
     navigationController?.pushViewController(genericVC, animated: true)
   }
@@ -461,7 +556,7 @@ extension SearchViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withAuthor: resource as? Author)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 
@@ -488,7 +583,7 @@ extension SearchViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withTopic: resource as? Topic)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 
@@ -555,7 +650,7 @@ extension SearchViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withBook: resource as? Book)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 }
@@ -566,9 +661,10 @@ extension SearchViewController {
   enum Section: Int {
     case cards = 0
     case activityIndicator
+    case misfortune
 
     static var numberOfSections: Int {
-      return 2
+      return 3
     }
   }
 }
@@ -586,5 +682,23 @@ extension SearchViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+  }
+}
+
+// MARK: - Misfortune node delegate
+extension SearchViewController: MisfortuneNodeDelegate {
+  func misfortuneNodeDidPerformAction(node: MisfortuneNode, action: MisfortuneNode.Action?) {
+    guard let action = action else {
+      return
+    }
+    
+    switch action {
+    case .tryAgain:
+      searchAction(query: searchBar?.text)
+    case .settings:
+      AppDelegate.openSettings()
+    default:
+      break
+    }
   }
 }

@@ -7,22 +7,26 @@
 //
 
 import AsyncDisplayKit
+import TTTAttributedLabel
 
 protocol MisfortuneNodeDelegate {
-  func misfortuneNodeDidTapActionButton(node: MisfortuneNode, mode: MisfortuneNode.Mode)
-  func misfortuneNodeDidTapSettingsButton(node: MisfortuneNode, mode: MisfortuneNode.Mode)
+  func misfortuneNodeDidPerformAction(node: MisfortuneNode, action: MisfortuneNode.Action?)
 }
 
-class MisfortuneNode: ASDisplayNode {
+class MisfortuneNode: ASCellNode {
   fileprivate let imageColoredBackgroundNode: ASDisplayNode
   fileprivate let imageWhiteBackgroundNode: ASDisplayNode
   fileprivate let imageNode: ASImageNode
   fileprivate let titleNode: ASTextNode
   fileprivate let descriptionNode: ASTextNode
   fileprivate let actionButtonNode: ASButtonNode
-  fileprivate let settingsTextNode: ASTextNode
+  fileprivate let settingsTextNode: TTTAttributedLabelNode
   
-  fileprivate var mode: Mode! = nil
+  var mode: Mode! = nil {
+    didSet {
+      reloadNode()
+    }
+  }
   
   fileprivate var configuration = Configuration()
   
@@ -36,9 +40,10 @@ class MisfortuneNode: ASDisplayNode {
     titleNode = ASTextNode()
     descriptionNode = ASTextNode()
     actionButtonNode = ASButtonNode()
-    settingsTextNode = ASTextNode()
+    settingsTextNode = TTTAttributedLabelNode()
     super.init()
     initializeNode()
+    reloadNode()
     applyTheme()
   }
   
@@ -46,19 +51,26 @@ class MisfortuneNode: ASDisplayNode {
     automaticallyManagesSubnodes = true
     
     actionButtonNode.addTarget(self, action: #selector(actionButtonTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
-    settingsTextNode.addTarget(self, action: #selector(settingsTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
     
-    titleText = mode.titleText
-    descriptionText = mode.descriptionText
-    actionButtonText = mode.actionButtonText
-    settingsAttributedText = mode.settingsAttributedText
-    image = mode.image
+    settingsTextNode.textAlignment = .center
     
     backgroundColor = UIColor.white
     imageWhiteBackgroundNode.backgroundColor = backgroundColor
-    imageColoredBackgroundNode.backgroundColor = mode.backgroundColor
     imageNode.contentMode = UIViewContentMode.scaleAspectFit
     actionButtonNode.contentEdgeInsets = configuration.actionButtonContentEdgeInsets
+  }
+  
+  private func reloadNode() {
+    titleText = mode.titleText
+    descriptionText = mode.descriptionText
+    actionButtonText = mode.actionButtonText
+    setupSettingsAttributedText()
+    imageColoredBackgroundNode.backgroundColor = mode.backgroundColor
+    image = mode.image
+    ThemeManager.shared.currentTheme.styleSecondaryButton(
+      button: actionButtonNode,
+      withColor: mode.actionButtonColor,
+      highlightedColor: mode.actionButtonColor)
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -101,6 +113,7 @@ class MisfortuneNode: ASDisplayNode {
       bottomContentLayoutElements.append(actionButtonInsets)
     }
     if mode.settingsTextVisible {
+      settingsTextNode.style.width = ASDimensionMake(constrainedSize.max.width)
       bottomContentLayoutElements.append(settingsTextNode)
     }
     let bottomContentVerticalStack = ASStackLayoutSpec(
@@ -152,16 +165,17 @@ class MisfortuneNode: ASDisplayNode {
   
   // MARK: - Actions
   func actionButtonTouchUpInside(_ sender: Any) {
-    delegate?.misfortuneNodeDidTapActionButton(node: self, mode: mode)
+    delegate?.misfortuneNodeDidPerformAction(node: self, action: self.mode.action)
   }
-  func settingsTouchUpInside(_ sender: Any) {
-    delegate?.misfortuneNodeDidTapSettingsButton(node: self, mode: mode)
+  func settingsTouchUpInside(_ sender: Any?) {
+    delegate?.misfortuneNodeDidPerformAction(node: self, action: Action.settings)
   }
   
   // MARK: - Conetent setters
   fileprivate var image: UIImage? {
     didSet {
       imageNode.image = image
+      imageNode.setNeedsDisplay()
     }
   }
   
@@ -187,11 +201,61 @@ class MisfortuneNode: ASDisplayNode {
     }
   }
   
-  fileprivate var settingsAttributedText: NSAttributedString? {
-    didSet {
-      settingsTextNode.attributedText = settingsAttributedText
-      setNeedsLayout()
+  fileprivate func setupSettingsAttributedText() {
+    //Set Attributed Styled up Text
+    let settingsText = mode.settingsAttributedText
+    let settingsNSString = settingsText.mutableString as NSMutableString
+    
+    //Attributed Label Links Styling
+    settingsTextNode.linkAttributes = ThemeManager.shared.currentTheme.styleTextLinkAttributes()
+    settingsTextNode.linkAttributes[NSFontAttributeName] = FontDynamicType.footnote.font
+    
+    let range: NSRange = NSRange(location: 0, length: settingsNSString.length)
+    let regular = try! NSRegularExpression(pattern: "•(.*?)•", options: [])
+    
+    var resultRanges: [NSRange] = []
+    regular.enumerateMatches(in: settingsText.string, options: [], range: range, using: {
+      (result: NSTextCheckingResult?, flags, stop) in
+      if let result = result {
+        resultRanges.append(result.rangeAt(1))
+      }
+    })
+    
+    settingsNSString.replaceOccurrences(of: "•", with: "", options: [], range: range)
+    settingsTextNode.attributedText = settingsText
+    
+    for (index, range) in resultRanges.enumerated() {
+      let effectiveRange = NSRange(location: (range.location - (2 * index + 1)), length: range.length)
+      switch index {
+      case 0:
+        _ = settingsTextNode.addLink(to: AttributedLinkReference.settings.url, with: effectiveRange)
+      default:
+        break
+      }
     }
+    
+    //Set Delegates
+    settingsTextNode.delegate = self
+    setNeedsLayout()
+  }
+}
+
+// MARK: - TTTAttributedText delegate
+extension MisfortuneNode: TTTAttributedLabelDelegate {
+  enum AttributedLinkReference: String {
+    case settings
+    var url: URL {
+      get {
+        return URL(string: "bookwittyapp://" + self.rawValue)!
+      }
+    }
+  }
+  
+  func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+    guard url.host != nil else {
+      return
+    }
+    settingsTouchUpInside(nil)
   }
 }
 
@@ -207,6 +271,13 @@ extension MisfortuneNode: Themeable {
 
 // MARK: - Mode Declaration
 extension MisfortuneNode {
+  enum Action {
+    case tryAgain
+    case updateApp
+    case myInterests
+    case settings
+  }
+  
   enum Mode {
     case noInternet
     case empty
@@ -218,7 +289,7 @@ extension MisfortuneNode {
     var actionButtonVisible: Bool {
       switch self {
       case .empty:
-        return true
+        return false
       case .noInternet:
         return true
       case .noResultsFound:
@@ -229,6 +300,22 @@ extension MisfortuneNode {
         return true
       }
     }
+    
+    var action: Action? {
+      switch self {
+      case .empty:
+        return Action.myInterests
+      case .noInternet:
+        return Action.tryAgain
+      case .noResultsFound:
+        return nil
+      case .somethingWrong:
+        return Action.tryAgain
+      case .appNeedsUpdate:
+        return Action.updateApp
+      }
+    }
+    
     var settingsTextVisible: Bool {
       switch self {
       case .empty:
@@ -320,9 +407,9 @@ extension MisfortuneNode {
         return Strings.update_now()
       }
     }
-    var settingsAttributedText: NSAttributedString {
+    var settingsAttributedText: NSMutableAttributedString {
       // TODO: Localize this
-      return AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: "or check your ", color: ThemeManager.shared.currentTheme.defaultTextColor()).append(text: "settings", fontDynamicType: FontDynamicType.footnote, color: ThemeManager.shared.currentTheme.colorNumber19()).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
+      return AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: Strings.or_check_your_settings()).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
     }
     
     // Colors

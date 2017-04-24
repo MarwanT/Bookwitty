@@ -17,9 +17,16 @@ class TopicCardPostCellNode: BaseCardPostNode {
   override var contentShouldExtendBorders: Bool { return true }
   override var contentNode: ASDisplayNode { return node }
 
+  let viewModel: TopicCardViewModel
+  override var baseViewModel: CardViewModelProtocol? {
+    return viewModel
+  }
+
   override init() {
     node = TopicCardPostContentNode()
+    viewModel = TopicCardViewModel()
     super.init()
+    viewModel.delegate = self
   }
 
   convenience init(shouldShowInfoNode: Bool) {
@@ -31,8 +38,8 @@ class TopicCardPostCellNode: BaseCardPostNode {
 class TopicCardPostContentNode: ASDisplayNode {
   private let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
-  private let imageHeight: CGFloat = 180.0
-  private let subImageSize = CGSize(width: 100.0, height: 180.0)
+  private let imageHeight: CGFloat = 190.0
+  private let subImageSize = CGSize(width: 100.0, height: 190.0)
 
   private var imageNode: ASNetworkImageNode
   private var subImageNode: ASNetworkImageNode
@@ -45,29 +52,48 @@ class TopicCardPostContentNode: ASDisplayNode {
       if let articleTitle = articleTitle {
         titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
           .append(text: articleTitle, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+      } else {
+        titleNode.attributedText = nil
       }
+
+      titleNode.setNeedsLayout()
     }
   }
+
   var articleDescription: String? {
     didSet {
       if let articleDescription = articleDescription {
         descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
           .append(text: articleDescription, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+      } else {
+        descriptionNode.attributedText = nil
       }
+
+      descriptionNode.setNeedsLayout()
     }
   }
+
   var imageUrl: String? {
     didSet {
       if let imageUrl = imageUrl {
         imageNode.url = URL(string: imageUrl)
+      } else {
+        imageNode.url = nil
       }
+
+      imageNode.setNeedsLayout()
     }
   }
+
   var subImageUrl: String? {
     didSet {
       if let subImageUrl = subImageUrl {
         subImageNode.url = URL(string: subImageUrl)
+      } else {
+        subImageNode.url = nil
       }
+
+      subImageNode.setNeedsLayout()
     }
   }
 
@@ -91,37 +117,25 @@ class TopicCardPostContentNode: ASDisplayNode {
     var attrStringBuilder = AttributedStringBuilder(fontDynamicType: .footnote)
     var addSeparator: Bool = false
 
-    //TODO: This should be handled with localization plurals
-    if let postsNumber = String(counting: numberOfPosts), (numberOfPosts ?? 0 > 0) {
-      let plural = numberOfPosts ?? 0 > 1
-      let str = plural ? Strings.posts() : Strings.post()
+    if let numberOfPosts = numberOfPosts {
       attrStringBuilder = attrStringBuilder
-        .append(text: postsNumber)
-        .append(text: " " + str, fontDynamicType: .caption2)
+        .append(text: Strings.posts(number: numberOfPosts), fontDynamicType: .caption2)
       addSeparator = true
     } else {
       addSeparator = false
     }
 
-    //TODO: This should be handled with localization plurals
-    if let booksNumber = String(counting: numberOfBooks), (numberOfBooks ?? 0 > 0) {
-      let plural = numberOfBooks ?? 0 > 1
-      let str = plural ? Strings.books() : Strings.book()
+    if let numberOfBooks = numberOfBooks {
       attrStringBuilder = attrStringBuilder
         .append(text: (addSeparator ? separator : ""), fontDynamicType: .caption2)
-        .append(text: booksNumber)
-        .append(text: " " + str, fontDynamicType: .caption2)
+        .append(text: Strings.books(number: numberOfBooks), fontDynamicType: .caption2)
       addSeparator = true
     }
 
-    //TODO: This should be handled with localization plurals
-    if let followersNumber = String(counting: numberOfFollowers) , (numberOfFollowers ?? 0 > 0) {
-      let plural = numberOfFollowers ?? 0 > 1
-      let str = plural ? Strings.followers() : Strings.follower()
+    if let numberOfFollowers = numberOfFollowers {
       attrStringBuilder = attrStringBuilder
         .append(text: (addSeparator ? separator : ""), fontDynamicType: .caption2)
-        .append(text: followersNumber)
-        .append(text: " " + str, fontDynamicType: .caption2)
+        .append(text: Strings.followers(number: numberOfFollowers), fontDynamicType: .caption2)
     }
 
     //Set the string value
@@ -202,5 +216,24 @@ class TopicCardPostContentNode: ASDisplayNode {
                                           children: nodesArray)
 
     return verticalStack
+  }
+}
+
+//MARK: - TopicCardViewModelDelegate implementation
+extension TopicCardPostCellNode: TopicCardViewModelDelegate {
+  func resourceUpdated(viewModel: TopicCardViewModel) {
+    let values = viewModel.values()
+    setup(forFollowingMode: true)
+    showsInfoNode = values.infoNode
+    postInfoData = values.postInfo
+    node.articleTitle = values.content.title
+    node.articleDescription = values.content.description
+    node.imageUrl = values.content.image.cover
+    node.subImageUrl = values.content.image.thumbnail
+    node.setTopicStatistics(numberOfPosts: values.content.statistics.posts, numberOfBooks: values.content.statistics.relatedBooks, numberOfFollowers: values.content.statistics.followers)
+    articleCommentsSummary = values.content.comments
+    setFollowingValue(following: values.content.following)
+    setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
+    setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
   }
 }

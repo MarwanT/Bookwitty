@@ -9,7 +9,7 @@
 import Foundation
 import AsyncDisplayKit
 
-protocol CardActionBarNodeDelegate {
+protocol CardActionBarNodeDelegate: class {
   func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
 }
 
@@ -30,7 +30,7 @@ class CardActionBarNode: ASCellNode {
   var shareButton: ASButtonNode
   var numberOfWitsNode: ASTextNode
   var numberOfDimsNode: ASTextNode
-  var delegate: CardActionBarNodeDelegate? = nil
+  weak var delegate: CardActionBarNodeDelegate? = nil
 
   fileprivate var numberOfWits: Int? {
     didSet {
@@ -52,9 +52,9 @@ class CardActionBarNode: ASCellNode {
       if let numberOfDims = numberOfDims {
         let fontDynamicType = FontDynamicType.footnote
         numberOfDimsNode.attributedText = AttributedStringBuilder(fontDynamicType: fontDynamicType)
-          .append(text: dimText)
+          .append(text: dimText, color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
           .append(text: " ")
-          .append(text: "(\(numberOfDims))", fontDynamicType: FontDynamicType.caption1).attributedString
+          .append(text: "(\(numberOfDims))", fontDynamicType: FontDynamicType.caption1, color: ThemeManager.shared.currentTheme.defaultGrayedTextColor()).attributedString
       } else {
         numberOfDimsNode.attributedText = nil
       }
@@ -148,9 +148,9 @@ class CardActionBarNode: ASCellNode {
     followButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
 
     followButton.setTitle(Strings.follow(), with: buttonFont, with: textColor, for: .normal)
-    followButton.setTitle(Strings.followed(), with: buttonFont, with: selectedTextColor, for: .selected)
+    followButton.setTitle(Strings.following(), with: buttonFont, with: selectedTextColor, for: .selected)
 
-    followButton.cornerRadius = 4
+    followButton.cornerRadius = 2.0
     followButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
     followButton.borderWidth = 2
     followButton.clipsToBounds = true
@@ -171,7 +171,7 @@ class CardActionBarNode: ASCellNode {
     witButton.setTitle(Strings.wit_it(), with: buttonFont, with: textColor, for: .normal)
     witButton.setTitle(Strings.witted(), with: buttonFont, with: selectedTextColor, for: .selected)
 
-    witButton.cornerRadius = 4
+    witButton.cornerRadius = 2.0
     witButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
     witButton.borderWidth = 2
     witButton.clipsToBounds = true

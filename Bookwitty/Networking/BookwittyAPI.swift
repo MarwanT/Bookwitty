@@ -13,7 +13,7 @@ import Moya
 // MARK: - Enum Declaration
 
 public enum BookwittyAPI {
-  case oAuth(username: String, password: String)
+  case oAuth(credentials: (username: String, password: String)?)
   case refreshToken(refreshToken: String)
   case allAddresses
   case register(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String?, countryISO3166: String, password: String, language: String)
@@ -23,7 +23,7 @@ public enum BookwittyAPI {
   case categoryCuratedContent(categoryIdentifier: String)
   case newsFeed()
   case Search(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?)
-  case updatePenName(identifier: String, name: String?, biography: String?, avatarUrl: String?, facebookUrl: String?, tumblrUrl: String?, googlePlusUrl: String?, twitterUrl: String?, instagramUrl: String?, pinterestUrl: String?, youtubeUrl: String?, linkedinUrl: String?, wordpressUrl: String?, websiteUrl: String?)
+  case updatePenName(identifier: String, name: String?, biography: String?, avatarId: String?, avatarUrl: String?, facebookUrl: String?, tumblrUrl: String?, googlePlusUrl: String?, twitterUrl: String?, instagramUrl: String?, pinterestUrl: String?, youtubeUrl: String?, linkedinUrl: String?, wordpressUrl: String?, websiteUrl: String?)
   case batch(identifiers: [String])
   case updatePreference(preference: String, value: String)
   case penNames
@@ -38,9 +38,11 @@ public enum BookwittyAPI {
   case unfollow(identifier: String)
   case followPenName(identifier: String)
   case unfollowPenName(identifier: String)
+  case postsContent(identifier: String, page: (number: String?, size: String?)?)
   case content(identifier: String, include: [String]?)
   case followers(identifier: String)
   case posts(identifier: String, type: [String]?)
+  case postsLinkedContent(identifier: String, type: [String]?)
   case editions(identifier: String)
   case resetPassword(email: String)
   case penName(identifier: String)
@@ -49,6 +51,8 @@ public enum BookwittyAPI {
   case penNameFollowing(identifier: String)
   case status
   case resendAccountConfirmation
+  case uploadPolicy(file: (name: String, size: Int), fileType: UploadAPI.FileType, assetType: UploadAPI.AssetType)
+  case uploadMultipart(url: URL, parameters: [String : String]?, multipart: (data: Data, name: String))
 }
 
 // MARK: - Target Type
@@ -68,6 +72,10 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .absolute(let fullUrl):
       return fullUrl
+    case .uploadMultipart(let url, _, _):
+      var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
+      components?.scheme = "https"
+      return components?.url ?? url
     default:
       return Environment.current.baseURL
     }
@@ -99,7 +107,7 @@ extension BookwittyAPI: TargetType {
       path = "/pen_name/feed"
     case .Search:
       path = "/search"
-    case .updatePenName(let identifier, _, _, _, _, _, _, _, _, _, _, _, _, _):
+    case .updatePenName(let identifier, _, _, _, _, _, _, _, _, _, _, _, _, _, _):
       path = "/pen_names/\(identifier)"
     case .batch:
       path = "/content/batch"
@@ -133,8 +141,12 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(identifier)"
     case .followers(let identifier):
       path = "/content/\(identifier)/followers"
+    case .postsContent(let identifier, _):
+      path = "/content/\(identifier)/content"
     case .posts(let identifier, _):
       path = "/content/\(identifier)/posts"
+    case .postsLinkedContent(let identifier, _):
+      path = "/content/\(identifier)/linked_content"
     case .editions(let identifier):
       path = "/content/\(identifier)/editions"
     case .resetPassword:
@@ -151,6 +163,14 @@ extension BookwittyAPI: TargetType {
       path = "/status"
     case .resendAccountConfirmation:
       path = "/user/resend_confirmation"
+    case .uploadPolicy:
+      path = "/upload_policies"
+    case .uploadMultipart:
+      /*
+      * Uploading to Amazon S3 servers, 
+      * upload absolute url is provided as parameter
+      */
+      return ""
     }
     
     return apiBasePath + apiVersion + path
@@ -160,9 +180,9 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .oAuth, .refreshToken, .resendAccountConfirmation:
       return .post
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName:
+  case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent:
       return .get
-    case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword, .followPenName:
+    case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart:
       return .post
     case .updateUser, .updatePenName:
       return .patch
@@ -173,15 +193,26 @@ extension BookwittyAPI: TargetType {
   
   public var parameters: [String: Any]? {
     switch self {
-    case .oAuth(let username, let password):
-      return [
-        "client_id": AppKeys.shared.apiKey,
-        "client_secret": AppKeys.shared.apiSecret,
-        "username": username,
-        "password":  password,
-        "grant_type": "password",
-        "scopes": "openid email profile"
-      ]
+    case .oAuth(let credentials):
+      let params: [String: Any]
+      if let credentials = credentials {
+        params = [
+          "client_id": AppKeys.shared.apiKey,
+          "client_secret": AppKeys.shared.apiSecret,
+          "username": credentials.username,
+          "password":  credentials.password,
+          "grant_type": "password",
+          "scopes": "openid email profile"
+        ]
+      } else {
+        params = [
+          "client_id": AppKeys.shared.apiKey,
+          "client_secret": AppKeys.shared.apiSecret,
+          "grant_type": "client_credentials",
+          "scopes": "openid email profile"
+        ]
+      }
+      return params
     case .refreshToken(let refreshToken):
       return [
         "client_id": AppKeys.shared.apiKey,
@@ -197,15 +228,21 @@ extension BookwittyAPI: TargetType {
       return UserAPI.updatePostBody(identifier: identifier, firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirth, email: email, currentPassword: currentPassword, password: password, country: country, badges: badges, preferences: preferences)
     case .Search(let filter, let page):
       return SearchAPI.parameters(filter: filter, page: page)
-    case .updatePenName(let identifier, let name, let biography, let avatarUrl, let facebookUrl, let tumblrUrl, let googlePlusUrl, let twitterUrl, let instagramUrl, let pinterestUrl, let youtubeUrl, let linkedinUrl, let wordpressUrl, let websiteUrl):
-      return PenNameAPI.updatePostBody(identifier: identifier, name: name, biography: biography, avatarUrl: avatarUrl, facebookUrl: facebookUrl, tumblrUrl: tumblrUrl, googlePlusUrl: googlePlusUrl, twitterUrl: twitterUrl, instagramUrl: instagramUrl, pinterestUrl: pinterestUrl, youtubeUrl: youtubeUrl, linkedinUrl: linkedinUrl, wordpressUrl: wordpressUrl, websiteUrl: websiteUrl)
+    case .updatePenName(let identifier, let name, let biography, let avatarId, let avatarUrl, let facebookUrl, let tumblrUrl, let googlePlusUrl, let twitterUrl, let instagramUrl, let pinterestUrl, let youtubeUrl, let linkedinUrl, let wordpressUrl, let websiteUrl):
+      return PenNameAPI.updatePostBody(identifier: identifier, name: name, biography: biography, avatarId: avatarId, avatarUrl: avatarUrl, facebookUrl: facebookUrl, tumblrUrl: tumblrUrl, googlePlusUrl: googlePlusUrl, twitterUrl: twitterUrl, instagramUrl: instagramUrl, pinterestUrl: pinterestUrl, youtubeUrl: youtubeUrl, linkedinUrl: linkedinUrl, wordpressUrl: wordpressUrl, websiteUrl: websiteUrl)
     case .updatePreference(let preference, let value):
       return UserAPI.updatePostBody(preference: preference, value: value)
     case .posts(_, let type):
       return GeneralAPI.postsParameters(type: type)
+    case .postsLinkedContent(_, let type):
+      return GeneralAPI.postsParameters(type: type)
     case .resetPassword(let email):
       return UserAPI.resetPasswordBody(email: email)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName:
+    case .postsContent(_ , let page):
+      return GeneralAPI.postsContentParameters(page: page)
+    case .uploadPolicy(let file, let fileType, let assetType):
+      return UploadAPI.uploadPolicyParameters(file: file, fileType: fileType, assetType: assetType)
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart:
       return nil
     }
   }
@@ -226,6 +263,21 @@ extension BookwittyAPI: TargetType {
   /// The type of HTTP task to be performed.
   public var task: Task {
     switch self {
+    case .uploadMultipart(_, let parameters, let multipart):
+      /* Discussion
+       * Amazon Requires the parameters to be appended before the `file`
+       * [DO NOT] change the order, it would break the amazon update
+       */
+      var multipartArray: [MultipartFormData] = []
+      if let parameters = parameters {
+        parameters.forEach({ (kvp: (key: String, value: String)) in
+          if let valueData: Data = kvp.value.data(using: .utf8) {
+            multipartArray.append(MultipartFormData(provider: .data(valueData), name: kvp.key))
+          }
+        })
+      }
+      multipartArray.append(MultipartFormData(provider: .data(multipart.data), name: multipart.name))
+      return .upload(.multipart(multipartArray))
     default:
       return .request
     }
@@ -251,14 +303,18 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .user, .register:
       return [PenName.resourceType]
-    case .batch, .Search, .discover, .penNameContent, .penNameFollowing, .posts:
+    case .batch, .Search, .discover, .penNameContent, .penNameFollowing, .posts, .postsLinkedContent:
       return ["pen-name"]
     case .newsFeed:
       return ["pen-name", "contributors", "commenters"]
     case .content(_, let include):
+      var includes = include ?? []
+      if !includes.contains("pen-name") {
+        includes.append("pen-name")
+      }
       return include
     default:
-      return nil
+      return ["pen-name"]
     }
   }
 }

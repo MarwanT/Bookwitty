@@ -169,8 +169,7 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
       }
 
       currentCell.label.text = values.title
-      currentCell.profileImageView.sd_setImage(with: URL(string: values.imageUrl ?? ""))
-      currentCell.profileImageView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+      currentCell.profileImageView.sd_setImage(with: URL(string: values.imageUrl ?? ""), placeholderImage: ThemeManager.shared.currentTheme.penNamePlaceholder)
       currentCell.disclosureIndicatorImageView.isHidden = true
 
     } else {

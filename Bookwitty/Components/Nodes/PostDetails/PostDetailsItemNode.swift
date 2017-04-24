@@ -8,17 +8,19 @@
 
 import UIKit
 import AsyncDisplayKit
+import DTCoreText
 
-protocol PostDetailsItemNodeDataSource {
+protocol PostDetailsItemNodeDataSource: class {
   func postDetailsItem(_ postDetailsItem: PostDetailsItemNode, nodeForItemAt index: Int) -> ASDisplayNode
+  func shouldUpdateItem(_ postDetailsItem: PostDetailsItemNode, at index: Int, displayNode: ASDisplayNode)
   func postDetailsItemCount(_ postDetailsItem: PostDetailsItemNode) -> Int
 }
 
-protocol PostDetailsItemNodeDelegate {
+protocol PostDetailsItemNodeDelegate: class {
   func postDetails(_ postDetailsItem: PostDetailsItemNode, node: ASDisplayNode, didSelectItemAt index: Int)
 }
 
-protocol ItemNodeTapDelegate {
+protocol ItemNodeTapDelegate: class {
   func didTapOn(node: ASDisplayNode)
 }
 
@@ -26,8 +28,8 @@ protocol ItemNodeTapDelegate {
  * Every Node that uses 'PostDetailsItemNode' should
  * conform NodeTapProtocol to be able to delegate its tap.
  */
-protocol NodeTapProtocol {
-  var tapDelegate: ItemNodeTapDelegate? { get set }
+protocol NodeTapProtocol: class {
+  weak var tapDelegate: ItemNodeTapDelegate? { get set }
 }
 
 class PostDetailsItemNode: ASDisplayNode, ItemNodeTapDelegate {
@@ -35,8 +37,8 @@ class PostDetailsItemNode: ASDisplayNode, ItemNodeTapDelegate {
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
 
   var nodes: [ASDisplayNode]
-  var dataSource: PostDetailsItemNodeDataSource!
-  var delegate: PostDetailsItemNodeDelegate?
+  weak var dataSource: PostDetailsItemNodeDataSource?
+  weak var delegate: PostDetailsItemNodeDelegate?
 
   override init() {
     nodes = []
@@ -53,13 +55,14 @@ class PostDetailsItemNode: ASDisplayNode, ItemNodeTapDelegate {
   func loadNodes() {
     nodes.removeAll(keepingCapacity: false)
 
-    let nodesCount: Int = dataSource.postDetailsItemCount(self)
+    let nodesCount: Int = dataSource?.postDetailsItemCount(self) ?? 0
 
     for index in 0..<nodesCount {
-      let node = dataSource.postDetailsItem(self, nodeForItemAt: index)
-      var tappableNode = (node as? NodeTapProtocol)
-      tappableNode?.tapDelegate = self
-      nodes.append(node)
+      if let node = dataSource?.postDetailsItem(self, nodeForItemAt: index) {
+        weak var tappableNode = (node as? NodeTapProtocol)
+        tappableNode?.tapDelegate = self
+        nodes.append(node)
+      }
     }
     setNeedsLayout()
   }
@@ -82,6 +85,31 @@ class PostDetailsItemNode: ASDisplayNode, ItemNodeTapDelegate {
     return nil
   }
 
+  func visibleNodes() -> [Int] {
+    var visibleIndices: [Int] = []
+
+    for (itemIndex, item) in nodes.enumerated() {
+      if item.isVisible {
+        visibleIndices.append(itemIndex)
+      }
+    }
+
+    return visibleIndices
+  }
+
+  func updateNodes(with indices: [Int]? = nil) {
+    if let indices = indices {
+      indices.forEach({ (index) in
+        dataSource?.shouldUpdateItem(self, at: index, displayNode: nodes[index])
+      })
+    } else {
+      for index in 0..<nodes.count {
+        dataSource?.shouldUpdateItem(self, at: index, displayNode: nodes[index])
+      }
+    }
+    setNeedsLayout()
+  }
+
   func didTapOn(node: ASDisplayNode) {
     guard let indexOfTappedNode = index(of: node) else {
       return
@@ -90,11 +118,15 @@ class PostDetailsItemNode: ASDisplayNode, ItemNodeTapDelegate {
   }
 }
 
-protocol PostDetailItemNodeDelegate {
+protocol PostDetailItemNodeDelegate: class {
   func postDetailItemNodeButtonTouchUpInside(postDetailItemNode: PostDetailItemNode, button: ASButtonNode)
 }
 
 extension PostDetailItemNode: DTAttributedTextContentNodeDelegate {
+  func attributedTextContentNode(node: ASCellNode, button: DTLinkButton, didTapOnLink link: URL) {
+    WebViewController.present(url: link)
+  }
+
   func attributedTextContentNodeNeedsLayout(node: ASCellNode) {
     self.setNeedsLayout()
   }
@@ -103,6 +135,8 @@ extension PostDetailItemNode: DTAttributedTextContentNodeDelegate {
 class PostDetailItemNode: ASCellNode, NodeTapProtocol {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+  private let largeVerticalSpacing = ThemeManager.shared.currentTheme.booksVerticalSpacing()
+
   private let largeImageHeight: CGFloat = 120.0
   private let smallImageHeight: CGFloat = 100.0
   private let imageWidth: CGFloat = 90.0
@@ -115,8 +149,8 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
   let separator: ASDisplayNode
   let button: ASButtonNode
 
-  var delegate: PostDetailItemNodeDelegate?
-  var tapDelegate: ItemNodeTapDelegate?
+  weak var delegate: PostDetailItemNodeDelegate?
+  weak var tapDelegate: ItemNodeTapDelegate?
   var smallImage: Bool = true
   var showsSubheadline: Bool = true
   var showsButton: Bool = false
@@ -306,9 +340,9 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
       outerVStackChildren.append(buttonHStack)
     }
 
-    outerVStackChildren.append(ASLayoutSpec.spacer(height: contentSpacing))
+    outerVStackChildren.append(ASLayoutSpec.spacer(height: largeVerticalSpacing))
     outerVStackChildren.append(separator)
     outerMostVStack.children = outerVStackChildren
-    return ASInsetLayoutSpec(insets: UIEdgeInsets(top: contentSpacing, left: internalMargin, bottom: 0, right: internalMargin), child: outerMostVStack)
+    return ASInsetLayoutSpec(insets: UIEdgeInsets(top: largeVerticalSpacing, left: internalMargin, bottom: 0, right: internalMargin), child: outerMostVStack)
   }
 }

@@ -96,6 +96,7 @@
 "latest" = "Latest";
 "link" = "Link";
 "list_price" = "List price";
+"most_popular" = "Most popular";
 "my_interests" = "My interests";
 "my_orders" = "My Orders";
 "new_password" = "New Password";
@@ -110,6 +111,7 @@
 "ok" = "Ok";
 "onboarding_view_header_title" = "Following People and Topics is how you fill up your home feed with interesting reads.";
 "ooops" = "Oops";
+"or_check_your_settings" = "or check your •settings•";
 "our_selection_for_you" = "Books you might like";
 "out_of_stock" = "Out of stock";
 "password" = "Password";
@@ -182,6 +184,17 @@
 "you_dont_have_account" = "You don't have an account";
 "you_save" = "You save";
 "your_feed" = "Your feed";
+
+/**
+ * Formatted Strings
+ * For This Part use `f_` as prefix to indicate that the localizable string is a formatted one
+ * And this will also allow us to avoid conflict with similar sentences
+ */
+"f_number_of_contributors" = "%d contributors";
+"f_number_of_followers" = "%d followers";
+"f_number_of_posts" = "%d posts";
+"f_number_of_books" = "%d books";
+
 
 /**
  Discussion:

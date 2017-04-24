@@ -71,7 +71,7 @@ class BookDetailsHeaderNode: ASCellNode {
   
   var title: String? {
     didSet {
-      titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title3)
+      titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
         .append(text: title ?? "", color: configuration.titleTextColor).attributedString
       setNeedsLayout()
     }

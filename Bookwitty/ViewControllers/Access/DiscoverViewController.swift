@@ -236,6 +236,19 @@ extension DiscoverViewController: ASCollectionDataSource {
       return baseCardNode
     }
   }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+    if let card = node as? BaseCardPostNode {
+      guard let indexPath = collectionNode.indexPath(for: node),
+        let resource = viewModel.resourceForIndex(index: indexPath.row) as? ModelCommonProperties else {
+          return
+      }
+
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
+        card.baseViewModel?.resource = resource
+      }
+    }
+  }
 }
 
 extension DiscoverViewController: ASCollectionDelegate {
@@ -478,14 +491,17 @@ extension DiscoverViewController {
 
   func pushPostDetailsViewController(resource: Resource) {
     let nodeVc = PostDetailsViewController(resource: resource)
+    nodeVc.hidesBottomBarWhenPushed = true
     self.navigationController?.pushViewController(nodeVc, animated: true)
   }
 
   func pushGenericViewControllerCard(resource: Resource, title: String? = nil) {
-    guard let cardNode = CardFactory.shared.createCardFor(resource: resource) else {
+    guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
       return
     }
+    cardNode.baseViewModel?.resource = resource as? ModelCommonProperties
     let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
+    genericVC.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(genericVC, animated: true)
   }
   
@@ -512,7 +528,8 @@ extension DiscoverViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withAuthor: resource as? Author)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
+    topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 
@@ -539,7 +556,8 @@ extension DiscoverViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withTopic: resource as? Topic)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
+    topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 
@@ -606,7 +624,8 @@ extension DiscoverViewController {
     Analytics.shared.send(event: event)
 
     let topicViewController = TopicViewController()
-    topicViewController.initialize(withBook: resource as? Book)
+    topicViewController.initialize(with: resource as? ModelCommonProperties)
+    topicViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(topicViewController, animated: true)
   }
 }
@@ -628,10 +647,29 @@ extension DiscoverViewController {
   func addObservers() {
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.refreshData(_:)), name: AppNotification.shouldRefreshData, object: nil)
+
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
   }
 
   func refreshData(_ notification: Notification) {
     refreshViewControllerData()
+  }
+
+  @objc
+  fileprivate func updatedResources(_ notification: NSNotification) {
+    let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.cards.rawValue })
+
+    guard let identifiers = notification.object as? [String],
+      identifiers.count > 0,
+      visibleItemsIndexPaths.count > 0 else {
+        return
+    }
+
+    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+    collectionNode.performBatchUpdates({ 
+      collectionNode.reloadItems(at: indexPathForAffectedItems)
+    }, completion: nil)
   }
 }
 

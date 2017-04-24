@@ -75,7 +75,9 @@ class SignInViewController: UIViewController {
     //Set Attributed Styled up Text
     registerLabel.attributedText = viewModel.styledRegisterText()
     //Attributed Label Links Styling
-    registerLabel.linkAttributes = ThemeManager.shared.currentTheme.styleTextLinkAttributes()
+    var attributes = ThemeManager.shared.currentTheme.styleTextLinkAttributes()
+    attributes.updateValue(FontDynamicType.footnote.font, forKey: NSFontAttributeName)
+    registerLabel.linkAttributes = attributes
     
     let registerTermRange: NSRange = (registerLabel.attributedText.string as NSString).range(of: Strings.register())
     

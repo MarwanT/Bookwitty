@@ -11,7 +11,7 @@ import AsyncDisplayKit
 
 class BookNode: ASCellNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
-  fileprivate let imageSize: CGSize = CGSize(width: 100.0, height: 125.0)
+  fileprivate let imageSize: CGSize = CGSize(width: 100.0, height: 180.0)
 
   private var imageNode: ASNetworkImageNode
   private var titleNode: ASTextNode
@@ -37,7 +37,7 @@ class BookNode: ASCellNode {
   var title: String? {
     didSet {
       if let title = title {
-        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title3)
           .append(text: title, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
         setNeedsLayout()
       }
@@ -83,7 +83,7 @@ class BookNode: ASCellNode {
   }
 
   private func setupNode() {
-    style.preferredSize = CGSize(width: imageSize.width + 2 * internalMargin, height: imageSize.height + 2 * internalMargin)
+    style.preferredSize = CGSize(width: 0.0, height: imageSize.height)
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
 
     imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
@@ -98,7 +98,10 @@ class BookNode: ASCellNode {
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     var nodesArray: [ASLayoutElement] = []
-    nodesArray.append(imageNode)
+
+    let imageSpeck = ASStaticLayoutSpec(sizing: ASAbsoluteLayoutSpecSizing.default, children: [imageNode])
+
+    nodesArray.append(imageSpeck)
 
     var infoArray: [ASLayoutElement] = []
 

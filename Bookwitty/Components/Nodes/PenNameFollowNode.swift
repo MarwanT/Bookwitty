@@ -10,12 +10,13 @@ import UIKit
 import AsyncDisplayKit
 
 protocol PenNameFollowNodeDelegate: class {
-  func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ASButtonNode)
+  func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader)
   func penName(node: PenNameFollowNode, actionPenNameFollowTouchUpInside button: Any?)
 }
 
 class PenNameFollowNode: ASCellNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let imageSize: CGSize = CGSize(width: 45.0, height: 45.0)
   fileprivate let largeImageSize: CGSize = CGSize(width: 60.0, height: 60.0)
   fileprivate let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
@@ -23,9 +24,10 @@ class PenNameFollowNode: ASCellNode {
   private var imageNode: ASNetworkImageNode
   private var nameNode: ASTextNode
   private var biographyNode: ASTextNode
-  private var actionButton: ASButtonNode
+  private var actionButton: ButtonWithLoader
   private let separatorNode: ASDisplayNode
   private var enlarged: Bool = false
+  fileprivate var largePadding: Bool = false
 
   weak var delegate: PenNameFollowNodeDelegate?
 
@@ -33,7 +35,7 @@ class PenNameFollowNode: ASCellNode {
     imageNode = ASNetworkImageNode()
     nameNode = ASTextNode()
     biographyNode = ASTextNode()
-    actionButton = ASButtonNode()
+    actionButton = ButtonWithLoader()
     separatorNode = ASDisplayNode()
     super.init()
     addSubnode(imageNode)
@@ -43,9 +45,10 @@ class PenNameFollowNode: ASCellNode {
     addSubnode(separatorNode)
   }
 
-  convenience init(enlarged: Bool = false) {
+  convenience init(enlarged: Bool = false, largePadding: Bool = false) {
     self.init()
     self.enlarged = enlarged
+    self.largePadding = largePadding
     setupNode()
   }
 
@@ -81,7 +84,7 @@ class PenNameFollowNode: ASCellNode {
 
   var following: Bool = false {
     didSet {
-      actionButton.isSelected = following
+      actionButton.state = self.following ? .selected : .normal
     }
   }
 
@@ -91,8 +94,10 @@ class PenNameFollowNode: ASCellNode {
   private func setupNode() {
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
 
-    imageNode.defaultImage = #imageLiteral(resourceName: "penNamePlaceholder ").imageMaskedAndTinted(with: ThemeManager.shared.currentTheme.colorNumber18())
+    imageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
     imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0.0, nil)
+    imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
+    imageNode.animatedImagePaused = true
 
     nameNode.maximumNumberOfLines = 1
     biographyNode.maximumNumberOfLines = enlarged ? 5 : 3
@@ -100,24 +105,20 @@ class PenNameFollowNode: ASCellNode {
     let buttonFont = FontDynamicType.subheadline.font
     let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()
     let selectedTextColor = ThemeManager.shared.currentTheme.colorNumber23()
-    let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultBackgroundColor())
-    let selectedButtonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultButtonColor())
-    actionButton.titleNode.maximumNumberOfLines = 1
-    actionButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
-    actionButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
-    actionButton.isSelected = self.following
 
-    actionButton.setTitle(Strings.follow(), with: buttonFont, with: textColor, for: .normal)
-    actionButton.setTitle(Strings.followed(), with: buttonFont, with: selectedTextColor, for: .selected)
-    actionButton.cornerRadius = 2
-    actionButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
-    actionButton.borderWidth = 2
-    actionButton.clipsToBounds = true
+    actionButton.setupSelectionButton(defaultBackgroundColor: ThemeManager.shared.currentTheme.defaultBackgroundColor(),
+                                      selectedBackgroundColor: ThemeManager.shared.currentTheme.defaultButtonColor(),
+                                      borderStroke: true,
+                                      borderColor: ThemeManager.shared.currentTheme.defaultButtonColor(),
+                                      borderWidth: 2.0,
+                                      cornerRadius: 2.0)
+    actionButton.setTitle(title: Strings.follow(), with: buttonFont, with: textColor, for: .normal)
+    actionButton.setTitle(title: Strings.following(), with: buttonFont, with: selectedTextColor, for: .selected)
+    actionButton.state = self.following ? .selected : .normal
+    actionButton.style.height = ASDimensionMake(buttonSize.height)
+    actionButton.delegate = self
 
     imageNode.style.preferredSize = enlarged ? largeImageSize : imageSize
-    actionButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-    actionButton.style.height = ASDimensionMake(buttonSize.height)
-    actionButton.addTarget(self, action: #selector(actionButtonTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
 
     nameNode.addTarget(self, action: #selector(actionPenNameFollowTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
     imageNode.addTarget(self, action: #selector(actionPenNameFollowTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
@@ -188,28 +189,30 @@ class PenNameFollowNode: ASCellNode {
 
 //Actions
 extension PenNameFollowNode {
-  func actionButtonTouchUpInside(_ sender: ASButtonNode) {
+  func actionPenNameFollowTouchUpInside(_ sender: Any?) {
+    delegate?.penName(node: self, actionPenNameFollowTouchUpInside: sender)
+  }
+}
+
+// MARK: - ButtonWithLoader Delegate Implementation
+extension PenNameFollowNode: ButtonWithLoaderDelegate {
+  func buttonTouchUpInside(buttonWithLoader: ButtonWithLoader) {
     guard UserManager.shared.isSignedIn else {
       //If user is not signed In post notification and do not fall through
       NotificationCenter.default.post( name: AppNotification.callToAction, object: CallToAction.follow)
       return
     }
 
-    delegate?.penName(node: self, actionButtonTouchUpInside: sender)
-  }
-
-  func actionPenNameFollowTouchUpInside(_ sender: Any?) {
-    delegate?.penName(node: self, actionPenNameFollowTouchUpInside: sender)
+    delegate?.penName(node: self, actionButtonTouchUpInside: buttonWithLoader)
   }
 }
-
 
 //Helpers
 extension PenNameFollowNode {
   fileprivate func edgeInset() -> UIEdgeInsets {
-    return UIEdgeInsets(top: internalMargin,
+    return UIEdgeInsets(top: largePadding ? contentSpacing : internalMargin,
                         left: internalMargin,
-                        bottom: internalMargin,
+                        bottom: largePadding ? contentSpacing : internalMargin,
                         right: internalMargin)
   }
 

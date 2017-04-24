@@ -1,5 +1,5 @@
 //
-//  VideoCardPostCellNode.swift
+//  PhotoCardPostCellNode.swift
 //  Bookwitty
 //
 //  Created by Shafic Hariri on 2/13/17.
@@ -9,73 +9,79 @@
 import Foundation
 import AsyncDisplayKit
 
-class VideoCardPostCellNode: BaseCardPostNode {
-
-  let node: VideoCardContentNode
+class PhotoCardPostCellNode: BaseCardPostNode {
+  let node: PhotoCardContentNode
   var showsInfoNode: Bool = true
   override var shouldShowInfoNode: Bool { return showsInfoNode }
   override var contentShouldExtendBorders: Bool { return true }
   override var contentNode: ASDisplayNode { return node }
 
-  override func updateMode(fullMode: Bool) {
-    node.setupMode(fullViewMode: fullMode)
+  let viewModel: PhotoCardViewModel
+  override var baseViewModel: CardViewModelProtocol? {
+    return viewModel
   }
-
+  
   override init() {
-    node = VideoCardContentNode()
+    node = PhotoCardContentNode()
+    viewModel = PhotoCardViewModel()
     super.init()
+    viewModel.delegate = self
   }
 
   convenience init(shouldShowInfoNode: Bool) {
     self.init()
     showsInfoNode = shouldShowInfoNode
   }
+
+  override func updateMode(fullMode: Bool) {
+    node.setupMode(fullViewMode: fullMode)
+  }
 }
 
-protocol VideoCardContentDelegate {
-  func videoImageTouchUpInside(sender: ASImageNode)
-}
-
-class VideoCardContentNode: ASDisplayNode {
+class PhotoCardContentNode: ASDisplayNode {
   private let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
-  private let playIconSize = CGSize(width: 120, height: 120)
 
   var imageNode: ASNetworkImageNode
   var titleNode: ASTextNode
   var descriptionNode: ASTextNode
-  var playNode: ASImageNode
 
-  var delegate: VideoCardContentDelegate?
+  var imageUrl: String? {
+    didSet {
+      if let imageUrl = imageUrl {
+        imageNode.url = URL(string: imageUrl)
+      } else {
+        imageNode.url = nil
+      }
+
+      imageNode.setNeedsLayout()
+    }
+  }
 
   var articleTitle: String? {
     didSet {
       if let articleTitle = articleTitle {
         titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
           .append(text: articleTitle, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+      } else {
+        titleNode.attributedText = nil
       }
+      titleNode.setNeedsLayout()
     }
   }
+
   var articleDescription: String? {
     didSet {
       if let articleDescription = articleDescription {
         descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
           .append(text: articleDescription, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+      } else {
+        descriptionNode.attributedText = nil
       }
+      descriptionNode.setNeedsLayout()
     }
   }
-  var imageUrl: String? {
-    didSet {
-      if let imageUrl = imageUrl {
-        imageNode.url = URL(string: imageUrl)
-      }
-      setNeedsLayout()
-    }
-  }
-
-  var videoUrl: URL?
-
   var hasImage: Bool {
     get {
       return !(imageUrl?.isEmpty ?? true)
@@ -86,40 +92,35 @@ class VideoCardContentNode: ASDisplayNode {
     imageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
     descriptionNode = ASTextNode()
-    playNode = ASImageNode()
     super.init()
     addSubnode(imageNode)
     addSubnode(titleNode)
     addSubnode(descriptionNode)
-    addSubnode(playNode)
+    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
+    imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
     setupNode()
   }
 
   private func setupNode() {
     setupMode(fullViewMode: false)
 
-    playNode.image = #imageLiteral(resourceName: "play")
-    playNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.colorNumber23().withAlphaComponent(0.9))
-    playNode.style.preferredSize = playIconSize
-
     imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
-    imageNode.addTarget(self, action: #selector(videoImageTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    imageNode.addTarget(self, action: #selector(photoImageTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
 
-  func setupMode(fullViewMode: Bool) {
+  func setupMode(fullViewMode: Bool) {  
     titleNode.maximumNumberOfLines = fullViewMode ? 0 : 3
     descriptionNode.maximumNumberOfLines = fullViewMode ? 0 : 3
     setNeedsLayout()
   }
 
-  func videoImageTouchUpInside(_ sender: ASImageNode?) {
-    guard let videoUrl = videoUrl else {
-      return
+  func photoImageTouchUpInside(_ sender: ASImageNode?) {
+  }
+
+  private func spacer(height: CGFloat) -> ASLayoutSpec {
+    return ASLayoutSpec().styled { (style) in
+      style.height = ASDimensionMake(height)
     }
-
-    WebViewController.present(url: videoUrl)
-
-    delegate?.videoImageTouchUpInside(sender: imageNode)
   }
 
   private func titleInset() -> UIEdgeInsets {
@@ -140,29 +141,19 @@ class VideoCardContentNode: ASDisplayNode {
     return UIEdgeInsets(top: 0, left: 0, bottom: 0 , right: 0)
   }
 
-  private func spacer(height: CGFloat) -> ASLayoutSpec {
-    return ASLayoutSpec().styled { (style) in
-      style.height = ASDimensionMake(height)
-    }
-  }
-
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    let imageSize = CGSize(width: constrainedSize.max.width, height: 150)
+    let imageSize = CGSize(width: constrainedSize.max.width, height: 190.0)
     imageNode.style.preferredSize = imageSize
     imageNode.defaultImage = UIImage(color: ASDisplayNodeDefaultPlaceholderColor(), size: imageSize)
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
 
     let imageInsetLayoutSpec = ASInsetLayoutSpec(insets: imageInset(), child: imageNode)
-    let videoNodeLayoutSpec = ASCenterLayoutSpec(centeringOptions: ASCenterLayoutSpecCenteringOptions.XY, sizingOptions: ASCenterLayoutSpecSizingOptions.minimumXY, child: playNode)
-    let overlayLayoutSpec = ASOverlayLayoutSpec.init(child: imageInsetLayoutSpec, overlay: videoNodeLayoutSpec)
-
-
     let titleInsetLayoutSpec = ASInsetLayoutSpec(insets: titleInset(), child: titleNode)
     let descriptionInsetLayoutSpec = ASInsetLayoutSpec(insets: descriptionInset(), child: descriptionNode)
 
     let nodesArray: [ASLayoutElement]
     if (hasImage) {
-      nodesArray = [overlayLayoutSpec, spacer(height: internalMargin), titleInsetLayoutSpec, spacer(height: internalMargin), descriptionInsetLayoutSpec]
+      nodesArray = [imageInsetLayoutSpec, spacer(height: internalMargin), titleInsetLayoutSpec, spacer(height: internalMargin), descriptionInsetLayoutSpec]
     } else {
       nodesArray = [titleInsetLayoutSpec, spacer(height: internalMargin), descriptionInsetLayoutSpec]
     }
@@ -172,7 +163,23 @@ class VideoCardContentNode: ASDisplayNode {
                                           justifyContent: .start,
                                           alignItems: .stretch,
                                           children: nodesArray)
-    
+
     return verticalStack
+
+  }
+}
+
+//MARK: - PhotoCardViewModelDelegate implementation
+extension PhotoCardPostCellNode: PhotoCardViewModelDelegate {
+  func resourceUpdated(viewModel: PhotoCardViewModel) {
+    let values = viewModel.values()
+    showsInfoNode = values.infoNode
+    postInfoData = values.postInfo
+    node.articleTitle = values.content.title
+    node.articleDescription = values.content.description
+    node.imageUrl = values.content.imageUrl
+    articleCommentsSummary = values.content.comments
+    setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
+    setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
   }
 }

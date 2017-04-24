@@ -250,7 +250,7 @@ extension DefaultTheme {
     button.setBackgroundImage(UIImage(color: color), for: .normal)
     button.setBackgroundImage(UIImage(color: highlightedColor), for: .highlighted)
     button.clipsToBounds = true
-    button.layer.cornerRadius = 4
+    button.layer.cornerRadius = 2.0
   }
   
   func styleSecondaryButton(button: UIButton, withColor color: UIColor, highlightedColor: UIColor) {
@@ -259,7 +259,7 @@ extension DefaultTheme {
     button.setTitleColor(highlightedColor, for: .highlighted)
     button.backgroundColor = colorNumber23()
     button.clipsToBounds = true
-    button.layer.cornerRadius = 4
+    button.layer.cornerRadius = 2.0
     button.layer.borderWidth = 2
     button.layer.borderColor = color.cgColor
   }
@@ -297,14 +297,14 @@ extension DefaultTheme {
     button.setBackgroundImage(color.image(), for: ASControlState(rawValue: 0))
     button.setBackgroundImage(highlightedColor.image(), for: .highlighted)
     button.clipsToBounds = true
-    button.cornerRadius = 4
+    button.cornerRadius = 2.0
     button.style.height = ASDimensionMake(45)
   }
   
   func styleSecondaryButton(button: ASButtonNode, withColor color: UIColor, highlightedColor: UIColor) {
     button.backgroundColor = colorNumber23()
     button.clipsToBounds = true
-    button.cornerRadius = 4
+    button.cornerRadius = 2.0
     button.borderWidth = 2
     button.borderColor = color.cgColor
     button.style.height = ASDimensionMake(45)
@@ -352,3 +352,11 @@ extension DefaultTheme {
     ]
   }
 }
+
+// MARK - Image Styling
+extension DefaultTheme {
+  var penNamePlaceholder: UIImage {
+    return #imageLiteral(resourceName: "penNamePlaceholder").imageMaskedAndTinted(with: ThemeManager.shared.currentTheme.colorNumber18())
+  }
+}
+

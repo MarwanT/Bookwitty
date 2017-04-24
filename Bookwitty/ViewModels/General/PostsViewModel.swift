@@ -12,7 +12,7 @@ import Spine
 final class PostsViewModel {
   var viewControllerTitle: String? = nil
   
-  var posts = [ModelResource]()
+  var posts = [String]()
   fileprivate var loadingMode: DataLoadingMode? = nil
   
   var isLoadingNextPage: Bool = false
@@ -33,10 +33,17 @@ final class PostsViewModel {
     viewControllerTitle = title
     self.loadingMode = loadingMode
     if let resources = resources {
-      self.posts = resources
+      self.posts = resources.flatMap({ $0.id })
     }
   }
-  
+
+  func resourceFor(id: String?) -> ModelResource? {
+    guard let id = id else {
+      return nil
+    }
+    return DataManager.shared.fetchResource(with: id)
+  }
+
   /// Currently this method resets 'should reload' flags when called
   func sectionsNeedsReloading() -> [PostsViewController.Section] {
     var sections:[PostsViewController.Section] = []
@@ -55,10 +62,20 @@ final class PostsViewModel {
     
     switch section {
     case .posts:
-      return posts[indexPath.item]
+      return resourceFor(id: posts[indexPath.item])
     default:
       return nil
     }
+  }
+
+  func indexPathForAffectedItems(resourcesIdentifiers: [String], visibleItemsIndexPaths: [IndexPath]) -> [IndexPath] {
+    return visibleItemsIndexPaths.filter({
+      indexPath in
+      guard let resource = resourceForIndexPath(indexPath: indexPath) as? ModelCommonProperties, let identifier = resource.id else {
+        return false
+      }
+      return resourcesIdentifiers.contains(identifier)
+    })
   }
 }
 
@@ -75,7 +92,8 @@ extension PostsViewModel {
         return
       }
       self.shouldReloadPostsSections = resources.count > 0
-      self.posts.append(contentsOf: resources)
+      DataManager.shared.update(resources: resources)
+      self.posts.append(contentsOf: resources.flatMap({ $0.id }))
     })
   }
 }
@@ -135,7 +153,8 @@ extension PostsViewModel {
         return
       }
       self.shouldReloadPostsSections = resources.count > 0
-      self.posts.append(contentsOf: resources)
+      DataManager.shared.update(resources: resources)
+      self.posts.append(contentsOf: resources.flatMap({ $0.id }))
     })
   }
   
@@ -167,8 +186,10 @@ extension PostsViewModel {
     
     switch section {
     case .posts:
-      let resource = posts[indexPath.item]
-      node = CardFactory.shared.createCardFor(resource: resource)
+      if let resource = resourceFor(id: posts[indexPath.item]) {
+        node = CardFactory.createCardFor(resourceType: resource.registeredResourceType)
+        node?.baseViewModel?.resource = resource as? ModelCommonProperties
+      }
     case .activityIndicator:
       return nil
     }
@@ -192,7 +213,7 @@ extension PostsViewModel {
 // MARK: - Handle Reading Lists Images
 extension PostsViewModel {
   func loadReadingListImages(at indexPath: IndexPath, maxNumberOfImages: Int, completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
-    guard let readingList = posts[indexPath.item] as? ReadingList else {
+    guard let readingList = resourceFor(id: posts[indexPath.item]) as? ReadingList else {
       completionBlock(nil)
       return
     }
@@ -244,25 +265,31 @@ extension PostsViewModel {
 // MARK: - Posts Actions
 extension PostsViewModel {
   func witContent(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
-    let resource = posts[indexPath.item]
-    guard let contentId = resource.id else {
+    let resource = resourceFor(id: posts[indexPath.item])
+    guard let contentId = resource?.id else {
         completionBlock(false)
         return
     }
 
     _ = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: .wit)
+      }
       completionBlock(success)
     })
   }
 
   func unwitContent(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
-    let resource = posts[indexPath.item]
-    guard let contentId = resource.id else {
+    let resource = resourceFor(id: posts[indexPath.item])
+    guard let contentId = resource?.id else {
       completionBlock(false)
       return
     }
 
     _ = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: .unwit)
+      }
       completionBlock(success)
     })
   }
@@ -284,8 +311,7 @@ extension PostsViewModel {
 // MARK: - PenName Follow/Unfollow
 extension PostsViewModel {
   func follow(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
-    let resource = posts[indexPath.item]
-    guard let resourceId = resource.id else {
+    guard let resource = resourceFor(id: posts[indexPath.item]), let resourceId = resource.id else {
       completionBlock(false)
       return
     }
@@ -300,8 +326,7 @@ extension PostsViewModel {
   }
 
   func unfollow(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
-    let resource = posts[indexPath.item]
-    guard let resourceId = resource.id else {
+    guard let resource = resourceFor(id: posts[indexPath.item]), let resourceId = resource.id else {
       completionBlock(false)
       return
     }
@@ -325,7 +350,10 @@ extension PostsViewModel {
       defer {
         completionBlock(success)
       }
-      penName.following = true
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .follow)
+        penName.following = true
+      }
     }
   }
 
@@ -339,7 +367,10 @@ extension PostsViewModel {
       defer {
         completionBlock(success)
       }
-      penName.following = false
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .unfollow)
+        penName.following = false
+      }
     }
   }
 
@@ -348,6 +379,9 @@ extension PostsViewModel {
       defer {
         completionBlock(success)
       }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .follow)
+      }
     }
   }
 
@@ -355,6 +389,9 @@ extension PostsViewModel {
     _ = GeneralAPI.unfollow(identifer: identifier) { (success, error) in
       defer {
         completionBlock(success)
+      }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: .unfollow)
       }
     }
   }

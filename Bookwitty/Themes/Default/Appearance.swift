@@ -90,6 +90,7 @@ protocol ThemeButtonsStyle {
   func styleSecondaryButton(button: ASButtonNode, withColor color: UIColor, highlightedColor: UIColor)
 }
 
+// TODO: Needs to be revised
 protocol ThemeLabelsStyle {
   func styleCallout(label: UILabel)
   func styleCaption1(label: UILabel)
@@ -105,7 +106,11 @@ protocol ThemeAttributedTextStyle {
   func styleTextLinkAttributes() -> [AnyHashable : Any]
 }
 
-protocol Theme: ThemeSpacing, ThemeColor, ThemeButtonsStyle, ThemeLabelsStyle, ThemeTextFieldsStyle, ThemeAttributedTextStyle {
+protocol ThemeImageStyling {
+  var penNamePlaceholder: UIImage { get }
+}
+
+protocol Theme: ThemeSpacing, ThemeColor, ThemeButtonsStyle, ThemeLabelsStyle, ThemeTextFieldsStyle, ThemeAttributedTextStyle, ThemeImageStyling {
   func initialize()
 }
 

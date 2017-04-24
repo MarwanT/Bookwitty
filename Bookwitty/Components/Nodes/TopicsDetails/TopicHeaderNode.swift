@@ -10,7 +10,7 @@ import UIKit
 import AsyncDisplayKit
 
 protocol TopicHeaderNodeDelegate: class {
-  func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ASButtonNode)
+  func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ButtonWithLoader)
 }
 
 class TopicHeaderNode: ASCellNode {
@@ -24,7 +24,7 @@ class TopicHeaderNode: ASCellNode {
   private var thumbnailImageNode: ASNetworkImageNode
   private var titleNode: ASTextNode
   private var topicStatsNode: ASTextNode
-  private var actionButton: ASButtonNode
+  private var actionButton: ButtonWithLoader
   private var contributorsNode: ContributorsNode
 
   weak var delegate: TopicHeaderNodeDelegate?
@@ -34,7 +34,7 @@ class TopicHeaderNode: ASCellNode {
     thumbnailImageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
     topicStatsNode = ASTextNode()
-    actionButton = ASButtonNode()
+    actionButton = ButtonWithLoader()
     contributorsNode = ContributorsNode()
     super.init()
     addSubnode(coverImageNode)
@@ -56,26 +56,23 @@ class TopicHeaderNode: ASCellNode {
     let buttonFont = FontDynamicType.subheadline.font
     let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()
     let selectedTextColor = ThemeManager.shared.currentTheme.colorNumber23()
-    let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultBackgroundColor())
-    let selectedButtonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultButtonColor())
-    actionButton.titleNode.maximumNumberOfLines = 1
-    actionButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
-    actionButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
-    actionButton.isSelected = self.following
-
-    actionButton.setTitle(Strings.follow(), with: buttonFont, with: textColor, for: .normal)
-    actionButton.setTitle(Strings.followed(), with: buttonFont, with: selectedTextColor, for: .selected)
-    actionButton.cornerRadius = 2
-    actionButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
-    actionButton.borderWidth = 2
-    actionButton.clipsToBounds = true
-    actionButton.addTarget(self, action: #selector(actionButtonTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
+    actionButton.setupSelectionButton(defaultBackgroundColor: ThemeManager.shared.currentTheme.defaultBackgroundColor(),
+                                      selectedBackgroundColor: ThemeManager.shared.currentTheme.defaultButtonColor(),
+                                      borderStroke: true,
+                                      borderColor: ThemeManager.shared.currentTheme.defaultButtonColor(),
+                                      borderWidth: 2.0,
+                                      cornerRadius: 2.0)
+    actionButton.setTitle(title: Strings.follow(), with: buttonFont, with: textColor, for: .normal)
+    actionButton.setTitle(title: Strings.following(), with: buttonFont, with: selectedTextColor, for: .selected)
+    actionButton.state = self.following ? .selected : .normal
+    actionButton.style.height = ASDimensionMake(buttonSize.height)
+    actionButton.delegate = self
   }
 
   var topicTitle: String? {
     didSet {
       if let topicTitle = topicTitle {
-        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
+        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title1)
           .append(text: topicTitle, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
         setNeedsLayout()
       }
@@ -102,7 +99,7 @@ class TopicHeaderNode: ASCellNode {
 
   var following: Bool = false {
     didSet {
-      actionButton.isSelected = following
+      actionButton.state = following ? .selected : .normal
     }
   }
 
@@ -116,26 +113,18 @@ class TopicHeaderNode: ASCellNode {
     var attrStringBuilder = AttributedStringBuilder(fontDynamicType: .footnote)
     var addSeparator: Bool = false
 
-    //TODO: This should be handled with localization plurals
-    if let followersNumber = String(counting: numberOfFollowers) , (numberOfFollowers ?? 0 > 0) {
-      let plural = numberOfFollowers ?? 0 > 1
-      let str = plural ? Strings.followers() : Strings.follower()
+    if let numberOfFollowers = numberOfFollowers {
       attrStringBuilder = attrStringBuilder
-        .append(text: followersNumber)
-        .append(text: " " + str, fontDynamicType: .caption2)
+        .append(text: Strings.followers(number: numberOfFollowers), fontDynamicType: .caption2)
       addSeparator = true
     } else {
       addSeparator = false
     }
 
-    //TODO: This should be handled with localization plurals
-    if let postsNumber = String(counting: numberOfPosts), (numberOfPosts ?? 0 > 0) {
-      let plural = numberOfPosts ?? 0 > 1
-      let str = plural ? Strings.posts() : Strings.post()
+    if let numberOfPosts = numberOfPosts {
       attrStringBuilder = attrStringBuilder
         .append(text: (addSeparator ? separator : ""), fontDynamicType: .caption2)
-        .append(text: postsNumber)
-        .append(text: " " + str, fontDynamicType: .caption2)
+        .append(text: Strings.posts(number: numberOfPosts), fontDynamicType: .caption2)
     }
 
     //Set the string value
@@ -165,9 +154,6 @@ class TopicHeaderNode: ASCellNode {
     if isValid(topicTitle) {
       nodesArray.append(titleNodeInset)
     }
-
-    actionButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-    actionButton.style.height = ASDimensionMake(buttonSize.height)
 
     var statsAndActionNodes: [ASLayoutElement] = []
 
@@ -208,15 +194,15 @@ class TopicHeaderNode: ASCellNode {
 }
 
 //Actions
-extension TopicHeaderNode {
-  func actionButtonTouchUpInside(_ sender: ASButtonNode) {
+extension TopicHeaderNode: ButtonWithLoaderDelegate {
+  func buttonTouchUpInside(buttonWithLoader: ButtonWithLoader) {
     guard UserManager.shared.isSignedIn else {
       //If user is not signed In post notification and do not fall through
       NotificationCenter.default.post( name: AppNotification.callToAction, object: CallToAction.follow)
       return
     }
 
-    delegate?.topicHeader(node: self, actionButtonTouchUpInside: sender)
+    delegate?.topicHeader(node: self, actionButtonTouchUpInside: buttonWithLoader)
   }
 }
 

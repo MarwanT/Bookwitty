@@ -17,9 +17,16 @@ class ProfileCardPostCellNode: BaseCardPostNode {
   override var contentShouldExtendBorders: Bool { return false }
   override var contentNode: ASDisplayNode { return node }
 
+  let viewModel: ProfileCardViewModel
+  override var baseViewModel: CardViewModelProtocol? {
+    return viewModel
+  }
+  
   override init() {
     node = ProfileCardPostContentNode()
+    viewModel = ProfileCardViewModel()
     super.init()
+    viewModel.delegate = self
   }
 
   convenience init(shouldShowInfoNode: Bool) {
@@ -43,34 +50,46 @@ class ProfileCardPostContentNode: ASDisplayNode {
       if let articleDescription = articleDescription {
         descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
           .append(text: articleDescription, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      } else {
+        descriptionNode.attributedText = nil
       }
+      descriptionNode.setNeedsLayout()
     }
   }
+
   var userName: String? {
     didSet {
       if let userName = userName {
         userNameTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
           .append(text: userName, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      } else {
+        userNameTextNode.attributedText = nil
       }
+      userNameTextNode.setNeedsLayout()
     }
   }
+
   var followersCount: String? {
     didSet {
-      //TODO: This should be handled with localization plurals
-      if let followersCount = followersCount {
+      if let followersCount = followersCount, let number: Int = Int(followersCount) {
         followersTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
-          .append(text: followersCount)
-          .append(text: " ")
-          .append(text: Strings.followers(), fontDynamicType: .caption2)
+          .append(text: Strings.followers(number: number), fontDynamicType: .caption2)
           .attributedString
+      } else {
+        followersTextNode.attributedText = nil
       }
+      followersTextNode.setNeedsLayout()
     }
   }
+
   var imageUrl: String? {
     didSet {
       if let imageUrl = imageUrl {
         userProfileImageNode.url = URL(string: imageUrl)
+      } else {
+        userProfileImageNode.url = nil
       }
+      userProfileImageNode.setNeedsLayout()
     }
   }
 
@@ -98,7 +117,7 @@ class ProfileCardPostContentNode: ASDisplayNode {
     let profileBorderColor: UIColor? = nil
     userProfileImageNode.style.preferredSize = profileImageSize
     userProfileImageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(profileBorderWidth, profileBorderColor)
-    userProfileImageNode.defaultImage = UIImage(color: ASDisplayNodeDefaultPlaceholderColor(), size: profileImageSize)
+    userProfileImageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
   }
 
   private func isValid(_ value: String?) -> Bool {
@@ -148,4 +167,17 @@ class ProfileCardPostContentNode: ASDisplayNode {
     return ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), child: verticalParentStackSpec)
   }
 
+}
+
+//MARK: - ProfileCardViewModelDelegate implementation
+extension ProfileCardPostCellNode: ProfileCardViewModelDelegate {
+  func resourceUpdated(viewModel: ProfileCardViewModel) {
+    let values = viewModel.values()
+    setup(forFollowingMode: true)
+    setFollowingValue(following: values.following)
+    node.userName = values.name
+    node.articleDescription = values.biography
+    node.followersCount = String(counting: values.followers)
+    node.imageUrl = values.imageUrl
+  }
 }
