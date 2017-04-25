@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftLoader
 
 class ChangePasswordViewController: UIViewController {
 
@@ -83,18 +84,25 @@ class ChangePasswordViewController: UIViewController {
     let identifier: String = UserManager.shared.signedInUser.id ?? ""
     let current: String = currentReult.value ?? ""
     let new: String = newResult.value ?? ""
-
+    SwiftLoader.show(animated: true)
     viewModel.updatePassword(identifier: identifier, current: current, new: new) {
       (success: Bool, error: Error?) in
+      SwiftLoader.hide()
       if success {
-        let alert = UIAlertController(title: "Success", message: "Password Changes Successfully", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-        self.navigationController?.present(alert, animated: true, completion: nil)
+        self.showSuccefullyUpdatedPasswordAlert()
       } else {
         self.currentPasswordInputField.status = .inValid
         self.newPasswordInputField.status = .inValid
       }
     }
+  }
+
+  fileprivate func showSuccefullyUpdatedPasswordAlert() {
+    let alert = UIAlertController(title: "Success", message: "Password Changes Successfully", preferredStyle: .alert)
+    alert.addAction(UIAlertAction.init(title: "Ok", style: .default, handler: { _ in
+      _ = self.navigationController?.popViewController(animated: true)
+    }))
+    self.navigationController?.present(alert, animated: true, completion: nil)
   }
 }
 

@@ -20,6 +20,19 @@ class Counts: NSObject {
     static let commenters = "commenters"
   }
 
+  func isValid() -> Bool {
+    return (
+      (comments ?? 0) > 0 ||
+      (wits ?? 0) > 0 ||
+      (dims ?? 0) > 0 ||
+      (relatedLinks?.count ?? 0) > 0 ||
+      (followers ?? 0) > 0 ||
+      (contributors ?? 0) > 0 ||
+      (posts ?? 0) > 0 ||
+      (commenters ?? 0) > 0
+    )
+  }
+
   var comments: Int?
   var commenters: Int?
   var wits: Int?
