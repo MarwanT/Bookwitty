@@ -199,14 +199,19 @@ extension TopicViewController {
   }
   
   func updatedResources(_ notification: Notification) {
-    viewModel.updateResourceIfNeeded()
-    
     let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.header.rawValue || $0.section == Section.relatedData.rawValue })
 
     guard let identifiers = notification.object as? [String],
       identifiers.count > 0,
       visibleItemsIndexPaths.count > 0 else {
         return
+    }
+
+    if let id = viewModel.resource?.id {
+      let found = identifiers.contains(id)
+      if found {
+        viewModel.updateResourceIfNeeded()
+      }
     }
 
     let indexPathForAffectedItems = visibleItemsIndexPaths.filter({

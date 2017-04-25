@@ -36,10 +36,11 @@ protocol ModelCommonProperties {
   var isDimmed: Bool { get }
   var following: Bool { get }
   var canonicalURL: URL? { get }
-  var counts: Counts? { get }
+  var counts: Counts? { get set }
 
   var registeredResourceType: ResourceType { get }
   var penName: PenName? { get set }
+  var contributors: [PenName]? { get set }
 
   func sameInstanceAs(newResource: ModelCommonProperties?) -> Bool?
 }
@@ -54,6 +55,13 @@ extension ModelCommonProperties {
 }
 
 extension Video: ModelCommonProperties {
+   var contributors: [PenName]? {
+    get { return nil }
+    set {
+      //Not a valid property of model
+    }
+  }
+
   var isWitted: Bool {
     guard let vote = vote else {
       return false
@@ -88,6 +96,13 @@ extension Topic: ModelCommonProperties {
 }
 
 extension Image: ModelCommonProperties {
+  var contributors: [PenName]? {
+    get { return nil }
+    set {
+      //Not a valid property of model
+    }
+  }
+
   var isWitted: Bool {
     guard let vote = vote else {
       return false
@@ -122,6 +137,13 @@ extension Author: ModelCommonProperties {
 }
 
 extension Link: ModelCommonProperties {
+  var contributors: [PenName]? {
+    get { return nil }
+    set {
+      //Not a valid property of model
+    }
+  }
+
   var isWitted: Bool {
     guard let vote = vote else {
       return false
@@ -141,6 +163,13 @@ extension Link: ModelCommonProperties {
 }
 
 extension ReadingList: ModelCommonProperties {
+  var contributors: [PenName]? {
+    get { return nil }
+    set {
+      //Not a valid property of model
+    }
+  }
+  
   var isWitted: Bool {
     guard let vote = vote else {
       return false
@@ -160,6 +189,13 @@ extension ReadingList: ModelCommonProperties {
 }
 
 extension Audio: ModelCommonProperties {
+  var contributors: [PenName]? {
+    get { return nil }
+    set {
+      //Not a valid property of model
+    }
+  }
+
   var isWitted: Bool {
     guard let vote = vote else {
       return false
@@ -179,6 +215,13 @@ extension Audio: ModelCommonProperties {
 }
 
 extension Text: ModelCommonProperties {
+  var contributors: [PenName]? {
+    get { return nil }
+    set {
+      //Not a valid property of model
+    }
+  }
+  
   var isWitted: Bool {
     guard let vote = vote else {
       return false
@@ -198,6 +241,13 @@ extension Text: ModelCommonProperties {
 }
 
 extension Quote: ModelCommonProperties {
+  var contributors: [PenName]? {
+    get { return nil }
+    set {
+      //Not a valid property of model
+    }
+  }
+
   var isWitted: Bool {
     guard let vote = vote else {
       return false
@@ -245,6 +295,13 @@ extension Book: ModelCommonProperties {
 }
 
 extension PenName: ModelCommonProperties {
+  var contributors: [PenName]? {
+    get { return nil }
+    set {
+      //Not a valid property of model
+    }
+  }
+  
   var title: String? {
     return name
   }
