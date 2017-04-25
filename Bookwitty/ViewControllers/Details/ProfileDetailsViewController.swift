@@ -232,7 +232,7 @@ extension ProfileDetailsViewController: ASCollectionDelegate {
       var updatedIndexPathRange: [IndexPath]?
       defer {
         context.completeBatchFetching(true)
-        self!.loadingStatus = .none
+        self?.loadingStatus = .none
         self?.updateCollection(with: updatedIndexPathRange, shouldReloadItems: false, loaderSection: true, cellsSection: false, orReloadAll: false, completionBlock: nil)
       }
       guard let strongSelf = self else {
