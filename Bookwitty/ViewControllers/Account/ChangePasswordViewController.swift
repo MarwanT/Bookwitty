@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftLoader
 
 class ChangePasswordViewController: UIViewController {
 
@@ -83,9 +84,10 @@ class ChangePasswordViewController: UIViewController {
     let identifier: String = UserManager.shared.signedInUser.id ?? ""
     let current: String = currentReult.value ?? ""
     let new: String = newResult.value ?? ""
-
+    SwiftLoader.show(animated: true)
     viewModel.updatePassword(identifier: identifier, current: current, new: new) {
       (success: Bool, error: Error?) in
+      SwiftLoader.hide()
       if success {
         self.showSuccefullyUpdatedPasswordAlert()
       } else {
