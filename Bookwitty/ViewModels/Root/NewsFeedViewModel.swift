@@ -158,7 +158,7 @@ final class NewsFeedViewModel {
 
   func sharingContent(index: Int) -> [String]? {
     guard data.count > index,
-    let commonProperties = data[index] as? ModelCommonProperties else {
+    let commonProperties = resourceForIndex(index: index) as? ModelCommonProperties else {
         return nil
     }
 
