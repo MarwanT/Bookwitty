@@ -498,7 +498,7 @@ extension PostDetailsViewModel {
     if let sharingUrl = commonProperties.canonicalURL {
       var sharingString = sharingUrl.absoluteString
       sharingString += shortDesciption.isEmpty ? "" : "\n\n\(shortDesciption)"
-      return [sharingUrl.absoluteString, shortDesciption]
+      return [shortDesciption, sharingUrl.absoluteString]
     }
     return [shortDesciption]
   }
