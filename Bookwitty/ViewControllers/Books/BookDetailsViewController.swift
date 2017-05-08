@@ -272,10 +272,7 @@ extension BookDetailsViewController {
   }
   
   fileprivate func shareBook(title: String, url: URL) {
-    let activityViewController = UIActivityViewController(
-      activityItems: [title, url],
-      applicationActivities: nil)
-    present(activityViewController, animated: true, completion: nil)
+    presentShareSheet(shareContent: [title, url])
 
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .BookProduct,

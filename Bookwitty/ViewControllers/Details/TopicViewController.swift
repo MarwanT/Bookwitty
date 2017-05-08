@@ -182,10 +182,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
       return
     }
     
-    let activityViewController = UIActivityViewController(
-      activityItems: sharingContent,
-      applicationActivities: nil)
-    present(activityViewController, animated: true, completion: nil)
+    presentShareSheet(shareContent: sharingContent)
   }
 }
 
