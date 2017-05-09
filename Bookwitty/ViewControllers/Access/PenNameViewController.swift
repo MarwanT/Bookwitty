@@ -93,6 +93,44 @@ class PenNameViewController: UIViewController {
   }
 
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
+    updateUserProfile()
+  }
+  
+  fileprivate func updateUserProfile() {
+    /**
+     Upload the pen name image if needed before proceeding
+     with completing the pen name profile update
+     */
+    showLoader()
+    
+    self.uploadUserImageIfNeeded { (imageId) in
+      self.updatePenNameProfile(imageId: imageId, completion: { (success: Bool) in
+        self.hideLoader()
+        
+        if UserManager.shared.shouldDisplayOnboarding {
+          self.pushOnboardingViewController()
+        } else {
+          _ = self.navigationController?.popViewController(animated: true)
+        }
+      })
+    }
+  }
+  
+  fileprivate func uploadUserImageIfNeeded(completion: @escaping (_ imageId: String?)->()) {
+    guard let image = profileImageView.image else {
+      completion(nil)
+      return
+    }
+    
+    viewModel.upload(image: image, completion: {
+      (success, imageId) in
+      self.didEditImage = false
+      completion(imageId)
+    })
+  }
+  
+  
+  fileprivate func updatePenNameProfile(imageId: String?, completion: @escaping (_ success: Bool) -> Void) {
     // Set the show pen name flag to false
     UserManager.shared.shouldEditPenName = false
     
@@ -102,25 +140,15 @@ class PenNameViewController: UIViewController {
 
     let name = penNameInputField.textField.text
     let biography = biographyTextView.text
-    let avatarId: String? = nil
-
+    
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .Account,
                                                  action: .EditPenName)
     Analytics.shared.send(event: event)
-
-    showLoader()
-    self.viewModel.updatePenNameIfNeeded(name: name, biography: biography, avatarId: avatarId) {
+    
+    self.viewModel.updatePenNameIfNeeded(name: name, biography: biography, avatarId: imageId) {
       (success: Bool) in
-      self.hideLoader()
-      
-      // TODO: Handle the fail here
-
-      if UserManager.shared.shouldDisplayOnboarding {
-        self.pushOnboardingViewController()
-      } else {
-        _ = self.navigationController?.popViewController(animated: true)
-      }
+      completion(success)
     }
   }
   
