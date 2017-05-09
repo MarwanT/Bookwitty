@@ -839,6 +839,8 @@ extension NewsFeedViewController: MisfortuneNodeDelegate {
     }
     
     switch action {
+    case .tryAgain:
+      refreshViewControllerData()
     case .settings:
       AppDelegate.openSettings()
     default:
