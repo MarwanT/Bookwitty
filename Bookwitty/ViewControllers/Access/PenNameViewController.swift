@@ -23,6 +23,7 @@ class PenNameViewController: UIViewController {
 
   @IBOutlet weak var topViewToTopConstraint: NSLayoutConstraint!
   let topViewToTopSpace: CGFloat = 40
+  let defaultPenNameImageSize = CGSize(width: 600, height: 600)
   let viewModel: PenNameViewModel = PenNameViewModel()
   
   var showNoteLabel: Bool = true
@@ -157,6 +158,13 @@ class PenNameViewController: UIViewController {
     let onboardingViewController = OnBoardingViewController()
     navigationController?.pushViewController(onboardingViewController, animated: true)
   }
+  
+  fileprivate func resized(_ image: UIImage?) -> UIImage? {
+    guard let imageSize = image?.size, (imageSize.height > defaultPenNameImageSize.height || imageSize.width > defaultPenNameImageSize.width) else {
+      return image
+    }
+    return image?.imageWithSize(size: defaultPenNameImageSize)
+  }
 
   // MARK: - Keyboard Handling
   func keyboardWillShow(_ notification: NSNotification) {
@@ -205,7 +213,7 @@ class PenNameViewController: UIViewController {
     let croppingEnabled = true
     let libraryEnabled = false
     let cameraViewController = CameraViewController(croppingEnabled: croppingEnabled, allowsLibraryAccess: libraryEnabled) { [weak self] image, asset in
-      if let image = image {
+      if let image = self?.resized(image) {
         self?.didEditImage = true
         self?.profileImageView.image = image
         self?.plusImageView.alpha = 0
@@ -218,7 +226,7 @@ class PenNameViewController: UIViewController {
   func openLibrary() {
     let croppingEnabled = true
     let libraryViewController = CameraViewController.imagePickerViewController(croppingEnabled: croppingEnabled) { image, asset in
-      if let image = image {
+      if let image = self.resized(image) {
         self.didEditImage = true
         self.profileImageView.image = image
         self.plusImageView.alpha = 0
