@@ -195,6 +195,7 @@ class PenNameViewController: UIViewController {
       self.openCamera()
     })
     let  removePhotoButton = UIAlertAction(title: Strings.clear_profile_photo(), style: .default, handler: { (action) -> Void in
+      self.profileImageView.image = nil
       self.plusImageView.alpha = 1
     })
 
