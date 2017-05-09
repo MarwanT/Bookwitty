@@ -91,6 +91,7 @@ class PenNameViewController: UIViewController {
       .attributedString
     if let avatarUrl = viewModel.penAvatarUrl(), let url = URL(string: avatarUrl) {
       self.profileImageView.sd_setImage(with: url)
+      self.plusImageView.alpha = 0
     }
   }
 
