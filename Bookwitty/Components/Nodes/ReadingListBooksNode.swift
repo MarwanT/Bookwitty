@@ -23,6 +23,7 @@ class ReadingListBooksNode: ASDisplayNode {
 
   override init() {
     super.init()
+    automaticallyManagesSubnodes = true
     maxItems = calculateMaxItems()
   }
 
