@@ -234,6 +234,7 @@ extension DiscoverViewController: ASCollectionDataSource {
         let max = readingListCell.node.maxNumberOfImages
         self.viewModel.loadReadingListImages(at: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
           if let imageCollection = imageCollection, imageCollection.count > 0 {
+            readingListCell.node.prepareImages(imageCount: imageCollection.count)
             readingListCell.node.loadImages(with: imageCollection)
           }
         })
