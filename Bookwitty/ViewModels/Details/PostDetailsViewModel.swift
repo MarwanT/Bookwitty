@@ -454,7 +454,6 @@ extension PostDetailsViewModel {
         completionBlock(imageCollection)
       }
       if let resources = resources, success {
-        DataManager.shared.update(resources: resources)
         var images: [String] = []
         resources.forEach({ (resource) in
           if let res = resource as? ModelCommonProperties {
