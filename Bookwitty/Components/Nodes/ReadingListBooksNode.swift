@@ -61,16 +61,17 @@ class ReadingListBooksNode: ASDisplayNode {
   }
 
   func prepareImages(for count: Int) {
-    guard imageListNodes.count == 0 && count > 0 else {
+    guard count > 0 else {
       return
     }
     let tillIndex = (maxItems > count) ? count : maxItems
-
+    imageListNodes.removeAll()
+    
     for _ in 0 ..< tillIndex {
       let imageNode = ReadingListBookNode(imageNodeSize: imageNodeSize)
       imageListNodes.append(imageNode)
-      addSubnode(imageNode)
     }
+    setNeedsLayout()
   }
 
   private func calculateMaxItems() -> Int {
