@@ -600,7 +600,11 @@ class Strings {
   static func topics_to_follow() -> String {
     return localizedString(key: "topics_to_follow")
   }
-  
+
+  static func pen_names_to_follow() -> String {
+    return localizedString(key: "pen_names_to_follow")
+  }
+
   static func try_again() -> String {
     return localizedString(key: "try_again")
   }

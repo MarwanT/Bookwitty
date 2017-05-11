@@ -120,6 +120,7 @@
 "pen_name" = "Pen Name";
 "pen_name_cant_be_empty" = "Please enter a pen name";
 "pen_names" = "Pen Names";
+"pen_names_to_follow" = "Pennames To Follow";
 "please_fill_required_field" = "Please fill the required fields";
 "post" = "Post";
 "posts" = "Posts";
