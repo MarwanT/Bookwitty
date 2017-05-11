@@ -101,14 +101,15 @@ final class OnBoardingViewModel {
   func loadOnBoardingCellNodeData(indexPath: IndexPath, completionBlock: @escaping (_ indexPath: IndexPath, _ success: Bool, _ dictionary: [String : [CellNodeDataItemModel]]?) -> ()) {
     let index = indexPath.row
     let queue = DispatchGroup()
-    var dictionary: [String : [CellNodeDataItemModel]] = [:]
+    var topicsDictionary: [String : [CellNodeDataItemModel]] = [:]
+    var pennamesDictionary: [String : [CellNodeDataItemModel]] = [:]
     var mergedSuccess: Bool = false
 
     queue.enter()
     loadCuratedCollectionItems(index: index) { (success: Bool, result: [String : [CellNodeDataItemModel]]?) in
       mergedSuccess = success || mergedSuccess
       if let result = result {
-        dictionary = mergeDictionaries(left: dictionary, right: result)
+        topicsDictionary = result
       }
       queue.leave()
     }
@@ -117,12 +118,14 @@ final class OnBoardingViewModel {
     loadCuratedCollectionPenNames(index: index) { (success: Bool, result: [String : [CellNodeDataItemModel]]?) in
       mergedSuccess = success || mergedSuccess
       if let result = result {
-        dictionary = mergeDictionaries(left: dictionary, right: result)
+        pennamesDictionary = result
       }
       queue.leave()
     }
 
     queue.notify(queue: DispatchQueue.main) {
+      //Sorting / Ordering dictionary values depends on who is left and who is right of the mergery
+      let dictionary: [String : [CellNodeDataItemModel]] = mergeDictionaries(left: topicsDictionary, right: pennamesDictionary)
       completionBlock(indexPath, mergedSuccess, dictionary)
     }
   }
