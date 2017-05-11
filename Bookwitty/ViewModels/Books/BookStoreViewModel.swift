@@ -26,6 +26,14 @@ final class BookStoreViewModel {
   
   var dataLoaded: ((_ finished: Bool) -> Void)? = nil
   
+  func clearData() {
+    self.curatedCollection = nil
+    self.banner = nil
+    self.featuredContents = nil
+    self.featuredReadingListContent = nil
+    self.readingLists = nil
+  }
+  
   func loadData(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
     request = loadCuratedContent(completion: {
       (success, identifiers, error) in
