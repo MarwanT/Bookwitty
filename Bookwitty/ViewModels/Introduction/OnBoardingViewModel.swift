@@ -84,7 +84,10 @@ final class OnBoardingViewModel {
       completionBlock(indexPath, success, dictionary)
     }
   }
+}
 
+// MARK: - APIS
+extension OnBoardingViewModel {
   func loadCuratedCollectionItems(index: Int, completionBlock: @escaping (_ success: Bool, _ dictionary: [String : [CellNodeDataItemModel]]?) -> ()) {
     guard let items: [String : [CuratedCollectionItem]] = topicsToFollowSection(for: index) else {
       completionBlock(false, nil)
