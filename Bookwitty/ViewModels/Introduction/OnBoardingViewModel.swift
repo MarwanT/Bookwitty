@@ -99,25 +99,31 @@ final class OnBoardingViewModel {
       guard let resources = resources else {
         return
       }
-      //init dictionary
-      for resource in resources {
-        if let topic = resource as? Topic {
-          let model: CellNodeDataItemModel = (topic.id, topic.title, topic.shortDescription, topic.thumbnailImageUrl, topic.following, topic.registeredResourceType)
-          if let id = topic.id,
-            let key = self.getRelatedKey(for: id, from: items) {
-            if dictionary[key] == nil {
-              dictionary[key] = []
-            }
-            dictionary[key]? += [model]
-          }
-        }
-      }
+      //create dictionary
+      dictionary = self.createOnboardingTopicsDictionary(with: resources, from: items)
     }
   }
 }
 
 // MARK: - Utility Helpers
 extension OnBoardingViewModel {
+  func createOnboardingTopicsDictionary(with resources: [Resource], from items: [String : [CuratedCollectionItem]]) -> [String : [CellNodeDataItemModel]] {
+    var dictionary: [String : [CellNodeDataItemModel]] = [:]
+    for resource in resources {
+      if let topic = resource as? Topic {
+        let model: CellNodeDataItemModel = (topic.id, topic.title, topic.shortDescription, topic.thumbnailImageUrl, topic.following, topic.registeredResourceType)
+        if let id = topic.id,
+          let key = self.getRelatedKey(for: id, from: items) {
+          if dictionary[key] == nil {
+            dictionary[key] = []
+          }
+          dictionary[key]? += [model]
+        }
+      }
+    }
+    return dictionary
+  }
+
   func getRelatedKey(for id: String, from items: [String : [CuratedCollectionItem]]) -> String? {
     let filteredDictionary = items.filter({ (dictionaryItem: (key: String, value: [CuratedCollectionItem])) -> Bool in
       return dictionaryItem.value.filter({ (curatedItem) -> Bool in
