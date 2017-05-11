@@ -30,6 +30,9 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
   let viewModel = DiscoverViewModel()
   var loadingStatus: LoadingStatus = .none
 
+  fileprivate var segments: [Segment] = [.content(index: 0), .books(index: 1), .pages(index: 2)]
+  fileprivate var activeSegment: Segment
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -41,6 +44,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     flowLayout.minimumLineSpacing       = 0
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     loaderNode = LoaderNode()
+    activeSegment = segments[0]
     segmentedNode = SegmentedControlNode()
     super.init(node: collectionNode)
 
