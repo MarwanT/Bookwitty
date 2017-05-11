@@ -152,7 +152,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     loadingStatus = .reloading
     updateCollection(loaderSection: true)
     self.pullToRefresher.beginRefreshing()
-    viewModel.loadDiscoverData(clearData: false) { [weak self] (success) in
+    viewModel.loadDiscoverData(clearData: true) { [weak self] (success) in
       guard let strongSelf = self else { return }
       strongSelf.loadingStatus = .none
       strongSelf.pullToRefresher.endRefreshing()
@@ -673,7 +673,9 @@ extension DiscoverViewController {
     }
 
     let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
-    updateCollection(with: indexPathForAffectedItems, shouldReloadItems: true, loaderSection: true)
+    if indexPathForAffectedItems.count > 0 {
+      updateCollection(with: indexPathForAffectedItems, shouldReloadItems: true, loaderSection: true)
+    }
   }
 }
 
