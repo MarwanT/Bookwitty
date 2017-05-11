@@ -201,7 +201,7 @@ final class OnBoardingCellNodeViewModel {
   }
 
   func numberOfSections() -> Int {
-    return data.count == 0 ? 0 : 1
+    return data.count
   }
 
   func numberOfItemsInSections(section: Int) -> Int {
