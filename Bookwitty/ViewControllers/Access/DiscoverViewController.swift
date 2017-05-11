@@ -649,6 +649,47 @@ extension DiscoverViewController {
       return 2
     }
   }
+
+  enum Segment {
+    case content(index: Int)
+    case books(index: Int)
+    case pages(index: Int)
+    case none
+
+    var name: String {
+      switch self {
+      case .content:
+        return Strings.content()
+      case .books:
+        return Strings.books()
+      case .pages:
+        return Strings.pages()
+      case .none:
+        return ""
+      }
+    }
+
+    var index: Int {
+      switch self {
+      case .content(let index):
+        return index
+      case .books(let index):
+        return index
+      case .pages(let index):
+        return index
+      case .none:
+        return NSNotFound
+      }
+    }
+  }
+
+  fileprivate func segment(withIndex index: Int) -> Segment {
+    guard let segment = self.segments.filter({ $0.index == index }).first else {
+      return .none
+    }
+
+    return segment
+  }
 }
 
 // MARK: - Notification
