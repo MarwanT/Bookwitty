@@ -351,9 +351,57 @@ struct GeneralAPI {
       completion(true, nil)
     })
   }
+
+  public static func batchPenNames(identifiers: [String], completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+
+    let successStatusCode = 200
+
+    return signedAPIRequest(target: .batchPenNames(identifiers: identifiers), completion: {
+      (data, statusCode, response, error) in
+      var success: Bool = false
+      var resources: [Resource]? = nil
+      var error: BookwittyAPIError? = error
+      DispatchQueue.global(qos: .background).async {
+        defer {
+          DispatchQueue.main.async {
+            completion(success, resources, error)
+          }
+        }
+
+        guard statusCode == successStatusCode else {
+          error = BookwittyAPIError.invalidStatusCode
+          return
+        }
+
+        if let data = data {
+          // Parse Data
+          guard let parsedData: (resources: [Resource]?, next: URL?, errors: [APIError]?) = Parser.parseDataArray(data: data) else {
+            error = BookwittyAPIError.failToParseData
+            return
+          }
+          resources = parsedData.resources
+          success = resources != nil
+          //TODO: handle parsedData.next and parsedData.errors if any
+        } else {
+          error = BookwittyAPIError.failToParseData
+        }
+      }
+    })
+  }
 }
 
 extension GeneralAPI {
+  static func batchPenNamesPostBody(identifiers: [String]) -> [String : Any]? {
+    let dictionary = [
+      "data" : [
+        "attributes" : [
+          "ids" : identifiers,
+        ]
+      ]
+    ]
+    return dictionary
+  }
+
   static func postsParameters(type: [String]?) -> [String : Any]? {
     var dictionary = [String : Any]()
 
