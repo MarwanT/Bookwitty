@@ -129,20 +129,25 @@ extension OnBoardingViewModel {
         return
       }
       //create dictionary
-      dictionary = self.createOnboardingTopicsDictionary(with: resources, from: items)
+      dictionary = self.createDataModelDictionary(with: resources, from: self.convertToIdsDic(items: items))
     }
   }
 }
 
 // MARK: - Utility Helpers
 extension OnBoardingViewModel {
-  func createOnboardingTopicsDictionary(with resources: [Resource], from items: [String : [CuratedCollectionItem]]) -> [String : [CellNodeDataItemModel]] {
+  func isModelSupport(resource: Resource) -> Bool {
+    return (resource.registeredResourceType == PenName.resourceType || resource.registeredResourceType == Topic.resourceType)
+  }
+
+  func createDataModelDictionary(with resources: [Resource], from items: [String : [String]]) -> [String : [CellNodeDataItemModel]] {
     var dictionary: [String : [CellNodeDataItemModel]] = [:]
     for resource in resources {
-      if let topic = resource as? Topic {
-        let model: CellNodeDataItemModel = (topic.id, topic.title, topic.shortDescription, topic.thumbnailImageUrl, topic.following, topic.registeredResourceType)
-        if let id = topic.id,
-          let key = getRelatedKey(for: id, from: convertToIdsDic(items: items)) {
+      if isModelSupport(resource: resource),
+        let commonResource = resource as? ModelCommonProperties {
+        let model: CellNodeDataItemModel = (commonResource.id, commonResource.title, commonResource.shortDescription, commonResource.thumbnailImageUrl, commonResource.following, commonResource.registeredResourceType)
+        if let id = commonResource.id,
+          let key = getRelatedKey(for: id, from: items) {
           if dictionary[key] == nil {
             dictionary[key] = []
           }
