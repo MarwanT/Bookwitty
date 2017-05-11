@@ -132,6 +132,28 @@ extension OnBoardingViewModel {
       dictionary = self.createDataModelDictionary(with: resources, from: self.convertToIdsDic(items: items))
     }
   }
+
+  func loadCuratedCollectionPenNames(index: Int, completionBlock: @escaping (_ success: Bool, _ dictionary: [String : [CellNodeDataItemModel]]?) -> ()) {
+    guard let items: [String : [String]]  = penNamesOnBoardingData(index: index) else {
+      completionBlock(false, nil)
+      return
+    }
+    let values: [String] = items.flatMap { (item: (key: String, value: [String])) -> [String] in
+      return item.value
+    }
+
+    _ = GeneralAPI.batchPenNames(identifiers: values, completion: { (success, resources, error) in
+      var dictionary: [String : [CellNodeDataItemModel]] = [:]
+      defer {
+        completionBlock(success, dictionary)
+      }
+      guard let resources = resources else {
+        return
+      }
+      //create dictionary
+      dictionary = self.createDataModelDictionary(with: resources, from: items)
+    })
+  }
 }
 
 // MARK: - Utility Helpers
