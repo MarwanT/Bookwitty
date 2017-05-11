@@ -98,8 +98,8 @@ class ChangePasswordViewController: UIViewController {
   }
 
   fileprivate func showSuccefullyUpdatedPasswordAlert() {
-    let alert = UIAlertController(title: "Success", message: "Password Changes Successfully", preferredStyle: .alert)
-    alert.addAction(UIAlertAction.init(title: "Ok", style: .default, handler: { _ in
+    let alert = UIAlertController(title: nil, message: Strings.change_password_success(), preferredStyle: .alert)
+    alert.addAction(UIAlertAction.init(title: Strings.ok(), style: .default, handler: { _ in
       _ = self.navigationController?.popViewController(animated: true)
     }))
     self.navigationController?.present(alert, animated: true, completion: nil)
