@@ -114,7 +114,10 @@ final class OnBoardingViewModel {
       }
     }
   }
+}
 
+// MARK: - Utility Helpers
+extension OnBoardingViewModel {
   func getRelatedKey(for id: String, from items: [String : [CuratedCollectionItem]]) -> String? {
     let filteredDictionary = items.filter({ (dictionaryItem: (key: String, value: [CuratedCollectionItem])) -> Bool in
       return dictionaryItem.value.filter({ (curatedItem) -> Bool in
@@ -126,7 +129,10 @@ final class OnBoardingViewModel {
     }
     return filteredDictionary[0].key
   }
+}
 
+// MARK: - follow / unfollow
+extension OnBoardingViewModel {
   func followRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     _ = GeneralAPI.follow(identifer: identifier) { (success, error) in
       defer {
