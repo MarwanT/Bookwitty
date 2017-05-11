@@ -24,6 +24,9 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
   let pullToRefresher = UIRefreshControl()
   let loaderNode: LoaderNode
   fileprivate var segmentedNode: SegmentedControlNode
+  fileprivate let contentTitleHeaderNode: SectionTitleHeaderNode
+  fileprivate let booksTitleHeaderNode: SectionTitleHeaderNode
+  fileprivate let pagesTitleHeaderNode: SectionTitleHeaderNode
 
   var collectionView: ASCollectionView?
 
@@ -46,6 +49,9 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     loaderNode = LoaderNode()
     activeSegment = segments[0]
     segmentedNode = SegmentedControlNode()
+    contentTitleHeaderNode = SectionTitleHeaderNode()
+    booksTitleHeaderNode = SectionTitleHeaderNode()
+    pagesTitleHeaderNode = SectionTitleHeaderNode()
     super.init(node: collectionNode)
 
     collectionNode.onDidLoad { [weak self] (collectionNode) in
