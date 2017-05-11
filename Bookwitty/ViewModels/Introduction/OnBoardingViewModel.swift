@@ -78,6 +78,26 @@ final class OnBoardingViewModel {
     return itemData
   }
 
+  func penNamesOnBoardingData(index: Int) -> [String : [String]]? {
+    guard let data = data else {
+      return nil
+    }
+    let dataArray = Array(data.values)
+    guard (index >= 0 && index < dataArray.count) else {
+      return nil
+    }
+
+    let key = Strings.pen_names_to_follow()
+    let item: OnBoardingCollectionItem = dataArray[index]
+    var itemData: [String : [String]] = [:]
+    itemData[key] = []
+    if let penNames = item.penNames {
+      itemData[key]? += penNames
+    }
+
+    return itemData
+  }
+
   func loadOnBoardingCellNodeData(indexPath: IndexPath, completionBlock: @escaping (_ indexPath: IndexPath, _ success: Bool, _ dictionary: [String : [CellNodeDataItemModel]]?) -> ()) {
     let index = indexPath.row
     loadCuratedCollectionItems(index: index) { (success, dictionary) in
