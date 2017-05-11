@@ -193,11 +193,13 @@ final class OnBoardingCellNodeViewModel {
   var data: [String : [CellNodeDataItemModel]] = [:]
 
   func onBoardingCellNodeSectionItems(section: Int) -> [CellNodeDataItemModel] {
-    let dataArray = Array(data.values)
+    let dataArray = Array(data.keys)
     guard (section >= 0 && section < dataArray.count) else {
       return []
     }
-    return dataArray[section]
+
+    let key = dataArray[section]
+    return data[key] ?? []
   }
 
   func numberOfSections() -> Int {
@@ -214,7 +216,7 @@ final class OnBoardingCellNodeViewModel {
       return ""
     }
 
-    let item = Array(data.keys)[index]
+    let item = dataArray[index]
     return item
   }
 
