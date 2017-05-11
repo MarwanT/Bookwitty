@@ -666,33 +666,24 @@ extension BookDetailsViewModel {
       completionBlock(nil)
       return
     }
-    
+
     let readingList = relatedReadingLists[indexPath.row - 1]
-    
-    var ids: [String] = []
-    if let list = readingList.postsRelations {
-      for item in list {
-        ids.append(item.id)
-      }
-    }
-    
-    if ids.count > 0 {
-      let limitToMaximumIds = Array(ids.prefix(maxNumberOfImages))
-      loadReadingListItems(readingListIds: limitToMaximumIds, completionBlock: completionBlock)
-    } else {
+    guard let readingListId = readingList.id else {
       completionBlock(nil)
+      return
     }
-  }
-  
-  private func loadReadingListItems(readingListIds: [String], completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
-    _ = UserAPI.batch(identifiers: readingListIds) { (success, resources, error) in
+    
+    let pageSize: String = String(maxNumberOfImages)
+    let page: (number: String?, size: String?) = (nil, pageSize)
+    _ = GeneralAPI.postsContent(contentIdentifier: readingListId, page: page) {
+      (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       var imageCollection: [String]? = nil
       defer {
         completionBlock(imageCollection)
       }
-      if success {
+      if let resources = resources, success {
         var images: [String] = []
-        resources?.forEach({ (resource) in
+        resources.forEach({ (resource) in
           if let res = resource as? ModelCommonProperties {
             if let imageUrl = res.thumbnailImageUrl {
               images.append(imageUrl)
