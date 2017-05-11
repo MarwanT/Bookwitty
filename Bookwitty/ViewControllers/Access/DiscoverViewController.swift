@@ -766,7 +766,7 @@ extension DiscoverViewController {
 
 // MARK: - Reload Footer
 extension DiscoverViewController {
-  func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, loaderSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
+  func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, loaderSection: Bool = false, headerSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
     if reloadAll {
       collectionNode.reloadData(completion: {
         completionBlock?(true)
@@ -776,6 +776,9 @@ extension DiscoverViewController {
 
         if loaderSection {
           collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
+        }
+        if headerSection {
+          collectionNode.reloadSections(IndexSet(integer: Section.header.rawValue))
         }
         if let itemIndices = itemIndices, itemIndices.count > 0 {
           if reloadItems {
