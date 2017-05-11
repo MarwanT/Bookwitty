@@ -12,7 +12,7 @@ import Spine
 
 final class DiscoverViewModel {
   var cancellableRequest:  Cancellable?
-  var dataIdentifiers: [String] = []
+  var contentIdentifiers: [String] = []
   var data: [String] = []
   var paginator: Paginator?
 
@@ -39,14 +39,14 @@ final class DiscoverViewModel {
       }
       //Note: We may need Add booksIdentifiers and readingListIdentifiers later
       if let featuredContent = sections.featuredContent {
-        self.dataIdentifiers = featuredContent
+        self.contentIdentifiers = featuredContent
       }
       if clearData {
         //Reset data
         self.data = []
       }
       afterDataEmptied?()
-      self.paginator = Paginator(ids: self.dataIdentifiers)
+      self.paginator = Paginator(ids: self.contentIdentifiers)
       self.loadNextPage(completionBlock: completionBlock)
     }
   }
@@ -63,7 +63,7 @@ final class DiscoverViewModel {
           DataManager.shared.update(resources: resources)
 
           //Get the Initial Order of resources result from the dataIndentifers original ids
-          for id in self.dataIdentifiers {
+          for id in self.contentIdentifiers {
             if let index = resources.index(where: { $0.id ?? "" == id }),
               let resId = resources[index].id {
               self.data.append(resId)
