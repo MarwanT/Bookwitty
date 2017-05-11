@@ -36,6 +36,7 @@
 "choose_pen_name" = "Choisissez un pseudo";
 "clear_profile_photo" = "Supprimer la photo de profil";
 "contact_us" = "Contactez-nous";
+"content" = "Content";
 "continue" = "Suivant";
 "contributors" = "Contributeurs";
 "couldnt_load_your_data" = "Nous n'avons pas réussi à charger vos données";
@@ -114,6 +115,7 @@
 "or_check_your_settings" = "ou vérifiez vos •paramètres•";
 "our_selection_for_you" = "Des livres que vous pourriez aimer";
 "out_of_stock" = "Actuellement indisponible";
+"pages" = "Pages";
 "password" = "Mot de passe";
 "password_invalid" = "Veuillez vérifier votre mot de passe";
 "payment_methods" = "Moyens de paiement";

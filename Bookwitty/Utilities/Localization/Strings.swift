@@ -128,7 +128,11 @@ class Strings {
   static func contact_us() -> String {
     return localizedString(key: "contact_us")
   }
-  
+
+  static func content() -> String {
+    return localizedString(key: "content")
+  }
+
   static func `continue`() -> String {
     return localizedString(key: "continue")
   }
@@ -440,7 +444,11 @@ class Strings {
   static func out_of_stock() -> String {
     return localizedString(key: "out_of_stock")
   }
-  
+
+  static func pages() -> String {
+    return localizedString(key: "pages")
+  }
+
   static func password() -> String {
     return localizedString(key: "password")
   }
