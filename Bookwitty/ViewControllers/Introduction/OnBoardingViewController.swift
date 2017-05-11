@@ -106,11 +106,11 @@ extension OnBoardingViewController: OnBoardingCellDelegate {
       return
     }
     if shouldSelect {
-      viewModel.followRequest(identifier: id, completionBlock: { (succes) in
+      viewModel.follow(identifier: id, resourceType: dataItem.resourceType, completionBlock: { (succes) in
         doneCompletionBlock(succes)
       })
     } else {
-      viewModel.unfollowRequest(identifier: id, completionBlock: { (succes) in
+      viewModel.unfollow(identifier: id, resourceType: dataItem.resourceType, completionBlock: { (succes) in
         doneCompletionBlock(succes)
       })
     }

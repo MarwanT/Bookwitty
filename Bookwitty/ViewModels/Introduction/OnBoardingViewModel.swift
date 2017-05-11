@@ -225,6 +225,24 @@ extension OnBoardingViewModel {
 
 // MARK: - follow / unfollow
 extension OnBoardingViewModel {
+  func follow(identifier: String, resourceType: ResourceType, completionBlock: @escaping (_ success: Bool) -> ()) {
+    switch resourceType {
+    case PenName.resourceType:
+      followPenName(identifier: identifier, completionBlock: completionBlock)
+    default:
+      followRequest(identifier: identifier, completionBlock: completionBlock)
+    }
+  }
+
+  func unfollow(identifier: String, resourceType: ResourceType, completionBlock: @escaping (_ success: Bool) -> ()) {
+    switch resourceType {
+    case PenName.resourceType:
+      unfollowPenName(identifier: identifier, completionBlock: completionBlock)
+    default:
+      unfollowRequest(identifier: identifier, completionBlock: completionBlock)
+    }
+  }
+
   func followRequest(identifier: String, completionBlock: @escaping (_ success: Bool) -> ()) {
     _ = GeneralAPI.follow(identifer: identifier) { (success, error) in
       defer {
