@@ -129,6 +129,18 @@ extension OnBoardingViewModel {
     }
     return filteredDictionary[0].key
   }
+
+  func getRelatedPenNameKey(for id: String, from items: [String : [String]]) -> String? {
+    let filteredDictionary = items.filter({ (dictionaryItem: (key: String, value: [String])) -> Bool in
+      return dictionaryItem.value.filter({ (curatedPenNameId) -> Bool in
+        return curatedPenNameId == id
+      }).count >= 1
+    })
+    guard filteredDictionary.count > 0 else {
+      return nil
+    }
+    return filteredDictionary[0].key
+  }
 }
 
 // MARK: - follow / unfollow
