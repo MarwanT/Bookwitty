@@ -23,6 +23,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
   let flowLayout: UICollectionViewFlowLayout
   let pullToRefresher = UIRefreshControl()
   let loaderNode: LoaderNode
+  fileprivate var segmentedNode: SegmentedControlNode
 
   var collectionView: ASCollectionView?
 
@@ -40,6 +41,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     flowLayout.minimumLineSpacing       = 0
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     loaderNode = LoaderNode()
+    segmentedNode = SegmentedControlNode()
     super.init(node: collectionNode)
 
     collectionNode.onDidLoad { [weak self] (collectionNode) in
