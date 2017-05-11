@@ -80,8 +80,14 @@ final class OnBoardingViewModel {
 
   func loadOnBoardingCellNodeData(indexPath: IndexPath, completionBlock: @escaping (_ indexPath: IndexPath, _ success: Bool, _ dictionary: [String : [CellNodeDataItemModel]]?) -> ()) {
     let index = indexPath.row
+    loadCuratedCollectionItems(index: index) { (success, dictionary) in
+      completionBlock(indexPath, success, dictionary)
+    }
+  }
+
+  func loadCuratedCollectionItems(index: Int, completionBlock: @escaping (_ success: Bool, _ dictionary: [String : [CellNodeDataItemModel]]?) -> ()) {
     guard let items: [String : [CuratedCollectionItem]] = topicsToFollowSection(for: index) else {
-      completionBlock(indexPath, false, nil)
+      completionBlock(false, nil)
       return
     }
     let values: [CuratedCollectionItem] = items.flatMap { (item: (key: String, value: [CuratedCollectionItem])) -> [CuratedCollectionItem] in
@@ -94,7 +100,7 @@ final class OnBoardingViewModel {
     _ = UserAPI.batch(identifiers: itemIds) { (success, resources, error) in
       var dictionary: [String : [CellNodeDataItemModel]] = [:]
       defer {
-        completionBlock(indexPath, success, dictionary)
+        completionBlock(success, dictionary)
       }
       guard let resources = resources else {
         return
