@@ -114,11 +114,19 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
       self?.segmentedNode(segmentedControlNode: segmentedControlNode, didSelectSegmentIndex: index)
     }
     segmentedNode.style.preferredSize = CGSize(width: collectionNode.style.maxWidth.value, height: 45.0)
+
+    setupHeaderTitles()
   }
 
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
     self.activeSegment = segment(withIndex: index)
     //TODO: loadData()
+  }
+
+  private func setupHeaderTitles() {
+    contentTitleHeaderNode.setTitle(title: Strings.see_whats_happening_on_bookwitty(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber10(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber9())
+    booksTitleHeaderNode.setTitle(title: Strings.books_you_may_be_interested_in(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber4(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber3())
+    pagesTitleHeaderNode.setTitle(title: Strings.pages_you_may_be_interested_in(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber6(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber5())
   }
 
   @objc private func authenticationStatusChanged(_: Notification) {
