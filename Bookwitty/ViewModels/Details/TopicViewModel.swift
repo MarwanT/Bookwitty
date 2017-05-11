@@ -52,11 +52,12 @@ final class TopicViewModel {
     canonicalURL = resource?.canonicalURL
     title = resourceTitle
     
-    if let canonicalURL = canonicalURL {
-      sharedContent.append(canonicalURL)
-    }
     if let title = title {
       sharedContent.append(title)
+    }
+    
+    if let canonicalURL = canonicalURL {
+      sharedContent.append(canonicalURL)
     }
     
     return sharedContent.count > 0 ? sharedContent : nil
@@ -551,7 +552,7 @@ extension TopicViewModel {
     if let sharingUrl = commonProperties.canonicalURL {
       var sharingString = sharingUrl.absoluteString
       sharingString += shortDesciption.isEmpty ? "" : "\n\n\(shortDesciption)"
-      return [sharingUrl.absoluteString, shortDesciption]
+      return [shortDesciption, sharingUrl.absoluteString]
     }
     return [shortDesciption]
   }

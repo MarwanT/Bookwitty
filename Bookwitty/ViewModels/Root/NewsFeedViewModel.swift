@@ -158,7 +158,7 @@ final class NewsFeedViewModel {
 
   func sharingContent(index: Int) -> [String]? {
     guard data.count > index,
-    let commonProperties = data[index] as? ModelCommonProperties else {
+    let commonProperties = resourceForIndex(index: index) as? ModelCommonProperties else {
         return nil
     }
 
@@ -166,7 +166,7 @@ final class NewsFeedViewModel {
     if let sharingUrl = commonProperties.canonicalURL {
       var sharingString = sharingUrl.absoluteString
       sharingString += shortDesciption.isEmpty ? "" : "\n\n\(shortDesciption)"
-      return [sharingUrl.absoluteString, shortDesciption]
+      return [shortDesciption, sharingUrl.absoluteString]
     }
     return [shortDesciption]
   }
