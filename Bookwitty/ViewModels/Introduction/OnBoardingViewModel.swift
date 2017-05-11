@@ -113,7 +113,7 @@ extension OnBoardingViewModel {
       if let topic = resource as? Topic {
         let model: CellNodeDataItemModel = (topic.id, topic.title, topic.shortDescription, topic.thumbnailImageUrl, topic.following, topic.registeredResourceType)
         if let id = topic.id,
-          let key = self.getRelatedKey(for: id, from: items) {
+          let key = getRelatedKey(for: id, from: convertToIdsDic(items: items)) {
           if dictionary[key] == nil {
             dictionary[key] = []
           }
@@ -124,19 +124,7 @@ extension OnBoardingViewModel {
     return dictionary
   }
 
-  func getRelatedKey(for id: String, from items: [String : [CuratedCollectionItem]]) -> String? {
-    let filteredDictionary = items.filter({ (dictionaryItem: (key: String, value: [CuratedCollectionItem])) -> Bool in
-      return dictionaryItem.value.filter({ (curatedItem) -> Bool in
-        return curatedItem.wittyId == id
-      }).count >= 1
-    })
-    guard filteredDictionary.count > 0 else {
-      return nil
-    }
-    return filteredDictionary[0].key
-  }
-
-  func getRelatedPenNameKey(for id: String, from items: [String : [String]]) -> String? {
+  func getRelatedKey(for id: String, from items: [String : [String]]) -> String? {
     let filteredDictionary = items.filter({ (dictionaryItem: (key: String, value: [String])) -> Bool in
       return dictionaryItem.value.filter({ (curatedPenNameId) -> Bool in
         return curatedPenNameId == id
@@ -146,6 +134,14 @@ extension OnBoardingViewModel {
       return nil
     }
     return filteredDictionary[0].key
+  }
+
+  func convertToIdsDic(items: [String : [CuratedCollectionItem]]) -> [String : [String]] {
+    var dictionary: [String: [String]] = [:]
+    items.forEach { (item: (key: String, value: [CuratedCollectionItem])) in
+      dictionary[item.key] = item.value.flatMap({ $0.wittyId })
+    }
+    return dictionary
   }
 }
 
