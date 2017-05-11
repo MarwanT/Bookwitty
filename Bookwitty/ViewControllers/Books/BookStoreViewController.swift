@@ -21,7 +21,6 @@ class BookStoreViewController: UIViewController {
   let viewAllCategories = UIView.loadFromView(DisclosureView.self, owner: nil)
   let viewAllBooksView = UIView.loadFromView(DisclosureView.self, owner: nil)
   let viewAllSelectionsView = UIView.loadFromView(DisclosureView.self, owner: nil)
-  let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
   
   let refreshController = UIRefreshControl()
   
@@ -104,9 +103,6 @@ class BookStoreViewController: UIViewController {
   }
   
   private func initializeSubviews() {
-    // Activity Indicator
-    activityIndicator.constrainHeight("44")
-    
     // Featured Content View
     let itemSize = FeaturedContentCollectionViewCell.defaultSize
     let interItemSpacing: CGFloat = 10
