@@ -120,6 +120,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
 
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
     self.activeSegment = segment(withIndex: index)
+    updateCollection(headerSection: true)
     //TODO: loadData()
   }
 
@@ -249,6 +250,8 @@ extension DiscoverViewController: ASCollectionDataSource {
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
     switch(section) {
     case DiscoverViewController.Section.segmentedControl.rawValue:
+      fallthrough
+    case DiscoverViewController.Section.header.rawValue:
       return 1
     case DiscoverViewController.Section.cards.rawValue:
       return viewModel.numberOfItemsInSection(section: section)
@@ -265,6 +268,8 @@ extension DiscoverViewController: ASCollectionDataSource {
       guard section == Section.cards.rawValue else {
         if DiscoverViewController.Section.segmentedControl.rawValue == section {
           return self.segmentedNode
+        }else if DiscoverViewController.Section.header.rawValue == section {
+          return self.headerForSegment(segment: self.activeSegment)
         } else {
           return self.loaderNode
         }
@@ -298,6 +303,19 @@ extension DiscoverViewController: ASCollectionDataSource {
       }
     } else if node === loaderNode {
       self.loaderNode.updateLoaderVisibility(show: loadingStatus != .none && loadingStatus != .reloading)
+    }
+  }
+
+  func headerForSegment(segment: Segment) -> SectionTitleHeaderNode {
+    switch segment {
+    case .content:
+      return contentTitleHeaderNode
+    case .books:
+      return booksTitleHeaderNode
+    case .pages:
+      fallthrough
+    default:
+      return pagesTitleHeaderNode
     }
   }
 }
@@ -683,11 +701,12 @@ extension DiscoverViewController {
 extension DiscoverViewController {
   enum Section: Int {
     case segmentedControl = 0
-    case cards = 1
-    case activityIndicator = 2
+    case header = 1
+    case cards = 2
+    case activityIndicator = 3
 
     static var numberOfSections: Int {
-      return 3
+      return 4
     }
   }
 
