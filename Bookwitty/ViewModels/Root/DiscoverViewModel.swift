@@ -13,6 +13,8 @@ import Spine
 final class DiscoverViewModel {
   var cancellableRequest:  Cancellable?
   var contentIdentifiers: [String] = []
+  var booksIdentifiers: [String] = []
+  var pagesIdentifiers: [String] = []
   var data: [String] = []
   var paginator: Paginator?
 
