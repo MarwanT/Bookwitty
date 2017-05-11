@@ -55,7 +55,7 @@ final class OnBoardingViewModel {
     return item
   }
 
-  func curatedOnBoardingData(index: Int) -> [String : [CuratedCollectionItem]]? {
+  func topicsToFollowSection(for index: Int) -> [String : [CuratedCollectionItem]]? {
     guard let data = data else {
       return nil
     }
@@ -80,7 +80,7 @@ final class OnBoardingViewModel {
 
   func loadOnBoardingCellNodeData(indexPath: IndexPath, completionBlock: @escaping (_ indexPath: IndexPath, _ success: Bool, _ dictionary: [String : [CellNodeDataItemModel]]?) -> ()) {
     let index = indexPath.row
-    guard let items: [String : [CuratedCollectionItem]] = curatedOnBoardingData(index: index) else {
+    guard let items: [String : [CuratedCollectionItem]] = topicsToFollowSection(for: index) else {
       completionBlock(indexPath, false, nil)
       return
     }
