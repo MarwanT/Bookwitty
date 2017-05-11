@@ -65,11 +65,7 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeNavigationItems()
-
-    collectionNode.delegate = self
-    collectionNode.dataSource = self
-    //Listen to pullToRefresh valueChange and call loadData
-    pullToRefresher.addTarget(self, action: #selector(self.pullDownToReloadData), for: .valueChanged)
+    initializeComponents()
 
     applyTheme()
     addObservers()
@@ -99,6 +95,24 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.BookStorefront)
+  }
+
+  private func initializeComponents() {
+    collectionNode.delegate = self
+    collectionNode.dataSource = self
+    //Listen to pullToRefresh valueChange and call loadData
+    pullToRefresher.addTarget(self, action: #selector(self.pullDownToReloadData), for: .valueChanged)
+
+    segmentedNode.initialize(with: segments.map({ $0.name }))
+    segmentedNode.selectedSegmentChanged = { [weak self] (segmentedControlNode: SegmentedControlNode, index: Int) in
+      self?.segmentedNode(segmentedControlNode: segmentedControlNode, didSelectSegmentIndex: index)
+    }
+    segmentedNode.style.preferredSize = CGSize(width: collectionNode.style.maxWidth.value, height: 45.0)
+  }
+
+  private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
+    self.activeSegment = segment(withIndex: index)
+    //TODO: loadData()
   }
 
   @objc private func authenticationStatusChanged(_: Notification) {
