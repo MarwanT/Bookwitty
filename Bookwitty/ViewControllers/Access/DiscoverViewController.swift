@@ -233,10 +233,14 @@ extension DiscoverViewController: ASCollectionDataSource {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    guard DiscoverViewController.Section.cards.rawValue == section else {
+    switch(section) {
+    case DiscoverViewController.Section.segmentedControl.rawValue:
+      return 1
+    case DiscoverViewController.Section.cards.rawValue:
+      return viewModel.numberOfItemsInSection(section: section)
+    default:
       return (loadingStatus == .none || loadingStatus == .reloading) ? 0 : 1
     }
-    return viewModel.numberOfItemsInSection(section: section)
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
@@ -245,7 +249,11 @@ extension DiscoverViewController: ASCollectionDataSource {
 
     return {
       guard section == Section.cards.rawValue else {
-        return self.loaderNode
+        if DiscoverViewController.Section.segmentedControl.rawValue == section {
+          return self.segmentedNode
+        } else {
+          return self.loaderNode
+        }
       }
       let baseCardNode = self.viewModel.nodeForItem(atIndex: index) ?? BaseCardPostNode()
       // Fetch the reading list cards images
@@ -660,11 +668,12 @@ extension DiscoverViewController {
 // MARK: - Declarations
 extension DiscoverViewController {
   enum Section: Int {
-    case cards = 0
-    case activityIndicator = 1
+    case segmentedControl = 0
+    case cards = 1
+    case activityIndicator = 2
 
     static var numberOfSections: Int {
-      return 2
+      return 3
     }
   }
 
