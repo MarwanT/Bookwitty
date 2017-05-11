@@ -240,5 +240,31 @@ extension OnBoardingViewModel {
       }
     }
   }
+
+  fileprivate func followPenName(identifier: String?, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let identifier = identifier else {
+      completionBlock(false)
+      return
+    }
+
+    _ = GeneralAPI.followPenName(identifer: identifier) { (success, error) in
+      defer {
+        completionBlock(success)
+      }
+    }
+  }
+
+  fileprivate func unfollowPenName(identifier: String?, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let identifier = identifier else {
+      completionBlock(false)
+      return
+    }
+
+    _ = GeneralAPI.unfollowPenName(identifer: identifier) { (success, error) in
+      defer {
+        completionBlock(success)
+      }
+    }
+  }
 }
 
