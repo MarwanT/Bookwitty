@@ -43,6 +43,12 @@ final class DiscoverViewModel {
       if let featuredContent = sections.featuredContent {
         self.contentIdentifiers = featuredContent
       }
+      if let booksIdentifiers = sections.booksIdentifiers {
+        self.booksIdentifiers = booksIdentifiers
+      }
+      if let pagesIdentifiers = sections.pagesIdentifiers {
+        self.pagesIdentifiers = pagesIdentifiers
+      }
       if clearData {
         //Reset data
         self.data = []
