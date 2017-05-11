@@ -100,8 +100,30 @@ final class OnBoardingViewModel {
 
   func loadOnBoardingCellNodeData(indexPath: IndexPath, completionBlock: @escaping (_ indexPath: IndexPath, _ success: Bool, _ dictionary: [String : [CellNodeDataItemModel]]?) -> ()) {
     let index = indexPath.row
-    loadCuratedCollectionItems(index: index) { (success, dictionary) in
-      completionBlock(indexPath, success, dictionary)
+    let queue = DispatchGroup()
+    var dictionary: [String : [CellNodeDataItemModel]] = [:]
+    var mergedSuccess: Bool = false
+
+    queue.enter()
+    loadCuratedCollectionItems(index: index) { (success: Bool, result: [String : [CellNodeDataItemModel]]?) in
+      mergedSuccess = success || mergedSuccess
+      if let result = result {
+        dictionary = mergeDictionaries(left: dictionary, right: result)
+      }
+      queue.leave()
+    }
+
+    queue.enter()
+    loadCuratedCollectionPenNames(index: index) { (success: Bool, result: [String : [CellNodeDataItemModel]]?) in
+      mergedSuccess = success || mergedSuccess
+      if let result = result {
+        dictionary = mergeDictionaries(left: dictionary, right: result)
+      }
+      queue.leave()
+    }
+
+    queue.notify(queue: DispatchQueue.main) {
+      completionBlock(indexPath, mergedSuccess, dictionary)
     }
   }
 }
