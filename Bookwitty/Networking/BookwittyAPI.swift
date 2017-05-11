@@ -25,6 +25,7 @@ public enum BookwittyAPI {
   case Search(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?)
   case updatePenName(identifier: String, name: String?, biography: String?, avatarId: String?, avatarUrl: String?, facebookUrl: String?, tumblrUrl: String?, googlePlusUrl: String?, twitterUrl: String?, instagramUrl: String?, pinterestUrl: String?, youtubeUrl: String?, linkedinUrl: String?, wordpressUrl: String?, websiteUrl: String?)
   case batch(identifiers: [String])
+  case batchPenNames(identifiers: [String])
   case updatePreference(preference: String, value: String)
   case penNames
   case wit(contentId: String)
@@ -159,6 +160,8 @@ extension BookwittyAPI: TargetType {
       path = "/pen_names/\(identifier)/following"
     case .penName(let identifier):
       path = "/pen_names/\(identifier)"
+    case .batchPenNames:
+      path = "/pen_name/batch"
     case .status:
       path = "/status"
     case .resendAccountConfirmation:
@@ -182,7 +185,7 @@ extension BookwittyAPI: TargetType {
       return .post
   case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent:
       return .get
-    case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart:
+    case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart, .batchPenNames:
       return .post
     case .updateUser, .updatePenName:
       return .patch
@@ -222,6 +225,8 @@ extension BookwittyAPI: TargetType {
       ]
     case .batch(let identifiers):
       return UserAPI.batchPostBody(identifiers: identifiers)
+    case .batchPenNames(let identifiers):
+      return nil
     case .register(let firstName, let lastName, let email, let dateOfBirth, let country, let password, let language):
       return UserAPI.registerPostBody(firstName: firstName, lastName: lastName, email: email, dateOfBirth: dateOfBirth, country: country, password: password, language: language)
     case .updateUser(let identifier, let firstName, let lastName, let dateOfBirth, let email, let currentPassword, let password, let country, let badges, let preferences):
@@ -313,6 +318,8 @@ extension BookwittyAPI: TargetType {
         includes.append("pen-name")
       }
       return include
+    case .batchPenNames:
+      return []
     default:
       return ["pen-name"]
     }
