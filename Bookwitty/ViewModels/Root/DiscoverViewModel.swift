@@ -31,7 +31,7 @@ final class DiscoverViewModel {
     }
   }
 
-  func loadDiscoverData(clearData: Bool = true, afterDataEmptied: (() -> ())? = nil, completionBlock: @escaping (_ success: Bool) -> ()) {
+  func loadDiscoverData(for segment: DiscoverViewController.Segment, clearData: Bool = true, afterDataEmptied: (() -> ())? = nil, completionBlock: @escaping (_ success: Bool) -> ()) {
     cancellableOnGoingRequest()
 
     cancellableRequest = DiscoverAPI.discover { (success, curatedCollection, error) in
@@ -55,11 +55,11 @@ final class DiscoverViewModel {
       }
       afterDataEmptied?()
       self.paginator = Paginator(ids: self.contentIdentifiers)
-      self.loadNextPage(completionBlock: completionBlock)
+      self.loadNextPage(for: segment, completionBlock: completionBlock)
     }
   }
 
-  func loadNextPage(completionBlock: @escaping (_ success: Bool) -> ()) {
+  func loadNextPage(for segment: DiscoverViewController.Segment, completionBlock: @escaping (_ success: Bool) -> ()) {
     if let listOfIdentifiers = self.paginator?.nextPageIds() {
       cancellableOnGoingRequest()
       cancellableRequest = loadBatch(listOfIdentifiers: listOfIdentifiers, completion: { (success: Bool, resources: [Resource]?, error: BookwittyAPIError?) in
@@ -99,10 +99,10 @@ final class DiscoverViewModel {
     })
   }
 
-  func indexPathForAffectedItems(resourcesIdentifiers: [String], visibleItemsIndexPaths: [IndexPath]) -> [IndexPath] {
+  func indexPathForAffectedItems(for segment: DiscoverViewController.Segment, resourcesIdentifiers: [String], visibleItemsIndexPaths: [IndexPath]) -> [IndexPath] {
     return visibleItemsIndexPaths.filter({
       indexPath in
-      guard let resource = resourceForIndex(index: indexPath.row) as? ModelCommonProperties, let identifier = resource.id else {
+      guard let resource = resourceForIndex(for: segment, index: indexPath.row) as? ModelCommonProperties, let identifier = resource.id else {
         return false
       }
       return resourcesIdentifiers.contains(identifier)
@@ -112,7 +112,7 @@ final class DiscoverViewModel {
 
 // MARK: - Collection Helper
 extension DiscoverViewModel {
-  func hasNextPage() -> Bool {
+  func hasNextPage(for segment: DiscoverViewController.Segment) -> Bool {
     return paginator?.hasMorePages() ?? false
   }
 
@@ -120,18 +120,18 @@ extension DiscoverViewModel {
     return DiscoverViewController.Section.numberOfSections
   }
 
-  func numberOfItemsInSection(section: Int) -> Int {
+  func numberOfItemsInSection(for segment: DiscoverViewController.Segment, section: Int) -> Int {
     return DiscoverViewController.Section.cards.rawValue == section ? data.count : 1
   }
 
-  func resourceForIndex(index: Int) -> ModelResource? {
+  func resourceForIndex(for segment: DiscoverViewController.Segment, index: Int) -> ModelResource? {
     guard data.count > index else { return nil }
     let resource = resourceFor(id: data[index])
     return resource
   }
 
-  func nodeForItem(atIndex index: Int) -> BaseCardPostNode? {
-    guard let resource = resourceForIndex(index: index) else {
+  func nodeForItem(for segment: DiscoverViewController.Segment, atIndex index: Int) -> BaseCardPostNode? {
+    guard let resource = resourceForIndex(for: segment, index: index) else {
       return nil
     }
     
@@ -143,7 +143,7 @@ extension DiscoverViewModel {
 
 // MARK: - Posts Actions 
 extension DiscoverViewModel {
-  func witContent(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
+  func witContent(for segment: DiscoverViewController.Segment, index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
     guard data.count > index else {
         completionBlock(false)
         return
@@ -158,7 +158,7 @@ extension DiscoverViewModel {
     })
   }
 
-  func unwitContent(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
+  func unwitContent(for segment: DiscoverViewController.Segment, index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
     guard data.count > index else {
         completionBlock(false)
         return
@@ -173,9 +173,9 @@ extension DiscoverViewModel {
     })
   }
 
-  func sharingContent(index: Int) -> [String]? {
+  func sharingContent(for segment: DiscoverViewController.Segment, index: Int) -> [String]? {
     guard data.count > index,
-      let commonProperties = resourceForIndex(index: index) as? ModelCommonProperties else {
+      let commonProperties = resourceForIndex(for: segment, index: index) as? ModelCommonProperties else {
         return nil
     }
 
@@ -189,8 +189,8 @@ extension DiscoverViewModel {
 
 // MARK: - PenName Follow/Unfollow
 extension DiscoverViewModel {
-  func follow(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard let resource = resourceForIndex(index: index),
+  func follow(for segment: DiscoverViewController.Segment, index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let resource = resourceForIndex(for: segment, index: index),
       let resourceId = resource.id else {
         completionBlock(false)
         return
@@ -205,8 +205,8 @@ extension DiscoverViewModel {
     }
   }
 
-  func unfollow(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard let resource = resourceForIndex(index: index),
+  func unfollow(for segment: DiscoverViewController.Segment, index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let resource = resourceForIndex(for: segment, index: index),
       let resourceId = resource.id else {
         completionBlock(false)
         return
@@ -272,8 +272,8 @@ extension DiscoverViewModel {
 
 // MARK: - Handle Reading Lists Images
 extension DiscoverViewModel {
-  func loadReadingListImages(at indexPath: IndexPath, maxNumberOfImages: Int, completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
-    guard let readingList = resourceForIndex(index: indexPath.item) as? ReadingList,
+  func loadReadingListImages(for segment: DiscoverViewController.Segment, at indexPath: IndexPath, maxNumberOfImages: Int, completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
+    guard let readingList = resourceForIndex(for: segment, index: indexPath.item) as? ReadingList,
       let identifier = readingList.id else {
         completionBlock(nil)
         return
@@ -304,8 +304,8 @@ extension DiscoverViewModel {
 
 //MARK: - Analytics
 extension DiscoverViewModel {
-  func resource(at index: Int) -> ModelResource? {
-    guard let resource = resourceForIndex(index: index) else {
+  func resource(for segment: DiscoverViewController.Segment, at index: Int) -> ModelResource? {
+    guard let resource = resourceForIndex(for: segment, index: index) else {
         return nil
     }
 

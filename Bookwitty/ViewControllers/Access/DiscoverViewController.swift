@@ -84,11 +84,11 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    if loadingStatus == .none && viewModel.numberOfItemsInSection(section: Section.cards.rawValue) == 0 {
+    if loadingStatus == .none && viewModel.numberOfItemsInSection(for: activeSegment, section: Section.cards.rawValue) == 0 {
       loadingStatus = .reloading
       updateCollection(loaderSection: true)
       self.pullToRefresher.beginRefreshing()
-      viewModel.loadDiscoverData(afterDataEmptied: {
+      viewModel.loadDiscoverData(for: activeSegment, afterDataEmptied: {
         self.updateCollection(orReloadAll: true)
       })  { [weak self] (success) in
         guard let strongSelf = self else { return }
@@ -186,7 +186,7 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
     loadingStatus = .reloading
     updateCollection(loaderSection: true)
     self.pullToRefresher.beginRefreshing()
-    viewModel.loadDiscoverData(clearData: true) { [weak self] (success) in
+    viewModel.loadDiscoverData(for: activeSegment, clearData: true) { [weak self] (success) in
       guard let strongSelf = self else { return }
       strongSelf.loadingStatus = .none
       strongSelf.pullToRefresher.endRefreshing()
@@ -200,7 +200,7 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
       self.loadingStatus = .loading
       updateCollection(loaderSection: true)
       self.pullToRefresher.beginRefreshing()
-      viewModel.loadDiscoverData(afterDataEmptied: {
+      viewModel.loadDiscoverData(for: activeSegment, afterDataEmptied: {
         self.updateCollection(orReloadAll: true)
       })  { [weak self] (success) in
         guard let strongSelf = self else { return }
@@ -267,7 +267,7 @@ extension DiscoverViewController: ASCollectionDataSource {
     case DiscoverViewController.Section.header.rawValue:
       return 1
     case DiscoverViewController.Section.cards.rawValue:
-      return viewModel.numberOfItemsInSection(section: section)
+      return viewModel.numberOfItemsInSection(for: activeSegment, section: section)
     default:
       return (loadingStatus == .none || loadingStatus == .reloading) ? 0 : 1
     }
@@ -285,12 +285,12 @@ extension DiscoverViewController: ASCollectionDataSource {
           return self.loaderNode
         }
       }
-      let baseCardNode = self.viewModel.nodeForItem(atIndex: index) ?? BaseCardPostNode()
+      let baseCardNode = self.viewModel.nodeForItem(for: self.activeSegment, atIndex: index) ?? BaseCardPostNode()
       // Fetch the reading list cards images
       if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
         !readingListCell.node.isImageCollectionLoaded {
         let max = readingListCell.node.maxNumberOfImages
-        self.viewModel.loadReadingListImages(at: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
+        self.viewModel.loadReadingListImages(for: self.activeSegment, at: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
           if let imageCollection = imageCollection, imageCollection.count > 0 {
             readingListCell.node.prepareImages(imageCount: imageCollection.count)
             readingListCell.node.loadImages(with: imageCollection)
@@ -305,7 +305,7 @@ extension DiscoverViewController: ASCollectionDataSource {
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
     if let card = node as? BaseCardPostNode {
       guard let indexPath = collectionNode.indexPath(for: node),
-        let resource = viewModel.resourceForIndex(index: indexPath.row) as? ModelCommonProperties else {
+        let resource = viewModel.resourceForIndex(for: activeSegment, index: indexPath.row) as? ModelCommonProperties else {
           return
       }
 
@@ -333,7 +333,7 @@ extension DiscoverViewController: ASCollectionDataSource {
 
 extension DiscoverViewController: ASCollectionDelegate {
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
-    let resource = viewModel.resourceForIndex(index: indexPath.item)
+    let resource = viewModel.resourceForIndex(for: activeSegment, index: indexPath.item)
     actionForCard(resource: resource)
   }
 
@@ -345,7 +345,7 @@ extension DiscoverViewController: ASCollectionDelegate {
   }
 
   public func shouldBatchFetch(for collectionNode: ASCollectionNode) -> Bool {
-    return viewModel.hasNextPage()
+    return viewModel.hasNextPage(for: activeSegment)
   }
 
   public func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
@@ -362,7 +362,7 @@ extension DiscoverViewController: ASCollectionDelegate {
       self.updateCollection(loaderSection: true)
     }
 
-    let initialLastIndexPath: Int = viewModel.numberOfItemsInSection(section: Section.cards.rawValue)
+    let initialLastIndexPath: Int = viewModel.numberOfItemsInSection(for: activeSegment, section: Section.cards.rawValue)
 
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .Discover,
@@ -370,7 +370,7 @@ extension DiscoverViewController: ASCollectionDelegate {
     Analytics.shared.send(event: event)
 
     // Fetch next page data
-    viewModel.loadNextPage { [weak self] (success) in
+    viewModel.loadNextPage(for: activeSegment) { [weak self] (success) in
       var updatedIndexPathRange: [IndexPath]? = nil
       defer {
         context.completeBatchFetching(true)
@@ -380,7 +380,7 @@ extension DiscoverViewController: ASCollectionDelegate {
       guard let strongSelf = self else {
         return
       }
-      let finalLastIndexPath: Int = strongSelf.viewModel.numberOfItemsInSection(section: Section.cards.rawValue)
+      let finalLastIndexPath: Int = strongSelf.viewModel.numberOfItemsInSection(for: strongSelf.activeSegment, section: Section.cards.rawValue)
 
       if success && finalLastIndexPath > initialLastIndexPath {
         let updateIndexRange = initialLastIndexPath..<finalLastIndexPath
@@ -399,7 +399,7 @@ extension DiscoverViewController: BaseCardPostNodeDelegate {
     guard let indexPath = collectionNode.indexPath(for: card) else {
       return
     }
-    let resource = viewModel.resourceForIndex(index: indexPath.item)
+    let resource = viewModel.resourceForIndex(for: activeSegment, index: indexPath.item)
     if let resource = resource as? ModelCommonProperties,
       let penName = resource.penName {
       pushProfileViewController(penName: penName)
@@ -456,23 +456,23 @@ extension DiscoverViewController: BaseCardPostNodeDelegate {
 
     switch(action) {
     case .wit:
-      viewModel.witContent(index: index) { (success) in
+      viewModel.witContent(for: activeSegment, index: index) { (success) in
         didFinishAction?(success)
       }
     case .unwit:
-      viewModel.unwitContent(index: index) { (success) in
+      viewModel.unwitContent(for: activeSegment, index: index) { (success) in
         didFinishAction?(success)
       }
     case .share:
-      if let sharingInfo: [String] = viewModel.sharingContent(index: index) {
+      if let sharingInfo: [String] = viewModel.sharingContent(for: activeSegment, index: index) {
         presentShareSheet(shareContent: sharingInfo)
       }
     case .follow:
-      viewModel.follow(index: index) { (success) in
+      viewModel.follow(for: activeSegment, index: index) { (success) in
         didFinishAction?(success)
       }
     case .unfollow:
-      viewModel.unfollow(index: index) { (success) in
+      viewModel.unfollow(for: activeSegment, index: index) { (success) in
         didFinishAction?(success)
       }
     default:
@@ -481,7 +481,7 @@ extension DiscoverViewController: BaseCardPostNodeDelegate {
     }
 
     //MARK: [Analytics] Event
-    guard let resource = viewModel.resource(at: index) else { return }
+    guard let resource = viewModel.resource(for: activeSegment, at: index) else { return }
     let category: Analytics.Category
     var name: String = (resource as? ModelCommonProperties)?.title ?? ""
     
@@ -786,7 +786,7 @@ extension DiscoverViewController {
         return
     }
 
-    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(for: activeSegment, resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
     if indexPathForAffectedItems.count > 0 {
       updateCollection(with: indexPathForAffectedItems, shouldReloadItems: true, loaderSection: true)
     }
