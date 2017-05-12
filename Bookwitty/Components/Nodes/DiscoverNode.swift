@@ -28,8 +28,10 @@ class DiscoverNode: ASDisplayNode {
   }
 
   func setupNode() {
+    //Setup elements dimensions
     segmentedNode.style.preferredSize = CGSize(width: collectionNode.style.maxWidth.value, height: segmentedNodeHeight)
-    
+    collectionNode.style.flexGrow = 1.0
+    collectionNode.style.flexShrink = 1.0
     //TODO: Node setup
   }
 }
