@@ -249,8 +249,6 @@ extension DiscoverViewController: ASCollectionDataSource {
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
     switch(section) {
-    case DiscoverViewController.Section.segmentedControl.rawValue:
-      fallthrough
     case DiscoverViewController.Section.header.rawValue:
       return 1
     case DiscoverViewController.Section.cards.rawValue:
@@ -266,9 +264,7 @@ extension DiscoverViewController: ASCollectionDataSource {
 
     return {
       guard section == Section.cards.rawValue else {
-        if DiscoverViewController.Section.segmentedControl.rawValue == section {
-          return self.segmentedNode
-        }else if DiscoverViewController.Section.header.rawValue == section {
+        if DiscoverViewController.Section.header.rawValue == section {
           return self.headerForSegment(segment: self.activeSegment)
         } else {
           return self.loaderNode
@@ -700,13 +696,12 @@ extension DiscoverViewController {
 // MARK: - Declarations
 extension DiscoverViewController {
   enum Section: Int {
-    case segmentedControl = 0
-    case header = 1
-    case cards = 2
-    case activityIndicator = 3
+    case header = 0
+    case cards = 1
+    case activityIndicator = 2
 
     static var numberOfSections: Int {
-      return 4
+      return 3
     }
   }
 
