@@ -11,4 +11,12 @@ import AsyncDisplayKit
 
 class DiscoverNode: ASDisplayNode {
 
+  override init() {
+    super.init()
+    setupNode()
+  }
+
+  func setupNode() {
+    //TODO: Node setup
+  }
 }
