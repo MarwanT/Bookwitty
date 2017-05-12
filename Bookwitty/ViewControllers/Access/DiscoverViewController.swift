@@ -77,13 +77,16 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     if loadingStatus == .none && viewModel.numberOfItemsInSection(section: Section.cards.rawValue) == 0 {
-      loadingStatus = .loading
+      loadingStatus = .reloading
+      updateCollection(loaderSection: true)
       self.pullToRefresher.beginRefreshing()
-      viewModel.loadDiscoverData { [weak self] (success) in
+      viewModel.loadDiscoverData(afterDataEmptied: {
+        self.updateCollection(orReloadAll: true)
+      })  { [weak self] (success) in
         guard let strongSelf = self else { return }
         strongSelf.loadingStatus = .none
         strongSelf.pullToRefresher.endRefreshing()
-        strongSelf.collectionNode.reloadData()
+        strongSelf.updateCollection(orReloadAll: true)
       }
     }
     animateRefreshControllerIfNeeded()
@@ -147,12 +150,13 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
                                                  action: .PullToRefresh)
     Analytics.shared.send(event: event)
     loadingStatus = .reloading
+    updateCollection(loaderSection: true)
     self.pullToRefresher.beginRefreshing()
-    viewModel.loadDiscoverData { [weak self] (success) in
+    viewModel.loadDiscoverData(clearData: true) { [weak self] (success) in
       guard let strongSelf = self else { return }
       strongSelf.loadingStatus = .none
       strongSelf.pullToRefresher.endRefreshing()
-      strongSelf.collectionNode.reloadData()
+      strongSelf.updateCollection(orReloadAll: true)
     }
   }
 
@@ -160,12 +164,15 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     if loadingStatus == .none {
       viewModel.cancellableOnGoingRequest()
       self.loadingStatus = .loading
+      updateCollection(loaderSection: true)
       self.pullToRefresher.beginRefreshing()
-      viewModel.loadDiscoverData { [weak self] (success) in
+      viewModel.loadDiscoverData(afterDataEmptied: {
+        self.updateCollection(orReloadAll: true)
+      })  { [weak self] (success) in
         guard let strongSelf = self else { return }
         strongSelf.loadingStatus = .none
         strongSelf.pullToRefresher.endRefreshing()
-        strongSelf.collectionNode.reloadData()
+        strongSelf.updateCollection(orReloadAll: true)
       }
     }
   }
@@ -190,7 +197,6 @@ extension DiscoverViewController {
 extension DiscoverViewController {
   func updateBottomLoaderVisibility(show: Bool) {
     self.loaderNode.updateLoaderVisibility(show: show)
-    collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
   }
 }
 
@@ -208,7 +214,7 @@ extension DiscoverViewController: ASCollectionDataSource {
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
     guard DiscoverViewController.Section.cards.rawValue == section else {
-      return loadingStatus == .none ? 0 : 1
+      return (loadingStatus == .none || loadingStatus == .reloading) ? 0 : 1
     }
     return viewModel.numberOfItemsInSection(section: section)
   }
@@ -228,6 +234,7 @@ extension DiscoverViewController: ASCollectionDataSource {
         let max = readingListCell.node.maxNumberOfImages
         self.viewModel.loadReadingListImages(at: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
           if let imageCollection = imageCollection, imageCollection.count > 0 {
+            readingListCell.node.prepareImages(imageCount: imageCollection.count)
             readingListCell.node.loadImages(with: imageCollection)
           }
         })
@@ -247,6 +254,8 @@ extension DiscoverViewController: ASCollectionDataSource {
       if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
         card.baseViewModel?.resource = resource
       }
+    } else if node === loaderNode {
+      self.loaderNode.updateLoaderVisibility(show: loadingStatus != .none && loadingStatus != .reloading)
     }
   }
 }
@@ -279,7 +288,7 @@ extension DiscoverViewController: ASCollectionDelegate {
     context.beginBatchFetching()
     self.loadingStatus = .loadMore
     DispatchQueue.main.async {
-      self.updateBottomLoaderVisibility(show: true)
+      self.updateCollection(loaderSection: true)
     }
 
     let initialLastIndexPath: Int = viewModel.numberOfItemsInSection(section: Section.cards.rawValue)
@@ -291,12 +300,11 @@ extension DiscoverViewController: ASCollectionDelegate {
 
     // Fetch next page data
     viewModel.loadNextPage { [weak self] (success) in
+      var updatedIndexPathRange: [IndexPath]? = nil
       defer {
         context.completeBatchFetching(true)
         self!.loadingStatus = .none
-        DispatchQueue.main.async {
-          self!.updateBottomLoaderVisibility(show: false)
-        }
+        self?.updateCollection(with: updatedIndexPathRange, loaderSection: true)
       }
       guard let strongSelf = self else {
         return
@@ -306,10 +314,9 @@ extension DiscoverViewController: ASCollectionDelegate {
       if success && finalLastIndexPath > initialLastIndexPath {
         let updateIndexRange = initialLastIndexPath..<finalLastIndexPath
 
-        let updatedIndexPathRange: [IndexPath]  = updateIndexRange.flatMap({ (index) -> IndexPath in
+        updatedIndexPathRange  = updateIndexRange.flatMap({ (index) -> IndexPath in
           return IndexPath(row: index, section: Section.cards.rawValue)
         })
-        collectionNode.insertItems(at: updatedIndexPathRange)
       }
     }
   }
@@ -667,9 +674,34 @@ extension DiscoverViewController {
     }
 
     let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
-    collectionNode.performBatchUpdates({ 
-      collectionNode.reloadItems(at: indexPathForAffectedItems)
-    }, completion: nil)
+    if indexPathForAffectedItems.count > 0 {
+      updateCollection(with: indexPathForAffectedItems, shouldReloadItems: true, loaderSection: true)
+    }
+  }
+}
+
+// MARK: - Reload Footer
+extension DiscoverViewController {
+  func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, loaderSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
+    if reloadAll {
+      collectionNode.reloadData(completion: {
+        completionBlock?(true)
+      })
+    } else {
+      collectionNode.performBatchUpdates({
+
+        if loaderSection {
+          collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
+        }
+        if let itemIndices = itemIndices, itemIndices.count > 0 {
+          if reloadItems {
+            collectionNode.reloadItems(at: itemIndices)
+          }else {
+            collectionNode.insertItems(at: itemIndices)
+          }
+        }
+      }, completion: completionBlock)
+    }
   }
 }
 

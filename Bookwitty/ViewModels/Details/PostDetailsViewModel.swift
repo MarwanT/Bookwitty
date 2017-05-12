@@ -429,32 +429,21 @@ extension PostDetailsViewModel {
 // MARK: - Related Posts
 extension PostDetailsViewModel {
   func loadReadingListImages(atIndex index: Int, maxNumberOfImages: Int, completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
-    guard let readingList = relatedPost(at: index) as? ReadingList else {
-      completionBlock(nil)
-      return
+    guard let readingList = relatedPost(at: index) as? ReadingList,
+      let identifier = readingList.id else {
+        completionBlock(nil)
+        return
     }
-    var ids: [String] = []
-    if let list = readingList.postsRelations {
-      for item in list {
-        ids.append(item.id)
-      }
-    }
-    if ids.count > 0 {
-      let limitToMaximumIds = Array(ids.prefix(maxNumberOfImages))
-      loadReadingListItems(readingListIds: limitToMaximumIds, completionBlock: completionBlock)
-    } else {
-      completionBlock(nil)
-    }
-  }
-
-  private func loadReadingListItems(readingListIds: [String], completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
-    _ = UserAPI.batch(identifiers: readingListIds) { (success, resources, error) in
+    
+    let pageSize: String = String(maxNumberOfImages)
+    let page: (number: String?, size: String?) = (nil, pageSize)
+    _ = GeneralAPI.postsContent(contentIdentifier: identifier, page: page) {
+      (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       var imageCollection: [String]? = nil
       defer {
         completionBlock(imageCollection)
       }
       if let resources = resources, success {
-        DataManager.shared.update(resources: resources)
         var images: [String] = []
         resources.forEach({ (resource) in
           if let res = resource as? ModelCommonProperties {
@@ -498,7 +487,7 @@ extension PostDetailsViewModel {
     if let sharingUrl = commonProperties.canonicalURL {
       var sharingString = sharingUrl.absoluteString
       sharingString += shortDesciption.isEmpty ? "" : "\n\n\(shortDesciption)"
-      return [sharingUrl.absoluteString, shortDesciption]
+      return [shortDesciption, sharingUrl.absoluteString]
     }
     return [shortDesciption]
   }

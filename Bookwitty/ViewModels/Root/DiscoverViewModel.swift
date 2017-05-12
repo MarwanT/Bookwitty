@@ -13,8 +13,15 @@ import Spine
 final class DiscoverViewModel {
   var cancellableRequest:  Cancellable?
   var dataIdentifiers: [String] = []
-  var data: [ModelResource] = []
+  var data: [String] = []
   var paginator: Paginator?
+
+  func resourceFor(id: String?) -> ModelResource? {
+    guard let id = id else {
+      return nil
+    }
+    return DataManager.shared.fetchResource(with: id)
+  }
 
   func cancellableOnGoingRequest() {
     if let cancellableRequest = cancellableRequest {
@@ -22,7 +29,7 @@ final class DiscoverViewModel {
     }
   }
 
-  func loadDiscoverData(completionBlock: @escaping (_ success: Bool) -> ()) {
+  func loadDiscoverData(clearData: Bool = true, afterDataEmptied: (() -> ())? = nil, completionBlock: @escaping (_ success: Bool) -> ()) {
     cancellableOnGoingRequest()
 
     cancellableRequest = DiscoverAPI.discover { (success, curatedCollection, error) in
@@ -34,8 +41,11 @@ final class DiscoverViewModel {
       if let featuredContent = sections.featuredContent {
         self.dataIdentifiers = featuredContent
       }
-      //Reset data
-      self.data = []
+      if clearData {
+        //Reset data
+        self.data = []
+      }
+      afterDataEmptied?()
       self.paginator = Paginator(ids: self.dataIdentifiers)
       self.loadNextPage(completionBlock: completionBlock)
     }
@@ -54,8 +64,9 @@ final class DiscoverViewModel {
 
           //Get the Initial Order of resources result from the dataIndentifers original ids
           for id in self.dataIdentifiers {
-            if let index = resources.index(where: { $0.id ?? "" == id }) {
-              self.data.append(resources[index])
+            if let index = resources.index(where: { $0.id ?? "" == id }),
+              let resId = resources[index].id {
+              self.data.append(resId)
             }
           }
         }
@@ -107,7 +118,7 @@ extension DiscoverViewModel {
 
   func resourceForIndex(index: Int) -> ModelResource? {
     guard data.count > index else { return nil }
-    let resource = data[index]
+    let resource = resourceFor(id: data[index])
     return resource
   }
 
@@ -125,38 +136,38 @@ extension DiscoverViewModel {
 // MARK: - Posts Actions 
 extension DiscoverViewModel {
   func witContent(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard data.count > index,
-      let contentId = data[index].id else {
+    guard data.count > index else {
         completionBlock(false)
         return
     }
+    let contentId = data[index]
 
     cancellableRequest = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
-      if success {
-        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.follow)
-      }
       completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.wit)
+      }
     })
   }
 
   func unwitContent(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard data.count > index,
-      let contentId = data[index].id else {
+    guard data.count > index else {
         completionBlock(false)
         return
     }
+    let contentId = data[index]
 
     cancellableRequest = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
-      if success {
-        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.follow)
-      }
       completionBlock(success)
+      if success {
+        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.unwit)
+      }
     })
   }
 
   func sharingContent(index: Int) -> [String]? {
     guard data.count > index,
-      let commonProperties = data[index] as? ModelCommonProperties else {
+      let commonProperties = resourceForIndex(index: index) as? ModelCommonProperties else {
         return nil
     }
 
@@ -254,35 +265,23 @@ extension DiscoverViewModel {
 // MARK: - Handle Reading Lists Images
 extension DiscoverViewModel {
   func loadReadingListImages(at indexPath: IndexPath, maxNumberOfImages: Int, completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
-    guard let readingList = data[indexPath.item] as? ReadingList else {
-      completionBlock(nil)
-      return
+    guard let readingList = resourceForIndex(index: indexPath.item) as? ReadingList,
+      let identifier = readingList.id else {
+        completionBlock(nil)
+        return
     }
     
-    var ids: [String] = []
-    if let list = readingList.postsRelations {
-      for item in list {
-        ids.append(item.id)
-      }
-    }
-    
-    if ids.count > 0 {
-      let limitToMaximumIds = Array(ids.prefix(maxNumberOfImages))
-      loadReadingListItems(readingListIds: limitToMaximumIds, completionBlock: completionBlock)
-    } else {
-      completionBlock(nil)
-    }
-  }
-  
-  private func loadReadingListItems(readingListIds: [String], completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
-    _ = UserAPI.batch(identifiers: readingListIds) { (success, resources, error) in
+    let pageSize: String = String(maxNumberOfImages)
+    let page: (number: String?, size: String?) = (nil, pageSize)
+    _ = GeneralAPI.postsContent(contentIdentifier: identifier, page: page) {
+      (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       var imageCollection: [String]? = nil
       defer {
         completionBlock(imageCollection)
       }
-      if success {
+      if let resources = resources, success {
         var images: [String] = []
-        resources?.forEach({ (resource) in
+        resources.forEach({ (resource) in
           if let res = resource as? ModelCommonProperties {
             if let imageUrl = res.thumbnailImageUrl {
               images.append(imageUrl)

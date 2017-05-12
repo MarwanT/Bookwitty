@@ -176,6 +176,7 @@
 		59DCFD7D1E96754C00C94D21 /* Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DCFD7C1E96754C00C94D21 /* Price.swift */; };
 		59DCFD7F1E96785B00C94D21 /* SupplierInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DCFD7E1E96785B00C94D21 /* SupplierInformation.swift */; };
 		59DCFD811E967BE700C94D21 /* ProductDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DCFD801E967BE700C94D21 /* ProductDetails.swift */; };
+		59E21D381EC5B0F500AF7D67 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E21D371EC5B0F500AF7D67 /* Device.swift */; };
 		59EC5BA51E6C5987006E1CB9 /* BookDetailsECommerceNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC5B9F1E6C5987006E1CB9 /* BookDetailsECommerceNode.swift */; };
 		59EC5BA61E6C5987006E1CB9 /* BookDetailsFormatNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC5BA01E6C5987006E1CB9 /* BookDetailsFormatNode.swift */; };
 		59EC5BA71E6C5987006E1CB9 /* BookDetailsHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC5BA11E6C5987006E1CB9 /* BookDetailsHeaderNode.swift */; };
@@ -438,6 +439,7 @@
 		59DCFD7C1E96754C00C94D21 /* Price.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Price.swift; sourceTree = "<group>"; };
 		59DCFD7E1E96785B00C94D21 /* SupplierInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupplierInformation.swift; sourceTree = "<group>"; };
 		59DCFD801E967BE700C94D21 /* ProductDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDetails.swift; sourceTree = "<group>"; };
+		59E21D371EC5B0F500AF7D67 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		59EC5B9F1E6C5987006E1CB9 /* BookDetailsECommerceNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsECommerceNode.swift; sourceTree = "<group>"; };
 		59EC5BA01E6C5987006E1CB9 /* BookDetailsFormatNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsFormatNode.swift; sourceTree = "<group>"; };
 		59EC5BA11E6C5987006E1CB9 /* BookDetailsHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsHeaderNode.swift; sourceTree = "<group>"; };
@@ -785,6 +787,7 @@
 				59049B101E81E36000EDF796 /* Node+Util.swift */,
 				56F9FDCB1E82F39B00A48CEB /* UIBarButtonItem+Utils.swift */,
 				5903394B1E9E6719004ED1C3 /* Utilities.swift */,
+				59E21D371EC5B0F500AF7D67 /* Device.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1653,6 +1656,7 @@
 				56320C921EA748FB00642934 /* VideoCardPostCellNode.swift in Sources */,
 				F42462B11E760E1500DB3A2C /* DTAttributedTextContentNode.swift in Sources */,
 				F420B6A41E43D01A001F34CD /* PenNameViewController.swift in Sources */,
+				59E21D381EC5B0F500AF7D67 /* Device.swift in Sources */,
 				5929C2731E5B2FDB006E08F8 /* CuratedCollection+API.swift in Sources */,
 				F42041C11E72ACCA00E7D208 /* PostDetailsViewController.swift in Sources */,
 				59EC5BA61E6C5987006E1CB9 /* BookDetailsFormatNode.swift in Sources */,

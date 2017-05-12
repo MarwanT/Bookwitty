@@ -21,7 +21,6 @@ class BookStoreViewController: UIViewController {
   let viewAllCategories = UIView.loadFromView(DisclosureView.self, owner: nil)
   let viewAllBooksView = UIView.loadFromView(DisclosureView.self, owner: nil)
   let viewAllSelectionsView = UIView.loadFromView(DisclosureView.self, owner: nil)
-  let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
   
   let refreshController = UIRefreshControl()
   
@@ -104,9 +103,6 @@ class BookStoreViewController: UIViewController {
   }
   
   private func initializeSubviews() {
-    // Activity Indicator
-    activityIndicator.constrainHeight("44")
-    
     // Featured Content View
     let itemSize = FeaturedContentCollectionViewCell.defaultSize
     let interItemSpacing: CGFloat = 10
@@ -170,6 +166,9 @@ class BookStoreViewController: UIViewController {
   }
   
   func refreshViewController() {
+    viewModel.clearData()
+    clearSubviews()
+
     refreshController.beginRefreshing()
     viewModel.loadData { (success, error) in
       self.refreshController.endRefreshing()
@@ -181,6 +180,13 @@ class BookStoreViewController: UIViewController {
       // Clear All Subviews in stack view
       self.stackView.subviews.forEach({ $0.removeFromSuperview() })
       self.loadUserInterface()
+    }
+  }
+  
+  func clearSubviews() {
+    let subviews = stackView.subviews
+    for view in subviews {
+      view.removeFromSuperview()
     }
   }
   
@@ -207,6 +213,7 @@ class BookStoreViewController: UIViewController {
   func loadFeaturedContentSection() {
     let canDisplayFeaturedContent = featuredContentCollectionView.superview == nil
     if viewModel.hasFeaturedContent && canDisplayFeaturedContent {
+      featuredContentCollectionView.reloadData()
       stackView.addArrangedSubview(featuredContentCollectionView)
       addSeparator(leftMargin)
     }
@@ -224,6 +231,7 @@ class BookStoreViewController: UIViewController {
   func loadBookwittySuggest() {
     let canDisplayBookwittySuggest = bookwittySuggestsTableView.superview == nil
     if viewModel.hasBookwittySuggests && canDisplayBookwittySuggest {
+      bookwittySuggestsTableView.reloadData()
       addSpacing(space: 10)
       stackView.addArrangedSubview(bookwittySuggestsTableView)
       bookwittySuggestsTableView.alignLeading("0", trailing: "0", toView: stackView)
@@ -236,6 +244,7 @@ class BookStoreViewController: UIViewController {
   func loadSelectionSection() {
     let canDisplaySelection = selectionTableView.superview == nil
     if viewModel.hasSelectionSection && canDisplaySelection {
+      selectionTableView.reloadData()
       addSeparator()
       addSpacing(space: sectionSpacing)
       stackView.addArrangedSubview(selectionTableView)

@@ -23,9 +23,11 @@ class PenNameViewController: UIViewController {
 
   @IBOutlet weak var topViewToTopConstraint: NSLayoutConstraint!
   let topViewToTopSpace: CGFloat = 40
+  let defaultPenNameImageSize = CGSize(width: 600, height: 600)
   let viewModel: PenNameViewModel = PenNameViewModel()
   
   var showNoteLabel: Bool = true
+  var didEditImage: Bool = false
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -89,10 +91,49 @@ class PenNameViewController: UIViewController {
       .attributedString
     if let avatarUrl = viewModel.penAvatarUrl(), let url = URL(string: avatarUrl) {
       self.profileImageView.sd_setImage(with: url)
+      self.plusImageView.alpha = 0
     }
   }
 
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
+    updateUserProfile()
+  }
+  
+  fileprivate func updateUserProfile() {
+    /**
+     Upload the pen name image if needed before proceeding
+     with completing the pen name profile update
+     */
+    showLoader()
+    
+    self.uploadUserImageIfNeeded { (imageId) in
+      self.updatePenNameProfile(imageId: imageId, completion: { (success: Bool) in
+        self.hideLoader()
+        
+        if UserManager.shared.shouldDisplayOnboarding {
+          self.pushOnboardingViewController()
+        } else {
+          _ = self.navigationController?.popViewController(animated: true)
+        }
+      })
+    }
+  }
+  
+  fileprivate func uploadUserImageIfNeeded(completion: @escaping (_ imageId: String?)->()) {
+    guard didEditImage, let image = profileImageView.image else {
+      completion(nil)
+      return
+    }
+    
+    viewModel.upload(image: image, completion: {
+      (success, imageId) in
+      self.didEditImage = false
+      completion(imageId)
+    })
+  }
+  
+  
+  fileprivate func updatePenNameProfile(imageId: String?, completion: @escaping (_ success: Bool) -> Void) {
     // Set the show pen name flag to false
     UserManager.shared.shouldEditPenName = false
     
@@ -102,31 +143,28 @@ class PenNameViewController: UIViewController {
 
     let name = penNameInputField.textField.text
     let biography = biographyTextView.text
-    let avatarId: String? = nil
-
+    
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .Account,
                                                  action: .EditPenName)
     Analytics.shared.send(event: event)
-
-    showLoader()
-    self.viewModel.updatePenNameIfNeeded(name: name, biography: biography, avatarId: avatarId) {
+    
+    self.viewModel.updatePenNameIfNeeded(name: name, biography: biography, avatarId: imageId) {
       (success: Bool) in
-      self.hideLoader()
-      
-      // TODO: Handle the fail here
-
-      if UserManager.shared.shouldDisplayOnboarding {
-        self.pushOnboardingViewController()
-      } else {
-        _ = self.navigationController?.popViewController(animated: true)
-      }
+      completion(success)
     }
   }
   
   fileprivate func pushOnboardingViewController() {
     let onboardingViewController = OnBoardingViewController()
     navigationController?.pushViewController(onboardingViewController, animated: true)
+  }
+  
+  fileprivate func resized(_ image: UIImage?) -> UIImage? {
+    guard let imageSize = image?.size, (imageSize.height > defaultPenNameImageSize.height || imageSize.width > defaultPenNameImageSize.width) else {
+      return image
+    }
+    return image?.imageWithSize(size: defaultPenNameImageSize)
   }
 
   // MARK: - Keyboard Handling
@@ -157,6 +195,7 @@ class PenNameViewController: UIViewController {
       self.openCamera()
     })
     let  removePhotoButton = UIAlertAction(title: Strings.clear_profile_photo(), style: .default, handler: { (action) -> Void in
+      self.profileImageView.image = nil
       self.plusImageView.alpha = 1
     })
 
@@ -176,7 +215,8 @@ class PenNameViewController: UIViewController {
     let croppingEnabled = true
     let libraryEnabled = false
     let cameraViewController = CameraViewController(croppingEnabled: croppingEnabled, allowsLibraryAccess: libraryEnabled) { [weak self] image, asset in
-      if let image = image {
+      if let image = self?.resized(image) {
+        self?.didEditImage = true
         self?.profileImageView.image = image
         self?.plusImageView.alpha = 0
       }
@@ -188,7 +228,8 @@ class PenNameViewController: UIViewController {
   func openLibrary() {
     let croppingEnabled = true
     let libraryViewController = CameraViewController.imagePickerViewController(croppingEnabled: croppingEnabled) { image, asset in
-      if let image = image {
+      if let image = self.resized(image) {
+        self.didEditImage = true
         self.profileImageView.image = image
         self.plusImageView.alpha = 0
       }

@@ -42,7 +42,7 @@ class ProductDetails: NSObject {
     let json = JSON(dictionary)
     
     self.author = json["author"].stringValue
-    self.categories = json["categories"].arrayObject as? [String]
+    self.categories = (json["categories"].arrayObject as? [String])?.filter({ !$0.isBlank })
     self.imprint = json["imprint"].stringValue
     self.isbn10 = json["isbn10"].stringValue
     self.isbn13 = json["isbn13"].stringValue

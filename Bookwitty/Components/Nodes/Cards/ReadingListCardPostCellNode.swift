@@ -215,10 +215,12 @@ extension ReadingListCardPostCellNode: ReadingListCardViewModelDelegate {
     setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
     setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
 
-    if values.content.relatedContent.posts.count > 0 {
-      node.loadImages(with: values.content.relatedContent.posts)
-    } else if values.content.relatedContent.count > 0 {
-      node.prepareImages(imageCount: values.content.relatedContent.count)
+    if !node.isImageCollectionLoaded {
+      if values.content.relatedContent.posts.count > 0 {
+        node.loadImages(with: values.content.relatedContent.posts)
+      } else if values.content.relatedContent.count > 0 {
+        node.prepareImages(imageCount: values.content.relatedContent.count)
+      }
     }
   }
 }

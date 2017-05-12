@@ -40,9 +40,18 @@ class DataManager {
     }
 
     if var newResource = resource as? ModelCommonProperties,
-      newResource.penName == nil,
-      let existingResource = pool[identifier] {
-      newResource.penName = (existingResource as? ModelCommonProperties)?.penName
+      let existingResource = pool[identifier] as? ModelCommonProperties {
+      if newResource.penName == nil {
+        newResource.penName = existingResource.penName
+      }
+
+      if !(newResource.counts?.isValid() ?? true) {
+        newResource.counts = existingResource.counts
+      }
+
+      if newResource.contributors?.count ?? 0 <= existingResource.contributors?.count ?? 0 {
+        newResource.contributors = existingResource.contributors
+      }
     }
 
     pool.updateValue(resource, forKey: identifier)
