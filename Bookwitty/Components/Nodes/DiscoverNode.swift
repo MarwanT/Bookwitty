@@ -38,3 +38,15 @@ class DiscoverNode: ASDisplayNode {
     //TODO: Node setup
   }
 }
+
+// MARK: - Layout Specs
+extension DiscoverNode {
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let nodes: [ASLayoutElement] = [segmentedNode, collectionNode]
+    let verticalStackSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0,
+                                              justifyContent: .start,
+                                              alignItems: .stretch,
+                                              children: nodes)
+    return verticalStackSpec
+  }
+}
