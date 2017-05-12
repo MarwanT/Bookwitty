@@ -104,7 +104,13 @@ class PenNameViewController: UIViewController {
   }
 
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
-    updateUserProfile()
+    switch mode {
+    case .New:
+    //TODO: handle New mode
+      break
+    case .Edit:
+      updateUserProfile()
+    }
   }
   
   fileprivate func updateUserProfile() {
