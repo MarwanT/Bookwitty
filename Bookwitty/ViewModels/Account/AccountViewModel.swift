@@ -12,8 +12,8 @@ final class AccountViewModel {
   enum Sections: Int {
     case UserInformation
     case PenNames
-    case CustomerService
     case CreatePenNames
+    case CustomerService
   }
 
   private var sectionTitles: [String] = []
@@ -28,7 +28,7 @@ final class AccountViewModel {
 
   func fillSectionTitles() {
     self.sectionTitles.removeAll()
-    self.sectionTitles += ["", Strings.pen_names(), Strings.customer_service()]
+    self.sectionTitles += ["", Strings.pen_names(), "", Strings.customer_service()]
   }
 
   func headerInformation() -> (name: String, image: UIImage?) {
