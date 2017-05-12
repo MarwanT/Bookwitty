@@ -11,6 +11,8 @@ import AsyncDisplayKit
 
 class DiscoverNode: ASDisplayNode {
 
+  fileprivate let segmentedNodeHeight: CGFloat = 45.0
+
   fileprivate let collectionNode: ASCollectionNode
   fileprivate let flowLayout: UICollectionViewFlowLayout
   fileprivate let segmentedNode: SegmentedControlNode
@@ -25,6 +27,8 @@ class DiscoverNode: ASDisplayNode {
   }
 
   func setupNode() {
+    segmentedNode.style.preferredSize = CGSize(width: collectionNode.style.maxWidth.value, height: segmentedNodeHeight)
+    
     //TODO: Node setup
   }
 }
