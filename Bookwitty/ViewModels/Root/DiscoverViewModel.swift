@@ -16,7 +16,10 @@ final class DiscoverViewModel {
   var booksIdentifiers: [String] = []
   var pagesIdentifiers: [String] = []
   var data: [String] = []
-  var paginator: Paginator?
+
+  fileprivate var contentPaginator: Paginator?
+  fileprivate var booksPaginator: Paginator?
+  fileprivate var pagesPaginator: Paginator?
 
   func resourceFor(id: String?) -> ModelResource? {
     guard let id = id else {
@@ -54,13 +57,13 @@ final class DiscoverViewModel {
         self.data = []
       }
       afterDataEmptied?()
-      self.paginator = Paginator(ids: self.contentIdentifiers)
+      self.setupDiscoverPaginators(contentIdentifiers: self.contentIdentifiers, booksIdentifiers: self.booksIdentifiers, pagesIdentifiers: self.pagesIdentifiers)
       self.loadNextPage(for: segment, completionBlock: completionBlock)
     }
   }
 
   func loadNextPage(for segment: DiscoverViewController.Segment, completionBlock: @escaping (_ success: Bool) -> ()) {
-    if let listOfIdentifiers = self.paginator?.nextPageIds() {
+    if let listOfIdentifiers = self.nextPageIds(for: segment) {
       cancellableOnGoingRequest()
       cancellableRequest = loadBatch(listOfIdentifiers: listOfIdentifiers, completion: { (success: Bool, resources: [Resource]?, error: BookwittyAPIError?) in
         defer {
@@ -110,12 +113,43 @@ final class DiscoverViewModel {
   }
 }
 
-// MARK: - Collection Helper
+// MARK: - Segments Helper
 extension DiscoverViewModel {
-  func hasNextPage(for segment: DiscoverViewController.Segment) -> Bool {
-    return paginator?.hasMorePages() ?? false
+  func setupDiscoverPaginators(contentIdentifiers: [String], booksIdentifiers: [String], pagesIdentifiers: [String]) {
+    self.contentPaginator = Paginator(ids: contentIdentifiers)
+    self.booksPaginator = Paginator(ids: booksIdentifiers)
+    self.pagesPaginator = Paginator(ids: pagesIdentifiers)
   }
 
+  func nextPageIds(for segment: DiscoverViewController.Segment) -> [String]? {
+    switch segment {
+    case .content:
+      return self.contentPaginator?.nextPageIds()
+    case .books:
+      return self.booksPaginator?.nextPageIds()
+    case .pages:
+      return self.pagesPaginator?.nextPageIds()
+    default:
+      return nil
+    }
+  }
+
+  func hasNextPage(for segment: DiscoverViewController.Segment) -> Bool {
+    switch segment {
+    case .content:
+      return self.contentPaginator?.hasMorePages() ?? false
+    case .books:
+      return self.booksPaginator?.hasMorePages() ?? false
+    case .pages:
+      return self.pagesPaginator?.hasMorePages() ?? false
+    default:
+      return false
+    }
+  }
+}
+
+// MARK: - Collection Helper
+extension DiscoverViewModel {
   func numberOfSections() -> Int {
     return DiscoverViewController.Section.numberOfSections
   }
