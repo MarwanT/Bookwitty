@@ -11,6 +11,12 @@ import ALCameraViewController
 import SwiftLoader
 
 class PenNameViewController: UIViewController {
+
+  enum Mode {
+    case New
+    case Edit
+  }
+
   @IBOutlet weak var profileContainerView: UIView!
   @IBOutlet weak var plusImageView: UIImageView!
   @IBOutlet weak var penNameLabel: UILabel!
@@ -28,6 +34,8 @@ class PenNameViewController: UIViewController {
   
   var showNoteLabel: Bool = true
   var didEditImage: Bool = false
+
+  var mode: Mode = .New
 
   override func viewDidLoad() {
     super.viewDidLoad()

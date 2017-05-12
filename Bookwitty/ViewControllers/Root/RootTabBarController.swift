@@ -144,6 +144,7 @@ class RootTabBarController: UITabBarController {
   
   fileprivate func presentPenNameViewController(user: User) {
     let penNameViewController = Storyboard.Access.instantiate(PenNameViewController.self)
+    penNameViewController.mode = .Edit
     penNameViewController.viewModel.initializeWith(penName: user.penNames?.first, andUser: user)
     let navigationController = UINavigationController(rootViewController: penNameViewController)
     present(navigationController, animated: true, completion: nil)
