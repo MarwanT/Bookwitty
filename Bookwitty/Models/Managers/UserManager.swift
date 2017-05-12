@@ -69,6 +69,12 @@ class UserManager {
     }
   }
 
+  func append(penName: PenName) {
+    var penNames = signedInUser.penNames ?? []
+    penNames.append(penName)
+    saveSignedInUserPenNames(penNames: penNames)
+  }
+
   var defaultPenName: PenName? {
     return getUserDefaultPenName()
   }
