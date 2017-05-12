@@ -104,6 +104,7 @@ public struct APIProvider {
       }
       headerParameters["Content-Type"] = "application/vnd.api+json";
       headerParameters["Accept"] = "application/vnd.api+json"
+      headerParameters["User-Agent"] = userAgentValue
 
       if let language = Localization.Language(rawValue: GeneralSettings.sharedInstance.preferredLanguage) {
         headerParameters["Accept-Language"] = language.rawValue
@@ -180,6 +181,16 @@ public struct APIProvider {
     set (newSharedProvider) {
       SharedProvider.instance = newSharedProvider
     }
+  }
+}
+
+extension APIProvider {
+  static var userAgentValue: String {
+    let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+    let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
+    let currentDevice = UIDevice.current
+    let deviceType = currentDevice.deviceType
+    return "Bookwitty/\(version)+\(buildNumber) (iOS/\(currentDevice.systemVersion); \(deviceType.displayName);)"
   }
 }
 
