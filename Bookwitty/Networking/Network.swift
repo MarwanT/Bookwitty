@@ -50,14 +50,6 @@ public typealias BookwittyAPICompletion = (_ data: Data?,_ statusCode: Int?,_ re
 private typealias APIOperation = (target: BookwittyAPI, completion: BookwittyAPICompletion)
 private var operationQueue: [APIOperation] = [APIOperation]()
 
-var userAgentValue: String {
-  let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
-  let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
-  let currentDevice = UIDevice.current
-  let deviceType = currentDevice.deviceType
-  return "Bookwitty/\(version)+\(buildNumber) (iOS/\(currentDevice.systemVersion); \(deviceType.displayName);)"
-}
-
 
 /**
  An endpoint is a semi-internal data structure that Moya uses to reason about the network request that will ultimately be made. An endpoint stores the following data: 
@@ -189,6 +181,16 @@ public struct APIProvider {
     set (newSharedProvider) {
       SharedProvider.instance = newSharedProvider
     }
+  }
+}
+
+extension APIProvider {
+  static var userAgentValue: String {
+    let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+    let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
+    let currentDevice = UIDevice.current
+    let deviceType = currentDevice.deviceType
+    return "Bookwitty/\(version)+\(buildNumber) (iOS/\(currentDevice.systemVersion); \(deviceType.displayName);)"
   }
 }
 
