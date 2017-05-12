@@ -69,7 +69,7 @@ class AccountViewController: UIViewController {
         break
       }
     case AccountViewModel.Sections.CreatePenNames.rawValue:
-      break
+      pushPenNameViewController()
     case AccountViewModel.Sections.CustomerService.rawValue:
       switch indexPath.row {
       case 0:
