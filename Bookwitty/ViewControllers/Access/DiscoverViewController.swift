@@ -238,7 +238,7 @@ extension DiscoverViewController {
 // MARK: - Themeable
 extension DiscoverViewController: Themeable {
   func applyTheme() {
-    collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+    collectionNode.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
   }
 }
 
