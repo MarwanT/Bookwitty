@@ -11,7 +11,15 @@ import AsyncDisplayKit
 
 class DiscoverNode: ASDisplayNode {
 
+  fileprivate let collectionNode: ASCollectionNode
+  fileprivate let flowLayout: UICollectionViewFlowLayout
+  fileprivate let segmentedNode: SegmentedControlNode
+  
   override init() {
+    flowLayout = UICollectionViewFlowLayout()
+    flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+    segmentedNode = SegmentedControlNode()
     super.init()
     setupNode()
   }
