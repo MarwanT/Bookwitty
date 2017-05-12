@@ -11,24 +11,24 @@ import UIKit
 import AsyncDisplayKit
 import Spine
 
-class DiscoverViewController: ASViewController<ASCollectionNode> {
+class DiscoverViewController: ASViewController<ASDisplayNode> {
   enum LoadingStatus {
     case none
     case loadMore
     case reloading
     case loading
   }
-  let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
-  let collectionNode: ASCollectionNode
-  let flowLayout: UICollectionViewFlowLayout
-  let pullToRefresher = UIRefreshControl()
-  let loaderNode: LoaderNode
-  fileprivate var segmentedNode: SegmentedControlNode
+
+  fileprivate let pullToRefresher = UIRefreshControl()
+  fileprivate let loaderNode: LoaderNode
+  fileprivate let collectionNode: ASCollectionNode
+  fileprivate let segmentedNode: SegmentedControlNode
   fileprivate let contentTitleHeaderNode: SectionTitleHeaderNode
   fileprivate let booksTitleHeaderNode: SectionTitleHeaderNode
   fileprivate let pagesTitleHeaderNode: SectionTitleHeaderNode
+  fileprivate let discoverNode: DiscoverNode
 
-  var collectionView: ASCollectionView?
+  fileprivate var collectionView: ASCollectionView?
 
   let viewModel = DiscoverViewModel()
   var loadingStatus: LoadingStatus = .none
@@ -41,18 +41,16 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
   }
 
   init() {
-    flowLayout = UICollectionViewFlowLayout()
-    flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: externalMargin/2, right: 0)
-    flowLayout.minimumInteritemSpacing  = 0
-    flowLayout.minimumLineSpacing       = 0
-    collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+    discoverNode = DiscoverNode()
+    collectionNode = discoverNode.collectionNode
+    segmentedNode = discoverNode.segmentedNode
+
     loaderNode = LoaderNode()
     activeSegment = segments[0]
-    segmentedNode = SegmentedControlNode()
     contentTitleHeaderNode = SectionTitleHeaderNode()
     booksTitleHeaderNode = SectionTitleHeaderNode()
     pagesTitleHeaderNode = SectionTitleHeaderNode()
-    super.init(node: collectionNode)
+    super.init(node: discoverNode)
 
     collectionNode.onDidLoad { [weak self] (collectionNode) in
       guard let strongSelf = self,
@@ -113,7 +111,6 @@ class DiscoverViewController: ASViewController<ASCollectionNode> {
     segmentedNode.selectedSegmentChanged = { [weak self] (segmentedControlNode: SegmentedControlNode, index: Int) in
       self?.segmentedNode(segmentedControlNode: segmentedControlNode, didSelectSegmentIndex: index)
     }
-    segmentedNode.style.preferredSize = CGSize(width: collectionNode.style.maxWidth.value, height: 45.0)
 
     setupHeaderTitles()
   }
