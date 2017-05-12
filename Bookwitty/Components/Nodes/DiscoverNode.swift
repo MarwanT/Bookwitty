@@ -13,10 +13,10 @@ class DiscoverNode: ASDisplayNode {
 
   fileprivate let segmentedNodeHeight: CGFloat = 45.0
 
-  fileprivate let collectionNode: ASCollectionNode
   fileprivate let flowLayout: UICollectionViewFlowLayout
-  fileprivate let segmentedNode: SegmentedControlNode
-  
+  let collectionNode: ASCollectionNode
+  let segmentedNode: SegmentedControlNode
+
   override init() {
     flowLayout = UICollectionViewFlowLayout()
     flowLayout.sectionInset = UIEdgeInsets(top: 0.0, left: 0, bottom: 0.0, right: 0)
