@@ -32,6 +32,19 @@ final class PenNameViewModel {
     self.user = user
   }
 
+  func createPenName(name: String, biography: String?, avatarId: String?, completion: ((Bool)->())?) {
+    _ = PenNameAPI.createPenName(name: name, biography: biography, avatarId: avatarId, avatarUrl: nil, facebookUrl: nil, tumblrUrl: nil, googlePlusUrl: nil, twitterUrl: nil, instagramUrl: nil, pinterestUrl: nil, youtubeUrl: nil, linkedinUrl: nil, wordpressUrl: nil, websiteUrl: nil) {
+      (success: Bool, penName: PenName?, error: BookwittyAPIError?) in
+      defer {
+        completion?(success)
+      }
+
+      if let penName = penName {
+        UserManager.shared.append(penName: penName)
+      }
+    }
+  }
+
   func updatePenNameIfNeeded(name: String?, biography: String?, avatarId: String?, completion: ((Bool)->())?) {
     guard let penName = penName, let identifier = penName.id else {
       completion?(false)
