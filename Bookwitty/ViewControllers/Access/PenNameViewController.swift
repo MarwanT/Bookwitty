@@ -106,10 +106,35 @@ class PenNameViewController: UIViewController {
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
     switch mode {
     case .New:
-    //TODO: handle New mode
-      break
+      createPenNameProfile()
     case .Edit:
       updateUserProfile()
+    }
+  }
+
+  fileprivate func createPenNameProfile() {
+    /**
+     Upload the pen name image if needed before proceeding
+     with completing the pen name profile creation
+     */
+    showLoader()
+    self.uploadUserImageIfNeeded { (imageId) in
+      self.createPenName(imageId: imageId)
+    }
+  }
+
+  fileprivate func createPenName(imageId: String?) {
+    // Hide keyboard if visible
+    _ = penNameInputField.resignFirstResponder()
+    _ = biographyTextView.resignFirstResponder()
+
+    let name = penNameInputField.textField.text ?? ""
+    let biography = biographyTextView.text
+
+    self.viewModel.createPenName(name: name, biography: biography, avatarId: imageId) {
+      (success: Bool) in
+      self.hideLoader()
+      _ = self.navigationController?.popViewController(animated: true)
     }
   }
   
