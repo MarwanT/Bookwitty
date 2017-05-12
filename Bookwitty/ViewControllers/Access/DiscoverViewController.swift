@@ -19,6 +19,8 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
     case loading
   }
 
+  fileprivate let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
+  fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let pullToRefresher = UIRefreshControl()
   fileprivate let loaderNode: LoaderNode
   fileprivate let collectionNode: ASCollectionNode
@@ -206,6 +208,22 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
         strongSelf.pullToRefresher.endRefreshing()
         strongSelf.updateCollection(orReloadAll: true)
       }
+    }
+  }
+}
+
+//MARK: - UICollectionViewDelegateFlowLayout implementation
+extension DiscoverViewController: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    switch (section) {
+    case Section.cards.rawValue:
+      return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+    case Section.header.rawValue:
+      return  UIEdgeInsets(top: externalMargin, left: 0.0, bottom: internalMargin, right: 0.0)
+    case Section.activityIndicator.rawValue:
+      return  UIEdgeInsets(top: externalMargin/2, left: 0.0, bottom: externalMargin/2, right: 0.0)
+    default:
+      return UIEdgeInsets.zero
     }
   }
 }
