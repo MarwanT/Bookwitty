@@ -23,6 +23,7 @@ class DiscoverNode: ASDisplayNode {
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     segmentedNode = SegmentedControlNode()
     super.init()
+    automaticallyManagesSubnodes = true
     setupNode()
   }
 
