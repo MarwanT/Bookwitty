@@ -101,12 +101,16 @@ class AccountViewController: UIViewController {
     navigationController?.pushViewController(settingsViewController, animated: true)
   }
 
-  func pushPenNameViewController(indexPath: IndexPath) {
+  func pushPenNameViewController(indexPath: IndexPath? = nil) {
     let penNameViewController = Storyboard.Access.instantiate(PenNameViewController.self)
+    var mode: PenNameViewController.Mode = .New
+    if let indexPath = indexPath {
+      let penName = viewModel.selectedPenName(atRow: indexPath.row)
+      penNameViewController.viewModel.initializeWith(penName: penName, andUser: UserManager.shared.signedInUser)
+      mode = .Edit
+    }
+    penNameViewController.mode = mode
     penNameViewController.showNoteLabel = false
-    let penName = viewModel.selectedPenName(atRow: indexPath.row)
-    penNameViewController.mode = .Edit
-    penNameViewController.viewModel.initializeWith(penName: penName, andUser: UserManager.shared.signedInUser)
     navigationController?.pushViewController(penNameViewController, animated: true)
   }
 
