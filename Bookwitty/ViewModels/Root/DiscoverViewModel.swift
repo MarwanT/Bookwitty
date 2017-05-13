@@ -256,7 +256,7 @@ extension DiscoverViewModel {
       return
     }
 
-    cancellableRequest = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
+    _ = NewsfeedAPI.wit(contentId: contentId, completion: { (success, error) in
       completionBlock(success)
       if success {
         DataManager.shared.updateResource(with: contentId, after: DataManager.Action.wit)
@@ -270,7 +270,7 @@ extension DiscoverViewModel {
       return
     }
 
-    cancellableRequest = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
+    _ = NewsfeedAPI.unwit(contentId: contentId, completion: { (success, error) in
       completionBlock(success)
       if success {
         DataManager.shared.updateResource(with: contentId, after: DataManager.Action.unwit)
