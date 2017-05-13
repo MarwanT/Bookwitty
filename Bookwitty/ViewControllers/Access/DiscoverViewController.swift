@@ -85,15 +85,13 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     if loadingStatus == .none && viewModel.numberOfItemsInSection(for: activeSegment, section: Section.cards.rawValue) == 0 {
-      loadingStatus = .reloading
+      loadingStatus = .loading
       updateCollection(loaderSection: true)
-      self.pullToRefresher.beginRefreshing()
       viewModel.refreshData(for: activeSegment, afterDataEmptied: {
         self.updateCollection(orReloadAll: true)
       })  { [weak self] (success, segment) in
         guard let strongSelf = self else { return }
         strongSelf.loadingStatus = .none
-        strongSelf.pullToRefresher.endRefreshing()
         strongSelf.updateCollection(orReloadAll: true)
       }
     }
