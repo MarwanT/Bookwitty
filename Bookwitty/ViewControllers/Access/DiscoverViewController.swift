@@ -116,9 +116,24 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
   }
 
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
+    guard loadingStatus == .none else {
+      self.activeSegment = segment(withIndex: index)
+      updateCollection(cardsSection: true, loaderSection: true, headerSection: true)
+      return
+    }
+
     self.activeSegment = segment(withIndex: index)
-    updateCollection(headerSection: true)
-    //TODO: loadData()
+    loadingStatus = .loading
+    updateCollection(cardsSection: true, loaderSection: true, headerSection: true)
+    viewModel.loadDataIfNeeded(for: activeSegment, clearData: true, afterDataEmptied: {
+      self.updateCollection(cardsSection: true)
+    }) { [weak self] (success, segment) in
+      guard let strongSelf = self else { return }
+      strongSelf.loadingStatus = .none
+      if strongSelf.activeSegment.index == segment.index {
+        strongSelf.updateCollection(cardsSection: true, loaderSection: true)
+      }
+    }
   }
 
   private func setupHeaderTitles() {
