@@ -173,7 +173,13 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
   }
 
   func pullDownToReloadData() {
-    guard loadingStatus != .reloading else {
+    guard pullToRefresher.isRefreshing else {
+      //Making sure that only UIRefreshControl will trigger this on valueChanged
+      return
+    }
+    guard loadingStatus == .none else {
+      pullToRefresher.endRefreshing()
+      //Making sure that only UIRefreshControl will trigger this on valueChanged
       return
     }
 
