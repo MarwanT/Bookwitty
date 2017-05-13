@@ -84,7 +84,7 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    if loadingStatus == .none && viewModel.numberOfItemsInSection(for: activeSegment, section: Section.cards.rawValue) == 0 {
+    if loadingStatus == .none && viewModel.numberOfItems(for: activeSegment) == 0 {
       loadingStatus = .loading
       updateCollection(loaderSection: true)
       viewModel.refreshData(for: activeSegment, afterDataEmptied: {
@@ -286,7 +286,7 @@ extension DiscoverViewController: ASCollectionDataSource {
     case DiscoverViewController.Section.header.rawValue:
       return 1
     case DiscoverViewController.Section.cards.rawValue:
-      return viewModel.numberOfItemsInSection(for: activeSegment, section: section)
+      return viewModel.numberOfItems(for: activeSegment)
     default:
       return (loadingStatus == .none || loadingStatus == .reloading) ? 0 : 1
     }
@@ -382,7 +382,7 @@ extension DiscoverViewController: ASCollectionDelegate {
       self.updateCollection(loaderSection: true)
     }
 
-    let initialLastIndexPath: Int = viewModel.numberOfItemsInSection(for: activeSegment, section: Section.cards.rawValue)
+    let initialLastIndexPath: Int = viewModel.numberOfItems(for: activeSegment)
 
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .Discover,
@@ -403,7 +403,7 @@ extension DiscoverViewController: ASCollectionDelegate {
       guard let strongSelf = self else {
         return
       }
-      let finalLastIndexPath: Int = strongSelf.viewModel.numberOfItemsInSection(for: strongSelf.activeSegment, section: Section.cards.rawValue)
+      let finalLastIndexPath: Int = strongSelf.viewModel.numberOfItems(for: strongSelf.activeSegment)
 
       if success && finalLastIndexPath > initialLastIndexPath {
         let updateIndexRange = initialLastIndexPath..<finalLastIndexPath

@@ -256,8 +256,8 @@ extension DiscoverViewModel {
     return DiscoverViewController.Section.numberOfSections
   }
 
-  func numberOfItemsInSection(for segment: DiscoverViewController.Segment, section: Int) -> Int {
-    return DiscoverViewController.Section.cards.rawValue == section ? dataCount(for: segment) : 1
+  func numberOfItems(for segment: DiscoverViewController.Segment) -> Int {
+    return dataCount(for: segment)
   }
 
   func resourceForIndex(for segment: DiscoverViewController.Segment, index: Int) -> ModelResource? {
