@@ -63,7 +63,7 @@ final class DiscoverViewModel {
         completionBlock(false, segment)
         return
       }
-      //Note: We may need Add booksIdentifiers and readingListIdentifiers later
+      
       if let featuredContent = sections.featuredContent {
         self.contentIdentifiers = featuredContent
       }
