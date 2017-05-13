@@ -379,8 +379,11 @@ extension DiscoverViewController: ASCollectionDelegate {
       var updatedIndexPathRange: [IndexPath]? = nil
       defer {
         context.completeBatchFetching(true)
-        self!.loadingStatus = .none
-        self?.updateCollection(with: updatedIndexPathRange, loaderSection: true)
+        self?.loadingStatus = .none
+        if let activeSegment = self?.activeSegment,
+          activeSegment.index == segment.index {
+          self?.updateCollection(with: updatedIndexPathRange, loaderSection: true)
+        }
       }
       guard let strongSelf = self else {
         return
