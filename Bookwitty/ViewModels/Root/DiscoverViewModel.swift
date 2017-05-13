@@ -32,14 +32,14 @@ final class DiscoverViewModel {
     return DataManager.shared.fetchResource(with: id)
   }
 
-  func cancellableOnGoingRequest() {
+  func cancelOnGoingRequest() {
     if let cancellableRequest = cancellableRequest {
       cancellableRequest.cancel()
     }
   }
 
   func refreshData(for segment: DiscoverViewController.Segment, clearData: Bool = true, afterDataEmptied: (() -> ())? = nil, completionBlock: @escaping (_ success: Bool, _ segment: DiscoverViewController.Segment) -> ()) {
-    cancellableOnGoingRequest()
+    cancelOnGoingRequest()
     loadDiscoverData(for: segment, clearData: clearData, afterDataEmptied: afterDataEmptied, completionBlock: completionBlock)
   }
   
@@ -79,7 +79,7 @@ final class DiscoverViewModel {
       }
       afterDataEmptied?()
       self.setupPaginators(for: segment)
-      self.cancellableOnGoingRequest()
+      self.cancelOnGoingRequest()
       self.loadNextPage(for: segment,completionBlock: completionBlock)
     }
   }

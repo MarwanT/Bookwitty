@@ -215,7 +215,7 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
 
   func refreshViewControllerData() {
     if loadingStatus == .none {
-      viewModel.cancellableOnGoingRequest()
+      viewModel.cancelOnGoingRequest()
       self.loadingStatus = .loading
       updateCollection(loaderSection: true)
       self.pullToRefresher.beginRefreshing()
