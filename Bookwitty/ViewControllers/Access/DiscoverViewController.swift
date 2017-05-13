@@ -88,9 +88,9 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
       loadingStatus = .reloading
       updateCollection(loaderSection: true)
       self.pullToRefresher.beginRefreshing()
-      viewModel.loadDiscoverData(for: activeSegment, afterDataEmptied: {
+      viewModel.refreshData(for: activeSegment, afterDataEmptied: {
         self.updateCollection(orReloadAll: true)
-      })  { [weak self] (success) in
+      })  { [weak self] (success, segment) in
         guard let strongSelf = self else { return }
         strongSelf.loadingStatus = .none
         strongSelf.pullToRefresher.endRefreshing()
@@ -186,7 +186,7 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
     loadingStatus = .reloading
     updateCollection(loaderSection: true)
     self.pullToRefresher.beginRefreshing()
-    viewModel.loadDiscoverData(for: activeSegment, clearData: true) { [weak self] (success) in
+    viewModel.refreshData(for: activeSegment, clearData: true) { [weak self] (success, segment) in
       guard let strongSelf = self else { return }
       strongSelf.loadingStatus = .none
       strongSelf.pullToRefresher.endRefreshing()
@@ -200,9 +200,9 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
       self.loadingStatus = .loading
       updateCollection(loaderSection: true)
       self.pullToRefresher.beginRefreshing()
-      viewModel.loadDiscoverData(for: activeSegment, afterDataEmptied: {
+      viewModel.refreshData(for: activeSegment, afterDataEmptied: {
         self.updateCollection(orReloadAll: true)
-      })  { [weak self] (success) in
+      })  { [weak self] (success, segment) in
         guard let strongSelf = self else { return }
         strongSelf.loadingStatus = .none
         strongSelf.pullToRefresher.endRefreshing()
@@ -356,6 +356,7 @@ extension DiscoverViewController: ASCollectionDelegate {
       context.completeBatchFetching(true)
       return
     }
+
     context.beginBatchFetching()
     self.loadingStatus = .loadMore
     DispatchQueue.main.async {
@@ -370,7 +371,7 @@ extension DiscoverViewController: ASCollectionDelegate {
     Analytics.shared.send(event: event)
 
     // Fetch next page data
-    viewModel.loadNextPage(for: activeSegment) { [weak self] (success) in
+    viewModel.loadNextPage(for: activeSegment) { [weak self] (success, segment) in
       var updatedIndexPathRange: [IndexPath]? = nil
       defer {
         context.completeBatchFetching(true)

@@ -38,12 +38,29 @@ final class DiscoverViewModel {
     }
   }
 
-  func loadDiscoverData(for segment: DiscoverViewController.Segment, clearData: Bool = true, afterDataEmptied: (() -> ())? = nil, completionBlock: @escaping (_ success: Bool) -> ()) {
+  func refreshData(for segment: DiscoverViewController.Segment, clearData: Bool = true, afterDataEmptied: (() -> ())? = nil, completionBlock: @escaping (_ success: Bool, _ segment: DiscoverViewController.Segment) -> ()) {
     cancellableOnGoingRequest()
+    loadDiscoverData(for: segment, clearData: clearData, afterDataEmptied: afterDataEmptied, completionBlock: completionBlock)
+  }
+  
+  func loadDataIfNeeded(for segment: DiscoverViewController.Segment, clearData: Bool = true, afterDataEmptied: (() -> ())? = nil, completionBlock: @escaping (_ success: Bool, _ segment: DiscoverViewController.Segment) -> ()) {
+    guard dataCount(for: segment) > 0 else {
+      if identifiers(for: segment).count == 0 {
+        loadDiscoverData(for: segment, clearData: clearData, afterDataEmptied: afterDataEmptied, completionBlock: completionBlock)
+      } else {
+        setupPaginators(for: segment)
+        loadNextPage(for: segment, completionBlock: completionBlock)
+      }
+      return
+    }
 
+    completionBlock(true, segment)
+  }
+
+  private func loadDiscoverData(for segment: DiscoverViewController.Segment, clearData: Bool = true, afterDataEmptied: (() -> ())? = nil, completionBlock: @escaping (_ success: Bool, _ segment: DiscoverViewController.Segment) -> ()) {
     cancellableRequest = DiscoverAPI.discover { (success, curatedCollection, error) in
       guard let sections = curatedCollection?.sections else {
-        completionBlock(false)
+        completionBlock(false, segment)
         return
       }
       //Note: We may need Add booksIdentifiers and readingListIdentifiers later
@@ -61,17 +78,17 @@ final class DiscoverViewModel {
         self.clearData(for: segment)
       }
       afterDataEmptied?()
-      self.setupDiscoverPaginators(contentIdentifiers: self.contentIdentifiers, booksIdentifiers: self.booksIdentifiers, pagesIdentifiers: self.pagesIdentifiers)
-      self.loadNextPage(for: segment, completionBlock: completionBlock)
+      self.setupPaginators(for: segment)
+      self.cancellableOnGoingRequest()
+      self.loadNextPage(for: segment,completionBlock: completionBlock)
     }
   }
 
-  func loadNextPage(for segment: DiscoverViewController.Segment, completionBlock: @escaping (_ success: Bool) -> ()) {
+  func loadNextPage(for segment: DiscoverViewController.Segment, completionBlock: @escaping (_ success: Bool, _ segment: DiscoverViewController.Segment) -> ()) {
     if let listOfIdentifiers = self.nextPageIds(for: segment) {
-      cancellableOnGoingRequest()
       cancellableRequest = loadBatch(listOfIdentifiers: listOfIdentifiers, completion: { (success: Bool, resources: [Resource]?, error: BookwittyAPIError?) in
         defer {
-          completionBlock(success)
+          completionBlock(success, segment)
         }
         if let resources = resources, success {
           DataManager.shared.update(resources: resources)
@@ -79,7 +96,7 @@ final class DiscoverViewModel {
         }
       })
     } else {
-      completionBlock(false)
+      completionBlock(false, segment)
     }
   }
 
@@ -111,10 +128,17 @@ final class DiscoverViewModel {
 
 // MARK: - Segments Helper
 extension DiscoverViewModel {
-  func setupDiscoverPaginators(contentIdentifiers: [String], booksIdentifiers: [String], pagesIdentifiers: [String]) {
-    self.contentPaginator = Paginator(ids: contentIdentifiers)
-    self.booksPaginator = Paginator(ids: booksIdentifiers)
-    self.pagesPaginator = Paginator(ids: pagesIdentifiers)
+  func setupPaginators(for segment: DiscoverViewController.Segment) {
+    switch segment {
+    case .content:
+      self.contentPaginator = Paginator(ids: contentIdentifiers)
+    case .books:
+      self.booksPaginator = Paginator(ids: booksIdentifiers)
+    case .pages:
+      self.pagesPaginator = Paginator(ids: pagesIdentifiers)
+    default:
+      return
+    }
   }
 
   func nextPageIds(for segment: DiscoverViewController.Segment) -> [String]? {
@@ -185,16 +209,22 @@ extension DiscoverViewModel {
     return nil
   }
 
-  func clearData(for segment: DiscoverViewController.Segment) {
-    switch segment {
-    case .content:
+  func clearData(for segment: DiscoverViewController.Segment? = nil) {
+    if let segment = segment {
+      switch segment {
+      case .content:
+        self.contentData = []
+      case .books:
+        self.booksData = []
+      case .pages:
+        self.pagesData = []
+      default:
+        return
+      }
+    } else {
       self.contentData = []
-    case .books:
       self.booksData = []
-    case .pages:
       self.pagesData = []
-    default:
-      return
     }
   }
 
