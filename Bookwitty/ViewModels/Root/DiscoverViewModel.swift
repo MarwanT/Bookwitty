@@ -74,9 +74,9 @@ final class DiscoverViewModel {
         self.pagesIdentifiers = pagesIdentifiers
       }
       //Reset data
-      self.clearData(for: segment)
+      self.clearData()
       afterDataEmptied?()
-      self.setupPaginators(for: segment)
+      self.setupPaginators()
       self.cancelOnGoingRequest()
       self.loadNextPage(for: segment,completionBlock: completionBlock)
     }
@@ -126,16 +126,22 @@ final class DiscoverViewModel {
 
 // MARK: - Segments Helper
 extension DiscoverViewModel {
-  func setupPaginators(for segment: DiscoverViewController.Segment) {
-    switch segment {
-    case .content:
+  func setupPaginators(for segment: DiscoverViewController.Segment? = nil) {
+    if let segment = segment {
+      switch segment {
+      case .content:
+        self.contentPaginator = Paginator(ids: contentIdentifiers)
+      case .books:
+        self.booksPaginator = Paginator(ids: booksIdentifiers)
+      case .pages:
+        self.pagesPaginator = Paginator(ids: pagesIdentifiers)
+      default:
+        return
+      }
+    }else {
       self.contentPaginator = Paginator(ids: contentIdentifiers)
-    case .books:
       self.booksPaginator = Paginator(ids: booksIdentifiers)
-    case .pages:
       self.pagesPaginator = Paginator(ids: pagesIdentifiers)
-    default:
-      return
     }
   }
 
