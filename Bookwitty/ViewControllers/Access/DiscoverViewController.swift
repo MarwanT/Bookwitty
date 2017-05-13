@@ -125,7 +125,7 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
     self.activeSegment = segment(withIndex: index)
     loadingStatus = .loading
     updateCollection(cardsSection: true, loaderSection: true, headerSection: true)
-    viewModel.loadDataIfNeeded(for: activeSegment, clearData: true, afterDataEmptied: {
+    viewModel.loadDataIfNeeded(for: activeSegment, afterDataEmptied: {
       self.updateCollection(cardsSection: true)
     }) { [weak self] (success, segment) in
       guard let strongSelf = self else { return }
@@ -205,7 +205,7 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
     loadingStatus = .reloading
     updateCollection(loaderSection: true)
     self.pullToRefresher.beginRefreshing()
-    viewModel.refreshData(for: activeSegment, clearData: true) { [weak self] (success, segment) in
+    viewModel.refreshData(for: activeSegment) { [weak self] (success, segment) in
       guard let strongSelf = self else { return }
       strongSelf.loadingStatus = .none
       strongSelf.pullToRefresher.endRefreshing()

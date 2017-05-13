@@ -38,15 +38,15 @@ final class DiscoverViewModel {
     }
   }
 
-  func refreshData(for segment: DiscoverViewController.Segment, clearData: Bool = true, afterDataEmptied: (() -> ())? = nil, completionBlock: @escaping (_ success: Bool, _ segment: DiscoverViewController.Segment) -> ()) {
+  func refreshData(for segment: DiscoverViewController.Segment, afterDataEmptied: (() -> ())? = nil, completionBlock: @escaping (_ success: Bool, _ segment: DiscoverViewController.Segment) -> ()) {
     cancelOnGoingRequest()
-    loadDiscoverData(for: segment, clearData: clearData, afterDataEmptied: afterDataEmptied, completionBlock: completionBlock)
+    loadDiscoverData(for: segment, afterDataEmptied: afterDataEmptied, completionBlock: completionBlock)
   }
   
-  func loadDataIfNeeded(for segment: DiscoverViewController.Segment, clearData: Bool = true, afterDataEmptied: (() -> ())? = nil, completionBlock: @escaping (_ success: Bool, _ segment: DiscoverViewController.Segment) -> ()) {
+  func loadDataIfNeeded(for segment: DiscoverViewController.Segment, afterDataEmptied: (() -> ())? = nil, completionBlock: @escaping (_ success: Bool, _ segment: DiscoverViewController.Segment) -> ()) {
     guard dataCount(for: segment) > 0 else {
       if identifiers(for: segment).count == 0 {
-        loadDiscoverData(for: segment, clearData: clearData, afterDataEmptied: afterDataEmptied, completionBlock: completionBlock)
+        loadDiscoverData(for: segment, afterDataEmptied: afterDataEmptied, completionBlock: completionBlock)
       } else {
         setupPaginators(for: segment)
         loadNextPage(for: segment, completionBlock: completionBlock)
@@ -57,7 +57,7 @@ final class DiscoverViewModel {
     completionBlock(true, segment)
   }
 
-  private func loadDiscoverData(for segment: DiscoverViewController.Segment, clearData: Bool = true, afterDataEmptied: (() -> ())? = nil, completionBlock: @escaping (_ success: Bool, _ segment: DiscoverViewController.Segment) -> ()) {
+  private func loadDiscoverData(for segment: DiscoverViewController.Segment, afterDataEmptied: (() -> ())? = nil, completionBlock: @escaping (_ success: Bool, _ segment: DiscoverViewController.Segment) -> ()) {
     cancellableRequest = DiscoverAPI.discover { (success, curatedCollection, error) in
       guard let sections = curatedCollection?.sections else {
         completionBlock(false, segment)
@@ -73,10 +73,8 @@ final class DiscoverViewModel {
       if let pagesIdentifiers = sections.pagesIdentifiers {
         self.pagesIdentifiers = pagesIdentifiers
       }
-      if clearData {
-        //Reset data
-        self.clearData(for: segment)
-      }
+      //Reset data
+      self.clearData(for: segment)
       afterDataEmptied?()
       self.setupPaginators(for: segment)
       self.cancelOnGoingRequest()
