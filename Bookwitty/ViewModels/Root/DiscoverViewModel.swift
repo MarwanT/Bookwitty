@@ -9,6 +9,7 @@
 import Foundation
 import Moya
 import Spine
+import AsyncDisplayKit
 
 final class DiscoverViewModel {
   var cancellableRequest:  Cancellable?
@@ -271,14 +272,18 @@ extension DiscoverViewModel {
     return resourceFor(id: resourceId)
   }
 
-  func nodeForItem(for segment: DiscoverViewController.Segment, atIndex index: Int) -> BaseCardPostNode? {
+  func nodeForItem(for segment: DiscoverViewController.Segment, atIndex index: Int) -> ASCellNode? {
     guard let resource = resourceForIndex(for: segment, index: index) else {
       return nil
     }
-    
-    let card = CardFactory.createCardFor(resourceType: resource.registeredResourceType)
-    card?.baseViewModel?.resource = resource as? ModelCommonProperties
-    return card
+    switch (segment) {
+    case .pages:
+      return PageCellNode()
+    default:
+      let card = CardFactory.createCardFor(resourceType: resource.registeredResourceType)
+      card?.baseViewModel?.resource = resource as? ModelCommonProperties
+      return card
+    }
   }
 }
 

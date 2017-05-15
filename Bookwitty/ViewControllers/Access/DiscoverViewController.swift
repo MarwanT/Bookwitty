@@ -304,35 +304,51 @@ extension DiscoverViewController: ASCollectionDataSource {
           return self.loaderNode
         }
       }
-      let baseCardNode = self.viewModel.nodeForItem(for: self.activeSegment, atIndex: index) ?? BaseCardPostNode()
-      // Fetch the reading list cards images
-      if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
-        !readingListCell.node.isImageCollectionLoaded {
-        let max = readingListCell.node.maxNumberOfImages
-        self.viewModel.loadReadingListImages(for: self.activeSegment, at: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
-          if let imageCollection = imageCollection, imageCollection.count > 0 {
-            readingListCell.node.prepareImages(imageCount: imageCollection.count)
-            readingListCell.node.loadImages(with: imageCollection)
-          }
-        })
+
+      let cellNode = self.viewModel.nodeForItem(for: self.activeSegment, atIndex: index) ?? BaseCardPostNode()
+
+      switch (self.activeSegment) {
+      case .pages:
+        guard let pageNode = cellNode as? PageCellNode, let resource = self.viewModel.resourceForIndex(for: self.activeSegment, index: index) as? ModelCommonProperties else {
+            return cellNode
+        }
+        pageNode.setup(with: resource.coverImageUrl, title: resource.title)
+        return pageNode
+      case .books: fallthrough
+        //TODO: Remove fallthrough and handle book nodes separately
+      case .content: fallthrough
+      default:
+        guard let baseCardNode = cellNode as? BaseCardPostNode else {
+          return cellNode
+        }
+        // Fetch the reading list cards images
+        if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
+          !readingListCell.node.isImageCollectionLoaded {
+          let max = readingListCell.node.maxNumberOfImages
+          self.viewModel.loadReadingListImages(for: self.activeSegment, at: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
+            if let imageCollection = imageCollection, imageCollection.count > 0 {
+              readingListCell.node.prepareImages(imageCount: imageCollection.count)
+              readingListCell.node.loadImages(with: imageCollection)
+            }
+          })
+        }
+        baseCardNode.delegate = self
+        return baseCardNode
       }
-      baseCardNode.delegate = self
-      return baseCardNode
     }
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
-    if let card = node as? BaseCardPostNode {
-      guard let indexPath = collectionNode.indexPath(for: node),
-        let resource = viewModel.resourceForIndex(for: activeSegment, index: indexPath.row) as? ModelCommonProperties else {
-          return
+    guard let indexPath = collectionNode.indexPath(for: node) else {
+      return
+    }
+    switch (indexPath.section) {
+    case Section.cards.rawValue:
+      updateCellNodeItem(for: activeSegment, index: indexPath.row)
+    default:
+      if node === loaderNode {
+        self.loaderNode.updateLoaderVisibility(show: loadingStatus != .none && loadingStatus != .reloading)
       }
-
-      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
-        card.baseViewModel?.resource = resource
-      }
-    } else if node === loaderNode {
-      self.loaderNode.updateLoaderVisibility(show: loadingStatus != .none && loadingStatus != .reloading)
     }
   }
 
@@ -346,6 +362,26 @@ extension DiscoverViewController: ASCollectionDataSource {
       fallthrough
     default:
       return pagesTitleHeaderNode
+    }
+  }
+
+  func updateCellNodeItem(for segment: Segment, index: Int) {
+    guard let resource = viewModel.resourceForIndex(for: segment, index: index) as? ModelCommonProperties else {
+      return
+    }
+    switch (segment) {
+    case .pages:
+      if let page = node as? PageCellNode {
+        page.setup(with: resource.coverImageUrl, title: resource.title)
+      }
+    case .content:
+      if let card = node as? BaseCardPostNode,
+        let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
+        card.baseViewModel?.resource = resource
+      }
+      fallthrough
+    case .books: break
+    default: break
     }
   }
 }
