@@ -290,6 +290,8 @@ extension DiscoverViewModel {
     switch (segment) {
     case .pages:
       return PageCellNode()
+    case .books:
+      return BookNode()
     default:
       let card = CardFactory.createCardFor(resourceType: resource.registeredResourceType)
       card?.baseViewModel?.resource = resource as? ModelCommonProperties

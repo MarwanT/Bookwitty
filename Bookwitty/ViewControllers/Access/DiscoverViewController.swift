@@ -314,8 +314,8 @@ extension DiscoverViewController: ASCollectionDataSource {
         }
         pageNode.setup(with: resource.coverImageUrl, title: resource.title)
         return pageNode
-      case .books: fallthrough
-        //TODO: Remove fallthrough and handle book nodes separately
+      case .books:
+        return cellNode
       case .content: fallthrough
       default:
         guard let baseCardNode = cellNode as? BaseCardPostNode else {
