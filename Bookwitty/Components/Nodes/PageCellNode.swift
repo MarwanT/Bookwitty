@@ -14,6 +14,8 @@ class PageCellNode: ASCellNode {
   fileprivate let titleNode: ASTextNode
 
   override init() {
+    imageNode = ASNetworkImageNode()
+    titleNode = ASTextNode()
     super.init()
     automaticallyManagesSubnodes = true
     setupNode()
