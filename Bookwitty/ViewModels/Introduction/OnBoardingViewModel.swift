@@ -190,31 +190,24 @@ extension OnBoardingViewModel {
   func createDataModelDictionary(with resources: [Resource], from items: [String : [String]]) -> [String : [CellNodeDataItemModel]] {
     var dictionary: [String : [CellNodeDataItemModel]] = [:]
     for resource in resources {
-      if isModelSupport(resource: resource),
-        let commonResource = resource as? ModelCommonProperties {
+      if isModelSupport(resource: resource), let commonResource = resource as? ModelCommonProperties,
+        let id = commonResource.id, let key = getRelatedKey(for: id, from: items) {
         let model: CellNodeDataItemModel = (commonResource.id, commonResource.title, commonResource.shortDescription, commonResource.thumbnailImageUrl, commonResource.following, commonResource.registeredResourceType)
-        if let id = commonResource.id,
-          let key = getRelatedKey(for: id, from: items) {
-          if dictionary[key] == nil {
-            dictionary[key] = []
-          }
-          dictionary[key]? += [model]
-        }
+        dictionary[key] = (dictionary[key] ?? []) + [model]
       }
     }
     return dictionary
   }
 
   func getRelatedKey(for id: String, from items: [String : [String]]) -> String? {
-    let filteredDictionary = items.filter({ (dictionaryItem: (key: String, value: [String])) -> Bool in
-      return dictionaryItem.value.filter({ (curatedPenNameId) -> Bool in
-        return curatedPenNameId == id
-      }).count >= 1
-    })
-    guard filteredDictionary.count > 0 else {
-      return nil
+    var candidateKey: String?
+    for dictionaryItem in items {
+      if dictionaryItem.value.contains(id) {
+        candidateKey = dictionaryItem.key
+        break
+      }
     }
-    return filteredDictionary[0].key
+    return candidateKey
   }
 
   func convertToIdsDic(items: [String : [CuratedCollectionItem]]) -> [String : [String]] {
