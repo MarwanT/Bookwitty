@@ -120,6 +120,7 @@
 "pen_name" = "Pseudo";
 "pen_name_cant_be_empty" = "Veuillez inscrire un pseudo";
 "pen_names" = "Pseudos";
+"pen_names_to_follow" = "Pennames To Follow";
 "please_fill_required_field" = "Veuillez remplir les champs obligatoires";
 "post" = "Post";
 "posts" = "Posts";
