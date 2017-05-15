@@ -344,23 +344,7 @@ extension DiscoverViewController: ASCollectionDataSource {
     }
     switch (indexPath.section) {
     case Section.cards.rawValue:
-      guard let resource = viewModel.resourceForIndex(for: activeSegment, index: indexPath.row) as? ModelCommonProperties else {
-        return
-      }
-      switch (activeSegment) {
-      case .pages:
-        if let page = node as? PageCellNode {
-          page.setup(with: resource.coverImageUrl, title: resource.title)
-        }
-      case .content:
-        if let card = node as? BaseCardPostNode,
-          let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
-          card.baseViewModel?.resource = resource
-        }
-        fallthrough
-      case .books: break
-      default: break
-      }
+      updateCellNodeItem(for: activeSegment, index: indexPath.row)
     default:
       if node === loaderNode {
         self.loaderNode.updateLoaderVisibility(show: loadingStatus != .none && loadingStatus != .reloading)
@@ -378,6 +362,26 @@ extension DiscoverViewController: ASCollectionDataSource {
       fallthrough
     default:
       return pagesTitleHeaderNode
+    }
+  }
+
+  func updateCellNodeItem(for segment: Segment, index: Int) {
+    guard let resource = viewModel.resourceForIndex(for: segment, index: index) as? ModelCommonProperties else {
+      return
+    }
+    switch (segment) {
+    case .pages:
+      if let page = node as? PageCellNode {
+        page.setup(with: resource.coverImageUrl, title: resource.title)
+      }
+    case .content:
+      if let card = node as? BaseCardPostNode,
+        let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
+        card.baseViewModel?.resource = resource
+      }
+      fallthrough
+    case .books: break
+    default: break
     }
   }
 }
