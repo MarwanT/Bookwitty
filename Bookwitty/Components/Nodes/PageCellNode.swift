@@ -16,6 +16,12 @@ class PageCellNode: ASCellNode {
   fileprivate let imageNode: ASNetworkImageNode
   fileprivate let titleNode: ASTextNode
 
+  fileprivate var titleTextDynamicFont: FontDynamicType {
+    get {
+      return FontDynamicType.subheadline
+    }
+  }
+
   override init() {
     imageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
