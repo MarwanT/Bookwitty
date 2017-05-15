@@ -10,6 +10,8 @@ import Foundation
 import AsyncDisplayKit
 
 class PageCellNode: ASCellNode {
+  fileprivate let imageNode: ASNetworkImageNode
+  fileprivate let titleNode: ASTextNode
 
   override init() {
     super.init()
