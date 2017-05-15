@@ -26,7 +26,7 @@ class AccountViewController: UIViewController {
     initializeComponents()
     applyTheme()
     fillUserInformation()
-    observeLanguageChanges()
+    addObservers()
 
     navigationItem.backBarButtonItem = UIBarButtonItem.back
 
@@ -43,6 +43,11 @@ class AccountViewController: UIViewController {
     tableView.register(TableViewSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: TableViewSectionHeaderView.reuseIdentifier)
 
     tableView.tableFooterView = UIView.defaultSeparator(useAutoLayout: false)
+  }
+
+  private func addObservers() {
+    observeLanguageChanges()
+    observeUserPenNamesChanges()
   }
 
   private func fillUserInformation() {
@@ -237,3 +242,16 @@ extension AccountViewController: Localizable {
     applyLocalization()
   }
 }
+
+//MARK: - User & Pen Names updates
+extension AccountViewController {
+  fileprivate func observeUserPenNamesChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(userPenNamesChanged(notification:)), name: UserManager.Notifications.Name.UpdatePenNames, object: nil)
+  }
+
+  @objc
+  fileprivate func userPenNamesChanged(notification: Notification) {
+    tableView.reloadData()
+  }
+}
+
