@@ -10,6 +10,9 @@ import Foundation
 import AsyncDisplayKit
 
 class PageCellNode: ASCellNode {
+  fileprivate let cellHeight: CGFloat = 200.0
+  fileprivate let imageHeight: CGFloat = 180.0
+
   fileprivate let imageNode: ASNetworkImageNode
   fileprivate let titleNode: ASTextNode
 
@@ -22,7 +25,8 @@ class PageCellNode: ASCellNode {
   }
 
   private func setupNode() {
-    //TODO: Setup the node
+    //Set Fixed Cell Height
+    style.height = ASDimensionMake(cellHeight)
   }
 
 }
@@ -30,7 +34,8 @@ class PageCellNode: ASCellNode {
 // MARK: - Layout
 extension PageCellNode {
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    //TODO: Implement layout
+    //Set Fixed Image Height
+    imageNode.style.preferredSize = CGSize(width: constrainedSize.max.width, height: imageHeight)
     return ASLayoutSpec()
   }
 }
