@@ -7,3 +7,18 @@
 //
 
 import Foundation
+import AsyncDisplayKit
+
+class PageCellNode: ASCellNode {
+
+  override init() {
+    super.init()
+    automaticallyManagesSubnodes = true
+    setupNode()
+  }
+
+  private func setupNode() {
+    //TODO: Setup the node
+  }
+
+}
