@@ -305,7 +305,7 @@ extension DiscoverViewController: ASCollectionDataSource {
         }
       }
 
-      let cellNode = self.viewModel.nodeForItem(for: self.activeSegment, atIndex: index) ?? BaseCardPostNode()
+      let cellNode = self.viewModel.nodeForItem(for: self.activeSegment, atIndex: index) ?? ASCellNode()
 
       switch (self.activeSegment) {
       case .pages:
@@ -314,8 +314,8 @@ extension DiscoverViewController: ASCollectionDataSource {
         }
         pageNode.setup(with: resource.coverImageUrl, title: resource.title)
         return pageNode
-      case .books: fallthrough
-        //TODO: Remove fallthrough and handle book nodes separately
+      case .books:
+        return cellNode
       case .content: fallthrough
       default:
         guard let baseCardNode = cellNode as? BaseCardPostNode else {
@@ -344,7 +344,7 @@ extension DiscoverViewController: ASCollectionDataSource {
     }
     switch (indexPath.section) {
     case Section.cards.rawValue:
-      updateCellNodeItem(for: activeSegment, index: indexPath.row)
+      updateCellNodeItem(for: activeSegment, node: node, index: indexPath.row)
     default:
       if node === loaderNode {
         self.loaderNode.updateLoaderVisibility(show: loadingStatus != .none && loadingStatus != .reloading)
@@ -365,22 +365,31 @@ extension DiscoverViewController: ASCollectionDataSource {
     }
   }
 
-  func updateCellNodeItem(for segment: Segment, index: Int) {
-    guard let resource = viewModel.resourceForIndex(for: segment, index: index) as? ModelCommonProperties else {
+  func updateCellNodeItem(for segment: Segment, node: ASCellNode, index: Int) {
+    guard let resource = viewModel.resourceForIndex(for: segment, index: index),
+      let modelCommonProperties = resource as? ModelCommonProperties else {
       return
     }
     switch (segment) {
     case .pages:
       if let page = node as? PageCellNode {
-        page.setup(with: resource.coverImageUrl, title: resource.title)
+        page.setup(with: modelCommonProperties.coverImageUrl, title: modelCommonProperties.title)
       }
     case .content:
       if let card = node as? BaseCardPostNode,
-        let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
-        card.baseViewModel?.resource = resource
+        let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: modelCommonProperties), !sameInstance {
+        card.baseViewModel?.resource = modelCommonProperties
       }
-      fallthrough
-    case .books: break
+    case .books:
+      guard let book = node as? BookNode, let bookResource = viewModel.bookValues(for: resource) else {
+        return
+      }
+
+      book.title = bookResource.title
+      book.author = bookResource.author
+      book.format = bookResource.format
+      book.price = bookResource.price
+      book.imageUrl = bookResource.imageUrl
     default: break
     }
   }
