@@ -43,6 +43,17 @@ class PageCellNode: ASCellNode {
     imageNode.contentMode = .scaleAspectFill
   }
 
+  func setup(with imageUrl: String?, title: String?) {
+    if let imageUrl = imageUrl {
+      imageNode.url = URL(string: imageUrl)
+    }
+    if let title = title {
+      titleNode.attributedText = AttributedStringBuilder(fontDynamicType: titleTextDynamicFont).append(text: title, lineHeightMultiple: 1.0).attributedString
+    } else {
+      titleNode.attributedText = nil
+    }
+    setNeedsLayout()
+  }
 }
 
 // MARK: - Layout
