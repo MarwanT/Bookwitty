@@ -305,7 +305,7 @@ extension DiscoverViewController: ASCollectionDataSource {
         }
       }
 
-      let cellNode = self.viewModel.nodeForItem(for: self.activeSegment, atIndex: index) ?? BaseCardPostNode()
+      let cellNode = self.viewModel.nodeForItem(for: self.activeSegment, atIndex: index) ?? ASCellNode()
 
       switch (self.activeSegment) {
       case .pages:
