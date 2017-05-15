@@ -33,6 +33,14 @@ class PageCellNode: ASCellNode {
   private func setupNode() {
     //Set Fixed Cell Height
     style.height = ASDimensionMake(cellHeight)
+    titleNode.textContainerInset = UIEdgeInsets(top: 15.0, left: 20.0, bottom: 0.0, right: 20.0)
+    titleNode.maximumNumberOfLines = 1
+
+    //Set Node Styling
+    backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+    titleNode.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+    imageNode.placeholderColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    imageNode.contentMode = .scaleAspectFill
   }
 
 }
