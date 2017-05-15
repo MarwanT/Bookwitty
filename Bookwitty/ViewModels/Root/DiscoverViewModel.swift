@@ -255,6 +255,17 @@ extension DiscoverViewModel {
   }
 }
 
+// MARK: - Book helper
+extension DiscoverViewModel {
+  func bookValues(for resource: ModelResource?) -> (identifier: String?, title: String?, author: String?, format: String?, price: String?, imageUrl: String?)? {
+    guard let book = resourceFor(id: resource?.id) as? Book else {
+      return nil
+    }
+
+    return (book.id, book.title, book.productDetails?.author, book.productDetails?.productFormat, book.preferredPrice?.formattedValue, book.thumbnailImageUrl)
+  }
+}
+
 // MARK: - Collection Helper
 extension DiscoverViewModel {
   func numberOfSections() -> Int {
