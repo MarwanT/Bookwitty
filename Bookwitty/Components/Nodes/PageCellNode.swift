@@ -50,6 +50,12 @@ extension PageCellNode {
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     //Set Fixed Image Height
     imageNode.style.preferredSize = CGSize(width: constrainedSize.max.width, height: imageHeight)
-    return ASLayoutSpec()
+
+    titleNode.style.layoutPosition = CGPoint(x: 0, y: imageHeight - titleTextDynamicFont.font.lineHeight - 12.0)
+    imageNode.style.layoutPosition = CGPoint(x: 0.0, y: 0.0)
+
+    let absoluteSpec = ASAbsoluteLayoutSpec(children: [imageNode, titleNode])
+    absoluteSpec.sizing = .sizeToFit
+    return absoluteSpec
   }
 }
