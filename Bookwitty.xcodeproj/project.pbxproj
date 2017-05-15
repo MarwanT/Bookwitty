@@ -229,6 +229,7 @@
 		F461B25C1E4B73B0005EA5A8 /* NewsFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F461B25B1E4B73B0005EA5A8 /* NewsFeedViewController.swift */; };
 		F4670AFB1E54669300159F4F /* ReadingListBookNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4670AFA1E54669300159F4F /* ReadingListBookNode.swift */; };
 		F46F3F971EC5A39D002C9718 /* DiscoverNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46F3F961EC5A39D002C9718 /* DiscoverNode.swift */; };
+		F46F3F991EC996BE002C9718 /* PageCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46F3F981EC996BE002C9718 /* PageCellNode.swift */; };
 		F47188181E4B1EB50076F93C /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47188171E4B1EB50076F93C /* Root.storyboard */; };
 		F4737D3F1EA0FE240065617D /* ModelCommonActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4737D3E1EA0FE240065617D /* ModelCommonActions.swift */; };
 		F478D92C1E7C26BA00B9EF18 /* ProfileDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F478D92B1E7C26BA00B9EF18 /* ProfileDetailsViewController.swift */; };
@@ -500,6 +501,7 @@
 		F461B25B1E4B73B0005EA5A8 /* NewsFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewsFeedViewController.swift; path = Bookwitty/ViewControllers/Root/NewsFeedViewController.swift; sourceTree = SOURCE_ROOT; };
 		F4670AFA1E54669300159F4F /* ReadingListBookNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingListBookNode.swift; sourceTree = "<group>"; };
 		F46F3F961EC5A39D002C9718 /* DiscoverNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverNode.swift; sourceTree = "<group>"; };
+		F46F3F981EC996BE002C9718 /* PageCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageCellNode.swift; sourceTree = "<group>"; };
 		F47188171E4B1EB50076F93C /* Root.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Root.storyboard; sourceTree = "<group>"; };
 		F4737D3E1EA0FE240065617D /* ModelCommonActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelCommonActions.swift; sourceTree = "<group>"; };
 		F478D92B1E7C26BA00B9EF18 /* ProfileDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileDetailsViewController.swift; sourceTree = "<group>"; };
@@ -838,6 +840,7 @@
 				F41F3AB61E6785CB004622D3 /* LoaderNode.swift */,
 				F4207B931E58466A00216A2E /* PenNameSelectionNode.swift */,
 				F46F3F961EC5A39D002C9718 /* DiscoverNode.swift */,
+				F46F3F981EC996BE002C9718 /* PageCellNode.swift */,
 				F458C5F11E5AFD4300AFD0FC /* PenNameDisplayNode.swift */,
 				F458C5F31E5AFEAA00AFD0FC /* PenNameCellNode.swift */,
 				F4CDDD361E60263800474CAA /* RotatingImageNode.swift */,
@@ -1602,6 +1605,7 @@
 				562A31231E65D7F2002851DE /* TopicViewController.swift in Sources */,
 				56620FCC1E8954CA00BD92BB /* UploadPolicy.swift in Sources */,
 				596562E41E79EF9E00B93920 /* MisfortuneNode.swift in Sources */,
+				F46F3F991EC996BE002C9718 /* PageCellNode.swift in Sources */,
 				596FAD741E2E53AC0064F967 /* Environment.swift in Sources */,
 				56BEF6391E6836DB0012FDE5 /* ContributorsNode.swift in Sources */,
 				F49AE93E1E47CFEA0031B355 /* Parser.swift in Sources */,
