@@ -11,6 +11,7 @@ import AsyncDisplayKit
 
 protocol TopicHeaderNodeDelegate: class {
   func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ButtonWithLoader)
+  func topicHeader(node: TopicHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
 }
 
 class TopicHeaderNode: ASCellNode {
@@ -216,6 +217,8 @@ extension TopicHeaderNode: ButtonWithLoaderDelegate {
     guard let image = sender.image else {
       return
     }
+
+    delegate?.topicHeader(node: self, requestToViewImage: image, from: sender)
   }
 }
 

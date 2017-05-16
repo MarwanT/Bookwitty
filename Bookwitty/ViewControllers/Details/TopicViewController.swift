@@ -381,6 +381,9 @@ extension TopicViewController: TopicHeaderNodeDelegate {
                                                  name: name)
     Analytics.shared.send(event: event)
   }
+
+  func topicHeader(node: TopicHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+  }
 }
 
 extension TopicViewController: PenNameFollowNodeDelegate {
