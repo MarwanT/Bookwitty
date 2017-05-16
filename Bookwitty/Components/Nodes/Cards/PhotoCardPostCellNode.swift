@@ -38,10 +38,16 @@ class PhotoCardPostCellNode: BaseCardPostNode {
   }
 }
 
+protocol PhotoCardContentNodeDelegate: class {
+  func photoCard(node: PhotoCardContentNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
+}
+
 class PhotoCardContentNode: ASDisplayNode {
   private let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+
+  var delegate: PhotoCardContentNodeDelegate?
 
   var imageNode: ASNetworkImageNode
   var titleNode: ASTextNode
@@ -118,7 +124,12 @@ class PhotoCardContentNode: ASDisplayNode {
     setNeedsLayout()
   }
 
-  func photoImageTouchUpInside(_ sender: ASImageNode?) {
+  func photoImageTouchUpInside(_ sender: ASNetworkImageNode) {
+    guard let image = sender.image else {
+      return
+    }
+
+    delegate?.photoCard(node: self, requestToViewImage: image, from: sender)
   }
 
   private func spacer(height: CGFloat) -> ASLayoutSpec {
