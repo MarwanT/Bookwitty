@@ -54,12 +54,7 @@ class BookCardPostContentNode: ASDisplayNode {
     priceNode = ASTextNode()
     topicStatsNode = ASTextNode()
     super.init()
-    addSubnode(imageNode)
-    addSubnode(titleNode)
-    addSubnode(authorNode)
-    addSubnode(formatNode)
-    addSubnode(priceNode)
-    addSubnode(topicStatsNode)
+    automaticallyManagesSubnodes = true
     setupNode()
   }
 
@@ -264,7 +259,7 @@ extension BookCardPostCellNode: BookCardViewModelDelegate {
     setFollowingValue(following: values.content.following)
     node.title = values.content.title
     node.imageUrl = values.content.image.thumbnail
-    node.isProduct = false
+
     node.author = values.content.info.author
     node.price = values.content.info.price
     node.format = values.content.info.format
