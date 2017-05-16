@@ -212,6 +212,8 @@ extension SearchViewController: ASCollectionDataSource {
               readingListCell.node.loadImages(with: imageCollection)
             }
           })
+        } else if let bookCard = baseCardNode as? BookCardPostCellNode, let resource = self.viewModel.resourceForIndex(indexPath: indexPath) {
+            bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.search) ?? .topic == .product)
         }
         baseCardNode.delegate = self
         return baseCardNode
@@ -226,12 +228,16 @@ extension SearchViewController: ASCollectionDataSource {
       misfortuneNode.mode = viewModel.misfortuneNodeMode ?? MisfortuneNode.Mode.empty
     } else if let card = node as? BaseCardPostNode {
       guard let indexPath = collectionNode.indexPath(for: node),
-        let resource = viewModel.resourceForIndex(indexPath: indexPath) as? ModelCommonProperties else {
+        let resource = viewModel.resourceForIndex(indexPath: indexPath), let commonResource =  resource as? ModelCommonProperties else {
           return
       }
 
-      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
-        card.baseViewModel?.resource = resource
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: commonResource), !sameInstance {
+        card.baseViewModel?.resource = commonResource
+      }
+
+      if let bookCard = card as? BookCardPostCellNode {
+        bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.search) ?? .topic == .product)
       }
     }
   }
@@ -639,20 +645,24 @@ extension SearchViewController {
   }
 
   fileprivate func actionForBookResourceType(resource: ModelResource) {
-    guard resource is Book else {
+    guard let resource = resource as? Book else {
       return
     }
-
+    let isProduct = (viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.search) ?? .topic == .product)
     //MARK: [Analytics] Event
-    let name: String = (resource as? Book)?.title ?? ""
-    let event: Analytics.Event = Analytics.Event(category: .TopicBook,
+    let name: String = resource.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: isProduct ? .BookProduct : .TopicBook,
                                                  action: .GoToDetails,
                                                  name: name)
     Analytics.shared.send(event: event)
-
-    let topicViewController = TopicViewController()
-    topicViewController.initialize(with: resource as? ModelCommonProperties)
-    navigationController?.pushViewController(topicViewController, animated: true)
+    if !isProduct {
+      let topicViewController = TopicViewController()
+      topicViewController.initialize(with: resource as ModelCommonProperties)
+      navigationController?.pushViewController(topicViewController, animated: true)
+    } else {
+      let bookDetailsViewController = BookDetailsViewController(with: resource)
+      navigationController?.pushViewController(bookDetailsViewController, animated: true)
+    }
   }
 }
 
