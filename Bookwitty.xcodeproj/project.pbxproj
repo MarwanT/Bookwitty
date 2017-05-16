@@ -737,6 +737,7 @@
 				F49AE93C1E47CFD20031B355 /* Parser */,
 				594F4EAD1E440A4900A947FA /* API */,
 				59D8FCBA1E4DA37D001C1EDB /* Managers */,
+				F440FD781ECB003100AEBF96 /* Registries */,
 				59DBA6641E732D3F0049B427 /* Models+Utilities.swift */,
 				F420B6A11E43C570001F34CD /* User.swift */,
 				F488D2781E44EB46003A7BD4 /* PenName.swift */,
@@ -1286,6 +1287,13 @@
 				F42441641E66FE260087E3B1 /* CardFactory.swift */,
 			);
 			name = Factories;
+			sourceTree = "<group>";
+		};
+		F440FD781ECB003100AEBF96 /* Registries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Registries;
 			sourceTree = "<group>";
 		};
 		F48278B91E4B214A003D82F2 /* Root */ = {
