@@ -124,7 +124,7 @@ class PenNameFollowNode: ASCellNode {
     imageNode.style.preferredSize = enlarged ? largeImageSize : imageSize
 
     nameNode.addTarget(self, action: #selector(actionPenNameFollowTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
-    imageNode.addTarget(self, action: #selector(actionPenNameFollowTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
+    imageNode.addTarget(self, action: #selector(imageNodeTouchUpInside(sender:)), forControlEvents: ASControlNodeEvent.touchUpInside)
     biographyNode.addTarget(self, action: #selector(actionPenNameFollowTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
 
     separatorNode.style.height = ASDimensionMake(1)
@@ -238,3 +238,15 @@ extension PenNameFollowNode {
     return !value.isEmptyOrNil()
   }
 }
+
+
+extension PenNameFollowNode: ASNetworkImageNodeDelegate {
+  @objc
+  fileprivate func imageNodeTouchUpInside(sender: ASNetworkImageNode) {
+    guard let image = sender.image else {
+      delegate?.penName(node: self, actionPenNameFollowTouchUpInside: sender)
+      return
+    }
+  }
+}
+
