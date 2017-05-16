@@ -27,6 +27,8 @@ class Book: Resource {
   var supplierInformation: SupplierInformation?
   var counts: Counts?
 
+  var productFormats: [String]?
+
   @objc
   private var followingNumber: NSNumber?
   var following: Bool {
@@ -63,6 +65,7 @@ class Book: Resource {
       "bookDescription" : Attribute().serializeAs("description"),
       "thumbnailImageUrl" : Attribute().serializeAs("thumbnail-image-url"),
       "userId": Attribute().serializeAs("user-id"),
+      "productFormats": Attribute().serializeAs("product-formats"),
       "createdAt" : DateAttribute().serializeAs("created-at"),
       "updatedAt" : DateAttribute().serializeAs("updated-at"),
       "coverImageUrl" : Attribute().serializeAs("cover-image-url"),
