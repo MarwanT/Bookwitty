@@ -57,6 +57,7 @@ class PostDetailsHeaderNode: ASCellNode {
 
   override func didLoad() {
     imageNode.contentMode = .scaleAspectFill
+    imageNode.delegate = self
   }
 
   func initializeNode() {
@@ -115,5 +116,19 @@ class PostDetailsHeaderNode: ASCellNode {
 
     vStackSpec.children = nodesArray
     return vStackSpec
+  }
+}
+
+extension PostDetailsHeaderNode: ASNetworkImageNodeDelegate {
+  @objc
+  fileprivate func imageNodeTouchUpInside(sender: ASNetworkImageNode) {
+    guard let image = sender.image else {
+      return
+    }
+
+  }
+
+  func imageNode(_ imageNode: ASNetworkImageNode, didLoad image: UIImage) {
+    imageNode.addTarget(self, action: #selector(imageNodeTouchUpInside(sender:)), forControlEvents: ASControlNodeEvent.touchUpInside)
   }
 }
