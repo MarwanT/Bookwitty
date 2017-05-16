@@ -16,7 +16,7 @@ PODS:
   - Bolts/Tasks (1.8.4)
   - BrightFutures (5.1.0):
     - Result (~> 3.0)
-  - Crashlytics (3.8.3):
+  - Crashlytics (3.8.4):
     - Fabric (~> 1.6.3)
   - DTCoreText (1.6.20):
     - DTCoreText/Core (= 1.6.20)
@@ -120,7 +120,7 @@ PODS:
 DEPENDENCIES:
   - ALCameraViewController (= 1.2.7)
   - AsyncDisplayKit (= 2.2)
-  - Crashlytics (= 3.8.3)
+  - Crashlytics (= 3.8.4)
   - DTCoreText (= 1.6.20)
   - EMCCountryPickerController (from `https://github.com/Keeward/EMCCountryPickerController`, tag `1.4.0`)
   - Fabric (= 1.6.11)
@@ -178,7 +178,7 @@ SPEC CHECKSUMS:
   AsyncDisplayKit: 1585f6cd0531ae9b30476f5912f577b73ebcb0e4
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   BrightFutures: 62aafb1a63520eda91c9286bf4be33e58e043938
-  Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
+  Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   DTCoreText: 51904f2374af443e0d270d6fdc76035ab6f9ef8a
   DTFoundation: 26a164ef510877387906fb92bff524a792db4bf8
   EMCCountryPickerController: 053b7e420dcb662c1436340cb856282af5a038be
@@ -216,6 +216,6 @@ SPEC CHECKSUMS:
   UIImageViewAlignedSwift: e57cc89b4738a82ffad1b76e8ab01f898215bbfb
   Version: 31221742495765fc798d08eae45de3c936dce0db
 
-PODFILE CHECKSUM: 7cbee60573fca4280e23c1be7624bd095f486000
+PODFILE CHECKSUM: 2f79fa315566f544b04b1eb88c4b252f23d8271f
 
 COCOAPODS: 1.2.0
