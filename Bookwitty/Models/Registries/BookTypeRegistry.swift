@@ -27,4 +27,17 @@ class BookTypeRegistry {
 
   fileprivate var registry: [Entry] = []
 
+  func update(resources: [ModelResource], section: Section) {
+    resources.forEach({ resource in
+      guard let book = resource as? Book, let id = book.id else {
+        return
+      }
+
+      if !registry.contains(where: { $0.id == id && $0.section == section }) {
+        let category: Category = (book.productFormats?.count ?? 0 == 0) ? .product : .topic
+        let entry: Entry = (id, section, category)
+        registry.append(entry)
+      }
+    })
+  }
 }
