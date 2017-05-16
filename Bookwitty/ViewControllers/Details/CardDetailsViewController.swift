@@ -10,6 +10,7 @@ import Foundation
 import AsyncDisplayKit
 import Spine
 import Moya
+import GSImageViewerController
 
 class CardDetailsViewController: GenericNodeViewController {
   var viewModel: CardDetailsViewModel
@@ -24,6 +25,12 @@ class CardDetailsViewController: GenericNodeViewController {
     node.delegate = self
     node.updateMode(fullMode: true)
     node.updateDimVisibility(visible: true)
+
+    if let photoNode = node as? PhotoCardPostCellNode {
+      photoNode.node.delegate = self
+    }
+
+
     viewControllerTitleForResouce(resource: resource)
   }
 
@@ -221,5 +228,15 @@ extension CardDetailsViewController: BaseCardPostNodeDelegate {
                                                  action: analyticsAction,
                                                  name: name)
     Analytics.shared.send(event: event)
+  }
+}
+
+extension CardDetailsViewController: PhotoCardContentNodeDelegate {
+  func photoCard(node: PhotoCardContentNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+    let imageInfo = GSImageInfo(image: image, imageMode: .aspectFit, imageHD: nil)
+    let transitionInfo = GSTransitionInfo(fromView: imageNode.view)
+    let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
+    present(imageViewer, animated: true, completion: nil)
+
   }
 }
