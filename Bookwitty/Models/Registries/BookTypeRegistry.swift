@@ -9,6 +9,7 @@
 import Foundation
 
 class BookTypeRegistry {
+  typealias Entry = (id: String, section: Section, category: Category)
 
   enum Category {
     case product
