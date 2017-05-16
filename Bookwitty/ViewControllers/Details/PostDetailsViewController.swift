@@ -384,6 +384,10 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
                                                  name: name)
     Analytics.shared.send(event: event)
   }
+
+  func postDetails(node: PostDetailsNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+
+  }
 }
 
 extension PostDetailsViewController: PostDetailsItemNodeDelegate {
