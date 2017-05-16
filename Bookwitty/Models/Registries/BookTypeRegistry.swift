@@ -19,7 +19,6 @@ class BookTypeRegistry {
   enum Section {
     case newsFeed
     case discover
-    case readingList
     case search
     case posts
     case postDetails
