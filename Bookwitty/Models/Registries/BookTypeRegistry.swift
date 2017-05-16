@@ -40,4 +40,12 @@ class BookTypeRegistry {
       }
     })
   }
+
+  func category(for resource: ModelResource, section: Section) -> Category? {
+    guard let book = resource as? Book, let id = book.id else {
+      return nil
+    }
+
+    return registry.first(where: { $0.id == id && $0.section == section })?.category
+  }
 }
