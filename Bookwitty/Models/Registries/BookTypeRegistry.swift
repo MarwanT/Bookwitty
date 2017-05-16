@@ -7,3 +7,10 @@
 //
 
 import Foundation
+
+class BookTypeRegistry {
+
+  static let shared = BookTypeRegistry()
+  private init() {}
+
+}
