@@ -27,6 +27,7 @@ final class NewsFeedViewModel {
     return UserManager.shared.defaultPenName
   }
   var misfortuneNodeMode: MisfortuneNode.Mode? = MisfortuneNode.Mode.empty
+  var bookRegistry: BookTypeRegistry = BookTypeRegistry()
 
   func resourceFor(id: String?) -> ModelResource? {
     guard let id = id else {
@@ -108,6 +109,8 @@ final class NewsFeedViewModel {
 
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
+        self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.newsFeed)
+
         self.data.removeAll(keepingCapacity: false)
         self.data = resources.flatMap({ $0.id })
         self.nextPage = nextPage
@@ -149,6 +152,8 @@ final class NewsFeedViewModel {
 
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
+        self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.newsFeed)
+        
         self.data += resources.flatMap({ $0.id })
         self.nextPage = nextPage
       }
