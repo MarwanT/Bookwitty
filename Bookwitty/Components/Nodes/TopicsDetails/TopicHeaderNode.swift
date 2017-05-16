@@ -70,6 +70,9 @@ class TopicHeaderNode: ASCellNode {
     actionButton.state = self.following ? .selected : .normal
     actionButton.style.height = ASDimensionMake(buttonSize.height)
     actionButton.delegate = self
+
+    coverImageNode.delegate = self
+    thumbnailImageNode.delegate = self
   }
 
   var topicTitle: String? {
@@ -206,6 +209,11 @@ extension TopicHeaderNode: ButtonWithLoaderDelegate {
     }
 
     delegate?.topicHeader(node: self, actionButtonTouchUpInside: buttonWithLoader)
+  }
+}
+
+extension TopicHeaderNode: ASNetworkImageNodeDelegate {  
+  func imageNode(_ imageNode: ASNetworkImageNode, didLoad image: UIImage) {
   }
 }
 
