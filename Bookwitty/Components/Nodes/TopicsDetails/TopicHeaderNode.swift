@@ -210,10 +210,18 @@ extension TopicHeaderNode: ButtonWithLoaderDelegate {
 
     delegate?.topicHeader(node: self, actionButtonTouchUpInside: buttonWithLoader)
   }
+
+  @objc
+  fileprivate func imageNodeTouchUpInside(sender: ASNetworkImageNode) {
+    guard let image = sender.image else {
+      return
+    }
+  }
 }
 
 extension TopicHeaderNode: ASNetworkImageNodeDelegate {  
   func imageNode(_ imageNode: ASNetworkImageNode, didLoad image: UIImage) {
+    imageNode.addTarget(self, action: #selector(imageNodeTouchUpInside(sender:)), forControlEvents: ASControlNodeEvent.touchUpInside)
   }
 }
 
