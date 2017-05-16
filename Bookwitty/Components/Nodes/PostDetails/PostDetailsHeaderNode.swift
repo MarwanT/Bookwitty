@@ -9,6 +9,11 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol PostDetailsHeaderNodeDelegate: class {
+  func postDetailsHeader(node: PostDetailsHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
+}
+
+
 class PostDetailsHeaderNode: ASCellNode {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
@@ -19,6 +24,8 @@ class PostDetailsHeaderNode: ASCellNode {
   let actionBarNode: CardActionBarNode
   fileprivate let separator: ASDisplayNode
   fileprivate let bottomSeparator: ASDisplayNode
+
+  var delegate: PostDetailsHeaderNodeDelegate?
 
   var title: String? {
     didSet {
@@ -126,6 +133,7 @@ extension PostDetailsHeaderNode: ASNetworkImageNodeDelegate {
       return
     }
 
+    delegate?.postDetailsHeader(node: self, requestToViewImage: image, from: sender)
   }
 
   func imageNode(_ imageNode: ASNetworkImageNode, didLoad image: UIImage) {
