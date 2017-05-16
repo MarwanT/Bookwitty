@@ -52,6 +52,11 @@ class DataManager {
       if newResource.contributors?.count ?? 0 <= existingResource.contributors?.count ?? 0 {
         newResource.contributors = existingResource.contributors
       }
+
+      if let newBook = newResource as? Book, newBook.productFormats?.count ?? 0 == 0,
+        let existingBook = existingResource as? Book {
+        newBook.productFormats = existingBook.productFormats
+      }
     }
 
     pool.updateValue(resource, forKey: identifier)
