@@ -212,6 +212,7 @@ class PostDetailsNode: ASScrollNode {
 
   func initializeNode() {
     headerNode.actionBarNode.delegate = self
+    headerNode.delegate = self
 
     booksHorizontalCollectionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width,
                                                                height: horizontalCollectionNodeHeight)
@@ -360,5 +361,10 @@ class PostDetailsNode: ASScrollNode {
       vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
     }
     return vStackSpec
+  }
+}
+
+extension PostDetailsNode: PostDetailsHeaderNodeDelegate {
+  func postDetailsHeader(node: PostDetailsHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
   }
 }
