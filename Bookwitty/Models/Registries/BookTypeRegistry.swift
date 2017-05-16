@@ -10,6 +10,11 @@ import Foundation
 
 class BookTypeRegistry {
 
+  enum Category {
+    case product
+    case topic
+  }
+
   enum Section {
     case newsFeed
     case discover
