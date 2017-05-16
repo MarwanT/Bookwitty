@@ -25,6 +25,7 @@ class BookTypeRegistry {
     case postDetails
     case profileLatest
     case profileFollowing
+    case topicLatest
   }
 
   fileprivate var registry: [Entry] = []
