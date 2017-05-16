@@ -21,9 +21,6 @@ class BookTypeRegistry {
     case discover
     case readingList
   }
-  
-  static let shared = BookTypeRegistry()
-  private init() {}
 
   fileprivate var registry: [Entry] = []
 
