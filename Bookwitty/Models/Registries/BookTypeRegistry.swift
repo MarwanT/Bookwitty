@@ -25,4 +25,6 @@ class BookTypeRegistry {
   static let shared = BookTypeRegistry()
   private init() {}
 
+  fileprivate var registry: [Entry] = []
+
 }
