@@ -10,6 +10,12 @@ import Foundation
 
 class BookTypeRegistry {
 
+  enum Section {
+    case newsFeed
+    case discover
+    case readingList
+  }
+  
   static let shared = BookTypeRegistry()
   private init() {}
 
