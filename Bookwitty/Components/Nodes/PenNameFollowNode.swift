@@ -12,6 +12,8 @@ import AsyncDisplayKit
 protocol PenNameFollowNodeDelegate: class {
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader)
   func penName(node: PenNameFollowNode, actionPenNameFollowTouchUpInside button: Any?)
+  func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
+
 }
 
 class PenNameFollowNode: ASCellNode {
@@ -247,6 +249,8 @@ extension PenNameFollowNode: ASNetworkImageNodeDelegate {
       delegate?.penName(node: self, actionPenNameFollowTouchUpInside: sender)
       return
     }
+
+    delegate?.penName(node: self, requestToViewImage: image, from: sender)
   }
 }
 

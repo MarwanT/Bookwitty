@@ -149,6 +149,10 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
 
 
 extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
+  func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+      penName(node: node, actionPenNameFollowTouchUpInside: imageNode)
+  }
+
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader) {
     var penName: PenName?
     if penNameHeaderNode === node {

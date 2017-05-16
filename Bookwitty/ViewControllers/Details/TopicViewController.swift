@@ -392,6 +392,10 @@ extension TopicViewController: TopicHeaderNodeDelegate {
 }
 
 extension TopicViewController: PenNameFollowNodeDelegate {
+  func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+    penName(node: node, actionPenNameFollowTouchUpInside: imageNode)
+  }
+
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader) {
     guard let indexPath = collectionNode.indexPath(for: node) else {
       return

@@ -700,6 +700,10 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
 
 // Mark: - Pen Name Header
 extension PostDetailsViewController: PenNameFollowNodeDelegate {
+  func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+    penName(node: node, actionPenNameFollowTouchUpInside: imageNode)
+  }
+
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader) {
     button.state = .loading
     if button.isSelected {
