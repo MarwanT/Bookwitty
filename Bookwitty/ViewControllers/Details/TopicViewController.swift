@@ -8,6 +8,7 @@
 
 import UIKit
 import AsyncDisplayKit
+import GSImageViewerController
 
 class TopicViewController: ASViewController<ASCollectionNode> {
 
@@ -383,6 +384,10 @@ extension TopicViewController: TopicHeaderNodeDelegate {
   }
 
   func topicHeader(node: TopicHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+    let imageInfo = GSImageInfo(image: image, imageMode: .aspectFit, imageHD: nil)
+    let transitionInfo = GSTransitionInfo(fromView: imageNode.view)
+    let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
+    present(imageViewer, animated: true, completion: nil)
   }
 }
 
