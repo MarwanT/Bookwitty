@@ -10,6 +10,7 @@ import Foundation
 import AsyncDisplayKit
 import Spine
 import Moya
+import GSImageViewerController
 
 class PostDetailsViewController: ASViewController<PostDetailsNode> {
   let postDetailsNode: PostDetailsNode
@@ -386,6 +387,10 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
   }
 
   func postDetails(node: PostDetailsNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+    let imageInfo = GSImageInfo(image: image, imageMode: .aspectFit, imageHD: nil)
+    let transitionInfo = GSTransitionInfo(fromView: imageNode.view)
+    let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
+    present(imageViewer, animated: true, completion: nil)
 
   }
 }
