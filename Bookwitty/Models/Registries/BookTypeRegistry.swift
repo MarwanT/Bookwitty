@@ -30,9 +30,11 @@ class BookTypeRegistry {
         return
       }
 
-      if !registry.contains(where: { $0.id == id && $0.section == section }) {
-        let category: Category = (book.productFormats?.count ?? 0 == 0) ? .product : .topic
-        let entry: Entry = (id, section, category)
+      let category: Category = (book.productFormats?.count ?? 0 == 0) ? .product : .topic
+      let entry: Entry = (id, section, category)
+      if let index = registry.index(where: { $0.id == id && $0.section == section }) {
+        registry[index] = entry
+      } else {
         registry.append(entry)
       }
     })
