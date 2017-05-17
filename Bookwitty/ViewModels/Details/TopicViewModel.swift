@@ -35,6 +35,8 @@ final class TopicViewModel {
   fileprivate var followers: [String] = []
   fileprivate var followersNextUrl: URL? = nil
   
+  var bookRegistry: BookTypeRegistry = BookTypeRegistry()
+
   func initialize(with resource: ModelCommonProperties?) {
     self.resource = resource
     initiateContentCalls()
@@ -273,6 +275,8 @@ extension TopicViewModel {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
+        self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.topicLatest)
+
         let resourcesIds: [String] = resources.flatMap({ $0.id })
         _ = self.handleLatest(results: resourcesIds, next: next, reset: true)
         self.callback?(.latest)

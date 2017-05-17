@@ -27,6 +27,8 @@ final class PostsViewModel {
   var shouldShowBottomLoader = false
   fileprivate var shouldReloadPostsSections = false
   
+  var bookRegistry: BookTypeRegistry = BookTypeRegistry()
+
   /// Given an array of resources, they will be considered as
   /// the items of the first page
   func initialize(title: String?, resources: [ModelResource]?, loadingMode: DataLoadingMode?) {
@@ -93,6 +95,8 @@ extension PostsViewModel {
       }
       self.shouldReloadPostsSections = resources.count > 0
       DataManager.shared.update(resources: resources)
+      self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.posts)
+
       self.posts.append(contentsOf: resources.flatMap({ $0.id }))
     })
   }
@@ -154,6 +158,8 @@ extension PostsViewModel {
       }
       self.shouldReloadPostsSections = resources.count > 0
       DataManager.shared.update(resources: resources)
+      self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.posts)
+
       self.posts.append(contentsOf: resources.flatMap({ $0.id }))
     })
   }

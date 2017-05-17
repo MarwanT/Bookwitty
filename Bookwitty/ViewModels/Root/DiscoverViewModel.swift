@@ -12,6 +12,7 @@ import Spine
 import AsyncDisplayKit
 
 final class DiscoverViewModel {
+  var bookRegistry: BookTypeRegistry = BookTypeRegistry()
   var cancellableRequest:  Cancellable?
   //All data identifier
   var contentIdentifiers: [String] = []
@@ -91,6 +92,8 @@ final class DiscoverViewModel {
         }
         if let resources = resources, success {
           DataManager.shared.update(resources: resources)
+          self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.discover)
+
           self.updateData(for: segment, with: resources)
         }
       })

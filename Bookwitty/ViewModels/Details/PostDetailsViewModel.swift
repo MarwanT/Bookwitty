@@ -15,6 +15,8 @@ class PostDetailsViewModel {
 
   var cancellableRequest: Cancellable?
 
+  var bookRegistry: BookTypeRegistry = BookTypeRegistry()
+
   var vcTitle: String? {
     return vcTitleForResource(resource: resource)
   }
@@ -396,6 +398,8 @@ extension PostDetailsViewModel {
       }
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
+        self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.postDetails)
+
         self.relatedPosts.removeAll()
         self.relatedPosts += resources.flatMap( { $0.id })
         self.relatedPostsNextPage = next
