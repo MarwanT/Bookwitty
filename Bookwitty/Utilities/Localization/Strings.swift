@@ -76,7 +76,11 @@ class Strings {
   static func books() -> String {
     return localizedString(key: "books")
   }
-  
+
+  static func books_you_may_be_interested_in() -> String {
+    return localizedString(key: "books_you_may_be_interested_in")
+  }
+
   static func bookwitty() -> String {
     return localizedString(key: "bookwitty")
   }
@@ -128,7 +132,11 @@ class Strings {
   static func contact_us() -> String {
     return localizedString(key: "contact_us")
   }
-  
+
+  static func content() -> String {
+    return localizedString(key: "content")
+  }
+
   static func `continue`() -> String {
     return localizedString(key: "continue")
   }
@@ -440,7 +448,15 @@ class Strings {
   static func out_of_stock() -> String {
     return localizedString(key: "out_of_stock")
   }
-  
+
+  static func pages() -> String {
+    return localizedString(key: "pages")
+  }
+
+  static func pages_you_may_be_interested_in() -> String {
+    return localizedString(key: "pages_you_may_be_interested_in")
+  }
+
   static func password() -> String {
     return localizedString(key: "password")
   }
@@ -536,7 +552,11 @@ class Strings {
   static func search_placeholder() -> String {
     return localizedString(key: "search_placeholder")
   }
-  
+
+  static func see_whats_happening_on_bookwitty() -> String {
+    return localizedString(key: "see_whats_happening_on_bookwitty")
+  }
+
   static func settings() -> String {
     return localizedString(key: "settings")
   }
