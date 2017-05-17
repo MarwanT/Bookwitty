@@ -53,6 +53,9 @@ class TopicHeaderNode: ASCellNode {
     titleNode.maximumNumberOfLines = 4
     topicStatsNode.maximumNumberOfLines = 1
 
+    titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    topicStatsNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     let buttonFont = FontDynamicType.subheadline.font
     let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()
     let selectedTextColor = ThemeManager.shared.currentTheme.colorNumber23()

@@ -36,6 +36,8 @@ class PageCellNode: ASCellNode {
     titleNode.textContainerInset = UIEdgeInsets(top: 15.0, left: 20.0, bottom: 0.0, right: 20.0)
     titleNode.maximumNumberOfLines = 1
 
+    titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     //Set Node Styling
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     titleNode.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()

@@ -103,6 +103,9 @@ class ArticleCardContentNode: ASDisplayNode {
     titleNode.maximumNumberOfLines = 3
     descriptionNode.maximumNumberOfLines = 3
 
+    titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    descriptionNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
   }

@@ -129,6 +129,10 @@ class LinkCardPostContentNode: ASDisplayNode {
   func setupMode(fullViewMode: Bool) {
     titleNode.maximumNumberOfLines = fullViewMode ? 0 : 3
     descriptionNode.maximumNumberOfLines = fullViewMode ? 0 : 3
+
+    titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    descriptionNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     setNeedsLayout()
   }
 

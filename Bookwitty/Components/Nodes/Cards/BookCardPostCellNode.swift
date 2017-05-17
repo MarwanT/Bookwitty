@@ -169,6 +169,11 @@ class BookCardPostContentNode: ASDisplayNode {
     formatNode.maximumNumberOfLines = 1
     priceNode.maximumNumberOfLines = 1
     topicStatsNode.maximumNumberOfLines = 1
+
+    authorNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    formatNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    priceNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    topicStatsNode.truncationMode = NSLineBreakMode.byTruncatingTail
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

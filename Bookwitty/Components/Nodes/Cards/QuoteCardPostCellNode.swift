@@ -89,6 +89,10 @@ class QuoteCardPostContentNode: ASDisplayNode {
   func setupMode(fullViewMode: Bool) {
     quoteTextNode.maximumNumberOfLines = fullViewMode ? 0 : 3
     nameTextNode.maximumNumberOfLines = fullViewMode ? 0 : 1
+
+    quoteTextNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    nameTextNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     setNeedsLayout()
   }
 

@@ -111,6 +111,10 @@ class ProfileCardPostContentNode: ASDisplayNode {
     followersTextNode.maximumNumberOfLines = 1
     descriptionNode.maximumNumberOfLines = 4
 
+    userNameTextNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    followersTextNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    descriptionNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     userProfileImageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
 
     let profileBorderWidth: CGFloat = 0.0

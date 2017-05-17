@@ -148,6 +148,10 @@ class TopicCardPostContentNode: ASDisplayNode {
     descriptionNode.maximumNumberOfLines = 3
     topicStatsNode.maximumNumberOfLines = 1
 
+    titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    descriptionNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    topicStatsNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
     imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
 

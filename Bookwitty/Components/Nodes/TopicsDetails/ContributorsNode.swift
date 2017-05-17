@@ -57,6 +57,8 @@ class ContributorsNode: ASDisplayNode {
 
   private func setupNode() {
     statsNode.maximumNumberOfLines = 1
+
+    statsNode.truncationMode = NSLineBreakMode.byTruncatingTail
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
