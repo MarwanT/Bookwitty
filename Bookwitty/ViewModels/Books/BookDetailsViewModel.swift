@@ -738,6 +738,13 @@ extension BookDetailsViewModel {
 }
 
 extension BookDetailsViewModel {
+  fileprivate func resourceFor(id: String?) -> ModelResource? {
+    guard let id = id else {
+      return nil
+    }
+    return DataManager.shared.fetchResource(with: id)
+  }
+
   func resource(at indexPath: IndexPath) -> ModelCommonProperties? {
     guard let resources = resourcesCommonProperties(for: indexPath) else {
         return nil
