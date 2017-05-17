@@ -136,7 +136,12 @@ extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
       }
     } else {
       return {
-        return self.viewModel.nodeForItem(at: indexPath)
+        let node = self.viewModel.nodeForItem(at: indexPath)
+        if let cardNode = node as? BaseCardPostNode {
+          self.setupCardNode(baseCardNode: cardNode, indexPath: indexPath)
+        }
+
+        return node
       }
     }
   }
@@ -144,23 +149,6 @@ extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
     if let loaderNode = node as? LoaderNode {
       loaderNode.updateLoaderVisibility(show: true)
-    }
-    
-    // Check if cell conforms to protocol base card delegate
-    if let cardNode = node as? BaseCardPostNode {
-      cardNode.delegate = self
-    }
-    
-    // If cell is reading list handle loading the images
-    if let readingListCell = node as? ReadingListCardPostCellNode, let indexPath = node.indexPath,
-      !readingListCell.node.isImageCollectionLoaded  {
-      let max = readingListCell.node.maxNumberOfImages
-      self.viewModel.loadReadingListImages(at: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
-        if let imageCollection = imageCollection, imageCollection.count > 0 {
-          readingListCell.node.prepareImages(imageCount: imageCollection.count)
-          readingListCell.node.loadImages(with: imageCollection)
-        }
-      })
     }
   }
   
