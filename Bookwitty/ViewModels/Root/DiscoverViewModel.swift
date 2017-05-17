@@ -460,15 +460,3 @@ extension DiscoverViewModel {
     }
   }
 }
-
-//MARK: - Analytics
-extension DiscoverViewModel {
-  func resource(for segment: DiscoverViewController.Segment, at index: Int) -> ModelResource? {
-    guard let resource = resourceForIndex(for: segment, index: index) else {
-        return nil
-    }
-
-    return resource
-  }
-}
-

@@ -554,7 +554,7 @@ extension DiscoverViewController: BaseCardPostNodeDelegate {
     }
 
     //MARK: [Analytics] Event
-    guard let resource = viewModel.resource(for: activeSegment, at: index) else { return }
+    guard let resource = viewModel.resourceForIndex(for: activeSegment, index: index) else { return }
     let category: Analytics.Category
     var name: String = (resource as? ModelCommonProperties)?.title ?? ""
     
