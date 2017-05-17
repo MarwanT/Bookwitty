@@ -48,7 +48,7 @@ class PageCellNode: ASCellNode {
       imageNode.url = URL(string: imageUrl)
     }
     if let title = title {
-      titleNode.attributedText = AttributedStringBuilder(fontDynamicType: titleTextDynamicFont).append(text: title, lineHeightMultiple: 1.0).attributedString
+      titleNode.attributedText = AttributedStringBuilder(fontDynamicType: titleTextDynamicFont).append(text: title).attributedString
     } else {
       titleNode.attributedText = nil
     }
