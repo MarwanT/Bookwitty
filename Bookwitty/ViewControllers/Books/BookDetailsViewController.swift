@@ -179,6 +179,22 @@ extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
     collectionNode.deselectItem(at: indexPath, animated: true)
     perform(action: viewModel.actionForItem(at: indexPath))
   }
+
+  func setupCardNode(baseCardNode: BaseCardPostNode, indexPath: IndexPath) {
+    // Check if cell conforms to protocol base card delegate
+    baseCardNode.delegate = self
+
+    if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
+      !readingListCell.node.isImageCollectionLoaded  {
+      let max = readingListCell.node.maxNumberOfImages
+      self.viewModel.loadReadingListImages(at: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
+        if let imageCollection = imageCollection, imageCollection.count > 0 {
+          readingListCell.node.prepareImages(imageCount: imageCollection.count)
+          readingListCell.node.loadImages(with: imageCollection)
+        }
+      })
+    }
+  }
 }
 
 // MARK: - Actions
