@@ -149,6 +149,15 @@ extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
     if let loaderNode = node as? LoaderNode {
       loaderNode.updateLoaderVisibility(show: true)
+    } else if let card = node as? BaseCardPostNode {
+      guard let indexPath = collectionNode.indexPath(for: node),
+        let commonResource = viewModel.resource(at: indexPath) else {
+          return
+      }
+
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: commonResource), !sameInstance {
+        card.baseViewModel?.resource = commonResource
+      }
     }
   }
   
