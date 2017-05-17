@@ -19,6 +19,8 @@ class ProfileDetailsViewModel {
   var followersNextPage: URL?
   var followingNextPage: URL?
   var cancellableRequest: Cancellable?
+  var bookRegistry: BookTypeRegistry = BookTypeRegistry()
+
   init(penName: PenName) {
     self.penName = penName
   }
@@ -134,6 +136,8 @@ extension ProfileDetailsViewModel {
       }
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
+        self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.profileLatest)
+
         self.latestData.removeAll(keepingCapacity: false)
         self.latestData += resources.flatMap({ $0.id })
       }
@@ -178,6 +182,8 @@ extension ProfileDetailsViewModel {
       }
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
+        self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.profileFollowing)
+
         self.following.removeAll(keepingCapacity: false)
         self.following += resources.flatMap({ $0.id })
       }

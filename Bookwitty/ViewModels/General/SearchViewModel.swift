@@ -15,6 +15,7 @@ class SearchViewModel {
   var nextPage: URL?
   
   var misfortuneNodeMode: MisfortuneNode.Mode? = nil
+  var bookRegistry: BookTypeRegistry = BookTypeRegistry()
 
   func cancelActiveRequest() {
     guard let cancellableRequest = cancellableRequest else {
@@ -58,6 +59,8 @@ class SearchViewModel {
       }
 
       DataManager.shared.update(resources: resources)
+      self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.search)
+
       self.data += resources
       self.nextPage = nextPage
     })
@@ -74,6 +77,8 @@ class SearchViewModel {
     cancellableRequest = GeneralAPI.nextPage(nextPage: nextPage) { (success, resources, nextPage, error) in
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
+        self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.search)
+
         self.data += resources
         self.nextPage = nextPage
       }

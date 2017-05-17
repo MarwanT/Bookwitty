@@ -331,6 +331,8 @@ extension DiscoverViewController: ASCollectionDataSource {
               readingListCell.node.loadImages(with: imageCollection)
             }
           })
+        } else if let bookCard = baseCardNode as? BookCardPostCellNode, let resource = self.viewModel.resourceForIndex(for: self.activeSegment, index: index) {
+          bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.discover) ?? .topic == .product)
         }
         baseCardNode.delegate = self
         return baseCardNode
@@ -379,6 +381,9 @@ extension DiscoverViewController: ASCollectionDataSource {
       if let card = node as? BaseCardPostNode,
         let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: modelCommonProperties), !sameInstance {
         card.baseViewModel?.resource = modelCommonProperties
+      }
+      if let bookCard = node as? BookCardPostCellNode {
+        bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.discover) ?? .topic == .product)
       }
     case .books:
       guard let book = node as? BookNode, let bookResource = viewModel.bookValues(for: resource) else {
@@ -758,21 +763,28 @@ extension DiscoverViewController {
   }
 
   fileprivate func actionForBookResourceType(resource: ModelResource) {
-    guard resource is Book else {
+    guard let resource = resource as? Book else {
       return
     }
+    let isProduct = (viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.discover) ?? .topic == .product)
 
     //MARK: [Analytics] Event
-    let name: String = (resource as? Book)?.title ?? ""
-    let event: Analytics.Event = Analytics.Event(category: .TopicBook,
+    let name: String = resource.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: isProduct ? .BookProduct : .TopicBook,
                                                  action: .GoToDetails,
                                                  name: name)
     Analytics.shared.send(event: event)
 
-    let topicViewController = TopicViewController()
-    topicViewController.initialize(with: resource as? ModelCommonProperties)
-    topicViewController.hidesBottomBarWhenPushed = true
-    navigationController?.pushViewController(topicViewController, animated: true)
+    if !isProduct {
+      let topicViewController = TopicViewController()
+      topicViewController.initialize(with: resource as ModelCommonProperties)
+      topicViewController.hidesBottomBarWhenPushed = true
+      navigationController?.pushViewController(topicViewController, animated: true)
+    } else {
+      let bookDetailsViewController = BookDetailsViewController(with: resource)
+      bookDetailsViewController.hidesBottomBarWhenPushed = true
+      navigationController?.pushViewController(bookDetailsViewController, animated: true)
+    }
   }
 }
 
