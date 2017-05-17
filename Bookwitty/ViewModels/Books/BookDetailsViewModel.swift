@@ -750,12 +750,12 @@ extension BookDetailsViewModel {
         return nil
     }
 
-    guard indexPath.row > 0 && indexPath.row < resources.count else {
+    guard indexPath.row > 0 && (indexPath.row - 1) < resources.count else {
       return nil
     }
 
-    let resource = resources[indexPath.row - 1]
-    return resource
+    let resource = resourceFor(id: resources[indexPath.row - 1].id)
+    return resource as? ModelCommonProperties
   }
 }
 
