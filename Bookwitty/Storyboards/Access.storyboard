@@ -4,7 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -24,7 +24,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="icG-US-vNT">
-                                <rect key="frame" x="0.0" y="20" width="375" height="521.5"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="457.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gP5-6X-Oaa" userLabel="Stack View Background">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="297"/>
@@ -104,13 +104,13 @@
                                 </constraints>
                             </scrollView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STo-2f-EV2" customClass="TTTAttributedLabel">
-                                <rect key="frame" x="20" y="562" width="335" height="21"/>
+                                <rect key="frame" x="20" y="498" width="335" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1r-FX-WUr" userLabel="Sign-In Button">
-                                <rect key="frame" x="20" y="603" width="335" height="44"/>
+                                <rect key="frame" x="20" y="539" width="335" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Ay7-xX-tH9"/>
                                 </constraints>
@@ -119,17 +119,27 @@
                                     <action selector="signInButtonTouchUpInside:" destination="RSO-OY-1rR" eventType="touchUpInside" id="l7y-vW-DrC"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gke-RM-D5g" userLabel="Facebook Signin Button" customClass="FBSDKLoginButton">
+                                <rect key="frame" x="20" y="603" width="335" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="r1z-jp-udn"/>
+                                </constraints>
+                                <state key="normal" title="Facebook Login"/>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="icG-US-vNT" firstAttribute="top" secondItem="gGw-xY-8LN" secondAttribute="bottom" id="88b-eI-pbc"/>
                             <constraint firstItem="icG-US-vNT" firstAttribute="bottom" secondItem="Kez-nw-7iT" secondAttribute="top" id="Hcw-qh-4yI"/>
                             <constraint firstItem="h1r-FX-WUr" firstAttribute="leading" secondItem="gUT-Uy-A5b" secondAttribute="leading" constant="20" id="LGX-Ra-xkS"/>
                             <constraint firstItem="STo-2f-EV2" firstAttribute="bottom" secondItem="h1r-FX-WUr" secondAttribute="top" constant="-20" id="LXr-aw-D2Y"/>
+                            <constraint firstItem="h1r-FX-WUr" firstAttribute="bottom" secondItem="gke-RM-D5g" secondAttribute="top" constant="-20" id="N6Z-y7-OL6"/>
                             <constraint firstItem="icG-US-vNT" firstAttribute="bottom" secondItem="STo-2f-EV2" secondAttribute="top" constant="-20" id="NWG-GI-3me"/>
+                            <constraint firstItem="gke-RM-D5g" firstAttribute="leading" secondItem="h1r-FX-WUr" secondAttribute="leading" id="SqW-k4-85A"/>
+                            <constraint firstItem="Kez-nw-7iT" firstAttribute="top" secondItem="gke-RM-D5g" secondAttribute="bottom" constant="20" id="Ue0-L2-7s1"/>
                             <constraint firstItem="STo-2f-EV2" firstAttribute="trailing" secondItem="gUT-Uy-A5b" secondAttribute="trailing" constant="-20" id="db0-FX-xcp"/>
                             <constraint firstItem="h1r-FX-WUr" firstAttribute="trailing" secondItem="gUT-Uy-A5b" secondAttribute="trailing" constant="-20" id="gfy-Vx-R3M"/>
                             <constraint firstItem="icG-US-vNT" firstAttribute="trailing" secondItem="gUT-Uy-A5b" secondAttribute="trailing" id="i7Q-uL-xeP"/>
-                            <constraint firstItem="Kez-nw-7iT" firstAttribute="top" secondItem="h1r-FX-WUr" secondAttribute="bottom" constant="20" id="oTP-0C-C75"/>
+                            <constraint firstItem="gke-RM-D5g" firstAttribute="trailing" secondItem="h1r-FX-WUr" secondAttribute="trailing" id="ovU-CQ-12l"/>
                             <constraint firstItem="STo-2f-EV2" firstAttribute="leading" secondItem="gUT-Uy-A5b" secondAttribute="leading" constant="20" id="x1t-2o-XOR"/>
                             <constraint firstItem="icG-US-vNT" firstAttribute="leading" secondItem="gUT-Uy-A5b" secondAttribute="leading" id="yHW-qb-Sf0"/>
                         </constraints>
@@ -141,6 +151,7 @@
                     </view>
                     <connections>
                         <outlet property="emailField" destination="654-el-WVd" id="cyi-ou-WbN"/>
+                        <outlet property="facebookSignInButton" destination="gke-RM-D5g" id="HmY-pK-8rD"/>
                         <outlet property="forgotPasswordLabel" destination="0Do-2q-d6T" id="3fG-5Y-qGu"/>
                         <outlet property="passwordField" destination="2MS-dN-n76" id="jxs-Dn-pN4"/>
                         <outlet property="registerLabel" destination="STo-2f-EV2" id="XQg-AN-rvN"/>

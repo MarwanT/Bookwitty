@@ -9,6 +9,7 @@
 import UIKit
 import TTTAttributedLabel
 import SwiftLoader
+import FBSDKLoginKit
 
 class SignInViewController: UIViewController {
   @IBOutlet weak var stackView: UIStackView!
@@ -16,6 +17,7 @@ class SignInViewController: UIViewController {
   @IBOutlet weak var stackViewBackgroundView: UIView!
   @IBOutlet weak var passwordField: PasswordInputField!
   @IBOutlet weak var signInButton: UIButton!
+  @IBOutlet weak var facebookSignInButton: FBSDKLoginButton!
   @IBOutlet weak var registerLabel: TTTAttributedLabel!
   @IBOutlet weak var forgotPasswordLabel: TTTAttributedLabel!
   @IBOutlet var separators: [UIView]!
