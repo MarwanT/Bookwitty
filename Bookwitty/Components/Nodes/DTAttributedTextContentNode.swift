@@ -71,8 +71,10 @@ class DTAttributedTextContentNode: ASCellNode {
   var textContentView: DTAttributedTextContentView!
   weak var delegate: DTAttributedTextContentNodeDelegate?
 
-  convenience override init() {
-    self.init(viewBlock: { () -> UIView in
+  override init() {
+    super.init()
+    
+    self.setViewBlock({ () -> UIView in
       let textContentView = DTAttributedTextContentView()
       return textContentView
     })
@@ -220,8 +222,10 @@ class DTAttributedLabelNode: ASCellNode {
   }
   private var attributedString: NSAttributedString?
 
-  override convenience init() {
-    self.init(viewBlock: { () -> UIView in
+  override init() {
+    super.init()
+    
+    self.setViewBlock({ () -> UIView in
       let textContentView = DTAttributedLabel()
       return textContentView
     })

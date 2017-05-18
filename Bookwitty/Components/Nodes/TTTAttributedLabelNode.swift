@@ -12,8 +12,10 @@ import TTTAttributedLabel
 class TTTAttributedLabelNode: ASDisplayNode {
   var label: TTTAttributedLabel?
   
-  convenience override init() {
-    self.init(viewBlock: { () -> UIView in
+  override init() {
+    super.init()
+    
+    self.setViewBlock({ () -> UIView in
       let tttLabel = TTTAttributedLabel(frame: CGRect.zero)
       return tttLabel
     })

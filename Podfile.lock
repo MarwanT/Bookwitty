@@ -1,13 +1,6 @@
 PODS:
   - Alamofire (4.2.0)
   - ALCameraViewController (1.2.7)
-  - AsyncDisplayKit (2.2):
-    - AsyncDisplayKit/PINRemoteImage (= 2.2)
-  - AsyncDisplayKit/Core (2.2)
-  - AsyncDisplayKit/PINRemoteImage (2.2):
-    - AsyncDisplayKit/Core
-    - PINRemoteImage/iOS (= 3.0.0-beta.8)
-    - PINRemoteImage/PINCache
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
@@ -94,10 +87,11 @@ PODS:
   - PINCache/Core (3.0.1-beta.4):
     - PINOperation (= 1.0.3)
   - PINOperation (1.0.3)
-  - PINRemoteImage/Core (3.0.0-beta.8)
-  - PINRemoteImage/iOS (3.0.0-beta.8):
+  - PINRemoteImage/Core (3.0.0-beta.9):
+    - PINOperation
+  - PINRemoteImage/iOS (3.0.0-beta.9):
     - PINRemoteImage/Core
-  - PINRemoteImage/PINCache (3.0.0-beta.8):
+  - PINRemoteImage/PINCache (3.0.0-beta.9):
     - PINCache (= 3.0.1-beta.4)
     - PINRemoteImage/Core
   - ReachabilitySwift (3)
@@ -113,13 +107,19 @@ PODS:
   - SwiftLoader (0.2.5)
   - SwiftMessages (3.1.4)
   - SwiftyJSON (3.1.4)
+  - Texture (2.3.2):
+    - Texture/PINRemoteImage (= 2.3.2)
+  - Texture/Core (2.3.2)
+  - Texture/PINRemoteImage (2.3.2):
+    - PINRemoteImage/iOS (= 3.0.0-beta.9)
+    - PINRemoteImage/PINCache
+    - Texture/Core
   - TTTAttributedLabel (2.0.0)
   - UIImageViewAlignedSwift (0.3.1)
   - Version (0.5.0)
 
 DEPENDENCIES:
   - ALCameraViewController (= 1.2.7)
-  - AsyncDisplayKit (= 2.2)
   - Crashlytics (= 3.8.4)
   - DTCoreText (= 1.6.20)
   - EMCCountryPickerController (from `https://github.com/Keeward/EMCCountryPickerController`, tag `1.4.0`)
@@ -139,6 +139,7 @@ DEPENDENCIES:
   - SwiftLoader (from `https://github.com/keeward/SwiftLoader`, tag `0.3.1`)
   - SwiftMessages (= 3.1.4)
   - SwiftyJSON (= 3.1.4)
+  - Texture (= 2.3.2)
   - TTTAttributedLabel (= 2.0.0)
   - UIImageViewAlignedSwift (= 0.3.1)
   - Version (from `https://github.com/opwoco/Version`)
@@ -175,7 +176,6 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
   ALCameraViewController: 4a513b8d5ecfdb3f34c50b1d469c373aae1ec7b4
-  AsyncDisplayKit: 1585f6cd0531ae9b30476f5912f577b73ebcb0e4
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   BrightFutures: 62aafb1a63520eda91c9286bf4be33e58e043938
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
@@ -202,7 +202,7 @@ SPEC CHECKSUMS:
   Moya: 850a166ab8241bd1c1cea6dbe012e3a2ad62944a
   PINCache: a89c8f609232afac77128557bd12c861844423d7
   PINOperation: ac23db44796d4a564ecf9b5ea7163510f579b71d
-  PINRemoteImage: c4f9f16932840c597f32e69dd288e10e111a1929
+  PINRemoteImage: e4e02e15a6f96cedbcef2abf1c9c1228dc9897d7
   ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
   Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
@@ -212,10 +212,11 @@ SPEC CHECKSUMS:
   SwiftLoader: 0009cbba8d0610ec58403bd76f705cdd6ae63edb
   SwiftMessages: 08386e74abe1b32fa8ac2075edb4043c56db709d
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  Texture: 18664254419f35de27af76399b3b265cbad5740a
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   UIImageViewAlignedSwift: e57cc89b4738a82ffad1b76e8ab01f898215bbfb
   Version: 31221742495765fc798d08eae45de3c936dce0db
 
-PODFILE CHECKSUM: 2f79fa315566f544b04b1eb88c4b252f23d8271f
+PODFILE CHECKSUM: a856f78e4af8baf2fdfa182d5c7c0605242ad9e6
 
 COCOAPODS: 1.2.0

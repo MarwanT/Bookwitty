@@ -23,8 +23,8 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
   
   var configuration = Configuration()
   
-  override init() {
-    super.init()
+  override init(style: UITableViewStyle) {
+    super.init(style: style)
     delegate = self
     dataSource = self
   }
@@ -35,10 +35,6 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
     view.separatorInset = UIEdgeInsets(
       top: 0, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: 0, right: 0)
-  }
-  
-  override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
-    super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
   
   func numberOfSections(in tableNode: ASTableNode) -> Int {
