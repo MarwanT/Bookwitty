@@ -26,7 +26,7 @@ class AccountViewController: UIViewController {
     initializeComponents()
     applyTheme()
     fillUserInformation()
-    observeLanguageChanges()
+    addObservers()
 
     navigationItem.backBarButtonItem = UIBarButtonItem.back
 
@@ -43,6 +43,11 @@ class AccountViewController: UIViewController {
     tableView.register(TableViewSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: TableViewSectionHeaderView.reuseIdentifier)
 
     tableView.tableFooterView = UIView.defaultSeparator(useAutoLayout: false)
+  }
+
+  private func addObservers() {
+    observeLanguageChanges()
+    observeUserPenNamesChanges()
   }
 
   private func fillUserInformation() {
@@ -69,7 +74,7 @@ class AccountViewController: UIViewController {
         break
       }
     case AccountViewModel.Sections.CreatePenNames.rawValue:
-      break
+      pushPenNameViewController()
     case AccountViewModel.Sections.CustomerService.rawValue:
       switch indexPath.row {
       case 0:
@@ -101,11 +106,16 @@ class AccountViewController: UIViewController {
     navigationController?.pushViewController(settingsViewController, animated: true)
   }
 
-  func pushPenNameViewController(indexPath: IndexPath) {
+  func pushPenNameViewController(indexPath: IndexPath? = nil) {
     let penNameViewController = Storyboard.Access.instantiate(PenNameViewController.self)
+    var mode: PenNameViewController.Mode = .New
+    if let indexPath = indexPath {
+      let penName = viewModel.selectedPenName(atRow: indexPath.row)
+      penNameViewController.viewModel.initializeWith(penName: penName, andUser: UserManager.shared.signedInUser)
+      mode = .Edit
+    }
+    penNameViewController.mode = mode
     penNameViewController.showNoteLabel = false
-    let penName = viewModel.selectedPenName(atRow: indexPath.row)
-    penNameViewController.viewModel.initializeWith(penName: penName, andUser: UserManager.shared.signedInUser)
     navigationController?.pushViewController(penNameViewController, animated: true)
   }
 
@@ -232,3 +242,16 @@ extension AccountViewController: Localizable {
     applyLocalization()
   }
 }
+
+//MARK: - User & Pen Names updates
+extension AccountViewController {
+  fileprivate func observeUserPenNamesChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(userPenNamesChanged(notification:)), name: UserManager.Notifications.Name.UpdatePenNames, object: nil)
+  }
+
+  @objc
+  fileprivate func userPenNamesChanged(notification: Notification) {
+    tableView.reloadData()
+  }
+}
+
