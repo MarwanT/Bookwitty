@@ -288,6 +288,7 @@
 		59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */; };
 		59FBF8611F05993100E2CDB7 /* UniColorSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FBF8601F05993100E2CDB7 /* UniColorSectionHeaderView.swift */; };
 		B4ECA3471E4E05E7004B3EE2 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4ECA3461E4E05E7004B3EE2 /* WebViewController.swift */; };
+		B4ECA3471E4E05E7004B3EE2 /* SafariWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4ECA3461E4E05E7004B3EE2 /* SafariWebViewController.swift */; };
 		F400CDC61E7AD48D00B7EF26 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400CDC51E7AD48D00B7EF26 /* SearchViewController.swift */; };
 		F400CDC81E7AF62600B7EF26 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400CDC71E7AF62600B7EF26 /* SearchViewModel.swift */; };
 		F40700501E55992000DA48A4 /* ReadingListBooksNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */; };
@@ -666,7 +667,7 @@
 		59FBF8601F05993100E2CDB7 /* UniColorSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniColorSectionHeaderView.swift; sourceTree = "<group>"; };
 		61D0EE3946D28FF160292FF2 /* Pods-Bookwitty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookwitty.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bookwitty/Pods-Bookwitty.release.xcconfig"; sourceTree = "<group>"; };
 		818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BookwittyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B4ECA3461E4E05E7004B3EE2 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		B4ECA3461E4E05E7004B3EE2 /* SafariWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SafariWebViewController.swift; sourceTree = "<group>"; };
 		B75E5B87D9559EBD71824DD7 /* Pods-Bookwitty.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookwitty.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bookwitty/Pods-Bookwitty.debug.xcconfig"; sourceTree = "<group>"; };
 		CB5E98B3C54E0B0AD22F5CB4 /* Pods-BookwittyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookwittyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests.release.xcconfig"; sourceTree = "<group>"; };
 		F400CDC51E7AD48D00B7EF26 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -1657,7 +1658,7 @@
 		B4ECA3451E4E05E7004B3EE2 /* General */ = {
 			isa = PBXGroup;
 			children = (
-				B4ECA3461E4E05E7004B3EE2 /* WebViewController.swift */,
+				B4ECA3461E4E05E7004B3EE2 /* SafariWebViewController.swift */,
 				591E15571E70FE37008CA78A /* GenericNodeViewController.swift */,
 				F400CDC51E7AD48D00B7EF26 /* SearchViewController.swift */,
 				59871F191E78ADFB000A86CD /* PostsViewController.swift */,
@@ -2271,7 +2272,7 @@
 				F43A5E921E69A840008C018B /* OnBoardingControllerNode.swift in Sources */,
 				56AC22C91EA50D2700484449 /* ArticleCardViewModel.swift in Sources */,
 				5967E45A1E410A850067093F /* NotificationView.swift in Sources */,
-				B4ECA3471E4E05E7004B3EE2 /* WebViewController.swift in Sources */,
+				B4ECA3471E4E05E7004B3EE2 /* SafariWebViewController.swift in Sources */,
 				59591F1F1E6EB065005592B8 /* BookDetailsInformationNode.swift in Sources */,
 				56E8B6441E6971C900D8E71E /* TopicControllerNode.swift in Sources */,
 				561229E11EA5E440004CE079 /* TopicCardViewModel.swift in Sources */,

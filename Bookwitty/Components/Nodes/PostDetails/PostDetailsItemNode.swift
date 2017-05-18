@@ -129,7 +129,7 @@ protocol PostDetailItemNodeDelegate: class {
 
 extension PostDetailItemNode: DTAttributedTextContentNodeDelegate {
   func attributedTextContentNode(node: ASCellNode, button: DTLinkButton, didTapOnLink link: URL) {
-    WebViewController.present(url: link)
+    SafariWebViewController.present(url: link)
   }
 
   func attributedTextContentNodeNeedsLayout(node: ASCellNode) {

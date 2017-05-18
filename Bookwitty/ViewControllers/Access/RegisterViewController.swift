@@ -334,7 +334,7 @@ extension RegisterViewController:  EMCCountryDelegate {
 
 extension RegisterViewController: TTTAttributedLabelDelegate {
   func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
-    WebViewController.present(url: url, inViewController: self)
+    SafariWebViewController.present(url: url)
 
     let name: Analytics.ScreenName
     switch url.relativeString {

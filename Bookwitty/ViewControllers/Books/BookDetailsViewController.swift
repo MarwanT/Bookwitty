@@ -316,7 +316,7 @@ extension BookDetailsViewController {
   }
   
   fileprivate func viewShippingInfo(_ url: URL) {
-    WebViewController.present(url: url)
+    SafariWebViewController.present(url: url)
   }
   
   fileprivate func buyThisBook(bookTitle: String, url: URL) {
@@ -331,7 +331,7 @@ extension BookDetailsViewController {
           newUrl = componentsUrl ?? url
         }
 
-        WebViewController.present(url: newUrl)
+        SafariWebViewController.present(url: newUrl)
 
         //MARK: [Analytics] Event
         let event: Analytics.Event = Analytics.Event(category: .BookProduct,
@@ -339,7 +339,7 @@ extension BookDetailsViewController {
                                                      name: bookTitle)
         Analytics.shared.send(event: event)
       } else {
-        WebViewController.present(url: newUrl)
+        SafariWebViewController.present(url: newUrl)
       }
     }
 

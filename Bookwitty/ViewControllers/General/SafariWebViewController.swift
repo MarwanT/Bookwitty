@@ -1,5 +1,5 @@
 //
-//  WebViewController.swift
+//  SafariWebViewController.swift
 //  Bookwitty
 //
 //  Created by Elie Soueidy on 2/10/17.
@@ -9,7 +9,7 @@
 import UIKit
 import SafariServices
 
-class WebViewController {
+class SafariWebViewController {
   public static func present(url: String, inViewController: UIViewController? = nil) {
     guard let safeURL  = URL(string: url) else {
       return

@@ -331,7 +331,8 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
     guard let safeURL = url else {
       return
     }
-    WebViewController.present(url: safeURL)
+
+    SafariWebViewController.present(url: safeURL)
   }
 
   func shouldShowPostDetailsAllPosts() {
@@ -743,12 +744,13 @@ extension PostDetailsViewController: PostDetailItemNodeDelegate {
       return
     }
 
+  
     guard let resource = viewModel.contentPostsItem(at: index),
       let url = resource.canonicalURL else {
         return
     }
 
-    WebViewController.present(url: url)
+    SafariWebViewController.present(url: url)
 
     //MARK: [Analytics] Event
     let category: Analytics.Category

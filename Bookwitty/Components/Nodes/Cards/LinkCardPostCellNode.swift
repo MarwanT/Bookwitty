@@ -175,7 +175,7 @@ class LinkCardPostContentNode: ASDisplayNode {
       return
     }
 
-    WebViewController.present(url: linkUrl)
+    SafariWebViewController.present(url: linkUrl)
     
     delegate?.linkViewTouchUpInside(sender: imageNode)
   }

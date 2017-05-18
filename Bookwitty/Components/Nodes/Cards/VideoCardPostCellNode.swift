@@ -152,7 +152,7 @@ class VideoCardContentNode: ASDisplayNode {
       return
     }
 
-    WebViewController.present(url: videoUrl)
+    SafariWebViewController.present(url: videoUrl)
 
     delegate?.videoViewTouchUpInside(sender: imageNode)
   }
