@@ -132,9 +132,8 @@ class SearchViewController: ASViewController<ASCollectionNode> {
       return
     }
     loadingStatus = .loading
-    self.updateCollection(with: nil, loaderSection: true, dataSection: false)
     viewModel.clearSearchData()
-    collectionNode.reloadData()
+    updateCollection(reloadAll: true)
 
     viewModel.search(query: query) { (success, error) in
       self.loadingStatus = .none
@@ -166,7 +165,7 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     }
 
     let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
-    collectionNode.reloadItems(at: indexPathForAffectedItems)
+    updateCollection(with: indexPathForAffectedItems, reloadItemsWithIndices: true, loaderSection: true)
   }
 }
 
