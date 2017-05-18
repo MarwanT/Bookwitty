@@ -179,7 +179,7 @@ extension BookDetailsViewModel {
         footerNode.configuration.style = .highlighted
         node = footerNode
       default: // Information
-        let (key, value) = bookDetailedInformation[indexPath.row - 1]
+        let (key, value) = bookDetailedInformation[section.dataIndex(for: indexPath)]
         let infoCell = DetailsInfoCellNode()
         infoCell.key = key
         infoCell.value = value
@@ -196,7 +196,7 @@ extension BookDetailsViewModel {
         headerNode.title = Strings.book_categories()
         node = headerNode
       default: // Information
-        let category = categories[indexPath.row - 1]
+        let category = categories[section.dataIndex(for: indexPath)]
         let disclosureNode = DisclosureNodeCell()
         disclosureNode.text = category.value
         disclosureNode.configuration.addInternalBottomSeparator = true
@@ -229,7 +229,7 @@ extension BookDetailsViewModel {
         footerNode.configuration.style = .highlighted
         node = footerNode
       default:
-        let resource = relatedReadingLists[indexPath.row - 1]
+        let resource = relatedReadingLists[section.dataIndex(for: indexPath)]
         guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
           break
         }
@@ -259,7 +259,7 @@ extension BookDetailsViewModel {
         footerNode.configuration.style = .highlighted
         node = footerNode
       default:
-        let resource = relatedTopics[indexPath.row - 1]
+        let resource = relatedTopics[section.dataIndex(for: indexPath)]
         guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
           break
         }
@@ -277,12 +277,12 @@ extension BookDetailsViewModel {
   }
   
   func sharingContent(indexPath: IndexPath) -> [String]? {
-    guard let resourcesCommonProperties = resourcesCommonProperties(for: indexPath), resourcesCommonProperties.count > 0
+    guard let section = Section(rawValue: indexPath.section), let resourcesCommonProperties = resourcesCommonProperties(for: indexPath), resourcesCommonProperties.count > 0
     else {
       return nil
     }
     
-    let resourceProperty = resourcesCommonProperties[indexPath.row - 1]
+    let resourceProperty = resourcesCommonProperties[section.dataIndex(for: indexPath)]
     let shortDesciption = resourceProperty.title ?? resourceProperty.shortDescription ?? ""
     if let sharingUrl = resourceProperty.canonicalURL {
       return [shortDesciption, sharingUrl.absoluteString]
@@ -463,7 +463,7 @@ extension BookDetailsViewModel {
       case 0: // Header
         return nil
       default:
-        return .viewCategory(categories[indexPath.row - 1])
+        return .viewCategory(categories[section.dataIndex(for: indexPath)])
       }
     case .recommendedReadingLists:
       guard let readingLists = relatedReadingLists?.prefixed else {
@@ -610,7 +610,7 @@ extension BookDetailsViewModel {
   // Wit And Unwit API calls
   
   func witContent(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard let resourcesCommonProperties = resourcesCommonProperties(for: indexPath), let contentId = resourcesCommonProperties[indexPath.row - 1].id else {
+    guard let section = Section(rawValue: indexPath.section), let resourcesCommonProperties = resourcesCommonProperties(for: indexPath), let contentId = resourcesCommonProperties[section.dataIndex(for: indexPath)].id else {
       completionBlock(false)
       return
     }
@@ -624,7 +624,7 @@ extension BookDetailsViewModel {
   }
   
   func unwitContent(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard let resourcesCommonProperties = resourcesCommonProperties(for: indexPath), let contentId = resourcesCommonProperties[indexPath.row - 1].id else {
+    guard let section = Section(rawValue: indexPath.section), let resourcesCommonProperties = resourcesCommonProperties(for: indexPath), let contentId = resourcesCommonProperties[section.dataIndex(for: indexPath)].id else {
       completionBlock(false)
       return
     }
@@ -656,18 +656,35 @@ extension BookDetailsViewModel {
     static var numberOfSections: Int {
       return 11
     }
+    
+    var hasHeaderRow: Bool {
+      switch self {
+      case .details, .categories, .recommendedReadingLists, .relatedTopics:
+        return true
+      default:
+        return false
+      }
+    }
+    
+    func dataIndex(for indexPath: IndexPath) -> Int {
+      if hasHeaderRow {
+        return (indexPath.item - 1)
+      } else {
+        return indexPath.item
+      }
+    }
   }
 }
 
 // MARK: - Handle Reading Lists Images
 extension BookDetailsViewModel {
   func loadReadingListImages(at indexPath: IndexPath, maxNumberOfImages: Int, completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
-    guard let relatedReadingLists = relatedReadingLists?.prefixed else {
+    guard let section = Section(rawValue: indexPath.section), let relatedReadingLists = relatedReadingLists?.prefixed else {
       completionBlock(nil)
       return
     }
 
-    let readingList = relatedReadingLists[indexPath.row - 1]
+    let readingList = relatedReadingLists[section.dataIndex(for: indexPath)]
     guard let readingListId = readingList.id else {
       completionBlock(nil)
       return
@@ -699,9 +716,10 @@ extension BookDetailsViewModel {
 // MARK: - PenName Follow/Unfollow
 extension BookDetailsViewModel {
   func follow(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard let resources = resourcesCommonProperties(for: indexPath),
-          let resourceId = resources[indexPath.row - 1].id else {
-      completionBlock(false)
+    guard let section = Section(rawValue: indexPath.section),
+      let resources = resourcesCommonProperties(for: indexPath),
+      let resourceId = resources[section.dataIndex(for: indexPath)].id else {
+        completionBlock(false)
       return
     }
     //Expected types: Topic
@@ -709,8 +727,9 @@ extension BookDetailsViewModel {
   }
 
   func unfollow(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard let resources = resourcesCommonProperties(for: indexPath),
-      let resourceId = resources[indexPath.row - 1].id else {
+    guard let section = Section(rawValue: indexPath.section),
+      let resources = resourcesCommonProperties(for: indexPath),
+      let resourceId = resources[section.dataIndex(for: indexPath)].id else {
         completionBlock(false)
         return
     }
@@ -738,17 +757,25 @@ extension BookDetailsViewModel {
 }
 
 extension BookDetailsViewModel {
+  fileprivate func resourceFor(id: String?) -> ModelResource? {
+    guard let id = id else {
+      return nil
+    }
+    return DataManager.shared.fetchResource(with: id)
+  }
+
   func resource(at indexPath: IndexPath) -> ModelCommonProperties? {
-    guard let resources = resourcesCommonProperties(for: indexPath) else {
+    guard let section = Section(rawValue: indexPath.section),
+      let resources = resourcesCommonProperties(for: indexPath) else {
         return nil
     }
 
-    guard indexPath.row > 0 && indexPath.row < resources.count else {
+    guard indexPath.row > 0 && (section.dataIndex(for: indexPath)) < resources.count else {
       return nil
     }
 
-    let resource = resources[indexPath.row - 1]
-    return resource
+    let resource = resourceFor(id: resources[section.dataIndex(for: indexPath)].id)
+    return resource as? ModelCommonProperties
   }
 }
 
