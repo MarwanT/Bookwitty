@@ -745,5 +745,8 @@ extension BookStoreViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+
+    //Reload the Data upon language change
+    refreshViewController()
   }
 }
