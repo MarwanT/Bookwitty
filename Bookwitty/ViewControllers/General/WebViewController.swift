@@ -7,3 +7,7 @@
 //
 
 import Foundation
+import FLKAutoLayout
+
+class WebViewController: UIViewController {
+}
