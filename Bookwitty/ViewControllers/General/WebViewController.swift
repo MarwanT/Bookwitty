@@ -22,6 +22,8 @@ class WebViewController: UIViewController {
   
   var configuration = Configuration()
   
+  weak var delegate: WebViewControllerDelegate? = nil
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.addSubview(webView)
@@ -65,16 +67,20 @@ extension WebViewController {
 // MARK: - UIWebViewDelegate
 extension WebViewController: UIWebViewDelegate {
   func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-    return true
+    let shouldStartLoad = delegate?.webViewController(self, shouldStartLoadWith: request, navigationType: navigationType) ?? true
+    return shouldStartLoad
   }
   
   func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
+    delegate?.webViewController(self, didFailLoadWithError: error)
   }
   
   func webViewDidStartLoad(_ webView: UIWebView) {
+    delegate?.webViewControllerDidStartLoad(self)
   }
   
   func webViewDidFinishLoad(_ webView: UIWebView) {
+    delegate?.webViewControllerDidFinishLoad(self)
   }
 }
 
