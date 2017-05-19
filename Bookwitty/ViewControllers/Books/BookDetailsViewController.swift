@@ -250,8 +250,7 @@ extension BookDetailsViewController {
       top: ThemeManager.shared.currentTheme.generalExternalMargin(),
       left: 0, bottom: 0, right: 0)
     let node = BookDetailsAboutNode(externalInsets: externalInsets)
-    node.about = description
-    node.dispayMode = .expanded
+    node.setText(aboutText: description, displayMode: .expanded)
     let genericViewController = GenericNodeViewController(node: node, title: viewModel.book.title)
     self.navigationController?.pushViewController(genericViewController, animated: true)
 
