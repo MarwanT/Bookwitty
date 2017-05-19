@@ -71,10 +71,8 @@ class DTAttributedTextContentNode: ASCellNode {
   var textContentView: DTAttributedTextContentView!
   weak var delegate: DTAttributedTextContentNodeDelegate?
 
-  override init() {
-    super.init()
-    
-    self.setViewBlock({ () -> UIView in
+  convenience override init() {
+    self.init(viewBlock: { () -> UIView in
       let textContentView = DTAttributedTextContentView()
       return textContentView
     })
@@ -231,10 +229,8 @@ class DTAttributedLabelNode: ASCellNode {
     }
   }
 
-  override init() {
-    super.init()
-    
-    self.setViewBlock({ () -> UIView in
+  override convenience init() {
+    self.init(viewBlock: { () -> UIView in
       let textContentView = DTAttributedLabel()
       return textContentView
     })
