@@ -244,6 +244,7 @@
 		59CBE4FA1E8094070068C7AD /* ErrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CBE4F91E8094070068C7AD /* ErrorManager.swift */; };
 		59CF3F821ECF3332002A5821 /* IntroductoryBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF3F811ECF3332002A5821 /* IntroductoryBanner.swift */; };
 		59CF3F7E1ECDE18D002A5821 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF3F7D1ECDE18D002A5821 /* WebViewController.swift */; };
+		59CF3F801ECF0DA1002A5821 /* CustomURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF3F7F1ECF0DA1002A5821 /* CustomURLProtocol.swift */; };
 		59CF44011E663C35006C16FC /* General+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF44001E663C35006C16FC /* General+API.swift */; };
 		59CF44031E66E01A006C16FC /* BookDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF44021E66E01A006C16FC /* BookDetailsViewController.swift */; };
 		59CF44051E66FEDF006C16FC /* BookDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF44041E66FEDF006C16FC /* BookDetailsViewModel.swift */; };
@@ -619,6 +620,7 @@
 		59CBE4F91E8094070068C7AD /* ErrorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorManager.swift; sourceTree = "<group>"; };
 		59CF3F811ECF3332002A5821 /* IntroductoryBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductoryBanner.swift; sourceTree = "<group>"; };
 		59CF3F7D1ECDE18D002A5821 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		59CF3F7F1ECF0DA1002A5821 /* CustomURLProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomURLProtocol.swift; sourceTree = "<group>"; };
 		59CF44001E663C35006C16FC /* General+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "General+API.swift"; sourceTree = "<group>"; };
 		59CF44021E66E01A006C16FC /* BookDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsViewController.swift; sourceTree = "<group>"; };
 		59CF44041E66FEDF006C16FC /* BookDetailsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -1076,6 +1078,7 @@
 				595A649B1E2CCB8900655067 /* BookwittyAPI.swift */,
 				595A649F1E2D0C4D00655067 /* Network.swift */,
 				594F4EA51E42255200A947FA /* AccessToken.swift */,
+				59CF3F7F1ECF0DA1002A5821 /* CustomURLProtocol.swift */,
 			);
 			name = Networking;
 			path = Bookwitty/Networking;
@@ -2355,6 +2358,7 @@
 				59591F231E6EE3FE005592B8 /* DetailsInfoCellNode.swift in Sources */,
 				59CF44051E66FEDF006C16FC /* BookDetailsViewModel.swift in Sources */,
 				59871F1D1E78AF19000A86CD /* PostsViewModel.swift in Sources */,
+				59CF3F801ECF0DA1002A5821 /* CustomURLProtocol.swift in Sources */,
 				594290141E51F2850006B2F1 /* BookStoreViewController.swift in Sources */,
 				594F4EA81E423B8600A947FA /* AppNotification.swift in Sources */,
 				F442CF871E65832000F59913 /* Date+Utils.swift in Sources */,
