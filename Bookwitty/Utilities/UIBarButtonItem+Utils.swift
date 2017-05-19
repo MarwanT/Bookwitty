@@ -17,4 +17,11 @@ extension UIBarButtonItem {
   public static var back: UIBarButtonItem {
     return UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
   }
+  
+  var frame: CGRect? {
+    guard let view = self.value(forKey: "view") as? UIView else {
+      return nil
+    }
+    return view.frame
+  }
 }
