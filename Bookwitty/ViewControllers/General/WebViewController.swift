@@ -10,4 +10,10 @@ import Foundation
 import FLKAutoLayout
 
 class WebViewController: UIViewController {
+  let webView: UIWebView = UIWebView()
+  let textField: UITextField = UITextField()
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
 }
