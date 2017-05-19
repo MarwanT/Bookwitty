@@ -74,6 +74,10 @@ class RelatedBooksMinimalCellNode: ASCellNode {
     titleNode.maximumNumberOfLines = 4
     subTitleNode.maximumNumberOfLines = 1
     priceNode.maximumNumberOfLines = 1
+
+    titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    subTitleNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    priceNode.truncationMode = NSLineBreakMode.byTruncatingTail
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

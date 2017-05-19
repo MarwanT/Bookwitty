@@ -52,6 +52,8 @@ class PenNameDisplayNode: ASControlNode {
     penNameTextNode.style.minWidth = ASDimensionMake(100)
     penNameTextNode.maximumNumberOfLines = 1
     
+    penNameTextNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     separatorNode.style.height = ASDimensionMake(1)
     separatorNode.style.flexGrow = 1
     separatorNode.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()

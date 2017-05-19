@@ -276,6 +276,11 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
     //caption Setup
     captionNode.maximumNumberOfLines = 1
 
+    headLineNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    subheadLineNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    captionNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    button.titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     //Button Style-up
     button.style.height = ASDimensionMake(34.0)
     button.style.flexGrow = 1.0

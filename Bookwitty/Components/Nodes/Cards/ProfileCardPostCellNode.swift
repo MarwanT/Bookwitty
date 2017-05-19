@@ -47,7 +47,7 @@ class ProfileCardPostContentNode: ASDisplayNode {
 
   var articleDescription: String? {
     didSet {
-      if let articleDescription = articleDescription {
+      if let articleDescription = articleDescription?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
         descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
           .append(text: articleDescription, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
       } else {
@@ -110,6 +110,10 @@ class ProfileCardPostContentNode: ASDisplayNode {
     userNameTextNode.maximumNumberOfLines = 1
     followersTextNode.maximumNumberOfLines = 1
     descriptionNode.maximumNumberOfLines = 4
+
+    userNameTextNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    followersTextNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    descriptionNode.truncationMode = NSLineBreakMode.byTruncatingTail
 
     userProfileImageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
 

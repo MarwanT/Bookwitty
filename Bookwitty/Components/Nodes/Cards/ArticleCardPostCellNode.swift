@@ -59,7 +59,7 @@ class ArticleCardContentNode: ASDisplayNode {
 
   var articleDescription: String? {
     didSet {
-      if let articleDescription = articleDescription {
+      if let articleDescription = articleDescription?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
         descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
           .append(text: articleDescription, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
       } else {
@@ -102,6 +102,9 @@ class ArticleCardContentNode: ASDisplayNode {
   private func setupNode() {
     titleNode.maximumNumberOfLines = 3
     descriptionNode.maximumNumberOfLines = 3
+
+    titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    descriptionNode.truncationMode = NSLineBreakMode.byTruncatingTail
 
     imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()

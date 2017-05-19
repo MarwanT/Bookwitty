@@ -102,6 +102,9 @@ class PenNameFollowNode: ASCellNode {
     nameNode.maximumNumberOfLines = 1
     biographyNode.maximumNumberOfLines = enlarged ? 5 : 3
 
+    nameNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    biographyNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     let buttonFont = FontDynamicType.subheadline.font
     let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()
     let selectedTextColor = ThemeManager.shared.currentTheme.colorNumber23()
