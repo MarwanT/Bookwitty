@@ -9,6 +9,13 @@
 import Foundation
 import FLKAutoLayout
 
+protocol WebViewControllerDelegate: class {
+  func webViewController(_ webViewController: WebViewController, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool
+  func webViewController(_ webViewController: WebViewController, didFailLoadWithError error: Error)
+  func webViewControllerDidStartLoad(_ webViewController: WebViewController)
+  func webViewControllerDidFinishLoad(_ webViewController: WebViewController)
+}
+
 class WebViewController: UIViewController {
   let webView: UIWebView = UIWebView()
   let textField: UITextField = UITextField()
