@@ -37,6 +37,20 @@ class WebViewController: UIViewController {
     }
   }
   
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+    // Set the textField size otherwise its frame is CGRect.zero
+    resizeTextField()
+  }
+  
+  func resizeTextField() {
+    var textFieldFrame = textField.frame
+    let leftBarButtonFrame = navigationItem.leftBarButtonItem?.frame ?? CGRect.zero
+    textFieldFrame.size.width = (navigationController?.navigationBar.frame.width ?? 100) - (leftBarButtonFrame.width + (leftBarButtonFrame.origin.x * 3))
+    textFieldFrame.size.height = 35
+    textField.frame = textFieldFrame
+  }
+  
   private func setupWebView() {
     // Setup layout
     webView.alignTop("0", leading: "0", bottom: "0", trailing: "0", toView: view)
