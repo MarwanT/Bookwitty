@@ -23,8 +23,8 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
   
   var configuration = Configuration()
   
-  override init(style: UITableViewStyle) {
-    super.init(style: style)
+  override init() {
+    super.init()
     delegate = self
     dataSource = self
   }
