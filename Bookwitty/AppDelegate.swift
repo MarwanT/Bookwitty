@@ -22,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     applyTheme()
     
+    URLProtocol.registerClass(CustomURLProtocol.self)
+    
     // Reset flag when application starts
     AccessToken.shared.updating = false
 
