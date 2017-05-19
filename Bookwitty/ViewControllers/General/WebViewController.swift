@@ -63,6 +63,7 @@ class WebViewController: UIViewController {
   
   func loadURL(url: URL) {
     self.url = url
+    display(url: url)
     webView.loadRequest(URLRequest(url: url))
   }
   
@@ -83,6 +84,9 @@ extension WebViewController {
 extension WebViewController: UIWebViewDelegate {
   func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
     let shouldStartLoad = delegate?.webViewController(self, shouldStartLoadWith: request, navigationType: navigationType) ?? true
+    if shouldStartLoad {
+      display(url: request.url)
+    }
     return shouldStartLoad
   }
   
