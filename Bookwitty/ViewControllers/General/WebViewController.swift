@@ -117,3 +117,21 @@ extension WebViewController: UIWebViewDelegate {
   }
 }
 
+// MARK: - Presenting methods
+extension WebViewController {
+  public static func present(url: URL, delegate: WebViewControllerDelegate? = nil, inViewController: UIViewController? = nil) {
+    let presenterViewController: UIViewController = inViewController != nil ? inViewController! : rootViewController
+    let webVC = WebViewController()
+    webVC.delegate = delegate
+    webVC.loadURL(url: url)
+    let navigationVC = UINavigationController(rootViewController: webVC)
+    presenterViewController.present(navigationVC, animated: true, completion: nil)
+  }
+  
+  private static var rootViewController: UIViewController {
+    guard let rootViewController = UIApplication.shared.delegate?.window??.rootViewController else {
+      fatalError("No root view controller detected")
+    }
+    return rootViewController
+  }
+}
