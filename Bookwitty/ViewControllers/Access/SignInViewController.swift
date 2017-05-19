@@ -37,6 +37,8 @@ class SignInViewController: UIViewController {
 
     navigationItem.backBarButtonItem = UIBarButtonItem.back
 
+    facebookSignInButton.delegate = self
+    
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.SignIn)
   }
@@ -316,4 +318,15 @@ extension SignInViewController: Localizable {
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
   }
+}
+
+//MARK: - Facebook Login Button Delegate
+extension SignInViewController: FBSDKLoginButtonDelegate {
+  func loginButtonWillLogin(_ loginButton: FBSDKLoginButton!) -> Bool {
+    return false
+  }
+  
+  func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) { }
+  
+  func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) { }
 }
