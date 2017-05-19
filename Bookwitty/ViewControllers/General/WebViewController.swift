@@ -24,11 +24,17 @@ class WebViewController: UIViewController {
   
   weak var delegate: WebViewControllerDelegate? = nil
   
+  private var url: URL!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.addSubview(webView)
     setupWebView()
     setupNavigationBar()
+    
+    if let url = url {
+      loadURL(url: url)
+    }
   }
   
   private func setupWebView() {
@@ -49,6 +55,11 @@ class WebViewController: UIViewController {
     textField.borderStyle = UITextBorderStyle.roundedRect
     let rightBarButton = UIBarButtonItem(customView: textField)
     self.navigationItem.rightBarButtonItem = rightBarButton
+  }
+  
+  func loadURL(url: URL) {
+    self.url = url
+    webView.loadRequest(URLRequest(url: url))
   }
   
   // MARK: Actions
