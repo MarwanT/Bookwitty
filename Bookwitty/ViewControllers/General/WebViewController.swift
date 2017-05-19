@@ -57,6 +57,10 @@ class WebViewController: UIViewController {
     self.navigationItem.rightBarButtonItem = rightBarButton
   }
   
+  fileprivate func display(url: URL?) {
+    textField.text = url?.host
+  }
+  
   func loadURL(url: URL) {
     self.url = url
     webView.loadRequest(URLRequest(url: url))
