@@ -25,6 +25,9 @@ class WebViewController: UIViewController {
   private func setupWebView() {
     // Setup layout
     webView.alignTop("0", leading: "0", bottom: "0", trailing: "0", toView: view)
+    
+    // Set Delegate
+    webView.delegate = self
   }
   
   private func setupNavigationBar() {
@@ -51,3 +54,20 @@ extension WebViewController {
     var textFieldTextColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor()
   }
 }
+
+// MARK: - UIWebViewDelegate
+extension WebViewController: UIWebViewDelegate {
+  func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    return true
+  }
+  
+  func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
+  }
+  
+  func webViewDidStartLoad(_ webView: UIWebView) {
+  }
+  
+  func webViewDidFinishLoad(_ webView: UIWebView) {
+  }
+}
+
