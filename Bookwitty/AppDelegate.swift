@@ -20,9 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-    // Register User Agent for network requests
-    UserDefaults.standard.register(defaults: ["UserAgent" : APIProvider.userAgentValue])
-    
     applyTheme()
     
     // Reset flag when application starts
