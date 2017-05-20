@@ -170,7 +170,12 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       //Making sure that only UIRefreshControl will trigger this on valueChanged
       return
     }
-
+    guard loadingStatus == .none else {
+      pullToRefresher.endRefreshing()
+      //Making sure that only UIRefreshControl will trigger this on valueChanged
+      return
+    }
+    
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .NewsFeed,
                                                  action: .PullToRefresh)
