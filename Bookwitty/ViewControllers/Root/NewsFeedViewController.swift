@@ -222,7 +222,7 @@ extension NewsFeedViewController: PenNameSelectionNodeDelegate {
     viewModel.cancellableOnGoingRequest()
     viewModel.data = []
     viewModel.nextPage = nil
-    self.loadingStatus = .reloading
+    self.loadingStatus = .loading
     self.updateCollection(with: nil, loaderSection: false, penNamesSection: false, orReloadAll: true, completionBlock: nil)
     viewModel.didUpdateDefaultPenName(penName: penName, completionBlock: {  didSaveDefault in
       if didSaveDefault {
