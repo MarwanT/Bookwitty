@@ -28,7 +28,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
   var loadingStatus: LoadingStatus = .none
   var shouldShowLoader: Bool {
-    return (loadingStatus != .none)
+    return (loadingStatus != .none && loadingStatus != .reloading)
   }
   var shouldDisplayMisfortuneNode: Bool {
     guard let misfortuneMode = viewModel.misfortuneNodeMode, !shouldShowLoader else {
