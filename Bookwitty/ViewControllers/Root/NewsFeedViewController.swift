@@ -110,7 +110,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     self.misfortuneNode.style.height = ASDimensionMake(collectionNode.frame.height)
     self.misfortuneNode.style.width = ASDimensionMake(collectionNode.frame.width)
     
-    reloadPenNamesNode()
+    reloadPenNamesNode(collapsed: true)
     if viewModel.numberOfItemsInSection(section: Section.cards.rawValue) == 0 {
       refreshViewControllerData()
     }
@@ -197,8 +197,8 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     }
   }
 
-  func reloadPenNamesNode() {
-    penNameSelectionNode.loadData(penNames: viewModel.penNames, withSelected: viewModel.defaultPenName)
+  func reloadPenNamesNode(collapsed: Bool = false) {
+    penNameSelectionNode.loadData(penNames: viewModel.penNames, withSelected: viewModel.defaultPenName, collapsed: collapsed)
   }
 }
 
