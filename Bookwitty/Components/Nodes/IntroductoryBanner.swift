@@ -74,3 +74,10 @@ extension IntroductoryBanner {
     }
   }
 }
+
+extension IntroductoryBanner {
+  struct Configuration {
+    var externalMargin = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+  }
+}
+
