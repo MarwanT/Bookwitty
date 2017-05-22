@@ -13,7 +13,11 @@ class IntroductoryBanner: ASCellNode {
   fileprivate let subtitleNode: ASTextNode
   fileprivate let dismissButton: ASButtonNode
   
-  var mode: Mode! = nil 
+  var mode: Mode! = nil {
+    didSet {
+      refreshNode()
+    }
+  }
   
   var configuration = Configuration()
   
@@ -24,6 +28,7 @@ class IntroductoryBanner: ASCellNode {
     dismissButton = ASButtonNode()
     super.init()
     initializeNode()
+    refreshNode()
   }
   
   private func initializeNode() {
@@ -34,6 +39,12 @@ class IntroductoryBanner: ASCellNode {
     dismissButton.setBackgroundImage(#imageLiteral(resourceName: "x"), for: .normal)
     dismissButton.contentEdgeInsets = UIEdgeInsets(top: 15, left: -15, bottom: 15, right: 15)
     dismissButton.contentMode = UIViewContentMode.scaleAspectFit
+  }
+  
+  func refreshNode() {
+    titleText = mode.title
+    subtitleText = mode.subtitle
+    backgroundColor = mode.color
   }
   
   func dismissButtonTouchUpInside(_ sender: Any) {
