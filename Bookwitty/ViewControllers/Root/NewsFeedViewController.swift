@@ -847,6 +847,9 @@ extension NewsFeedViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+
+    //Reload the Data upon language change
+    refreshViewControllerData()
   }
 }
 
