@@ -13,7 +13,10 @@ class IntroductoryBanner: ASCellNode {
   fileprivate let subtitleNode: ASTextNode
   fileprivate let dismissButton: ASButtonNode
   
-  init() {
+  var mode: Mode! = nil 
+  
+  init(mode: Mode) {
+    self.mode = mode
     titleNode = ASTextNode()
     subtitleNode = ASTextNode()
     dismissButton = ASButtonNode()
