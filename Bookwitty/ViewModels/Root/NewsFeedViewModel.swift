@@ -330,3 +330,15 @@ extension NewsFeedViewModel {
     }
   }
 }
+
+// MARK: - Introductory Banner Logic
+extension NewsFeedViewModel {
+  var shouldDisplayIntroductoryBanner: Bool {
+    get {
+      return GeneralSettings.sharedInstance.shouldDisplayNewsFeedIntroductoryBanner
+    }
+    set {
+      GeneralSettings.sharedInstance.shouldDisplayNewsFeedIntroductoryBanner = newValue
+    }
+  }
+}

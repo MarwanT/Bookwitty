@@ -24,6 +24,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let penNameSelectionNode = PenNameSelectionNode()
   let loaderNode: LoaderNode
   let misfortuneNode = MisfortuneNode(mode: MisfortuneNode.Mode.empty)
+  let introductoryNode = IntroductoryBanner(mode: .welcome)
   
 
   var loadingStatus: LoadingStatus = .none
@@ -310,8 +311,8 @@ extension NewsFeedViewController {
       card.baseViewModel?.resource = commonResource
     })
   }
-
-  func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, loaderSection: Bool = false, penNamesSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
+  
+  func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, introductorySection: Bool = false, loaderSection: Bool = false, penNamesSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
     if reloadAll {
       collectionNode.reloadData(completion: { 
         completionBlock?(true)
@@ -326,6 +327,9 @@ extension NewsFeedViewController {
         }
         if penNamesSection {
           collectionNode.reloadSections(IndexSet(integer: Section.penNames.rawValue))
+        }
+        if introductorySection {
+          collectionNode.reloadSections(IndexSet(integer: Section.introductoryBanner.rawValue))
         }
         if let itemIndices = itemIndices, itemIndices.count > 0 {
           if reloadItems {
@@ -345,16 +349,20 @@ extension NewsFeedViewController: ASCollectionDataSource {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    guard NewsFeedViewController.Section.cards.rawValue == section else {
-      if NewsFeedViewController.Section.penNames.rawValue == section {
-        return 1
-      } else if NewsFeedViewController.Section.activityIndicator.rawValue == section {
-        return shouldShowLoader ? 1 : 0
-      } else  { // NewsFeedViewController.Section.misfortune
-        return shouldDisplayMisfortuneNode ? 1 : 0
-      }
+    switch section {
+    case NewsFeedViewController.Section.cards.rawValue:
+      return viewModel.numberOfItemsInSection(section: section)
+    case NewsFeedViewController.Section.penNames.rawValue:
+      return 1
+    case NewsFeedViewController.Section.activityIndicator.rawValue:
+      return shouldShowLoader ? 1 : 0
+    case NewsFeedViewController.Section.misfortune.rawValue:
+      return shouldDisplayMisfortuneNode ? 1 : 0
+    case NewsFeedViewController.Section.introductoryBanner.rawValue:
+      return viewModel.shouldDisplayIntroductoryBanner ? 1 : 0
+    default:
+      return 0
     }
-    return viewModel.numberOfItemsInSection(section: section)
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
@@ -381,8 +389,11 @@ extension NewsFeedViewController: ASCollectionDataSource {
         return self.penNameSelectionNode
       } else if section == Section.activityIndicator.rawValue {
         return self.loaderNode
-      } else { // Section.misfortune
+      } else if section == Section.misfortune.rawValue { // Section.misfortune
         return self.misfortuneNode
+      } else { // Section.introductoryBanner.rawValue
+        self.introductoryNode.delegate = self
+        return self.introductoryNode
       }
     }
   }
@@ -617,7 +628,7 @@ extension NewsFeedViewController: UIScrollViewDelegate {
 
   private func scrollToTheRightPosition(scrollView: UIScrollView) {
     let penNameHeight = penNameSelectionNode.occupiedHeight
-    if scrollView.contentOffset.y <= penNameHeight {
+    if scrollView.contentOffset.y <= penNameHeight && !viewModel.shouldDisplayIntroductoryBanner {
       if(scrollView.contentOffset.y <= scrollingThreshold) {
         UIView.animate(withDuration: 0.3, animations: {
           self.penNameSelectionNode.alpha = 1.0
@@ -835,13 +846,14 @@ extension NewsFeedViewController {
 // MARK: - Declarations
 extension NewsFeedViewController {
   enum Section: Int {
-    case penNames = 0
-    case cards = 1
-    case activityIndicator = 2
-    case misfortune = 3
+    case introductoryBanner = 0
+    case penNames
+    case cards
+    case activityIndicator
+    case misfortune
 
     static var numberOfSections: Int {
-      return 4
+      return 5
     }
   }
 }
@@ -881,5 +893,13 @@ extension NewsFeedViewController: MisfortuneNodeDelegate {
     default:
       break
     }
+  }
+}
+
+// MARK: - Introductory Node Delegate
+extension NewsFeedViewController: IntroductoryBannerDelegate {
+  func introductoryBannerDidTapDismissButton(_ introductoryBanner: IntroductoryBanner) {
+    viewModel.shouldDisplayIntroductoryBanner = false
+    updateCollection(introductorySection: true)
   }
 }
