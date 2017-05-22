@@ -23,6 +23,15 @@ class IntroductoryBanner: ASCellNode {
     subtitleNode = ASTextNode()
     dismissButton = ASButtonNode()
     super.init()
+    initializeNode()
+  }
+  
+  private func initializeNode() {
+    automaticallyManagesSubnodes = true
+    
+    dismissButton.setBackgroundImage(#imageLiteral(resourceName: "x"), for: .normal)
+    dismissButton.contentEdgeInsets = UIEdgeInsets(top: 15, left: -15, bottom: 15, right: 15)
+    dismissButton.contentMode = UIViewContentMode.scaleAspectFit
   }
 }
 
