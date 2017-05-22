@@ -36,6 +36,9 @@ class ContributorsNode: ASDisplayNode {
           imageNode.style.preferredSize = imageSize
           imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
           imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(imageBorderWidth, imgaeBorderColor)
+          imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
+          imageNode.animatedImagePaused = true
+          imageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
           imageNode.url = URL(string: imagesUrls[index])
           imagesNodes.append(imageNode)
         }
