@@ -137,6 +137,36 @@ class PostDetailsNode: ASScrollNode {
     }
   }
 
+  override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
+    headerNode = PostDetailsHeaderNode()
+    descriptionNode = DTAttributedTextContentNode()
+    postItemsNode = PostDetailsItemNode()
+    separator = SeparatorNode()
+    conculsionNode = DTAttributedTextContentNode()
+    postItemsNodeLoader = LoaderNode()
+    postItemsNodeViewAll = DisclosureNode()
+    booksHorizontalFlowLayout = UICollectionViewFlowLayout()
+    booksHorizontalFlowLayout.scrollDirection = .horizontal
+    booksHorizontalFlowLayout.sectionInset = UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: internalMargin)
+    booksHorizontalFlowLayout.minimumInteritemSpacing  = 0
+    booksHorizontalFlowLayout.minimumLineSpacing       = internalMargin
+    booksHorizontalCollectionNode = ASCollectionNode(collectionViewLayout: booksHorizontalFlowLayout)
+    sectionTitleHeaderNode = SectionTitleHeaderNode()
+    postItemsSeparator = SeparatorNode()
+    relatedBooksViewAllNode = DisclosureNode()
+    relatedBooksSeparator = SeparatorNode()
+    relatedBooksTopSeparator = SeparatorNode()
+    postCardsNode = PostDetailsItemNode()
+    relatedPostsSectionTitleHeaderNode = SectionTitleHeaderNode()
+    relatedPostsViewAllNode = DisclosureNode()
+    relatedPostsTopSeparator = SeparatorNode()
+    relatedPostsBottomSeparator = SeparatorNode()
+    relatedPostsNodeLoader = LoaderNode()
+    relatedBooksNodeLoader = LoaderNode()
+    bannerImageNode = ASImageNode()
+    super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
+  }
+
   override init() {
     headerNode = PostDetailsHeaderNode()
     descriptionNode = DTAttributedTextContentNode()

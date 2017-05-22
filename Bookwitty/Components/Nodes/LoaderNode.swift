@@ -14,19 +14,17 @@ class LoaderNode: ASCellNode {
   fileprivate var activityIndicatorView: UIActivityIndicatorView!
 
   private var nodeHeight: CGFloat?
-  
-  override init() {
-    super.init()
-    
-    self.setViewBlock { () -> UIView in
+
+  convenience override init() {
+    self.init(viewBlock: { () -> UIView in
       let activityIndicatorView = UIActivityIndicatorView()
       activityIndicatorView.activityIndicatorViewStyle = .white
       activityIndicatorView.color = UIColor.bwRuby
       activityIndicatorView.hidesWhenStopped = true
       activityIndicatorView.backgroundColor = UIColor.clear
       return activityIndicatorView
-    }
-    
+    })
+
     DispatchQueue.main.async {
       self.activityIndicatorView = self.view as! UIActivityIndicatorView
     }

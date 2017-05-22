@@ -20,10 +20,8 @@ class SegmentedControlNode: ASCellNode {
     return self.segmentedControl.selectedIndex
   }
 
-  override init() {
-    super.init()
-    
-    self.setViewBlock({ () -> UIView in
+  convenience override init() {
+    self.init(viewBlock: { () -> UIView in
       let segmentedControl = SegmentedControl.instantiate()      
       return segmentedControl
     })
