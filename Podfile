@@ -41,6 +41,7 @@ target 'Bookwitty' do
   pod 'SwiftLoader', :git => 'https://github.com/keeward/SwiftLoader', :tag => '0.3.1'
   pod 'Version', :git => 'https://github.com/opwoco/Version'
   pod 'ReachabilitySwift', '3'
+  pod 'GSImageViewerController', '1.2.1'
   
   target 'BookwittyTests' do
     inherit! :search_paths

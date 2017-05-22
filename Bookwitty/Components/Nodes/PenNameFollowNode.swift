@@ -12,6 +12,8 @@ import AsyncDisplayKit
 protocol PenNameFollowNodeDelegate: class {
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader)
   func penName(node: PenNameFollowNode, actionPenNameFollowTouchUpInside button: Any?)
+  func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
+
 }
 
 class PenNameFollowNode: ASCellNode {
@@ -124,7 +126,7 @@ class PenNameFollowNode: ASCellNode {
     imageNode.style.preferredSize = enlarged ? largeImageSize : imageSize
 
     nameNode.addTarget(self, action: #selector(actionPenNameFollowTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
-    imageNode.addTarget(self, action: #selector(actionPenNameFollowTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
+    imageNode.addTarget(self, action: #selector(imageNodeTouchUpInside(sender:)), forControlEvents: ASControlNodeEvent.touchUpInside)
     biographyNode.addTarget(self, action: #selector(actionPenNameFollowTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
 
     separatorNode.style.height = ASDimensionMake(1)
@@ -238,3 +240,17 @@ extension PenNameFollowNode {
     return !value.isEmptyOrNil()
   }
 }
+
+
+extension PenNameFollowNode: ASNetworkImageNodeDelegate {
+  @objc
+  fileprivate func imageNodeTouchUpInside(sender: ASNetworkImageNode) {
+    guard let image = sender.image else {
+      delegate?.penName(node: self, actionPenNameFollowTouchUpInside: sender)
+      return
+    }
+
+    delegate?.penName(node: self, requestToViewImage: image, from: sender)
+  }
+}
+

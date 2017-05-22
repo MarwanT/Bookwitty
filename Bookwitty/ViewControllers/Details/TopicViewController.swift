@@ -8,6 +8,7 @@
 
 import UIKit
 import AsyncDisplayKit
+import GSImageViewerController
 
 class TopicViewController: ASViewController<ASCollectionNode> {
 
@@ -381,9 +382,20 @@ extension TopicViewController: TopicHeaderNodeDelegate {
                                                  name: name)
     Analytics.shared.send(event: event)
   }
+
+  func topicHeader(node: TopicHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+    let imageInfo = GSImageInfo(image: image, imageMode: .aspectFit, imageHD: nil)
+    let transitionInfo = GSTransitionInfo(fromView: imageNode.view)
+    let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
+    present(imageViewer, animated: true, completion: nil)
+  }
 }
 
 extension TopicViewController: PenNameFollowNodeDelegate {
+  func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+    penName(node: node, actionPenNameFollowTouchUpInside: imageNode)
+  }
+
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader) {
     guard let indexPath = collectionNode.indexPath(for: node) else {
       return

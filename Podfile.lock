@@ -80,6 +80,7 @@ PODS:
   - GoogleToolboxForMac/Defines (2.1.1)
   - GoogleToolboxForMac/NSData+zlib (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
+  - GSImageViewerController (1.2.1)
   - Keys (1.0.0)
   - Moya (8.0.0):
     - Moya/Core (= 8.0.0)
@@ -129,6 +130,7 @@ DEPENDENCIES:
   - FacebookShare (= 0.2.0)
   - FLKAutoLayout (= 1.0.0)
   - Google/Analytics (= 3.0.3)
+  - GSImageViewerController (= 1.2.1)
   - Keys (from `Pods/CocoaPodsKeys`)
   - Moya (= 8.0.0)
   - ReachabilitySwift (= 3)
@@ -198,6 +200,7 @@ SPEC CHECKSUMS:
   GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
+  GSImageViewerController: 73e84498743987560d24814828baa8f307e0e206
   Keys: 9c35bf00f612ee1d48556f4a4b9b4551e224e90f
   Moya: 850a166ab8241bd1c1cea6dbe012e3a2ad62944a
   PINCache: a89c8f609232afac77128557bd12c861844423d7
@@ -216,6 +219,6 @@ SPEC CHECKSUMS:
   UIImageViewAlignedSwift: e57cc89b4738a82ffad1b76e8ab01f898215bbfb
   Version: 31221742495765fc798d08eae45de3c936dce0db
 
-PODFILE CHECKSUM: 2f79fa315566f544b04b1eb88c4b252f23d8271f
+PODFILE CHECKSUM: 9b7bfd2c2e3cecd72cebd51697c3f8c9ca01731d
 
 COCOAPODS: 1.2.0

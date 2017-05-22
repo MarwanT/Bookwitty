@@ -8,6 +8,7 @@
 
 import Foundation
 import AsyncDisplayKit
+import GSImageViewerController
 
 class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   let flowLayout: UICollectionViewFlowLayout
@@ -149,6 +150,17 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
 
 
 extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
+  func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+    if penNameHeaderNode === node {
+      let imageInfo = GSImageInfo(image: image, imageMode: .aspectFit, imageHD: nil)
+      let transitionInfo = GSTransitionInfo(fromView: imageNode.view)
+      let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
+      present(imageViewer, animated: true, completion: nil)
+    } else {
+      penName(node: node, actionPenNameFollowTouchUpInside: imageNode)
+    }
+  }
+
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader) {
     var penName: PenName?
     if penNameHeaderNode === node {

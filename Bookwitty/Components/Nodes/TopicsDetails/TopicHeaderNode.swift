@@ -11,6 +11,7 @@ import AsyncDisplayKit
 
 protocol TopicHeaderNodeDelegate: class {
   func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ButtonWithLoader)
+  func topicHeader(node: TopicHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
 }
 
 class TopicHeaderNode: ASCellNode {
@@ -70,6 +71,9 @@ class TopicHeaderNode: ASCellNode {
     actionButton.state = self.following ? .selected : .normal
     actionButton.style.height = ASDimensionMake(buttonSize.height)
     actionButton.delegate = self
+
+    coverImageNode.delegate = self
+    thumbnailImageNode.delegate = self
   }
 
   var topicTitle: String? {
@@ -206,6 +210,21 @@ extension TopicHeaderNode: ButtonWithLoaderDelegate {
     }
 
     delegate?.topicHeader(node: self, actionButtonTouchUpInside: buttonWithLoader)
+  }
+
+  @objc
+  fileprivate func imageNodeTouchUpInside(sender: ASNetworkImageNode) {
+    guard let image = sender.image else {
+      return
+    }
+
+    delegate?.topicHeader(node: self, requestToViewImage: image, from: sender)
+  }
+}
+
+extension TopicHeaderNode: ASNetworkImageNodeDelegate {  
+  func imageNode(_ imageNode: ASNetworkImageNode, didLoad image: UIImage) {
+    imageNode.addTarget(self, action: #selector(imageNodeTouchUpInside(sender:)), forControlEvents: ASControlNodeEvent.touchUpInside)
   }
 }
 
