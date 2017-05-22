@@ -90,22 +90,22 @@ extension IntroductoryBanner {
     var title: String {
       switch self {
       case .welcome:
-        return "Welcome to Bookwitty"
+        return Strings.welcome_to_bookwitty()
       case .discover:
-        return "See what's happening on Bookwitty"
+        return Strings.see_whats_happening_on_bookwitty()
       case .shop:
-        return "Shop For Books"
+        return Strings.shop_for_books()
       }
     }
 
     var subtitle: String {
       switch self {
       case .welcome:
-        return "Your feed displays the stories from topics or people you follow."
+        return Strings.welcome_banner_message()
       case .discover:
-        return "Check back here anytime to find the best stories from the community."
+        return Strings.discover_banner_message()
       case .shop:
-        return "All the best books, the best prices and shipping is free."
+        return Strings.shop_banner_message()
       }
     }
     
