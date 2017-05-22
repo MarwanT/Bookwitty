@@ -42,7 +42,7 @@ class IntroductoryBanner: ASCellNode {
     let stackInsetsSpec = ASInsetLayoutSpec(insets: configuration.externalMargin, child: stackLayoutSpec)
     
     let dismissButtonInsetsSpec = ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: CGFloat.infinity, bottom: CGFloat.infinity, right: 0), child: dismissButton)
-    dismissButton.style.preferredSize = CGSize(width: 40, height: 40)
+    dismissButton.style.preferredSize = CGSize(width: 30, height: 30)
     
     return ASOverlayLayoutSpec(child: stackInsetsSpec, overlay: dismissButtonInsetsSpec)
   }
@@ -53,8 +53,6 @@ class IntroductoryBanner: ASCellNode {
     dismissButton.addTarget(self, action: #selector(dismissButtonTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
     
     dismissButton.setBackgroundImage(#imageLiteral(resourceName: "x"), for: .normal)
-    dismissButton.contentEdgeInsets = UIEdgeInsets(top: 15, left: -15, bottom: 15, right: 15)
-    dismissButton.contentMode = UIViewContentMode.scaleAspectFit
   }
   
   func refreshNode() {
