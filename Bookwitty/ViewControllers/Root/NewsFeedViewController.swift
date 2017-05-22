@@ -28,7 +28,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
   var loadingStatus: LoadingStatus = .none
   var shouldShowLoader: Bool {
-    return (loadingStatus != .none)
+    return (loadingStatus != .none && loadingStatus != .reloading)
   }
   var shouldDisplayMisfortuneNode: Bool {
     guard let misfortuneMode = viewModel.misfortuneNodeMode, !shouldShowLoader else {
@@ -170,7 +170,12 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       //Making sure that only UIRefreshControl will trigger this on valueChanged
       return
     }
-
+    guard loadingStatus == .none else {
+      pullToRefresher.endRefreshing()
+      //Making sure that only UIRefreshControl will trigger this on valueChanged
+      return
+    }
+    
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .NewsFeed,
                                                  action: .PullToRefresh)
@@ -217,7 +222,7 @@ extension NewsFeedViewController: PenNameSelectionNodeDelegate {
     viewModel.cancellableOnGoingRequest()
     viewModel.data = []
     viewModel.nextPage = nil
-    self.loadingStatus = .reloading
+    self.loadingStatus = .loading
     self.updateCollection(with: nil, loaderSection: false, penNamesSection: false, orReloadAll: true, completionBlock: nil)
     viewModel.didUpdateDefaultPenName(penName: penName, completionBlock: {  didSaveDefault in
       if didSaveDefault {
