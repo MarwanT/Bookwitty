@@ -10,3 +10,54 @@ import AsyncDisplayKit
 
 class IntroductoryBanner: ASCellNode {
 }
+
+extension IntroductoryBanner {
+  enum Mode {
+    case welcome
+    case discover
+    case shop
+    
+    var title: String {
+      switch self {
+      case .welcome:
+        return "Welcome to Bookwitty"
+      case .discover:
+        return "See what's happening on Bookwitty"
+      case .shop:
+        return "Shop For Books"
+      }
+    }
+
+    var subtitle: String {
+      switch self {
+      case .welcome:
+        return "Your feed displays the stories from topics or people you follow."
+      case .discover:
+        return "Check back here anytime to find the best stories from the community."
+      case .shop:
+        return "All the best books, the best prices and shipping is free."
+      }
+    }
+    
+    var color: UIColor {
+      let theme = ThemeManager.shared.currentTheme
+      
+      switch self {
+      case .welcome:
+        return theme.colorNumber9()
+      case .discover:
+        return theme.colorNumber7()
+      case .shop:
+        return theme.colorNumber3()
+      }
+    }
+    
+    var titleTextColor: UIColor {
+      return ThemeManager.shared.currentTheme.defaultTextColor()
+    }
+    
+    var subtitleTextColor: UIColor {
+      return ThemeManager.shared.currentTheme.defaultTextColor()
+    }
+  }
+}
