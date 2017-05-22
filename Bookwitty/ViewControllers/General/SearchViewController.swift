@@ -132,9 +132,8 @@ class SearchViewController: ASViewController<ASCollectionNode> {
       return
     }
     loadingStatus = .loading
-    self.updateCollection(with: nil, loaderSection: true, dataSection: false)
     viewModel.clearSearchData()
-    collectionNode.reloadData()
+    updateCollection(reloadAll: true)
 
     viewModel.search(query: query) { (success, error) in
       self.loadingStatus = .none
@@ -166,7 +165,7 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     }
 
     let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
-    collectionNode.reloadItems(at: indexPathForAffectedItems)
+    updateCollection(with: indexPathForAffectedItems, reloadItemsWithIndices: true, loaderSection: true)
   }
 }
 
@@ -436,20 +435,28 @@ extension SearchViewController: ASCollectionDelegate {
 }
 
 extension SearchViewController {
-  func updateCollection(with itemIndices: [IndexPath]? = nil, loaderSection: Bool = false, dataSection: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
-    collectionNode.performBatchUpdates({
-      // Always relaod misfortune section
-      collectionNode.reloadSections(IndexSet(integer: Section.misfortune.rawValue))
-      
-      if loaderSection {
-        collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
-      }
-      if dataSection {
-        collectionNode.reloadSections(IndexSet(integer: Section.cards.rawValue))
-      } else if let itemIndices = itemIndices {
-        collectionNode.insertItems(at: itemIndices)
-      }
-    }, completion: completionBlock)
+  func updateCollection(reloadAll: Bool = false, with itemIndices: [IndexPath]? = nil, reloadItemsWithIndices: Bool = false, loaderSection: Bool = false, dataSection: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
+    if reloadAll {
+      collectionNode.reloadData()
+    } else {
+      collectionNode.performBatchUpdates({
+        // Always relaod misfortune section
+        collectionNode.reloadSections(IndexSet(integer: Section.misfortune.rawValue))
+
+        if loaderSection {
+          collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
+        }
+        if dataSection {
+          collectionNode.reloadSections(IndexSet(integer: Section.cards.rawValue))
+        } else if let itemIndices = itemIndices {
+          if reloadItemsWithIndices {
+            collectionNode.reloadItems(at: itemIndices)
+          } else {
+            collectionNode.insertItems(at: itemIndices)
+          }
+        }
+      }, completion: completionBlock)
+    }
   }
 }
 
