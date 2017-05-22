@@ -15,6 +15,8 @@ class IntroductoryBanner: ASCellNode {
   
   var mode: Mode! = nil 
   
+  var configuration = Configuration()
+  
   init(mode: Mode) {
     self.mode = mode
     titleNode = ASTextNode()
