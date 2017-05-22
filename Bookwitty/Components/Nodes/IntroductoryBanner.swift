@@ -9,6 +9,16 @@
 import AsyncDisplayKit
 
 class IntroductoryBanner: ASCellNode {
+  fileprivate let titleNode: ASTextNode
+  fileprivate let subtitleNode: ASTextNode
+  fileprivate let dismissButton: ASButtonNode
+  
+  init() {
+    titleNode = ASTextNode()
+    subtitleNode = ASTextNode()
+    dismissButton = ASButtonNode()
+    super.init()
+  }
 }
 
 extension IntroductoryBanner {
