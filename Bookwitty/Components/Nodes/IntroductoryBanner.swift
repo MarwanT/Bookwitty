@@ -31,6 +31,16 @@ class IntroductoryBanner: ASCellNode {
     refreshNode()
   }
   
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let stackLayoutSpec = ASStackLayoutSpec(direction: .vertical, spacing: 15, justifyContent: .start, alignItems: .center, children: [titleNode,subtitleNode])
+    let stackInsetsSpec = ASInsetLayoutSpec(insets: configuration.externalMargin, child: stackLayoutSpec)
+    
+    let dismissButtonInsetsSpec = ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: CGFloat.infinity, bottom: CGFloat.infinity, right: 0), child: dismissButton)
+    dismissButton.style.preferredSize = CGSize(width: 40, height: 40)
+    
+    return ASOverlayLayoutSpec(child: stackInsetsSpec, overlay: dismissButtonInsetsSpec)
+  }
+  
   private func initializeNode() {
     automaticallyManagesSubnodes = true
     
