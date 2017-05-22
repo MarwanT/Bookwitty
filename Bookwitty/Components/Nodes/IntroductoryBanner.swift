@@ -40,6 +40,21 @@ class IntroductoryBanner: ASCellNode {
     // TODO: call delegate for dismissal
     print("Dismiss button taapped")
   }
+  
+  fileprivate var titleText: String? {
+    didSet {
+      titleNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.callout)
+        .append(text: titleText ?? "", color: mode.titleTextColor).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
+      setNeedsLayout()
+    }
+  }
+  
+  fileprivate var subtitleText: String? {
+    didSet {
+      subtitleNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: subtitleText ?? "", color: mode.subtitleTextColor).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
+      setNeedsLayout()
+    }
+  }
 }
 
 extension IntroductoryBanner {
