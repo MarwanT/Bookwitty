@@ -29,9 +29,16 @@ class IntroductoryBanner: ASCellNode {
   private func initializeNode() {
     automaticallyManagesSubnodes = true
     
+    dismissButton.addTarget(self, action: #selector(dismissButtonTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
+    
     dismissButton.setBackgroundImage(#imageLiteral(resourceName: "x"), for: .normal)
     dismissButton.contentEdgeInsets = UIEdgeInsets(top: 15, left: -15, bottom: 15, right: 15)
     dismissButton.contentMode = UIViewContentMode.scaleAspectFit
+  }
+  
+  func dismissButtonTouchUpInside(_ sender: Any) {
+    // TODO: call delegate for dismissal
+    print("Dismiss button taapped")
   }
 }
 
