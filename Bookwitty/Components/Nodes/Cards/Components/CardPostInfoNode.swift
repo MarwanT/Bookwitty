@@ -67,6 +67,9 @@ class CardPostInfoNode: ASDisplayNode {
     userNameTextNode.maximumNumberOfLines = 1
     postDateTextNode.maximumNumberOfLines = 1
 
+    userNameTextNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    userNameTextNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     userNameTextNode.addTarget(self, action: #selector(userNameTouchUpInside(_:)), forControlEvents: .touchUpInside)
     postDateTextNode.addTarget(self, action: #selector(postDateTouchUpInside(_:)), forControlEvents: .touchUpInside)
     userProfileImageNode.addTarget(self, action: #selector(userProfileImageTouchUpInside(_:)), forControlEvents: .touchUpInside)

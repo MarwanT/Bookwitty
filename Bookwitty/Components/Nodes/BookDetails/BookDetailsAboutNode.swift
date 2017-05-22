@@ -7,6 +7,7 @@
 //
 
 import AsyncDisplayKit
+import DTCoreText
 
 protocol BookDetailsAboutNodeDelegate: class {
   func aboutNodeDidTapViewDescription(aboutNode: BookDetailsAboutNode)
@@ -14,7 +15,7 @@ protocol BookDetailsAboutNodeDelegate: class {
 
 class BookDetailsAboutNode: ASCellNode {
   fileprivate let headerNode: SectionTitleHeaderNode
-  fileprivate let descriptionTextNode: ASTextNode
+  fileprivate let descriptionTextNode: DTAttributedLabelNode
   fileprivate let viewDescription: DisclosureNode
   fileprivate let topSeparator: ASDisplayNode
   fileprivate let bottomSeparator: ASDisplayNode
@@ -23,12 +24,13 @@ class BookDetailsAboutNode: ASCellNode {
   
   var configuration = Configuration()
   
-  var dispayMode: DisplayMode = .compact
-  
+  private var dispayMode: DisplayMode = .compact
+  private(set) var about: String?
+
   init(externalInsets: UIEdgeInsets = UIEdgeInsets.zero) {
     configuration.externalEdgeInsets = externalInsets
     headerNode = SectionTitleHeaderNode()
-    descriptionTextNode = ASTextNode()
+    descriptionTextNode = DTAttributedLabelNode()
     viewDescription = DisclosureNode()
     topSeparator = ASDisplayNode()
     bottomSeparator = ASDisplayNode()
@@ -40,7 +42,10 @@ class BookDetailsAboutNode: ASCellNode {
     automaticallyManagesSubnodes = true
     
     headerNode.setTitle(title: Strings.about_this_book(), verticalBarColor: configuration.headerVerticalBarColor, horizontalBarColor: configuration.headerHorizontalBarColor)
-    descriptionTextNode.maximumNumberOfLines = configuration.compactMaximumNumberOfLines
+
+    descriptionTextNode.delegate = self
+    descriptionTextNode.width = UIScreen.main.bounds.width - (configuration.descriptionTextEdgeInsets.left + configuration.descriptionTextEdgeInsets.right)
+    
     viewDescription.configuration.style = .highlighted
     viewDescription.text = Strings.view_whole_description()
     viewDescription.delegate = self
@@ -56,9 +61,7 @@ class BookDetailsAboutNode: ASCellNode {
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     style.flexGrow = 1.0
     style.flexShrink = 1.0
-    
-    descriptionTextNode.maximumNumberOfLines = dispayMode == .compact ? configuration.compactMaximumNumberOfLines : 0
-    
+
     var layoutElements = [ASLayoutElement]()
     layoutElements.append(headerNode)
     
@@ -91,13 +94,14 @@ class BookDetailsAboutNode: ASCellNode {
     
     return nodeInsets
   }
-  
-  var about: String? {
-    didSet {
-      descriptionTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
-        .append(text: about ?? "", color: configuration.defaultTextColor).attributedString
-      setNeedsLayout()
-    }
+
+  func setText(aboutText text: String?, displayMode mode: DisplayMode = .compact) {
+    self.dispayMode = mode
+    self.about = text
+
+    descriptionTextNode.maxNumberOfLines = dispayMode == .compact ? Int(configuration.compactMaximumNumberOfLines) : 100
+    descriptionTextNode.htmlString(text: text, fontDynamicType: FontDynamicType.body)
+    setNeedsLayout()
   }
 }
 
@@ -127,5 +131,15 @@ extension BookDetailsAboutNode {
 extension BookDetailsAboutNode: DisclosureNodeDelegate {
   func disclosureNodeDidTap(disclosureNode: DisclosureNode, selected: Bool) {
     delegate?.aboutNodeDidTapViewDescription(aboutNode: self)
+  }
+}
+
+extension BookDetailsAboutNode: DTAttributedTextContentNodeDelegate {
+  func attributedTextContentNode(node: ASCellNode, button: DTLinkButton, didTapOnLink link: URL) {
+    WebViewController.present(url: link)
+  }
+
+  func attributedTextContentNodeNeedsLayout(node: ASCellNode) {
+    self.setNeedsLayout()
   }
 }

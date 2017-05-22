@@ -131,6 +131,9 @@ class CardActionBarNode: ASCellNode {
     numberOfDimsNode.style.maxWidth = ASDimensionMake(120.0)
     numberOfDimsNode.maximumNumberOfLines = 1
 
+    numberOfWitsNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    numberOfDimsNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     //By default dim info should be hidden, needs to be explicitly set false to show
     hideDim = true
   }
@@ -326,6 +329,7 @@ class CardActionBarNode: ASCellNode {
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     //Setup Dynamic width Wit Button
+    actionButton.titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
     actionButton.titleNode.maximumNumberOfLines = 1
     actionButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     actionButton.style.height = ASDimensionMake(buttonSize.height)

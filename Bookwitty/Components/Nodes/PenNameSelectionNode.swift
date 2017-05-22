@@ -135,6 +135,9 @@ class PenNameSelectionNode: ASCellNode {
     let heightDimension = expand ? ASDimensionMake(expandedHeightDimension.value + extraSeparator) : collapsedHeightDimension
     style.height = heightDimension
 
+    collectionNode.style.preferredSize = CGSize(width: style.maxWidth.value, height: expand ? expandedCollectionHeight : 0.0)
+    collectionNode.setNeedsLayout()
+
     transitionLayout(withAnimation: true, shouldMeasureAsync: true) {
       //This transition will trigger the node's height change and required change from layoutSpecThatFits
       //In our case the alpha for the collectionNode will change since it is being added and removed from
@@ -147,7 +150,7 @@ class PenNameSelectionNode: ASCellNode {
     return data.count > 0
   }
 
-  func loadData(penNames: [PenName]?, withSelected selectedPenName: PenName?) {
+  func loadData(penNames: [PenName]?, withSelected selectedPenName: PenName?, collapsed: Bool = false) {
     //Hold the old selected Pen Name Id
     var oldSelectedPenNameId: String? = nil
     if let selectedIndexPath = selectedIndexPath, data.count > selectedIndexPath.item {
@@ -169,7 +172,7 @@ class PenNameSelectionNode: ASCellNode {
       return
     }
     isHidden = false
-    expand = true
+    expand = !collapsed
     var penNameChanged: Bool = true
 
     if let selectedPenNameId = selectedPenName?.id {
@@ -185,9 +188,19 @@ class PenNameSelectionNode: ASCellNode {
 
     updateSelectedPenName()
     let extraSeparator = separatorHeight
-    style.height = ASDimensionMake(expandedHeightDimension.value + extraSeparator)
 
-    collectionNode.style.preferredSize = CGSize(width: style.maxWidth.value, height: expandedCollectionHeight)
+    guard !collapsed else {
+      style.height = ASDimensionMake(collapsedHeightDimension.value - extraSeparator)
+      collectionNode.reloadData()
+      setNeedsLayout()
+
+      delegate?.penNameSelectionNodeNeeds(node: self, reload: true, penNameChanged: true)
+      return
+    }
+
+    style.height = ASDimensionMake(!collapsed ? expandedHeightDimension.value + extraSeparator : collapsedHeightDimension.value)
+
+    collectionNode.style.preferredSize = CGSize(width: style.maxWidth.value, height: !collapsed ? expandedCollectionHeight : 0.0)
     collectionNode.reloadData()
 
     setNeedsLayout()

@@ -9,6 +9,11 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol PostDetailsHeaderNodeDelegate: class {
+  func postDetailsHeader(node: PostDetailsHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
+}
+
+
 class PostDetailsHeaderNode: ASCellNode {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
@@ -19,6 +24,8 @@ class PostDetailsHeaderNode: ASCellNode {
   let actionBarNode: CardActionBarNode
   fileprivate let separator: ASDisplayNode
   fileprivate let bottomSeparator: ASDisplayNode
+
+  var delegate: PostDetailsHeaderNodeDelegate?
 
   var title: String? {
     didSet {
@@ -57,6 +64,7 @@ class PostDetailsHeaderNode: ASCellNode {
 
   override func didLoad() {
     imageNode.contentMode = .scaleAspectFill
+    imageNode.delegate = self
   }
 
   func initializeNode() {
@@ -115,5 +123,20 @@ class PostDetailsHeaderNode: ASCellNode {
 
     vStackSpec.children = nodesArray
     return vStackSpec
+  }
+}
+
+extension PostDetailsHeaderNode: ASNetworkImageNodeDelegate {
+  @objc
+  fileprivate func imageNodeTouchUpInside(sender: ASNetworkImageNode) {
+    guard let image = sender.image else {
+      return
+    }
+
+    delegate?.postDetailsHeader(node: self, requestToViewImage: image, from: sender)
+  }
+
+  func imageNode(_ imageNode: ASNetworkImageNode, didLoad image: UIImage) {
+    imageNode.addTarget(self, action: #selector(imageNodeTouchUpInside(sender:)), forControlEvents: ASControlNodeEvent.touchUpInside)
   }
 }

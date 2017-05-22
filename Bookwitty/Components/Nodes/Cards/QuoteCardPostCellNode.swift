@@ -62,7 +62,7 @@ class QuoteCardPostContentNode: ASDisplayNode {
 
   var articleQuotePublisher: String? {
     didSet {
-      if let articleQuotePublisher = articleQuotePublisher {
+      if let articleQuotePublisher = articleQuotePublisher?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
         nameTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
           .append(text: articleQuotePublisher, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
       } else {
@@ -89,6 +89,10 @@ class QuoteCardPostContentNode: ASDisplayNode {
   func setupMode(fullViewMode: Bool) {
     quoteTextNode.maximumNumberOfLines = fullViewMode ? 0 : 3
     nameTextNode.maximumNumberOfLines = fullViewMode ? 0 : 1
+
+    quoteTextNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    nameTextNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     setNeedsLayout()
   }
 

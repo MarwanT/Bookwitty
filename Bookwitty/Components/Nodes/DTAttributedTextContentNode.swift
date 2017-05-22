@@ -206,7 +206,11 @@ class DTAttributedLabelNode: ASCellNode {
 
   var textContentView: DTAttributedLabel?
   var delegate: DTAttributedTextContentNodeDelegate?
-  var maxNumberOfLines: Int = 0
+  var maxNumberOfLines: Int = 0 {
+    didSet {
+      setNeedsDisplay()
+    }
+  }
   var width: CGFloat = 0.0 {
     didSet {
       style.preferredSize = CGSize(width: width, height: maxHeight)
@@ -218,7 +222,12 @@ class DTAttributedLabelNode: ASCellNode {
       style.preferredSize = CGSize(width: width, height: maxHeight)
     }
   }
-  private var attributedString: NSAttributedString?
+  private var fontLineHeight: CGFloat = FontDynamicType.body.font.lineHeight
+  private var attributedString: NSAttributedString? {
+    didSet {
+      textContentView?.attributedString = attributedString
+    }
+  }
 
   override convenience init() {
     self.init(viewBlock: { () -> UIView in
@@ -231,6 +240,8 @@ class DTAttributedLabelNode: ASCellNode {
     super.didLoad()
     textContentView = self.view as? DTAttributedLabel
     textContentView?.delegate = self
+    textContentView?.lineBreakMode = .byTruncatingTail
+    textContentView?.truncationString = AttributedStringBuilder(fontDynamicType: .body).append(text: "...").attributedString
     textContentView?.numberOfLines = maxNumberOfLines
     textContentView?.attributedString = attributedString
   }
@@ -250,8 +261,11 @@ class DTAttributedLabelNode: ASCellNode {
                                     htmlImageWidth: CGFloat = UIScreen.main.bounds.width) -> NSAttributedString? {
 
     let font: UIFont = fontDynamicType?.font ?? FontDynamicType.footnote.font
+    //Set the font line height
+    fontLineHeight = font.lineHeight
+
     //Update max-height
-    self.maxHeight = CGFloat(font.lineHeight) * CGFloat(maxNumberOfLines)
+    self.maxHeight = CGFloat(fontLineHeight) * CGFloat(maxNumberOfLines)
 
     return DTAttributedTextContentView.htmlAttributedString(text: text, fontDynamicType: fontDynamicType, color: color, htmlImageWidth: htmlImageWidth, defaultLineHeightMultiple: AttributedStringBuilder.defaultHTMLLineHeightMultiple)
   }

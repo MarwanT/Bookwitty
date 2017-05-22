@@ -20,7 +20,7 @@ target 'Bookwitty' do
   # Pods for Bookwitty
   pod 'Moya', '8.0.0'
   pod 'Fabric', '1.6.11'
-  pod 'Crashlytics', '3.8.3'
+  pod 'Crashlytics', '3.8.4'
   pod 'Google/Analytics', '3.0.3'
   pod 'FacebookCore', '0.2.0'
   pod 'FacebookLogin', '0.2.0'
@@ -41,6 +41,7 @@ target 'Bookwitty' do
   pod 'SwiftLoader', :git => 'https://github.com/keeward/SwiftLoader', :tag => '0.3.1'
   pod 'Version', :git => 'https://github.com/opwoco/Version'
   pod 'ReachabilitySwift', '3'
+  pod 'GSImageViewerController', '1.2.1'
   
   target 'BookwittyTests' do
     inherit! :search_paths

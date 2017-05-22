@@ -8,6 +8,7 @@
 
 import UIKit
 import AsyncDisplayKit
+import GSImageViewerController
 
 class TopicViewController: ASViewController<ASCollectionNode> {
 
@@ -381,9 +382,20 @@ extension TopicViewController: TopicHeaderNodeDelegate {
                                                  name: name)
     Analytics.shared.send(event: event)
   }
+
+  func topicHeader(node: TopicHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+    let imageInfo = GSImageInfo(image: image, imageMode: .aspectFit, imageHD: nil)
+    let transitionInfo = GSTransitionInfo(fromView: imageNode.view)
+    let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
+    present(imageViewer, animated: true, completion: nil)
+  }
 }
 
 extension TopicViewController: PenNameFollowNodeDelegate {
+  func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+    penName(node: node, actionPenNameFollowTouchUpInside: imageNode)
+  }
+
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader) {
     guard let indexPath = collectionNode.indexPath(for: node) else {
       return
@@ -511,8 +523,19 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
       let category = self.category(withIndex: segmentedNode.selectedIndex)
       switch category {
       case .latest:
-        //data is filled when node is created
-        break
+        guard let post = viewModel.latest(at: indexPath.row),
+          let card = node as? BaseCardPostNode else {
+            return
+        }
+
+        if let commonResource = post as? ModelCommonProperties,
+          let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: commonResource), !sameInstance {
+          card.baseViewModel?.resource = commonResource
+        }
+
+        if let bookCard = card as? BookCardPostCellNode {
+          bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: post , section: BookTypeRegistry.Section.topicLatest) ?? .topic == .product)
+        }
       case .editions:
         guard let cell = node as? BookNode else {
           return
@@ -566,6 +589,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
         let node = CardFactory.createCardFor(resourceType: post.registeredResourceType) else {
         return ASCellNode()
       }
+      node.baseViewModel?.resource = post as? ModelCommonProperties
       // Fetch the reading list cards images
       if let readingListCell = node as? ReadingListCardPostCellNode,
         !readingListCell.node.isImageCollectionLoaded {
@@ -576,9 +600,11 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
             readingListCell.node.loadImages(with: imageCollection)
           }
         })
+      } else if let bookCard = node as? BookCardPostCellNode {
+        bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: post , section: BookTypeRegistry.Section.topicLatest) ?? .topic == .product)
       }
+
       node.delegate = self
-      node.baseViewModel?.resource = post as? ModelCommonProperties
       return node
     case .editions:
       return BookNode()
@@ -1017,20 +1043,27 @@ extension TopicViewController {
   }
 
   fileprivate func actionForBookResourceType(resource: ModelResource) {
-    guard resource is Book else {
+    guard let resource = resource as? Book else {
       return
     }
 
+    let isProduct = (viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.topicLatest) ?? .topic == .product)
+
     //MARK: [Analytics] Event
-    let name: String = (resource as? Book)?.title ?? ""
-    let event: Analytics.Event = Analytics.Event(category: .TopicBook,
+    let name: String = resource.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: isProduct ? .BookProduct : .TopicBook,
                                                  action: .GoToDetails,
                                                  name: name)
     Analytics.shared.send(event: event)
 
-    let topicViewController = TopicViewController()
-    topicViewController.initialize(with: resource as? ModelCommonProperties)
-    navigationController?.pushViewController(topicViewController, animated: true)
+    if !isProduct {
+      let topicViewController = TopicViewController()
+      topicViewController.initialize(with: resource as ModelCommonProperties)
+      navigationController?.pushViewController(topicViewController, animated: true)
+    } else {
+      let bookDetailsViewController = BookDetailsViewController(with: resource)
+      navigationController?.pushViewController(bookDetailsViewController, animated: true)
+    }
   }
 }
 

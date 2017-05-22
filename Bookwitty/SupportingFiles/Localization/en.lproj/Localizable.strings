@@ -23,6 +23,7 @@
 "book_details" = "Book Details";
 "book_recommended_in_reading_lists" = "Book recommended in reading lists";
 "books" = "Books";
+"books_you_may_be_interested_in" = "Books you may be interested in";
 "bookwitty" = "Bookwitty";
 "bookwitty_suggests" = "Bookwitty Suggests";
 "buy_this_book" = "Buy This Book";
@@ -36,6 +37,7 @@
 "choose_pen_name" = "Choose a Pen Name";
 "clear_profile_photo" = "Clear profile photo";
 "contact_us" = "Contact Us";
+"content" = "Content";
 "continue" = "Continue";
 "contributors" = "Contributors";
 "couldnt_load_your_data" = "We could not load your data";
@@ -114,12 +116,15 @@
 "or_check_your_settings" = "or check your •settings•";
 "our_selection_for_you" = "Books you might like";
 "out_of_stock" = "Out of stock";
+"pages" = "Pages";
+"pages_you_may_be_interested_in" = "Pages you may be interested in";
 "password" = "Password";
 "password_invalid" = "Please verify your password";
 "payment_methods" = "Payment Methods";
 "pen_name" = "Pen Name";
 "pen_name_cant_be_empty" = "Please enter a pen name";
 "pen_names" = "Pen Names";
+"pen_names_to_follow" = "Pennames To Follow";
 "please_fill_required_field" = "Please fill the required fields";
 "post" = "Post";
 "posts" = "Posts";
@@ -138,6 +143,7 @@
 "reset_password" = "Reset password";
 "reset_password_text" = "You will receive an email with instructions on how to reset your password in a few minutes.";
 "search_placeholder" = "Search here";
+"see_whats_happening_on_bookwitty" = "See what's happening on Bookwitty";
 "settings" = "Settings";
 "shop_in_app_coming_soon_message" = "Soon you will be able to buy books in the Mobile App.";
 "shop_online" = "Shop Online";

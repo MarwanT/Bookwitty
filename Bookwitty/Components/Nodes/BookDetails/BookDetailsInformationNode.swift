@@ -37,10 +37,6 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
       bottom: 0, right: 0)
   }
   
-  override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
-    super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
-  }
-  
   func numberOfSections(in tableNode: ASTableNode) -> Int {
     return tableViewData.count > 0 ? 3 : 0 // Header + Data + Footer
   }

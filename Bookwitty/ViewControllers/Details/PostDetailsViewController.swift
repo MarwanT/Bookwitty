@@ -10,6 +10,7 @@ import Foundation
 import AsyncDisplayKit
 import Spine
 import Moya
+import GSImageViewerController
 
 class PostDetailsViewController: ASViewController<PostDetailsNode> {
   let postDetailsNode: PostDetailsNode
@@ -384,6 +385,14 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
                                                  name: name)
     Analytics.shared.send(event: event)
   }
+
+  func postDetails(node: PostDetailsNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+    let imageInfo = GSImageInfo(image: image, imageMode: .aspectFit, imageHD: nil)
+    let transitionInfo = GSTransitionInfo(fromView: imageNode.view)
+    let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
+    present(imageViewer, animated: true, completion: nil)
+
+  }
 }
 
 extension PostDetailsViewController: PostDetailsItemNodeDelegate {
@@ -394,6 +403,10 @@ extension PostDetailsViewController: PostDetailsItemNodeDelegate {
       }
       card.baseViewModel?.resource = resource
       card.setNeedsLayout()
+      
+      if let bookCard = card as? BookCardPostCellNode, let book = resource as? Book {
+        bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: book , section: BookTypeRegistry.Section.postDetails) ?? .topic == .product)
+      }
     }
   }
 
@@ -437,6 +450,7 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
         return BaseCardPostNode()
       }
       let card = CardFactory.createCardFor(resourceType: resource.registeredResourceType)
+      card?.baseViewModel?.resource = resource as? ModelCommonProperties
       if let readingListCell = card as? ReadingListCardPostCellNode,
         !readingListCell.node.isImageCollectionLoaded {
         let max = readingListCell.node.maxNumberOfImages
@@ -446,9 +460,10 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
             readingListCell.node.loadImages(with: imageCollection)
           }
         })
+      } else if let bookCard = card as? BookCardPostCellNode {
+        bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.postDetails) ?? .topic == .product)
       }
 
-      card?.baseViewModel?.resource = resource as? ModelCommonProperties
       card?.delegate = self
       return  card ?? BaseCardPostNode()
     } else {
@@ -685,6 +700,10 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
 
 // Mark: - Pen Name Header
 extension PostDetailsViewController: PenNameFollowNodeDelegate {
+  func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+    penName(node: node, actionPenNameFollowTouchUpInside: imageNode)
+  }
+
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader) {
     button.state = .loading
     if button.isSelected {
@@ -747,12 +766,25 @@ extension PostDetailsViewController {
     let topicViewController = TopicViewController()
 
     switch resource.registeredResourceType {
-    case Author.resourceType, Book.resourceType, Topic.resourceType:
+    case Book.resourceType:
+      guard let resource = resource as? Book else {
+        return
+      }
+
+      let isProduct = (viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.postDetails) ?? .topic == .product)
+      if !isProduct {
+        topicViewController.initialize(with: resource as ModelCommonProperties)
+        navigationController?.pushViewController(topicViewController, animated: true)
+      } else {
+        let bookDetailsViewController = BookDetailsViewController(with: resource)
+        bookDetailsViewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(bookDetailsViewController, animated: true)
+      }
+    case Author.resourceType, Topic.resourceType:
       topicViewController.initialize(with: resource as? ModelCommonProperties)
+      navigationController?.pushViewController(topicViewController, animated: true)
     default: break
     }
-
-    navigationController?.pushViewController(topicViewController, animated: true)
   }
 }
 

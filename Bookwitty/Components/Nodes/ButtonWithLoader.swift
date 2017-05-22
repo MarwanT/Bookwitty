@@ -71,6 +71,8 @@ class ButtonWithLoader: ASDisplayNode {
   }
 
   private func setupNode() {
+    button.titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     button.titleNode.maximumNumberOfLines = 1
     button.style.height = ASDimensionMake(buttonHeight)
     button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)

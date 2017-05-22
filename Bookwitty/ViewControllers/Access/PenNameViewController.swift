@@ -11,6 +11,12 @@ import ALCameraViewController
 import SwiftLoader
 
 class PenNameViewController: UIViewController {
+
+  enum Mode {
+    case New
+    case Edit
+  }
+
   @IBOutlet weak var profileContainerView: UIView!
   @IBOutlet weak var plusImageView: UIImageView!
   @IBOutlet weak var penNameLabel: UILabel!
@@ -28,6 +34,8 @@ class PenNameViewController: UIViewController {
   
   var showNoteLabel: Bool = true
   var didEditImage: Bool = false
+
+  var mode: Mode = .New
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -96,7 +104,38 @@ class PenNameViewController: UIViewController {
   }
 
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
-    updateUserProfile()
+    switch mode {
+    case .New:
+      createPenNameProfile()
+    case .Edit:
+      updateUserProfile()
+    }
+  }
+
+  fileprivate func createPenNameProfile() {
+    /**
+     Upload the pen name image if needed before proceeding
+     with completing the pen name profile creation
+     */
+    showLoader()
+    self.uploadUserImageIfNeeded { (imageId) in
+      self.createPenName(imageId: imageId)
+    }
+  }
+
+  fileprivate func createPenName(imageId: String?) {
+    // Hide keyboard if visible
+    _ = penNameInputField.resignFirstResponder()
+    _ = biographyTextView.resignFirstResponder()
+
+    let name = penNameInputField.textField.text ?? ""
+    let biography = biographyTextView.text
+
+    self.viewModel.createPenName(name: name, biography: biography, avatarId: imageId) {
+      (success: Bool) in
+      self.hideLoader()
+      _ = self.navigationController?.popViewController(animated: true)
+    }
   }
   
   fileprivate func updateUserProfile() {

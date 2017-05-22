@@ -31,6 +31,7 @@ class UserManager {
         return
       }
       saveSignedInUser(user: user)
+      notifyUpdate(user: true)
     }
   }
   
@@ -66,7 +67,16 @@ class UserManager {
       }
       signedInUser.penNames = penNames
       saveSignedInUserPenNames(penNames: penNames)
+      notifyUpdate(user: false, names: true)
     }
+  }
+
+  func append(penName: PenName) {
+    var penNames = signedInUser.penNames ?? []
+    penNames.append(penName)
+    signedInUser.penNames = penNames
+    saveSignedInUserPenNames(penNames: penNames)
+    notifyUpdate(user: false, names: true)
   }
 
   var defaultPenName: PenName? {
@@ -165,6 +175,7 @@ class UserManager {
     }
 
     saveSignedInUserPenNames(penNames: signedInUser.penNames ?? [])
+    notifyUpdate(user: false, names: true)
   }
 
   func isMy(penName: PenName) -> Bool {
@@ -172,5 +183,27 @@ class UserManager {
       return false
     }
     return signedInUser.isMy(penName: penName)
+  }
+}
+
+extension UserManager {
+  fileprivate func notifyUpdate(user: Bool = false, names: Bool = false) {
+    if user {
+      NotificationCenter.default.post(name: Notifications.Name.UpdateUser, object: signedInUser)
+    }
+
+    if names {
+      NotificationCenter.default.post(name: Notifications.Name.UpdatePenNames, object: penNames ?? [])
+    }
+  }
+}
+
+//MARK: - Notifications
+extension UserManager {
+  struct Notifications {
+    struct Name {
+      static let UpdateUser = Notification.Name("UserManager.Notifications.Name.UpdateUser")
+      static let UpdatePenNames = Notification.Name("UserManager.Notifications.Name.UpdatePenNames")
+    }
   }
 }

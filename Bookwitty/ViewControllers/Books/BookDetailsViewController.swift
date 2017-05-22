@@ -136,7 +136,12 @@ extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
       }
     } else {
       return {
-        return self.viewModel.nodeForItem(at: indexPath)
+        let node = self.viewModel.nodeForItem(at: indexPath)
+        if let cardNode = node as? BaseCardPostNode {
+          self.setupCardNode(baseCardNode: cardNode, indexPath: indexPath)
+        }
+
+        return node
       }
     }
   }
@@ -144,23 +149,15 @@ extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
     if let loaderNode = node as? LoaderNode {
       loaderNode.updateLoaderVisibility(show: true)
-    }
-    
-    // Check if cell conforms to protocol base card delegate
-    if let cardNode = node as? BaseCardPostNode {
-      cardNode.delegate = self
-    }
-    
-    // If cell is reading list handle loading the images
-    if let readingListCell = node as? ReadingListCardPostCellNode, let indexPath = node.indexPath,
-      !readingListCell.node.isImageCollectionLoaded  {
-      let max = readingListCell.node.maxNumberOfImages
-      self.viewModel.loadReadingListImages(at: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
-        if let imageCollection = imageCollection, imageCollection.count > 0 {
-          readingListCell.node.prepareImages(imageCount: imageCollection.count)
-          readingListCell.node.loadImages(with: imageCollection)
-        }
-      })
+    } else if let card = node as? BaseCardPostNode {
+      guard let indexPath = collectionNode.indexPath(for: node),
+        let commonResource = viewModel.resource(at: indexPath) else {
+          return
+      }
+
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: commonResource), !sameInstance {
+        card.baseViewModel?.resource = commonResource
+      }
     }
   }
   
@@ -178,6 +175,22 @@ extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
     collectionNode.deselectItem(at: indexPath, animated: true)
     perform(action: viewModel.actionForItem(at: indexPath))
+  }
+
+  func setupCardNode(baseCardNode: BaseCardPostNode, indexPath: IndexPath) {
+    // Check if cell conforms to protocol base card delegate
+    baseCardNode.delegate = self
+
+    if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
+      !readingListCell.node.isImageCollectionLoaded  {
+      let max = readingListCell.node.maxNumberOfImages
+      self.viewModel.loadReadingListImages(at: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
+        if let imageCollection = imageCollection, imageCollection.count > 0 {
+          readingListCell.node.prepareImages(imageCount: imageCollection.count)
+          readingListCell.node.loadImages(with: imageCollection)
+        }
+      })
+    }
   }
 }
 
@@ -237,8 +250,7 @@ extension BookDetailsViewController {
       top: ThemeManager.shared.currentTheme.generalExternalMargin(),
       left: 0, bottom: 0, right: 0)
     let node = BookDetailsAboutNode(externalInsets: externalInsets)
-    node.about = description
-    node.dispayMode = .expanded
+    node.setText(aboutText: description, displayMode: .expanded)
     let genericViewController = GenericNodeViewController(node: node, title: viewModel.book.title)
     self.navigationController?.pushViewController(genericViewController, animated: true)
 

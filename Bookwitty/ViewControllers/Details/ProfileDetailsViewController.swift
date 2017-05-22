@@ -8,6 +8,7 @@
 
 import Foundation
 import AsyncDisplayKit
+import GSImageViewerController
 
 class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   let flowLayout: UICollectionViewFlowLayout
@@ -149,6 +150,17 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
 
 
 extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
+  func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+    if penNameHeaderNode === node {
+      let imageInfo = GSImageInfo(image: image, imageMode: .aspectFit, imageHD: nil)
+      let transitionInfo = GSTransitionInfo(fromView: imageNode.view)
+      let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
+      present(imageViewer, animated: true, completion: nil)
+    } else {
+      penName(node: node, actionPenNameFollowTouchUpInside: imageNode)
+    }
+  }
+
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader) {
     var penName: PenName?
     if penNameHeaderNode === node {
@@ -301,12 +313,16 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
       case .latest:
         if let card = node as? BaseCardPostNode {
           guard let indexPath = collectionNode.indexPath(for: node),
-            let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment) as? ModelCommonProperties else {
+            let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment), let commonResource =  resource as? ModelCommonProperties else {
               return
           }
 
-          if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
-            card.baseViewModel?.resource = resource
+
+          if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: commonResource), !sameInstance {
+            card.baseViewModel?.resource = commonResource
+          }
+          if let registrySection = activeSegment.registrySection, let bookCard = card as? BookCardPostCellNode {
+            bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: registrySection) ?? .topic == .product)
           }
         }
       default: break
@@ -325,6 +341,8 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
     switch segment {
     case .latest, .following:
       let baseCardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType)
+      baseCardNode?.baseViewModel?.resource = resource as? ModelCommonProperties
+
       if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
         !readingListCell.node.isImageCollectionLoaded {
         let max = readingListCell.node.maxNumberOfImages
@@ -334,9 +352,10 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
             readingListCell.node.loadImages(with: imageCollection)
           }
         })
+      } else if let registrySection = segment.registrySection,  let bookCard = baseCardNode as? BookCardPostCellNode, let resource = resource as? Book {
+        bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: registrySection) ?? .topic == .product)
       }
 
-      baseCardNode?.baseViewModel?.resource = resource as? ModelCommonProperties
       baseCardNode?.delegate = self
       return baseCardNode
     case .followers:
@@ -602,13 +621,28 @@ extension ProfileDetailsViewController {
   }
 
   fileprivate func actionForBookResourceType(resource: ModelResource) {
-    guard resource is Book else {
+    guard let resource = resource as? Book else {
       return
     }
 
-    let topicViewController = TopicViewController()
-    topicViewController.initialize(with: resource as? ModelCommonProperties)
-    navigationController?.pushViewController(topicViewController, animated: true)
+    var isProduct = false
+    if let registrySection = activeSegment.registrySection {
+      isProduct = (viewModel.bookRegistry.category(for: resource , section: registrySection) ?? .topic == .product)
+    }
+    let name: String = resource.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: isProduct ? .BookProduct : .TopicBook,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+
+    if !isProduct {
+      let topicViewController = TopicViewController()
+      topicViewController.initialize(with: resource as ModelCommonProperties)
+      navigationController?.pushViewController(topicViewController, animated: true)
+    } else {
+      let bookDetailsViewController = BookDetailsViewController(with: resource)
+      navigationController?.pushViewController(bookDetailsViewController, animated: true)
+    }
   }
 }
 
@@ -643,6 +677,20 @@ extension ProfileDetailsViewController {
     case followers(index: Int)
     case following(index: Int)
     case none
+
+
+    var registrySection: BookTypeRegistry.Section? {
+      switch self {
+      case .latest:
+        return BookTypeRegistry.Section.profileLatest
+      case .followers:
+        return BookTypeRegistry.Section.profileFollowing
+      case .following:
+        fallthrough
+      case .none:
+        return nil
+      }
+    }
 
     var name: String {
       switch self {

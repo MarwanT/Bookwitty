@@ -28,7 +28,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
 
   var loadingStatus: LoadingStatus = .none
   var shouldShowLoader: Bool {
-    return (loadingStatus != .none)
+    return (loadingStatus != .none && loadingStatus != .reloading)
   }
   var shouldDisplayMisfortuneNode: Bool {
     guard let misfortuneMode = viewModel.misfortuneNodeMode, !shouldShowLoader else {
@@ -110,7 +110,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     self.misfortuneNode.style.height = ASDimensionMake(collectionNode.frame.height)
     self.misfortuneNode.style.width = ASDimensionMake(collectionNode.frame.width)
     
-    reloadPenNamesNode()
+    reloadPenNamesNode(collapsed: true)
     if viewModel.numberOfItemsInSection(section: Section.cards.rawValue) == 0 {
       refreshViewControllerData()
     }
@@ -170,7 +170,12 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       //Making sure that only UIRefreshControl will trigger this on valueChanged
       return
     }
-
+    guard loadingStatus == .none else {
+      pullToRefresher.endRefreshing()
+      //Making sure that only UIRefreshControl will trigger this on valueChanged
+      return
+    }
+    
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .NewsFeed,
                                                  action: .PullToRefresh)
@@ -192,8 +197,8 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     }
   }
 
-  func reloadPenNamesNode() {
-    penNameSelectionNode.loadData(penNames: viewModel.penNames, withSelected: viewModel.defaultPenName)
+  func reloadPenNamesNode(collapsed: Bool = false) {
+    penNameSelectionNode.loadData(penNames: viewModel.penNames, withSelected: viewModel.defaultPenName, collapsed: collapsed)
   }
 }
 
@@ -217,7 +222,7 @@ extension NewsFeedViewController: PenNameSelectionNodeDelegate {
     viewModel.cancellableOnGoingRequest()
     viewModel.data = []
     viewModel.nextPage = nil
-    self.loadingStatus = .reloading
+    self.loadingStatus = .loading
     self.updateCollection(with: nil, loaderSection: false, penNamesSection: false, orReloadAll: true, completionBlock: nil)
     viewModel.didUpdateDefaultPenName(penName: penName, completionBlock: {  didSaveDefault in
       if didSaveDefault {
@@ -354,6 +359,8 @@ extension NewsFeedViewController: ASCollectionDataSource {
               readingListCell.node.loadImages(with: imageCollection)
             }
           })
+        } else if let bookCard = baseCardNode as? BookCardPostCellNode, let resource = self.viewModel.resourceForIndex(index: index) {
+          bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.newsFeed) ?? .topic == .product)
         }
         baseCardNode.delegate = self
         return baseCardNode
@@ -376,12 +383,15 @@ extension NewsFeedViewController: ASCollectionDataSource {
       misfortuneNode.mode = viewModel.misfortuneNodeMode ?? MisfortuneNode.Mode.empty
     } else if let card = node as? BaseCardPostNode {
       guard let indexPath = collectionNode.indexPath(for: node),
-        let resource = viewModel.resourceForIndex(index: indexPath.row) as? ModelCommonProperties else {
+        let resource = viewModel.resourceForIndex(index: indexPath.row), let commonResource =  resource as? ModelCommonProperties else {
         return
       }
 
-      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
-        card.baseViewModel?.resource = resource
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: commonResource), !sameInstance {
+        card.baseViewModel?.resource = commonResource
+      }
+      if let bookCard = card as? BookCardPostCellNode {
+        bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.newsFeed) ?? .topic == .product)
       }
     }
   }
@@ -783,21 +793,29 @@ extension NewsFeedViewController {
   }
 
   fileprivate func actionForBookResourceType(resource: ModelResource) {
-    guard resource is Book else {
+    guard let resource = resource as? Book else {
       return
     }
 
+    let isProduct = (viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.newsFeed) ?? .topic == .product)
+
     //MARK: [Analytics] Event
-    let name: String = (resource as? Book)?.title ?? ""
-    let event: Analytics.Event = Analytics.Event(category: .TopicBook,
+    let name: String = resource.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: isProduct ? .BookProduct : .TopicBook,
                                                  action: .GoToDetails,
                                                  name: name)
     Analytics.shared.send(event: event)
 
-    let topicViewController = TopicViewController()
-    topicViewController.initialize(with: resource as? ModelCommonProperties)
-    topicViewController.hidesBottomBarWhenPushed = true
-    navigationController?.pushViewController(topicViewController, animated: true)
+    if !isProduct {
+      let topicViewController = TopicViewController()
+      topicViewController.initialize(with: resource as ModelCommonProperties)
+      topicViewController.hidesBottomBarWhenPushed = true
+      navigationController?.pushViewController(topicViewController, animated: true)
+    } else {
+      let bookDetailsViewController = BookDetailsViewController(with: resource)
+      bookDetailsViewController.hidesBottomBarWhenPushed = true
+      navigationController?.pushViewController(bookDetailsViewController, animated: true)
+    }
   }
 }
 
@@ -829,6 +847,9 @@ extension NewsFeedViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+
+    //Reload the Data upon language change
+    refreshViewControllerData()
   }
 }
 

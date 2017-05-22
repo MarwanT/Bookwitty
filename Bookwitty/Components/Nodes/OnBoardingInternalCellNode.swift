@@ -72,6 +72,9 @@ class OnBoardingInternalCellNode: ASCellNode {
     shortDescriptionTextNode.maximumNumberOfLines = 3
     titleTextNode.maximumNumberOfLines = 1
 
+    shortDescriptionTextNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    titleTextNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     selectionButtonNode.style.preferredSize = CGSize(width: 36.0, height: 36.0)
     imageNode.style.preferredSize = CGSize(width: 45.0, height: 45.0)
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
