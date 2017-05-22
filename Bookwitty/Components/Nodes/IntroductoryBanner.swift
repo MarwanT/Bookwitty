@@ -8,6 +8,10 @@
 
 import AsyncDisplayKit
 
+protocol IntroductoryBannerDelegate: class {
+  func introductoryBannerDidTapDismissButton(_ introductoryBanner: IntroductoryBanner)
+}
+
 class IntroductoryBanner: ASCellNode {
   fileprivate let titleNode: ASTextNode
   fileprivate let subtitleNode: ASTextNode
@@ -20,6 +24,8 @@ class IntroductoryBanner: ASCellNode {
   }
   
   var configuration = Configuration()
+  
+  weak var delegate: IntroductoryBannerDelegate? = nil
   
   init(mode: Mode) {
     self.mode = mode
@@ -58,8 +64,7 @@ class IntroductoryBanner: ASCellNode {
   }
   
   func dismissButtonTouchUpInside(_ sender: Any) {
-    // TODO: call delegate for dismissal
-    print("Dismiss button taapped")
+    delegate?.introductoryBannerDidTapDismissButton(self)
   }
   
   fileprivate var titleText: String? {
