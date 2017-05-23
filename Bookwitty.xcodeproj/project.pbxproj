@@ -53,6 +53,7 @@
 		56620FCC1E8954CA00BD92BB /* UploadPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56620FCB1E8954CA00BD92BB /* UploadPolicy.swift */; };
 		566EE82D1E5D7082004B990D /* Search+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EE82C1E5D7082004B990D /* Search+API.swift */; };
 		566EE87B1E5DC677004B990D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 566EE8781E5DC677004B990D /* Localizable.strings */; };
+		567B3C021ED42ECF00E02E16 /* Misc.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 567B3C011ED42ECF00E02E16 /* Misc.storyboard */; };
 		567EE1B11E7A9F1200A0CA0D /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567EE1B01E7A9F1200A0CA0D /* ForgotPasswordViewController.swift */; };
 		56929CE61E671BE700B3D00A /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56929CE51E671BE700B3D00A /* SegmentedControl.swift */; };
 		56A623B61EA0C02D00D930A7 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A623B51EA0C02D00D930A7 /* DataManager.swift */; };
@@ -319,6 +320,7 @@
 		566EE82C1E5D7082004B990D /* Search+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Search+API.swift"; sourceTree = "<group>"; };
 		566EE8791E5DC677004B990D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		566EE87A1E5DC677004B990D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		567B3C011ED42ECF00E02E16 /* Misc.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Misc.storyboard; sourceTree = "<group>"; };
 		567EE1B01E7A9F1200A0CA0D /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		56929CE51E671BE700B3D00A /* SegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		56A623B51EA0C02D00D930A7 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -823,6 +825,7 @@
 				594290021E4F737B0006B2F1 /* Books.storyboard */,
 				59DA47561E3A65A600BA90A5 /* Storyboard.swift */,
 				56399DBB1E51CF2D005192AC /* Account.storyboard */,
+				567B3C011ED42ECF00E02E16 /* Misc.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -1429,6 +1432,7 @@
 				5967E4581E4107EF0067093F /* NotificationView.xib in Resources */,
 				597B8E371E3954B200C7811B /* Ubuntu-Medium.ttf in Resources */,
 				5942902E1E53BF2D0006B2F1 /* SectionTitleHeaderView.xib in Resources */,
+				567B3C021ED42ECF00E02E16 /* Misc.storyboard in Resources */,
 				59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */,
 				597B8E381E3954B200C7811B /* Ubuntu-Regular.ttf in Resources */,
 				59D8FCB91E4CBF70001C1EDB /* Categories.en.json in Resources */,
