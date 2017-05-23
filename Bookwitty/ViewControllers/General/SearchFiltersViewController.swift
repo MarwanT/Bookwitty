@@ -38,6 +38,43 @@ class SearchFiltersViewController: UIViewController {
   }
 }
 
+extension SearchFiltersViewController: UITableViewDataSource, UITableViewDelegate {
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return 0 //TODO: get the value from the view model
+  }
+
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return 0 //TODO: get the value from the view model
+  }
+
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    return tableView.dequeueReusableCell(withIdentifier: CheckmarkTableViewCell.reuseIdentifier, for: indexPath)
+  }
+
+  func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    guard let currentCell = cell as? CheckmarkTableViewCell else {
+      return
+    }
+
+    currentCell.titleLabel.text = nil //TODO: get the value from the view model
+  }
+
+  func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    return 50.0
+  }
+
+  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    let sectionHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: SearchFilterTableViewSectionHeaderView.reuseIdentifier) as? SearchFilterTableViewSectionHeaderView
+    sectionHeader?.titleLabel.text = nil //TODO: get the value from the view model
+    sectionHeader?.subTitleLabel.text = nil //TODO: get the value from the view model
+    return sectionHeader
+  }
+
+  func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    return 0.01 // To remove the separator after the last cell
+  }
+}
+
 //MARK: - Themeable implementation
 extension SearchFiltersViewController: Themeable {
   func applyTheme() {
