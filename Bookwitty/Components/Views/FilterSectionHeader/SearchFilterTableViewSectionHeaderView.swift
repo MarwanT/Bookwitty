@@ -37,6 +37,7 @@ class SearchFilterTableViewSectionHeaderView: UITableViewHeaderFooterView {
 
 extension SearchFilterTableViewSectionHeaderView: Themeable {
   func applyTheme() {
+    contentView.backgroundColor = UIColor.white
     titleLabel.font = FontDynamicType.footnote.font
     titleLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
 

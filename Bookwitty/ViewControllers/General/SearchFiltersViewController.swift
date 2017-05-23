@@ -39,9 +39,10 @@ class SearchFiltersViewController: UIViewController {
 //MARK: - Themeable implementation
 extension SearchFiltersViewController: Themeable {
   func applyTheme() {
-    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
+    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
     tableViewHeader.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     tableViewHeaderButton.setTitleColor(ThemeManager.shared.currentTheme.defaultButtonColor(), for: .normal)
+    tableView.backgroundColor = UIColor.clear
 
     let margin = ThemeManager.shared.currentTheme.generalExternalMargin()
     tableViewHeader.layoutMargins = UIEdgeInsets(top: 0.0, left: margin, bottom: 0.0, right: margin)
