@@ -43,6 +43,9 @@ extension SearchFiltersViewController: Themeable {
     tableViewHeader.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     tableViewHeaderButton.setTitleColor(ThemeManager.shared.currentTheme.defaultButtonColor(), for: .normal)
 
+    let margin = ThemeManager.shared.currentTheme.generalExternalMargin()
+    tableViewHeader.layoutMargins = UIEdgeInsets(top: 0.0, left: margin, bottom: 0.0, right: margin)
+
     for separator in separators {
       separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     }
