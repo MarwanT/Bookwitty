@@ -22,6 +22,9 @@ class SearchFiltersViewController: UIViewController {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
+    initializeComponents()
+    applyTheme()
+    addObservers()
   }
 
   fileprivate func initializeComponents() {
