@@ -11,5 +11,15 @@ import UIKit
 class SearchFilterTableViewSectionHeaderView: UITableViewHeaderFooterView {
   @IBOutlet var titleLabel: UILabel!
   @IBOutlet var subTitleLabel: UILabel!
-  @IBOutlet var imageView: UIImageView!  
+  @IBOutlet var imageView: UIImageView!
+
+  override func awakeFromNib() {
+    super.awakeFromNib()
+
+    initializeComponents()
+  }
+
+  fileprivate func initializeComponents() {
+
+  }
 }
