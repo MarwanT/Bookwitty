@@ -9,6 +9,9 @@
 import UIKit
 
 class SearchFilterTableViewSectionHeaderView: UITableViewHeaderFooterView {
+  static let reuseIdentifier = "SearchFilterTableViewSectionHeaderViewReuseIdentifier"
+  static let nib: UINib = UINib(nibName: "SearchFilterTableViewSectionHeaderView", bundle: nil)
+
   @IBOutlet var titleLabel: UILabel!
   @IBOutlet var subTitleLabel: UILabel!
   @IBOutlet var imageView: UIImageView!
