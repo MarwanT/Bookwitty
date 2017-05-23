@@ -95,6 +95,7 @@ extension SearchFiltersViewController: Themeable {
 //MARK: - Localizable implementation
 extension SearchFiltersViewController: Localizable {
   func applyLocalization() {
+    //TODO: Localize
     title = "Filters"
     tableViewHeaderButton.setTitle("Clear all", for: .normal)
   }
