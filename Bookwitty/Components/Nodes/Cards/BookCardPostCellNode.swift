@@ -13,7 +13,9 @@ class BookCardPostCellNode: BaseCardPostNode {
 
   let node: BookCardPostContentNode
   var showsInfoNode: Bool = false
+  var showActionNode: Bool = false
   override var shouldShowInfoNode: Bool { return showsInfoNode }
+  override var shouldShowActionBarNode: Bool { return showActionNode }
   override var contentShouldExtendBorders: Bool { return false }
   override var contentNode: ASDisplayNode { return node }
 
