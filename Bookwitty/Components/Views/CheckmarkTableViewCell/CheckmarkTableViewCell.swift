@@ -9,6 +9,10 @@
 import UIKit
 
 class CheckmarkTableViewCell: UITableViewCell {
+  static let reuseIdentifier = "CheckmarkTableViewCellReuseIdentifier"
+
+  @IBOutlet var titleLabel: UILabel!
+  @IBOutlet var checkmarkImageView: UIImageView!
 
   override func awakeFromNib() {
     super.awakeFromNib()
