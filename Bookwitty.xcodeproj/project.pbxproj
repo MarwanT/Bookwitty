@@ -55,6 +55,7 @@
 		566EE87B1E5DC677004B990D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 566EE8781E5DC677004B990D /* Localizable.strings */; };
 		567B3C021ED42ECF00E02E16 /* Misc.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 567B3C011ED42ECF00E02E16 /* Misc.storyboard */; };
 		567B3C041ED4310600E02E16 /* SearchFiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567B3C031ED4310600E02E16 /* SearchFiltersViewController.swift */; };
+		567B3C061ED4330F00E02E16 /* SearchFiltersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567B3C051ED4330F00E02E16 /* SearchFiltersViewModel.swift */; };
 		567EE1B11E7A9F1200A0CA0D /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567EE1B01E7A9F1200A0CA0D /* ForgotPasswordViewController.swift */; };
 		56929CE61E671BE700B3D00A /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56929CE51E671BE700B3D00A /* SegmentedControl.swift */; };
 		56A623B61EA0C02D00D930A7 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A623B51EA0C02D00D930A7 /* DataManager.swift */; };
@@ -323,6 +324,7 @@
 		566EE87A1E5DC677004B990D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		567B3C011ED42ECF00E02E16 /* Misc.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Misc.storyboard; sourceTree = "<group>"; };
 		567B3C031ED4310600E02E16 /* SearchFiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFiltersViewController.swift; sourceTree = "<group>"; };
+		567B3C051ED4330F00E02E16 /* SearchFiltersViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFiltersViewModel.swift; sourceTree = "<group>"; };
 		567EE1B01E7A9F1200A0CA0D /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		56929CE51E671BE700B3D00A /* SegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		56A623B51EA0C02D00D930A7 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -1048,6 +1050,7 @@
 			children = (
 				59871F1C1E78AF19000A86CD /* PostsViewModel.swift */,
 				F400CDC71E7AF62600B7EF26 /* SearchViewModel.swift */,
+				567B3C051ED4330F00E02E16 /* SearchFiltersViewModel.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -1660,6 +1663,7 @@
 				56320C8E1EA748FB00642934 /* ProfileCardPostCellNode.swift in Sources */,
 				597B8E2D1E37F6BC00C7811B /* Image+Utils.swift in Sources */,
 				59CF764A1E5CB010003EAB6B /* BooksTableViewController.swift in Sources */,
+				567B3C061ED4330F00E02E16 /* SearchFiltersViewModel.swift in Sources */,
 				F434F7911E4E16CE001812BD /* CellNode.swift in Sources */,
 				56320C911EA748FB00642934 /* TopicCardPostCellNode.swift in Sources */,
 				56A623B61EA0C02D00D930A7 /* DataManager.swift in Sources */,
