@@ -10,6 +10,8 @@ import UIKit
 
 class SearchFiltersViewController: UIViewController {
 
+  let viewModel: SearchFiltersViewModel = SearchFiltersViewModel()
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
