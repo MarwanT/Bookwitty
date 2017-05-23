@@ -28,6 +28,13 @@
                         <constraint firstAttribute="width" constant="45" id="m7g-Th-9dI"/>
                     </constraints>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nWk-ZR-GmG" userLabel="Separator">
+                    <rect key="frame" x="0.0" y="49" width="553" height="1"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="6I7-ih-F11"/>
+                    </constraints>
+                </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aDh-RV-YCh">
                     <rect key="frame" x="8" y="8" width="42" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -39,9 +46,12 @@
             <constraints>
                 <constraint firstItem="Vlt-bH-nZL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="aDh-RV-YCh" secondAttribute="trailing" constant="5" id="0OI-fC-dBg"/>
                 <constraint firstItem="Vlt-bH-nZL" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="1Cu-ZL-JDi"/>
+                <constraint firstAttribute="bottom" secondItem="nWk-ZR-GmG" secondAttribute="bottom" id="DaL-1W-a9Y"/>
+                <constraint firstItem="nWk-ZR-GmG" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Ksr-aS-jo6"/>
                 <constraint firstItem="Vlt-bH-nZL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6lg-XW-Mvl" secondAttribute="trailing" constant="5" id="Tnd-Wb-7vI"/>
                 <constraint firstAttribute="trailingMargin" secondItem="Vlt-bH-nZL" secondAttribute="trailing" id="YAC-mP-fPQ"/>
                 <constraint firstItem="6lg-XW-Mvl" firstAttribute="top" secondItem="aDh-RV-YCh" secondAttribute="bottom" id="cs9-ZP-vcQ"/>
+                <constraint firstAttribute="trailing" secondItem="nWk-ZR-GmG" secondAttribute="trailing" id="hQl-Aw-bZb"/>
                 <constraint firstAttribute="leadingMargin" secondItem="6lg-XW-Mvl" secondAttribute="leading" id="mHv-IA-JtM"/>
                 <constraint firstAttribute="leadingMargin" secondItem="aDh-RV-YCh" secondAttribute="leading" id="sjW-Yc-x8B"/>
                 <constraint firstItem="aDh-RV-YCh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" id="w4k-XF-leb"/>
@@ -49,6 +59,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="imageView" destination="Vlt-bH-nZL" id="9nB-sl-w4E"/>
+                <outlet property="separatorView" destination="nWk-ZR-GmG" id="dli-49-Cru"/>
                 <outlet property="subTitleLabel" destination="6lg-XW-Mvl" id="0no-v0-9Rw"/>
                 <outlet property="titleLabel" destination="aDh-RV-YCh" id="ycx-e5-a7U"/>
             </connections>

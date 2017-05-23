@@ -15,6 +15,7 @@ class SearchFilterTableViewSectionHeaderView: UITableViewHeaderFooterView {
   @IBOutlet var titleLabel: UILabel!
   @IBOutlet var subTitleLabel: UILabel!
   @IBOutlet var imageView: UIImageView!
+  @IBOutlet var separatorView: UIView!
 
   var selected: Bool = false {
     didSet {
@@ -41,6 +42,10 @@ extension SearchFilterTableViewSectionHeaderView: Themeable {
 
     subTitleLabel.font = FontDynamicType.caption1.font
     subTitleLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+
+    separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    let margin = ThemeManager.shared.currentTheme.generalExternalMargin()
+    separatorView.layoutMargins = UIEdgeInsets(top: 0.0, left: margin, bottom: 0.0, right: 0.0)
   }
 
   fileprivate func applySelectedState() {
