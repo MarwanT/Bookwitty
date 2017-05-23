@@ -10,6 +10,25 @@ import Foundation
 import Version
 import ReachabilitySwift
 
+extension Version {
+  public func isGreaterOrEqual(other: Version) -> Bool {
+    guard self.major == other.major else {
+      return self.major > other.major
+    }
+
+    guard self.canonicalMinor == other.canonicalMinor else {
+      return self.canonicalMinor > other.canonicalMinor
+    }
+
+    guard self.canonicalPatch == other.canonicalPatch else {
+      return self.canonicalPatch > other.canonicalPatch
+    }
+
+    //self and other version are Equal
+    return true
+  }
+}
+
 class AppManager {
   private(set) var appStatus: AppDelegate.Status = AppDelegate.Status.unspecified
   var isCheckingStatus: Bool = false
@@ -51,7 +70,7 @@ class AppManager {
       }
       
       // Store app meta somewhere if needed
-      if version >= minimumSupportedVersion {
+      if version.isGreaterOrEqual(other: minimumSupportedVersion) {
         self.appStatus = .valid
       } else {
         self.appStatus = .needsUpdate(URL(string: meta.storeURLString ?? ""))
