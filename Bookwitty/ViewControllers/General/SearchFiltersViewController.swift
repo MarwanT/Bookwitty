@@ -24,3 +24,17 @@ class SearchFiltersViewController: UIViewController {
     // Do any additional setup after loading the view.
   }
 }
+
+//MARK: - Themeable implementation
+extension SearchFiltersViewController: Themeable {
+  func applyTheme() {
+    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
+    tableViewHeader.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+    tableViewHeaderButton.setTitleColor(ThemeManager.shared.currentTheme.defaultButtonColor(), for: .normal)
+
+    for separator in separators {
+      separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    }
+  }
+}
+
