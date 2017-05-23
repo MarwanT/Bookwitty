@@ -12,6 +12,12 @@ class SearchFiltersViewController: UIViewController {
 
   let viewModel: SearchFiltersViewModel = SearchFiltersViewModel()
 
+  @IBOutlet var tableView: UITableView!
+
+  @IBOutlet var tableViewHeader: UIView!
+  @IBOutlet var tableViewHeaderButton: UIButton!
+  @IBOutlet var separators: [UIView]!
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
