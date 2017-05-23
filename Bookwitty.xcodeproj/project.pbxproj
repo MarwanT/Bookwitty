@@ -58,6 +58,7 @@
 		567B3C061ED4330F00E02E16 /* SearchFiltersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567B3C051ED4330F00E02E16 /* SearchFiltersViewModel.swift */; };
 		567B3C091ED4740A00E02E16 /* SearchFilterTableViewSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 567B3C081ED4740A00E02E16 /* SearchFilterTableViewSectionHeaderView.xib */; };
 		567B3C0B1ED4743A00E02E16 /* SearchFilterTableViewSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567B3C0A1ED4743A00E02E16 /* SearchFilterTableViewSectionHeaderView.swift */; };
+		567B3C111ED4886F00E02E16 /* CheckmarkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567B3C101ED4886F00E02E16 /* CheckmarkTableViewCell.swift */; };
 		567EE1B11E7A9F1200A0CA0D /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567EE1B01E7A9F1200A0CA0D /* ForgotPasswordViewController.swift */; };
 		56929CE61E671BE700B3D00A /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56929CE51E671BE700B3D00A /* SegmentedControl.swift */; };
 		56A623B61EA0C02D00D930A7 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A623B51EA0C02D00D930A7 /* DataManager.swift */; };
@@ -329,6 +330,7 @@
 		567B3C051ED4330F00E02E16 /* SearchFiltersViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFiltersViewModel.swift; sourceTree = "<group>"; };
 		567B3C081ED4740A00E02E16 /* SearchFilterTableViewSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchFilterTableViewSectionHeaderView.xib; sourceTree = "<group>"; };
 		567B3C0A1ED4743A00E02E16 /* SearchFilterTableViewSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFilterTableViewSectionHeaderView.swift; sourceTree = "<group>"; };
+		567B3C101ED4886F00E02E16 /* CheckmarkTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckmarkTableViewCell.swift; sourceTree = "<group>"; };
 		567EE1B01E7A9F1200A0CA0D /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		56929CE51E671BE700B3D00A /* SegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		56A623B51EA0C02D00D930A7 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -687,6 +689,14 @@
 			path = FilterSectionHeader;
 			sourceTree = "<group>";
 		};
+		567B3C0F1ED4886F00E02E16 /* CheckmarkTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				567B3C101ED4886F00E02E16 /* CheckmarkTableViewCell.swift */,
+			);
+			path = CheckmarkTableViewCell;
+			sourceTree = "<group>";
+		};
 		56929CE41E671BD000B3D00A /* Segmented */ = {
 			isa = PBXGroup;
 			children = (
@@ -904,6 +914,7 @@
 		59057FDA1E2533010036AAF3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				567B3C0F1ED4886F00E02E16 /* CheckmarkTableViewCell */,
 				567B3C071ED473F400E02E16 /* FilterSectionHeader */,
 				56929CE41E671BD000B3D00A /* Segmented */,
 				56205DE81E5324BC000CA4D7 /* TableViewSectionHeader */,
@@ -1609,6 +1620,7 @@
 				F42600891E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift in Sources */,
 				566EE82D1E5D7082004B990D /* Search+API.swift in Sources */,
 				59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */,
+				567B3C111ED4886F00E02E16 /* CheckmarkTableViewCell.swift in Sources */,
 				56535F351E7CB9ED0045E73D /* Thumbnail.swift in Sources */,
 				F43996851E76C76700FE9D8B /* PostsListViewController.swift in Sources */,
 				562A31201E659919002851DE /* Strings.swift in Sources */,
