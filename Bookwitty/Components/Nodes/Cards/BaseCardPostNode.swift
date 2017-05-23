@@ -21,6 +21,7 @@ extension CardViewModelProtocol {
 
 protocol BaseCardPostNodeContentProvider {
   var shouldShowInfoNode: Bool { get }
+  var shouldShowActionBarNode: Bool { get }
   var contentShouldExtendBorders: Bool { get }
   var contentNode: ASDisplayNode { get }
 
@@ -184,8 +185,11 @@ extension BaseCardPostNode {
     verticalStack.justifyContent = .center
     verticalStack.alignItems = .stretch
     verticalStack.children = (shouldShowInfoNode && !forceHideInfoNode)
-      ? [infoNodeInset, contentInset, commentSummaryInset, separatorNodeInset, actionBarNodeInset]
-      : [contentInset, commentSummaryInset, separatorNodeInset, actionBarNodeInset]
+      ? [infoNodeInset, contentInset, commentSummaryInset, separatorNodeInset]
+      : [contentInset, commentSummaryInset, separatorNodeInset]
+    if shouldShowActionBarNode {
+      verticalStack.children?.append(actionBarNodeInset)
+    }
 
     //Note: If we used children or background properties instead of init -> Order would be important,
     //insetForVerticalLayout must be added before backgroundNode
@@ -269,6 +273,10 @@ extension BaseCardPostNode {
 //MARK: - Default Content Card Setup
 extension BaseCardPostNode: BaseCardPostNodeContentProvider {
   internal var shouldShowInfoNode: Bool {
+    return true
+  }
+  
+  internal var shouldShowActionBarNode: Bool {
     return true
   }
 
