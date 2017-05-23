@@ -61,7 +61,7 @@
                                     </constraints>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CheckmarkTableViewCellReuseIdentifier" id="S6O-hJ-Zgp" customClass="CheckmarkTableViewCell" customModule="Bookwitty" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CheckmarkTableViewCellReuseIdentifier" id="S6O-hJ-Zgp" customClass="CheckmarkTableViewCell" customModule="Bookwitty" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="68" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="S6O-hJ-Zgp" id="c6A-lb-Iqn">
