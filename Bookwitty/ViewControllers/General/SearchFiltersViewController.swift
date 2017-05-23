@@ -38,3 +38,19 @@ extension SearchFiltersViewController: Themeable {
   }
 }
 
+//MARK: - Localizable implementation
+extension SearchFiltersViewController: Localizable {
+  func applyLocalization() {
+    title = "Filters"
+    tableViewHeaderButton.setTitle("Clear all", for: .normal)
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
+  }
+}
