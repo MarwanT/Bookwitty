@@ -67,6 +67,14 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     //MARK: [Analytics] Screen Name
     if let resourceType = viewModel.resourceType {
       switch resourceType {
+      case Topic.resourceType, Author.resourceType:
+        self.mode = .normal(categories: self.normal)
+      case Book.resourceType:
+        self.mode = .book(categories: self.book)
+      default: break
+      }
+      
+      switch resourceType {
       case Topic.resourceType:
         Analytics.shared.send(screenName: Analytics.ScreenNames.Topic)
       case Author.resourceType:
