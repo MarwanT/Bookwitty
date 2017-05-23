@@ -190,6 +190,8 @@ class PenNameSelectionNode: ASCellNode {
     let extraSeparator = separatorHeight
 
     guard !collapsed else {
+      //Make sure updateArrowDirection is run
+      header.updateArrowDirection(direction: expand ? .down : .up, animated: false)
       style.height = ASDimensionMake(collapsedHeightDimension.value - extraSeparator)
       collectionNode.reloadData()
       setNeedsLayout()
