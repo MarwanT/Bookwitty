@@ -23,6 +23,14 @@ class SearchFiltersViewController: UIViewController {
 
     // Do any additional setup after loading the view.
   }
+
+  fileprivate func initializeComponents() {
+    applyLocalization()
+  }
+
+  fileprivate func addObservers() {
+    observeLanguageChanges()
+  }
 }
 
 //MARK: - Themeable implementation
