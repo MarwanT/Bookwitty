@@ -17,6 +17,7 @@ class CheckmarkTableViewCell: UITableViewCell {
   override func awakeFromNib() {
     super.awakeFromNib()
     initializeComponents()
+    applyTheme()
   }
 
   fileprivate func initializeComponents() {
@@ -27,6 +28,7 @@ class CheckmarkTableViewCell: UITableViewCell {
     super.setSelected(selected, animated: animated)
 
     // Configure the view for the selected state
+    applySelectedState()
   }
 }
 
@@ -37,5 +39,9 @@ extension CheckmarkTableViewCell: Themeable {
     titleLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
     contentView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
     backgroundColor = UIColor.clear
+  }
+
+  fileprivate func applySelectedState() {
+    checkmarkImageView.image = isSelected ? #imageLiteral(resourceName: "tick") : nil
   }
 }
