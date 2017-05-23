@@ -29,6 +29,8 @@ class SearchFiltersViewController: UIViewController {
 
   fileprivate func initializeComponents() {
     applyLocalization()
+
+    tableView.register(SearchFilterTableViewSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: SearchFilterTableViewSectionHeaderView.reuseIdentifier)
   }
 
   fileprivate func addObservers() {
