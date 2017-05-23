@@ -9,5 +9,7 @@
 import UIKit
 
 class SearchFilterTableViewSectionHeaderView: UITableViewHeaderFooterView {
-  
+  @IBOutlet var titleLabel: UILabel!
+  @IBOutlet var subTitleLabel: UILabel!
+  @IBOutlet var imageView: UIImageView!  
 }
