@@ -11,8 +11,9 @@ import Moya
 import Spine
 
 struct SearchAPI {
-  static func search(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?, completion: @escaping (_ success: Bool, _ collection: [ModelResource]?, _ nextPage: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
-    return signedAPIRequest(target: BookwittyAPI.search(filter: filter, page: page)) {
+
+  static func search(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?, includeFacets: Bool = false, completion: @escaping (_ success: Bool, _ collection: [ModelResource]?, _ nextPage: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    return signedAPIRequest(target: BookwittyAPI.search(filter: filter, page: page, includeFacets: includeFacets)) {
       (data, statusCode, response, error) in
       var success: Bool = false
       var collection: [ModelResource]? = nil
@@ -41,7 +42,7 @@ struct SearchAPI {
 }
 
 extension SearchAPI {
-  static func parameters(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?) -> [String : Any]? {
+  static func parameters(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?, includeFacets: Bool) -> [String : Any]? {
     var dictionary = [String : Any]()
 
     //Filters
