@@ -32,3 +32,22 @@ class Facet {
     self.init(categories: categories, languages: languages, types: types)
   }
 }
+
+extension Facet {
+  struct Filter {
+    //Different Filter Facets
+    private static let categories = "categories"
+    private static let languages = "languages"
+    private static let types = "types"
+    private static let limit: Int = 10
+
+    private init(){}
+
+    //Search API Facets Parameter
+    static let dictionary = [
+      categories : limit,
+      languages :  limit,
+      types : limit
+    ]
+  }
+}

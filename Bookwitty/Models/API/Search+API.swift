@@ -11,24 +11,6 @@ import Moya
 import Spine
 
 struct SearchAPI {
-
-  struct Facets {
-    //Different Filter Facets
-    private static let categories = "categories"
-    private static let languages = "languages"
-    private static let types = "types"
-    private static let limit: Int = 10
-
-    private init(){}
-
-    //Search API Facets Parameter
-    static let dictionary = [
-      categories : limit,
-      languages :  limit,
-      types : limit
-    ]
-  }
-
   static func search(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?, includeFacets: Bool = false, completion: @escaping (_ success: Bool, _ collection: [ModelResource]?, _ nextPage: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     return signedAPIRequest(target: BookwittyAPI.search(filter: filter, page: page, includeFacets: includeFacets)) {
       (data, statusCode, response, error) in
@@ -85,7 +67,7 @@ extension SearchAPI {
     }
 
     if includeFacets {
-      dictionary["filter[facets]"] = Facets.dictionary
+      dictionary["filter[facets]"] = Facet.Filter.dictionary
     }
     
     return dictionary
