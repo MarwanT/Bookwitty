@@ -542,7 +542,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
         }
 
         if let bookCard = card as? BookCardPostCellNode {
-          bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: post , section: BookTypeRegistry.Section.topicLatest) ?? .topic == .product)
+          bookCard.isProduct = (self.viewModel.bookRegistry.category(for: post , section: BookTypeRegistry.Section.topicLatest) ?? .topic == .product)
         }
       case .editions:
         guard let cell = node as? BookNode else {
@@ -609,7 +609,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
           }
         })
       } else if let bookCard = node as? BookCardPostCellNode {
-        bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: post , section: BookTypeRegistry.Section.topicLatest) ?? .topic == .product)
+        bookCard.isProduct = (self.viewModel.bookRegistry.category(for: post , section: BookTypeRegistry.Section.topicLatest) ?? .topic == .product)
       }
 
       node.delegate = self

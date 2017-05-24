@@ -35,6 +35,14 @@ class BookCardPostCellNode: BaseCardPostNode {
     self.init()
     showsInfoNode = shouldShowInfoNode
   }
+
+  var isProduct: Bool = false {
+    didSet {
+      showActionNode = !isProduct
+      node.isProduct = isProduct
+      setNeedsLayout()
+    }
+  }
 }
 
 class BookCardPostContentNode: ASDisplayNode {
@@ -122,7 +130,7 @@ class BookCardPostContentNode: ASDisplayNode {
     }
   }
 
-  var isProduct: Bool = false {
+  fileprivate var isProduct: Bool = false {
     didSet {
       setNeedsLayout()
     }

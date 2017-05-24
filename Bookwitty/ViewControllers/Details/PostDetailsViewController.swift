@@ -405,7 +405,7 @@ extension PostDetailsViewController: PostDetailsItemNodeDelegate {
       card.setNeedsLayout()
       
       if let bookCard = card as? BookCardPostCellNode, let book = resource as? Book {
-        bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: book , section: BookTypeRegistry.Section.postDetails) ?? .topic == .product)
+        bookCard.isProduct = (self.viewModel.bookRegistry.category(for: book , section: BookTypeRegistry.Section.postDetails) ?? .topic == .product)
       }
     }
   }
@@ -461,7 +461,7 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
           }
         })
       } else if let bookCard = card as? BookCardPostCellNode {
-        bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.postDetails) ?? .topic == .product)
+        bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.postDetails) ?? .topic == .product)
       }
 
       card?.delegate = self

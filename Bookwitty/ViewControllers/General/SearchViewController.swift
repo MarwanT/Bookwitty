@@ -212,7 +212,7 @@ extension SearchViewController: ASCollectionDataSource {
             }
           })
         } else if let bookCard = baseCardNode as? BookCardPostCellNode, let resource = self.viewModel.resourceForIndex(indexPath: indexPath) {
-            bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.search) ?? .topic == .product)
+            bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.search) ?? .topic == .product)
         }
         baseCardNode.delegate = self
         return baseCardNode
@@ -236,7 +236,7 @@ extension SearchViewController: ASCollectionDataSource {
       }
 
       if let bookCard = card as? BookCardPostCellNode {
-        bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.search) ?? .topic == .product)
+        bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.search) ?? .topic == .product)
       }
     }
   }

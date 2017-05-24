@@ -332,7 +332,7 @@ extension DiscoverViewController: ASCollectionDataSource {
             }
           })
         } else if let bookCard = baseCardNode as? BookCardPostCellNode, let resource = self.viewModel.resourceForIndex(for: self.activeSegment, index: index) {
-          bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.discover) ?? .topic == .product)
+          bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.discover) ?? .topic == .product)
         }
         baseCardNode.delegate = self
         return baseCardNode
@@ -383,7 +383,7 @@ extension DiscoverViewController: ASCollectionDataSource {
         card.baseViewModel?.resource = modelCommonProperties
       }
       if let bookCard = node as? BookCardPostCellNode {
-        bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.discover) ?? .topic == .product)
+        bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.discover) ?? .topic == .product)
       }
     case .books:
       guard let book = node as? BookNode, let bookResource = viewModel.bookValues(for: resource) else {

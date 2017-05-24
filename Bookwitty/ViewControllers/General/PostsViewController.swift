@@ -166,7 +166,7 @@ extension PostsViewController: ASCollectionDataSource, ASCollectionDelegate {
             }
           })
         } else if let bookCard = baseCardNode as? BookCardPostCellNode, let resource = self.viewModel.resourceForIndexPath(indexPath: indexPath) {
-          bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.posts) ?? .topic == .product)
+          bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.posts) ?? .topic == .product)
         }
         baseCardNode.delegate = self
         return baseCardNode
@@ -187,7 +187,7 @@ extension PostsViewController: ASCollectionDataSource, ASCollectionDelegate {
         card.baseViewModel?.resource = commonResource
       }
       if let bookCard = card as? BookCardPostCellNode {
-        bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.posts) ?? .topic == .product)
+        bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.posts) ?? .topic == .product)
       }
     }
   }

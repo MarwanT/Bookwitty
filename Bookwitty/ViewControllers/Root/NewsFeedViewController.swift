@@ -361,7 +361,7 @@ extension NewsFeedViewController: ASCollectionDataSource {
             }
           })
         } else if let bookCard = baseCardNode as? BookCardPostCellNode, let resource = self.viewModel.resourceForIndex(index: index) {
-          bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.newsFeed) ?? .topic == .product)
+          bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.newsFeed) ?? .topic == .product)
         }
         baseCardNode.delegate = self
         return baseCardNode
@@ -392,7 +392,7 @@ extension NewsFeedViewController: ASCollectionDataSource {
         card.baseViewModel?.resource = commonResource
       }
       if let bookCard = card as? BookCardPostCellNode {
-        bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.newsFeed) ?? .topic == .product)
+        bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.newsFeed) ?? .topic == .product)
       }
     }
   }
