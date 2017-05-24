@@ -156,7 +156,7 @@ final class CategoryViewModel {
     categoryBooks = nil
     
     return SearchAPI.search(filter: (nil, [categoryIdentifier]), page: nil, completion: {
-      (success, resources, nextPage, error) in
+      (success, resources, nextPage, facet, error) in
       defer {
         completion(success, error)
       }

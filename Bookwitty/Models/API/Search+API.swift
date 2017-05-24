@@ -11,15 +11,16 @@ import Moya
 import Spine
 
 struct SearchAPI {
-  static func search(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?, includeFacets: Bool = false, completion: @escaping (_ success: Bool, _ collection: [ModelResource]?, _ nextPage: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  static func search(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?, includeFacets: Bool = false, completion: @escaping (_ success: Bool, _ collection: [ModelResource]?, _ nextPage: URL?, _ facet: Facet?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     return signedAPIRequest(target: BookwittyAPI.search(filter: filter, page: page, includeFacets: includeFacets)) {
       (data, statusCode, response, error) in
       var success: Bool = false
       var collection: [ModelResource]? = nil
       var nextPage: URL? = nil
+      var facet: Facet? = nil
       var error: BookwittyAPIError? = nil
       defer {
-        completion(success, collection, nextPage, error)
+        completion(success, collection, nextPage, facet, error)
       }
 
       guard let data = data else {
@@ -34,6 +35,9 @@ struct SearchAPI {
       //TODO: handle parsedData.errors if any
       collection = parsedData.resources
       nextPage = parsedData.next
+      if let facets = parsedData.metadata?["facets"] as? [String : Any] {
+        facet = Facet(from: facets)
+      }
       success = parsedData.resources != nil
       error = nil
     }
