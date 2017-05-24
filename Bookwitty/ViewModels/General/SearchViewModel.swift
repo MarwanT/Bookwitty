@@ -45,7 +45,7 @@ class SearchViewModel {
 
     self.data.removeAll(keepingCapacity: false)
 
-    cancellableRequest = SearchAPI.search(filter: (query, nil), page: nil, completion: {
+    cancellableRequest = SearchAPI.search(filter: (query, nil), page: nil, includeFacets: true, completion: {
       (success, resources, nextPage, error) in
       defer {
         // Set misfortune node mode
