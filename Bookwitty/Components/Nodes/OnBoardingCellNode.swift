@@ -9,7 +9,7 @@
 import Foundation
 import AsyncDisplayKit
 
-protocol OnBoardingCellDelegate {
+protocol OnBoardingCellDelegate: class {
   func didTapOnSelectionButton(dataItem: CellNodeDataItemModel, internalCollectionNode collectioNode: ASCollectionNode, indexPath: IndexPath, cell: OnBoardingInternalCellNode, button: OnBoardingLoadingButton, shouldSelect: Bool, doneCompletionBlock: @escaping (_ success: Bool) -> ())
    func didFinishAnimatingExpansion(of onBoardingCellNode: OnBoardingCellNode)
 }
@@ -43,7 +43,7 @@ class OnBoardingCellNode: ASCellNode {
   let flowLayout: UICollectionViewFlowLayout
 
   fileprivate var viewModel: OnBoardingCellNodeViewModel = OnBoardingCellNodeViewModel()
-  var delegate: OnBoardingCellDelegate?
+  weak var delegate: OnBoardingCellDelegate?
   var showAll: Bool = false
   var state: State = .collapsed
   var text: String? {
