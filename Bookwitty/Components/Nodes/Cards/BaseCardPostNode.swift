@@ -185,10 +185,13 @@ extension BaseCardPostNode {
     verticalStack.justifyContent = .center
     verticalStack.alignItems = .stretch
     verticalStack.children = (shouldShowInfoNode && !forceHideInfoNode)
-      ? [infoNodeInset, contentInset, commentSummaryInset, separatorNodeInset]
-      : [contentInset, commentSummaryInset, separatorNodeInset]
+      ? [infoNodeInset, contentInset, commentSummaryInset]
+      : [contentInset, commentSummaryInset]
     if shouldShowActionBarNode {
+      verticalStack.children?.append(separatorNodeInset)
       verticalStack.children?.append(actionBarNodeInset)
+    } else {
+      verticalStack.children?.append(ASLayoutSpec.spacer(height: actionBarInset().bottom))
     }
 
     //Note: If we used children or background properties instead of init -> Order would be important,
