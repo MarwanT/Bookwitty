@@ -97,8 +97,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     applyTheme()
     applyLocalization()
 
-    reloadPenNamesNode(collapsed: true)
-
     navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
 
@@ -112,6 +110,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     self.misfortuneNode.style.height = ASDimensionMake(collectionNode.frame.height)
     self.misfortuneNode.style.width = ASDimensionMake(collectionNode.frame.width)
     
+    reloadPenNamesNode(collapsed: true)
     if viewModel.numberOfItemsInSection(section: Section.cards.rawValue) == 0 {
       refreshViewControllerData()
     }
