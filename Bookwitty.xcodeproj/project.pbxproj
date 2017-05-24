@@ -153,6 +153,7 @@
 		59C048801E735AAB00CADE38 /* BagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C0487F1E735AAB00CADE38 /* BagViewController.swift */; };
 		59C048821E735C4500CADE38 /* BagNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C048811E735C4500CADE38 /* BagNode.swift */; };
 		59C997BD1ED5A0FD009A8451 /* CommentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C997BC1ED5A0FD009A8451 /* CommentAPI.swift */; };
+		59C997BF1ED5AD70009A8451 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C997BE1ED5AD70009A8451 /* Comment.swift */; };
 		59CBE4F81E8090280068C7AD /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CBE4F71E8090280068C7AD /* AppError.swift */; };
 		59CBE4FA1E8094070068C7AD /* ErrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CBE4F91E8094070068C7AD /* ErrorManager.swift */; };
 		59CF3F821ECF3332002A5821 /* IntroductoryBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF3F811ECF3332002A5821 /* IntroductoryBanner.swift */; };
@@ -430,6 +431,7 @@
 		59C0487F1E735AAB00CADE38 /* BagViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BagViewController.swift; sourceTree = "<group>"; };
 		59C048811E735C4500CADE38 /* BagNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BagNode.swift; sourceTree = "<group>"; };
 		59C997BC1ED5A0FD009A8451 /* CommentAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentAPI.swift; sourceTree = "<group>"; };
+		59C997BE1ED5AD70009A8451 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		59CBE4F71E8090280068C7AD /* AppError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		59CBE4F91E8094070068C7AD /* ErrorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorManager.swift; sourceTree = "<group>"; };
 		59CF3F811ECF3332002A5821 /* IntroductoryBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductoryBanner.swift; sourceTree = "<group>"; };
@@ -796,6 +798,7 @@
 				F4A426341E5629210090CD51 /* Video.swift */,
 				F4A426301E5623EE0090CD51 /* Text.swift */,
 				F4A426321E5628080090CD51 /* Quote.swift */,
+				59C997BE1ED5AD70009A8451 /* Comment.swift */,
 				F4A4262A1E5617A30090CD51 /* PageAuthor.swift */,
 				F49AF6B21E81E5B40045F604 /* CallToAction.swift */,
 				F43A690C1E79441D001C3657 /* Counts.swift */,
@@ -1692,6 +1695,7 @@
 				59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */,
 				562A996C1ED8683000382ADD /* FilterCellNode.swift in Sources */,
 				F4CDDD371E60263800474CAA /* RotatingImageNode.swift in Sources */,
+				59C997BF1ED5AD70009A8451 /* Comment.swift in Sources */,
 				59CF44031E66E01A006C16FC /* BookDetailsViewController.swift in Sources */,
 				56320C8C1EA748FB00642934 /* LinkCardPostCellNode.swift in Sources */,
 				59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */,
