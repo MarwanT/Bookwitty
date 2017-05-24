@@ -12,7 +12,7 @@ import Spine
 
 struct SearchAPI {
   static func search(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?, completion: @escaping (_ success: Bool, _ collection: [ModelResource]?, _ nextPage: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
-    return signedAPIRequest(target: BookwittyAPI.Search(filter: filter, page: page)) {
+    return signedAPIRequest(target: BookwittyAPI.search(filter: filter, page: page)) {
       (data, statusCode, response, error) in
       var success: Bool = false
       var collection: [ModelResource]? = nil
