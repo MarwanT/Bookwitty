@@ -11,3 +11,19 @@ import Foundation
 struct CommentAPI {
   
 }
+
+extension CommentAPI {
+  static func createCommentBody(comment: String, parentCommentIdentifier: String?) -> [String : Any]? {
+    var attributes = ["body" : comment]
+    if let parentCommentIdentifier = parentCommentIdentifier {
+      attributes["parent-id"] = parentCommentIdentifier
+    }
+    
+    let dictionary = [
+      "data" : [
+        "attributes" : attributes
+      ]
+    ]
+    return dictionary
+  }
+}
