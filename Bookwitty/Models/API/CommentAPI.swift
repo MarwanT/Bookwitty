@@ -7,9 +7,39 @@
 //
 
 import Foundation
+import Moya
 
 struct CommentAPI {
-  
+  public static func comments(postIdentifier: String, completion: @escaping (_ success: Bool, _ comments: [Comment]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let retieveCommentsSuccessStatusCode = 200
+    
+    return signedAPIRequest(target: .comments(postIdentifier: postIdentifier), completion: {
+      (data, statucCode, response, error) in
+      DispatchQueue.global(qos: .background).async {
+        var success: Bool = false
+        var commentsArray: [Comment]? = nil
+        var completionError: BookwittyAPIError? = error
+        defer {
+          DispatchQueue.main.async {
+            completion(success, commentsArray, error)
+          }
+        }
+        
+        guard let statucCode = statucCode, statucCode == retieveCommentsSuccessStatusCode else {
+          completionError = BookwittyAPIError.invalidStatusCode
+          return
+        }
+        
+        // Parse Data
+        if let data = data, let comments = Comment.parseDataArray(data: data)?.resources {
+          commentsArray = comments
+          success = true
+        } else {
+          completionError = BookwittyAPIError.failToParseData
+        }
+      }
+    })
+  }
 }
 
 extension CommentAPI {
