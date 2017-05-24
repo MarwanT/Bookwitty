@@ -11,6 +11,7 @@ import AsyncDisplayKit
 
 protocol OnBoardingCellDelegate {
   func didTapOnSelectionButton(dataItem: CellNodeDataItemModel, internalCollectionNode collectioNode: ASCollectionNode, indexPath: IndexPath, cell: OnBoardingInternalCellNode, button: OnBoardingLoadingButton, shouldSelect: Bool, doneCompletionBlock: @escaping (_ success: Bool) -> ())
+   func didFinishAnimatingExpansion(of onBoardingCellNode: OnBoardingCellNode)
 }
 
 class OnBoardingCellNode: ASCellNode {
@@ -100,6 +101,9 @@ class OnBoardingCellNode: ASCellNode {
       self.frame = finalFrame
     }) { (success) in
       context.completeTransition(true)
+      if self.showAll {
+        self.delegate?.didFinishAnimatingExpansion(of: self)
+      }
     }
   }
 
