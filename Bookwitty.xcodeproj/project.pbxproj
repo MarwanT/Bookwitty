@@ -34,6 +34,7 @@
 		56320C901EA748FB00642934 /* ReadingListCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C841EA748FB00642934 /* ReadingListCardPostCellNode.swift */; };
 		56320C911EA748FB00642934 /* TopicCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C851EA748FB00642934 /* TopicCardPostCellNode.swift */; };
 		56320C921EA748FB00642934 /* VideoCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C861EA748FB00642934 /* VideoCardPostCellNode.swift */; };
+		563482BB1ED59F2B005428BF /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563482BA1ED59F2B005428BF /* Filter.swift */; };
 		563482BD1ED5BD61005428BF /* Facet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563482BC1ED5BD61005428BF /* Facet.swift */; };
 		56399DBC1E51CF2D005192AC /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56399DBB1E51CF2D005192AC /* Account.storyboard */; };
 		56399DBF1E51D006005192AC /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56399DBE1E51D006005192AC /* AccountViewController.swift */; };
@@ -305,6 +306,7 @@
 		56320C841EA748FB00642934 /* ReadingListCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReadingListCardPostCellNode.swift; path = Cards/ReadingListCardPostCellNode.swift; sourceTree = "<group>"; };
 		56320C851EA748FB00642934 /* TopicCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopicCardPostCellNode.swift; path = Cards/TopicCardPostCellNode.swift; sourceTree = "<group>"; };
 		56320C861EA748FB00642934 /* VideoCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoCardPostCellNode.swift; path = Cards/VideoCardPostCellNode.swift; sourceTree = "<group>"; };
+		563482BA1ED59F2B005428BF /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		563482BC1ED5BD61005428BF /* Facet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Facet.swift; sourceTree = "<group>"; };
 		56399DBB1E51CF2D005192AC /* Account.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Account.storyboard; sourceTree = "<group>"; };
 		56399DBE1E51D006005192AC /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
@@ -804,6 +806,7 @@
 				59D106CF1E804D2100BB9695 /* AppMeta.swift */,
 				59CBE4F71E8090280068C7AD /* AppError.swift */,
 				56620FCB1E8954CA00BD92BB /* UploadPolicy.swift */,
+				563482BA1ED59F2B005428BF /* Filter.swift */,
 				563482BC1ED5BD61005428BF /* Facet.swift */,
 			);
 			path = Models;
@@ -1685,6 +1688,7 @@
 				56320C8C1EA748FB00642934 /* LinkCardPostCellNode.swift in Sources */,
 				59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */,
 				59DA475E1E3B7A8F00BA90A5 /* TutorialViewModel.swift in Sources */,
+				563482BB1ED59F2B005428BF /* Filter.swift in Sources */,
 				56320C8A1EA748FB00642934 /* CardActionBarNode.swift in Sources */,
 				F496DE081E65DECB007E22B1 /* Paginator.swift in Sources */,
 				59CF44011E663C35006C16FC /* General+API.swift in Sources */,
