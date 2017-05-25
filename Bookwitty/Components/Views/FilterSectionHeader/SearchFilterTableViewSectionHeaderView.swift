@@ -41,7 +41,7 @@ class SearchFilterTableViewSectionHeaderView: UITableViewHeaderFooterView {
   }
 
   fileprivate func initializeComponents() {
-
+    imageView.image = #imageLiteral(resourceName: "downArrow")
   }
 }
 
@@ -57,5 +57,7 @@ extension SearchFilterTableViewSectionHeaderView: Themeable {
     separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     let margin = ThemeManager.shared.currentTheme.generalExternalMargin()
     separatorView.layoutMargins = UIEdgeInsets(top: 0.0, left: margin, bottom: 0.0, right: 0.0)
+
+    imageView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
   }
 }
