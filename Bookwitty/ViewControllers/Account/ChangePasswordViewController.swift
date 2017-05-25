@@ -49,7 +49,7 @@ class ChangePasswordViewController: UIViewController {
     currentPasswordInputField.delegate = self
 
     currentPasswordInputField.validationBlock = { (password: String?) -> Bool in
-      return password?.isValidPassword() ?? false
+      return !password.isEmptyOrNil()
     }
 
     newPasswordInputField.configuration = InputFieldConfiguration(
@@ -72,7 +72,17 @@ class ChangePasswordViewController: UIViewController {
     let currentReult = currentPasswordInputField.validateField()
     let newResult = newPasswordInputField.validateField()
 
-    guard currentReult.isValid && newResult.isValid else {
+    guard currentReult.isValid else {
+      showErrorUpdatingPasswordAlert(error: Strings.current_password_is_empty_error())
+      return
+    }
+
+    guard newResult.isValid else {
+      if newPasswordInputField.textField.text.isEmptyOrNil() {
+        showErrorUpdatingPasswordAlert(error: Strings.new_password_is_empty_error())
+      } else if !(newPasswordInputField.textField.text?.isValidPassword() ?? false) {
+        showErrorUpdatingPasswordAlert(error: Strings.password_minimum_six_characters_error())
+      }
       return
     }
 
@@ -93,6 +103,15 @@ class ChangePasswordViewController: UIViewController {
       } else {
         self.currentPasswordInputField.status = .inValid
         self.newPasswordInputField.status = .inValid
+
+        if let error = error {
+          switch error {
+          case BookwittyAPIError.invalidCurrentPassword:
+            self.showErrorUpdatingPasswordAlert(error: Strings.password_is_wrong_error())
+          default:
+            self.showErrorUpdatingPasswordAlert(error: Strings.password_change_unknown_error())
+          }
+        }
       }
     }
   }
