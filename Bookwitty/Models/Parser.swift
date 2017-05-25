@@ -11,6 +11,40 @@ import Spine
 
 typealias ModelResource = Resource
 
+extension ResourceType {
+  //TODO: Localize
+  var localizedName: String {
+    switch self {
+    case User.resourceType:
+      return "User"
+    case PenName.resourceType:
+      return Strings.pen_name()
+    case Image.resourceType:
+      return Strings.image()
+    case Author.resourceType:
+      return Strings.author()
+    case ReadingList.resourceType:
+      return Strings.reading_list()
+    case Topic.resourceType:
+      return Strings.topic()
+    case Text.resourceType:
+      return Strings.text()
+    case Quote.resourceType:
+      return Strings.quote()
+    case Video.resourceType:
+      return Strings.video()
+    case Audio.resourceType:
+      return "Audio"
+    case Link.resourceType:
+      return Strings.link()
+    case Book.resourceType:
+      return Strings.book()
+    default:
+      return ""
+    }
+  }
+}
+
 protocol Parsable {
   associatedtype AbstractType: Resource
   static func parseData(data: Data?) -> AbstractType?
