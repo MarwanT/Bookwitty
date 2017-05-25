@@ -69,7 +69,8 @@ class SearchFilterTableViewSectionHeaderView: UITableViewHeaderFooterView {
 
   @objc
   private func tapGestureHandle(_ sender: UITapGestureRecognizer) {
-    
+    self.mode.toggle()
+    delegate?.sectionHeader(view: self, request: self.mode)
   }
 }
 
