@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Spine
 
 class SearchFiltersViewModel {
   var facet: Facet?
@@ -63,6 +64,45 @@ class SearchFiltersViewModel {
   fileprivate func subtitle(for section: Int) -> String? {
     return nil
   }
+
+  //Row Helpers
+  fileprivate func category(at row: Int) -> Category? {
+    guard let categories = facet?.categories, categories.count > 0 else {
+      return nil
+    }
+
+    guard row >= 0 && row < categories.count else {
+      return nil
+    }
+
+    return categories[row]
+  }
+
+  fileprivate func language(at row: Int) -> String? {
+    guard let languages = facet?.languages, languages.count > 0 else {
+      return nil
+    }
+
+    guard row >= 0 && row < languages.count else {
+      return nil
+    }
+
+    let languageCode = languages[row]
+    return Locale.application.localizedString(forLanguageCode: languageCode)
+  }
+
+  fileprivate func type(at row: Int) -> String? {
+    guard let types = facet?.types, types.count > 0 else {
+      return nil
+    }
+
+    guard row >= 0 && row < types.count else {
+      return nil
+    }
+
+    let resourceType = types[row] as ResourceType
+    return resourceType.localizedName
+  }
 }
 
 //Facet Table View Mirorring
@@ -90,5 +130,25 @@ extension SearchFiltersViewModel {
     let title = self.title(for: section)
     let subtitle = self.subtitle(for: section)
     return (title, subtitle)
+  }
+
+  func values(forRowAt indexPath: IndexPath) -> (title: String?, selected: Bool) {
+    var title: String? = nil
+    var selected: Bool = false
+
+    guard let option = facetOption(at: indexPath.section) else {
+      return (nil, false)
+    }
+
+    switch option {
+    case .categories:
+      title = category(at: indexPath.row)?.value
+    case .languages:
+      title = language(at: indexPath.row)
+    case .types:
+      title = type(at: indexPath.row)
+    }
+
+    return (title, selected)
   }
 }
