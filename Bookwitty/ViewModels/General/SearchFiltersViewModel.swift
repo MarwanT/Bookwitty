@@ -9,5 +9,9 @@
 import Foundation
 
 class SearchFiltersViewModel {
+  var facet: Facet?
 
+  func initialize(with facet: Facet) {
+    self.facet = facet
+  }
 }
