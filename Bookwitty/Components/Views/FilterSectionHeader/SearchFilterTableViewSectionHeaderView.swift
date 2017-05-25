@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol SearchFilterTableViewSectionHeaderViewDelegate: class {
+  func sectionHeader(view: SearchFilterTableViewSectionHeaderView, request mode: SearchFilterTableViewSectionHeaderView.Mode)
+}
+
 class SearchFilterTableViewSectionHeaderView: UITableViewHeaderFooterView {
   static let reuseIdentifier = "SearchFilterTableViewSectionHeaderViewReuseIdentifier"
   static let nib: UINib = UINib(nibName: "SearchFilterTableViewSectionHeaderView", bundle: nil)
@@ -30,6 +34,8 @@ class SearchFilterTableViewSectionHeaderView: UITableViewHeaderFooterView {
   @IBOutlet var subTitleLabel: UILabel!
   @IBOutlet var imageView: UIImageView!
   @IBOutlet var separatorView: UIView!
+
+  var delegate: SearchFilterTableViewSectionHeaderViewDelegate?
 
   fileprivate var mode: Mode = .collapsed
 
