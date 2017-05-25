@@ -497,6 +497,14 @@ class Strings {
     return localizedString(key: "pen_name_cant_be_empty")
   }
   
+  static func pen_name_error_was_already_taken() -> String {
+    return localizedString(key: "pen_name_error_was_already_taken")
+  }
+
+  static func pen_name_error_could_not_create() -> String {
+    return localizedString(key: "pen_name_error_could_not_create")
+  }
+
   static func pen_names() -> String {
     return localizedString(key: "pen_names")
   }
