@@ -15,6 +15,7 @@ class SearchFiltersViewModel {
 
   func initialize(with facet: Facet) {
     self.facet = facet
+    fillSections()
   }
 
   fileprivate func fillSections() {
