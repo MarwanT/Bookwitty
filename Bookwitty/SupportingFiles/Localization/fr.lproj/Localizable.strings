@@ -124,7 +124,7 @@
 "password_change_unknown_error" = "Something went wrong";
 "password_invalid" = "Veuillez vérifier votre mot de passe";
 "password_is_wrong_error" = "The password entered is wrong";
-"password_minimum_characters_error" = "Password should be at least 6 characters long!";
+"password_minimum_six_characters_error" = "Le mot de passe doit comporter au moins 6 caractères!";
 "payment_methods" = "Moyens de paiement";
 "pen_name" = "Pseudo";
 "pen_name_cant_be_empty" = "Veuillez inscrire un pseudo";
