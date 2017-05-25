@@ -40,11 +40,11 @@ class SearchFiltersViewController: UIViewController {
 
 extension SearchFiltersViewController: UITableViewDataSource, UITableViewDelegate {
   func numberOfSections(in tableView: UITableView) -> Int {
-    return 0 //TODO: get the value from the view model
+    return viewModel.numberOfSections()
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 0 //TODO: get the value from the view model
+    return viewModel.numberOfRows(in: section)
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -56,7 +56,9 @@ extension SearchFiltersViewController: UITableViewDataSource, UITableViewDelegat
       return
     }
 
-    currentCell.titleLabel.text = nil //TODO: get the value from the view model
+    let values = viewModel.values(forRowAt: indexPath)
+    currentCell.titleLabel.text = values.title
+    currentCell.isSelected = values.selected
   }
 
   func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -65,8 +67,9 @@ extension SearchFiltersViewController: UITableViewDataSource, UITableViewDelegat
 
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let sectionHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: SearchFilterTableViewSectionHeaderView.reuseIdentifier) as? SearchFilterTableViewSectionHeaderView
-    sectionHeader?.titleLabel.text = nil //TODO: get the value from the view model
-    sectionHeader?.subTitleLabel.text = nil //TODO: get the value from the view model
+    let values = viewModel.values(for: section)
+    sectionHeader?.titleLabel.text = values.title
+    sectionHeader?.subTitleLabel.text = values.subtitle
     return sectionHeader
   }
 
