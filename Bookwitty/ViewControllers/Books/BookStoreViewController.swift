@@ -38,17 +38,11 @@ class BookStoreViewController: UIViewController {
     initializeSubviews()
     refreshViewController()
 
+    applyLocalization()
+    addObservers()
     navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
 
-  override func awakeFromNib() {
-    super.awakeFromNib()
-    applyLocalization()
-    observeLanguageChanges()
-    NotificationCenter.default.addObserver(self, selector:
-      #selector(self.authenticationStatusChanged(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
-  }
-  
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
@@ -69,7 +63,14 @@ class BookStoreViewController: UIViewController {
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.BookStorefront)
   }
-  
+
+  private func addObservers() {
+    observeLanguageChanges()
+
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.authenticationStatusChanged(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
+  }
+
   @objc private func authenticationStatusChanged(_: Notification) {
     initializeNavigationItems()
   }
