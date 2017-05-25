@@ -43,6 +43,20 @@ class SearchFilterTableViewSectionHeaderView: UITableViewHeaderFooterView {
   fileprivate func initializeComponents() {
     imageView.image = #imageLiteral(resourceName: "downArrow")
   }
+
+  fileprivate func applyMode() {
+    let transform: CGAffineTransform
+    switch mode {
+    case .collapsed:
+      transform = CGAffineTransform.identity
+    case .expanded:
+      transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))
+    }
+
+    UIView.animate(withDuration: 0.4, animations: {
+      self.imageView.transform = transform
+    })
+  }
 }
 
 extension SearchFilterTableViewSectionHeaderView: Themeable {
