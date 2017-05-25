@@ -29,6 +29,7 @@ class WebViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.addSubview(webView)
+    clearCoockies()
     setupWebView()
     setupNavigationBar()
     
@@ -69,6 +70,16 @@ class WebViewController: UIViewController {
     textField.borderStyle = UITextBorderStyle.roundedRect
     let rightBarButton = UIBarButtonItem(customView: textField)
     self.navigationItem.rightBarButtonItem = rightBarButton
+  }
+  
+  private func clearCoockies() {
+    let storage = HTTPCookieStorage.shared
+    guard let cookies = storage.cookies else {
+      return
+    }
+    for cookie in cookies {
+      storage.deleteCookie(cookie)
+    }
   }
   
   fileprivate func display(url: URL?) {
