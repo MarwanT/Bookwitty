@@ -37,7 +37,11 @@ class SearchFilterTableViewSectionHeaderView: UITableViewHeaderFooterView {
 
   var delegate: SearchFilterTableViewSectionHeaderViewDelegate?
 
-  fileprivate var mode: Mode = .collapsed
+  fileprivate var mode: Mode = .collapsed {
+    didSet {
+      applyMode()
+    }
+  }
 
   override func awakeFromNib() {
     super.awakeFromNib()
