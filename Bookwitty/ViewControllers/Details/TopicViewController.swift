@@ -175,7 +175,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     let category = self.category(withIndex: segmentedNode.selectedIndex)
     switch (callbackCategory, category) {
     case (.content, _):
-      self.collectionNode.reloadSections(IndexSet(integer: Section.header.rawValue))
+      self.fillHeaderNode()
     case (.latest, .latest): fallthrough
     case (.editions, .editions): fallthrough
     case (.relatedBooks, .relatedBooks): fallthrough
@@ -220,15 +220,22 @@ extension TopicViewController {
       }
     }
 
-    let indexPathForAffectedItems = visibleItemsIndexPaths.filter({
+    var indexPathForAffectedItems = visibleItemsIndexPaths.filter({
       indexPath in
       guard let resourceIdentifier = resourceIdentifierForIndex(indexPath: indexPath) else {
         return false
       }
       return identifiers.contains(resourceIdentifier)
     })
-    
-    collectionNode.reloadItems(at: indexPathForAffectedItems)
+
+    if let index = indexPathForAffectedItems.index(where: { $0.section == Section.header.rawValue }) {
+      //Note: Fill Header manually and remove index from indexPathForAffectedItems to bypass auto-reload-collection-animation issue
+      self.fillHeaderNode()
+      indexPathForAffectedItems.remove(at: index)
+    }
+    if indexPathForAffectedItems.count > 0 {
+      collectionNode.reloadItems(at: indexPathForAffectedItems)
+    }
   }
   
   func resourceIdentifierForIndex(indexPath: IndexPath) -> String? {
@@ -1094,5 +1101,31 @@ extension TopicViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+  }
+}
+
+extension TopicViewController {
+  func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, relatedDataSection: Bool = false, loaderSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
+    if reloadAll {
+      collectionNode.reloadData(completion: {
+        completionBlock?(true)
+      })
+    } else {
+      collectionNode.performBatch(animated: false, updates: {
+        if loaderSection {
+          collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
+        }
+        if relatedDataSection {
+          collectionNode.reloadSections(IndexSet(integer: Section.relatedData.rawValue))
+        }
+        if let itemIndices = itemIndices, itemIndices.count > 0 {
+          if reloadItems {
+            collectionNode.reloadItems(at: itemIndices)
+          }else {
+            collectionNode.insertItems(at: itemIndices)
+          }
+        }
+      }, completion: completionBlock)
+    }
   }
 }
