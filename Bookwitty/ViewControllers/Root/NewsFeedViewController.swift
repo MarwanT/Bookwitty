@@ -256,7 +256,7 @@ extension NewsFeedViewController {
     }
 
     let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
-    updateCollection(with: indexPathForAffectedItems, shouldReloadItems: true, loaderSection: false, penNamesSection: false, orReloadAll: false, completionBlock: nil)
+    updateCollectionNodes(indexPathForAffectedItems: indexPathForAffectedItems)
   }
 
   func refreshData(_ notification: Notification) {
@@ -298,6 +298,19 @@ extension NewsFeedViewController {
 
 // MARK: - Reload Footer
 extension NewsFeedViewController {
+  func updateCollectionNodes(indexPathForAffectedItems: [IndexPath]) {
+    let cards = indexPathForAffectedItems.map({ collectionNode.nodeForItem(at: $0) })
+    cards.forEach({ card in
+      guard let card = card as? BaseCardPostNode else {
+        return
+      }
+      guard let indexPath = card.indexPath, let commonResource =  viewModel.resourceForIndex(index: indexPath.row) as? ModelCommonProperties else {
+        return
+      }
+      card.baseViewModel?.resource = commonResource
+    })
+  }
+
   func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, loaderSection: Bool = false, penNamesSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
     if reloadAll {
       collectionNode.reloadData(completion: { 
