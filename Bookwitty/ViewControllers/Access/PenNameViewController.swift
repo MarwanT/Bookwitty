@@ -141,6 +141,13 @@ class PenNameViewController: UIViewController {
     }
   }
   
+
+  fileprivate func showErrorUpdatingPasswordAlert(error message: String) {
+    let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: Strings.ok(), style: .default, handler: nil))
+    self.navigationController?.present(alert, animated: true, completion: nil)
+  }
+
   fileprivate func updateUserProfile() {
     /**
      Upload the pen name image if needed before proceeding
