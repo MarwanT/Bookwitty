@@ -67,11 +67,19 @@ extension SearchFiltersViewController: UITableViewDataSource, UITableViewDelegat
 
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let sectionHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: SearchFilterTableViewSectionHeaderView.reuseIdentifier) as? SearchFilterTableViewSectionHeaderView
-    let values = viewModel.values(for: section)
-    sectionHeader?.titleLabel.text = values.title
-    sectionHeader?.subTitleLabel.text = values.subtitle
-    sectionHeader?.section = section
     return sectionHeader
+  }
+
+  func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    guard let sectionHeader = view as? SearchFilterTableViewSectionHeaderView else {
+      return
+    }
+
+    let values = viewModel.values(for: section)
+    sectionHeader.titleLabel.text = values.title
+    sectionHeader.subTitleLabel.text = values.subtitle
+    sectionHeader.delegate = self
+    sectionHeader.section = section
   }
 
   func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
