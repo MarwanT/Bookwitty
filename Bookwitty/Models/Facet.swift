@@ -18,7 +18,7 @@ class Facet {
   init(categories: [String]?, languages: [String]?, types: [String]?) {
     self.categoriesCodes = categories
     self.languages = languages
-    self.types = types
+    self.types = types?.filter({ Parser.sharedInstance.registeredResourceTypes.contains($0) })
 
     if let codes = categoriesCodes {
       self.categories = CategoryManager.shared.categories(from: codes)

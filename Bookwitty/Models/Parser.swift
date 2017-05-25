@@ -72,6 +72,24 @@ class Parser {
   static let sharedInstance = Parser()
   let serializer: Serializer = Serializer()
 
+  //Used in Search Filter, to Restrict the Types to
+  var registeredResourceTypes: [ResourceType] {
+    return [
+      User.resourceType,
+      PenName.resourceType,
+      Image.resourceType,
+      Author.resourceType,
+      ReadingList.resourceType,
+      Topic.resourceType,
+      Text.resourceType,
+      Quote.resourceType,
+      Video.resourceType,
+      Audio.resourceType,
+      Link.resourceType,
+      Book.resourceType
+    ]
+  }
+
   init() {
     serializer.keyFormatter = DasherizedKeyFormatter()
     registerResources()
