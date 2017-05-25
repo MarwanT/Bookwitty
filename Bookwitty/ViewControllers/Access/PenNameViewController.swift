@@ -135,12 +135,23 @@ class PenNameViewController: UIViewController {
       (success: Bool, error: BookwittyAPIError?) in
       self.hideLoader()
       guard success else {
+        self.handleError(error: error)
         return
       }
       _ = self.navigationController?.popViewController(animated: true)
     }
   }
   
+  fileprivate func handleError(error: BookwittyAPIError?) {
+    if let error = error {
+      switch error {
+      case .penNameHasAlreadyBeenTaken:
+        showErrorUpdatingPasswordAlert(error: Strings.pen_name_error_was_already_taken())
+      default:
+        showErrorUpdatingPasswordAlert(error: Strings.pen_name_error_could_not_create())
+      }
+    }
+  }
 
   fileprivate func showErrorUpdatingPasswordAlert(error message: String) {
     let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
