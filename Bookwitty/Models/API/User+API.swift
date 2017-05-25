@@ -123,6 +123,16 @@ struct UserAPI {
   }
 
   public static func updateUser(identifier: String, firstName: String? = nil, lastName: String? = nil, email: String? = nil, currentPassword: String? = nil, password: String? = nil, dateOfBirthISO8601: String? = nil, countryISO3166: String? = nil, badges: [String : Any]? = nil, preferences: [String : Any]? = nil, completionBlock: @escaping (_ success: Bool, _ user: User?, _ error: BookwittyAPIError?)->()) -> Cancellable? {
+
+    let successStatusCode = 200
+    let errorStatusCode = 422
+    /** Discussion
+     * Status Code 422 represents multiple errors in the updateUser endpoint.
+     * Changing Password allows the detection of this particular error. 
+     * Returned as BookwittyAPIError.invalidCurrentPassword
+     */
+    let changingPassword = (!currentPassword.isEmptyOrNil() || !password.isEmptyOrNil())
+
     return signedAPIRequest(target: BookwittyAPI.updateUser(identifier: identifier, firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirthISO8601, email: email, currentPassword: currentPassword, password: password, country: countryISO3166, badges: badges, preferences: preferences), completion: {
       (data, statusCode, response, error) in
       var success: Bool = false
@@ -130,6 +140,15 @@ struct UserAPI {
       var error: BookwittyAPIError? = error
       defer {
         completionBlock(success, user, error)
+      }
+
+      guard statusCode == successStatusCode else {
+        if statusCode == errorStatusCode && changingPassword {
+          error = BookwittyAPIError.invalidCurrentPassword
+        } else {
+          error = BookwittyAPIError.undefined
+        }
+        return
       }
 
       if let data = data {
