@@ -17,12 +17,6 @@ class SearchFilterTableViewSectionHeaderView: UITableViewHeaderFooterView {
   @IBOutlet var imageView: UIImageView!
   @IBOutlet var separatorView: UIView!
 
-  var selected: Bool = false {
-    didSet {
-      applySelectedState()
-    }
-  }
-
   override func awakeFromNib() {
     super.awakeFromNib()
 
@@ -47,9 +41,5 @@ extension SearchFilterTableViewSectionHeaderView: Themeable {
     separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     let margin = ThemeManager.shared.currentTheme.generalExternalMargin()
     separatorView.layoutMargins = UIEdgeInsets(top: 0.0, left: margin, bottom: 0.0, right: 0.0)
-  }
-
-  fileprivate func applySelectedState() {
-    imageView.image = selected ? #imageLiteral(resourceName: "tick") : nil
   }
 }
