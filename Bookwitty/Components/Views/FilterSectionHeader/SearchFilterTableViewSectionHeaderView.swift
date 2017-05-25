@@ -36,6 +36,7 @@ class SearchFilterTableViewSectionHeaderView: UITableViewHeaderFooterView {
   @IBOutlet var separatorView: UIView!
 
   var delegate: SearchFilterTableViewSectionHeaderViewDelegate?
+  var section: Int?
 
   fileprivate var mode: Mode = .collapsed {
     didSet {

@@ -70,6 +70,7 @@ extension SearchFiltersViewController: UITableViewDataSource, UITableViewDelegat
     let values = viewModel.values(for: section)
     sectionHeader?.titleLabel.text = values.title
     sectionHeader?.subTitleLabel.text = values.subtitle
+    sectionHeader?.section = section
     return sectionHeader
   }
 
