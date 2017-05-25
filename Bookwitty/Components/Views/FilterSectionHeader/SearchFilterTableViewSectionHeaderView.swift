@@ -42,6 +42,9 @@ class SearchFilterTableViewSectionHeaderView: UITableViewHeaderFooterView {
 
   fileprivate func initializeComponents() {
     imageView.image = #imageLiteral(resourceName: "downArrow")
+
+    let recognizer = UITapGestureRecognizer(target: self, action: #selector(self.tapGestureHandle(_:)))
+    self.addGestureRecognizer(recognizer)
   }
 
   fileprivate func applyMode() {
@@ -56,6 +59,11 @@ class SearchFilterTableViewSectionHeaderView: UITableViewHeaderFooterView {
     UIView.animate(withDuration: 0.4, animations: {
       self.imageView.transform = transform
     })
+  }
+
+  @objc
+  private func tapGestureHandle(_ sender: UITapGestureRecognizer) {
+    
   }
 }
 
