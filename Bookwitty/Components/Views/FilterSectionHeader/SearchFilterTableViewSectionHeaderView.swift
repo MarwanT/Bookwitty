@@ -12,10 +12,26 @@ class SearchFilterTableViewSectionHeaderView: UITableViewHeaderFooterView {
   static let reuseIdentifier = "SearchFilterTableViewSectionHeaderViewReuseIdentifier"
   static let nib: UINib = UINib(nibName: "SearchFilterTableViewSectionHeaderView", bundle: nil)
 
+  enum Mode {
+    case collapsed
+    case expanded
+
+    mutating func toggle() {
+      switch self {
+      case .collapsed:
+        self = .expanded
+      case .expanded:
+        self = .collapsed
+      }
+    }
+  }
+
   @IBOutlet var titleLabel: UILabel!
   @IBOutlet var subTitleLabel: UILabel!
   @IBOutlet var imageView: UIImageView!
   @IBOutlet var separatorView: UIView!
+
+  fileprivate var mode: Mode = .collapsed
 
   override func awakeFromNib() {
     super.awakeFromNib()
