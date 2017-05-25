@@ -13,6 +13,7 @@ class SearchFiltersViewModel {
   var facet: Facet?
 
   var sections: [Facet.Options] = []
+  var expandedSections: [Int] = []
 
   func initialize(with facet: Facet) {
     self.facet = facet
@@ -116,6 +117,10 @@ extension SearchFiltersViewModel {
       return 0
     }
 
+    guard expandedSections.contains(section) else {
+      return 0
+    }
+
     switch option {
     case .categories:
       return facet?.categories?.count ?? 0
@@ -150,5 +155,13 @@ extension SearchFiltersViewModel {
     }
 
     return (title, selected)
+  }
+
+  func toggleSection(_ section: Int) {
+    if let index = expandedSections.index(of: section) {
+      expandedSections.remove(at: index)
+    } else {
+      expandedSections.append(section)
+    }
   }
 }
