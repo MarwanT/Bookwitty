@@ -35,4 +35,13 @@ class SearchFiltersViewModel {
       sections.append(Facet.Options.types)
     }
   }
+
+  //Section Helpers
+  fileprivate func facetOption(at section: Int) -> Facet.Options? {
+    guard section >= 0 && section < sections.count else {
+      return nil
+    }
+
+    return sections[section]
+  }
 }
