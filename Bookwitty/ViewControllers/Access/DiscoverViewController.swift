@@ -909,6 +909,9 @@ extension DiscoverViewController: Localizable {
   func applyLocalization() {
     navigationItem.title = Strings.discover()
     tabBarItem.title = Strings.discover().uppercased()
+
+    let segments: [String] = self.segments.map({ $0.name })
+    segmentedNode.initialize(with: segments)
   }
 
   fileprivate func observeLanguageChanges() {
