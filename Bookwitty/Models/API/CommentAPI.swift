@@ -71,6 +71,35 @@ struct CommentAPI {
       }
     })
   }
+  
+  public static func createComment(postIdentifier: String, commentMessage: String, parentCommentIdentifier: String?, completion: @escaping (_ success: Bool, _ comment: Comment?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let createCommentsSuccessStatusCode = 201
+    
+    return signedAPIRequest(target: .createComment(postIdentifier: postIdentifier, comment: commentMessage, parentCommentIdentifier: parentCommentIdentifier), completion: {
+      (data, statusCode, response, error) in
+      var success: Bool = false
+      var comment: Comment? = nil
+      var completionError: BookwittyAPIError? = error
+      defer {
+        DispatchQueue.main.async {
+          completion(success, comment, error)
+        }
+      }
+      
+      guard let statucCode = statusCode, statucCode == createCommentsSuccessStatusCode else {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+      
+      // Parse Data
+      if let data = data, let newComment = Comment.parseData(data: data) {
+        comment = newComment
+        success = true
+      } else {
+        completionError = BookwittyAPIError.failToParseData
+      }
+    })
+  }
 }
 
 extension CommentAPI {
