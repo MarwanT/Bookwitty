@@ -205,7 +205,11 @@ class PenNameViewController: UIViewController {
     _ = penNameInputField.resignFirstResponder()
     _ = biographyTextView.resignFirstResponder()
 
-    let name = penNameInputField.textField.text
+    guard let name = penNameInputField.textField.text, !name.isBlank else {
+      completion(false)
+      showErrorUpdatingPasswordAlert(error: Strings.pen_name_cant_be_empty())
+      return
+    }
     let biography = biographyTextView.text
     
     //MARK: [Analytics] Event
