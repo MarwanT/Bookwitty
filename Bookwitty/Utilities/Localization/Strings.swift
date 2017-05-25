@@ -165,6 +165,10 @@ class Strings {
     return localizedString(key: "current_password")
   }
   
+  static func current_password_is_empty_error() -> String {
+    return localizedString(key: "current_password_is_empty_error")
+  }
+
   static func customer_service() -> String {
     return localizedString(key: "customer_service")
   }
@@ -393,6 +397,10 @@ class Strings {
     return localizedString(key: "new_password")
   }
   
+  static func new_password_is_empty_error() -> String {
+    return localizedString(key: "new_password_is_empty_error")
+  }
+
   static func new_version_available_description() -> String {
     return localizedString(key: "new_version_available_description")
   }
@@ -461,10 +469,22 @@ class Strings {
     return localizedString(key: "password")
   }
   
+  static func password_change_unknown_error() -> String {
+    return localizedString(key: "password_change_unknown_error")
+  }
+
   static func password_invalid() -> String {
     return localizedString(key: "password_invalid")
   }
   
+  static func password_is_wrong_error() -> String {
+    return localizedString(key: "password_is_wrong_error")
+  }
+
+  static func password_minimum_six_characters_error() -> String {
+    return localizedString(key: "password_minimum_six_characters_error")
+  }
+
   static func payment_methods() -> String {
     return localizedString(key: "payment_methods")
   }

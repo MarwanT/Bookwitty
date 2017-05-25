@@ -45,6 +45,7 @@
 "country_region" = "Région";
 "create_new_pen_name" = "Créer un nouveau pseudo";
 "current_password" = "Mot de passe actuel";
+"current_password_is_empty_error" = "Current password was left empty!";
 "customer_service" = "Service client";
 "dim" = "Dim";
 "dimmed" = "Dimmé";
@@ -102,6 +103,7 @@
 "my_interests" = "Mes intérêts";
 "my_orders" = "Mes commandes";
 "new_password" = "Nouveau mot de passe";
+"new_password_is_empty_error" = "New password was left empty!";
 "new_version_available_description" = "Une nouvelle version de l'application Bookwitty est disponible. Télécharger-là maintenant dans l'App Store.";
 "new_version_available_title" = "Mise à jour disponible";
 "news" = "Informations";
@@ -119,7 +121,10 @@
 "pages" = "Pages";
 "pages_you_may_be_interested_in" = "Pages you may be interested in";
 "password" = "Mot de passe";
+"password_change_unknown_error" = "Something went wrong";
 "password_invalid" = "Veuillez vérifier votre mot de passe";
+"password_is_wrong_error" = "The password entered is wrong";
+"password_minimum_characters_error" = "Password should be at least 6 characters long!";
 "payment_methods" = "Moyens de paiement";
 "pen_name" = "Pseudo";
 "pen_name_cant_be_empty" = "Veuillez inscrire un pseudo";
