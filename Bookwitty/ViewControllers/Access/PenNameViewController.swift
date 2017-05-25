@@ -208,7 +208,9 @@ class PenNameViewController: UIViewController {
 
   // MARK: - Keyboard Handling
   func keyboardWillShow(_ notification: NSNotification) {
-    topViewToTopConstraint.constant = 15 //was `-profileContainerView.frame.height/2`
+    let heightToShowTextBox = profileContainerView.frame.height - 10.0 // The 10.0 is just to keep a part of the image visible
+
+    topViewToTopConstraint.constant = -heightToShowTextBox
     profileContainerView.alpha = 0.2
     UIView.animate(withDuration: 0.44) {
       self.view.layoutIfNeeded()
