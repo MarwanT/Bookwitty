@@ -7,9 +7,99 @@
 //
 
 import Foundation
+import Moya
 
 struct CommentAPI {
+  public static func comments(postIdentifier: String, completion: @escaping (_ success: Bool, _ comments: [Comment]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let retieveCommentsSuccessStatusCode = 200
+    
+    return signedAPIRequest(target: .comments(postIdentifier: postIdentifier), completion: {
+      (data, statucCode, response, error) in
+      DispatchQueue.global(qos: .background).async {
+        var success: Bool = false
+        var commentsArray: [Comment]? = nil
+        var completionError: BookwittyAPIError? = error
+        defer {
+          DispatchQueue.main.async {
+            completion(success, commentsArray, error)
+          }
+        }
+        
+        guard let statucCode = statucCode, statucCode == retieveCommentsSuccessStatusCode else {
+          completionError = BookwittyAPIError.invalidStatusCode
+          return
+        }
+        
+        // Parse Data
+        if let data = data, let comments = Comment.parseDataArray(data: data)?.resources {
+          commentsArray = comments
+          success = true
+        } else {
+          completionError = BookwittyAPIError.failToParseData
+        }
+      }
+    })
+  }
   
+  public static func commentReplies(identifier: String, completion: @escaping (_ success: Bool, _ comments: [Comment]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let retieveCommentsSuccessStatusCode = 200
+    
+    return signedAPIRequest(target: .replies(commentIdentifier: identifier), completion: {
+      (data, statucCode, response, error) in
+      DispatchQueue.global(qos: .background).async {
+        var success: Bool = false
+        var commentsArray: [Comment]? = nil
+        var completionError: BookwittyAPIError? = error
+        defer {
+          DispatchQueue.main.async {
+            completion(success, commentsArray, error)
+          }
+        }
+        
+        guard let statucCode = statucCode, statucCode == retieveCommentsSuccessStatusCode else {
+          completionError = BookwittyAPIError.invalidStatusCode
+          return
+        }
+        
+        // Parse Data
+        if let data = data, let comments = Comment.parseDataArray(data: data)?.resources {
+          commentsArray = comments
+          success = true
+        } else {
+          completionError = BookwittyAPIError.failToParseData
+        }
+      }
+    })
+  }
+  
+  public static func createComment(postIdentifier: String, commentMessage: String, parentCommentIdentifier: String?, completion: @escaping (_ success: Bool, _ comment: Comment?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let createCommentsSuccessStatusCode = 201
+    
+    return signedAPIRequest(target: .createComment(postIdentifier: postIdentifier, comment: commentMessage, parentCommentIdentifier: parentCommentIdentifier), completion: {
+      (data, statusCode, response, error) in
+      var success: Bool = false
+      var comment: Comment? = nil
+      var completionError: BookwittyAPIError? = error
+      defer {
+        DispatchQueue.main.async {
+          completion(success, comment, error)
+        }
+      }
+      
+      guard let statucCode = statusCode, statucCode == createCommentsSuccessStatusCode else {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+      
+      // Parse Data
+      if let data = data, let newComment = Comment.parseData(data: data) {
+        comment = newComment
+        success = true
+      } else {
+        completionError = BookwittyAPIError.failToParseData
+      }
+    })
+  }
 }
 
 extension CommentAPI {
