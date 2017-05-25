@@ -132,8 +132,11 @@ class PenNameViewController: UIViewController {
     let biography = biographyTextView.text
 
     self.viewModel.createPenName(name: name, biography: biography, avatarId: imageId) {
-      (success: Bool) in
+      (success: Bool, error: BookwittyAPIError?) in
       self.hideLoader()
+      guard success else {
+        return
+      }
       _ = self.navigationController?.popViewController(animated: true)
     }
   }
