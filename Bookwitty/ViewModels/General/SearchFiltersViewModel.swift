@@ -45,3 +45,25 @@ class SearchFiltersViewModel {
     return sections[section]
   }
 }
+
+//Facet Table View Mirorring
+extension SearchFiltersViewModel {
+  func numberOfSections() -> Int {
+    return sections.count
+  }
+
+  func numberOfRows(in section: Int) -> Int {
+    guard let option = facetOption(at: section) else {
+      return 0
+    }
+
+    switch option {
+    case .categories:
+      return facet?.categories?.count ?? 0
+    case .languages:
+      return facet?.languages?.count ?? 0
+    case .types:
+      return facet?.types?.count ?? 0
+    }
+  }
+}
