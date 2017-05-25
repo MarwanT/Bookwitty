@@ -173,11 +173,12 @@ class PenNameViewController: UIViewController {
     self.uploadUserImageIfNeeded { (imageId) in
       self.updatePenNameProfile(imageId: imageId, completion: { (success: Bool) in
         self.hideLoader()
-        
-        if UserManager.shared.shouldDisplayOnboarding {
-          self.pushOnboardingViewController()
-        } else {
-          _ = self.navigationController?.popViewController(animated: true)
+        if success {
+          if UserManager.shared.shouldDisplayOnboarding {
+            self.pushOnboardingViewController()
+          } else {
+            _ = self.navigationController?.popViewController(animated: true)
+          }
         }
       })
     }
@@ -218,7 +219,11 @@ class PenNameViewController: UIViewController {
     Analytics.shared.send(event: event)
     
     self.viewModel.updatePenNameIfNeeded(name: name, biography: biography, avatarId: imageId) {
-      (success: Bool) in
+      (success: Bool, error: BookwittyAPIError?) in
+      if !success {
+        self.handleError(error: error)
+      }
+
       completion(success)
     }
   }

@@ -45,9 +45,9 @@ final class PenNameViewModel {
     }
   }
 
-  func updatePenNameIfNeeded(name: String?, biography: String?, avatarId: String?, completion: ((Bool)->())?) {
+  func updatePenNameIfNeeded(name: String?, biography: String?, avatarId: String?, completion: ((Bool, BookwittyAPIError?)->())?) {
     guard let penName = penName, let identifier = penName.id else {
-      completion?(false)
+      completion?(false, nil)
       return
     }
 
@@ -58,7 +58,7 @@ final class PenNameViewModel {
     updateRequest = PenNameAPI.updatePenName(identifier: identifier, name: name, biography: biography, avatarId: avatarId, avatarUrl: nil, facebookUrl: nil, tumblrUrl: nil, googlePlusUrl: nil, twitterUrl: nil, instagramUrl: nil, pinterestUrl: nil, youtubeUrl: nil, linkedinUrl: nil, wordpressUrl: nil, websiteUrl: nil) {
       (success: Bool, penName: PenName?, error: BookwittyAPIError?) in
       defer {
-        completion?(success)
+        completion?(success, error)
       }
       
       if let penName = penName {
