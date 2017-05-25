@@ -34,20 +34,22 @@ class Facet {
 }
 
 extension Facet {
+  //Different Filter Facets
+  enum Options: String {
+    case categories = "categories"
+    case languages = "languages"
+    case types = "types"
+  }
+
   struct Filter {
-    //Different Filter Facets
-    private static let categories = "categories"
-    private static let languages = "languages"
-    private static let types = "types"
     private static let limit: Int = 10
-
     private init(){}
-
+    
     //Search API Facets Parameter
     static let dictionary = [
-      categories : limit,
-      languages :  limit,
-      types : limit
+      Options.categories.rawValue : limit,
+      Options.languages.rawValue :  limit,
+      Options.types.rawValue : limit
     ]
   }
 }
