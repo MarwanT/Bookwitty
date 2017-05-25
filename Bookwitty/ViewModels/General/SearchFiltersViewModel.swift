@@ -44,6 +44,25 @@ class SearchFiltersViewModel {
 
     return sections[section]
   }
+
+  fileprivate func title(for section: Int) -> String? {
+    guard let option = facetOption(at: section) else {
+      return nil
+    }
+
+    switch option {
+    case .categories:
+      return "Categories" //TODO: Localize
+    case .languages:
+      return "Languages" //TODO: Localize
+    case .types:
+      return "Types" //TODO: Localize
+    }
+  }
+
+  fileprivate func subtitle(for section: Int) -> String? {
+    return nil
+  }
 }
 
 //Facet Table View Mirorring
@@ -65,5 +84,11 @@ extension SearchFiltersViewModel {
     case .types:
       return facet?.types?.count ?? 0
     }
+  }
+
+  func values(for section: Int) -> (title: String?, subtitle: String?) {
+    let title = self.title(for: section)
+    let subtitle = self.subtitle(for: section)
+    return (title, subtitle)
   }
 }
