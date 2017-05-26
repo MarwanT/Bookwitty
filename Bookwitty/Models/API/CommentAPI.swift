@@ -125,6 +125,31 @@ struct CommentAPI {
       }
     })
   }
+  
+  public static func unwit(commentIdentifier: String, completion: @escaping (_ success: Bool, _ commentIdentifier: String, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let unwitCommentSuccessfulStatusCode = 204
+    
+    return signedAPIRequest(target: .unwitComment(identifier: commentIdentifier), completion: {
+      (data, statusCode, response, error) in
+      DispatchQueue.global(qos: .background).async {
+        var success: Bool = false
+        var commentIdentifier = commentIdentifier
+        var error: BookwittyAPIError? = error
+        defer {
+          DispatchQueue.main.async {
+            completion(success, commentIdentifier, error)
+          }
+        }
+        
+        guard statusCode == unwitCommentSuccessfulStatusCode else {
+          error = BookwittyAPIError.invalidStatusCode
+          return
+        }
+        
+        success  = true
+      }
+    })
+  }
 }
 
 extension CommentAPI {
