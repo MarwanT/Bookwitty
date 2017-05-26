@@ -61,6 +61,8 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   }
   
   func initialize(with resource: ModelCommonProperties?) {
+    setLoading(status: TopicViewController.LoadingStatus.loading)
+    updateCollection(loaderSection: true)
     viewModel.initialize(with: resource)
     self.mode = .normal(categories: self.normal)
     
@@ -135,10 +137,12 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   }
 
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
-    collectionNode.reloadSections(IndexSet(integer: 1))
 
     //MARK: [Analytics] Event
     let category = self.category(withIndex: index)
+    setLoading(status: TopicViewController.LoadingStatus.none)
+    self.updateCollection(relatedDataSection: true, loaderSection: true)
+
     var analyticsAction: Analytics.Action = .Default
     switch category {
     case .latest:
@@ -180,7 +184,8 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     case (.editions, .editions): fallthrough
     case (.relatedBooks, .relatedBooks): fallthrough
     case (.followers, .editions):
-      self.collectionNode.reloadSections(IndexSet(integer: Section.relatedData.rawValue))
+      setLoading(status: TopicViewController.LoadingStatus.none)
+      self.updateCollection(relatedDataSection: true, loaderSection: true)
     default:
       break
     }
@@ -234,7 +239,7 @@ extension TopicViewController {
       indexPathForAffectedItems.remove(at: index)
     }
     if indexPathForAffectedItems.count > 0 {
-      collectionNode.reloadItems(at: indexPathForAffectedItems)
+      updateCollection(with: indexPathForAffectedItems, shouldReloadItems: true)
     }
   }
   
@@ -619,17 +624,23 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
-
-    let category = self.category(withIndex: segmentedNode.selectedIndex)
-
     guard context.isFetching() else {
+      return
+    }
+    guard loadingStatus == .none else {
+      context.completeBatchFetching(true)
       return
     }
 
     context.beginBatchFetching()
     self.setLoading(status: .loadMore)
+    DispatchQueue.main.sync {
+      self.updateCollection(loaderSection: true)
+    }
 
     var callBackCategory: TopicViewModel.CallbackCategory = .content
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+
     switch category {
     case .latest:
       callBackCategory = .latest
@@ -646,10 +657,18 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
     viewModel.loadNext(for: callBackCategory) {
       (success: Bool, indices: [Int]?, callBackCategory) in
       var insert: Bool = false
-
+      var indexes: [IndexPath]?
       defer {
         context.completeBatchFetching(true)
-        self.setLoading(status: .none)
+        if category.index != self.category(withIndex: self.segmentedNode.selectedIndex).index {
+          self.updateCollection( relatedDataSection: true, loaderSection: true)
+        } else if let indexes = indexes {
+          self.setLoading(status: .none)
+          self.updateCollection(with: indexes, shouldReloadItems: false, loaderSection: true)
+        } else {
+          self.setLoading(status: .none)
+          self.updateCollection(loaderSection: true)
+        }
       }
 
       if success {
@@ -661,8 +680,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
         }
 
         if insert {
-          let indexes: [IndexPath] = indices?.map({ IndexPath(item: $0, section: 1) }) ?? []
-          collectionNode.insertItems(at: indexes)
+          indexes = indices?.map({ IndexPath(item: $0, section: 1) }) ?? []
         }
       }
     }
@@ -1085,7 +1103,7 @@ extension TopicViewController: Localizable {
     let segments: [String] = self.mode.categories.map({ $0.name })
     segmentedNode.initialize(with: segments)
 
-    collectionNode.reloadData()
+    updateCollection(orReloadAll: true)
   }
 
   fileprivate func observeLanguageChanges() {
