@@ -143,6 +143,37 @@ final class TopicViewModel {
     }
   }
 
+  func loadData(for category: TopicViewController.Category, completion: @escaping (Bool, TopicViewController.Category) -> ()) {
+    switch category {
+    case .editions:
+      if numberOfEditions() == 0 {
+        getEditions(category: category, completion: completion)
+      } else {
+        completion(true, category)
+      }
+    case .latest:
+      if numberOfLatest() == 0 {
+        getLatest(category: category, completion: completion)
+      } else {
+        completion(true, category)
+      }
+    case .relatedBooks:
+      if numberOfRelatedBooks() == 0 {
+        getRelatedBooks(category: category, completion: completion)
+      } else {
+        completion(true, category)
+      }
+    case .followers:
+      if numberOfFollowers() == 0 {
+        getFollowers(category: category, completion: completion)
+      } else {
+        completion(true, category)
+      }
+    default:
+      completion(false, category)
+    }
+  }
+
   func resourceFor(id: String?) -> ModelResource? {
     guard let id = id else {
       return nil

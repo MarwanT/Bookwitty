@@ -194,6 +194,18 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     
     presentShareSheet(shareContent: sharingContent)
   }
+
+  func loadData() {
+    setLoading(status: TopicViewController.LoadingStatus.loading)
+    self.updateCollection(relatedDataSection: true, loaderSection: true)
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+    viewModel.loadData(for: category) { (success, categoryForRequest) in
+      if category.index == categoryForRequest.index {
+        self.setLoading(status: TopicViewController.LoadingStatus.none)
+        self.updateCollection(relatedDataSection: true, loaderSection: true)
+      }
+    }
+  }
 }
 
 //MARK: - Notifications
