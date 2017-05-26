@@ -82,6 +82,20 @@ extension SearchFiltersViewController: UITableViewDataSource, UITableViewDelegat
     sectionHeader.section = section
   }
 
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    viewModel.toggleRow(at: indexPath)
+    let rows = viewModel.numberOfRows(in: indexPath.section)
+    let rowsIndexPaths = Array(0..<rows).map({ IndexPath(row: $0, section: indexPath.section) })
+    tableView.reloadRows(at: rowsIndexPaths, with: UITableViewRowAnimation.automatic)
+
+    guard let sectionHeader = tableView.headerView(forSection: indexPath.section) as? SearchFilterTableViewSectionHeaderView else {
+      return
+    }
+
+    let values = viewModel.values(for: indexPath.section)
+    sectionHeader.subTitleLabel.text = values.subtitle
+  }
+
   func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
     return 0.01 // To remove the separator after the last cell
   }
