@@ -87,6 +87,37 @@ extension SearchFiltersViewController: UITableViewDataSource, UITableViewDelegat
   }
 }
 
+extension SearchFiltersViewController: SearchFilterTableViewSectionHeaderViewDelegate {
+  func sectionHeader(view: SearchFilterTableViewSectionHeaderView, request mode: SearchFilterTableViewSectionHeaderView.Mode) {
+    guard let section = view.section else {
+      return
+    }
+
+    /** 
+     * This approach ensures rows animation
+     * and stops the automatic animation on the section header
+     * The section header animates the arrow (rotates down -> up or vice versa)
+    */
+    tableView.beginUpdates()
+    let affectedIndexPaths: [IndexPath]
+
+    //mode is the new value
+    switch mode {
+    case .collapsed:
+      let rows = viewModel.numberOfRows(in: section)
+      affectedIndexPaths = Array(0..<rows).map({ IndexPath(row: $0, section: section) })
+      viewModel.toggleSection(section)
+      tableView.deleteRows(at: affectedIndexPaths, with: UITableViewRowAnimation.automatic)
+    case .expanded:
+      viewModel.toggleSection(section)
+      let rows = viewModel.numberOfRows(in: section)
+      affectedIndexPaths = Array(0..<rows).map({ IndexPath(row: $0, section: section) })
+      tableView.insertRows(at: affectedIndexPaths, with: UITableViewRowAnimation.automatic)
+    }
+    tableView.endUpdates()
+  }
+}
+
 //MARK: - Themeable implementation
 extension SearchFiltersViewController: Themeable {
   func applyTheme() {
