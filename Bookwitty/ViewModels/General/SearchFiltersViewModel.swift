@@ -95,6 +95,19 @@ class SearchFiltersViewModel {
     return categories[row]
   }
 
+  fileprivate func toggleCategory(at row: Int) {
+    guard let filter = filter, let cat = category(at: row), let key = cat.key else {
+      return
+    }
+
+    if filter.categories.contains(key) {
+      filter.categories.removeAll()
+    } else {
+      filter.categories.removeAll()
+      filter.categories.append(key)
+    }
+  }
+
   fileprivate func language(at row: Int) -> (code: String?, localized: String?) {
     guard let languages = facet?.languages, languages.count > 0 else {
       return (nil, nil)
@@ -109,6 +122,20 @@ class SearchFiltersViewModel {
     return (languageCode, localized)
   }
 
+  fileprivate func toggleLanguage(at row: Int) {
+    let lang = language(at: row)
+    guard let filter = filter, let code = lang.code else {
+      return
+    }
+
+    if filter.languages.contains(code) {
+      filter.languages.removeAll()
+    } else {
+      filter.languages.removeAll()
+      filter.languages.append(code)
+    }
+  }
+
   fileprivate func type(at row: Int) -> (resourceType: String?, localized: String?) {
     guard let types = facet?.types, types.count > 0 else {
       return (nil, nil)
@@ -120,6 +147,20 @@ class SearchFiltersViewModel {
 
     let resourceType = types[row] as ResourceType
     return (resourceType, resourceType.localizedName)
+  }
+
+  fileprivate func toggleType(at row: Int) {
+    let typ = type(at: row)
+    guard let filter = filter, let resourceType = typ.resourceType else {
+      return
+    }
+
+    if filter.types.contains(resourceType) {
+      filter.types.removeAll()
+    } else {
+      filter.types.removeAll()
+      filter.types.append(resourceType)
+    }
   }
 }
 
@@ -185,6 +226,21 @@ extension SearchFiltersViewModel {
       expandedSections.remove(at: index)
     } else {
       expandedSections.append(section)
+    }
+  }
+
+  func toggleRow(at indexPath: IndexPath) {
+    guard let option = facetOption(at: indexPath.section) else {
+      return
+    }
+
+    switch option {
+    case .categories:
+      toggleCategory(at: indexPath.row)
+    case .languages:
+      toggleLanguage(at: indexPath.row)
+    case .types:
+      toggleType(at: indexPath.row)
     }
   }
 }
