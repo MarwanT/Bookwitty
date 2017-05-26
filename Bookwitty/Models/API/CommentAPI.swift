@@ -150,6 +150,31 @@ struct CommentAPI {
       }
     })
   }
+  
+  public static func dim(commentIdentifier: String, completion: @escaping (_ success: Bool, _ commentIdentifier: String, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let dimCommentSuccessfulStatusCode = 204
+    
+    return signedAPIRequest(target: .dimComment(identifier: commentIdentifier), completion: {
+      (data, statusCode, response, error) in
+      DispatchQueue.global(qos: .background).async {
+        var success: Bool = false
+        var commentIdentifier = commentIdentifier
+        var error: BookwittyAPIError? = error
+        defer {
+          DispatchQueue.main.async {
+            completion(success, commentIdentifier, error)
+          }
+        }
+        
+        guard statusCode == dimCommentSuccessfulStatusCode else {
+          error = BookwittyAPIError.invalidStatusCode
+          return
+        }
+        
+        success  = true
+      }
+    })
+  }
 }
 
 extension CommentAPI {
