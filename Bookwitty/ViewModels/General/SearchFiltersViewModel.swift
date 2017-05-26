@@ -65,7 +65,21 @@ class SearchFiltersViewModel {
   }
 
   fileprivate func subtitle(for section: Int) -> String? {
-    return nil
+    guard let option = facetOption(at: section) else {
+      return nil
+    }
+
+    switch option {
+    case .categories:
+      let localized = facet?.categories?.filter({ filter?.categories.contains($0.key ?? "") ?? false }).flatMap({ $0.value }) ?? []
+      return localized.joined(separator: ", ")
+    case .languages:
+      let localized = filter?.languages.flatMap({ Locale.application.localizedString(forLanguageCode: $0) }) ?? []
+      return localized.joined(separator: ", ")
+    case .types:
+      let localized = filter?.types.flatMap({ $0.localizedName }) ?? []
+      return localized.joined(separator: ", ")
+    }
   }
 
   //Row Helpers
