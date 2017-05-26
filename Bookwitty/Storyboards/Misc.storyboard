@@ -65,7 +65,7 @@
                                         <rect key="frame" x="0.0" y="68" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="S6O-hJ-Zgp" id="c6A-lb-Iqn">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m0X-Wc-0mt">
@@ -84,6 +84,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="b5S-fS-Nla" firstAttribute="centerY" secondItem="c6A-lb-Iqn" secondAttribute="centerY" id="6yp-PF-ohW"/>
+                                                <constraint firstItem="b5S-fS-Nla" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="m0X-Wc-0mt" secondAttribute="trailing" constant="5" id="DvO-r2-KTv"/>
                                                 <constraint firstItem="m0X-Wc-0mt" firstAttribute="centerY" secondItem="c6A-lb-Iqn" secondAttribute="centerY" id="P74-AR-2xm"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="b5S-fS-Nla" secondAttribute="trailing" id="ifc-E0-WZd"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="m0X-Wc-0mt" secondAttribute="leading" id="tdp-Td-9yW"/>
