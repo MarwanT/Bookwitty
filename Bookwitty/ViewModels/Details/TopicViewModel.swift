@@ -138,14 +138,9 @@ final class TopicViewModel {
         getAuthorContent()
       case Book.resourceType:
         getBookContent()
-        getEditions()
       default: break
       }
     }
-    
-    getLatest()
-    getRelatedBooks()
-    getFollowers()
   }
 
   func resourceFor(id: String?) -> ModelResource? {

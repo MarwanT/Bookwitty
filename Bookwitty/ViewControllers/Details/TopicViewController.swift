@@ -180,12 +180,6 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     switch (callbackCategory, category) {
     case (.content, _):
       self.fillHeaderNode()
-    case (.latest, .latest): fallthrough
-    case (.editions, .editions): fallthrough
-    case (.relatedBooks, .relatedBooks): fallthrough
-    case (.followers, .editions):
-      setLoading(status: TopicViewController.LoadingStatus.none)
-      self.updateCollection(relatedDataSection: true, loaderSection: true)
     case (.initialize, _):
       break
     default:
