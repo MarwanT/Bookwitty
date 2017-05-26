@@ -332,24 +332,6 @@ extension TopicViewController {
 extension TopicViewController {
   func setLoading(status: LoadingStatus) {
     self.loadingStatus = status
-
-    let show: Bool
-    switch self.loadingStatus {
-    case .loading, .loadMore, .reloading:
-      show = true
-    case .none:
-      show = false
-    }
-
-    if Thread.current.isMainThread {
-      self.loaderNode.updateLoaderVisibility(show: show)
-      self.collectionNode.reloadSections(IndexSet(integer: 2))
-    } else {
-      DispatchQueue.main.sync {
-        self.loaderNode.updateLoaderVisibility(show: show)
-        self.collectionNode.reloadSections(IndexSet(integer: 2))
-      }
-    }
   }
 }
 
@@ -510,7 +492,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
     }
 
     return {
-      return self.cellNodeBlockFor(item: indexPath.item, category: self.category(withIndex: self.segmentedNode.selectedIndex))
+      return self.cellNodeBlockFor(indexPath: indexPath, category: self.category(withIndex: self.segmentedNode.selectedIndex))
     }
   }
 
@@ -531,62 +513,13 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
     guard let indexPath = collectionNode.indexPath(for: node) else {
       return
     }
-
-    if indexPath.section == Section.header.rawValue {
+    if indexPath.section == Section.activityIndicator.rawValue {
+      self.loaderNode.updateLoaderVisibility(show: self.loadingStatus != .none)
+    }
+    else if indexPath.section == Section.header.rawValue {
       self.fillHeaderNode()
     } else if indexPath.section == Section.relatedData.rawValue {
-      let category = self.category(withIndex: segmentedNode.selectedIndex)
-      switch category {
-      case .latest:
-        guard let post = viewModel.latest(at: indexPath.row),
-          let card = node as? BaseCardPostNode else {
-            return
-        }
-
-        if let commonResource = post as? ModelCommonProperties,
-          let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: commonResource), !sameInstance {
-          card.baseViewModel?.resource = commonResource
-        }
-
-        if let bookCard = card as? BookCardPostCellNode {
-          bookCard.isProduct = (self.viewModel.bookRegistry.category(for: post , section: BookTypeRegistry.Section.topicLatest) ?? .topic == .product)
-        }
-      case .editions:
-        guard let cell = node as? BookNode else {
-          return
-        }
-
-        let bookValues = viewModel.valuesForEdition(at: indexPath.item)
-        cell.title = bookValues?.title
-        cell.author = bookValues?.author
-        cell.format = bookValues?.format
-        cell.price = bookValues?.price
-        cell.imageUrl = bookValues?.imageUrl
-      case .relatedBooks:
-        guard let cell = node as? BookNode else {
-          return
-        }
-
-        let bookValues = viewModel.valuesForRelatedBook(at: indexPath.item)
-        cell.title = bookValues?.title
-        cell.author = bookValues?.author
-        cell.format = bookValues?.format
-        cell.price = bookValues?.price
-        cell.imageUrl = bookValues?.imageUrl
-      case .followers:
-        guard let cell = node as? PenNameFollowNode else {
-          return
-        }
-
-        let followerValues = viewModel.valuesForFollower(at: indexPath.item)
-        cell.penName = followerValues?.penName
-        cell.biography = followerValues?.biography
-        cell.imageUrl = followerValues?.imageUrl
-        cell.following = followerValues?.following ?? false
-        cell.updateMode(disabled: followerValues?.isMyPenName ?? false)
-      case .none:
-        break
-      }
+      _ = loadDataForCategory(node: node, indexPath: indexPath)
     }
   }
 
@@ -597,7 +530,9 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
     )
   }
 
-  private func cellNodeBlockFor(item: Int, category: Category) -> ASCellNode {
+  private func cellNodeBlockFor(indexPath: IndexPath, category: Category) -> ASCellNode {
+    let item = indexPath.item
+
     switch category {
     case .latest:
       guard let post = viewModel.latest(at: item),
@@ -622,14 +557,17 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
       node.delegate = self
       return node
     case .editions:
-      return BookNode()
+      fallthrough
     case .relatedBooks:
-      return BookNode()
+      let node = BookNode()
+      loadDataForCategory(node: node, indexPath: indexPath)
+      return node
     case .followers:
-      let penNameNode = PenNameFollowNode()
-      penNameNode.showBottomSeparator = true
-      penNameNode.delegate = self
-      return penNameNode
+      let node = PenNameFollowNode()
+      loadDataForCategory(node: node, indexPath: indexPath)
+      node.showBottomSeparator = true
+      node.delegate = self
+      return node
     case .none:
       return ASCellNode()
     }
@@ -727,6 +665,62 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
           collectionNode.insertItems(at: indexes)
         }
       }
+    }
+  }
+
+  private func loadDataForCategory(node: ASCellNode, indexPath: IndexPath) {
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+
+    switch category {
+    case .latest:
+      guard let post = viewModel.latest(at: indexPath.row),
+        let card = node as? BaseCardPostNode else {
+          return
+      }
+
+      if let commonResource = post as? ModelCommonProperties,
+        let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: commonResource), !sameInstance {
+        card.baseViewModel?.resource = commonResource
+      }
+
+      if let bookCard = card as? BookCardPostCellNode {
+        bookCard.isProduct = (self.viewModel.bookRegistry.category(for: post , section: BookTypeRegistry.Section.topicLatest) ?? .topic == .product)
+      }
+    case .editions:
+      guard let cell = node as? BookNode else {
+        return
+      }
+
+      let bookValues = viewModel.valuesForEdition(at: indexPath.item)
+      cell.title = bookValues?.title
+      cell.author = bookValues?.author
+      cell.format = bookValues?.format
+      cell.price = bookValues?.price
+      cell.imageUrl = bookValues?.imageUrl
+    case .relatedBooks:
+      guard let cell = node as? BookNode else {
+        return
+      }
+
+      let bookValues = viewModel.valuesForRelatedBook(at: indexPath.item)
+      cell.title = bookValues?.title
+      cell.author = bookValues?.author
+      cell.format = bookValues?.format
+      cell.price = bookValues?.price
+      cell.imageUrl = bookValues?.imageUrl
+    case .followers:
+      guard let cell = node as? PenNameFollowNode else {
+        return
+      }
+
+      let followerValues = viewModel.valuesForFollower(at: indexPath.item)
+      cell.penName = followerValues?.penName
+      cell.biography = followerValues?.biography
+      cell.imageUrl = followerValues?.imageUrl
+      cell.following = followerValues?.following ?? false
+      cell.updateMode(disabled: followerValues?.isMyPenName ?? false)
+    case .none:
+      break
     }
   }
 }
