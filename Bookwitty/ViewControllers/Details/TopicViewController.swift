@@ -282,7 +282,7 @@ extension TopicViewController {
     }
   }
 
-  fileprivate enum Category {
+  enum Category {
     case latest(index: Int)
     case relatedBooks(index: Int)
     case editions(index: Int)
