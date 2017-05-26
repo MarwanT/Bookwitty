@@ -244,7 +244,7 @@ extension TopicViewController {
       indexPathForAffectedItems.remove(at: index)
     }
     if indexPathForAffectedItems.count > 0 {
-      updateCollection(with: indexPathForAffectedItems, shouldReloadItems: true)
+      updateCollectionNodes(indexPathForAffectedItems: indexPathForAffectedItems)
     }
   }
   
@@ -1122,6 +1122,21 @@ extension TopicViewController: Localizable {
 }
 
 extension TopicViewController {
+  func updateCollectionNodes(indexPathForAffectedItems: [IndexPath]) {
+    let cards = indexPathForAffectedItems.map({ collectionNode.nodeForItem(at: $0) })
+    cards.forEach({ card in
+      guard let card = card as? BaseCardPostNode else {
+        return
+      }
+
+      guard let indexPath = card.indexPath, let resourceId = resourceIdentifierForIndex(indexPath: indexPath),
+        let commonResource =  DataManager.shared.fetchResource(with: resourceId) as? ModelCommonProperties else {
+        return
+      }
+      card.baseViewModel?.resource = commonResource
+    })
+  }
+
   func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, relatedDataSection: Bool = false, loaderSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
     if reloadAll {
       collectionNode.reloadData(completion: {
