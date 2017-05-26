@@ -186,6 +186,8 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     case (.followers, .editions):
       setLoading(status: TopicViewController.LoadingStatus.none)
       self.updateCollection(relatedDataSection: true, loaderSection: true)
+    case (.initialize, _):
+      break
     default:
       break
     }

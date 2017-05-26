@@ -17,11 +17,18 @@ final class TopicViewModel {
     case editions
     case relatedBooks
     case followers
+    case initialize
   }
 
   var callback: ((CallbackCategory) -> ())?
   
-  var resource: ModelCommonProperties?
+  var resource: ModelCommonProperties? {
+    didSet {
+      if oldValue == nil {
+        self.callback?(.initialize)
+      }
+    }
+  }
 
   fileprivate var latest: [String] = []
   fileprivate var latestNextUrl: URL? = nil
@@ -541,7 +548,7 @@ extension TopicViewModel {
         indices = self.handleRelatedBooks(results: resourcesIdentifiers, next: next)
       case .followers:
         indices = self.handleFollowers(results: resourcesIdentifiers, next: next)
-      case .content:
+      case .content, .initialize:
         break
       }
     }
