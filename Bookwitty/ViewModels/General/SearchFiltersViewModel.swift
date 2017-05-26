@@ -11,12 +11,14 @@ import Spine
 
 class SearchFiltersViewModel {
   var facet: Facet?
+  var filter: Filter?
 
   var sections: [Facet.Options] = []
   var expandedSections: [Int] = []
 
-  func initialize(with facet: Facet) {
+  func initialize(with facet: Facet, and filter: Filter) {
     self.facet = facet
+    self.filter = filter
     fillSections()
   }
 
