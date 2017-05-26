@@ -34,6 +34,7 @@ public enum BookwittyAPI {
   case createComment(postIdentifier: String, comment: String, parentCommentIdentifier: String?)
   case witComment(identifier: String)
   case unwitComment(identifier: String)
+  case dimComment(identifier: String)
   case wit(contentId: String)
   case unwit(contentId: String)
   case dim(contentId: String)
@@ -132,6 +133,8 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(postIdentifier)/comments"
     case .witComment(let identifier), .unwitComment(let identifier):
       path = "/comments/\(identifier)/wit"
+    case .dimComment(let identifier):
+      path = "/comments/\(identifier)/dim"
     case .wit(let contentId):
       path = "/content/\(contentId)/wit"
     case .unwit(let contentId):
@@ -201,7 +204,7 @@ extension BookwittyAPI: TargetType {
       return .post
   case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .search, .penNames, .comments, .replies, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent:
       return .get
-    case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart, .batchPenNames, .createComment, .witComment:
+    case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart, .batchPenNames, .createComment, .witComment, .dimComment:
       return .post
     case .updateUser, .updatePenName:
       return .patch
@@ -267,7 +270,7 @@ extension BookwittyAPI: TargetType {
       return CommentAPI.createCommentBody(comment: comment, parentCommentIdentifier: parentCommentIdentifier)
     case .uploadPolicy(let file, let fileType, let assetType):
       return UploadAPI.uploadPolicyParameters(file: file, fileType: fileType, assetType: assetType)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment, .dimComment:
       return nil
     }
   }
