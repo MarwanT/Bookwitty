@@ -79,30 +79,31 @@ class SearchFiltersViewModel {
     return categories[row]
   }
 
-  fileprivate func language(at row: Int) -> String? {
+  fileprivate func language(at row: Int) -> (code: String?, localized: String?) {
     guard let languages = facet?.languages, languages.count > 0 else {
-      return nil
+      return (nil, nil)
     }
 
     guard row >= 0 && row < languages.count else {
-      return nil
+      return (nil, nil)
     }
 
     let languageCode = languages[row]
-    return Locale.application.localizedString(forLanguageCode: languageCode)
+    let localized = Locale.application.localizedString(forLanguageCode: languageCode)
+    return (languageCode, localized)
   }
 
-  fileprivate func type(at row: Int) -> String? {
+  fileprivate func type(at row: Int) -> (resourceType: String?, localized: String?) {
     guard let types = facet?.types, types.count > 0 else {
-      return nil
+      return (nil, nil)
     }
 
     guard row >= 0 && row < types.count else {
-      return nil
+      return (nil, nil)
     }
 
     let resourceType = types[row] as ResourceType
-    return resourceType.localizedName
+    return (resourceType, resourceType.localizedName)
   }
 }
 
@@ -149,9 +150,9 @@ extension SearchFiltersViewModel {
     case .categories:
       title = category(at: indexPath.row)?.value
     case .languages:
-      title = language(at: indexPath.row)
+      title = language(at: indexPath.row).localized
     case .types:
-      title = type(at: indexPath.row)
+      title = type(at: indexPath.row).localized
     }
 
     return (title, selected)
