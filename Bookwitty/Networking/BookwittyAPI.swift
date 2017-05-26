@@ -33,6 +33,7 @@ public enum BookwittyAPI {
   case replies(commentIdentifier: String)
   case createComment(postIdentifier: String, comment: String, parentCommentIdentifier: String?)
   case witComment(identifier: String)
+  case unwitComment(identifier: String)
   case wit(contentId: String)
   case unwit(contentId: String)
   case dim(contentId: String)
@@ -129,7 +130,7 @@ extension BookwittyAPI: TargetType {
       path = "/comments/\(commentIdentifier)/children"
     case .createComment(let postIdentifier, _, _):
       path = "/content/\(postIdentifier)/comments"
-    case .witComment(let identifier):
+    case .witComment(let identifier), .unwitComment(let identifier):
       path = "/comments/\(identifier)/wit"
     case .wit(let contentId):
       path = "/content/\(contentId)/wit"
@@ -204,7 +205,7 @@ extension BookwittyAPI: TargetType {
       return .post
     case .updateUser, .updatePenName:
       return .patch
-    case .unwit, .unfollow, .undim, .unfollowPenName:
+    case .unwit, .unfollow, .undim, .unfollowPenName, .unwitComment:
       return .delete
     }
   }
@@ -266,7 +267,7 @@ extension BookwittyAPI: TargetType {
       return CommentAPI.createCommentBody(comment: comment, parentCommentIdentifier: parentCommentIdentifier)
     case .uploadPolicy(let file, let fileType, let assetType):
       return UploadAPI.uploadPolicyParameters(file: file, fileType: fileType, assetType: assetType)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment:
       return nil
     }
   }
