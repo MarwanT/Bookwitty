@@ -61,8 +61,6 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   }
   
   func initialize(with resource: ModelCommonProperties?) {
-    setLoading(status: TopicViewController.LoadingStatus.loading)
-    updateCollection(loaderSection: true)
     viewModel.initialize(with: resource)
     self.mode = .normal(categories: self.normal)
     
@@ -140,8 +138,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
 
     //MARK: [Analytics] Event
     let category = self.category(withIndex: index)
-    setLoading(status: TopicViewController.LoadingStatus.none)
-    self.updateCollection(relatedDataSection: true, loaderSection: true)
+    loadData()
 
     var analyticsAction: Analytics.Action = .Default
     switch category {
@@ -181,7 +178,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     case (.content, _):
       self.fillHeaderNode()
     case (.initialize, _):
-      break
+      loadData()
     default:
       break
     }
