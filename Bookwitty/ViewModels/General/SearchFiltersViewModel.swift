@@ -150,11 +150,17 @@ extension SearchFiltersViewModel {
 
     switch option {
     case .categories:
-      title = category(at: indexPath.row)?.value
+      let cat = category(at: indexPath.row)
+      title = cat?.value
+      selected = filter?.categories.contains(cat?.key ?? "") ?? false
     case .languages:
-      title = language(at: indexPath.row).localized
+      let lang = language(at: indexPath.row)
+      title = lang.localized
+      selected = filter?.languages.contains(lang.code ?? "") ?? false
     case .types:
-      title = type(at: indexPath.row).localized
+      let typ = type(at: indexPath.row)
+      title = typ.localized
+      selected = filter?.types.contains(typ.resourceType ?? "") ?? false
     }
 
     return (title, selected)
