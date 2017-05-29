@@ -22,6 +22,7 @@
 		562A31201E659919002851DE /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562A311F1E659919002851DE /* Strings.swift */; };
 		562A31231E65D7F2002851DE /* TopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562A31221E65D7F2002851DE /* TopicViewController.swift */; };
 		562A31261E65E214002851DE /* TopicHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562A31251E65E214002851DE /* TopicHeaderNode.swift */; };
+		562A996C1ED8683000382ADD /* FilterCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562A996B1ED8683000382ADD /* FilterCellNode.swift */; };
 		56320C871EA748FB00642934 /* ArticleCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C7A1EA748FB00642934 /* ArticleCardPostCellNode.swift */; };
 		56320C881EA748FB00642934 /* BaseCardPostNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C7B1EA748FB00642934 /* BaseCardPostNode.swift */; };
 		56320C891EA748FB00642934 /* BookCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C7C1EA748FB00642934 /* BookCardPostCellNode.swift */; };
@@ -294,6 +295,7 @@
 		562A311F1E659919002851DE /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		562A31221E65D7F2002851DE /* TopicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicViewController.swift; sourceTree = "<group>"; };
 		562A31251E65E214002851DE /* TopicHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicHeaderNode.swift; sourceTree = "<group>"; };
+		562A996B1ED8683000382ADD /* FilterCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCellNode.swift; sourceTree = "<group>"; };
 		56320C7A1EA748FB00642934 /* ArticleCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArticleCardPostCellNode.swift; path = Cards/ArticleCardPostCellNode.swift; sourceTree = "<group>"; };
 		56320C7B1EA748FB00642934 /* BaseCardPostNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseCardPostNode.swift; path = Cards/BaseCardPostNode.swift; sourceTree = "<group>"; };
 		56320C7C1EA748FB00642934 /* BookCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BookCardPostCellNode.swift; path = Cards/BookCardPostCellNode.swift; sourceTree = "<group>"; };
@@ -913,6 +915,7 @@
 				596562E31E79EF9E00B93920 /* MisfortuneNode.swift */,
 				5988FCFB1EA4AC100045F82B /* TTTAttributedLabelNode.swift */,
 				59CF3F811ECF3332002A5821 /* IntroductoryBanner.swift */,
+				562A996B1ED8683000382ADD /* FilterCellNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -1683,6 +1686,7 @@
 				56929CE61E671BE700B3D00A /* SegmentedControl.swift in Sources */,
 				594B9F6F1E55F557007C49E1 /* RootTabBarViewModel.swift in Sources */,
 				59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */,
+				562A996C1ED8683000382ADD /* FilterCellNode.swift in Sources */,
 				F4CDDD371E60263800474CAA /* RotatingImageNode.swift in Sources */,
 				59CF44031E66E01A006C16FC /* BookDetailsViewController.swift in Sources */,
 				56320C8C1EA748FB00642934 /* LinkCardPostCellNode.swift in Sources */,
