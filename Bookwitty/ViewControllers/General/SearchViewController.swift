@@ -513,21 +513,20 @@ extension SearchViewController: UISearchBarDelegate {
   }
 
   public func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-    searchBar.showsCancelButton = false
-    searchBar.endEditing(true)
+    searchBar.showsCancelButton = false    
     return true
   }
 
   public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-    searchBar.endEditing(true)
     viewModel.filter.query = searchBar.text
     searchAction()
+    searchBar.resignFirstResponder()
   }
 
   public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-    searchBar.text = nil
+    searchBar.text = viewModel.filter.query
     searchBar.showsCancelButton = false
-    searchBar.endEditing(true)
+    searchBar.resignFirstResponder()
   }
 }
 // MARK: - Actions For Cards
