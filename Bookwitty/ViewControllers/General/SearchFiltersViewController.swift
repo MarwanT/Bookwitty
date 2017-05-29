@@ -58,6 +58,10 @@ class SearchFiltersViewController: UIViewController {
 
     delegate?.searchFilter(viewController: self, didSelect: filter)
   }
+
+  @objc
+  @IBAction fileprivate func clearAllTouchUpInside(_ sender: UIButton) {
+  }
 }
 
 extension SearchFiltersViewController: UITableViewDataSource, UITableViewDelegate {

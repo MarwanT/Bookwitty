@@ -37,6 +37,9 @@
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Xc-G1-8mP">
                                             <rect key="frame" x="8" y="5" width="30" height="30"/>
+                                            <connections>
+                                                <action selector="clearAllTouchUpInside:" destination="ZTg-xC-Lph" eventType="touchUpInside" id="h9g-yn-Uk1"/>
+                                            </connections>
                                         </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Icg-wy-0nR" userLabel="Long Separator View">
                                             <rect key="frame" x="0.0" y="39" width="375" height="1"/>
