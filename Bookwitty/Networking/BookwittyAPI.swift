@@ -22,7 +22,7 @@ public enum BookwittyAPI {
   case bookStore
   case categoryCuratedContent(categoryIdentifier: String)
   case newsFeed()
-  case search(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?, includeFacets: Bool)
+  case search(filter: Filter?, page: (number: String?, size: String?)?, includeFacets: Bool)
   case createPenName(name: String, biography: String?, avatarId: String?, avatarUrl: String?, facebookUrl: String?, tumblrUrl: String?, googlePlusUrl: String?, twitterUrl: String?, instagramUrl: String?, pinterestUrl: String?, youtubeUrl: String?, linkedinUrl: String?, wordpressUrl: String?, websiteUrl: String?)
   case updatePenName(identifier: String, name: String?, biography: String?, avatarId: String?, avatarUrl: String?, facebookUrl: String?, tumblrUrl: String?, googlePlusUrl: String?, twitterUrl: String?, instagramUrl: String?, pinterestUrl: String?, youtubeUrl: String?, linkedinUrl: String?, wordpressUrl: String?, websiteUrl: String?)
   case batch(identifiers: [String])
