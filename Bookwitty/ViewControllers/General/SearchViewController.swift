@@ -20,6 +20,7 @@ class SearchViewController: ASViewController<ASCollectionNode> {
   let collectionNode: ASCollectionNode
   let loaderNode: LoaderNode
   let misfortuneNode: MisfortuneNode
+  let filterNode: FilterCellNode
 
   var searchBar: UISearchBar?
   var viewModel: SearchViewModel = SearchViewModel()
@@ -63,7 +64,10 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     misfortuneNode = MisfortuneNode(mode: MisfortuneNode.Mode.empty)
     misfortuneNode.style.height = ASDimensionMake(0)
     misfortuneNode.style.width = ASDimensionMake(0)
-    
+
+    filterNode = FilterCellNode()
+    filterNode.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+
     super.init(node: collectionNode)
     
     misfortuneNode.delegate = self
@@ -181,10 +185,11 @@ extension SearchViewController: ASCollectionDataSource {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    if section == Section.activityIndicator.rawValue {
+    if section == Section.filter.rawValue {
+      return 1
+    } else if section == Section.activityIndicator.rawValue {
       return shouldShowLoader ? 1 : 0
-    }
-    else if section == Section.misfortune.rawValue {
+    } else if section == Section.misfortune.rawValue {
       return shouldDisplayMisfortuneNode ? 1 : 0
     } else {
       return viewModel.numberOfItemsInSection(section: section)
@@ -195,7 +200,10 @@ extension SearchViewController: ASCollectionDataSource {
     let indexPath = indexPath
 
     return {
-      if indexPath.section == Section.activityIndicator.rawValue {
+
+      if indexPath.section == Section.filter.rawValue {
+        return self.filterNode
+      } else if indexPath.section == Section.activityIndicator.rawValue {
         //Return the activity indicator
         return self.loaderNode
       } else if indexPath.section == Section.misfortune.rawValue {
@@ -690,12 +698,13 @@ extension SearchViewController {
 // MARK: - Declarations
 extension SearchViewController {
   enum Section: Int {
-    case cards = 0
+    case filter = 0
+    case cards = 1
     case activityIndicator
     case misfortune
 
     static var numberOfSections: Int {
-      return 3
+      return 4
     }
   }
 }
