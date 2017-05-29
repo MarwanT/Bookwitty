@@ -31,6 +31,7 @@ class SearchFiltersViewController: UIViewController {
     initializeComponents()
     applyTheme()
     addObservers()
+    setupNavigationbarButtons()
   }
 
   fileprivate func initializeComponents() {
@@ -41,6 +42,21 @@ class SearchFiltersViewController: UIViewController {
 
   fileprivate func addObservers() {
     observeLanguageChanges()
+  }
+
+  fileprivate func setupNavigationbarButtons() {
+    //TODO: Localize
+    let applyBarButtonItem = UIBarButtonItem(title: "Apply", style: UIBarButtonItemStyle.plain, target: self, action: #selector(applyTouchUpInside(_:)))
+    navigationItem.rightBarButtonItem = applyBarButtonItem
+  }
+
+  @objc
+  fileprivate func applyTouchUpInside(_ sender: UIBarButtonItem) {
+    guard let filter = viewModel.filter else {
+      return
+    }
+
+    delegate?.searchFilter(viewController: self, didSelect: filter)
   }
 }
 
