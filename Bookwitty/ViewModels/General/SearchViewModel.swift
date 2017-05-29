@@ -15,6 +15,7 @@ class SearchViewModel {
   var nextPage: URL?
 
   var facet: Facet?
+  var filter: Filter = Filter()
   
   var misfortuneNodeMode: MisfortuneNode.Mode? = nil
   var bookRegistry: BookTypeRegistry = BookTypeRegistry()
