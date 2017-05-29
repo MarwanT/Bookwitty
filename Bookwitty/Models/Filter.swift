@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Filter {
+public class Filter {
   var query: String?
 
   var categories: [String]
