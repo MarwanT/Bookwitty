@@ -173,7 +173,12 @@ class SearchViewController: ASViewController<ASCollectionNode> {
   }
 
   fileprivate func pushFilterViewController() {
+    guard let facet = viewModel.facet else {
+      return
+    }
+
     let searchFiltersViewController = Storyboard.Misc.instantiate(SearchFiltersViewController.self)
+    searchFiltersViewController.viewModel.initialize(with: facet, and: viewModel.filter)
     self.navigationController?.pushViewController(searchFiltersViewController, animated: true)
   }
 }
