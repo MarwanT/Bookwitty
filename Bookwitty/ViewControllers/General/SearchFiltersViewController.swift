@@ -61,6 +61,15 @@ class SearchFiltersViewController: UIViewController {
 
   @objc
   @IBAction fileprivate func clearAllTouchUpInside(_ sender: UIButton) {
+    guard let filter = viewModel.candidateFilter else {
+      return
+    }
+
+    filter.categories.removeAll()
+    filter.languages.removeAll()
+    filter.types.removeAll()
+
+    delegate?.searchFilter(viewController: self, didSelect: filter)
   }
 }
 
