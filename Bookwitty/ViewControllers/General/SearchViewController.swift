@@ -131,14 +131,12 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     }
   }
 
-  fileprivate func searchAction(query: String?) {
-    guard let query = query else {
-      return
-    }
+  fileprivate func searchAction() {
     loadingStatus = .loading
     viewModel.clearSearchData()
     updateCollection(reloadAll: true)
 
+    let query = viewModel.filter.query ?? ""
     viewModel.search(query: query) { (success, error) in
       self.loadingStatus = .none
       self.updateCollection(with: nil, loaderSection: true, dataSection: true)
@@ -522,7 +520,8 @@ extension SearchViewController: UISearchBarDelegate {
 
   public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
     searchBar.endEditing(true)
-    searchAction(query: searchBar.text)
+    viewModel.filter.query = searchBar.text
+    searchAction()
   }
 
   public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -758,7 +757,7 @@ extension SearchViewController: MisfortuneNodeDelegate {
     
     switch action {
     case .tryAgain:
-      searchAction(query: searchBar?.text)
+      searchAction()
     case .settings:
       AppDelegate.openSettings()
     default:
