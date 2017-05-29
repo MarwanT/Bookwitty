@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol SearchFiltersViewControllerDelegate: class {
+  func searchFilter(viewController: SearchFiltersViewController, didSelect filter: Filter)
+}
+
 class SearchFiltersViewController: UIViewController {
 
   let viewModel: SearchFiltersViewModel = SearchFiltersViewModel()
@@ -17,6 +21,8 @@ class SearchFiltersViewController: UIViewController {
   @IBOutlet var tableViewHeader: UIView!
   @IBOutlet var tableViewHeaderButton: UIButton!
   @IBOutlet var separators: [UIView]!
+
+  var delegate: SearchFiltersViewControllerDelegate?
 
   override func viewDidLoad() {
     super.viewDidLoad()
