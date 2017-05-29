@@ -47,6 +47,10 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     return true
   }
 
+  var shouldDisplayFilter: Bool {
+    return viewModel.facet != nil
+  }
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -195,7 +199,7 @@ extension SearchViewController: ASCollectionDataSource {
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
     if section == Section.filter.rawValue {
-      return 1
+      return shouldDisplayFilter ? 1 : 0
     } else if section == Section.activityIndicator.rawValue {
       return shouldShowLoader ? 1 : 0
     } else if section == Section.misfortune.rawValue {
@@ -478,6 +482,7 @@ extension SearchViewController {
       collectionNode.performBatchUpdates({
         // Always relaod misfortune section
         collectionNode.reloadSections(IndexSet(integer: Section.misfortune.rawValue))
+        collectionNode.reloadSections(IndexSet(integer: Section.filter.rawValue))
 
         if loaderSection {
           collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
