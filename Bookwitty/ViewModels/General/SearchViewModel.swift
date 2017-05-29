@@ -13,6 +13,8 @@ class SearchViewModel {
   var data: [String] = []
   var cancellableRequest: Cancellable?
   var nextPage: URL?
+
+  var facet: Facet?
   
   var misfortuneNodeMode: MisfortuneNode.Mode? = nil
   var bookRegistry: BookTypeRegistry = BookTypeRegistry()
@@ -70,6 +72,7 @@ class SearchViewModel {
 
       self.data += resources.flatMap({ $0.id })
       self.nextPage = nextPage
+      self.facet = facet
     })
   }
 
