@@ -179,6 +179,7 @@ class SearchViewController: ASViewController<ASCollectionNode> {
 
     let searchFiltersViewController = Storyboard.Misc.instantiate(SearchFiltersViewController.self)
     searchFiltersViewController.viewModel.initialize(with: facet, and: viewModel.filter)
+    searchFiltersViewController.delegate = self
     self.navigationController?.pushViewController(searchFiltersViewController, animated: true)
   }
 }
@@ -494,6 +495,13 @@ extension SearchViewController {
         }
       }, completion: completionBlock)
     }
+  }
+}
+
+//MARK: - SearchFiltersViewControllerDelegate implementation
+extension SearchViewController: SearchFiltersViewControllerDelegate {
+  func searchFilter(viewController: SearchFiltersViewController, didSelect filter: Filter) {
+    viewModel.filter = filter
   }
 }
 
