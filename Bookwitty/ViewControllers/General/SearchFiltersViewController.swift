@@ -52,7 +52,7 @@ class SearchFiltersViewController: UIViewController {
 
   @objc
   fileprivate func applyTouchUpInside(_ sender: UIBarButtonItem) {
-    guard let filter = viewModel.filter else {
+    guard let filter = viewModel.candidateFilter else {
       return
     }
 

@@ -13,12 +13,20 @@ class SearchFiltersViewModel {
   var facet: Facet?
   var filter: Filter?
 
+  var candidateFilter: Filter?
+
   var sections: [Facet.Options] = []
   var expandedSections: [Int] = []
 
   func initialize(with facet: Facet, and filter: Filter) {
     self.facet = facet
     self.filter = filter
+
+    self.candidateFilter = Filter()
+    self.candidateFilter?.categories = self.filter?.categories ?? []
+    self.candidateFilter?.languages = self.filter?.languages ?? []
+    self.candidateFilter?.types = self.filter?.types ?? []
+
     fillSections()
   }
 
@@ -71,13 +79,13 @@ class SearchFiltersViewModel {
 
     switch option {
     case .categories:
-      let localized = facet?.categories?.filter({ filter?.categories.contains($0.key ?? "") ?? false }).flatMap({ $0.value }) ?? []
+      let localized = facet?.categories?.filter({ candidateFilter?.categories.contains($0.key ?? "") ?? false }).flatMap({ $0.value }) ?? []
       return localized.joined(separator: ", ")
     case .languages:
-      let localized = filter?.languages.flatMap({ Locale.application.localizedString(forLanguageCode: $0) }) ?? []
+      let localized = candidateFilter?.languages.flatMap({ Locale.application.localizedString(forLanguageCode: $0) }) ?? []
       return localized.joined(separator: ", ")
     case .types:
-      let localized = filter?.types.flatMap({ $0.localizedName }) ?? []
+      let localized = candidateFilter?.types.flatMap({ $0.localizedName }) ?? []
       return localized.joined(separator: ", ")
     }
   }
@@ -96,7 +104,7 @@ class SearchFiltersViewModel {
   }
 
   fileprivate func toggleCategory(at row: Int) {
-    guard let filter = filter, let cat = category(at: row), let key = cat.key else {
+    guard let filter = candidateFilter, let cat = category(at: row), let key = cat.key else {
       return
     }
 
@@ -124,7 +132,7 @@ class SearchFiltersViewModel {
 
   fileprivate func toggleLanguage(at row: Int) {
     let lang = language(at: row)
-    guard let filter = filter, let code = lang.code else {
+    guard let filter = candidateFilter, let code = lang.code else {
       return
     }
 
@@ -151,7 +159,7 @@ class SearchFiltersViewModel {
 
   fileprivate func toggleType(at row: Int) {
     let typ = type(at: row)
-    guard let filter = filter, let resourceType = typ.resourceType else {
+    guard let filter = candidateFilter, let resourceType = typ.resourceType else {
       return
     }
 
@@ -207,15 +215,15 @@ extension SearchFiltersViewModel {
     case .categories:
       let cat = category(at: indexPath.row)
       title = cat?.value
-      selected = filter?.categories.contains(cat?.key ?? "") ?? false
+      selected = candidateFilter?.categories.contains(cat?.key ?? "") ?? false
     case .languages:
       let lang = language(at: indexPath.row)
       title = lang.localized
-      selected = filter?.languages.contains(lang.code ?? "") ?? false
+      selected = candidateFilter?.languages.contains(lang.code ?? "") ?? false
     case .types:
       let typ = type(at: indexPath.row)
       title = typ.localized
-      selected = filter?.types.contains(typ.resourceType ?? "") ?? false
+      selected = candidateFilter?.types.contains(typ.resourceType ?? "") ?? false
     }
 
     return (title, selected)
