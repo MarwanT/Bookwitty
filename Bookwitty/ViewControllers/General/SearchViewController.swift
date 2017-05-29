@@ -499,7 +499,9 @@ extension SearchViewController {
 //MARK: - SearchFiltersViewControllerDelegate implementation
 extension SearchViewController: SearchFiltersViewControllerDelegate {
   func searchFilter(viewController: SearchFiltersViewController, didSelect filter: Filter) {
+    _ = viewController.navigationController?.popViewController(animated: true)
     viewModel.filter = filter
+    searchAction()
   }
 }
 
