@@ -171,6 +171,11 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
     updateCollectionNodes(indexPathForAffectedItems: indexPathForAffectedItems)
   }
+
+  fileprivate func pushFilterViewController() {
+    let searchFiltersViewController = Storyboard.Misc.instantiate(SearchFiltersViewController.self)
+    self.navigationController?.pushViewController(searchFiltersViewController, animated: true)
+  }
 }
 
 extension SearchViewController: Themeable {
@@ -379,6 +384,12 @@ extension SearchViewController: BaseCardPostNodeDelegate {
 
 extension SearchViewController: ASCollectionDelegate {
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+
+    if indexPath.section == Section.filter.rawValue {
+      pushFilterViewController()
+      return
+    }
+
     let resource = viewModel.resourceForIndex(indexPath: indexPath)
     actionForCard(resource: resource)
   }
