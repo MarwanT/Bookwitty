@@ -36,7 +36,7 @@ class CheckmarkTableViewCell: UITableViewCell {
 
 extension CheckmarkTableViewCell: Themeable {
   func applyTheme() {
-    titleLabel.font = FontDynamicType.footnote.font
+    titleLabel.font = FontDynamicType.caption2.font
     titleLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
     contentView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
     backgroundColor = UIColor.clear

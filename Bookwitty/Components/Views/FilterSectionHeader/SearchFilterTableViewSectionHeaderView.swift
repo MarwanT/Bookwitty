@@ -85,7 +85,7 @@ extension SearchFilterTableViewSectionHeaderView: Themeable {
     titleLabel.font = FontDynamicType.footnote.font
     titleLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
 
-    subTitleLabel.font = FontDynamicType.caption1.font
+    subTitleLabel.font = FontDynamicType.caption2.font
     subTitleLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
 
     separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
