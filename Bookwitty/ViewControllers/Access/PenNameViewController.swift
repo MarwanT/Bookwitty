@@ -31,7 +31,7 @@ class PenNameViewController: UIViewController {
   let topViewToTopSpace: CGFloat = 40
   let defaultPenNameImageSize = CGSize(width: 600, height: 600)
   let viewModel: PenNameViewModel = PenNameViewModel()
-  
+  let maximumNumberOfPenNameCharacters: Int = 36
   var showNoteLabel: Bool = true
   var didEditImage: Bool = false
   var candidateImageId: String?
@@ -133,6 +133,12 @@ class PenNameViewController: UIViewController {
       showErrorUpdatingPasswordAlert(error: Strings.pen_name_cant_be_empty())
       return
     }
+    guard penNameInputField.textField.text?.characters.count ?? 0 <= maximumNumberOfPenNameCharacters else {
+      self.hideLoader()
+      showErrorUpdatingPasswordAlert(error: Strings.pen_name_max_number_of_characters_thirty_six())
+      return
+    }
+
     let biography = biographyTextView.text
 
     self.viewModel.createPenName(name: name, biography: biography, avatarId: imageId) {
@@ -215,6 +221,11 @@ class PenNameViewController: UIViewController {
     guard let name = penNameInputField.textField.text, !name.isBlank else {
       completion(false)
       showErrorUpdatingPasswordAlert(error: Strings.pen_name_cant_be_empty())
+      return
+    }
+    guard penNameInputField.textField.text?.characters.count ?? 0 <= maximumNumberOfPenNameCharacters else {
+      completion(false)
+      showErrorUpdatingPasswordAlert(error: Strings.pen_name_max_number_of_characters_thirty_six())
       return
     }
     let biography = biographyTextView.text
