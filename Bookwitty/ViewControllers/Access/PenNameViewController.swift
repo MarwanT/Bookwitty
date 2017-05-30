@@ -364,7 +364,8 @@ extension PenNameViewController: InputFieldDelegate {
   func inputFieldShouldReturn(inputField: InputField) -> Bool {
     switch inputField {
     case penNameInputField:
-      return biographyTextView.becomeFirstResponder()
+      _ = biographyTextView.becomeFirstResponder()
+      return false
     default: return true
     }
   }
