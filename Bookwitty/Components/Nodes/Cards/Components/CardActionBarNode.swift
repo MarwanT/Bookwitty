@@ -93,12 +93,6 @@ class CardActionBarNode: ASCellNode {
     numberOfDimsNode = ASTextNode()
     followButton = ASButtonNode()
     super.init()
-    addSubnode(witButton)
-    addSubnode(commentButton)
-    addSubnode(shareButton)
-    addSubnode(numberOfWitsNode)
-    addSubnode(numberOfDimsNode)
-    addSubnode(followButton)
     self.initializeNode()
   }
 
@@ -107,6 +101,8 @@ class CardActionBarNode: ASCellNode {
   }
 
   private func initializeNode() {
+    automaticallyManagesSubnodes = true
+    
     let imageTintColor: UIColor = ThemeManager.shared.currentTheme.colorNumber15()
 
     //Note: Had a Problem with the selected and highlighted states of the button images
