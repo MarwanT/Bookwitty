@@ -30,6 +30,22 @@ class CommentNode: ASCellNode {
     messageNode = ASTextNode()
     actionBar = CardActionBarNode()
     super.init()
+    setupNode()
+  }
+  
+  private func setupNode() {
+    automaticallyManagesSubnodes = true
+    
+    imageNode.style.preferredSize = configuration.imageSize
+    imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(
+      configuration.imageBorderWidth, configuration.imageBorderColor)
+    
+    actionBar.setup(forFollowingMode: false)
+    actionBar.configuration.externalHorizontalMargin = 0
+    actionBar.hideDim = false
+    actionBar.hideReplyButton = false
+    actionBar.hideShareButton = true
+  }
 }
 
 // MARK: Configuration declaration
