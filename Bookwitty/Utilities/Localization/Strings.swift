@@ -605,6 +605,10 @@ class Strings {
     return localizedString(key: "related_posts")
   }
   
+  static func reply() -> String {
+    return localizedString(key: "reply")
+  }
+  
   static func reset_password() -> String {
     return localizedString(key: "reset_password")
   }
