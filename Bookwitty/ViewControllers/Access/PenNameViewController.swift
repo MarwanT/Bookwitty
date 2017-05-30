@@ -34,7 +34,7 @@ class PenNameViewController: UIViewController {
   
   var showNoteLabel: Bool = true
   var didEditImage: Bool = false
-
+  var candidateImageId: String?
   var mode: Mode = .New
 
   override func viewDidLoad() {
@@ -185,6 +185,11 @@ class PenNameViewController: UIViewController {
   }
   
   fileprivate func uploadUserImageIfNeeded(completion: @escaping (_ imageId: String?)->()) {
+    guard candidateImageId == nil else {
+      completion(candidateImageId)
+      return
+    }
+
     guard didEditImage, let image = profileImageView.image else {
       completion(nil)
       return
@@ -193,6 +198,7 @@ class PenNameViewController: UIViewController {
     viewModel.upload(image: image, completion: {
       (success, imageId) in
       self.didEditImage = false
+      self.candidateImageId = imageId
       completion(imageId)
     })
   }
@@ -292,6 +298,7 @@ class PenNameViewController: UIViewController {
     let cameraViewController = CameraViewController(croppingEnabled: croppingEnabled, allowsLibraryAccess: libraryEnabled) { [weak self] image, asset in
       if let image = self?.resized(image) {
         self?.didEditImage = true
+        self?.candidateImageId = nil
         self?.profileImageView.image = image
         self?.plusImageView.alpha = 0
       }
@@ -305,6 +312,7 @@ class PenNameViewController: UIViewController {
     let libraryViewController = CameraViewController.imagePickerViewController(croppingEnabled: croppingEnabled) { image, asset in
       if let image = self.resized(image) {
         self.didEditImage = true
+        self.candidateImageId = nil
         self.profileImageView.image = image
         self.plusImageView.alpha = 0
       }
