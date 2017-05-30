@@ -936,7 +936,7 @@ extension DiscoverViewController: Localizable {
     applyLocalization()
 
     //Reload the Data upon language change
-    refreshViewControllerData()
+    pullDownToReloadData()
   }
 }
 
