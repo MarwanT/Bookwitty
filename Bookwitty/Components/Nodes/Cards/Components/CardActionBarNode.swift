@@ -79,7 +79,11 @@ class CardActionBarNode: ASCellNode {
     }
   }
   
-  var configuration = Configuration()
+  var configuration = Configuration() {
+    didSet {
+      setNeedsLayout()
+    }
+  }
 
   override init() {
     witButton = ASButtonNode()
