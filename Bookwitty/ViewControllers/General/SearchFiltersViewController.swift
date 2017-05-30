@@ -102,6 +102,9 @@ extension SearchFiltersViewController: UITableViewDataSource, UITableViewDelegat
 
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let sectionHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: SearchFilterTableViewSectionHeaderView.reuseIdentifier) as? SearchFilterTableViewSectionHeaderView
+    let values = viewModel.values(for: section)
+    sectionHeader?.mode = values.mode
+    sectionHeader?.delegate = self
     return sectionHeader
   }
 
@@ -113,22 +116,12 @@ extension SearchFiltersViewController: UITableViewDataSource, UITableViewDelegat
     let values = viewModel.values(for: section)
     sectionHeader.titleLabel.text = values.title
     sectionHeader.subTitleLabel.text = values.subtitle
-    sectionHeader.delegate = self
     sectionHeader.section = section
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     viewModel.toggleRow(at: indexPath)
-    let rows = viewModel.numberOfRows(in: indexPath.section)
-    let rowsIndexPaths = Array(0..<rows).map({ IndexPath(row: $0, section: indexPath.section) })
-    tableView.reloadRows(at: rowsIndexPaths, with: UITableViewRowAnimation.automatic)
-
-    guard let sectionHeader = tableView.headerView(forSection: indexPath.section) as? SearchFilterTableViewSectionHeaderView else {
-      return
-    }
-
-    let values = viewModel.values(for: indexPath.section)
-    sectionHeader.subTitleLabel.text = values.subtitle
+    tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
   }
 
   func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -142,28 +135,8 @@ extension SearchFiltersViewController: SearchFilterTableViewSectionHeaderViewDel
       return
     }
 
-    /** 
-     * This approach ensures rows animation
-     * and stops the automatic animation on the section header
-     * The section header animates the arrow (rotates down -> up or vice versa)
-    */
-    tableView.beginUpdates()
-    let affectedIndexPaths: [IndexPath]
-
-    //mode is the new value
-    switch mode {
-    case .collapsed:
-      let rows = viewModel.numberOfRows(in: section)
-      affectedIndexPaths = Array(0..<rows).map({ IndexPath(row: $0, section: section) })
-      viewModel.toggleSection(section)
-      tableView.deleteRows(at: affectedIndexPaths, with: UITableViewRowAnimation.automatic)
-    case .expanded:
-      viewModel.toggleSection(section)
-      let rows = viewModel.numberOfRows(in: section)
-      affectedIndexPaths = Array(0..<rows).map({ IndexPath(row: $0, section: section) })
-      tableView.insertRows(at: affectedIndexPaths, with: UITableViewRowAnimation.automatic)
-    }
-    tableView.endUpdates()
+    viewModel.toggleSection(section)
+    tableView.reloadSections(IndexSet(integer: section), with: .none)
   }
 }
 

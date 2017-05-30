@@ -38,7 +38,7 @@ class SearchFilterTableViewSectionHeaderView: UITableViewHeaderFooterView {
   var delegate: SearchFilterTableViewSectionHeaderViewDelegate?
   var section: Int?
 
-  fileprivate var mode: Mode = .collapsed {
+  var mode: Mode = .collapsed {
     didSet {
       applyMode()
     }
