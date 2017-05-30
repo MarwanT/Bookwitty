@@ -47,6 +47,44 @@ class CommentNode: ASCellNode {
     actionBar.hideShareButton = true
   }
   
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    
+    var infoStackElements = [ASLayoutElement]()
+    
+    // layout the header elements: Image - Name - Date
+    let titleDateSpec = ASStackLayoutSpec(direction: .vertical, spacing: configuration.titleDateVerticalSpace, justifyContent: .start, alignItems: .start, children: [fullNameNode, dateNode])
+    let imageNodeInsetSpec = ASInsetLayoutSpec(insets: configuration.imageNodeInsets, child: imageNode)
+    let headerSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start, alignItems: .center, children: [imageNodeInsetSpec, titleDateSpec])
+    infoStackElements.append(headerSpec)
+    
+    // layout the body elements: Comment Message, Action Buttons
+    let bodySpec = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: [messageNode, separator(), actionBar])
+    let bodyInsetSpec = ASInsetLayoutSpec(insets: bodyInsets, child: bodySpec)
+    infoStackElements.append(bodyInsetSpec)
+    
+    let infoStackSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: infoStackElements)
+    
+    return infoStackSpec
+  }
+  
+  var bodyInsets: UIEdgeInsets {
+    let bodyLeftMargin: CGFloat
+    switch mode {
+    case .primary:
+      bodyLeftMargin = configuration.imageSize.width + configuration.imageNodeInsets.right + configuration.imageNodeInsets.left
+    default:
+      bodyLeftMargin = 0
+    }
+    return UIEdgeInsets(top: configuration.bodyInsetTop, left: bodyLeftMargin, bottom: 0, right: 0)
+  }
+  
+  private func separator() -> ASDisplayNode {
+    let separator = ASDisplayNode()
+    separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    separator.style.height = ASDimensionMake(1)
+    return separator
+  }
+  
   // MARK: Data Setters
   var imageURL: URL?  {
     didSet {
