@@ -505,6 +505,10 @@ class Strings {
     return localizedString(key: "pen_name_error_could_not_create")
   }
 
+  static func pen_name_max_number_of_characters_thirty_six() -> String {
+    return localizedString(key: "pen_name_max_number_of_characters_thirty_six")
+  }
+
   static func pen_names() -> String {
     return localizedString(key: "pen_names")
   }
