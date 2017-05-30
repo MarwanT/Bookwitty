@@ -72,9 +72,20 @@ class CardActionBarNode: ASCellNode {
     }
   }
 
-  var hideDim: Bool = false {
+  var hideDim: Bool = true {
     didSet {
-      numberOfDimsNode.isHidden = hideDim
+      setNeedsLayout()
+    }
+  }
+  
+  var hideCommentButton: Bool = true {
+    didSet {
+      setNeedsLayout()
+    }
+  }
+  
+  var hideShareButton: Bool = false {
+    didSet {
       setNeedsLayout()
     }
   }
@@ -129,9 +140,6 @@ class CardActionBarNode: ASCellNode {
 
     numberOfWitsNode.truncationMode = NSLineBreakMode.byTruncatingTail
     numberOfDimsNode.truncationMode = NSLineBreakMode.byTruncatingTail
-
-    //By default dim info should be hidden, needs to be explicitly set false to show
-    hideDim = true
   }
 
   private func setupFollowButtonStyling() {
@@ -324,6 +332,8 @@ class CardActionBarNode: ASCellNode {
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    var shouldAddSpace: Bool = true
+    
     //Setup Dynamic width Wit Button
     actionButton.titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
     actionButton.titleNode.maximumNumberOfLines = 1
@@ -333,6 +343,11 @@ class CardActionBarNode: ASCellNode {
     //Setup other buttons
     commentButton.style.preferredSize = configuration.iconSize
     shareButton.style.preferredSize = configuration.iconSize
+    
+    // • Layout visible subnodes
+    var horizontalStackElements = [ASLayoutElement]()
+    
+    // • Add voting action buttons
     let textHorizontalStackSpec = ASStackLayoutSpec.horizontal()
     textHorizontalStackSpec.justifyContent = .start
     textHorizontalStackSpec.alignItems = .center
@@ -344,16 +359,31 @@ class CardActionBarNode: ASCellNode {
         textHorizontalStackSpec.children?.append(numberOfDimsNode)
       }
     }
+    horizontalStackElements.append(actionButton)
+    horizontalStackElements.append(textHorizontalStackSpec)
+    horizontalStackElements.append(spacer())
+    shouldAddSpace = false
+    
+    // • Add Comment Button
+    if !hideCommentButton {
+      horizontalStackElements.append(commentButton)
+      shouldAddSpace = true
+    }
+    
+    // • Add Share Button
+    if !hideShareButton {
+      if shouldAddSpace {
+        horizontalStackElements.append(spacer(width: 10))
+      }
+      horizontalStackElements.append(shareButton)
+      shouldAddSpace = true
+    }
+    
     let horizontalStackSpec = ASStackLayoutSpec(direction: .horizontal,
                                                 spacing: 0,
                                                 justifyContent: .spaceAround,
                                                 alignItems: .center,
-                                                children: [actionButton,
-                                                          textHorizontalStackSpec,
-                                                           spacer(),
-                                                           commentButton,
-                                                           spacer(width: 10),
-                                                           shareButton])
+                                                children: horizontalStackElements)
 
     let centeredActionBarLayoutSpec = ASCenterLayoutSpec(centeringOptions: ASCenterLayoutSpecCenteringOptions.Y, sizingOptions: ASCenterLayoutSpecSizingOptions.minimumY, child: horizontalStackSpec)
     //Set Node Height
