@@ -31,6 +31,7 @@ class CardActionBarNode: ASCellNode {
   var shareButton: ASButtonNode
   var numberOfWitsNode: ASTextNode
   var numberOfDimsNode: ASTextNode
+  var replyNode: ASTextNode
   weak var delegate: CardActionBarNodeDelegate? = nil
 
   fileprivate var numberOfWits: Int? {
@@ -91,6 +92,12 @@ class CardActionBarNode: ASCellNode {
     }
   }
   
+  var hideReplyButton: Bool = true {
+    didSet {
+      setNeedsLayout()
+    }
+  }
+  
   var configuration = Configuration() {
     didSet {
       setNeedsLayout()
@@ -104,6 +111,7 @@ class CardActionBarNode: ASCellNode {
     numberOfWitsNode = ASTextNode()
     numberOfDimsNode = ASTextNode()
     followButton = ASButtonNode()
+    replyNode = ASTextNode()
     super.init()
     self.initializeNode()
   }
@@ -127,12 +135,14 @@ class CardActionBarNode: ASCellNode {
 
     setupWitButtonStyling()
     setupFollowButtonStyling()
+    setupReplyNodeStyling()
 
     shareButton.addTarget(self, action: #selector(shareButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     commentButton.addTarget(self, action: #selector(commentButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     witButton.addTarget(self, action: #selector(witButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     followButton.addTarget(self, action: #selector(followButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     numberOfDimsNode.addTarget(self, action: #selector(dimButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    replyNode.addTarget(self, action: #selector(replyButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
 
     numberOfWitsNode.style.maxWidth = ASDimensionMake(60.0)
     numberOfWitsNode.maximumNumberOfLines = 1
@@ -183,6 +193,14 @@ class CardActionBarNode: ASCellNode {
     witButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
     witButton.borderWidth = 2
     witButton.clipsToBounds = true
+  }
+  
+  private func setupReplyNodeStyling() {
+    replyNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.footnote)
+      .append(text: Strings.reply(), color: ThemeManager.shared.currentTheme.defaultGrayedTextColor()).attributedString
+    replyNode.style.maxWidth = ASDimensionMake(120.0)
+    replyNode.maximumNumberOfLines = 1
+    replyNode.truncationMode = NSLineBreakMode.byTruncatingTail
   }
 
   func setFollowingValue(following: Bool) {
@@ -322,6 +340,11 @@ class CardActionBarNode: ASCellNode {
     guard let sender = sender else { return }
     delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: CardActionBarNode.Action.share, forSender: sender, didFinishAction: nil)
   }
+  
+  func replyButtonTouchUpInside(_ sender: ASButtonNode?) {
+    guard let sender = sender else { return }
+    delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: CardActionBarNode.Action.reply, forSender: sender, didFinishAction: nil)
+  }
 
   private func spacer(width: CGFloat = 0.0, flexGrow: CGFloat = 1.0) -> ASLayoutSpec {
     return ASLayoutSpec().styled { (style) in
@@ -377,6 +400,15 @@ class CardActionBarNode: ASCellNode {
         horizontalStackElements.append(spacer(width: 10))
       }
       horizontalStackElements.append(shareButton)
+      shouldAddSpace = true
+    }
+    
+    // • Add Reply Button
+    if !hideReplyButton {
+      if shouldAddSpace {
+        horizontalStackElements.append(spacer(width: 10))
+      }
+      horizontalStackElements.append(replyNode)
       shouldAddSpace = true
     }
     
