@@ -27,6 +27,8 @@ class CommentNode: ASCellNode {
   
   var configuration = Configuration()
   
+  weak var delegate: CommentNodeDelegate?
+  
   override init() {
     imageNode = ASNetworkImageNode()
     fullNameNode = ASTextNode()
@@ -158,5 +160,6 @@ extension CommentNode {
 // MARK: Modes declaration
 extension CommentNode: CardActionBarNodeDelegate {
   func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
+    delegate?.commentNode(self, didRequestAction: action, forSender: sender, didFinishAction: didFinishAction)
   }
 }
