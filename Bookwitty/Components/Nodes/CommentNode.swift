@@ -46,6 +46,47 @@ class CommentNode: ASCellNode {
     actionBar.hideReplyButton = false
     actionBar.hideShareButton = true
   }
+  
+  // MARK: Data Setters
+  var imageURL: URL?  {
+    didSet {
+      imageNode.url = imageURL
+      imageNode.setNeedsLayout()
+    }
+  }
+  
+  var fullName: String? {
+    didSet {
+      fullNameNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
+        .append(text: fullName ?? "", color: configuration.nameColor).attributedString
+      fullNameNode.setNeedsLayout()
+      setNeedsLayout()
+    }
+  }
+  
+  var date: Date? {
+    didSet {
+      dateNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+        .append(text: date?.formatted() ?? "", color: configuration.defaultTextColor).attributedString
+      setNeedsLayout()
+    }
+  }
+  
+  var message: String? {
+    didSet {
+      messageNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
+        .append(text: message ?? "", color: configuration.defaultTextColor).attributedString
+      setNeedsLayout()
+    }
+  }
+  
+  func setWitValue(witted: Bool, wits: Int) {
+    actionBar.setWitButton(witted: witted, wits: wits)
+  }
+  
+  func setDimValue(dimmed: Bool, dims: Int) {
+    actionBar.setDimValue(dimmed: dimmed, dims: dims)
+  }
 }
 
 // MARK: Configuration declaration
