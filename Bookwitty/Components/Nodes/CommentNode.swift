@@ -45,6 +45,7 @@ class CommentNode: ASCellNode {
     actionBar.hideDim = false
     actionBar.hideReplyButton = false
     actionBar.hideShareButton = true
+    actionBar.delegate = self
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -150,3 +151,8 @@ extension CommentNode {
   }
 }
 
+// MARK: Modes declaration
+extension CommentNode: CardActionBarNodeDelegate {
+  func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
+  }
+}
