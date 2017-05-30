@@ -10,12 +10,19 @@ import Foundation
 import Moya
 
 class SearchViewModel {
-  var data: [ModelResource] = []
+  var data: [String] = []
   var cancellableRequest: Cancellable?
   var nextPage: URL?
   
   var misfortuneNodeMode: MisfortuneNode.Mode? = nil
   var bookRegistry: BookTypeRegistry = BookTypeRegistry()
+
+  func resourceFor(id: String?) -> ModelResource? {
+    guard let id = id else {
+      return nil
+    }
+    return DataManager.shared.fetchResource(with: id)
+  }
 
   func cancelActiveRequest() {
     guard let cancellableRequest = cancellableRequest else {
@@ -61,7 +68,7 @@ class SearchViewModel {
       DataManager.shared.update(resources: resources)
       self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.search)
 
-      self.data += resources
+      self.data += resources.flatMap({ $0.id })
       self.nextPage = nextPage
     })
   }
@@ -79,7 +86,7 @@ class SearchViewModel {
         DataManager.shared.update(resources: resources)
         self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.search)
 
-        self.data += resources
+        self.data += resources.flatMap({ $0.id })
         self.nextPage = nextPage
       }
       self.cancellableRequest = nil
@@ -114,8 +121,8 @@ extension SearchViewModel {
 
   func resourceForIndex(indexPath: IndexPath) -> ModelResource? {
     guard data.count > indexPath.row else { return nil }
-    let resource = data[indexPath.row]
-    return resource
+    let resourceId = data[indexPath.row]
+    return resourceFor(id: resourceId)
   }
 
   func nodeForItem(atIndexPath indexPath: IndexPath) -> BaseCardPostNode? {
