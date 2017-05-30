@@ -360,7 +360,7 @@ class CardActionBarNode: ASCellNode {
     centeredActionBarLayoutSpec.style.height = ASDimensionMake(configuration.actionBarHeight)
 
     //Set Node Insets
-    return ASInsetLayoutSpec.init(insets: UIEdgeInsets.init(top: 0, left: configuration.internalMargin, bottom: 0, right: configuration.internalMargin), child: centeredActionBarLayoutSpec)
+    return ASInsetLayoutSpec.init(insets: UIEdgeInsets.init(top: 0, left: configuration.externalHorizontalMargin, bottom: 0, right: configuration.externalHorizontalMargin), child: centeredActionBarLayoutSpec)
   }
 }
 
@@ -368,6 +368,7 @@ extension CardActionBarNode {
   struct Configuration {
     var witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
     var internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+    var externalHorizontalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
     
     var actionBarHeight: CGFloat = 60.0
     var buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
