@@ -71,12 +71,6 @@ class CardActionBarNode: ASCellNode {
       setNeedsLayout()
     }
   }
-  private let witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
-  private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
-
-  private let actionBarHeight: CGFloat = 60.0
-  private let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
-  private let iconSize: CGSize = CGSize(width: 40.0, height: 40.0)
 
   var hideDim: Bool = false {
     didSet {
@@ -84,6 +78,8 @@ class CardActionBarNode: ASCellNode {
       setNeedsLayout()
     }
   }
+  
+  var configuration = Configuration()
 
   override init() {
     witButton = ASButtonNode()
@@ -328,19 +324,19 @@ class CardActionBarNode: ASCellNode {
     actionButton.titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
     actionButton.titleNode.maximumNumberOfLines = 1
     actionButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-    actionButton.style.height = ASDimensionMake(buttonSize.height)
+    actionButton.style.height = ASDimensionMake(configuration.buttonSize.height)
 
     //Setup other buttons
-    commentButton.style.preferredSize = iconSize
-    shareButton.style.preferredSize = iconSize
+    commentButton.style.preferredSize = configuration.iconSize
+    shareButton.style.preferredSize = configuration.iconSize
     let textHorizontalStackSpec = ASStackLayoutSpec.horizontal()
     textHorizontalStackSpec.justifyContent = .start
     textHorizontalStackSpec.alignItems = .center
     if !followingMode {
-      textHorizontalStackSpec.children = [ASLayoutSpec.spacer(width: internalMargin/2),
+      textHorizontalStackSpec.children = [ASLayoutSpec.spacer(width: configuration.internalMargin/2),
                                           numberOfWitsNode]
       if !hideDim {
-        textHorizontalStackSpec.children?.append(ASLayoutSpec.spacer(width: internalMargin))
+        textHorizontalStackSpec.children?.append(ASLayoutSpec.spacer(width: configuration.internalMargin))
         textHorizontalStackSpec.children?.append(numberOfDimsNode)
       }
     }
@@ -357,10 +353,20 @@ class CardActionBarNode: ASCellNode {
 
     let centeredActionBarLayoutSpec = ASCenterLayoutSpec(centeringOptions: ASCenterLayoutSpecCenteringOptions.Y, sizingOptions: ASCenterLayoutSpecSizingOptions.minimumY, child: horizontalStackSpec)
     //Set Node Height
-    centeredActionBarLayoutSpec.style.height = ASDimensionMake(actionBarHeight)
+    centeredActionBarLayoutSpec.style.height = ASDimensionMake(configuration.actionBarHeight)
 
     //Set Node Insets
-    return ASInsetLayoutSpec.init(insets: UIEdgeInsets.init(top: 0, left: internalMargin, bottom: 0, right: internalMargin), child: centeredActionBarLayoutSpec)
+    return ASInsetLayoutSpec.init(insets: UIEdgeInsets.init(top: 0, left: configuration.internalMargin, bottom: 0, right: configuration.internalMargin), child: centeredActionBarLayoutSpec)
   }
+}
 
+extension CardActionBarNode {
+  struct Configuration {
+    var witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
+    var internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+    
+    var actionBarHeight: CGFloat = 60.0
+    var buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
+    var iconSize: CGSize = CGSize(width: 40.0, height: 40.0)
+  }
 }
