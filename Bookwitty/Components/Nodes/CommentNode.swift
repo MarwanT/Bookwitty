@@ -15,6 +15,12 @@ class CommentNode: ASCellNode {
   fileprivate let messageNode: ASTextNode
   fileprivate let actionBar: CardActionBarNode
   
+  var mode = Mode.primary {
+    didSet {
+      setNeedsLayout()
+    }
+  }
+  
   var configuration = Configuration()
   
   override init() {
@@ -40,3 +46,12 @@ extension CommentNode {
     var titleDateVerticalSpace: CGFloat = 5
   }
 }
+
+// MARK: Modes declaration
+extension CommentNode {
+  enum Mode {
+    case primary
+    case secondary
+  }
+}
+
