@@ -8,6 +8,10 @@
 
 import AsyncDisplayKit
 
+protocol CommentNodeDelegate: class {
+  func commentNode(_ node: CommentNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?)
+}
+
 class CommentNode: ASCellNode {
   fileprivate let imageNode: ASNetworkImageNode
   fileprivate let fullNameNode: ASTextNode
