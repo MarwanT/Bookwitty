@@ -288,6 +288,7 @@ class PenNameViewController: UIViewController {
     })
     let  removePhotoButton = UIAlertAction(title: Strings.clear_profile_photo(), style: .default, handler: { (action) -> Void in
       self.profileImageView.image = nil
+      self.candidateImageId = "" // Empty String makes the image deletable, nil => does not
       self.plusImageView.alpha = 1
     })
 
