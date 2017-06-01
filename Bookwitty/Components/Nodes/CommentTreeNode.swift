@@ -12,6 +12,12 @@ class CommentTreeNode: ASCellNode {
   let commentNode: CommentNode
   let viewRepliesDisclosureNode: DisclosureNode
   
+  var configuration = Configuration() {
+    didSet {
+      setNeedsLayout()
+    }
+  }
+  
   override init() {
     commentNode = CommentNode()
     viewRepliesDisclosureNode = DisclosureNode()
