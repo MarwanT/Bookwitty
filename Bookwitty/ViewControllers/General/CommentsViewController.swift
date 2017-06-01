@@ -9,4 +9,14 @@
 import AsyncDisplayKit
 
 class CommentsViewController: ASViewController<ASDisplayNode> {
+  let commentsNode: CommentsNode
+  
+  init() {
+    commentsNode = CommentsNode()
+    super.init(node: commentsNode)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 }
