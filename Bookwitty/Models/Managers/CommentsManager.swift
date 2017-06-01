@@ -10,4 +10,16 @@ import Foundation
 import Moya
 
 class CommentManager {
+  private(set) var postIdentifier: String?
+  private(set) var commentIdentifier: String?
+  
+  func initialize(postIdentifier: String) {
+    self.postIdentifier = postIdentifier
+    self.commentIdentifier = nil
+  }
+  
+  func initialize(commentIdentifier: String) {
+    self.postIdentifier = nil
+    self.commentIdentifier = commentIdentifier
+  }
 }
