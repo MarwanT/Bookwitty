@@ -36,6 +36,12 @@ class CommentsNode: ASCellNode {
   func initialize(with manager: CommentManager) {
     viewModel.initialize(with: manager)
   }
+  
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    collectionNode.style.preferredSize = constrainedSize.max
+    let externalInsetsSpec = ASInsetLayoutSpec(insets: configuration.externalInsets, child: collectionNode)
+    return externalInsetsSpec
+  }
 }
 
 // MARK: - Configuration Declaration
