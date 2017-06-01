@@ -29,3 +29,17 @@ class CommentsNode: ASCellNode {
     automaticallyManagesSubnodes = true
   }
 }
+
+// MARK: - Section Declaration
+extension CommentsNode {
+  enum Section: Int {
+    case header = 0
+    case write
+    case read
+    case activityIndicator
+    
+    static var numberOfSections: Int {
+      return 4
+    }
+  }
+}
