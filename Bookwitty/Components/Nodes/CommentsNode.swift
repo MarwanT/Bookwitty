@@ -21,6 +21,8 @@ class CommentsNode: ASCellNode {
   
   let viewModel = CommentsViewModel()
   
+  weak var delegate: CommentsNodeDelegate?
+  
   var shouldShowLoader: Bool = false {
     didSet {
       updateCollectionNode(updateLoaderNode: true)
