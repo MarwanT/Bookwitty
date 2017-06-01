@@ -17,6 +17,12 @@ class CommentsNode: ASCellNode {
   
   let viewModel = CommentsViewModel()
   
+  var shouldShowLoader: Bool = false {
+    didSet {
+      updateCollectionNode(updateLoaderNode: true)
+    }
+  }
+  
   override init() {
     flowLayout = UICollectionViewFlowLayout()
     flowLayout.sectionInset = UIEdgeInsets.zero
