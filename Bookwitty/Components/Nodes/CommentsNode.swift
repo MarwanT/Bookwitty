@@ -59,6 +59,19 @@ class CommentsNode: ASCellNode {
     }
   }
   
+  fileprivate func loadNextPage(completion: @escaping (_ success: Bool) -> Void) {
+    guard !viewModel.isFetchingData, viewModel.hasNextPage else {
+      completion(false)
+      return
+    }
+    
+    shouldShowLoader = true
+    viewModel.loadMore { (success, error) in
+      self.shouldShowLoader = false
+      completion(success)
+    }
+  }
+  
   func updateCollectionNode(updateLoaderNode: Bool = false) {
     var reloadableSections: [Int] = [Section.read.rawValue]
     if updateLoaderNode {
@@ -133,6 +146,17 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
       min: CGSize(width: collectionNode.frame.width, height: 0),
       max: CGSize(width: collectionNode.frame.width, height: .infinity)
     )
+  }
+  
+  func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
+    guard context.isFetching() else {
+      return
+    }
+    
+    context.beginBatchFetching()
+    loadNextPage { (success) in
+      context.completeBatchFetching(true)
+    }
   }
 }
 
