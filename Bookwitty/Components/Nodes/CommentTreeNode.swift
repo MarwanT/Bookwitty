@@ -18,3 +18,14 @@ class CommentTreeNode: ASCellNode {
     super.init()
   }
 }
+
+extension CommentTreeNode {
+  struct Configuration {
+    var shouldDisplayViewRepliesDisclosureNode: Bool = true
+    var externalInsets = UIEdgeInsets(
+      top: ThemeManager.shared.currentTheme.generalExternalMargin() / 2,
+      left: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      bottom: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      right: ThemeManager.shared.currentTheme.generalExternalMargin())
+  }
+}
