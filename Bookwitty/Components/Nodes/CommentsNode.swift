@@ -13,6 +13,8 @@ class CommentsNode: ASCellNode {
   let collectionNode: ASCollectionNode
   let loaderNode: LoaderNode
   
+  var configuration = Configuration()
+  
   override init() {
     flowLayout = UICollectionViewFlowLayout()
     flowLayout.sectionInset = UIEdgeInsets.zero
