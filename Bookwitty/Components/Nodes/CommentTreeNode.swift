@@ -28,8 +28,6 @@ class CommentTreeNode: ASCellNode {
   private func setupNode() {
     automaticallyManagesSubnodes = true
     
-    viewRepliesDisclosureNode.text = Strings.view_all()
-    
     var disclosureNodeConfiguration = DisclosureNode.Configuration()
     disclosureNodeConfiguration.style = .highlighted
     disclosureNodeConfiguration.nodeEdgeInsets.left = 0
@@ -40,6 +38,7 @@ class CommentTreeNode: ASCellNode {
   var comment: Comment? {
     didSet {
       refreshCommentNode()
+      refreshDisclosureNodeText()
     }
   }
   
@@ -54,6 +53,11 @@ class CommentTreeNode: ASCellNode {
     }
     commentNode.mode = isReply ? .secondary : .primary
     commentNode.configuration.showBottomActionBarSeparator = hasReplies ? false : true
+    setNeedsLayout()
+  }
+  
+  func refreshDisclosureNodeText() {
+    viewRepliesDisclosureNode.text = Strings.view_all_replies(number: comment?.counts?.children ?? 0)
     setNeedsLayout()
   }
   

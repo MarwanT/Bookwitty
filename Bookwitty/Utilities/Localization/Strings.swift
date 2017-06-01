@@ -141,6 +141,10 @@ class Strings {
     return localizedString(key: "clear_profile_photo")
   }
   
+  static func comments() -> String {
+    return localizedString(key: "comments")
+  }
+  
   static func contact_us() -> String {
     return localizedString(key: "contact_us")
   }
@@ -854,6 +858,10 @@ class Strings {
 
   static func books(number: Int) -> String {
     return localizedString(key: "f_number_of_books", formatVariables: number)
+  }
+  
+  static func view_all_replies(number: Int) -> String {
+    return localizedString(key: "f_view_all_replies", formatVariable: number)
   }
 
   /**

@@ -228,7 +228,7 @@
 "f_number_of_followers" = "%d followers";
 "f_number_of_posts" = "%d posts";
 "f_number_of_books" = "%d books";
-
+"f_view_all_replies" = "View all %d replies";
 
 /**
  Discussion:
