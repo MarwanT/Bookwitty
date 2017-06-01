@@ -46,7 +46,7 @@ struct CommentAPI {
     })
   }
   
-  public static func commentReplies(identifier: String, completion: @escaping (_ success: Bool, _ comments: [Comment]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  public static func commentReplies(identifier: String, completion: @escaping (_ success: Bool, _ comments: [Comment]?, _ next: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let retieveCommentsSuccessStatusCode = 200
     
     return signedAPIRequest(target: .replies(commentIdentifier: identifier), completion: {
@@ -54,10 +54,11 @@ struct CommentAPI {
       DispatchQueue.global(qos: .background).async {
         var success: Bool = false
         var commentsArray: [Comment]? = nil
+        var next: URL? = nil
         var completionError: BookwittyAPIError? = error
         defer {
           DispatchQueue.main.async {
-            completion(success, commentsArray, error)
+            completion(success, commentsArray, next, error)
           }
         }
         
@@ -67,9 +68,13 @@ struct CommentAPI {
         }
         
         // Parse Data
-        if let data = data, let comments = Comment.parseDataArray(data: data)?.resources {
+        if let data = data, let parsedData = Comment.parseDataArray(data: data), let comments = parsedData.resources {
           commentsArray = comments
           success = true
+          
+          if let nextURL = parsedData.next {
+            next = nextURL
+          }
         } else {
           completionError = BookwittyAPIError.failToParseData
         }
