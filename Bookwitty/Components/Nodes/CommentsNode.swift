@@ -15,6 +15,8 @@ class CommentsNode: ASCellNode {
   
   var configuration = Configuration()
   
+  let viewModel = CommentsViewModel()
+  
   override init() {
     flowLayout = UICollectionViewFlowLayout()
     flowLayout.sectionInset = UIEdgeInsets.zero
