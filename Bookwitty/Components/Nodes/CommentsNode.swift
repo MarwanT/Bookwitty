@@ -30,6 +30,13 @@ class CommentsNode: ASCellNode {
   }
 }
 
+// MARK: - Configuration Declaration
+extension CommentsNode {
+  struct Configuration {
+    var externalInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+  }
+}
+
 // MARK: - Section Declaration
 extension CommentsNode {
   enum Section: Int {
