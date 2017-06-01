@@ -9,4 +9,9 @@
 import Foundation
 
 class CommentsViewModel {
+  var commentManager: CommentManager?
+  
+  func initialize(with manager: CommentManager) {
+    commentManager = manager
+  }
 }
