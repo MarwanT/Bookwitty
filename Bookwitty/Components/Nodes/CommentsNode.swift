@@ -32,6 +32,10 @@ class CommentsNode: ASCellNode {
     
     automaticallyManagesSubnodes = true
   }
+  
+  func initialize(with manager: CommentManager) {
+    viewModel.initialize(with: manager)
+  }
 }
 
 // MARK: - Configuration Declaration
