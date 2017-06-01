@@ -180,3 +180,10 @@ extension CommentsNode {
     }
   }
 }
+
+// MARK: - Actions Declaration
+extension CommentsNode {
+  enum Action {
+    case viewRepliesForComment(comment: Comment)
+  }
+}
