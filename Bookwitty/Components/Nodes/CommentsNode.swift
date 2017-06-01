@@ -100,6 +100,13 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
       return
     }
   }
+  
+  func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
+    return ASSizeRange(
+      min: CGSize(width: collectionNode.frame.width, height: 0),
+      max: CGSize(width: collectionNode.frame.width, height: .infinity)
+    )
+  }
 }
 
 // MARK: - Configuration Declaration
