@@ -52,6 +52,13 @@ class CommentsNode: ASCellNode {
     return externalInsetsSpec
   }
   
+  func reloadData() {
+    shouldShowLoader = true
+    viewModel.loadComments { (success, error) in
+      self.shouldShowLoader = false
+    }
+  }
+  
   func updateCollectionNode(updateLoaderNode: Bool = false) {
     var reloadableSections: [Int] = [Section.read.rawValue]
     if updateLoaderNode {
