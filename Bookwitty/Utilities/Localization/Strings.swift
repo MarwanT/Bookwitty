@@ -859,6 +859,10 @@ class Strings {
   static func books(number: Int) -> String {
     return localizedString(key: "f_number_of_books", formatVariables: number)
   }
+  
+  static func view_all_replies(number: Int) -> String {
+    return localizedString(key: "f_view_all_replies", formatVariable: number)
+  }
 
   /**
    Discussion:

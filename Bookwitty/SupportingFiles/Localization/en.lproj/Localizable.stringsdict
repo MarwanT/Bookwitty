@@ -98,5 +98,29 @@
 			<string>%d Books</string>
 		</dict>
 	</dict>
+	<key>f_view_all_replies</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@value@</string>
+		<key>value</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>View all replies</string>
+			<key>one</key>
+			<string>View reply</string>
+			<key>two</key>
+			<string>View all %d replies</string>
+			<key>few</key>
+			<string>View all %d replies</string>
+			<key>many</key>
+			<string>View all %d replies</string>
+			<key>other</key>
+			<string>View all %d replies</string>
+		</dict>
+	</dict>
 </dict>
 </plist>
