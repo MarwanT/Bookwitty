@@ -8,6 +8,10 @@
 
 import AsyncDisplayKit
 
+protocol CommentsNodeDelegate: class {
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action)
+}
+
 class CommentsNode: ASCellNode {
   let flowLayout: UICollectionViewFlowLayout
   let collectionNode: ASCollectionNode
@@ -16,6 +20,8 @@ class CommentsNode: ASCellNode {
   var configuration = Configuration()
   
   let viewModel = CommentsViewModel()
+  
+  weak var delegate: CommentsNodeDelegate?
   
   var shouldShowLoader: Bool = false {
     didSet {
@@ -122,6 +128,7 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
           return ASCellNode()
         }
         let commentTreeNode = CommentTreeNode()
+        commentTreeNode.delegate = self
         commentTreeNode.comment = comment
         return commentTreeNode
       case Section.activityIndicator.rawValue:
@@ -178,5 +185,19 @@ extension CommentsNode {
     static var numberOfSections: Int {
       return 4
     }
+  }
+}
+
+// MARK: - Actions Declaration
+extension CommentsNode {
+  enum Action {
+    case viewRepliesForComment(comment: Comment)
+  }
+}
+
+// MARK: - Comment tree delegate
+extension CommentsNode: CommentTreeNodeDelegate {
+  func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, comment: Comment) {
+    delegate?.commentsNode(self, reactFor: .viewRepliesForComment(comment: comment))
   }
 }

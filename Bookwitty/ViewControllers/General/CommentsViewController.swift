@@ -14,6 +14,7 @@ class CommentsViewController: ASViewController<ASDisplayNode> {
   init() {
     commentsNode = CommentsNode()
     super.init(node: commentsNode)
+    commentsNode.delegate = self
   }
   
   func initialize(with commentManager: CommentManager) {
@@ -34,5 +35,27 @@ class CommentsViewController: ASViewController<ASDisplayNode> {
   
   func reloadData() {
     commentsNode.reloadData()
+  }
+  
+  fileprivate func pushCommentsViewControllerForReplies(comment: Comment) {
+    guard let commentIdentifier = comment.id else {
+      return
+    }
+    
+    let commentManager = CommentManager()
+    commentManager.initialize(commentIdentifier: commentIdentifier)
+    let commentsViewController = CommentsViewController()
+    commentsViewController.initialize(with: commentManager)
+    self.navigationController?.pushViewController(commentsViewController, animated: true)
+  }
+}
+
+// MARK: - Comments node delegate
+extension CommentsViewController: CommentsNodeDelegate {
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
+    switch action {
+    case .viewRepliesForComment(let comment):
+      pushCommentsViewControllerForReplies(comment: comment)
+    }
   }
 }
