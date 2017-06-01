@@ -156,6 +156,7 @@
 		59C997BD1ED5A0FD009A8451 /* CommentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C997BC1ED5A0FD009A8451 /* CommentAPI.swift */; };
 		59C997BF1ED5AD70009A8451 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C997BE1ED5AD70009A8451 /* Comment.swift */; };
 		59CB4DE71EDDADA800E7A60B /* CommentTreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB4DE61EDDADA800E7A60B /* CommentTreeNode.swift */; };
+		59CB4DE91EDDBFAE00E7A60B /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB4DE81EDDBFAE00E7A60B /* CommentsViewController.swift */; };
 		59CB4DEB1EDDC64200E7A60B /* CommentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB4DEA1EDDC64200E7A60B /* CommentsViewModel.swift */; };
 		59CB4DED1EDEA49C00E7A60B /* CommentsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB4DEC1EDEA49C00E7A60B /* CommentsNode.swift */; };
 		59CB4DEF1EDEC15800E7A60B /* CommentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB4DEE1EDEC15800E7A60B /* CommentsManager.swift */; };
@@ -439,6 +440,7 @@
 		59C997BC1ED5A0FD009A8451 /* CommentAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentAPI.swift; sourceTree = "<group>"; };
 		59C997BE1ED5AD70009A8451 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		59CB4DE61EDDADA800E7A60B /* CommentTreeNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTreeNode.swift; sourceTree = "<group>"; };
+		59CB4DE81EDDBFAE00E7A60B /* CommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
 		59CB4DEA1EDDC64200E7A60B /* CommentsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewModel.swift; sourceTree = "<group>"; };
 		59CB4DEC1EDEA49C00E7A60B /* CommentsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsNode.swift; sourceTree = "<group>"; };
 		59CB4DEE1EDEC15800E7A60B /* CommentsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsManager.swift; sourceTree = "<group>"; };
@@ -1310,6 +1312,7 @@
 				F400CDC51E7AD48D00B7EF26 /* SearchViewController.swift */,
 				59871F191E78ADFB000A86CD /* PostsViewController.swift */,
 				567B3C031ED4310600E02E16 /* SearchFiltersViewController.swift */,
+				59CB4DE81EDDBFAE00E7A60B /* CommentsViewController.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -1799,6 +1802,7 @@
 				56320C881EA748FB00642934 /* BaseCardPostNode.swift in Sources */,
 				F42A0AFF1E80829600ED52D2 /* UISearchBar+Utils.swift in Sources */,
 				F41F3AB71E6785CB004622D3 /* LoaderNode.swift in Sources */,
+				59CB4DE91EDDBFAE00E7A60B /* CommentsViewController.swift in Sources */,
 				F496DE061E65CB30007E22B1 /* Discover+API.swift in Sources */,
 				561229E71EA628E9004CE079 /* QuoteCardViewModel.swift in Sources */,
 				F420B6A21E43C570001F34CD /* User.swift in Sources */,
