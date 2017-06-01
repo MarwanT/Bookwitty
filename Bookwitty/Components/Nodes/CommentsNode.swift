@@ -111,7 +111,7 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
           left: 0, bottom: 0, right: 0)
         let headerNode = SectionTitleHeaderNode(externalInsets: externalInsets)
         headerNode.setTitle(
-          title: "Comments", // TODO: Localize
+          title: Strings.comments(),
           verticalBarColor: ThemeManager.shared.currentTheme.colorNumber6(),
           horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber5())
         return headerNode

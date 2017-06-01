@@ -141,6 +141,10 @@ class Strings {
     return localizedString(key: "clear_profile_photo")
   }
   
+  static func comments() -> String {
+    return localizedString(key: "comments")
+  }
+  
   static func contact_us() -> String {
     return localizedString(key: "contact_us")
   }
