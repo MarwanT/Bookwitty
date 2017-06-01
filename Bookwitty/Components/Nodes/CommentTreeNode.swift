@@ -36,6 +36,34 @@ class CommentTreeNode: ASCellNode {
     disclosureNodeConfiguration.imageNodeInsets.right = 0
     viewRepliesDisclosureNode.configuration = disclosureNodeConfiguration
   }
+  
+  var comment: Comment? {
+    didSet {
+      refreshCommentNode()
+    }
+  }
+  
+  func refreshCommentNode() {
+    commentNode.imageURL = URL(string: comment?.penName?.avatarUrl ?? "")
+    commentNode.fullName = comment?.penName?.name
+    commentNode.message = comment?.body
+    commentNode.setWitValue(witted: comment?.isWitted ?? false, wits: comment?.counts?.wits ?? 0)
+    commentNode.setDimValue(dimmed: comment?.isDimmed ?? false, dims: comment?.counts?.dims ?? 0)
+    if let createDate = comment?.createdAt as Date? {
+      commentNode.date = createDate
+    }
+    commentNode.mode = isReply ? .secondary : .primary
+    commentNode.configuration.showBottomActionBarSeparator = hasReplies ? false : true
+    setNeedsLayout()
+  }
+  
+  var hasReplies: Bool {
+    return (comment?.counts?.children ?? 0) > 0
+  }
+  
+  var isReply: Bool {
+    return !(comment?.parentId.isEmptyOrNil() ?? true)
+  }
 }
 
 extension CommentTreeNode {
