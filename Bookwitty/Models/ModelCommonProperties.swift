@@ -347,3 +347,45 @@ extension PenName: ModelCommonProperties {
     }
   }
 }
+
+extension Comment: ModelCommonProperties {
+  var thumbnailImageUrl: String? {
+    return nil
+  }
+  
+  var coverImageUrl: String? {
+    return nil
+  }
+  
+  var title: String? {
+    return nil
+  }
+  
+  var shortDescription: String? {
+    return nil
+  }
+  
+  var contributors: [PenName]? {
+    get { return nil }
+    set {
+      //Not a valid property of model
+    }
+  }
+  
+  var isWitted: Bool {
+    guard let vote = vote else {
+      return false
+    }
+    return Vote.isWitted(vote: vote)
+  }
+  var isDimmed: Bool {
+    guard let vote = vote else {
+      return false
+    }
+    return Vote.isDimmed(vote: vote)
+  }
+  
+  var following: Bool {
+    return false
+  }
+}
