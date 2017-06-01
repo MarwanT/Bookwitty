@@ -28,7 +28,6 @@ class Comment: Resource {
       "updatedAt" : DateAttribute().serializeAs("updated-at"),
       "body" : Attribute().serializeAs("body"),
       "vote": Attribute().serializeAs("vote"),
-      "parentId" : Attribute().serializeAs("parent-id"),
       "counts" : CountsAttribute().serializeAs("counts"),
       "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
       ])
