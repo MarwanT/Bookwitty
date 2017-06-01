@@ -64,6 +64,26 @@ class CommentTreeNode: ASCellNode {
   var isReply: Bool {
     return !(comment?.parentId.isEmptyOrNil() ?? true)
   }
+  
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    var elements = [ASLayoutElement]()
+    elements.append(commentNode)
+    
+    if hasReplies && configuration.shouldDisplayViewRepliesDisclosureNode {
+      elements.append(contentsOf: [separator(), viewRepliesDisclosureNode, separator()])
+    }
+    
+    let verticalStack = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: elements)
+    let externalInsetsSpec = ASInsetLayoutSpec(insets: configuration.externalInsets, child: verticalStack)
+    return externalInsetsSpec
+  }
+  
+  private func separator() -> ASDisplayNode {
+    let separator = ASDisplayNode()
+    separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    separator.style.height = ASDimensionMake(1)
+    return separator
+  }
 }
 
 extension CommentTreeNode {
