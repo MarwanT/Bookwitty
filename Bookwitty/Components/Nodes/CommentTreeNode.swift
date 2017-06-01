@@ -8,6 +8,10 @@
 
 import AsyncDisplayKit
 
+protocol CommentTreeNodeDelegate: class {
+  func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, comment: Comment)
+}
+
 class CommentTreeNode: ASCellNode {
   let commentNode: CommentNode
   let viewRepliesDisclosureNode: DisclosureNode
