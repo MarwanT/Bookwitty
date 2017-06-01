@@ -65,7 +65,13 @@ class CommentNode: ASCellNode {
     infoStackElements.append(headerSpec)
     
     // layout the body elements: Comment Message, Action Buttons
-    let bodySpec = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: [messageNode, separator(), actionBar])
+    var bodyStackElements = [ASLayoutElement]()
+    let actionBarTopSeparatorInsetSpec = ASInsetLayoutSpec(insets: configuration.separatorInsets, child: separator())
+    bodyStackElements.append(contentsOf: [messageNode, actionBarTopSeparatorInsetSpec, actionBar])
+    if configuration.showBottomActionBarSeparator {
+      bodyStackElements.append(separator())
+    }
+    let bodySpec = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: bodyStackElements)
     let bodyInsetSpec = ASInsetLayoutSpec(insets: bodyInsets, child: bodySpec)
     infoStackElements.append(bodyInsetSpec)
     
@@ -144,8 +150,10 @@ extension CommentNode {
     var imageBorderWidth: CGFloat = 0.0
     var imageBorderColor: UIColor? = nil
     var imageNodeInsets = UIEdgeInsetsMake(0, 0, 0, Configuration.subnodesSpace)
+    var separatorInsets = UIEdgeInsetsMake(10, 0, 0, 0)
     var bodyInsetTop: CGFloat = Configuration.subnodesSpace - 5
     var titleDateVerticalSpace: CGFloat = 5
+    var showBottomActionBarSeparator = true
   }
 }
 
