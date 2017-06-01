@@ -146,8 +146,10 @@ extension DisclosureNodeCell {
       bottom: 0, right: 0)
     var textEdgeInsets = UIEdgeInsets(
       top: 0, left: 0,
-      bottom: 5, right: 0)
-    var imageNodeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 19)
+      bottom: 0, right: 0)
+    var imageNodeInsets = UIEdgeInsets(
+      top: 0, left: 10, bottom: 0,
+      right: ThemeManager.shared.currentTheme.generalExternalMargin())
     var style: Style = .normal
     var addInternalBottomSeparator: Bool = false
     var separatorInsets = UIEdgeInsets.zero
