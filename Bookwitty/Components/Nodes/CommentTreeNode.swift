@@ -22,6 +22,19 @@ class CommentTreeNode: ASCellNode {
     commentNode = CommentNode()
     viewRepliesDisclosureNode = DisclosureNode()
     super.init()
+    setupNode()
+  }
+  
+  private func setupNode() {
+    automaticallyManagesSubnodes = true
+    
+    viewRepliesDisclosureNode.text = Strings.view_all()
+    
+    var disclosureNodeConfiguration = DisclosureNode.Configuration()
+    disclosureNodeConfiguration.style = .highlighted
+    disclosureNodeConfiguration.nodeEdgeInsets.left = 0
+    disclosureNodeConfiguration.imageNodeInsets.right = 0
+    viewRepliesDisclosureNode.configuration = disclosureNodeConfiguration
   }
 }
 
