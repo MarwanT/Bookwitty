@@ -13,6 +13,13 @@ class CommentManager {
   private(set) var postIdentifier: String?
   private(set) var commentIdentifier: String?
   
+  fileprivate var comments = [Comment]()
+  fileprivate var nextPageURL: URL?
+  
+  fileprivate var cancellableRequest: Cancellable?
+  
+  var isFetchingData = false
+  
   func initialize(postIdentifier: String) {
     self.postIdentifier = postIdentifier
     self.commentIdentifier = nil
