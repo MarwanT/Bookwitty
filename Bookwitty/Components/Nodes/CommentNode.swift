@@ -25,7 +25,11 @@ class CommentNode: ASCellNode {
     }
   }
   
-  var configuration = Configuration()
+  var configuration = Configuration() {
+    didSet {
+      setNeedsLayout()
+    }
+  }
   
   weak var delegate: CommentNodeDelegate?
   
