@@ -22,6 +22,8 @@ class CommentTreeNode: ASCellNode {
     }
   }
   
+  weak var delegate: CommentTreeNodeDelegate?
+  
   override init() {
     commentNode = CommentNode()
     viewRepliesDisclosureNode = DisclosureNode()
@@ -37,6 +39,7 @@ class CommentTreeNode: ASCellNode {
     disclosureNodeConfiguration.nodeEdgeInsets.left = 0
     disclosureNodeConfiguration.imageNodeInsets.right = 0
     viewRepliesDisclosureNode.configuration = disclosureNodeConfiguration
+    viewRepliesDisclosureNode.delegate = self
   }
   
   var comment: Comment? {
@@ -102,5 +105,15 @@ extension CommentTreeNode {
       left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: ThemeManager.shared.currentTheme.generalExternalMargin(),
       right: ThemeManager.shared.currentTheme.generalExternalMargin())
+  }
+}
+
+// MARK: - Disclosure node delegate
+extension CommentTreeNode: DisclosureNodeDelegate {
+  func disclosureNodeDidTap(disclosureNode: DisclosureNode, selected: Bool) {
+    guard let comment = comment else {
+      return
+    }
+    delegate?.commentTreeDidTapViewReplies(self, comment: comment)
   }
 }
