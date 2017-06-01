@@ -42,3 +42,88 @@ class CommentManager {
     return nextPageURL != nil
   }
 }
+
+// MARK: Network Calls
+extension CommentManager {
+  func loadComments(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    if postIdentifier != nil {
+      loadCommentsForPost(completion: completion)
+    } else if commentIdentifier != nil {
+      loadCommentReplies(completion: completion)
+    }
+  }
+  
+  private func loadCommentsForPost(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    guard !isFetchingData, let postIdentifier = postIdentifier else {
+      completion(false, BookwittyAPIError.undefined)
+      return
+    }
+    
+    isFetchingData = true
+    cancellableRequest?.cancel()
+    cancellableRequest = CommentAPI.comments(postIdentifier: postIdentifier, completion: {
+      (success, comments, next, error) in
+      defer {
+        self.isFetchingData = false
+        self.cancellableRequest = nil
+        completion(success, error)
+      }
+      
+      self.comments.removeAll()
+      if let comments = comments {
+        self.comments.append(contentsOf: comments)
+      }
+      
+      self.nextPageURL = next
+    })
+  }
+  
+  private func loadCommentReplies(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    guard !isFetchingData, let commentIdentifier = commentIdentifier else {
+      completion(false, BookwittyAPIError.undefined)
+      return
+    }
+    
+    isFetchingData = true
+    cancellableRequest?.cancel()
+    cancellableRequest = CommentAPI.commentReplies(identifier: commentIdentifier, completion: {
+      (success, comments, next, error) in
+      defer {
+        self.isFetchingData = false
+        self.cancellableRequest = nil
+        completion(success, error)
+      }
+      
+      self.comments.removeAll()
+      if let comments = comments {
+        self.comments.append(contentsOf: comments)
+      }
+      
+      self.nextPageURL = next
+    })
+  }
+  
+  func loadMore(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    guard !isFetchingData, let url = nextPageURL else {
+      completion(false, BookwittyAPIError.undefined)
+      return
+    }
+    
+    isFetchingData = true
+    cancellableRequest?.cancel()
+    cancellableRequest = GeneralAPI.nextPage(nextPage: url, completion: {
+      (success, resources, url, error) in
+      defer {
+        self.isFetchingData = false
+        self.cancellableRequest = nil
+        completion(success, error)
+      }
+      
+      guard success, let comments = resources as? [Comment] else {
+        return
+      }
+      self.comments.append(contentsOf: comments)
+      self.nextPageURL = url
+    })
+  }
+}
