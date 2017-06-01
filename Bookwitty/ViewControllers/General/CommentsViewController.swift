@@ -16,6 +16,13 @@ class CommentsViewController: ASViewController<ASDisplayNode> {
     super.init(node: commentsNode)
   }
   
+  func initialize(with commentManager: CommentManager) {
+    commentsNode.initialize(with: commentManager)
+    if isViewLoaded {
+      reloadData()
+    }
+  }
+  
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
