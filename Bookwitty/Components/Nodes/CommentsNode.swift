@@ -128,6 +128,7 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
           return ASCellNode()
         }
         let commentTreeNode = CommentTreeNode()
+        commentTreeNode.delegate = self
         commentTreeNode.comment = comment
         return commentTreeNode
       case Section.activityIndicator.rawValue:
@@ -191,5 +192,12 @@ extension CommentsNode {
 extension CommentsNode {
   enum Action {
     case viewRepliesForComment(comment: Comment)
+  }
+}
+
+// MARK: - Comment tree delegate
+extension CommentsNode: CommentTreeNodeDelegate {
+  func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, comment: Comment) {
+    delegate?.commentsNode(self, reactFor: .viewRepliesForComment(comment: comment))
   }
 }
