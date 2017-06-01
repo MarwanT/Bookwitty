@@ -70,6 +70,7 @@ struct CommentAPI {
         // Parse Data
         if let data = data, let parsedData = Comment.parseDataArray(data: data), let comments = parsedData.resources {
           commentsArray = comments
+          commentsArray?.forEach({ $0.parentId = identifier })
           success = true
           
           if let nextURL = parsedData.next {
