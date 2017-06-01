@@ -8,6 +8,10 @@
 
 import AsyncDisplayKit
 
+protocol CommentsNodeDelegate: class {
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action)
+}
+
 class CommentsNode: ASCellNode {
   let flowLayout: UICollectionViewFlowLayout
   let collectionNode: ASCollectionNode
