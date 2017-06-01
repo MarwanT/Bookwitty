@@ -9,4 +9,12 @@
 import AsyncDisplayKit
 
 class CommentTreeNode: ASCellNode {
+  let commentNode: CommentNode
+  let viewRepliesDisclosureNode: DisclosureNode
+  
+  override init() {
+    commentNode = CommentNode()
+    viewRepliesDisclosureNode = DisclosureNode()
+    super.init()
+  }
 }
