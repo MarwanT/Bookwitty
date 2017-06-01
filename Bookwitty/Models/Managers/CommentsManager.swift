@@ -29,4 +29,16 @@ class CommentManager {
     self.postIdentifier = nil
     self.commentIdentifier = commentIdentifier
   }
+  
+  var numberOfComments: Int {
+    return comments.count
+  }
+  
+  func comment(at index: Int) -> Comment? {
+    return comments[index]
+  }
+  
+  var hasNextPage: Bool {
+    return nextPageURL != nil
+  }
 }
