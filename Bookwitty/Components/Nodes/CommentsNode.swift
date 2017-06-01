@@ -45,6 +45,20 @@ class CommentsNode: ASCellNode {
     let externalInsetsSpec = ASInsetLayoutSpec(insets: configuration.externalInsets, child: collectionNode)
     return externalInsetsSpec
   }
+  
+  func updateCollectionNode(updateLoaderNode: Bool = false) {
+    var reloadableSections: [Int] = [Section.read.rawValue]
+    if updateLoaderNode {
+      reloadableSections.append(Section.activityIndicator.rawValue)
+    }
+    
+    let mutableIndexSet = NSMutableIndexSet()
+    reloadableSections.forEach({ mutableIndexSet.add($0) })
+    
+    DispatchQueue.main.async {
+      self.collectionNode.reloadSections(mutableIndexSet as IndexSet)
+    }
+  }
 }
 
 // MARK: - Collection View Delegates
