@@ -77,6 +77,7 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let relatedPostsBottomSeparator: SeparatorNode
   fileprivate let relatedPostsNodeLoader: LoaderNode
   fileprivate let bannerImageNode: ASImageNode
+  fileprivate let commentsNode: CommentsNode
 
   let headerNode: PostDetailsHeaderNode
   let postItemsNode: PostDetailsItemNode
@@ -123,6 +124,7 @@ class PostDetailsNode: ASScrollNode {
       }
     }
   }
+  var showCommentNode: Bool = true
   var showRelatedPostsLoader: Bool = false {
     didSet {
       if isNodeLoaded {
@@ -165,6 +167,7 @@ class PostDetailsNode: ASScrollNode {
     relatedPostsNodeLoader = LoaderNode()
     relatedBooksNodeLoader = LoaderNode()
     bannerImageNode = ASImageNode()
+    commentsNode = CommentsNode()
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
@@ -195,6 +198,7 @@ class PostDetailsNode: ASScrollNode {
     relatedPostsNodeLoader = LoaderNode()
     relatedBooksNodeLoader = LoaderNode()
     bannerImageNode = ASImageNode()
+    commentsNode = CommentsNode()
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
@@ -209,6 +213,13 @@ class PostDetailsNode: ASScrollNode {
   func loadRelatedCards() {
     postCardsNode.loadNodes()
     setNeedsLayout()
+  }
+  
+  func loadComments(with resourceIdentifier: String) {
+    let commentManager = CommentManager()
+    commentManager.initialize(postIdentifier: resourceIdentifier)
+    commentsNode.initialize(with: commentManager)
+    commentsNode.reloadData()
   }
 
   func initializeNode() {
@@ -254,6 +265,8 @@ class PostDetailsNode: ASScrollNode {
     setBannerImage()
 
     bannerImageNode.addTarget(self, action: #selector(bannerTouchUpInside) , forControlEvents: .touchUpInside)
+    
+    commentsNode.displayMode = .compact
   }
 
   func setBannerImage() {
@@ -317,6 +330,11 @@ class PostDetailsNode: ASScrollNode {
       let conculsionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: conculsionNode)
       vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
       vStackSpec.children?.append(conculsionInsetSpec)
+    }
+    
+    if showCommentNode {
+      let commentsWrapper = wrapNode(node: commentsNode, width: constrainedSize.max.width)
+      vStackSpec.children?.append(commentsWrapper)
     }
 
     relatedBooksNodeLoader.updateLoaderVisibility(show: showRelatedBooksLoader)
