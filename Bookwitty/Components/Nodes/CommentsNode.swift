@@ -80,6 +80,11 @@ class CommentsNode: ASCellNode {
         return
     }
     contentSize = newSize
+    
+    if oldSize != newSize {
+      updateNodeHeight()
+      setNeedsLayout()
+    }
   }
   
   func initialize(with manager: CommentManager) {
@@ -87,7 +92,13 @@ class CommentsNode: ASCellNode {
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    collectionNode.style.preferredSize = constrainedSize.max
+    updateNodeHeight()
+    
+    var collectionSize = constrainedSize.max
+    if constrainedSize.max.height == CGFloat.infinity {
+      collectionSize = constrainedSize.min
+    }
+    collectionNode.style.preferredSize = collectionSize
     let externalInsetsSpec = ASInsetLayoutSpec(insets: configuration.externalInsets, child: collectionNode)
     return externalInsetsSpec
   }
@@ -123,6 +134,12 @@ class CommentsNode: ASCellNode {
     
     DispatchQueue.main.async {
       self.collectionNode.reloadSections(mutableIndexSet as IndexSet)
+    }
+  }
+  
+  func updateNodeHeight() {
+    if case DisplayMode.compact = displayMode {
+      style.height = ASDimensionMake(contentSize.height)
     }
   }
 }
