@@ -16,7 +16,7 @@ extension ResourceType {
   var localizedName: String {
     switch self {
     case User.resourceType:
-      return "User"
+      return Strings.user()
     case PenName.resourceType:
       return Strings.pen_name()
     case Image.resourceType:
@@ -34,7 +34,7 @@ extension ResourceType {
     case Video.resourceType:
       return Strings.video()
     case Audio.resourceType:
-      return "Audio"
+      return Strings.audio()
     case Link.resourceType:
       return Strings.link()
     case Book.resourceType:

@@ -39,9 +39,8 @@ class FilterCellNode: ASCellNode {
     disclosureImageNode.style.preferredSize = disclosureImageSize
     disclosureImageNode.image = #imageLiteral(resourceName: "rightArrow")
 
-    //TODO: Localize
     textNode.attributedText = AttributedStringBuilder(fontDynamicType: .callout)
-      .append(text: "Filter", color: defaultColor).attributedString
+      .append(text: Strings.filter(), color: defaultColor).attributedString
 
     filterImageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(defaultColor)
     disclosureImageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(defaultColor)

@@ -45,8 +45,7 @@ class SearchFiltersViewController: UIViewController {
   }
 
   fileprivate func setupNavigationbarButtons() {
-    //TODO: Localize
-    let applyBarButtonItem = UIBarButtonItem(title: "Apply", style: UIBarButtonItemStyle.plain, target: self, action: #selector(applyTouchUpInside(_:)))
+    let applyBarButtonItem = UIBarButtonItem(title: Strings.apply(), style: UIBarButtonItemStyle.plain, target: self, action: #selector(applyTouchUpInside(_:)))
     navigationItem.rightBarButtonItem = applyBarButtonItem
   }
 
@@ -160,9 +159,8 @@ extension SearchFiltersViewController: Themeable {
 //MARK: - Localizable implementation
 extension SearchFiltersViewController: Localizable {
   func applyLocalization() {
-    //TODO: Localize
-    title = "Filters"
-    tableViewHeaderButton.setTitle("Clear all", for: .normal)
+    title = Strings.filters()
+    tableViewHeaderButton.setTitle(Strings.clear_all(), for: .normal)
   }
 
   fileprivate func observeLanguageChanges() {

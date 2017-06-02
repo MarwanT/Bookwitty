@@ -64,11 +64,11 @@ class SearchFiltersViewModel {
 
     switch option {
     case .categories:
-      return "Categories" //TODO: Localize
+      return Strings.categories()
     case .languages:
-      return "Languages" //TODO: Localize
+      return Strings.languages()
     case .types:
-      return "Types" //TODO: Localize
+      return Strings.types()
     }
   }
 
