@@ -9,4 +9,14 @@
 import AsyncDisplayKit
 
 class WriteCommentNode: ASCellNode {
+  fileprivate let imageNode: ASNetworkImageNode
+  fileprivate let textNode: ASEditableTextNode
+  fileprivate let overlayNode: ASControlNode
+  
+  override init() {
+    imageNode = ASNetworkImageNode()
+    textNode = ASEditableTextNode()
+    overlayNode = ASControlNode()
+    super.init()
+  }
 }
