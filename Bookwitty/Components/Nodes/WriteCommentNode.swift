@@ -20,3 +20,27 @@ class WriteCommentNode: ASCellNode {
     super.init()
   }
 }
+
+extension WriteCommentNode {
+  struct Configuration {
+    private static var subnodesSpace = ThemeManager.shared.currentTheme.cardInternalMargin()
+    fileprivate var textContainerInset = UIEdgeInsetsMake(
+      ThemeManager.shared.currentTheme.cardInternalMargin(),
+      ThemeManager.shared.currentTheme.cardInternalMargin(),
+      ThemeManager.shared.currentTheme.cardInternalMargin(),
+      ThemeManager.shared.currentTheme.cardInternalMargin())
+    
+    var externalInsets = UIEdgeInsets(
+      top: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      left: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      bottom: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      right: ThemeManager.shared.currentTheme.generalExternalMargin())
+    var imageNodeInsets = UIEdgeInsetsMake(0, 0, 0, Configuration.subnodesSpace)
+    var imageSize: CGSize = CGSize(width: 45.0, height: 45.0)
+    var defaultTextColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    var placeholderTextColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    var textNodeBorderColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    var textNodeBorderWidth: CGFloat = 0.5
+    var textNodeMinimumHeight: CGFloat = 100
+  }
+}
