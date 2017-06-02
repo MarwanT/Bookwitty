@@ -191,6 +191,14 @@ extension CommentsNode {
   }
 }
 
+// MARK: - Display Declaration
+extension CommentsNode {
+  enum DisplayMode {
+    case normal
+    case compact
+  }
+}
+
 // MARK: - Actions Declaration
 extension CommentsNode {
   enum Action {
