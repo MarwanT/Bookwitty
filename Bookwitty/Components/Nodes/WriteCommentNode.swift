@@ -8,6 +8,10 @@
 
 import AsyncDisplayKit
 
+protocol WriteCommentNodeDelegate: class {
+  func writeCommentNodeDidTap(_ writeCommentNode: WriteCommentNode)
+}
+
 class WriteCommentNode: ASCellNode {
   fileprivate let imageNode: ASNetworkImageNode
   fileprivate let textNode: ASEditableTextNode
