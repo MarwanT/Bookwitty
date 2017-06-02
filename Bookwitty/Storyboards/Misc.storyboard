@@ -77,19 +77,31 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b5S-fS-Nla">
-                                                    <rect key="frame" x="337" y="10.5" width="30" height="30"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qns-f3-JDy">
+                                                    <rect key="frame" x="322" y="3" width="45" height="45"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b5S-fS-Nla">
+                                                            <rect key="frame" x="7.5" y="7.5" width="30" height="30"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="30" id="ipm-sb-AYW"/>
+                                                                <constraint firstAttribute="height" constant="30" id="qQV-Bk-DDv"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="30" id="ipm-sb-AYW"/>
-                                                        <constraint firstAttribute="height" constant="30" id="qQV-Bk-DDv"/>
+                                                        <constraint firstAttribute="width" constant="45" id="1v0-Q2-0k3"/>
+                                                        <constraint firstItem="b5S-fS-Nla" firstAttribute="centerY" secondItem="qns-f3-JDy" secondAttribute="centerY" id="2Cw-T1-ZNy"/>
+                                                        <constraint firstAttribute="height" constant="45" id="Ugi-AS-inA"/>
+                                                        <constraint firstItem="b5S-fS-Nla" firstAttribute="centerX" secondItem="qns-f3-JDy" secondAttribute="centerX" id="vCg-En-vzt"/>
                                                     </constraints>
-                                                </imageView>
+                                                </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="b5S-fS-Nla" firstAttribute="centerY" secondItem="c6A-lb-Iqn" secondAttribute="centerY" id="6yp-PF-ohW"/>
-                                                <constraint firstItem="b5S-fS-Nla" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="m0X-Wc-0mt" secondAttribute="trailing" constant="5" id="DvO-r2-KTv"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="qns-f3-JDy" secondAttribute="trailing" id="EoS-vK-aU0"/>
                                                 <constraint firstItem="m0X-Wc-0mt" firstAttribute="centerY" secondItem="c6A-lb-Iqn" secondAttribute="centerY" id="P74-AR-2xm"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="b5S-fS-Nla" secondAttribute="trailing" id="ifc-E0-WZd"/>
+                                                <constraint firstItem="qns-f3-JDy" firstAttribute="centerY" secondItem="c6A-lb-Iqn" secondAttribute="centerY" id="fQF-T5-32F"/>
+                                                <constraint firstItem="qns-f3-JDy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="m0X-Wc-0mt" secondAttribute="trailing" constant="5" id="fUv-uI-zP9"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="m0X-Wc-0mt" secondAttribute="leading" id="tdp-Td-9yW"/>
                                             </constraints>
                                         </tableViewCellContentView>
