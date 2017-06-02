@@ -13,6 +13,8 @@ class WriteCommentNode: ASCellNode {
   fileprivate let textNode: ASEditableTextNode
   fileprivate let overlayNode: ASControlNode
   
+  var configuration = Configuration()
+  
   override init() {
     imageNode = ASNetworkImageNode()
     textNode = ASEditableTextNode()
