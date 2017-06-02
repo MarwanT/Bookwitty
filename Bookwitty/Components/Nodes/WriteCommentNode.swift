@@ -19,6 +19,8 @@ class WriteCommentNode: ASCellNode {
   
   var configuration = Configuration()
   
+  weak var delegate: WriteCommentNodeDelegate?
+  
   override init() {
     imageNode = ASNetworkImageNode()
     textNode = ASEditableTextNode()
@@ -59,6 +61,7 @@ class WriteCommentNode: ASCellNode {
   
   // MARK: Actions
   func didTapNode(_ sender: Any) {
+    delegate?.writeCommentNodeDidTap(self)
   }
   
   // MARK: Data Setters
