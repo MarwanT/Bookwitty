@@ -29,6 +29,8 @@ class WriteCommentNode: ASCellNode {
     imageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
     imageNode.isLayerBacked = true
   
+    overlayNode.addTarget(self, action: #selector(didTapNode(_:)), forControlEvents: .touchUpInside)
+    
     placeholder = "What are your thoughts?"
     textNode.style.flexGrow = 1.0
     textNode.textContainerInset = configuration.textContainerInset
@@ -36,6 +38,10 @@ class WriteCommentNode: ASCellNode {
   
   override func didLoad() {
     textNode.textView.isEditable = false
+  }
+  
+  // MARK: Actions
+  func didTapNode(_ sender: Any) {
   }
   
   // MARK: Data Setters
