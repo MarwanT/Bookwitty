@@ -33,6 +33,10 @@ class WriteCommentNode: ASCellNode {
     textNode.style.flexGrow = 1.0
     textNode.textContainerInset = configuration.textContainerInset
   }
+  
+  override func didLoad() {
+    textNode.textView.isEditable = false
+  }
 }
 
 extension WriteCommentNode {
