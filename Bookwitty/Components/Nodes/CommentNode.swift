@@ -49,6 +49,7 @@ class CommentNode: ASCellNode {
     imageNode.style.preferredSize = configuration.imageSize
     imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(
       configuration.imageBorderWidth, configuration.imageBorderColor)
+    imageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
     
     actionBar.setup(forFollowingMode: false)
     actionBar.configuration.externalHorizontalMargin = 0
