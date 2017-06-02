@@ -160,6 +160,7 @@
 		59CB4DEB1EDDC64200E7A60B /* CommentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB4DEA1EDDC64200E7A60B /* CommentsViewModel.swift */; };
 		59CB4DED1EDEA49C00E7A60B /* CommentsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB4DEC1EDEA49C00E7A60B /* CommentsNode.swift */; };
 		59CB4DEF1EDEC15800E7A60B /* CommentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB4DEE1EDEC15800E7A60B /* CommentsManager.swift */; };
+		59CB4DF11EE0600800E7A60B /* WriteCommentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB4DF01EE0600800E7A60B /* WriteCommentNode.swift */; };
 		59CBE4F81E8090280068C7AD /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CBE4F71E8090280068C7AD /* AppError.swift */; };
 		59CBE4FA1E8094070068C7AD /* ErrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CBE4F91E8094070068C7AD /* ErrorManager.swift */; };
 		59CF3F821ECF3332002A5821 /* IntroductoryBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF3F811ECF3332002A5821 /* IntroductoryBanner.swift */; };
@@ -444,6 +445,7 @@
 		59CB4DEA1EDDC64200E7A60B /* CommentsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewModel.swift; sourceTree = "<group>"; };
 		59CB4DEC1EDEA49C00E7A60B /* CommentsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsNode.swift; sourceTree = "<group>"; };
 		59CB4DEE1EDEC15800E7A60B /* CommentsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsManager.swift; sourceTree = "<group>"; };
+		59CB4DF01EE0600800E7A60B /* WriteCommentNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WriteCommentNode.swift; sourceTree = "<group>"; };
 		59CBE4F71E8090280068C7AD /* AppError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		59CBE4F91E8094070068C7AD /* ErrorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorManager.swift; sourceTree = "<group>"; };
 		59CF3F811ECF3332002A5821 /* IntroductoryBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductoryBanner.swift; sourceTree = "<group>"; };
@@ -936,6 +938,7 @@
 				590E30011EDC1A68006C6D5C /* CommentNode.swift */,
 				59CB4DE61EDDADA800E7A60B /* CommentTreeNode.swift */,
 				59CB4DEC1EDEA49C00E7A60B /* CommentsNode.swift */,
+				59CB4DF01EE0600800E7A60B /* WriteCommentNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -1776,6 +1779,7 @@
 				593769D81E3689FB00F23226 /* DefaultTheme.swift in Sources */,
 				59EC5BAA1E6C5987006E1CB9 /* BookDetailsStockNode.swift in Sources */,
 				5988FCFC1EA4AC100045F82B /* TTTAttributedLabelNode.swift in Sources */,
+				59CB4DF11EE0600800E7A60B /* WriteCommentNode.swift in Sources */,
 				561229E31EA5FA5D004CE079 /* ProfileCardViewModel.swift in Sources */,
 				59A341571E575D3100CF90B3 /* NewsFeedViewModel.swift in Sources */,
 				5657A5431E8BCF02000EE647 /* Utilities+API.swift in Sources */,
