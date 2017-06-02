@@ -11,6 +11,8 @@ import Foundation
 class CommentsViewModel {
   fileprivate var commentManager: CommentManager?
   
+  var displayMode: CommentsNode.DisplayMode = .normal
+  
   func initialize(with manager: CommentManager) {
     commentManager = manager
   }

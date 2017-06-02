@@ -29,6 +29,13 @@ class CommentsNode: ASCellNode {
     }
   }
   
+  var displayMode = DisplayMode.normal {
+    didSet {
+      viewModel.displayMode = displayMode
+      setNeedsLayout()
+    }
+  }
+  
   override init() {
     flowLayout = UICollectionViewFlowLayout()
     flowLayout.sectionInset = UIEdgeInsets.zero
