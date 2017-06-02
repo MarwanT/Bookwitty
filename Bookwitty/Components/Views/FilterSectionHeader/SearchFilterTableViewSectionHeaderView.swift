@@ -110,7 +110,7 @@ extension SearchFilterTableViewSectionHeaderView: Themeable {
 
     separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     let margin = ThemeManager.shared.currentTheme.generalExternalMargin()
-    contentView.layoutMargins = UIEdgeInsets(top: 0.0, left: margin, bottom: 0.0, right: margin)
+    layoutMargins = UIEdgeInsets(top: 0.0, left: margin, bottom: 0.0, right: margin)
 
     imageView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
   }
