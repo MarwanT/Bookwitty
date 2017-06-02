@@ -21,6 +21,8 @@ class CommentsNode: ASCellNode {
   
   let viewModel = CommentsViewModel()
   
+  fileprivate var contentSize: CGSize = CGSize.zero
+  
   weak var delegate: CommentsNodeDelegate?
   
   var shouldShowLoader: Bool = false {
@@ -53,6 +55,31 @@ class CommentsNode: ASCellNode {
     loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
     
     automaticallyManagesSubnodes = true
+  }
+  
+  deinit {
+    collectionNode.view.removeObserver(self, forKeyPath: #keyPath(UICollectionView.contentSize))
+  }
+  
+  override func didLoad() {
+    super.didLoad()
+    collectionNode.view.addObserver(
+      self,
+      forKeyPath: #keyPath(UICollectionView.contentSize),
+      options: [NSKeyValueObservingOptions.new, NSKeyValueObservingOptions.old],
+      context: nil)
+  }
+
+  override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    guard let keyPath = keyPath, keyPath == #keyPath(UICollectionView.contentSize) else {
+      return
+    }
+    
+    guard let oldSize = change?[NSKeyValueChangeKey.oldKey] as? CGSize,
+      let newSize = change?[NSKeyValueChangeKey.newKey] as? CGSize else {
+        return
+    }
+    contentSize = newSize
   }
   
   func initialize(with manager: CommentManager) {
