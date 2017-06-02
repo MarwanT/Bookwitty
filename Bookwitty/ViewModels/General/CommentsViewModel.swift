@@ -28,7 +28,11 @@ class CommentsViewModel {
     case CommentsNode.Section.write.rawValue:
       return 1
     case CommentsNode.Section.read.rawValue:
-      return commentManager?.numberOfComments ?? 0
+      var itemsNumber = commentManager?.numberOfComments ?? 0
+      if case displayMode = CommentsNode.DisplayMode.compact {
+        itemsNumber = min(itemsNumber, 1)
+      }
+      return itemsNumber
     default:
       return 0
     }
