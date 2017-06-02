@@ -20,6 +20,18 @@ class WriteCommentNode: ASCellNode {
     textNode = ASEditableTextNode()
     overlayNode = ASControlNode()
     super.init()
+    setupNode()
+  }
+  
+  private func setupNode() {
+    automaticallyManagesSubnodes = true
+    
+    imageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
+    imageNode.isLayerBacked = true
+  
+    placeholder = "What are your thoughts?"
+    textNode.style.flexGrow = 1.0
+    textNode.textContainerInset = configuration.textContainerInset
   }
 }
 
