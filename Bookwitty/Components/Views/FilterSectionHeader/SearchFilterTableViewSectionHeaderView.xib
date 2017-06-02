@@ -15,8 +15,17 @@
             <rect key="frame" x="0.0" y="0.0" width="553" height="50"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aDh-RV-YCh">
+                    <rect key="frame" x="8" y="8.5" width="42" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6lg-XW-Mvl">
                     <rect key="frame" x="8" y="29" width="42" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="X4q-oG-Hvs"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -35,12 +44,6 @@
                         <constraint firstAttribute="height" constant="1" id="6I7-ih-F11"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aDh-RV-YCh">
-                    <rect key="frame" x="8" y="8" width="42" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -48,18 +51,20 @@
                 <constraint firstItem="Vlt-bH-nZL" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="1Cu-ZL-JDi"/>
                 <constraint firstAttribute="bottom" secondItem="nWk-ZR-GmG" secondAttribute="bottom" id="DaL-1W-a9Y"/>
                 <constraint firstItem="nWk-ZR-GmG" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Ksr-aS-jo6"/>
+                <constraint firstItem="aDh-RV-YCh" firstAttribute="centerY" relation="lessThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="centerY" id="PuK-bp-GrX"/>
                 <constraint firstItem="Vlt-bH-nZL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6lg-XW-Mvl" secondAttribute="trailing" constant="5" id="Tnd-Wb-7vI"/>
                 <constraint firstAttribute="trailingMargin" secondItem="Vlt-bH-nZL" secondAttribute="trailing" id="YAC-mP-fPQ"/>
+                <constraint firstAttribute="bottom" secondItem="6lg-XW-Mvl" secondAttribute="bottom" id="cEZ-pA-Bvx"/>
                 <constraint firstItem="6lg-XW-Mvl" firstAttribute="top" secondItem="aDh-RV-YCh" secondAttribute="bottom" id="cs9-ZP-vcQ"/>
                 <constraint firstAttribute="trailing" secondItem="nWk-ZR-GmG" secondAttribute="trailing" id="hQl-Aw-bZb"/>
                 <constraint firstAttribute="leadingMargin" secondItem="6lg-XW-Mvl" secondAttribute="leading" id="mHv-IA-JtM"/>
                 <constraint firstAttribute="leadingMargin" secondItem="aDh-RV-YCh" secondAttribute="leading" id="sjW-Yc-x8B"/>
-                <constraint firstItem="aDh-RV-YCh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" id="w4k-XF-leb"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="imageView" destination="Vlt-bH-nZL" id="9nB-sl-w4E"/>
                 <outlet property="separatorView" destination="nWk-ZR-GmG" id="dli-49-Cru"/>
+                <outlet property="subTitleHeightLayoutConstraint" destination="X4q-oG-Hvs" id="pvi-QL-5e0"/>
                 <outlet property="subTitleLabel" destination="6lg-XW-Mvl" id="0no-v0-9Rw"/>
                 <outlet property="titleLabel" destination="aDh-RV-YCh" id="ycx-e5-a7U"/>
             </connections>

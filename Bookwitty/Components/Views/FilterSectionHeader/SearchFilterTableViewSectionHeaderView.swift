@@ -34,6 +34,9 @@ class SearchFilterTableViewSectionHeaderView: UITableViewHeaderFooterView {
   @IBOutlet var subTitleLabel: UILabel!
   @IBOutlet var imageView: UIImageView!
   @IBOutlet var separatorView: UIView!
+  @IBOutlet var subTitleHeightLayoutConstraint: NSLayoutConstraint!
+
+  private let subTitleHeightLayoutConstraintDefaultValue: CGFloat = 21.0
 
   var delegate: SearchFilterTableViewSectionHeaderViewDelegate?
   var section: Int?
