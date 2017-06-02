@@ -40,6 +40,19 @@ class WriteCommentNode: ASCellNode {
     textNode.textView.isEditable = false
   }
   
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    textNode.borderColor = configuration.textNodeBorderColor.cgColor
+    textNode.borderWidth = configuration.textNodeBorderWidth
+    
+    textNode.style.minHeight = ASDimensionMake(configuration.textNodeMinimumHeight)
+    
+    imageNode.style.preferredSize = configuration.imageSize
+    let imageInsetsSpec = ASInsetLayoutSpec(insets: configuration.imageNodeInsets, child: imageNode)
+    let contentSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start, alignItems: .start, children: [imageInsetsSpec, textNode])
+    let contentInsetsSpec = ASInsetLayoutSpec(insets: configuration.externalInsets, child: contentSpec)
+    return ASOverlayLayoutSpec(child: contentInsetsSpec, overlay: overlayNode)
+  }
+  
   // MARK: Actions
   func didTapNode(_ sender: Any) {
   }
