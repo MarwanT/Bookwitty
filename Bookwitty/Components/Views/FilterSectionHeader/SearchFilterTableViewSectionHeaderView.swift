@@ -59,6 +59,23 @@ class SearchFilterTableViewSectionHeaderView: UITableViewHeaderFooterView {
 
     let recognizer = UITapGestureRecognizer(target: self, action: #selector(self.tapGestureHandle(_:)))
     self.addGestureRecognizer(recognizer)
+
+    subTitleLabel.addObserver(self, forKeyPath: #keyPath(UILabel.text), options: NSKeyValueObservingOptions.new, context: nil)
+  }
+
+  deinit {
+    subTitleLabel.removeObserver(self, forKeyPath: #keyPath(UILabel.text))
+  }
+
+  override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    if let keyPath = keyPath, keyPath == "text" {
+      guard let change = change else {
+        return
+      }
+
+      let val = change[NSKeyValueChangeKey.newKey] as? String
+      subTitleHeightLayoutConstraint.constant = val.isEmptyOrNil() ? 0.0 : subTitleHeightLayoutConstraintDefaultValue
+    }
   }
 
   fileprivate func applyMode() {
