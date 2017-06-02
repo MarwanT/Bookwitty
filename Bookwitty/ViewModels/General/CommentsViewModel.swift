@@ -24,7 +24,7 @@ class CommentsViewModel {
     case CommentsNode.Section.header.rawValue:
       return 1
     case CommentsNode.Section.write.rawValue:
-      return 0
+      return 1
     case CommentsNode.Section.read.rawValue:
       return commentManager?.numberOfComments ?? 0
     default:

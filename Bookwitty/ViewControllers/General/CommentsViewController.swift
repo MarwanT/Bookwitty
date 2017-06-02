@@ -56,6 +56,8 @@ extension CommentsViewController: CommentsNodeDelegate {
     switch action {
     case .viewRepliesForComment(let comment):
       pushCommentsViewControllerForReplies(comment: comment)
+    case .writeComment(let parentCommentIdentifier):
+      break // TODO: Trigger the writing a comment process
     }
   }
 }

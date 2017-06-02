@@ -122,7 +122,10 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
           horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber5())
         return headerNode
       case Section.write.rawValue:
-        return ASCellNode()
+        let writeCommentNode = WriteCommentNode()
+        writeCommentNode.imageURL = URL(string: UserManager.shared.defaultPenName?.coverImageUrl ?? "")
+        writeCommentNode.delegate = self
+        return writeCommentNode
       case Section.read.rawValue:
         guard let comment = self.viewModel.comment(for: indexPath) else {
           return ASCellNode()
@@ -192,6 +195,7 @@ extension CommentsNode {
 extension CommentsNode {
   enum Action {
     case viewRepliesForComment(comment: Comment)
+    case writeComment(parentCommentIdentifier: String?)
   }
 }
 
@@ -199,5 +203,12 @@ extension CommentsNode {
 extension CommentsNode: CommentTreeNodeDelegate {
   func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, comment: Comment) {
     delegate?.commentsNode(self, reactFor: .viewRepliesForComment(comment: comment))
+  }
+}
+
+// MARK: - Write comment node delegate
+extension CommentsNode: WriteCommentNodeDelegate {
+  func writeCommentNodeDidTap(_ writeCommentNode: WriteCommentNode) {
+    delegate?.commentsNode(self, reactFor: .writeComment(parentCommentIdentifier: nil))
   }
 }
