@@ -37,6 +37,30 @@ class WriteCommentNode: ASCellNode {
   override func didLoad() {
     textNode.textView.isEditable = false
   }
+  
+  // MARK: Data Setters
+  var imageURL: URL?  {
+    didSet {
+      imageNode.url = imageURL
+      imageNode.setNeedsLayout()
+    }
+  }
+  
+  var text: String? {
+    didSet {
+      textNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
+        .append(text: text ?? "", color: configuration.defaultTextColor).attributedString
+      setNeedsLayout()
+    }
+  }
+  
+  var placeholder: String? {
+    didSet {
+      textNode.attributedPlaceholderText = AttributedStringBuilder(fontDynamicType: .caption1)
+        .append(text: placeholder ?? "", color: configuration.placeholderTextColor).attributedString
+      setNeedsLayout()
+    }
+  }
 }
 
 extension WriteCommentNode {
