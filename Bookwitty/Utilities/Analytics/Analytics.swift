@@ -41,9 +41,10 @@ internal final class Analytics {
   func send(event: Event) {
     self.sendGoogle(event: event)
     
-    // Facebook don't have a built in OptOut option.
+    // Facebook / Answers don't have a built in OptOut option.
     if self.enabled {
       sendFacebook(event: event)
+      sendAnswers(event: event)
     }
   }
   
