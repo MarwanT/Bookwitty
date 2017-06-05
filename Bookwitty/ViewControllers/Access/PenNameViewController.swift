@@ -31,10 +31,10 @@ class PenNameViewController: UIViewController {
   let topViewToTopSpace: CGFloat = 40
   let defaultPenNameImageSize = CGSize(width: 600, height: 600)
   let viewModel: PenNameViewModel = PenNameViewModel()
-  
+  let maximumNumberOfPenNameCharacters: Int = 36
   var showNoteLabel: Bool = true
   var didEditImage: Bool = false
-
+  var candidateImageId: String?
   var mode: Mode = .New
 
   override func viewDidLoad() {
@@ -133,6 +133,12 @@ class PenNameViewController: UIViewController {
       showErrorUpdatingPasswordAlert(error: Strings.pen_name_cant_be_empty())
       return
     }
+    guard penNameInputField.textField.text?.characters.count ?? 0 <= maximumNumberOfPenNameCharacters else {
+      self.hideLoader()
+      showErrorUpdatingPasswordAlert(error: Strings.pen_name_max_number_of_characters_thirty_six())
+      return
+    }
+
     let biography = biographyTextView.text
 
     self.viewModel.createPenName(name: name, biography: biography, avatarId: imageId) {
@@ -185,6 +191,11 @@ class PenNameViewController: UIViewController {
   }
   
   fileprivate func uploadUserImageIfNeeded(completion: @escaping (_ imageId: String?)->()) {
+    guard candidateImageId == nil else {
+      completion(candidateImageId)
+      return
+    }
+
     guard didEditImage, let image = profileImageView.image else {
       completion(nil)
       return
@@ -193,6 +204,7 @@ class PenNameViewController: UIViewController {
     viewModel.upload(image: image, completion: {
       (success, imageId) in
       self.didEditImage = false
+      self.candidateImageId = imageId
       completion(imageId)
     })
   }
@@ -209,6 +221,11 @@ class PenNameViewController: UIViewController {
     guard let name = penNameInputField.textField.text, !name.isBlank else {
       completion(false)
       showErrorUpdatingPasswordAlert(error: Strings.pen_name_cant_be_empty())
+      return
+    }
+    guard penNameInputField.textField.text?.characters.count ?? 0 <= maximumNumberOfPenNameCharacters else {
+      completion(false)
+      showErrorUpdatingPasswordAlert(error: Strings.pen_name_max_number_of_characters_thirty_six())
       return
     }
     let biography = biographyTextView.text
@@ -271,6 +288,7 @@ class PenNameViewController: UIViewController {
     })
     let  removePhotoButton = UIAlertAction(title: Strings.clear_profile_photo(), style: .default, handler: { (action) -> Void in
       self.profileImageView.image = nil
+      self.candidateImageId = "" // Empty String makes the image deletable, nil => does not
       self.plusImageView.alpha = 1
     })
 
@@ -292,6 +310,7 @@ class PenNameViewController: UIViewController {
     let cameraViewController = CameraViewController(croppingEnabled: croppingEnabled, allowsLibraryAccess: libraryEnabled) { [weak self] image, asset in
       if let image = self?.resized(image) {
         self?.didEditImage = true
+        self?.candidateImageId = nil
         self?.profileImageView.image = image
         self?.plusImageView.alpha = 0
       }
@@ -305,6 +324,7 @@ class PenNameViewController: UIViewController {
     let libraryViewController = CameraViewController.imagePickerViewController(croppingEnabled: croppingEnabled) { image, asset in
       if let image = self.resized(image) {
         self.didEditImage = true
+        self.candidateImageId = nil
         self.profileImageView.image = image
         self.plusImageView.alpha = 0
       }
@@ -345,7 +365,8 @@ extension PenNameViewController: InputFieldDelegate {
   func inputFieldShouldReturn(inputField: InputField) -> Bool {
     switch inputField {
     case penNameInputField:
-      return biographyTextView.becomeFirstResponder()
+      _ = biographyTextView.becomeFirstResponder()
+      return false
     default: return true
     }
   }

@@ -56,7 +56,7 @@ class VideoCardViewModel: CardViewModelProtocol {
     let cardPostInfoData: CardPostInfoNodeData?
     if let penName = resource.penName {
       let name = penName.name ?? ""
-      let date = Date.formatDate(date: resource.createdAt)
+      let date = resource.createdAt?.formatted() ?? ""
       let penNameprofileImage = penName.avatarUrl
       cardPostInfoData = CardPostInfoNodeData(name, date, penNameprofileImage)
     } else {

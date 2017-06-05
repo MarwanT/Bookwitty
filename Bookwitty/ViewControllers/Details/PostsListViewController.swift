@@ -181,7 +181,7 @@ extension PostsListViewController: ASCollectionDataSource, ASCollectionDelegate 
       let itemNode = PostDetailItemNode(smallImage: true, showsSubheadline: true, showsButton: false)
       itemNode.imageUrl = res?.thumbnailImageUrl
       itemNode.body = res?.shortDescription
-      let date = Date.formatDate(date: res?.createdAt)
+      let date = res?.createdAt?.formatted() ?? ""
       itemNode.caption = date
       itemNode.headLine = res?.title
       itemNode.subheadLine = String(counting: res?.counts?.contributors)
@@ -191,7 +191,7 @@ extension PostsListViewController: ASCollectionDataSource, ASCollectionDelegate 
       let itemNode = PostDetailItemNode(smallImage: true, showsSubheadline: true, showsButton: false)
       itemNode.imageUrl = res?.thumbnailImageUrl
       itemNode.body = res?.shortDescription
-      let date = Date.formatDate(date: res?.createdAt)
+      let date = res?.createdAt?.formatted() ?? ""
       itemNode.caption = date
       itemNode.headLine = res?.title
       itemNode.subheadLine = res?.penName?.name
