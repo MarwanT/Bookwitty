@@ -54,12 +54,12 @@ class CommentNode: ASCellNode {
     actionBar.setup(forFollowingMode: false)
     actionBar.configuration.externalHorizontalMargin = 0
     actionBar.hideDim = false
-    actionBar.hideReplyButton = false
     actionBar.hideShareButton = true
     actionBar.delegate = self
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    actionBar.hideReplyButton = mode == .primary ? false : true
     
     var infoStackElements = [ASLayoutElement]()
     
@@ -73,7 +73,7 @@ class CommentNode: ASCellNode {
     var bodyStackElements = [ASLayoutElement]()
     let actionBarTopSeparatorInsetSpec = ASInsetLayoutSpec(insets: configuration.separatorInsets, child: separator())
     bodyStackElements.append(contentsOf: [messageNode, actionBarTopSeparatorInsetSpec, actionBar])
-    if configuration.showBottomActionBarSeparator {
+    if !configuration.hideBottomActionBarSeparator {
       bodyStackElements.append(separator())
     }
     let bodySpec = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: bodyStackElements)
@@ -158,7 +158,7 @@ extension CommentNode {
     var separatorInsets = UIEdgeInsetsMake(10, 0, 0, 0)
     var bodyInsetTop: CGFloat = Configuration.subnodesSpace - 5
     var titleDateVerticalSpace: CGFloat = 5
-    var showBottomActionBarSeparator = true
+    var hideBottomActionBarSeparator = false
   }
 }
 

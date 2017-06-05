@@ -19,9 +19,20 @@ class CardDetailsViewController: GenericNodeViewController {
     fatalError("init(coder:) has not been implemented")
   }
 
-  init(node: BaseCardPostNode, title: String? = nil, resource: ModelResource) {
+  init(node: BaseCardPostNode, title: String? = nil, resource: ModelResource, includeCommentsSection: Bool = true) {
     viewModel = CardDetailsViewModel(resource: resource)
-    super.init(node: node, title: nil)
+    var containerNode: ASDisplayNode = node
+    var commentsNode: CommentsNode?
+    if let resourceId = resource.id {
+      let concatNode = CommentsNode.concatinate(with: node, resourceIdentifier: resourceId)
+      containerNode = concatNode.wrapperNode
+      commentsNode = concatNode.commentsNode
+    }
+    
+    super.init(node: containerNode, title: nil)
+    
+    commentsNode?.delegate = self
+    
     node.delegate = self
     node.updateMode(fullMode: true)
     node.updateDimVisibility(visible: true)
@@ -232,5 +243,16 @@ extension CardDetailsViewController: PhotoCardContentNodeDelegate {
     let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
     present(imageViewer, animated: true, completion: nil)
 
+  }
+}
+
+extension CardDetailsViewController: CommentsNodeDelegate {
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
+    switch action {
+    case .writeComment(let parentCommentIdentifier):
+      break // TODO: Implement thiss
+    case .viewRepliesForComment(let comment):
+      break
+    }
   }
 }

@@ -785,6 +785,10 @@ class Strings {
     return localizedString(key: "view_all_categories")
   }
   
+  static func view_all_comments() -> String {
+    return localizedString(key: "view_all_comments")
+  }
+  
   static func view_all_related_books() -> String {
     return localizedString(key: "view_all_related_books")
   }

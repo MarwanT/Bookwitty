@@ -35,6 +35,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
       self.postDetailsNode.penName = self.viewModel.penName
     }
     loadContentPosts()
+    loadComments()
     loadRelatedBooks()
     loadRelatedPosts()
     applyLocalization()
@@ -120,6 +121,13 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
       self.postDetailsNode.showPostsLoader = false
       self.postDetailsNode.loadPostItemsNode()
     }
+  }
+  
+  func loadComments() {
+    guard let id = viewModel.resource.id else {
+      return
+    }
+    postDetailsNode.loadComments(with: id)
   }
 
   func loadRelatedBooks() {
@@ -391,7 +399,6 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
     let transitionInfo = GSTransitionInfo(fromView: imageNode.view)
     let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
     present(imageViewer, animated: true, completion: nil)
-
   }
 }
 

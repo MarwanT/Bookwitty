@@ -16,16 +16,26 @@ class CommentsNode: ASCellNode {
   let flowLayout: UICollectionViewFlowLayout
   let collectionNode: ASCollectionNode
   let loaderNode: LoaderNode
+  let viewCommentsDisclosureNode: DisclosureNodeCell
   
   var configuration = Configuration()
   
   let viewModel = CommentsViewModel()
+  
+  fileprivate var contentSize: CGSize = CGSize.zero
   
   weak var delegate: CommentsNodeDelegate?
   
   var shouldShowLoader: Bool = false {
     didSet {
       updateCollectionNode(updateLoaderNode: true)
+    }
+  }
+  
+  var displayMode = DisplayMode.normal {
+    didSet {
+      viewModel.displayMode = displayMode
+      setNeedsLayout()
     }
   }
   
@@ -37,6 +47,7 @@ class CommentsNode: ASCellNode {
     
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     loaderNode = LoaderNode()
+    viewCommentsDisclosureNode = DisclosureNodeCell()
     
     super.init()
     
@@ -45,7 +56,44 @@ class CommentsNode: ASCellNode {
     
     loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
     
+    var disclosureNodeConfiguration = DisclosureNodeCell.Configuration()
+    disclosureNodeConfiguration.style = .highlighted
+    disclosureNodeConfiguration.addInternalTopSeparator = true
+    disclosureNodeConfiguration.addInternalBottomSeparator = true
+    viewCommentsDisclosureNode.configuration = disclosureNodeConfiguration
+    viewCommentsDisclosureNode.text = Strings.view_all_comments()
+    
     automaticallyManagesSubnodes = true
+  }
+  
+  deinit {
+    collectionNode.view.removeObserver(self, forKeyPath: #keyPath(UICollectionView.contentSize))
+  }
+  
+  override func didLoad() {
+    super.didLoad()
+    collectionNode.view.addObserver(
+      self,
+      forKeyPath: #keyPath(UICollectionView.contentSize),
+      options: [NSKeyValueObservingOptions.new, NSKeyValueObservingOptions.old],
+      context: nil)
+  }
+
+  override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    guard let keyPath = keyPath, keyPath == #keyPath(UICollectionView.contentSize) else {
+      return
+    }
+    
+    guard let oldSize = change?[NSKeyValueChangeKey.oldKey] as? CGSize,
+      let newSize = change?[NSKeyValueChangeKey.newKey] as? CGSize else {
+        return
+    }
+    contentSize = newSize
+    
+    if oldSize != newSize {
+      updateNodeHeight()
+      setNeedsLayout()
+    }
   }
   
   func initialize(with manager: CommentManager) {
@@ -53,7 +101,13 @@ class CommentsNode: ASCellNode {
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    collectionNode.style.preferredSize = constrainedSize.max
+    updateNodeHeight()
+    
+    var collectionSize = constrainedSize.max
+    if constrainedSize.max.height == CGFloat.infinity {
+      collectionSize = constrainedSize.min
+    }
+    collectionNode.style.preferredSize = collectionSize
     let externalInsetsSpec = ASInsetLayoutSpec(insets: configuration.externalInsets, child: collectionNode)
     return externalInsetsSpec
   }
@@ -79,7 +133,7 @@ class CommentsNode: ASCellNode {
   }
   
   func updateCollectionNode(updateLoaderNode: Bool = false) {
-    var reloadableSections: [Int] = [Section.read.rawValue]
+    var reloadableSections: [Int] = [Section.read.rawValue, Section.viewAllComments.rawValue]
     if updateLoaderNode {
       reloadableSections.append(Section.activityIndicator.rawValue)
     }
@@ -89,6 +143,12 @@ class CommentsNode: ASCellNode {
     
     DispatchQueue.main.async {
       self.collectionNode.reloadSections(mutableIndexSet as IndexSet)
+    }
+  }
+  
+  func updateNodeHeight() {
+    if case DisplayMode.compact = displayMode {
+      style.height = ASDimensionMake(contentSize.height)
     }
   }
 }
@@ -133,9 +193,12 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
         let commentTreeNode = CommentTreeNode()
         commentTreeNode.delegate = self
         commentTreeNode.comment = comment
+        commentTreeNode.configuration.shouldHideViewRepliesDisclosureNode = (self.displayMode == .compact) ? true : false 
         return commentTreeNode
       case Section.activityIndicator.rawValue:
         return self.loaderNode
+      case Section.viewAllComments.rawValue:
+        return self.viewCommentsDisclosureNode
       default:
         return ASCellNode()
       }
@@ -168,6 +231,17 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
       context.completeBatchFetching(true)
     }
   }
+  
+  func collectionNode(_ collectionNode: ASCollectionNode, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+    guard let section = Section(rawValue: indexPath.section), section == .viewAllComments else {
+      return false
+    }
+    return true
+  }
+  
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    collectionNode.deselectItem(at: indexPath, animated: true)
+  }
 }
 
 // MARK: - Configuration Declaration
@@ -184,10 +258,19 @@ extension CommentsNode {
     case write
     case read
     case activityIndicator
+    case viewAllComments
     
     static var numberOfSections: Int {
-      return 4
+      return 5
     }
+  }
+}
+
+// MARK: - Display Declaration
+extension CommentsNode {
+  enum DisplayMode {
+    case normal
+    case compact
   }
 }
 
@@ -210,5 +293,24 @@ extension CommentsNode: CommentTreeNodeDelegate {
 extension CommentsNode: WriteCommentNodeDelegate {
   func writeCommentNodeDidTap(_ writeCommentNode: WriteCommentNode) {
     delegate?.commentsNode(self, reactFor: .writeComment(parentCommentIdentifier: nil))
+  }
+}
+
+// MARK: - Write comment node delegate
+extension CommentsNode {
+  static func concatinate(with node: ASDisplayNode, resourceIdentifier: String) -> (wrapperNode: ASDisplayNode, commentsNode: CommentsNode) {
+    let commentsNode = CommentsNode()
+    commentsNode.displayMode = .compact
+    let commentsManager = CommentManager()
+    commentsManager.initialize(postIdentifier: resourceIdentifier)
+    commentsNode.initialize(with: commentsManager)
+    commentsNode.reloadData()
+    
+    let containerNode = ASDisplayNode()
+    containerNode.automaticallyManagesSubnodes = true
+    containerNode.layoutSpecBlock = { (_, _) -> ASLayoutSpec in
+      return ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: [node, commentsNode])
+    }
+    return (containerNode, commentsNode)
   }
 }

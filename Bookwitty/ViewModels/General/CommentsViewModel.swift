@@ -11,6 +11,8 @@ import Foundation
 class CommentsViewModel {
   fileprivate var commentManager: CommentManager?
   
+  var displayMode: CommentsNode.DisplayMode = .normal
+  
   func initialize(with manager: CommentManager) {
     commentManager = manager
   }
@@ -26,7 +28,14 @@ class CommentsViewModel {
     case CommentsNode.Section.write.rawValue:
       return 1
     case CommentsNode.Section.read.rawValue:
-      return commentManager?.numberOfComments ?? 0
+      var itemsNumber = commentManager?.numberOfComments ?? 0
+      if case displayMode = CommentsNode.DisplayMode.compact {
+        itemsNumber = min(itemsNumber, 1)
+      }
+      return itemsNumber
+    case CommentsNode.Section.viewAllComments.rawValue:
+      let isCompactMode = displayMode == CommentsNode.DisplayMode.compact
+      return (isCompactMode && !isFetchingData) ? 1 : 0
     default:
       return 0
     }

@@ -59,7 +59,6 @@ class CommentTreeNode: ASCellNode {
       commentNode.date = createDate
     }
     commentNode.mode = isReply ? .secondary : .primary
-    commentNode.configuration.showBottomActionBarSeparator = hasReplies ? false : true
     setNeedsLayout()
   }
   
@@ -80,8 +79,11 @@ class CommentTreeNode: ASCellNode {
     var elements = [ASLayoutElement]()
     elements.append(commentNode)
     
-    if hasReplies && configuration.shouldDisplayViewRepliesDisclosureNode {
+    if hasReplies && !configuration.shouldHideViewRepliesDisclosureNode {
       elements.append(contentsOf: [separator(), viewRepliesDisclosureNode, separator()])
+      commentNode.configuration.hideBottomActionBarSeparator = true
+    } else {
+      commentNode.configuration.hideBottomActionBarSeparator = false
     }
     
     let verticalStack = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: elements)
@@ -99,7 +101,7 @@ class CommentTreeNode: ASCellNode {
 
 extension CommentTreeNode {
   struct Configuration {
-    var shouldDisplayViewRepliesDisclosureNode: Bool = true
+    var shouldHideViewRepliesDisclosureNode: Bool = true
     var externalInsets = UIEdgeInsets(
       top: ThemeManager.shared.currentTheme.generalExternalMargin() / 2,
       left: ThemeManager.shared.currentTheme.generalExternalMargin(),
