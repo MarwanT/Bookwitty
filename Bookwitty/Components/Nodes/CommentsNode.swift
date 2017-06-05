@@ -230,6 +230,17 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
       context.completeBatchFetching(true)
     }
   }
+  
+  func collectionNode(_ collectionNode: ASCollectionNode, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+    guard let section = Section(rawValue: indexPath.section), section == .viewAllComments else {
+      return false
+    }
+    return true
+  }
+  
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    collectionNode.deselectItem(at: indexPath, animated: true)
+  }
 }
 
 // MARK: - Configuration Declaration
