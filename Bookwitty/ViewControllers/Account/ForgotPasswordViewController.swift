@@ -63,7 +63,7 @@ class ForgotPasswordViewController: UIViewController {
       return
     }
     guard emailValidationResult.isValid else {
-      //TODO: Show error dialog message email not valid
+      showErrorDialogMessage(errorMessage: Strings.email_invalid())
       return
     }
 
