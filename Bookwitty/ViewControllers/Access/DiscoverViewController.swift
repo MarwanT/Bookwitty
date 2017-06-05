@@ -187,21 +187,24 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
     }
   }
 
-  func pullDownToReloadData() {
+
+  func reloadViewData() -> Bool {
+    /** Discussion
+     * TODO: Merge reloadViewData with refreshViewControllerData function, since they almost do the they job.
+     * The only difference is that 'refreshViewControllerData' function has the 'afterDataEmptied' block which
+     * removes all the cells that were showing prior to the load operation + it used the .loading not .reloading
+     * option which in turn shows the bottom/loadmore loader.
+     **/
     guard pullToRefresher.isRefreshing else {
       //Making sure that only UIRefreshControl will trigger this on valueChanged
-      return
+      return false
     }
     guard loadingStatus == .none else {
       pullToRefresher.endRefreshing()
       //Making sure that only UIRefreshControl will trigger this on valueChanged
-      return
+      return false
     }
 
-    //MARK: [Analytics] Event
-    let event: Analytics.Event = Analytics.Event(category: .Discover,
-                                                 action: .PullToRefresh)
-    Analytics.shared.send(event: event)
     loadingStatus = .reloading
     updateCollection(loaderSection: true)
     self.pullToRefresher.beginRefreshing()
@@ -210,6 +213,17 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
       strongSelf.loadingStatus = .none
       strongSelf.pullToRefresher.endRefreshing()
       strongSelf.updateCollection(orReloadAll: true)
+    }
+    return true
+  }
+
+  func pullDownToReloadData() {
+    let didStartReloadingData = reloadViewData()
+    if didStartReloadingData {
+      //MARK: [Analytics] Event
+      let event: Analytics.Event = Analytics.Event(category: .Discover,
+                                                   action: .PullToRefresh)
+      Analytics.shared.send(event: event)
     }
   }
 
@@ -936,7 +950,7 @@ extension DiscoverViewController: Localizable {
     applyLocalization()
 
     //Reload the Data upon language change
-    pullDownToReloadData()
+    _ = reloadViewData()
   }
 }
 
