@@ -213,6 +213,10 @@ class Strings {
     return localizedString(key: "email_already_registered")
   }
   
+  static func email_empty() -> String {
+    return localizedString(key: "email_empty")
+  }
+
   static func email_invalid() -> String {
     return localizedString(key: "email_invalid")
   }

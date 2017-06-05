@@ -56,6 +56,7 @@ class DataManager {
       if let newBook = newResource as? Book, newBook.productFormats?.count ?? 0 == 0,
         let existingBook = existingResource as? Book {
         newBook.productFormats = existingBook.productFormats
+        newBook.following = existingBook.following
       }
     }
 
