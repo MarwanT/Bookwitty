@@ -57,6 +57,7 @@
 "editions" = "Éditions";
 "email" = "E-mail";
 "email_already_registered" = "L'e-mail que vous avez indiqué est déjà enregistré chez nous";
+"email_empty" = "The email field can not be empty!";
 "email_invalid" = "Oups, votre e-mail semble invalide";
 "email_notifications" = "Notifications par e-mail";
 "empty_error_description" = "Sélectionnez des sujets et des contributeurs qui vous intéressent pour nourrir votre fil d'actualité.";
@@ -130,6 +131,7 @@
 "pen_name_cant_be_empty" = "Veuillez inscrire un pseudo";
 "pen_name_error_was_already_taken" = "Ooops, Penname was already taken!";
 "pen_name_error_could_not_create" = "Something went wrong, could not create Penname!";
+"pen_name_max_number_of_characters_thirty_six" = "Penname ne peut pas dépasser 36 caractères";
 "pen_names" = "Pseudos";
 "pen_names_to_follow" = "Pennames To Follow";
 "please_fill_required_field" = "Veuillez remplir les champs obligatoires";

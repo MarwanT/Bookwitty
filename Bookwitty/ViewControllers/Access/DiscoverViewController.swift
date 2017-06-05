@@ -868,13 +868,26 @@ extension DiscoverViewController {
 
     let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(for: activeSegment, resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
     if indexPathForAffectedItems.count > 0 {
-      updateCollection(with: indexPathForAffectedItems, shouldReloadItems: true, loaderSection: true)
+      updateCollectionNodes(indexPathForAffectedItems: indexPathForAffectedItems)
     }
   }
 }
 
 // MARK: - Reload Footer
 extension DiscoverViewController {
+  func updateCollectionNodes(indexPathForAffectedItems: [IndexPath]) {
+    let cards = indexPathForAffectedItems.map({ collectionNode.nodeForItem(at: $0) })
+    cards.forEach({ card in
+      guard let card = card as? BaseCardPostNode else {
+        return
+      }
+      guard let indexPath = card.indexPath, let commonResource =  viewModel.resourceForIndex(for: activeSegment, index: indexPath.row) as? ModelCommonProperties else {
+        return
+      }
+      card.baseViewModel?.resource = commonResource
+    })
+  }
+  
   func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, cardsSection: Bool = false, loaderSection: Bool = false, headerSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
     if reloadAll {
       collectionNode.reloadData(completion: {
@@ -923,7 +936,7 @@ extension DiscoverViewController: Localizable {
     applyLocalization()
 
     //Reload the Data upon language change
-    refreshViewControllerData()
+    pullDownToReloadData()
   }
 }
 

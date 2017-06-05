@@ -204,7 +204,15 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let sectionView = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableViewSectionHeaderView.reuseIdentifier) as? TableViewSectionHeaderView
     sectionView?.label.text = viewModel.titleFor(section: section)
+    /** Discussion
+     * Setting the background color on UITableViewHeaderFooterView has been deprecated, BUT contentView.backgroundColor was not working on the IPOD or IPHONE-5/s
+     * so we kept both until 'contentView.backgroundColor' work 100% on all supported devices
+     */
     sectionView?.contentView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+    if let imagebg = ThemeManager.shared.currentTheme.colorNumber2().image(size: CGSize(width: sectionView?.frame.width ?? 0.0, height: sectionView?.frame.height ?? 0.0)) {
+      sectionView?.backgroundView = UIImageView(image: imagebg)
+    }
+
     return sectionView
   }
 

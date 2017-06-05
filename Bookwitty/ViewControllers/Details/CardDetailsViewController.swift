@@ -31,7 +31,7 @@ class CardDetailsViewController: GenericNodeViewController {
     }
 
 
-    viewControllerTitleForResouce(resource: resource)
+    viewControllerAnalyticsScreenName(for: resource)
   }
 
   deinit {
@@ -66,40 +66,30 @@ class CardDetailsViewController: GenericNodeViewController {
     }
   }
   
-  func viewControllerTitleForResouce(resource: ModelResource) {
+  func viewControllerAnalyticsScreenName(for resource: ModelResource) {
 
     //MARK: [Analytics] Screen Name
     let name: Analytics.ScreenName
     switch resource.registeredResourceType {
     case Image.resourceType:
-      title = Strings.image()
       name = Analytics.ScreenNames.Image
     case Quote.resourceType:
-      title = Strings.quote()
       name = Analytics.ScreenNames.Quote
     case Video.resourceType:
-      title = Strings.video()
       name = Analytics.ScreenNames.Video
     case Link.resourceType:
-      title = Strings.link()
       name = Analytics.ScreenNames.Link
     case Author.resourceType:
-      title = Strings.author()
       name = Analytics.ScreenNames.Author
     case ReadingList.resourceType:
-      title = Strings.reading_list()
       name = Analytics.ScreenNames.ReadingList
     case Topic.resourceType:
-      title = Strings.topic()
       name = Analytics.ScreenNames.Topic
     case Text.resourceType:
-      title = Strings.article()
       name = Analytics.ScreenNames.Article
     case Book.resourceType:
-      title = Strings.book()
       name = Analytics.ScreenNames.BookDetails
     default:
-      title = nil
       name = Analytics.ScreenNames.Default
     }
 
