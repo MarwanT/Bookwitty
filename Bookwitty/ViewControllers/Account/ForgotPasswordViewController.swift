@@ -78,6 +78,12 @@ class ForgotPasswordViewController: UIViewController {
       }
     }
   }
+
+  fileprivate func showErrorDialogMessage(errorMessage: String, dimissButtonTitle: String = Strings.ok()) {
+    let alertController = UIAlertController(title: nil, message: errorMessage, preferredStyle: UIAlertControllerStyle.alert)
+    alertController.addAction(UIAlertAction(title: dimissButtonTitle, style: UIAlertActionStyle.default, handler: nil))
+    self.present(alertController, animated: true, completion: nil)
+  }
 }
 
 //MARK: - Themable implementation
