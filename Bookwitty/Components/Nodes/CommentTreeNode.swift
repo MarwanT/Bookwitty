@@ -81,6 +81,9 @@ class CommentTreeNode: ASCellNode {
     
     if hasReplies && !configuration.shouldHideViewRepliesDisclosureNode {
       elements.append(contentsOf: [separator(), viewRepliesDisclosureNode, separator()])
+      commentNode.configuration.hideBottomActionBarSeparator = true
+    } else {
+      commentNode.configuration.hideBottomActionBarSeparator = false
     }
     
     let verticalStack = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: elements)
