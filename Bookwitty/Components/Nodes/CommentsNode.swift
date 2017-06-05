@@ -295,3 +295,22 @@ extension CommentsNode: WriteCommentNodeDelegate {
     delegate?.commentsNode(self, reactFor: .writeComment(parentCommentIdentifier: nil))
   }
 }
+
+// MARK: - Write comment node delegate
+extension CommentsNode {
+  static func concatinate(with node: ASDisplayNode, resourceIdentifier: String) -> (wrapperNode: ASDisplayNode, commentsNode: CommentsNode) {
+    let commentsNode = CommentsNode()
+    commentsNode.displayMode = .compact
+    let commentsManager = CommentManager()
+    commentsManager.initialize(postIdentifier: resourceIdentifier)
+    commentsNode.initialize(with: commentsManager)
+    commentsNode.reloadData()
+    
+    let containerNode = ASDisplayNode()
+    containerNode.automaticallyManagesSubnodes = true
+    containerNode.layoutSpecBlock = { (_, _) -> ASLayoutSpec in
+      return ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: [node, commentsNode])
+    }
+    return (containerNode, commentsNode)
+  }
+}
