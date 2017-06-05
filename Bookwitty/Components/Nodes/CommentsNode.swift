@@ -193,6 +193,7 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
         let commentTreeNode = CommentTreeNode()
         commentTreeNode.delegate = self
         commentTreeNode.comment = comment
+        commentTreeNode.configuration.shouldHideViewRepliesDisclosureNode = (self.displayMode == .compact) ? true : false 
         return commentTreeNode
       case Section.activityIndicator.rawValue:
         return self.loaderNode
