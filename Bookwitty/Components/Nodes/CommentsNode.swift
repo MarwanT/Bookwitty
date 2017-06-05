@@ -16,6 +16,7 @@ class CommentsNode: ASCellNode {
   let flowLayout: UICollectionViewFlowLayout
   let collectionNode: ASCollectionNode
   let loaderNode: LoaderNode
+  let viewCommentsDisclosureNode: DisclosureNodeCell
   
   var configuration = Configuration()
   
@@ -46,6 +47,7 @@ class CommentsNode: ASCellNode {
     
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     loaderNode = LoaderNode()
+    viewCommentsDisclosureNode = DisclosureNodeCell()
     
     super.init()
     
@@ -53,6 +55,13 @@ class CommentsNode: ASCellNode {
     collectionNode.dataSource = self
     
     loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
+    
+    var disclosureNodeConfiguration = DisclosureNodeCell.Configuration()
+    disclosureNodeConfiguration.style = .highlighted
+    disclosureNodeConfiguration.addInternalTopSeparator = true
+    disclosureNodeConfiguration.addInternalBottomSeparator = true
+    viewCommentsDisclosureNode.configuration = disclosureNodeConfiguration
+    viewCommentsDisclosureNode.text = Strings.view_all_comments()
     
     automaticallyManagesSubnodes = true
   }
@@ -124,7 +133,7 @@ class CommentsNode: ASCellNode {
   }
   
   func updateCollectionNode(updateLoaderNode: Bool = false) {
-    var reloadableSections: [Int] = [Section.read.rawValue]
+    var reloadableSections: [Int] = [Section.read.rawValue, Section.viewAllComments.rawValue]
     if updateLoaderNode {
       reloadableSections.append(Section.activityIndicator.rawValue)
     }
@@ -187,6 +196,8 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
         return commentTreeNode
       case Section.activityIndicator.rawValue:
         return self.loaderNode
+      case Section.viewAllComments.rawValue:
+        return self.viewCommentsDisclosureNode
       default:
         return ASCellNode()
       }
@@ -235,9 +246,10 @@ extension CommentsNode {
     case write
     case read
     case activityIndicator
+    case viewAllComments
     
     static var numberOfSections: Int {
-      return 4
+      return 5
     }
   }
 }

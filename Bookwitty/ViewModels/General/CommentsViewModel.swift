@@ -33,6 +33,9 @@ class CommentsViewModel {
         itemsNumber = min(itemsNumber, 1)
       }
       return itemsNumber
+    case CommentsNode.Section.viewAllComments.rawValue:
+      let isCompactMode = displayMode == CommentsNode.DisplayMode.compact
+      return (isCompactMode && !isFetchingData) ? 1 : 0
     default:
       return 0
     }
