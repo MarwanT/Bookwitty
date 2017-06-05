@@ -129,6 +129,13 @@ extension OnBoardingViewController: OnBoardingCellDelegate {
                                                  action: analyticsAction)
     Analytics.shared.send(event: event)
   }
+
+  func didFinishAnimatingExpansion(of onBoardingCellNode: OnBoardingCellNode) {
+    guard let indexPath = onBoardingCellNode.indexPath else {
+      return
+    }
+    onBoardingNode.collectionNode.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.top, animated: true)
+  }
 }
 
 extension OnBoardingViewController: Themeable {

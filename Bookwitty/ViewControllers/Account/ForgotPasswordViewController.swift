@@ -51,23 +51,36 @@ class ForgotPasswordViewController: UIViewController {
   }
 
   fileprivate func resetPassword() {
-
-
     let event: Analytics.Event = Analytics.Event(category: .Author,
                                                  action: .ResetPassword)
     Analytics.shared.send(event: event)
 
     let emailValidationResult = emailField.validateField()
-    if emailValidationResult.isValid, let email: String = emailValidationResult.value {
-      _ = UserAPI.resetPassword(email: email) {
-        (success: Bool, error: BookwittyAPIError?) in
-        if success {
-          let alertController = UIAlertController(title: nil, message: Strings.reset_password_text(), preferredStyle: UIAlertControllerStyle.alert)
-          alertController.addAction(UIAlertAction(title: Strings.ok(), style: UIAlertActionStyle.default, handler: nil))
-          self.present(alertController, animated: true, completion: nil)
-        }
+    guard let email: String = emailValidationResult.value, !email.isBlank else {
+      showErrorDialogMessage(errorMessage: Strings.email_empty())
+      return
+    }
+    guard emailValidationResult.isValid else {
+      showErrorDialogMessage(errorMessage: Strings.email_invalid())
+      return
+    }
+
+    _ = UserAPI.resetPassword(email: email) {
+      (success: Bool, error: BookwittyAPIError?) in
+      if success {
+        let alertController = UIAlertController(title: nil, message: Strings.reset_password_text(), preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: Strings.ok(), style: UIAlertActionStyle.default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+      } else {
+        self.showErrorDialogMessage(errorMessage: Strings.some_thing_wrong_error())
       }
     }
+  }
+
+  fileprivate func showErrorDialogMessage(errorMessage: String, dimissButtonTitle: String = Strings.ok()) {
+    let alertController = UIAlertController(title: nil, message: errorMessage, preferredStyle: UIAlertControllerStyle.alert)
+    alertController.addAction(UIAlertAction(title: dimissButtonTitle, style: UIAlertActionStyle.default, handler: nil))
+    self.present(alertController, animated: true, completion: nil)
   }
 }
 

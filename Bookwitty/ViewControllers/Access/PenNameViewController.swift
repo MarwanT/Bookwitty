@@ -31,10 +31,10 @@ class PenNameViewController: UIViewController {
   let topViewToTopSpace: CGFloat = 40
   let defaultPenNameImageSize = CGSize(width: 600, height: 600)
   let viewModel: PenNameViewModel = PenNameViewModel()
-  
+  let maximumNumberOfPenNameCharacters: Int = 36
   var showNoteLabel: Bool = true
   var didEditImage: Bool = false
-
+  var candidateImageId: String?
   var mode: Mode = .New
 
   override func viewDidLoad() {
@@ -128,16 +128,47 @@ class PenNameViewController: UIViewController {
     _ = penNameInputField.resignFirstResponder()
     _ = biographyTextView.resignFirstResponder()
 
-    let name = penNameInputField.textField.text ?? ""
+    guard let name = penNameInputField.textField.text, !name.isBlank else {
+      self.hideLoader()
+      showErrorUpdatingPasswordAlert(error: Strings.pen_name_cant_be_empty())
+      return
+    }
+    guard penNameInputField.textField.text?.characters.count ?? 0 <= maximumNumberOfPenNameCharacters else {
+      self.hideLoader()
+      showErrorUpdatingPasswordAlert(error: Strings.pen_name_max_number_of_characters_thirty_six())
+      return
+    }
+
     let biography = biographyTextView.text
 
     self.viewModel.createPenName(name: name, biography: biography, avatarId: imageId) {
-      (success: Bool) in
+      (success: Bool, error: BookwittyAPIError?) in
       self.hideLoader()
+      guard success else {
+        self.handleError(error: error)
+        return
+      }
       _ = self.navigationController?.popViewController(animated: true)
     }
   }
   
+  fileprivate func handleError(error: BookwittyAPIError?) {
+    if let error = error {
+      switch error {
+      case .penNameHasAlreadyBeenTaken:
+        showErrorUpdatingPasswordAlert(error: Strings.pen_name_error_was_already_taken())
+      default:
+        showErrorUpdatingPasswordAlert(error: Strings.pen_name_error_could_not_create())
+      }
+    }
+  }
+
+  fileprivate func showErrorUpdatingPasswordAlert(error message: String) {
+    let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: Strings.ok(), style: .default, handler: nil))
+    self.navigationController?.present(alert, animated: true, completion: nil)
+  }
+
   fileprivate func updateUserProfile() {
     /**
      Upload the pen name image if needed before proceeding
@@ -148,17 +179,23 @@ class PenNameViewController: UIViewController {
     self.uploadUserImageIfNeeded { (imageId) in
       self.updatePenNameProfile(imageId: imageId, completion: { (success: Bool) in
         self.hideLoader()
-        
-        if UserManager.shared.shouldDisplayOnboarding {
-          self.pushOnboardingViewController()
-        } else {
-          _ = self.navigationController?.popViewController(animated: true)
+        if success {
+          if UserManager.shared.shouldDisplayOnboarding {
+            self.pushOnboardingViewController()
+          } else {
+            _ = self.navigationController?.popViewController(animated: true)
+          }
         }
       })
     }
   }
   
   fileprivate func uploadUserImageIfNeeded(completion: @escaping (_ imageId: String?)->()) {
+    guard candidateImageId == nil else {
+      completion(candidateImageId)
+      return
+    }
+
     guard didEditImage, let image = profileImageView.image else {
       completion(nil)
       return
@@ -167,6 +204,7 @@ class PenNameViewController: UIViewController {
     viewModel.upload(image: image, completion: {
       (success, imageId) in
       self.didEditImage = false
+      self.candidateImageId = imageId
       completion(imageId)
     })
   }
@@ -180,7 +218,16 @@ class PenNameViewController: UIViewController {
     _ = penNameInputField.resignFirstResponder()
     _ = biographyTextView.resignFirstResponder()
 
-    let name = penNameInputField.textField.text
+    guard let name = penNameInputField.textField.text, !name.isBlank else {
+      completion(false)
+      showErrorUpdatingPasswordAlert(error: Strings.pen_name_cant_be_empty())
+      return
+    }
+    guard penNameInputField.textField.text?.characters.count ?? 0 <= maximumNumberOfPenNameCharacters else {
+      completion(false)
+      showErrorUpdatingPasswordAlert(error: Strings.pen_name_max_number_of_characters_thirty_six())
+      return
+    }
     let biography = biographyTextView.text
     
     //MARK: [Analytics] Event
@@ -189,7 +236,11 @@ class PenNameViewController: UIViewController {
     Analytics.shared.send(event: event)
     
     self.viewModel.updatePenNameIfNeeded(name: name, biography: biography, avatarId: imageId) {
-      (success: Bool) in
+      (success: Bool, error: BookwittyAPIError?) in
+      if !success {
+        self.handleError(error: error)
+      }
+
       completion(success)
     }
   }
@@ -208,7 +259,9 @@ class PenNameViewController: UIViewController {
 
   // MARK: - Keyboard Handling
   func keyboardWillShow(_ notification: NSNotification) {
-    topViewToTopConstraint.constant = 15 //was `-profileContainerView.frame.height/2`
+    let heightToShowTextBox = profileContainerView.frame.height - 10.0 // The 10.0 is just to keep a part of the image visible
+
+    topViewToTopConstraint.constant = -heightToShowTextBox
     profileContainerView.alpha = 0.2
     UIView.animate(withDuration: 0.44) {
       self.view.layoutIfNeeded()
@@ -235,6 +288,7 @@ class PenNameViewController: UIViewController {
     })
     let  removePhotoButton = UIAlertAction(title: Strings.clear_profile_photo(), style: .default, handler: { (action) -> Void in
       self.profileImageView.image = nil
+      self.candidateImageId = "" // Empty String makes the image deletable, nil => does not
       self.plusImageView.alpha = 1
     })
 
@@ -256,6 +310,7 @@ class PenNameViewController: UIViewController {
     let cameraViewController = CameraViewController(croppingEnabled: croppingEnabled, allowsLibraryAccess: libraryEnabled) { [weak self] image, asset in
       if let image = self?.resized(image) {
         self?.didEditImage = true
+        self?.candidateImageId = nil
         self?.profileImageView.image = image
         self?.plusImageView.alpha = 0
       }
@@ -269,6 +324,7 @@ class PenNameViewController: UIViewController {
     let libraryViewController = CameraViewController.imagePickerViewController(croppingEnabled: croppingEnabled) { image, asset in
       if let image = self.resized(image) {
         self.didEditImage = true
+        self.candidateImageId = nil
         self.profileImageView.image = image
         self.plusImageView.alpha = 0
       }
@@ -309,7 +365,8 @@ extension PenNameViewController: InputFieldDelegate {
   func inputFieldShouldReturn(inputField: InputField) -> Bool {
     switch inputField {
     case penNameInputField:
-      return biographyTextView.becomeFirstResponder()
+      _ = biographyTextView.becomeFirstResponder()
+      return false
     default: return true
     }
   }

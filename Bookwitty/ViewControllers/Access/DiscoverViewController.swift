@@ -187,21 +187,24 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
     }
   }
 
-  func pullDownToReloadData() {
+
+  func reloadViewData() -> Bool {
+    /** Discussion
+     * TODO: Merge reloadViewData with refreshViewControllerData function, since they almost do the they job.
+     * The only difference is that 'refreshViewControllerData' function has the 'afterDataEmptied' block which
+     * removes all the cells that were showing prior to the load operation + it used the .loading not .reloading
+     * option which in turn shows the bottom/loadmore loader.
+     **/
     guard pullToRefresher.isRefreshing else {
       //Making sure that only UIRefreshControl will trigger this on valueChanged
-      return
+      return false
     }
     guard loadingStatus == .none else {
       pullToRefresher.endRefreshing()
       //Making sure that only UIRefreshControl will trigger this on valueChanged
-      return
+      return false
     }
 
-    //MARK: [Analytics] Event
-    let event: Analytics.Event = Analytics.Event(category: .Discover,
-                                                 action: .PullToRefresh)
-    Analytics.shared.send(event: event)
     loadingStatus = .reloading
     updateCollection(loaderSection: true)
     self.pullToRefresher.beginRefreshing()
@@ -210,6 +213,17 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
       strongSelf.loadingStatus = .none
       strongSelf.pullToRefresher.endRefreshing()
       strongSelf.updateCollection(orReloadAll: true)
+    }
+    return true
+  }
+
+  func pullDownToReloadData() {
+    let didStartReloadingData = reloadViewData()
+    if didStartReloadingData {
+      //MARK: [Analytics] Event
+      let event: Analytics.Event = Analytics.Event(category: .Discover,
+                                                   action: .PullToRefresh)
+      Analytics.shared.send(event: event)
     }
   }
 
@@ -332,7 +346,7 @@ extension DiscoverViewController: ASCollectionDataSource {
             }
           })
         } else if let bookCard = baseCardNode as? BookCardPostCellNode, let resource = self.viewModel.resourceForIndex(for: self.activeSegment, index: index) {
-          bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.discover) ?? .topic == .product)
+          bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.discover) ?? .topic == .product)
         }
         baseCardNode.delegate = self
         return baseCardNode
@@ -383,7 +397,7 @@ extension DiscoverViewController: ASCollectionDataSource {
         card.baseViewModel?.resource = modelCommonProperties
       }
       if let bookCard = node as? BookCardPostCellNode {
-        bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.discover) ?? .topic == .product)
+        bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.discover) ?? .topic == .product)
       }
     case .books:
       guard let book = node as? BookNode, let bookResource = viewModel.bookValues(for: resource) else {
@@ -868,13 +882,26 @@ extension DiscoverViewController {
 
     let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(for: activeSegment, resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
     if indexPathForAffectedItems.count > 0 {
-      updateCollection(with: indexPathForAffectedItems, shouldReloadItems: true, loaderSection: true)
+      updateCollectionNodes(indexPathForAffectedItems: indexPathForAffectedItems)
     }
   }
 }
 
 // MARK: - Reload Footer
 extension DiscoverViewController {
+  func updateCollectionNodes(indexPathForAffectedItems: [IndexPath]) {
+    let cards = indexPathForAffectedItems.map({ collectionNode.nodeForItem(at: $0) })
+    cards.forEach({ card in
+      guard let card = card as? BaseCardPostNode else {
+        return
+      }
+      guard let indexPath = card.indexPath, let commonResource =  viewModel.resourceForIndex(for: activeSegment, index: indexPath.row) as? ModelCommonProperties else {
+        return
+      }
+      card.baseViewModel?.resource = commonResource
+    })
+  }
+  
   func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, cardsSection: Bool = false, loaderSection: Bool = false, headerSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
     if reloadAll {
       collectionNode.reloadData(completion: {
@@ -909,6 +936,9 @@ extension DiscoverViewController: Localizable {
   func applyLocalization() {
     navigationItem.title = Strings.discover()
     tabBarItem.title = Strings.discover().uppercased()
+
+    let segments: [String] = self.segments.map({ $0.name })
+    segmentedNode.initialize(with: segments)
   }
 
   fileprivate func observeLanguageChanges() {
@@ -920,7 +950,7 @@ extension DiscoverViewController: Localizable {
     applyLocalization()
 
     //Reload the Data upon language change
-    refreshViewControllerData()
+    _ = reloadViewData()
   }
 }
 

@@ -9,6 +9,7 @@
 import UIKit
 import AsyncDisplayKit
 import Spine
+import GSImageViewerController
 
 class BookDetailsViewController: ASViewController<ASCollectionNode> {
   let viewModel = BookDetailsViewModel()
@@ -511,5 +512,15 @@ extension BookDetailsViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+  }
+}
+
+//MARK: Image Delegate Action
+extension BookDetailsViewController: BookDetailsHeaderNodeDelegate {
+  func photoCard(node: BookDetailsHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+    let imageInfo = GSImageInfo(image: image, imageMode: .aspectFit, imageHD: nil)
+    let transitionInfo = GSTransitionInfo(fromView: imageNode.view)
+    let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
+    present(imageViewer, animated: true, completion: nil)
   }
 }

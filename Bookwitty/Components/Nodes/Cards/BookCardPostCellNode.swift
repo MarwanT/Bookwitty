@@ -13,7 +13,9 @@ class BookCardPostCellNode: BaseCardPostNode {
 
   let node: BookCardPostContentNode
   var showsInfoNode: Bool = false
+  var showActionNode: Bool = false
   override var shouldShowInfoNode: Bool { return showsInfoNode }
+  override var shouldShowActionBarNode: Bool { return showActionNode }
   override var contentShouldExtendBorders: Bool { return false }
   override var contentNode: ASDisplayNode { return node }
 
@@ -32,6 +34,14 @@ class BookCardPostCellNode: BaseCardPostNode {
   convenience init(shouldShowInfoNode: Bool) {
     self.init()
     showsInfoNode = shouldShowInfoNode
+  }
+
+  var isProduct: Bool = false {
+    didSet {
+      showActionNode = !isProduct
+      node.isProduct = isProduct
+      setNeedsLayout()
+    }
   }
 }
 
@@ -120,7 +130,7 @@ class BookCardPostContentNode: ASDisplayNode {
     }
   }
 
-  var isProduct: Bool = false {
+  fileprivate var isProduct: Bool = false {
     didSet {
       setNeedsLayout()
     }

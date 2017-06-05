@@ -135,6 +135,7 @@ extension BookDetailsViewModel {
       headerNode.title = book.title
       headerNode.author = book.productDetails?.author
       headerNode.imageURL = URL(string: book.coverImageUrl ?? "")
+      headerNode.delegate = viewController
       node = headerNode
     case .format:
       let formatNode = BookDetailsFormatNode()

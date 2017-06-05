@@ -165,7 +165,7 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     }
 
     let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
-    updateCollection(with: indexPathForAffectedItems, reloadItemsWithIndices: true, loaderSection: true)
+    updateCollectionNodes(indexPathForAffectedItems: indexPathForAffectedItems)
   }
 }
 
@@ -212,7 +212,7 @@ extension SearchViewController: ASCollectionDataSource {
             }
           })
         } else if let bookCard = baseCardNode as? BookCardPostCellNode, let resource = self.viewModel.resourceForIndex(indexPath: indexPath) {
-            bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.search) ?? .topic == .product)
+            bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.search) ?? .topic == .product)
         }
         baseCardNode.delegate = self
         return baseCardNode
@@ -236,7 +236,7 @@ extension SearchViewController: ASCollectionDataSource {
       }
 
       if let bookCard = card as? BookCardPostCellNode {
-        bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.search) ?? .topic == .product)
+        bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.search) ?? .topic == .product)
       }
     }
   }
@@ -435,6 +435,19 @@ extension SearchViewController: ASCollectionDelegate {
 }
 
 extension SearchViewController {
+  func updateCollectionNodes(indexPathForAffectedItems: [IndexPath]) {
+    let cards = indexPathForAffectedItems.map({ collectionNode.nodeForItem(at: $0) })
+    cards.forEach({ card in
+      guard let card = card as? BaseCardPostNode else {
+        return
+      }
+      guard let indexPath = card.indexPath, let commonResource =  viewModel.resourceForIndex(indexPath: indexPath) as? ModelCommonProperties else {
+        return
+      }
+      card.baseViewModel?.resource = commonResource
+    })
+  }
+
   func updateCollection(reloadAll: Bool = false, with itemIndices: [IndexPath]? = nil, reloadItemsWithIndices: Bool = false, loaderSection: Bool = false, dataSection: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
     if reloadAll {
       collectionNode.reloadData()

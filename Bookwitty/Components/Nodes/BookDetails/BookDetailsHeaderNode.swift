@@ -8,11 +8,16 @@
 
 import AsyncDisplayKit
 
+protocol BookDetailsHeaderNodeDelegate: class {
+  func photoCard(node: BookDetailsHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
+}
+
 class BookDetailsHeaderNode: ASCellNode {
   fileprivate var imageNode: ASNetworkImageNode
   fileprivate var titleNode: ASTextNode
   fileprivate var authorNode: ASTextNode
-  
+
+  weak var delegate: BookDetailsHeaderNodeDelegate?
   var configuration = Configuration()
   
   override init() {
@@ -22,18 +27,30 @@ class BookDetailsHeaderNode: ASCellNode {
     super.init()
     initializeComponents()
     applyTheme()
+    addTargets()
   }
   
   func initializeComponents() {
     automaticallyManagesSubnodes = true
-    imageNode.isLayerBacked = true
     titleNode.isLayerBacked = true
     authorNode.isLayerBacked = true
     
     imageNode.style.preferredSize = configuration.imageNodePreferredSize
     style.width = ASDimensionMake(UIScreen.main.bounds.width)
   }
-  
+
+  func addTargets() {
+    imageNode.addTarget(self, action: #selector(photoImageTouchUpInside(_:)), forControlEvents: .touchUpInside)
+  }
+
+  func photoImageTouchUpInside(_ sender: ASNetworkImageNode) {
+    guard let image = sender.image else {
+      return
+    }
+
+    delegate?.photoCard(node: self, requestToViewImage: image, from: sender)
+  }
+
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let verticalLayoutSpec = ASStackLayoutSpec(
       direction: .vertical,

@@ -45,6 +45,7 @@
 "country_region" = "Country/Region";
 "create_new_pen_name" = "Create New Pen Name";
 "current_password" = "Current Password";
+"current_password_is_empty_error" = "Current password was left empty!";
 "customer_service" = "Customer Service";
 "dim" = "Dim";
 "dimmed" = "Dimmed";
@@ -56,6 +57,7 @@
 "editions" = "Editions";
 "email" = "Email";
 "email_already_registered" = "The email address you have entered is already registered!";
+"email_empty" = "The email field can not be empty!";
 "email_invalid" = "Oops your email seems to be invalid";
 "email_notifications" = "Email Notifications";
 "empty_error_description" = "Select people, topics and tags of\ninterest to populate this section\nwith content you like.";
@@ -102,6 +104,7 @@
 "my_interests" = "My interests";
 "my_orders" = "My Orders";
 "new_password" = "New Password";
+"new_password_is_empty_error" = "New password was left empty!";
 "new_version_available_description" = "There is a newer version available for download! Please update the app by visiting the Apple Store.";
 "new_version_available_title" = "New version available";
 "news" = "News";
@@ -119,10 +122,16 @@
 "pages" = "Pages";
 "pages_you_may_be_interested_in" = "Pages you may be interested in";
 "password" = "Password";
+"password_change_unknown_error" = "Something went wrong";
 "password_invalid" = "Please verify your password";
+"password_is_wrong_error" = "The password entered is wrong";
+"password_minimum_six_characters_error" = "Password should be at least 6 characters long!";
 "payment_methods" = "Payment Methods";
 "pen_name" = "Pen Name";
 "pen_name_cant_be_empty" = "Please enter a pen name";
+"pen_name_error_was_already_taken" = "Ooops, Penname was already taken!";
+"pen_name_error_could_not_create" = "Something went wrong, could not create Penname!";
+"pen_name_max_number_of_characters_thirty_six" = "Penname can not be more than 36 characters long";
 "pen_names" = "Pen Names";
 "pen_names_to_follow" = "Pennames To Follow";
 "please_fill_required_field" = "Please fill the required fields";

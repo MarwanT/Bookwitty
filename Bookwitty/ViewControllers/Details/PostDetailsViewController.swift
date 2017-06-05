@@ -71,7 +71,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.coverImage = viewModel.image
     postDetailsNode.body = viewModel.body
 
-    let date = Date.formatDate(date: viewModel.date)
+    let date = viewModel.date?.formatted() ?? ""
     postDetailsNode.date = date
     postDetailsNode.penName = viewModel.penName
     postDetailsNode.conculsion = viewModel.conculsion
@@ -405,7 +405,7 @@ extension PostDetailsViewController: PostDetailsItemNodeDelegate {
       card.setNeedsLayout()
       
       if let bookCard = card as? BookCardPostCellNode, let book = resource as? Book {
-        bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: book , section: BookTypeRegistry.Section.postDetails) ?? .topic == .product)
+        bookCard.isProduct = (self.viewModel.bookRegistry.category(for: book , section: BookTypeRegistry.Section.postDetails) ?? .topic == .product)
       }
     }
   }
@@ -461,7 +461,7 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
           }
         })
       } else if let bookCard = card as? BookCardPostCellNode {
-        bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.postDetails) ?? .topic == .product)
+        bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.postDetails) ?? .topic == .product)
       }
 
       card?.delegate = self
@@ -503,7 +503,7 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
       let itemNode = PostDetailItemNode(smallImage: true, showsSubheadline: true, showsButton: false)
       itemNode.imageUrl = res?.thumbnailImageUrl
       itemNode.body = res?.shortDescription
-      let date = Date.formatDate(date: res?.createdAt)
+      let date = res?.createdAt?.formatted() ?? ""
       itemNode.caption = date
       itemNode.headLine = res?.title
       itemNode.subheadLine = String(counting: res?.counts?.contributors)
@@ -513,7 +513,7 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
       let itemNode = PostDetailItemNode(smallImage: true, showsSubheadline: true, showsButton: false)
       itemNode.imageUrl = res?.thumbnailImageUrl
       itemNode.body = res?.shortDescription
-      let date = Date.formatDate(date: res?.createdAt)
+      let date = res?.createdAt?.formatted() ?? ""
       itemNode.caption = date
       itemNode.headLine = res?.title
       itemNode.subheadLine = res?.penName?.name

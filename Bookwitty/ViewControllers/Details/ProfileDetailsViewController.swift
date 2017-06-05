@@ -322,7 +322,7 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
             card.baseViewModel?.resource = commonResource
           }
           if let registrySection = activeSegment.registrySection, let bookCard = card as? BookCardPostCellNode {
-            bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: registrySection) ?? .topic == .product)
+            bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: registrySection) ?? .topic == .product)
           }
         }
       default: break
@@ -353,7 +353,7 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
           }
         })
       } else if let registrySection = segment.registrySection,  let bookCard = baseCardNode as? BookCardPostCellNode, let resource = resource as? Book {
-        bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: registrySection) ?? .topic == .product)
+        bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: registrySection) ?? .topic == .product)
       }
 
       baseCardNode?.delegate = self

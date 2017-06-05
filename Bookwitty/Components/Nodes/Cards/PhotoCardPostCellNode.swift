@@ -47,7 +47,7 @@ class PhotoCardContentNode: ASDisplayNode {
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
 
-  var delegate: PhotoCardContentNodeDelegate?
+  weak var delegate: PhotoCardContentNodeDelegate?
 
   var imageNode: ASNetworkImageNode
   var titleNode: ASTextNode

@@ -45,6 +45,7 @@
 "country_region" = "Région";
 "create_new_pen_name" = "Créer un nouveau pseudo";
 "current_password" = "Mot de passe actuel";
+"current_password_is_empty_error" = "Current password was left empty!";
 "customer_service" = "Service client";
 "dim" = "Dim";
 "dimmed" = "Dimmé";
@@ -56,6 +57,7 @@
 "editions" = "Éditions";
 "email" = "E-mail";
 "email_already_registered" = "L'e-mail que vous avez indiqué est déjà enregistré chez nous";
+"email_empty" = "The email field can not be empty!";
 "email_invalid" = "Oups, votre e-mail semble invalide";
 "email_notifications" = "Notifications par e-mail";
 "empty_error_description" = "Sélectionnez des sujets et des contributeurs qui vous intéressent pour nourrir votre fil d'actualité.";
@@ -102,6 +104,7 @@
 "my_interests" = "Mes intérêts";
 "my_orders" = "Mes commandes";
 "new_password" = "Nouveau mot de passe";
+"new_password_is_empty_error" = "New password was left empty!";
 "new_version_available_description" = "Une nouvelle version de l'application Bookwitty est disponible. Télécharger-là maintenant dans l'App Store.";
 "new_version_available_title" = "Mise à jour disponible";
 "news" = "Informations";
@@ -119,10 +122,16 @@
 "pages" = "Pages";
 "pages_you_may_be_interested_in" = "Pages you may be interested in";
 "password" = "Mot de passe";
+"password_change_unknown_error" = "Something went wrong";
 "password_invalid" = "Veuillez vérifier votre mot de passe";
+"password_is_wrong_error" = "The password entered is wrong";
+"password_minimum_six_characters_error" = "Le mot de passe doit comporter au moins 6 caractères!";
 "payment_methods" = "Moyens de paiement";
 "pen_name" = "Pseudo";
 "pen_name_cant_be_empty" = "Veuillez inscrire un pseudo";
+"pen_name_error_was_already_taken" = "Ooops, Penname was already taken!";
+"pen_name_error_could_not_create" = "Something went wrong, could not create Penname!";
+"pen_name_max_number_of_characters_thirty_six" = "Penname ne peut pas dépasser 36 caractères";
 "pen_names" = "Pseudos";
 "pen_names_to_follow" = "Pennames To Follow";
 "please_fill_required_field" = "Veuillez remplir les champs obligatoires";

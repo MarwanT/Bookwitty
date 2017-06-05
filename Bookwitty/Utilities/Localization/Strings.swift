@@ -165,6 +165,10 @@ class Strings {
     return localizedString(key: "current_password")
   }
   
+  static func current_password_is_empty_error() -> String {
+    return localizedString(key: "current_password_is_empty_error")
+  }
+
   static func customer_service() -> String {
     return localizedString(key: "customer_service")
   }
@@ -209,6 +213,10 @@ class Strings {
     return localizedString(key: "email_already_registered")
   }
   
+  static func email_empty() -> String {
+    return localizedString(key: "email_empty")
+  }
+
   static func email_invalid() -> String {
     return localizedString(key: "email_invalid")
   }
@@ -393,6 +401,10 @@ class Strings {
     return localizedString(key: "new_password")
   }
   
+  static func new_password_is_empty_error() -> String {
+    return localizedString(key: "new_password_is_empty_error")
+  }
+
   static func new_version_available_description() -> String {
     return localizedString(key: "new_version_available_description")
   }
@@ -461,10 +473,22 @@ class Strings {
     return localizedString(key: "password")
   }
   
+  static func password_change_unknown_error() -> String {
+    return localizedString(key: "password_change_unknown_error")
+  }
+
   static func password_invalid() -> String {
     return localizedString(key: "password_invalid")
   }
   
+  static func password_is_wrong_error() -> String {
+    return localizedString(key: "password_is_wrong_error")
+  }
+
+  static func password_minimum_six_characters_error() -> String {
+    return localizedString(key: "password_minimum_six_characters_error")
+  }
+
   static func payment_methods() -> String {
     return localizedString(key: "payment_methods")
   }
@@ -477,6 +501,18 @@ class Strings {
     return localizedString(key: "pen_name_cant_be_empty")
   }
   
+  static func pen_name_error_was_already_taken() -> String {
+    return localizedString(key: "pen_name_error_was_already_taken")
+  }
+
+  static func pen_name_error_could_not_create() -> String {
+    return localizedString(key: "pen_name_error_could_not_create")
+  }
+
+  static func pen_name_max_number_of_characters_thirty_six() -> String {
+    return localizedString(key: "pen_name_max_number_of_characters_thirty_six")
+  }
+
   static func pen_names() -> String {
     return localizedString(key: "pen_names")
   }

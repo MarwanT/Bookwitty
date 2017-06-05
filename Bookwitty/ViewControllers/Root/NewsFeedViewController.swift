@@ -110,7 +110,7 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     self.misfortuneNode.style.height = ASDimensionMake(collectionNode.frame.height)
     self.misfortuneNode.style.width = ASDimensionMake(collectionNode.frame.width)
     
-    reloadPenNamesNode(collapsed: true)
+    reloadPenNamesNode()
     if viewModel.numberOfItemsInSection(section: Section.cards.rawValue) == 0 {
       refreshViewControllerData()
     }
@@ -197,8 +197,8 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
     }
   }
 
-  func reloadPenNamesNode(collapsed: Bool = false) {
-    penNameSelectionNode.loadData(penNames: viewModel.penNames, withSelected: viewModel.defaultPenName, collapsed: collapsed)
+  func reloadPenNamesNode() {
+    penNameSelectionNode.loadData(penNames: viewModel.penNames, withSelected: viewModel.defaultPenName)
   }
 }
 
@@ -256,7 +256,7 @@ extension NewsFeedViewController {
     }
 
     let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
-    updateCollection(with: indexPathForAffectedItems, shouldReloadItems: true, loaderSection: false, penNamesSection: false, orReloadAll: false, completionBlock: nil)
+    updateCollectionNodes(indexPathForAffectedItems: indexPathForAffectedItems)
   }
 
   func refreshData(_ notification: Notification) {
@@ -298,6 +298,19 @@ extension NewsFeedViewController {
 
 // MARK: - Reload Footer
 extension NewsFeedViewController {
+  func updateCollectionNodes(indexPathForAffectedItems: [IndexPath]) {
+    let cards = indexPathForAffectedItems.map({ collectionNode.nodeForItem(at: $0) })
+    cards.forEach({ card in
+      guard let card = card as? BaseCardPostNode else {
+        return
+      }
+      guard let indexPath = card.indexPath, let commonResource =  viewModel.resourceForIndex(index: indexPath.row) as? ModelCommonProperties else {
+        return
+      }
+      card.baseViewModel?.resource = commonResource
+    })
+  }
+
   func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, loaderSection: Bool = false, penNamesSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
     if reloadAll {
       collectionNode.reloadData(completion: { 
@@ -360,7 +373,7 @@ extension NewsFeedViewController: ASCollectionDataSource {
             }
           })
         } else if let bookCard = baseCardNode as? BookCardPostCellNode, let resource = self.viewModel.resourceForIndex(index: index) {
-          bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.newsFeed) ?? .topic == .product)
+          bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.newsFeed) ?? .topic == .product)
         }
         baseCardNode.delegate = self
         return baseCardNode
@@ -391,7 +404,7 @@ extension NewsFeedViewController: ASCollectionDataSource {
         card.baseViewModel?.resource = commonResource
       }
       if let bookCard = card as? BookCardPostCellNode {
-        bookCard.node.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.newsFeed) ?? .topic == .product)
+        bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.newsFeed) ?? .topic == .product)
       }
     }
   }

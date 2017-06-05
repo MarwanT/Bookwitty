@@ -23,6 +23,8 @@ public enum BookwittyAPIError: Swift.Error {
   case failToRetrieveDictionary
   case failToParseData
   case failToSignIn
+  case invalidCurrentPassword
+  case penNameHasAlreadyBeenTaken
   case undefined
   
   init(moyaError: MoyaError) {
