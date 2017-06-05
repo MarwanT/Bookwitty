@@ -8,6 +8,7 @@
 
 import Foundation
 import FacebookCore
+import Crashlytics
 
 internal final class Analytics {
 
@@ -130,5 +131,32 @@ extension Analytics {
     }
     
     AppEventsLogger.log(eventName)
+  }
+}
+
+// MARK: - Answers Analytics
+extension Analytics {
+  fileprivate func sendAnswers(event: Event) {
+    let aAcategory: String = event.category.name
+    let aAction: String = event.action.name
+    let aALabel: String = event.name
+
+    let eventName = aAcategory + (aAction.characters.count > 0 ? "-" + aAction : "")
+
+    var dictionary: [String : String] = [:]
+    if aALabel.characters.count > 0 {
+      dictionary["Label"] = aALabel
+    }
+
+    switch event.action {
+    case .SignIn:
+      Answers.logLogin(withMethod: "e-mail", success: 1.0, customAttributes: nil)
+    case .SearchOnBookwitty:
+      Answers.logSearch(withQuery: aALabel, customAttributes: nil)
+    case .GoToDetails:
+      Answers.logContentView(withName: aALabel, contentType: aAcategory, contentId: nil, customAttributes: nil)
+    default:
+      Answers.logCustomEvent(withName: eventName, customAttributes: dictionary)
+    }
   }
 }
