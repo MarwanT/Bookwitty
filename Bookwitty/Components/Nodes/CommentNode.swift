@@ -54,12 +54,12 @@ class CommentNode: ASCellNode {
     actionBar.setup(forFollowingMode: false)
     actionBar.configuration.externalHorizontalMargin = 0
     actionBar.hideDim = false
-    actionBar.hideReplyButton = false
     actionBar.hideShareButton = true
     actionBar.delegate = self
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    actionBar.hideReplyButton = mode == .primary ? false : true
     
     var infoStackElements = [ASLayoutElement]()
     
