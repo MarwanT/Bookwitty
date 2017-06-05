@@ -51,8 +51,6 @@ class ForgotPasswordViewController: UIViewController {
   }
 
   fileprivate func resetPassword() {
-
-
     let event: Analytics.Event = Analytics.Event(category: .Author,
                                                  action: .ResetPassword)
     Analytics.shared.send(event: event)
@@ -74,7 +72,7 @@ class ForgotPasswordViewController: UIViewController {
         alertController.addAction(UIAlertAction(title: Strings.ok(), style: UIAlertActionStyle.default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
       } else {
-        //TODO: show error dialog something went wrong
+        self.showErrorDialogMessage(errorMessage: Strings.some_thing_wrong_error())
       }
     }
   }
