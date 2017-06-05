@@ -58,14 +58,21 @@ class ForgotPasswordViewController: UIViewController {
     Analytics.shared.send(event: event)
 
     let emailValidationResult = emailField.validateField()
-    if emailValidationResult.isValid, let email: String = emailValidationResult.value {
-      _ = UserAPI.resetPassword(email: email) {
-        (success: Bool, error: BookwittyAPIError?) in
-        if success {
-          let alertController = UIAlertController(title: nil, message: Strings.reset_password_text(), preferredStyle: UIAlertControllerStyle.alert)
-          alertController.addAction(UIAlertAction(title: Strings.ok(), style: UIAlertActionStyle.default, handler: nil))
-          self.present(alertController, animated: true, completion: nil)
-        }
+    guard let email: String = emailValidationResult.value, !email.isBlank else {
+      //TODO: Show error dialog message email is empty
+      return
+    }
+    guard emailValidationResult.isValid else {
+      //TODO: Show error dialog message email not valid
+      return
+    }
+
+    _ = UserAPI.resetPassword(email: email) {
+      (success: Bool, error: BookwittyAPIError?) in
+      if success {
+        let alertController = UIAlertController(title: nil, message: Strings.reset_password_text(), preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: Strings.ok(), style: UIAlertActionStyle.default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
       }
     }
   }
