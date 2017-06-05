@@ -59,7 +59,7 @@ class ForgotPasswordViewController: UIViewController {
 
     let emailValidationResult = emailField.validateField()
     guard let email: String = emailValidationResult.value, !email.isBlank else {
-      //TODO: Show error dialog message email is empty
+      showErrorDialogMessage(errorMessage: Strings.email_empty())
       return
     }
     guard emailValidationResult.isValid else {
