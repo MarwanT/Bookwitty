@@ -79,7 +79,7 @@ class CommentTreeNode: ASCellNode {
     var elements = [ASLayoutElement]()
     elements.append(commentNode)
     
-    if hasReplies && configuration.shouldDisplayViewRepliesDisclosureNode {
+    if hasReplies && !configuration.shouldHideViewRepliesDisclosureNode {
       elements.append(contentsOf: [separator(), viewRepliesDisclosureNode, separator()])
     }
     
@@ -98,7 +98,7 @@ class CommentTreeNode: ASCellNode {
 
 extension CommentTreeNode {
   struct Configuration {
-    var shouldDisplayViewRepliesDisclosureNode: Bool = true
+    var shouldHideViewRepliesDisclosureNode: Bool = true
     var externalInsets = UIEdgeInsets(
       top: ThemeManager.shared.currentTheme.generalExternalMargin() / 2,
       left: ThemeManager.shared.currentTheme.generalExternalMargin(),
