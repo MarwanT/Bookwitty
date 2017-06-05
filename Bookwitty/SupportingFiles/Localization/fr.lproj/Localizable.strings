@@ -57,6 +57,7 @@
 "editions" = "Éditions";
 "email" = "E-mail";
 "email_already_registered" = "L'e-mail que vous avez indiqué est déjà enregistré chez nous";
+"email_empty" = "The email field can not be empty!";
 "email_invalid" = "Oups, votre e-mail semble invalide";
 "email_notifications" = "Notifications par e-mail";
 "empty_error_description" = "Sélectionnez des sujets et des contributeurs qui vous intéressent pour nourrir votre fil d'actualité.";

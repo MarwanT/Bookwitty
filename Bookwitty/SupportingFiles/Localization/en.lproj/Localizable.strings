@@ -57,6 +57,7 @@
 "editions" = "Editions";
 "email" = "Email";
 "email_already_registered" = "The email address you have entered is already registered!";
+"email_empty" = "The email field can not be empty!";
 "email_invalid" = "Oops your email seems to be invalid";
 "email_notifications" = "Email Notifications";
 "empty_error_description" = "Select people, topics and tags of\ninterest to populate this section\nwith content you like.";
