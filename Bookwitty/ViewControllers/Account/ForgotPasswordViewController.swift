@@ -73,6 +73,8 @@ class ForgotPasswordViewController: UIViewController {
         let alertController = UIAlertController(title: nil, message: Strings.reset_password_text(), preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: Strings.ok(), style: UIAlertActionStyle.default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
+      } else {
+        //TODO: show error dialog something went wrong
       }
     }
   }
