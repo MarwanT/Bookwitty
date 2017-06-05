@@ -121,17 +121,19 @@ extension Analytics {
 
 extension Analytics {
   fileprivate func sendFacebook(event: Event) {
-    var eventName: String = event.category.name
-    
-    if !event.action.name.isEmpty {
-      eventName += "-" + event.action.name
+    let fACategory: String = event.category.name
+    let fAAction: String = event.action.name
+    let fALabel: String = event.name
+
+    let eventName = fACategory + (fAAction.characters.count > 0 ? "-" + fAAction : "")
+
+    var dictionary: AppEvent.ParametersDictionary = [:]
+    if fALabel.characters.count > 0 {
+      dictionary[AppEventParameterName.custom("Label")] = fALabel
     }
-    
-    if !event.name.isEmpty {
-      eventName += "-" + event.name
-    }
-    
-    AppEventsLogger.log(eventName)
+
+    let fAEvent = AppEvent(name: eventName, parameters: dictionary, valueToSum: nil)
+    AppEventsLogger.log(fAEvent)
   }
 }
 
