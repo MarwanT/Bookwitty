@@ -59,7 +59,6 @@ class CommentTreeNode: ASCellNode {
       commentNode.date = createDate
     }
     commentNode.mode = isReply ? .secondary : .primary
-    commentNode.configuration.showBottomActionBarSeparator = hasReplies ? false : true
     setNeedsLayout()
   }
   
