@@ -114,6 +114,8 @@ protocol ThemeImageStyling {
 
 protocol Theme: ThemeSpacing, ThemeColor, ThemeButtonsStyle, ThemeLabelsStyle, ThemeTextFieldsStyle, ThemeAttributedTextStyle, ThemeImageStyling {
   func initialize()
+  
+  func defaultCornerRadius() -> CGFloat
 }
 
 class ThemeManager {

@@ -41,6 +41,10 @@ final class DefaultTheme: Theme {
     let refreshControlAppearance = UIRefreshControl.appearance()
     refreshControlAppearance.tintColor = self.colorNumber19()
   }
+  
+  func defaultCornerRadius() -> CGFloat {
+    return 2.0
+  }
 }
 
 // MARK: - Colors
