@@ -174,8 +174,12 @@ extension DefaultTheme {
   }
 }
 
-// MARK: - Buttons
+// MARK: - Spacings
 extension DefaultTheme {
+  func defaultLayoutMargin() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+  }
+  
   func cardExternalMargin() -> CGFloat {
     return 10
   }
