@@ -30,11 +30,17 @@ class ComposeCommentViewController: UIViewController {
   
   // MARK: - Action
   func didTapCancel(_ sender: Any) {
+    dismissKeyboard()
   }
   
   func didTapPublish(_ sender: Any) {
+    dismissKeyboard()
   }
   
+  // MARK: - Helpers
+  func dismissKeyboard() {
+    textView.resignFirstResponder()
+  }
 }
 
 // MARK: - Themeable protocol
