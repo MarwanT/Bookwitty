@@ -17,7 +17,24 @@ class ComposeCommentViewController: UIViewController {
     super.viewDidLoad()
     
     applyTheme()
+    setupNavigationItems()
   }
+  
+  private func setupNavigationItems() {
+    let leftBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(didTapCancel(_:)))
+    let rightBarButton = UIBarButtonItem(title: Strings.publish(), style: .plain, target: self, action: #selector(didTapPublish(_:)))
+    rightBarButton.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
+    self.navigationItem.leftBarButtonItem = leftBarButton
+    self.navigationItem.rightBarButtonItem = rightBarButton
+  }
+  
+  // MARK: - Action
+  func didTapCancel(_ sender: Any) {
+  }
+  
+  func didTapPublish(_ sender: Any) {
+  }
+  
 }
 
 // MARK: - Themeable protocol
