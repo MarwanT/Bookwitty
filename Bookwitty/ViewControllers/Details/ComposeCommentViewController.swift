@@ -28,6 +28,11 @@ class ComposeCommentViewController: UIViewController {
     addKeyboardNotifications()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    textView.becomeFirstResponder()
+  }
+  
   private func setupNavigationItems() {
     let leftBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(didTapCancel(_:)))
     let rightBarButton = UIBarButtonItem(title: Strings.publish(), style: .plain, target: self, action: #selector(didTapPublish(_:)))
