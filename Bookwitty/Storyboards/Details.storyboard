@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Compose Comment View Controller-->
+        <!--Comment Composer View Controller-->
         <scene sceneID="MTN-lM-ImE">
             <objects>
-                <viewController storyboardIdentifier="ComposeCommentViewController" id="9vy-T2-Qm4" customClass="ComposeCommentViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CommentComposerViewController" id="9vy-T2-Qm4" customClass="CommentComposerViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rYe-OB-M6c"/>
                         <viewControllerLayoutGuide type="bottom" id="8NP-Kt-3Gy"/>

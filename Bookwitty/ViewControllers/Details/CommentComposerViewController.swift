@@ -1,5 +1,5 @@
 //
-//  ComposeCommentViewController.swift
+//  CommentComposerViewController.swift
 //  Bookwitty
 //
 //  Created by Marwan  on 6/5/17.
@@ -8,19 +8,19 @@
 
 import UIKit
 
-protocol ComposeCommentViewControllerDelegate: class {
-  func composeCommentCancel(_ viewController: ComposeCommentViewController)
-  func composeCommentPublish(_ viewController: ComposeCommentViewController, content: String?)
+protocol CommentComposerViewControllerDelegate: class {
+  func commentComposerCancel(_ viewController: CommentComposerViewController)
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?)
 }
 
-class ComposeCommentViewController: UIViewController {
+class CommentComposerViewController: UIViewController {
   @IBOutlet weak var textView: UITextView!
   @IBOutlet weak var contentView: UIView!
   @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
   
   var blurEffectView: UIVisualEffectView?
   
-  weak var delegate: ComposeCommentViewControllerDelegate?
+  weak var delegate: CommentComposerViewControllerDelegate?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -86,12 +86,12 @@ class ComposeCommentViewController: UIViewController {
   // MARK: - Action
   func didTapCancel(_ sender: Any) {
     dismissKeyboard()
-    delegate?.composeCommentCancel(self)
+    delegate?.commentComposerCancel(self)
   }
   
   func didTapPublish(_ sender: Any) {
     dismissKeyboard()
-    delegate?.composeCommentPublish(self, content: textView.text)
+    delegate?.commentComposerPublish(self, content: textView.text)
   }
   
   // MARK: - Helpers
@@ -109,7 +109,7 @@ class ComposeCommentViewController: UIViewController {
 }
 
 // MARK: - Themeable protocol
-extension ComposeCommentViewController: Themeable {
+extension CommentComposerViewController: Themeable {
   func applyTheme() {
     contentView.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
     textView.textContainerInset = ThemeManager.shared.currentTheme.defaultTextViewInsets()
@@ -119,9 +119,9 @@ extension ComposeCommentViewController: Themeable {
 }
 
 // MARK: -
-extension ComposeCommentViewController {
-  class func show(from viewController: UIViewController, delegate: ComposeCommentViewControllerDelegate?) {
-    let composeCommentVC = Storyboard.Details.instantiate(ComposeCommentViewController.self)
+extension CommentComposerViewController {
+  class func show(from viewController: UIViewController, delegate: CommentComposerViewControllerDelegate?) {
+    let composeCommentVC = Storyboard.Details.instantiate(CommentComposerViewController.self)
     composeCommentVC.delegate = delegate
     composeCommentVC.addBlurEffectView(to: viewController.view)
     
