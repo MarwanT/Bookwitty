@@ -25,6 +25,7 @@ class ComposeCommentViewController: UIViewController {
     
     applyTheme()
     setupNavigationItems()
+    addKeyboardNotifications()
   }
   
   private func setupNavigationItems() {
@@ -33,6 +34,36 @@ class ComposeCommentViewController: UIViewController {
     rightBarButton.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
     self.navigationItem.leftBarButtonItem = leftBarButton
     self.navigationItem.rightBarButtonItem = rightBarButton
+  }
+  
+  private func addKeyboardNotifications() {
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillShow(_:)),
+      name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillHide(_:)),
+      name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+  }
+  
+  // MARK: - Keyboard Handling
+  func keyboardWillShow(_ notification: NSNotification) {
+    if let value = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+      let frame = value.cgRectValue
+      contentViewBottomConstraintToSuperview.constant = -frame.height
+    }
+
+    UIView.animate(withDuration: 0.44) {
+      self.view.layoutSubviews()
+    }
+  }
+  
+  func keyboardWillHide(_ notification: NSNotification) {
+    contentViewBottomConstraintToSuperview.constant = 0
+    UIView.animate(withDuration: 0.44) {
+      self.view.layoutSubviews()
+    }
   }
   
   // MARK: - Action
