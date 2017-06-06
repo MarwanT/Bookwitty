@@ -117,3 +117,20 @@ extension ComposeCommentViewController: Themeable {
     textView.font = FontDynamicType.body.font
   }
 }
+
+// MARK: -
+extension ComposeCommentViewController {
+  class func show(from viewController: UIViewController, delegate: ComposeCommentViewControllerDelegate?) {
+    let composeCommentVC = Storyboard.Details.instantiate(ComposeCommentViewController.self)
+    composeCommentVC.delegate = delegate
+    composeCommentVC.addBlurEffectView(to: viewController.view)
+    
+    let navigationController = UINavigationController(rootViewController: composeCommentVC)
+    navigationController.modalPresentationStyle = .overCurrentContext
+    navigationController.modalTransitionStyle = .crossDissolve
+    
+    viewController.present(navigationController, animated: true, completion: nil)
+    
+    return
+  }
+}
