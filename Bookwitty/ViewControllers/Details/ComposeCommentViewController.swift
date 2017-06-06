@@ -18,6 +18,8 @@ class ComposeCommentViewController: UIViewController {
   @IBOutlet weak var contentView: UIView!
   @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
   
+  var blurEffectView: UIVisualEffectView?
+  
   weak var delegate: ComposeCommentViewControllerDelegate?
   
   override func viewDidLoad() {
@@ -85,6 +87,14 @@ class ComposeCommentViewController: UIViewController {
   // MARK: - Helpers
   func dismissKeyboard() {
     textView.resignFirstResponder()
+  }
+  
+  func addBlurEffectView(to view: UIView) {
+    blurEffectView = UIVisualEffectView()
+    blurEffectView?.effect = UIBlurEffect(style: UIBlurEffectStyle.light)
+    blurEffectView?.frame = view.bounds
+    blurEffectView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    view.addSubview(blurEffectView!)
   }
 }
 
