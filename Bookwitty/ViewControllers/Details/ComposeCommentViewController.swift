@@ -18,6 +18,8 @@ class ComposeCommentViewController: UIViewController {
   @IBOutlet weak var contentView: UIView!
   @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
   
+  weak var delegate: ComposeCommentViewControllerDelegate?
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -36,10 +38,12 @@ class ComposeCommentViewController: UIViewController {
   // MARK: - Action
   func didTapCancel(_ sender: Any) {
     dismissKeyboard()
+    delegate?.composeCommentCancel(self)
   }
   
   func didTapPublish(_ sender: Any) {
     dismissKeyboard()
+    delegate?.composeCommentPublish(self, content: textView.text)
   }
   
   // MARK: - Helpers
