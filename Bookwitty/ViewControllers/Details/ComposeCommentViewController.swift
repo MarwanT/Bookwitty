@@ -33,6 +33,16 @@ class ComposeCommentViewController: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     textView.becomeFirstResponder()
+    self.blurEffectView?.alpha = 1
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    self.blurEffectView?.alpha = 0
+  }
+  
+  deinit {
+    self.blurEffectView?.removeFromSuperview()
   }
   
   private func setupNavigationItems() {
