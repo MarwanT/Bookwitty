@@ -577,6 +577,10 @@ class Strings {
     return localizedString(key: "publication_date")
   }
   
+  static func publish() -> String {
+    return localizedString(key: "publish")
+  }
+  
   static func publisher() -> String {
     return localizedString(key: "publisher")
   }
