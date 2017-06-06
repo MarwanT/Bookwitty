@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol ComposeCommentViewControllerDelegate: class {
+  func composeCommentCancel(_ viewController: ComposeCommentViewController)
+  func composeCommentPublish(_ viewController: ComposeCommentViewController, content: String?)
+}
+
 class ComposeCommentViewController: UIViewController {
   @IBOutlet weak var textView: UITextView!
   @IBOutlet weak var contentView: UIView!
