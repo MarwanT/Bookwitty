@@ -9,4 +9,8 @@
 import UIKit
 
 class ComposeCommentViewController: UIViewController {
+  @IBOutlet weak var textView: UITextView!
+  @IBOutlet weak var contentView: UIView!
+  @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
+  
 }
