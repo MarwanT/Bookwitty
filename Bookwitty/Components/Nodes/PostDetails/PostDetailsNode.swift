@@ -267,6 +267,7 @@ class PostDetailsNode: ASScrollNode {
     bannerImageNode.addTarget(self, action: #selector(bannerTouchUpInside) , forControlEvents: .touchUpInside)
     
     commentsNode.displayMode = .compact
+    commentsNode.delegate = self
   }
 
   func setBannerImage() {
@@ -386,5 +387,10 @@ class PostDetailsNode: ASScrollNode {
 extension PostDetailsNode: PostDetailsHeaderNodeDelegate {
   func postDetailsHeader(node: PostDetailsHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
     delegate?.postDetails(node: self, requestToViewImage: image, from: imageNode)
+  }
+}
+
+extension PostDetailsNode: CommentsNodeDelegate {
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
   }
 }
