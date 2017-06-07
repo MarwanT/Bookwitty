@@ -286,6 +286,7 @@ extension CommentsNode {
     case viewRepliesForComment(comment: Comment, postId: String)
     case viewAllComments(commentManager: CommentManager)
     case writeComment(parentCommentIdentifier: String?, postId: String)
+    case commentAction(comment: Comment, action: CardActionBarNode.Action)
   }
 }
 

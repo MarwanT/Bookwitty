@@ -409,6 +409,8 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
       pushCommentsViewController(with: commentManager)
     case .writeComment(let parentCommentIdentifier, _):
       CommentComposerViewController.show(from: self, delegate: self, parentCommentId: parentCommentIdentifier)
+    case .commentAction(let comment, let action):
+      break
     }
   }
 }

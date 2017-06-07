@@ -255,6 +255,8 @@ extension CardDetailsViewController: CommentsNodeDelegate {
       break
     case .viewRepliesForComment(let comment, let postId):
       break
+    case .commentAction(let comment, let action):
+      break
     }
   }
 }
