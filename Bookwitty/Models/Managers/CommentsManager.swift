@@ -142,6 +142,31 @@ extension CommentManager {
       self.nextPageURL = url
     })
   }
+  
+  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+    guard let postIdentifier = postIdentifier else {
+      completion(false, CommentManager.Error.missingPostId)
+      return
+    }
+    
+    guard let content = content, !content.isBlank else {
+      completion(false, CommentManager.Error.publishEmptyComment)
+      return
+    }
+    
+    _ = CommentAPI.createComment(postIdentifier: postIdentifier, commentMessage: content, parentCommentIdentifier: parentCommentId, completion: {
+      (success, comment, error) in
+      defer {
+        completion(success, CommentManager.Error.api(error))
+      }
+      
+      guard success else {
+        return
+      }
+      
+      // Do additional logic here if necessary
+    })
+  }
 }
 
 // MARK: - Comments related errors
