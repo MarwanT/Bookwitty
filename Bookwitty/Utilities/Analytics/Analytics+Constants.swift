@@ -341,6 +341,7 @@ extension Analytics {
     static let Help = ScreenName(name: "Help")
     static let ReadingLists = ScreenName(name: "Reading Lists")
     static let BooksListing = ScreenName(name: "Books Listing")
+    static let UserProfile = ScreenName(name: "User Profile")
 
     //Use in switch cases default clause
     static let Default = ScreenName(name: "[DEFAULT]")

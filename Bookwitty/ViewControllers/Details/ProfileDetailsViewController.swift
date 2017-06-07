@@ -74,6 +74,9 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     addDataObserver()
 
     navigationItem.backBarButtonItem = UIBarButtonItem.back
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.UserProfile)
   }
 
   deinit {
