@@ -68,6 +68,7 @@ class CommentsNode: ASCellNode {
   
   deinit {
     collectionNode.view.removeObserver(self, forKeyPath: #keyPath(UICollectionView.contentSize))
+    unregisterNotification()
   }
   
   override func didLoad() {
@@ -98,6 +99,7 @@ class CommentsNode: ASCellNode {
   
   func initialize(with manager: CommentManager) {
     viewModel.initialize(with: manager)
+    registerNotification()
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -110,6 +112,18 @@ class CommentsNode: ASCellNode {
     collectionNode.style.preferredSize = collectionSize
     let externalInsetsSpec = ASInsetLayoutSpec(insets: configuration.externalInsets, child: collectionNode)
     return externalInsetsSpec
+  }
+  
+  private func registerNotification() {
+    unregisterNotification()
+    guard let postId = viewModel.postId else {
+      return
+    }
+    NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(_:)), name: CommentManager.notificationName(for: postId), object: nil)
+  }
+  
+  private func unregisterNotification() {
+    NotificationCenter.default.removeObserver(self)
   }
   
   func reloadData() {
@@ -150,6 +164,11 @@ class CommentsNode: ASCellNode {
     if case DisplayMode.compact = displayMode {
       style.height = ASDimensionMake(contentSize.height)
     }
+  }
+  
+  // MARK: Actions
+  func handleNotification(_ notification: Notification) {
+    // check attached 'object' in notification if needed
   }
 }
 
