@@ -110,6 +110,7 @@ extension Analytics {
     case ResetPassword
     case Register
     case EditPenName
+    case CreatePenName
     case SwitchEmailNotification
     case ChangePassword
     case SignOut
@@ -186,6 +187,8 @@ extension Analytics {
         return "Register"
       case .EditPenName:
         return "Edit Pen Name"
+      case .CreatePenName:
+        return "Create Pen Name"
       case .SwitchEmailNotification:
         return "Switch Email Notification"
       case .ChangePassword:
