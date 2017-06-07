@@ -305,7 +305,7 @@ extension CommentsNode: WriteCommentNodeDelegate {
     guard let postId = viewModel.postId else {
       return
     }
-    delegate?.commentsNode(self, reactFor: .writeComment(parentCommentIdentifier: nil, postId: postId))
+    delegate?.commentsNode(self, reactFor: .writeComment(parentCommentIdentifier: viewModel.parentCommentIdentifier, postId: postId))
   }
 }
 
