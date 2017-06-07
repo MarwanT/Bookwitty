@@ -169,6 +169,7 @@ class CommentsNode: ASCellNode {
   // MARK: Actions
   func handleNotification(_ notification: Notification) {
     // check attached 'object' in notification if needed
+    reloadData()
   }
 }
 
