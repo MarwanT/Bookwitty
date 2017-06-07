@@ -251,6 +251,8 @@ extension CardDetailsViewController: CommentsNodeDelegate {
     switch action {
     case .writeComment(let parentCommentIdentifier, let postId):
       break // TODO: Implement thiss
+    case .viewAllComments(let commentManager):
+      break
     case .viewRepliesForComment(let comment, let postId):
       break
     }

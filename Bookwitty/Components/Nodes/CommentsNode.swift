@@ -278,6 +278,7 @@ extension CommentsNode {
 extension CommentsNode {
   enum Action {
     case viewRepliesForComment(comment: Comment, postId: String)
+    case viewAllComments(commentManager: CommentManager)
     case writeComment(parentCommentIdentifier: String?, postId: String)
   }
 }

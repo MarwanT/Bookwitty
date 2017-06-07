@@ -37,7 +37,7 @@ class CommentsViewController: ASViewController<ASDisplayNode> {
     commentsNode.reloadData()
   }
   
-  fileprivate func pushCommentsViewControllerForReplies(comment: Comment) {
+  fileprivate func pushCommentsViewControllerForReplies(comment: Comment, postId: String) {
     guard let commentIdentifier = comment.id else {
       return
     }
@@ -54,8 +54,10 @@ class CommentsViewController: ASViewController<ASDisplayNode> {
 extension CommentsViewController: CommentsNodeDelegate {
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
     switch action {
-      pushCommentsViewControllerForReplies(comment: comment)
     case .viewRepliesForComment(let comment, let postId):
+      pushCommentsViewControllerForReplies(comment: comment, postId: postId)
+    case .viewAllComments(let commentManager):
+      break
     case .writeComment(let parentCommentIdentifier, let postId):
       break // TODO: Trigger the writing a comment process
     }
