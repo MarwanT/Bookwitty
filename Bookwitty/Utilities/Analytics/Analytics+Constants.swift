@@ -147,6 +147,7 @@ extension Analytics {
     case GoToContent
     case GoToBooks
     case GoToPages
+    case GoToFilters
     //
     case ViewBanner
     //
@@ -249,6 +250,8 @@ extension Analytics {
         return "Go To Books"
       case .GoToPages:
         return "Go To Pages"
+      case .GoToFilters:
+        return "Go To Filters"
       case .ViewBanner:
         return "View Banner"
       case .ViewAllTopics:

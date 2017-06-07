@@ -183,6 +183,11 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     searchFiltersViewController.viewModel.initialize(with: facet, and: viewModel.filter)
     searchFiltersViewController.delegate = self
     self.navigationController?.pushViewController(searchFiltersViewController, animated: true)
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .Search,
+                                                 action: .GoToFilters)
+    Analytics.shared.send(event: event)
   }
 }
 
