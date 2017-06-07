@@ -277,26 +277,32 @@ extension CommentsNode {
 // MARK: - Actions Declaration
 extension CommentsNode {
   enum Action {
-    case viewRepliesForComment(comment: Comment)
-    case writeComment(parentCommentIdentifier: String?)
+    case viewRepliesForComment(comment: Comment, postId: String)
+    case writeComment(parentCommentIdentifier: String?, postId: String)
   }
 }
 
 // MARK: - Comment tree delegate
 extension CommentsNode: CommentTreeNodeDelegate {
   func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, comment: Comment) {
-    delegate?.commentsNode(self, reactFor: .viewRepliesForComment(comment: comment))
+    guard let postId = viewModel.postId else {
+      return
+    }
+    delegate?.commentsNode(self, reactFor: .viewRepliesForComment(comment: comment, postId: postId))
   }
 }
 
 // MARK: - Write comment node delegate
 extension CommentsNode: WriteCommentNodeDelegate {
   func writeCommentNodeDidTap(_ writeCommentNode: WriteCommentNode) {
-    delegate?.commentsNode(self, reactFor: .writeComment(parentCommentIdentifier: nil))
+    guard let postId = viewModel.postId else {
+      return
+    }
+    delegate?.commentsNode(self, reactFor: .writeComment(parentCommentIdentifier: nil, postId: postId))
   }
 }
 
-// MARK: - Write comment node delegate
+// MARK: - Display Helpers
 extension CommentsNode {
   static func concatinate(with node: ASDisplayNode, resourceIdentifier: String) -> (wrapperNode: ASDisplayNode, commentsNode: CommentsNode) {
     let commentsNode = CommentsNode()

@@ -249,9 +249,9 @@ extension CardDetailsViewController: PhotoCardContentNodeDelegate {
 extension CardDetailsViewController: CommentsNodeDelegate {
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
     switch action {
-    case .writeComment(let parentCommentIdentifier):
+    case .writeComment(let parentCommentIdentifier, let postId):
       break // TODO: Implement thiss
-    case .viewRepliesForComment(let comment):
+    case .viewRepliesForComment(let comment, let postId):
       break
     }
   }

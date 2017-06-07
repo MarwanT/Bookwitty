@@ -13,6 +13,10 @@ class CommentsViewModel {
   
   var displayMode: CommentsNode.DisplayMode = .normal
   
+  var postId: String? {
+    return commentManager?.postIdentifier
+  }
+  
   func initialize(with manager: CommentManager) {
     commentManager = manager
   }

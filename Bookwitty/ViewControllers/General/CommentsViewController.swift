@@ -54,9 +54,9 @@ class CommentsViewController: ASViewController<ASDisplayNode> {
 extension CommentsViewController: CommentsNodeDelegate {
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
     switch action {
-    case .viewRepliesForComment(let comment):
       pushCommentsViewControllerForReplies(comment: comment)
-    case .writeComment(let parentCommentIdentifier):
+    case .viewRepliesForComment(let comment, let postId):
+    case .writeComment(let parentCommentIdentifier, let postId):
       break // TODO: Trigger the writing a comment process
     }
   }
