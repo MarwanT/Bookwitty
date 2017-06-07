@@ -400,6 +400,9 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
     let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
     present(imageViewer, animated: true, completion: nil)
   }
+  
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
+  }
 }
 
 extension PostDetailsViewController: PostDetailsItemNodeDelegate {

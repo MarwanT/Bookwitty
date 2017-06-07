@@ -51,6 +51,7 @@ protocol PostDetailsNodeDelegate: class {
   func hasContentItems() -> Bool
   func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
   func postDetails(node: PostDetailsNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action)
 }
 
 class PostDetailsNode: ASScrollNode {
@@ -392,5 +393,6 @@ extension PostDetailsNode: PostDetailsHeaderNodeDelegate {
 
 extension PostDetailsNode: CommentsNodeDelegate {
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
+    delegate?.commentsNode(commentsNode, reactFor: action)
   }
 }
