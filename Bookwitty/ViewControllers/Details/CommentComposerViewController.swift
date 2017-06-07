@@ -70,6 +70,10 @@ class CommentComposerViewController: UIViewController {
       name: NSNotification.Name.UIKeyboardWillHide, object: nil)
   }
   
+  override func becomeFirstResponder() -> Bool {
+    return textView.becomeFirstResponder()
+  }
+  
   // MARK: - Keyboard Handling
   func keyboardWillShow(_ notification: NSNotification) {
     if let value = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
