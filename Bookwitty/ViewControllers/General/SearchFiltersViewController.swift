@@ -32,6 +32,9 @@ class SearchFiltersViewController: UIViewController {
     applyTheme()
     addObservers()
     setupNavigationbarButtons()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.SearchFilter)
   }
 
   fileprivate func initializeComponents() {

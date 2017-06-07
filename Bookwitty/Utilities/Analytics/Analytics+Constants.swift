@@ -349,6 +349,7 @@ extension Analytics {
     static let Discover = ScreenName(name: "Discover")
     static let Bag = ScreenName(name: "Bag")
     static let Search = ScreenName(name: "Search")
+    static let SearchFilter = ScreenName(name: "Search Filters")
     static let Account = ScreenName(name: "Account")
     static let Settings = ScreenName(name: "Settings")
     static let ChangePassword = ScreenName(name: "Change Password")
