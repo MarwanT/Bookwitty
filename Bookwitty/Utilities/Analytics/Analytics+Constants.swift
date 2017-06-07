@@ -141,6 +141,9 @@ extension Analytics {
     case GoToFollowings
     case GoToRelatedCategories
     case GoToBagOnWebsite
+    case GoToContent
+    case GoToBooks
+    case GoToPages
     //
     case ViewBanner
     //
@@ -235,6 +238,12 @@ extension Analytics {
         return "Go To Related Categories"
       case .GoToBagOnWebsite:
         return "Go To Bag On Website"
+      case .GoToContent:
+        return "Go To Content"
+      case .GoToBooks:
+        return "Go To Books"
+      case .GoToPages:
+        return "Go To Pages"
       case .ViewBanner:
         return "View Banner"
       case .ViewAllTopics:
