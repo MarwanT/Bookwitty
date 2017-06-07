@@ -18,6 +18,8 @@ class CommentComposerViewController: UIViewController {
   @IBOutlet weak var contentView: UIView!
   @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
   
+  fileprivate var parentCommentId: String?
+  
   var blurEffectView: UIVisualEffectView?
   
   weak var delegate: CommentComposerViewControllerDelegate?
@@ -43,6 +45,10 @@ class CommentComposerViewController: UIViewController {
   
   deinit {
     self.blurEffectView?.removeFromSuperview()
+  }
+  
+  func initialize(with parentCommentId: String?) {
+    self.parentCommentId = parentCommentId
   }
   
   private func setupNavigationItems() {
@@ -120,8 +126,9 @@ extension CommentComposerViewController: Themeable {
 
 // MARK: -
 extension CommentComposerViewController {
-  class func show(from viewController: UIViewController, delegate: CommentComposerViewControllerDelegate?) {
+  class func show(from viewController: UIViewController, delegate: CommentComposerViewControllerDelegate?, parentCommentId: String?) {
     let composeCommentVC = Storyboard.Details.instantiate(CommentComposerViewController.self)
+    composeCommentVC.initialize(with: parentCommentId)
     composeCommentVC.delegate = delegate
     composeCommentVC.addBlurEffectView(to: viewController.view)
     
