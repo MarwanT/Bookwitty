@@ -71,3 +71,18 @@ class CommentsViewModel {
     return commentManager?.hasNextPage ?? false
   }
 }
+
+// MARK: - Related methods
+extension CommentsViewModel {
+  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+    guard let commentManager = commentManager else {
+      completion(false, nil)
+      return
+    }
+    
+    commentManager.publishComment(content: content, parentCommentId: parentCommentId, completion: {
+      (success, error) in
+      completion(success, error)
+    })
+  }
+}
