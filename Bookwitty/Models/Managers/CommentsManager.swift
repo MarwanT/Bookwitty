@@ -128,3 +128,31 @@ extension CommentManager {
     })
   }
 }
+
+// MARK: - Comments related errors
+extension CommentManager {
+  enum Error {
+    case publishEmptyComment
+    case api(BookwittyAPIError?)
+    case missingPostId
+    case unidentified
+    
+    var title: String? {
+      switch self {
+      case .publishEmptyComment:
+        return "No Valid"
+      case .api, .missingPostId, .unidentified:
+        return "Ooops something went wrong"
+      }
+    }
+    
+    var message: String? {
+      switch self {
+      case .publishEmptyComment:
+        return "Your Comment Is Empty cannot publish it"
+      case .api, .missingPostId, .unidentified:
+        return "Something went wrong"
+      }
+    }
+  }
+}
