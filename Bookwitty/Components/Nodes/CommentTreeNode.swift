@@ -34,6 +34,8 @@ class CommentTreeNode: ASCellNode {
   private func setupNode() {
     automaticallyManagesSubnodes = true
     
+    commentNode.delegate = self
+    
     var disclosureNodeConfiguration = DisclosureNode.Configuration()
     disclosureNodeConfiguration.style = .highlighted
     disclosureNodeConfiguration.nodeEdgeInsets.left = 0
@@ -107,6 +109,12 @@ extension CommentTreeNode {
       left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: ThemeManager.shared.currentTheme.generalExternalMargin(),
       right: ThemeManager.shared.currentTheme.generalExternalMargin())
+  }
+}
+
+// MARK: - Comment node delegate
+extension CommentTreeNode: CommentNodeDelegate {
+  func commentNode(_ node: CommentNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
   }
 }
 
