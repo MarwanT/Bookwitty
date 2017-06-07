@@ -58,8 +58,34 @@ extension CommentsViewController: CommentsNodeDelegate {
       pushCommentsViewControllerForReplies(comment: comment, postId: postId)
     case .viewAllComments(let commentManager):
       break
-    case .writeComment(let parentCommentIdentifier, let postId):
-      break // TODO: Trigger the writing a comment process
+    case .writeComment(let parentCommentIdentifier, _):
+      CommentComposerViewController.show(from: self, delegate: self, parentCommentId: parentCommentIdentifier)
+    }
+  }
+}
+
+// MARK: - Compose comment delegate implementation
+extension CommentsViewController: CommentComposerViewControllerDelegate {
+  func commentComposerCancel(_ viewController: CommentComposerViewController) {
+    dismiss(animated: true, completion: nil)
+  }
+  
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, parentCommentId: String?) {
+    commentsNode.publishComment(content: content, parentCommentId: parentCommentId) {
+      (success, error) in
+      guard success else {
+        if let error = error {
+          self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
+            (_) in
+            // Restart editing the comment
+            _ = viewController.becomeFirstResponder()
+          })
+        }
+        return
+      }
+      
+      self.dismiss(animated: true, completion: nil)
+      self.reloadData()
     }
   }
 }
