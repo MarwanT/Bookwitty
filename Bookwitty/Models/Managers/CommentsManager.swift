@@ -42,6 +42,16 @@ class CommentManager {
   var hasNextPage: Bool {
     return nextPageURL != nil
   }
+  
+  func clone() -> CommentManager? {
+    guard let postIdentifier = postIdentifier else {
+      return nil
+    }
+    
+    var manager = CommentManager()
+    manager.initialize(postIdentifier: postIdentifier, commentIdentifier: commentIdentifier, comments: comments, nextPageURL: nextPageURL)
+    return manager
+  }
 }
 
 // MARK: Network Calls
