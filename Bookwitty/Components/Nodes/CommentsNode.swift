@@ -241,6 +241,12 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
   
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
     collectionNode.deselectItem(at: indexPath, animated: true)
+    
+    if viewCommentsDisclosureNode === collectionNode.nodeForItem(at: indexPath) {
+      if let commentManager = viewModel.commentManagerClone() {
+        delegate?.commentsNode(self, reactFor: .viewAllComments(commentManager: commentManager))
+      }
+    }
   }
 }
 
