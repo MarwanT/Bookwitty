@@ -20,14 +20,15 @@ class CommentManager {
   
   var isFetchingData = false
   
-  func initialize(postIdentifier: String) {
+  /// The loaded comments are replies for the comment with the provided id
+  /// if available, otherwise the comments are the post main comments
+  func initialize(postIdentifier: String, commentIdentifier: String? = nil, comments: [Comment]? = nil, nextPageURL: URL? = nil) {
     self.postIdentifier = postIdentifier
-    self.commentIdentifier = nil
-  }
-  
-  func initialize(commentIdentifier: String) {
-    self.postIdentifier = nil
     self.commentIdentifier = commentIdentifier
+    if let comments = comments {
+      self.comments = comments
+    }
+    self.nextPageURL = nextPageURL
   }
   
   var numberOfComments: Int {

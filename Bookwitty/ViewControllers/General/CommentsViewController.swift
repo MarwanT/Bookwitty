@@ -43,7 +43,7 @@ class CommentsViewController: ASViewController<ASDisplayNode> {
     }
     
     let commentManager = CommentManager()
-    commentManager.initialize(commentIdentifier: commentIdentifier)
+    commentManager.initialize(postIdentifier: postId, commentIdentifier: commentIdentifier)
     let commentsViewController = CommentsViewController()
     commentsViewController.initialize(with: commentManager)
     self.navigationController?.pushViewController(commentsViewController, animated: true)
