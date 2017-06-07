@@ -291,6 +291,9 @@ extension CommentsNode {
 
 // MARK: - Comment tree delegate
 extension CommentsNode: CommentTreeNodeDelegate {
+  func commentTreeDidPerformAction(_ commentTreeNode: CommentTreeNode, comment: Comment, action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
+  }
+  
   func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, comment: Comment) {
     guard let postId = viewModel.postId else {
       return

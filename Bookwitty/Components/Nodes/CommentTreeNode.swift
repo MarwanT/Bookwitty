@@ -10,6 +10,7 @@ import AsyncDisplayKit
 
 protocol CommentTreeNodeDelegate: class {
   func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, comment: Comment)
+  func commentTreeDidPerformAction(_ commentTreeNode: CommentTreeNode, comment: Comment, action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?)
 }
 
 class CommentTreeNode: ASCellNode {
