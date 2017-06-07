@@ -10,7 +10,7 @@ import UIKit
 
 protocol CommentComposerViewControllerDelegate: class {
   func commentComposerCancel(_ viewController: CommentComposerViewController)
-  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?)
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, parentCommentId: String?)
 }
 
 class CommentComposerViewController: UIViewController {
@@ -101,7 +101,7 @@ class CommentComposerViewController: UIViewController {
   
   func didTapPublish(_ sender: Any) {
     dismissKeyboard()
-    delegate?.commentComposerPublish(self, content: textView.text)
+    delegate?.commentComposerPublish(self, content: textView.text, parentCommentId: parentCommentId)
   }
   
   // MARK: - Helpers
