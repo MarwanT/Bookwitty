@@ -1010,5 +1010,21 @@ extension PostDetailsViewController: CommentComposerViewControllerDelegate {
   }
   
   func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, parentCommentId: String?) {
+    postDetailsNode.publishComment(content: content, parentCommentId: parentCommentId) {
+      (success, error) in
+      guard success else {
+        if let error = error {
+          self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
+            (_) in
+            // Restart editing the comment
+            _ = viewController.becomeFirstResponder()
+          })
+        }
+        return
+      }
+      
+      self.dismiss(animated: true, completion: nil)
+      self.loadComments()
+    }
   }
 }

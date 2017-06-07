@@ -396,3 +396,13 @@ extension PostDetailsNode: CommentsNodeDelegate {
     delegate?.commentsNode(commentsNode, reactFor: action)
   }
 }
+
+// MARK: - Comment related methods
+extension PostDetailsNode {
+  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+    commentsNode.publishComment(content: content, parentCommentId: parentCommentId) {
+      (success, error) in
+      completion(success, error)
+    }
+  }
+}
