@@ -61,7 +61,20 @@ extension CommentsViewController: CommentsNodeDelegate {
     case .writeComment(let parentCommentIdentifier, _):
       CommentComposerViewController.show(from: self, delegate: self, parentCommentId: parentCommentIdentifier)
     case .commentAction(let comment, let action):
-      break
+      switch action {
+      case .wit:
+        break
+      case .unwit:
+        break
+      case .dim:
+        break
+      case .undim:
+        break
+      case .reply:
+        CommentComposerViewController.show(from: self, delegate: self, parentCommentId: comment.id)
+      default:
+        break
+      }
     }
   }
 }

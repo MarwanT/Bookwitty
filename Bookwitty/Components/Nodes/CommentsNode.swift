@@ -293,6 +293,7 @@ extension CommentsNode {
 // MARK: - Comment tree delegate
 extension CommentsNode: CommentTreeNodeDelegate {
   func commentTreeDidPerformAction(_ commentTreeNode: CommentTreeNode, comment: Comment, action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
+    delegate?.commentsNode(self, reactFor: .commentAction(comment: comment, action: action))
   }
   
   func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, comment: Comment) {
