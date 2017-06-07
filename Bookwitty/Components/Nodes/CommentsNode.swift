@@ -321,3 +321,13 @@ extension CommentsNode {
     return (containerNode, commentsNode)
   }
 }
+
+// MARK: - Comments Node
+extension CommentsNode {
+  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+    viewModel.publishComment(content: content, parentCommentId: parentCommentId) {
+      (success, error) in
+      completion(success, error)
+    }
+  }
+}
