@@ -46,17 +46,22 @@ class CommentManager {
 
 // MARK: Network Calls
 extension CommentManager {
-  func loadComments(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
-    if postIdentifier != nil {
+  func loadComments(completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+    guard postIdentifier != nil else {
+      completion(false, CommentManager.Error.missingPostId)
+      return
+    }
+    
+    if commentIdentifier == nil {
       loadCommentsForPost(completion: completion)
-    } else if commentIdentifier != nil {
+    } else {
       loadCommentReplies(completion: completion)
     }
   }
   
-  private func loadCommentsForPost(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+  private func loadCommentsForPost(completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
     guard !isFetchingData, let postIdentifier = postIdentifier else {
-      completion(false, BookwittyAPIError.undefined)
+      completion(false, CommentManager.Error.missingPostId)
       return
     }
     
@@ -67,7 +72,7 @@ extension CommentManager {
       defer {
         self.isFetchingData = false
         self.cancellableRequest = nil
-        completion(success, error)
+        completion(success, CommentManager.Error.api(error))
       }
       
       self.comments.removeAll()
@@ -79,9 +84,9 @@ extension CommentManager {
     })
   }
   
-  private func loadCommentReplies(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+  private func loadCommentReplies(completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
     guard !isFetchingData, let commentIdentifier = commentIdentifier else {
-      completion(false, BookwittyAPIError.undefined)
+      completion(false, CommentManager.Error.unidentified)
       return
     }
     
@@ -92,7 +97,7 @@ extension CommentManager {
       defer {
         self.isFetchingData = false
         self.cancellableRequest = nil
-        completion(success, error)
+        completion(success, CommentManager.Error.api(error))
       }
       
       self.comments.removeAll()
@@ -104,9 +109,9 @@ extension CommentManager {
     })
   }
   
-  func loadMore(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+  func loadMore(completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
     guard !isFetchingData, let url = nextPageURL else {
-      completion(false, BookwittyAPIError.undefined)
+      completion(false, CommentManager.Error.unidentified)
       return
     }
     
@@ -117,7 +122,7 @@ extension CommentManager {
       defer {
         self.isFetchingData = false
         self.cancellableRequest = nil
-        completion(success, error)
+        completion(success, CommentManager.Error.api(error))
       }
       
       guard success, let comments = resources as? [Comment] else {

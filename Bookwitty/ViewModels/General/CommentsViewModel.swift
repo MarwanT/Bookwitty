@@ -49,14 +49,14 @@ class CommentsViewModel {
     return commentManager?.comment(at: indexPath.item)
   }
   
-  func loadComments(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+  func loadComments(completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
     commentManager?.loadComments(completion: {
       (success, error) in
       completion(success, error)
     })
   }
   
-  func loadMore(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+  func loadMore(completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
     commentManager?.loadMore(completion: {
       (success, error) in
       completion(success, error)
