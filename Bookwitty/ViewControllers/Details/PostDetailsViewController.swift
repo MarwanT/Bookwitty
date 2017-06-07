@@ -406,7 +406,7 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
     case .viewRepliesForComment(let comment, let postId):
       break
     case .viewAllComments(let commentManager):
-      break
+      pushCommentsViewController(with: commentManager)
     case .writeComment(let parentCommentIdentifier, _):
       CommentComposerViewController.show(from: self, delegate: self, parentCommentId: parentCommentIdentifier)
     }
@@ -803,6 +803,12 @@ extension PostDetailsViewController {
       navigationController?.pushViewController(topicViewController, animated: true)
     default: break
     }
+  }
+  
+  func pushCommentsViewController(with commentManager: CommentManager) {
+    let commentsVC = CommentsViewController()
+    commentsVC.initialize(with: commentManager)
+    self.navigationController?.pushViewController(commentsVC, animated: true)
   }
 }
 
