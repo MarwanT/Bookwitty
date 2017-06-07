@@ -402,6 +402,14 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
   }
   
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
+    switch action {
+    case .viewRepliesForComment(let comment, let postId):
+      break
+    case .viewAllComments(let commentManager):
+      break
+    case .writeComment(let parentCommentIdentifier, _):
+      CommentComposerViewController.show(from: self, delegate: self, parentCommentId: parentCommentIdentifier)
+    }
   }
 }
 
@@ -992,5 +1000,15 @@ extension PostDetailsViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+  }
+}
+
+// MARK: - Compose comment delegate implementation
+extension PostDetailsViewController: CommentComposerViewControllerDelegate {
+  func commentComposerCancel(_ viewController: CommentComposerViewController) {
+    dismiss(animated: true, completion: nil)
+  }
+  
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, parentCommentId: String?) {
   }
 }
