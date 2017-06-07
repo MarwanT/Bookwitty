@@ -100,7 +100,6 @@ extension CommentsViewController: CommentComposerViewControllerDelegate {
       }
       
       self.dismiss(animated: true, completion: nil)
-      self.reloadData()
     }
   }
 }

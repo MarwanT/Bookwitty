@@ -1045,7 +1045,6 @@ extension PostDetailsViewController: CommentComposerViewControllerDelegate {
       }
       
       self.dismiss(animated: true, completion: nil)
-      self.loadComments()
     }
   }
 }
