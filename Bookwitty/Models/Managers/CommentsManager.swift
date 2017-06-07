@@ -165,6 +165,7 @@ extension CommentManager {
       }
       
       // Do additional logic here if necessary
+      NotificationCenter.default.post(name: CommentManager.notificationName(for: postIdentifier), object: comment)
     })
   }
 }
