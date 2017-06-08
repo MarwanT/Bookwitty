@@ -136,9 +136,9 @@
 "payment_methods" = "Moyens de paiement";
 "pen_name" = "Pseudo";
 "pen_name_cant_be_empty" = "Veuillez inscrire un pseudo";
-"pen_name_error_was_already_taken" = "";
-"pen_name_error_could_not_create" = "";
-"pen_name_max_number_of_characters_thirty_six" = "";
+"pen_name_error_was_already_taken" = "Désolés, ce nom est déjà pris";
+"pen_name_error_could_not_create" = "Il y a eu un problème, pseudo n'a pu être créé";
+"pen_name_max_number_of_characters_thirty_six" = "Votre nom ne peut pas excéder 36 caractères";
 "pen_names" = "Pseudos";
 "pen_names_to_follow" = "Des contributeurs que vous pouvez suivre";
 "please_fill_required_field" = "Veuillez remplir les champs obligatoires";
@@ -186,7 +186,7 @@
 "tutorial_first_page_title" = "Aiguisez votre curiosité";
 "tutorial_forth_page_description" = "Bookwitty est une gigantesque librairie. Notre catalogue comprend 26 millions de livres. Nous vendons et livrons ces livres à des prix raisonnables.";
 "tutorial_forth_page_title" = "Pour l'amour des livres";
-"tutorial_second_page_description" = "Approfondissez un sujet, explorez de nouvelles idées ou discutez avec d'autres utilisateurs de sujets qui vous passionnent.";
+"tutorial_second_page_description" = "Approfondissez un sujet, explorez de nouvelles idées ou discutez avec d'autres utilisateurs de sujets qui vous passionnent.  ";
 "tutorial_second_page_title" = "Faites des découvertes";
 "tutorial_third_page_title" = "Partagez vos idées";
 "tutorial_third_page_description" = "Nous sommes tous experts des sujets qui nous passionnent. Partagez votre savoir.";
@@ -196,8 +196,8 @@
 "user_not_signed_in_alert_message" = "Vous devez être connecté pour effectuer cette action";
 "user_not_signed_in_alert_title" = "Vous n'êtes pas connecté";
 "video" = "Vidéo";
-"view_all" = "Voir tout ";
-"view_all_books" = "Voir tout les livres ";
+"view_all" = "Voir tout";
+"view_all_books" = "Voir tous les livres";
 "view_all_categories" = "Livres par catégories";
 "view_all_comments" = "Voir tous les commentaires";
 "view_all_related_books" = "Voir tous les livres associés";
