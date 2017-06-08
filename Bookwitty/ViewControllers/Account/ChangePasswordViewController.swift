@@ -81,7 +81,7 @@ class ChangePasswordViewController: UIViewController {
       if newPasswordInputField.textField.text.isEmptyOrNil() {
         showErrorUpdatingPasswordAlert(error: Strings.new_password_is_empty_error())
       } else if !(newPasswordInputField.textField.text?.isValidPassword() ?? false) {
-        showErrorUpdatingPasswordAlert(error: Strings.password_minimum_six_characters_error())
+        showErrorUpdatingPasswordAlert(error: Strings.password_minimum_characters_error())
       }
       return
     }

@@ -485,8 +485,8 @@ class Strings {
     return localizedString(key: "password_is_wrong_error")
   }
 
-  static func password_minimum_six_characters_error() -> String {
-    return localizedString(key: "password_minimum_six_characters_error")
+  static func password_minimum_characters_error() -> String {
+    return localizedString(key: "password_minimum_characters_error")
   }
 
   static func payment_methods() -> String {
