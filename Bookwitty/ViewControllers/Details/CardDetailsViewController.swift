@@ -11,6 +11,7 @@ import AsyncDisplayKit
 import Spine
 import Moya
 import GSImageViewerController
+import SwiftLoader
 
 class CardDetailsViewController: GenericNodeViewController {
   var commentsNode: CommentsNode?
@@ -288,8 +289,10 @@ extension CardDetailsViewController: CommentComposerViewControllerDelegate {
   }
   
   func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, parentCommentId: String?) {
+    SwiftLoader.show(animated: true)
     commentsNode?.publishComment(content: content, parentCommentId: parentCommentId) {
       (success, error) in
+      SwiftLoader.hide()
       guard success else {
         if let error = error {
           self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
