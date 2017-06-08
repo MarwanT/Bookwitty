@@ -20,8 +20,12 @@ extension String {
   }
 
   func isValidPassword() -> Bool {
-    let minimumNumberOfCharacters = 6
-    return self.characters.count > minimumNumberOfCharacters
+    /* Discussion
+     * Number of Characters defined by the Register API 
+     * fails with 409, pointer password
+     */
+    let minimumNumberOfCharacters = 8
+    return self.characters.count >= minimumNumberOfCharacters
   }
 
   func isValidText() -> Bool {
