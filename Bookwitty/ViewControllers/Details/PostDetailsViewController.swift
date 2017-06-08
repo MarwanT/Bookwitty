@@ -400,6 +400,32 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
     let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
     present(imageViewer, animated: true, completion: nil)
   }
+  
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
+    switch action {
+    case .viewRepliesForComment(let comment, let postId):
+      break
+    case .viewAllComments(let commentManager):
+      pushCommentsViewController(with: commentManager)
+    case .writeComment(let parentCommentIdentifier, _):
+      CommentComposerViewController.show(from: self, delegate: self, parentCommentId: parentCommentIdentifier)
+    case .commentAction(let comment, let action):
+      switch action {
+      case .wit:
+        postDetailsNode.wit(comment: comment, completion: nil)
+      case .unwit:
+        postDetailsNode.unwit(comment: comment, completion: nil)
+      case .dim:
+        postDetailsNode.dim(comment: comment, completion: nil)
+      case .undim:
+        postDetailsNode.undim(comment: comment, completion: nil)
+      case .reply:
+        CommentComposerViewController.show(from: self, delegate: self, parentCommentId: comment.id)
+      default:
+        break
+      }
+    }
+  }
 }
 
 extension PostDetailsViewController: PostDetailsItemNodeDelegate {
@@ -793,6 +819,12 @@ extension PostDetailsViewController {
     default: break
     }
   }
+  
+  func pushCommentsViewController(with commentManager: CommentManager) {
+    let commentsVC = CommentsViewController()
+    commentsVC.initialize(with: commentManager)
+    self.navigationController?.pushViewController(commentsVC, animated: true)
+  }
 }
 
 // MARK: - Actions For Cards
@@ -989,5 +1021,30 @@ extension PostDetailsViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+  }
+}
+
+// MARK: - Compose comment delegate implementation
+extension PostDetailsViewController: CommentComposerViewControllerDelegate {
+  func commentComposerCancel(_ viewController: CommentComposerViewController) {
+    dismiss(animated: true, completion: nil)
+  }
+  
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, parentCommentId: String?) {
+    postDetailsNode.publishComment(content: content, parentCommentId: parentCommentId) {
+      (success, error) in
+      guard success else {
+        if let error = error {
+          self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
+            (_) in
+            // Restart editing the comment
+            _ = viewController.becomeFirstResponder()
+          })
+        }
+        return
+      }
+      
+      self.dismiss(animated: true, completion: nil)
+    }
   }
 }

@@ -10,6 +10,7 @@ import AsyncDisplayKit
 
 protocol CommentTreeNodeDelegate: class {
   func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, comment: Comment)
+  func commentTreeDidPerformAction(_ commentTreeNode: CommentTreeNode, comment: Comment, action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?)
 }
 
 class CommentTreeNode: ASCellNode {
@@ -33,6 +34,8 @@ class CommentTreeNode: ASCellNode {
   
   private func setupNode() {
     automaticallyManagesSubnodes = true
+    
+    commentNode.delegate = self
     
     var disclosureNodeConfiguration = DisclosureNode.Configuration()
     disclosureNodeConfiguration.style = .highlighted
@@ -107,6 +110,17 @@ extension CommentTreeNode {
       left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: ThemeManager.shared.currentTheme.generalExternalMargin(),
       right: ThemeManager.shared.currentTheme.generalExternalMargin())
+  }
+}
+
+// MARK: - Comment node delegate
+extension CommentTreeNode: CommentNodeDelegate {
+  func commentNode(_ node: CommentNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
+    guard let comment = comment else {
+      return
+    }
+
+    delegate?.commentTreeDidPerformAction(self, comment: comment, action: action, forSender: sender, didFinishAction: didFinishAction)
   }
 }
 

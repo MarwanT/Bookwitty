@@ -13,6 +13,10 @@ class CommentsViewModel {
   
   var displayMode: CommentsNode.DisplayMode = .normal
   
+  var postId: String? {
+    return commentManager?.postIdentifier
+  }
+  
   func initialize(with manager: CommentManager) {
     commentManager = manager
   }
@@ -41,18 +45,14 @@ class CommentsViewModel {
     }
   }
   
-  func comment(for indexPath: IndexPath) -> Comment? {
-    return commentManager?.comment(at: indexPath.item)
-  }
-  
-  func loadComments(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+  func loadComments(completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
     commentManager?.loadComments(completion: {
       (success, error) in
       completion(success, error)
     })
   }
   
-  func loadMore(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+  func loadMore(completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
     commentManager?.loadMore(completion: {
       (success, error) in
       completion(success, error)
@@ -65,5 +65,90 @@ class CommentsViewModel {
   
   var hasNextPage: Bool {
     return commentManager?.hasNextPage ?? false
+  }
+}
+
+// MARK: Utilities
+extension CommentsViewModel {
+  func updateData(with updatedComment: Comment) {
+    commentManager?.updateData(with: updatedComment)
+  }
+  
+  func comment(for indexPath: IndexPath) -> Comment? {
+    return commentManager?.comment(at: indexPath.item)
+  }
+  
+  /// Sends a clone of the comment manager held in this instance
+  func commentManagerClone() -> CommentManager? {
+    return commentManager?.clone()
+  }
+}
+
+// MARK: - Related methods
+extension CommentsViewModel {
+  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+    guard let commentManager = commentManager else {
+      completion(false, nil)
+      return
+    }
+    
+    commentManager.publishComment(content: content, parentCommentId: parentCommentId, completion: {
+      (success, error) in
+      completion(success, error)
+    })
+  }
+  
+  func wit(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+    guard let commentManager = commentManager else {
+      completion(false, nil)
+      return
+    }
+    
+    commentManager.wit(comment: comment) {
+      (success, error) in
+      completion(success, error)
+    }
+  }
+  
+  func unwit(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+    guard let commentManager = commentManager else {
+      completion(false, nil)
+      return
+    }
+    
+    commentManager.unwit(comment: comment) {
+      (success, error) in
+      completion(success, error)
+    }
+  }
+  
+  func dim(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+    guard let commentManager = commentManager else {
+      completion(false, nil)
+      return
+    }
+    
+    commentManager.dim(comment: comment) {
+      (success, error) in
+      completion(success, error)
+    }
+  }
+  
+  func undim(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+    guard let commentManager = commentManager else {
+      completion(false, nil)
+      return
+    }
+    
+    commentManager.undim(comment: comment) {
+      (success, error) in
+      completion(success, error)
+    }
+  }
+  
+  /// If the comments displayed are replies of a certain comment then the
+  /// value of this property will be that parent comment id. Otherwise nil
+  var parentCommentIdentifier: String? {
+    return commentManager?.commentIdentifier
   }
 }

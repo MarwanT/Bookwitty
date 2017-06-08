@@ -43,9 +43,9 @@ extension UIViewController {
     present(activityViewController, animated: true, completion: nil)
   }
   
-  func showAlertWith(title: String, message: String) {
+  func showAlertWith(title: String, message: String, handler: ((UIAlertAction) -> Void)? = nil) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-    alert.addAction(UIAlertAction(title: Strings.ok(), style: UIAlertActionStyle.default, handler: nil))
+    alert.addAction(UIAlertAction(title: Strings.ok(), style: UIAlertActionStyle.default, handler: handler))
     self.present(alert, animated: true, completion: nil)
   }
 

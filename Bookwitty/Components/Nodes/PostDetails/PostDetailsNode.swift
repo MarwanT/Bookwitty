@@ -51,6 +51,7 @@ protocol PostDetailsNodeDelegate: class {
   func hasContentItems() -> Bool
   func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
   func postDetails(node: PostDetailsNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action)
 }
 
 class PostDetailsNode: ASScrollNode {
@@ -267,6 +268,7 @@ class PostDetailsNode: ASScrollNode {
     bannerImageNode.addTarget(self, action: #selector(bannerTouchUpInside) , forControlEvents: .touchUpInside)
     
     commentsNode.displayMode = .compact
+    commentsNode.delegate = self
   }
 
   func setBannerImage() {
@@ -386,5 +388,49 @@ class PostDetailsNode: ASScrollNode {
 extension PostDetailsNode: PostDetailsHeaderNodeDelegate {
   func postDetailsHeader(node: PostDetailsHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
     delegate?.postDetails(node: self, requestToViewImage: image, from: imageNode)
+  }
+}
+
+extension PostDetailsNode: CommentsNodeDelegate {
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
+    delegate?.commentsNode(commentsNode, reactFor: action)
+  }
+}
+
+// MARK: - Comment related methods
+extension PostDetailsNode {
+  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+    commentsNode.publishComment(content: content, parentCommentId: parentCommentId) {
+      (success, error) in
+      completion(success, error)
+    }
+  }
+  
+  func wit(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+    commentsNode.wit(comment: comment) {
+      (success, error) in
+      completion?(success, error)
+    }
+  }
+  
+  func unwit(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+    commentsNode.unwit(comment: comment) {
+      (success, error) in
+      completion?(success, error)
+    }
+  }
+  
+  func dim(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+    commentsNode.dim(comment: comment) {
+      (success, error) in
+      completion?(success, error)
+    }
+  }
+  
+  func undim(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+    commentsNode.undim(comment: comment) {
+      (success, error) in
+      completion?(success, error)
+    }
   }
 }

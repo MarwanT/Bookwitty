@@ -10,13 +10,15 @@ import UIKit
 
 protocol CommentComposerViewControllerDelegate: class {
   func commentComposerCancel(_ viewController: CommentComposerViewController)
-  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?)
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, parentCommentId: String?)
 }
 
 class CommentComposerViewController: UIViewController {
   @IBOutlet weak var textView: UITextView!
   @IBOutlet weak var contentView: UIView!
   @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
+  
+  fileprivate var parentCommentId: String?
   
   var blurEffectView: UIVisualEffectView?
   
@@ -45,6 +47,10 @@ class CommentComposerViewController: UIViewController {
     self.blurEffectView?.removeFromSuperview()
   }
   
+  func initialize(with parentCommentId: String?) {
+    self.parentCommentId = parentCommentId
+  }
+  
   private func setupNavigationItems() {
     let leftBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(didTapCancel(_:)))
     let rightBarButton = UIBarButtonItem(title: Strings.publish(), style: .plain, target: self, action: #selector(didTapPublish(_:)))
@@ -62,6 +68,10 @@ class CommentComposerViewController: UIViewController {
       self,
       selector: #selector(keyboardWillHide(_:)),
       name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+  }
+  
+  override func becomeFirstResponder() -> Bool {
+    return textView.becomeFirstResponder()
   }
   
   // MARK: - Keyboard Handling
@@ -91,7 +101,7 @@ class CommentComposerViewController: UIViewController {
   
   func didTapPublish(_ sender: Any) {
     dismissKeyboard()
-    delegate?.commentComposerPublish(self, content: textView.text)
+    delegate?.commentComposerPublish(self, content: textView.text, parentCommentId: parentCommentId)
   }
   
   // MARK: - Helpers
@@ -120,8 +130,9 @@ extension CommentComposerViewController: Themeable {
 
 // MARK: -
 extension CommentComposerViewController {
-  class func show(from viewController: UIViewController, delegate: CommentComposerViewControllerDelegate?) {
+  class func show(from viewController: UIViewController, delegate: CommentComposerViewControllerDelegate?, parentCommentId: String?) {
     let composeCommentVC = Storyboard.Details.instantiate(CommentComposerViewController.self)
+    composeCommentVC.initialize(with: parentCommentId)
     composeCommentVC.delegate = delegate
     composeCommentVC.addBlurEffectView(to: viewController.view)
     

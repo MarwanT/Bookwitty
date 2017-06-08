@@ -68,6 +68,7 @@ class CommentsNode: ASCellNode {
   
   deinit {
     collectionNode.view.removeObserver(self, forKeyPath: #keyPath(UICollectionView.contentSize))
+    unregisterNotification()
   }
   
   override func didLoad() {
@@ -98,6 +99,7 @@ class CommentsNode: ASCellNode {
   
   func initialize(with manager: CommentManager) {
     viewModel.initialize(with: manager)
+    registerNotification()
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -110,6 +112,18 @@ class CommentsNode: ASCellNode {
     collectionNode.style.preferredSize = collectionSize
     let externalInsetsSpec = ASInsetLayoutSpec(insets: configuration.externalInsets, child: collectionNode)
     return externalInsetsSpec
+  }
+  
+  private func registerNotification() {
+    unregisterNotification()
+    guard let postId = viewModel.postId else {
+      return
+    }
+    NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(_:)), name: CommentManager.notificationName(for: postId), object: nil)
+  }
+  
+  private func unregisterNotification() {
+    NotificationCenter.default.removeObserver(self)
   }
   
   func reloadData() {
@@ -149,6 +163,25 @@ class CommentsNode: ASCellNode {
   func updateNodeHeight() {
     if case DisplayMode.compact = displayMode {
       style.height = ASDimensionMake(contentSize.height)
+    }
+  }
+}
+
+// MARK: - Notification
+extension CommentsNode {
+  func handleNotification(_ notification: Notification) {
+    guard let (action, comment) = notification.object as? CommentManager.CommentNotificationObject else {
+      return
+    }
+    
+    switch action {
+    case .commentAction:
+      viewModel.updateData(with: comment)
+      updateCollectionNode()
+    case .writeComment:
+      reloadData()
+    default:
+      break
     }
   }
 }
@@ -241,6 +274,12 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
   
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
     collectionNode.deselectItem(at: indexPath, animated: true)
+    
+    if viewCommentsDisclosureNode === collectionNode.nodeForItem(at: indexPath) {
+      if let commentManager = viewModel.commentManagerClone() {
+        delegate?.commentsNode(self, reactFor: .viewAllComments(commentManager: commentManager))
+      }
+    }
   }
 }
 
@@ -277,26 +316,38 @@ extension CommentsNode {
 // MARK: - Actions Declaration
 extension CommentsNode {
   enum Action {
-    case viewRepliesForComment(comment: Comment)
-    case writeComment(parentCommentIdentifier: String?)
+    case viewRepliesForComment(comment: Comment, postId: String)
+    case viewAllComments(commentManager: CommentManager)
+    case writeComment(parentCommentIdentifier: String?, postId: String)
+    case commentAction(comment: Comment, action: CardActionBarNode.Action)
   }
 }
 
 // MARK: - Comment tree delegate
 extension CommentsNode: CommentTreeNodeDelegate {
+  func commentTreeDidPerformAction(_ commentTreeNode: CommentTreeNode, comment: Comment, action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
+    delegate?.commentsNode(self, reactFor: .commentAction(comment: comment, action: action))
+  }
+  
   func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, comment: Comment) {
-    delegate?.commentsNode(self, reactFor: .viewRepliesForComment(comment: comment))
+    guard let postId = viewModel.postId else {
+      return
+    }
+    delegate?.commentsNode(self, reactFor: .viewRepliesForComment(comment: comment, postId: postId))
   }
 }
 
 // MARK: - Write comment node delegate
 extension CommentsNode: WriteCommentNodeDelegate {
   func writeCommentNodeDidTap(_ writeCommentNode: WriteCommentNode) {
-    delegate?.commentsNode(self, reactFor: .writeComment(parentCommentIdentifier: nil))
+    guard let postId = viewModel.postId else {
+      return
+    }
+    delegate?.commentsNode(self, reactFor: .writeComment(parentCommentIdentifier: viewModel.parentCommentIdentifier, postId: postId))
   }
 }
 
-// MARK: - Write comment node delegate
+// MARK: - Display Helpers
 extension CommentsNode {
   static func concatinate(with node: ASDisplayNode, resourceIdentifier: String) -> (wrapperNode: ASDisplayNode, commentsNode: CommentsNode) {
     let commentsNode = CommentsNode()
@@ -312,5 +363,43 @@ extension CommentsNode {
       return ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: [node, commentsNode])
     }
     return (containerNode, commentsNode)
+  }
+}
+
+// MARK: - Comment intences related methods
+extension CommentsNode {
+  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+    viewModel.publishComment(content: content, parentCommentId: parentCommentId) {
+      (success, error) in
+      completion(success, error)
+    }
+  }
+  
+  func wit(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+    viewModel.wit(comment: comment) {
+      (success, error) in
+      completion?(success, error)
+    }
+  }
+  
+  func unwit(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+    viewModel.unwit(comment: comment) {
+      (success, error) in
+      completion?(success, error)
+    }
+  }
+  
+  func dim(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+    viewModel.dim(comment: comment) {
+      (success, error) in
+      completion?(success, error)
+    }
+  }
+  
+  func undim(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+    viewModel.undim(comment: comment) {
+      (success, error) in
+      completion?(success, error)
+    }
   }
 }
