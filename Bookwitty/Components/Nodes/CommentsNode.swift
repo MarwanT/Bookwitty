@@ -388,4 +388,11 @@ extension CommentsNode {
       completion?(success, error)
     }
   }
+  
+  func dim(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+    viewModel.dim(comment: comment) {
+      (success, error) in
+      completion?(success, error)
+    }
+  }
 }
