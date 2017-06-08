@@ -412,4 +412,11 @@ extension PostDetailsNode {
       completion?(success, error)
     }
   }
+  
+  func unwit(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+    commentsNode.unwit(comment: comment) {
+      (success, error) in
+      completion?(success, error)
+    }
+  }
 }
