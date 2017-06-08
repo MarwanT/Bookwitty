@@ -13,6 +13,8 @@ import Moya
 import GSImageViewerController
 
 class CardDetailsViewController: GenericNodeViewController {
+  var commentsNode: CommentsNode?
+  
   var viewModel: CardDetailsViewModel
 
   required init?(coder aDecoder: NSCoder) {
@@ -22,7 +24,6 @@ class CardDetailsViewController: GenericNodeViewController {
   init(node: BaseCardPostNode, title: String? = nil, resource: ModelResource, includeCommentsSection: Bool = true) {
     viewModel = CardDetailsViewModel(resource: resource)
     var containerNode: ASDisplayNode = node
-    var commentsNode: CommentsNode?
     if let resourceId = resource.id {
       let concatNode = CommentsNode.concatinate(with: node, resourceIdentifier: resourceId)
       containerNode = concatNode.wrapperNode
