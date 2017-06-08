@@ -416,7 +416,7 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
       case .unwit:
         postDetailsNode.unwit(comment: comment, completion: nil)
       case .dim:
-        break
+        postDetailsNode.dim(comment: comment, completion: nil)
       case .undim:
         break
       case .reply:

@@ -419,4 +419,11 @@ extension PostDetailsNode {
       completion?(success, error)
     }
   }
+  
+  func dim(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+    commentsNode.dim(comment: comment) {
+      (success, error) in
+      completion?(success, error)
+    }
+  }
 }
