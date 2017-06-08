@@ -70,6 +70,10 @@ class CommentsViewModel {
 
 // MARK: Utilities
 extension CommentsViewModel {
+  func updateData(with updatedComment: Comment) {
+    commentManager?.updateData(with: updatedComment)
+  }
+  
   func comment(for indexPath: IndexPath) -> Comment? {
     return commentManager?.comment(at: indexPath.item)
   }
