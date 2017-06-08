@@ -412,7 +412,7 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
     case .commentAction(let comment, let action):
       switch action {
       case .wit:
-        break
+        postDetailsNode.wit(comment: comment, completion: nil)
       case .unwit:
         break
       case .dim:

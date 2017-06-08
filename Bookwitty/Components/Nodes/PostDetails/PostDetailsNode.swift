@@ -405,4 +405,11 @@ extension PostDetailsNode {
       completion(success, error)
     }
   }
+  
+  func wit(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+    commentsNode.wit(comment: comment) {
+      (success, error) in
+      completion?(success, error)
+    }
+  }
 }
