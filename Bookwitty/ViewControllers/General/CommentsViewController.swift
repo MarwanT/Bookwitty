@@ -67,7 +67,7 @@ extension CommentsViewController: CommentsNodeDelegate {
       case .unwit:
         commentsNode.unwit(comment: comment, completion: nil)
       case .dim:
-        break
+        commentsNode.dim(comment: comment, completion: nil)
       case .undim:
         break
       case .reply:
