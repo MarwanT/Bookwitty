@@ -24,7 +24,6 @@ class OnBoardingControllerNode: ASDisplayNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
-  fileprivate let headerHeight: CGFloat = 45.0
 
   let titleTextNode: ASTextNode
   let separatorNode: ASDisplayNode
@@ -56,7 +55,7 @@ class OnBoardingControllerNode: ASDisplayNode {
     collectionNode.style.flexShrink = 1.0
     collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
 
-    titleTextNode.style.maxHeight = ASDimensionMake(headerHeight)
+    titleTextNode.truncationMode = NSLineBreakMode.byTruncatingTail
     titleTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption1)
       .append(text: Strings.onboarding_view_header_title(), color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
 
