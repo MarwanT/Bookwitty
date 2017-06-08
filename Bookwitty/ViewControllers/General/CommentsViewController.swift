@@ -63,7 +63,7 @@ extension CommentsViewController: CommentsNodeDelegate {
     case .commentAction(let comment, let action):
       switch action {
       case .wit:
-        break
+        commentsNode.wit(comment: comment, completion: nil)
       case .unwit:
         break
       case .dim:
