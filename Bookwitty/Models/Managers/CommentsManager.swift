@@ -39,6 +39,14 @@ class CommentManager {
     return comments[index]
   }
   
+  func updateData(with updatedComment: Comment) {
+    guard let index = comments.index(where: { $0.id == updatedComment.id }) else {
+      return
+    }
+    comments.remove(at: index)
+    comments.insert(updatedComment, at: index)
+  }
+  
   var hasNextPage: Bool {
     return nextPageURL != nil
   }
