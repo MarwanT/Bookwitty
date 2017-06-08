@@ -110,6 +110,18 @@ extension CommentsViewModel {
     }
   }
   
+  func unwit(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+    guard let commentManager = commentManager else {
+      completion(false, nil)
+      return
+    }
+    
+    commentManager.unwit(comment: comment) {
+      (success, error) in
+      completion(success, error)
+    }
+  }
+  
   /// If the comments displayed are replies of a certain comment then the
   /// value of this property will be that parent comment id. Otherwise nil
   var parentCommentIdentifier: String? {

@@ -366,7 +366,7 @@ extension CommentsNode {
   }
 }
 
-// MARK: - Comments Node
+// MARK: - Comment intences related methods
 extension CommentsNode {
   func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
     viewModel.publishComment(content: content, parentCommentId: parentCommentId) {
@@ -377,6 +377,13 @@ extension CommentsNode {
   
   func wit(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
     viewModel.wit(comment: comment) {
+      (success, error) in
+      completion?(success, error)
+    }
+  }
+  
+  func unwit(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+    viewModel.unwit(comment: comment) {
       (success, error) in
       completion?(success, error)
     }
