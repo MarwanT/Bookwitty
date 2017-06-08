@@ -326,6 +326,12 @@ extension CommentsNode {
 // MARK: - Comment tree delegate
 extension CommentsNode: CommentTreeNodeDelegate {
   func commentTreeDidPerformAction(_ commentTreeNode: CommentTreeNode, comment: Comment, action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
+    guard UserManager.shared.isSignedIn else {
+      //If user is not signed In post notification and do not fall through
+      NotificationCenter.default.post( name: AppNotification.callToAction, object: CallToAction.dim)
+      return
+    }
+    
     delegate?.commentsNode(self, reactFor: .commentAction(comment: comment, action: action))
   }
   
@@ -340,6 +346,12 @@ extension CommentsNode: CommentTreeNodeDelegate {
 // MARK: - Write comment node delegate
 extension CommentsNode: WriteCommentNodeDelegate {
   func writeCommentNodeDidTap(_ writeCommentNode: WriteCommentNode) {
+    guard UserManager.shared.isSignedIn else {
+      //If user is not signed In post notification and do not fall through
+      NotificationCenter.default.post( name: AppNotification.callToAction, object: CallToAction.dim)
+      return
+    }
+    
     guard let postId = viewModel.postId else {
       return
     }
