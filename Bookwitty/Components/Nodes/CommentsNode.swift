@@ -361,4 +361,11 @@ extension CommentsNode {
       completion(success, error)
     }
   }
+  
+  func wit(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+    viewModel.wit(comment: comment) {
+      (success, error) in
+      completion?(success, error)
+    }
+  }
 }
