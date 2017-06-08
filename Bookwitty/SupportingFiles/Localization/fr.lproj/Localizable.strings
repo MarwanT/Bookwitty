@@ -132,7 +132,7 @@
 "password_change_unknown_error" = "Une erreur s'est produite";
 "password_invalid" = "Veuillez vérifier votre mot de passe";
 "password_is_wrong_error" = "Mot de passe incorrect";
-"password_minimum_six_characters_error" = "Votre mot de passe doit être composé d'au moins six caractères";
+"password_minimum_characters_error" = "Votre mot de passe doit être composé d'au moins huit caractères";
 "payment_methods" = "Moyens de paiement";
 "pen_name" = "Pseudo";
 "pen_name_cant_be_empty" = "Veuillez inscrire un pseudo";

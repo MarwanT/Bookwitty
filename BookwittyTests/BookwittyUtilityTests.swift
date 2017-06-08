@@ -24,8 +24,8 @@ class BookwittyUtilityTests: XCTestCase {
   }
 
   func testPasswordValidation() {
-    XCTAssertTrue("1234567".isValidPassword(), "This password was 7 characters long, it should not have failed.")
-    XCTAssertFalse("123456".isValidPassword(), "Password with 6 character only should not pass.")
+    XCTAssertTrue("12345678".isValidPassword(), "This password was 8 characters long, it should not have failed.")
+    XCTAssertFalse("1234567".isValidPassword(), "Password with 7 character only should not pass.")
     XCTAssertFalse("".isValidPassword(), "Empty password should not pass.")
     XCTAssertFalse(" ".isValidPassword(), "Blank password should not pass.")
   }

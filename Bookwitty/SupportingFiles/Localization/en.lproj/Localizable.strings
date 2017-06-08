@@ -132,7 +132,7 @@
 "password_change_unknown_error" = "Something went wrong";
 "password_invalid" = "Please verify your password";
 "password_is_wrong_error" = "The password entered is wrong";
-"password_minimum_six_characters_error" = "Password should be at least 6 characters long!";
+"password_minimum_characters_error" = "Password should be at least 8 characters long!";
 "payment_methods" = "Payment Methods";
 "pen_name" = "Pen Name";
 "pen_name_cant_be_empty" = "Please enter a pen name";
