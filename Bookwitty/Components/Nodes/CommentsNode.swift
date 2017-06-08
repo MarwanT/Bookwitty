@@ -165,11 +165,24 @@ class CommentsNode: ASCellNode {
       style.height = ASDimensionMake(contentSize.height)
     }
   }
-  
-  // MARK: Actions
+}
+
+// MARK: - Notification
+extension CommentsNode {
   func handleNotification(_ notification: Notification) {
-    // check attached 'object' in notification if needed
-    reloadData()
+    guard let (action, comment) = notification.object as? CommentManager.CommentNotificationObject else {
+      return
+    }
+    
+    switch action {
+    case .commentAction:
+      viewModel.updateData(with: comment)
+      updateCollectionNode()
+    case .writeComment:
+      reloadData()
+    default:
+      break
+    }
   }
 }
 
