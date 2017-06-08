@@ -52,6 +52,10 @@ class CommentManager {
     manager.initialize(postIdentifier: postIdentifier, commentIdentifier: commentIdentifier, comments: comments, nextPageURL: nextPageURL)
     return manager
   }
+  
+  func comment(for identifier: String) -> Comment? {
+    return comments.filter({ $0.id == identifier }).first
+  }
 }
 
 // MARK: Network Calls
