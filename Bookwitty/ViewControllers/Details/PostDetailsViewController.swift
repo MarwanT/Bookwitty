@@ -11,6 +11,7 @@ import AsyncDisplayKit
 import Spine
 import Moya
 import GSImageViewerController
+import SwiftLoader
 
 class PostDetailsViewController: ASViewController<PostDetailsNode> {
   let postDetailsNode: PostDetailsNode
@@ -1031,8 +1032,10 @@ extension PostDetailsViewController: CommentComposerViewControllerDelegate {
   }
   
   func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, parentCommentId: String?) {
+    SwiftLoader.show(animated: true)
     postDetailsNode.publishComment(content: content, parentCommentId: parentCommentId) {
       (success, error) in
+      SwiftLoader.hide()
       guard success else {
         if let error = error {
           self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
