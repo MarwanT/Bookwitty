@@ -250,14 +250,39 @@ extension CardDetailsViewController: PhotoCardContentNodeDelegate {
 extension CardDetailsViewController: CommentsNodeDelegate {
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
     switch action {
-    case .writeComment(let parentCommentIdentifier, let postId):
-      break // TODO: Implement thiss
     case .viewAllComments(let commentManager):
       break
     case .viewRepliesForComment(let comment, let postId):
       break
+    case .writeComment(let parentCommentIdentifier, _):
+      CommentComposerViewController.show(from: self, delegate: self, parentCommentId: parentCommentIdentifier)
     case .commentAction(let comment, let action):
       break
+    }
+  }
+}
+
+// MARK: - Compose comment delegate implementation
+extension CardDetailsViewController: CommentComposerViewControllerDelegate {
+  func commentComposerCancel(_ viewController: CommentComposerViewController) {
+    dismiss(animated: true, completion: nil)
+  }
+  
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, parentCommentId: String?) {
+    commentsNode?.publishComment(content: content, parentCommentId: parentCommentId) {
+      (success, error) in
+      guard success else {
+        if let error = error {
+          self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
+            (_) in
+            // Restart editing the comment
+            _ = viewController.becomeFirstResponder()
+          })
+        }
+        return
+      }
+      
+      self.dismiss(animated: true, completion: nil)
     }
   }
 }
