@@ -581,6 +581,22 @@ class Strings {
     return localizedString(key: "publish")
   }
   
+  static func publishCommentGeneralErrorMessage() -> String {
+    return localizedString(key: "publish_comment_general_error_message")
+  }
+  
+  static func publishCommentGeneralErrorTitle() -> String {
+    return localizedString(key: "publish_comment_general_error_title")
+  }
+  
+  static func publishEmptyCommentErrorMessage() -> String {
+    return localizedString(key: "publish_empty_comment_error_message")
+  }
+  
+  static func publishEmptyCommentErrorTitle() -> String {
+    return localizedString(key: "publish_empty_comment_error_title")
+  }
+  
   static func publisher() -> String {
     return localizedString(key: "publisher")
   }

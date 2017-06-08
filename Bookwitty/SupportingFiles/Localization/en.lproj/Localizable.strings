@@ -150,6 +150,10 @@
 "profile_picture" = "Profile Picture";
 "publication_date" = "Publication date";
 "publish" = "Publish";
+"publish_comment_general_error_message" = "Something went wrong";
+"publish_comment_general_error_title" = "Ooops";
+"publish_empty_comment_error_message" = "You seem to have forgotten your words!?";
+"publish_empty_comment_error_title" = "Ooops";
 "publisher" = "Publisher";
 "quote" = "Quote";
 "reading_list" = "Reading List";

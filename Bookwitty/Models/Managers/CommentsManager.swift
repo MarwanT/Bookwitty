@@ -368,18 +368,18 @@ extension CommentManager {
     var title: String? {
       switch self {
       case .publishEmptyComment:
-        return "No Valid"
+        return Strings.publishEmptyCommentErrorTitle()
       case .api, .missingPostId, .unidentified:
-        return "Ooops something went wrong"
+        return Strings.publishCommentGeneralErrorTitle()
       }
     }
     
     var message: String? {
       switch self {
       case .publishEmptyComment:
-        return "Your Comment Is Empty cannot publish it"
+        return Strings.publishEmptyCommentErrorMessage()
       case .api, .missingPostId, .unidentified:
-        return "Something went wrong"
+        return Strings.publishCommentGeneralErrorMessage()
       }
     }
   }
