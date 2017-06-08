@@ -395,4 +395,11 @@ extension CommentsNode {
       completion?(success, error)
     }
   }
+  
+  func undim(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+    viewModel.undim(comment: comment) {
+      (success, error) in
+      completion?(success, error)
+    }
+  }
 }

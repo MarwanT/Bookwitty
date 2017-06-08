@@ -287,6 +287,41 @@ extension CommentManager {
         object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.dim), comment))
     })
   }
+  
+  func undim(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+    guard let postIdentifier = postIdentifier else {
+      completion(false, CommentManager.Error.missingPostId)
+      return
+    }
+    
+    guard let commentId = comment.id else {
+      completion(false, CommentManager.Error.unidentified)
+      return
+    }
+    
+    _ = CommentAPI.undim(commentIdentifier: commentId, completion: {
+      (success, commentId, error) in
+      var responseError: CommentManager.Error? = CommentManager.Error.api(error)
+      defer {
+        completion(success, responseError)
+      }
+      
+      guard success else {
+        return
+      }
+      
+      // Do additional logic here if necessary
+      guard let comment = self.comment(for: commentId) else {
+        responseError = CommentManager.Error.unidentified
+        return
+      }
+      
+      self.undim(comment)
+      NotificationCenter.default.post(
+        name: CommentManager.notificationName(for: postIdentifier),
+        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.undim), comment))
+    })
+  }
 }
 
 //MARK: - Update After Action Implementations
