@@ -82,6 +82,12 @@ class CardDetailsViewController: GenericNodeViewController {
     }
   }
   
+  func pushCommentsViewController(with commentManager: CommentManager) {
+    let commentsVC = CommentsViewController()
+    commentsVC.initialize(with: commentManager)
+    self.navigationController?.pushViewController(commentsVC, animated: true)
+  }
+  
   func viewControllerAnalyticsScreenName(for resource: ModelResource) {
 
     //MARK: [Analytics] Screen Name
@@ -250,10 +256,10 @@ extension CardDetailsViewController: PhotoCardContentNodeDelegate {
 extension CardDetailsViewController: CommentsNodeDelegate {
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
     switch action {
-    case .viewAllComments(let commentManager):
-      break
     case .viewRepliesForComment(let comment, let postId):
       break
+    case .viewAllComments(let commentManager):
+      pushCommentsViewController(with: commentManager)
     case .writeComment(let parentCommentIdentifier, _):
       CommentComposerViewController.show(from: self, delegate: self, parentCommentId: parentCommentIdentifier)
     case .commentAction(let comment, let action):
