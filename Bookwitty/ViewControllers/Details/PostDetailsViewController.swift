@@ -418,7 +418,7 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
       case .dim:
         postDetailsNode.dim(comment: comment, completion: nil)
       case .undim:
-        break
+        postDetailsNode.undim(comment: comment, completion: nil)
       case .reply:
         CommentComposerViewController.show(from: self, delegate: self, parentCommentId: comment.id)
       default:

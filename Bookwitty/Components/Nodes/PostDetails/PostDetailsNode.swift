@@ -426,4 +426,11 @@ extension PostDetailsNode {
       completion?(success, error)
     }
   }
+  
+  func undim(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+    commentsNode.undim(comment: comment) {
+      (success, error) in
+      completion?(success, error)
+    }
+  }
 }
