@@ -45,15 +45,6 @@ class CommentsViewModel {
     }
   }
   
-  func comment(for indexPath: IndexPath) -> Comment? {
-    return commentManager?.comment(at: indexPath.item)
-  }
-  
-  /// Sends a clone of the comment manager held in this instance
-  func commentManagerClone() -> CommentManager? {
-    return commentManager?.clone()
-  }
-  
   func loadComments(completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
     commentManager?.loadComments(completion: {
       (success, error) in
@@ -74,6 +65,18 @@ class CommentsViewModel {
   
   var hasNextPage: Bool {
     return commentManager?.hasNextPage ?? false
+  }
+}
+
+// MARK: Utilities
+extension CommentsViewModel {
+  func comment(for indexPath: IndexPath) -> Comment? {
+    return commentManager?.comment(at: indexPath.item)
+  }
+  
+  /// Sends a clone of the comment manager held in this instance
+  func commentManagerClone() -> CommentManager? {
+    return commentManager?.clone()
   }
 }
 
