@@ -182,6 +182,41 @@ extension CommentManager {
         object: (CommentsNode.Action.writeComment(parentCommentIdentifier: nil, postId: postIdentifier), comment))
     })
   }
+  
+  func wit(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+    guard let postIdentifier = postIdentifier else {
+      completion(false, CommentManager.Error.missingPostId)
+      return
+    }
+    
+    guard let commentId = comment.id else {
+      completion(false, CommentManager.Error.unidentified)
+      return
+    }
+    
+    _ = CommentAPI.wit(commentIdentifier: commentId, completion: {
+      (success, commentId, error) in
+      var responseError: CommentManager.Error? = CommentManager.Error.api(error)
+      defer {
+        completion(success, responseError)
+      }
+      
+      guard success else {
+        return
+      }
+      
+      // Do additional logic here if necessary
+      guard let comment = self.comment(for: commentId) else {
+        responseError = CommentManager.Error.unidentified
+        return
+      }
+      
+      self.wit(comment)
+      NotificationCenter.default.post(
+        name: CommentManager.notificationName(for: postIdentifier),
+        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.wit), comment))
+    })
+  }
 }
 
 //MARK: - Update After Action Implementations
