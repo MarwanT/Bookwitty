@@ -212,6 +212,7 @@ extension CommentManager {
 
 // MARK: - Notifications related
 extension CommentManager {
+  typealias CommentNotificationObject = (action: CommentsNode.Action, comment: Comment)
   class func notificationName(for identifier: String) -> Notification.Name {
     return Notification.Name("comments-updates-for-id:\(identifier)") 
   }
