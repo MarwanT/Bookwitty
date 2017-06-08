@@ -184,6 +184,39 @@ extension CommentManager {
   }
 }
 
+//MARK: - Update After Action Implementations
+extension CommentManager {
+  fileprivate func wit(_ resource: ModelResource) {
+    var actionableRes = resource as? ModelCommonActions
+    actionableRes?.wit = true
+  }
+  
+  fileprivate func unwit(_ resource: ModelResource) {
+    var actionableRes = resource as? ModelCommonActions
+    actionableRes?.wit = false
+  }
+  
+  fileprivate func dim(_ resource: ModelResource) {
+    var actionableRes = resource as? ModelCommonActions
+    actionableRes?.dim = true
+  }
+  
+  fileprivate func undim(_ resource: ModelResource) {
+    var actionableRes = resource as? ModelCommonActions
+    actionableRes?.dim = false
+  }
+  
+  fileprivate func follow(_ resource: ModelResource) {
+    var actionableRes = resource as? ModelCommonActions
+    actionableRes?.isFollowing = true
+  }
+  
+  fileprivate func unfollow(_ resource: ModelResource) {
+    var actionableRes = resource as? ModelCommonActions
+    actionableRes?.isFollowing = false
+  }
+}
+
 // MARK: - Comments related errors
 extension CommentManager {
   enum Error {
