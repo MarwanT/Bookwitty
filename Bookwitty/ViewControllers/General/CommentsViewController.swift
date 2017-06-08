@@ -69,7 +69,7 @@ extension CommentsViewController: CommentsNodeDelegate {
       case .dim:
         commentsNode.dim(comment: comment, completion: nil)
       case .undim:
-        break
+        commentsNode.undim(comment: comment, completion: nil)
       case .reply:
         CommentComposerViewController.show(from: self, delegate: self, parentCommentId: comment.id)
       default:
