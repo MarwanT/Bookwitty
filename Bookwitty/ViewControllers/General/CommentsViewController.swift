@@ -7,6 +7,7 @@
 //
 
 import AsyncDisplayKit
+import SwiftLoader
 
 class CommentsViewController: ASViewController<ASDisplayNode> {
   let commentsNode: CommentsNode
@@ -86,8 +87,10 @@ extension CommentsViewController: CommentComposerViewControllerDelegate {
   }
   
   func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, parentCommentId: String?) {
+    SwiftLoader.show(animated: true)
     commentsNode.publishComment(content: content, parentCommentId: parentCommentId) {
       (success, error) in
+      SwiftLoader.hide()
       guard success else {
         if let error = error {
           self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
