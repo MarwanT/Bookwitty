@@ -70,9 +70,8 @@ class CommentNode: ASCellNode {
     infoStackElements.append(headerSpec)
     
     // layout the body elements: Comment Message, Action Buttons
-    var bodyStackElements = [ASLayoutElement]()
     let actionBarTopSeparatorInsetSpec = ASInsetLayoutSpec(insets: configuration.separatorInsets, child: separator())
-    bodyStackElements.append(contentsOf: [messageNode, actionBarTopSeparatorInsetSpec, actionBar])
+    var bodyStackElements: [ASLayoutElement] = [messageNode, actionBarTopSeparatorInsetSpec, actionBar]
     if !configuration.hideBottomActionBarSeparator {
       bodyStackElements.append(separator())
     }

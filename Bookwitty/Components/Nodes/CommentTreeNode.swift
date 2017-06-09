@@ -79,11 +79,12 @@ class CommentTreeNode: ASCellNode {
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    var elements = [ASLayoutElement]()
+    var elements: [ASLayoutElement] = []
     elements.append(commentNode)
     
     if hasReplies && !configuration.shouldHideViewRepliesDisclosureNode {
-      elements.append(contentsOf: [separator(), viewRepliesDisclosureNode, separator()])
+      let children: [ASLayoutElement] = [separator(), viewRepliesDisclosureNode, separator()]
+      elements.append(contentsOf: children)
       commentNode.configuration.hideBottomActionBarSeparator = true
     } else {
       commentNode.configuration.hideBottomActionBarSeparator = false
