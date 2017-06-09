@@ -26,7 +26,7 @@ class CardDetailsViewController: GenericNodeViewController {
     viewModel = CardDetailsViewModel(resource: resource)
     var containerNode: ASDisplayNode = node
     if let resourceId = resource.id {
-      let concatNode = CommentsNode.concatinate(with: node, resourceIdentifier: resourceId)
+      let concatNode = CommentsNode.concatenate(with: node, resourceIdentifier: resourceId)
       containerNode = concatNode.wrapperNode
       commentsNode = concatNode.commentsNode
     }

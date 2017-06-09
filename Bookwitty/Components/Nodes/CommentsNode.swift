@@ -361,7 +361,7 @@ extension CommentsNode: WriteCommentNodeDelegate {
 
 // MARK: - Display Helpers
 extension CommentsNode {
-  static func concatinate(with node: ASDisplayNode, resourceIdentifier: String) -> (wrapperNode: ASDisplayNode, commentsNode: CommentsNode) {
+  static func concatenate(with node: ASDisplayNode, resourceIdentifier: String) -> (wrapperNode: ASDisplayNode, commentsNode: CommentsNode) {
     let commentsNode = CommentsNode()
     commentsNode.displayMode = .compact
     let commentsManager = CommentsManager()
