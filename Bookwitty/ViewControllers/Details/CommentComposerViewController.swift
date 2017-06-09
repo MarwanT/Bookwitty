@@ -141,7 +141,5 @@ extension CommentComposerViewController {
     navigationController.modalTransitionStyle = .crossDissolve
     
     viewController.present(navigationController, animated: true, completion: nil)
-    
-    return
   }
 }
