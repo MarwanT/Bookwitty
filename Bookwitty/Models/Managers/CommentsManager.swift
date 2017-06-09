@@ -9,7 +9,7 @@
 import Foundation
 import Moya
 
-class CommentManager {
+class CommentsManager {
   private(set) var postIdentifier: String?
   private(set) var commentIdentifier: String?
   
@@ -51,12 +51,12 @@ class CommentManager {
     return nextPageURL != nil
   }
   
-  func clone() -> CommentManager? {
+  func clone() -> CommentsManager? {
     guard let postIdentifier = postIdentifier else {
       return nil
     }
     
-    var manager = CommentManager()
+    var manager = CommentsManager()
     manager.initialize(postIdentifier: postIdentifier, commentIdentifier: commentIdentifier, comments: comments, nextPageURL: nextPageURL)
     return manager
   }
@@ -67,10 +67,10 @@ class CommentManager {
 }
 
 // MARK: Network Calls
-extension CommentManager {
-  func loadComments(completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+extension CommentsManager {
+  func loadComments(completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
     guard postIdentifier != nil else {
-      completion(false, CommentManager.Error.missingPostId)
+      completion(false, CommentsManager.Error.missingPostId)
       return
     }
     
@@ -81,9 +81,9 @@ extension CommentManager {
     }
   }
   
-  private func loadCommentsForPost(completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+  private func loadCommentsForPost(completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
     guard !isFetchingData, let postIdentifier = postIdentifier else {
-      completion(false, CommentManager.Error.missingPostId)
+      completion(false, CommentsManager.Error.missingPostId)
       return
     }
     
@@ -94,7 +94,7 @@ extension CommentManager {
       defer {
         self.isFetchingData = false
         self.cancellableRequest = nil
-        completion(success, CommentManager.Error.api(error))
+        completion(success, CommentsManager.Error.api(error))
       }
       
       self.comments.removeAll()
@@ -106,9 +106,9 @@ extension CommentManager {
     })
   }
   
-  private func loadCommentReplies(completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+  private func loadCommentReplies(completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
     guard !isFetchingData, let commentIdentifier = commentIdentifier else {
-      completion(false, CommentManager.Error.unidentified)
+      completion(false, CommentsManager.Error.unidentified)
       return
     }
     
@@ -119,7 +119,7 @@ extension CommentManager {
       defer {
         self.isFetchingData = false
         self.cancellableRequest = nil
-        completion(success, CommentManager.Error.api(error))
+        completion(success, CommentsManager.Error.api(error))
       }
       
       self.comments.removeAll()
@@ -131,9 +131,9 @@ extension CommentManager {
     })
   }
   
-  func loadMore(completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+  func loadMore(completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
     guard !isFetchingData, let url = nextPageURL else {
-      completion(false, CommentManager.Error.unidentified)
+      completion(false, CommentsManager.Error.unidentified)
       return
     }
     
@@ -144,7 +144,7 @@ extension CommentManager {
       defer {
         self.isFetchingData = false
         self.cancellableRequest = nil
-        completion(success, CommentManager.Error.api(error))
+        completion(success, CommentsManager.Error.api(error))
       }
       
       guard success, let comments = resources as? [Comment] else {
@@ -155,21 +155,21 @@ extension CommentManager {
     })
   }
   
-  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
     guard let postIdentifier = postIdentifier else {
-      completion(false, CommentManager.Error.missingPostId)
+      completion(false, CommentsManager.Error.missingPostId)
       return
     }
     
     guard let content = content, !content.isBlank else {
-      completion(false, CommentManager.Error.publishEmptyComment)
+      completion(false, CommentsManager.Error.publishEmptyComment)
       return
     }
     
     _ = CommentAPI.createComment(postIdentifier: postIdentifier, commentMessage: content, parentCommentIdentifier: parentCommentId, completion: {
       (success, comment, error) in
       defer {
-        completion(success, CommentManager.Error.api(error))
+        completion(success, CommentsManager.Error.api(error))
       }
       
       guard success else {
@@ -178,25 +178,25 @@ extension CommentManager {
       
       // Do additional logic here if necessary
       NotificationCenter.default.post(
-        name: CommentManager.notificationName(for: postIdentifier),
+        name: CommentsManager.notificationName(for: postIdentifier),
         object: (CommentsNode.Action.writeComment(parentCommentIdentifier: nil, postId: postIdentifier), comment))
     })
   }
   
-  func wit(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+  func wit(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
     guard let postIdentifier = postIdentifier else {
-      completion(false, CommentManager.Error.missingPostId)
+      completion(false, CommentsManager.Error.missingPostId)
       return
     }
     
     guard let commentId = comment.id else {
-      completion(false, CommentManager.Error.unidentified)
+      completion(false, CommentsManager.Error.unidentified)
       return
     }
     
     _ = CommentAPI.wit(commentIdentifier: commentId, completion: {
       (success, commentId, error) in
-      var responseError: CommentManager.Error? = CommentManager.Error.api(error)
+      var responseError: CommentsManager.Error? = CommentsManager.Error.api(error)
       defer {
         completion(success, responseError)
       }
@@ -207,31 +207,31 @@ extension CommentManager {
       
       // Do additional logic here if necessary
       guard let comment = self.comment(for: commentId) else {
-        responseError = CommentManager.Error.unidentified
+        responseError = CommentsManager.Error.unidentified
         return
       }
       
       self.wit(comment)
       NotificationCenter.default.post(
-        name: CommentManager.notificationName(for: postIdentifier),
+        name: CommentsManager.notificationName(for: postIdentifier),
         object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.wit), comment))
     })
   }
   
-  func unwit(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+  func unwit(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
     guard let postIdentifier = postIdentifier else {
-      completion(false, CommentManager.Error.missingPostId)
+      completion(false, CommentsManager.Error.missingPostId)
       return
     }
     
     guard let commentId = comment.id else {
-      completion(false, CommentManager.Error.unidentified)
+      completion(false, CommentsManager.Error.unidentified)
       return
     }
     
     _ = CommentAPI.unwit(commentIdentifier: commentId, completion: {
       (success, commentId, error) in
-      var responseError: CommentManager.Error? = CommentManager.Error.api(error)
+      var responseError: CommentsManager.Error? = CommentsManager.Error.api(error)
       defer {
         completion(success, responseError)
       }
@@ -242,31 +242,31 @@ extension CommentManager {
       
       // Do additional logic here if necessary
       guard let comment = self.comment(for: commentId) else {
-        responseError = CommentManager.Error.unidentified
+        responseError = CommentsManager.Error.unidentified
         return
       }
       
       self.unwit(comment)
       NotificationCenter.default.post(
-        name: CommentManager.notificationName(for: postIdentifier),
+        name: CommentsManager.notificationName(for: postIdentifier),
         object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.unwit), comment))
     })
   }
   
-  func dim(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+  func dim(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
     guard let postIdentifier = postIdentifier else {
-      completion(false, CommentManager.Error.missingPostId)
+      completion(false, CommentsManager.Error.missingPostId)
       return
     }
     
     guard let commentId = comment.id else {
-      completion(false, CommentManager.Error.unidentified)
+      completion(false, CommentsManager.Error.unidentified)
       return
     }
     
     _ = CommentAPI.dim(commentIdentifier: commentId, completion: {
       (success, commentId, error) in
-      var responseError: CommentManager.Error? = CommentManager.Error.api(error)
+      var responseError: CommentsManager.Error? = CommentsManager.Error.api(error)
       defer {
         completion(success, responseError)
       }
@@ -277,31 +277,31 @@ extension CommentManager {
       
       // Do additional logic here if necessary
       guard let comment = self.comment(for: commentId) else {
-        responseError = CommentManager.Error.unidentified
+        responseError = CommentsManager.Error.unidentified
         return
       }
       
       self.dim(comment)
       NotificationCenter.default.post(
-        name: CommentManager.notificationName(for: postIdentifier),
+        name: CommentsManager.notificationName(for: postIdentifier),
         object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.dim), comment))
     })
   }
   
-  func undim(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+  func undim(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
     guard let postIdentifier = postIdentifier else {
-      completion(false, CommentManager.Error.missingPostId)
+      completion(false, CommentsManager.Error.missingPostId)
       return
     }
     
     guard let commentId = comment.id else {
-      completion(false, CommentManager.Error.unidentified)
+      completion(false, CommentsManager.Error.unidentified)
       return
     }
     
     _ = CommentAPI.undim(commentIdentifier: commentId, completion: {
       (success, commentId, error) in
-      var responseError: CommentManager.Error? = CommentManager.Error.api(error)
+      var responseError: CommentsManager.Error? = CommentsManager.Error.api(error)
       defer {
         completion(success, responseError)
       }
@@ -312,20 +312,20 @@ extension CommentManager {
       
       // Do additional logic here if necessary
       guard let comment = self.comment(for: commentId) else {
-        responseError = CommentManager.Error.unidentified
+        responseError = CommentsManager.Error.unidentified
         return
       }
       
       self.undim(comment)
       NotificationCenter.default.post(
-        name: CommentManager.notificationName(for: postIdentifier),
+        name: CommentsManager.notificationName(for: postIdentifier),
         object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.undim), comment))
     })
   }
 }
 
 //MARK: - Update After Action Implementations
-extension CommentManager {
+extension CommentsManager {
   fileprivate func wit(_ resource: ModelResource) {
     var actionableRes = resource as? ModelCommonActions
     actionableRes?.wit = true
@@ -358,7 +358,7 @@ extension CommentManager {
 }
 
 // MARK: - Comments related errors
-extension CommentManager {
+extension CommentsManager {
   enum Error {
     case publishEmptyComment
     case api(BookwittyAPIError?)
@@ -386,7 +386,7 @@ extension CommentManager {
 }
 
 // MARK: - Notifications related
-extension CommentManager {
+extension CommentsManager {
   typealias CommentNotificationObject = (action: CommentsNode.Action, comment: Comment)
   class func notificationName(for identifier: String) -> Notification.Name {
     return Notification.Name("comments-updates-for-id:\(identifier)") 

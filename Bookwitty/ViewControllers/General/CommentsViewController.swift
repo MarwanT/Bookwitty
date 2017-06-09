@@ -18,8 +18,8 @@ class CommentsViewController: ASViewController<ASDisplayNode> {
     commentsNode.delegate = self
   }
   
-  func initialize(with commentManager: CommentManager) {
-    commentsNode.initialize(with: commentManager)
+  func initialize(with commentsManager: CommentsManager) {
+    commentsNode.initialize(with: commentsManager)
     if isViewLoaded {
       reloadData()
     }
@@ -43,10 +43,10 @@ class CommentsViewController: ASViewController<ASDisplayNode> {
       return
     }
     
-    let commentManager = CommentManager()
-    commentManager.initialize(postIdentifier: postId, commentIdentifier: commentIdentifier)
+    let commentsManager = CommentsManager()
+    commentsManager.initialize(postIdentifier: postId, commentIdentifier: commentIdentifier)
     let commentsViewController = CommentsViewController()
-    commentsViewController.initialize(with: commentManager)
+    commentsViewController.initialize(with: commentsManager)
     self.navigationController?.pushViewController(commentsViewController, animated: true)
   }
 }
@@ -57,7 +57,7 @@ extension CommentsViewController: CommentsNodeDelegate {
     switch action {
     case .viewRepliesForComment(let comment, let postId):
       pushCommentsViewControllerForReplies(comment: comment, postId: postId)
-    case .viewAllComments(let commentManager):
+    case .viewAllComments(let commentsManager):
       break
     case .writeComment(let parentCommentIdentifier, _):
       CommentComposerViewController.show(from: self, delegate: self, parentCommentId: parentCommentIdentifier)

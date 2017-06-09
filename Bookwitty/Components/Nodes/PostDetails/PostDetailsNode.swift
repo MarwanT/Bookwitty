@@ -217,9 +217,9 @@ class PostDetailsNode: ASScrollNode {
   }
   
   func loadComments(with resourceIdentifier: String) {
-    let commentManager = CommentManager()
-    commentManager.initialize(postIdentifier: resourceIdentifier)
-    commentsNode.initialize(with: commentManager)
+    let commentsManager = CommentsManager()
+    commentsManager.initialize(postIdentifier: resourceIdentifier)
+    commentsNode.initialize(with: commentsManager)
     commentsNode.reloadData()
   }
 
@@ -399,35 +399,35 @@ extension PostDetailsNode: CommentsNodeDelegate {
 
 // MARK: - Comment related methods
 extension PostDetailsNode {
-  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
     commentsNode.publishComment(content: content, parentCommentId: parentCommentId) {
       (success, error) in
       completion(success, error)
     }
   }
   
-  func wit(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+  func wit(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
     commentsNode.wit(comment: comment) {
       (success, error) in
       completion?(success, error)
     }
   }
   
-  func unwit(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+  func unwit(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
     commentsNode.unwit(comment: comment) {
       (success, error) in
       completion?(success, error)
     }
   }
   
-  func dim(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+  func dim(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
     commentsNode.dim(comment: comment) {
       (success, error) in
       completion?(success, error)
     }
   }
   
-  func undim(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+  func undim(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
     commentsNode.undim(comment: comment) {
       (success, error) in
       completion?(success, error)
