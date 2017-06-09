@@ -840,6 +840,10 @@ class Strings {
   static func welcome_to_bookwitty() -> String {
     return localizedString(key: "welcome_to_bookwitty")
   }
+
+  static func what_are_your_thoughts() -> String {
+    return localizedString(key: "what_are_your_thoughts")
+  }
   
   static func width() -> String {
     return localizedString(key: "width")

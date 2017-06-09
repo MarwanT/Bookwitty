@@ -9,16 +9,16 @@
 import Foundation
 
 class CommentsViewModel {
-  fileprivate var commentManager: CommentManager?
+  fileprivate var commentsManager: CommentsManager?
   
   var displayMode: CommentsNode.DisplayMode = .normal
   
   var postId: String? {
-    return commentManager?.postIdentifier
+    return commentsManager?.postIdentifier
   }
   
-  func initialize(with manager: CommentManager) {
-    commentManager = manager
+  func initialize(with manager: CommentsManager) {
+    commentsManager = manager
   }
   
   var numberOfSection: Int {
@@ -32,7 +32,7 @@ class CommentsViewModel {
     case CommentsNode.Section.write.rawValue:
       return 1
     case CommentsNode.Section.read.rawValue:
-      var itemsNumber = commentManager?.numberOfComments ?? 0
+      var itemsNumber = commentsManager?.numberOfComments ?? 0
       if case displayMode = CommentsNode.DisplayMode.compact {
         itemsNumber = min(itemsNumber, 1)
       }
@@ -45,102 +45,102 @@ class CommentsViewModel {
     }
   }
   
-  func loadComments(completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
-    commentManager?.loadComments(completion: {
+  func loadComments(completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+    commentsManager?.loadComments(completion: {
       (success, error) in
       completion(success, error)
     })
   }
   
-  func loadMore(completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
-    commentManager?.loadMore(completion: {
+  func loadMore(completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+    commentsManager?.loadMore(completion: {
       (success, error) in
       completion(success, error)
     })
   }
   
   var isFetchingData: Bool {
-    return commentManager?.isFetchingData ?? false
+    return commentsManager?.isFetchingData ?? false
   }
   
   var hasNextPage: Bool {
-    return commentManager?.hasNextPage ?? false
+    return commentsManager?.hasNextPage ?? false
   }
 }
 
 // MARK: Utilities
 extension CommentsViewModel {
   func updateData(with updatedComment: Comment) {
-    commentManager?.updateData(with: updatedComment)
+    commentsManager?.updateData(with: updatedComment)
   }
   
   func comment(for indexPath: IndexPath) -> Comment? {
-    return commentManager?.comment(at: indexPath.item)
+    return commentsManager?.comment(at: indexPath.item)
   }
   
   /// Sends a clone of the comment manager held in this instance
-  func commentManagerClone() -> CommentManager? {
-    return commentManager?.clone()
+  func commentsManagerClone() -> CommentsManager? {
+    return commentsManager?.clone()
   }
 }
 
 // MARK: - Related methods
 extension CommentsViewModel {
-  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
-    guard let commentManager = commentManager else {
+  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+    guard let commentsManager = commentsManager else {
       completion(false, nil)
       return
     }
     
-    commentManager.publishComment(content: content, parentCommentId: parentCommentId, completion: {
+    commentsManager.publishComment(content: content, parentCommentId: parentCommentId, completion: {
       (success, error) in
       completion(success, error)
     })
   }
   
-  func wit(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
-    guard let commentManager = commentManager else {
+  func wit(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+    guard let commentsManager = commentsManager else {
       completion(false, nil)
       return
     }
     
-    commentManager.wit(comment: comment) {
+    commentsManager.wit(comment: comment) {
       (success, error) in
       completion(success, error)
     }
   }
   
-  func unwit(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
-    guard let commentManager = commentManager else {
+  func unwit(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+    guard let commentsManager = commentsManager else {
       completion(false, nil)
       return
     }
     
-    commentManager.unwit(comment: comment) {
+    commentsManager.unwit(comment: comment) {
       (success, error) in
       completion(success, error)
     }
   }
   
-  func dim(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
-    guard let commentManager = commentManager else {
+  func dim(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+    guard let commentsManager = commentsManager else {
       completion(false, nil)
       return
     }
     
-    commentManager.dim(comment: comment) {
+    commentsManager.dim(comment: comment) {
       (success, error) in
       completion(success, error)
     }
   }
   
-  func undim(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
-    guard let commentManager = commentManager else {
+  func undim(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+    guard let commentsManager = commentsManager else {
       completion(false, nil)
       return
     }
     
-    commentManager.undim(comment: comment) {
+    commentsManager.undim(comment: comment) {
       (success, error) in
       completion(success, error)
     }
@@ -149,6 +149,6 @@ extension CommentsViewModel {
   /// If the comments displayed are replies of a certain comment then the
   /// value of this property will be that parent comment id. Otherwise nil
   var parentCommentIdentifier: String? {
-    return commentManager?.commentIdentifier
+    return commentsManager?.commentIdentifier
   }
 }

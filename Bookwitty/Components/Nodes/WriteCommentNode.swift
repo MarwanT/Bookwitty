@@ -37,7 +37,7 @@ class WriteCommentNode: ASCellNode {
   
     overlayNode.addTarget(self, action: #selector(didTapNode(_:)), forControlEvents: .touchUpInside)
     
-    placeholder = "What are your thoughts?"
+    placeholder = Strings.what_are_your_thoughts()
     textNode.style.flexGrow = 1.0
     textNode.textContainerInset = configuration.textContainerInset
   }

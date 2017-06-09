@@ -97,7 +97,7 @@ class CommentsNode: ASCellNode {
     }
   }
   
-  func initialize(with manager: CommentManager) {
+  func initialize(with manager: CommentsManager) {
     viewModel.initialize(with: manager)
     registerNotification()
   }
@@ -119,7 +119,7 @@ class CommentsNode: ASCellNode {
     guard let postId = viewModel.postId else {
       return
     }
-    NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(_:)), name: CommentManager.notificationName(for: postId), object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(_:)), name: CommentsManager.notificationName(for: postId), object: nil)
   }
   
   private func unregisterNotification() {
@@ -170,7 +170,7 @@ class CommentsNode: ASCellNode {
 // MARK: - Notification
 extension CommentsNode {
   func handleNotification(_ notification: Notification) {
-    guard let (action, comment) = notification.object as? CommentManager.CommentNotificationObject else {
+    guard let (action, comment) = notification.object as? CommentsManager.CommentNotificationObject else {
       return
     }
     
@@ -276,8 +276,8 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
     collectionNode.deselectItem(at: indexPath, animated: true)
     
     if viewCommentsDisclosureNode === collectionNode.nodeForItem(at: indexPath) {
-      if let commentManager = viewModel.commentManagerClone() {
-        delegate?.commentsNode(self, reactFor: .viewAllComments(commentManager: commentManager))
+      if let commentsManager = viewModel.commentsManagerClone() {
+        delegate?.commentsNode(self, reactFor: .viewAllComments(commentsManager: commentsManager))
       }
     }
   }
@@ -317,7 +317,7 @@ extension CommentsNode {
 extension CommentsNode {
   enum Action {
     case viewRepliesForComment(comment: Comment, postId: String)
-    case viewAllComments(commentManager: CommentManager)
+    case viewAllComments(commentsManager: CommentsManager)
     case writeComment(parentCommentIdentifier: String?, postId: String)
     case commentAction(comment: Comment, action: CardActionBarNode.Action)
   }
@@ -361,10 +361,10 @@ extension CommentsNode: WriteCommentNodeDelegate {
 
 // MARK: - Display Helpers
 extension CommentsNode {
-  static func concatinate(with node: ASDisplayNode, resourceIdentifier: String) -> (wrapperNode: ASDisplayNode, commentsNode: CommentsNode) {
+  static func concatenate(with node: ASDisplayNode, resourceIdentifier: String) -> (wrapperNode: ASDisplayNode, commentsNode: CommentsNode) {
     let commentsNode = CommentsNode()
     commentsNode.displayMode = .compact
-    let commentsManager = CommentManager()
+    let commentsManager = CommentsManager()
     commentsManager.initialize(postIdentifier: resourceIdentifier)
     commentsNode.initialize(with: commentsManager)
     commentsNode.reloadData()
@@ -380,35 +380,35 @@ extension CommentsNode {
 
 // MARK: - Comment intences related methods
 extension CommentsNode {
-  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentManager.Error?) -> Void) {
+  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
     viewModel.publishComment(content: content, parentCommentId: parentCommentId) {
       (success, error) in
       completion(success, error)
     }
   }
   
-  func wit(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+  func wit(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
     viewModel.wit(comment: comment) {
       (success, error) in
       completion?(success, error)
     }
   }
   
-  func unwit(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+  func unwit(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
     viewModel.unwit(comment: comment) {
       (success, error) in
       completion?(success, error)
     }
   }
   
-  func dim(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+  func dim(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
     viewModel.dim(comment: comment) {
       (success, error) in
       completion?(success, error)
     }
   }
   
-  func undim(comment: Comment, completion: ((_ success: Bool, _ error: CommentManager.Error?) -> Void)?) {
+  func undim(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
     viewModel.undim(comment: comment) {
       (success, error) in
       completion?(success, error)

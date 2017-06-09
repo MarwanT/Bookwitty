@@ -26,7 +26,7 @@ class CardDetailsViewController: GenericNodeViewController {
     viewModel = CardDetailsViewModel(resource: resource)
     var containerNode: ASDisplayNode = node
     if let resourceId = resource.id {
-      let concatNode = CommentsNode.concatinate(with: node, resourceIdentifier: resourceId)
+      let concatNode = CommentsNode.concatenate(with: node, resourceIdentifier: resourceId)
       containerNode = concatNode.wrapperNode
       commentsNode = concatNode.commentsNode
     }
@@ -83,9 +83,9 @@ class CardDetailsViewController: GenericNodeViewController {
     }
   }
   
-  func pushCommentsViewController(with commentManager: CommentManager) {
+  func pushCommentsViewController(with commentsManager: CommentsManager) {
     let commentsVC = CommentsViewController()
-    commentsVC.initialize(with: commentManager)
+    commentsVC.initialize(with: commentsManager)
     self.navigationController?.pushViewController(commentsVC, animated: true)
   }
   
@@ -259,8 +259,8 @@ extension CardDetailsViewController: CommentsNodeDelegate {
     switch action {
     case .viewRepliesForComment(let comment, let postId):
       break
-    case .viewAllComments(let commentManager):
-      pushCommentsViewController(with: commentManager)
+    case .viewAllComments(let commentsManager):
+      pushCommentsViewController(with: commentsManager)
     case .writeComment(let parentCommentIdentifier, _):
       CommentComposerViewController.show(from: self, delegate: self, parentCommentId: parentCommentIdentifier)
     case .commentAction(let comment, let action):
