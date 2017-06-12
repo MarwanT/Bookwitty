@@ -212,10 +212,6 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
      * removes all the cells that were showing prior to the load operation + it used the .loading not .reloading
      * option which in turn shows the bottom/loadmore loader.
      **/
-    guard pullToRefresher.isRefreshing else {
-      //Making sure that only UIRefreshControl will trigger this on valueChanged
-      return false
-    }
     guard loadingStatus == .none else {
       pullToRefresher.endRefreshing()
       //Making sure that only UIRefreshControl will trigger this on valueChanged
@@ -235,6 +231,11 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
   }
 
   func pullDownToReloadData() {
+    guard pullToRefresher.isRefreshing else {
+      //Making sure that only UIRefreshControl will trigger this on valueChanged
+      return
+    }
+
     let didStartReloadingData = reloadViewData()
     if didStartReloadingData {
       //MARK: [Analytics] Event
