@@ -40,7 +40,7 @@ class VideoCardPostCellNode: BaseCardPostNode {
 }
 
 protocol VideoCardContentDelegate {
-  func videoImageTouchUpInside(sender: ASImageNode)
+  func videoViewTouchUpInside(sender: ASImageNode)
 }
 
 class VideoCardContentNode: ASDisplayNode {
@@ -55,6 +55,16 @@ class VideoCardContentNode: ASDisplayNode {
   var playNode: ASImageNode
 
   var delegate: VideoCardContentDelegate?
+
+  var tappableTitle: Bool = false {
+    didSet {
+      if tappableTitle {
+        titleNode.addTarget(self, action: #selector(videoViewTouchUpInside(_:)), forControlEvents: .touchUpInside)
+      } else {
+        titleNode.removeTarget(self, action: #selector(videoViewTouchUpInside(_:)), forControlEvents: .touchUpInside)
+      }
+    }
+  }
 
   var articleTitle: String? {
     didSet {
@@ -122,7 +132,7 @@ class VideoCardContentNode: ASDisplayNode {
     playNode.style.preferredSize = playIconSize
 
     imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
-    imageNode.addTarget(self, action: #selector(videoImageTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    imageNode.addTarget(self, action: #selector(videoViewTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
 
   func setupMode(fullViewMode: Bool) {
@@ -135,14 +145,14 @@ class VideoCardContentNode: ASDisplayNode {
     setNeedsLayout()
   }
 
-  func videoImageTouchUpInside(_ sender: ASImageNode?) {
+  func videoViewTouchUpInside(_ sender: ASImageNode?) {
     guard let videoUrl = videoUrl else {
       return
     }
 
     WebViewController.present(url: videoUrl)
 
-    delegate?.videoImageTouchUpInside(sender: imageNode)
+    delegate?.videoViewTouchUpInside(sender: imageNode)
   }
 
   private func titleInset() -> UIEdgeInsets {
