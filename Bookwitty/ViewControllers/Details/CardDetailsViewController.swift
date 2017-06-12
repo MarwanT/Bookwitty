@@ -28,6 +28,10 @@ class CardDetailsViewController: GenericNodeViewController {
 
     if let photoNode = node as? PhotoCardPostCellNode {
       photoNode.node.delegate = self
+    } else if let linkCard = node as? LinkCardPostCellNode {
+      linkCard.node.tappableTitle = true
+    } else if let videoCard = node as? VideoCardPostCellNode {
+      videoCard.node.tappableTitle = true
     }
 
 
