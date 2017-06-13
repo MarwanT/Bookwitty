@@ -530,7 +530,15 @@ extension SearchViewController: UISearchBarDelegate {
   }
 
   public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-    viewModel.filter.query = searchBar.text
+    /* Discussion:
+     * Reset the filters when the query is new
+     */
+    if viewModel.filter.query != searchBar.text {
+      viewModel.filter.query = searchBar.text
+      viewModel.filter.categories.removeAll()
+      viewModel.filter.languages.removeAll()
+      viewModel.filter.types.removeAll()
+    }
     searchAction()
     searchBar.resignFirstResponder()
   }
