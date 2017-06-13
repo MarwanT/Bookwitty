@@ -459,7 +459,7 @@ extension SearchViewController: ASCollectionDelegate {
         let updateIndexRange = initialLastIndexPath..<finalLastIndexPath
 
         updatedIndexPathRange = updateIndexRange.flatMap({ (index) -> IndexPath in
-          return IndexPath(row: index, section: 0)
+          return IndexPath(row: index, section: Section.cards.rawValue)
         })
       }
     }
