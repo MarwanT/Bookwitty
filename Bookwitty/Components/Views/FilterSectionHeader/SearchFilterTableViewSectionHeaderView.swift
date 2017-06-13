@@ -101,7 +101,14 @@ class SearchFilterTableViewSectionHeaderView: UITableViewHeaderFooterView {
 
 extension SearchFilterTableViewSectionHeaderView: Themeable {
   func applyTheme() {
-    contentView.backgroundColor = UIColor.white
+
+    /** Discussion
+     * Setting the background color on UITableViewHeaderFooterView has been deprecated, BUT contentView.backgroundColor was not working on the IPOD or IPHONE-5/s
+     * so we kept both until 'contentView.backgroundColor' work 100% on all supported devices
+     */
+    contentView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
+    backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
+
     titleLabel.font = FontDynamicType.footnote.font
     titleLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
 
