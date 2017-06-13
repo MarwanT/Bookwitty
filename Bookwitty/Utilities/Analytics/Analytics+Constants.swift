@@ -20,12 +20,14 @@ extension Analytics {
     let action: Action
     let name: String
     let value: Double
+    let info: [String : String]
 
-    init(category: Category, action: Action, name: String = "", value: Double = 0.0) {
+    init(category: Category, action: Action, name: String = "", value: Double = 0.0, info: [String : String] = [:]) {
       self.category = category
       self.action = action
       self.name = name
       self.value = value
+      self.info = info
     }
   }
   
