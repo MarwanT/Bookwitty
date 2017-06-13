@@ -23,6 +23,7 @@ class SearchFiltersViewModel {
     self.filter = filter
 
     self.candidateFilter = Filter()
+    self.candidateFilter?.query = self.filter?.query
     self.candidateFilter?.categories = self.filter?.categories ?? []
     self.candidateFilter?.languages = self.filter?.languages ?? []
     self.candidateFilter?.types = self.filter?.types ?? []
