@@ -36,15 +36,15 @@ class SearchFiltersViewModel {
       return
     }
 
-    if facet.categories != nil {
+    if facet.categories?.count ?? 0 > 0 {
       sections.append(Facet.Options.categories)
     }
 
-    if facet.languages != nil {
+    if facet.languages?.count ?? 0 > 0 {
       sections.append(Facet.Options.languages)
     }
 
-    if facet.types != nil {
+    if facet.types?.count ?? 0 > 0 {
       sections.append(Facet.Options.types)
     }
   }
