@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,7 +19,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="244.5"/>
                     <color key="backgroundColor" red="0.93725490196078431" green="0.90196078431372551" blue="0.85098039215686272" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bookwitty" translatesAutoresizingMaskIntoConstraints="NO" id="BSN-M6-L2t" userLabel="Bookwitty simbol logo">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BookwittyAppIcon" translatesAutoresizingMaskIntoConstraints="NO" id="BSN-M6-L2t" userLabel="Bookwitty simbol logo">
                     <rect key="frame" x="137" y="183.5" width="100" height="100"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="J8z-Vl-fnG"/>
@@ -50,6 +50,6 @@
     </objects>
     <resources>
         <image name="AppNameIcon" width="270" height="30"/>
-        <image name="bookwitty" width="90" height="90"/>
+        <image name="BookwittyAppIcon" width="256" height="256"/>
     </resources>
 </document>
