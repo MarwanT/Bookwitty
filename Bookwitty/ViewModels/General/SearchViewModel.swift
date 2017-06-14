@@ -112,6 +112,26 @@ class SearchViewModel {
   }
 }
 
+//MARK: - Filter helper
+extension SearchViewModel {
+  func filterDictionary() -> [String : String] {
+    var dictionary = [String : String]()
+
+    if let category = self.filter.categories.first {
+      dictionary["category"] = category
+    }
+
+    if let language = self.filter.languages.first {
+      dictionary["language"] = language
+    }
+
+    if let type = self.filter.types.first {
+      dictionary["type"] = type
+    }
+    return dictionary
+  }
+}
+
 // Mark: - Collection helper
 extension SearchViewModel {
   func numberOfSections() -> Int {
