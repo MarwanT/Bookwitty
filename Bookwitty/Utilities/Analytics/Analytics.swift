@@ -8,6 +8,7 @@
 
 import Foundation
 import FacebookCore
+import Crashlytics
 
 internal final class Analytics {
 
@@ -40,9 +41,10 @@ internal final class Analytics {
   func send(event: Event) {
     self.sendGoogle(event: event)
     
-    // Facebook don't have a built in OptOut option.
+    // Facebook / Answers don't have a built in OptOut option.
     if self.enabled {
       sendFacebook(event: event)
+      sendAnswers(event: event)
     }
   }
   
@@ -95,10 +97,15 @@ extension Analytics {
     
     let gACategory: String = event.category.name
     let gAAction: String = event.action.name
-    let gALabel: String = event.name
+    var gALabel: String = event.name
+    let gAInfo = event.info
     let gADictionaryBuilder: GAIDictionaryBuilder = GAIDictionaryBuilder.createEvent(withCategory: gACategory, action: gAAction, label: gALabel, value: NSNumber(value: event.value))
+
+    if gAInfo.keys.count > 0 {
+      gALabel += " ''' filters: " + gAInfo.description
+    }
+
     let gADictionary: NSMutableDictionary = gADictionaryBuilder.build()
-    
     GAI.sharedInstance().defaultTracker.send(gADictionary as [NSObject : AnyObject])
   }
 
@@ -119,16 +126,59 @@ extension Analytics {
 
 extension Analytics {
   fileprivate func sendFacebook(event: Event) {
-    var eventName: String = event.category.name
-    
-    if !event.action.name.isEmpty {
-      eventName += "-" + event.action.name
+    let fACategory: String = event.category.name
+    let fAAction: String = event.action.name
+    let fALabel: String = event.name
+    let fAInfo = event.info
+
+    let eventName = fACategory + (fAAction.characters.count > 0 ? "-" + fAAction : "")
+
+    var dictionary: AppEvent.ParametersDictionary = [:]
+    if fALabel.characters.count > 0 {
+      dictionary[AppEventParameterName.custom("Label")] = fALabel
     }
-    
-    if !event.name.isEmpty {
-      eventName += "-" + event.name
+
+    if fAInfo.keys.count > 0 {
+      for (key, value) in fAInfo {
+        dictionary[AppEventParameterName.custom(key)] = value
+      }
     }
-    
-    AppEventsLogger.log(eventName)
+
+    let fAEvent = AppEvent(name: eventName, parameters: dictionary, valueToSum: nil)
+    AppEventsLogger.log(fAEvent)
+  }
+}
+
+// MARK: - Answers Analytics
+extension Analytics {
+  fileprivate func sendAnswers(event: Event) {
+    let aAcategory: String = event.category.name
+    let aAction: String = event.action.name
+    let aALabel: String = event.name
+    let aAInfo = event.info
+
+    let eventName = aAcategory + (aAction.characters.count > 0 ? "-" + aAction : "")
+
+    var dictionary: [String : String] = [:]
+    if aALabel.characters.count > 0 {
+      dictionary["Label"] = aALabel
+    }
+
+    if aAInfo.keys.count > 0 {
+      for (key, value) in aAInfo {
+        dictionary[key] = value
+      }
+    }
+
+    switch event.action {
+    case .SignIn:
+      Answers.logLogin(withMethod: "e-mail", success: 1.0, customAttributes: nil)
+    case .SearchOnBookwitty:
+      Answers.logSearch(withQuery: aALabel, customAttributes: nil)
+    case .GoToDetails:
+      Answers.logContentView(withName: aALabel, contentType: aAcategory, contentId: nil, customAttributes: nil)
+    default:
+      Answers.logCustomEvent(withName: eventName, customAttributes: dictionary)
+    }
   }
 }

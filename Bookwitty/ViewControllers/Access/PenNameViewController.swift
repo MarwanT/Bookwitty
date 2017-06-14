@@ -117,6 +117,12 @@ class PenNameViewController: UIViewController {
      Upload the pen name image if needed before proceeding
      with completing the pen name profile creation
      */
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .Account,
+                                                 action: .EditPenName)
+    Analytics.shared.send(event: event)
+
     showLoader()
     self.uploadUserImageIfNeeded { (imageId) in
       self.createPenName(imageId: imageId)

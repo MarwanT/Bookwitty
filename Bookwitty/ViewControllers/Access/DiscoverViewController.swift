@@ -135,6 +135,22 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
         strongSelf.updateCollection(cardsSection: true, loaderSection: true)
       }
     }
+
+
+    var analyticsAction: Analytics.Action = .Default
+    switch activeSegment {
+    case .pages:
+      analyticsAction = .GoToPages
+    case .books:
+      analyticsAction = .GoToBooks
+    case .content: fallthrough
+    default:
+      analyticsAction = .GoToContent
+    }
+
+    let event: Analytics.Event = Analytics.Event(category: .Discover,
+                                                 action: analyticsAction)
+    Analytics.shared.send(event: event)
   }
 
   private func setupHeaderTitles() {

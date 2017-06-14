@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     SwiftLoader.configure()
     
-    Fabric.with([Crashlytics.self])
+    Fabric.with([Crashlytics.self, Answers.self])
     SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
 
     IFramely.shared.initializeWith(apiKey: AppKeys.shared.iframelyKey)

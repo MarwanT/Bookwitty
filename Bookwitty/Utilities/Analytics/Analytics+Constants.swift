@@ -20,12 +20,14 @@ extension Analytics {
     let action: Action
     let name: String
     let value: Double
+    let info: [String : String]
 
-    init(category: Category, action: Action, name: String = "", value: Double = 0.0) {
+    init(category: Category, action: Action, name: String = "", value: Double = 0.0, info: [String : String] = [:]) {
       self.category = category
       self.action = action
       self.name = name
       self.value = value
+      self.info = info
     }
   }
   
@@ -110,6 +112,7 @@ extension Analytics {
     case ResetPassword
     case Register
     case EditPenName
+    case CreatePenName
     case SwitchEmailNotification
     case ChangePassword
     case SignOut
@@ -141,6 +144,9 @@ extension Analytics {
     case GoToFollowings
     case GoToRelatedCategories
     case GoToBagOnWebsite
+    case GoToContent
+    case GoToBooks
+    case GoToPages
     //
     case ViewBanner
     //
@@ -183,6 +189,8 @@ extension Analytics {
         return "Register"
       case .EditPenName:
         return "Edit Pen Name"
+      case .CreatePenName:
+        return "Create Pen Name"
       case .SwitchEmailNotification:
         return "Switch Email Notification"
       case .ChangePassword:
@@ -235,6 +243,12 @@ extension Analytics {
         return "Go To Related Categories"
       case .GoToBagOnWebsite:
         return "Go To Bag On Website"
+      case .GoToContent:
+        return "Go To Content"
+      case .GoToBooks:
+        return "Go To Books"
+      case .GoToPages:
+        return "Go To Pages"
       case .ViewBanner:
         return "View Banner"
       case .ViewAllTopics:
@@ -341,6 +355,7 @@ extension Analytics {
     static let Help = ScreenName(name: "Help")
     static let ReadingLists = ScreenName(name: "Reading Lists")
     static let BooksListing = ScreenName(name: "Books Listing")
+    static let UserProfile = ScreenName(name: "User Profile")
 
     //Use in switch cases default clause
     static let Default = ScreenName(name: "[DEFAULT]")
