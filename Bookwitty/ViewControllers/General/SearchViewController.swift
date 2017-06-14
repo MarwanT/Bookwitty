@@ -146,10 +146,12 @@ class SearchViewController: ASViewController<ASCollectionNode> {
       self.updateCollection(with: nil, loaderSection: true, dataSection: true)
     }
 
+    let filtersInfo = viewModel.filterDictionary()
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .Search,
                                                  action: .SearchOnBookwitty,
-                                                 name: query)
+                                                 name: query,
+                                                 info: filtersInfo)
     Analytics.shared.send(event: event)
   }
 
