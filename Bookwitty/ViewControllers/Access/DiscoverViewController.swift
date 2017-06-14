@@ -29,6 +29,7 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
   fileprivate let booksTitleHeaderNode: SectionTitleHeaderNode
   fileprivate let pagesTitleHeaderNode: SectionTitleHeaderNode
   fileprivate let discoverNode: DiscoverNode
+  fileprivate let introductoryNode = IntroductoryBanner(mode: .discover)
 
   fileprivate var collectionView: ASCollectionView?
 
@@ -297,12 +298,16 @@ extension DiscoverViewController: ASCollectionDataSource {
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
     switch(section) {
+    case DiscoverViewController.Section.introductoryBanner.rawValue:
+      return viewModel.shouldDisplayIntroductoryBanner ? 1 : 0
     case DiscoverViewController.Section.header.rawValue:
       return 1
     case DiscoverViewController.Section.cards.rawValue:
       return viewModel.numberOfItems(for: activeSegment)
-    default:
+    case DiscoverViewController.Section.activityIndicator.rawValue:
       return (loadingStatus == .none || loadingStatus == .reloading) ? 0 : 1
+    default:
+      return 0
     }
   }
 
@@ -311,45 +316,49 @@ extension DiscoverViewController: ASCollectionDataSource {
     let index = indexPath.row
 
     return {
-      guard section == Section.cards.rawValue else {
-        if DiscoverViewController.Section.header.rawValue == section {
-          return self.headerForSegment(segment: self.activeSegment)
-        } else {
-          return self.loaderNode
-        }
-      }
-
-      let cellNode = self.viewModel.nodeForItem(for: self.activeSegment, atIndex: index) ?? ASCellNode()
-
-      switch (self.activeSegment) {
-      case .pages:
-        guard let pageNode = cellNode as? PageCellNode, let resource = self.viewModel.resourceForIndex(for: self.activeSegment, index: index) as? ModelCommonProperties else {
+      switch section {
+      case Section.cards.rawValue:
+        let cellNode = self.viewModel.nodeForItem(for: self.activeSegment, atIndex: index) ?? ASCellNode()
+        
+        switch (self.activeSegment) {
+        case .pages:
+          guard let pageNode = cellNode as? PageCellNode, let resource = self.viewModel.resourceForIndex(for: self.activeSegment, index: index) as? ModelCommonProperties else {
             return cellNode
-        }
-        pageNode.setup(with: resource.coverImageUrl, title: resource.title)
-        return pageNode
-      case .books:
-        return cellNode
-      case .content: fallthrough
-      default:
-        guard let baseCardNode = cellNode as? BaseCardPostNode else {
+          }
+          pageNode.setup(with: resource.coverImageUrl, title: resource.title)
+          return pageNode
+        case .books:
           return cellNode
+        case .content: fallthrough
+        default:
+          guard let baseCardNode = cellNode as? BaseCardPostNode else {
+            return cellNode
+          }
+          // Fetch the reading list cards images
+          if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
+            !readingListCell.node.isImageCollectionLoaded {
+            let max = readingListCell.node.maxNumberOfImages
+            self.viewModel.loadReadingListImages(for: self.activeSegment, at: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
+              if let imageCollection = imageCollection, imageCollection.count > 0 {
+                readingListCell.node.prepareImages(imageCount: imageCollection.count)
+                readingListCell.node.loadImages(with: imageCollection)
+              }
+            })
+          } else if let bookCard = baseCardNode as? BookCardPostCellNode, let resource = self.viewModel.resourceForIndex(for: self.activeSegment, index: index) {
+            bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.discover) ?? .topic == .product)
+          }
+          baseCardNode.delegate = self
+          return baseCardNode
         }
-        // Fetch the reading list cards images
-        if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
-          !readingListCell.node.isImageCollectionLoaded {
-          let max = readingListCell.node.maxNumberOfImages
-          self.viewModel.loadReadingListImages(for: self.activeSegment, at: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
-            if let imageCollection = imageCollection, imageCollection.count > 0 {
-              readingListCell.node.prepareImages(imageCount: imageCollection.count)
-              readingListCell.node.loadImages(with: imageCollection)
-            }
-          })
-        } else if let bookCard = baseCardNode as? BookCardPostCellNode, let resource = self.viewModel.resourceForIndex(for: self.activeSegment, index: index) {
-          bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.discover) ?? .topic == .product)
-        }
-        baseCardNode.delegate = self
-        return baseCardNode
+      case Section.header.rawValue:
+        return self.headerForSegment(segment: self.activeSegment)
+      case Section.activityIndicator.rawValue:
+        return self.loaderNode
+      case Section.introductoryBanner.rawValue:
+        self.introductoryNode.delegate = self
+        return self.introductoryNode
+      default:
+        return ASCellNode()
       }
     }
   }
@@ -805,12 +814,13 @@ extension DiscoverViewController {
 // MARK: - Declarations
 extension DiscoverViewController {
   enum Section: Int {
-    case header = 0
-    case cards = 1
-    case activityIndicator = 2
+    case introductoryBanner = 0
+    case header
+    case cards
+    case activityIndicator
 
     static var numberOfSections: Int {
-      return 3
+      return 4
     }
   }
 
@@ -902,7 +912,7 @@ extension DiscoverViewController {
     })
   }
   
-  func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, cardsSection: Bool = false, loaderSection: Bool = false, headerSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
+  func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, introductorySection: Bool = false, cardsSection: Bool = false, loaderSection: Bool = false, headerSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
     if reloadAll {
       collectionNode.reloadData(completion: {
         completionBlock?(true)
@@ -916,7 +926,9 @@ extension DiscoverViewController {
         if headerSection {
           collectionNode.reloadSections(IndexSet(integer: Section.header.rawValue))
         }
-
+        if introductorySection {
+          collectionNode.reloadSections(IndexSet(integer: Section.introductoryBanner.rawValue))
+        }
         if cardsSection {
           collectionNode.reloadSections(IndexSet(integer: Section.cards.rawValue))
         } else if let itemIndices = itemIndices, itemIndices.count > 0 {
@@ -951,6 +963,14 @@ extension DiscoverViewController: Localizable {
 
     //Reload the Data upon language change
     _ = reloadViewData()
+  }
+}
+
+// MARK: - Introductory Node Delegate
+extension DiscoverViewController: IntroductoryBannerDelegate {
+  func introductoryBannerDidTapDismissButton(_ introductoryBanner: IntroductoryBanner) {
+    viewModel.shouldDisplayIntroductoryBanner = false
+    updateCollection(introductorySection: true)
   }
 }
 

@@ -460,3 +460,15 @@ extension DiscoverViewModel {
     }
   }
 }
+
+// MARK: - Introductory Banner Logic
+extension DiscoverViewModel {
+  var shouldDisplayIntroductoryBanner: Bool {
+    get {
+      return GeneralSettings.sharedInstance.shouldDisplayDiscoverIntroductoryBanner
+    }
+    set {
+      GeneralSettings.sharedInstance.shouldDisplayDiscoverIntroductoryBanner = newValue
+    }
+  }
+}

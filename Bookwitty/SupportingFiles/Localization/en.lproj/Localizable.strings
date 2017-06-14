@@ -52,6 +52,7 @@
 "current_password_is_empty_error" = "Current password was left empty!";
 "customer_service" = "Customer Service";
 "discover" = "Discover";
+"discover_banner_message" = "Check back here anytime to find the best stories from the community.";
 "done" = "Done";
 "dont_worry_you_can_change_it_later" = "Don't worry : you can always change it later";
 "drafts" = "Drafts";
@@ -163,6 +164,7 @@
 "search_placeholder" = "Search";
 "see_whats_happening_on_bookwitty" = "See what's happening on Bookwitty";
 "settings" = "Settings";
+"shop_banner_message" = "All the best books, the best prices and shipping is free.";
 "shop_for_books" = "Shop For Books";
 "shop_in_app_coming_soon_message" = "Shop for books on our website";
 "shop_online" = "Continue";
@@ -208,6 +210,8 @@
 "welcome_banner_message" = "Your feed displays the stories from topics or people you follow.";
 "welcome_to_bookwitty" = "Welcome to Bookwitty";
 "weight" = "Weight";
+"welcome_banner_message" = "Your feed displays the stories from topics or people you follow.";
+"welcome_to_bookwitty" = "Welcome to Bookwitty";
 "width" = "Width";
 "wit_it" = "Wit";
 "witted" = "Witted";

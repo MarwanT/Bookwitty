@@ -185,6 +185,10 @@ class Strings {
     return localizedString(key: "discover")
   }
   
+  static func discover_banner_message() -> String {
+    return localizedString(key: "discover_banner_message")
+  }
+  
   static func done() -> String {
     return localizedString(key: "done")
   }
@@ -597,6 +601,14 @@ class Strings {
     return localizedString(key: "settings")
   }
   
+  static func shop_banner_message() -> String {
+    return localizedString(key: "shop_banner_message")
+  }
+  
+  static func shop_for_books() -> String {
+    return localizedString(key: "shop_for_books")
+  }
+  
   static func shop_in_app_coming_soon_message() -> String {
     return localizedString(key: "shop_in_app_coming_soon_message")
   }
@@ -755,6 +767,14 @@ class Strings {
   
   static func weight() -> String {
     return localizedString(key: "weight")
+  }
+  
+  static func welcome_banner_message() -> String {
+    return localizedString(key: "welcome_banner_message")
+  }
+  
+  static func welcome_to_bookwitty() -> String {
+    return localizedString(key: "welcome_to_bookwitty")
   }
   
   static func width() -> String {

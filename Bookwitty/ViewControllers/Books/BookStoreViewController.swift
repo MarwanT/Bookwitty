@@ -9,11 +9,13 @@
 import UIKit
 import FLKAutoLayout
 import Spine
+import AsyncDisplayKit
 
 class BookStoreViewController: UIViewController {
   @IBOutlet weak var stackView: UIStackView!
   @IBOutlet weak var scrollView: UIScrollView!
   
+  let introductoryBanner = IntroductoryBanner(mode: IntroductoryBanner.Mode.shop)
   let banner = BannerView()
   let featuredContentCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout())
   let bookwittySuggestsTableView = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)
@@ -104,6 +106,9 @@ class BookStoreViewController: UIViewController {
   }
   
   private func initializeSubviews() {
+    // Introductory Banner
+    introductoryBanner.delegate = self
+    
     // Featured Content View
     let itemSize = FeaturedContentCollectionViewCell.defaultSize
     let interItemSpacing: CGFloat = 10
@@ -191,13 +196,28 @@ class BookStoreViewController: UIViewController {
     }
   }
   
+  fileprivate func removeInformativeBanner() {
+    introductoryBanner.view.removeFromSuperview()
+  }
+  
   private func loadUserInterface() {
+    loadIntroductorySection()
     loadBannerSection()
     loadFeaturedContentSection()
     loadViewAllCategories()
     loadBookwittySuggest()
     loadSelectionSection()
     loadViewAllSelections()
+  }
+  
+  func loadIntroductorySection() {
+    let canDisplayIntroductoryBanner = introductoryBanner.view.superview == nil
+    if canDisplayIntroductoryBanner && viewModel.shouldDisplayIntroductoryBanner {
+      stackView.addArrangedSubview(self.introductoryBanner.view)
+      introductoryBanner.view.alignLeading("0", trailing: "0", toView: self.stackView)
+      let calculatedSize = introductoryBanner.calculateLayoutThatFits(ASSizeRange.init(min: CGSize.zero, max: self.view.frame.size)).frame.size
+      introductoryBanner.view.constrainHeight("\(calculatedSize.height)")
+    }
   }
   
   func loadBannerSection() {
@@ -749,5 +769,13 @@ extension BookStoreViewController: Localizable {
 
     //Reload the Data upon language change
     refreshViewController()
+  }
+}
+
+// MARK: - Introductory Node Delegate
+extension BookStoreViewController: IntroductoryBannerDelegate {
+  func introductoryBannerDidTapDismissButton(_ introductoryBanner: IntroductoryBanner) {
+    viewModel.shouldDisplayIntroductoryBanner = false
+    removeInformativeBanner()
   }
 }
