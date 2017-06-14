@@ -30,7 +30,13 @@ class BookStoreViewController: UIViewController {
   
   fileprivate let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
   fileprivate let sectionSpacing = ThemeManager.shared.currentTheme.sectionSpacing()
-  
+
+  override func awakeFromNib() {
+    super.awakeFromNib()
+
+    addObservers()
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     viewModel.dataLoaded = viewModelLoadedDataBlock()
@@ -41,7 +47,6 @@ class BookStoreViewController: UIViewController {
     refreshViewController()
 
     applyLocalization()
-    addObservers()
     navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
 
@@ -766,6 +771,10 @@ extension BookStoreViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+
+    guard isViewLoaded else {
+      return
+    }
 
     //Reload the Data upon language change
     refreshViewController()
