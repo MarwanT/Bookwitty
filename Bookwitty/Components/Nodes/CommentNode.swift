@@ -7,6 +7,7 @@
 //
 
 import AsyncDisplayKit
+import DTCoreText
 
 protocol CommentNodeDelegate: class {
   func commentNode(_ node: CommentNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?)
@@ -16,7 +17,7 @@ class CommentNode: ASCellNode {
   fileprivate let imageNode: ASNetworkImageNode
   fileprivate let fullNameNode: ASTextNode
   fileprivate let dateNode: ASTextNode
-  fileprivate let messageNode: ASTextNode
+  fileprivate let messageNode: DTAttributedLabelNode
   fileprivate let actionBar: CardActionBarNode
   
   var mode = Mode.primary {
@@ -37,7 +38,7 @@ class CommentNode: ASCellNode {
     imageNode = ASNetworkImageNode()
     fullNameNode = ASTextNode()
     dateNode = ASTextNode()
-    messageNode = ASTextNode()
+    messageNode = DTAttributedLabelNode()
     actionBar = CardActionBarNode()
     super.init()
     setupNode()
@@ -50,6 +51,9 @@ class CommentNode: ASCellNode {
     imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(
       configuration.imageBorderWidth, configuration.imageBorderColor)
     imageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
+    
+    messageNode.maxNumberOfLines = 1000
+    messageNode.delegate = self
     
     actionBar.setup(forFollowingMode: false)
     actionBar.configuration.externalHorizontalMargin = 0
@@ -129,9 +133,8 @@ class CommentNode: ASCellNode {
   
   var message: String? {
     didSet {
-      messageNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
-        .append(text: message ?? "", color: configuration.defaultTextColor).attributedString
-      setNeedsLayout()
+      messageNode.htmlString(text: message, fontDynamicType: FontDynamicType.body)
+      messageNode.setNeedsLayout()
     }
   }
   
@@ -173,5 +176,16 @@ extension CommentNode {
 extension CommentNode: CardActionBarNodeDelegate {
   func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
     delegate?.commentNode(self, didRequestAction: action, forSender: sender, didFinishAction: didFinishAction)
+  }
+}
+
+// MARK: Modes declaration
+extension CommentNode: DTAttributedTextContentNodeDelegate {
+  func attributedTextContentNode(node: ASCellNode, button: DTLinkButton, didTapOnLink link: URL) {
+    WebViewController.present(url: link)
+  }
+  
+  func attributedTextContentNodeNeedsLayout(node: ASCellNode) {
+    self.setNeedsLayout()
   }
 }
