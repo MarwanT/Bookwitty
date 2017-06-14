@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "BW_Mobile-App_Icon_90x90.png",
+      "filename" : "BW_Mobile-App_Icon_341x341.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "BW_Mobile-App_Icon_180x180.png",
+      "filename" : "BW_Mobile-App_Icon_512x512.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "BW_Mobile-App_Icon_270x270.png",
+      "filename" : "BW_Mobile-App_Icon_1024x1024.png",
       "scale" : "3x"
     }
   ],
