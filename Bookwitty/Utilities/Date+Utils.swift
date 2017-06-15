@@ -34,7 +34,7 @@ extension Date {
   
   func relativelyFormatted() -> String {
     let dateFormatter = Date.formatter()
-    return dateFormatter.timeSince(from: self, numericDates: true)
+    return dateFormatter.timeSince(from: self, numericDates: false)
   }
 }
 
