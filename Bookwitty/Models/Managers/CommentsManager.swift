@@ -36,6 +36,9 @@ class CommentsManager {
   }
   
   func comment(at index: Int) -> Comment? {
+    guard index < comments.count else {
+      return nil
+    }
     return comments[index]
   }
   
