@@ -68,57 +68,57 @@ extension DateFormatter {
     }
     
     if year >= 2 {
-      result = "\(year) years ago"
+      result = Strings.years_ago(number: year)
     } else if year >= 1 {
       if numericDates {
-        result = "1 year ago"
+        result = Strings.years_ago(number: year)
       } else {
-        result = "Last year"
+        result = Strings.last_year()
       }
     } else if month >= 2 {
-      result = "\(month) months ago"
+      result = Strings.months_ago(number: month)
     } else if month >= 1 {
       if numericDates {
-        result = "1 month ago"
+        result = Strings.months_ago(number: month)
       } else {
-        result = "Last month"
+        result = Strings.last_month()
       }
     } else if weekOfYear >= 2 {
-      result = "\(weekOfYear) weeks ago"
+      result = Strings.weeks_ago(number: weekOfYear)
     } else if weekOfYear >= 1 {
       if numericDates {
-        result = "1 week ago"
+        result = Strings.weeks_ago(number: weekOfYear)
       } else {
-        result = "Last week"
+        result = Strings.last_week()
       }
     } else if day >= 2 {
-      result = "\(day) days ago"
+      result = Strings.days_ago(number: day)
     } else if day >= 1 {
       if numericDates {
-        result = "1 day ago"
+        result = Strings.days_ago(number: day)
       } else {
-        result = "Yesterday"
+        result = Strings.yesterday()
       }
     } else if hour >= 2 {
-      result = "\(hour) hours ago"
+      result = Strings.hours_ago(number: hour)
     } else if hour >= 1 {
       if numericDates {
-        result = "1 hour ago"
+        result = Strings.hours_ago(number: hour)
       } else {
-        result = "An hour ago"
+        result = Strings.an_hour_ago()
       }
     } else if minute >= 2 {
-      result = "\(minute) minutes ago"
+      result = Strings.minutes_ago(number: minute)
     } else if minute >= 1 {
       if numericDates {
-        result = "1 minute ago"
+        result = Strings.minutes_ago(number: minute)
       } else {
-        result = "A minute ago"
+        result = Strings.a_minute_ago()
       }
     } else if second >= 0 && numericDates {
-      result = "\(second) seconds ago"
+      result = Strings.seconds_ago(number: second)
     } else {
-      result = "Just now"
+      result = Strings.just_now()
     }
     
     return result

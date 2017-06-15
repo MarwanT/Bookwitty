@@ -6,6 +6,7 @@
   Copyright © 2017 Keeward. All rights reserved.
 */
 
+"a_minute_ago" = "Il y'a une minute";
 "about_this_book" = "À propos de ce livre";
 "account" = "Compte";
 "account_needs_confirmation_alert_dismiss_button_title" = "Annuler";
@@ -15,6 +16,7 @@
 "address_book" = "Adresses de livraison";
 "already_have_an_account" = "Déjà inscrit ?";
 "apply" = "Appliquer";
+"an_hour_ago" = "Il y a une heure";
 "article" = "Article";
 "audio" = "Audio";
 "author" = "Auteur";
@@ -100,11 +102,15 @@
 "isbn13" = "ISBN-13";
 "join_us_to_personalize_feed_description" = "Afficher des articles, des listes de lecture et des recommendations personnalisées dans votre fil d'actualité. ";
 "join_us_to_personalize_feed_title" = "Personnaliser cette page";
+"just_now" = "juste maintenant";
 "languages" = "Langues";
 "language" = "Langue";
 "language_of_text" = "Langue";
+"last_month" = "Le mois dernier";
 "last_name" = "Nom";
 "last_name_invalid" = "Veuillez inscrire votre e-mail";
+"last_week" = "La semaine dernière";
+"last_year" = "L'année dernière";
 "latest" = "Nouveautés";
 "link" = "Lien";
 "list_price" = "Prix conseillé";
@@ -220,6 +226,7 @@
 "width" = "Largeur";
 "wit_it" = "Wit";
 "witted" = "Witted";
+"yesterday" = "Hier";
 "you_dont_have_account" = "Vous n'avez pas de compte";
 "you_save" = "Vous économisez";
 "your_feed" = "Votre flux";

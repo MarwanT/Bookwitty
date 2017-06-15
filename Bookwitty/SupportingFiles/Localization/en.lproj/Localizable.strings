@@ -6,6 +6,7 @@
   Copyright © 2017 Keeward. All rights reserved.
 */
 
+"a_minute_ago" = "A minute ago";
 "about_this_book" = "About this book";
 "account" = "Account";
 "account_needs_confirmation_alert_dismiss_button_title" = "Cancel";
@@ -15,6 +16,7 @@
 "address_book" = "Address Book";
 "already_have_an_account" = "Already have an account?";
 "apply" = "Apply";
+"an_hour_ago" = "An hour ago";
 "article" = "Article";
 "audio" = "Audio";
 "author" = "Author";
@@ -100,11 +102,15 @@
 "isbn13" = "ISBN-13";
 "join_us_to_personalize_feed_description" = "View articles reading lists and book recommendations in your feed based on your interests.";
 "join_us_to_personalize_feed_title" = "Personalize your feed";
+"just_now" = "Just now";
 "languages" = "Languages";
 "language" = "Language";
 "language_of_text" = "Language";
+"last_month" = "Last month";
 "last_name" = "Last name";
 "last_name_invalid" = "Please enter your email";
+"last_week" = "Last Week";
+"last_year" = "Last year";
 "latest" = "Latest";
 "link" = "Link";
 "list_price" = "List price";
@@ -220,6 +226,7 @@
 "width" = "Width";
 "wit_it" = "Wit";
 "witted" = "Witted";
+"yesterday" = "Yesterday";
 "you_dont_have_account" = "You don't have an account";
 "you_save" = "You save";
 "your_feed" = "Your feed";
@@ -229,11 +236,19 @@
  * For This Part use `f_` as prefix to indicate that the localizable string is a formatted one
  * And this will also allow us to avoid conflict with similar sentences
  */
-"f_number_of_contributors" = "%d contributors";
-"f_number_of_followers" = "%d followers";
-"f_number_of_posts" = "%d posts";
 "f_number_of_books" = "%d books";
+"f_number_of_contributors" = "%d contributors";
+"f_number_of_days_ago" = "%d days ago";
+"f_number_of_followers" = "%d followers";
+"f_number_of_hours_ago" = "%d hours ago";
+"f_number_of_minutes_ago" = "%d minutes ago";
+"f_number_of_months_ago" = "%d months ago";
+"f_number_of_posts" = "%d posts";
+"f_number_of_seconds_ago" = "%d seconds ago";
+"f_number_of_weeks_ago" = "%d weeks ago";
+"f_number_of_years_ago" = "%d years ago";
 "f_view_all_replies" = "View all %d replies";
+
 
 /**
  Discussion:
