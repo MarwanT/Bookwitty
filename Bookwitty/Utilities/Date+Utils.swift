@@ -31,6 +31,11 @@ extension Date {
     dateFormatter.dateFormat = format
     return dateFormatter.string(from: self)
   }
+  
+  func relativelyFormatted() -> String {
+    let dateFormatter = Date.formatter()
+    return dateFormatter.timeSince(from: self, numericDates: true)
+  }
 }
 
 extension NSDate {
