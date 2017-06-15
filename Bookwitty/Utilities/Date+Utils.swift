@@ -111,7 +111,7 @@ extension DateFormatter {
       } else {
         result = "A minute ago"
       }
-    } else if components.second! >= 3 {
+    } else if components.second! >= 0 && numericDates {
       result = "\(components.second!) seconds ago"
     } else {
       result = "Just now"
