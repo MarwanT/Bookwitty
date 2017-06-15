@@ -63,56 +63,60 @@ extension DateFormatter {
     
     var result = ""
     
-    if components.year! >= 2 {
-      result = "\(components.year!) years ago"
-    } else if components.year! >= 1 {
+    guard let year = components.year, let month = components.month, let weekOfYear = components.weekOfYear, let day = components.day, let hour = components.hour, let minute = components.minute, let second = components.second else {
+      return result
+    }
+    
+    if year >= 2 {
+      result = "\(year) years ago"
+    } else if year >= 1 {
       if numericDates {
         result = "1 year ago"
       } else {
         result = "Last year"
       }
-    } else if components.month! >= 2 {
-      result = "\(components.month!) months ago"
-    } else if components.month! >= 1 {
+    } else if month >= 2 {
+      result = "\(month) months ago"
+    } else if month >= 1 {
       if numericDates {
         result = "1 month ago"
       } else {
         result = "Last month"
       }
-    } else if components.weekOfYear! >= 2 {
-      result = "\(components.weekOfYear!) weeks ago"
-    } else if components.weekOfYear! >= 1 {
+    } else if weekOfYear >= 2 {
+      result = "\(weekOfYear) weeks ago"
+    } else if weekOfYear >= 1 {
       if numericDates {
         result = "1 week ago"
       } else {
         result = "Last week"
       }
-    } else if components.day! >= 2 {
-      result = "\(components.day!) days ago"
-    } else if components.day! >= 1 {
+    } else if day >= 2 {
+      result = "\(day) days ago"
+    } else if day >= 1 {
       if numericDates {
         result = "1 day ago"
       } else {
         result = "Yesterday"
       }
-    } else if components.hour! >= 2 {
-      result = "\(components.hour!) hours ago"
-    } else if components.hour! >= 1 {
+    } else if hour >= 2 {
+      result = "\(hour) hours ago"
+    } else if hour >= 1 {
       if numericDates {
         result = "1 hour ago"
       } else {
         result = "An hour ago"
       }
-    } else if components.minute! >= 2 {
-      result = "\(components.minute!) minutes ago"
-    } else if components.minute! >= 1 {
+    } else if minute >= 2 {
+      result = "\(minute) minutes ago"
+    } else if minute >= 1 {
       if numericDates {
         result = "1 minute ago"
       } else {
         result = "A minute ago"
       }
-    } else if components.second! >= 0 && numericDates {
-      result = "\(components.second!) seconds ago"
+    } else if second >= 0 && numericDates {
+      result = "\(second) seconds ago"
     } else {
       result = "Just now"
     }
