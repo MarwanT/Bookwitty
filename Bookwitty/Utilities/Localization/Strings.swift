@@ -9,6 +9,10 @@
 import UIKit
 
 class Strings {
+  static func a_minute_ago() -> String {
+    return localizedString(key: "a_minute_ago")
+  }
+  
   static func about_this_book() -> String {
     return localizedString(key: "about_this_book")
   }
@@ -45,6 +49,10 @@ class Strings {
     return localizedString(key: "apply")
   }
 
+  static func an_hour_ago() -> String {
+    return localizedString(key: "an_hour_ago")
+  }
+  
   static func article() -> String {
     return localizedString(key: "article")
   }
@@ -385,6 +393,10 @@ class Strings {
     return localizedString(key: "join_us_to_personalize_feed_title")
   }
   
+  static func just_now() -> String {
+    return localizedString(key: "just_now")
+  }
+  
   static func language() -> String {
     return localizedString(key: "language")
   }
@@ -397,12 +409,24 @@ class Strings {
     return localizedString(key: "language_of_text")
   }
   
+  static func last_month() -> String {
+    return localizedString(key: "last_month")
+  }
+  
   static func last_name() -> String {
     return localizedString(key: "last_name")
   }
   
   static func last_name_invalid() -> String {
     return localizedString(key: "last_name_invalid")
+  }
+  
+  static func last_week() -> String {
+    return localizedString(key: "last_week")
+  }
+  
+  static func last_year() -> String {
+    return localizedString(key: "last_year")
   }
   
   static func latest() -> String {
@@ -857,6 +881,10 @@ class Strings {
     return localizedString(key: "witted")
   }
   
+  static func yesterday() -> String {
+    return localizedString(key: "yesterday")
+  }
+  
   static func you_dont_have_account() -> String {
     return localizedString(key: "you_dont_have_account")
   }
@@ -875,9 +903,25 @@ class Strings {
   static func contributors(number: Int) -> String {
     return localizedString(key: "f_number_of_contributors", formatVariables: number)
   }
+  
+  static func days_ago(number: Int) -> String {
+    return localizedString(key: "f_number_of_days_ago", formatVariables: number)
+  }
 
   static func followers(number: Int) -> String {
     return localizedString(key: "f_number_of_followers", formatVariables: number)
+  }
+  
+  static func hours_ago(number: Int) -> String {
+    return localizedString(key: "f_number_of_hours_ago", formatVariables: number)
+  }
+  
+  static func minutes_ago(number: Int) -> String {
+    return localizedString(key: "f_number_of_minutes_ago", formatVariables: number)
+  }
+  
+  static func months_ago(number: Int) -> String {
+    return localizedString(key: "f_number_of_months_ago", formatVariables: number)
   }
 
   static func posts(number: Int) -> String {
@@ -888,9 +932,22 @@ class Strings {
     return localizedString(key: "f_number_of_books", formatVariables: number)
   }
   
-  static func view_all_replies(number: Int) -> String {
-    return localizedString(key: "f_view_all_replies", formatVariable: number)
+  static func seconds_ago(number: Int) -> String {
+    return localizedString(key: "f_number_of_seconds_ago", formatVariables: number)
   }
+  
+  static func view_all_replies(number: Int) -> String {
+    return localizedString(key: "f_view_all_replies", formatVariables: number)
+  }
+  
+  static func weeks_ago(number: Int) -> String {
+    return localizedString(key: "f_number_of_weeks_ago", formatVariables: number)
+  }
+  
+  static func years_ago(number: Int) -> String {
+    return localizedString(key: "f_number_of_years_ago", formatVariables: number)
+  }
+  
 
   /**
    Discussion:
