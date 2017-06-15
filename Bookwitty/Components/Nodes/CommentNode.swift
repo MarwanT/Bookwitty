@@ -126,7 +126,7 @@ class CommentNode: ASCellNode {
   var date: Date? {
     didSet {
       dateNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
-        .append(text: date?.formatted() ?? "", color: configuration.defaultTextColor).attributedString
+        .append(text: date?.relativelyFormatted() ?? "", color: configuration.defaultTextColor).attributedString
       setNeedsLayout()
     }
   }
