@@ -211,6 +211,10 @@ extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
 
 extension ProfileDetailsViewController: ASCollectionDelegate {
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    guard indexPath.section == Section.cells.rawValue else {
+      return
+    }
+
     let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment)
     actionForCard(resource: resource)
   }
