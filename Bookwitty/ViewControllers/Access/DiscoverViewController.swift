@@ -442,6 +442,10 @@ extension DiscoverViewController: ASCollectionDataSource {
 
 extension DiscoverViewController: ASCollectionDelegate {
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    guard indexPath.section == Section.cards.rawValue else {
+      return
+    }
+
     let resource = viewModel.resourceForIndex(for: activeSegment, index: indexPath.item)
     actionForCard(resource: resource)
   }
