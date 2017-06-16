@@ -41,7 +41,7 @@ class LinkCardPostCellNode: BaseCardPostNode {
 }
 
 protocol LinkCardPostContentDelegate {
-  func linkImageTouchUpInside(sender: ASImageNode)
+  func linkViewTouchUpInside(sender: ASImageNode)
 }
 
 class LinkCardPostContentNode: ASDisplayNode {
@@ -54,6 +54,16 @@ class LinkCardPostContentNode: ASDisplayNode {
   var titleNode: ASTextNode
   var descriptionNode: ASTextNode
   var fullViewMode: Bool = false
+
+  var tappableTitle: Bool = false {
+    didSet {
+      if tappableTitle {
+        titleNode.addTarget(self, action: #selector(linkViewTouchUpInside(_:)), forControlEvents: .touchUpInside)
+      } else {
+        titleNode.removeTarget(self, action: #selector(linkViewTouchUpInside(_:)), forControlEvents: .touchUpInside)
+      }
+    }
+  }
 
   var delegate: LinkCardPostContentDelegate?
 
@@ -123,7 +133,7 @@ class LinkCardPostContentNode: ASDisplayNode {
     setupMode(fullViewMode: false)
 
     imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
-    imageNode.addTarget(self, action: #selector(videoImageTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    imageNode.addTarget(self, action: #selector(linkViewTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
 
   func setupMode(fullViewMode: Bool) {
@@ -158,14 +168,14 @@ class LinkCardPostContentNode: ASDisplayNode {
   }
 
   @objc
-  private func videoImageTouchUpInside(_ sender: ASImageNode?) {
+  private func linkViewTouchUpInside(_ sender: ASImageNode?) {
     guard let linkUrl = linkUrl else {
       return
     }
 
     WebViewController.present(url: linkUrl)
     
-    delegate?.linkImageTouchUpInside(sender: imageNode)
+    delegate?.linkViewTouchUpInside(sender: imageNode)
   }
 
   private func titleInset() -> UIEdgeInsets {
