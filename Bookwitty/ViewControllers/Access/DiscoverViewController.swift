@@ -153,7 +153,7 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
     Analytics.shared.send(event: event)
   }
 
-  private func setupHeaderTitles() {
+  fileprivate func setupHeaderTitles() {
     contentTitleHeaderNode.setTitle(title: Strings.see_whats_happening_on_bookwitty(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber10(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber9())
     booksTitleHeaderNode.setTitle(title: Strings.books_you_may_be_interested_in(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber4(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber3())
     pagesTitleHeaderNode.setTitle(title: Strings.pages_you_may_be_interested_in(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber6(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber5())
@@ -212,10 +212,6 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
      * removes all the cells that were showing prior to the load operation + it used the .loading not .reloading
      * option which in turn shows the bottom/loadmore loader.
      **/
-    guard pullToRefresher.isRefreshing else {
-      //Making sure that only UIRefreshControl will trigger this on valueChanged
-      return false
-    }
     guard loadingStatus == .none else {
       pullToRefresher.endRefreshing()
       //Making sure that only UIRefreshControl will trigger this on valueChanged
@@ -235,6 +231,11 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
   }
 
   func pullDownToReloadData() {
+    guard pullToRefresher.isRefreshing else {
+      //Making sure that only UIRefreshControl will trigger this on valueChanged
+      return
+    }
+
     let didStartReloadingData = reloadViewData()
     if didStartReloadingData {
       //MARK: [Analytics] Event
@@ -967,6 +968,7 @@ extension DiscoverViewController: Localizable {
 
     let segments: [String] = self.segments.map({ $0.name })
     segmentedNode.initialize(with: segments)
+    setupHeaderTitles()
   }
 
   fileprivate func observeLanguageChanges() {
