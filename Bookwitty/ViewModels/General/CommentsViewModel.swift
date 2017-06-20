@@ -149,6 +149,6 @@ extension CommentsViewModel {
   /// If the comments displayed are replies of a certain comment then the
   /// value of this property will be that parent comment id. Otherwise nil
   var parentCommentIdentifier: String? {
-    return commentsManager?.commentIdentifier
+    return commentsManager?.parentComment?.id
   }
 }
