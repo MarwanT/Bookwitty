@@ -66,6 +66,10 @@ class CommentsViewModel {
   var hasNextPage: Bool {
     return commentsManager?.hasNextPage ?? false
   }
+  
+  var isDisplayingACommentReplies: Bool {
+    return commentsManager?.parentComment != nil
+  }
 }
 
 // MARK: Utilities
