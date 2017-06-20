@@ -204,6 +204,15 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
     return {
       switch indexPath.section {
+      case Section.parentComment.rawValue:
+        guard let comment = self.viewModel.comment(for: indexPath) else {
+          return ASCellNode()
+        }
+        let commentTreeNode = CommentTreeNode()
+        commentTreeNode.delegate = self
+        commentTreeNode.comment = comment
+        commentTreeNode.configuration.shouldHideViewRepliesDisclosureNode = true
+        return commentTreeNode
       case Section.header.rawValue:
         let externalInsets = UIEdgeInsets(
           top: ThemeManager.shared.currentTheme.generalExternalMargin(),
@@ -293,14 +302,15 @@ extension CommentsNode {
 // MARK: - Section Declaration
 extension CommentsNode {
   enum Section: Int {
-    case header = 0
+    case parentComment = 0
+    case header
     case write
     case read
     case activityIndicator
     case viewAllComments
     
     static var numberOfSections: Int {
-      return 5
+      return 6
     }
   }
 }

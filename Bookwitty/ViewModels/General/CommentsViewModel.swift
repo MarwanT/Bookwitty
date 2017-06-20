@@ -27,6 +27,8 @@ class CommentsViewModel {
   
   func numberOfItems(in section: Int) -> Int {
     switch section {
+    case CommentsNode.Section.parentComment.rawValue:
+      return isDisplayingACommentReplies ? 1 : 0
     case CommentsNode.Section.header.rawValue:
       return 1
     case CommentsNode.Section.write.rawValue:
@@ -79,7 +81,14 @@ extension CommentsViewModel {
   }
   
   func comment(for indexPath: IndexPath) -> Comment? {
-    return commentsManager?.comment(at: indexPath.item)
+    switch indexPath.section {
+    case CommentsNode.Section.parentComment.rawValue:
+      return commentsManager?.parentComment
+    case CommentsNode.Section.read.rawValue:
+      fallthrough
+    default:
+      return commentsManager?.comment(at: indexPath.item)
+    }
   }
   
   /// Sends a clone of the comment manager held in this instance
