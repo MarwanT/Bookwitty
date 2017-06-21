@@ -18,8 +18,8 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3G8-hQ-tbw">
                     <rect key="frame" x="8" y="0.0" width="42" height="60"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aDh-RV-YCh">
-                            <rect key="frame" x="0.0" y="5" width="42" height="26"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aDh-RV-YCh">
+                            <rect key="frame" x="0.0" y="5" width="42" height="32"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -37,7 +37,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="6lg-XW-Mvl" secondAttribute="trailing" id="BHm-zd-oZm"/>
-                        <constraint firstItem="6lg-XW-Mvl" firstAttribute="top" secondItem="aDh-RV-YCh" secondAttribute="bottom" constant="3" id="G6g-sg-Zj0"/>
+                        <constraint firstItem="6lg-XW-Mvl" firstAttribute="top" secondItem="aDh-RV-YCh" secondAttribute="bottom" constant="-3" id="G6g-sg-Zj0"/>
                         <constraint firstItem="aDh-RV-YCh" firstAttribute="top" secondItem="3G8-hQ-tbw" secondAttribute="top" constant="5" id="GSr-ID-8np"/>
                         <constraint firstAttribute="trailing" secondItem="aDh-RV-YCh" secondAttribute="trailing" id="JMN-5U-yba"/>
                         <constraint firstItem="aDh-RV-YCh" firstAttribute="leading" secondItem="3G8-hQ-tbw" secondAttribute="leading" id="LRv-34-rIv"/>
