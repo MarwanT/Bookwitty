@@ -84,7 +84,9 @@ class CommentTreeNode: ASCellNode {
     
     if hasReplies && !configuration.shouldHideViewRepliesDisclosureNode {
       let children: [ASLayoutElement] = [separator(), viewRepliesDisclosureNode, separator()]
-      elements.append(contentsOf: children)
+      let disclosureStackSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: children)
+      let disclosureNodeInsetsSpec = ASInsetLayoutSpec(insets: configuration.disclosureInsets, child: disclosureStackSpec)
+      elements.append(disclosureNodeInsetsSpec)
       commentNode.configuration.hideBottomActionBarSeparator = true
     } else {
       commentNode.configuration.hideBottomActionBarSeparator = false
@@ -111,6 +113,9 @@ extension CommentTreeNode {
   struct Configuration {
     fileprivate var indentationMargin: CGFloat {
       return CommentNode.Configuration().indentationMargin
+    }
+    var disclosureInsets: UIEdgeInsets {
+      return UIEdgeInsets(top: 0, left: indentationMargin, bottom: 0, right: 0)
     }
     var shouldHideViewRepliesDisclosureNode: Bool = true
     var leftIndentToParentNode: Bool = false
