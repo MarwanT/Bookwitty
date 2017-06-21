@@ -30,7 +30,7 @@ class CommentsViewModel {
     case CommentsNode.Section.parentComment.rawValue:
       return isDisplayingACommentReplies ? 1 : 0
     case CommentsNode.Section.header.rawValue:
-      return 1
+      return isDisplayingACommentReplies ? 0 : 1
     case CommentsNode.Section.write.rawValue:
       return isDisplayingACommentReplies ? 0 : 1
     case CommentsNode.Section.read.rawValue:
