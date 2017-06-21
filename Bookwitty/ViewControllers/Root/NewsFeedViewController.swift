@@ -33,11 +33,9 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   }
   var shouldDisplayMisfortuneNode: Bool {
     guard let misfortuneMode = viewModel.misfortuneNodeMode, !shouldShowLoader else {
-      flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: externalMargin/2, right: 0)
        return false
     }
     misfortuneNode.mode = misfortuneMode
-    flowLayout.sectionInset = UIEdgeInsets.zero
     return true
   }
   var collectionView: ASCollectionView?
@@ -420,6 +418,22 @@ extension NewsFeedViewController: ASCollectionDataSource {
     }
   }
 }
+
+extension NewsFeedViewController: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+      if viewModel.misfortuneNodeMode != nil, !shouldShowLoader {
+        return UIEdgeInsets.zero
+      } else {
+        switch (section) {
+        case Section.introductoryBanner.rawValue:
+          return UIEdgeInsets.zero
+        default:
+          return UIEdgeInsets(top: 0, left: 0, bottom: externalMargin/2, right: 0)
+        }
+      }
+  }
+}
+
 
 // MARK - BaseCardPostNode Delegate
 extension NewsFeedViewController: BaseCardPostNodeDelegate {
