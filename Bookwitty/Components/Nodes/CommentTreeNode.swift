@@ -91,7 +91,11 @@ class CommentTreeNode: ASCellNode {
     }
     
     let verticalStack = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: elements)
-    let externalInsetsSpec = ASInsetLayoutSpec(insets: configuration.externalInsets, child: verticalStack)
+    var insets = configuration.externalInsets
+    if configuration.leftIndentToParentNode {
+      insets.left += configuration.indentationMargin
+    }
+    let externalInsetsSpec = ASInsetLayoutSpec(insets: insets, child: verticalStack)
     return externalInsetsSpec
   }
   
@@ -105,7 +109,11 @@ class CommentTreeNode: ASCellNode {
 
 extension CommentTreeNode {
   struct Configuration {
+    fileprivate var indentationMargin: CGFloat {
+      return CommentNode.Configuration().indentationMargin
+    }
     var shouldHideViewRepliesDisclosureNode: Bool = true
+    var leftIndentToParentNode: Bool = false
     var externalInsets = UIEdgeInsets(
       top: ThemeManager.shared.currentTheme.generalExternalMargin() / 2,
       left: ThemeManager.shared.currentTheme.generalExternalMargin(),
