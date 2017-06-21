@@ -92,7 +92,7 @@ class CommentNode: ASCellNode {
     let bodyLeftMargin: CGFloat
     switch mode {
     case .primary:
-      bodyLeftMargin = configuration.imageSize.width + configuration.imageNodeInsets.right + configuration.imageNodeInsets.left
+      bodyLeftMargin = configuration.indentationMargin
     default:
       bodyLeftMargin = 0
     }
@@ -161,6 +161,9 @@ extension CommentNode {
     var bodyInsetTop: CGFloat = Configuration.subnodesSpace - 5
     var titleDateVerticalSpace: CGFloat = 5
     var hideBottomActionBarSeparator = false
+    var indentationMargin: CGFloat {
+      return imageSize.width + imageNodeInsets.right + imageNodeInsets.left
+    }
   }
 }
 
