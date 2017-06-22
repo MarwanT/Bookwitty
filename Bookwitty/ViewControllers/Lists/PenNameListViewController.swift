@@ -37,8 +37,36 @@ class PenNameListViewController: ASViewController<ASCollectionNode> {
   }
 
   fileprivate func initializeComponents() {
+    collectionNode.delegate = self
+    collectionNode.dataSource = self
+
     flowLayout.minimumInteritemSpacing = 0
     flowLayout.minimumLineSpacing = 0
     flowLayout.sectionHeadersPinToVisibleBounds = true
+  }
+}
+
+extension PenNameListViewController: ASCollectionDataSource, ASCollectionDelegate {
+  func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+    return 5 //TODO: Set the value
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+    return {
+      let node = PenNameFollowNode()
+      node.showBottomSeparator = true
+      return node
+    }
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+    guard let indexPath = collectionNode.indexPath(for: node),
+      let cell = node as? PenNameFollowNode else {
+        return
+    }
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    //TODO: push the pen name details vc
   }
 }
