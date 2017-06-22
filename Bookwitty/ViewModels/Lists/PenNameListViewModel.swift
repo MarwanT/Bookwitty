@@ -9,5 +9,9 @@
 import Foundation
 
 class PenNameListViewModel {
+  private(set) var penNames: [PenName] = []
 
+  func initialize(with penNames: [PenName]) {
+    self.penNames = penNames
+  }
 }
