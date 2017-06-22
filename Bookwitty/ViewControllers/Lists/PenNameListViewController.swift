@@ -37,6 +37,8 @@ class PenNameListViewController: ASViewController<ASCollectionNode> {
   }
 
   fileprivate func initializeComponents() {
-
+    flowLayout.minimumInteritemSpacing = 0
+    flowLayout.minimumLineSpacing = 0
+    flowLayout.sectionHeadersPinToVisibleBounds = true
   }
 }
