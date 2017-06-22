@@ -11,6 +11,22 @@ import AsyncDisplayKit
 
 class PenNameListViewController: ASViewController<ASCollectionNode> {
 
+  fileprivate let collectionNode: ASCollectionNode
+  fileprivate var flowLayout: UICollectionViewFlowLayout
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  init() {
+    flowLayout = UICollectionViewFlowLayout()
+    collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+    super.init(node: collectionNode)
+  }
+
+  func initialize(with penNames: [PenName]) {
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
