@@ -18,5 +18,11 @@ class PenNameListViewModel {
 
 //MARK: - ASCollectionDataSource helpers
 extension PenNameListViewModel {
+  private func penName(at item: Int) -> PenName? {
+    guard item >= 0 && item < penNames.count else {
+      return nil
+    }
 
+    return penNames[item]
+  }
 }
