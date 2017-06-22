@@ -27,6 +27,7 @@ class PenNameListViewController: ASViewController<ASCollectionNode> {
   }
 
   func initialize(with penNames: [PenName]) {
+    viewModel.initialize(with: penNames)
   }
 
   override func viewDidLoad() {
