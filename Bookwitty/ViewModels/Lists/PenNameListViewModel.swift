@@ -15,3 +15,8 @@ class PenNameListViewModel {
     self.penNames = penNames
   }
 }
+
+//MARK: - ASCollectionDataSource helpers
+extension PenNameListViewModel {
+
+}
