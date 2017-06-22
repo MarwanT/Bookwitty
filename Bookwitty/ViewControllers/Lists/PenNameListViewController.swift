@@ -14,8 +14,13 @@ class PenNameListViewController: ASViewController<ASCollectionNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    // Do any additional setup after loading the view.
+    initializeComponents()
+
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.PenNameList)
+  }
+
+  fileprivate func initializeComponents() {
+
   }
 }
