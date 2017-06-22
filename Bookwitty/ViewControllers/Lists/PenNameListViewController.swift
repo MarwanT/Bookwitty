@@ -15,5 +15,7 @@ class PenNameListViewController: ASViewController<ASCollectionNode> {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.PenNameList)
   }
 }
