@@ -25,4 +25,17 @@ extension PenNameListViewModel {
 
     return penNames[item]
   }
+
+  func numberOfPenNames() -> Int {
+    return penNames.count
+  }
+
+  func values(at item: Int) -> (identifier: String?, penName: String?, biography: String?, imageUrl: String?, following: Bool, isMyPenName: Bool)? {
+    guard let penName = penName(at: item) else {
+      return nil
+    }
+
+    let mine = UserManager.shared.isMy(penName: penName)
+    return (penName.id, penName.name, penName.biography, penName.avatarUrl, penName.following, mine)
+  }
 }
