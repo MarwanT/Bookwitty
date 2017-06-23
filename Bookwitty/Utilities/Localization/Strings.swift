@@ -805,19 +805,19 @@ class Strings {
    * Formatted Strings
    */
   static func contributors(number: Int) -> String {
-    return localizedString(key: "f_number_of_contributors", formatVariable: number)
+    return localizedString(key: "f_number_of_contributors", formatVariables: number)
   }
 
   static func followers(number: Int) -> String {
-    return localizedString(key: "f_number_of_followers", formatVariable: number)
+    return localizedString(key: "f_number_of_followers", formatVariables: number)
   }
 
   static func posts(number: Int) -> String {
-    return localizedString(key: "f_number_of_posts", formatVariable: number)
+    return localizedString(key: "f_number_of_posts", formatVariables: number)
   }
 
   static func books(number: Int) -> String {
-    return localizedString(key: "f_number_of_books", formatVariable: number)
+    return localizedString(key: "f_number_of_books", formatVariables: number)
   }
 
   /**
