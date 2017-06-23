@@ -57,6 +57,7 @@ extension PenNameListViewController: ASCollectionDataSource, ASCollectionDelegat
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
     return {
       let node = PenNameFollowNode()
+      node.delegate = self
       node.showBottomSeparator = true
       return node
     }
@@ -78,5 +79,49 @@ extension PenNameListViewController: ASCollectionDataSource, ASCollectionDelegat
 
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
     //TODO: push the pen name details vc
+  }
+}
+
+//MARK: - PenNameFollowNodeDelegate implementation
+extension PenNameListViewController: PenNameFollowNodeDelegate {
+  func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader) {
+    guard let indexPath = collectionNode.indexPath(for: node),
+      let penName = viewModel.penName(at: indexPath.item) else {
+      return
+    }
+
+    button.state = .loading
+
+    if penName.following {
+      viewModel.unfollow(at: indexPath.item, completionBlock: {
+        (success: Bool) in
+        node.following = !success
+        button.state = success ? .normal : .selected
+      })
+    } else {
+      viewModel.follow(at: indexPath.item, completionBlock: {
+        (success: Bool) in
+        node.following = success
+        button.state = success ? .selected : .normal
+      })
+    }
+  }
+  
+  func penName(node: PenNameFollowNode, actionPenNameFollowTouchUpInside button: Any?) {
+    guard let indexPath = collectionNode.indexPath(for: node),
+      let penName = viewModel.penName(at: indexPath.item) else {
+        return
+    }
+    pushProfileViewController(penName: penName)
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                 action: .GoToDetails,
+                                                 name: penName.name ?? "")
+    Analytics.shared.send(event: event)
+  }
+
+  func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode){    
+    penName(node: node, actionPenNameFollowTouchUpInside: imageNode)
   }
 }
