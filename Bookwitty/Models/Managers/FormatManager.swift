@@ -9,3 +9,6 @@
 import Foundation
 
 typealias ProductForm = Dictionary<String, String>.Element
+
+class FormatManager {
+}
