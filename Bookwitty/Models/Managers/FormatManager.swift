@@ -44,6 +44,12 @@ class FormatManager {
   func formatsFromDictionary(dictionary: [String : Any]) -> [ProductForm] {
     return dictionary.flatMap({ $0 as? ProductForm })
   }
+  
+  // MARK: Manager APIs
+  func formatString(for key: String) -> String {
+    let lowerCaseKey = key.lowercased()
+    return formats?.filter({ $0.key.lowercased() == lowerCaseKey }).first?.value ?? ""
+  }
 }
 
 //MARK: - Localizable implementation
