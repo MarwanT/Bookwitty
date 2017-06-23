@@ -88,5 +88,18 @@ extension Book {
   class Meta {
     var numberOfEditionsPerFormat: [String : Int] = [:]
     var totalEditions: Int = 0
+    
+    init(dictionary: [String : Any]?) {
+      guard let dictionary = dictionary else {
+        return
+      }
+      
+      if let counts = dictionary["counts"] as? [String : Int] {
+        numberOfEditionsPerFormat = counts
+      }
+      if let totalEditions = dictionary["total-editions"] as? Int {
+        self.totalEditions = totalEditions
+      }
+    }
   }
 }
