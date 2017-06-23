@@ -41,7 +41,7 @@ struct ContentAPI {
     })
   }
   
-  static func preferredFormats(identifier: String, completion: @escaping (_ success: Bool, _ resources: [Book]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  static func preferredFormats(identifier: String, completion: @escaping (_ success: Bool, _ resources: [Book]?, _ metadata: Book.Meta?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let successStatusCode: Int = 200
     
     return signedAPIRequest(target: .preferredFormats(bookIdentifier: identifier), completion: {
@@ -49,9 +49,10 @@ struct ContentAPI {
       var success: Bool = statusCode == successStatusCode
       var books: [Book]? = nil
       var error: BookwittyAPIError? = error
+      var bookMeta: Book.Meta? = nil
       
       defer {
-        completion(success, books, error)
+        completion(success, books, bookMeta, error)
       }
       
       guard statusCode == successStatusCode else {
@@ -65,6 +66,7 @@ struct ContentAPI {
       }
       
       books = bookResources
+      bookMeta = Book.Meta(dictionary: values.metadata)
     })
   }
 }
