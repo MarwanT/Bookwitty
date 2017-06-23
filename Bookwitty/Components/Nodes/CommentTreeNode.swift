@@ -84,14 +84,20 @@ class CommentTreeNode: ASCellNode {
     
     if hasReplies && !configuration.shouldHideViewRepliesDisclosureNode {
       let children: [ASLayoutElement] = [separator(), viewRepliesDisclosureNode, separator()]
-      elements.append(contentsOf: children)
+      let disclosureStackSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: children)
+      let disclosureNodeInsetsSpec = ASInsetLayoutSpec(insets: configuration.disclosureInsets, child: disclosureStackSpec)
+      elements.append(disclosureNodeInsetsSpec)
       commentNode.configuration.hideBottomActionBarSeparator = true
     } else {
       commentNode.configuration.hideBottomActionBarSeparator = false
     }
     
     let verticalStack = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: elements)
-    let externalInsetsSpec = ASInsetLayoutSpec(insets: configuration.externalInsets, child: verticalStack)
+    var insets = configuration.externalInsets
+    if configuration.leftIndentToParentNode {
+      insets.left += configuration.indentationMargin
+    }
+    let externalInsetsSpec = ASInsetLayoutSpec(insets: insets, child: verticalStack)
     return externalInsetsSpec
   }
   
@@ -105,12 +111,19 @@ class CommentTreeNode: ASCellNode {
 
 extension CommentTreeNode {
   struct Configuration {
+    fileprivate let indentationMargin = CommentNode.Configuration().indentationMargin
+    let disclosureInsets: UIEdgeInsets
     var shouldHideViewRepliesDisclosureNode: Bool = true
+    var leftIndentToParentNode: Bool = false
     var externalInsets = UIEdgeInsets(
       top: ThemeManager.shared.currentTheme.generalExternalMargin() / 2,
       left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: ThemeManager.shared.currentTheme.generalExternalMargin(),
       right: ThemeManager.shared.currentTheme.generalExternalMargin())
+    
+    init() {
+      disclosureInsets = UIEdgeInsets(top: 0, left: indentationMargin, bottom: 0, right: 0)
+    }
   }
 }
 

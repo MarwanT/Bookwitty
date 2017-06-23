@@ -39,12 +39,8 @@ class CommentsViewController: ASViewController<ASDisplayNode> {
   }
   
   fileprivate func pushCommentsViewControllerForReplies(comment: Comment, postId: String) {
-    guard let commentIdentifier = comment.id else {
-      return
-    }
-    
     let commentsManager = CommentsManager()
-    commentsManager.initialize(postIdentifier: postId, commentIdentifier: commentIdentifier)
+    commentsManager.initialize(postIdentifier: postId, comment: comment)
     let commentsViewController = CommentsViewController()
     commentsViewController.initialize(with: commentsManager)
     self.navigationController?.pushViewController(commentsViewController, animated: true)

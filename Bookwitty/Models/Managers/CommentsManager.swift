@@ -11,7 +11,7 @@ import Moya
 
 class CommentsManager {
   private(set) var postIdentifier: String?
-  private(set) var commentIdentifier: String?
+  private(set) var parentComment: Comment?
   
   fileprivate var comments = [Comment]()
   fileprivate var nextPageURL: URL?
@@ -20,11 +20,11 @@ class CommentsManager {
   
   var isFetchingData = false
   
-  /// The loaded comments are replies for the comment with the provided id
+  /// The loaded comments are replies for the comment provided
   /// if available, otherwise the comments are the post main comments
-  func initialize(postIdentifier: String, commentIdentifier: String? = nil, comments: [Comment]? = nil, nextPageURL: URL? = nil) {
+  func initialize(postIdentifier: String, comment: Comment? = nil, comments: [Comment]? = nil, nextPageURL: URL? = nil) {
     self.postIdentifier = postIdentifier
-    self.commentIdentifier = commentIdentifier
+    self.parentComment = comment
     if let comments = comments {
       self.comments = comments
     }
@@ -60,7 +60,7 @@ class CommentsManager {
     }
     
     var manager = CommentsManager()
-    manager.initialize(postIdentifier: postIdentifier, commentIdentifier: commentIdentifier, comments: comments, nextPageURL: nextPageURL)
+    manager.initialize(postIdentifier: postIdentifier, comment: parentComment, comments: comments, nextPageURL: nextPageURL)
     return manager
   }
   
@@ -77,7 +77,7 @@ extension CommentsManager {
       return
     }
     
-    if commentIdentifier == nil {
+    if parentComment == nil {
       loadCommentsForPost(completion: completion)
     } else {
       loadCommentReplies(completion: completion)
@@ -110,7 +110,7 @@ extension CommentsManager {
   }
   
   private func loadCommentReplies(completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
-    guard !isFetchingData, let commentIdentifier = commentIdentifier else {
+    guard !isFetchingData, let commentIdentifier = parentComment?.id else {
       completion(false, CommentsManager.Error.unidentified)
       return
     }

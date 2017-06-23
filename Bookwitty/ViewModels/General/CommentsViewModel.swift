@@ -27,10 +27,12 @@ class CommentsViewModel {
   
   func numberOfItems(in section: Int) -> Int {
     switch section {
+    case CommentsNode.Section.parentComment.rawValue:
+      return isDisplayingACommentReplies ? 1 : 0
     case CommentsNode.Section.header.rawValue:
-      return 1
+      return isDisplayingACommentReplies ? 0 : 1
     case CommentsNode.Section.write.rawValue:
-      return 1
+      return isDisplayingACommentReplies ? 0 : 1
     case CommentsNode.Section.read.rawValue:
       var itemsNumber = commentsManager?.numberOfComments ?? 0
       if case displayMode = CommentsNode.DisplayMode.compact {
@@ -66,6 +68,10 @@ class CommentsViewModel {
   var hasNextPage: Bool {
     return commentsManager?.hasNextPage ?? false
   }
+  
+  var isDisplayingACommentReplies: Bool {
+    return commentsManager?.parentComment != nil
+  }
 }
 
 // MARK: Utilities
@@ -75,12 +81,25 @@ extension CommentsViewModel {
   }
   
   func comment(for indexPath: IndexPath) -> Comment? {
-    return commentsManager?.comment(at: indexPath.item)
+    switch indexPath.section {
+    case CommentsNode.Section.parentComment.rawValue:
+      return commentsManager?.parentComment
+    case CommentsNode.Section.read.rawValue:
+      fallthrough
+    default:
+      return commentsManager?.comment(at: indexPath.item)
+    }
   }
   
   /// Sends a clone of the comment manager held in this instance
   func commentsManagerClone() -> CommentsManager? {
     return commentsManager?.clone()
+  }
+  
+  /// If the comments displayed are replies of a certain comment then the
+  /// value of this property will be that parent comment id. Otherwise nil
+  var parentCommentIdentifier: String? {
+    return commentsManager?.parentComment?.id
   }
 }
 
@@ -144,11 +163,5 @@ extension CommentsViewModel {
       (success, error) in
       completion(success, error)
     }
-  }
-  
-  /// If the comments displayed are replies of a certain comment then the
-  /// value of this property will be that parent comment id. Otherwise nil
-  var parentCommentIdentifier: String? {
-    return commentsManager?.commentIdentifier
   }
 }
