@@ -17,3 +17,18 @@ class FormatManager {
   private init() {
   }
 }
+
+//MARK: - Localizable implementation
+extension FormatManager: Localizable {
+  func applyLocalization() {
+  }
+  
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+  
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
+  }
+}
