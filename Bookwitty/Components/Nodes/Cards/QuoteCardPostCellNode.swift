@@ -126,7 +126,6 @@ extension QuoteCardPostCellNode: QuoteCardViewModelDelegate {
       node.articleQuote = "“ \(quote) ”"
     }
     articleCommentsSummary = values.content.comments
-    setWitValue(witted: values.content.wit.is)
-    setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
+    setWitValue(witted: values.content.wit.is)    
   }
 }
