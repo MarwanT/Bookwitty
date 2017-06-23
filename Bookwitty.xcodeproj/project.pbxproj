@@ -43,6 +43,7 @@
 		5639A4081EA5359600528D6F /* VideoCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5639A4071EA5359600528D6F /* VideoCardViewModel.swift */; };
 		563C1EA71E93D14600675B42 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 563C1EA91E93D14600675B42 /* Localizable.stringsdict */; };
 		5641F96A1EFBB015001CC72F /* PenNameListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5641F9691EFBB015001CC72F /* PenNameListViewController.swift */; };
+		5641F96D1EFBE902001CC72F /* PenNameListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5641F96C1EFBE902001CC72F /* PenNameListViewModel.swift */; };
 		5644F21A1E55A2F100B7D8E7 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5644F2191E55A2F100B7D8E7 /* SettingsViewController.swift */; };
 		5644F21C1E55A77100B7D8E7 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5644F21B1E55A77100B7D8E7 /* SettingsViewModel.swift */; };
 		564EEC0A1E70194100700474 /* TopicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564EEC091E70194100700474 /* TopicViewModel.swift */; };
@@ -329,6 +330,7 @@
 		563C1EA81E93D14600675B42 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		563C1EAA1E93D14900675B42 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = fr; path = fr.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		5641F9691EFBB015001CC72F /* PenNameListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameListViewController.swift; sourceTree = "<group>"; };
+		5641F96C1EFBE902001CC72F /* PenNameListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameListViewModel.swift; sourceTree = "<group>"; };
 		5644F2191E55A2F100B7D8E7 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		5644F21B1E55A77100B7D8E7 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		564EEC091E70194100700474 /* TopicViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicViewModel.swift; sourceTree = "<group>"; };
@@ -687,6 +689,14 @@
 			path = Lists;
 			sourceTree = "<group>";
 		};
+		5641F96B1EFBE8F1001CC72F /* Lists */ = {
+			isa = PBXGroup;
+			children = (
+				5641F96C1EFBE902001CC72F /* PenNameListViewModel.swift */,
+			);
+			path = Lists;
+			sourceTree = "<group>";
+		};
 		564EEC081E70192300700474 /* Details */ = {
 			isa = PBXGroup;
 			children = (
@@ -781,6 +791,7 @@
 		59057FC51E252C500036AAF3 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				5641F96B1EFBE8F1001CC72F /* Lists */,
 				56AC22C71EA50B6E00484449 /* Cards */,
 				564EEC081E70192300700474 /* Details */,
 				56399DC01E51D0DA005192AC /* Account */,
@@ -1879,6 +1890,7 @@
 				59DA476A1E3B876900BA90A5 /* SignInViewController.swift in Sources */,
 				56E87D341E6EFFCA00AF6CFD /* BookNode.swift in Sources */,
 				59EC5BA91E6C5987006E1CB9 /* BookDetailsPricesNode.swift in Sources */,
+				5641F96D1EFBE902001CC72F /* PenNameListViewModel.swift in Sources */,
 				594290391E549FF40006B2F1 /* UIColor.swift in Sources */,
 				F42DFEBF1E77F39A0025CE65 /* RelatedBooksMinimalCellNode.swift in Sources */,
 				5639A4081EA5359600528D6F /* VideoCardViewModel.swift in Sources */,

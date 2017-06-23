@@ -13,7 +13,9 @@ class PenNameListViewController: ASViewController<ASCollectionNode> {
 
   fileprivate let collectionNode: ASCollectionNode
   fileprivate var flowLayout: UICollectionViewFlowLayout
-  
+
+  fileprivate let viewModel = PenNameListViewModel()
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -25,6 +27,7 @@ class PenNameListViewController: ASViewController<ASCollectionNode> {
   }
 
   func initialize(with penNames: [PenName]) {
+    viewModel.initialize(with: penNames)
   }
 
   override func viewDidLoad() {
@@ -48,7 +51,7 @@ class PenNameListViewController: ASViewController<ASCollectionNode> {
 
 extension PenNameListViewController: ASCollectionDataSource, ASCollectionDelegate {
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    return 5 //TODO: Set the value
+    return viewModel.numberOfPenNames()
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
@@ -64,6 +67,13 @@ extension PenNameListViewController: ASCollectionDataSource, ASCollectionDelegat
       let cell = node as? PenNameFollowNode else {
         return
     }
+
+    let values = viewModel.values(at: indexPath.item)
+    cell.penName = values?.penName
+    cell.biography = values?.biography
+    cell.imageUrl = values?.imageUrl
+    cell.following = values?.following ?? false
+    cell.updateMode(disabled: values?.isMyPenName ?? false)
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
