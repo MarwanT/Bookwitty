@@ -237,6 +237,7 @@
  * For This Part use `f_` as prefix to indicate that the localizable string is a formatted one
  * And this will also allow us to avoid conflict with similar sentences
  */
+"f_find_witty" = "%d find this witty";
 "f_number_of_books" = "%d books";
 "f_number_of_contributors" = "%d contributors";
 "f_number_of_days_ago" = "%d days ago";
@@ -248,6 +249,7 @@
 "f_number_of_seconds_ago" = "%d seconds ago";
 "f_number_of_weeks_ago" = "%d weeks ago";
 "f_number_of_years_ago" = "%d years ago";
+"f_others_find_witty" = "and %d others find this witty";
 "f_view_all_replies" = "View all %d replies";
 
 

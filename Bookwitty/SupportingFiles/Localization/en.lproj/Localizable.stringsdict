@@ -26,6 +26,54 @@
 			<string>%d Books</string>
 		</dict>
 	</dict>
+	<key>f_find_witty</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@value@</string>
+		<key>value</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>%d find this witty</string>
+			<key>one</key>
+			<string>%d find this witty</string>
+			<key>two</key>
+			<string>%d find this witty</string>
+			<key>few</key>
+			<string>%d find this witty</string>
+			<key>many</key>
+			<string>%d find this witty</string>
+			<key>other</key>
+			<string>%d find this witty</string>
+		</dict>
+	</dict>
+	<key>f_others_find_witty</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@value@</string>
+		<key>value</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>and %d others find this witty</string>
+			<key>one</key>
+			<string>and %d other find this witty</string>
+			<key>two</key>
+			<string>and %d others find this witty</string>
+			<key>few</key>
+			<string>and %d others find this witty</string>
+			<key>many</key>
+			<string>and %d others find this witty</string>
+			<key>other</key>
+			<string>and %d others find this witty</string>
+		</dict>
+	</dict>
 	<key>f_number_of_contributors</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
