@@ -889,6 +889,10 @@ class Strings {
     return localizedString(key: "you")
   }
 
+  static func you_find_witty() -> String {
+    return localizedString(key: "you_find_witty")
+  }
+
   static func you_dont_have_account() -> String {
     return localizedString(key: "you_dont_have_account")
   }
