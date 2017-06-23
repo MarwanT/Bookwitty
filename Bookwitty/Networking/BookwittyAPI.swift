@@ -51,7 +51,7 @@ public enum BookwittyAPI {
   case posts(identifier: String, type: [String]?)
   case postsLinkedContent(identifier: String, type: [String]?)
   case preferredFormats(bookIdentifier: String)
-  case editions(identifier: String)
+  case editions(identifier: String, formats: [String]?)
   case resetPassword(email: String)
   case penName(identifier: String)
   case penNameContent(identifier: String)
@@ -164,7 +164,7 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(identifier)/posts"
     case .postsLinkedContent(let identifier, _):
       path = "/content/\(identifier)/linked_content"
-    case .editions(let identifier):
+    case .editions(let identifier, _):
       path = "/content/\(identifier)/editions"
     case .votes(let identifier):
       path = "/content/\(identifier)/votes"
@@ -273,7 +273,9 @@ extension BookwittyAPI: TargetType {
       return CommentAPI.createCommentBody(comment: comment, parentCommentIdentifier: parentCommentIdentifier)
     case .uploadPolicy(let file, let fileType, let assetType):
       return UploadAPI.uploadPolicyParameters(file: file, fileType: fileType, assetType: assetType)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment, .dimComment, .undimComment, .preferredFormats:
+    case .editions(_, let formats):
+      return ContentAPI.editionsFilterParameters(formats: formats)
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment, .dimComment, .undimComment, .preferredFormats:
       return nil
     }
   }

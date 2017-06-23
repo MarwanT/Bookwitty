@@ -11,10 +11,10 @@ import Moya
 import Spine
 
 struct ContentAPI {
-  static func editions(contentIdentifier identifier: String, completion: @escaping (_ success: Bool, _ resource: [ModelResource]?, _ next: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  static func editions(contentIdentifier identifier: String, formats: [String]?, completion: @escaping (_ success: Bool, _ resource: [ModelResource]?, _ next: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let successStatusCode: Int = 200
     
-    return signedAPIRequest(target: .editions(identifier: identifier), completion: {
+    return signedAPIRequest(target: .editions(identifier: identifier, formats: formats), completion: {
       (data, statusCode, response, error) in
       var success: Bool = statusCode == successStatusCode
       var resources: [ModelResource]? = nil
@@ -68,5 +68,15 @@ struct ContentAPI {
       books = bookResources
       bookMeta = Book.Meta(dictionary: values.metadata)
     })
+  }
+}
+
+extension ContentAPI {
+  static func editionsFilterParameters(formats: [String]?) -> [String : Any]? {
+    var dictionary = [String : Any]()
+    if let formats = formats {
+      dictionary["filter[formats]"] = formats
+    }
+    return dictionary
   }
 }
