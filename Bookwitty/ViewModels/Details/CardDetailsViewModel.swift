@@ -59,30 +59,18 @@ class CardDetailsViewModel {
     return [shortDesciption]
   }
 
+  //TODO: Remove
   func dimContent(completionBlock: @escaping (_ success: Bool) -> ()) {
     guard let contentId = resource.id else {
       return completionBlock(false)
     }
-
-    cancellableRequest = NewsfeedAPI.dim(contentId: contentId, completion: { (success, error) in
-      if success {
-        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.dim)
-      }
-      completionBlock(success)
-    })
   }
 
+  //TODO: Remove
   func undimContent(completionBlock: @escaping (_ success: Bool) -> ()) {
     guard let contentId = resource.id else {
       return completionBlock(false)
     }
-
-    cancellableRequest = NewsfeedAPI.undim(contentId: contentId, completion: { (success, error) in
-      if success {
-        DataManager.shared.updateResource(with: contentId, after: DataManager.Action.undim)
-      }
-      completionBlock(success)
-    })
   }
 }
 

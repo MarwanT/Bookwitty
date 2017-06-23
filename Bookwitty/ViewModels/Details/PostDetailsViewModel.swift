@@ -242,30 +242,18 @@ class PostDetailsViewModel {
     unwitContent(contentId: contentId, completionBlock: completionBlock)
   }
 
+  //TODO: Remove
   func dimContent(completionBlock: @escaping (_ success: Bool) -> ()) {
     guard let contentId = identifier else {
       return completionBlock(false)
     }
-
-    cancellableRequest = NewsfeedAPI.dim(contentId: contentId, completion: { (success, error) in
-      completionBlock(success)
-      if success {
-        DataManager.shared.updateResource(with: contentId, after: .dim)
-      }
-    })
   }
 
+  //TODO: Remove
   func undimContent(completionBlock: @escaping (_ success: Bool) -> ()) {
     guard let contentId = identifier else {
       return completionBlock(false)
     }
-
-    cancellableRequest = NewsfeedAPI.undim(contentId: contentId, completion: { (success, error) in
-      completionBlock(success)
-      if success {
-        DataManager.shared.updateResource(with: contentId, after: .undim)
-      }
-    })
   }
 
   func sharingPost() -> [String]? {
