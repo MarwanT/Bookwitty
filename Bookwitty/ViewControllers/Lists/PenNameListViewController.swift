@@ -85,7 +85,26 @@ extension PenNameListViewController: ASCollectionDataSource, ASCollectionDelegat
 //MARK: - PenNameFollowNodeDelegate implementation
 extension PenNameListViewController: PenNameFollowNodeDelegate {
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader) {
+    guard let indexPath = collectionNode.indexPath(for: node),
+      let penName = viewModel.penName(at: indexPath.item) else {
+      return
+    }
 
+    button.state = .loading
+
+    if penName.following {
+      viewModel.unfollow(at: indexPath.item, completionBlock: {
+        (success: Bool) in
+        node.following = !success
+        button.state = success ? .normal : .selected
+      })
+    } else {
+      viewModel.follow(at: indexPath.item, completionBlock: {
+        (success: Bool) in
+        node.following = success
+        button.state = success ? .selected : .normal
+      })
+    }
   }
   
   func penName(node: PenNameFollowNode, actionPenNameFollowTouchUpInside button: Any?) {
