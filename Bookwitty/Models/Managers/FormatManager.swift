@@ -16,6 +16,7 @@ class FormatManager {
   static let shared: FormatManager = FormatManager()
   private init() {
     observeLanguageChanges()
+    loadFormatsFromJSON()
   }
   
   fileprivate func loadFormatsFromJSON() {
