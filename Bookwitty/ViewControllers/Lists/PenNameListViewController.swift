@@ -105,6 +105,13 @@ extension PenNameListViewController: PenNameFollowNodeDelegate {
         button.state = success ? .selected : .normal
       })
     }
+
+    //MARK: [Analytics] Event
+    let analyticsAction: Analytics.Action = penName.following ? .UnfollowPenName : .FollowPenName
+    let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                 action: analyticsAction,
+                                                 name: penName.name ?? "")
+    Analytics.shared.send(event: event)
   }
   
   func penName(node: PenNameFollowNode, actionPenNameFollowTouchUpInside button: Any?) {
