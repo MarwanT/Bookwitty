@@ -884,7 +884,11 @@ class Strings {
   static func yesterday() -> String {
     return localizedString(key: "yesterday")
   }
-  
+
+  static func you() -> String {
+    return localizedString(key: "you")
+  }
+
   static func you_dont_have_account() -> String {
     return localizedString(key: "you_dont_have_account")
   }
