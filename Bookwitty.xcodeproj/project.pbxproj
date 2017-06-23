@@ -150,7 +150,7 @@
 		59956E001EFD2B62004DA794 /* Content+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59956DFF1EFD2B62004DA794 /* Content+API.swift */; };
 		59956E031EFD808B004DA794 /* Formats.en.json in Resources */ = {isa = PBXBuildFile; fileRef = 59956E011EFD808B004DA794 /* Formats.en.json */; };
 		59956E041EFD808B004DA794 /* Formats.fr.json in Resources */ = {isa = PBXBuildFile; fileRef = 59956E021EFD808B004DA794 /* Formats.fr.json */; };
-		59956E081EFD8CDB004DA794 /* BookFormatMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59956E071EFD8CDB004DA794 /* BookFormatMapper.swift */; };
+		59956E0A1EFDAC9C004DA794 /* BookFormatMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59956E091EFDAC9C004DA794 /* BookFormatMapper.swift */; };
 		59A164CB1E561BBD00088D84 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59A164CA1E561BBD00088D84 /* LaunchScreen.xib */; };
 		59A341571E575D3100CF90B3 /* NewsFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A341561E575D3100CF90B3 /* NewsFeedViewModel.swift */; };
 		59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59B65FD21E251FE80093FF44 /* Assets.xcassets */; };
@@ -444,7 +444,7 @@
 		59956DFF1EFD2B62004DA794 /* Content+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Content+API.swift"; sourceTree = "<group>"; };
 		59956E011EFD808B004DA794 /* Formats.en.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Formats.en.json; sourceTree = "<group>"; };
 		59956E021EFD808B004DA794 /* Formats.fr.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Formats.fr.json; sourceTree = "<group>"; };
-		59956E071EFD8CDB004DA794 /* BookFormatMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookFormatMapper.swift; sourceTree = "<group>"; };
+		59956E091EFDAC9C004DA794 /* BookFormatMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookFormatMapper.swift; sourceTree = "<group>"; };
 		59A164CA1E561BBD00088D84 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		59A341561E575D3100CF90B3 /* NewsFeedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeedViewModel.swift; sourceTree = "<group>"; };
 		59B65FD21E251FE80093FF44 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -894,6 +894,7 @@
 				56F9FDCB1E82F39B00A48CEB /* UIBarButtonItem+Utils.swift */,
 				5903394B1E9E6719004ED1C3 /* Utilities.swift */,
 				59E21D371EC5B0F500AF7D67 /* Device.swift */,
+				59956E091EFDAC9C004DA794 /* BookFormatMapper.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1248,7 +1249,6 @@
 				59CBE4F91E8094070068C7AD /* ErrorManager.swift */,
 				56A623B51EA0C02D00D930A7 /* DataManager.swift */,
 				59CB4DEE1EDEC15800E7A60B /* CommentsManager.swift */,
-				59956E071EFD8CDB004DA794 /* BookFormatMapper.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -1752,7 +1752,6 @@
 				F46F3F991EC996BE002C9718 /* PageCellNode.swift in Sources */,
 				596FAD741E2E53AC0064F967 /* Environment.swift in Sources */,
 				56BEF6391E6836DB0012FDE5 /* ContributorsNode.swift in Sources */,
-				59956E081EFD8CDB004DA794 /* BookFormatMapper.swift in Sources */,
 				F49AE93E1E47CFEA0031B355 /* Parser.swift in Sources */,
 				595C4F0D1E3F8C0200BE3942 /* InputField.swift in Sources */,
 				59049B131E81E44400EDF796 /* JoinUsNode.swift in Sources */,
@@ -1795,6 +1794,7 @@
 				56E09DBC1E5463EA00B7C6E6 /* ChangePasswordViewController.swift in Sources */,
 				F42441651E66FE260087E3B1 /* CardFactory.swift in Sources */,
 				59CF3F821ECF3332002A5821 /* IntroductoryBanner.swift in Sources */,
+				59956E0A1EFDAC9C004DA794 /* BookFormatMapper.swift in Sources */,
 				5945FACB1E6476A30010CF77 /* CategoryViewModel.swift in Sources */,
 				59DA47641E3B7A9B00BA90A5 /* TutorialPageViewController.swift in Sources */,
 				59DA47571E3A65A600BA90A5 /* Storyboard.swift in Sources */,
