@@ -111,12 +111,8 @@ class CommentTreeNode: ASCellNode {
 
 extension CommentTreeNode {
   struct Configuration {
-    fileprivate var indentationMargin: CGFloat {
-      return CommentNode.Configuration().indentationMargin
-    }
-    var disclosureInsets: UIEdgeInsets {
-      return UIEdgeInsets(top: 0, left: indentationMargin, bottom: 0, right: 0)
-    }
+    fileprivate let indentationMargin = CommentNode.Configuration().indentationMargin
+    let disclosureInsets: UIEdgeInsets
     var shouldHideViewRepliesDisclosureNode: Bool = true
     var leftIndentToParentNode: Bool = false
     var externalInsets = UIEdgeInsets(
@@ -124,6 +120,10 @@ extension CommentTreeNode {
       left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: ThemeManager.shared.currentTheme.generalExternalMargin(),
       right: ThemeManager.shared.currentTheme.generalExternalMargin())
+    
+    init() {
+      disclosureInsets = UIEdgeInsets(top: 0, left: indentationMargin, bottom: 0, right: 0)
+    }
   }
 }
 
