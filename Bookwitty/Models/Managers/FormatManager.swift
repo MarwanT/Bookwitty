@@ -12,4 +12,8 @@ typealias ProductForm = Dictionary<String, String>.Element
 
 class FormatManager {
   var formats: [ProductForm]? = nil
+  
+  static let shared: FormatManager = FormatManager()
+  private init() {
+  }
 }
