@@ -89,7 +89,17 @@ extension PenNameListViewController: PenNameFollowNodeDelegate {
   }
   
   func penName(node: PenNameFollowNode, actionPenNameFollowTouchUpInside button: Any?) {
+    guard let indexPath = collectionNode.indexPath(for: node),
+      let penName = viewModel.penName(at: indexPath.item) else {
+        return
+    }
+    pushProfileViewController(penName: penName)
 
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                 action: .GoToDetails,
+                                                 name: penName.name ?? "")
+    Analytics.shared.send(event: event)
   }
 
   func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode){
