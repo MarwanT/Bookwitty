@@ -53,9 +53,7 @@ class PostDetailsViewModel {
   var isWitted: Bool {
     return  (resource as? ModelCommonProperties)?.isWitted ?? false
   }
-  var isDimmed: Bool {
-    return  (resource as? ModelCommonProperties)?.isDimmed ?? false
-  }
+
   var wits: Int? {
     return  (resource as? ModelCommonProperties)?.counts?.wits
   }
