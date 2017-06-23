@@ -8,10 +8,12 @@
 
 import Foundation
 
-func localizedString(key: String, defaultValue: String = "", comment: String = "", formatVariable: CustomStringConvertible? = nil) -> String {
-  if let formatVariable = formatVariable {
+func localizedString(key: String, defaultValue: String = "", comment: String = "", formatVariables: CVarArg...) -> String {
+  if formatVariables.count > 0 {
     let localized: String = NSLocalizedString(key, value: defaultValue, comment: comment)
-    return String.localizedStringWithFormat(localized, formatVariable as! CVarArg)
+    return withVaList(formatVariables, {
+      return NSString(format: localized, locale: Locale.application , arguments: $0) as String
+    })
   }
   return NSLocalizedString(key, value: defaultValue, comment: comment)
 }
