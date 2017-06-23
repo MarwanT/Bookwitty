@@ -39,3 +39,8 @@ extension PenNameListViewModel {
     return (penName.id, penName.name, penName.biography, penName.avatarUrl, penName.following, mine)
   }
 }
+
+//MARK: - Actions
+extension PenNameListViewModel {
+
+}
