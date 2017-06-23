@@ -87,8 +87,8 @@ class PostDetailsHeaderNode: ASCellNode {
 
   }
 
-  func setWitValue(witted: Bool, wits: Int) {
-    actionBarNode.setWitButton(witted: witted, wits: wits)
+  func setWitValue(witted: Bool) {
+    actionBarNode.setWitButton(witted: witted)
   }
 
   func setDimValue(dimmed: Bool, dims: Int) {

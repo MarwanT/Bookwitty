@@ -285,8 +285,8 @@ class PostDetailsNode: ASScrollNode {
     delegate?.bannerTapAction(url: Environment.current.shipementInfoURL)
   }
 
-  func setWitValue(witted: Bool, wits: Int) {
-    headerNode.actionBarNode.setWitButton(witted: witted, wits: wits)
+  func setWitValue(witted: Bool) {
+    headerNode.actionBarNode.setWitButton(witted: witted)
   }
 
   func setDimValue(dimmed: Bool, dims: Int) {

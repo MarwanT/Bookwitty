@@ -29,21 +29,10 @@ class CardActionBarNode: ASCellNode {
   var witButton: ASButtonNode
   var commentButton: ASButtonNode
   var shareButton: ASButtonNode
-  var numberOfWitsNode: ASTextNode
   var numberOfDimsNode: ASTextNode
   var replyNode: ASTextNode
   weak var delegate: CardActionBarNodeDelegate? = nil
 
-  fileprivate var numberOfWits: Int? {
-    didSet {
-      if let numberOfWits = numberOfWits, numberOfWits > 0 {
-        numberOfWitsNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1)
-          .append(text: "(\(numberOfWits))", color: ThemeManager.shared.currentTheme.defaultButtonColor()).attributedString
-      } else {
-        numberOfWitsNode.attributedText = nil
-      }
-    }
-  }
   fileprivate var numberOfDims: Int? {
     didSet {
       numberOfDimsNode.isHidden = hideDim
@@ -108,7 +97,6 @@ class CardActionBarNode: ASCellNode {
     witButton = ASButtonNode()
     commentButton = ASButtonNode()
     shareButton = ASButtonNode()
-    numberOfWitsNode = ASTextNode()
     numberOfDimsNode = ASTextNode()
     followButton = ASButtonNode()
     replyNode = ASTextNode()
@@ -144,12 +132,9 @@ class CardActionBarNode: ASCellNode {
     numberOfDimsNode.addTarget(self, action: #selector(dimButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     replyNode.addTarget(self, action: #selector(replyButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
 
-    numberOfWitsNode.style.maxWidth = ASDimensionMake(60.0)
-    numberOfWitsNode.maximumNumberOfLines = 1
     numberOfDimsNode.style.maxWidth = ASDimensionMake(120.0)
     numberOfDimsNode.maximumNumberOfLines = 1
 
-    numberOfWitsNode.truncationMode = NSLineBreakMode.byTruncatingTail
     numberOfDimsNode.truncationMode = NSLineBreakMode.byTruncatingTail
   }
 
@@ -207,18 +192,13 @@ class CardActionBarNode: ASCellNode {
     followButton.isSelected = following
   }
 
-  func setWitButton(witted: Bool, wits: Int? = nil) {
+  func setWitButton(witted: Bool) {
     witButton.isSelected = witted
-    setNumberOfWits(wits: wits ?? 0)
   }
 
   func setDimValue(dimmed: Bool, dims: Int? = nil) {
     numberOfDimsNode.isSelected = dimmed
     setNumberOfDims(dims: dims ?? 0)
-  }
-
-  private func setNumberOfWits(wits: Int) {
-    numberOfWits = wits
   }
 
   private func setNumberOfDims(dims: Int) {
@@ -230,8 +210,7 @@ class CardActionBarNode: ASCellNode {
 
     switch action {
     case .dim:
-      let wits: Int? = (numberOfWits ?? 0 > 0) ? (numberOfWits! + (-1 * inverter)) : nil
-      setWitButton(witted: false, wits: wits)
+      setWitButton(witted: false)
       let dims: Int? = (numberOfDims ?? 0) + (1 * inverter)
       setDimValue(dimmed: success, dims: dims)
 
@@ -242,12 +221,10 @@ class CardActionBarNode: ASCellNode {
     case .wit:
       let dims: Int? = (numberOfDims ?? 0 > 0) ? (numberOfDims! + (-1 * inverter)) : nil
       setDimValue(dimmed: false, dims: dims)
-      let wits: Int? = (numberOfWits ?? 0) + (1 * inverter)
-      setWitButton(witted: success, wits: wits)
+      setWitButton(witted: success)
 
     case .unwit:
-      let wits: Int? = (numberOfWits ?? 0 > 0) ? (numberOfWits! + (-1 * inverter)) : nil
-      setWitButton(witted: false, wits: wits)
+      setWitButton(witted: false)
 
     default: break
     }
@@ -376,8 +353,6 @@ class CardActionBarNode: ASCellNode {
     textHorizontalStackSpec.justifyContent = .start
     textHorizontalStackSpec.alignItems = .center
     if !followingMode {
-      textHorizontalStackSpec.children = [ASLayoutSpec.spacer(width: configuration.internalMargin/2),
-                                          numberOfWitsNode]
       if !hideDim {
         textHorizontalStackSpec.children?.append(ASLayoutSpec.spacer(width: configuration.internalMargin))
         textHorizontalStackSpec.children?.append(numberOfDimsNode)
