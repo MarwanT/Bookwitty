@@ -50,6 +50,16 @@ class FormatManager {
     let lowerCaseKey = key.lowercased()
     return formats?.filter({ $0.key.lowercased() == lowerCaseKey }).first?.value ?? ""
   }
+  
+  func validKeys(from listOfKeys: [String]) -> [String] {
+    var keys = [String]()
+    
+    if let availableKeys = formats?.flatMap({ $0.key.lowercased() }) {
+      keys = listOfKeys.flatMap({ availableKeys.contains($0.lowercased()) ? $0 : nil })
+    }
+    
+    return keys
+  }
 }
 
 //MARK: - Localizable implementation
