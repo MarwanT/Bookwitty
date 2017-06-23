@@ -49,6 +49,7 @@ class FormatManager {
 //MARK: - Localizable implementation
 extension FormatManager: Localizable {
   func applyLocalization() {
+    loadFormatsFromJSON()
   }
   
   fileprivate func observeLanguageChanges() {
