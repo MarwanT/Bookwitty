@@ -1,5 +1,5 @@
 //
-//  FormatManager.swift
+//  BookFormatMapper.swift
 //  Bookwitty
 //
 //  Created by Marwan  on 6/23/17.
@@ -10,10 +10,10 @@ import Foundation
 
 typealias ProductForm = Dictionary<String, String>.Element
 
-class FormatManager {
+class BookFormatMapper {
   var formats: [ProductForm]? = nil
   
-  static let shared: FormatManager = FormatManager()
+  static let shared: BookFormatMapper = BookFormatMapper()
   private init() {
     observeLanguageChanges()
     loadFormatsFromJSON()
@@ -51,6 +51,8 @@ class FormatManager {
     return formats?.filter({ $0.key.lowercased() == lowerCaseKey }).first?.value ?? ""
   }
   
+  
+  /// Returns and array of the available given format keys
   func validKeys(from listOfKeys: [String]) -> [String] {
     var keys = [String]()
     
@@ -63,7 +65,7 @@ class FormatManager {
 }
 
 //MARK: - Localizable implementation
-extension FormatManager: Localizable {
+extension BookFormatMapper: Localizable {
   func applyLocalization() {
     loadFormatsFromJSON()
   }
