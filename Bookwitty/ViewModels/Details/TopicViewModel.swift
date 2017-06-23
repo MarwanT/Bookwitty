@@ -373,7 +373,7 @@ extension TopicViewModel {
       return
     }
 
-    _ = GeneralAPI.editions(contentIdentifier: identifier) {
+    _ = ContentAPI.editions(contentIdentifier: identifier) {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       defer {
         completion(success, category)
