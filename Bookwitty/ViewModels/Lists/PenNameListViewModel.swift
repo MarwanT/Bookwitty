@@ -42,5 +42,37 @@ extension PenNameListViewModel {
 
 //MARK: - Actions
 extension PenNameListViewModel {
+  func follow(at item: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let penName = penName(at: item), let identifier = penName.id else {
+      completionBlock(false)
+      return
+    }
 
+    _ = GeneralAPI.followPenName(identifer: identifier) { (success, error) in
+      defer {
+        completionBlock(success)
+      }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.follow)
+      }
+      penName.following = true
+    }
+  }
+
+  func unfollow(at item: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let penName = penName(at: item), let identifier = penName.id else {
+      completionBlock(false)
+      return
+    }
+
+    _ = GeneralAPI.unfollowPenName(identifer: identifier) { (success, error) in
+      defer {
+        completionBlock(success)
+      }
+      if success {
+        DataManager.shared.updateResource(with: identifier, after: DataManager.Action.unfollow)
+      }
+      penName.following = false
+    }
+  }
 }
