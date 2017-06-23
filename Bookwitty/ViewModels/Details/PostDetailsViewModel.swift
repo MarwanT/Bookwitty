@@ -59,9 +59,7 @@ class PostDetailsViewModel {
   var wits: Int? {
     return  (resource as? ModelCommonProperties)?.counts?.wits
   }
-  var dims: Int? {
-    return  (resource as? ModelCommonProperties)?.counts?.dims
-  }
+
   var identifier: String? {
     return resource.id
   }
@@ -296,7 +294,7 @@ extension PostDetailsViewModel {
     return false
   }
   
-  func relatedPostsResourceValues(for index: Int) -> (followingMode: Bool, following: Bool, isWitted: Bool,wits: Int, isDimmed: Bool, dims: Int)? {
+  func relatedPostsResourceValues(for index: Int) -> (followingMode: Bool, following: Bool, isWitted: Bool,wits: Int)? {
     guard let modelResource = relatedPostsResourceForIndex(index: index), let resource = modelResource as? ModelCommonProperties else {
       return nil
     }
@@ -323,8 +321,7 @@ extension PostDetailsViewModel {
     let following = isFollowingResource(resource: modelResource)
 
     let wits = resource.counts?.wits ?? 0
-    let dims = resource.counts?.dims ?? 0
-    return (followingMode: canBeFollowed, following: following, isWitted: resource.isWitted, wits: wits, isDimmed: resource.isDimmed, dims: dims)
+    return (followingMode: canBeFollowed, following: following, isWitted: resource.isWitted, wits: wits)
   }
 
   func relatedPostsAffectedItems(identifiers: [String], visibleItemsIndices: [Int]) -> [Int] {
