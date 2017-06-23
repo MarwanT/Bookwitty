@@ -53,6 +53,7 @@ extension Analytics {
     case CategoriesList
     case Bag
     case Onboarding
+    case PenNamesList
 
     //Use in switch cases default clause
     case Default
@@ -101,6 +102,8 @@ extension Analytics {
         return "Bag"
       case .Onboarding:
         return "Onboarding"
+      case .PenNamesList:
+        return "Pen Names List"
       case .Default:
         return "[DEFAULT]"
       }
