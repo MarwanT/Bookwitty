@@ -170,7 +170,7 @@ extension ArticleCardPostCellNode: ArticleCardViewModelDelegate {
     node.articleDescription = values.content.description
     node.imageUrl = values.content.imageUrl
     articleCommentsSummary = values.content.comments
-    setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
+    setWitValue(witted: values.content.wit.is)
     setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
   }
 }

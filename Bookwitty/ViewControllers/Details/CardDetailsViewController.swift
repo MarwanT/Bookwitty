@@ -77,7 +77,7 @@ class CardDetailsViewController: GenericNodeViewController {
     }
     if let index = node.subnodes.index( where: { $0 is BaseCardPostNode } ) {
       if let card = node.subnodes[index] as? BaseCardPostNode {
-        card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
+        card.setWitValue(witted: resource.isWitted)
         card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
       }
     }

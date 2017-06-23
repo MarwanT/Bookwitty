@@ -216,7 +216,7 @@ extension ReadingListCardPostCellNode: ReadingListCardViewModelDelegate {
     node.articleDescription = values.content.description
     node.setTopicStatistics(numberOfPosts: values.content.statistics.posts, numberOfBooks: values.content.statistics.relatedBooks, numberOfFollowers: values.content.statistics.followers)
     articleCommentsSummary = values.content.comments
-    setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
+    setWitValue(witted: values.content.wit.is)
     setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
 
     if !node.isImageCollectionLoaded {
