@@ -19,6 +19,29 @@ class FormatManager {
   }
   
   fileprivate func loadFormatsFromJSON() {
+    let language = GeneralSettings.sharedInstance.preferredLanguage
+    
+    guard let url = Bundle.main.url(forResource: "Formats." + language, withExtension: "json") else {
+      print("Fail to get formats file path")
+      return
+    }
+    
+    guard let data = try? Data(contentsOf: url),
+      let dictionary = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: Any] else {
+        print("Fail to load dictionary from formats file")
+        return
+    }
+    
+    guard let formatsDictionary = dictionary?[language] as? [String : Any] else {
+      print("Fail to load localized formats")
+      return
+    }
+    
+    formats = formatsFromDictionary(dictionary: formatsDictionary)
+  }
+  
+  func formatsFromDictionary(dictionary: [String : Any]) -> [ProductForm] {
+    return dictionary.flatMap({ $0 as? ProductForm })
   }
 }
 
