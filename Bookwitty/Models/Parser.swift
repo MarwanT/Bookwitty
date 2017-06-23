@@ -122,7 +122,7 @@ class Parser {
     return nil
   }
 
-  static func parseDataArray(data: Data?, mappingTargets: [Resource]? = nil) -> (resources: [Resource]?, next: URL?, errors: [APIError]?)? {
+  static func parseDataArray(data: Data?, mappingTargets: [Resource]? = nil) -> (resources: [Resource]?, next: URL?, metadata: [String : Any]?, errors: [APIError]?)? {
     guard let data = data else {
       return nil
     }
@@ -132,12 +132,13 @@ class Parser {
     }
 
     let next = document.links?["next"]
+    let metadata = document.meta
     
     if let parsedData = document.data {
-      return (parsedData, next, document.errors)
+      return (parsedData, next, metadata, document.errors)
     }
 
-    return (nil, next, document.errors)
+    return (nil, next, metadata, document.errors)
   }
 }
 

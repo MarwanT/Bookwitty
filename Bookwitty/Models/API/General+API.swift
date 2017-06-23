@@ -375,7 +375,7 @@ struct GeneralAPI {
 
         if let data = data {
           // Parse Data
-          guard let parsedData: (resources: [Resource]?, next: URL?, errors: [APIError]?) = Parser.parseDataArray(data: data) else {
+          guard let parsedData = Parser.parseDataArray(data: data) else {
             error = BookwittyAPIError.failToParseData
             return
           }
