@@ -57,6 +57,7 @@ extension PenNameListViewController: ASCollectionDataSource, ASCollectionDelegat
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
     return {
       let node = PenNameFollowNode()
+      node.delegate = self
       node.showBottomSeparator = true
       return node
     }
@@ -78,5 +79,20 @@ extension PenNameListViewController: ASCollectionDataSource, ASCollectionDelegat
 
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
     //TODO: push the pen name details vc
+  }
+}
+
+//MARK: - PenNameFollowNodeDelegate implementation
+extension PenNameListViewController: PenNameFollowNodeDelegate {
+  func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader) {
+
+  }
+  
+  func penName(node: PenNameFollowNode, actionPenNameFollowTouchUpInside button: Any?) {
+
+  }
+
+  func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode){
+    
   }
 }
