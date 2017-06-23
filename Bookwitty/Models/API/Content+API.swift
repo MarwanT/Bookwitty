@@ -40,4 +40,31 @@ struct ContentAPI {
       next = values?.next
     })
   }
+  
+  static func preferredFormats(identifier: String, completion: @escaping (_ success: Bool, _ resources: [Book]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let successStatusCode: Int = 200
+    
+    return signedAPIRequest(target: .preferredFormats(bookIdentifier: identifier), completion: {
+      (data, statusCode, response, error) in
+      var success: Bool = statusCode == successStatusCode
+      var books: [Book]? = nil
+      var error: BookwittyAPIError? = error
+      
+      defer {
+        completion(success, books, error)
+      }
+      
+      guard statusCode == successStatusCode else {
+        error = BookwittyAPIError.invalidStatusCode
+        return
+      }
+      
+      guard let data = data, let values = Parser.parseDataArray(data: data), let bookResources = values.resources as? [Book] else {
+        error = BookwittyAPIError.failToParseData
+        return
+      }
+      
+      books = bookResources
+    })
+  }
 }
