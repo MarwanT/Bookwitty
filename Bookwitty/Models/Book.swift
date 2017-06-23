@@ -86,5 +86,7 @@ extension Book: Parsable {
 // MARK: - Declare Book.Meta
 extension Book {
   class Meta {
+    var numberOfEditionsPerFormat: [String : Int] = [:]
+    var totalEditions: Int = 0
   }
 }
