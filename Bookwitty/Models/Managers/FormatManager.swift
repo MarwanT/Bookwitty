@@ -17,6 +17,9 @@ class FormatManager {
   private init() {
     observeLanguageChanges()
   }
+  
+  fileprivate func loadFormatsFromJSON() {
+  }
 }
 
 //MARK: - Localizable implementation
