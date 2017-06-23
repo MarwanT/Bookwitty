@@ -15,7 +15,7 @@ class PenNameListViewModel {
     self.penNames = penNames
   }
 
-  private func penName(at item: Int) -> PenName? {
+  func penName(at item: Int) -> PenName? {
     guard item >= 0 && item < penNames.count else {
       return nil
     }
