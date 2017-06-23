@@ -381,10 +381,6 @@ extension Analytics.Action {
       return .Comment
     case .share:
       return .Share
-    case .dim:
-      return .Dim
-    case .undim:
-      return .Undim
     case .follow:
       switch category {
       case .Topic:

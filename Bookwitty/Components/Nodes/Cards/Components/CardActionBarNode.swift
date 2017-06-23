@@ -19,8 +19,6 @@ class CardActionBarNode: ASCellNode {
     case unwit
     case comment
     case share
-    case dim
-    case undim
     case follow
     case unfollow
     case reply
@@ -163,9 +161,6 @@ class CardActionBarNode: ASCellNode {
 
   func updateWitAndDim(for action: Action, success: Bool = true) {
     switch action {
-    case .dim:
-      setWitButton(witted: false)
-    case .undim: break
     case .wit:
       setWitButton(witted: success)
     case .unwit:

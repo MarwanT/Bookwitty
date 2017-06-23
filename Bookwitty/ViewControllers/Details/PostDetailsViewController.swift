@@ -337,14 +337,6 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
       viewModel.unwitPost(completionBlock: { (success) in
         didFinishAction?(success)
       })
-    case .dim:
-      viewModel.dimContent(completionBlock: { (success) in
-        didFinishAction?(success)
-      })
-    case .undim:
-      viewModel.undimContent(completionBlock: { (success) in
-        didFinishAction?(success)
-      })
     case .share:
       if let sharingInfo: [String] = viewModel.sharingPost() {
         presentShareSheet(shareContent: sharingInfo)
