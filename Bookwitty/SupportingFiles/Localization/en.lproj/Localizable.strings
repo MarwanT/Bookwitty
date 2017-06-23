@@ -238,6 +238,7 @@
  * For This Part use `f_` as prefix to indicate that the localizable string is a formatted one
  * And this will also allow us to avoid conflict with similar sentences
  */
+"f_and_others_find_witty" = "%@, %@";
 "f_find_witty" = "%d find this witty";
 "f_number_of_books" = "%d books";
 "f_number_of_contributors" = "%d contributors";

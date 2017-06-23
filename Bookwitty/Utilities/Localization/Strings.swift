@@ -908,6 +908,12 @@ class Strings {
   /**
    * Formatted Strings
    */
+
+  static func andOthersFindThisWitty(witters: String, others: Int) -> String {
+    let otherWitters = othersFindThisWitty(witters: others)
+    return localizedString(key: "f_and_others_find_witty", formatVariables: witters, otherWitters)
+  }
+
   static func findThisWitty(witters: Int) -> String {
     return localizedString(key: "f_find_witty", formatVariables: witters)
   }
