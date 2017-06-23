@@ -82,3 +82,9 @@ class Book: Resource {
 extension Book: Parsable {
   typealias AbstractType = Book
 }
+
+// MARK: - Declare Book.Meta
+extension Book {
+  class Meta {
+  }
+}
