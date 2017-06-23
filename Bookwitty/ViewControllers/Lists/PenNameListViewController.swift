@@ -102,7 +102,7 @@ extension PenNameListViewController: PenNameFollowNodeDelegate {
     Analytics.shared.send(event: event)
   }
 
-  func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode){
-    
+  func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode){    
+    penName(node: node, actionPenNameFollowTouchUpInside: imageNode)
   }
 }
