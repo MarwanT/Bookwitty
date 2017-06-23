@@ -884,7 +884,15 @@ class Strings {
   static func yesterday() -> String {
     return localizedString(key: "yesterday")
   }
-  
+
+  static func you() -> String {
+    return localizedString(key: "you")
+  }
+
+  static func you_find_witty() -> String {
+    return localizedString(key: "you_find_witty")
+  }
+
   static func you_dont_have_account() -> String {
     return localizedString(key: "you_dont_have_account")
   }
@@ -900,6 +908,16 @@ class Strings {
   /**
    * Formatted Strings
    */
+
+  static func andOthersFindThisWitty(witters: String, others: Int) -> String {
+    let otherWitters = othersFindThisWitty(witters: others)
+    return localizedString(key: "f_and_others_find_witty", formatVariables: witters, otherWitters)
+  }
+
+  static func findThisWitty(witters: Int) -> String {
+    return localizedString(key: "f_find_witty", formatVariables: witters)
+  }
+
   static func contributors(number: Int) -> String {
     return localizedString(key: "f_number_of_contributors", formatVariables: number)
   }
@@ -948,6 +966,10 @@ class Strings {
     return localizedString(key: "f_number_of_years_ago", formatVariables: number)
   }
   
+
+  private static func othersFindThisWitty(witters: Int) -> String {
+    return localizedString(key: "f_others_find_witty", formatVariables: witters)
+  }
 
   /**
    Discussion:

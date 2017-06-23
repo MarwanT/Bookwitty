@@ -227,6 +227,8 @@
 "wit_it" = "Wit";
 "witted" = "Witted";
 "yesterday" = "Hier";
+"you" = "You";
+"you_find_witty" = "You find this witty";
 "you_dont_have_account" = "Vous n'avez pas de compte";
 "you_save" = "Vous économisez";
 "your_feed" = "Votre flux";
@@ -236,11 +238,14 @@
  * For This Part use `f_` as prefix to indicate that the localizable string is a formatted one
  * And this will also allow us to avoid conflict with similar sentences
  */
+"f_and_others_find_witty" = "%@, and %@";
+"f_find_witty" = "%d find this witty";
 "f_number_of_contributors" = "%d contributors";
 "f_number_of_followers" = "%d followers";
 "f_number_of_posts" = "%d posts";
 "f_number_of_books" = "%d books";
 "f_view_all_replies" = "View all %d replies";
+"f_others_find_witty" = "and %d others find this witty";
 
 /**
  Discussion:

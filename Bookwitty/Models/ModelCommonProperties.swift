@@ -42,10 +42,34 @@ protocol ModelCommonProperties {
   var penName: PenName? { get set }
   var contributors: [PenName]? { get set }
 
+  var witters: String? { get }
+
   func sameInstanceAs(newResource: ModelCommonProperties?) -> Bool?
 }
 
 extension ModelCommonProperties {
+  var witters: String? {
+    let wits = self.counts?.wits ?? 0
+    guard wits > 0 else {
+      return nil
+    }
+
+    var names: [String] = []
+    if isWitted {
+      names.insert(Strings.you() , at: 0)
+    }
+
+    let witters: String
+    if names.count > 0 {
+      let othersCount = max(wits - names.count, 0)
+      witters = Strings.andOthersFindThisWitty(witters: names.joined(separator: ","), others: othersCount)
+    } else {
+      witters = Strings.findThisWitty(witters: wits)
+    }
+
+    return witters
+  }
+
   func sameInstanceAs(newResource: ModelCommonProperties?) -> Bool? {
     guard let existingResource = self as? ModelResource, let newResource = newResource as? ModelResource else {
       return nil
