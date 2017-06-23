@@ -58,20 +58,6 @@ class CardDetailsViewModel {
     }
     return [shortDesciption]
   }
-
-  //TODO: Remove
-  func dimContent(completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard let contentId = resource.id else {
-      return completionBlock(false)
-    }
-  }
-
-  //TODO: Remove
-  func undimContent(completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard let contentId = resource.id else {
-      return completionBlock(false)
-    }
-  }
 }
 
 // MARK: - PenName Follow/Unfollow

@@ -242,20 +242,6 @@ class PostDetailsViewModel {
     unwitContent(contentId: contentId, completionBlock: completionBlock)
   }
 
-  //TODO: Remove
-  func dimContent(completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard let contentId = identifier else {
-      return completionBlock(false)
-    }
-  }
-
-  //TODO: Remove
-  func undimContent(completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard let contentId = identifier else {
-      return completionBlock(false)
-    }
-  }
-
   func sharingPost() -> [String]? {
     return sharingContent(resource: resource)
   }
