@@ -289,10 +289,6 @@ class PostDetailsNode: ASScrollNode {
     headerNode.actionBarNode.setWitButton(witted: witted)
   }
 
-  func setDimValue(dimmed: Bool, dims: Int) {
-    headerNode.actionBarNode.setDimValue(dimmed: dimmed, dims: dims)
-  }
-
   func sidesEdgeInset() -> UIEdgeInsets {
     return UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: internalMargin)
   }

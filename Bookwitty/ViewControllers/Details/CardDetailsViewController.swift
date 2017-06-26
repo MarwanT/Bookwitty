@@ -37,7 +37,6 @@ class CardDetailsViewController: GenericNodeViewController {
     
     node.delegate = self
     node.updateMode(fullMode: true)
-    node.updateDimVisibility(visible: true)
 
     if let photoNode = node as? PhotoCardPostCellNode {
       photoNode.node.delegate = self
@@ -77,8 +76,7 @@ class CardDetailsViewController: GenericNodeViewController {
     }
     if let index = node.subnodes.index( where: { $0 is BaseCardPostNode } ) {
       if let card = node.subnodes[index] as? BaseCardPostNode {
-        card.setWitValue(witted: resource.isWitted)
-        card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
+        card.setWitValue(witted: resource.isWitted)        
       }
     }
   }
@@ -181,14 +179,6 @@ extension CardDetailsViewController: BaseCardPostNodeDelegate {
       viewModel.unwitContent() { (success) in
         didFinishAction?(success)
       }
-    case .dim:
-      viewModel.dimContent(completionBlock: { (success) in
-        didFinishAction?(success)
-      })
-    case .undim:
-      viewModel.undimContent(completionBlock: { (success) in
-        didFinishAction?(success)
-      })
     case .share:
       if let sharingInfo: [String] = viewModel.sharingContent() {
         presentShareSheet(shareContent: sharingInfo)

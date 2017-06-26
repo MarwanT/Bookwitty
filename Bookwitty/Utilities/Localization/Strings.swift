@@ -197,14 +197,6 @@ class Strings {
     return localizedString(key: "customer_service")
   }
   
-  static func dim() -> String {
-    return localizedString(key: "dim")
-  }
-  
-  static func dimmed() -> String {
-    return localizedString(key: "dimmed")
-  }
-  
   static func discover() -> String {
     return localizedString(key: "discover")
   }

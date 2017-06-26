@@ -78,8 +78,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.penName = viewModel.penName
     postDetailsNode.conculsion = viewModel.conculsion
     postDetailsNode.headerNode.profileBarNode.updateMode(disabled: viewModel.isMyPenName())
-    postDetailsNode.setWitValue(witted: viewModel.isWitted)
-    postDetailsNode.setDimValue(dimmed: viewModel.isDimmed, dims: viewModel.dims ?? 0)
+    postDetailsNode.setWitValue(witted: viewModel.isWitted)    
   }
 
   fileprivate func addDelegatesAndDataSources() {
@@ -336,14 +335,6 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
       })
     case .unwit:
       viewModel.unwitPost(completionBlock: { (success) in
-        didFinishAction?(success)
-      })
-    case .dim:
-      viewModel.dimContent(completionBlock: { (success) in
-        didFinishAction?(success)
-      })
-    case .undim:
-      viewModel.undimContent(completionBlock: { (success) in
         didFinishAction?(success)
       })
     case .share:

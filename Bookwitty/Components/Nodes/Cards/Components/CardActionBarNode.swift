@@ -19,8 +19,6 @@ class CardActionBarNode: ASCellNode {
     case unwit
     case comment
     case share
-    case dim
-    case undim
     case follow
     case unfollow
     case reply
@@ -29,31 +27,9 @@ class CardActionBarNode: ASCellNode {
   var witButton: ASButtonNode
   var commentButton: ASButtonNode
   var shareButton: ASButtonNode
-  var numberOfDimsNode: ASTextNode
   var replyNode: ASTextNode
   weak var delegate: CardActionBarNodeDelegate? = nil
 
-  fileprivate var numberOfDims: Int? {
-    didSet {
-      numberOfDimsNode.isHidden = hideDim
-      guard !hideDim else {
-        return
-      }
-
-      if let numberOfDims = numberOfDims {
-        let fontDynamicType = FontDynamicType.footnote
-        numberOfDimsNode.attributedText = AttributedStringBuilder(fontDynamicType: fontDynamicType)
-          .append(text: dimText, color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
-          .append(text: " ")
-          .append(text: "(\(numberOfDims))", fontDynamicType: FontDynamicType.caption1, color: ThemeManager.shared.currentTheme.defaultGrayedTextColor()).attributedString
-      } else {
-        numberOfDimsNode.attributedText = nil
-      }
-    }
-  }
-  fileprivate var dimText: String {
-    return numberOfDimsNode.isSelected ? Strings.dimmed() : Strings.dim()
-  }
   fileprivate var actionButton: ASButtonNode {
     return followingMode ? followButton : witButton
   }
@@ -63,12 +39,6 @@ class CardActionBarNode: ASCellNode {
     }
   }
 
-  var hideDim: Bool = true {
-    didSet {
-      setNeedsLayout()
-    }
-  }
-  
   var hideCommentButton: Bool = true {
     didSet {
       setNeedsLayout()
@@ -97,7 +67,6 @@ class CardActionBarNode: ASCellNode {
     witButton = ASButtonNode()
     commentButton = ASButtonNode()
     shareButton = ASButtonNode()
-    numberOfDimsNode = ASTextNode()
     followButton = ASButtonNode()
     replyNode = ASTextNode()
     super.init()
@@ -129,13 +98,7 @@ class CardActionBarNode: ASCellNode {
     commentButton.addTarget(self, action: #selector(commentButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     witButton.addTarget(self, action: #selector(witButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     followButton.addTarget(self, action: #selector(followButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
-    numberOfDimsNode.addTarget(self, action: #selector(dimButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     replyNode.addTarget(self, action: #selector(replyButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
-
-    numberOfDimsNode.style.maxWidth = ASDimensionMake(120.0)
-    numberOfDimsNode.maximumNumberOfLines = 1
-
-    numberOfDimsNode.truncationMode = NSLineBreakMode.byTruncatingTail
   }
 
   private func setupFollowButtonStyling() {
@@ -196,33 +159,10 @@ class CardActionBarNode: ASCellNode {
     witButton.isSelected = witted
   }
 
-  func setDimValue(dimmed: Bool, dims: Int? = nil) {
-    numberOfDimsNode.isSelected = dimmed
-    setNumberOfDims(dims: dims ?? 0)
-  }
-
-  private func setNumberOfDims(dims: Int) {
-    numberOfDims = dims
-  }
-
   func updateWitAndDim(for action: Action, success: Bool = true) {
-    let inverter = success ? 1 : -1
-
     switch action {
-    case .dim:
-      setWitButton(witted: false)
-      let dims: Int? = (numberOfDims ?? 0) + (1 * inverter)
-      setDimValue(dimmed: success, dims: dims)
-
-    case .undim:
-      let dims: Int? = (numberOfDims ?? 0 > 0) ? (numberOfDims! + (-1 * inverter)) : nil
-      setDimValue(dimmed: false, dims: dims)
-
     case .wit:
-      let dims: Int? = (numberOfDims ?? 0 > 0) ? (numberOfDims! + (-1 * inverter)) : nil
-      setDimValue(dimmed: false, dims: dims)
       setWitButton(witted: success)
-
     case .unwit:
       setWitButton(witted: false)
 
@@ -240,28 +180,6 @@ class CardActionBarNode: ASCellNode {
     }
   }
 
-  func dimButtonTouchUpInside(_ sender: ASTextNode?) {
-    guard UserManager.shared.isSignedIn else {
-      //If user is not signed In post notification and do not fall through
-      NotificationCenter.default.post( name: AppNotification.callToAction, object: CallToAction.dim)
-      return
-    }
-
-    let action = !numberOfDimsNode.isSelected ? CardActionBarNode.Action.dim : CardActionBarNode.Action.undim
-    self.updateWitAndDim(for: action)
-    self.witButton.isEnabled = false
-    self.numberOfDimsNode.isEnabled = false
-
-    delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: action, forSender: witButton, didFinishAction: { [weak self] (success: Bool) in
-      guard let strongSelf = self else { return }
-      if !success { //Toggle back on failure
-        strongSelf.updateWitAndDim(for: action, success: false)
-      }
-      strongSelf.witButton.isEnabled = true
-      strongSelf.numberOfDimsNode.isEnabled = true
-    })
-  }
-
   func witButtonTouchUpInside(_ sender: ASButtonNode?) {
     guard UserManager.shared.isSignedIn else {
       //If user is not signed In post notification and do not fall through
@@ -275,7 +193,6 @@ class CardActionBarNode: ASCellNode {
     //Assume success and Toggle button anyway, if witting/unwitting fails delegate should either call didFinishAction or  call toggleWitButton.
     self.updateWitAndDim(for: action)
     self.witButton.isEnabled = false
-    self.numberOfDimsNode.isEnabled = false
 
     delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: action, forSender: sender, didFinishAction: { [weak self] (success: Bool) in
       guard let strongSelf = self else { return }
@@ -283,7 +200,6 @@ class CardActionBarNode: ASCellNode {
         strongSelf.updateWitAndDim(for: action, success: false)
       }
       strongSelf.witButton.isEnabled = true
-      strongSelf.numberOfDimsNode.isEnabled = true
     })
   }
 
@@ -353,10 +269,7 @@ class CardActionBarNode: ASCellNode {
     textHorizontalStackSpec.justifyContent = .start
     textHorizontalStackSpec.alignItems = .center
     if !followingMode {
-      if !hideDim {
-        textHorizontalStackSpec.children?.append(ASLayoutSpec.spacer(width: configuration.internalMargin))
-        textHorizontalStackSpec.children?.append(numberOfDimsNode)
-      }
+
     }
     horizontalStackElements.append(actionButton)
     horizontalStackElements.append(textHorizontalStackSpec)

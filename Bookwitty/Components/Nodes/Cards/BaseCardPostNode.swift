@@ -120,10 +120,6 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     actionBarNode.setWitButton(witted: witted)
   }
 
-  func setDimValue(dimmed: Bool, dims: Int) {
-    actionBarNode.setDimValue(dimmed: dimmed, dims: dims)
-  }
-
   private func setupCellNode() {
     actionBarNode.delegate = self
     infoNode.delegate = self
@@ -156,10 +152,6 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     backgroundNode.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     //Separator
     separatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
-  }
-
-  func updateDimVisibility(visible: Bool) {
-    actionBarNode.hideDim = !visible
   }
 }
 

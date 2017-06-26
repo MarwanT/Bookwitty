@@ -251,7 +251,6 @@ extension LinkCardPostCellNode: LinkCardViewModelDelegate {
     node.imageNode.url = URL(string: values.content.imageUrl ?? "")
     node.linkUrl = values.content.linkUrl
     articleCommentsSummary = values.content.comments
-    setWitValue(witted: values.content.wit.is)
-    setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
+    setWitValue(witted: values.content.wit.is)    
   }
 }

@@ -13,8 +13,6 @@ class DataManager {
   enum Action {
     case wit
     case unwit
-    case dim
-    case undim
     case follow
     case unfollow
   }
@@ -88,10 +86,6 @@ class DataManager {
       wit(resource)
     case .unwit:
       unwit(resource)
-    case .dim:
-      dim(resource)
-    case .undim:
-      undim(resource)
     case .follow:
       follow(resource)
     case .unfollow:
@@ -120,16 +114,6 @@ extension DataManager {
   fileprivate func unwit(_ resource: ModelResource) {
     var actionableRes = resource as? ModelCommonActions
     actionableRes?.wit = false
-  }
-
-  fileprivate func dim(_ resource: ModelResource) {
-    var actionableRes = resource as? ModelCommonActions
-    actionableRes?.dim = true
-  }
-
-  fileprivate func undim(_ resource: ModelResource) {
-    var actionableRes = resource as? ModelCommonActions
-    actionableRes?.dim = false
   }
 
   fileprivate func follow(_ resource: ModelResource) {

@@ -38,8 +38,6 @@ public enum BookwittyAPI {
   case undimComment(identifier: String)
   case wit(contentId: String)
   case unwit(contentId: String)
-  case dim(contentId: String)
-  case undim(contentId: String)
   case absolute(url: URL)
   case discover
   case onBoarding
@@ -140,10 +138,6 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(contentId)/wit"
     case .unwit(let contentId):
       path = "/content/\(contentId)/wit"
-    case .dim(let contentId):
-      path = "/content/\(contentId)/dim"
-    case .undim(let contentId):
-      path = "/content/\(contentId)/dim"
     case .discover:
       path = "/curated_collection/discover_page"
     case .onBoarding:
@@ -205,11 +199,11 @@ extension BookwittyAPI: TargetType {
       return .post
   case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .search, .penNames, .comments, .replies, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent:
       return .get
-    case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart, .batchPenNames, .createComment, .witComment, .dimComment:
+    case .register, .batch, .updatePreference, .wit, .follow, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart, .batchPenNames, .createComment, .witComment, .dimComment:
       return .post
     case .updateUser, .updatePenName:
       return .patch
-    case .unwit, .unfollow, .undim, .unfollowPenName, .unwitComment, .undimComment:
+    case .unwit, .unfollow, .unfollowPenName, .unwitComment, .undimComment:
       return .delete
     }
   }
@@ -271,7 +265,7 @@ extension BookwittyAPI: TargetType {
       return CommentAPI.createCommentBody(comment: comment, parentCommentIdentifier: parentCommentIdentifier)
     case .uploadPolicy(let file, let fileType, let assetType):
       return UploadAPI.uploadPolicyParameters(file: file, fileType: fileType, assetType: assetType)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment, .dimComment, .undimComment:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment, .dimComment, .undimComment:
       return nil
     }
   }

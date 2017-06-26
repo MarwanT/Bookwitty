@@ -25,9 +25,9 @@ class BookCardViewModel: CardViewModelProtocol {
     delegate?.resourceUpdated(viewModel: self)
   }
 
-  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, image: (cover: String?, thumbnail: String?), info: (author: String?, price: String?, format: String?), comments: String?, statistics: (posts: Int?, relatedBooks: Int?, followers: Int?), following: Bool, wit: (is: Bool, count: Int), dim: (is: Bool, count: Int))) {
+  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, image: (cover: String?, thumbnail: String?), info: (author: String?, price: String?, format: String?), comments: String?, statistics: (posts: Int?, relatedBooks: Int?, followers: Int?), following: Bool, wit: (is: Bool, count: Int))) {
     guard let resource = resource, let book = resource as? Book else {
-      return (false, nil, content: (nil, nil, image: (nil, nil), info: (nil, nil, nil), nil, statistics: (nil, nil, nil), false, wit: (false, 0), dim: (false, 0)))
+      return (false, nil, content: (nil, nil, image: (nil, nil), info: (nil, nil, nil), nil, statistics: (nil, nil, nil), false, wit: (false, 0)))
     }
 
     let cardPostInfoData: CardPostInfoNodeData?
@@ -50,14 +50,13 @@ class BookCardViewModel: CardViewModelProtocol {
     let following = resource.following
     let followers = resource.counts?.followers
     let statistics = (posts, relatedBooks, followers)
-    let wit = (is: resource.isWitted, count: resource.counts?.wits ?? 0)
-    let dim = (is: resource.isDimmed, count: resource.counts?.dims ?? 0)
+    let wit = (is: resource.isWitted, count: resource.counts?.wits ?? 0)    
 
     let author = book.productDetails?.author
     let price = (book.productDetails?.isElectronicFormat() ?? false) ? nil : book.supplierInformation?.preferredPrice?.formattedValue
     let format = book.productDetails?.productFormat
     let info = (author, price, format)
 
-    return (infoNode, cardPostInfoData, content: (title, description, image: (nil, imageUrl), info: info, comments, statistics: statistics, following, wit: wit, dim: dim))
+    return (infoNode, cardPostInfoData, content: (title, description, image: (nil, imageUrl), info: info, comments, statistics: statistics, following, wit: wit))
   }
 }

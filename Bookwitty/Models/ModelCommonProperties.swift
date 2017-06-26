@@ -11,15 +11,10 @@ import Spine
 
 enum Vote: String {
   case witted = "wit"
-  case dimmed = "dim"
   case none = ""
 
   static func isWitted(vote: String) -> Bool {
     return vote == Vote.witted.rawValue
-  }
-
-  static func isDimmed(vote: String) -> Bool {
-    return vote == Vote.dimmed.rawValue
   }
 }
 
@@ -33,7 +28,6 @@ protocol ModelCommonProperties {
   var shortDescription: String? { get }
   var vote: String? { get }
   var isWitted: Bool { get }
-  var isDimmed: Bool { get }
   var following: Bool { get }
   var canonicalURL: URL? { get }
   var counts: Counts? { get set }
@@ -92,12 +86,6 @@ extension Video: ModelCommonProperties {
     }
     return Vote.isWitted(vote: vote)
   }
-  var isDimmed: Bool {
-    guard let vote = vote else {
-      return false
-    }
-    return Vote.isDimmed(vote: vote)
-  }
 
   var following: Bool {
     return false
@@ -110,12 +98,6 @@ extension Topic: ModelCommonProperties {
       return false
     }
     return Vote.isWitted(vote: vote)
-  }
-  var isDimmed: Bool {
-    guard let vote = vote else {
-      return false
-    }
-    return Vote.isDimmed(vote: vote)
   }
 }
 
@@ -133,12 +115,6 @@ extension Image: ModelCommonProperties {
     }
     return Vote.isWitted(vote: vote)
   }
-  var isDimmed: Bool {
-    guard let vote = vote else {
-      return false
-    }
-    return Vote.isDimmed(vote: vote)
-  }
 
   var following: Bool {
     return false
@@ -151,12 +127,6 @@ extension Author: ModelCommonProperties {
       return false
     }
     return Vote.isWitted(vote: vote)
-  }
-  var isDimmed: Bool {
-    guard let vote = vote else {
-      return false
-    }
-    return Vote.isDimmed(vote: vote)
   }
 }
 
@@ -173,12 +143,6 @@ extension Link: ModelCommonProperties {
       return false
     }
     return Vote.isWitted(vote: vote)
-  }
-  var isDimmed: Bool {
-    guard let vote = vote else {
-      return false
-    }
-    return Vote.isDimmed(vote: vote)
   }
 
   var following: Bool {
@@ -200,12 +164,6 @@ extension ReadingList: ModelCommonProperties {
     }
     return Vote.isWitted(vote: vote)
   }
-  var isDimmed: Bool {
-    guard let vote = vote else {
-      return false
-    }
-    return Vote.isDimmed(vote: vote)
-  }
 
   var following: Bool {
     return false
@@ -225,12 +183,6 @@ extension Audio: ModelCommonProperties {
       return false
     }
     return Vote.isWitted(vote: vote)
-  }
-  var isDimmed: Bool {
-    guard let vote = vote else {
-      return false
-    }
-    return Vote.isDimmed(vote: vote)
   }
 
   var following: Bool {
@@ -252,12 +204,6 @@ extension Text: ModelCommonProperties {
     }
     return Vote.isWitted(vote: vote)
   }
-  var isDimmed: Bool {
-    guard let vote = vote else {
-      return false
-    }
-    return Vote.isDimmed(vote: vote)
-  }
 
   var following: Bool {
     return false
@@ -278,12 +224,6 @@ extension Quote: ModelCommonProperties {
     }
     return Vote.isWitted(vote: vote)
   }
-  var isDimmed: Bool {
-    guard let vote = vote else {
-      return false
-    }
-    return Vote.isDimmed(vote: vote)
-  }
 
   var following: Bool {
     return false
@@ -298,9 +238,6 @@ extension Book: ModelCommonProperties {
   }
   
   var isWitted: Bool {
-    return false
-  }
-  var isDimmed: Bool {
     return false
   }
 
@@ -355,10 +292,6 @@ extension PenName: ModelCommonProperties {
   }
 
   var isWitted: Bool {
-    return false
-  }
-
-  var isDimmed: Bool {
     return false
   }
 
