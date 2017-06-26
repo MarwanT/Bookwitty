@@ -21,6 +21,7 @@ extension CardViewModelProtocol {
 
 protocol BaseCardPostNodeContentProvider {
   var shouldShowInfoNode: Bool { get }
+  var shouldShowActionInfoNode: Bool { get }
   var shouldShowActionBarNode: Bool { get }
   var contentShouldExtendBorders: Bool { get }
   var contentNode: ASDisplayNode { get }
@@ -268,6 +269,10 @@ extension BaseCardPostNode {
 //MARK: - Default Content Card Setup
 extension BaseCardPostNode: BaseCardPostNodeContentProvider {
   internal var shouldShowInfoNode: Bool {
+    return true
+  }
+
+  internal var shouldShowActionInfoNode: Bool {
     return true
   }
   
