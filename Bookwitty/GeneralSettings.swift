@@ -15,6 +15,7 @@ public class GeneralSettings {
   public struct Keys {
     public static let SendUsageData = "SendUsageData"
     public static let SendEmailNotifications = "SendEmailNotifications"
+    public static let SendNewsletter = "SendNewsletter"
     public static let ShouldShowIntroduction = "ShouldShowIntroduction"
     public static let PreferredLanguage = "PreferredLanguage"
     public static let ShouldDisplayNewsFeedIntroductoryBanner = "ShouldDisplayNewsFeedIntroductoryBanner"
@@ -32,6 +33,7 @@ public class GeneralSettings {
       Keys.PreferredLanguage : defaultLanguage,
       Keys.SendUsageData : true,
       Keys.SendEmailNotifications : true,
+      Keys.SendNewsletter : true,
       Keys.ShouldShowIntroduction : true,
       Keys.ShouldDisplayNewsFeedIntroductoryBanner : true,
       Keys.ShouldDisplayDiscoverIntroductoryBanner : true,
@@ -41,6 +43,7 @@ public class GeneralSettings {
     defaults.register(defaults: defaultValues)
     shouldSendUsageData = defaults.bool(forKey: Keys.SendUsageData)
     shouldSendEmailNotifications = defaults.bool(forKey: Keys.SendEmailNotifications)
+    shouldSendNewsletter = defaults.bool(forKey: Keys.SendNewsletter)
     shouldShowIntroduction = defaults.bool(forKey: Keys.ShouldShowIntroduction)
     preferredLanguage = defaults.string(forKey: Keys.PreferredLanguage) ?? Localization.Language.English.rawValue
     shouldDisplayNewsFeedIntroductoryBanner = defaults.bool(forKey: Keys.ShouldDisplayNewsFeedIntroductoryBanner)
@@ -60,6 +63,12 @@ public class GeneralSettings {
   public var shouldSendEmailNotifications: Bool {
     didSet {
       defaults.set(self.shouldSendEmailNotifications, forKey: Keys.SendEmailNotifications)
+    }
+  }
+
+  public var shouldSendNewsletter: Bool {
+    didSet {
+      defaults.set(self.shouldSendNewsletter, forKey: Keys.SendNewsletter)
     }
   }
  

@@ -38,7 +38,7 @@ final class SettingsViewModel {
       let sendEmailNotification = GeneralSettings.sharedInstance.shouldSendEmailNotifications
       return (Strings.email_notifications(), sendEmailNotification)
     case 1: //newsletter
-      let sendNewsletter = true
+      let sendNewsletter = GeneralSettings.sharedInstance.shouldSendNewsletter
       return (Strings.newsletter(), sendNewsletter)
     case 2: //change password
       return (Strings.change_password(), "")
@@ -80,7 +80,7 @@ final class SettingsViewModel {
         completion()
       })
     case 1: //newsletter
-      break
+      GeneralSettings.sharedInstance.shouldSendNewsletter = newValue
     default:
       break
     }
