@@ -58,6 +58,7 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
 
   fileprivate let infoNode: CardPostInfoNode
+  fileprivate let actionInfoNode: ASTextNode
   fileprivate let actionBarNode: CardActionBarNode
   fileprivate let backgroundNode: ASDisplayNode
   fileprivate let separatorNode: ASDisplayNode
@@ -88,6 +89,7 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
 
   override init() {
     infoNode = CardPostInfoNode()
+    actionInfoNode = ASTextNode()
     actionBarNode = CardActionBarNode()
     backgroundNode = ASDisplayNode()
     separatorNode = ASDisplayNode()
@@ -164,6 +166,7 @@ extension BaseCardPostNode {
     let defaultInset = internalInset()
 
     let infoNodeInset = ASInsetLayoutSpec(insets: infoInset(), child: infoNode)
+    let actionInfoNodeInset = ASInsetLayoutSpec(insets: defaultInset, child: actionInfoNode)
     let actionBarNodeInset = ASInsetLayoutSpec(insets: actionBarInset(), child: actionBarNode)
     let backgroundNodeInset = ASInsetLayoutSpec(insets: backgroundInset, child: backgroundNode)
     let separatorNodeInset = ASInsetLayoutSpec(insets: separatorInset(), child: separatorNode)
@@ -180,6 +183,11 @@ extension BaseCardPostNode {
     verticalStack.children = (shouldShowInfoNode && !forceHideInfoNode)
       ? [infoNodeInset, contentInset, commentSummaryInset]
       : [contentInset, commentSummaryInset]
+
+    if shouldShowActionInfoNode {
+      verticalStack.children?.append(actionInfoNodeInset)
+    }
+
     if shouldShowActionBarNode {
       verticalStack.children?.append(separatorNodeInset)
       verticalStack.children?.append(actionBarNodeInset)
