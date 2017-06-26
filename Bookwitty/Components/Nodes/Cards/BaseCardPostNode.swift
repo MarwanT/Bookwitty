@@ -78,6 +78,16 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
       setNeedsLayout()
     }
   }
+
+  var actionInfoValue: String? {
+    didSet {
+      if let actionInfoValue = actionInfoValue {
+        actionInfoNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+          .append(text: actionInfoValue, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      }
+    }
+  }
+
   var articleCommentsSummary: String? {
     didSet {
       if let articleCommentsSummary = articleCommentsSummary {
