@@ -9,6 +9,8 @@
 import UIKit
 
 class ProductFormatsViewController: UIViewController {
+  @IBOutlet weak var tableView: UITableView!
+  
   fileprivate var viewModel = ProductFormatsViewModel()
   
   override func viewDidLoad() {

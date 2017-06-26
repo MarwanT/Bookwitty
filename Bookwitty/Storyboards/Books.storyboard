@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -104,8 +105,23 @@
                     <view key="view" contentMode="scaleToFill" id="UfK-OK-nnk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bGW-DI-C5o">
+                                <rect key="frame" x="16" y="0.0" width="343" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="bGW-DI-C5o" firstAttribute="leading" secondItem="UfK-OK-nnk" secondAttribute="leadingMargin" id="M4d-P5-Y6A"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="bGW-DI-C5o" secondAttribute="bottom" id="MMZ-fz-Xz2"/>
+                            <constraint firstItem="bGW-DI-C5o" firstAttribute="top" secondItem="UfK-OK-nnk" secondAttribute="topMargin" id="quS-jt-w7Z"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="bGW-DI-C5o" secondAttribute="trailing" id="zNU-Wo-Hws"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="bGW-DI-C5o" id="wca-YH-8LV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1vC-kr-F4P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
