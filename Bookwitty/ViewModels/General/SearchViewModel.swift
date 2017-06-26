@@ -13,6 +13,9 @@ class SearchViewModel {
   var data: [String] = []
   var cancellableRequest: Cancellable?
   var nextPage: URL?
+
+  var facet: Facet?
+  var filter: Filter = Filter()
   
   var misfortuneNodeMode: MisfortuneNode.Mode? = nil
   var bookRegistry: BookTypeRegistry = BookTypeRegistry()
@@ -44,9 +47,8 @@ class SearchViewModel {
     cancelActiveRequest()
 
     self.data.removeAll(keepingCapacity: false)
-
-    cancellableRequest = SearchAPI.search(filter: (query, nil), page: nil, completion: {
-      (success, resources, nextPage, error) in
+    cancellableRequest = SearchAPI.search(filter: filter, page: nil, includeFacets: true, completion: {
+      (success, resources, nextPage, facet, error) in
       defer {
         // Set misfortune node mode
         if self.data.count > 0 {
@@ -70,6 +72,7 @@ class SearchViewModel {
 
       self.data += resources.flatMap({ $0.id })
       self.nextPage = nextPage
+      self.facet = facet
     })
   }
 
@@ -106,6 +109,26 @@ class SearchViewModel {
       }
       return resourcesIdentifiers.contains(identifier)
     })
+  }
+}
+
+//MARK: - Filter helper
+extension SearchViewModel {
+  func filterDictionary() -> [String : String] {
+    var dictionary = [String : String]()
+
+    if let category = self.filter.categories.first {
+      dictionary["category"] = category
+    }
+
+    if let language = self.filter.languages.first {
+      dictionary["language"] = language
+    }
+
+    if let type = self.filter.types.first {
+      dictionary["type"] = type
+    }
+    return dictionary
   }
 }
 

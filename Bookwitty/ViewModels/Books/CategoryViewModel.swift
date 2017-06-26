@@ -154,9 +154,11 @@ final class CategoryViewModel {
   
   private func loadCategoryBooks(categoryIdentifier: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     categoryBooks = nil
-    
-    return SearchAPI.search(filter: (nil, [categoryIdentifier]), page: nil, completion: {
-      (success, resources, nextPage, error) in
+
+    let filter = Filter()
+    filter.categories.append(categoryIdentifier)
+    return SearchAPI.search(filter: filter, page: nil, completion: {
+      (success, resources, nextPage, facet, error) in
       defer {
         completion(success, error)
       }

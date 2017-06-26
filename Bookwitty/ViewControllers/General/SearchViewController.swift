@@ -20,6 +20,7 @@ class SearchViewController: ASViewController<ASCollectionNode> {
   let collectionNode: ASCollectionNode
   let loaderNode: LoaderNode
   let misfortuneNode: MisfortuneNode
+  let filterNode: FilterCellNode
 
   var searchBar: UISearchBar?
   var viewModel: SearchViewModel = SearchViewModel()
@@ -46,6 +47,10 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     return true
   }
 
+  var shouldDisplayFilter: Bool {
+    return viewModel.facet != nil
+  }
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -63,7 +68,10 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     misfortuneNode = MisfortuneNode(mode: MisfortuneNode.Mode.empty)
     misfortuneNode.style.height = ASDimensionMake(0)
     misfortuneNode.style.width = ASDimensionMake(0)
-    
+
+    filterNode = FilterCellNode()
+    filterNode.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+
     super.init(node: collectionNode)
     
     misfortuneNode.delegate = self
@@ -127,23 +135,23 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     }
   }
 
-  fileprivate func searchAction(query: String?) {
-    guard let query = query else {
-      return
-    }
+  fileprivate func searchAction() {
     loadingStatus = .loading
     viewModel.clearSearchData()
     updateCollection(reloadAll: true)
 
+    let query = viewModel.filter.query ?? ""
     viewModel.search(query: query) { (success, error) in
       self.loadingStatus = .none
       self.updateCollection(with: nil, loaderSection: true, dataSection: true)
     }
 
+    let filtersInfo = viewModel.filterDictionary()
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .Search,
                                                  action: .SearchOnBookwitty,
-                                                 name: query)
+                                                 name: query,
+                                                 info: filtersInfo)
     Analytics.shared.send(event: event)
   }
 
@@ -167,6 +175,22 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
     updateCollectionNodes(indexPathForAffectedItems: indexPathForAffectedItems)
   }
+
+  fileprivate func pushFilterViewController() {
+    guard let facet = viewModel.facet else {
+      return
+    }
+
+    let searchFiltersViewController = Storyboard.Misc.instantiate(SearchFiltersViewController.self)
+    searchFiltersViewController.viewModel.initialize(with: facet, and: viewModel.filter)
+    searchFiltersViewController.delegate = self
+    self.navigationController?.pushViewController(searchFiltersViewController, animated: true)
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .Search,
+                                                 action: .GoToFilters)
+    Analytics.shared.send(event: event)
+  }
 }
 
 extension SearchViewController: Themeable {
@@ -181,10 +205,11 @@ extension SearchViewController: ASCollectionDataSource {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    if section == Section.activityIndicator.rawValue {
+    if section == Section.filter.rawValue {
+      return shouldDisplayFilter ? 1 : 0
+    } else if section == Section.activityIndicator.rawValue {
       return shouldShowLoader ? 1 : 0
-    }
-    else if section == Section.misfortune.rawValue {
+    } else if section == Section.misfortune.rawValue {
       return shouldDisplayMisfortuneNode ? 1 : 0
     } else {
       return viewModel.numberOfItemsInSection(section: section)
@@ -195,7 +220,10 @@ extension SearchViewController: ASCollectionDataSource {
     let indexPath = indexPath
 
     return {
-      if indexPath.section == Section.activityIndicator.rawValue {
+
+      if indexPath.section == Section.filter.rawValue {
+        return self.filterNode
+      } else if indexPath.section == Section.activityIndicator.rawValue {
         //Return the activity indicator
         return self.loaderNode
       } else if indexPath.section == Section.misfortune.rawValue {
@@ -371,6 +399,12 @@ extension SearchViewController: BaseCardPostNodeDelegate {
 
 extension SearchViewController: ASCollectionDelegate {
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+
+    if indexPath.section == Section.filter.rawValue {
+      pushFilterViewController()
+      return
+    }
+
     let resource = viewModel.resourceForIndex(indexPath: indexPath)
     actionForCard(resource: resource)
   }
@@ -427,7 +461,7 @@ extension SearchViewController: ASCollectionDelegate {
         let updateIndexRange = initialLastIndexPath..<finalLastIndexPath
 
         updatedIndexPathRange = updateIndexRange.flatMap({ (index) -> IndexPath in
-          return IndexPath(row: index, section: 0)
+          return IndexPath(row: index, section: Section.cards.rawValue)
         })
       }
     }
@@ -455,6 +489,7 @@ extension SearchViewController {
       collectionNode.performBatchUpdates({
         // Always relaod misfortune section
         collectionNode.reloadSections(IndexSet(integer: Section.misfortune.rawValue))
+        collectionNode.reloadSections(IndexSet(integer: Section.filter.rawValue))
 
         if loaderSection {
           collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
@@ -473,6 +508,15 @@ extension SearchViewController {
   }
 }
 
+//MARK: - SearchFiltersViewControllerDelegate implementation
+extension SearchViewController: SearchFiltersViewControllerDelegate {
+  func searchFilter(viewController: SearchFiltersViewController, didSelect filter: Filter) {
+    _ = viewController.navigationController?.popViewController(animated: true)
+    viewModel.filter = filter
+    searchAction()
+  }
+}
+
 extension SearchViewController: UISearchBarDelegate {
   public func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
     return true
@@ -483,20 +527,28 @@ extension SearchViewController: UISearchBarDelegate {
   }
 
   public func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-    searchBar.showsCancelButton = false
-    searchBar.endEditing(true)
+    searchBar.showsCancelButton = false    
     return true
   }
 
   public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-    searchBar.endEditing(true)
-    searchAction(query: searchBar.text)
+    /* Discussion:
+     * Reset the filters when the query is new
+     */
+    if viewModel.filter.query != searchBar.text {
+      viewModel.filter.query = searchBar.text
+      viewModel.filter.categories.removeAll()
+      viewModel.filter.languages.removeAll()
+      viewModel.filter.types.removeAll()
+    }
+    searchAction()
+    searchBar.resignFirstResponder()
   }
 
   public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-    searchBar.text = nil
+    searchBar.text = viewModel.filter.query
     searchBar.showsCancelButton = false
-    searchBar.endEditing(true)
+    searchBar.resignFirstResponder()
   }
 }
 // MARK: - Actions For Cards
@@ -690,12 +742,13 @@ extension SearchViewController {
 // MARK: - Declarations
 extension SearchViewController {
   enum Section: Int {
-    case cards = 0
+    case filter = 0
+    case cards = 1
     case activityIndicator
     case misfortune
 
     static var numberOfSections: Int {
-      return 3
+      return 4
     }
   }
 }
@@ -725,7 +778,7 @@ extension SearchViewController: MisfortuneNodeDelegate {
     
     switch action {
     case .tryAgain:
-      searchAction(query: searchBar?.text)
+      searchAction()
     case .settings:
       AppDelegate.openSettings()
     default:

@@ -40,11 +40,19 @@ class Strings {
   static func already_have_an_account() -> String {
     return localizedString(key: "already_have_an_account")
   }
-  
+
+  static func apply() -> String {
+    return localizedString(key: "apply")
+  }
+
   static func article() -> String {
     return localizedString(key: "article")
   }
-  
+
+  static func audio() -> String {
+    return localizedString(key: "audio")
+  }
+
   static func author() -> String {
     return localizedString(key: "author")
   }
@@ -125,6 +133,10 @@ class Strings {
     return localizedString(key: "choose_pen_name")
   }
   
+  static func clear_all() -> String {
+    return localizedString(key: "clear_all")
+  }
+
   static func clear_profile_photo() -> String {
     return localizedString(key: "clear_profile_photo")
   }
@@ -268,7 +280,15 @@ class Strings {
   static func fail_to_refresh_token_alert_title() -> String {
     return localizedString(key: "fail_to_refresh_token_alert_title")
   }
-  
+
+  static func filter() -> String {
+    return localizedString(key: "filter")
+  }
+
+  static func filters() -> String {
+    return localizedString(key: "filters")
+  }
+
   static func first_name() -> String {
     return localizedString(key: "first_name")
   }
@@ -364,7 +384,11 @@ class Strings {
   static func language() -> String {
     return localizedString(key: "language")
   }
-  
+
+  static func languages() -> String {
+    return localizedString(key: "languages")
+  }
+
   static func language_of_text() -> String {
     return localizedString(key: "language_of_text")
   }
@@ -716,11 +740,19 @@ class Strings {
   static func tutorial_third_page_title() -> String {
     return localizedString(key: "tutorial_third_page_title")
   }
-  
+
+  static func types() -> String {
+    return localizedString(key: "types")
+  }
+
   static func update_now() -> String {
     return localizedString(key: "update_now")
   }
-  
+
+  static func user() -> String {
+    return localizedString(key: "user")
+  }
+
   static func user_not_signed_in_alert_message() -> String {
     return localizedString(key: "user_not_signed_in_alert_message")
   }

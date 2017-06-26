@@ -22,6 +22,7 @@
 		562A31201E659919002851DE /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562A311F1E659919002851DE /* Strings.swift */; };
 		562A31231E65D7F2002851DE /* TopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562A31221E65D7F2002851DE /* TopicViewController.swift */; };
 		562A31261E65E214002851DE /* TopicHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562A31251E65E214002851DE /* TopicHeaderNode.swift */; };
+		562A996C1ED8683000382ADD /* FilterCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562A996B1ED8683000382ADD /* FilterCellNode.swift */; };
 		56320C871EA748FB00642934 /* ArticleCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C7A1EA748FB00642934 /* ArticleCardPostCellNode.swift */; };
 		56320C881EA748FB00642934 /* BaseCardPostNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C7B1EA748FB00642934 /* BaseCardPostNode.swift */; };
 		56320C891EA748FB00642934 /* BookCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C7C1EA748FB00642934 /* BookCardPostCellNode.swift */; };
@@ -34,6 +35,8 @@
 		56320C901EA748FB00642934 /* ReadingListCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C841EA748FB00642934 /* ReadingListCardPostCellNode.swift */; };
 		56320C911EA748FB00642934 /* TopicCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C851EA748FB00642934 /* TopicCardPostCellNode.swift */; };
 		56320C921EA748FB00642934 /* VideoCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56320C861EA748FB00642934 /* VideoCardPostCellNode.swift */; };
+		563482BB1ED59F2B005428BF /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563482BA1ED59F2B005428BF /* Filter.swift */; };
+		563482BD1ED5BD61005428BF /* Facet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563482BC1ED5BD61005428BF /* Facet.swift */; };
 		56399DBC1E51CF2D005192AC /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56399DBB1E51CF2D005192AC /* Account.storyboard */; };
 		56399DBF1E51D006005192AC /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56399DBE1E51D006005192AC /* AccountViewController.swift */; };
 		56399DC21E51D0F0005192AC /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56399DC11E51D0F0005192AC /* AccountViewModel.swift */; };
@@ -53,6 +56,12 @@
 		56620FCC1E8954CA00BD92BB /* UploadPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56620FCB1E8954CA00BD92BB /* UploadPolicy.swift */; };
 		566EE82D1E5D7082004B990D /* Search+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EE82C1E5D7082004B990D /* Search+API.swift */; };
 		566EE87B1E5DC677004B990D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 566EE8781E5DC677004B990D /* Localizable.strings */; };
+		567B3C021ED42ECF00E02E16 /* Misc.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 567B3C011ED42ECF00E02E16 /* Misc.storyboard */; };
+		567B3C041ED4310600E02E16 /* SearchFiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567B3C031ED4310600E02E16 /* SearchFiltersViewController.swift */; };
+		567B3C061ED4330F00E02E16 /* SearchFiltersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567B3C051ED4330F00E02E16 /* SearchFiltersViewModel.swift */; };
+		567B3C091ED4740A00E02E16 /* SearchFilterTableViewSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 567B3C081ED4740A00E02E16 /* SearchFilterTableViewSectionHeaderView.xib */; };
+		567B3C0B1ED4743A00E02E16 /* SearchFilterTableViewSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567B3C0A1ED4743A00E02E16 /* SearchFilterTableViewSectionHeaderView.swift */; };
+		567B3C111ED4886F00E02E16 /* CheckmarkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567B3C101ED4886F00E02E16 /* CheckmarkTableViewCell.swift */; };
 		567EE1B11E7A9F1200A0CA0D /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567EE1B01E7A9F1200A0CA0D /* ForgotPasswordViewController.swift */; };
 		56929CE61E671BE700B3D00A /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56929CE51E671BE700B3D00A /* SegmentedControl.swift */; };
 		56A623B61EA0C02D00D930A7 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A623B51EA0C02D00D930A7 /* DataManager.swift */; };
@@ -286,6 +295,7 @@
 		562A311F1E659919002851DE /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		562A31221E65D7F2002851DE /* TopicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicViewController.swift; sourceTree = "<group>"; };
 		562A31251E65E214002851DE /* TopicHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicHeaderNode.swift; sourceTree = "<group>"; };
+		562A996B1ED8683000382ADD /* FilterCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCellNode.swift; sourceTree = "<group>"; };
 		56320C7A1EA748FB00642934 /* ArticleCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArticleCardPostCellNode.swift; path = Cards/ArticleCardPostCellNode.swift; sourceTree = "<group>"; };
 		56320C7B1EA748FB00642934 /* BaseCardPostNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseCardPostNode.swift; path = Cards/BaseCardPostNode.swift; sourceTree = "<group>"; };
 		56320C7C1EA748FB00642934 /* BookCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BookCardPostCellNode.swift; path = Cards/BookCardPostCellNode.swift; sourceTree = "<group>"; };
@@ -298,6 +308,8 @@
 		56320C841EA748FB00642934 /* ReadingListCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReadingListCardPostCellNode.swift; path = Cards/ReadingListCardPostCellNode.swift; sourceTree = "<group>"; };
 		56320C851EA748FB00642934 /* TopicCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopicCardPostCellNode.swift; path = Cards/TopicCardPostCellNode.swift; sourceTree = "<group>"; };
 		56320C861EA748FB00642934 /* VideoCardPostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoCardPostCellNode.swift; path = Cards/VideoCardPostCellNode.swift; sourceTree = "<group>"; };
+		563482BA1ED59F2B005428BF /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		563482BC1ED5BD61005428BF /* Facet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Facet.swift; sourceTree = "<group>"; };
 		56399DBB1E51CF2D005192AC /* Account.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Account.storyboard; sourceTree = "<group>"; };
 		56399DBE1E51D006005192AC /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		56399DC11E51D0F0005192AC /* AccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
@@ -319,6 +331,12 @@
 		566EE82C1E5D7082004B990D /* Search+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Search+API.swift"; sourceTree = "<group>"; };
 		566EE8791E5DC677004B990D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		566EE87A1E5DC677004B990D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		567B3C011ED42ECF00E02E16 /* Misc.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Misc.storyboard; sourceTree = "<group>"; };
+		567B3C031ED4310600E02E16 /* SearchFiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFiltersViewController.swift; sourceTree = "<group>"; };
+		567B3C051ED4330F00E02E16 /* SearchFiltersViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFiltersViewModel.swift; sourceTree = "<group>"; };
+		567B3C081ED4740A00E02E16 /* SearchFilterTableViewSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchFilterTableViewSectionHeaderView.xib; sourceTree = "<group>"; };
+		567B3C0A1ED4743A00E02E16 /* SearchFilterTableViewSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFilterTableViewSectionHeaderView.swift; sourceTree = "<group>"; };
+		567B3C101ED4886F00E02E16 /* CheckmarkTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckmarkTableViewCell.swift; sourceTree = "<group>"; };
 		567EE1B01E7A9F1200A0CA0D /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		56929CE51E671BE700B3D00A /* SegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		56A623B51EA0C02D00D930A7 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -668,6 +686,23 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
+		567B3C071ED473F400E02E16 /* FilterSectionHeader */ = {
+			isa = PBXGroup;
+			children = (
+				567B3C081ED4740A00E02E16 /* SearchFilterTableViewSectionHeaderView.xib */,
+				567B3C0A1ED4743A00E02E16 /* SearchFilterTableViewSectionHeaderView.swift */,
+			);
+			path = FilterSectionHeader;
+			sourceTree = "<group>";
+		};
+		567B3C0F1ED4886F00E02E16 /* CheckmarkTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				567B3C101ED4886F00E02E16 /* CheckmarkTableViewCell.swift */,
+			);
+			path = CheckmarkTableViewCell;
+			sourceTree = "<group>";
+		};
 		56929CE41E671BD000B3D00A /* Segmented */ = {
 			isa = PBXGroup;
 			children = (
@@ -773,6 +808,8 @@
 				59D106CF1E804D2100BB9695 /* AppMeta.swift */,
 				59CBE4F71E8090280068C7AD /* AppError.swift */,
 				56620FCB1E8954CA00BD92BB /* UploadPolicy.swift */,
+				563482BA1ED59F2B005428BF /* Filter.swift */,
+				563482BC1ED5BD61005428BF /* Facet.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -823,6 +860,7 @@
 				594290021E4F737B0006B2F1 /* Books.storyboard */,
 				59DA47561E3A65A600BA90A5 /* Storyboard.swift */,
 				56399DBB1E51CF2D005192AC /* Account.storyboard */,
+				567B3C011ED42ECF00E02E16 /* Misc.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -877,6 +915,7 @@
 				596562E31E79EF9E00B93920 /* MisfortuneNode.swift */,
 				5988FCFB1EA4AC100045F82B /* TTTAttributedLabelNode.swift */,
 				59CF3F811ECF3332002A5821 /* IntroductoryBanner.swift */,
+				562A996B1ED8683000382ADD /* FilterCellNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -884,6 +923,8 @@
 		59057FDA1E2533010036AAF3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				567B3C0F1ED4886F00E02E16 /* CheckmarkTableViewCell */,
+				567B3C071ED473F400E02E16 /* FilterSectionHeader */,
 				56929CE41E671BD000B3D00A /* Segmented */,
 				56205DE81E5324BC000CA4D7 /* TableViewSectionHeader */,
 				5942901D1E5316380006B2F1 /* FeaturedContentCollectionViewCell */,
@@ -1043,6 +1084,7 @@
 			children = (
 				59871F1C1E78AF19000A86CD /* PostsViewModel.swift */,
 				F400CDC71E7AF62600B7EF26 /* SearchViewModel.swift */,
+				567B3C051ED4330F00E02E16 /* SearchFiltersViewModel.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -1246,6 +1288,7 @@
 				591E15571E70FE37008CA78A /* GenericNodeViewController.swift */,
 				F400CDC51E7AD48D00B7EF26 /* SearchViewController.swift */,
 				59871F191E78ADFB000A86CD /* PostsViewController.swift */,
+				567B3C031ED4310600E02E16 /* SearchFiltersViewController.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -1429,6 +1472,7 @@
 				5967E4581E4107EF0067093F /* NotificationView.xib in Resources */,
 				597B8E371E3954B200C7811B /* Ubuntu-Medium.ttf in Resources */,
 				5942902E1E53BF2D0006B2F1 /* SectionTitleHeaderView.xib in Resources */,
+				567B3C021ED42ECF00E02E16 /* Misc.storyboard in Resources */,
 				59B65FD31E251FE80093FF44 /* Assets.xcassets in Resources */,
 				597B8E381E3954B200C7811B /* Ubuntu-Regular.ttf in Resources */,
 				59D8FCB91E4CBF70001C1EDB /* Categories.en.json in Resources */,
@@ -1442,6 +1486,7 @@
 				566EE87B1E5DC677004B990D /* Localizable.strings in Resources */,
 				59DBA6631E731C640049B427 /* Categories.fr.json in Resources */,
 				563C1EA71E93D14600675B42 /* Localizable.stringsdict in Resources */,
+				567B3C091ED4740A00E02E16 /* SearchFilterTableViewSectionHeaderView.xib in Resources */,
 				597B8E391E3954B200C7811B /* Volkhov-Regular.ttf in Resources */,
 				56399DBC1E51CF2D005192AC /* Account.storyboard in Resources */,
 				59A164CB1E561BBD00088D84 /* LaunchScreen.xib in Resources */,
@@ -1584,6 +1629,7 @@
 				F42600891E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift in Sources */,
 				566EE82D1E5D7082004B990D /* Search+API.swift in Sources */,
 				59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */,
+				567B3C111ED4886F00E02E16 /* CheckmarkTableViewCell.swift in Sources */,
 				56535F351E7CB9ED0045E73D /* Thumbnail.swift in Sources */,
 				F43996851E76C76700FE9D8B /* PostsListViewController.swift in Sources */,
 				562A31201E659919002851DE /* Strings.swift in Sources */,
@@ -1640,11 +1686,13 @@
 				56929CE61E671BE700B3D00A /* SegmentedControl.swift in Sources */,
 				594B9F6F1E55F557007C49E1 /* RootTabBarViewModel.swift in Sources */,
 				59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */,
+				562A996C1ED8683000382ADD /* FilterCellNode.swift in Sources */,
 				F4CDDD371E60263800474CAA /* RotatingImageNode.swift in Sources */,
 				59CF44031E66E01A006C16FC /* BookDetailsViewController.swift in Sources */,
 				56320C8C1EA748FB00642934 /* LinkCardPostCellNode.swift in Sources */,
 				59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */,
 				59DA475E1E3B7A8F00BA90A5 /* TutorialViewModel.swift in Sources */,
+				563482BB1ED59F2B005428BF /* Filter.swift in Sources */,
 				56320C8A1EA748FB00642934 /* CardActionBarNode.swift in Sources */,
 				F496DE081E65DECB007E22B1 /* Paginator.swift in Sources */,
 				59CF44011E663C35006C16FC /* General+API.swift in Sources */,
@@ -1653,6 +1701,7 @@
 				56320C8E1EA748FB00642934 /* ProfileCardPostCellNode.swift in Sources */,
 				597B8E2D1E37F6BC00C7811B /* Image+Utils.swift in Sources */,
 				59CF764A1E5CB010003EAB6B /* BooksTableViewController.swift in Sources */,
+				567B3C061ED4330F00E02E16 /* SearchFiltersViewModel.swift in Sources */,
 				F434F7911E4E16CE001812BD /* CellNode.swift in Sources */,
 				56320C911EA748FB00642934 /* TopicCardPostCellNode.swift in Sources */,
 				56A623B61EA0C02D00D930A7 /* DataManager.swift in Sources */,
@@ -1710,6 +1759,7 @@
 				F42041C31E72E84C00E7D208 /* PostDetailsViewModel.swift in Sources */,
 				594290061E4FEEC10006B2F1 /* CategoriesTableViewController.swift in Sources */,
 				F40700521E55F55A00DA48A4 /* Image.swift in Sources */,
+				563482BD1ED5BD61005428BF /* Facet.swift in Sources */,
 				F4A4262B1E5617A30090CD51 /* PageAuthor.swift in Sources */,
 				F40700501E55992000DA48A4 /* ReadingListBooksNode.swift in Sources */,
 				F4737D3F1EA0FE240065617D /* ModelCommonActions.swift in Sources */,
@@ -1732,11 +1782,13 @@
 				56D5F73D1E5B7D0000F6A164 /* PenName+API.swift in Sources */,
 				F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */,
 				59591F1B1E6D7E7A005592B8 /* DisclosureNode.swift in Sources */,
+				567B3C041ED4310600E02E16 /* SearchFiltersViewController.swift in Sources */,
 				F488D2791E44EB46003A7BD4 /* PenName.swift in Sources */,
 				59DBA6651E732D3F0049B427 /* Models+Utilities.swift in Sources */,
 				595A64A01E2D0C4D00655067 /* Network.swift in Sources */,
 				F46F3F971EC5A39D002C9718 /* DiscoverNode.swift in Sources */,
 				F4CBAFA21E8044FF00FD1AFB /* MediaModel.swift in Sources */,
+				567B3C0B1ED4743A00E02E16 /* SearchFilterTableViewSectionHeaderView.swift in Sources */,
 				5929C2771E5B89E5006E08F8 /* CustomAttributes.swift in Sources */,
 				F478D92C1E7C26BA00B9EF18 /* ProfileDetailsViewController.swift in Sources */,
 				F43996871E770EB100FE9D8B /* PostsListViewModel.swift in Sources */,
