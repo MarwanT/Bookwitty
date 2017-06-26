@@ -9,6 +9,8 @@
 import UIKit
 
 class ProductFormatsViewController: UIViewController {
+  fileprivate var viewModel = ProductFormatsViewModel()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
