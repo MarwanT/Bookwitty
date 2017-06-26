@@ -19,5 +19,23 @@ class ProductFormatsViewController: UIViewController {
     // Do any additional setup after loading the view.
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.ProductFormats)
+    
+    tableView.delegate = self
+    tableView.dataSource = self
+  }
+}
+
+// MARK: Table View Delegates
+extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelegate {
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return 0
+  }
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return 0
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    return UITableViewCell()
   }
 }
