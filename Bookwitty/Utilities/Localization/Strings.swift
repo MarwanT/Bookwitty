@@ -469,6 +469,10 @@ class Strings {
     return localizedString(key: "news")
   }
   
+  static func newsletter() -> String {
+    return localizedString(key: "newsletter")
+  }
+
   static func no_internet_error_description() -> String {
     return localizedString(key: "no_internet_error_description")
   }

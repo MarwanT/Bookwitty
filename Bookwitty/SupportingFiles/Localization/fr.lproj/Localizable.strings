@@ -121,6 +121,7 @@
 "new_version_available_description" = "Une nouvelle version de l'application Bookwitty est disponible. Téléchargez-la dès maintenant dans l'App Store.";
 "new_version_available_title" = "Mise à jour disponible";
 "news" = "Actualités";
+"newsletter" = "Newsletter";
 "no_internet_error_description" = "Vous n'êtes pas connecté à Internet";
 "no_internet_error_title" = "Pas d'Internet";
 "no_results_found_description" = "Nous n'avons pas trouvé de résultats pour votre recherche. Veuillez vérifier l'orthographe ou faites une nouvelle recherche.";

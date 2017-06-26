@@ -121,6 +121,7 @@
 "new_version_available_description" = "There is a newer version available for download! Please update the app by visiting the Apple Store.";
 "new_version_available_title" = "New version available";
 "news" = "News";
+"newsletter" = "Newsletter";
 "no_internet_error_description" = "Your internet connection appears\nto be offline.";
 "no_internet_error_title" = "No Internet!";
 "no_results_found_description" = "We can't find what you were\nlooking for. Check the spelling or try a different search.";
