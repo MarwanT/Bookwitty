@@ -49,4 +49,9 @@ extension ProductFormatsViewModel {
 extension ProductFormatsViewModel {
   typealias PreferredFormatValues = (id: String, form: ProductForm, price: Price?, isSelected: Bool)
   typealias AvailableFormatValues = (form: ProductForm, numberOfEditions: Int)
+  
+  enum ProductFormatsError {
+    case api(BookwittyAPIError?)
+    case unidentified
+  }
 }
