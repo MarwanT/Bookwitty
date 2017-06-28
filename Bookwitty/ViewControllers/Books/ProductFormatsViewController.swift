@@ -23,6 +23,10 @@ class ProductFormatsViewController: UIViewController {
     tableView.delegate = self
     tableView.dataSource = self
   }
+  
+  func initialize(with book: Book) {
+    self.viewModel.initialize(with: book)
+  }
 }
 
 // MARK: Declare Section
