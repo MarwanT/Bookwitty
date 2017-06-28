@@ -27,6 +27,12 @@ class Link: Resource {
   private var topVotesCollection: LinkedResourceCollection?
   lazy var topVotes: [Vote]? = {
     return self.topVotesCollection?.resources as? [Vote]
+  }()    
+
+  @objc
+  private var topCommentsCollection: LinkedResourceCollection?
+  lazy var topComments: [Comment]? = {
+    return self.topCommentsCollection?.resources as? [Comment]
   }()
 
   override class var resourceType: ResourceType {
@@ -47,7 +53,8 @@ class Link: Resource {
       "type": Attribute().serializeAs("type"),
       "counts" : CountsAttribute().serializeAs("counts"),
       "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name"),
-      "topVotesCollection" : ToManyRelationship(PenName.self).serializeAs("top-votes")
+      "topVotesCollection" : ToManyRelationship(PenName.self).serializeAs("top-votes"),
+      "topCommentsCollection" : ToManyRelationship(Comment.self).serializeAs("top-comments")
       ])
   }
 }
