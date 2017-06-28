@@ -25,6 +25,19 @@ class ProductFormatsViewController: UIViewController {
   }
 }
 
+// MARK: Declare Section
+extension ProductFormatsViewController {
+  enum Section: Int {
+    case preferredFormats = 0
+    case availableFormats
+    case activityIndicator
+    
+    static var numberOfSections: Int {
+      return 3
+    }
+  }
+}
+
 // MARK: Table View Delegates
 extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelegate {
   func numberOfSections(in tableView: UITableView) -> Int {
