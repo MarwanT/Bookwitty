@@ -22,6 +22,29 @@ final class ProductFormatsViewModel {
   func initialize(with currentBook: Book) {
     self.currentBook = currentBook
   }
+  
+  fileprivate func values(books: [Book]) -> [PreferredFormatValues] {
+    let validatedBooks = validateAndTrimPreferredBooks(books: books)
+    
+    var valuesArray = [PreferredFormatValues]()
+    validatedBooks.forEach { (book) in
+      guard let id = book.id, let productForm = book.productDetails?.productForm else {
+        return
+      }
+      valuesArray.append((id, productForm, book.preferredPrice, id == currentBook?.id))
+    }
+    return valuesArray
+  }
+  
+  fileprivate func validateAndTrimPreferredBooks(books: [Book]) -> [Book] {
+    let maxIndex = min(maximumNumberOfPreferredFormats, books.count)
+    var pickedBooks = Array(books[0..<maxIndex])
+    if let currentBook = currentBook, !pickedBooks.contains(currentBook) {
+      pickedBooks.removeLast()
+      pickedBooks.insert(currentBook, at: 0)
+    }
+    return pickedBooks
+  }
 }
 
 extension ProductFormatsViewModel {
@@ -42,6 +65,9 @@ extension ProductFormatsViewModel {
       guard success, let books = books, let metadata = metadata else {
         return
       }
+      
+      // Set preferred formats
+      self.preferredFormats = self.values(books: books)
     })
   }
 }
