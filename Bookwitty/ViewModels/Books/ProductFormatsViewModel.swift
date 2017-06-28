@@ -14,6 +14,8 @@ final class ProductFormatsViewModel {
   fileprivate var availableFormats: [AvailableFormatValues] = []
   fileprivate var totalNumberOfEditions: Int = 0
   
+  fileprivate let maximumNumberOfPreferredFormats = 5
+  
   func initialize(with currentBook: Book) {
     self.currentBook = currentBook
   }
