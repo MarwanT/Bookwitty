@@ -15,6 +15,8 @@ final class ProductFormatsViewModel {
   fileprivate var availableFormats: [AvailableFormatValues] = []
   fileprivate var totalNumberOfEditions: Int = 0
   
+  var isListOfAvailableFormatsExpanded: Bool = false
+  
   fileprivate var request: Cancellable? = nil
   
   fileprivate let maximumNumberOfPreferredFormats = 5
