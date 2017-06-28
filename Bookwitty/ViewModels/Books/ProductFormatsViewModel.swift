@@ -11,3 +11,7 @@ import Foundation
 final class ProductFormatsViewModel {
   
 }
+
+extension ProductFormatsViewModel {
+  typealias PreferredFormatValues = (id: String, form: ProductForm, price: Price?, isSelected: Bool)
+}
