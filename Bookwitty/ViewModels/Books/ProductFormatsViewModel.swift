@@ -14,6 +14,9 @@ final class ProductFormatsViewModel {
   fileprivate var availableFormats: [AvailableFormatValues] = []
   fileprivate var totalNumberOfEditions: Int = 0
   
+  func initialize(with currentBook: Book) {
+    self.currentBook = currentBook
+  }
 }
 
 extension ProductFormatsViewModel {
