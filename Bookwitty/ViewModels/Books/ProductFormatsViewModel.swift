@@ -10,6 +10,7 @@ import Foundation
 
 final class ProductFormatsViewModel {
   fileprivate var preferredFormats: [PreferredFormatValues] = []
+  fileprivate var availableFormats: [AvailableFormatValues] = []
   
 }
 
