@@ -36,6 +36,17 @@ final class ProductFormatsViewModel {
     return valuesArray
   }
   
+  fileprivate func values(numberOfEditionsPerFormat: [String: Int]) -> [AvailableFormatValues] {
+    var valuesArray = [AvailableFormatValues]()
+    numberOfEditionsPerFormat.forEach { (key, value) in
+      guard let productForm = BookFormatMapper.shared.productForm(for: key) else {
+        return
+      }
+      valuesArray.append((productForm, value))
+    }
+    return valuesArray
+  }
+  
   fileprivate func validateAndTrimPreferredBooks(books: [Book]) -> [Book] {
     let maxIndex = min(maximumNumberOfPreferredFormats, books.count)
     var pickedBooks = Array(books[0..<maxIndex])
@@ -68,6 +79,9 @@ extension ProductFormatsViewModel {
       
       // Set preferred formats
       self.preferredFormats = self.values(books: books)
+      
+      // Set available formats
+      self.availableFormats = self.values(numberOfEditionsPerFormat: metadata.numberOfEditionsPerFormat)
     })
   }
 }
