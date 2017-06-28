@@ -9,6 +9,7 @@
 import Foundation
 
 final class ProductFormatsViewModel {
+  fileprivate var currentBook: Book? = nil
   fileprivate var preferredFormats: [PreferredFormatValues] = []
   fileprivate var availableFormats: [AvailableFormatValues] = []
   fileprivate var totalNumberOfEditions: Int = 0
