@@ -25,6 +25,25 @@ final class ProductFormatsViewModel {
     self.currentBook = currentBook
   }
   
+  var numberOfSections: Int {
+    return ProductFormatsViewController.Section.numberOfSections
+  }
+  
+  func numberOfRows(in section: Int) -> Int {
+    guard let section = ProductFormatsViewController.Section(rawValue: section) else {
+      return 0
+    }
+    
+    switch section {
+    case .preferredFormats:
+      return preferredFormats.count
+    case .availableFormats:
+      return isListOfAvailableFormatsExpanded ? availableFormats.count : 0
+    case .activityIndicator:
+      return 0
+    }
+  }
+  
   fileprivate func values(books: [Book]) -> [PreferredFormatValues] {
     let validatedBooks = validateAndTrimPreferredBooks(books: books)
     
