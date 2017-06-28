@@ -82,6 +82,9 @@ extension ProductFormatsViewModel {
       
       // Set available formats
       self.availableFormats = self.values(numberOfEditionsPerFormat: metadata.numberOfEditionsPerFormat)
+      
+      // Set the number of editions
+      self.totalNumberOfEditions = metadata.totalEditions
     })
   }
 }
