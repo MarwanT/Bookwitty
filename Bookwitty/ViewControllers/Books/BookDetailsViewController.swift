@@ -204,7 +204,7 @@ extension BookDetailsViewController {
     switch action {
     case .viewImageFullScreen:
       break
-    case .viewFormat:
+    case .viewFormat(let book):
       break
     case .viewCategory(let category):
       viewCategory(category)
@@ -367,7 +367,7 @@ extension BookDetailsViewController: BookDetailsECommerceNodeDelegate {
 extension BookDetailsViewController {  
   enum Action {
     case viewImageFullScreen
-    case viewFormat
+    case viewFormat(Book)
     case viewDetails(ProductDetails)
     case viewCategory(Category)
     case viewDescription(String)
