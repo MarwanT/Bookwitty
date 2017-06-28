@@ -384,6 +384,8 @@ extension BookDetailsViewModel {
     }
     
     switch section {
+    case .format:
+      return true
     case .details:
       guard let bookDetailedInformation = bookDetailedInformation else {
         return false
@@ -441,6 +443,8 @@ extension BookDetailsViewModel {
     }
     
     switch section {
+    case .format:
+      return .viewFormat(book)
     case .details:
       guard let bookDetailedInformation = bookDetailedInformation else {
         return nil
