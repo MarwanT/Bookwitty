@@ -10,6 +10,7 @@ import UIKit
 
 class PreferredFormatTableViewCell: UITableViewCell {
   static let reuseIdentifier = "PreferredFormatTableViewCell"
+  static let nib: UINib = UINib(nibName: "PreferredFormatTableViewCell", bundle: nil)
   
   @IBOutlet weak var primaryLabel: UILabel!
   @IBOutlet weak var secondaryLabel: UILabel!
