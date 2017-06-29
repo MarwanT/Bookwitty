@@ -24,6 +24,17 @@ class CommentCompactNode: ASCellNode {
   }
 
   fileprivate func setupNode() {
+    automaticallyManagesSubnodes = true
 
+    imageNode.style.preferredSize = CGSize(width: 30.0, height: 30.0)
+    imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0.0, nil)
+    imageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
+
+    messageNode.style.flexGrow = 1.0
+    messageNode.style.flexShrink = 1.0
+
+    self.style.preferredSize = CGSize(width: 45.0, height: 45.0)
+
+    messageNode.maxNumberOfLines = 3
   }
 }
