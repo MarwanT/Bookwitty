@@ -9,5 +9,6 @@
 import UIKit
 
 class UniColorSectionHeaderView: UITableViewHeaderFooterView {
+  static let reuseIdentifier = "UniColorSectionHeaderView"
   
 }
