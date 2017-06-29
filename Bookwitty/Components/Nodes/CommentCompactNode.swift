@@ -38,6 +38,33 @@ class CommentCompactNode: ASCellNode {
     messageNode.maxNumberOfLines = 3
   }
 
+  // MARK: Data Setters
+  var imageURL: URL?  {
+    didSet {
+      imageNode.url = imageURL
+      imageNode.setNeedsLayout()
+    }
+  }
+
+  func set(fullName: String?, message: String?) {
+    guard let fullName = fullName, let message = message else {
+      return
+    }
+
+    let fullNameAttributedString = AttributedStringBuilder(fontDynamicType: .footnote)
+      .append(text: fullName, color: ThemeManager.shared.currentTheme.defaultTextColor())
+      .append(text: ": ")
+      .attributedString
+
+    let commentAttributedString = messageNode.htmlAttributedString(text: message, fontDynamicType: .body, color: ThemeManager.shared.currentTheme.defaultTextColor())
+      ?? NSAttributedString(string: message)
+
+    let attributedString: NSMutableAttributedString = NSMutableAttributedString(attributedString: fullNameAttributedString)
+    attributedString.append(commentAttributedString)
+    messageNode.set(attributedString: attributedString)
+    messageNode.setNeedsLayout()
+  }
+
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let imageNodeInsetSpec = ASInsetLayoutSpec(insets: imageInset, child: imageNode)
     let horizontalSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start, alignItems: .center, children: [imageNodeInsetSpec, messageNode])
