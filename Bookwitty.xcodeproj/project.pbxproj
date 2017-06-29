@@ -218,6 +218,7 @@
 		59F0020C1F01230400D17883 /* ProductFormatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F0020B1F01230400D17883 /* ProductFormatsViewModel.swift */; };
 		59F002111F040B8A00D17883 /* PreferredFormatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59F002101F040B8A00D17883 /* PreferredFormatTableViewCell.xib */; };
 		59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */; };
+		59FBF8611F05993100E2CDB7 /* UniColorSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FBF8601F05993100E2CDB7 /* UniColorSectionHeaderView.swift */; };
 		B4ECA3471E4E05E7004B3EE2 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4ECA3461E4E05E7004B3EE2 /* WebViewController.swift */; };
 		F400CDC61E7AD48D00B7EF26 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400CDC51E7AD48D00B7EF26 /* SearchViewController.swift */; };
 		F400CDC81E7AF62600B7EF26 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400CDC71E7AF62600B7EF26 /* SearchViewModel.swift */; };
@@ -521,6 +522,7 @@
 		59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59FBBC5D1E1D074400FC84E5 /* BookwittyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BookwittyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FBBC631E1D074400FC84E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		59FBF8601F05993100E2CDB7 /* UniColorSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniColorSectionHeaderView.swift; sourceTree = "<group>"; };
 		61D0EE3946D28FF160292FF2 /* Pods-Bookwitty.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bookwitty.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bookwitty/Pods-Bookwitty.release.xcconfig"; sourceTree = "<group>"; };
 		818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BookwittyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4ECA3461E4E05E7004B3EE2 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -1007,6 +1009,7 @@
 				594290331E548FA10006B2F1 /* BookTableViewCell */,
 				594290261E5347670006B2F1 /* DisclosureView */,
 				5967E4561E4105020067093F /* NotificationView */,
+				59FBF85F1F05990400E2CDB7 /* UniColorSectionHeaderView */,
 				595C4F0C1E3F8C0200BE3942 /* InputField.swift */,
 				595C4F0E1E3F8C9200BE3942 /* PasswordInputField.swift */,
 				595C4F101E3F9DA400BE3942 /* InformativeInputField.swift */,
@@ -1371,6 +1374,14 @@
 				F420AD9C1E41D2E600C78AEB /* BookwittyUtilityTests.swift */,
 			);
 			path = BookwittyTests;
+			sourceTree = "<group>";
+		};
+		59FBF85F1F05990400E2CDB7 /* UniColorSectionHeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				59FBF8601F05993100E2CDB7 /* UniColorSectionHeaderView.swift */,
+			);
+			path = UniColorSectionHeaderView;
 			sourceTree = "<group>";
 		};
 		B4ECA3451E4E05E7004B3EE2 /* General */ = {
@@ -1806,6 +1817,7 @@
 				59CF44011E663C35006C16FC /* General+API.swift in Sources */,
 				F400CDC81E7AF62600B7EF26 /* SearchViewModel.swift in Sources */,
 				59DCFD7F1E96785B00C94D21 /* SupplierInformation.swift in Sources */,
+				59FBF8611F05993100E2CDB7 /* UniColorSectionHeaderView.swift in Sources */,
 				56320C8E1EA748FB00642934 /* ProfileCardPostCellNode.swift in Sources */,
 				597B8E2D1E37F6BC00C7811B /* Image+Utils.swift in Sources */,
 				59CF764A1E5CB010003EAB6B /* BooksTableViewController.swift in Sources */,
