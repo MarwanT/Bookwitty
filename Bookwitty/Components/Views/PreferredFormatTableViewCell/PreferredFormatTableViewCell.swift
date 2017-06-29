@@ -20,6 +20,7 @@ class PreferredFormatTableViewCell: UITableViewCell {
     super.awakeFromNib()
     // Initialization code
     initializeComponents()
+    applyTheme()
   }
   
   private func initializeComponents() {
@@ -27,4 +28,17 @@ class PreferredFormatTableViewCell: UITableViewCell {
     contentView.layoutMargins = UIEdgeInsets(top: 0.0, left: margin, bottom: 0.0, right: (margin-10))
   }
   
+  }
+}
+
+extension PreferredFormatTableViewCell: Themeable {
+  func applyTheme() {
+    let defaultTextColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    primaryLabel.font = FontDynamicType.caption1.font
+    primaryLabel.textColor = defaultTextColor
+    secondaryLabel.font = FontDynamicType.caption2.font
+    secondaryLabel.textColor = defaultTextColor
+    contentView.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+    backgroundColor = UIColor.clear
+  }
 }
