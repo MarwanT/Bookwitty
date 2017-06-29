@@ -165,7 +165,7 @@ extension PostDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
     return {
       let cell = RelatedBooksMinimalCellNode()
       cell.url = book?.thumbnailImageUrl
-      cell.price = (book?.productDetails?.isElectronicFormat() ?? false) ? nil : book?.supplierInformation?.preferredPrice?.formattedValue
+      cell.price = (book?.productDetails?.isElectronicFormat ?? false) ? nil : book?.supplierInformation?.preferredPrice?.formattedValue
       cell.subTitle = book?.productDetails?.author
       cell.title = book?.title
       return cell
@@ -513,7 +513,7 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
     case Book.resourceType:
       let res = resource as? Book
       let showEcommerceButton: Bool = (res?.supplierInformation != nil) &&
-        !(res?.productDetails?.isElectronicFormat() ?? false)
+        !(res?.productDetails?.isElectronicFormat ?? false)
 
       let itemNode = PostDetailItemNode(smallImage: false, showsSubheadline: false, showsButton: showEcommerceButton)
       itemNode.imageUrl = res?.thumbnailImageUrl

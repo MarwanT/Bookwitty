@@ -308,7 +308,7 @@ extension BookDetailsViewModel {
   
   var itemsInECommerce: Int {
     return (book.supplierInformation != nil &&
-      !(book.productDetails?.isElectronicFormat() ?? false)) ? 1 : 0
+      !(book.productDetails?.isElectronicFormat ?? false)) ? 1 : 0
   }
   
   var itemsInAbout: Int {
