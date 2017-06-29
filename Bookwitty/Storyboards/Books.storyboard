@@ -107,16 +107,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bGW-DI-C5o">
-                                <rect key="frame" x="16" y="0.0" width="343" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="bGW-DI-C5o" firstAttribute="leading" secondItem="UfK-OK-nnk" secondAttribute="leadingMargin" id="M4d-P5-Y6A"/>
+                            <constraint firstItem="bGW-DI-C5o" firstAttribute="leading" secondItem="UfK-OK-nnk" secondAttribute="leading" id="M4d-P5-Y6A"/>
                             <constraint firstAttribute="bottomMargin" secondItem="bGW-DI-C5o" secondAttribute="bottom" id="MMZ-fz-Xz2"/>
                             <constraint firstItem="bGW-DI-C5o" firstAttribute="top" secondItem="UfK-OK-nnk" secondAttribute="topMargin" id="quS-jt-w7Z"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="bGW-DI-C5o" secondAttribute="trailing" id="zNU-Wo-Hws"/>
+                            <constraint firstAttribute="trailing" secondItem="bGW-DI-C5o" secondAttribute="trailing" id="zNU-Wo-Hws"/>
                         </constraints>
                     </view>
                     <connections>
