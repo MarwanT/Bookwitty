@@ -134,6 +134,7 @@
 		595C4F0D1E3F8C0200BE3942 /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595C4F0C1E3F8C0200BE3942 /* InputField.swift */; };
 		595C4F0F1E3F8C9200BE3942 /* PasswordInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595C4F0E1E3F8C9200BE3942 /* PasswordInputField.swift */; };
 		595C4F111E3F9DA400BE3942 /* InformativeInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595C4F101E3F9DA400BE3942 /* InformativeInputField.swift */; };
+		595F21D71F057E7700DC4AFC /* PreferredFormatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595F21D61F057E7700DC4AFC /* PreferredFormatTableViewCell.swift */; };
 		596562E41E79EF9E00B93920 /* MisfortuneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596562E31E79EF9E00B93920 /* MisfortuneNode.swift */; };
 		5967E4581E4107EF0067093F /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5967E4571E4107EF0067093F /* NotificationView.xib */; };
 		5967E45A1E410A850067093F /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5967E4591E410A850067093F /* NotificationView.swift */; };
@@ -215,6 +216,7 @@
 		59EC5BAA1E6C5987006E1CB9 /* BookDetailsStockNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC5BA41E6C5987006E1CB9 /* BookDetailsStockNode.swift */; };
 		59EC5BAC1E6C5B51006E1CB9 /* SectionTitleHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EC5BAB1E6C5B51006E1CB9 /* SectionTitleHeaderNode.swift */; };
 		59F0020C1F01230400D17883 /* ProductFormatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F0020B1F01230400D17883 /* ProductFormatsViewModel.swift */; };
+		59F002111F040B8A00D17883 /* PreferredFormatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59F002101F040B8A00D17883 /* PreferredFormatTableViewCell.xib */; };
 		59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */; };
 		B4ECA3471E4E05E7004B3EE2 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4ECA3461E4E05E7004B3EE2 /* WebViewController.swift */; };
 		F400CDC61E7AD48D00B7EF26 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400CDC51E7AD48D00B7EF26 /* SearchViewController.swift */; };
@@ -431,6 +433,7 @@
 		595C4F0C1E3F8C0200BE3942 /* InputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
 		595C4F0E1E3F8C9200BE3942 /* PasswordInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordInputField.swift; sourceTree = "<group>"; };
 		595C4F101E3F9DA400BE3942 /* InformativeInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformativeInputField.swift; sourceTree = "<group>"; };
+		595F21D61F057E7700DC4AFC /* PreferredFormatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferredFormatTableViewCell.swift; sourceTree = "<group>"; };
 		596562E31E79EF9E00B93920 /* MisfortuneNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MisfortuneNode.swift; sourceTree = "<group>"; };
 		5967E4571E4107EF0067093F /* NotificationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationView.xib; sourceTree = "<group>"; };
 		5967E4591E410A850067093F /* NotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
@@ -513,6 +516,7 @@
 		59EC5BA41E6C5987006E1CB9 /* BookDetailsStockNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsStockNode.swift; sourceTree = "<group>"; };
 		59EC5BAB1E6C5B51006E1CB9 /* SectionTitleHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionTitleHeaderNode.swift; sourceTree = "<group>"; };
 		59F0020B1F01230400D17883 /* ProductFormatsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductFormatsViewModel.swift; sourceTree = "<group>"; };
+		59F002101F040B8A00D17883 /* PreferredFormatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferredFormatTableViewCell.xib; sourceTree = "<group>"; };
 		59FBBC491E1D074400FC84E5 /* Bookwitty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookwitty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FBBC4C1E1D074400FC84E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59FBBC5D1E1D074400FC84E5 /* BookwittyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BookwittyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -993,6 +997,7 @@
 			isa = PBXGroup;
 			children = (
 				567B3C0F1ED4886F00E02E16 /* CheckmarkTableViewCell */,
+				59F0020F1F040B5600D17883 /* PreferredFormatTableViewCell */,
 				567B3C071ED473F400E02E16 /* FilterSectionHeader */,
 				56929CE41E671BD000B3D00A /* Segmented */,
 				56205DE81E5324BC000CA4D7 /* TableViewSectionHeader */,
@@ -1307,6 +1312,15 @@
 			path = BookDetails;
 			sourceTree = "<group>";
 		};
+		59F0020F1F040B5600D17883 /* PreferredFormatTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				595F21D61F057E7700DC4AFC /* PreferredFormatTableViewCell.swift */,
+				59F002101F040B8A00D17883 /* PreferredFormatTableViewCell.xib */,
+			);
+			path = PreferredFormatTableViewCell;
+			sourceTree = "<group>";
+		};
 		59FBBC401E1D074400FC84E5 = {
 			isa = PBXGroup;
 			children = (
@@ -1556,6 +1570,7 @@
 				597B8E381E3954B200C7811B /* Ubuntu-Regular.ttf in Resources */,
 				59D8FCB91E4CBF70001C1EDB /* Categories.en.json in Resources */,
 				59139E041E895CDA002022F6 /* Volkhov-Bold.ttf in Resources */,
+				59F002111F040B8A00D17883 /* PreferredFormatTableViewCell.xib in Resources */,
 				59D8FCA31E4C760F001C1EDB /* GoogleService-Info.plist in Resources */,
 				59D8FCA61E4C76E7001C1EDB /* Info.plist in Resources */,
 				597B8E361E3954B200C7811B /* Georgia.ttf in Resources */,
@@ -1934,6 +1949,7 @@
 				59049B111E81E36000EDF796 /* Node+Util.swift in Sources */,
 				56F9FDCC1E82F39B00A48CEB /* UIBarButtonItem+Utils.swift in Sources */,
 				594290111E51B7C00006B2F1 /* DisclosureTableViewCell.swift in Sources */,
+				595F21D71F057E7700DC4AFC /* PreferredFormatTableViewCell.swift in Sources */,
 				F43A5E8E1E69858A008C018B /* OnBoardingInternalCellNode.swift in Sources */,
 				F49AF6B31E81E5B40045F604 /* CallToAction.swift in Sources */,
 				594F4EA61E42255200A947FA /* AccessToken.swift in Sources */,
