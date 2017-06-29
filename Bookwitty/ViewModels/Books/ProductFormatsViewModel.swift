@@ -104,11 +104,23 @@ final class ProductFormatsViewModel {
   }
   
   fileprivate func validateAndTrimPreferredBooks(books: [Book]) -> [Book] {
-    let maxIndex = min(maximumNumberOfPreferredFormats, books.count)
-    var pickedBooks = Array(books[0..<maxIndex])
-    if let currentBook = currentBook, !pickedBooks.contains(currentBook) {
-      pickedBooks.removeLast()
-      pickedBooks.insert(currentBook, at: 0)
+    var pickedBooks: [Book] = []
+    
+    // filter audio formats
+    pickedBooks = books.filter({ !($0.productDetails?.isElectronicFormat ?? false) })
+    
+    // Do not exceed maximum amount of preferred books
+    let maxIndex = min(maximumNumberOfPreferredFormats, pickedBooks.count)
+    pickedBooks = Array(pickedBooks[0..<maxIndex])
+    
+    // Make sure that the current book is among picked formats
+    if let currentBook = currentBook, !pickedBooks.contains(where: { $0.id == currentBook.id }) {
+      if let index = pickedBooks.index(where: {
+        $0.productDetails?.productForm?.key == currentBook.productDetails?.productForm?.key
+      }) {
+        pickedBooks.remove(at: index)
+        pickedBooks.insert(currentBook, at: 0)
+      }
     }
     return pickedBooks
   }
