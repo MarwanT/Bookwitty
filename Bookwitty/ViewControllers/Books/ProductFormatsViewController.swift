@@ -24,6 +24,8 @@ class ProductFormatsViewController: UIViewController {
     tableView.dataSource = self
     
     tableView.register(PreferredFormatTableViewCell.nib, forCellReuseIdentifier: PreferredFormatTableViewCell.reuseIdentifier)
+    tableView.register(UniColorSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: UniColorSectionHeaderView.reuseIdentifier)
+    
     tableView.separatorInset.left = ThemeManager.shared.currentTheme.generalExternalMargin()
     
     tableView.rowHeight = UITableViewAutomaticDimension
@@ -101,6 +103,40 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
       break
     case .activityIndicator:
       break
+    }
+  }
+  
+  
+  // Headers $ Footers
+  
+  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    guard let section = Section(rawValue: section) else {
+      return UITableViewCell()
+    }
+    
+    switch section {
+    case .preferredFormats:
+      guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: UniColorSectionHeaderView.reuseIdentifier) else {
+        return nil
+      }
+      headerView.textLabel?.text = Strings.choose_format()
+      return headerView
+    default:
+      return nil
+      
+    }
+  }
+  
+  func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    guard let section = Section(rawValue: section) else {
+      return 0
+    }
+    
+    switch section {
+    case .preferredFormats:
+      return 50
+    default:
+      return 0.0
     }
   }
   

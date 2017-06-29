@@ -137,6 +137,10 @@ class Strings {
     return localizedString(key: "change_password_success")
   }
   
+  static func choose_format() -> String {
+    return localizedString(key: "choose_format")
+  }
+  
   static func choose_from_library() -> String {
     return localizedString(key: "choose_from_library")
   }
