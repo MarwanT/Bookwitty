@@ -139,6 +139,10 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     actionBarNode.setWitButton(witted: witted)
   }
 
+  func setTopComment(comment: Comment?) {
+
+  }
+
   private func setupCellNode() {
     actionBarNode.delegate = self
     infoNode.delegate = self
