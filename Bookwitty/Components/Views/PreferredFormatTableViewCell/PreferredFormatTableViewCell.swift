@@ -15,4 +15,16 @@ class PreferredFormatTableViewCell: UITableViewCell {
   @IBOutlet weak var primaryLabel: UILabel!
   @IBOutlet weak var secondaryLabel: UILabel!
   @IBOutlet weak var checkmarkImageView: UIImageView!
+  
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    // Initialization code
+    initializeComponents()
+  }
+  
+  private func initializeComponents() {
+    let margin = ThemeManager.shared.currentTheme.generalExternalMargin()
+    contentView.layoutMargins = UIEdgeInsets(top: 0.0, left: margin, bottom: 0.0, right: (margin-10))
+  }
+  
 }
