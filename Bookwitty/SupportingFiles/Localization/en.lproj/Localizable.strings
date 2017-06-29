@@ -38,6 +38,7 @@
 "change_password" = "Change Password";
 "change_password_error" = "Could not change password";
 "change_password_success" = "Password changed successfully";
+"choose_format" = "Choose format";
 "choose_from_library" = "Choose photo from library";
 "clear_all" = "Clear All";
 "choose_pen_name" = "Choose a Pen Name";
