@@ -256,7 +256,7 @@ class DTAttributedLabelNode: ASCellNode {
                                                             color:  color)
   }
 
-  private func htmlAttributedString(text: String, fontDynamicType: FontDynamicType? = nil,
+  func htmlAttributedString(text: String, fontDynamicType: FontDynamicType? = nil,
                                     color: UIColor =  ThemeManager.shared.currentTheme.defaultTextColor(),
                                     htmlImageWidth: CGFloat = UIScreen.main.bounds.width) -> NSAttributedString? {
 
@@ -268,6 +268,10 @@ class DTAttributedLabelNode: ASCellNode {
     self.maxHeight = CGFloat(fontLineHeight) * CGFloat(maxNumberOfLines)
 
     return DTAttributedTextContentView.htmlAttributedString(text: text, fontDynamicType: fontDynamicType, color: color, htmlImageWidth: htmlImageWidth, defaultLineHeightMultiple: AttributedStringBuilder.defaultHTMLLineHeightMultiple)
+  }
+
+  func set(attributedString: NSAttributedString) {
+    self.attributedString = attributedString
   }
 }
 
