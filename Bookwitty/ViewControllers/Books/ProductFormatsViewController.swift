@@ -24,6 +24,10 @@ class ProductFormatsViewController: UIViewController {
     tableView.dataSource = self
     
     tableView.separatorInset.left = ThemeManager.shared.currentTheme.generalExternalMargin()
+    
+    tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.estimatedRowHeight = 60
+    
     reloadData()
   }
   
