@@ -59,6 +59,26 @@ final class ProductFormatsViewModel {
     }
   }
   
+  func selectPreferredFormat(_ indexPath: IndexPath) {
+    guard let section = ProductFormatsViewController.Section(rawValue: indexPath.section) else {
+      return
+    }
+    guard case ProductFormatsViewController.Section.preferredFormats = section else {
+      return
+    }
+    
+    for index in 0..<preferredFormats.count {
+      // Deselect Currently selected
+      if preferredFormats[index].isSelected {
+        preferredFormats[index].isSelected = false
+      }
+      // Select new value
+      if index == indexPath.item {
+        preferredFormats[index].isSelected = true
+      }
+    }
+  }
+  
   fileprivate func values(books: [Book]) -> [PreferredFormatValues] {
     let validatedBooks = validateAndTrimPreferredBooks(books: books)
     

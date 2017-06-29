@@ -88,4 +88,19 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
       return UITableViewCell()
     }
   }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    guard let section = Section(rawValue: indexPath.section) else {
+      return
+    }
+    
+    switch section {
+    case .preferredFormats:
+      viewModel.selectPreferredFormat(indexPath)
+    case .availableFormats:
+      break
+    case .activityIndicator:
+      break
+    }
+  }
 }
