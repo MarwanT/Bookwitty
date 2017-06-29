@@ -26,8 +26,15 @@ class PreferredFormatTableViewCell: UITableViewCell {
   private func initializeComponents() {
     let margin = ThemeManager.shared.currentTheme.generalExternalMargin()
     contentView.layoutMargins = UIEdgeInsets(top: 0.0, left: margin, bottom: 0.0, right: (margin-10))
+    
+    selectionStyle = .none
   }
   
+  override func setSelected(_ selected: Bool, animated: Bool) {
+    super.setSelected(selected, animated: animated)
+    
+    // Configure the view for the selected state
+    applySelectedState()
   }
 }
 
@@ -40,5 +47,17 @@ extension PreferredFormatTableViewCell: Themeable {
     secondaryLabel.textColor = defaultTextColor
     contentView.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     backgroundColor = UIColor.clear
+  }
+  
+  fileprivate func applySelectedState() {
+    let image = isSelected ? #imageLiteral(resourceName: "radioFilled") : #imageLiteral(resourceName: "radioEmpty")
+    let color = isSelected ? ThemeManager.shared.currentTheme.defaultButtonColor() : ThemeManager.shared.currentTheme.defaultGrayedTextColor()
+    let textColor = isSelected ? ThemeManager.shared.currentTheme.defaultECommerceColor() : ThemeManager.shared.currentTheme.defaultTextColor()
+    let textFont = isSelected ? FontDynamicType.footnote.font : FontDynamicType.caption1.font
+    
+    secondaryLabel.font = textFont
+    secondaryLabel.textColor = textColor
+    checkmarkImageView.image = image
+    checkmarkImageView.tintColor = color
   }
 }
