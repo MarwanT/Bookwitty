@@ -103,4 +103,8 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
       break
     }
   }
+  
+  func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    return 0.01 // To remove the separator after the last cell
+  }
 }
