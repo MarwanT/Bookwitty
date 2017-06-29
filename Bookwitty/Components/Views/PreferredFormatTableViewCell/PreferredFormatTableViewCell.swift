@@ -9,4 +9,8 @@
 import UIKit
 
 class PreferredFormatTableViewCell: UITableViewCell {
+  
+  @IBOutlet weak var primaryLabel: UILabel!
+  @IBOutlet weak var secondaryLabel: UILabel!
+  @IBOutlet weak var checkmarkImageView: UIImageView!
 }

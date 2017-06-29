@@ -68,6 +68,11 @@
                     <constraint firstItem="YNY-zD-B9w" firstAttribute="leading" secondItem="uWe-C0-9uN" secondAttribute="leadingMargin" id="sGF-W1-ILg"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="checkmarkImageView" destination="TRH-42-0sa" id="2Oz-S4-NEs"/>
+                <outlet property="primaryLabel" destination="YNY-zD-B9w" id="r0e-aE-VRr"/>
+                <outlet property="secondaryLabel" destination="PLS-dv-WTN" id="I9H-Ts-pVa"/>
+            </connections>
             <point key="canvasLocation" x="-155.5" y="-154"/>
         </tableViewCell>
     </objects>
