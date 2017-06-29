@@ -23,6 +23,7 @@ class ProductFormatsViewController: UIViewController {
     tableView.delegate = self
     tableView.dataSource = self
     
+    tableView.separatorInset.left = ThemeManager.shared.currentTheme.generalExternalMargin()
     reloadData()
   }
   
