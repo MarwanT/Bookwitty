@@ -23,6 +23,7 @@ class ProductFormatsViewController: UIViewController {
     tableView.delegate = self
     tableView.dataSource = self
     
+    tableView.register(PreferredFormatTableViewCell.nib, forCellReuseIdentifier: PreferredFormatTableViewCell.reuseIdentifier)
     tableView.separatorInset.left = ThemeManager.shared.currentTheme.generalExternalMargin()
     
     tableView.rowHeight = UITableViewAutomaticDimension
@@ -66,6 +67,25 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    return UITableViewCell()
+    guard let section = Section(rawValue: indexPath.section) else {
+      return UITableViewCell()
+    }
+    
+    switch section {
+    case .preferredFormats:
+      guard let cell = tableView.dequeueReusableCell(withIdentifier: PreferredFormatTableViewCell.reuseIdentifier, for: indexPath) as? PreferredFormatTableViewCell, let values = viewModel.values(for: indexPath) as? ProductFormatsViewModel.PreferredFormatValues else {
+        return UITableViewCell()
+      }
+      cell.primaryLabel.text = values.form.value
+      cell.secondaryLabel.text = values.price?.formattedValue
+      if values.isSelected {
+        tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
+      }
+      return cell
+    case .availableFormats:
+      return UITableViewCell()
+    case .activityIndicator:
+      return UITableViewCell()
+    }
   }
 }
