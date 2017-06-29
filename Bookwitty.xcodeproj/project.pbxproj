@@ -143,6 +143,7 @@
 		597B8E371E3954B200C7811B /* Ubuntu-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 597B8E321E3954B200C7811B /* Ubuntu-Medium.ttf */; };
 		597B8E381E3954B200C7811B /* Ubuntu-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 597B8E331E3954B200C7811B /* Ubuntu-Regular.ttf */; };
 		597B8E391E3954B200C7811B /* Volkhov-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 597B8E351E3954B200C7811B /* Volkhov-Regular.ttf */; };
+		597CE07E1F0523BA00B67BA4 /* ProductForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597CE07D1F0523BA00B67BA4 /* ProductForm.swift */; };
 		59871F1A1E78ADFB000A86CD /* PostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59871F191E78ADFB000A86CD /* PostsViewController.swift */; };
 		59871F1D1E78AF19000A86CD /* PostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59871F1C1E78AF19000A86CD /* PostsViewModel.swift */; };
 		5988FCFC1EA4AC100045F82B /* TTTAttributedLabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5988FCFB1EA4AC100045F82B /* TTTAttributedLabelNode.swift */; };
@@ -437,6 +438,7 @@
 		597B8E321E3954B200C7811B /* Ubuntu-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Medium.ttf"; sourceTree = "<group>"; };
 		597B8E331E3954B200C7811B /* Ubuntu-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Regular.ttf"; sourceTree = "<group>"; };
 		597B8E351E3954B200C7811B /* Volkhov-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Volkhov-Regular.ttf"; sourceTree = "<group>"; };
+		597CE07D1F0523BA00B67BA4 /* ProductForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductForm.swift; sourceTree = "<group>"; };
 		59871F191E78ADFB000A86CD /* PostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostsViewController.swift; sourceTree = "<group>"; };
 		59871F1C1E78AF19000A86CD /* PostsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostsViewModel.swift; sourceTree = "<group>"; };
 		5988FCFB1EA4AC100045F82B /* TTTAttributedLabelNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTTAttributedLabelNode.swift; sourceTree = "<group>"; };
@@ -856,6 +858,7 @@
 				5929C2701E5B25BC006E08F8 /* CuratedCollection.swift */,
 				56D5F73A1E5B60BF00F6A164 /* Book.swift */,
 				59DCFD801E967BE700C94D21 /* ProductDetails.swift */,
+				597CE07D1F0523BA00B67BA4 /* ProductForm.swift */,
 				59DCFD7C1E96754C00C94D21 /* Price.swift */,
 				59DCFD7E1E96785B00C94D21 /* SupplierInformation.swift */,
 				F4737D3E1EA0FE240065617D /* ModelCommonActions.swift */,
@@ -1689,6 +1692,7 @@
 			files = (
 				59903FED1E3B9D90006043EF /* View.swift in Sources */,
 				59DCFD7D1E96754C00C94D21 /* Price.swift in Sources */,
+				597CE07E1F0523BA00B67BA4 /* ProductForm.swift in Sources */,
 				F440FD7A1ECB005F00AEBF96 /* BookTypeRegistry.swift in Sources */,
 				F42041C71E73088500E7D208 /* CardDetailsViewModel.swift in Sources */,
 				564EEC101E70298200700474 /* ReadingListsViewModel.swift in Sources */,

@@ -8,8 +8,6 @@
 
 import Foundation
 
-typealias ProductForm = Dictionary<String, String>.Element
-
 class BookFormatMapper {
   var formats: [ProductForm]? = nil
   
@@ -42,7 +40,7 @@ class BookFormatMapper {
   }
   
   func formatsFromDictionary(dictionary: [String : Any]) -> [ProductForm] {
-    return dictionary.flatMap({ $0 as? ProductForm })
+    return dictionary.flatMap({ ProductForm(key: $0.key, value: ($0.value as? String) ?? "") })
   }
   
   // MARK: Manager APIs
@@ -51,8 +49,12 @@ class BookFormatMapper {
     return formats?.filter({ $0.key.lowercased() == lowerCaseKey }).first?.value ?? ""
   }
   
+  func productForm(for key: String) -> ProductForm? {
+    let lowerCaseKey = key.lowercased()
+    return formats?.filter({ $0.key.lowercased() == lowerCaseKey }).first
+  }
   
-  /// Returns and array of the available given format keys
+  /// Returns an array of the available given format keys
   func validKeys(from listOfKeys: [String]) -> [String] {
     var keys = [String]()
     

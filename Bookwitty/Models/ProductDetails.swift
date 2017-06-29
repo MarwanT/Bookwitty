@@ -17,7 +17,7 @@ class ProductDetails: NSObject {
   var isbn13: String?
   var isbn13h: String?
   var languageOfText: String?
-  var productForm: String?
+  var productForm: ProductForm?
   var productFormat: String?
   var publishedAt: Date?
   var publisher: String?
@@ -48,7 +48,7 @@ class ProductDetails: NSObject {
     self.isbn13 = json["isbn13"].stringValue
     self.isbn13h = json["isbn13h"].stringValue
     self.languageOfText = json["language-of-text"].stringValue
-    self.productForm = json["product-form"].stringValue
+    self.productForm = productForm(json["product-form"].stringValue)
     self.productFormat = json["product-format"].stringValue
     self.publishedAt = Date.from(json["published-at"].stringValue)
     self.publisher = json["publisher"].stringValue
@@ -58,6 +58,10 @@ class ProductDetails: NSObject {
     self.weight = json["weight"].dictionaryObject
     self.width = json["width"].dictionaryObject
     self.numberOfPages = json["nb-of-pages"].stringValue
+  }
+  
+  private func productForm(_ key: String) -> ProductForm? {
+    return BookFormatMapper.shared.productForm(for: key)
   }
   
   func associatedKeyValues() -> [(key: String, value: String)] {
@@ -110,20 +114,7 @@ class ProductDetails: NSObject {
 }
 
 extension ProductDetails {
-  /*
-   *  The list of formats below is taken from the ONIX documentation here:
-   *  https://www.medra.org/stdoc/onix-codelist-7.htm
-   */
-  private static let electronicProductForms = [ "AA", "AB", "AC", "AD", "AE",
-                                                "AF", "AG", "AH", "AI", "AJ", "AK", "AL", "AZ", "DA", "DB", "DC", "DD",
-                                                "DE", "DF", "DG", "DH", "DI", "DJ", "DK", "DL", "DM", "DN", "DZ", "VA",
-                                                "VB", "VC", "VD", "VE", "VF", "VG", "VH", "VI", "VJ", "VK", "VL", "VM",
-                                                "VN", "VO", "VP", "VZ", "WW" ]
-  
-  func isElectronicFormat() -> Bool {
-    guard let productForm = self.productForm else {
-      return false
-    }
-    return ProductDetails.electronicProductForms.contains(productForm)
+  var isElectronicFormat: Bool {
+    return productForm?.isElectronicFormat ?? false
   }
 }
