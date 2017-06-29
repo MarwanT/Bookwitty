@@ -9,6 +9,7 @@
 import UIKit
 
 class PreferredFormatTableViewCell: UITableViewCell {
+  static let reuseIdentifier = "PreferredFormatTableViewCell"
   
   @IBOutlet weak var primaryLabel: UILabel!
   @IBOutlet weak var secondaryLabel: UILabel!
