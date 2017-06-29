@@ -22,6 +22,14 @@ class ProductFormatsViewController: UIViewController {
     
     tableView.delegate = self
     tableView.dataSource = self
+    
+    reloadData()
+  }
+  
+  fileprivate func reloadData() {
+    viewModel.loadData { (success, error) in
+      self.tableView.reloadData()
+    }
   }
   
   func initialize(with book: Book) {
