@@ -8,7 +8,22 @@
 
 import UIKit
 import AsyncDisplayKit
+import DTCoreText
 
 class CommentCompactNode: ASCellNode {
+  fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
 
+  fileprivate let imageNode: ASNetworkImageNode
+  fileprivate let messageNode: DTAttributedLabelNode
+
+  override init() {
+    imageNode = ASNetworkImageNode()
+    messageNode = DTAttributedLabelNode()
+    super.init()
+    setupNode()
+  }
+
+  fileprivate func setupNode() {
+
+  }
 }
