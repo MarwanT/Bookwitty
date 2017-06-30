@@ -139,7 +139,19 @@
                     <view key="view" contentMode="scaleToFill" id="a1d-cM-u0a">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Oj8-P0-o9A">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Oj8-P0-o9A" firstAttribute="top" secondItem="a1d-cM-u0a" secondAttribute="topMargin" id="CgW-Gz-HAi"/>
+                            <constraint firstAttribute="trailing" secondItem="Oj8-P0-o9A" secondAttribute="trailing" id="Cqv-L9-LzF"/>
+                            <constraint firstItem="Oj8-P0-o9A" firstAttribute="leading" secondItem="a1d-cM-u0a" secondAttribute="leading" id="wIg-Yh-VPk"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="Oj8-P0-o9A" secondAttribute="bottom" id="wmN-vG-Xfc"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8nt-rn-LM6" userLabel="First Responder" sceneMemberID="firstResponder"/>
