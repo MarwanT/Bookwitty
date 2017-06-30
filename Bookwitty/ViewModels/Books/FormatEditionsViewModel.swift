@@ -60,6 +60,8 @@ extension FormatEditionsViewModel {
       let description: String = editionDescription(for: $0)
       let price = $0.preferredPrice
       return (id, description, price) as? FormatEdition
+    }).sorted(by: {
+      ($0.price?.value ?? 0) < ($1.price?.value ?? 0)
     })
   }
   
