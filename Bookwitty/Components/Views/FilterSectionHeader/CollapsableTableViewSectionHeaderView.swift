@@ -37,6 +37,13 @@ class CollapsableTableViewSectionHeaderView: UITableViewHeaderFooterView {
   @IBOutlet var subTitleHeightLayoutConstraint: NSLayoutConstraint!
 
   private let subTitleHeightLayoutConstraintDefaultValue: CGFloat = 21.0
+  
+  var configuration = Configuration() {
+    didSet {
+      applyTheme()
+      layoutIfNeeded()
+    }
+  }
 
   var delegate: CollapsableTableViewSectionHeaderViewDelegate?
   var section: Int?
@@ -106,20 +113,33 @@ extension CollapsableTableViewSectionHeaderView: Themeable {
      * Setting the background color on UITableViewHeaderFooterView has been deprecated, BUT contentView.backgroundColor was not working on the IPOD or IPHONE-5/s
      * so we kept both until 'contentView.backgroundColor' work 100% on all supported devices
      */
-    contentView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
-    backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
+    contentView.backgroundColor = configuration.backgroundColor
+    backgroundColor = configuration.backgroundColor
+    
+    titleLabel.font = configuration.titleLabelFont
+    titleLabel.textColor = configuration.titleLabelTextColor
+    
+    subTitleLabel.font = configuration.subTitleLabelFont
+    subTitleLabel.textColor = configuration.subTitleLabelTextColor
+    
+    separatorView.backgroundColor = configuration.separatorColor
+    layoutMargins = configuration.contentLayoutMargin
+    
+    imageView.tintColor = configuration.imageTintColor
+  }
+}
 
-    titleLabel.font = FontDynamicType.footnote.font
-    titleLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
-
-    subTitleLabel.font = FontDynamicType.caption2.font
-    subTitleLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
-
-    separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
-    layoutMargins = UIEdgeInsets(
+extension CollapsableTableViewSectionHeaderView {
+  struct Configuration {
+    var titleLabelFont = FontDynamicType.footnote.font
+    var titleLabelTextColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    var subTitleLabelFont = FontDynamicType.caption2.font
+    var subTitleLabelTextColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    var backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
+    var separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    var contentLayoutMargin = UIEdgeInsets(
       top: 0.0, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: 0.0, right: ThemeManager.shared.currentTheme.generalExternalMargin())
-
-    imageView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
+    var imageTintColor = ThemeManager.shared.currentTheme.colorNumber20()
   }
 }
