@@ -128,6 +128,24 @@
             </objects>
             <point key="canvasLocation" x="2402" y="87"/>
         </scene>
+        <!--Format Editions View Controller-->
+        <scene sceneID="vYd-HK-MWu">
+            <objects>
+                <viewController storyboardIdentifier="FormatEditionsViewController" id="SiH-nT-RLD" customClass="FormatEditionsViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wXM-Ui-fmR"/>
+                        <viewControllerLayoutGuide type="bottom" id="PZ6-Mn-KQg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="a1d-cM-u0a">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8nt-rn-LM6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3578" y="87"/>
+        </scene>
         <!--Book Store View Controller-->
         <scene sceneID="gFi-Mc-yyX">
             <objects>
