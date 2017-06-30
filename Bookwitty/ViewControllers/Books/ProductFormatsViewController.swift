@@ -87,7 +87,11 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
       }
       return cell
     case .availableFormats:
-      return UITableViewCell()
+      guard let cell = tableView.dequeueReusableCell(withIdentifier: DisclosureTableViewCell.identifier, for: indexPath) as? DisclosureTableViewCell, let values = viewModel.values(for: indexPath) as? ProductFormatsViewModel.AvailableFormatValues else {
+        return UITableViewCell()
+      }
+      cell.label.text = "\(values.form.value) (\(values.numberOfEditions))"
+      return cell
     case .activityIndicator:
       return UITableViewCell()
     }
