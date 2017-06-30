@@ -970,6 +970,10 @@ class Strings {
     return localizedString(key: "f_view_all_replies", formatVariables: number)
   }
   
+  static func view_formats_and_editions(number: Int) -> String {
+    return localizedString(key: "f_view_formats_and_editions", formatVariables: number)
+  }
+
   static func weeks_ago(number: Int) -> String {
     return localizedString(key: "f_number_of_weeks_ago", formatVariables: number)
   }

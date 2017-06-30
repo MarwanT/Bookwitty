@@ -257,6 +257,7 @@
 "f_number_of_years_ago" = "%d years ago";
 "f_others_find_witty" = "and %d others find this witty";
 "f_view_all_replies" = "View all %d replies";
+"f_view_formats_and_editions" = "View all %d formats and editions";
 
 /**
  Discussion:

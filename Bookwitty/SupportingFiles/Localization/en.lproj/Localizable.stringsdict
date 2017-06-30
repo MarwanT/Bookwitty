@@ -314,5 +314,29 @@
 			<string>View all %d replies</string>
 		</dict>
 	</dict>
+	<key>f_view_formats_and_editions</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@value@</string>
+		<key>value</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>There is no additional Formats or editions</string>
+			<key>one</key>
+			<string>View available format</string>
+			<key>two</key>
+			<string>View all %d formats and editions</string>
+			<key>few</key>
+			<string>View all %d formats and editions</string>
+			<key>many</key>
+			<string>View all %d formats and editions</string>
+			<key>other</key>
+			<string>View all %d formats and editions</string>
+		</dict>
+	</dict>
 </dict>
 </plist>
