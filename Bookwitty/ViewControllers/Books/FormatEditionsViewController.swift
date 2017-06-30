@@ -17,6 +17,8 @@ class FormatEditionsViewController: UIViewController {
     super.viewDidLoad()
     
     initializeTableView()
+    
+    reloadData()
   }
   
   func initialize(initialProductIdentifier: String, productForm: ProductForm) {
@@ -30,6 +32,14 @@ class FormatEditionsViewController: UIViewController {
   
   fileprivate func reloadTable() {
     self.tableView.reloadSections(IndexSet(integer: 0), with: .none)
+  }
+}
+
+extension FormatEditionsViewController {
+  fileprivate func reloadData() {
+    viewModel.loadData { (success, error) in
+      self.reloadTable()
+    }
   }
 }
 
