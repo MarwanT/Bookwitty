@@ -7,10 +7,13 @@
 //
 
 import Foundation
+import Moya
 
 final class FormatEditionsViewModel {
   fileprivate var initialProductIdentifier: String?
   fileprivate var productForm: ProductForm?
+  
+  fileprivate var request: Cancellable? = nil
   
   fileprivate var editions: [FormatEdition] = []
   
