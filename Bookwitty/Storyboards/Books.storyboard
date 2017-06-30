@@ -176,6 +176,10 @@
                                                 <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="bIq-Xh-qYc" secondAttribute="bottom" id="x67-gK-Pne"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="leftTextLabel" destination="bIq-Xh-qYc" id="v63-Z1-k1f"/>
+                                            <outlet property="rightTextLabel" destination="J2m-zd-pyn" id="hAH-Pu-0HO"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

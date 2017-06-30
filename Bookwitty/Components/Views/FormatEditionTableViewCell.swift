@@ -9,4 +9,6 @@
 import Foundation
 
 class FormatEditionTableViewCell: UITableViewCell {
+  @IBOutlet weak var leftTextLabel: UILabel!
+  @IBOutlet weak var rightTextLabel: UILabel!
 }
