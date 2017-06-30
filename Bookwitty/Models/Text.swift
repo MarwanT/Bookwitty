@@ -22,7 +22,13 @@ class Text: Resource {
   var penName: PenName?
   var vote: String?
   var counts: Counts?
-  
+
+  @objc
+  private var topVotesCollection: LinkedResourceCollection?
+  lazy var topVotes: [Vote]? = {
+    return self.topVotesCollection?.resources as? [Vote]
+  }()
+
   override class var resourceType: ResourceType {
     return "texts"
   }
@@ -40,7 +46,8 @@ class Text: Resource {
       "title": Attribute().serializeAs("title"),
       "type": Attribute().serializeAs("type"),
       "counts" : CountsAttribute().serializeAs("counts"),
-      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
+      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name"),
+      "topVotesCollection" : ToManyRelationship(PenName.self).serializeAs("top-votes.pen-name")
       ])
   }
 }

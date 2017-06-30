@@ -25,7 +25,7 @@ extension ModelCommonActions {
     }
     set {
       //Set Value
-      voteValue = newValue ? Vote.witted.rawValue : ""
+      voteValue = newValue ? Vote.Options.witted.rawValue : ""
 
       guard let counts = counts else {
         return

@@ -70,6 +70,7 @@
 		56AC22C91EA50D2700484449 /* ArticleCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56AC22C81EA50D2700484449 /* ArticleCardViewModel.swift */; };
 		56BEF6371E6825C80012FDE5 /* SegmentedControlNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BEF6361E6825C80012FDE5 /* SegmentedControlNode.swift */; };
 		56BEF6391E6836DB0012FDE5 /* ContributorsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BEF6381E6836DB0012FDE5 /* ContributorsNode.swift */; };
+		56BFE6321F065D62009ABECC /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BFE6311F065D62009ABECC /* Vote.swift */; };
 		56D341C31EE6AE2800A852C6 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D341C21EE6AE2800A852C6 /* AdSupport.framework */; };
 		56D36E821E6DAB3400791098 /* PenNameFollowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D36E811E6DAB3400791098 /* PenNameFollowNode.swift */; };
 		56D5F73B1E5B60BF00F6A164 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D5F73A1E5B60BF00F6A164 /* Book.swift */; };
@@ -358,6 +359,7 @@
 		56AC22C81EA50D2700484449 /* ArticleCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleCardViewModel.swift; sourceTree = "<group>"; };
 		56BEF6361E6825C80012FDE5 /* SegmentedControlNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlNode.swift; sourceTree = "<group>"; };
 		56BEF6381E6836DB0012FDE5 /* ContributorsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContributorsNode.swift; path = TopicsDetails/ContributorsNode.swift; sourceTree = "<group>"; };
+		56BFE6311F065D62009ABECC /* Vote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
 		56D341C21EE6AE2800A852C6 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		56D36E811E6DAB3400791098 /* PenNameFollowNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameFollowNode.swift; sourceTree = "<group>"; };
 		56D5F73A1E5B60BF00F6A164 /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
@@ -855,6 +857,7 @@
 				56620FCB1E8954CA00BD92BB /* UploadPolicy.swift */,
 				563482BA1ED59F2B005428BF /* Filter.swift */,
 				563482BC1ED5BD61005428BF /* Facet.swift */,
+				56BFE6311F065D62009ABECC /* Vote.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1678,6 +1681,7 @@
 				59CF76481E5C8079003EAB6B /* UserManager.swift in Sources */,
 				594290201E5316380006B2F1 /* FeaturedContentCollectionViewCell.swift in Sources */,
 				59CB4DF51EE59BAD00E7A60B /* CommentComposerViewController.swift in Sources */,
+				56BFE6321F065D62009ABECC /* Vote.swift in Sources */,
 				F42041C51E73010100E7D208 /* CardDetailsViewController.swift in Sources */,
 				59C997BD1ED5A0FD009A8451 /* CommentAPI.swift in Sources */,
 				595C4F0F1E3F8C9200BE3942 /* PasswordInputField.swift in Sources */,

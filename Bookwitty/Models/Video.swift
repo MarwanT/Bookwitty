@@ -23,7 +23,13 @@ class Video: Resource {
   var vote: String?
   var counts: Counts?
   var media: MediaModel?
-  
+
+  @objc
+  private var topVotesCollection: LinkedResourceCollection?
+  lazy var topVotes: [Vote]? = {
+    return self.topVotesCollection?.resources as? [Vote]
+  }()
+
   override class var resourceType: ResourceType {
     return "videos"
   }
@@ -42,7 +48,8 @@ class Video: Resource {
       "caption": Attribute().serializeAs("caption"),
       "media" : MediaAttribute().serializeAs("media"),
       "counts" : CountsAttribute().serializeAs("counts"),
-      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
+      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name"),
+      "topVotesCollection" : ToManyRelationship(PenName.self).serializeAs("top-votes")
       ])
   }
 }
