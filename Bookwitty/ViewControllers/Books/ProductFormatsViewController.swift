@@ -111,8 +111,8 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
   // Headers $ Footers
   
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    guard let section = Section(rawValue: section) else {
-      return UITableViewCell()
+    guard let values = viewModel.sectionValues(for: section), let section = Section(rawValue: section) else {
+      return nil
     }
     
     switch section {
@@ -120,22 +120,35 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
       guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: UniColorSectionHeaderView.reuseIdentifier) else {
         return nil
       }
-      headerView.textLabel?.text = Strings.choose_format()
+      headerView.textLabel?.text = values as? String
+      return headerView
+    case .availableFormats:
+      guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CollapsableTableViewSectionHeaderView.reuseIdentifier) as? CollapsableTableViewSectionHeaderView, let values = values as? ProductFormatsViewModel.AvailableFormatHeaderValues else {
+        return nil
+      }
+      headerView.configuration.titleLabelTextColor = ThemeManager.shared.currentTheme.defaultECommerceColor()
+      headerView.configuration.contentLayoutMargin.right = 2
+      headerView.mode = values.mode
+      headerView.titleLabel.text = values.title
+      headerView.subTitleLabel.text = nil
+      headerView.section = section.rawValue
+      headerView.delegate = self
       return headerView
     default:
       return nil
-      
     }
   }
   
   func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    guard let section = Section(rawValue: section) else {
+    guard viewModel.sectionValues(for: section) != nil, let section = Section(rawValue: section) else {
       return 0
     }
     
     switch section {
     case .preferredFormats:
       return 50
+    case .availableFormats:
+      return 50.0
     default:
       return 0.0
     }
@@ -143,5 +156,10 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
   
   func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
     return 0.01 // To remove the separator after the last cell
+  }
+}
+
+extension ProductFormatsViewController: CollapsableTableViewSectionHeaderViewDelegate {
+  func sectionHeader(view: CollapsableTableViewSectionHeaderView, request mode: CollapsableTableViewSectionHeaderView.Mode) {
   }
 }
