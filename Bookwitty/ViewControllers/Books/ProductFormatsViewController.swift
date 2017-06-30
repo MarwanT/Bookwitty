@@ -33,6 +33,8 @@ class ProductFormatsViewController: UIViewController {
     tableView.rowHeight = UITableViewAutomaticDimension
     tableView.estimatedRowHeight = 60
     
+    tableView.layoutMargins = UIEdgeInsets.zero
+    
     reloadData()
   }
   
