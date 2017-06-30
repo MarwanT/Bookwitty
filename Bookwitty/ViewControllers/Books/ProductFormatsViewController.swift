@@ -10,8 +10,21 @@ import UIKit
 
 class ProductFormatsViewController: UIViewController {
   @IBOutlet weak var tableView: UITableView!
+  fileprivate let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
   
   fileprivate var viewModel = ProductFormatsViewModel()
+  
+  var shouldShowLoader: Bool = false {
+    didSet {
+      switch shouldShowLoader {
+      case true:
+        showActivityIndicator()
+      case false:
+        hideActivityIndicator()
+      }
+    }
+  }
+
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -35,11 +48,20 @@ class ProductFormatsViewController: UIViewController {
     
     tableView.layoutMargins = UIEdgeInsets.zero
     
+    // Configurae activity indicator
+    activityIndicator.activityIndicatorViewStyle = .white
+    activityIndicator.color = UIColor.bwRuby
+    activityIndicator.hidesWhenStopped = true
+    activityIndicator.backgroundColor = UIColor.clear
+    activityIndicator.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 44)
+    
     reloadData()
   }
   
   fileprivate func reloadData() {
+    shouldShowLoader = true
     viewModel.loadData { (success, error) in
+      self.shouldShowLoader = false
       self.refreshTableView()
     }
   }
@@ -52,13 +74,22 @@ class ProductFormatsViewController: UIViewController {
     let sections = [
       Section.preferredFormats,
       Section.availableFormats,
-      Section.activityIndicator
     ]
     
     let mutableIndexSet = NSMutableIndexSet()
     sections.forEach({ mutableIndexSet.add($0.rawValue) })
     tableView.reloadSections(mutableIndexSet as IndexSet, with: UITableViewRowAnimation.none)
     tableView.reloadSections(IndexSet(integer: Section.availableFormats.rawValue), with: .none)
+  }
+  
+  func showActivityIndicator() {
+    tableView.tableFooterView = activityIndicator
+    activityIndicator.startAnimating()
+  }
+  
+  func hideActivityIndicator() {
+    activityIndicator.stopAnimating()
+    tableView.tableFooterView = UIView(frame: CGRect.zero)
   }
 }
 
@@ -67,10 +98,9 @@ extension ProductFormatsViewController {
   enum Section: Int {
     case preferredFormats = 0
     case availableFormats
-    case activityIndicator
     
     static var numberOfSections: Int {
-      return 3
+      return 2
     }
   }
 }
@@ -107,8 +137,6 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
       }
       cell.label.text = "\(values.form.value) (\(values.numberOfEditions))"
       return cell
-    case .activityIndicator:
-      return UITableViewCell()
     }
   }
   
@@ -121,8 +149,6 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
     case .preferredFormats:
       viewModel.selectPreferredFormat(indexPath)
     case .availableFormats:
-      break
-    case .activityIndicator:
       break
     }
   }
