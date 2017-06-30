@@ -138,6 +138,7 @@ extension ProductFormatsViewModel {
       (success, books, metadata, apiError) in
       var error = apiError != nil ? ProductFormatsError.api(apiError) : nil
       defer {
+        self.request = nil
         completion(success, error)
       }
       
