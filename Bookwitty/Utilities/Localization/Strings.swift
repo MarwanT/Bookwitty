@@ -361,6 +361,10 @@ class Strings {
     return localizedString(key: "help")
   }
   
+  static func hide_formats_and_editions() -> String {
+    return localizedString(key: "hide_formats_and_editions")
+  }
+  
   static func image() -> String {
     return localizedString(key: "image")
   }
