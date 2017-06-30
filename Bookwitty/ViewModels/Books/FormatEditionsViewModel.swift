@@ -24,6 +24,21 @@ final class FormatEditionsViewModel {
 }
 
 extension FormatEditionsViewModel {
+  var numberOfSections: Int {
+    return 1
+  }
+  
+  func numberOfRows(in section: Int) -> Int {
+    return editions.count
+  }
+  
+  func valueForRow(at indexPath: IndexPath) -> (description: String?, formattedPrice: String?)? {
+    let editionValues = editions[indexPath.item]
+    return (editionValues.description, editionValues.price?.formattedValue)
+  }
+}
+
+extension FormatEditionsViewModel {
   func loadData(completion: @escaping (_ success: Bool, _ error: FormatEditionsError?) -> Void) {
     guard let initialProductIdentifier = initialProductIdentifier, let formatId = productForm?.key else {
       request = nil
