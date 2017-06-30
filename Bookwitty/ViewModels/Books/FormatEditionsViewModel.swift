@@ -21,6 +21,19 @@ final class FormatEditionsViewModel {
 }
 
 extension FormatEditionsViewModel {
+  private func values(resources: [ModelResource]) -> [FormatEdition] {
+    guard let books = resources as? [Book] else {
+      return []
+    }
+    
+    return books.flatMap({
+      let id: String? = $0.id
+      let description: String = editionDescription(for: $0)
+      let price = $0.preferredPrice
+      return (id, description, price) as? FormatEdition
+    })
+  }
+  
   private func editionDescription(for book: Book) -> String {
     var description = ""
     var currentSeparator = ""
