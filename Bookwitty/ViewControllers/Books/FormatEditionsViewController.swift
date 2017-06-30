@@ -27,6 +27,10 @@ class FormatEditionsViewController: UIViewController {
     tableView.delegate = self
     tableView.dataSource = self
   }
+  
+  fileprivate func reloadTable() {
+    self.tableView.reloadSections(IndexSet(integer: 0), with: .none)
+  }
 }
 
 // MARK: - FormatEditionsViewController
