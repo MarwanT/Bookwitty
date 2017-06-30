@@ -24,3 +24,8 @@ class Vote: Resource {
       ])
   }
 }
+
+// MARK: - Parser
+extension Vote: Parsable {
+  typealias AbstractType = Vote
+}
