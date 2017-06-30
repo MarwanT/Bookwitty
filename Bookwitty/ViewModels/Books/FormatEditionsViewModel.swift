@@ -21,5 +21,24 @@ final class FormatEditionsViewModel {
 }
 
 extension FormatEditionsViewModel {
+  private func editionDescription(for book: Book) -> String {
+    var description = ""
+    var currentSeparator = ""
+    let separator = ", "
+    
+    if let formatString = book.productDetails?.productFormat, !formatString.isBlank {
+      description += "\(formatString)"
+      currentSeparator = separator
+    }
+    
+    if let formatedDate = book.productDetails?.publishedAt?.formatted().capitalized, !formatedDate.isBlank {
+      description += "\(currentSeparator)\(formatedDate)"
+    }
+    
+    return description
+  }
+}
+
+extension FormatEditionsViewModel {
   typealias FormatEdition = (id: String, description: String, price: Price?)
 }
