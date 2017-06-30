@@ -13,4 +13,13 @@ class FormatEditionTableViewCell: UITableViewCell {
   
   @IBOutlet weak var leftTextLabel: UILabel!
   @IBOutlet weak var rightTextLabel: UILabel!
+  
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    initializeView()
+  }
+  
+  private func initializeView() {
+    selectionStyle = .default
+  }
 }
