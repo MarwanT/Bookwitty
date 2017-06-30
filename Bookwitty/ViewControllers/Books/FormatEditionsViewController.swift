@@ -46,14 +46,27 @@ extension FormatEditionsViewController {
 // MARK: - FormatEditionsViewController
 extension FormatEditionsViewController: UITableViewDelegate, UITableViewDataSource {
   func numberOfSections(in tableView: UITableView) -> Int {
-    return 0
+    return viewModel.numberOfSections
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 0
+    return viewModel.numberOfRows(in: section)
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    return UITableViewCell()
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: FormatEditionTableViewCell.reuseIdentifier, for: indexPath) as? FormatEditionTableViewCell, let value = viewModel.valueForRow(at: indexPath) else {
+      return UITableViewCell()
+    }
+    cell.leftTextLabel?.text = value.description
+    cell.rightTextLabel?.text = value.formattedPrice
+    return cell
+  }
+  
+  func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    return 0.01
+  }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
   }
 }
