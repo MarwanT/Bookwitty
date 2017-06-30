@@ -54,4 +54,9 @@ extension FormatEditionsViewModel {
 
 extension FormatEditionsViewModel {
   typealias FormatEdition = (id: String, description: String, price: Price?)
+  
+  enum FormatEditionsError {
+    case api(BookwittyAPIError?)
+    case unidentified
+  }
 }
