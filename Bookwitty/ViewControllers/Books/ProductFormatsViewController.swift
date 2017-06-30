@@ -38,12 +38,24 @@ class ProductFormatsViewController: UIViewController {
   
   fileprivate func reloadData() {
     viewModel.loadData { (success, error) in
-      self.tableView.reloadData()
+      self.refreshTableView()
     }
   }
   
   func initialize(with book: Book) {
     self.viewModel.initialize(with: book)
+  }
+  
+  fileprivate func refreshTableView() {
+    let sections = [
+      Section.preferredFormats,
+      Section.availableFormats,
+      Section.activityIndicator
+    ]
+    
+    let mutableIndexSet = NSMutableIndexSet()
+    sections.forEach({ mutableIndexSet.add($0.rawValue) })
+    tableView.reloadSections(mutableIndexSet as IndexSet, with: UITableViewRowAnimation.none)
   }
 }
 
