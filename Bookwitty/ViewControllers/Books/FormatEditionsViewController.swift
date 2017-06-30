@@ -19,6 +19,10 @@ class FormatEditionsViewController: UIViewController {
     initializeTableView()
   }
   
+  func initialize(with productForm: ProductForm) {
+    viewModel.initialize(with: productForm)
+  }
+  
   private func initializeTableView() {
     tableView.delegate = self
     tableView.dataSource = self

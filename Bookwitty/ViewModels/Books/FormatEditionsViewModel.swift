@@ -11,4 +11,7 @@ import Foundation
 final class FormatEditionsViewModel {
   fileprivate var productForm: ProductForm?
   
+  func initialize(with productForm: ProductForm) {
+    self.productForm = productForm
+  }
 }
