@@ -174,6 +174,7 @@
 		59CB4DF31EE59ABD00E7A60B /* Details.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59CB4DF21EE59ABD00E7A60B /* Details.storyboard */; };
 		59CB4DF51EE59BAD00E7A60B /* CommentComposerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB4DF41EE59BAD00E7A60B /* CommentComposerViewController.swift */; };
 		59C2732F1F06BD33009C51D9 /* FormatEditionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C2732E1F06BD33009C51D9 /* FormatEditionsViewModel.swift */; };
+		59C273311F070223009C51D9 /* FormatEditionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C273301F070223009C51D9 /* FormatEditionTableViewCell.swift */; };
 		59CBE4F81E8090280068C7AD /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CBE4F71E8090280068C7AD /* AppError.swift */; };
 		59CBE4FA1E8094070068C7AD /* ErrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CBE4F91E8094070068C7AD /* ErrorManager.swift */; };
 		59CF3F821ECF3332002A5821 /* IntroductoryBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF3F811ECF3332002A5821 /* IntroductoryBanner.swift */; };
@@ -476,6 +477,7 @@
 		59CB4DF21EE59ABD00E7A60B /* Details.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Details.storyboard; sourceTree = "<group>"; };
 		59CB4DF41EE59BAD00E7A60B /* CommentComposerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentComposerViewController.swift; sourceTree = "<group>"; };
 		59C2732E1F06BD33009C51D9 /* FormatEditionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatEditionsViewModel.swift; sourceTree = "<group>"; };
+		59C273301F070223009C51D9 /* FormatEditionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatEditionTableViewCell.swift; sourceTree = "<group>"; };
 		59CBE4F71E8090280068C7AD /* AppError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		59CBE4F91E8094070068C7AD /* ErrorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorManager.swift; sourceTree = "<group>"; };
 		59CF3F811ECF3332002A5821 /* IntroductoryBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductoryBanner.swift; sourceTree = "<group>"; };
@@ -1021,6 +1023,7 @@
 				5942902B1E53BF050006B2F1 /* SectionTitleHeaderView.swift */,
 				5942902D1E53BF2D0006B2F1 /* SectionTitleHeaderView.xib */,
 				59A164CA1E561BBD00088D84 /* LaunchScreen.xib */,
+				59C273301F070223009C51D9 /* FormatEditionTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1746,6 +1749,7 @@
 				F496DE041E65C75D007E22B1 /* DiscoverViewModel.swift in Sources */,
 				F42600891E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift in Sources */,
 				566EE82D1E5D7082004B990D /* Search+API.swift in Sources */,
+				59C273311F070223009C51D9 /* FormatEditionTableViewCell.swift in Sources */,
 				59C2732F1F06BD33009C51D9 /* FormatEditionsViewModel.swift in Sources */,
 				59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */,
 				567B3C111ED4886F00E02E16 /* CheckmarkTableViewCell.swift in Sources */,
