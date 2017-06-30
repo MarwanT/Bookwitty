@@ -25,7 +25,7 @@ class PreferredFormatTableViewCell: UITableViewCell {
   
   private func initializeComponents() {
     let margin = ThemeManager.shared.currentTheme.generalExternalMargin()
-    contentView.layoutMargins = UIEdgeInsets(top: 0.0, left: margin, bottom: 0.0, right: (margin-10))
+    contentView.layoutMargins = UIEdgeInsets(top: 0.0, left: margin, bottom: 0.0, right: 0)
     
     selectionStyle = .none
   }
