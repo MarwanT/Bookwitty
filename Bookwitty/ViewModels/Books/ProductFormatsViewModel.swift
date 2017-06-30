@@ -39,8 +39,6 @@ final class ProductFormatsViewModel {
       return preferredFormats.count
     case .availableFormats:
       return isListOfAvailableFormatsExpanded ? availableFormats.count : 0
-    case .activityIndicator:
-      return 0
     }
   }
   

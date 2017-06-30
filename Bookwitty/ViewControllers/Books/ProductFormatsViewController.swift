@@ -74,7 +74,6 @@ class ProductFormatsViewController: UIViewController {
     let sections = [
       Section.preferredFormats,
       Section.availableFormats,
-      Section.activityIndicator
     ]
     
     let mutableIndexSet = NSMutableIndexSet()
@@ -99,10 +98,9 @@ extension ProductFormatsViewController {
   enum Section: Int {
     case preferredFormats = 0
     case availableFormats
-    case activityIndicator
     
     static var numberOfSections: Int {
-      return 3
+      return 2
     }
   }
 }
@@ -139,8 +137,6 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
       }
       cell.label.text = "\(values.form.value) (\(values.numberOfEditions))"
       return cell
-    case .activityIndicator:
-      return UITableViewCell()
     }
   }
   
@@ -153,8 +149,6 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
     case .preferredFormats:
       viewModel.selectPreferredFormat(indexPath)
     case .availableFormats:
-      break
-    case .activityIndicator:
       break
     }
   }
