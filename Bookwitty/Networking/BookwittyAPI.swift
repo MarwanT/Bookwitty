@@ -60,6 +60,7 @@ public enum BookwittyAPI {
   case resendAccountConfirmation
   case uploadPolicy(file: (name: String, size: Int), fileType: UploadAPI.FileType, assetType: UploadAPI.AssetType)
   case uploadMultipart(url: URL, parameters: [String : String]?, multipart: (data: Data, name: String))
+  case votes(identifier: String)
 }
 
 // MARK: - Target Type
@@ -164,6 +165,8 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(identifier)/linked_content"
     case .editions(let identifier):
       path = "/content/\(identifier)/editions"
+    case .votes(let identifier):
+      path = "/content/\(identifier)/votes"
     case .resetPassword:
       path = "/user/reset_password"
     case .penNameContent(let identifier):
@@ -197,7 +200,7 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .oAuth, .refreshToken, .resendAccountConfirmation, .createPenName:
       return .post
-  case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .search, .penNames, .comments, .replies, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .search, .penNames, .comments, .replies, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent, .votes:
       return .get
     case .register, .batch, .updatePreference, .wit, .follow, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart, .batchPenNames, .createComment, .witComment, .dimComment:
       return .post
@@ -255,6 +258,8 @@ extension BookwittyAPI: TargetType {
       return UserAPI.updatePostBody(preference: preference, value: value)
     case .posts(_, let type):
       return GeneralAPI.postsParameters(type: type)
+    case .votes:
+      return GeneralAPI.votesParameters()
     case .postsLinkedContent(_, let type):
       return GeneralAPI.postsParameters(type: type)
     case .resetPassword(let email):
