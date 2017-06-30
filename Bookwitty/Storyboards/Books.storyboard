@@ -153,6 +153,9 @@
                             <constraint firstAttribute="bottomMargin" secondItem="Oj8-P0-o9A" secondAttribute="bottom" id="wmN-vG-Xfc"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="Oj8-P0-o9A" id="5It-7N-beo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8nt-rn-LM6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
