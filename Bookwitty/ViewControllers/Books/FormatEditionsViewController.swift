@@ -28,6 +28,9 @@ class FormatEditionsViewController: UIViewController {
   private func initializeTableView() {
     tableView.delegate = self
     tableView.dataSource = self
+    
+    tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.estimatedRowHeight = 40
   }
   
   fileprivate func reloadTable() {
