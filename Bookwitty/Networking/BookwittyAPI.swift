@@ -329,7 +329,7 @@ extension BookwittyAPI: TargetType {
     case .batch, .search, .discover, .penNameContent, .penNameFollowing, .posts, .postsLinkedContent, .comments, .replies:
       return ["pen-name"]
     case .newsFeed:
-      return ["pen-name", "contributors", "commenters"]
+      return ["pen-name", "contributors", "commenters", "top-votes", "top-votes.pen-name"]
     case .content(_, let include):
       var includes = include ?? []
       if !includes.contains("pen-name") {
