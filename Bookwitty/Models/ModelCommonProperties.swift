@@ -9,12 +9,12 @@
 import Foundation
 import Spine
 
-enum Vote: String {
+enum VoteValues: String {
   case witted = "wit"
   case none = ""
 
   static func isWitted(vote: String) -> Bool {
-    return vote == Vote.witted.rawValue
+    return vote == VoteValues.witted.rawValue
   }
 }
 
@@ -84,7 +84,7 @@ extension Video: ModelCommonProperties {
     guard let vote = vote else {
       return false
     }
-    return Vote.isWitted(vote: vote)
+    return VoteValues.isWitted(vote: vote)
   }
 
   var following: Bool {
@@ -97,7 +97,7 @@ extension Topic: ModelCommonProperties {
     guard let vote = vote else {
       return false
     }
-    return Vote.isWitted(vote: vote)
+    return VoteValues.isWitted(vote: vote)
   }
 }
 
@@ -113,7 +113,7 @@ extension Image: ModelCommonProperties {
     guard let vote = vote else {
       return false
     }
-    return Vote.isWitted(vote: vote)
+    return VoteValues.isWitted(vote: vote)
   }
 
   var following: Bool {
@@ -126,7 +126,7 @@ extension Author: ModelCommonProperties {
     guard let vote = vote else {
       return false
     }
-    return Vote.isWitted(vote: vote)
+    return VoteValues.isWitted(vote: vote)
   }
 }
 
@@ -142,7 +142,7 @@ extension Link: ModelCommonProperties {
     guard let vote = vote else {
       return false
     }
-    return Vote.isWitted(vote: vote)
+    return VoteValues.isWitted(vote: vote)
   }
 
   var following: Bool {
@@ -162,7 +162,7 @@ extension ReadingList: ModelCommonProperties {
     guard let vote = vote else {
       return false
     }
-    return Vote.isWitted(vote: vote)
+    return VoteValues.isWitted(vote: vote)
   }
 
   var following: Bool {
@@ -182,7 +182,7 @@ extension Audio: ModelCommonProperties {
     guard let vote = vote else {
       return false
     }
-    return Vote.isWitted(vote: vote)
+    return VoteValues.isWitted(vote: vote)
   }
 
   var following: Bool {
@@ -202,7 +202,7 @@ extension Text: ModelCommonProperties {
     guard let vote = vote else {
       return false
     }
-    return Vote.isWitted(vote: vote)
+    return VoteValues.isWitted(vote: vote)
   }
 
   var following: Bool {
@@ -222,7 +222,7 @@ extension Quote: ModelCommonProperties {
     guard let vote = vote else {
       return false
     }
-    return Vote.isWitted(vote: vote)
+    return VoteValues.isWitted(vote: vote)
   }
 
   var following: Bool {
