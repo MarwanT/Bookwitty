@@ -161,5 +161,11 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
 
 extension ProductFormatsViewController: CollapsableTableViewSectionHeaderViewDelegate {
   func sectionHeader(view: CollapsableTableViewSectionHeaderView, request mode: CollapsableTableViewSectionHeaderView.Mode) {
+    guard let rawSection = view.section else {
+      return
+    }
+    
+    viewModel.toggleSection()
+    tableView.reloadSections(IndexSet(integer: rawSection), with: .none)
   }
 }

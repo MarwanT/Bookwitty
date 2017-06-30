@@ -154,6 +154,11 @@ final class ProductFormatsViewModel {
     }
     return pickedBooks
   }
+  
+  
+  func toggleSection() {
+    isListOfAvailableFormatsExpanded = !isListOfAvailableFormatsExpanded
+  }
 }
 
 extension ProductFormatsViewModel {
