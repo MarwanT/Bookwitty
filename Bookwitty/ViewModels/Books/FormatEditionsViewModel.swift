@@ -12,6 +12,8 @@ final class FormatEditionsViewModel {
   fileprivate var initialProductIdentifier: String?
   fileprivate var productForm: ProductForm?
   
+  fileprivate var editions: [FormatEdition] = []
+  
   func initialize(initialProductIdentifier: String, productForm: ProductForm) {
     self.initialProductIdentifier = initialProductIdentifier
     self.productForm = productForm
