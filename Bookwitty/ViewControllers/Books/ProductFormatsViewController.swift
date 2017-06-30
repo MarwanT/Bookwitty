@@ -56,6 +56,7 @@ class ProductFormatsViewController: UIViewController {
     let mutableIndexSet = NSMutableIndexSet()
     sections.forEach({ mutableIndexSet.add($0.rawValue) })
     tableView.reloadSections(mutableIndexSet as IndexSet, with: UITableViewRowAnimation.none)
+    tableView.reloadSections(IndexSet(integer: Section.availableFormats.rawValue), with: .none)
   }
 }
 
