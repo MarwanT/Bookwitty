@@ -120,15 +120,14 @@ final class ProductFormatsViewModel {
     return valuesArray
   }
   
-  fileprivate func values(numberOfEditionsPerFormat: [String: Int]) -> [AvailableFormatValues] {
-    var valuesArray = [AvailableFormatValues]()
-    numberOfEditionsPerFormat.forEach { (key, value) in
-      guard let productForm = BookFormatMapper.shared.productForm(for: key) else {
-        return
-      }
-      valuesArray.append((productForm, value))
+  fileprivate func values(numberOfEditionsPerFormat: [String: Int], totalNumberOfEditions: Int) {
+    let (formats, numberOfTrimmedEditions) = validateAndTrimAvailableFormats(numberOfEditionsPerFormat: numberOfEditionsPerFormat)
+    
+    self.availableFormats = formats.flatMap { (key, value)  -> ProductFormatsViewModel.AvailableFormatValues? in
+      let productForm = BookFormatMapper.shared.productForm(for: key)
+      return (productForm, value) as? AvailableFormatValues
     }
-    return valuesArray
+    self.totalNumberOfEditions = totalNumberOfEditions - numberOfTrimmedEditions
   }
   
   fileprivate func validateAndTrimPreferredBooks(books: [Book]) -> [Book] {
@@ -153,6 +152,18 @@ final class ProductFormatsViewModel {
     return pickedBooks
   }
   
+  fileprivate func validateAndTrimAvailableFormats(numberOfEditionsPerFormat: [String: Int]) -> (formats: [String: Int], numberOfTrimmedEditions: Int) {
+    var pickedFormats: [String : Int] = [:]
+    var totalEditionsTrimmed: Int = 0
+    numberOfEditionsPerFormat.forEach { (key, value) in
+      guard !ProductForm.isElectronicFormat(key) else {
+        totalEditionsTrimmed += value
+        return
+      }
+      pickedFormats[key] = value
+    }
+    return (pickedFormats, totalEditionsTrimmed)
+  }
   
   func toggleSection() {
     isListOfAvailableFormatsExpanded = !isListOfAvailableFormatsExpanded
@@ -182,11 +193,8 @@ extension ProductFormatsViewModel {
       // Set preferred formats
       self.preferredFormats = self.values(books: books)
       
-      // Set available formats
-      self.availableFormats = self.values(numberOfEditionsPerFormat: metadata.numberOfEditionsPerFormat)
-      
-      // Set the number of editions
-      self.totalNumberOfEditions = metadata.totalEditions
+      // Set available formats and the number of editions
+      self.values(numberOfEditionsPerFormat: metadata.numberOfEditionsPerFormat, totalNumberOfEditions: metadata.totalEditions)
     })
   }
   
