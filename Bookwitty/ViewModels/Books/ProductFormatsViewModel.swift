@@ -44,6 +44,36 @@ final class ProductFormatsViewModel {
     }
   }
   
+  /// Returns nil when section header should not be visible
+  func sectionValues(for section: Int) -> Any? {
+    guard !isLoadingData else {
+      return nil
+    }
+    
+    guard let section = ProductFormatsViewController.Section(rawValue: section) else {
+      return nil
+    }
+    
+    switch section {
+    case .preferredFormats:
+      return Strings.choose_format()
+    case .availableFormats:
+      guard availableFormats.count > 0 else {
+        return nil
+      }
+      
+      if isListOfAvailableFormatsExpanded {
+        return (Strings.hide_formats_and_editions(),
+                CollapsableTableViewSectionHeaderView.Mode.expanded)
+      } else {
+        return (Strings.view_formats_and_editions(number: totalNumberOfEditions),
+                CollapsableTableViewSectionHeaderView.Mode.collapsed)
+      }
+    default:
+      return nil
+    }
+  }
+  
   func values(for indexPath: IndexPath) -> Any? {
     guard let section = ProductFormatsViewController.Section(rawValue: indexPath.section) else {
       return nil
@@ -124,6 +154,11 @@ final class ProductFormatsViewModel {
     }
     return pickedBooks
   }
+  
+  
+  func toggleSection() {
+    isListOfAvailableFormatsExpanded = !isListOfAvailableFormatsExpanded
+  }
 }
 
 extension ProductFormatsViewModel {
@@ -138,6 +173,7 @@ extension ProductFormatsViewModel {
       (success, books, metadata, apiError) in
       var error = apiError != nil ? ProductFormatsError.api(apiError) : nil
       defer {
+        self.request = nil
         completion(success, error)
       }
       
@@ -155,11 +191,17 @@ extension ProductFormatsViewModel {
       self.totalNumberOfEditions = metadata.totalEditions
     })
   }
+  
+  var isLoadingData: Bool {
+    return request != nil
+  }
 }
 
 extension ProductFormatsViewModel {
   typealias PreferredFormatValues = (id: String, form: ProductForm, price: Price?, isSelected: Bool)
   typealias AvailableFormatValues = (form: ProductForm, numberOfEditions: Int)
+  
+  typealias AvailableFormatHeaderValues = (title: String, mode: CollapsableTableViewSectionHeaderView.Mode)
   
   enum ProductFormatsError {
     case api(BookwittyAPIError?)

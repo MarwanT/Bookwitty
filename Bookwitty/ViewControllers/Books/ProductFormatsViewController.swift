@@ -25,23 +25,40 @@ class ProductFormatsViewController: UIViewController {
     
     tableView.register(PreferredFormatTableViewCell.nib, forCellReuseIdentifier: PreferredFormatTableViewCell.reuseIdentifier)
     tableView.register(UniColorSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: UniColorSectionHeaderView.reuseIdentifier)
+    tableView.register(CollapsableTableViewSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: CollapsableTableViewSectionHeaderView.reuseIdentifier)
+    tableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
     
     tableView.separatorInset.left = ThemeManager.shared.currentTheme.generalExternalMargin()
     
     tableView.rowHeight = UITableViewAutomaticDimension
     tableView.estimatedRowHeight = 60
     
+    tableView.layoutMargins = UIEdgeInsets.zero
+    
     reloadData()
   }
   
   fileprivate func reloadData() {
     viewModel.loadData { (success, error) in
-      self.tableView.reloadData()
+      self.refreshTableView()
     }
   }
   
   func initialize(with book: Book) {
     self.viewModel.initialize(with: book)
+  }
+  
+  fileprivate func refreshTableView() {
+    let sections = [
+      Section.preferredFormats,
+      Section.availableFormats,
+      Section.activityIndicator
+    ]
+    
+    let mutableIndexSet = NSMutableIndexSet()
+    sections.forEach({ mutableIndexSet.add($0.rawValue) })
+    tableView.reloadSections(mutableIndexSet as IndexSet, with: UITableViewRowAnimation.none)
+    tableView.reloadSections(IndexSet(integer: Section.availableFormats.rawValue), with: .none)
   }
 }
 
@@ -85,7 +102,11 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
       }
       return cell
     case .availableFormats:
-      return UITableViewCell()
+      guard let cell = tableView.dequeueReusableCell(withIdentifier: DisclosureTableViewCell.identifier, for: indexPath) as? DisclosureTableViewCell, let values = viewModel.values(for: indexPath) as? ProductFormatsViewModel.AvailableFormatValues else {
+        return UITableViewCell()
+      }
+      cell.label.text = "\(values.form.value) (\(values.numberOfEditions))"
+      return cell
     case .activityIndicator:
       return UITableViewCell()
     }
@@ -110,8 +131,8 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
   // Headers $ Footers
   
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    guard let section = Section(rawValue: section) else {
-      return UITableViewCell()
+    guard let values = viewModel.sectionValues(for: section), let section = Section(rawValue: section) else {
+      return nil
     }
     
     switch section {
@@ -119,22 +140,35 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
       guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: UniColorSectionHeaderView.reuseIdentifier) else {
         return nil
       }
-      headerView.textLabel?.text = Strings.choose_format()
+      headerView.textLabel?.text = values as? String
+      return headerView
+    case .availableFormats:
+      guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CollapsableTableViewSectionHeaderView.reuseIdentifier) as? CollapsableTableViewSectionHeaderView, let values = values as? ProductFormatsViewModel.AvailableFormatHeaderValues else {
+        return nil
+      }
+      headerView.configuration.titleLabelTextColor = ThemeManager.shared.currentTheme.defaultECommerceColor()
+      headerView.configuration.contentLayoutMargin.right = 2
+      headerView.mode = values.mode
+      headerView.titleLabel.text = values.title
+      headerView.subTitleLabel.text = nil
+      headerView.section = section.rawValue
+      headerView.delegate = self
       return headerView
     default:
       return nil
-      
     }
   }
   
   func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    guard let section = Section(rawValue: section) else {
+    guard viewModel.sectionValues(for: section) != nil, let section = Section(rawValue: section) else {
       return 0
     }
     
     switch section {
     case .preferredFormats:
       return 50
+    case .availableFormats:
+      return 50.0
     default:
       return 0.0
     }
@@ -142,5 +176,16 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
   
   func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
     return 0.01 // To remove the separator after the last cell
+  }
+}
+
+extension ProductFormatsViewController: CollapsableTableViewSectionHeaderViewDelegate {
+  func sectionHeader(view: CollapsableTableViewSectionHeaderView, request mode: CollapsableTableViewSectionHeaderView.Mode) {
+    guard let rawSection = view.section else {
+      return
+    }
+    
+    viewModel.toggleSection()
+    tableView.reloadSections(IndexSet(integer: rawSection), with: .none)
   }
 }
