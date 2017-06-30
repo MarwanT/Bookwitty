@@ -153,6 +153,10 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
     }
   }
   
+  func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+    viewModel.deselectPreferredFormat()
+  }
+  
   
   // Headers $ Footers
   

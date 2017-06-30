@@ -95,14 +95,14 @@ final class ProductFormatsViewModel {
       return
     }
     
+    preferredFormats[indexPath.item].isSelected = true
+  }
+  
+  func deselectPreferredFormat() {
     for index in 0..<preferredFormats.count {
       // Deselect Currently selected
       if preferredFormats[index].isSelected {
         preferredFormats[index].isSelected = false
-      }
-      // Select new value
-      if index == indexPath.item {
-        preferredFormats[index].isSelected = true
       }
     }
   }
