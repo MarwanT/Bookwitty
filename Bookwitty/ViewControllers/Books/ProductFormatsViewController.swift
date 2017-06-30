@@ -10,8 +10,21 @@ import UIKit
 
 class ProductFormatsViewController: UIViewController {
   @IBOutlet weak var tableView: UITableView!
+  fileprivate let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
   
   fileprivate var viewModel = ProductFormatsViewModel()
+  
+  var shouldShowLoader: Bool = false {
+    didSet {
+      switch shouldShowLoader {
+      case true:
+        showActivityIndicator()
+      case false:
+        hideActivityIndicator()
+      }
+    }
+  }
+
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -35,11 +48,20 @@ class ProductFormatsViewController: UIViewController {
     
     tableView.layoutMargins = UIEdgeInsets.zero
     
+    // Configurae activity indicator
+    activityIndicator.activityIndicatorViewStyle = .white
+    activityIndicator.color = UIColor.bwRuby
+    activityIndicator.hidesWhenStopped = true
+    activityIndicator.backgroundColor = UIColor.clear
+    activityIndicator.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 44)
+    
     reloadData()
   }
   
   fileprivate func reloadData() {
+    shouldShowLoader = true
     viewModel.loadData { (success, error) in
+      self.shouldShowLoader = false
       self.refreshTableView()
     }
   }
@@ -59,6 +81,16 @@ class ProductFormatsViewController: UIViewController {
     sections.forEach({ mutableIndexSet.add($0.rawValue) })
     tableView.reloadSections(mutableIndexSet as IndexSet, with: UITableViewRowAnimation.none)
     tableView.reloadSections(IndexSet(integer: Section.availableFormats.rawValue), with: .none)
+  }
+  
+  func showActivityIndicator() {
+    tableView.tableFooterView = activityIndicator
+    activityIndicator.startAnimating()
+  }
+  
+  func hideActivityIndicator() {
+    activityIndicator.stopAnimating()
+    tableView.tableFooterView = UIView(frame: CGRect.zero)
   }
 }
 
