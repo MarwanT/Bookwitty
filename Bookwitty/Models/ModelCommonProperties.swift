@@ -27,6 +27,7 @@ protocol ModelCommonProperties {
   var penName: PenName? { get set }
   var contributors: [PenName]? { get set }
 
+  var topVotes: [Vote]? { get set }
   var witters: String? { get }
 
   func sameInstanceAs(newResource: ModelCommonProperties?) -> Bool?
@@ -90,6 +91,11 @@ extension Topic: ModelCommonProperties {
     }
     return Vote.isWitted(vote: vote)
   }
+
+  var topVotes: [Vote]? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
+  }
 }
 
 extension Image: ModelCommonProperties {
@@ -118,6 +124,11 @@ extension Author: ModelCommonProperties {
       return false
     }
     return Vote.isWitted(vote: vote)
+  }
+
+  var topVotes: [Vote]? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
   }
 }
 
@@ -244,6 +255,11 @@ extension Book: ModelCommonProperties {
       //Property does not apply
     }
   }
+
+  var topVotes: [Vote]? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
+  }
 }
 
 extension PenName: ModelCommonProperties {
@@ -293,6 +309,11 @@ extension PenName: ModelCommonProperties {
     set {
       //Property does not apply
     }
+  }
+
+  var topVotes: [Vote]? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
   }
 }
 

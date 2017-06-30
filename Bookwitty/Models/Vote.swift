@@ -29,3 +29,14 @@ class Vote: Resource {
 extension Vote: Parsable {
   typealias AbstractType = Vote
 }
+
+extension Vote {
+  enum Options: String {
+    case witted = "wit"
+    case none = ""
+  }
+
+  static func isWitted(vote: String) -> Bool {
+    return vote == Options.witted.rawValue
+  }
+}
