@@ -24,6 +24,32 @@ final class FormatEditionsViewModel {
 }
 
 extension FormatEditionsViewModel {
+  func loadData(completion: @escaping (_ success: Bool, _ error: FormatEditionsError?) -> Void) {
+    guard let initialProductIdentifier = initialProductIdentifier, let formatId = productForm?.key else {
+      request = nil
+      completion(false, nil)
+      return
+    }
+    
+    request?.cancel()
+    request = ContentAPI.editions(contentIdentifier: initialProductIdentifier, formats: [formatId], completion: {
+      (success, resources, nextURL, apiError) in
+      var error = apiError != nil ? FormatEditionsError.api(apiError) : nil
+      defer {
+        self.request = nil
+        completion(success, error)
+      }
+      
+      guard success, let resources = resources else {
+        error = FormatEditionsError.unidentified
+        return
+      }
+      
+      self.editions.removeAll()
+      self.editions.append(contentsOf: self.values(resources: resources))
+    })
+  }
+  
   private func values(resources: [ModelResource]) -> [FormatEdition] {
     guard let books = resources as? [Book] else {
       return []
