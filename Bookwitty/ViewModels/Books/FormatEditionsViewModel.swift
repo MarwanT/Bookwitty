@@ -17,3 +17,7 @@ final class FormatEditionsViewModel {
     self.productForm = productForm
   }
 }
+
+extension FormatEditionsViewModel {
+  typealias FormatEdition = (id: String, description: String, price: Price?)
+}
