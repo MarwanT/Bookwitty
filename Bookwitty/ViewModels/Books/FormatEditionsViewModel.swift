@@ -9,5 +9,6 @@
 import Foundation
 
 final class FormatEditionsViewModel {
+  fileprivate var productForm: ProductForm?
   
 }
