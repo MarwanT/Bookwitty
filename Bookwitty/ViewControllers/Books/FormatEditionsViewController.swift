@@ -31,6 +31,8 @@ class FormatEditionsViewController: UIViewController {
     
     tableView.rowHeight = UITableViewAutomaticDimension
     tableView.estimatedRowHeight = 40
+    
+    tableView.layoutMargins = UIEdgeInsets.zero
   }
   
   fileprivate func reloadTable() {
