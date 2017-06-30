@@ -26,6 +26,7 @@ class ProductFormatsViewController: UIViewController {
     tableView.register(PreferredFormatTableViewCell.nib, forCellReuseIdentifier: PreferredFormatTableViewCell.reuseIdentifier)
     tableView.register(UniColorSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: UniColorSectionHeaderView.reuseIdentifier)
     tableView.register(CollapsableTableViewSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: CollapsableTableViewSectionHeaderView.reuseIdentifier)
+    tableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
     
     tableView.separatorInset.left = ThemeManager.shared.currentTheme.generalExternalMargin()
     
