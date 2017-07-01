@@ -11,11 +11,14 @@ import UIKit
 class FormatEditionsViewController: UIViewController {
   @IBOutlet weak var tableView: UITableView!
   
+  let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+  
   var viewModel = FormatEditionsViewModel()
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    initializeComponents()
     initializeTableView()
     
     reloadData()
@@ -35,14 +38,35 @@ class FormatEditionsViewController: UIViewController {
     tableView.layoutMargins = UIEdgeInsets.zero
   }
   
+  private func initializeComponents() {
+    // Configurae activity indicator
+    activityIndicator.activityIndicatorViewStyle = .white
+    activityIndicator.color = UIColor.bwRuby
+    activityIndicator.hidesWhenStopped = true
+    activityIndicator.backgroundColor = UIColor.clear
+    activityIndicator.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 44)
+  }
+  
   fileprivate func reloadTable() {
     self.tableView.reloadSections(IndexSet(integer: 0), with: .none)
+  }
+  
+  func showActivityIndicator() {
+    tableView.tableFooterView = activityIndicator
+    activityIndicator.startAnimating()
+  }
+  
+  func hideActivityIndicator() {
+    activityIndicator.stopAnimating()
+    tableView.tableFooterView = UIView(frame: CGRect.zero)
   }
 }
 
 extension FormatEditionsViewController {
   fileprivate func reloadData() {
+    showActivityIndicator()
     viewModel.loadData { (success, error) in
+      self.hideActivityIndicator()
       self.reloadTable()
     }
   }
