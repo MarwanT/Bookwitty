@@ -68,6 +68,7 @@ extension FormatEditionsViewController {
     viewModel.loadData { (success, error) in
       self.hideActivityIndicator()
       self.reloadTable()
+      self.loadNextPage()
     }
   }
 }
@@ -97,5 +98,28 @@ extension FormatEditionsViewController: UITableViewDelegate, UITableViewDataSour
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
+  }
+}
+
+// MARK: - Pagination
+extension FormatEditionsViewController {
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if tableView.contentOffset.y >= (tableView.contentSize.height - tableView.bounds.size.height) {
+      loadNextPage()
+    }
+  }
+  
+  fileprivate func loadNextPage() {
+    if viewModel.hasNextPage && !viewModel.isLoadingData {
+      showActivityIndicator()
+      self.viewModel.loadNextPage(completion: {
+        (success, _) in
+        self.hideActivityIndicator()
+        guard success else {
+          return
+        }
+        self.reloadTable()
+      })
+    }
   }
 }

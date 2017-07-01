@@ -14,6 +14,7 @@ final class FormatEditionsViewModel {
   fileprivate var productForm: ProductForm?
   
   fileprivate var request: Cancellable? = nil
+  fileprivate var nextPageURL: URL? = nil
   
   fileprivate var editions: [FormatEdition] = []
   
@@ -62,7 +63,38 @@ extension FormatEditionsViewModel {
       
       self.editions.removeAll()
       self.editions.append(contentsOf: self.values(resources: resources))
+      self.nextPageURL = nextURL
     })
+  }
+  
+  func loadNextPage(completion: @escaping (_ success: Bool, _ error: FormatEditionsError?) -> Void) {
+    guard let url = nextPageURL else {
+      completion(false, nil)
+      return
+    }
+    
+    request?.cancel()
+    request = GeneralAPI.nextPage(nextPage: url, completion: { (success, resources, url, apiError) in
+      var error = apiError != nil ? FormatEditionsError.api(apiError) : nil
+      defer {
+        self.request = nil
+        completion(success, error)
+      }
+      
+      guard success, let resources = resources else {
+        return
+      }
+      self.editions.append(contentsOf: self.values(resources: resources))
+      self.nextPageURL = url
+    })
+  }
+  
+  var isLoadingData: Bool {
+    return request != nil
+  }
+  
+  var hasNextPage: Bool {
+    return nextPageURL != nil
   }
   
   private func values(resources: [ModelResource]) -> [FormatEdition] {
