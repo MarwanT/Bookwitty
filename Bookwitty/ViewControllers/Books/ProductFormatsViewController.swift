@@ -109,6 +109,12 @@ class ProductFormatsViewController: UIViewController {
       }
     })
   }
+
+  fileprivate func pushFormatEditionsViewController(productId: String, productForm: ProductForm) {
+    let viewController = Storyboard.Books.instantiate(FormatEditionsViewController.self)
+    viewController.initialize(initialProductIdentifier: productId, productForm: productForm)
+    self.navigationController?.pushViewController(viewController, animated: true)
+  }
 }
 
 // MARK: Declare Section
@@ -172,7 +178,11 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
       }
       didSelectEdition(id: values.id)
     case .availableFormats:
-      break
+      guard let values = viewModel.values(for: indexPath) as? ProductFormatsViewModel.AvailableFormatValues, let productId = viewModel.productId else {
+        tableView.deselectRow(at: indexPath, animated: true)
+        return
+      }
+      pushFormatEditionsViewController(productId: productId, productForm: values.form)
     }
   }
   
