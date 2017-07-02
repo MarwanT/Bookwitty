@@ -8,11 +8,17 @@
 
 import UIKit
 
+protocol ProductFormatsViewControllerDelegate {
+  func productFormats(_ viewController: ProductFormatsViewController, selected editionId: String, didFinishLoading completion: ((_ success: Bool) -> Void)?)
+}
+
 class ProductFormatsViewController: UIViewController {
   @IBOutlet weak var tableView: UITableView!
   fileprivate let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
   
   fileprivate var viewModel = ProductFormatsViewModel()
+  
+  var delegate: ProductFormatsViewControllerDelegate?
   
   var shouldShowLoader: Bool = false {
     didSet {
