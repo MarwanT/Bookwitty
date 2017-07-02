@@ -8,12 +8,18 @@
 
 import UIKit
 
+protocol FormatEditionsViewControllerDelegate {
+  func formatEditions(_ viewController: FormatEditionsViewController, selected editionId: String)
+}
+
 class FormatEditionsViewController: UIViewController {
   @IBOutlet weak var tableView: UITableView!
   
   let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
   
   var viewModel = FormatEditionsViewModel()
+  
+  var delegate: FormatEditionsViewControllerDelegate?
   
   override func viewDidLoad() {
     super.viewDidLoad()
