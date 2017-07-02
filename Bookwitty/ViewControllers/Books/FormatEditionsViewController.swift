@@ -104,6 +104,11 @@ extension FormatEditionsViewController: UITableViewDelegate, UITableViewDataSour
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
+    
+    guard let editionId = viewModel.valueForRow(at: indexPath)?.id else {
+      return
+    }
+    delegate?.formatEditions(self, selected: editionId)
   }
 }
 
