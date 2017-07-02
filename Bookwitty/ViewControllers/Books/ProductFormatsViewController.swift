@@ -97,6 +97,18 @@ class ProductFormatsViewController: UIViewController {
     activityIndicator.stopAnimating()
     tableView.tableFooterView = UIView(frame: CGRect.zero)
   }
+  
+  fileprivate func didSelectEdition(id: String) {
+    delegate?.productFormats(self, selected: id, didFinishLoading: {
+      (success) in
+      if success {
+        self.navigationController?.popToViewController(self, animated: false)
+        self.navigationController?.popViewController(animated: true)
+      } else {
+        // TODO: Display Alert
+      }
+    })
+  }
 }
 
 // MARK: Declare Section
@@ -154,6 +166,11 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
     switch section {
     case .preferredFormats:
       viewModel.selectPreferredFormat(indexPath)
+      
+      guard let values = viewModel.values(for: indexPath) as? ProductFormatsViewModel.PreferredFormatValues else {
+        return
+      }
+      didSelectEdition(id: values.id)
     case .availableFormats:
       break
     }
