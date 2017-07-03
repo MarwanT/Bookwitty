@@ -559,6 +559,7 @@ extension BookDetailsViewController: BookDetailsHeaderNodeDelegate {
   }
 }
 
+//MARK: Product formats vc delegate implementation
 extension BookDetailsViewController: ProductFormatsViewControllerDelegate {
   func productFormats(_ viewController: ProductFormatsViewController, selected editionId: String, didFinishLoading completion: ((Bool) -> Void)?) {
     viewModel.initialize(withId: editionId)
