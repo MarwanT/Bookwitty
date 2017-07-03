@@ -609,7 +609,7 @@ extension BookDetailsViewModel {
         let readingLists = resources.flatMap({ $0 as? ReadingList })
         let displayedReadingLists = Array(readingLists.prefix(self.maximumNumberOfDetails))
         self.relatedReadingLists = (readingLists, displayedReadingLists, nextPage)
-        self.shouldReloadRelatedReadingListsSections = (readingLists.count > 0) ? true : false
+        self.shouldReloadRelatedReadingListsSections = true
     })
   }
   
@@ -636,7 +636,7 @@ extension BookDetailsViewModel {
         let topics = resources.flatMap({ $0 as? Topic })
         let displayedTopics = Array(topics.prefix(self.maximumNumberOfDetails))
         self.relatedTopics = (topics, displayedTopics, nextPage)
-        self.shouldReloadRelatedTopicsSections = (topics.count > 0) ? true : false
+        self.shouldReloadRelatedTopicsSections = true
     })
   }
   
