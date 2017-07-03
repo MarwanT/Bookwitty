@@ -42,6 +42,10 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
     viewModel.initialize(with: book)
   }
   
+  func initialize(withId id: String) {
+    viewModel.initialize(withId: id)
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     title = viewModel.viewControllerTitle

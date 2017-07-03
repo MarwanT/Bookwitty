@@ -12,6 +12,7 @@ import AsyncDisplayKit
 
 final class BookDetailsViewModel {
   var book: Book! = nil
+  fileprivate var bookId: String? = nil
   var relatedReadingLists: (readingLists: [ReadingList]?, prefixed: [ReadingList]?, nextPageURL: URL?)? = nil
   var relatedTopics: (topics: [Topic]?, prefixed: [Topic]?, nextPageURL: URL?)? = nil
   
@@ -29,6 +30,10 @@ final class BookDetailsViewModel {
     self.book = book
   }
 
+  func initialize(withId id: String) {
+    self.bookId = id
+  }
+  
   var viewControllerTitle: String? {
     return ""
   }
