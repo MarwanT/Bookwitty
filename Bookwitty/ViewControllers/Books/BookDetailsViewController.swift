@@ -23,20 +23,23 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
     fatalError("init(coder:) has not been implemented")
   }
   
-  init(with book: Book) {
+  init() {
     flowLayout = UICollectionViewFlowLayout()
     flowLayout.sectionInset = UIEdgeInsets.zero
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
     
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
-    viewModel.book = book
     
     loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
     
     super.init(node: collectionNode)
     
     viewModel.viewController = self
+  }
+  
+  func initialize(with book: Book) {
+    viewModel.initialize(with: book)
   }
   
   override func viewDidLoad() {

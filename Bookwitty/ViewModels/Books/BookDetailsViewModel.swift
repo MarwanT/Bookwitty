@@ -25,6 +25,10 @@ final class BookDetailsViewModel {
   fileprivate var shouldReloadRelatedReadingListsSections = false
   fileprivate var shouldReloadRelatedTopicsSections = false
   
+  func initialize(with book: Book) {
+    self.book = book
+  }
+
   var viewControllerTitle: String? {
     return ""
   }

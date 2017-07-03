@@ -788,7 +788,8 @@ extension PostDetailsViewController {
   }
 
   fileprivate func pushBookDetailsViewController(with book: Book) {
-    let bookDetailsViewController = BookDetailsViewController(with: book)
+    let bookDetailsViewController = BookDetailsViewController()
+    bookDetailsViewController.initialize(with: book)
     navigationController?.pushViewController(bookDetailsViewController, animated: true)
   }
 
@@ -821,7 +822,8 @@ extension PostDetailsViewController {
         topicViewController.initialize(with: resource as ModelCommonProperties)
         navigationController?.pushViewController(topicViewController, animated: true)
       } else {
-        let bookDetailsViewController = BookDetailsViewController(with: resource)
+        let bookDetailsViewController = BookDetailsViewController()
+        bookDetailsViewController.initialize(with: resource)
         bookDetailsViewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(bookDetailsViewController, animated: true)
       }

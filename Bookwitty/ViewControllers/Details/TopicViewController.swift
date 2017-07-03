@@ -596,13 +596,15 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
     case .relatedBooks:
       //TODO: [DataManager]
       if let resource = viewModel.relatedBook(at: indexPath.item) {
-        let vc = BookDetailsViewController(with: resource)
+        let vc = BookDetailsViewController()
+        vc.initialize(with: resource)
         navigationController?.pushViewController(vc, animated: true)
       }
     case .editions:
       //TODO: [DataManager]
       if let resource = viewModel.edition(at: indexPath.item) {
-        let vc = BookDetailsViewController(with: resource)
+        let vc = BookDetailsViewController()
+        vc.initialize(with: resource)
         navigationController?.pushViewController(vc, animated: true)
       }
     case .followers:
@@ -1129,7 +1131,8 @@ extension TopicViewController {
       topicViewController.initialize(with: resource as ModelCommonProperties)
       navigationController?.pushViewController(topicViewController, animated: true)
     } else {
-      let bookDetailsViewController = BookDetailsViewController(with: resource)
+      let bookDetailsViewController = BookDetailsViewController()
+      bookDetailsViewController.initialize(with: resource)
       navigationController?.pushViewController(bookDetailsViewController, animated: true)
     }
   }

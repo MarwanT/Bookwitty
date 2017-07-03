@@ -666,7 +666,8 @@ extension ProfileDetailsViewController {
       topicViewController.initialize(with: resource as ModelCommonProperties)
       navigationController?.pushViewController(topicViewController, animated: true)
     } else {
-      let bookDetailsViewController = BookDetailsViewController(with: resource)
+      let bookDetailsViewController = BookDetailsViewController()
+      bookDetailsViewController.initialize(with: resource)
       navigationController?.pushViewController(bookDetailsViewController, animated: true)
     }
   }
