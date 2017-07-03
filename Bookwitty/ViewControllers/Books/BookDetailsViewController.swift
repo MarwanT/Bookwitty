@@ -10,6 +10,7 @@ import UIKit
 import AsyncDisplayKit
 import Spine
 import GSImageViewerController
+import SwiftLoader
 
 class BookDetailsViewController: ASViewController<ASCollectionNode> {
   let viewModel = BookDetailsViewModel()
@@ -241,6 +242,7 @@ extension BookDetailsViewController {
   fileprivate func viewFormats(_ book: Book) {
     let viewController = Storyboard.Books.instantiate(ProductFormatsViewController.self)
     viewController.initialize(with: book)
+    viewController.delegate = self
     navigationController?.pushViewController(viewController, animated: true)
   }
   
@@ -554,5 +556,19 @@ extension BookDetailsViewController: BookDetailsHeaderNodeDelegate {
     let transitionInfo = GSTransitionInfo(fromView: imageNode.view)
     let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
     present(imageViewer, animated: true, completion: nil)
+  }
+}
+
+extension BookDetailsViewController: ProductFormatsViewControllerDelegate {
+  func productFormats(_ viewController: ProductFormatsViewController, selected editionId: String, didFinishLoading completion: ((Bool) -> Void)?) {
+    viewModel.initialize(withId: editionId)
+    
+    SwiftLoader.show(animated: true)
+    viewModel.loadContent { (success, errors) in
+      SwiftLoader.hide()
+      let sectionsNeedsReloading = self.viewModel.sectionsNeedsReloading()
+      self.reloadCollectionViewSections(sections: sectionsNeedsReloading)
+      completion?(success)
+    }
   }
 }
