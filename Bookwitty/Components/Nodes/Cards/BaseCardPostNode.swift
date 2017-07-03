@@ -84,7 +84,11 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
       if let actionInfoValue = actionInfoValue {
         actionInfoNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
           .append(text: actionInfoValue, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      } else {
+        actionInfoNode.attributedText = nil
       }
+
+      actionInfoNode.setNeedsLayout()
     }
   }
 
