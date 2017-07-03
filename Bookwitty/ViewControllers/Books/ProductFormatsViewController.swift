@@ -105,7 +105,9 @@ class ProductFormatsViewController: UIViewController {
         self.navigationController?.popToViewController(self, animated: false)
         self.navigationController?.popViewController(animated: true)
       } else {
-        // TODO: Display Alert
+        self.showAlertWith(
+          title: Strings.couldnt_load_selected_edition_title(),
+          message: Strings.couldnt_load_selected_edition_message())
       }
     })
   }
