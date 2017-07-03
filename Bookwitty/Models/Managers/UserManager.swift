@@ -184,6 +184,13 @@ class UserManager {
     }
     return signedInUser.isMy(penName: penName)
   }
+
+  func isMyDefault(penName: PenName) -> Bool {
+    guard isSignedIn, let defaultPenName = defaultPenName else {
+      return false
+    }
+    return defaultPenName.id == penName.id
+  }
 }
 
 extension UserManager {
