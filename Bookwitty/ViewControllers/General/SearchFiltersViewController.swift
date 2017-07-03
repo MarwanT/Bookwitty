@@ -99,7 +99,7 @@ extension SearchFiltersViewController: UITableViewDataSource, UITableViewDelegat
   }
 
   func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return 50.0
+    return 60.0
   }
 
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -148,6 +148,7 @@ extension SearchFiltersViewController: Themeable {
     view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
     tableViewHeader.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     tableViewHeaderButton.setTitleColor(ThemeManager.shared.currentTheme.defaultButtonColor(), for: .normal)
+    tableViewHeaderButton.titleLabel?.font = FontDynamicType.footnote.font
     tableView.backgroundColor = UIColor.clear
 
     let margin = ThemeManager.shared.currentTheme.generalExternalMargin()

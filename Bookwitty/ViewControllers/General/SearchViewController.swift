@@ -48,7 +48,13 @@ class SearchViewController: ASViewController<ASCollectionNode> {
   }
 
   var shouldDisplayFilter: Bool {
-    return viewModel.facet != nil
+    guard let facet = viewModel.facet else {
+      return false
+    }
+    let categories = facet.categories?.count ?? 0 > 0
+    let languages = facet.languages?.count ?? 0 > 0
+    let typs = facet.types?.count ?? 0 > 0
+    return categories || languages || typs
   }
 
   required init?(coder aDecoder: NSCoder) {
