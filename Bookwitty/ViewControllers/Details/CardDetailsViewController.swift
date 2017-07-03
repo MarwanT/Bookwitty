@@ -11,17 +11,30 @@ import AsyncDisplayKit
 import Spine
 import Moya
 import GSImageViewerController
+import SwiftLoader
 
 class CardDetailsViewController: GenericNodeViewController {
+  var commentsNode: CommentsNode?
+  
   var viewModel: CardDetailsViewModel
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  init(node: BaseCardPostNode, title: String? = nil, resource: ModelResource) {
+  init(node: BaseCardPostNode, title: String? = nil, resource: ModelResource, includeCommentsSection: Bool = true) {
     viewModel = CardDetailsViewModel(resource: resource)
-    super.init(node: node, title: nil)
+    var containerNode: ASDisplayNode = node
+    if let resourceId = resource.id {
+      let concatNode = CommentsNode.concatenate(with: node, resourceIdentifier: resourceId)
+      containerNode = concatNode.wrapperNode
+      commentsNode = concatNode.commentsNode
+    }
+    
+    super.init(node: containerNode, title: nil)
+    
+    commentsNode?.delegate = self
+    
     node.delegate = self
     node.updateMode(fullMode: true)
     node.updateDimVisibility(visible: true)
@@ -68,6 +81,12 @@ class CardDetailsViewController: GenericNodeViewController {
         card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
       }
     }
+  }
+  
+  func pushCommentsViewController(with commentsManager: CommentsManager) {
+    let commentsVC = CommentsViewController()
+    commentsVC.initialize(with: commentsManager)
+    self.navigationController?.pushViewController(commentsVC, animated: true)
   }
   
   func viewControllerAnalyticsScreenName(for resource: ModelResource) {
@@ -232,5 +251,60 @@ extension CardDetailsViewController: PhotoCardContentNodeDelegate {
     let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
     present(imageViewer, animated: true, completion: nil)
 
+  }
+}
+
+extension CardDetailsViewController: CommentsNodeDelegate {
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
+    switch action {
+    case .viewRepliesForComment(let comment, let postId):
+      break
+    case .viewAllComments(let commentsManager):
+      pushCommentsViewController(with: commentsManager)
+    case .writeComment(let parentCommentIdentifier, _):
+      CommentComposerViewController.show(from: self, delegate: self, parentCommentId: parentCommentIdentifier)
+    case .commentAction(let comment, let action):
+      switch action {
+      case .wit:
+        commentsNode.wit(comment: comment, completion: nil)
+      case .unwit:
+        commentsNode.unwit(comment: comment, completion: nil)
+      case .dim:
+        commentsNode.dim(comment: comment, completion: nil)
+      case .undim:
+        commentsNode.undim(comment: comment, completion: nil)
+      case .reply:
+        CommentComposerViewController.show(from: self, delegate: self, parentCommentId: comment.id)
+      default:
+        break
+      }
+    }
+  }
+}
+
+// MARK: - Compose comment delegate implementation
+extension CardDetailsViewController: CommentComposerViewControllerDelegate {
+  func commentComposerCancel(_ viewController: CommentComposerViewController) {
+    dismiss(animated: true, completion: nil)
+  }
+  
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, parentCommentId: String?) {
+    SwiftLoader.show(animated: true)
+    commentsNode?.publishComment(content: content, parentCommentId: parentCommentId) {
+      (success, error) in
+      SwiftLoader.hide()
+      guard success else {
+        if let error = error {
+          self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
+            (_) in
+            // Restart editing the comment
+            _ = viewController.becomeFirstResponder()
+          })
+        }
+        return
+      }
+      
+      self.dismiss(animated: true, completion: nil)
+    }
   }
 }

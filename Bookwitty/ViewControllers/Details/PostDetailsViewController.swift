@@ -11,6 +11,7 @@ import AsyncDisplayKit
 import Spine
 import Moya
 import GSImageViewerController
+import SwiftLoader
 
 class PostDetailsViewController: ASViewController<PostDetailsNode> {
   let postDetailsNode: PostDetailsNode
@@ -35,6 +36,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
       self.postDetailsNode.penName = self.viewModel.penName
     }
     loadContentPosts()
+    loadComments()
     loadRelatedBooks()
     loadRelatedPosts()
     applyLocalization()
@@ -120,6 +122,13 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
       self.postDetailsNode.showPostsLoader = false
       self.postDetailsNode.loadPostItemsNode()
     }
+  }
+  
+  func loadComments() {
+    guard let id = viewModel.resource.id else {
+      return
+    }
+    postDetailsNode.loadComments(with: id)
   }
 
   func loadRelatedBooks() {
@@ -391,7 +400,32 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
     let transitionInfo = GSTransitionInfo(fromView: imageNode.view)
     let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
     present(imageViewer, animated: true, completion: nil)
-
+  }
+  
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
+    switch action {
+    case .viewRepliesForComment(let comment, let postId):
+      break
+    case .viewAllComments(let commentsManager):
+      pushCommentsViewController(with: commentsManager)
+    case .writeComment(let parentCommentIdentifier, _):
+      CommentComposerViewController.show(from: self, delegate: self, parentCommentId: parentCommentIdentifier)
+    case .commentAction(let comment, let action):
+      switch action {
+      case .wit:
+        postDetailsNode.wit(comment: comment, completion: nil)
+      case .unwit:
+        postDetailsNode.unwit(comment: comment, completion: nil)
+      case .dim:
+        postDetailsNode.dim(comment: comment, completion: nil)
+      case .undim:
+        postDetailsNode.undim(comment: comment, completion: nil)
+      case .reply:
+        CommentComposerViewController.show(from: self, delegate: self, parentCommentId: comment.id)
+      default:
+        break
+      }
+    }
   }
 }
 
@@ -786,6 +820,12 @@ extension PostDetailsViewController {
     default: break
     }
   }
+  
+  func pushCommentsViewController(with commentsManager: CommentsManager) {
+    let commentsVC = CommentsViewController()
+    commentsVC.initialize(with: commentsManager)
+    self.navigationController?.pushViewController(commentsVC, animated: true)
+  }
 }
 
 // MARK: - Actions For Cards
@@ -982,5 +1022,32 @@ extension PostDetailsViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+  }
+}
+
+// MARK: - Compose comment delegate implementation
+extension PostDetailsViewController: CommentComposerViewControllerDelegate {
+  func commentComposerCancel(_ viewController: CommentComposerViewController) {
+    dismiss(animated: true, completion: nil)
+  }
+  
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, parentCommentId: String?) {
+    SwiftLoader.show(animated: true)
+    postDetailsNode.publishComment(content: content, parentCommentId: parentCommentId) {
+      (success, error) in
+      SwiftLoader.hide()
+      guard success else {
+        if let error = error {
+          self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
+            (_) in
+            // Restart editing the comment
+            _ = viewController.becomeFirstResponder()
+          })
+        }
+        return
+      }
+      
+      self.dismiss(animated: true, completion: nil)
+    }
   }
 }

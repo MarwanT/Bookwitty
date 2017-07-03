@@ -2,6 +2,30 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>f_number_of_books</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@value@</string>
+		<key>value</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>%d Livres</string>
+			<key>one</key>
+			<string>%d Livre</string>
+			<key>two</key>
+			<string>%d Livres</string>
+			<key>few</key>
+			<string>%d Livres</string>
+			<key>many</key>
+			<string>%d Livres</string>
+			<key>other</key>
+			<string>%d Livres</string>
+		</dict>
+	</dict>
 	<key>f_number_of_contributors</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -24,6 +48,30 @@
 			<string>%d Contributeurs</string>
 			<key>other</key>
 			<string>%d Contributeurs</string>
+		</dict>
+	</dict>
+	<key>f_number_of_days_ago</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@value@</string>
+		<key>value</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>Il y a moins d&apos;un jour</string>
+			<key>one</key>
+			<string>il y a %d jour</string>
+			<key>two</key>
+			<string>il y a %d jours</string>
+			<key>few</key>
+			<string>il y a %d jours</string>
+			<key>many</key>
+			<string>il y a %d jours</string>
+			<key>other</key>
+			<string>il y a %d jours</string>
 		</dict>
 	</dict>
 	<key>f_number_of_followers</key>
@@ -50,6 +98,78 @@
 			<string>%d Abonnés</string>
 		</dict>
 	</dict>
+	<key>f_number_of_hours_ago</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@value@</string>
+		<key>value</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>Il y a moins d&apos;une heure</string>
+			<key>one</key>
+			<string>il y a %d heure</string>
+			<key>two</key>
+			<string>il y a %d heures</string>
+			<key>few</key>
+			<string>il y a %d heures</string>
+			<key>many</key>
+			<string>il y a %d heures</string>
+			<key>other</key>
+			<string>il y a %d heures</string>
+		</dict>
+	</dict>
+	<key>f_number_of_minutes_ago</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@value@</string>
+		<key>value</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>Il y a moins d&apos;une minute</string>
+			<key>one</key>
+			<string>il y a %d minute</string>
+			<key>two</key>
+			<string>il y a %d minutes</string>
+			<key>few</key>
+			<string>il y a %d minutes</string>
+			<key>many</key>
+			<string>il y a %d minutes</string>
+			<key>other</key>
+			<string>il y a %d minutes</string>
+		</dict>
+	</dict>
+	<key>f_number_of_months_ago</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@value@</string>
+		<key>value</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>Il y a moins d&apos;un mois</string>
+			<key>one</key>
+			<string>il y a %d mois</string>
+			<key>two</key>
+			<string>il y a %d mois</string>
+			<key>few</key>
+			<string>il y a %d mois</string>
+			<key>many</key>
+			<string>il y a %d mois</string>
+			<key>other</key>
+			<string>il y a %d mois</string>
+		</dict>
+	</dict>
 	<key>f_number_of_posts</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -74,7 +194,7 @@
 			<string>%d Posts</string>
 		</dict>
 	</dict>
-	<key>f_number_of_books</key>
+	<key>f_number_of_weeks_ago</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@value@</string>
@@ -85,17 +205,65 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>zero</key>
-			<string>%d Livres</string>
+			<string>Il y a moins d&apos;une semaine</string>
 			<key>one</key>
-			<string>%d Livre</string>
+			<string>il y a %d semaine</string>
 			<key>two</key>
-			<string>%d Livres</string>
+			<string>il y a %d semaines</string>
 			<key>few</key>
-			<string>%d Livres</string>
+			<string>il y a %d semaines</string>
 			<key>many</key>
-			<string>%d Livres</string>
+			<string>il y a %d semaines</string>
 			<key>other</key>
-			<string>%d Livres</string>
+			<string>il y a %d semaines</string>
+		</dict>
+	</dict>
+	<key>f_number_of_years_ago</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@value@</string>
+		<key>value</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>Il y a moins d&apos;un an</string>
+			<key>one</key>
+			<string>il y a %d an</string>
+			<key>two</key>
+			<string>il y a %d ans</string>
+			<key>few</key>
+			<string>il y a %d ans</string>
+			<key>many</key>
+			<string>il y a %d ans</string>
+			<key>other</key>
+			<string>il y a %d ans</string>
+		</dict>
+	</dict>
+	<key>f_view_all_replies</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@value@</string>
+		<key>value</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>Voir toutes les réponses</string>
+			<key>one</key>
+			<string>Voir la réponses</string>
+			<key>two</key>
+			<string>Voir toutes les %d réponses</string>
+			<key>few</key>
+			<string>Voir toutes les %d réponses</string>
+			<key>many</key>
+			<string>Voir toutes les %d réponses</string>
+			<key>other</key>
+			<string>Voir toutes les %d réponses</string>
 		</dict>
 	</dict>
 </dict>

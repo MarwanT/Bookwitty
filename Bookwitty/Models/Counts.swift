@@ -11,6 +11,7 @@ import Foundation
 class Counts: NSObject {
   private struct CountsKey {
     private init(){}
+    static let children = "children"
     static let followers = "followers"
     static let contributors = "contributors"
     static let comments = "comments"
@@ -22,6 +23,7 @@ class Counts: NSObject {
 
   func isValid() -> Bool {
     return (
+      (children ?? 0) > 0 ||
       (comments ?? 0) > 0 ||
       (wits ?? 0) > 0 ||
       (dims ?? 0) > 0 ||
@@ -33,6 +35,7 @@ class Counts: NSObject {
     )
   }
 
+  var children: Int?
   var comments: Int?
   var commenters: Int?
   var wits: Int?
@@ -53,6 +56,7 @@ class Counts: NSObject {
   }
 
   private func setValues(dictionary: [String : Any]) {
+    self.children = (dictionary[CountsKey.children] as? NSNumber)?.intValue
     self.wits = (dictionary[CountsKey.wits] as? NSNumber)?.intValue
     self.dims = (dictionary[CountsKey.dims] as? NSNumber)?.intValue
     self.commenters = (dictionary[CountsKey.commenters] as? NSNumber)?.intValue

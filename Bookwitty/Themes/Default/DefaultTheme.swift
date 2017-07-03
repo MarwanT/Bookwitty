@@ -41,6 +41,10 @@ final class DefaultTheme: Theme {
     let refreshControlAppearance = UIRefreshControl.appearance()
     refreshControlAppearance.tintColor = self.colorNumber19()
   }
+  
+  func defaultCornerRadius() -> CGFloat {
+    return 2.0
+  }
 }
 
 // MARK: - Colors
@@ -174,8 +178,16 @@ extension DefaultTheme {
   }
 }
 
-// MARK: - Buttons
+// MARK: - Spacings
 extension DefaultTheme {
+  func defaultLayoutMargin() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+  }
+  
+  func defaultTextViewInsets() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 15, left: 10, bottom: 15, right: 10)
+  }
+  
   func cardExternalMargin() -> CGFloat {
     return 10
   }

@@ -82,6 +82,7 @@
 		59049B111E81E36000EDF796 /* Node+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59049B101E81E36000EDF796 /* Node+Util.swift */; };
 		59049B131E81E44400EDF796 /* JoinUsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59049B121E81E44400EDF796 /* JoinUsNode.swift */; };
 		59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59057FDF1E25340A0036AAF3 /* Introduction.storyboard */; };
+		590E30021EDC1A68006C6D5C /* CommentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590E30011EDC1A68006C6D5C /* CommentNode.swift */; };
 		59139E041E895CDA002022F6 /* Volkhov-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59139E021E895CCD002022F6 /* Volkhov-Bold.ttf */; };
 		59139E051E895CDC002022F6 /* Volkhov-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59139E031E895CCD002022F6 /* Volkhov-BoldItalic.ttf */; };
 		591E15561E70E381008CA78A /* SectionSubtitleHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591E15551E70E381008CA78A /* SectionSubtitleHeaderNode.swift */; };
@@ -152,6 +153,16 @@
 		59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BD55791E309BFC00D3B805 /* GeneralSettings.swift */; };
 		59C048801E735AAB00CADE38 /* BagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C0487F1E735AAB00CADE38 /* BagViewController.swift */; };
 		59C048821E735C4500CADE38 /* BagNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C048811E735C4500CADE38 /* BagNode.swift */; };
+		59C997BD1ED5A0FD009A8451 /* CommentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C997BC1ED5A0FD009A8451 /* CommentAPI.swift */; };
+		59C997BF1ED5AD70009A8451 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C997BE1ED5AD70009A8451 /* Comment.swift */; };
+		59CB4DE71EDDADA800E7A60B /* CommentTreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB4DE61EDDADA800E7A60B /* CommentTreeNode.swift */; };
+		59CB4DE91EDDBFAE00E7A60B /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB4DE81EDDBFAE00E7A60B /* CommentsViewController.swift */; };
+		59CB4DEB1EDDC64200E7A60B /* CommentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB4DEA1EDDC64200E7A60B /* CommentsViewModel.swift */; };
+		59CB4DED1EDEA49C00E7A60B /* CommentsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB4DEC1EDEA49C00E7A60B /* CommentsNode.swift */; };
+		59CB4DEF1EDEC15800E7A60B /* CommentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB4DEE1EDEC15800E7A60B /* CommentsManager.swift */; };
+		59CB4DF11EE0600800E7A60B /* WriteCommentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB4DF01EE0600800E7A60B /* WriteCommentNode.swift */; };
+		59CB4DF31EE59ABD00E7A60B /* Details.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59CB4DF21EE59ABD00E7A60B /* Details.storyboard */; };
+		59CB4DF51EE59BAD00E7A60B /* CommentComposerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB4DF41EE59BAD00E7A60B /* CommentComposerViewController.swift */; };
 		59CBE4F81E8090280068C7AD /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CBE4F71E8090280068C7AD /* AppError.swift */; };
 		59CBE4FA1E8094070068C7AD /* ErrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CBE4F91E8094070068C7AD /* ErrorManager.swift */; };
 		59CF3F821ECF3332002A5821 /* IntroductoryBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF3F811ECF3332002A5821 /* IntroductoryBanner.swift */; };
@@ -358,6 +369,7 @@
 		59049B101E81E36000EDF796 /* Node+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Node+Util.swift"; sourceTree = "<group>"; };
 		59049B121E81E44400EDF796 /* JoinUsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JoinUsNode.swift; path = ../JoinUsNode.swift; sourceTree = "<group>"; };
 		59057FDF1E25340A0036AAF3 /* Introduction.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Introduction.storyboard; sourceTree = "<group>"; };
+		590E30011EDC1A68006C6D5C /* CommentNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentNode.swift; sourceTree = "<group>"; };
 		59139E021E895CCD002022F6 /* Volkhov-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Volkhov-Bold.ttf"; sourceTree = "<group>"; };
 		59139E031E895CCD002022F6 /* Volkhov-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Volkhov-BoldItalic.ttf"; sourceTree = "<group>"; };
 		591E15551E70E381008CA78A /* SectionSubtitleHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionSubtitleHeaderNode.swift; sourceTree = "<group>"; };
@@ -428,6 +440,16 @@
 		59BD55791E309BFC00D3B805 /* GeneralSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralSettings.swift; sourceTree = "<group>"; };
 		59C0487F1E735AAB00CADE38 /* BagViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BagViewController.swift; sourceTree = "<group>"; };
 		59C048811E735C4500CADE38 /* BagNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BagNode.swift; sourceTree = "<group>"; };
+		59C997BC1ED5A0FD009A8451 /* CommentAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentAPI.swift; sourceTree = "<group>"; };
+		59C997BE1ED5AD70009A8451 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		59CB4DE61EDDADA800E7A60B /* CommentTreeNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTreeNode.swift; sourceTree = "<group>"; };
+		59CB4DE81EDDBFAE00E7A60B /* CommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
+		59CB4DEA1EDDC64200E7A60B /* CommentsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewModel.swift; sourceTree = "<group>"; };
+		59CB4DEC1EDEA49C00E7A60B /* CommentsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsNode.swift; sourceTree = "<group>"; };
+		59CB4DEE1EDEC15800E7A60B /* CommentsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsManager.swift; sourceTree = "<group>"; };
+		59CB4DF01EE0600800E7A60B /* WriteCommentNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WriteCommentNode.swift; sourceTree = "<group>"; };
+		59CB4DF21EE59ABD00E7A60B /* Details.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Details.storyboard; sourceTree = "<group>"; };
+		59CB4DF41EE59BAD00E7A60B /* CommentComposerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentComposerViewController.swift; sourceTree = "<group>"; };
 		59CBE4F71E8090280068C7AD /* AppError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		59CBE4F91E8094070068C7AD /* ErrorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorManager.swift; sourceTree = "<group>"; };
 		59CF3F811ECF3332002A5821 /* IntroductoryBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductoryBanner.swift; sourceTree = "<group>"; };
@@ -611,6 +633,7 @@
 				F42041C41E73010100E7D208 /* CardDetailsViewController.swift */,
 				F43996841E76C76700FE9D8B /* PostsListViewController.swift */,
 				F478D92B1E7C26BA00B9EF18 /* ProfileDetailsViewController.swift */,
+				59CB4DF41EE59BAD00E7A60B /* CommentComposerViewController.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -794,6 +817,7 @@
 				F4A426341E5629210090CD51 /* Video.swift */,
 				F4A426301E5623EE0090CD51 /* Text.swift */,
 				F4A426321E5628080090CD51 /* Quote.swift */,
+				59C997BE1ED5AD70009A8451 /* Comment.swift */,
 				F4A4262A1E5617A30090CD51 /* PageAuthor.swift */,
 				F49AF6B21E81E5B40045F604 /* CallToAction.swift */,
 				F43A690C1E79441D001C3657 /* Counts.swift */,
@@ -861,6 +885,7 @@
 				59DA47561E3A65A600BA90A5 /* Storyboard.swift */,
 				56399DBB1E51CF2D005192AC /* Account.storyboard */,
 				567B3C011ED42ECF00E02E16 /* Misc.storyboard */,
+				59CB4DF21EE59ABD00E7A60B /* Details.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -916,6 +941,10 @@
 				5988FCFB1EA4AC100045F82B /* TTTAttributedLabelNode.swift */,
 				59CF3F811ECF3332002A5821 /* IntroductoryBanner.swift */,
 				562A996B1ED8683000382ADD /* FilterCellNode.swift */,
+				590E30011EDC1A68006C6D5C /* CommentNode.swift */,
+				59CB4DE61EDDADA800E7A60B /* CommentTreeNode.swift */,
+				59CB4DEC1EDEA49C00E7A60B /* CommentsNode.swift */,
+				59CB4DF01EE0600800E7A60B /* WriteCommentNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -1028,6 +1057,7 @@
 				59CF44001E663C35006C16FC /* General+API.swift */,
 				56620FC71E89470600BD92BB /* Upload+API.swift */,
 				5657A5421E8BCF02000EE647 /* Utilities+API.swift */,
+				59C997BC1ED5A0FD009A8451 /* CommentAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1085,6 +1115,7 @@
 				59871F1C1E78AF19000A86CD /* PostsViewModel.swift */,
 				F400CDC71E7AF62600B7EF26 /* SearchViewModel.swift */,
 				567B3C051ED4330F00E02E16 /* SearchFiltersViewModel.swift */,
+				59CB4DEA1EDDC64200E7A60B /* CommentsViewModel.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -1180,6 +1211,7 @@
 				59CF76471E5C8079003EAB6B /* UserManager.swift */,
 				59CBE4F91E8094070068C7AD /* ErrorManager.swift */,
 				56A623B51EA0C02D00D930A7 /* DataManager.swift */,
+				59CB4DEE1EDEC15800E7A60B /* CommentsManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -1289,6 +1321,7 @@
 				F400CDC51E7AD48D00B7EF26 /* SearchViewController.swift */,
 				59871F191E78ADFB000A86CD /* PostsViewController.swift */,
 				567B3C031ED4310600E02E16 /* SearchFiltersViewController.swift */,
+				59CB4DE81EDDBFAE00E7A60B /* CommentsViewController.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -1490,6 +1523,7 @@
 				597B8E391E3954B200C7811B /* Volkhov-Regular.ttf in Resources */,
 				56399DBC1E51CF2D005192AC /* Account.storyboard in Resources */,
 				59A164CB1E561BBD00088D84 /* LaunchScreen.xib in Resources */,
+				59CB4DF31EE59ABD00E7A60B /* Details.storyboard in Resources */,
 				F47188181E4B1EB50076F93C /* Root.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1621,7 +1655,9 @@
 				564EEC101E70298200700474 /* ReadingListsViewModel.swift in Sources */,
 				59CF76481E5C8079003EAB6B /* UserManager.swift in Sources */,
 				594290201E5316380006B2F1 /* FeaturedContentCollectionViewCell.swift in Sources */,
+				59CB4DF51EE59BAD00E7A60B /* CommentComposerViewController.swift in Sources */,
 				F42041C51E73010100E7D208 /* CardDetailsViewController.swift in Sources */,
+				59C997BD1ED5A0FD009A8451 /* CommentAPI.swift in Sources */,
 				595C4F0F1E3F8C9200BE3942 /* PasswordInputField.swift in Sources */,
 				56399DBF1E51D006005192AC /* AccountViewController.swift in Sources */,
 				F43A5E901E69878A008C018B /* OnBoardingCellNode.swift in Sources */,
@@ -1643,6 +1679,7 @@
 				5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */,
 				59DCFD811E967BE700C94D21 /* ProductDetails.swift in Sources */,
 				594290181E522D980006B2F1 /* BannerView.swift in Sources */,
+				59CB4DE71EDDADA800E7A60B /* CommentTreeNode.swift in Sources */,
 				F420AD9F1E4231E000C78AEB /* AttributedStringBuilder.swift in Sources */,
 				F4A4262D1E5619E10090CD51 /* ReadingList.swift in Sources */,
 				592974BF1E5F57AE0083A4C2 /* ModelCommonProperties.swift in Sources */,
@@ -1657,6 +1694,8 @@
 				59D27D0F1E40D2EE00468C29 /* SignInViewModel.swift in Sources */,
 				59CF764C1E5CB15E003EAB6B /* BooksTableViewModel.swift in Sources */,
 				F43A690D1E79441D001C3657 /* Counts.swift in Sources */,
+				590E30021EDC1A68006C6D5C /* CommentNode.swift in Sources */,
+				59CB4DEB1EDDC64200E7A60B /* CommentsViewModel.swift in Sources */,
 				561229EB1EA65F21004CE079 /* PhotoCardViewModel.swift in Sources */,
 				5644F21C1E55A77100B7D8E7 /* SettingsViewModel.swift in Sources */,
 				F4A426351E5629210090CD51 /* Video.swift in Sources */,
@@ -1683,11 +1722,13 @@
 				F417B1D21E71C3D400B0FAFE /* PostDetailsItemNode.swift in Sources */,
 				59BD55781E302EB800D3B805 /* Analytics.swift in Sources */,
 				56205DEB1E5324BC000CA4D7 /* TableViewSectionHeaderView.swift in Sources */,
+				59CB4DEF1EDEC15800E7A60B /* CommentsManager.swift in Sources */,
 				56929CE61E671BE700B3D00A /* SegmentedControl.swift in Sources */,
 				594B9F6F1E55F557007C49E1 /* RootTabBarViewModel.swift in Sources */,
 				59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */,
 				562A996C1ED8683000382ADD /* FilterCellNode.swift in Sources */,
 				F4CDDD371E60263800474CAA /* RotatingImageNode.swift in Sources */,
+				59C997BF1ED5AD70009A8451 /* Comment.swift in Sources */,
 				59CF44031E66E01A006C16FC /* BookDetailsViewController.swift in Sources */,
 				56320C8C1EA748FB00642934 /* LinkCardPostCellNode.swift in Sources */,
 				59BD557A1E309BFC00D3B805 /* GeneralSettings.swift in Sources */,
@@ -1746,6 +1787,7 @@
 				593769D81E3689FB00F23226 /* DefaultTheme.swift in Sources */,
 				59EC5BAA1E6C5987006E1CB9 /* BookDetailsStockNode.swift in Sources */,
 				5988FCFC1EA4AC100045F82B /* TTTAttributedLabelNode.swift in Sources */,
+				59CB4DF11EE0600800E7A60B /* WriteCommentNode.swift in Sources */,
 				561229E31EA5FA5D004CE079 /* ProfileCardViewModel.swift in Sources */,
 				59A341571E575D3100CF90B3 /* NewsFeedViewModel.swift in Sources */,
 				5657A5431E8BCF02000EE647 /* Utilities+API.swift in Sources */,
@@ -1772,6 +1814,7 @@
 				56320C881EA748FB00642934 /* BaseCardPostNode.swift in Sources */,
 				F42A0AFF1E80829600ED52D2 /* UISearchBar+Utils.swift in Sources */,
 				F41F3AB71E6785CB004622D3 /* LoaderNode.swift in Sources */,
+				59CB4DE91EDDBFAE00E7A60B /* CommentsViewController.swift in Sources */,
 				F496DE061E65CB30007E22B1 /* Discover+API.swift in Sources */,
 				561229E71EA628E9004CE079 /* QuoteCardViewModel.swift in Sources */,
 				F420B6A21E43C570001F34CD /* User.swift in Sources */,
@@ -1811,6 +1854,7 @@
 				5613402E1E5221730085B8A5 /* AccountPenNameTableViewCell.swift in Sources */,
 				595A649E1E2CF4EA00655067 /* String.swift in Sources */,
 				F458C5F41E5AFEAA00AFD0FC /* PenNameCellNode.swift in Sources */,
+				59CB4DED1EDEA49C00E7A60B /* CommentsNode.swift in Sources */,
 				F42ED4F21E686BF9002B65DF /* OnBoardingViewController.swift in Sources */,
 				56535F361E7CB9ED0045E73D /* IFramely.swift in Sources */,
 				F478D92E1E7C275D00B9EF18 /* ProfileDetailsViewModel.swift in Sources */,

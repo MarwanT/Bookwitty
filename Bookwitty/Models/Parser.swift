@@ -145,6 +145,7 @@ class Parser {
     serializer.registerResource(Link.self)
     serializer.registerResource(CuratedCollection.self)
     serializer.registerResource(Book.self)
+    serializer.registerResource(Comment.self)
     serializer.registerResource(UploadPolicy.self)
   }
 

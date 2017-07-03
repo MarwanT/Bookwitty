@@ -407,6 +407,8 @@ extension Analytics.Action {
       default:
         return .Unfollow
       }
+    case .reply:
+      return .ReplyToComment
     }
   }
 }

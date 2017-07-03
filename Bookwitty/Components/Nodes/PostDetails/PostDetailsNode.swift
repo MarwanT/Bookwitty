@@ -51,6 +51,7 @@ protocol PostDetailsNodeDelegate: class {
   func hasContentItems() -> Bool
   func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
   func postDetails(node: PostDetailsNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action)
 }
 
 class PostDetailsNode: ASScrollNode {
@@ -77,6 +78,7 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let relatedPostsBottomSeparator: SeparatorNode
   fileprivate let relatedPostsNodeLoader: LoaderNode
   fileprivate let bannerImageNode: ASImageNode
+  fileprivate let commentsNode: CommentsNode
 
   let headerNode: PostDetailsHeaderNode
   let postItemsNode: PostDetailsItemNode
@@ -123,6 +125,7 @@ class PostDetailsNode: ASScrollNode {
       }
     }
   }
+  var showCommentNode: Bool = true
   var showRelatedPostsLoader: Bool = false {
     didSet {
       if isNodeLoaded {
@@ -165,6 +168,7 @@ class PostDetailsNode: ASScrollNode {
     relatedPostsNodeLoader = LoaderNode()
     relatedBooksNodeLoader = LoaderNode()
     bannerImageNode = ASImageNode()
+    commentsNode = CommentsNode()
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
@@ -195,6 +199,7 @@ class PostDetailsNode: ASScrollNode {
     relatedPostsNodeLoader = LoaderNode()
     relatedBooksNodeLoader = LoaderNode()
     bannerImageNode = ASImageNode()
+    commentsNode = CommentsNode()
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
@@ -209,6 +214,13 @@ class PostDetailsNode: ASScrollNode {
   func loadRelatedCards() {
     postCardsNode.loadNodes()
     setNeedsLayout()
+  }
+  
+  func loadComments(with resourceIdentifier: String) {
+    let commentsManager = CommentsManager()
+    commentsManager.initialize(postIdentifier: resourceIdentifier)
+    commentsNode.initialize(with: commentsManager)
+    commentsNode.reloadData()
   }
 
   func initializeNode() {
@@ -254,6 +266,9 @@ class PostDetailsNode: ASScrollNode {
     setBannerImage()
 
     bannerImageNode.addTarget(self, action: #selector(bannerTouchUpInside) , forControlEvents: .touchUpInside)
+    
+    commentsNode.displayMode = .compact
+    commentsNode.delegate = self
   }
 
   func setBannerImage() {
@@ -318,6 +333,11 @@ class PostDetailsNode: ASScrollNode {
       vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
       vStackSpec.children?.append(conculsionInsetSpec)
     }
+    
+    if showCommentNode {
+      let commentsWrapper = wrapNode(node: commentsNode, width: constrainedSize.max.width)
+      vStackSpec.children?.append(commentsWrapper)
+    }
 
     relatedBooksNodeLoader.updateLoaderVisibility(show: showRelatedBooksLoader)
     if showRelatedBooksLoader {
@@ -368,5 +388,49 @@ class PostDetailsNode: ASScrollNode {
 extension PostDetailsNode: PostDetailsHeaderNodeDelegate {
   func postDetailsHeader(node: PostDetailsHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
     delegate?.postDetails(node: self, requestToViewImage: image, from: imageNode)
+  }
+}
+
+extension PostDetailsNode: CommentsNodeDelegate {
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
+    delegate?.commentsNode(commentsNode, reactFor: action)
+  }
+}
+
+// MARK: - Comment related methods
+extension PostDetailsNode {
+  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+    commentsNode.publishComment(content: content, parentCommentId: parentCommentId) {
+      (success, error) in
+      completion(success, error)
+    }
+  }
+  
+  func wit(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
+    commentsNode.wit(comment: comment) {
+      (success, error) in
+      completion?(success, error)
+    }
+  }
+  
+  func unwit(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
+    commentsNode.unwit(comment: comment) {
+      (success, error) in
+      completion?(success, error)
+    }
+  }
+  
+  func dim(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
+    commentsNode.dim(comment: comment) {
+      (success, error) in
+      completion?(success, error)
+    }
+  }
+  
+  func undim(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
+    commentsNode.undim(comment: comment) {
+      (success, error) in
+      completion?(success, error)
+    }
   }
 }
