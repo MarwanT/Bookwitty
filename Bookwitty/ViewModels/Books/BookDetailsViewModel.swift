@@ -517,6 +517,10 @@ extension BookDetailsViewModel {
 
 // MARK: - API Calls
 extension BookDetailsViewModel {
+  fileprivate var shouldLoadBookData: Bool {
+    return bookId != nil
+  }
+  
   func loadContent(completion: @escaping (_ success: Bool, _ error: [BookwittyAPIError?]) -> Void) {
     let queue = DispatchGroup()
     
@@ -527,11 +531,16 @@ extension BookDetailsViewModel {
     var loadRelatedReadingListsError: BookwittyAPIError? = nil
     var loadRelatedTopicsError: BookwittyAPIError? = nil
     
-    queue.enter()
-    loadBookDetails { (success, error) in
-      loadBookDetailsSuccess = success
-      loadBookDetailsError = error
-      queue.leave()
+    if shouldLoadBookData {
+      queue.enter()
+      loadBookDetails { (success, error) in
+        loadBookDetailsSuccess = success
+        loadBookDetailsError = error
+        queue.leave()
+      }
+    } else {
+      loadBookDetailsSuccess = true
+      loadBookDetailsError = nil
     }
     
     queue.enter()
@@ -556,15 +565,25 @@ extension BookDetailsViewModel {
   }
   
   func loadBookDetails(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
-    var success: Bool = false
-    var error:BookwittyAPIError? = nil
-    defer {
-      completion(success, error)
+    guard let bookId = bookId else {
+      completion(false, nil)
+      return
     }
     
-    // TODO: Load book details From API
-    success = true
-    shouldReloadBookDetailsSections = false
+    _ = GeneralAPI.content(of: bookId, include: nil, completion: {
+      (success: Bool, book: Book?, error: BookwittyAPIError?) in
+      defer {
+        completion(success, error)
+      }
+      
+      guard success, let book = book else {
+        return
+      }
+      
+      self.book = book
+      self.bookId = nil
+      self.shouldReloadBookDetailsSections = true
+    })
   }
   
   func loadRelatedReadingLists(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
