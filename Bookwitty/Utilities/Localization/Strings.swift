@@ -910,8 +910,12 @@ class Strings {
     return localizedString(key: "f_and_others_find_witty", formatVariables: witters, otherWitters)
   }
 
-  static func findThisWitty(witters: Int) -> String {
+  static func findThisWitty(witters: String) -> String {
     return localizedString(key: "f_find_witty", formatVariables: witters)
+  }
+
+  static func findThisWitty(witters: Int) -> String {
+    return localizedString(key: "f_number_find_witty", formatVariables: witters)
   }
 
   static func contributors(number: Int) -> String {

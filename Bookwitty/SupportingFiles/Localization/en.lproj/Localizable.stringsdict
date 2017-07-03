@@ -26,7 +26,7 @@
 			<string>%d Books</string>
 		</dict>
 	</dict>
-	<key>f_find_witty</key>
+	<key>f_number_find_witty</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@value@</string>
