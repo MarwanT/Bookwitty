@@ -48,6 +48,8 @@
 "content" = "Content";
 "continue" = "Continue";
 "contributors" = "Contributors";
+"couldnt_load_selected_edition_message" = "We could not load selected edition!";
+"couldnt_load_selected_edition_title" = "Oooops";
 "couldnt_load_your_data" = "We could not load your data";
 "country" = "Country";
 "country_region" = "Country/Region";

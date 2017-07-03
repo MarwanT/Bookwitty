@@ -177,6 +177,14 @@ class Strings {
     return localizedString(key: "contributors")
   }
   
+  static func couldnt_load_selected_edition_message() -> String {
+    return localizedString(key: "couldnt_load_selected_edition_message")
+  }
+  
+  static func couldnt_load_selected_edition_title() -> String {
+    return localizedString(key: "couldnt_load_selected_edition_title")
+  }
+  
   static func couldnt_load_your_data() -> String {
     return localizedString(key: "couldnt_load_your_data")
   }
