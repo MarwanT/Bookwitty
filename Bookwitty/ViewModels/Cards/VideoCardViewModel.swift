@@ -48,9 +48,9 @@ class VideoCardViewModel: CardViewModelProtocol {
   }
 
 
-  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, comments: String?, properties: (url: URL?, thumbnail: String?), wit: (is: Bool, count: Int))) {
+  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, comments: String?, properties: (url: URL?, thumbnail: String?), wit: (is: Bool, count: Int, info: String?))) {
     guard let resource = resource else {
-      return (false, nil, content: (nil, nil, nil, properties: (nil, nil), wit: (false, 0)))
+      return (false, nil, content: (nil, nil, nil, properties: (nil, nil), wit: (false, 0, nil)))
     }
 
     let cardPostInfoData: CardPostInfoNodeData?
@@ -68,7 +68,7 @@ class VideoCardViewModel: CardViewModelProtocol {
     let description = resource.shortDescription
     let comments: String? = nil
     let properties = (self.videoProperties.url, self.videoProperties.thumbnail)
-    let wit = (is: resource.isWitted, count: resource.counts?.wits ?? 0)
+    let wit = (is: resource.isWitted, count: resource.counts?.wits ?? 0, resource.witters)
 
     return (infoNode, cardPostInfoData, content: (title, description, comments, properties, wit: wit))
   }

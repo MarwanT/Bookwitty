@@ -25,9 +25,9 @@ class LinkCardViewModel: CardViewModelProtocol {
     delegate?.resourceUpdated(viewModel: self)
   }
 
-  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, linkUrl: String?, imageUrl: String?, comments: String?, wit: (is: Bool, count: Int))) {
+  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, linkUrl: String?, imageUrl: String?, comments: String?, wit: (is: Bool, count: Int, info: String?))) {
     guard let resource = resource else {
-      return (false, nil, content: (nil, nil, nil, nil, nil, wit: (false, 0)))
+      return (false, nil, content: (nil, nil, nil, nil, nil, wit: (false, 0, nil)))
     }
 
     let cardPostInfoData: CardPostInfoNodeData?
@@ -53,7 +53,7 @@ class LinkCardViewModel: CardViewModelProtocol {
       linkUrl = audio.media?.mediaLink
     }
 
-    let wit = (is: resource.isWitted, count: resource.counts?.wits ?? 0)
+    let wit = (is: resource.isWitted, count: resource.counts?.wits ?? 0, resource.witters)
 
     return (infoNode, cardPostInfoData, content: (title, description, linkUrl, imageUrl, comments, wit: wit))
   }
