@@ -11,12 +11,14 @@ import AsyncDisplayKit
 class BookDetailsFormatNode: ASCellNode {
   fileprivate let borderNode: ASDisplayNode
   fileprivate let textNode: ASTextNode
+  fileprivate let disclosureImageNode: ASImageNode
   
   var configuration = Configuration()
   
   override init() {
     borderNode = ASDisplayNode()
     textNode = ASTextNode()
+    disclosureImageNode = ASImageNode()
     super.init()
     initializeComponents()
     applyTheme()
@@ -27,11 +29,16 @@ class BookDetailsFormatNode: ASCellNode {
     textNode.isLayerBacked = true
     borderNode.isLayerBacked = true
     
+    disclosureImageNode.image = #imageLiteral(resourceName: "rightArrow")
+    disclosureImageNode.contentMode = UIViewContentMode.scaleAspectFit
+    disclosureImageNode.style.preferredSize = CGSize(width: 10, height: 14)
+    
     style.width = ASDimensionMake(UIScreen.main.bounds.width)
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    let formatTextSpec = ASInsetLayoutSpec(insets: configuration.formatTextEdgeInsets, child: textNode)
+    let stackSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start, alignItems: .center, children: [textNode, ASLayoutSpec.spacer(flexGrow: 1.0), disclosureImageNode])
+    let formatTextSpec = ASInsetLayoutSpec(insets: configuration.formatTextEdgeInsets, child: stackSpec)
     let backgroundSpec = ASBackgroundLayoutSpec(child: formatTextSpec, background: borderNode)
     let externalInsets = ASInsetLayoutSpec(insets: configuration.externalEdgeInsets, child: backgroundSpec)
     return externalInsets

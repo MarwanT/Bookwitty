@@ -39,4 +39,8 @@ extension ProductForm {
   var isElectronicFormat: Bool {
     return ProductForm.electronicProductForms.contains(self.key)
   }
+  
+  static func isElectronicFormat(_ key: String) -> Bool {
+    return electronicProductForms.contains(key.uppercased())
+  }
 }

@@ -137,6 +137,10 @@ class Strings {
     return localizedString(key: "change_password_success")
   }
   
+  static func choose_format() -> String {
+    return localizedString(key: "choose_format")
+  }
+  
   static func choose_from_library() -> String {
     return localizedString(key: "choose_from_library")
   }
@@ -355,6 +359,10 @@ class Strings {
   
   static func help() -> String {
     return localizedString(key: "help")
+  }
+  
+  static func hide_formats_and_editions() -> String {
+    return localizedString(key: "hide_formats_and_editions")
   }
   
   static func image() -> String {
@@ -962,6 +970,10 @@ class Strings {
     return localizedString(key: "f_view_all_replies", formatVariables: number)
   }
   
+  static func view_formats_and_editions(number: Int) -> String {
+    return localizedString(key: "f_view_formats_and_editions", formatVariables: number)
+  }
+
   static func weeks_ago(number: Int) -> String {
     return localizedString(key: "f_number_of_weeks_ago", formatVariables: number)
   }

@@ -38,6 +38,7 @@
 "change_password" = "Change Password";
 "change_password_error" = "Could not change password";
 "change_password_success" = "Password changed successfully";
+"choose_format" = "Choose format";
 "choose_from_library" = "Choose photo from library";
 "clear_all" = "Clear All";
 "choose_pen_name" = "Choose a Pen Name";
@@ -93,6 +94,7 @@
 "get_started" = "Get started";
 "height" = "Height";
 "help" = "Help";
+"hide_formats_and_editions" = "Hide formats and editions";
 "image" = "Image";
 "imprint" = "Publisher";
 "in_stock" = "In stock";
@@ -255,6 +257,7 @@
 "f_number_of_years_ago" = "%d years ago";
 "f_others_find_witty" = "and %d others find this witty";
 "f_view_all_replies" = "View all %d replies";
+"f_view_formats_and_editions" = "View all %d formats and editions";
 
 /**
  Discussion:

@@ -40,7 +40,7 @@ class SearchFiltersViewController: UIViewController {
   fileprivate func initializeComponents() {
     applyLocalization()
 
-    tableView.register(SearchFilterTableViewSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: SearchFilterTableViewSectionHeaderView.reuseIdentifier)
+    tableView.register(CollapsableTableViewSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: CollapsableTableViewSectionHeaderView.reuseIdentifier)
   }
 
   fileprivate func addObservers() {
@@ -103,7 +103,7 @@ extension SearchFiltersViewController: UITableViewDataSource, UITableViewDelegat
   }
 
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    let sectionHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: SearchFilterTableViewSectionHeaderView.reuseIdentifier) as? SearchFilterTableViewSectionHeaderView
+    let sectionHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: CollapsableTableViewSectionHeaderView.reuseIdentifier) as? CollapsableTableViewSectionHeaderView
     let values = viewModel.values(for: section)
     sectionHeader?.mode = values.mode
     sectionHeader?.delegate = self
@@ -111,7 +111,7 @@ extension SearchFiltersViewController: UITableViewDataSource, UITableViewDelegat
   }
 
   func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-    guard let sectionHeader = view as? SearchFilterTableViewSectionHeaderView else {
+    guard let sectionHeader = view as? CollapsableTableViewSectionHeaderView else {
       return
     }
 
@@ -131,8 +131,8 @@ extension SearchFiltersViewController: UITableViewDataSource, UITableViewDelegat
   }
 }
 
-extension SearchFiltersViewController: SearchFilterTableViewSectionHeaderViewDelegate {
-  func sectionHeader(view: SearchFilterTableViewSectionHeaderView, request mode: SearchFilterTableViewSectionHeaderView.Mode) {
+extension SearchFiltersViewController: CollapsableTableViewSectionHeaderViewDelegate {
+  func sectionHeader(view: CollapsableTableViewSectionHeaderView, request mode: CollapsableTableViewSectionHeaderView.Mode) {
     guard let section = view.section else {
       return
     }

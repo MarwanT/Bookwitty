@@ -198,10 +198,10 @@ extension SearchFiltersViewModel {
     }
   }
 
-  func values(for section: Int) -> (title: String?, subtitle: String?, mode: SearchFilterTableViewSectionHeaderView.Mode) {
+  func values(for section: Int) -> (title: String?, subtitle: String?, mode: CollapsableTableViewSectionHeaderView.Mode) {
     let title = self.title(for: section)
     let subtitle = self.subtitle(for: section)
-    let mode: SearchFilterTableViewSectionHeaderView.Mode = expandedSections.contains(section) ? .expanded : .collapsed
+    let mode: CollapsableTableViewSectionHeaderView.Mode = expandedSections.contains(section) ? .expanded : .collapsed
     return (title, subtitle, mode)
   }
 

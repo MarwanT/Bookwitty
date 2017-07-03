@@ -204,8 +204,8 @@ extension BookDetailsViewController {
     switch action {
     case .viewImageFullScreen:
       break
-    case .viewFormat:
-      break
+    case .viewFormat(let book):
+      viewFormats(book)
     case .viewCategory(let category):
       viewCategory(category)
     case .viewDescription(let description):
@@ -229,6 +229,12 @@ extension BookDetailsViewController {
     case .viewRelatedTopics(let bookTitle, let topics, let url):
       pushPostsViewController(bookTitle: bookTitle, resources: topics, url: url)
     }
+  }
+  
+  fileprivate func viewFormats(_ book: Book) {
+    let viewController = Storyboard.Books.instantiate(ProductFormatsViewController.self)
+    viewController.initialize(with: book)
+    navigationController?.pushViewController(viewController, animated: true)
   }
   
   fileprivate func viewDetails(_ productDetails: ProductDetails) {
@@ -367,7 +373,7 @@ extension BookDetailsViewController: BookDetailsECommerceNodeDelegate {
 extension BookDetailsViewController {  
   enum Action {
     case viewImageFullScreen
-    case viewFormat
+    case viewFormat(Book)
     case viewDetails(ProductDetails)
     case viewCategory(Category)
     case viewDescription(String)

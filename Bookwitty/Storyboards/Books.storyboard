@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -92,6 +93,40 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CIh-p5-8N0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1290" y="87"/>
+        </scene>
+        <!--Product Formats View Controller-->
+        <scene sceneID="fEW-FG-MQW">
+            <objects>
+                <viewController storyboardIdentifier="ProductFormatsViewController" id="SsG-y1-w8s" customClass="ProductFormatsViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="B2s-Ax-bs0"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ggd-bx-NCL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UfK-OK-nnk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bGW-DI-C5o">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="bGW-DI-C5o" firstAttribute="leading" secondItem="UfK-OK-nnk" secondAttribute="leading" id="M4d-P5-Y6A"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="bGW-DI-C5o" secondAttribute="bottom" id="MMZ-fz-Xz2"/>
+                            <constraint firstItem="bGW-DI-C5o" firstAttribute="top" secondItem="UfK-OK-nnk" secondAttribute="topMargin" id="quS-jt-w7Z"/>
+                            <constraint firstAttribute="trailing" secondItem="bGW-DI-C5o" secondAttribute="trailing" id="zNU-Wo-Hws"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="bGW-DI-C5o" id="wca-YH-8LV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1vC-kr-F4P" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2402" y="87"/>
         </scene>
         <!--Book Store View Controller-->
         <scene sceneID="gFi-Mc-yyX">
