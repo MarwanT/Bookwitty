@@ -40,7 +40,11 @@ class Strings {
   static func address_book() -> String {
     return localizedString(key: "address_book")
   }
-  
+
+  static func and() -> String {
+    return localizedString(key: "and")
+  }
+
   static func already_have_an_account() -> String {
     return localizedString(key: "already_have_an_account")
   }
