@@ -194,6 +194,7 @@ extension PhotoCardPostCellNode: PhotoCardViewModelDelegate {
     node.articleDescription = values.content.description
     node.imageUrl = values.content.imageUrl
     articleCommentsSummary = values.content.comments
-    setWitValue(witted: values.content.wit.is)    
+    setWitValue(witted: values.content.wit.is)
+    actionInfoValue = values.content.wit.info
   }
 }
