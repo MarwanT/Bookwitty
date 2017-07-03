@@ -40,17 +40,29 @@ extension ModelCommonProperties {
       return nil
     }
 
-    var names: [String] = []
+    let voters: [String] = self.topVotes?
+      .filter({
+      guard let penName = $0.penName else { return false }
+      return !UserManager.shared.isMyDefault(penName: penName) })
+      .flatMap({ $0.penName?.name }) ?? []
+
+    var names = voters.prefix(2)
+
     if isWitted {
-      names.insert(Strings.you() , at: 0)
+      names.insert(Strings.you(), at: 0)
     }
 
     let witters: String
-    if names.count > 0 {
-      let othersCount = max(wits - names.count, 0)
-      witters = Strings.andOthersFindThisWitty(witters: names.joined(separator: ","), others: othersCount)
-    } else {
+    let othersCount = max(wits - names.count, 0)
+    let separator = names.count == 2 ? " " + Strings.and() + " " : ", "
+
+    switch (names.count, othersCount) {
+    case (0, _):
       witters = Strings.findThisWitty(witters: wits)
+    case (_, 0):
+      witters = Strings.findThisWitty(witters: names.joined(separator: separator))
+    default:
+      witters = Strings.andOthersFindThisWitty(witters: names.joined(separator: separator), others: othersCount)
     }
 
     return witters
