@@ -146,6 +146,33 @@ extension PenNameListViewController: ASCollectionDataSource, ASCollectionDelegat
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
     //TODO: push the pen name details vc
   }
+
+  public func shouldBatchFetch(for collectionNode: ASCollectionNode) -> Bool {
+    return viewModel.hasNextPage()
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
+    guard context.isFetching() else {
+      return
+    }
+
+    guard loadingStatus == .none else {
+      context.completeBatchFetching(true)
+      return
+    }
+    
+    self.loadingStatus = .loadMore
+    context.beginBatchFetching()
+
+    viewModel.getNextPage { (success: Bool) in
+      collectionNode.performBatchUpdates({
+        self.loadingStatus = .none
+        collectionNode.reloadData()
+      }, completion: nil)
+
+      context.completeBatchFetching(true)
+    }
+  }
 }
 
 //MARK: - PenNameFollowNodeDelegate implementation
