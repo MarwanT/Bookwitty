@@ -384,10 +384,8 @@ extension BookDetailsViewController {
 
 // MARK: - Base card post node delegate
 extension BookDetailsViewController: BaseCardPostNodeDelegate {
-  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
-    guard let indexPath = collectionNode.indexPath(for: card) else {
-      return
-    }
+
+  private func userProfileHandler(at indexPath: IndexPath) {
     let resourcesCommonProperties = viewModel.resourcesCommonProperties(for: indexPath)
     if let resource = resourcesCommonProperties?[indexPath.row - 1],
       let penName = resource.penName {
@@ -426,6 +424,19 @@ extension BookDetailsViewController: BaseCardPostNodeDelegate {
                                                    action: .GoToPenName,
                                                    name: penName.name ?? "")
       Analytics.shared.send(event: event)
+    }
+  }
+
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+
+    switch action {
+    case .userProfile:
+      userProfileHandler(at: indexPath)
+    case .actionInfo:
+      break
     }
   }
   

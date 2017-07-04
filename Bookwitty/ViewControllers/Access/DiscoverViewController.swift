@@ -512,10 +512,8 @@ extension DiscoverViewController: ASCollectionDelegate {
 
 // MARK - BaseCardPostNode Delegate
 extension DiscoverViewController: BaseCardPostNodeDelegate {
-  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
-    guard let indexPath = collectionNode.indexPath(for: card) else {
-      return
-    }
+
+  private func userProfileHandler(at indexPath: IndexPath) {
     let resource = viewModel.resourceForIndex(for: activeSegment, index: indexPath.item)
     if let resource = resource as? ModelCommonProperties,
       let penName = resource.penName {
@@ -563,6 +561,19 @@ extension DiscoverViewController: BaseCardPostNodeDelegate {
                                                    action: .GoToDetails,
                                                    name: penName.name ?? "")
       Analytics.shared.send(event: event)
+    }
+  }
+
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+
+    switch action {
+    case .userProfile:
+      userProfileHandler(at: indexPath)
+    case .actionInfo:
+      break
     }
   }
 

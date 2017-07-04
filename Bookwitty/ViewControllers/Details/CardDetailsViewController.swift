@@ -120,7 +120,8 @@ class CardDetailsViewController: GenericNodeViewController {
 
 // MARK - BaseCardPostNode Delegate
 extension CardDetailsViewController: BaseCardPostNodeDelegate {
-  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+
+  private func userProfileHandler() {
     if let resource = viewModel.resource as? ModelCommonProperties,
       let penName = resource.penName {
       pushProfileViewController(penName: penName)
@@ -166,6 +167,15 @@ extension CardDetailsViewController: BaseCardPostNodeDelegate {
                                                    action: .GoToDetails,
                                                    name: penName.name ?? "")
       Analytics.shared.send(event: event)
+    }
+  }
+
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    switch action {
+    case .userProfile:
+      userProfileHandler()
+    case .actionInfo:
+      break
     }
   }
   
