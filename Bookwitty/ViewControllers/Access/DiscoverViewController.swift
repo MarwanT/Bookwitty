@@ -564,6 +564,14 @@ extension DiscoverViewController: BaseCardPostNodeDelegate {
     }
   }
 
+  private func actionInfoHandler(at indexPath: IndexPath) {
+    guard let resource = viewModel.resourceForIndex(for: activeSegment, index: indexPath.item) else {
+      return
+    }
+
+    pushPenNamesListViewController(with: resource)
+  }
+
   func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
     guard let indexPath = collectionNode.indexPath(for: card) else {
       return
@@ -573,7 +581,7 @@ extension DiscoverViewController: BaseCardPostNodeDelegate {
     case .userProfile:
       userProfileHandler(at: indexPath)
     case .actionInfo:
-      break
+      actionInfoHandler(at: indexPath)
     }
   }
 

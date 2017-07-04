@@ -179,6 +179,15 @@ extension ReadingListsViewController: BaseCardPostNodeDelegate {
     }
   }
 
+  private func actionInfoHandler(at indexPath: IndexPath) {
+    guard let resource = viewModel.resourceForIndex(indexPath: indexPath) else {
+      return
+    }
+
+    pushPenNamesListViewController(with: resource)
+  }
+
+
   func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
     guard let indexPath = collectionNode.indexPath(for: card) else {
       return
@@ -188,7 +197,7 @@ extension ReadingListsViewController: BaseCardPostNodeDelegate {
     case .userProfile:
       userProfileHandler(at: indexPath)
     case .actionInfo:
-      break
+      actionInfoHandler(at: indexPath)
     }
   }
 

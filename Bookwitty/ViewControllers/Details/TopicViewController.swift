@@ -816,6 +816,31 @@ extension TopicViewController: BaseCardPostNodeDelegate {
     }
   }
 
+  private func actionInfoHandler(at indexPath: IndexPath) {
+
+    let index: Int = indexPath.row
+    var candidateResource: ModelResource?
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+    switch category {
+    case .latest:
+      candidateResource = viewModel.latest(at: index)
+    case .editions:
+      candidateResource = viewModel.edition(at: index)
+    case .relatedBooks:
+      candidateResource = viewModel.relatedBook(at: index)
+    case .followers:
+      candidateResource = viewModel.follower(at: index)
+    case .none:
+      return
+    }
+
+    guard let resource = candidateResource else {
+      return
+    }
+
+    pushPenNamesListViewController(with: resource)
+  }
+
   func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
     guard let indexPath = collectionNode.indexPath(for: card) else {
       return
@@ -825,7 +850,7 @@ extension TopicViewController: BaseCardPostNodeDelegate {
     case .userProfile:
       userProfileHandler(at: indexPath)
     case .actionInfo:
-      break
+      actionInfoHandler(at: indexPath)
     }
   }
 

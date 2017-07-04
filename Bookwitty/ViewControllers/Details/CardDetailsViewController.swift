@@ -170,12 +170,20 @@ extension CardDetailsViewController: BaseCardPostNodeDelegate {
     }
   }
 
+  private func actionInfoHandler() {
+    guard let resource = viewModel.resource else {
+      return
+    }
+
+    pushPenNamesListViewController(with: resource)
+  }
+
   func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
     switch action {
     case .userProfile:
       userProfileHandler()
     case .actionInfo:
-      break
+      actionInfoHandler()
     }
   }
   

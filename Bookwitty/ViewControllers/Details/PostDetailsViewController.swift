@@ -648,6 +648,14 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
     }
   }
 
+  private func actionInfoHandler(at index: Int) {
+    guard let resource = viewModel.relatedPost(at: index) else {
+      return
+    }
+
+    pushPenNamesListViewController(with: resource)
+  }
+
   func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
     guard let index = postDetailsNode.postCardsNode.index(of: card) else {
       return
@@ -657,7 +665,7 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
     case .userProfile:
       userProfileHandler(at: index)
     case .actionInfo:
-      break
+      actionInfoHandler(at: index)
     }
   }
 
