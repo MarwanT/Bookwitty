@@ -30,6 +30,10 @@ class PenNameListViewModel {
 
     return penNames[item]
   }
+
+  func hasNextPage() -> Bool {
+    return (nextPage != nil)
+  }
 }
 
 //MARK: - ASCollectionDataSource helpers
