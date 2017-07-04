@@ -149,6 +149,8 @@ extension Analytics {
     case GoToFilters
     case GoToFormats
     //
+    case ChoosePreferredFormat
+    //
     case ViewBanner
     //
     case ViewAllTopics
@@ -196,6 +198,8 @@ extension Analytics {
         return "Switch Email Notification"
       case .ChangePassword:
         return "Change Password"
+      case .ChoosePreferredFormat:
+        return "Choose Preferred Format"
       case .SignOut:
         return "Sign Out"
       case .Wit:
