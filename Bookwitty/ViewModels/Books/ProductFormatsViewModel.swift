@@ -212,8 +212,8 @@ extension ProductFormatsViewModel {
 }
 
 extension ProductFormatsViewModel {
-  typealias AvailableFormatValues = (form: ProductForm, numberOfEditions: Int)
   typealias PreferredFormatValues = (id: String, form: ProductForm, price: Price?, isSelected: Bool)
+  typealias AvailableFormatValues = (form: ProductForm, numberOfEditions: Int)
   
   typealias AvailableFormatHeaderValues = (title: String, mode: CollapsableTableViewSectionHeaderView.Mode)
   

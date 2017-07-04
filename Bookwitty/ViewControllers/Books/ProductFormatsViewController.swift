@@ -193,6 +193,13 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
         return
       }
       pushFormatEditionsViewController(productId: productId, productForm: values.form)
+      
+      //MARK: [Analytics] Event
+      let event: Analytics.Event = Analytics.Event(
+        category: .BookProduct,
+        action: .GoToEditions,
+        name: "\(viewModel.productTitle ?? "") - \(values.form.value)" )
+      Analytics.shared.send(event: event)
     }
   }
   
