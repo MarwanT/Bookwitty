@@ -244,6 +244,12 @@ extension BookDetailsViewController {
     viewController.initialize(with: book)
     viewController.delegate = self
     navigationController?.pushViewController(viewController, animated: true)
+    
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .BookProduct,
+                                                 action: .GoToFormats,
+                                                 name: book.title ?? "")
+    Analytics.shared.send(event: event)
   }
   
   fileprivate func viewDetails(_ productDetails: ProductDetails) {
