@@ -118,6 +118,8 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
       let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnView(_:)))
       view.addGestureRecognizer(tapGesture)
     }
+
+    actionInfoNode.addTarget(self, action: #selector(actionInfoNodeTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
 
   func didTapOnView(_ sender: Any?) {
@@ -285,6 +287,14 @@ extension BaseCardPostNode {
       style.height = ASDimensionMake(height)
       style.width = ASDimensionMake(width)
     }
+  }
+}
+
+//MARK: - Actions
+extension BaseCardPostNode {
+  @objc
+  fileprivate func actionInfoNodeTouchUpInside(_ sender: ASTextNode) {
+    delegate?.cardInfoNode(card: self, cardPostInfoNode: infoNode, didRequestAction: .actionInfo, forSender: sender)
   }
 }
 
