@@ -341,6 +341,7 @@ extension Analytics {
     static let BookDescription = ScreenName(name: "Book Description")
     static let BookDetails = ScreenName(name: "Book Details")
     static let ProductFormats = ScreenName(name: "Product Formats")
+    static let FormatEditions = ScreenName(name: "Format Editions")
     static let Discover = ScreenName(name: "Discover")
     static let Bag = ScreenName(name: "Bag")
     static let Search = ScreenName(name: "Search")

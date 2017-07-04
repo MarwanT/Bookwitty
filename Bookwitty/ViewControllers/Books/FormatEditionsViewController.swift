@@ -24,6 +24,10 @@ class FormatEditionsViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    // Do any additional setup after loading the view.
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.FormatEditions)
+    
     initializeComponents()
     initializeTableView()
     
