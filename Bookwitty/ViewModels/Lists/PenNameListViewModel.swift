@@ -9,10 +9,18 @@
 import Foundation
 
 class PenNameListViewModel {
-  private(set) var penNames: [PenName] = []
+
+  fileprivate var resource: ModelResource?
+  fileprivate(set) var penNames: [PenName] = []
+
+  fileprivate var nextPage: URL?
 
   func initialize(with penNames: [PenName]) {
     self.penNames = penNames
+  }
+
+  func initialize(with resource: ModelResource) {
+    self.resource = resource
   }
 
   func penName(at item: Int) -> PenName? {
