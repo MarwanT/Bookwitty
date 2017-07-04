@@ -869,7 +869,8 @@ extension NewsFeedViewController {
       topicViewController.hidesBottomBarWhenPushed = true
       navigationController?.pushViewController(topicViewController, animated: true)
     } else {
-      let bookDetailsViewController = BookDetailsViewController(with: resource)
+      let bookDetailsViewController = BookDetailsViewController()
+      bookDetailsViewController.initialize(with: resource)
       bookDetailsViewController.hidesBottomBarWhenPushed = true
       navigationController?.pushViewController(bookDetailsViewController, animated: true)
     }

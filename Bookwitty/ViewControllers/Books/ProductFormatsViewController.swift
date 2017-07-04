@@ -105,7 +105,9 @@ class ProductFormatsViewController: UIViewController {
         self.navigationController?.popToViewController(self, animated: false)
         self.navigationController?.popViewController(animated: true)
       } else {
-        // TODO: Display Alert
+        self.showAlertWith(
+          title: Strings.couldnt_load_selected_edition_title(),
+          message: Strings.couldnt_load_selected_edition_message())
       }
     })
   }
@@ -113,6 +115,7 @@ class ProductFormatsViewController: UIViewController {
   fileprivate func pushFormatEditionsViewController(productId: String, productForm: ProductForm) {
     let viewController = Storyboard.Books.instantiate(FormatEditionsViewController.self)
     viewController.initialize(initialProductIdentifier: productId, productForm: productForm)
+    viewController.delegate = self
     self.navigationController?.pushViewController(viewController, animated: true)
   }
 }
@@ -242,6 +245,14 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
   }
 }
 
+// MARK: format editions view controller delegate implementation
+extension ProductFormatsViewController: FormatEditionsViewControllerDelegate {
+  func formatEditions(_ viewController: FormatEditionsViewController, selected editionId: String) {
+    didSelectEdition(id: editionId)
+  }
+}
+
+// MARK: Collapsable table view section header view delegate implementation
 extension ProductFormatsViewController: CollapsableTableViewSectionHeaderViewDelegate {
   func sectionHeader(view: CollapsableTableViewSectionHeaderView, request mode: CollapsableTableViewSectionHeaderView.Mode) {
     guard let rawSection = view.section else {
