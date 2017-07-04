@@ -597,10 +597,8 @@ extension PostDetailsViewController: PostDetailItemNodeDelegate {
 
 // MARK - BaseCardPostNode Delegate
 extension PostDetailsViewController: BaseCardPostNodeDelegate {
-  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
-    guard let index = postDetailsNode.postCardsNode.index(of: card) else {
-      return
-    }
+
+  private func userProfileHandler(at index: Int) {
     let resource = viewModel.relatedPost(at: index)
     if let resource = resource as? ModelCommonProperties,
       let penName = resource.penName {
@@ -647,6 +645,19 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
                                                    action: .GoToDetails,
                                                    name: penName.name ?? "")
       Analytics.shared.send(event: event)
+    }
+  }
+
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let index = postDetailsNode.postCardsNode.index(of: card) else {
+      return
+    }
+    
+    switch action {
+    case .userProfile:
+      userProfileHandler(at: index)
+    case .actionInfo:
+      break
     }
   }
 

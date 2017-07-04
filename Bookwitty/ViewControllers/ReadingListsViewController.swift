@@ -136,10 +136,8 @@ extension ReadingListsViewController: ASCollectionDataSource, ASCollectionDelega
 
 // MARK - BaseCardPostNode Delegate
 extension ReadingListsViewController: BaseCardPostNodeDelegate {
-  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
-    guard let indexPath = collectionNode.indexPath(for: card) else {
-      return
-    }
+
+  private func userProfileHandler(at indexPath: IndexPath) {
     let resource = viewModel.resourceForIndex(indexPath: indexPath)
     if let resource = resource,
       let penName = resource.penName {
@@ -178,6 +176,19 @@ extension ReadingListsViewController: BaseCardPostNodeDelegate {
                                                    action: .GoToPenName,
                                                    name: penName.name ?? "")
       Analytics.shared.send(event: event)
+    }
+  }
+
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+
+    switch action {
+    case .userProfile:
+      userProfileHandler(at: indexPath)
+    case .actionInfo:
+      break
     }
   }
 

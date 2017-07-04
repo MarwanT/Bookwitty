@@ -213,10 +213,8 @@ extension PostsViewController: ASCollectionDataSource, ASCollectionDelegate {
 
 // MARK: - Base card post node delegate
 extension PostsViewController: BaseCardPostNodeDelegate {
-  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
-    guard let indexPath = collectionNode.indexPath(for: card) else {
-      return
-    }
+
+  private func userProfileHandler(at indexPath: IndexPath) {
     let resource = viewModel.resourceForIndexPath(indexPath: indexPath)
     if let resource = resource as? ModelCommonProperties,
       let penName = resource.penName {
@@ -263,6 +261,19 @@ extension PostsViewController: BaseCardPostNodeDelegate {
                                                    action: .GoToDetails,
                                                    name: penName.name ?? "")
       Analytics.shared.send(event: event)
+    }
+  }
+
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+    
+    switch action {
+    case .userProfile:
+      userProfileHandler(at: indexPath)
+    case .actionInfo:
+      break
     }
   }
   
