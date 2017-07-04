@@ -113,6 +113,14 @@ extension FormatEditionsViewController: UITableViewDelegate, UITableViewDataSour
       return
     }
     delegate?.formatEditions(self, selected: editionId)
+    
+    //MARK: [Analytics] Event
+    let analyticsValues = viewModel.analyticsValues(for: indexPath)
+    let event: Analytics.Event = Analytics.Event(
+      category: .BookProduct,
+      action: .ChooseEdition,
+      name: "\(analyticsValues.productTitle) - \(analyticsValues.format) - \(analyticsValues.date)")
+    Analytics.shared.send(event: event)
   }
 }
 

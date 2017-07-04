@@ -37,6 +37,11 @@ extension FormatEditionsViewModel {
     let editionValues = editions[indexPath.item]
     return (editionValues.id, editionValues.description, editionValues.price?.formattedValue)
   }
+  
+  func analyticsValues(for indexPath: IndexPath) -> (productTitle: String, format: String, date: String) {
+    let editionValues = editions[indexPath.item]
+    return (editionValues.title ?? "", editionValues.form?.value ?? "", editionValues.publishedAt?.formatted() ?? "")
+  }
 }
 
 extension FormatEditionsViewModel {
@@ -104,9 +109,12 @@ extension FormatEditionsViewModel {
     
     var editions = books.flatMap({ (book) -> FormatEdition? in
       let id: String? = book.id
+      let title: String? = book.title
       let description: String = editionDescription(for: book)
+      let form: ProductForm? = book.productDetails?.productForm
       let price = book.preferredPrice
-      return (id, description, price) as? FormatEdition
+      let publishedAt: Date? = book.productDetails?.publishedAt
+      return (id, title, description, price, form, publishedAt) as? FormatEdition
     })
     
     // Sort editions by the cheapest, and the ones with no price come last
@@ -136,7 +144,7 @@ extension FormatEditionsViewModel {
 }
 
 extension FormatEditionsViewModel {
-  typealias FormatEdition = (id: String, description: String, price: Price?)
+  typealias FormatEdition = (id: String, title: String?, description: String, price: Price?, form: ProductForm?, publishedAt: Date?)
   
   enum FormatEditionsError {
     case api(BookwittyAPIError?)

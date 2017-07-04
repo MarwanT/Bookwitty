@@ -149,6 +149,7 @@ extension Analytics {
     case GoToFilters
     case GoToFormats
     //
+    case ChooseEdition
     case ChoosePreferredFormat
     //
     case ViewBanner
@@ -196,6 +197,8 @@ extension Analytics {
         return "Create Pen Name"
       case .SwitchEmailNotification:
         return "Switch Email Notification"
+      case .ChooseEdition:
+        return "Choose Edition"
       case .ChangePassword:
         return "Change Password"
       case .ChoosePreferredFormat:
