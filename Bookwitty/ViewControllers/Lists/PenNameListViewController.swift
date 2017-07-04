@@ -41,6 +41,10 @@ class PenNameListViewController: ASViewController<ASCollectionNode> {
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.PenNameList)
+
+    viewModel.getVoters { (success: Bool) in
+      self.collectionNode.reloadData()
+    }
   }
 
   fileprivate func initializeComponents() {
