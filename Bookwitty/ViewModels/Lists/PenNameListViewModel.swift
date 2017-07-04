@@ -48,6 +48,40 @@ extension PenNameListViewModel {
   }
 }
 
+//MARK: - Data Fetchers
+extension PenNameListViewModel {
+  func getVoters(completion: @escaping (_ success: Bool)->()) {
+    guard let resource = resource, let id = resource.id else {
+      completion(false)
+      return
+    }
+
+    _ = GeneralAPI.votes(contentIdentifier: id) { (success: Bool, votes: [Vote]?, next: URL?, error: BookwittyAPIError?) in
+      self.penNames = votes?.flatMap({ $0.penName }) ?? []
+      self.nextPage = next
+      completion(success)
+    }
+  }
+
+  func getNextPage(completion: @escaping (_ success: Bool)->()) {
+    guard let next = nextPage else {
+      completion(false)
+      return
+    }
+
+    _ = GeneralAPI.nextPage(nextPage: next) { (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
+      guard let votes = resources as? [Vote] else {
+        completion(false)
+        return
+      }
+
+      self.penNames += votes.flatMap({ $0.penName })
+      self.nextPage = next
+      completion(success)
+    }
+  }
+}
+
 //MARK: - Actions
 extension PenNameListViewModel {
   func follow(at item: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
