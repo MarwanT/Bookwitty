@@ -54,6 +54,12 @@ extension UIViewController {
     let profileVC = ProfileDetailsViewController.create(with: viewModel)
     self.navigationController?.pushViewController(profileVC, animated: true)
   }
+
+  func pushPenNamesListViewController(with resource: ModelResource) {
+    let penNamesListVC = PenNameListViewController()
+    penNamesListVC.initializeWith(resource: resource)
+    self.navigationController?.pushViewController(penNamesListVC, animated: true)
+  }
 }
 
 extension UIViewController {

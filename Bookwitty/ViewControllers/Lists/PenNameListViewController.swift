@@ -14,20 +14,32 @@ class PenNameListViewController: ASViewController<ASCollectionNode> {
   fileprivate let collectionNode: ASCollectionNode
   fileprivate var flowLayout: UICollectionViewFlowLayout
 
+  fileprivate let loaderNode: LoaderNode
+
   fileprivate let viewModel = PenNameListViewModel()
+
+  var loadingStatus: LoadingStatus = .none  
+  var shouldShowLoader: Bool {
+    return loadingStatus != .none
+  }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
   init() {
+    loaderNode = LoaderNode()
     flowLayout = UICollectionViewFlowLayout()
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     super.init(node: collectionNode)
   }
 
-  func initialize(with penNames: [PenName]) {
+  func initializeWith(penNames: [PenName]) {
     viewModel.initialize(with: penNames)
+  }
+
+  func initializeWith(resource: ModelResource) {
+    viewModel.initialize(with: resource)
   }
 
   override func viewDidLoad() {
@@ -37,6 +49,12 @@ class PenNameListViewController: ASViewController<ASCollectionNode> {
 
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.PenNameList)
+
+    loadingStatus = .loading
+    viewModel.getVoters { (success: Bool) in
+      self.loadingStatus = .none
+      self.collectionNode.reloadData()
+    }
   }
 
   fileprivate func initializeComponents() {
@@ -49,36 +67,111 @@ class PenNameListViewController: ASViewController<ASCollectionNode> {
   }
 }
 
+// MARK: - Declarations
+extension PenNameListViewController {
+  enum LoadingStatus {
+    case none
+    case loadMore
+    case loading
+  }
+
+  enum Section: Int {
+    case penNames
+    case activityIndicator
+    static var numberOfSections: Int {
+      return 2
+    }
+  }
+}
+
+//MARK: - ASCollectionDataSource, ASCollectionDelegate implementations
 extension PenNameListViewController: ASCollectionDataSource, ASCollectionDelegate {
+  func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+    return Section.numberOfSections
+  }
+
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    return viewModel.numberOfPenNames()
+    switch section  {
+    case Section.penNames.rawValue:
+      return viewModel.numberOfPenNames()
+    case Section.activityIndicator.rawValue:
+      return shouldShowLoader ? 1 : 0
+    default:
+      return 0
+    }
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+    let section = indexPath.section
     return {
-      let node = PenNameFollowNode()
-      node.delegate = self
-      node.showBottomSeparator = true
-      return node
+      if case section = Section.activityIndicator.rawValue {
+        return self.loaderNode
+      } else if case section = Section.penNames.rawValue {
+        let node = PenNameFollowNode()
+        node.delegate = self
+        node.showBottomSeparator = true
+        return node
+      } else {
+        return ASCellNode()
+      }
     }
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
-    guard let indexPath = collectionNode.indexPath(for: node),
-      let cell = node as? PenNameFollowNode else {
+    guard let indexPath = collectionNode.indexPath(for: node) else {
         return
     }
 
-    let values = viewModel.values(at: indexPath.item)
-    cell.penName = values?.penName
-    cell.biography = values?.biography
-    cell.imageUrl = values?.imageUrl
-    cell.following = values?.following ?? false
-    cell.updateMode(disabled: values?.isMyPenName ?? false)
+    if case indexPath.section = Section.activityIndicator.rawValue {
+      guard let loaderNode = node as? LoaderNode else {
+        return
+      }
+
+      loaderNode.updateLoaderVisibility(show: shouldShowLoader)
+    } else if case indexPath.section = Section.penNames.rawValue {
+
+      guard let cell = node as? PenNameFollowNode else {
+          return
+      }
+
+      let values = viewModel.values(at: indexPath.item)
+      cell.penName = values?.penName
+      cell.biography = values?.biography
+      cell.imageUrl = values?.imageUrl
+      cell.following = values?.following ?? false
+      cell.updateMode(disabled: values?.isMyPenName ?? false)
+    }
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
     //TODO: push the pen name details vc
+  }
+
+  public func shouldBatchFetch(for collectionNode: ASCollectionNode) -> Bool {
+    return viewModel.hasNextPage()
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
+    guard context.isFetching() else {
+      return
+    }
+
+    guard loadingStatus == .none else {
+      context.completeBatchFetching(true)
+      return
+    }
+    
+    self.loadingStatus = .loadMore
+    context.beginBatchFetching()
+
+    viewModel.getNextPage { (success: Bool) in
+      collectionNode.performBatchUpdates({
+        self.loadingStatus = .none
+        collectionNode.reloadData()
+      }, completion: nil)
+
+      context.completeBatchFetching(true)
+    }
   }
 }
 

@@ -9,10 +9,18 @@
 import Foundation
 
 class PenNameListViewModel {
-  private(set) var penNames: [PenName] = []
+
+  fileprivate var resource: ModelResource?
+  fileprivate(set) var penNames: [PenName] = []
+
+  fileprivate var nextPage: URL?
 
   func initialize(with penNames: [PenName]) {
     self.penNames = penNames
+  }
+
+  func initialize(with resource: ModelResource) {
+    self.resource = resource
   }
 
   func penName(at item: Int) -> PenName? {
@@ -21,6 +29,10 @@ class PenNameListViewModel {
     }
 
     return penNames[item]
+  }
+
+  func hasNextPage() -> Bool {
+    return (nextPage != nil)
   }
 }
 
@@ -37,6 +49,40 @@ extension PenNameListViewModel {
 
     let mine = UserManager.shared.isMy(penName: penName)
     return (penName.id, penName.name, penName.biography, penName.avatarUrl, penName.following, mine)
+  }
+}
+
+//MARK: - Data Fetchers
+extension PenNameListViewModel {
+  func getVoters(completion: @escaping (_ success: Bool)->()) {
+    guard let resource = resource, let id = resource.id else {
+      completion(false)
+      return
+    }
+
+    _ = GeneralAPI.votes(contentIdentifier: id) { (success: Bool, votes: [Vote]?, next: URL?, error: BookwittyAPIError?) in
+      self.penNames = votes?.flatMap({ $0.penName }) ?? []
+      self.nextPage = next
+      completion(success)
+    }
+  }
+
+  func getNextPage(completion: @escaping (_ success: Bool)->()) {
+    guard let next = nextPage else {
+      completion(false)
+      return
+    }
+
+    _ = GeneralAPI.nextPage(nextPage: next) { (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
+      guard let votes = resources as? [Vote] else {
+        completion(false)
+        return
+      }
+
+      self.penNames += votes.flatMap({ $0.penName })
+      self.nextPage = next
+      completion(success)
+    }
   }
 }
 
