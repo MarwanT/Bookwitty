@@ -147,6 +147,10 @@ extension Analytics {
     case GoToBooks
     case GoToPages
     case GoToFilters
+    case GoToFormats
+    //
+    case ChooseEdition
+    case ChoosePreferredFormat
     //
     case ViewBanner
     //
@@ -193,8 +197,12 @@ extension Analytics {
         return "Create Pen Name"
       case .SwitchEmailNotification:
         return "Switch Email Notification"
+      case .ChooseEdition:
+        return "Choose Edition"
       case .ChangePassword:
         return "Change Password"
+      case .ChoosePreferredFormat:
+        return "Choose Preferred Format"
       case .SignOut:
         return "Sign Out"
       case .Wit:
@@ -231,6 +239,8 @@ extension Analytics {
         return "Go To Followers"
       case .GoToFollowings:
         return "Go To Followings"
+      case .GoToFormats:
+        return "Go To Formats"
       case .GoToRelatedCategories:
         return "Go To Related Categories"
       case .GoToBagOnWebsite:
@@ -341,6 +351,7 @@ extension Analytics {
     static let BookDescription = ScreenName(name: "Book Description")
     static let BookDetails = ScreenName(name: "Book Details")
     static let ProductFormats = ScreenName(name: "Product Formats")
+    static let FormatEditions = ScreenName(name: "Format Editions")
     static let Discover = ScreenName(name: "Discover")
     static let Bag = ScreenName(name: "Bag")
     static let Search = ScreenName(name: "Search")

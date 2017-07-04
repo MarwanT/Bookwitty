@@ -180,12 +180,26 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
         return
       }
       didSelectEdition(id: values.id)
+      
+      //MARK: [Analytics] Event
+      let event: Analytics.Event = Analytics.Event(
+        category: .BookProduct,
+        action: .ChoosePreferredFormat,
+        name: "\(viewModel.productTitle ?? "") - \(values.form.value)" )
+      Analytics.shared.send(event: event)
     case .availableFormats:
       guard let values = viewModel.values(for: indexPath) as? ProductFormatsViewModel.AvailableFormatValues, let productId = viewModel.productId else {
         tableView.deselectRow(at: indexPath, animated: true)
         return
       }
       pushFormatEditionsViewController(productId: productId, productForm: values.form)
+      
+      //MARK: [Analytics] Event
+      let event: Analytics.Event = Analytics.Event(
+        category: .BookProduct,
+        action: .GoToEditions,
+        name: "\(viewModel.productTitle ?? "") - \(values.form.value)" )
+      Analytics.shared.send(event: event)
     }
   }
   

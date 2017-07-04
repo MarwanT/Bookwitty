@@ -169,6 +169,10 @@ final class ProductFormatsViewModel {
     return currentBook?.id
   }
   
+  var productTitle: String? {
+    return currentBook?.title
+  }
+  
   func toggleSection() {
     isListOfAvailableFormatsExpanded = !isListOfAvailableFormatsExpanded
   }
