@@ -57,6 +57,22 @@ class PenNameListViewController: ASViewController<ASCollectionNode> {
   }
 }
 
+// MARK: - Declarations
+extension PenNameListViewController {
+  enum LoadingStatus {
+    case none
+    case loadMore
+    case loading
+  }
+
+  enum Section: Int {
+    case penNames
+    case activityIndicator
+    static var numberOfSections: Int {
+      return 2
+    }
+  }
+}
 extension PenNameListViewController: ASCollectionDataSource, ASCollectionDelegate {
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
     return viewModel.numberOfPenNames()
