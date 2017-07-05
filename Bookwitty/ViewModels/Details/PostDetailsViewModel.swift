@@ -44,6 +44,9 @@ class PostDetailsViewModel {
       setPenNameFromResource(resource: resource, penName: newValue)
     }
   }
+  var actionInfoValue: String? {
+    return (resource as? ModelCommonProperties)?.witters
+  }
   var contentPostsIdentifiers: [ResourceIdentifier]? {
     return contentPostsFromResource(resource: resource)
   }

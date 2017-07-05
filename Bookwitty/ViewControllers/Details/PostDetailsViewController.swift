@@ -76,6 +76,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     let date = viewModel.date?.formatted() ?? ""
     postDetailsNode.date = date
     postDetailsNode.penName = viewModel.penName
+    postDetailsNode.actionInfoValue = viewModel.actionInfoValue
     postDetailsNode.conculsion = viewModel.conculsion
     postDetailsNode.headerNode.profileBarNode.updateMode(disabled: viewModel.isMyPenName())
     postDetailsNode.setWitValue(witted: viewModel.isWitted)    

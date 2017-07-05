@@ -112,6 +112,13 @@ class PostDetailsNode: ASScrollNode {
       headerNode.penName = penName
     }
   }
+
+  var actionInfoValue: String? {
+    didSet {
+      headerNode.actionInfoValue = actionInfoValue
+    }
+  }
+
   weak var delegate: PostDetailsNodeDelegate?
   var conculsion: String? {
     didSet {
