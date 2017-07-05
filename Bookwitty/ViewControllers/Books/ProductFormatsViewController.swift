@@ -193,6 +193,7 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
         return
       }
       pushFormatEditionsViewController(productId: productId, productForm: values.form)
+      tableView.deselectRow(at: indexPath, animated: true)
       
       //MARK: [Analytics] Event
       let event: Analytics.Event = Analytics.Event(
