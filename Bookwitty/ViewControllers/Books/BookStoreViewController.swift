@@ -332,7 +332,8 @@ class BookStoreViewController: UIViewController {
   }
   
   fileprivate func pushBookDetailsViewController(with book: Book) {
-    let bookDetailsViewController = BookDetailsViewController(with: book)
+    let bookDetailsViewController = BookDetailsViewController()
+    bookDetailsViewController.initialize(with: book)
     bookDetailsViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(bookDetailsViewController, animated: true)
   }

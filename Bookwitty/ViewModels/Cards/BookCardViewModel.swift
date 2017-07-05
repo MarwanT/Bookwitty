@@ -53,7 +53,7 @@ class BookCardViewModel: CardViewModelProtocol {
     let wit = (is: resource.isWitted, count: resource.counts?.wits ?? 0, resource.witters)
 
     let author = book.productDetails?.author
-    let price = (book.productDetails?.isElectronicFormat() ?? false) ? nil : book.supplierInformation?.preferredPrice?.formattedValue
+    let price = (book.productDetails?.isElectronicFormat ?? false) ? nil : book.supplierInformation?.preferredPrice?.formattedValue
     let format = book.productDetails?.productFormat
     let info = (author, price, format)
 

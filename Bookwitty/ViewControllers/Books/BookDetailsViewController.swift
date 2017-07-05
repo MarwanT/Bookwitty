@@ -10,6 +10,7 @@ import UIKit
 import AsyncDisplayKit
 import Spine
 import GSImageViewerController
+import SwiftLoader
 
 class BookDetailsViewController: ASViewController<ASCollectionNode> {
   let viewModel = BookDetailsViewModel()
@@ -23,20 +24,27 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
     fatalError("init(coder:) has not been implemented")
   }
   
-  init(with book: Book) {
+  init() {
     flowLayout = UICollectionViewFlowLayout()
     flowLayout.sectionInset = UIEdgeInsets.zero
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
     
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
-    viewModel.book = book
     
     loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
     
     super.init(node: collectionNode)
     
     viewModel.viewController = self
+  }
+  
+  func initialize(with book: Book) {
+    viewModel.initialize(with: book)
+  }
+  
+  func initialize(withId id: String) {
+    viewModel.initialize(withId: id)
   }
   
   override func viewDidLoad() {
@@ -204,8 +212,8 @@ extension BookDetailsViewController {
     switch action {
     case .viewImageFullScreen:
       break
-    case .viewFormat:
-      break
+    case .viewFormat(let book):
+      viewFormats(book)
     case .viewCategory(let category):
       viewCategory(category)
     case .viewDescription(let description):
@@ -229,6 +237,19 @@ extension BookDetailsViewController {
     case .viewRelatedTopics(let bookTitle, let topics, let url):
       pushPostsViewController(bookTitle: bookTitle, resources: topics, url: url)
     }
+  }
+  
+  fileprivate func viewFormats(_ book: Book) {
+    let viewController = Storyboard.Books.instantiate(ProductFormatsViewController.self)
+    viewController.initialize(with: book)
+    viewController.delegate = self
+    navigationController?.pushViewController(viewController, animated: true)
+    
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .BookProduct,
+                                                 action: .GoToFormats,
+                                                 name: book.title ?? "")
+    Analytics.shared.send(event: event)
   }
   
   fileprivate func viewDetails(_ productDetails: ProductDetails) {
@@ -367,7 +388,7 @@ extension BookDetailsViewController: BookDetailsECommerceNodeDelegate {
 extension BookDetailsViewController {  
   enum Action {
     case viewImageFullScreen
-    case viewFormat
+    case viewFormat(Book)
     case viewDetails(ProductDetails)
     case viewCategory(Category)
     case viewDescription(String)
@@ -541,5 +562,20 @@ extension BookDetailsViewController: BookDetailsHeaderNodeDelegate {
     let transitionInfo = GSTransitionInfo(fromView: imageNode.view)
     let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
     present(imageViewer, animated: true, completion: nil)
+  }
+}
+
+//MARK: Product formats vc delegate implementation
+extension BookDetailsViewController: ProductFormatsViewControllerDelegate {
+  func productFormats(_ viewController: ProductFormatsViewController, selected editionId: String, didFinishLoading completion: ((Bool) -> Void)?) {
+    viewModel.initialize(withId: editionId)
+    
+    SwiftLoader.show(animated: true)
+    viewModel.loadContent { (success, errors) in
+      SwiftLoader.hide()
+      let sectionsNeedsReloading = self.viewModel.sectionsNeedsReloading()
+      self.reloadCollectionViewSections(sections: sectionsNeedsReloading)
+      completion?(success)
+    }
   }
 }

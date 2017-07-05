@@ -55,7 +55,7 @@ class Book: Resource {
   
   // TODO: Use this variable when displaying a book price across the app
   var preferredPrice: Price? {
-    return (productDetails?.isElectronicFormat() ?? false) ? nil : supplierInformation?.preferredPrice
+    return (productDetails?.isElectronicFormat ?? false) ? nil : supplierInformation?.preferredPrice
   }
 
   override class var fields: [Field] {
@@ -81,4 +81,25 @@ class Book: Resource {
 // MARK: - Parser
 extension Book: Parsable {
   typealias AbstractType = Book
+}
+
+// MARK: - Declare Book.Meta
+extension Book {
+  class Meta {
+    var numberOfEditionsPerFormat: [String : Int] = [:]
+    var totalEditions: Int = 0
+    
+    init(dictionary: [String : Any]?) {
+      guard let dictionary = dictionary else {
+        return
+      }
+      
+      if let counts = dictionary["counts"] as? [String : Int] {
+        numberOfEditionsPerFormat = counts
+      }
+      if let totalEditions = dictionary["total-editions"] as? Int {
+        self.totalEditions = totalEditions
+      }
+    }
+  }
 }

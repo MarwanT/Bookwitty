@@ -100,7 +100,8 @@ extension PostsListViewController {
   }
 
   fileprivate func pushBookDetailsViewController(with book: Book) {
-    let bookDetailsViewController = BookDetailsViewController(with: book)
+    let bookDetailsViewController = BookDetailsViewController()
+    bookDetailsViewController.initialize(with: book)
     navigationController?.pushViewController(bookDetailsViewController, animated: true)
   }
 }
@@ -166,7 +167,7 @@ extension PostsListViewController: ASCollectionDataSource, ASCollectionDelegate 
     case Book.resourceType:
       let res = resource as? Book
       let showEcommerceButton: Bool = (res?.supplierInformation != nil) &&
-        !(res?.productDetails?.isElectronicFormat() ?? false)
+        !(res?.productDetails?.isElectronicFormat ?? false)
       let itemNode = PostDetailItemNode(smallImage: false, showsSubheadline: false, showsButton: showEcommerceButton)
       itemNode.imageUrl = res?.thumbnailImageUrl
       itemNode.body = res?.bookDescription
