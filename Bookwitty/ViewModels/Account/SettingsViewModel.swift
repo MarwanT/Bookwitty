@@ -37,12 +37,15 @@ final class SettingsViewModel {
     case 0: //email
       let sendEmailNotification = GeneralSettings.sharedInstance.shouldSendEmailNotifications
       return (Strings.email_notifications(), sendEmailNotification)
-    case 1: //change password
+    case 1: //newsletter
+      let sendNewsletter = GeneralSettings.sharedInstance.shouldSendNewsletter
+      return (Strings.newsletter(), sendNewsletter)
+    case 2: //change password
       return (Strings.change_password(), "")
-    case 2: //change language
+    case 3: //change language
       let languageDisplayName: String = Locale.application.localizedString(forLanguageCode: GeneralSettings.sharedInstance.preferredLanguage) ?? ""
       return (Strings.language(), languageDisplayName.capitalized)
-    case 3: //country/region
+    case 4: //country/region
       let countryName = Locale.application.localizedString(forRegionCode: countryCode) ?? ""
       return (Strings.country_region(), countryName)
     default:
@@ -54,32 +57,41 @@ final class SettingsViewModel {
     switch row {
     case 0: //email
       return .Switch
-    case 1: //change password
+    case 1: //newsletter
+      return .Switch
+    case 2: //change password
       return .Disclosure
-    case 2: //change language
+    case 3: //change language
       return .Disclosure
-    case 3: //country/region
+    case 4: //country/region
       return .Disclosure
     default:
       return .None
     }
   }
 
-  private func handleGeneralSwitchValueChanged(atRow row: Int, newValue: Bool, completion: @escaping (()->())) {
+  private func handleGeneralSwitchValueChanged(atRow row: Int, newValue: Bool, completion: @escaping ((_ value: Bool)->())) {
     switch row {
     case 0: //email
-      updateUserPreferences(value: "\(newValue)", completion: { (success: Bool) -> () in
+      updateUserEmailNotificationsPreferences(value: "\(newValue)", completion: { (success: Bool) -> () in
         if success {
           GeneralSettings.sharedInstance.shouldSendEmailNotifications = newValue
         }
-        completion()
+        completion(GeneralSettings.sharedInstance.shouldSendEmailNotifications)
+      })
+    case 1: //newsletter
+      updateUserEmailNewsletterPreference(value: "\(newValue)", completion: { (success: Bool) in
+        if success {
+          GeneralSettings.sharedInstance.shouldSendNewsletter = newValue
+        }
+        completion(GeneralSettings.sharedInstance.shouldSendNewsletter)
       })
     default:
       break
     }
   }
 
-  private func updateUserPreferences(value: String, completion: @escaping ((Bool)->())) {
+  private func updateUserEmailNotificationsPreferences(value: String, completion: @escaping ((Bool)->())) {
     var followersPreferenceSuccess: Bool = false
     var commentsPreferenceSuccess: Bool = false
 
@@ -100,6 +112,13 @@ final class SettingsViewModel {
 
     group.notify(queue: DispatchQueue.main) {
       completion(followersPreferenceSuccess && commentsPreferenceSuccess)
+    }
+  }
+
+  private func updateUserEmailNewsletterPreference(value: String, completion: @escaping ((Bool)->())) {
+    _ = UserAPI.updateUser(preference: User.Preference.emailNewsletter, value: value) {
+      (success: Bool, error: BookwittyAPIError?) in
+      completion(success)
     }
   }
 
@@ -146,8 +165,8 @@ final class SettingsViewModel {
     var numberOfRows = 0
     switch section {
     case Sections.General.rawValue:
-      //email notifications, change password, change language, country/region
-      numberOfRows = 4
+      //email notifications, newsletter, change password, change language, country/region
+      numberOfRows = 5
     case Sections.SignOut.rawValue:
       //sign out
       numberOfRows = 1
@@ -188,7 +207,7 @@ final class SettingsViewModel {
     return accessory
   }
 
-  func handleSwitchValueChanged(forRowAt indexPath: IndexPath, newValue: Bool, completion: @escaping (()->())) {
+  func handleSwitchValueChanged(forRowAt indexPath: IndexPath, newValue: Bool, completion: @escaping ((_ value: Bool)->())) {
     switch indexPath.section {
     case Sections.General.rawValue:
       handleGeneralSwitchValueChanged(atRow: indexPath.row, newValue: newValue, completion: completion)
