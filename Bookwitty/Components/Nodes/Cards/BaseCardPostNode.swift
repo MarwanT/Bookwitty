@@ -305,7 +305,7 @@ extension BaseCardPostNode: BaseCardPostNodeContentProvider {
   }
 
   internal var shouldShowActionInfoNode: Bool {
-    return true
+    return self.actionInfoValue != nil
   }
   
   internal var shouldShowActionBarNode: Bool {
