@@ -182,7 +182,7 @@ extension BaseCardPostNode {
     let defaultInset = internalInset()
 
     let infoNodeInset = ASInsetLayoutSpec(insets: infoInset(), child: infoNode)
-    let actionInfoNodeInset = ASInsetLayoutSpec(insets: defaultInset, child: actionInfoNode)
+    let actionInfoNodeInset = ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: defaultInset.left, bottom: defaultInset.bottom, right: defaultInset.right), child: actionInfoNode)
     let actionBarNodeInset = ASInsetLayoutSpec(insets: actionBarInset(), child: actionBarNode)
     let backgroundNodeInset = ASInsetLayoutSpec(insets: backgroundInset, child: backgroundNode)
     let separatorNodeInset = ASInsetLayoutSpec(insets: separatorInset(), child: separatorNode)
