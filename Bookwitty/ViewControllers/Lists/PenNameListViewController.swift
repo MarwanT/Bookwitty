@@ -61,6 +61,8 @@ class PenNameListViewController: ASViewController<ASCollectionNode> {
     collectionNode.delegate = self
     collectionNode.dataSource = self
 
+    loaderNode.style.preferredSize.width = collectionNode.frame.width
+
     flowLayout.minimumInteritemSpacing = 0
     flowLayout.minimumLineSpacing = 0
     flowLayout.sectionHeadersPinToVisibleBounds = true
