@@ -359,14 +359,13 @@ extension Comment: ModelCommonProperties {
     }
     return Vote.isWitted(vote: vote)
   }
-  var isDimmed: Bool {
-    guard let vote = vote else {
-      return false
-    }
-    return Vote.isDimmed(vote: vote)
-  }
   
   var following: Bool {
     return false
+  }
+
+  var topVotes: [Vote]? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
   }
 }

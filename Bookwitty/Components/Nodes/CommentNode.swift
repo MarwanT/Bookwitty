@@ -57,7 +57,6 @@ class CommentNode: ASCellNode {
     
     actionBar.setup(forFollowingMode: false)
     actionBar.configuration.externalHorizontalMargin = 0
-    actionBar.hideDim = false
     actionBar.hideShareButton = true
     actionBar.delegate = self
   }
@@ -138,12 +137,8 @@ class CommentNode: ASCellNode {
     }
   }
   
-  func setWitValue(witted: Bool, wits: Int) {
-    actionBar.setWitButton(witted: witted, wits: wits)
-  }
-  
-  func setDimValue(dimmed: Bool, dims: Int) {
-    actionBar.setDimValue(dimmed: dimmed, dims: dims)
+  func setWitValue(witted: Bool) {
+    actionBar.setWitButton(witted: witted)
   }
 }
 

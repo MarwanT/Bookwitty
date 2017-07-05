@@ -140,28 +140,4 @@ extension CommentsViewModel {
       completion(success, error)
     }
   }
-  
-  func dim(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
-    guard let commentsManager = commentsManager else {
-      completion(false, nil)
-      return
-    }
-    
-    commentsManager.dim(comment: comment) {
-      (success, error) in
-      completion(success, error)
-    }
-  }
-  
-  func undim(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
-    guard let commentsManager = commentsManager else {
-      completion(false, nil)
-      return
-    }
-    
-    commentsManager.undim(comment: comment) {
-      (success, error) in
-      completion(success, error)
-    }
-  }
 }

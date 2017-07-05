@@ -277,10 +277,6 @@ extension CardDetailsViewController: CommentsNodeDelegate {
         commentsNode.wit(comment: comment, completion: nil)
       case .unwit:
         commentsNode.unwit(comment: comment, completion: nil)
-      case .dim:
-        commentsNode.dim(comment: comment, completion: nil)
-      case .undim:
-        commentsNode.undim(comment: comment, completion: nil)
       case .reply:
         CommentComposerViewController.show(from: self, delegate: self, parentCommentId: comment.id)
       default:
