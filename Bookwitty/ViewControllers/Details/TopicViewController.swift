@@ -750,10 +750,8 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
 
 // MARK - BaseCardPostNode Delegate
 extension TopicViewController: BaseCardPostNodeDelegate {
-  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
-    guard let indexPath = collectionNode.indexPath(for: card) else {
-      return
-    }
+
+  private func userProfileHandler(at indexPath: IndexPath) {
     let index: Int = indexPath.row
     var resource: ModelResource?
     let category = self.category(withIndex: segmentedNode.selectedIndex)
@@ -815,6 +813,44 @@ extension TopicViewController: BaseCardPostNodeDelegate {
                                                    action: .GoToDetails,
                                                    name: penName.name ?? "")
       Analytics.shared.send(event: event)
+    }
+  }
+
+  private func actionInfoHandler(at indexPath: IndexPath) {
+
+    let index: Int = indexPath.row
+    var candidateResource: ModelResource?
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+    switch category {
+    case .latest:
+      candidateResource = viewModel.latest(at: index)
+    case .editions:
+      candidateResource = viewModel.edition(at: index)
+    case .relatedBooks:
+      candidateResource = viewModel.relatedBook(at: index)
+    case .followers:
+      candidateResource = viewModel.follower(at: index)
+    case .none:
+      return
+    }
+
+    guard let resource = candidateResource else {
+      return
+    }
+
+    pushPenNamesListViewController(with: resource)
+  }
+
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+    
+    switch action {
+    case .userProfile:
+      userProfileHandler(at: indexPath)
+    case .actionInfo:
+      actionInfoHandler(at: indexPath)
     }
   }
 

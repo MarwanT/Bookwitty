@@ -53,6 +53,7 @@ extension Analytics {
     case CategoriesList
     case Bag
     case Onboarding
+    case PenNamesList
 
     //Use in switch cases default clause
     case Default
@@ -101,6 +102,8 @@ extension Analytics {
         return "Bag"
       case .Onboarding:
         return "Onboarding"
+      case .PenNamesList:
+        return "Pen Names List"
       case .Default:
         return "[DEFAULT]"
       }
@@ -119,12 +122,8 @@ extension Analytics {
     //
     case Wit
     case Unwit
-    case Dim
-    case Undim
     case WitComment
     case UnwitComment
-    case DimComment
-    case UndimComment
     //
     case Comment
     case ReplyToComment
@@ -202,18 +201,10 @@ extension Analytics {
         return "Wit"
       case .Unwit:
         return "Unwit"
-      case .Dim:
-        return "Dim"
-      case .Undim:
-        return "Undim"
       case .WitComment:
         return "Wit Comment"
       case .UnwitComment:
         return "Unwit Comment"
-      case .DimComment:
-        return "Dim Comment"
-      case .UndimComment:
-        return "Undim Comment"
       case .Comment:
         return "Comment"
       case .ReplyToComment:
@@ -360,6 +351,7 @@ extension Analytics {
     static let ReadingLists = ScreenName(name: "Reading Lists")
     static let BooksListing = ScreenName(name: "Books Listing")
     static let UserProfile = ScreenName(name: "User Profile")
+    static let PenNameList = ScreenName(name: "Pen Name List")
 
     //Use in switch cases default clause
     static let Default = ScreenName(name: "[DEFAULT]")
@@ -377,10 +369,6 @@ extension Analytics.Action {
       return .Comment
     case .share:
       return .Share
-    case .dim:
-      return .Dim
-    case .undim:
-      return .Undim
     case .follow:
       switch category {
       case .Topic:

@@ -25,9 +25,9 @@ class ReadingListCardViewModel: CardViewModelProtocol {
     delegate?.resourceUpdated(viewModel: self)
   }
 
-  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, comments: String?, relatedContent: (posts: [String], count: Int), statistics: (posts: Int?, relatedBooks: Int?, followers: Int?), wit: (is: Bool, count: Int), dim: (is: Bool, count: Int))) {
+  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, comments: String?, relatedContent: (posts: [String], count: Int), statistics: (posts: Int?, relatedBooks: Int?, followers: Int?), wit: (is: Bool, count: Int, info: String?))) {
     guard let resource = resource, let readingList = resource as? ReadingList else {
-      return (false, nil, content: (nil, nil, nil, relatedContent: ([], 0), statistics: (nil, nil, nil), wit: (false, 0), dim: (false, 0)))
+      return (false, nil, content: (nil, nil, nil, relatedContent: ([], 0), statistics: (nil, nil, nil), wit: (false, 0, nil)))
     }
 
     let cardPostInfoData: CardPostInfoNodeData?
@@ -48,13 +48,12 @@ class ReadingListCardViewModel: CardViewModelProtocol {
     let relatedBooks: Int? = nil
     let followers = resource.counts?.followers
     let statistics = (posts, relatedBooks, followers)
-    let wit = (is: resource.isWitted, count: resource.counts?.wits ?? 0)
-    let dim = (is: resource.isDimmed, count: resource.counts?.dims ?? 0)
+    let wit = (is: resource.isWitted, count: resource.counts?.wits ?? 0, resource.witters)
 
     let postsCount = readingList.postsRelations?.count ?? 0
     let images = readingList.posts?.flatMap({ ($0 as? ModelCommonProperties)?.thumbnailImageUrl }) ?? []
     let relatedContent = (images, postsCount)
 
-    return (infoNode, cardPostInfoData, content: (title, description, comments, relatedContent: relatedContent, statistics: statistics, wit: wit, dim: dim))
+    return (infoNode, cardPostInfoData, content: (title, description, comments, relatedContent: relatedContent, statistics: statistics, wit: wit))
   }
 }

@@ -25,9 +25,9 @@ class TopicCardViewModel: CardViewModelProtocol {
     delegate?.resourceUpdated(viewModel: self)
   }
 
-  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, image: (cover: String?, thumbnail: String?), comments: String?, statistics: (posts: Int?, relatedBooks: Int?, followers: Int?), following: Bool, wit: (is: Bool, count: Int), dim: (is: Bool, count: Int))) {
+  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, image: (cover: String?, thumbnail: String?), comments: String?, statistics: (posts: Int?, relatedBooks: Int?, followers: Int?), following: Bool, wit: (is: Bool, count: Int, info: String?))) {
     guard let resource = resource else {
-      return (false, nil, content: (nil, nil, image: (nil, nil), nil, statistics: (nil, nil, nil), false, wit: (false, 0), dim: (false, 0)))
+      return (false, nil, content: (nil, nil, image: (nil, nil), nil, statistics: (nil, nil, nil), false, wit: (false, 0, nil)))
     }
 
     let cardPostInfoData: CardPostInfoNodeData?
@@ -50,9 +50,8 @@ class TopicCardViewModel: CardViewModelProtocol {
     let following = resource.following
     let followers = resource.counts?.followers
     let statistics = (posts, relatedBooks, followers)
-    let wit = (is: resource.isWitted, count: resource.counts?.wits ?? 0)
-    let dim = (is: resource.isDimmed, count: resource.counts?.dims ?? 0)
+    let wit = (is: resource.isWitted, count: resource.counts?.wits ?? 0, resource.witters)
 
-    return (infoNode, cardPostInfoData, content: (title, description, image: (imageUrl, nil), comments, statistics: statistics, following, wit: wit, dim: dim))
+    return (infoNode, cardPostInfoData, content: (title, description, image: (imageUrl, nil), comments, statistics: statistics, following, wit: wit))
   }
 }

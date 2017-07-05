@@ -76,10 +76,10 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     let date = viewModel.date?.formatted() ?? ""
     postDetailsNode.date = date
     postDetailsNode.penName = viewModel.penName
+    postDetailsNode.actionInfoValue = viewModel.actionInfoValue
     postDetailsNode.conculsion = viewModel.conculsion
     postDetailsNode.headerNode.profileBarNode.updateMode(disabled: viewModel.isMyPenName())
-    postDetailsNode.setWitValue(witted: viewModel.isWitted, wits: viewModel.wits ?? 0)
-    postDetailsNode.setDimValue(dimmed: viewModel.isDimmed, dims: viewModel.dims ?? 0)
+    postDetailsNode.setWitValue(witted: viewModel.isWitted)    
   }
 
   fileprivate func addDelegatesAndDataSources() {
@@ -338,14 +338,6 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
       viewModel.unwitPost(completionBlock: { (success) in
         didFinishAction?(success)
       })
-    case .dim:
-      viewModel.dimContent(completionBlock: { (success) in
-        didFinishAction?(success)
-      })
-    case .undim:
-      viewModel.undimContent(completionBlock: { (success) in
-        didFinishAction?(success)
-      })
     case .share:
       if let sharingInfo: [String] = viewModel.sharingPost() {
         presentShareSheet(shareContent: sharingInfo)
@@ -401,6 +393,10 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
     let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
     present(imageViewer, animated: true, completion: nil)
   }
+
+  func postDetails(node: PostDetailsNode, didRequestActionInfo fromNode: ASTextNode) {
+    pushPenNamesListViewController(with: viewModel.resource)
+  }
   
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
     switch action {
@@ -416,10 +412,6 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
         postDetailsNode.wit(comment: comment, completion: nil)
       case .unwit:
         postDetailsNode.unwit(comment: comment, completion: nil)
-      case .dim:
-        postDetailsNode.dim(comment: comment, completion: nil)
-      case .undim:
-        postDetailsNode.undim(comment: comment, completion: nil)
       case .reply:
         CommentComposerViewController.show(from: self, delegate: self, parentCommentId: comment.id)
       default:
@@ -606,10 +598,8 @@ extension PostDetailsViewController: PostDetailItemNodeDelegate {
 
 // MARK - BaseCardPostNode Delegate
 extension PostDetailsViewController: BaseCardPostNodeDelegate {
-  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
-    guard let index = postDetailsNode.postCardsNode.index(of: card) else {
-      return
-    }
+
+  private func userProfileHandler(at index: Int) {
     let resource = viewModel.relatedPost(at: index)
     if let resource = resource as? ModelCommonProperties,
       let penName = resource.penName {
@@ -656,6 +646,27 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
                                                    action: .GoToDetails,
                                                    name: penName.name ?? "")
       Analytics.shared.send(event: event)
+    }
+  }
+
+  private func actionInfoHandler(at index: Int) {
+    guard let resource = viewModel.relatedPost(at: index) else {
+      return
+    }
+
+    pushPenNamesListViewController(with: resource)
+  }
+
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let index = postDetailsNode.postCardsNode.index(of: card) else {
+      return
+    }
+    
+    switch action {
+    case .userProfile:
+      userProfileHandler(at: index)
+    case .actionInfo:
+      actionInfoHandler(at: index)
     }
   }
 

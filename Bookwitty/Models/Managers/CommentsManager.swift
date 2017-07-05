@@ -255,76 +255,6 @@ extension CommentsManager {
         object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.unwit), comment))
     })
   }
-  
-  func dim(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
-    guard let postIdentifier = postIdentifier else {
-      completion(false, CommentsManager.Error.missingPostId)
-      return
-    }
-    
-    guard let commentId = comment.id else {
-      completion(false, CommentsManager.Error.unidentified)
-      return
-    }
-    
-    _ = CommentAPI.dim(commentIdentifier: commentId, completion: {
-      (success, commentId, error) in
-      var responseError: CommentsManager.Error? = CommentsManager.Error.api(error)
-      defer {
-        completion(success, responseError)
-      }
-      
-      guard success else {
-        return
-      }
-      
-      // Do additional logic here if necessary
-      guard let comment = self.comment(for: commentId) else {
-        responseError = CommentsManager.Error.unidentified
-        return
-      }
-      
-      self.dim(comment)
-      NotificationCenter.default.post(
-        name: CommentsManager.notificationName(for: postIdentifier),
-        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.dim), comment))
-    })
-  }
-  
-  func undim(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
-    guard let postIdentifier = postIdentifier else {
-      completion(false, CommentsManager.Error.missingPostId)
-      return
-    }
-    
-    guard let commentId = comment.id else {
-      completion(false, CommentsManager.Error.unidentified)
-      return
-    }
-    
-    _ = CommentAPI.undim(commentIdentifier: commentId, completion: {
-      (success, commentId, error) in
-      var responseError: CommentsManager.Error? = CommentsManager.Error.api(error)
-      defer {
-        completion(success, responseError)
-      }
-      
-      guard success else {
-        return
-      }
-      
-      // Do additional logic here if necessary
-      guard let comment = self.comment(for: commentId) else {
-        responseError = CommentsManager.Error.unidentified
-        return
-      }
-      
-      self.undim(comment)
-      NotificationCenter.default.post(
-        name: CommentsManager.notificationName(for: postIdentifier),
-        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.undim), comment))
-    })
-  }
 }
 
 //MARK: - Update After Action Implementations
@@ -337,16 +267,6 @@ extension CommentsManager {
   fileprivate func unwit(_ resource: ModelResource) {
     var actionableRes = resource as? ModelCommonActions
     actionableRes?.wit = false
-  }
-  
-  fileprivate func dim(_ resource: ModelResource) {
-    var actionableRes = resource as? ModelCommonActions
-    actionableRes?.dim = true
-  }
-  
-  fileprivate func undim(_ resource: ModelResource) {
-    var actionableRes = resource as? ModelCommonActions
-    actionableRes?.dim = false
   }
   
   fileprivate func follow(_ resource: ModelResource) {

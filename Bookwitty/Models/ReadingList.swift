@@ -24,6 +24,12 @@ class ReadingList: Resource {
   var vote: String?
   var counts: Counts?
 
+  @objc
+  private var topVotesCollection: LinkedResourceCollection?
+  lazy var topVotes: [Vote]? = {
+    return self.topVotesCollection?.resources as? [Vote]
+  }()
+
   var postsCollection: LinkedResourceCollection?
   lazy var postsRelations: [ResourceIdentifier]? = {
     return self.postsCollection?.linkage
@@ -52,7 +58,8 @@ class ReadingList: Resource {
       "body": Attribute().serializeAs("body"),
       "counts" : CountsAttribute().serializeAs("counts"),
       "postsCollection" : ToManyRelationship(Resource.self).serializeAs("posts"),
-      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
+      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name"),
+      "topVotesCollection" : ToManyRelationship(PenName.self).serializeAs("top-votes")
       ])
   }
 }

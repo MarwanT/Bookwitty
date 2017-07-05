@@ -51,6 +51,7 @@ protocol PostDetailsNodeDelegate: class {
   func hasContentItems() -> Bool
   func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
   func postDetails(node: PostDetailsNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
+  func postDetails(node: PostDetailsNode, didRequestActionInfo fromNode: ASTextNode)
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action)
 }
 
@@ -112,6 +113,13 @@ class PostDetailsNode: ASScrollNode {
       headerNode.penName = penName
     }
   }
+
+  var actionInfoValue: String? {
+    didSet {
+      headerNode.actionInfoValue = actionInfoValue
+    }
+  }
+
   weak var delegate: PostDetailsNodeDelegate?
   var conculsion: String? {
     didSet {
@@ -285,12 +293,8 @@ class PostDetailsNode: ASScrollNode {
     delegate?.bannerTapAction(url: Environment.current.shipementInfoURL)
   }
 
-  func setWitValue(witted: Bool, wits: Int) {
-    headerNode.actionBarNode.setWitButton(witted: witted, wits: wits)
-  }
-
-  func setDimValue(dimmed: Bool, dims: Int) {
-    headerNode.actionBarNode.setDimValue(dimmed: dimmed, dims: dims)
+  func setWitValue(witted: Bool) {
+    headerNode.actionBarNode.setWitButton(witted: witted)
   }
 
   func sidesEdgeInset() -> UIEdgeInsets {
@@ -389,6 +393,10 @@ extension PostDetailsNode: PostDetailsHeaderNodeDelegate {
   func postDetailsHeader(node: PostDetailsHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
     delegate?.postDetails(node: self, requestToViewImage: image, from: imageNode)
   }
+
+  func postDetailsHeader(node: PostDetailsHeaderNode, didRequestActionInfo fromNode: ASTextNode) {
+    delegate?.postDetails(node: self, didRequestActionInfo: fromNode)
+  }
 }
 
 extension PostDetailsNode: CommentsNodeDelegate {
@@ -415,20 +423,6 @@ extension PostDetailsNode {
   
   func unwit(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
     commentsNode.unwit(comment: comment) {
-      (success, error) in
-      completion?(success, error)
-    }
-  }
-  
-  func dim(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
-    commentsNode.dim(comment: comment) {
-      (success, error) in
-      completion?(success, error)
-    }
-  }
-  
-  func undim(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
-    commentsNode.undim(comment: comment) {
       (success, error) in
       completion?(success, error)
     }

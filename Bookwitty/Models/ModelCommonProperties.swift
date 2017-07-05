@@ -9,20 +9,6 @@
 import Foundation
 import Spine
 
-enum Vote: String {
-  case witted = "wit"
-  case dimmed = "dim"
-  case none = ""
-
-  static func isWitted(vote: String) -> Bool {
-    return vote == Vote.witted.rawValue
-  }
-
-  static func isDimmed(vote: String) -> Bool {
-    return vote == Vote.dimmed.rawValue
-  }
-}
-
 protocol ModelCommonProperties {
   var id: String? { get }
   var title: String? { get }
@@ -33,7 +19,6 @@ protocol ModelCommonProperties {
   var shortDescription: String? { get }
   var vote: String? { get }
   var isWitted: Bool { get }
-  var isDimmed: Bool { get }
   var following: Bool { get }
   var canonicalURL: URL? { get }
   var counts: Counts? { get set }
@@ -42,10 +27,47 @@ protocol ModelCommonProperties {
   var penName: PenName? { get set }
   var contributors: [PenName]? { get set }
 
+  var topVotes: [Vote]? { get set }
+  var witters: String? { get }
+
   func sameInstanceAs(newResource: ModelCommonProperties?) -> Bool?
 }
 
 extension ModelCommonProperties {
+  var witters: String? {
+    let wits = self.counts?.wits ?? 0
+    guard wits > 0 else {
+      return nil
+    }
+
+    let voters: [String] = self.topVotes?
+      .filter({
+      guard let penName = $0.penName else { return false }
+      return !UserManager.shared.isMyDefault(penName: penName) })
+      .flatMap({ $0.penName?.name }) ?? []
+
+    var names = voters.prefix(2)
+
+    if isWitted {
+      names.insert(Strings.you(), at: 0)
+    }
+
+    let witters: String
+    let othersCount = max(wits - names.count, 0)
+    let separator = names.count == 2 ? " " + Strings.and() + " " : ", "
+
+    switch (names.count, othersCount) {
+    case (0, _):
+      witters = Strings.findThisWitty(witters: wits)
+    case (_, 0):
+      witters = Strings.findThisWitty(witters: names.joined(separator: separator))
+    default:
+      witters = Strings.andOthersFindThisWitty(witters: names.joined(separator: separator), others: othersCount)
+    }
+
+    return witters
+  }
+
   func sameInstanceAs(newResource: ModelCommonProperties?) -> Bool? {
     guard let existingResource = self as? ModelResource, let newResource = newResource as? ModelResource else {
       return nil
@@ -68,12 +90,6 @@ extension Video: ModelCommonProperties {
     }
     return Vote.isWitted(vote: vote)
   }
-  var isDimmed: Bool {
-    guard let vote = vote else {
-      return false
-    }
-    return Vote.isDimmed(vote: vote)
-  }
 
   var following: Bool {
     return false
@@ -87,11 +103,10 @@ extension Topic: ModelCommonProperties {
     }
     return Vote.isWitted(vote: vote)
   }
-  var isDimmed: Bool {
-    guard let vote = vote else {
-      return false
-    }
-    return Vote.isDimmed(vote: vote)
+
+  var topVotes: [Vote]? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
   }
 }
 
@@ -109,12 +124,6 @@ extension Image: ModelCommonProperties {
     }
     return Vote.isWitted(vote: vote)
   }
-  var isDimmed: Bool {
-    guard let vote = vote else {
-      return false
-    }
-    return Vote.isDimmed(vote: vote)
-  }
 
   var following: Bool {
     return false
@@ -128,11 +137,10 @@ extension Author: ModelCommonProperties {
     }
     return Vote.isWitted(vote: vote)
   }
-  var isDimmed: Bool {
-    guard let vote = vote else {
-      return false
-    }
-    return Vote.isDimmed(vote: vote)
+
+  var topVotes: [Vote]? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
   }
 }
 
@@ -149,12 +157,6 @@ extension Link: ModelCommonProperties {
       return false
     }
     return Vote.isWitted(vote: vote)
-  }
-  var isDimmed: Bool {
-    guard let vote = vote else {
-      return false
-    }
-    return Vote.isDimmed(vote: vote)
   }
 
   var following: Bool {
@@ -176,12 +178,6 @@ extension ReadingList: ModelCommonProperties {
     }
     return Vote.isWitted(vote: vote)
   }
-  var isDimmed: Bool {
-    guard let vote = vote else {
-      return false
-    }
-    return Vote.isDimmed(vote: vote)
-  }
 
   var following: Bool {
     return false
@@ -201,12 +197,6 @@ extension Audio: ModelCommonProperties {
       return false
     }
     return Vote.isWitted(vote: vote)
-  }
-  var isDimmed: Bool {
-    guard let vote = vote else {
-      return false
-    }
-    return Vote.isDimmed(vote: vote)
   }
 
   var following: Bool {
@@ -228,12 +218,6 @@ extension Text: ModelCommonProperties {
     }
     return Vote.isWitted(vote: vote)
   }
-  var isDimmed: Bool {
-    guard let vote = vote else {
-      return false
-    }
-    return Vote.isDimmed(vote: vote)
-  }
 
   var following: Bool {
     return false
@@ -254,12 +238,6 @@ extension Quote: ModelCommonProperties {
     }
     return Vote.isWitted(vote: vote)
   }
-  var isDimmed: Bool {
-    guard let vote = vote else {
-      return false
-    }
-    return Vote.isDimmed(vote: vote)
-  }
 
   var following: Bool {
     return false
@@ -276,9 +254,6 @@ extension Book: ModelCommonProperties {
   var isWitted: Bool {
     return false
   }
-  var isDimmed: Bool {
-    return false
-  }
 
   var shortDescription: String? {
     return nil
@@ -291,6 +266,11 @@ extension Book: ModelCommonProperties {
     set {
       //Property does not apply
     }
+  }
+
+  var topVotes: [Vote]? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
   }
 }
 
@@ -334,10 +314,6 @@ extension PenName: ModelCommonProperties {
     return false
   }
 
-  var isDimmed: Bool {
-    return false
-  }
-
   var penName: PenName? {
     get {
       return nil
@@ -345,6 +321,11 @@ extension PenName: ModelCommonProperties {
     set {
       //Property does not apply
     }
+  }
+
+  var topVotes: [Vote]? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
   }
 }
 
@@ -378,14 +359,13 @@ extension Comment: ModelCommonProperties {
     }
     return Vote.isWitted(vote: vote)
   }
-  var isDimmed: Bool {
-    guard let vote = vote else {
-      return false
-    }
-    return Vote.isDimmed(vote: vote)
-  }
   
   var following: Bool {
     return false
+  }
+
+  var topVotes: [Vote]? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
   }
 }

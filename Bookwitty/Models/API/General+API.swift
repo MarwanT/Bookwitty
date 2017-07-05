@@ -204,6 +204,36 @@ struct GeneralAPI {
     })
   }
 
+  static func votes(contentIdentifier identifier: String, completion: @escaping (_ success: Bool, _ votes: [Vote]?, _ next: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let successStatusCode: Int = 200
+
+    return signedAPIRequest(target: .votes(identifier: identifier), completion: {
+      (data, statusCode, response, error) in
+      var success: Bool = statusCode == successStatusCode
+      var votes: [Vote]? = nil
+      var next: URL? = nil
+      var error: BookwittyAPIError? = error
+
+      defer {
+        completion(success, votes, next, error)
+      }
+
+      guard statusCode == successStatusCode else {
+        error = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      guard let data = data else {
+        error = BookwittyAPIError.failToParseData
+        return
+      }
+
+      let values = Parser.parseDataArray(data: data)
+      votes = values?.resources as? [Vote]
+      next = values?.next
+    })
+  }
+
   static func follow(identifer: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
 
     let successStatusCode = 204
@@ -410,6 +440,12 @@ extension GeneralAPI {
       dictionary["filter[types]"] = type
     }
 
+    return dictionary
+  }
+
+  static func votesParameters() -> [String : Any]? {
+    var dictionary = [String : Any]()
+    dictionary["filter[vote]"] = true
     return dictionary
   }
 

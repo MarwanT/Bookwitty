@@ -18,6 +18,7 @@ protocol CardPostInfoNodeDelegate: class {
 class CardPostInfoNode: ASDisplayNode {
   enum Action {
     case userProfile
+    case actionInfo
   }
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
 

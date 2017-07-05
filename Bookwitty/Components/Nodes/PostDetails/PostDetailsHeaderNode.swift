@@ -11,16 +11,19 @@ import AsyncDisplayKit
 
 protocol PostDetailsHeaderNodeDelegate: class {
   func postDetailsHeader(node: PostDetailsHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
+  func postDetailsHeader(node: PostDetailsHeaderNode, didRequestActionInfo fromNode: ASTextNode)
 }
 
 
 class PostDetailsHeaderNode: ASCellNode {
+  private let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
 
   fileprivate let imageNode: ASNetworkImageNode
   fileprivate let textNode: ASTextNode
   let profileBarNode: PenNameFollowNode
+  fileprivate let actionInfoNode: ASTextNode
   let actionBarNode: CardActionBarNode
   fileprivate let separator: ASDisplayNode
   fileprivate let bottomSeparator: ASDisplayNode
@@ -50,10 +53,24 @@ class PostDetailsHeaderNode: ASCellNode {
     }
   }
 
+  var actionInfoValue: String? {
+    didSet {
+      if let actionInfoValue = actionInfoValue {
+        actionInfoNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+          .append(text: actionInfoValue, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      } else {
+        actionInfoNode.attributedText = nil
+      }
+
+      actionInfoNode.setNeedsLayout()
+    }
+  }
+
   override init() {
     imageNode = ASNetworkImageNode()
     textNode = ASTextNode()
     profileBarNode = PenNameFollowNode(largePadding: true)
+    actionInfoNode = ASTextNode()
     actionBarNode = CardActionBarNode()
     separator = ASDisplayNode()
     bottomSeparator = ASDisplayNode()
@@ -65,12 +82,11 @@ class PostDetailsHeaderNode: ASCellNode {
   override func didLoad() {
     imageNode.contentMode = .scaleAspectFill
     imageNode.delegate = self
+
+    actionInfoNode.addTarget(self, action: #selector(actionInfoNodeTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
 
   func initializeNode() {
-    //Enable dimming node
-    actionBarNode.hideDim = false
-    
     //Separator Styling
     separator.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 1.0)
     separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
@@ -87,12 +103,8 @@ class PostDetailsHeaderNode: ASCellNode {
 
   }
 
-  func setWitValue(witted: Bool, wits: Int) {
-    actionBarNode.setWitButton(witted: witted, wits: wits)
-  }
-
-  func setDimValue(dimmed: Bool, dims: Int) {
-    actionBarNode.setDimValue(dimmed: dimmed, dims: dims)
+  func setWitValue(witted: Bool) {
+    actionBarNode.setWitButton(witted: witted)
   }
   
   func sidesEdgeInset() -> UIEdgeInsets {
@@ -108,7 +120,19 @@ class PostDetailsHeaderNode: ASCellNode {
     let bottomSeparatorInset =  ASInsetLayoutSpec(insets: sidesEdgeInset(), child: bottomSeparator)
 
     let vStackActionBarSpec = ASStackLayoutSpec.vertical()
-    vStackActionBarSpec.children = [separatorInset, actionBarNode, bottomSeparatorInset]
+    var actionNodes: [ASLayoutElement] = []
+
+    if shouldShowActionInfoNode {
+      var insets = sidesEdgeInset()
+      insets.bottom = externalMargin/2.0
+      let actionInfoInset =  ASInsetLayoutSpec(insets: insets, child: actionInfoNode)
+      actionNodes.append(actionInfoInset)
+    }
+
+    actionNodes.append(separatorInset)
+    actionNodes.append(actionBarNode)
+    actionNodes.append(bottomSeparatorInset)
+    vStackActionBarSpec.children = actionNodes
 
     var nodesArray: [ASLayoutElement]
 
@@ -120,9 +144,20 @@ class PostDetailsHeaderNode: ASCellNode {
                     textInsetSpec, profileBarNode, vStackActionBarSpec]
     }
 
-
     vStackSpec.children = nodesArray
     return vStackSpec
+  }
+
+  internal var shouldShowActionInfoNode: Bool {
+    return self.actionInfoValue != nil
+  }
+}
+
+//MARK: - Actions
+extension PostDetailsHeaderNode {
+  @objc
+  fileprivate func actionInfoNodeTouchUpInside(_ sender: ASTextNode) {
+    delegate?.postDetailsHeader(node: self, didRequestActionInfo: sender)
   }
 }
 

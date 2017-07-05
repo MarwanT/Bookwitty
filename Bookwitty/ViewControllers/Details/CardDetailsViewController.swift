@@ -37,7 +37,6 @@ class CardDetailsViewController: GenericNodeViewController {
     
     node.delegate = self
     node.updateMode(fullMode: true)
-    node.updateDimVisibility(visible: true)
 
     if let photoNode = node as? PhotoCardPostCellNode {
       photoNode.node.delegate = self
@@ -77,8 +76,7 @@ class CardDetailsViewController: GenericNodeViewController {
     }
     if let index = node.subnodes.index( where: { $0 is BaseCardPostNode } ) {
       if let card = node.subnodes[index] as? BaseCardPostNode {
-        card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
-        card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
+        card.setWitValue(witted: resource.isWitted)        
       }
     }
   }
@@ -122,7 +120,8 @@ class CardDetailsViewController: GenericNodeViewController {
 
 // MARK - BaseCardPostNode Delegate
 extension CardDetailsViewController: BaseCardPostNodeDelegate {
-  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+
+  private func userProfileHandler() {
     if let resource = viewModel.resource as? ModelCommonProperties,
       let penName = resource.penName {
       pushProfileViewController(penName: penName)
@@ -170,6 +169,23 @@ extension CardDetailsViewController: BaseCardPostNodeDelegate {
       Analytics.shared.send(event: event)
     }
   }
+
+  private func actionInfoHandler() {
+    guard let resource = viewModel.resource else {
+      return
+    }
+
+    pushPenNamesListViewController(with: resource)
+  }
+
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    switch action {
+    case .userProfile:
+      userProfileHandler()
+    case .actionInfo:
+      actionInfoHandler()
+    }
+  }
   
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
     switch(action) {
@@ -181,14 +197,6 @@ extension CardDetailsViewController: BaseCardPostNodeDelegate {
       viewModel.unwitContent() { (success) in
         didFinishAction?(success)
       }
-    case .dim:
-      viewModel.dimContent(completionBlock: { (success) in
-        didFinishAction?(success)
-      })
-    case .undim:
-      viewModel.undimContent(completionBlock: { (success) in
-        didFinishAction?(success)
-      })
     case .share:
       if let sharingInfo: [String] = viewModel.sharingContent() {
         presentShareSheet(shareContent: sharingInfo)
@@ -269,10 +277,6 @@ extension CardDetailsViewController: CommentsNodeDelegate {
         commentsNode.wit(comment: comment, completion: nil)
       case .unwit:
         commentsNode.unwit(comment: comment, completion: nil)
-      case .dim:
-        commentsNode.dim(comment: comment, completion: nil)
-      case .undim:
-        commentsNode.undim(comment: comment, completion: nil)
       case .reply:
         CommentComposerViewController.show(from: self, delegate: self, parentCommentId: comment.id)
       default:

@@ -38,8 +38,6 @@ public enum BookwittyAPI {
   case undimComment(identifier: String)
   case wit(contentId: String)
   case unwit(contentId: String)
-  case dim(contentId: String)
-  case undim(contentId: String)
   case absolute(url: URL)
   case discover
   case onBoarding
@@ -62,6 +60,7 @@ public enum BookwittyAPI {
   case resendAccountConfirmation
   case uploadPolicy(file: (name: String, size: Int), fileType: UploadAPI.FileType, assetType: UploadAPI.AssetType)
   case uploadMultipart(url: URL, parameters: [String : String]?, multipart: (data: Data, name: String))
+  case votes(identifier: String)
 }
 
 // MARK: - Target Type
@@ -140,10 +139,6 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(contentId)/wit"
     case .unwit(let contentId):
       path = "/content/\(contentId)/wit"
-    case .dim(let contentId):
-      path = "/content/\(contentId)/dim"
-    case .undim(let contentId):
-      path = "/content/\(contentId)/dim"
     case .discover:
       path = "/curated_collection/discover_page"
     case .onBoarding:
@@ -170,6 +165,8 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(identifier)/linked_content"
     case .editions(let identifier):
       path = "/content/\(identifier)/editions"
+    case .votes(let identifier):
+      path = "/content/\(identifier)/votes"
     case .resetPassword:
       path = "/user/reset_password"
     case .penNameContent(let identifier):
@@ -203,13 +200,13 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .oAuth, .refreshToken, .resendAccountConfirmation, .createPenName:
       return .post
-  case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .search, .penNames, .comments, .replies, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .search, .penNames, .comments, .replies, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent, .votes:
       return .get
-    case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart, .batchPenNames, .createComment, .witComment, .dimComment:
+    case .register, .batch, .updatePreference, .wit, .follow, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart, .batchPenNames, .createComment, .witComment, .dimComment:
       return .post
     case .updateUser, .updatePenName:
       return .patch
-    case .unwit, .unfollow, .undim, .unfollowPenName, .unwitComment, .undimComment:
+    case .unwit, .unfollow, .unfollowPenName, .unwitComment, .undimComment:
       return .delete
     }
   }
@@ -261,6 +258,8 @@ extension BookwittyAPI: TargetType {
       return UserAPI.updatePostBody(preference: preference, value: value)
     case .posts(_, let type):
       return GeneralAPI.postsParameters(type: type)
+    case .votes:
+      return GeneralAPI.votesParameters()
     case .postsLinkedContent(_, let type):
       return GeneralAPI.postsParameters(type: type)
     case .resetPassword(let email):
@@ -271,7 +270,7 @@ extension BookwittyAPI: TargetType {
       return CommentAPI.createCommentBody(comment: comment, parentCommentIdentifier: parentCommentIdentifier)
     case .uploadPolicy(let file, let fileType, let assetType):
       return UploadAPI.uploadPolicyParameters(file: file, fileType: fileType, assetType: assetType)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment, .dimComment, .undimComment:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment, .dimComment, .undimComment:
       return nil
     }
   }
@@ -335,7 +334,7 @@ extension BookwittyAPI: TargetType {
     case .batch, .search, .discover, .penNameContent, .penNameFollowing, .posts, .postsLinkedContent, .comments, .replies:
       return ["pen-name"]
     case .newsFeed:
-      return ["pen-name", "contributors", "commenters"]
+      return ["pen-name", "contributors", "commenters", "top-votes", "top-votes.pen-name"]
     case .content(_, let include):
       var includes = include ?? []
       if !includes.contains("pen-name") {

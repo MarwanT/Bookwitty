@@ -25,9 +25,9 @@ class ArticleCardViewModel: CardViewModelProtocol {
     delegate?.resourceUpdated(viewModel: self)
   }
 
-  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, imageUrl: String?, comments: String?, wit: (is: Bool, count: Int), dim: (is: Bool, count: Int))) {
+  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, imageUrl: String?, comments: String?, wit: (is: Bool, count: Int, info: String?))) {
     guard let resource = resource else {
-      return (false, nil, content: (nil, nil, nil, nil, wit: (false, 0), dim: (false, 0)))
+      return (false, nil, content: (nil, nil, nil, nil, wit: (false, 0, nil)))
     }
 
 
@@ -46,9 +46,8 @@ class ArticleCardViewModel: CardViewModelProtocol {
     let description = resource.shortDescription
     let imageUrl = resource.coverImageUrl ?? resource.thumbnailImageUrl
     let comments: String? = nil
-    let wit = (is: resource.isWitted, count: resource.counts?.wits ?? 0)
-    let dim = (is: resource.isDimmed, count: resource.counts?.dims ?? 0)
+    let wit = (is: resource.isWitted, count: resource.counts?.wits ?? 0, resource.witters)
 
-    return (infoNode, cardPostInfoData, content: (title, description, imageUrl, comments, wit: wit, dim: dim))
+    return (infoNode, cardPostInfoData, content: (title, description, imageUrl, comments, wit: wit))
   }
 }

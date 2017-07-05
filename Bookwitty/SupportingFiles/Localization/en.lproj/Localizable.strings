@@ -15,6 +15,7 @@
 "account_needs_confirmation_alert_title" = "Account";
 "address_book" = "Address Book";
 "already_have_an_account" = "Already have an account?";
+"and" = "and";
 "apply" = "Apply";
 "an_hour_ago" = "An hour ago";
 "article" = "Article";
@@ -58,8 +59,6 @@
 "done" = "Done";
 "dont_worry_you_can_change_it_later" = "Don't worry : you can always change it later";
 "drafts" = "Drafts";
-"dim" = "Dim";
-"dimmed" = "Dimmed";
 "edit_pen_name" = "Edit pen name";
 "editions" = "Editions";
 "email" = "Email";
@@ -227,6 +226,8 @@
 "wit_it" = "Wit";
 "witted" = "Witted";
 "yesterday" = "Yesterday";
+"you" = "You";
+"you_find_witty" = "You find this witty";
 "you_dont_have_account" = "You don't have an account";
 "you_save" = "You save";
 "your_feed" = "Your feed";
@@ -236,6 +237,10 @@
  * For This Part use `f_` as prefix to indicate that the localizable string is a formatted one
  * And this will also allow us to avoid conflict with similar sentences
  */
+
+"f_and_others_find_witty" = "%@, %@";
+"f_find_witty" = "%@ find this witty";
+"f_number_find_witty" = "%d find this witty";
 "f_number_of_books" = "%d books";
 "f_number_of_contributors" = "%d contributors";
 "f_number_of_days_ago" = "%d days ago";
@@ -247,8 +252,8 @@
 "f_number_of_seconds_ago" = "%d seconds ago";
 "f_number_of_weeks_ago" = "%d weeks ago";
 "f_number_of_years_ago" = "%d years ago";
+"f_others_find_witty" = "and %d others find this witty";
 "f_view_all_replies" = "View all %d replies";
-
 
 /**
  Discussion:

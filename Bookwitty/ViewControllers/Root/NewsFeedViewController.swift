@@ -437,10 +437,8 @@ extension NewsFeedViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK - BaseCardPostNode Delegate
 extension NewsFeedViewController: BaseCardPostNodeDelegate {
-  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
-    guard let indexPath = collectionNode.indexPath(for: card) else {
-      return
-    }
+
+  private func userProfileHandler(at indexPath: IndexPath) {
     let resource = viewModel.resourceForIndex(index: indexPath.item)
     if let resource = resource as? ModelCommonProperties,
       let penName = resource.penName {
@@ -487,6 +485,27 @@ extension NewsFeedViewController: BaseCardPostNodeDelegate {
                                                    action: .GoToDetails,
                                                    name: penName.name ?? "")
       Analytics.shared.send(event: event)
+    }
+  }
+
+  private func actionInfoHandler(at indexPath: IndexPath) {
+    guard let resource = viewModel.resourceForIndex(index: indexPath.item) else {
+      return
+    }
+
+    pushPenNamesListViewController(with: resource)
+  }
+
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+    
+    switch action {
+    case .userProfile:
+      userProfileHandler(at: indexPath)
+    case .actionInfo:
+      actionInfoHandler(at: indexPath)
     }
   }
   
