@@ -70,23 +70,28 @@ final class SettingsViewModel {
     }
   }
 
-  private func handleGeneralSwitchValueChanged(atRow row: Int, newValue: Bool, completion: @escaping (()->())) {
+  private func handleGeneralSwitchValueChanged(atRow row: Int, newValue: Bool, completion: @escaping ((_ value: Bool)->())) {
     switch row {
     case 0: //email
-      updateUserPreferences(value: "\(newValue)", completion: { (success: Bool) -> () in
+      updateUserEmailNotificationsPreferences(value: "\(newValue)", completion: { (success: Bool) -> () in
         if success {
           GeneralSettings.sharedInstance.shouldSendEmailNotifications = newValue
         }
-        completion()
+        completion(GeneralSettings.sharedInstance.shouldSendEmailNotifications)
       })
     case 1: //newsletter
-      GeneralSettings.sharedInstance.shouldSendNewsletter = newValue
+      updateUserEmailNewsletterPreference(value: "\(newValue)", completion: { (success: Bool) in
+        if success {
+          GeneralSettings.sharedInstance.shouldSendNewsletter = newValue
+        }
+        completion(GeneralSettings.sharedInstance.shouldSendNewsletter)
+      })
     default:
       break
     }
   }
 
-  private func updateUserPreferences(value: String, completion: @escaping ((Bool)->())) {
+  private func updateUserEmailNotificationsPreferences(value: String, completion: @escaping ((Bool)->())) {
     var followersPreferenceSuccess: Bool = false
     var commentsPreferenceSuccess: Bool = false
 
@@ -107,6 +112,13 @@ final class SettingsViewModel {
 
     group.notify(queue: DispatchQueue.main) {
       completion(followersPreferenceSuccess && commentsPreferenceSuccess)
+    }
+  }
+
+  private func updateUserEmailNewsletterPreference(value: String, completion: @escaping ((Bool)->())) {
+    _ = UserAPI.updateUser(preference: User.Preference.emailNewsletter, value: value) {
+      (success: Bool, error: BookwittyAPIError?) in
+      completion(success)
     }
   }
 
@@ -195,7 +207,7 @@ final class SettingsViewModel {
     return accessory
   }
 
-  func handleSwitchValueChanged(forRowAt indexPath: IndexPath, newValue: Bool, completion: @escaping (()->())) {
+  func handleSwitchValueChanged(forRowAt indexPath: IndexPath, newValue: Bool, completion: @escaping ((_ value: Bool)->())) {
     switch indexPath.section {
     case Sections.General.rawValue:
       handleGeneralSwitchValueChanged(atRow: indexPath.row, newValue: newValue, completion: completion)

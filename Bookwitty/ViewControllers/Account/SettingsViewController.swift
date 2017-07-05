@@ -57,8 +57,8 @@ class SettingsViewController: UIViewController {
     Analytics.shared.send(event: event)
 
     viewModel.handleSwitchValueChanged(forRowAt: indexPath, newValue: sender.isOn) {
-      () -> () in
-      sender.isOn = GeneralSettings.sharedInstance.shouldSendEmailNotifications
+      (value: Bool) -> () in
+      sender.isOn = value
     }
   }
 

@@ -78,5 +78,6 @@ extension User {
   enum Preference: String {
     case emailNotificationFollowers = "unsub-email-notification-followers"
     case emailNotificationComments = "unsub-email-notification-comments"
+    case emailNewsletter = "unsub-email-newsletter"
   }
 }
