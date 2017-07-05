@@ -11,6 +11,7 @@ import AsyncDisplayKit
 
 protocol PostDetailsHeaderNodeDelegate: class {
   func postDetailsHeader(node: PostDetailsHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
+  func postDetailsHeader(node: PostDetailsHeaderNode, didRequestActionInfo fromNode: ASTextNode)
 }
 
 
@@ -156,7 +157,7 @@ class PostDetailsHeaderNode: ASCellNode {
 extension PostDetailsHeaderNode {
   @objc
   fileprivate func actionInfoNodeTouchUpInside(_ sender: ASTextNode) {
-    
+    delegate?.postDetailsHeader(node: self, didRequestActionInfo: sender)
   }
 }
 

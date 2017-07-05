@@ -393,6 +393,10 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
     let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
     present(imageViewer, animated: true, completion: nil)
   }
+
+  func postDetails(node: PostDetailsNode, didRequestActionInfo fromNode: ASTextNode) {
+    pushPenNamesListViewController(with: viewModel.resource)
+  }
   
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
     switch action {
