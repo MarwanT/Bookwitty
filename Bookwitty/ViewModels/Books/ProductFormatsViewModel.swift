@@ -124,8 +124,10 @@ final class ProductFormatsViewModel {
     let (formats, numberOfTrimmedEditions) = validateAndTrimAvailableFormats(numberOfEditionsPerFormat: numberOfEditionsPerFormat)
     
     self.availableFormats = formats.flatMap { (key, value)  -> ProductFormatsViewModel.AvailableFormatValues? in
-      let productForm = BookFormatMapper.shared.productForm(for: key)
-      return (productForm, value) as? AvailableFormatValues
+      guard let productForm = BookFormatMapper.shared.productForm(for: key) else {
+        return nil
+      }
+      return (productForm, value)
     }
     self.totalNumberOfEditions = totalNumberOfEditions - numberOfTrimmedEditions
   }
