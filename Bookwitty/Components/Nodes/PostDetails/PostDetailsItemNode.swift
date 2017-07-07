@@ -22,6 +22,7 @@ protocol PostDetailsItemNodeDelegate: class {
 
 protocol ItemNodeTapDelegate: class {
   func didTapOn(node: ASDisplayNode)
+  func indexFor(node: ASDisplayNode) -> Int?
 }
 
 /**
@@ -115,6 +116,10 @@ class PostDetailsItemNode: ASDisplayNode, ItemNodeTapDelegate {
       return
     }
     delegate?.postDetails(self, node: node, didSelectItemAt: indexOfTappedNode)
+  }
+
+  func indexFor(node: ASDisplayNode) -> Int? {
+    return index(of: node)
   }
 }
 

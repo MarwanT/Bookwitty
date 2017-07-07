@@ -552,14 +552,18 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
 
 extension PostDetailsViewController: PostDetailItemNodeDelegate {
   func postDetailItemNodeButtonTouchUpInside(postDetailItemNode: PostDetailItemNode, button: ASButtonNode) {
-    guard let url = viewModel.canonicalURL else {
+    guard let index = postDetailItemNode.tapDelegate?.indexFor(node: postDetailItemNode) else {
       return
     }
+
+    guard let resource = viewModel.contentPostsItem(at: index),
+      let url = resource.canonicalURL else {
+        return
+    }
+
     WebViewController.present(url: url)
 
-
     //MARK: [Analytics] Event
-    let resource = viewModel.resource
     let category: Analytics.Category
     switch resource.registeredResourceType {
     case Image.resourceType:
