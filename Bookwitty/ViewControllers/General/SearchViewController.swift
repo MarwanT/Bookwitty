@@ -783,6 +783,7 @@ extension SearchViewController {
 extension SearchViewController: Localizable {
   func applyLocalization() {
     searchBar?.placeholder = Strings.search_placeholder()
+    UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = Strings.cancel()
   }
 
   fileprivate func observeLanguageChanges() {
