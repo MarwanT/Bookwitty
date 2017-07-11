@@ -54,7 +54,7 @@ extension ModelCommonProperties {
 
     let witters: String
     let othersCount = max(wits - names.count, 0)
-    let separator = names.count == 2 ? " " + Strings.and() + " " : ", "
+    let separator = ", "
 
     switch (names.count, othersCount) {
     case (0, _):
