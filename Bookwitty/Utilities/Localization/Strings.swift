@@ -812,6 +812,10 @@ class Strings {
   static func types() -> String {
     return localizedString(key: "types")
   }
+  
+  static func unknown_format() -> String {
+    return localizedString(key: "unknown_format")
+  }
 
   static func update_now() -> String {
     return localizedString(key: "update_now")
