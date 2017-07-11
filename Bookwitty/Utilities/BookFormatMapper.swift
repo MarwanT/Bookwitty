@@ -49,9 +49,13 @@ class BookFormatMapper {
     return formats?.filter({ $0.key.lowercased() == lowerCaseKey }).first?.value ?? ""
   }
   
-  func productForm(for key: String) -> ProductForm? {
+  func productForm(for key: String) -> ProductForm {
     let lowerCaseKey = key.lowercased()
-    return formats?.filter({ $0.key.lowercased() == lowerCaseKey }).first
+    if let productFormat = formats?.filter({ $0.key.lowercased() == lowerCaseKey }).first {
+      return productFormat
+    } else {
+      return ProductForm.unknownFormatInstance(with: key)
+    }
   }
   
   /// Returns an array of the available given format keys

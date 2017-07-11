@@ -207,6 +207,7 @@
 "tutorial_third_page_title" = "Share Your Own Ideas";
 "tutorial_third_page_description" = "Everyone has knowledge, expertise or a topic they are passionate about.\nWrite about it.";
 "types" = "Types";
+"unknown_format" = "Unknown format";
 "update_now" = "Update now";
 "user" = "User";
 "user_not_signed_in_alert_message" = "You need to be signed in to complete this action";

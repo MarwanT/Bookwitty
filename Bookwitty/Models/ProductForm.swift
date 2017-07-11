@@ -26,6 +26,16 @@ struct ProductForm {
 }
 
 extension ProductForm {
+  static func unknownFormatInstance(with key: String) -> ProductForm {
+    var unknownKey = key
+    if unknownKey.isBlank {
+      unknownKey = "UNKNOWN_KEY"
+    }
+    return ProductForm(key: unknownKey, value: Strings.unknown_format())!
+  }
+}
+
+extension ProductForm {
   /*
    *  The list of formats below is taken from the ONIX documentation here:
    *  https://www.medra.org/stdoc/onix-codelist-7.htm

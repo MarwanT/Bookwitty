@@ -124,24 +124,11 @@ final class ProductFormatsViewModel {
     let (formats, numberOfTrimmedEditions) = validateAndTrimAvailableFormats(numberOfEditionsPerFormat: numberOfEditionsPerFormat)
     
     self.availableFormats = formats.flatMap { (key, value)  -> ProductFormatsViewModel.AvailableFormatValues? in
-      guard let productForm = BookFormatMapper.shared.productForm(for: key) else {
-        return nil
-      }
+      let productForm = BookFormatMapper.shared.productForm(for: key)
       return (productForm, value)
     }
 
-    /* Discussion
-     * This is crucial to remove all the edition count of the format keys that are not Mapped in the BookFormatMapper
-     */
-    let numberOfUnavailableEditions = formats.reduce(0) { (cumulative: Int, format) -> Int in
-      if BookFormatMapper.shared.productForm(for: format.key) == nil {
-        return cumulative + format.value
-      }
-      return cumulative
-    }
-
-
-    self.totalNumberOfEditions = totalNumberOfEditions - numberOfTrimmedEditions - numberOfUnavailableEditions
+    self.totalNumberOfEditions = totalNumberOfEditions - numberOfTrimmedEditions
   }
   
   fileprivate func validateAndTrimPreferredBooks(books: [Book]) -> [Book] {

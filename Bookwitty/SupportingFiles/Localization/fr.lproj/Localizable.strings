@@ -207,6 +207,7 @@
 "tutorial_third_page_title" = "Partagez vos idées";
 "tutorial_third_page_description" = "Nous sommes tous experts des sujets qui nous passionnent. Partagez votre savoir.";
 "types" = "Types";
+"unknown_format" = "Format de produit inconnu";
 "update_now" = "Mettre à jour";
 "user" = "Utilisateur";
 "user_not_signed_in_alert_message" = "Vous devez être connecté pour effectuer cette action";
