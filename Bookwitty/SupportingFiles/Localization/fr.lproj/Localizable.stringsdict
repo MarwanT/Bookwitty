@@ -1,342 +1,390 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>f_number_of_books</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@value@</string>
-		<key>value</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>zero</key>
-			<string>%d Livres</string>
-			<key>one</key>
-			<string>%d Livre</string>
-			<key>two</key>
-			<string>%d Livres</string>
-			<key>few</key>
-			<string>%d Livres</string>
-			<key>many</key>
-			<string>%d Livres</string>
-			<key>other</key>
-			<string>%d Livres</string>
-		</dict>
-	</dict>
-	<key>f_number_find_witty</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@value@</string>
-		<key>value</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>zero</key>
-			<string>%d find this witty</string>
-			<key>one</key>
-			<string>%d find this witty</string>
-			<key>two</key>
-			<string>%d find this witty</string>
-			<key>few</key>
-			<string>%d find this witty</string>
-			<key>many</key>
-			<string>%d find this witty</string>
-			<key>other</key>
-			<string>%d find this witty</string>
-		</dict>
-	</dict>
-	<key>f_others_find_witty</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@value@</string>
-		<key>value</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>zero</key>
-			<string>and %d others find this witty</string>
-			<key>one</key>
-			<string>and %d other find this witty</string>
-			<key>two</key>
-			<string>and %d others find this witty</string>
-			<key>few</key>
-			<string>and %d others find this witty</string>
-			<key>many</key>
-			<string>and %d others find this witty</string>
-			<key>other</key>
-			<string>and %d others find this witty</string>
-		</dict>
-	</dict>
-	<key>f_number_of_contributors</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@value@</string>
-		<key>value</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>zero</key>
-			<string>%d Contributeurs</string>
-			<key>one</key>
-			<string>%d Contributeur</string>
-			<key>two</key>
-			<string>%d Contributeurs</string>
-			<key>few</key>
-			<string>%d Contributeurs</string>
-			<key>many</key>
-			<string>%d Contributeurs</string>
-			<key>other</key>
-			<string>%d Contributeurs</string>
-		</dict>
-	</dict>
-	<key>f_number_of_days_ago</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@value@</string>
-		<key>value</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>zero</key>
-			<string>Il y a moins d&apos;un jour</string>
-			<key>one</key>
-			<string>il y a %d jour</string>
-			<key>two</key>
-			<string>il y a %d jours</string>
-			<key>few</key>
-			<string>il y a %d jours</string>
-			<key>many</key>
-			<string>il y a %d jours</string>
-			<key>other</key>
-			<string>il y a %d jours</string>
-		</dict>
-	</dict>
-	<key>f_number_of_followers</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@value@</string>
-		<key>value</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>zero</key>
-			<string>%d Abonnés</string>
-			<key>one</key>
-			<string>%d Abonné</string>
-			<key>two</key>
-			<string>%d Abonnés</string>
-			<key>few</key>
-			<string>%d Abonnés</string>
-			<key>many</key>
-			<string>%d Abonnés</string>
-			<key>other</key>
-			<string>%d Abonnés</string>
-		</dict>
-	</dict>
-	<key>f_number_of_hours_ago</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@value@</string>
-		<key>value</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>zero</key>
-			<string>Il y a moins d&apos;une heure</string>
-			<key>one</key>
-			<string>il y a %d heure</string>
-			<key>two</key>
-			<string>il y a %d heures</string>
-			<key>few</key>
-			<string>il y a %d heures</string>
-			<key>many</key>
-			<string>il y a %d heures</string>
-			<key>other</key>
-			<string>il y a %d heures</string>
-		</dict>
-	</dict>
-	<key>f_number_of_minutes_ago</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@value@</string>
-		<key>value</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>zero</key>
-			<string>Il y a moins d&apos;une minute</string>
-			<key>one</key>
-			<string>il y a %d minute</string>
-			<key>two</key>
-			<string>il y a %d minutes</string>
-			<key>few</key>
-			<string>il y a %d minutes</string>
-			<key>many</key>
-			<string>il y a %d minutes</string>
-			<key>other</key>
-			<string>il y a %d minutes</string>
-		</dict>
-	</dict>
-	<key>f_number_of_months_ago</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@value@</string>
-		<key>value</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>zero</key>
-			<string>Il y a moins d&apos;un mois</string>
-			<key>one</key>
-			<string>il y a %d mois</string>
-			<key>two</key>
-			<string>il y a %d mois</string>
-			<key>few</key>
-			<string>il y a %d mois</string>
-			<key>many</key>
-			<string>il y a %d mois</string>
-			<key>other</key>
-			<string>il y a %d mois</string>
-		</dict>
-	</dict>
-	<key>f_number_of_posts</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@value@</string>
-		<key>value</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>zero</key>
-			<string>%d Posts</string>
-			<key>one</key>
-			<string>%d Post</string>
-			<key>two</key>
-			<string>%d Posts</string>
-			<key>few</key>
-			<string>%d Posts</string>
-			<key>many</key>
-			<string>%d Posts</string>
-			<key>other</key>
-			<string>%d Posts</string>
-		</dict>
-	</dict>
-	<key>f_number_of_weeks_ago</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@value@</string>
-		<key>value</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>zero</key>
-			<string>Il y a moins d&apos;une semaine</string>
-			<key>one</key>
-			<string>il y a %d semaine</string>
-			<key>two</key>
-			<string>il y a %d semaines</string>
-			<key>few</key>
-			<string>il y a %d semaines</string>
-			<key>many</key>
-			<string>il y a %d semaines</string>
-			<key>other</key>
-			<string>il y a %d semaines</string>
-		</dict>
-	</dict>
-	<key>f_number_of_years_ago</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@value@</string>
-		<key>value</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>zero</key>
-			<string>Il y a moins d&apos;un an</string>
-			<key>one</key>
-			<string>il y a %d an</string>
-			<key>two</key>
-			<string>il y a %d ans</string>
-			<key>few</key>
-			<string>il y a %d ans</string>
-			<key>many</key>
-			<string>il y a %d ans</string>
-			<key>other</key>
-			<string>il y a %d ans</string>
-		</dict>
-	</dict>
-	<key>f_view_all_replies</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@value@</string>
-		<key>value</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>zero</key>
-			<string>Voir toutes les réponses</string>
-			<key>one</key>
-			<string>Voir la réponses</string>
-			<key>two</key>
-			<string>Voir toutes les %d réponses</string>
-			<key>few</key>
-			<string>Voir toutes les %d réponses</string>
-			<key>many</key>
-			<string>Voir toutes les %d réponses</string>
-			<key>other</key>
-			<string>Voir toutes les %d réponses</string>
-		</dict>
-	</dict>
-  <key>f_view_formats_and_editions</key>
   <dict>
-    <key>NSStringLocalizedFormatKey</key>
-    <string>%#@value@</string>
-    <key>value</key>
+    <key>f_find_witty</key>
     <dict>
-      <key>NSStringFormatSpecTypeKey</key>
-      <string>NSStringPluralRuleType</string>
-      <key>NSStringFormatValueTypeKey</key>
-      <string>d</string>
-      <key>zero</key>
-      <string>Il n'y a pas de formats ou d'éditions supplémentaires</string>
-      <key>one</key>
-      <string>Voir les formats disponibles</string>
-      <key>two</key>
-      <string>Voir les %d formats et éditions</string>
-      <key>few</key>
-      <string>Voir les %d formats et éditions</string>
-      <key>many</key>
-      <string>Voir les %d formats et éditions</string>
-      <key>other</key>
-      <string>Voir les %d formats et éditions</string>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@value@</string>
+      <key>value</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>personne n'a witté ceci</string>
+        <key>one</key>
+        <string>une personne a witté ceci</string>
+        <key>two</key>
+        <string>deux personnes ont witté ceci</string>
+        <key>few</key>
+        <string>quelques personnes ont witté ceci</string>
+        <key>many</key>
+        <string>plusieurs personnes ont witté ceci</string>
+        <key>other</key>
+        <string>%@ autres personnes ont witté ceci</string>
+      </dict>
+    </dict>
+    <key>f_number_find_witty</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@value@</string>
+      <key>value</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>personne n'a witté ceci</string>
+        <key>one</key>
+        <string>une personne a witté ceci</string>
+        <key>two</key>
+        <string>deux personnes ont witté ceci</string>
+        <key>few</key>
+        <string>quelques personnes ont witté ceci</string>
+        <key>many</key>
+        <string>plusieurs personnes ont witté ceci</string>
+        <key>other</key>
+        <string>%d autres personnes ont witté ceci</string>
+      </dict>
+    </dict>
+    <key>f_number_of_books</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@value@</string>
+      <key>value</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>%d livre</string>
+        <key>one</key>
+        <string>%d livre</string>
+        <key>two</key>
+        <string>%d livres</string>
+        <key>few</key>
+        <string>%d livres</string>
+        <key>many</key>
+        <string>%d livres</string>
+        <key>other</key>
+        <string>%d livres</string>
+      </dict>
+    </dict>
+    <key>f_number_of_contributors</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@value@</string>
+      <key>value</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>%d contributeur</string>
+        <key>one</key>
+        <string>%d contributeur</string>
+        <key>two</key>
+        <string>%d contributeurs</string>
+        <key>few</key>
+        <string>%d contributeurs</string>
+        <key>many</key>
+        <string>%d contributeurs</string>
+        <key>other</key>
+        <string>%d contributeurs</string>
+      </dict>
+    </dict>
+    <key>f_number_of_days_ago</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@value@</string>
+      <key>value</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>il y a moins d'une journée</string>
+        <key>one</key>
+        <string>il y a un jour</string>
+        <key>two</key>
+        <string>il y a deux jours</string>
+        <key>few</key>
+        <string>il y a quelques jours</string>
+        <key>many</key>
+        <string>il y a plusieurs jours</string>
+        <key>other</key>
+        <string>il y a %d jours</string>
+      </dict>
+    </dict>
+    <key>f_number_of_followers</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@value@</string>
+      <key>value</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>%d abonné</string>
+        <key>one</key>
+        <string>%d abonné</string>
+        <key>two</key>
+        <string>%d abonnés</string>
+        <key>few</key>
+        <string>%d abonnés</string>
+        <key>many</key>
+        <string>%d abonnés</string>
+        <key>other</key>
+        <string>%d abonnés</string>
+      </dict>
+    </dict>
+    <key>f_number_of_hours_ago</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@value@</string>
+      <key>value</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>il y a moins d'une heure</string>
+        <key>one</key>
+        <string>il y a une heure</string>
+        <key>two</key>
+        <string>il y a deux heures</string>
+        <key>few</key>
+        <string>il y a quelques heures</string>
+        <key>many</key>
+        <string>il y a plusieurs heures</string>
+        <key>other</key>
+        <string>il y a %d heures</string>
+      </dict>
+    </dict>
+    <key>f_number_of_minutes_ago</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@value@</string>
+      <key>value</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>il y a moins d'une minute</string>
+        <key>one</key>
+        <string>il y a une minute</string>
+        <key>two</key>
+        <string>il y a deux minutes</string>
+        <key>few</key>
+        <string>il y a quelques minutes</string>
+        <key>many</key>
+        <string>il y a plusieurs minutes</string>
+        <key>other</key>
+        <string>il y a %d minutes</string>
+      </dict>
+    </dict>
+    <key>f_number_of_months_ago</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@value@</string>
+      <key>value</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>il y a moins d'un mois</string>
+        <key>one</key>
+        <string>il y a un mois</string>
+        <key>two</key>
+        <string>il y a deux mois</string>
+        <key>few</key>
+        <string>il y a quelques mois</string>
+        <key>many</key>
+        <string>il y a plusieurs mois</string>
+        <key>other</key>
+        <string>il y a %d mois</string>
+      </dict>
+    </dict>
+    <key>f_number_of_posts</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@value@</string>
+      <key>value</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>%d post</string>
+        <key>one</key>
+        <string>%d post</string>
+        <key>two</key>
+        <string>%d posts</string>
+        <key>few</key>
+        <string>%d posts</string>
+        <key>many</key>
+        <string>%d posts</string>
+        <key>other</key>
+        <string>%d posts</string>
+      </dict>
+    </dict>
+    <key>f_number_of_seconds_ago</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@value@</string>
+      <key>value</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>il y a moins d'une seconde</string>
+        <key>one</key>
+        <string>il y a une seconde</string>
+        <key>two</key>
+        <string>il y a deux secondes</string>
+        <key>few</key>
+        <string>il y a quelques secondes</string>
+        <key>many</key>
+        <string>il y a plusieurs secondes</string>
+        <key>other</key>
+        <string>il y a %d secondes</string>
+      </dict>
+    </dict>
+    <key>f_number_of_weeks_ago</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@value@</string>
+      <key>value</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>il y a moins d'une semaine</string>
+        <key>one</key>
+        <string>il y a une semaine</string>
+        <key>two</key>
+        <string>il y a deux semaines</string>
+        <key>few</key>
+        <string>il y a plusieurs semaines</string>
+        <key>many</key>
+        <string>il y a plusieurs semaines</string>
+        <key>other</key>
+        <string>il y a %d semaines</string>
+      </dict>
+    </dict>
+    <key>f_number_of_years_ago</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@value@</string>
+      <key>value</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>il y a moins d'un an</string>
+        <key>one</key>
+        <string>il y a un an</string>
+        <key>two</key>
+        <string>il y a deux ans</string>
+        <key>few</key>
+        <string>il y a quelques années</string>
+        <key>many</key>
+        <string>il y a plusieurs années</string>
+        <key>other</key>
+        <string>il y a %d années</string>
+      </dict>
+    </dict>
+    <key>f_others_find_witty</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@value@</string>
+      <key>value</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>et personne d'autre n'a witté ceci</string>
+        <key>one</key>
+        <string>et une autre personne avez witté ceci</string>
+        <key>two</key>
+        <string>et deux autres personnes avez witté ceci</string>
+        <key>few</key>
+        <string>et quelques autres personnes avez witté ceci</string>
+        <key>many</key>
+        <string>et plusieurs autres personnes avez witté ceci</string>
+        <key>other</key>
+        <string>et %d autres personnes avez witté ceci</string>
+      </dict>
+    </dict>
+    <key>f_view_all_replies</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@value@</string>
+      <key>value</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>Voir les réponses</string>
+        <key>one</key>
+        <string>Voir la réponse</string>
+        <key>two</key>
+        <string>Voir les deux réponses</string>
+        <key>few</key>
+        <string>Voir toutes les réponses</string>
+        <key>many</key>
+        <string>Voir toutes les réponses</string>
+        <key>other</key>
+        <string>Voir les %d réponses</string>
+      </dict>
+    </dict>
+    <key>f_view_formats_and_editions</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@value@</string>
+      <key>value</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>Il n'y a pas d'autre édition</string>
+        <key>one</key>
+        <string>Voir l'édition disponible </string>
+        <key>two</key>
+        <string>Voir les deux éditions</string>
+        <key>few</key>
+        <string>Voir toutes les éditions </string>
+        <key>many</key>
+        <string>Voir toutes les éditionss</string>
+        <key>other</key>
+        <string>Voir les %d éditions</string>
+      </dict>
     </dict>
   </dict>
-</dict>
 </plist>

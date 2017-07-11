@@ -242,16 +242,24 @@
  * For This Part use `f_` as prefix to indicate that the localizable string is a formatted one
  * And this will also allow us to avoid conflict with similar sentences
  */
-"f_and_others_find_witty" = "%@, and %@";
-"f_find_witty" = "%@ find this witty";
-"f_number_find_witty" = "%d find this witty";
-"f_number_of_contributors" = "%d contributors";
-"f_number_of_followers" = "%d followers";
+
+"f_and_others_find_witty" = "%@, %@";
+"f_find_witty" = "%@ autres personnes ont witté ceci";
+"f_number_find_witty" = "%d autres personnes ont witté ceci";
+"f_number_of_books" = "%d livres";
+"f_number_of_contributors" = "%d contributeurs";
+"f_number_of_days_ago" = "il y a %d jours";
+"f_number_of_followers" = "%d abonnés";
+"f_number_of_hours_ago" = "il y a %d heures";
+"f_number_of_minutes_ago" = "il y a %d minutes";
+"f_number_of_months_ago" = "il y a %d mois";
 "f_number_of_posts" = "%d posts";
-"f_number_of_books" = "%d books";
-"f_others_find_witty" = "and %d others find this witty";
-"f_view_all_replies" = "View all %d replies";
-"f_view_formats_and_editions" = "View all %d formats and editions";
+"f_number_of_seconds_ago" = "il y a %d secondes";
+"f_number_of_weeks_ago" = "il y a %d semaines";
+"f_number_of_years_ago" = "il y a %d années";
+"f_others_find_witty" = "et %d autres personnes avez witté ceci";
+"f_view_all_replies" = "Voir les %d réponses";
+"f_view_formats_and_editions" = "Voir les %d éditions";
 
 /**
  Discussion:
