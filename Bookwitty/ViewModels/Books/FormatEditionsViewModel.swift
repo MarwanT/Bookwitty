@@ -108,13 +108,16 @@ extension FormatEditionsViewModel {
     }
     
     var editions = books.flatMap({ (book) -> FormatEdition? in
-      let id: String? = book.id
+      guard let id: String = book.id else {
+        return nil
+      }
+
       let title: String? = book.title
       let description: String = editionDescription(for: book)
       let form: ProductForm? = book.productDetails?.productForm
       let price = book.preferredPrice
       let publishedAt: Date? = book.productDetails?.publishedAt
-      return (id, title, description, price, form, publishedAt) as? FormatEdition
+      return (id, title, description, price, form, publishedAt)
     })
     
     // Sort editions by the cheapest, and the ones with no price come last

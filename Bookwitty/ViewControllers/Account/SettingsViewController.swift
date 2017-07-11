@@ -68,11 +68,13 @@ class SettingsViewController: UIViewController {
       switch indexPath.row {
       case 0: //email
         break
-      case 1: //change password
+      case 1: //newsletter
+        break
+      case 2: //change password
         pushChangePasswordViewController()
-      case 2:
+      case 3:
         presentChangeLanguageActionSheet()
-      case 3: //country/region
+      case 4: //country/region
         pushCountryPickerViewController()
       default:
         break

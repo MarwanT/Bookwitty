@@ -47,7 +47,7 @@ extension PenNameListViewModel {
       return nil
     }
 
-    let mine = UserManager.shared.isMy(penName: penName)
+    let mine = UserManager.shared.isMyDefault(penName: penName)
     return (penName.id, penName.name, penName.biography, penName.avatarUrl, penName.following, mine)
   }
 }

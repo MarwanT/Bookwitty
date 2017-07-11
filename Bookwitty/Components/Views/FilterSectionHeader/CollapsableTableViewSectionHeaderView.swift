@@ -115,12 +115,17 @@ extension CollapsableTableViewSectionHeaderView: Themeable {
      */
     contentView.backgroundColor = configuration.backgroundColor
     backgroundColor = configuration.backgroundColor
-    
+    if let imagebg = configuration.backgroundColor.image(size: self.frame.size) {
+      self.backgroundView = UIImageView(image: imagebg)
+    }
+
     titleLabel.font = configuration.titleLabelFont
     titleLabel.textColor = configuration.titleLabelTextColor
+    titleLabel.backgroundColor = UIColor.clear
     
     subTitleLabel.font = configuration.subTitleLabelFont
     subTitleLabel.textColor = configuration.subTitleLabelTextColor
+    subTitleLabel.backgroundColor = UIColor.clear
     
     separatorView.backgroundColor = configuration.separatorColor
     layoutMargins = configuration.contentLayoutMargin

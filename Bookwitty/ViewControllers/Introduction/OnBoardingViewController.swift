@@ -84,9 +84,7 @@ extension OnBoardingViewController: OnBoardingControllerDataSource {
       node.isLoading = true
       viewModel.loadOnBoardingCellNodeData(indexPath: indexPath, completionBlock: { [weak self] (indexPath, success, cellCollectionDictionary) in
         guard let strongSelf = self else { return }
-        if success {
-          strongSelf.updateNodeForCollectionAtWith(indexPath: indexPath, dictionary: cellCollectionDictionary)
-        }
+        strongSelf.updateNodeForCollectionAtWith(indexPath: indexPath, dictionary: cellCollectionDictionary)
       })
     }
   }

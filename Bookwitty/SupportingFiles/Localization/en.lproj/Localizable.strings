@@ -15,9 +15,9 @@
 "account_needs_confirmation_alert_title" = "Account";
 "address_book" = "Address Book";
 "already_have_an_account" = "Already have an account?";
+"an_hour_ago" = "An hour ago";
 "and" = "and";
 "apply" = "Apply";
-"an_hour_ago" = "An hour ago";
 "article" = "Article";
 "audio" = "Audio";
 "author" = "Author";
@@ -27,9 +27,9 @@
 "book_categories" = "Book Categories";
 "book_details" = "Book Details";
 "book_recommended_in_reading_lists" = "Book recommended in reading lists";
-"bookwitty" = "Bookwitty";
 "books" = "Books";
 "books_you_may_be_interested_in" = "Books you may be interested in";
+"bookwitty" = "Bookwitty";
 "bookwitty_suggests" = "Bookwitty Suggests";
 "buy_this_book" = "Buy This Book";
 "cancel" = "Cancel";
@@ -40,8 +40,8 @@
 "change_password_success" = "Password changed successfully";
 "choose_format" = "Choose format";
 "choose_from_library" = "Choose photo from library";
-"clear_all" = "Clear All";
 "choose_pen_name" = "Choose a Pen Name";
+"clear_all" = "Clear All";
 "clear_profile_photo" = "Clear profile photo";
 "comments" = "Comments";
 "contact_us" = "Contact Us";
@@ -106,10 +106,10 @@
 "join_us_to_personalize_feed_description" = "View articles reading lists and book recommendations in your feed based on your interests.";
 "join_us_to_personalize_feed_title" = "Personalize your feed";
 "just_now" = "Just now";
-"languages" = "Languages";
 "language" = "Language";
 "language_of_text" = "Language";
-"last_month" = "Last month";
+"languages" = "Languages";
+"last_month" = "Last Month";
 "last_name" = "Last name";
 "last_name_invalid" = "Please enter your email";
 "last_week" = "Last Week";
@@ -147,8 +147,8 @@
 "payment_methods" = "Payment Methods";
 "pen_name" = "Pen Name";
 "pen_name_cant_be_empty" = "Please enter a pen name";
-"pen_name_error_was_already_taken" = "Ooops, Penname was already taken!";
 "pen_name_error_could_not_create" = "Something went wrong, could not create Penname!";
+"pen_name_error_was_already_taken" = "Ooops, Penname was already taken!";
 "pen_name_max_number_of_characters_thirty_six" = "Penname can not be more than 36 characters long";
 "pen_names" = "Pen Names";
 "pen_names_to_follow" = "Pennames To Follow";
@@ -172,6 +172,7 @@
 "related_books" = "Related books";
 "related_bookwitty_topics" = "Related topics";
 "related_posts" = "Related posts";
+"replies" = "Replies";
 "reply" = "Reply";
 "reset_password" = "Reset password";
 "reset_password_text" = "You will receive an email with instructions on how to reset your password in a few minutes.";
@@ -204,9 +205,10 @@
 "tutorial_forth_page_title" = "For The Love Of Books";
 "tutorial_second_page_description" = "Dig deep into a topic, explore new ideas and discuss with people. You're sure to find articles and reading lists you like.";
 "tutorial_second_page_title" = "Discover Ideas & People";
-"tutorial_third_page_title" = "Share Your Own Ideas";
 "tutorial_third_page_description" = "Everyone has knowledge, expertise or a topic they are passionate about.\nWrite about it.";
+"tutorial_third_page_title" = "Share Your Own Ideas";
 "types" = "Types";
+"unknown_format" = "Unknown format";
 "update_now" = "Update now";
 "user" = "User";
 "user_not_signed_in_alert_message" = "You need to be signed in to complete this action";
@@ -221,8 +223,6 @@
 "view_all_selections" = "View All Selections";
 "view_subcategories" = "View Subcategories";
 "view_whole_description" = "View Whole Description";
-"welcome_banner_message" = "Your feed displays the stories from topics or people you follow.";
-"welcome_to_bookwitty" = "Welcome to Bookwitty";
 "weight" = "Weight";
 "welcome_banner_message" = "Your feed displays the stories from topics or people you follow.";
 "welcome_to_bookwitty" = "Welcome to Bookwitty";
@@ -232,8 +232,8 @@
 "witted" = "Witted";
 "yesterday" = "Yesterday";
 "you" = "You";
-"you_find_witty" = "You find this witty";
 "you_dont_have_account" = "You don't have an account";
+"you_find_witty" = "You find this witty";
 "you_save" = "You save";
 "your_feed" = "Your feed";
 
