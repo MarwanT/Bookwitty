@@ -56,9 +56,10 @@ extension UIViewController {
   }
 
   func pushPenNamesListViewController(with resource: ModelResource) {
-    let penNamesListVC = PenNameListViewController()
-    penNamesListVC.initializeWith(resource: resource)
-    self.navigationController?.pushViewController(penNamesListVC, animated: true)
+    /// Uncoment the following line to access list of pen names
+//    let penNamesListVC = PenNameListViewController()
+//    penNamesListVC.initializeWith(resource: resource)
+//    self.navigationController?.pushViewController(penNamesListVC, animated: true)
   }
 }
 
