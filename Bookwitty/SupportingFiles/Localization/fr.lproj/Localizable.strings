@@ -243,7 +243,7 @@
  * And this will also allow us to avoid conflict with similar sentences
  */
 
-"f_and_others_find_witty" = "%@, %@";
+"f_and_others_find_witty" = "%@ %@";
 "f_find_witty" = "%@ autres personnes ont witté ceci";
 "f_number_find_witty" = "%d autres personnes ont witté ceci";
 "f_number_of_books" = "%d livres";
