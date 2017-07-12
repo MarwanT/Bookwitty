@@ -60,7 +60,11 @@ extension ModelCommonProperties {
     case (0, _):
       witters = Strings.findThisWitty(witters: wits)
     case (let count, 0):
-      witters = Strings.findThisWitty(witters: names.joined(separator: separator), count: count)
+      if count == 1 && isWitted {
+        witters = Strings.you_find_witty()
+      } else {
+        witters = Strings.findThisWitty(witters: names.joined(separator: separator), count: count)
+      }
     default:
       witters = Strings.andOthersFindThisWitty(witters: names.joined(separator: separator), others: othersCount)
     }
