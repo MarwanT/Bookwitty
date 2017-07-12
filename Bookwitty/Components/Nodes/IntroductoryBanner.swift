@@ -35,6 +35,11 @@ class IntroductoryBanner: ASCellNode {
     super.init()
     initializeNode()
     refreshNode()
+    observeLanguageChanges()
+  }
+  
+  deinit {
+    NotificationCenter.default.removeObserver(self)
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -135,6 +140,22 @@ extension IntroductoryBanner {
 extension IntroductoryBanner {
   struct Configuration {
     var externalMargin = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+  }
+}
+
+//MARK: - Localizable implementation
+extension IntroductoryBanner: Localizable {
+  func applyLocalization() {
+    refreshNode()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+  
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }
 
