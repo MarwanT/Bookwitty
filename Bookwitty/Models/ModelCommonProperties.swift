@@ -59,8 +59,8 @@ extension ModelCommonProperties {
     switch (names.count, othersCount) {
     case (0, _):
       witters = Strings.findThisWitty(witters: wits)
-    case (_, 0):
-      witters = Strings.findThisWitty(witters: names.joined(separator: separator))
+    case (let count, 0):
+      witters = Strings.findThisWitty(witters: names.joined(separator: separator), count: count)
     default:
       witters = Strings.andOthersFindThisWitty(witters: names.joined(separator: separator), others: othersCount)
     }
