@@ -9,8 +9,9 @@
 import Foundation
 import AsyncDisplayKit
 
-protocol OnBoardingCellDelegate {
+protocol OnBoardingCellDelegate: class {
   func didTapOnSelectionButton(dataItem: CellNodeDataItemModel, internalCollectionNode collectioNode: ASCollectionNode, indexPath: IndexPath, cell: OnBoardingInternalCellNode, button: OnBoardingLoadingButton, shouldSelect: Bool, doneCompletionBlock: @escaping (_ success: Bool) -> ())
+   func didFinishAnimatingExpansion(of onBoardingCellNode: OnBoardingCellNode)
 }
 
 class OnBoardingCellNode: ASCellNode {
@@ -42,7 +43,7 @@ class OnBoardingCellNode: ASCellNode {
   let flowLayout: UICollectionViewFlowLayout
 
   fileprivate var viewModel: OnBoardingCellNodeViewModel = OnBoardingCellNodeViewModel()
-  var delegate: OnBoardingCellDelegate?
+  weak var delegate: OnBoardingCellDelegate?
   var showAll: Bool = false
   var state: State = .collapsed
   var text: String? {
@@ -100,6 +101,9 @@ class OnBoardingCellNode: ASCellNode {
       self.frame = finalFrame
     }) { (success) in
       context.completeTransition(true)
+      if self.showAll {
+        self.delegate?.didFinishAnimatingExpansion(of: self)
+      }
     }
   }
 
@@ -193,15 +197,17 @@ final class OnBoardingCellNodeViewModel {
   var data: [String : [CellNodeDataItemModel]] = [:]
 
   func onBoardingCellNodeSectionItems(section: Int) -> [CellNodeDataItemModel] {
-    let dataArray = Array(data.values)
+    let dataArray = Array(data.keys)
     guard (section >= 0 && section < dataArray.count) else {
       return []
     }
-    return dataArray[section]
+
+    let key = dataArray[section]
+    return data[key] ?? []
   }
 
   func numberOfSections() -> Int {
-    return data.count == 0 ? 0 : 1
+    return data.count
   }
 
   func numberOfItemsInSections(section: Int) -> Int {
@@ -214,7 +220,7 @@ final class OnBoardingCellNodeViewModel {
       return ""
     }
 
-    let item = Array(data.keys)[index]
+    let item = dataArray[index]
     return item
   }
 

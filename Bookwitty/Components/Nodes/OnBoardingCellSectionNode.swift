@@ -33,6 +33,8 @@ class OnBoardingCellSectionNode: ASCellNode {
 
     titleTextNode.maximumNumberOfLines = 1
 
+    titleTextNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     style.height = ASDimensionMake(OnBoardingCellSectionNode.nodeHeight)
 
     separator.style.height = ASDimensionMake(1.0)

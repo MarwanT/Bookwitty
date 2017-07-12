@@ -11,6 +11,40 @@ import Spine
 
 typealias ModelResource = Resource
 
+extension ResourceType {
+  //TODO: Localize
+  var localizedName: String {
+    switch self {
+    case User.resourceType:
+      return Strings.user()
+    case PenName.resourceType:
+      return Strings.pen_name()
+    case Image.resourceType:
+      return Strings.image()
+    case Author.resourceType:
+      return Strings.author()
+    case ReadingList.resourceType:
+      return Strings.reading_list()
+    case Topic.resourceType:
+      return Strings.topic()
+    case Text.resourceType:
+      return Strings.text()
+    case Quote.resourceType:
+      return Strings.quote()
+    case Video.resourceType:
+      return Strings.video()
+    case Audio.resourceType:
+      return Strings.audio()
+    case Link.resourceType:
+      return Strings.link()
+    case Book.resourceType:
+      return Strings.book()
+    default:
+      return ""
+    }
+  }
+}
+
 protocol Parsable {
   associatedtype AbstractType: Resource
   static func parseData(data: Data?) -> AbstractType?
@@ -72,6 +106,24 @@ class Parser {
   static let sharedInstance = Parser()
   let serializer: Serializer = Serializer()
 
+  //Used in Search Filter, to Restrict the Types to
+  var registeredResourceTypes: [ResourceType] {
+    return [
+      User.resourceType,
+      PenName.resourceType,
+      Image.resourceType,
+      Author.resourceType,
+      ReadingList.resourceType,
+      Topic.resourceType,
+      Text.resourceType,
+      Quote.resourceType,
+      Video.resourceType,
+      Audio.resourceType,
+      Link.resourceType,
+      Book.resourceType
+    ]
+  }
+
   init() {
     serializer.keyFormatter = DasherizedKeyFormatter()
     registerResources()
@@ -93,7 +145,9 @@ class Parser {
     serializer.registerResource(Link.self)
     serializer.registerResource(CuratedCollection.self)
     serializer.registerResource(Book.self)
+    serializer.registerResource(Comment.self)
     serializer.registerResource(UploadPolicy.self)
+    serializer.registerResource(Vote.self)
   }
 
   private func registerValueFormatters() {
@@ -122,7 +176,7 @@ class Parser {
     return nil
   }
 
-  static func parseDataArray(data: Data?, mappingTargets: [Resource]? = nil) -> (resources: [Resource]?, next: URL?, errors: [APIError]?)? {
+  static func parseDataArray(data: Data?, mappingTargets: [Resource]? = nil) -> (resources: [Resource]?, next: URL?, metadata: [String : Any]?, errors: [APIError]?)? {
     guard let data = data else {
       return nil
     }
@@ -132,12 +186,13 @@ class Parser {
     }
 
     let next = document.links?["next"]
+    let metadata = document.meta
     
     if let parsedData = document.data {
-      return (parsedData, next, document.errors)
+      return (parsedData, next, metadata, document.errors)
     }
 
-    return (nil, next, document.errors)
+    return (nil, next, metadata, document.errors)
   }
 }
 

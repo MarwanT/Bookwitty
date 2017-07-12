@@ -22,6 +22,7 @@ protocol PostDetailsItemNodeDelegate: class {
 
 protocol ItemNodeTapDelegate: class {
   func didTapOn(node: ASDisplayNode)
+  func indexFor(node: ASDisplayNode) -> Int?
 }
 
 /**
@@ -115,6 +116,10 @@ class PostDetailsItemNode: ASDisplayNode, ItemNodeTapDelegate {
       return
     }
     delegate?.postDetails(self, node: node, didSelectItemAt: indexOfTappedNode)
+  }
+
+  func indexFor(node: ASDisplayNode) -> Int? {
+    return index(of: node)
   }
 }
 
@@ -275,6 +280,11 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
     subheadLineNode.maximumNumberOfLines = 2
     //caption Setup
     captionNode.maximumNumberOfLines = 1
+
+    headLineNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    subheadLineNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    captionNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    button.titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
 
     //Button Style-up
     button.style.height = ASDimensionMake(34.0)

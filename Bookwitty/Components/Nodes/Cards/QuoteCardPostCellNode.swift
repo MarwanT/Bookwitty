@@ -62,7 +62,7 @@ class QuoteCardPostContentNode: ASDisplayNode {
 
   var articleQuotePublisher: String? {
     didSet {
-      if let articleQuotePublisher = articleQuotePublisher {
+      if let articleQuotePublisher = articleQuotePublisher?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
         nameTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
           .append(text: articleQuotePublisher, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
       } else {
@@ -89,6 +89,10 @@ class QuoteCardPostContentNode: ASDisplayNode {
   func setupMode(fullViewMode: Bool) {
     quoteTextNode.maximumNumberOfLines = fullViewMode ? 0 : 3
     nameTextNode.maximumNumberOfLines = fullViewMode ? 0 : 1
+
+    quoteTextNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    nameTextNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     setNeedsLayout()
   }
 
@@ -122,7 +126,7 @@ extension QuoteCardPostCellNode: QuoteCardViewModelDelegate {
       node.articleQuote = "“ \(quote) ”"
     }
     articleCommentsSummary = values.content.comments
-    setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
-    setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
+    setWitValue(witted: values.content.wit.is)
+    actionInfoValue = values.content.wit.info
   }
 }

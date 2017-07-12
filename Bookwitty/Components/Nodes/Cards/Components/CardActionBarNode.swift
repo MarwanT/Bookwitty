@@ -19,50 +19,17 @@ class CardActionBarNode: ASCellNode {
     case unwit
     case comment
     case share
-    case dim
-    case undim
     case follow
     case unfollow
+    case reply
   }
   var followButton: ASButtonNode
   var witButton: ASButtonNode
   var commentButton: ASButtonNode
   var shareButton: ASButtonNode
-  var numberOfWitsNode: ASTextNode
-  var numberOfDimsNode: ASTextNode
+  var replyNode: ASTextNode
   weak var delegate: CardActionBarNodeDelegate? = nil
 
-  fileprivate var numberOfWits: Int? {
-    didSet {
-      if let numberOfWits = numberOfWits, numberOfWits > 0 {
-        numberOfWitsNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1)
-          .append(text: "(\(numberOfWits))", color: ThemeManager.shared.currentTheme.defaultButtonColor()).attributedString
-      } else {
-        numberOfWitsNode.attributedText = nil
-      }
-    }
-  }
-  fileprivate var numberOfDims: Int? {
-    didSet {
-      numberOfDimsNode.isHidden = hideDim
-      guard !hideDim else {
-        return
-      }
-
-      if let numberOfDims = numberOfDims {
-        let fontDynamicType = FontDynamicType.footnote
-        numberOfDimsNode.attributedText = AttributedStringBuilder(fontDynamicType: fontDynamicType)
-          .append(text: dimText, color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
-          .append(text: " ")
-          .append(text: "(\(numberOfDims))", fontDynamicType: FontDynamicType.caption1, color: ThemeManager.shared.currentTheme.defaultGrayedTextColor()).attributedString
-      } else {
-        numberOfDimsNode.attributedText = nil
-      }
-    }
-  }
-  fileprivate var dimText: String {
-    return numberOfDimsNode.isSelected ? Strings.dimmed() : Strings.dim()
-  }
   fileprivate var actionButton: ASButtonNode {
     return followingMode ? followButton : witButton
   }
@@ -71,16 +38,27 @@ class CardActionBarNode: ASCellNode {
       setNeedsLayout()
     }
   }
-  private let witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
-  private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
 
-  private let actionBarHeight: CGFloat = 60.0
-  private let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
-  private let iconSize: CGSize = CGSize(width: 40.0, height: 40.0)
-
-  var hideDim: Bool = false {
+  var hideCommentButton: Bool = true {
     didSet {
-      numberOfDimsNode.isHidden = hideDim
+      setNeedsLayout()
+    }
+  }
+  
+  var hideShareButton: Bool = false {
+    didSet {
+      setNeedsLayout()
+    }
+  }
+  
+  var hideReplyButton: Bool = true {
+    didSet {
+      setNeedsLayout()
+    }
+  }
+  
+  var configuration = Configuration() {
+    didSet {
       setNeedsLayout()
     }
   }
@@ -89,16 +67,9 @@ class CardActionBarNode: ASCellNode {
     witButton = ASButtonNode()
     commentButton = ASButtonNode()
     shareButton = ASButtonNode()
-    numberOfWitsNode = ASTextNode()
-    numberOfDimsNode = ASTextNode()
     followButton = ASButtonNode()
+    replyNode = ASTextNode()
     super.init()
-    addSubnode(witButton)
-    addSubnode(commentButton)
-    addSubnode(shareButton)
-    addSubnode(numberOfWitsNode)
-    addSubnode(numberOfDimsNode)
-    addSubnode(followButton)
     self.initializeNode()
   }
 
@@ -107,6 +78,8 @@ class CardActionBarNode: ASCellNode {
   }
 
   private func initializeNode() {
+    automaticallyManagesSubnodes = true
+    
     let imageTintColor: UIColor = ThemeManager.shared.currentTheme.colorNumber15()
 
     //Note: Had a Problem with the selected and highlighted states of the button images
@@ -119,20 +92,13 @@ class CardActionBarNode: ASCellNode {
 
     setupWitButtonStyling()
     setupFollowButtonStyling()
+    setupReplyNodeStyling()
 
     shareButton.addTarget(self, action: #selector(shareButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     commentButton.addTarget(self, action: #selector(commentButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     witButton.addTarget(self, action: #selector(witButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     followButton.addTarget(self, action: #selector(followButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
-    numberOfDimsNode.addTarget(self, action: #selector(dimButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
-
-    numberOfWitsNode.style.maxWidth = ASDimensionMake(60.0)
-    numberOfWitsNode.maximumNumberOfLines = 1
-    numberOfDimsNode.style.maxWidth = ASDimensionMake(120.0)
-    numberOfDimsNode.maximumNumberOfLines = 1
-
-    //By default dim info should be hidden, needs to be explicitly set false to show
-    hideDim = true
+    replyNode.addTarget(self, action: #selector(replyButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
 
   private func setupFollowButtonStyling() {
@@ -176,52 +142,29 @@ class CardActionBarNode: ASCellNode {
     witButton.borderWidth = 2
     witButton.clipsToBounds = true
   }
+  
+  private func setupReplyNodeStyling() {
+    replyNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.footnote)
+      .append(text: Strings.reply(), color: ThemeManager.shared.currentTheme.defaultGrayedTextColor()).attributedString
+    replyNode.style.maxWidth = ASDimensionMake(120.0)
+    replyNode.maximumNumberOfLines = 1
+    replyNode.truncationMode = NSLineBreakMode.byTruncatingTail
+  }
 
   func setFollowingValue(following: Bool) {
     followButton.isSelected = following
   }
 
-  func setWitButton(witted: Bool, wits: Int? = nil) {
+  func setWitButton(witted: Bool) {
     witButton.isSelected = witted
-    setNumberOfWits(wits: wits ?? 0)
-  }
-
-  func setDimValue(dimmed: Bool, dims: Int? = nil) {
-    numberOfDimsNode.isSelected = dimmed
-    setNumberOfDims(dims: dims ?? 0)
-  }
-
-  private func setNumberOfWits(wits: Int) {
-    numberOfWits = wits
-  }
-
-  private func setNumberOfDims(dims: Int) {
-    numberOfDims = dims
   }
 
   func updateWitAndDim(for action: Action, success: Bool = true) {
-    let inverter = success ? 1 : -1
-
     switch action {
-    case .dim:
-      let wits: Int? = (numberOfWits ?? 0 > 0) ? (numberOfWits! + (-1 * inverter)) : nil
-      setWitButton(witted: false, wits: wits)
-      let dims: Int? = (numberOfDims ?? 0) + (1 * inverter)
-      setDimValue(dimmed: success, dims: dims)
-
-    case .undim:
-      let dims: Int? = (numberOfDims ?? 0 > 0) ? (numberOfDims! + (-1 * inverter)) : nil
-      setDimValue(dimmed: false, dims: dims)
-
     case .wit:
-      let dims: Int? = (numberOfDims ?? 0 > 0) ? (numberOfDims! + (-1 * inverter)) : nil
-      setDimValue(dimmed: false, dims: dims)
-      let wits: Int? = (numberOfWits ?? 0) + (1 * inverter)
-      setWitButton(witted: success, wits: wits)
-
+      setWitButton(witted: success)
     case .unwit:
-      let wits: Int? = (numberOfWits ?? 0 > 0) ? (numberOfWits! + (-1 * inverter)) : nil
-      setWitButton(witted: false, wits: wits)
+      setWitButton(witted: false)
 
     default: break
     }
@@ -237,28 +180,6 @@ class CardActionBarNode: ASCellNode {
     }
   }
 
-  func dimButtonTouchUpInside(_ sender: ASTextNode?) {
-    guard UserManager.shared.isSignedIn else {
-      //If user is not signed In post notification and do not fall through
-      NotificationCenter.default.post( name: AppNotification.callToAction, object: CallToAction.dim)
-      return
-    }
-
-    let action = !numberOfDimsNode.isSelected ? CardActionBarNode.Action.dim : CardActionBarNode.Action.undim
-    self.updateWitAndDim(for: action)
-    self.witButton.isEnabled = false
-    self.numberOfDimsNode.isEnabled = false
-
-    delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: action, forSender: witButton, didFinishAction: { [weak self] (success: Bool) in
-      guard let strongSelf = self else { return }
-      if !success { //Toggle back on failure
-        strongSelf.updateWitAndDim(for: action, success: false)
-      }
-      strongSelf.witButton.isEnabled = true
-      strongSelf.numberOfDimsNode.isEnabled = true
-    })
-  }
-
   func witButtonTouchUpInside(_ sender: ASButtonNode?) {
     guard UserManager.shared.isSignedIn else {
       //If user is not signed In post notification and do not fall through
@@ -272,7 +193,6 @@ class CardActionBarNode: ASCellNode {
     //Assume success and Toggle button anyway, if witting/unwitting fails delegate should either call didFinishAction or  call toggleWitButton.
     self.updateWitAndDim(for: action)
     self.witButton.isEnabled = false
-    self.numberOfDimsNode.isEnabled = false
 
     delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: action, forSender: sender, didFinishAction: { [weak self] (success: Bool) in
       guard let strongSelf = self else { return }
@@ -280,7 +200,6 @@ class CardActionBarNode: ASCellNode {
         strongSelf.updateWitAndDim(for: action, success: false)
       }
       strongSelf.witButton.isEnabled = true
-      strongSelf.numberOfDimsNode.isEnabled = true
     })
   }
 
@@ -314,6 +233,11 @@ class CardActionBarNode: ASCellNode {
     guard let sender = sender else { return }
     delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: CardActionBarNode.Action.share, forSender: sender, didFinishAction: nil)
   }
+  
+  func replyButtonTouchUpInside(_ sender: ASButtonNode?) {
+    guard let sender = sender else { return }
+    delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: CardActionBarNode.Action.reply, forSender: sender, didFinishAction: nil)
+  }
 
   private func spacer(width: CGFloat = 0.0, flexGrow: CGFloat = 1.0) -> ASLayoutSpec {
     return ASLayoutSpec().styled { (style) in
@@ -325,42 +249,80 @@ class CardActionBarNode: ASCellNode {
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    var shouldAddSpace: Bool = true
+    
     //Setup Dynamic width Wit Button
+    actionButton.titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
     actionButton.titleNode.maximumNumberOfLines = 1
     actionButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-    actionButton.style.height = ASDimensionMake(buttonSize.height)
+    actionButton.style.height = ASDimensionMake(configuration.buttonSize.height)
 
     //Setup other buttons
-    commentButton.style.preferredSize = iconSize
-    shareButton.style.preferredSize = iconSize
+    commentButton.style.preferredSize = configuration.iconSize
+    shareButton.style.preferredSize = configuration.iconSize
+    
+    // • Layout visible subnodes
+    var horizontalStackElements = [ASLayoutElement]()
+    
+    // • Add voting action buttons
     let textHorizontalStackSpec = ASStackLayoutSpec.horizontal()
     textHorizontalStackSpec.justifyContent = .start
     textHorizontalStackSpec.alignItems = .center
     if !followingMode {
-      textHorizontalStackSpec.children = [ASLayoutSpec.spacer(width: internalMargin/2),
-                                          numberOfWitsNode]
-      if !hideDim {
-        textHorizontalStackSpec.children?.append(ASLayoutSpec.spacer(width: internalMargin))
-        textHorizontalStackSpec.children?.append(numberOfDimsNode)
-      }
+
     }
+    horizontalStackElements.append(actionButton)
+    horizontalStackElements.append(textHorizontalStackSpec)
+    horizontalStackElements.append(spacer())
+    shouldAddSpace = false
+    
+    // • Add Comment Button
+    if !hideCommentButton {
+      horizontalStackElements.append(commentButton)
+      shouldAddSpace = true
+    }
+    
+    // • Add Share Button
+    if !hideShareButton {
+      if shouldAddSpace {
+        horizontalStackElements.append(spacer(width: 10))
+      }
+      horizontalStackElements.append(shareButton)
+      shouldAddSpace = true
+    }
+    
+    // • Add Reply Button
+    if !hideReplyButton {
+      if shouldAddSpace {
+        horizontalStackElements.append(spacer(width: 10))
+      }
+      horizontalStackElements.append(replyNode)
+      shouldAddSpace = true
+    }
+    
     let horizontalStackSpec = ASStackLayoutSpec(direction: .horizontal,
                                                 spacing: 0,
                                                 justifyContent: .spaceAround,
                                                 alignItems: .center,
-                                                children: [actionButton,
-                                                          textHorizontalStackSpec,
-                                                           spacer(),
-                                                           commentButton,
-                                                           spacer(width: 10),
-                                                           shareButton])
+                                                children: horizontalStackElements)
 
     let centeredActionBarLayoutSpec = ASCenterLayoutSpec(centeringOptions: ASCenterLayoutSpecCenteringOptions.Y, sizingOptions: ASCenterLayoutSpecSizingOptions.minimumY, child: horizontalStackSpec)
     //Set Node Height
-    centeredActionBarLayoutSpec.style.height = ASDimensionMake(actionBarHeight)
+    centeredActionBarLayoutSpec.style.height = ASDimensionMake(configuration.actionBarHeight)
 
     //Set Node Insets
-    return ASInsetLayoutSpec.init(insets: UIEdgeInsets.init(top: 0, left: internalMargin, bottom: 0, right: internalMargin), child: centeredActionBarLayoutSpec)
+    return ASInsetLayoutSpec.init(insets: UIEdgeInsets.init(top: 0, left: configuration.externalHorizontalMargin, bottom: 0, right: configuration.externalHorizontalMargin), child: centeredActionBarLayoutSpec)
   }
+}
 
+extension CardActionBarNode {
+  struct Configuration {
+    var witItButtonMargin = ThemeManager.shared.currentTheme.witItButtonMargin()
+    var internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+    var externalHorizontalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+    
+    var actionBarHeight: CGFloat = 60.0
+    var buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
+    var iconSize: CGSize = CGSize(width: 40.0, height: 40.0)
+  }
 }

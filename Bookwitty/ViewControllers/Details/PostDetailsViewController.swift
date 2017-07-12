@@ -10,6 +10,8 @@ import Foundation
 import AsyncDisplayKit
 import Spine
 import Moya
+import GSImageViewerController
+import SwiftLoader
 
 class PostDetailsViewController: ASViewController<PostDetailsNode> {
   let postDetailsNode: PostDetailsNode
@@ -34,6 +36,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
       self.postDetailsNode.penName = self.viewModel.penName
     }
     loadContentPosts()
+    loadComments()
     loadRelatedBooks()
     loadRelatedPosts()
     applyLocalization()
@@ -70,13 +73,13 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.coverImage = viewModel.image
     postDetailsNode.body = viewModel.body
 
-    let date = Date.formatDate(date: viewModel.date)
+    let date = viewModel.date?.formatted() ?? ""
     postDetailsNode.date = date
     postDetailsNode.penName = viewModel.penName
+    postDetailsNode.actionInfoValue = viewModel.actionInfoValue
     postDetailsNode.conculsion = viewModel.conculsion
     postDetailsNode.headerNode.profileBarNode.updateMode(disabled: viewModel.isMyPenName())
-    postDetailsNode.setWitValue(witted: viewModel.isWitted, wits: viewModel.wits ?? 0)
-    postDetailsNode.setDimValue(dimmed: viewModel.isDimmed, dims: viewModel.dims ?? 0)
+    postDetailsNode.setWitValue(witted: viewModel.isWitted)    
   }
 
   fileprivate func addDelegatesAndDataSources() {
@@ -120,6 +123,13 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
       self.postDetailsNode.loadPostItemsNode()
     }
   }
+  
+  func loadComments() {
+    guard let id = viewModel.resource.id else {
+      return
+    }
+    postDetailsNode.loadComments(with: id)
+  }
 
   func loadRelatedBooks() {
     postDetailsNode.showRelatedBooksLoader = true
@@ -155,7 +165,7 @@ extension PostDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
     return {
       let cell = RelatedBooksMinimalCellNode()
       cell.url = book?.thumbnailImageUrl
-      cell.price = (book?.productDetails?.isElectronicFormat() ?? false) ? nil : book?.supplierInformation?.preferredPrice?.formattedValue
+      cell.price = (book?.productDetails?.isElectronicFormat ?? false) ? nil : book?.supplierInformation?.preferredPrice?.formattedValue
       cell.subTitle = book?.productDetails?.author
       cell.title = book?.title
       return cell
@@ -328,14 +338,6 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
       viewModel.unwitPost(completionBlock: { (success) in
         didFinishAction?(success)
       })
-    case .dim:
-      viewModel.dimContent(completionBlock: { (success) in
-        didFinishAction?(success)
-      })
-    case .undim:
-      viewModel.undimContent(completionBlock: { (success) in
-        didFinishAction?(success)
-      })
     case .share:
       if let sharingInfo: [String] = viewModel.sharingPost() {
         presentShareSheet(shareContent: sharingInfo)
@@ -384,6 +386,39 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
                                                  name: name)
     Analytics.shared.send(event: event)
   }
+
+  func postDetails(node: PostDetailsNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+    let imageInfo = GSImageInfo(image: image, imageMode: .aspectFit, imageHD: nil)
+    let transitionInfo = GSTransitionInfo(fromView: imageNode.view)
+    let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
+    present(imageViewer, animated: true, completion: nil)
+  }
+
+  func postDetails(node: PostDetailsNode, didRequestActionInfo fromNode: ASTextNode) {
+    pushPenNamesListViewController(with: viewModel.resource)
+  }
+  
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
+    switch action {
+    case .viewRepliesForComment(let comment, let postId):
+      break
+    case .viewAllComments(let commentsManager):
+      pushCommentsViewController(with: commentsManager)
+    case .writeComment(let parentCommentIdentifier, _):
+      CommentComposerViewController.show(from: self, delegate: self, parentCommentId: parentCommentIdentifier)
+    case .commentAction(let comment, let action):
+      switch action {
+      case .wit:
+        postDetailsNode.wit(comment: comment, completion: nil)
+      case .unwit:
+        postDetailsNode.unwit(comment: comment, completion: nil)
+      case .reply:
+        CommentComposerViewController.show(from: self, delegate: self, parentCommentId: comment.id)
+      default:
+        break
+      }
+    }
+  }
 }
 
 extension PostDetailsViewController: PostDetailsItemNodeDelegate {
@@ -394,6 +429,10 @@ extension PostDetailsViewController: PostDetailsItemNodeDelegate {
       }
       card.baseViewModel?.resource = resource
       card.setNeedsLayout()
+      
+      if let bookCard = card as? BookCardPostCellNode, let book = resource as? Book {
+        bookCard.isProduct = (self.viewModel.bookRegistry.category(for: book , section: BookTypeRegistry.Section.postDetails) ?? .topic == .product)
+      }
     }
   }
 
@@ -437,6 +476,7 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
         return BaseCardPostNode()
       }
       let card = CardFactory.createCardFor(resourceType: resource.registeredResourceType)
+      card?.baseViewModel?.resource = resource as? ModelCommonProperties
       if let readingListCell = card as? ReadingListCardPostCellNode,
         !readingListCell.node.isImageCollectionLoaded {
         let max = readingListCell.node.maxNumberOfImages
@@ -446,9 +486,10 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
             readingListCell.node.loadImages(with: imageCollection)
           }
         })
+      } else if let bookCard = card as? BookCardPostCellNode {
+        bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.postDetails) ?? .topic == .product)
       }
 
-      card?.baseViewModel?.resource = resource as? ModelCommonProperties
       card?.delegate = self
       return  card ?? BaseCardPostNode()
     } else {
@@ -472,7 +513,7 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
     case Book.resourceType:
       let res = resource as? Book
       let showEcommerceButton: Bool = (res?.supplierInformation != nil) &&
-        !(res?.productDetails?.isElectronicFormat() ?? false)
+        !(res?.productDetails?.isElectronicFormat ?? false)
 
       let itemNode = PostDetailItemNode(smallImage: false, showsSubheadline: false, showsButton: showEcommerceButton)
       itemNode.imageUrl = res?.thumbnailImageUrl
@@ -488,7 +529,7 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
       let itemNode = PostDetailItemNode(smallImage: true, showsSubheadline: true, showsButton: false)
       itemNode.imageUrl = res?.thumbnailImageUrl
       itemNode.body = res?.shortDescription
-      let date = Date.formatDate(date: res?.createdAt)
+      let date = res?.createdAt?.formatted() ?? ""
       itemNode.caption = date
       itemNode.headLine = res?.title
       itemNode.subheadLine = String(counting: res?.counts?.contributors)
@@ -498,7 +539,7 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
       let itemNode = PostDetailItemNode(smallImage: true, showsSubheadline: true, showsButton: false)
       itemNode.imageUrl = res?.thumbnailImageUrl
       itemNode.body = res?.shortDescription
-      let date = Date.formatDate(date: res?.createdAt)
+      let date = res?.createdAt?.formatted() ?? ""
       itemNode.caption = date
       itemNode.headLine = res?.title
       itemNode.subheadLine = res?.penName?.name
@@ -511,14 +552,18 @@ extension PostDetailsViewController: PostDetailsItemNodeDataSource {
 
 extension PostDetailsViewController: PostDetailItemNodeDelegate {
   func postDetailItemNodeButtonTouchUpInside(postDetailItemNode: PostDetailItemNode, button: ASButtonNode) {
-    guard let url = viewModel.canonicalURL else {
+    guard let index = postDetailItemNode.tapDelegate?.indexFor(node: postDetailItemNode) else {
       return
     }
+
+    guard let resource = viewModel.contentPostsItem(at: index),
+      let url = resource.canonicalURL else {
+        return
+    }
+
     WebViewController.present(url: url)
 
-
     //MARK: [Analytics] Event
-    let resource = viewModel.resource
     let category: Analytics.Category
     switch resource.registeredResourceType {
     case Image.resourceType:
@@ -557,10 +602,8 @@ extension PostDetailsViewController: PostDetailItemNodeDelegate {
 
 // MARK - BaseCardPostNode Delegate
 extension PostDetailsViewController: BaseCardPostNodeDelegate {
-  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
-    guard let index = postDetailsNode.postCardsNode.index(of: card) else {
-      return
-    }
+
+  private func userProfileHandler(at index: Int) {
     let resource = viewModel.relatedPost(at: index)
     if let resource = resource as? ModelCommonProperties,
       let penName = resource.penName {
@@ -607,6 +650,27 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
                                                    action: .GoToDetails,
                                                    name: penName.name ?? "")
       Analytics.shared.send(event: event)
+    }
+  }
+
+  private func actionInfoHandler(at index: Int) {
+    guard let resource = viewModel.relatedPost(at: index) else {
+      return
+    }
+
+    pushPenNamesListViewController(with: resource)
+  }
+
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let index = postDetailsNode.postCardsNode.index(of: card) else {
+      return
+    }
+    
+    switch action {
+    case .userProfile:
+      userProfileHandler(at: index)
+    case .actionInfo:
+      actionInfoHandler(at: index)
     }
   }
 
@@ -685,6 +749,10 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
 
 // Mark: - Pen Name Header
 extension PostDetailsViewController: PenNameFollowNodeDelegate {
+  func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+    penName(node: node, actionPenNameFollowTouchUpInside: imageNode)
+  }
+
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader) {
     button.state = .loading
     if button.isSelected {
@@ -724,7 +792,8 @@ extension PostDetailsViewController {
   }
 
   fileprivate func pushBookDetailsViewController(with book: Book) {
-    let bookDetailsViewController = BookDetailsViewController(with: book)
+    let bookDetailsViewController = BookDetailsViewController()
+    bookDetailsViewController.initialize(with: book)
     navigationController?.pushViewController(bookDetailsViewController, animated: true)
   }
 
@@ -747,12 +816,32 @@ extension PostDetailsViewController {
     let topicViewController = TopicViewController()
 
     switch resource.registeredResourceType {
-    case Author.resourceType, Book.resourceType, Topic.resourceType:
+    case Book.resourceType:
+      guard let resource = resource as? Book else {
+        return
+      }
+
+      let isProduct = (viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.postDetails) ?? .topic == .product)
+      if !isProduct {
+        topicViewController.initialize(with: resource as ModelCommonProperties)
+        navigationController?.pushViewController(topicViewController, animated: true)
+      } else {
+        let bookDetailsViewController = BookDetailsViewController()
+        bookDetailsViewController.initialize(with: resource)
+        bookDetailsViewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(bookDetailsViewController, animated: true)
+      }
+    case Author.resourceType, Topic.resourceType:
       topicViewController.initialize(with: resource as? ModelCommonProperties)
+      navigationController?.pushViewController(topicViewController, animated: true)
     default: break
     }
-
-    navigationController?.pushViewController(topicViewController, animated: true)
+  }
+  
+  func pushCommentsViewController(with commentsManager: CommentsManager) {
+    let commentsVC = CommentsViewController()
+    commentsVC.initialize(with: commentsManager)
+    self.navigationController?.pushViewController(commentsVC, animated: true)
   }
 }
 
@@ -950,5 +1039,32 @@ extension PostDetailsViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+  }
+}
+
+// MARK: - Compose comment delegate implementation
+extension PostDetailsViewController: CommentComposerViewControllerDelegate {
+  func commentComposerCancel(_ viewController: CommentComposerViewController) {
+    dismiss(animated: true, completion: nil)
+  }
+  
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, parentCommentId: String?) {
+    SwiftLoader.show(animated: true)
+    postDetailsNode.publishComment(content: content, parentCommentId: parentCommentId) {
+      (success, error) in
+      SwiftLoader.hide()
+      guard success else {
+        if let error = error {
+          self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
+            (_) in
+            // Restart editing the comment
+            _ = viewController.becomeFirstResponder()
+          })
+        }
+        return
+      }
+      
+      self.dismiss(animated: true, completion: nil)
+    }
   }
 }

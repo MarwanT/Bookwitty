@@ -63,6 +63,8 @@ class PenNameCellNode: ASCellNode {
 
     penNameTextNode.maximumNumberOfLines = 1
 
+    penNameTextNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     penNameImageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0, ASDisplayNodeDefaultPlaceholderColor())
     penNameImageNode.style.preferredSize = imageSize
     penNameImageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder

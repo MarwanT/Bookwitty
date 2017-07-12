@@ -15,6 +15,8 @@ class PostDetailsViewModel {
 
   var cancellableRequest: Cancellable?
 
+  var bookRegistry: BookTypeRegistry = BookTypeRegistry()
+
   var vcTitle: String? {
     return vcTitleForResource(resource: resource)
   }
@@ -42,6 +44,9 @@ class PostDetailsViewModel {
       setPenNameFromResource(resource: resource, penName: newValue)
     }
   }
+  var actionInfoValue: String? {
+    return (resource as? ModelCommonProperties)?.witters
+  }
   var contentPostsIdentifiers: [ResourceIdentifier]? {
     return contentPostsFromResource(resource: resource)
   }
@@ -51,15 +56,11 @@ class PostDetailsViewModel {
   var isWitted: Bool {
     return  (resource as? ModelCommonProperties)?.isWitted ?? false
   }
-  var isDimmed: Bool {
-    return  (resource as? ModelCommonProperties)?.isDimmed ?? false
-  }
+
   var wits: Int? {
     return  (resource as? ModelCommonProperties)?.counts?.wits
   }
-  var dims: Int? {
-    return  (resource as? ModelCommonProperties)?.counts?.dims
-  }
+
   var identifier: String? {
     return resource.id
   }
@@ -240,32 +241,6 @@ class PostDetailsViewModel {
     unwitContent(contentId: contentId, completionBlock: completionBlock)
   }
 
-  func dimContent(completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard let contentId = identifier else {
-      return completionBlock(false)
-    }
-
-    cancellableRequest = NewsfeedAPI.dim(contentId: contentId, completion: { (success, error) in
-      completionBlock(success)
-      if success {
-        DataManager.shared.updateResource(with: contentId, after: .dim)
-      }
-    })
-  }
-
-  func undimContent(completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard let contentId = identifier else {
-      return completionBlock(false)
-    }
-
-    cancellableRequest = NewsfeedAPI.undim(contentId: contentId, completion: { (success, error) in
-      completionBlock(success)
-      if success {
-        DataManager.shared.updateResource(with: contentId, after: .undim)
-      }
-    })
-  }
-
   func sharingPost() -> [String]? {
     return sharingContent(resource: resource)
   }
@@ -320,7 +295,7 @@ extension PostDetailsViewModel {
     return false
   }
   
-  func relatedPostsResourceValues(for index: Int) -> (followingMode: Bool, following: Bool, isWitted: Bool,wits: Int, isDimmed: Bool, dims: Int)? {
+  func relatedPostsResourceValues(for index: Int) -> (followingMode: Bool, following: Bool, isWitted: Bool,wits: Int)? {
     guard let modelResource = relatedPostsResourceForIndex(index: index), let resource = modelResource as? ModelCommonProperties else {
       return nil
     }
@@ -347,8 +322,7 @@ extension PostDetailsViewModel {
     let following = isFollowingResource(resource: modelResource)
 
     let wits = resource.counts?.wits ?? 0
-    let dims = resource.counts?.dims ?? 0
-    return (followingMode: canBeFollowed, following: following, isWitted: resource.isWitted, wits: wits, isDimmed: resource.isDimmed, dims: dims)
+    return (followingMode: canBeFollowed, following: following, isWitted: resource.isWitted, wits: wits)
   }
 
   func relatedPostsAffectedItems(identifiers: [String], visibleItemsIndices: [Int]) -> [Int] {
@@ -396,6 +370,8 @@ extension PostDetailsViewModel {
       }
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
+        self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.postDetails)
+
         self.relatedPosts.removeAll()
         self.relatedPosts += resources.flatMap( { $0.id })
         self.relatedPostsNextPage = next

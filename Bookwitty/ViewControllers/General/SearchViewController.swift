@@ -20,6 +20,7 @@ class SearchViewController: ASViewController<ASCollectionNode> {
   let collectionNode: ASCollectionNode
   let loaderNode: LoaderNode
   let misfortuneNode: MisfortuneNode
+  let filterNode: FilterCellNode
 
   var searchBar: UISearchBar?
   var viewModel: SearchViewModel = SearchViewModel()
@@ -46,6 +47,16 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     return true
   }
 
+  var shouldDisplayFilter: Bool {
+    guard let facet = viewModel.facet else {
+      return false
+    }
+    let categories = facet.categories?.count ?? 0 > 0
+    let languages = facet.languages?.count ?? 0 > 0
+    let typs = facet.types?.count ?? 0 > 0
+    return categories || languages || typs
+  }
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -63,7 +74,10 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     misfortuneNode = MisfortuneNode(mode: MisfortuneNode.Mode.empty)
     misfortuneNode.style.height = ASDimensionMake(0)
     misfortuneNode.style.width = ASDimensionMake(0)
-    
+
+    filterNode = FilterCellNode()
+    filterNode.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+
     super.init(node: collectionNode)
     
     misfortuneNode.delegate = self
@@ -127,24 +141,23 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     }
   }
 
-  fileprivate func searchAction(query: String?) {
-    guard let query = query else {
-      return
-    }
+  fileprivate func searchAction() {
     loadingStatus = .loading
-    self.updateCollection(with: nil, loaderSection: true, dataSection: false)
     viewModel.clearSearchData()
-    collectionNode.reloadData()
+    updateCollection(reloadAll: true)
 
+    let query = viewModel.filter.query ?? ""
     viewModel.search(query: query) { (success, error) in
       self.loadingStatus = .none
       self.updateCollection(with: nil, loaderSection: true, dataSection: true)
     }
 
+    let filtersInfo = viewModel.filterDictionary()
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .Search,
                                                  action: .SearchOnBookwitty,
-                                                 name: query)
+                                                 name: query,
+                                                 info: filtersInfo)
     Analytics.shared.send(event: event)
   }
 
@@ -166,7 +179,23 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     }
 
     let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
-    collectionNode.reloadItems(at: indexPathForAffectedItems)
+    updateCollectionNodes(indexPathForAffectedItems: indexPathForAffectedItems)
+  }
+
+  fileprivate func pushFilterViewController() {
+    guard let facet = viewModel.facet else {
+      return
+    }
+
+    let searchFiltersViewController = Storyboard.Misc.instantiate(SearchFiltersViewController.self)
+    searchFiltersViewController.viewModel.initialize(with: facet, and: viewModel.filter)
+    searchFiltersViewController.delegate = self
+    self.navigationController?.pushViewController(searchFiltersViewController, animated: true)
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .Search,
+                                                 action: .GoToFilters)
+    Analytics.shared.send(event: event)
   }
 }
 
@@ -182,10 +211,11 @@ extension SearchViewController: ASCollectionDataSource {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    if section == Section.activityIndicator.rawValue {
+    if section == Section.filter.rawValue {
+      return shouldDisplayFilter ? 1 : 0
+    } else if section == Section.activityIndicator.rawValue {
       return shouldShowLoader ? 1 : 0
-    }
-    else if section == Section.misfortune.rawValue {
+    } else if section == Section.misfortune.rawValue {
       return shouldDisplayMisfortuneNode ? 1 : 0
     } else {
       return viewModel.numberOfItemsInSection(section: section)
@@ -196,7 +226,10 @@ extension SearchViewController: ASCollectionDataSource {
     let indexPath = indexPath
 
     return {
-      if indexPath.section == Section.activityIndicator.rawValue {
+
+      if indexPath.section == Section.filter.rawValue {
+        return self.filterNode
+      } else if indexPath.section == Section.activityIndicator.rawValue {
         //Return the activity indicator
         return self.loaderNode
       } else if indexPath.section == Section.misfortune.rawValue {
@@ -212,6 +245,8 @@ extension SearchViewController: ASCollectionDataSource {
               readingListCell.node.loadImages(with: imageCollection)
             }
           })
+        } else if let bookCard = baseCardNode as? BookCardPostCellNode, let resource = self.viewModel.resourceForIndex(indexPath: indexPath) {
+            bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.search) ?? .topic == .product)
         }
         baseCardNode.delegate = self
         return baseCardNode
@@ -226,12 +261,16 @@ extension SearchViewController: ASCollectionDataSource {
       misfortuneNode.mode = viewModel.misfortuneNodeMode ?? MisfortuneNode.Mode.empty
     } else if let card = node as? BaseCardPostNode {
       guard let indexPath = collectionNode.indexPath(for: node),
-        let resource = viewModel.resourceForIndex(indexPath: indexPath) as? ModelCommonProperties else {
+        let resource = viewModel.resourceForIndex(indexPath: indexPath), let commonResource =  resource as? ModelCommonProperties else {
           return
       }
 
-      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
-        card.baseViewModel?.resource = resource
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: commonResource), !sameInstance {
+        card.baseViewModel?.resource = commonResource
+      }
+
+      if let bookCard = card as? BookCardPostCellNode {
+        bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.search) ?? .topic == .product)
       }
     }
   }
@@ -239,10 +278,8 @@ extension SearchViewController: ASCollectionDataSource {
 
 // MARK - BaseCardPostNode Delegate
 extension SearchViewController: BaseCardPostNodeDelegate {
-  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
-    guard let indexPath = collectionNode.indexPath(for: card) else {
-      return
-    }
+
+  private func userProfileHandler(at indexPath: IndexPath) {
     let resource = viewModel.resourceForIndex(indexPath: indexPath)
     if let resource = resource as? ModelCommonProperties,
       let penName = resource.penName {
@@ -289,6 +326,27 @@ extension SearchViewController: BaseCardPostNodeDelegate {
                                                    action: .GoToDetails,
                                                    name: penName.name ?? "")
       Analytics.shared.send(event: event)
+    }
+  }
+
+  private func actionInfoHandler(at indexPath: IndexPath) {
+    guard let resource = viewModel.resourceForIndex(indexPath: indexPath) else {
+      return
+    }
+
+    pushPenNamesListViewController(with: resource)
+  }
+
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+    
+    switch action {
+    case .userProfile:
+      userProfileHandler(at: indexPath)
+    case .actionInfo:
+      actionInfoHandler(at: indexPath)
     }
   }
 
@@ -366,6 +424,12 @@ extension SearchViewController: BaseCardPostNodeDelegate {
 
 extension SearchViewController: ASCollectionDelegate {
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+
+    if indexPath.section == Section.filter.rawValue {
+      pushFilterViewController()
+      return
+    }
+
     let resource = viewModel.resourceForIndex(indexPath: indexPath)
     actionForCard(resource: resource)
   }
@@ -422,7 +486,7 @@ extension SearchViewController: ASCollectionDelegate {
         let updateIndexRange = initialLastIndexPath..<finalLastIndexPath
 
         updatedIndexPathRange = updateIndexRange.flatMap({ (index) -> IndexPath in
-          return IndexPath(row: index, section: 0)
+          return IndexPath(row: index, section: Section.cards.rawValue)
         })
       }
     }
@@ -430,20 +494,51 @@ extension SearchViewController: ASCollectionDelegate {
 }
 
 extension SearchViewController {
-  func updateCollection(with itemIndices: [IndexPath]? = nil, loaderSection: Bool = false, dataSection: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
-    collectionNode.performBatchUpdates({
-      // Always relaod misfortune section
-      collectionNode.reloadSections(IndexSet(integer: Section.misfortune.rawValue))
-      
-      if loaderSection {
-        collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
+  func updateCollectionNodes(indexPathForAffectedItems: [IndexPath]) {
+    let cards = indexPathForAffectedItems.map({ collectionNode.nodeForItem(at: $0) })
+    cards.forEach({ card in
+      guard let card = card as? BaseCardPostNode else {
+        return
       }
-      if dataSection {
-        collectionNode.reloadSections(IndexSet(integer: Section.cards.rawValue))
-      } else if let itemIndices = itemIndices {
-        collectionNode.insertItems(at: itemIndices)
+      guard let indexPath = card.indexPath, let commonResource =  viewModel.resourceForIndex(indexPath: indexPath) as? ModelCommonProperties else {
+        return
       }
-    }, completion: completionBlock)
+      card.baseViewModel?.resource = commonResource
+    })
+  }
+
+  func updateCollection(reloadAll: Bool = false, with itemIndices: [IndexPath]? = nil, reloadItemsWithIndices: Bool = false, loaderSection: Bool = false, dataSection: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
+    if reloadAll {
+      collectionNode.reloadData()
+    } else {
+      collectionNode.performBatchUpdates({
+        // Always relaod misfortune section
+        collectionNode.reloadSections(IndexSet(integer: Section.misfortune.rawValue))
+        collectionNode.reloadSections(IndexSet(integer: Section.filter.rawValue))
+
+        if loaderSection {
+          collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
+        }
+        if dataSection {
+          collectionNode.reloadSections(IndexSet(integer: Section.cards.rawValue))
+        } else if let itemIndices = itemIndices {
+          if reloadItemsWithIndices {
+            collectionNode.reloadItems(at: itemIndices)
+          } else {
+            collectionNode.insertItems(at: itemIndices)
+          }
+        }
+      }, completion: completionBlock)
+    }
+  }
+}
+
+//MARK: - SearchFiltersViewControllerDelegate implementation
+extension SearchViewController: SearchFiltersViewControllerDelegate {
+  func searchFilter(viewController: SearchFiltersViewController, didSelect filter: Filter) {
+    _ = viewController.navigationController?.popViewController(animated: true)
+    viewModel.filter = filter
+    searchAction()
   }
 }
 
@@ -458,19 +553,30 @@ extension SearchViewController: UISearchBarDelegate {
 
   public func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
     searchBar.showsCancelButton = false
-    searchBar.endEditing(true)
+    if viewModel.filter.query != searchBar.text {
+      searchBar.text = viewModel.filter.query
+    }
     return true
   }
 
   public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-    searchBar.endEditing(true)
-    searchAction(query: searchBar.text)
+    /* Discussion:
+     * Reset the filters when the query is new
+     */
+    if viewModel.filter.query != searchBar.text {
+      viewModel.filter.query = searchBar.text
+      viewModel.filter.categories.removeAll()
+      viewModel.filter.languages.removeAll()
+      viewModel.filter.types.removeAll()
+    }
+    searchAction()
+    searchBar.resignFirstResponder()
   }
 
   public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-    searchBar.text = nil
+    searchBar.text = viewModel.filter.query
     searchBar.showsCancelButton = false
-    searchBar.endEditing(true)
+    searchBar.resignFirstResponder()
   }
 }
 // MARK: - Actions For Cards
@@ -639,20 +745,25 @@ extension SearchViewController {
   }
 
   fileprivate func actionForBookResourceType(resource: ModelResource) {
-    guard resource is Book else {
+    guard let resource = resource as? Book else {
       return
     }
-
+    let isProduct = (viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.search) ?? .topic == .product)
     //MARK: [Analytics] Event
-    let name: String = (resource as? Book)?.title ?? ""
-    let event: Analytics.Event = Analytics.Event(category: .TopicBook,
+    let name: String = resource.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: isProduct ? .BookProduct : .TopicBook,
                                                  action: .GoToDetails,
                                                  name: name)
     Analytics.shared.send(event: event)
-
-    let topicViewController = TopicViewController()
-    topicViewController.initialize(with: resource as? ModelCommonProperties)
-    navigationController?.pushViewController(topicViewController, animated: true)
+    if !isProduct {
+      let topicViewController = TopicViewController()
+      topicViewController.initialize(with: resource as ModelCommonProperties)
+      navigationController?.pushViewController(topicViewController, animated: true)
+    } else {
+      let bookDetailsViewController = BookDetailsViewController()
+      bookDetailsViewController.initialize(with: resource)
+      navigationController?.pushViewController(bookDetailsViewController, animated: true)
+    }
   }
 }
 
@@ -660,12 +771,13 @@ extension SearchViewController {
 // MARK: - Declarations
 extension SearchViewController {
   enum Section: Int {
-    case cards = 0
+    case filter = 0
+    case cards = 1
     case activityIndicator
     case misfortune
 
     static var numberOfSections: Int {
-      return 3
+      return 4
     }
   }
 }
@@ -674,6 +786,7 @@ extension SearchViewController {
 extension SearchViewController: Localizable {
   func applyLocalization() {
     searchBar?.placeholder = Strings.search_placeholder()
+    UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = Strings.cancel()
   }
 
   fileprivate func observeLanguageChanges() {
@@ -695,7 +808,7 @@ extension SearchViewController: MisfortuneNodeDelegate {
     
     switch action {
     case .tryAgain:
-      searchAction(query: searchBar?.text)
+      searchAction()
     case .settings:
       AppDelegate.openSettings()
     default:

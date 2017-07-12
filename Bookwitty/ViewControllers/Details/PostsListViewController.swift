@@ -100,7 +100,8 @@ extension PostsListViewController {
   }
 
   fileprivate func pushBookDetailsViewController(with book: Book) {
-    let bookDetailsViewController = BookDetailsViewController(with: book)
+    let bookDetailsViewController = BookDetailsViewController()
+    bookDetailsViewController.initialize(with: book)
     navigationController?.pushViewController(bookDetailsViewController, animated: true)
   }
 }
@@ -166,7 +167,7 @@ extension PostsListViewController: ASCollectionDataSource, ASCollectionDelegate 
     case Book.resourceType:
       let res = resource as? Book
       let showEcommerceButton: Bool = (res?.supplierInformation != nil) &&
-        !(res?.productDetails?.isElectronicFormat() ?? false)
+        !(res?.productDetails?.isElectronicFormat ?? false)
       let itemNode = PostDetailItemNode(smallImage: false, showsSubheadline: false, showsButton: showEcommerceButton)
       itemNode.imageUrl = res?.thumbnailImageUrl
       itemNode.body = res?.bookDescription
@@ -181,7 +182,7 @@ extension PostsListViewController: ASCollectionDataSource, ASCollectionDelegate 
       let itemNode = PostDetailItemNode(smallImage: true, showsSubheadline: true, showsButton: false)
       itemNode.imageUrl = res?.thumbnailImageUrl
       itemNode.body = res?.shortDescription
-      let date = Date.formatDate(date: res?.createdAt)
+      let date = res?.createdAt?.formatted() ?? ""
       itemNode.caption = date
       itemNode.headLine = res?.title
       itemNode.subheadLine = String(counting: res?.counts?.contributors)
@@ -191,7 +192,7 @@ extension PostsListViewController: ASCollectionDataSource, ASCollectionDelegate 
       let itemNode = PostDetailItemNode(smallImage: true, showsSubheadline: true, showsButton: false)
       itemNode.imageUrl = res?.thumbnailImageUrl
       itemNode.body = res?.shortDescription
-      let date = Date.formatDate(date: res?.createdAt)
+      let date = res?.createdAt?.formatted() ?? ""
       itemNode.caption = date
       itemNode.headLine = res?.title
       itemNode.subheadLine = res?.penName?.name

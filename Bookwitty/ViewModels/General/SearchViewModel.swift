@@ -10,11 +10,22 @@ import Foundation
 import Moya
 
 class SearchViewModel {
-  var data: [ModelResource] = []
+  var data: [String] = []
   var cancellableRequest: Cancellable?
   var nextPage: URL?
+
+  var facet: Facet?
+  var filter: Filter = Filter()
   
   var misfortuneNodeMode: MisfortuneNode.Mode? = nil
+  var bookRegistry: BookTypeRegistry = BookTypeRegistry()
+
+  func resourceFor(id: String?) -> ModelResource? {
+    guard let id = id else {
+      return nil
+    }
+    return DataManager.shared.fetchResource(with: id)
+  }
 
   func cancelActiveRequest() {
     guard let cancellableRequest = cancellableRequest else {
@@ -36,9 +47,8 @@ class SearchViewModel {
     cancelActiveRequest()
 
     self.data.removeAll(keepingCapacity: false)
-
-    cancellableRequest = SearchAPI.search(filter: (query, nil), page: nil, completion: {
-      (success, resources, nextPage, error) in
+    cancellableRequest = SearchAPI.search(filter: filter, page: nil, includeFacets: true, completion: {
+      (success, resources, nextPage, facet, error) in
       defer {
         // Set misfortune node mode
         if self.data.count > 0 {
@@ -58,8 +68,11 @@ class SearchViewModel {
       }
 
       DataManager.shared.update(resources: resources)
-      self.data += resources
+      self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.search)
+
+      self.data += resources.flatMap({ $0.id })
       self.nextPage = nextPage
+      self.facet = facet
     })
   }
 
@@ -74,7 +87,9 @@ class SearchViewModel {
     cancellableRequest = GeneralAPI.nextPage(nextPage: nextPage) { (success, resources, nextPage, error) in
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
-        self.data += resources
+        self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.search)
+
+        self.data += resources.flatMap({ $0.id })
         self.nextPage = nextPage
       }
       self.cancellableRequest = nil
@@ -97,6 +112,26 @@ class SearchViewModel {
   }
 }
 
+//MARK: - Filter helper
+extension SearchViewModel {
+  func filterDictionary() -> [String : String] {
+    var dictionary = [String : String]()
+
+    if let category = self.filter.categories.first {
+      dictionary["category"] = category
+    }
+
+    if let language = self.filter.languages.first {
+      dictionary["language"] = language
+    }
+
+    if let type = self.filter.types.first {
+      dictionary["type"] = type
+    }
+    return dictionary
+  }
+}
+
 // Mark: - Collection helper
 extension SearchViewModel {
   func numberOfSections() -> Int {
@@ -109,8 +144,8 @@ extension SearchViewModel {
 
   func resourceForIndex(indexPath: IndexPath) -> ModelResource? {
     guard data.count > indexPath.row else { return nil }
-    let resource = data[indexPath.row]
-    return resource
+    let resourceId = data[indexPath.row]
+    return resourceFor(id: resourceId)
   }
 
   func nodeForItem(atIndexPath indexPath: IndexPath) -> BaseCardPostNode? {

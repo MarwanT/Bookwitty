@@ -6,6 +6,7 @@
   Copyright © 2017 Keeward. All rights reserved.
 */
 
+"a_minute_ago" = "A minute ago";
 "about_this_book" = "About this book";
 "account" = "Account";
 "account_needs_confirmation_alert_dismiss_button_title" = "Cancel";
@@ -14,7 +15,11 @@
 "account_needs_confirmation_alert_title" = "Account";
 "address_book" = "Address Book";
 "already_have_an_account" = "Already have an account?";
+"an_hour_ago" = "An hour ago";
+"and" = "and";
+"apply" = "Apply";
 "article" = "Article";
+"audio" = "Audio";
 "author" = "Author";
 "bag" = "Bag";
 "biography" = "Biography";
@@ -23,6 +28,7 @@
 "book_details" = "Book Details";
 "book_recommended_in_reading_lists" = "Book recommended in reading lists";
 "books" = "Books";
+"books_you_may_be_interested_in" = "Books you may be interested in";
 "bookwitty" = "Bookwitty";
 "bookwitty_suggests" = "Bookwitty Suggests";
 "buy_this_book" = "Buy This Book";
@@ -32,21 +38,27 @@
 "change_password" = "Change Password";
 "change_password_error" = "Could not change password";
 "change_password_success" = "Password changed successfully";
+"choose_format" = "Choose format";
 "choose_from_library" = "Choose photo from library";
 "choose_pen_name" = "Choose a Pen Name";
+"clear_all" = "Clear All";
 "clear_profile_photo" = "Clear profile photo";
+"comments" = "Comments";
 "contact_us" = "Contact Us";
+"content" = "Content";
 "continue" = "Continue";
 "contributors" = "Contributors";
+"couldnt_load_selected_edition_message" = "We could not load selected edition!";
+"couldnt_load_selected_edition_title" = "Oooops";
 "couldnt_load_your_data" = "We could not load your data";
 "country" = "Country";
 "country_region" = "Country/Region";
 "create_new_pen_name" = "Create New Pen Name";
 "current_password" = "Current Password";
+"current_password_is_empty_error" = "Current password was left empty!";
 "customer_service" = "Customer Service";
-"dim" = "Dim";
-"dimmed" = "Dimmed";
 "discover" = "Discover";
+"discover_banner_message" = "Check back here anytime to find the best stories from the community.";
 "done" = "Done";
 "dont_worry_you_can_change_it_later" = "Don't worry : you can always change it later";
 "drafts" = "Drafts";
@@ -54,6 +66,7 @@
 "editions" = "Editions";
 "email" = "Email";
 "email_already_registered" = "The email address you have entered is already registered!";
+"email_empty" = "The email field can not be empty!";
 "email_invalid" = "Oops your email seems to be invalid";
 "email_notifications" = "Email Notifications";
 "empty_error_description" = "Select people, topics and tags of\ninterest to populate this section\nwith content you like.";
@@ -66,6 +79,8 @@
 "error_loading_data" = "Error Loading Data";
 "fail_to_refresh_token_alert_message" = "It seems that your session expired and you need to sign in again";
 "fail_to_refresh_token_alert_title" = "Please sign in again";
+"filter" = "Filter";
+"filters" = "Filters";
 "first_name" = "First name";
 "first_name_invalid" = "Please enter your first name";
 "follow" = "Follow";
@@ -81,6 +96,7 @@
 "get_started" = "Get started";
 "height" = "Height";
 "help" = "Help";
+"hide_formats_and_editions" = "Hide formats and editions";
 "image" = "Image";
 "imprint" = "Publisher";
 "in_stock" = "In stock";
@@ -89,10 +105,15 @@
 "isbn13" = "ISBN-13";
 "join_us_to_personalize_feed_description" = "View articles reading lists and book recommendations in your feed based on your interests.";
 "join_us_to_personalize_feed_title" = "Personalize your feed";
+"just_now" = "Just now";
 "language" = "Language";
 "language_of_text" = "Language";
+"languages" = "Languages";
+"last_month" = "Last Month";
 "last_name" = "Last name";
 "last_name_invalid" = "Please enter your email";
+"last_week" = "Last Week";
+"last_year" = "Last year";
 "latest" = "Latest";
 "link" = "Link";
 "list_price" = "List price";
@@ -100,9 +121,11 @@
 "my_interests" = "My interests";
 "my_orders" = "My Orders";
 "new_password" = "New Password";
+"new_password_is_empty_error" = "New password was left empty!";
 "new_version_available_description" = "There is a newer version available for download! Please update the app by visiting the Apple Store.";
 "new_version_available_title" = "New version available";
 "news" = "News";
+"newsletter" = "Newsletter";
 "no_internet_error_description" = "Your internet connection appears\nto be offline.";
 "no_internet_error_title" = "No Internet!";
 "no_results_found_description" = "We can't find what you were\nlooking for. Check the spelling or try a different search.";
@@ -114,12 +137,21 @@
 "or_check_your_settings" = "or check your •settings•";
 "our_selection_for_you" = "Books you might like";
 "out_of_stock" = "Out of stock";
+"pages" = "Pages";
+"pages_you_may_be_interested_in" = "Pages you may be interested in";
 "password" = "Password";
+"password_change_unknown_error" = "Something went wrong";
 "password_invalid" = "Please verify your password";
+"password_is_wrong_error" = "The password entered is wrong";
+"password_minimum_characters_error" = "Password should be at least 8 characters long!";
 "payment_methods" = "Payment Methods";
 "pen_name" = "Pen Name";
 "pen_name_cant_be_empty" = "Please enter a pen name";
+"pen_name_error_could_not_create" = "Something went wrong, could not create Penname!";
+"pen_name_error_was_already_taken" = "Ooops, Penname was already taken!";
+"pen_name_max_number_of_characters_thirty_six" = "Penname can not be more than 36 characters long";
 "pen_names" = "Pen Names";
+"pen_names_to_follow" = "Pennames To Follow";
 "please_fill_required_field" = "Please fill the required fields";
 "post" = "Post";
 "posts" = "Posts";
@@ -127,20 +159,30 @@
 "profile" = "Profile";
 "profile_picture" = "Profile Picture";
 "publication_date" = "Publication date";
+"publish" = "Publish";
+"publish_comment_general_error_message" = "Something went wrong";
+"publish_comment_general_error_title" = "Ooops";
+"publish_empty_comment_error_message" = "You seem to have forgotten your words!?";
+"publish_empty_comment_error_title" = "Ooops";
 "publisher" = "Publisher";
 "quote" = "Quote";
 "reading_list" = "Reading List";
 "reading_lists" = "Reading Lists";
 "register" = "Register";
 "related_books" = "Related books";
-"related_bookwitty_topics" = "Related bookwitty topics";
+"related_bookwitty_topics" = "Related topics";
 "related_posts" = "Related posts";
+"replies" = "Replies";
+"reply" = "Reply";
 "reset_password" = "Reset password";
 "reset_password_text" = "You will receive an email with instructions on how to reset your password in a few minutes.";
-"search_placeholder" = "Search here";
+"search_placeholder" = "Search";
+"see_whats_happening_on_bookwitty" = "See what's happening on Bookwitty";
 "settings" = "Settings";
-"shop_in_app_coming_soon_message" = "Soon you will be able to buy books in the Mobile App.";
-"shop_online" = "Shop Online";
+"shop_banner_message" = "All the best books, the best prices and shipping is free.";
+"shop_for_books" = "Shop For Books";
+"shop_in_app_coming_soon_message" = "Shop for books on our website";
+"shop_online" = "Continue";
 "sign_in" = "Sign In";
 "sign_out" = "Sign Out";
 "sign_up" = "Sign up";
@@ -165,23 +207,33 @@
 "tutorial_second_page_title" = "Discover Ideas & People";
 "tutorial_third_page_description" = "Everyone has knowledge, expertise or a topic they are passionate about.\nWrite about it.";
 "tutorial_third_page_title" = "Share Your Own Ideas";
+"types" = "Types";
+"unknown_format" = "Unknown format";
 "update_now" = "Update now";
+"user" = "User";
 "user_not_signed_in_alert_message" = "You need to be signed in to complete this action";
-"user_not_signed_in_alert_title" = "You Are Not Signed In!";
+"user_not_signed_in_alert_title" = "You are not signed in";
 "video" = "Video";
 "view_all" = "View All";
 "view_all_books" = "View All Books";
 "view_all_categories" = "Browse by Categories";
+"view_all_comments" = "View all comments";
 "view_all_related_books" = "View all related books";
 "view_all_related_posts" = "View all related posts";
 "view_all_selections" = "View All Selections";
 "view_subcategories" = "View Subcategories";
 "view_whole_description" = "View Whole Description";
 "weight" = "Weight";
+"welcome_banner_message" = "Your feed displays the stories from topics or people you follow.";
+"welcome_to_bookwitty" = "Welcome to Bookwitty";
+"what_are_your_thoughts" = "What are your thoughts?";
 "width" = "Width";
 "wit_it" = "Wit";
 "witted" = "Witted";
+"yesterday" = "Yesterday";
+"you" = "You";
 "you_dont_have_account" = "You don't have an account";
+"you_find_witty" = "You find this witty";
 "you_save" = "You save";
 "your_feed" = "Your feed";
 
@@ -190,11 +242,24 @@
  * For This Part use `f_` as prefix to indicate that the localizable string is a formatted one
  * And this will also allow us to avoid conflict with similar sentences
  */
-"f_number_of_contributors" = "%d contributors";
-"f_number_of_followers" = "%d followers";
-"f_number_of_posts" = "%d posts";
-"f_number_of_books" = "%d books";
 
+"f_and_others_find_witty" = "%@, %@";
+"f_find_witty" = "%@ find this witty";
+"f_number_find_witty" = "%d find this witty";
+"f_number_of_books" = "%d books";
+"f_number_of_contributors" = "%d contributors";
+"f_number_of_days_ago" = "%d days ago";
+"f_number_of_followers" = "%d followers";
+"f_number_of_hours_ago" = "%d hours ago";
+"f_number_of_minutes_ago" = "%d minutes ago";
+"f_number_of_months_ago" = "%d months ago";
+"f_number_of_posts" = "%d posts";
+"f_number_of_seconds_ago" = "%d seconds ago";
+"f_number_of_weeks_ago" = "%d weeks ago";
+"f_number_of_years_ago" = "%d years ago";
+"f_others_find_witty" = "and %d others find this witty";
+"f_view_all_replies" = "View all %d replies";
+"f_view_formats_and_editions" = "View all %d formats and editions";
 
 /**
  Discussion:

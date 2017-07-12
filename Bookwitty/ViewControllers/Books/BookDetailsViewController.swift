@@ -9,6 +9,8 @@
 import UIKit
 import AsyncDisplayKit
 import Spine
+import GSImageViewerController
+import SwiftLoader
 
 class BookDetailsViewController: ASViewController<ASCollectionNode> {
   let viewModel = BookDetailsViewModel()
@@ -22,20 +24,27 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
     fatalError("init(coder:) has not been implemented")
   }
   
-  init(with book: Book) {
+  init() {
     flowLayout = UICollectionViewFlowLayout()
     flowLayout.sectionInset = UIEdgeInsets.zero
     flowLayout.minimumInteritemSpacing  = 0
     flowLayout.minimumLineSpacing       = 0
     
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
-    viewModel.book = book
     
     loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
     
     super.init(node: collectionNode)
     
     viewModel.viewController = self
+  }
+  
+  func initialize(with book: Book) {
+    viewModel.initialize(with: book)
+  }
+  
+  func initialize(withId id: String) {
+    viewModel.initialize(withId: id)
   }
   
   override func viewDidLoad() {
@@ -136,7 +145,12 @@ extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
       }
     } else {
       return {
-        return self.viewModel.nodeForItem(at: indexPath)
+        let node = self.viewModel.nodeForItem(at: indexPath)
+        if let cardNode = node as? BaseCardPostNode {
+          self.setupCardNode(baseCardNode: cardNode, indexPath: indexPath)
+        }
+
+        return node
       }
     }
   }
@@ -144,23 +158,15 @@ extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
   func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
     if let loaderNode = node as? LoaderNode {
       loaderNode.updateLoaderVisibility(show: true)
-    }
-    
-    // Check if cell conforms to protocol base card delegate
-    if let cardNode = node as? BaseCardPostNode {
-      cardNode.delegate = self
-    }
-    
-    // If cell is reading list handle loading the images
-    if let readingListCell = node as? ReadingListCardPostCellNode, let indexPath = node.indexPath,
-      !readingListCell.node.isImageCollectionLoaded  {
-      let max = readingListCell.node.maxNumberOfImages
-      self.viewModel.loadReadingListImages(at: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
-        if let imageCollection = imageCollection, imageCollection.count > 0 {
-          readingListCell.node.prepareImages(imageCount: imageCollection.count)
-          readingListCell.node.loadImages(with: imageCollection)
-        }
-      })
+    } else if let card = node as? BaseCardPostNode {
+      guard let indexPath = collectionNode.indexPath(for: node),
+        let commonResource = viewModel.resource(at: indexPath) else {
+          return
+      }
+
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: commonResource), !sameInstance {
+        card.baseViewModel?.resource = commonResource
+      }
     }
   }
   
@@ -179,6 +185,22 @@ extension BookDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
     collectionNode.deselectItem(at: indexPath, animated: true)
     perform(action: viewModel.actionForItem(at: indexPath))
   }
+
+  func setupCardNode(baseCardNode: BaseCardPostNode, indexPath: IndexPath) {
+    // Check if cell conforms to protocol base card delegate
+    baseCardNode.delegate = self
+
+    if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
+      !readingListCell.node.isImageCollectionLoaded  {
+      let max = readingListCell.node.maxNumberOfImages
+      self.viewModel.loadReadingListImages(at: indexPath, maxNumberOfImages: max, completionBlock: { (imageCollection) in
+        if let imageCollection = imageCollection, imageCollection.count > 0 {
+          readingListCell.node.prepareImages(imageCount: imageCollection.count)
+          readingListCell.node.loadImages(with: imageCollection)
+        }
+      })
+    }
+  }
 }
 
 // MARK: - Actions
@@ -190,8 +212,8 @@ extension BookDetailsViewController {
     switch action {
     case .viewImageFullScreen:
       break
-    case .viewFormat:
-      break
+    case .viewFormat(let book):
+      viewFormats(book)
     case .viewCategory(let category):
       viewCategory(category)
     case .viewDescription(let description):
@@ -217,6 +239,19 @@ extension BookDetailsViewController {
     }
   }
   
+  fileprivate func viewFormats(_ book: Book) {
+    let viewController = Storyboard.Books.instantiate(ProductFormatsViewController.self)
+    viewController.initialize(with: book)
+    viewController.delegate = self
+    navigationController?.pushViewController(viewController, animated: true)
+    
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .BookProduct,
+                                                 action: .GoToFormats,
+                                                 name: book.title ?? "")
+    Analytics.shared.send(event: event)
+  }
+  
   fileprivate func viewDetails(_ productDetails: ProductDetails) {
     let node = BookDetailsInformationNode()
     node.productDetails = productDetails
@@ -237,8 +272,7 @@ extension BookDetailsViewController {
       top: ThemeManager.shared.currentTheme.generalExternalMargin(),
       left: 0, bottom: 0, right: 0)
     let node = BookDetailsAboutNode(externalInsets: externalInsets)
-    node.about = description
-    node.dispayMode = .expanded
+    node.setText(aboutText: description, displayMode: .expanded)
     let genericViewController = GenericNodeViewController(node: node, title: viewModel.book.title)
     self.navigationController?.pushViewController(genericViewController, animated: true)
 
@@ -354,7 +388,7 @@ extension BookDetailsViewController: BookDetailsECommerceNodeDelegate {
 extension BookDetailsViewController {  
   enum Action {
     case viewImageFullScreen
-    case viewFormat
+    case viewFormat(Book)
     case viewDetails(ProductDetails)
     case viewCategory(Category)
     case viewDescription(String)
@@ -371,10 +405,8 @@ extension BookDetailsViewController {
 
 // MARK: - Base card post node delegate
 extension BookDetailsViewController: BaseCardPostNodeDelegate {
-  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
-    guard let indexPath = collectionNode.indexPath(for: card) else {
-      return
-    }
+
+  private func userProfileHandler(at indexPath: IndexPath) {
     let resourcesCommonProperties = viewModel.resourcesCommonProperties(for: indexPath)
     if let resource = resourcesCommonProperties?[indexPath.row - 1],
       let penName = resource.penName {
@@ -413,6 +445,27 @@ extension BookDetailsViewController: BaseCardPostNodeDelegate {
                                                    action: .GoToPenName,
                                                    name: penName.name ?? "")
       Analytics.shared.send(event: event)
+    }
+  }
+
+  private func actionInfoHandler(at indexPath: IndexPath) {
+    guard let resource = viewModel.resource(at: indexPath) as? ModelResource else {
+      return
+    }
+
+    pushPenNamesListViewController(with: resource)
+  }
+
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+
+    switch action {
+    case .userProfile:
+      userProfileHandler(at: indexPath)
+    case .actionInfo:
+      actionInfoHandler(at: indexPath)
     }
   }
   
@@ -499,5 +552,30 @@ extension BookDetailsViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+  }
+}
+
+//MARK: Image Delegate Action
+extension BookDetailsViewController: BookDetailsHeaderNodeDelegate {
+  func photoCard(node: BookDetailsHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+    let imageInfo = GSImageInfo(image: image, imageMode: .aspectFit, imageHD: nil)
+    let transitionInfo = GSTransitionInfo(fromView: imageNode.view)
+    let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
+    present(imageViewer, animated: true, completion: nil)
+  }
+}
+
+//MARK: Product formats vc delegate implementation
+extension BookDetailsViewController: ProductFormatsViewControllerDelegate {
+  func productFormats(_ viewController: ProductFormatsViewController, selected editionId: String, didFinishLoading completion: ((Bool) -> Void)?) {
+    viewModel.initialize(withId: editionId)
+    
+    SwiftLoader.show(animated: true)
+    viewModel.loadContent { (success, errors) in
+      SwiftLoader.hide()
+      let sectionsNeedsReloading = self.viewModel.sectionsNeedsReloading()
+      self.reloadCollectionViewSections(sections: sectionsNeedsReloading)
+      completion?(success)
+    }
   }
 }

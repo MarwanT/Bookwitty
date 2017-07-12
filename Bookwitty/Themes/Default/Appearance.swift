@@ -63,6 +63,8 @@ protocol ThemeColor {
 }
 
 protocol ThemeSpacing {
+  func defaultLayoutMargin() -> UIEdgeInsets
+  func defaultTextViewInsets() -> UIEdgeInsets
   func cardExternalMargin() -> CGFloat
   func witItButtonMargin() -> CGFloat
   func cardInternalMargin() -> CGFloat
@@ -112,6 +114,8 @@ protocol ThemeImageStyling {
 
 protocol Theme: ThemeSpacing, ThemeColor, ThemeButtonsStyle, ThemeLabelsStyle, ThemeTextFieldsStyle, ThemeAttributedTextStyle, ThemeImageStyling {
   func initialize()
+  
+  func defaultCornerRadius() -> CGFloat
 }
 
 class ThemeManager {

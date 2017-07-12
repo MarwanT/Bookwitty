@@ -20,12 +20,14 @@ extension Analytics {
     let action: Action
     let name: String
     let value: Double
+    let info: [String : String]
 
-    init(category: Category, action: Action, name: String = "", value: Double = 0.0) {
+    init(category: Category, action: Action, name: String = "", value: Double = 0.0, info: [String : String] = [:]) {
       self.category = category
       self.action = action
       self.name = name
       self.value = value
+      self.info = info
     }
   }
   
@@ -51,6 +53,7 @@ extension Analytics {
     case CategoriesList
     case Bag
     case Onboarding
+    case PenNamesList
 
     //Use in switch cases default clause
     case Default
@@ -99,6 +102,8 @@ extension Analytics {
         return "Bag"
       case .Onboarding:
         return "Onboarding"
+      case .PenNamesList:
+        return "Pen Names List"
       case .Default:
         return "[DEFAULT]"
       }
@@ -110,18 +115,15 @@ extension Analytics {
     case ResetPassword
     case Register
     case EditPenName
+    case CreatePenName
     case SwitchEmailNotification
     case ChangePassword
     case SignOut
     //
     case Wit
     case Unwit
-    case Dim
-    case Undim
     case WitComment
     case UnwitComment
-    case DimComment
-    case UndimComment
     //
     case Comment
     case ReplyToComment
@@ -141,6 +143,14 @@ extension Analytics {
     case GoToFollowings
     case GoToRelatedCategories
     case GoToBagOnWebsite
+    case GoToContent
+    case GoToBooks
+    case GoToPages
+    case GoToFilters
+    case GoToFormats
+    //
+    case ChooseEdition
+    case ChoosePreferredFormat
     //
     case ViewBanner
     //
@@ -183,28 +193,26 @@ extension Analytics {
         return "Register"
       case .EditPenName:
         return "Edit Pen Name"
+      case .CreatePenName:
+        return "Create Pen Name"
       case .SwitchEmailNotification:
         return "Switch Email Notification"
+      case .ChooseEdition:
+        return "Choose Edition"
       case .ChangePassword:
         return "Change Password"
+      case .ChoosePreferredFormat:
+        return "Choose Preferred Format"
       case .SignOut:
         return "Sign Out"
       case .Wit:
         return "Wit"
       case .Unwit:
         return "Unwit"
-      case .Dim:
-        return "Dim"
-      case .Undim:
-        return "Undim"
       case .WitComment:
         return "Wit Comment"
       case .UnwitComment:
         return "Unwit Comment"
-      case .DimComment:
-        return "Dim Comment"
-      case .UndimComment:
-        return "Undim Comment"
       case .Comment:
         return "Comment"
       case .ReplyToComment:
@@ -231,10 +239,20 @@ extension Analytics {
         return "Go To Followers"
       case .GoToFollowings:
         return "Go To Followings"
+      case .GoToFormats:
+        return "Go To Formats"
       case .GoToRelatedCategories:
         return "Go To Related Categories"
       case .GoToBagOnWebsite:
         return "Go To Bag On Website"
+      case .GoToContent:
+        return "Go To Content"
+      case .GoToBooks:
+        return "Go To Books"
+      case .GoToPages:
+        return "Go To Pages"
+      case .GoToFilters:
+        return "Go To Filters"
       case .ViewBanner:
         return "View Banner"
       case .ViewAllTopics:
@@ -332,15 +350,20 @@ extension Analytics {
     static let BookProduct = ScreenName(name: "Book Product")
     static let BookDescription = ScreenName(name: "Book Description")
     static let BookDetails = ScreenName(name: "Book Details")
+    static let ProductFormats = ScreenName(name: "Product Formats")
+    static let FormatEditions = ScreenName(name: "Format Editions")
     static let Discover = ScreenName(name: "Discover")
     static let Bag = ScreenName(name: "Bag")
     static let Search = ScreenName(name: "Search")
+    static let SearchFilter = ScreenName(name: "Search Filters")
     static let Account = ScreenName(name: "Account")
     static let Settings = ScreenName(name: "Settings")
     static let ChangePassword = ScreenName(name: "Change Password")
     static let Help = ScreenName(name: "Help")
     static let ReadingLists = ScreenName(name: "Reading Lists")
     static let BooksListing = ScreenName(name: "Books Listing")
+    static let UserProfile = ScreenName(name: "User Profile")
+    static let PenNameList = ScreenName(name: "Pen Name List")
 
     //Use in switch cases default clause
     static let Default = ScreenName(name: "[DEFAULT]")
@@ -358,10 +381,6 @@ extension Analytics.Action {
       return .Comment
     case .share:
       return .Share
-    case .dim:
-      return .Dim
-    case .undim:
-      return .Undim
     case .follow:
       switch category {
       case .Topic:
@@ -388,6 +407,8 @@ extension Analytics.Action {
       default:
         return .Unfollow
       }
+    case .reply:
+      return .ReplyToComment
     }
   }
 }

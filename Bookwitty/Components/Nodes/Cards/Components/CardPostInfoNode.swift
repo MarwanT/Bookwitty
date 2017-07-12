@@ -18,6 +18,7 @@ protocol CardPostInfoNodeDelegate: class {
 class CardPostInfoNode: ASDisplayNode {
   enum Action {
     case userProfile
+    case actionInfo
   }
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
 
@@ -66,6 +67,9 @@ class CardPostInfoNode: ASDisplayNode {
 
     userNameTextNode.maximumNumberOfLines = 1
     postDateTextNode.maximumNumberOfLines = 1
+
+    userNameTextNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    userNameTextNode.truncationMode = NSLineBreakMode.byTruncatingTail
 
     userNameTextNode.addTarget(self, action: #selector(userNameTouchUpInside(_:)), forControlEvents: .touchUpInside)
     postDateTextNode.addTarget(self, action: #selector(postDateTouchUpInside(_:)), forControlEvents: .touchUpInside)

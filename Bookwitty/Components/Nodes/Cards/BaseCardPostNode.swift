@@ -21,6 +21,8 @@ extension CardViewModelProtocol {
 
 protocol BaseCardPostNodeContentProvider {
   var shouldShowInfoNode: Bool { get }
+  var shouldShowActionInfoNode: Bool { get }
+  var shouldShowActionBarNode: Bool { get }
   var contentShouldExtendBorders: Bool { get }
   var contentNode: ASDisplayNode { get }
 
@@ -56,6 +58,7 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
 
   fileprivate let infoNode: CardPostInfoNode
+  fileprivate let actionInfoNode: ASTextNode
   fileprivate let actionBarNode: CardActionBarNode
   fileprivate let backgroundNode: ASDisplayNode
   fileprivate let separatorNode: ASDisplayNode
@@ -75,6 +78,20 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
       setNeedsLayout()
     }
   }
+
+  var actionInfoValue: String? {
+    didSet {
+      if let actionInfoValue = actionInfoValue {
+        actionInfoNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+          .append(text: actionInfoValue, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      } else {
+        actionInfoNode.attributedText = nil
+      }
+
+      actionInfoNode.setNeedsLayout()
+    }
+  }
+
   var articleCommentsSummary: String? {
     didSet {
       if let articleCommentsSummary = articleCommentsSummary {
@@ -86,6 +103,7 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
 
   override init() {
     infoNode = CardPostInfoNode()
+    actionInfoNode = ASTextNode()
     actionBarNode = CardActionBarNode()
     backgroundNode = ASDisplayNode()
     separatorNode = ASDisplayNode()
@@ -100,6 +118,8 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
       let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnView(_:)))
       view.addGestureRecognizer(tapGesture)
     }
+
+    actionInfoNode.addTarget(self, action: #selector(actionInfoNodeTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
 
   func didTapOnView(_ sender: Any?) {
@@ -115,12 +135,8 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     actionBarNode.setFollowingValue(following: following)
   }
 
-  func setWitValue(witted: Bool, wits: Int) {
-    actionBarNode.setWitButton(witted: witted, wits: wits)
-  }
-
-  func setDimValue(dimmed: Bool, dims: Int) {
-    actionBarNode.setDimValue(dimmed: dimmed, dims: dims)
+  func setWitValue(witted: Bool) {
+    actionBarNode.setWitButton(witted: witted)
   }
 
   private func setupCellNode() {
@@ -156,10 +172,6 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     //Separator
     separatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
   }
-
-  func updateDimVisibility(visible: Bool) {
-    actionBarNode.hideDim = !visible
-  }
 }
 
 //MARK: - Layout Sizing
@@ -170,6 +182,7 @@ extension BaseCardPostNode {
     let defaultInset = internalInset()
 
     let infoNodeInset = ASInsetLayoutSpec(insets: infoInset(), child: infoNode)
+    let actionInfoNodeInset = ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: defaultInset.left, bottom: defaultInset.bottom, right: defaultInset.right), child: actionInfoNode)
     let actionBarNodeInset = ASInsetLayoutSpec(insets: actionBarInset(), child: actionBarNode)
     let backgroundNodeInset = ASInsetLayoutSpec(insets: backgroundInset, child: backgroundNode)
     let separatorNodeInset = ASInsetLayoutSpec(insets: separatorInset(), child: separatorNode)
@@ -184,8 +197,19 @@ extension BaseCardPostNode {
     verticalStack.justifyContent = .center
     verticalStack.alignItems = .stretch
     verticalStack.children = (shouldShowInfoNode && !forceHideInfoNode)
-      ? [infoNodeInset, contentInset, commentSummaryInset, separatorNodeInset, actionBarNodeInset]
-      : [contentInset, commentSummaryInset, separatorNodeInset, actionBarNodeInset]
+      ? [infoNodeInset, contentInset, commentSummaryInset]
+      : [contentInset, commentSummaryInset]
+
+    if shouldShowActionInfoNode {
+      verticalStack.children?.append(actionInfoNodeInset)
+    }
+
+    if shouldShowActionBarNode {
+      verticalStack.children?.append(separatorNodeInset)
+      verticalStack.children?.append(actionBarNodeInset)
+    } else {
+      verticalStack.children?.append(ASLayoutSpec.spacer(height: actionBarInset().bottom))
+    }
 
     //Note: If we used children or background properties instead of init -> Order would be important,
     //insetForVerticalLayout must be added before backgroundNode
@@ -266,9 +290,25 @@ extension BaseCardPostNode {
   }
 }
 
+//MARK: - Actions
+extension BaseCardPostNode {
+  @objc
+  fileprivate func actionInfoNodeTouchUpInside(_ sender: ASTextNode) {
+    delegate?.cardInfoNode(card: self, cardPostInfoNode: infoNode, didRequestAction: .actionInfo, forSender: sender)
+  }
+}
+
 //MARK: - Default Content Card Setup
 extension BaseCardPostNode: BaseCardPostNodeContentProvider {
   internal var shouldShowInfoNode: Bool {
+    return true
+  }
+
+  internal var shouldShowActionInfoNode: Bool {
+    return self.actionInfoValue != nil
+  }
+  
+  internal var shouldShowActionBarNode: Bool {
     return true
   }
 

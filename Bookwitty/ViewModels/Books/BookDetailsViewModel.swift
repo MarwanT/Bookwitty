@@ -12,6 +12,7 @@ import AsyncDisplayKit
 
 final class BookDetailsViewModel {
   var book: Book! = nil
+  fileprivate var bookId: String? = nil
   var relatedReadingLists: (readingLists: [ReadingList]?, prefixed: [ReadingList]?, nextPageURL: URL?)? = nil
   var relatedTopics: (topics: [Topic]?, prefixed: [Topic]?, nextPageURL: URL?)? = nil
   
@@ -24,6 +25,14 @@ final class BookDetailsViewModel {
   fileprivate var shouldReloadBookDetailsSections = false
   fileprivate var shouldReloadRelatedReadingListsSections = false
   fileprivate var shouldReloadRelatedTopicsSections = false
+  
+  func initialize(with book: Book) {
+    self.book = book
+  }
+
+  func initialize(withId id: String) {
+    self.bookId = id
+  }
   
   var viewControllerTitle: String? {
     return ""
@@ -135,6 +144,7 @@ extension BookDetailsViewModel {
       headerNode.title = book.title
       headerNode.author = book.productDetails?.author
       headerNode.imageURL = URL(string: book.coverImageUrl ?? "")
+      headerNode.delegate = viewController
       node = headerNode
     case .format:
       let formatNode = BookDetailsFormatNode()
@@ -150,7 +160,7 @@ extension BookDetailsViewModel {
         top: ThemeManager.shared.currentTheme.generalExternalMargin() * 2,
         left: 0, bottom: 0, right: 0)
       let aboutNode = BookDetailsAboutNode(externalInsets: externalInsets)
-      aboutNode.about = book.bookDescription
+      aboutNode.setText(aboutText: book.bookDescription)
       aboutNode.delegate = viewController
       node = aboutNode
     case .serie:
@@ -179,7 +189,7 @@ extension BookDetailsViewModel {
         footerNode.configuration.style = .highlighted
         node = footerNode
       default: // Information
-        let (key, value) = bookDetailedInformation[indexPath.row - 1]
+        let (key, value) = bookDetailedInformation[section.dataIndex(for: indexPath)]
         let infoCell = DetailsInfoCellNode()
         infoCell.key = key
         infoCell.value = value
@@ -196,7 +206,7 @@ extension BookDetailsViewModel {
         headerNode.title = Strings.book_categories()
         node = headerNode
       default: // Information
-        let category = categories[indexPath.row - 1]
+        let category = categories[section.dataIndex(for: indexPath)]
         let disclosureNode = DisclosureNodeCell()
         disclosureNode.text = category.value
         disclosureNode.configuration.addInternalBottomSeparator = true
@@ -229,7 +239,7 @@ extension BookDetailsViewModel {
         footerNode.configuration.style = .highlighted
         node = footerNode
       default:
-        let resource = relatedReadingLists[indexPath.row - 1]
+        let resource = relatedReadingLists[section.dataIndex(for: indexPath)]
         guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
           break
         }
@@ -259,7 +269,7 @@ extension BookDetailsViewModel {
         footerNode.configuration.style = .highlighted
         node = footerNode
       default:
-        let resource = relatedTopics[indexPath.row - 1]
+        let resource = relatedTopics[section.dataIndex(for: indexPath)]
         guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
           break
         }
@@ -277,12 +287,12 @@ extension BookDetailsViewModel {
   }
   
   func sharingContent(indexPath: IndexPath) -> [String]? {
-    guard let resourcesCommonProperties = resourcesCommonProperties(for: indexPath), resourcesCommonProperties.count > 0
+    guard let section = Section(rawValue: indexPath.section), let resourcesCommonProperties = resourcesCommonProperties(for: indexPath), resourcesCommonProperties.count > 0
     else {
       return nil
     }
     
-    let resourceProperty = resourcesCommonProperties[indexPath.row - 1]
+    let resourceProperty = resourcesCommonProperties[section.dataIndex(for: indexPath)]
     let shortDesciption = resourceProperty.title ?? resourceProperty.shortDescription ?? ""
     if let sharingUrl = resourceProperty.canonicalURL {
       return [shortDesciption, sharingUrl.absoluteString]
@@ -307,7 +317,7 @@ extension BookDetailsViewModel {
   
   var itemsInECommerce: Int {
     return (book.supplierInformation != nil &&
-      !(book.productDetails?.isElectronicFormat() ?? false)) ? 1 : 0
+      !(book.productDetails?.isElectronicFormat ?? false)) ? 1 : 0
   }
   
   var itemsInAbout: Int {
@@ -383,6 +393,8 @@ extension BookDetailsViewModel {
     }
     
     switch section {
+    case .format:
+      return true
     case .details:
       guard let bookDetailedInformation = bookDetailedInformation else {
         return false
@@ -440,6 +452,8 @@ extension BookDetailsViewModel {
     }
     
     switch section {
+    case .format:
+      return .viewFormat(book)
     case .details:
       guard let bookDetailedInformation = bookDetailedInformation else {
         return nil
@@ -463,7 +477,7 @@ extension BookDetailsViewModel {
       case 0: // Header
         return nil
       default:
-        return .viewCategory(categories[indexPath.row - 1])
+        return .viewCategory(categories[section.dataIndex(for: indexPath)])
       }
     case .recommendedReadingLists:
       guard let readingLists = relatedReadingLists?.prefixed else {
@@ -503,6 +517,10 @@ extension BookDetailsViewModel {
 
 // MARK: - API Calls
 extension BookDetailsViewModel {
+  fileprivate var shouldLoadBookData: Bool {
+    return bookId != nil
+  }
+  
   func loadContent(completion: @escaping (_ success: Bool, _ error: [BookwittyAPIError?]) -> Void) {
     let queue = DispatchGroup()
     
@@ -513,11 +531,16 @@ extension BookDetailsViewModel {
     var loadRelatedReadingListsError: BookwittyAPIError? = nil
     var loadRelatedTopicsError: BookwittyAPIError? = nil
     
-    queue.enter()
-    loadBookDetails { (success, error) in
-      loadBookDetailsSuccess = success
-      loadBookDetailsError = error
-      queue.leave()
+    if shouldLoadBookData {
+      queue.enter()
+      loadBookDetails { (success, error) in
+        loadBookDetailsSuccess = success
+        loadBookDetailsError = error
+        queue.leave()
+      }
+    } else {
+      loadBookDetailsSuccess = true
+      loadBookDetailsError = nil
     }
     
     queue.enter()
@@ -542,15 +565,25 @@ extension BookDetailsViewModel {
   }
   
   func loadBookDetails(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
-    var success: Bool = false
-    var error:BookwittyAPIError? = nil
-    defer {
-      completion(success, error)
+    guard let bookId = bookId else {
+      completion(false, nil)
+      return
     }
     
-    // TODO: Load book details From API
-    success = true
-    shouldReloadBookDetailsSections = false
+    _ = GeneralAPI.content(of: bookId, include: nil, completion: {
+      (success: Bool, book: Book?, error: BookwittyAPIError?) in
+      defer {
+        completion(success, error)
+      }
+      
+      guard success, let book = book else {
+        return
+      }
+      
+      self.book = book
+      self.bookId = nil
+      self.shouldReloadBookDetailsSections = true
+    })
   }
   
   func loadRelatedReadingLists(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
@@ -576,7 +609,7 @@ extension BookDetailsViewModel {
         let readingLists = resources.flatMap({ $0 as? ReadingList })
         let displayedReadingLists = Array(readingLists.prefix(self.maximumNumberOfDetails))
         self.relatedReadingLists = (readingLists, displayedReadingLists, nextPage)
-        self.shouldReloadRelatedReadingListsSections = (readingLists.count > 0) ? true : false
+        self.shouldReloadRelatedReadingListsSections = true
     })
   }
   
@@ -603,14 +636,14 @@ extension BookDetailsViewModel {
         let topics = resources.flatMap({ $0 as? Topic })
         let displayedTopics = Array(topics.prefix(self.maximumNumberOfDetails))
         self.relatedTopics = (topics, displayedTopics, nextPage)
-        self.shouldReloadRelatedTopicsSections = (topics.count > 0) ? true : false
+        self.shouldReloadRelatedTopicsSections = true
     })
   }
   
   // Wit And Unwit API calls
   
   func witContent(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard let resourcesCommonProperties = resourcesCommonProperties(for: indexPath), let contentId = resourcesCommonProperties[indexPath.row - 1].id else {
+    guard let section = Section(rawValue: indexPath.section), let resourcesCommonProperties = resourcesCommonProperties(for: indexPath), let contentId = resourcesCommonProperties[section.dataIndex(for: indexPath)].id else {
       completionBlock(false)
       return
     }
@@ -624,7 +657,7 @@ extension BookDetailsViewModel {
   }
   
   func unwitContent(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard let resourcesCommonProperties = resourcesCommonProperties(for: indexPath), let contentId = resourcesCommonProperties[indexPath.row - 1].id else {
+    guard let section = Section(rawValue: indexPath.section), let resourcesCommonProperties = resourcesCommonProperties(for: indexPath), let contentId = resourcesCommonProperties[section.dataIndex(for: indexPath)].id else {
       completionBlock(false)
       return
     }
@@ -656,18 +689,35 @@ extension BookDetailsViewModel {
     static var numberOfSections: Int {
       return 11
     }
+    
+    var hasHeaderRow: Bool {
+      switch self {
+      case .details, .categories, .recommendedReadingLists, .relatedTopics:
+        return true
+      default:
+        return false
+      }
+    }
+    
+    func dataIndex(for indexPath: IndexPath) -> Int {
+      if hasHeaderRow {
+        return (indexPath.item - 1)
+      } else {
+        return indexPath.item
+      }
+    }
   }
 }
 
 // MARK: - Handle Reading Lists Images
 extension BookDetailsViewModel {
   func loadReadingListImages(at indexPath: IndexPath, maxNumberOfImages: Int, completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
-    guard let relatedReadingLists = relatedReadingLists?.prefixed else {
+    guard let section = Section(rawValue: indexPath.section), let relatedReadingLists = relatedReadingLists?.prefixed else {
       completionBlock(nil)
       return
     }
 
-    let readingList = relatedReadingLists[indexPath.row - 1]
+    let readingList = relatedReadingLists[section.dataIndex(for: indexPath)]
     guard let readingListId = readingList.id else {
       completionBlock(nil)
       return
@@ -699,9 +749,10 @@ extension BookDetailsViewModel {
 // MARK: - PenName Follow/Unfollow
 extension BookDetailsViewModel {
   func follow(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard let resources = resourcesCommonProperties(for: indexPath),
-          let resourceId = resources[indexPath.row - 1].id else {
-      completionBlock(false)
+    guard let section = Section(rawValue: indexPath.section),
+      let resources = resourcesCommonProperties(for: indexPath),
+      let resourceId = resources[section.dataIndex(for: indexPath)].id else {
+        completionBlock(false)
       return
     }
     //Expected types: Topic
@@ -709,8 +760,9 @@ extension BookDetailsViewModel {
   }
 
   func unfollow(indexPath: IndexPath, completionBlock: @escaping (_ success: Bool) -> ()) {
-    guard let resources = resourcesCommonProperties(for: indexPath),
-      let resourceId = resources[indexPath.row - 1].id else {
+    guard let section = Section(rawValue: indexPath.section),
+      let resources = resourcesCommonProperties(for: indexPath),
+      let resourceId = resources[section.dataIndex(for: indexPath)].id else {
         completionBlock(false)
         return
     }
@@ -738,17 +790,25 @@ extension BookDetailsViewModel {
 }
 
 extension BookDetailsViewModel {
+  fileprivate func resourceFor(id: String?) -> ModelResource? {
+    guard let id = id else {
+      return nil
+    }
+    return DataManager.shared.fetchResource(with: id)
+  }
+
   func resource(at indexPath: IndexPath) -> ModelCommonProperties? {
-    guard let resources = resourcesCommonProperties(for: indexPath) else {
+    guard let section = Section(rawValue: indexPath.section),
+      let resources = resourcesCommonProperties(for: indexPath) else {
         return nil
     }
 
-    guard indexPath.row > 0 && indexPath.row < resources.count else {
+    guard indexPath.row > 0 && (section.dataIndex(for: indexPath)) < resources.count else {
       return nil
     }
 
-    let resource = resources[indexPath.row - 1]
-    return resource
+    let resource = resourceFor(id: resources[section.dataIndex(for: indexPath)].id)
+    return resource as? ModelCommonProperties
   }
 }
 

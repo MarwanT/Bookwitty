@@ -94,6 +94,11 @@ class BookNode: ASCellNode {
     authorNode.maximumNumberOfLines = 1
     formatNode.maximumNumberOfLines = 1
     priceNode.maximumNumberOfLines = 1
+
+    titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    authorNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    formatNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    priceNode.truncationMode = NSLineBreakMode.byTruncatingTail
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

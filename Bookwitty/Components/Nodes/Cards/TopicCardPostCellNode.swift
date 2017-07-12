@@ -62,7 +62,7 @@ class TopicCardPostContentNode: ASDisplayNode {
 
   var articleDescription: String? {
     didSet {
-      if let articleDescription = articleDescription {
+      if let articleDescription = articleDescription?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
         descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
           .append(text: articleDescription, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
       } else {
@@ -147,6 +147,10 @@ class TopicCardPostContentNode: ASDisplayNode {
     titleNode.maximumNumberOfLines = 4
     descriptionNode.maximumNumberOfLines = 3
     topicStatsNode.maximumNumberOfLines = 1
+
+    titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    descriptionNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    topicStatsNode.truncationMode = NSLineBreakMode.byTruncatingTail
 
     imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
     imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
@@ -233,7 +237,7 @@ extension TopicCardPostCellNode: TopicCardViewModelDelegate {
     node.setTopicStatistics(numberOfPosts: values.content.statistics.posts, numberOfBooks: values.content.statistics.relatedBooks, numberOfFollowers: values.content.statistics.followers)
     articleCommentsSummary = values.content.comments
     setFollowingValue(following: values.content.following)
-    setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
-    setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
+    setWitValue(witted: values.content.wit.is)
+    actionInfoValue = values.content.wit.info
   }
 }

@@ -13,7 +13,9 @@ class BookCardPostCellNode: BaseCardPostNode {
 
   let node: BookCardPostContentNode
   var showsInfoNode: Bool = false
+  var showActionNode: Bool = false
   override var shouldShowInfoNode: Bool { return showsInfoNode }
+  override var shouldShowActionBarNode: Bool { return showActionNode }
   override var contentShouldExtendBorders: Bool { return false }
   override var contentNode: ASDisplayNode { return node }
 
@@ -32,6 +34,14 @@ class BookCardPostCellNode: BaseCardPostNode {
   convenience init(shouldShowInfoNode: Bool) {
     self.init()
     showsInfoNode = shouldShowInfoNode
+  }
+
+  var isProduct: Bool = false {
+    didSet {
+      showActionNode = !isProduct
+      node.isProduct = isProduct
+      setNeedsLayout()
+    }
   }
 }
 
@@ -54,12 +64,7 @@ class BookCardPostContentNode: ASDisplayNode {
     priceNode = ASTextNode()
     topicStatsNode = ASTextNode()
     super.init()
-    addSubnode(imageNode)
-    addSubnode(titleNode)
-    addSubnode(authorNode)
-    addSubnode(formatNode)
-    addSubnode(priceNode)
-    addSubnode(topicStatsNode)
+    automaticallyManagesSubnodes = true
     setupNode()
   }
 
@@ -125,7 +130,7 @@ class BookCardPostContentNode: ASDisplayNode {
     }
   }
 
-  var isProduct: Bool = false {
+  fileprivate var isProduct: Bool = false {
     didSet {
       setNeedsLayout()
     }
@@ -174,6 +179,11 @@ class BookCardPostContentNode: ASDisplayNode {
     formatNode.maximumNumberOfLines = 1
     priceNode.maximumNumberOfLines = 1
     topicStatsNode.maximumNumberOfLines = 1
+
+    authorNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    formatNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    priceNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    topicStatsNode.truncationMode = NSLineBreakMode.byTruncatingTail
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -264,11 +274,12 @@ extension BookCardPostCellNode: BookCardViewModelDelegate {
     setFollowingValue(following: values.content.following)
     node.title = values.content.title
     node.imageUrl = values.content.image.thumbnail
-    node.isProduct = false
+
     node.author = values.content.info.author
     node.price = values.content.info.price
     node.format = values.content.info.format
     node.setTopicStatistics(numberOfPosts: values.content.statistics.posts, numberOfBooks: values.content.statistics.relatedBooks, numberOfFollowers: values.content.statistics.followers)
-    articleCommentsSummary = values.content.comments    
+    articleCommentsSummary = values.content.comments
+    actionInfoValue = values.content.wit.info
   }
 }

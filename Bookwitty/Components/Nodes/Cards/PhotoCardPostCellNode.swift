@@ -38,10 +38,16 @@ class PhotoCardPostCellNode: BaseCardPostNode {
   }
 }
 
+protocol PhotoCardContentNodeDelegate: class {
+  func photoCard(node: PhotoCardContentNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
+}
+
 class PhotoCardContentNode: ASDisplayNode {
   private let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+
+  weak var delegate: PhotoCardContentNodeDelegate?
 
   var imageNode: ASNetworkImageNode
   var titleNode: ASTextNode
@@ -73,7 +79,7 @@ class PhotoCardContentNode: ASDisplayNode {
 
   var articleDescription: String? {
     didSet {
-      if let articleDescription = articleDescription {
+      if let articleDescription = articleDescription?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
         descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
           .append(text: articleDescription, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
       } else {
@@ -111,10 +117,19 @@ class PhotoCardContentNode: ASDisplayNode {
   func setupMode(fullViewMode: Bool) {  
     titleNode.maximumNumberOfLines = fullViewMode ? 0 : 3
     descriptionNode.maximumNumberOfLines = fullViewMode ? 0 : 3
+
+    titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    descriptionNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     setNeedsLayout()
   }
 
-  func photoImageTouchUpInside(_ sender: ASImageNode?) {
+  func photoImageTouchUpInside(_ sender: ASNetworkImageNode) {
+    guard let image = sender.image else {
+      return
+    }
+
+    delegate?.photoCard(node: self, requestToViewImage: image, from: sender)
   }
 
   private func spacer(height: CGFloat) -> ASLayoutSpec {
@@ -179,7 +194,7 @@ extension PhotoCardPostCellNode: PhotoCardViewModelDelegate {
     node.articleDescription = values.content.description
     node.imageUrl = values.content.imageUrl
     articleCommentsSummary = values.content.comments
-    setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
-    setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
+    setWitValue(witted: values.content.wit.is)
+    actionInfoValue = values.content.wit.info
   }
 }

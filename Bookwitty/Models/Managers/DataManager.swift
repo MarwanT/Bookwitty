@@ -13,8 +13,6 @@ class DataManager {
   enum Action {
     case wit
     case unwit
-    case dim
-    case undim
     case follow
     case unfollow
   }
@@ -52,6 +50,12 @@ class DataManager {
       if newResource.contributors?.count ?? 0 <= existingResource.contributors?.count ?? 0 {
         newResource.contributors = existingResource.contributors
       }
+
+      if let newBook = newResource as? Book, newBook.productFormats?.count ?? 0 == 0,
+        let existingBook = existingResource as? Book {
+        newBook.productFormats = existingBook.productFormats
+        newBook.following = existingBook.following
+      }
     }
 
     pool.updateValue(resource, forKey: identifier)
@@ -82,10 +86,6 @@ class DataManager {
       wit(resource)
     case .unwit:
       unwit(resource)
-    case .dim:
-      dim(resource)
-    case .undim:
-      undim(resource)
     case .follow:
       follow(resource)
     case .unfollow:
@@ -114,16 +114,6 @@ extension DataManager {
   fileprivate func unwit(_ resource: ModelResource) {
     var actionableRes = resource as? ModelCommonActions
     actionableRes?.wit = false
-  }
-
-  fileprivate func dim(_ resource: ModelResource) {
-    var actionableRes = resource as? ModelCommonActions
-    actionableRes?.dim = true
-  }
-
-  fileprivate func undim(_ resource: ModelResource) {
-    var actionableRes = resource as? ModelCommonActions
-    actionableRes?.dim = false
   }
 
   fileprivate func follow(_ resource: ModelResource) {

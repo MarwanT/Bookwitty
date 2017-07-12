@@ -41,7 +41,7 @@ class LinkCardPostCellNode: BaseCardPostNode {
 }
 
 protocol LinkCardPostContentDelegate {
-  func linkImageTouchUpInside(sender: ASImageNode)
+  func linkViewTouchUpInside(sender: ASImageNode)
 }
 
 class LinkCardPostContentNode: ASDisplayNode {
@@ -54,6 +54,16 @@ class LinkCardPostContentNode: ASDisplayNode {
   var titleNode: ASTextNode
   var descriptionNode: ASTextNode
   var fullViewMode: Bool = false
+
+  var tappableTitle: Bool = false {
+    didSet {
+      if tappableTitle {
+        titleNode.addTarget(self, action: #selector(linkViewTouchUpInside(_:)), forControlEvents: .touchUpInside)
+      } else {
+        titleNode.removeTarget(self, action: #selector(linkViewTouchUpInside(_:)), forControlEvents: .touchUpInside)
+      }
+    }
+  }
 
   var delegate: LinkCardPostContentDelegate?
 
@@ -71,7 +81,7 @@ class LinkCardPostContentNode: ASDisplayNode {
 
   var articleDescription: String? {
     didSet {
-      if let articleDescription = articleDescription {
+      if let articleDescription = articleDescription?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
         descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
           .append(text: articleDescription, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
       } else {
@@ -123,12 +133,16 @@ class LinkCardPostContentNode: ASDisplayNode {
     setupMode(fullViewMode: false)
 
     imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
-    imageNode.addTarget(self, action: #selector(videoImageTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    imageNode.addTarget(self, action: #selector(linkViewTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
 
   func setupMode(fullViewMode: Bool) {
     titleNode.maximumNumberOfLines = fullViewMode ? 0 : 3
     descriptionNode.maximumNumberOfLines = fullViewMode ? 0 : 3
+
+    titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    descriptionNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     setNeedsLayout()
   }
 
@@ -154,14 +168,14 @@ class LinkCardPostContentNode: ASDisplayNode {
   }
 
   @objc
-  private func videoImageTouchUpInside(_ sender: ASImageNode?) {
+  private func linkViewTouchUpInside(_ sender: ASImageNode?) {
     guard let linkUrl = linkUrl else {
       return
     }
 
     WebViewController.present(url: linkUrl)
     
-    delegate?.linkImageTouchUpInside(sender: imageNode)
+    delegate?.linkViewTouchUpInside(sender: imageNode)
   }
 
   private func titleInset() -> UIEdgeInsets {
@@ -237,7 +251,7 @@ extension LinkCardPostCellNode: LinkCardViewModelDelegate {
     node.imageNode.url = URL(string: values.content.imageUrl ?? "")
     node.linkUrl = values.content.linkUrl
     articleCommentsSummary = values.content.comments
-    setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
-    setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
+    setWitValue(witted: values.content.wit.is)
+    actionInfoValue = values.content.wit.info
   }
 }

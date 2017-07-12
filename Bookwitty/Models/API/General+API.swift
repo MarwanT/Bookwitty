@@ -173,19 +173,18 @@ struct GeneralAPI {
     })
   }
 
-
-  static func editions(contentIdentifier identifier: String, completion: @escaping (_ success: Bool, _ resource: [ModelResource]?, _ next: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  static func votes(contentIdentifier identifier: String, completion: @escaping (_ success: Bool, _ votes: [Vote]?, _ next: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let successStatusCode: Int = 200
 
-    return signedAPIRequest(target: .editions(identifier: identifier), completion: {
+    return signedAPIRequest(target: .votes(identifier: identifier), completion: {
       (data, statusCode, response, error) in
       var success: Bool = statusCode == successStatusCode
-      var resources: [ModelResource]? = nil
+      var votes: [Vote]? = nil
       var next: URL? = nil
       var error: BookwittyAPIError? = error
 
       defer {
-        completion(success, resources, next, error)
+        completion(success, votes, next, error)
       }
 
       guard statusCode == successStatusCode else {
@@ -199,7 +198,7 @@ struct GeneralAPI {
       }
 
       let values = Parser.parseDataArray(data: data)
-      resources = values?.resources
+      votes = values?.resources as? [Vote]
       next = values?.next
     })
   }
@@ -351,9 +350,57 @@ struct GeneralAPI {
       completion(true, nil)
     })
   }
+
+  public static func batchPenNames(identifiers: [String], completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+
+    let successStatusCode = 200
+
+    return signedAPIRequest(target: .batchPenNames(identifiers: identifiers), completion: {
+      (data, statusCode, response, error) in
+      var success: Bool = false
+      var resources: [Resource]? = nil
+      var error: BookwittyAPIError? = error
+      DispatchQueue.global(qos: .background).async {
+        defer {
+          DispatchQueue.main.async {
+            completion(success, resources, error)
+          }
+        }
+
+        guard statusCode == successStatusCode else {
+          error = BookwittyAPIError.invalidStatusCode
+          return
+        }
+
+        if let data = data {
+          // Parse Data
+          guard let parsedData = Parser.parseDataArray(data: data) else {
+            error = BookwittyAPIError.failToParseData
+            return
+          }
+          resources = parsedData.resources
+          success = resources != nil
+          //TODO: handle parsedData.next and parsedData.errors if any
+        } else {
+          error = BookwittyAPIError.failToParseData
+        }
+      }
+    })
+  }
 }
 
 extension GeneralAPI {
+  static func batchPenNamesPostBody(identifiers: [String]) -> [String : Any]? {
+    let dictionary = [
+      "data" : [
+        "attributes" : [
+          "ids" : identifiers,
+        ]
+      ]
+    ]
+    return dictionary
+  }
+
   static func postsParameters(type: [String]?) -> [String : Any]? {
     var dictionary = [String : Any]()
 
@@ -362,6 +409,12 @@ extension GeneralAPI {
       dictionary["filter[types]"] = type
     }
 
+    return dictionary
+  }
+
+  static func votesParameters() -> [String : Any]? {
+    var dictionary = [String : Any]()
+    dictionary["filter[vote]"] = true
     return dictionary
   }
 

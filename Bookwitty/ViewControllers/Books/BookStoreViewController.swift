@@ -9,11 +9,13 @@
 import UIKit
 import FLKAutoLayout
 import Spine
+import AsyncDisplayKit
 
 class BookStoreViewController: UIViewController {
   @IBOutlet weak var stackView: UIStackView!
   @IBOutlet weak var scrollView: UIScrollView!
   
+  let introductoryBanner = IntroductoryBanner(mode: IntroductoryBanner.Mode.shop)
   let banner = BannerView()
   let featuredContentCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout())
   let bookwittySuggestsTableView = UITableView(frame: CGRect.zero, style: UITableViewStyle.plain)
@@ -28,7 +30,13 @@ class BookStoreViewController: UIViewController {
   
   fileprivate let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
   fileprivate let sectionSpacing = ThemeManager.shared.currentTheme.sectionSpacing()
-  
+
+  override func awakeFromNib() {
+    super.awakeFromNib()
+
+    addObservers()
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     viewModel.dataLoaded = viewModelLoadedDataBlock()
@@ -38,17 +46,10 @@ class BookStoreViewController: UIViewController {
     initializeSubviews()
     refreshViewController()
 
+    applyLocalization()
     navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
 
-  override func awakeFromNib() {
-    super.awakeFromNib()
-    applyLocalization()
-    observeLanguageChanges()
-    NotificationCenter.default.addObserver(self, selector:
-      #selector(self.authenticationStatusChanged(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
-  }
-  
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
@@ -69,7 +70,14 @@ class BookStoreViewController: UIViewController {
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.BookStorefront)
   }
-  
+
+  private func addObservers() {
+    observeLanguageChanges()
+
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.authenticationStatusChanged(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
+  }
+
   @objc private func authenticationStatusChanged(_: Notification) {
     initializeNavigationItems()
   }
@@ -103,6 +111,9 @@ class BookStoreViewController: UIViewController {
   }
   
   private func initializeSubviews() {
+    // Introductory Banner
+    introductoryBanner.delegate = self
+    
     // Featured Content View
     let itemSize = FeaturedContentCollectionViewCell.defaultSize
     let interItemSpacing: CGFloat = 10
@@ -190,13 +201,28 @@ class BookStoreViewController: UIViewController {
     }
   }
   
+  fileprivate func removeInformativeBanner() {
+    introductoryBanner.view.removeFromSuperview()
+  }
+  
   private func loadUserInterface() {
+    loadIntroductorySection()
     loadBannerSection()
     loadFeaturedContentSection()
     loadViewAllCategories()
     loadBookwittySuggest()
     loadSelectionSection()
     loadViewAllSelections()
+  }
+  
+  func loadIntroductorySection() {
+    let canDisplayIntroductoryBanner = introductoryBanner.view.superview == nil
+    if canDisplayIntroductoryBanner && viewModel.shouldDisplayIntroductoryBanner {
+      stackView.addArrangedSubview(self.introductoryBanner.view)
+      introductoryBanner.view.alignLeading("0", trailing: "0", toView: self.stackView)
+      let calculatedSize = introductoryBanner.calculateLayoutThatFits(ASSizeRange.init(min: CGSize.zero, max: self.view.frame.size)).frame.size
+      introductoryBanner.view.constrainHeight("\(calculatedSize.height)")
+    }
   }
   
   func loadBannerSection() {
@@ -306,7 +332,8 @@ class BookStoreViewController: UIViewController {
   }
   
   fileprivate func pushBookDetailsViewController(with book: Book) {
-    let bookDetailsViewController = BookDetailsViewController(with: book)
+    let bookDetailsViewController = BookDetailsViewController()
+    bookDetailsViewController.initialize(with: book)
     bookDetailsViewController.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(bookDetailsViewController, animated: true)
   }
@@ -745,5 +772,20 @@ extension BookStoreViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+
+    guard isViewLoaded else {
+      return
+    }
+
+    //Reload the Data upon language change
+    refreshViewController()
+  }
+}
+
+// MARK: - Introductory Node Delegate
+extension BookStoreViewController: IntroductoryBannerDelegate {
+  func introductoryBannerDidTapDismissButton(_ introductoryBanner: IntroductoryBanner) {
+    viewModel.shouldDisplayIntroductoryBanner = false
+    removeInformativeBanner()
   }
 }

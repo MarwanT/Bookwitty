@@ -314,3 +314,15 @@ extension BookStoreViewModel {
     return readingLists ?? []
   }
 }
+
+// MARK: - Introductory Banner Logic
+extension BookStoreViewModel {
+  var shouldDisplayIntroductoryBanner: Bool {
+    get {
+      return GeneralSettings.sharedInstance.shouldDisplayBookStoreIntroductoryBanner
+    }
+    set {
+      GeneralSettings.sharedInstance.shouldDisplayBookStoreIntroductoryBanner = newValue
+    }
+  }
+}

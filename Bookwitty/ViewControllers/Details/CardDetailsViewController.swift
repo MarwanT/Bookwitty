@@ -10,21 +10,44 @@ import Foundation
 import AsyncDisplayKit
 import Spine
 import Moya
+import GSImageViewerController
+import SwiftLoader
 
 class CardDetailsViewController: GenericNodeViewController {
+  var commentsNode: CommentsNode?
+  
   var viewModel: CardDetailsViewModel
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
-  init(node: BaseCardPostNode, title: String? = nil, resource: ModelResource) {
+  init(node: BaseCardPostNode, title: String? = nil, resource: ModelResource, includeCommentsSection: Bool = true) {
     viewModel = CardDetailsViewModel(resource: resource)
-    super.init(node: node, title: nil)
+    var containerNode: ASDisplayNode = node
+    if let resourceId = resource.id {
+      let concatNode = CommentsNode.concatenate(with: node, resourceIdentifier: resourceId)
+      containerNode = concatNode.wrapperNode
+      commentsNode = concatNode.commentsNode
+    }
+    
+    super.init(node: containerNode, title: nil)
+    
+    commentsNode?.delegate = self
+    
     node.delegate = self
     node.updateMode(fullMode: true)
-    node.updateDimVisibility(visible: true)
-    viewControllerTitleForResouce(resource: resource)
+
+    if let photoNode = node as? PhotoCardPostCellNode {
+      photoNode.node.delegate = self
+    } else if let linkCard = node as? LinkCardPostCellNode {
+      linkCard.node.tappableTitle = true
+    } else if let videoCard = node as? VideoCardPostCellNode {
+      videoCard.node.tappableTitle = true
+    }
+
+
+    viewControllerAnalyticsScreenName(for: resource)
   }
 
   deinit {
@@ -53,46 +76,41 @@ class CardDetailsViewController: GenericNodeViewController {
     }
     if let index = node.subnodes.index( where: { $0 is BaseCardPostNode } ) {
       if let card = node.subnodes[index] as? BaseCardPostNode {
-        card.setWitValue(witted: resource.isWitted, wits: resource.counts?.wits ?? 0)
-        card.setDimValue(dimmed: resource.isDimmed, dims: resource.counts?.dims ?? 0)
+        card.setWitValue(witted: resource.isWitted)        
       }
     }
   }
   
-  func viewControllerTitleForResouce(resource: ModelResource) {
+  func pushCommentsViewController(with commentsManager: CommentsManager) {
+    let commentsVC = CommentsViewController()
+    commentsVC.initialize(with: commentsManager)
+    self.navigationController?.pushViewController(commentsVC, animated: true)
+  }
+  
+  func viewControllerAnalyticsScreenName(for resource: ModelResource) {
 
     //MARK: [Analytics] Screen Name
     let name: Analytics.ScreenName
     switch resource.registeredResourceType {
     case Image.resourceType:
-      title = Strings.image()
       name = Analytics.ScreenNames.Image
     case Quote.resourceType:
-      title = Strings.quote()
       name = Analytics.ScreenNames.Quote
     case Video.resourceType:
-      title = Strings.video()
       name = Analytics.ScreenNames.Video
     case Link.resourceType:
-      title = Strings.link()
       name = Analytics.ScreenNames.Link
     case Author.resourceType:
-      title = Strings.author()
       name = Analytics.ScreenNames.Author
     case ReadingList.resourceType:
-      title = Strings.reading_list()
       name = Analytics.ScreenNames.ReadingList
     case Topic.resourceType:
-      title = Strings.topic()
       name = Analytics.ScreenNames.Topic
     case Text.resourceType:
-      title = Strings.article()
       name = Analytics.ScreenNames.Article
     case Book.resourceType:
-      title = Strings.book()
       name = Analytics.ScreenNames.BookDetails
     default:
-      title = nil
       name = Analytics.ScreenNames.Default
     }
 
@@ -102,7 +120,8 @@ class CardDetailsViewController: GenericNodeViewController {
 
 // MARK - BaseCardPostNode Delegate
 extension CardDetailsViewController: BaseCardPostNodeDelegate {
-  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+
+  private func userProfileHandler() {
     if let resource = viewModel.resource as? ModelCommonProperties,
       let penName = resource.penName {
       pushProfileViewController(penName: penName)
@@ -150,6 +169,23 @@ extension CardDetailsViewController: BaseCardPostNodeDelegate {
       Analytics.shared.send(event: event)
     }
   }
+
+  private func actionInfoHandler() {
+    guard let resource = viewModel.resource else {
+      return
+    }
+
+    pushPenNamesListViewController(with: resource)
+  }
+
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    switch action {
+    case .userProfile:
+      userProfileHandler()
+    case .actionInfo:
+      actionInfoHandler()
+    }
+  }
   
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
     switch(action) {
@@ -161,14 +197,6 @@ extension CardDetailsViewController: BaseCardPostNodeDelegate {
       viewModel.unwitContent() { (success) in
         didFinishAction?(success)
       }
-    case .dim:
-      viewModel.dimContent(completionBlock: { (success) in
-        didFinishAction?(success)
-      })
-    case .undim:
-      viewModel.undimContent(completionBlock: { (success) in
-        didFinishAction?(success)
-      })
     case .share:
       if let sharingInfo: [String] = viewModel.sharingContent() {
         presentShareSheet(shareContent: sharingInfo)
@@ -221,5 +249,66 @@ extension CardDetailsViewController: BaseCardPostNodeDelegate {
                                                  action: analyticsAction,
                                                  name: name)
     Analytics.shared.send(event: event)
+  }
+}
+
+extension CardDetailsViewController: PhotoCardContentNodeDelegate {
+  func photoCard(node: PhotoCardContentNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+    let imageInfo = GSImageInfo(image: image, imageMode: .aspectFit, imageHD: nil)
+    let transitionInfo = GSTransitionInfo(fromView: imageNode.view)
+    let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
+    present(imageViewer, animated: true, completion: nil)
+
+  }
+}
+
+extension CardDetailsViewController: CommentsNodeDelegate {
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
+    switch action {
+    case .viewRepliesForComment(let comment, let postId):
+      break
+    case .viewAllComments(let commentsManager):
+      pushCommentsViewController(with: commentsManager)
+    case .writeComment(let parentCommentIdentifier, _):
+      CommentComposerViewController.show(from: self, delegate: self, parentCommentId: parentCommentIdentifier)
+    case .commentAction(let comment, let action):
+      switch action {
+      case .wit:
+        commentsNode.wit(comment: comment, completion: nil)
+      case .unwit:
+        commentsNode.unwit(comment: comment, completion: nil)
+      case .reply:
+        CommentComposerViewController.show(from: self, delegate: self, parentCommentId: comment.id)
+      default:
+        break
+      }
+    }
+  }
+}
+
+// MARK: - Compose comment delegate implementation
+extension CardDetailsViewController: CommentComposerViewControllerDelegate {
+  func commentComposerCancel(_ viewController: CommentComposerViewController) {
+    dismiss(animated: true, completion: nil)
+  }
+  
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, parentCommentId: String?) {
+    SwiftLoader.show(animated: true)
+    commentsNode?.publishComment(content: content, parentCommentId: parentCommentId) {
+      (success, error) in
+      SwiftLoader.hide()
+      guard success else {
+        if let error = error {
+          self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
+            (_) in
+            // Restart editing the comment
+            _ = viewController.becomeFirstResponder()
+          })
+        }
+        return
+      }
+      
+      self.dismiss(animated: true, completion: nil)
+    }
   }
 }

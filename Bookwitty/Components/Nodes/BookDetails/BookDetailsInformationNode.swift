@@ -29,16 +29,16 @@ class BookDetailsInformationNode: ASTableNode, ASTableDelegate, ASTableDataSourc
     dataSource = self
   }
   
+  override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
+    super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
+  }
+  
   override func didLoad() {
     super.didLoad()
     view.tableFooterView = UIView(frame: CGRect.zero)
     view.separatorInset = UIEdgeInsets(
       top: 0, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: 0, right: 0)
-  }
-  
-  override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
-    super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
   
   func numberOfSections(in tableNode: ASTableNode) -> Int {

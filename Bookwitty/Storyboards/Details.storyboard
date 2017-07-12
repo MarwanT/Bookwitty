@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Comment Composer View Controller-->
+        <scene sceneID="MTN-lM-ImE">
+            <objects>
+                <viewController storyboardIdentifier="CommentComposerViewController" id="9vy-T2-Qm4" customClass="CommentComposerViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rYe-OB-M6c"/>
+                        <viewControllerLayoutGuide type="bottom" id="8NP-Kt-3Gy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mkG-Vq-6eb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JOU-1W-mzt" userLabel="ContentView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mi7-IB-NF6">
+                                        <rect key="frame" x="8" y="8" width="359" height="651"/>
+                                        <color key="backgroundColor" white="1" alpha="0.85239190924657537" colorSpace="calibratedWhite"/>
+                                        <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="mi7-IB-NF6" firstAttribute="leading" secondItem="JOU-1W-mzt" secondAttribute="leadingMargin" id="MKw-ZU-NCj"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="mi7-IB-NF6" secondAttribute="trailing" id="RQ2-jn-2Vh"/>
+                                    <constraint firstItem="mi7-IB-NF6" firstAttribute="top" secondItem="JOU-1W-mzt" secondAttribute="topMargin" id="afS-Kq-Su9"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="mi7-IB-NF6" secondAttribute="bottom" id="e6A-fd-eVw"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="JOU-1W-mzt" firstAttribute="leading" secondItem="mkG-Vq-6eb" secondAttribute="leading" id="7Zv-TG-GWf"/>
+                            <constraint firstAttribute="trailing" secondItem="JOU-1W-mzt" secondAttribute="trailing" id="Gkv-j2-QIe"/>
+                            <constraint firstItem="JOU-1W-mzt" firstAttribute="top" secondItem="mkG-Vq-6eb" secondAttribute="topMargin" id="l6f-tz-lhO"/>
+                            <constraint firstItem="JOU-1W-mzt" firstAttribute="bottom" secondItem="mkG-Vq-6eb" secondAttribute="bottomMargin" id="mmK-oi-ShD"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="contentView" destination="JOU-1W-mzt" id="8Vq-mi-lBM"/>
+                        <outlet property="contentViewBottomConstraintToSuperview" destination="mmK-oi-ShD" id="afD-lS-l6g"/>
+                        <outlet property="textView" destination="mi7-IB-NF6" id="bHG-x2-0By"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sbd-ev-Mzw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-210" y="155"/>
+        </scene>
+    </scenes>
+</document>

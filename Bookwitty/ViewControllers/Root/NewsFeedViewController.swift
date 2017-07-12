@@ -24,19 +24,18 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   let penNameSelectionNode = PenNameSelectionNode()
   let loaderNode: LoaderNode
   let misfortuneNode = MisfortuneNode(mode: MisfortuneNode.Mode.empty)
+  let introductoryNode = IntroductoryBanner(mode: .welcome)
   
 
   var loadingStatus: LoadingStatus = .none
   var shouldShowLoader: Bool {
-    return (loadingStatus != .none)
+    return (loadingStatus != .none && loadingStatus != .reloading)
   }
   var shouldDisplayMisfortuneNode: Bool {
     guard let misfortuneMode = viewModel.misfortuneNodeMode, !shouldShowLoader else {
-      flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: externalMargin/2, right: 0)
        return false
     }
     misfortuneNode.mode = misfortuneMode
-    flowLayout.sectionInset = UIEdgeInsets.zero
     return true
   }
   var collectionView: ASCollectionView?
@@ -170,7 +169,12 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       //Making sure that only UIRefreshControl will trigger this on valueChanged
       return
     }
-
+    guard loadingStatus == .none else {
+      pullToRefresher.endRefreshing()
+      //Making sure that only UIRefreshControl will trigger this on valueChanged
+      return
+    }
+    
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .NewsFeed,
                                                  action: .PullToRefresh)
@@ -217,7 +221,7 @@ extension NewsFeedViewController: PenNameSelectionNodeDelegate {
     viewModel.cancellableOnGoingRequest()
     viewModel.data = []
     viewModel.nextPage = nil
-    self.loadingStatus = .reloading
+    self.loadingStatus = .loading
     self.updateCollection(with: nil, loaderSection: false, penNamesSection: false, orReloadAll: true, completionBlock: nil)
     viewModel.didUpdateDefaultPenName(penName: penName, completionBlock: {  didSaveDefault in
       if didSaveDefault {
@@ -251,7 +255,7 @@ extension NewsFeedViewController {
     }
 
     let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
-    updateCollection(with: indexPathForAffectedItems, shouldReloadItems: true, loaderSection: false, penNamesSection: false, orReloadAll: false, completionBlock: nil)
+    updateCollectionNodes(indexPathForAffectedItems: indexPathForAffectedItems)
   }
 
   func refreshData(_ notification: Notification) {
@@ -293,7 +297,20 @@ extension NewsFeedViewController {
 
 // MARK: - Reload Footer
 extension NewsFeedViewController {
-  func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, loaderSection: Bool = false, penNamesSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
+  func updateCollectionNodes(indexPathForAffectedItems: [IndexPath]) {
+    let cards = indexPathForAffectedItems.map({ collectionNode.nodeForItem(at: $0) })
+    cards.forEach({ card in
+      guard let card = card as? BaseCardPostNode else {
+        return
+      }
+      guard let indexPath = card.indexPath, let commonResource =  viewModel.resourceForIndex(index: indexPath.row) as? ModelCommonProperties else {
+        return
+      }
+      card.baseViewModel?.resource = commonResource
+    })
+  }
+  
+  func updateCollection(with itemIndices: [IndexPath]? = nil, shouldReloadItems reloadItems: Bool = false, introductorySection: Bool = false, loaderSection: Bool = false, penNamesSection: Bool = false, orReloadAll reloadAll: Bool = false, completionBlock: ((Bool) -> ())? = nil) {
     if reloadAll {
       collectionNode.reloadData(completion: { 
         completionBlock?(true)
@@ -308,6 +325,9 @@ extension NewsFeedViewController {
         }
         if penNamesSection {
           collectionNode.reloadSections(IndexSet(integer: Section.penNames.rawValue))
+        }
+        if introductorySection {
+          collectionNode.reloadSections(IndexSet(integer: Section.introductoryBanner.rawValue))
         }
         if let itemIndices = itemIndices, itemIndices.count > 0 {
           if reloadItems {
@@ -327,16 +347,20 @@ extension NewsFeedViewController: ASCollectionDataSource {
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-    guard NewsFeedViewController.Section.cards.rawValue == section else {
-      if NewsFeedViewController.Section.penNames.rawValue == section {
-        return 1
-      } else if NewsFeedViewController.Section.activityIndicator.rawValue == section {
-        return shouldShowLoader ? 1 : 0
-      } else  { // NewsFeedViewController.Section.misfortune
-        return shouldDisplayMisfortuneNode ? 1 : 0
-      }
+    switch section {
+    case NewsFeedViewController.Section.cards.rawValue:
+      return viewModel.numberOfItemsInSection(section: section)
+    case NewsFeedViewController.Section.penNames.rawValue:
+      return 1
+    case NewsFeedViewController.Section.activityIndicator.rawValue:
+      return shouldShowLoader ? 1 : 0
+    case NewsFeedViewController.Section.misfortune.rawValue:
+      return shouldDisplayMisfortuneNode ? 1 : 0
+    case NewsFeedViewController.Section.introductoryBanner.rawValue:
+      return viewModel.shouldDisplayIntroductoryBanner ? 1 : 0
+    default:
+      return 0
     }
-    return viewModel.numberOfItemsInSection(section: section)
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
@@ -354,6 +378,8 @@ extension NewsFeedViewController: ASCollectionDataSource {
               readingListCell.node.loadImages(with: imageCollection)
             }
           })
+        } else if let bookCard = baseCardNode as? BookCardPostCellNode, let resource = self.viewModel.resourceForIndex(index: index) {
+          bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.newsFeed) ?? .topic == .product)
         }
         baseCardNode.delegate = self
         return baseCardNode
@@ -361,8 +387,11 @@ extension NewsFeedViewController: ASCollectionDataSource {
         return self.penNameSelectionNode
       } else if section == Section.activityIndicator.rawValue {
         return self.loaderNode
-      } else { // Section.misfortune
+      } else if section == Section.misfortune.rawValue { // Section.misfortune
         return self.misfortuneNode
+      } else { // Section.introductoryBanner.rawValue
+        self.introductoryNode.delegate = self
+        return self.introductoryNode
       }
     }
   }
@@ -376,23 +405,40 @@ extension NewsFeedViewController: ASCollectionDataSource {
       misfortuneNode.mode = viewModel.misfortuneNodeMode ?? MisfortuneNode.Mode.empty
     } else if let card = node as? BaseCardPostNode {
       guard let indexPath = collectionNode.indexPath(for: node),
-        let resource = viewModel.resourceForIndex(index: indexPath.row) as? ModelCommonProperties else {
+        let resource = viewModel.resourceForIndex(index: indexPath.row), let commonResource =  resource as? ModelCommonProperties else {
         return
       }
 
-      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: resource), !sameInstance {
-        card.baseViewModel?.resource = resource
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: commonResource), !sameInstance {
+        card.baseViewModel?.resource = commonResource
+      }
+      if let bookCard = card as? BookCardPostCellNode {
+        bookCard.isProduct = (self.viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.newsFeed) ?? .topic == .product)
       }
     }
   }
 }
 
+extension NewsFeedViewController: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+      if viewModel.misfortuneNodeMode != nil, !shouldShowLoader {
+        return UIEdgeInsets.zero
+      } else {
+        switch (section) {
+        case Section.introductoryBanner.rawValue:
+          return UIEdgeInsets.zero
+        default:
+          return UIEdgeInsets(top: 0, left: 0, bottom: externalMargin/2, right: 0)
+        }
+      }
+  }
+}
+
+
 // MARK - BaseCardPostNode Delegate
 extension NewsFeedViewController: BaseCardPostNodeDelegate {
-  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
-    guard let indexPath = collectionNode.indexPath(for: card) else {
-      return
-    }
+
+  private func userProfileHandler(at indexPath: IndexPath) {
     let resource = viewModel.resourceForIndex(index: indexPath.item)
     if let resource = resource as? ModelCommonProperties,
       let penName = resource.penName {
@@ -439,6 +485,27 @@ extension NewsFeedViewController: BaseCardPostNodeDelegate {
                                                    action: .GoToDetails,
                                                    name: penName.name ?? "")
       Analytics.shared.send(event: event)
+    }
+  }
+
+  private func actionInfoHandler(at indexPath: IndexPath) {
+    guard let resource = viewModel.resourceForIndex(index: indexPath.item) else {
+      return
+    }
+
+    pushPenNamesListViewController(with: resource)
+  }
+
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+    
+    switch action {
+    case .userProfile:
+      userProfileHandler(at: indexPath)
+    case .actionInfo:
+      actionInfoHandler(at: indexPath)
     }
   }
   
@@ -594,7 +661,7 @@ extension NewsFeedViewController: UIScrollViewDelegate {
 
   private func scrollToTheRightPosition(scrollView: UIScrollView) {
     let penNameHeight = penNameSelectionNode.occupiedHeight
-    if scrollView.contentOffset.y <= penNameHeight {
+    if scrollView.contentOffset.y <= penNameHeight && !viewModel.shouldDisplayIntroductoryBanner {
       if(scrollView.contentOffset.y <= scrollingThreshold) {
         UIView.animate(withDuration: 0.3, animations: {
           self.penNameSelectionNode.alpha = 1.0
@@ -783,34 +850,44 @@ extension NewsFeedViewController {
   }
 
   fileprivate func actionForBookResourceType(resource: ModelResource) {
-    guard resource is Book else {
+    guard let resource = resource as? Book else {
       return
     }
 
+    let isProduct = (viewModel.bookRegistry.category(for: resource , section: BookTypeRegistry.Section.newsFeed) ?? .topic == .product)
+
     //MARK: [Analytics] Event
-    let name: String = (resource as? Book)?.title ?? ""
-    let event: Analytics.Event = Analytics.Event(category: .TopicBook,
+    let name: String = resource.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: isProduct ? .BookProduct : .TopicBook,
                                                  action: .GoToDetails,
                                                  name: name)
     Analytics.shared.send(event: event)
 
-    let topicViewController = TopicViewController()
-    topicViewController.initialize(with: resource as? ModelCommonProperties)
-    topicViewController.hidesBottomBarWhenPushed = true
-    navigationController?.pushViewController(topicViewController, animated: true)
+    if !isProduct {
+      let topicViewController = TopicViewController()
+      topicViewController.initialize(with: resource as ModelCommonProperties)
+      topicViewController.hidesBottomBarWhenPushed = true
+      navigationController?.pushViewController(topicViewController, animated: true)
+    } else {
+      let bookDetailsViewController = BookDetailsViewController()
+      bookDetailsViewController.initialize(with: resource)
+      bookDetailsViewController.hidesBottomBarWhenPushed = true
+      navigationController?.pushViewController(bookDetailsViewController, animated: true)
+    }
   }
 }
 
 // MARK: - Declarations
 extension NewsFeedViewController {
   enum Section: Int {
-    case penNames = 0
-    case cards = 1
-    case activityIndicator = 2
-    case misfortune = 3
+    case introductoryBanner = 0
+    case penNames
+    case cards
+    case activityIndicator
+    case misfortune
 
     static var numberOfSections: Int {
-      return 4
+      return 5
     }
   }
 }
@@ -829,6 +906,9 @@ extension NewsFeedViewController: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+
+    //Reload the Data upon language change
+    refreshViewControllerData()
   }
 }
 
@@ -847,5 +927,13 @@ extension NewsFeedViewController: MisfortuneNodeDelegate {
     default:
       break
     }
+  }
+}
+
+// MARK: - Introductory Node Delegate
+extension NewsFeedViewController: IntroductoryBannerDelegate {
+  func introductoryBannerDidTapDismissButton(_ introductoryBanner: IntroductoryBanner) {
+    viewModel.shouldDisplayIntroductoryBanner = false
+    updateCollection(introductorySection: true)
   }
 }

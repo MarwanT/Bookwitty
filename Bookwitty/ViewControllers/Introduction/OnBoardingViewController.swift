@@ -82,11 +82,9 @@ extension OnBoardingViewController: OnBoardingControllerDataSource {
       node.delegate = self
       node.text = title.capitalized
       node.isLoading = true
-      _ = viewModel.loadOnBoardingCellNodeData(indexPath: indexPath, completionBlock: { [weak self] (indexPath, success, cellCollectionDictionary) in
+      viewModel.loadOnBoardingCellNodeData(indexPath: indexPath, completionBlock: { [weak self] (indexPath, success, cellCollectionDictionary) in
         guard let strongSelf = self else { return }
-        if success {
-          strongSelf.updateNodeForCollectionAtWith(indexPath: indexPath, dictionary: cellCollectionDictionary)
-        }
+        strongSelf.updateNodeForCollectionAtWith(indexPath: indexPath, dictionary: cellCollectionDictionary)
       })
     }
   }
@@ -106,11 +104,11 @@ extension OnBoardingViewController: OnBoardingCellDelegate {
       return
     }
     if shouldSelect {
-      viewModel.followRequest(identifier: id, completionBlock: { (succes) in
+      viewModel.follow(identifier: id, resourceType: dataItem.resourceType, completionBlock: { (succes) in
         doneCompletionBlock(succes)
       })
     } else {
-      viewModel.unfollowRequest(identifier: id, completionBlock: { (succes) in
+      viewModel.unfollow(identifier: id, resourceType: dataItem.resourceType, completionBlock: { (succes) in
         doneCompletionBlock(succes)
       })
     }
@@ -128,6 +126,13 @@ extension OnBoardingViewController: OnBoardingCellDelegate {
     let event: Analytics.Event = Analytics.Event(category: .Onboarding,
                                                  action: analyticsAction)
     Analytics.shared.send(event: event)
+  }
+
+  func didFinishAnimatingExpansion(of onBoardingCellNode: OnBoardingCellNode) {
+    guard let indexPath = onBoardingCellNode.indexPath else {
+      return
+    }
+    onBoardingNode.collectionNode.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.top, animated: true)
   }
 }
 

@@ -59,7 +59,7 @@ class ArticleCardContentNode: ASDisplayNode {
 
   var articleDescription: String? {
     didSet {
-      if let articleDescription = articleDescription {
+      if let articleDescription = articleDescription?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
         descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
           .append(text: articleDescription, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
       } else {
@@ -102,6 +102,9 @@ class ArticleCardContentNode: ASDisplayNode {
   private func setupNode() {
     titleNode.maximumNumberOfLines = 3
     descriptionNode.maximumNumberOfLines = 3
+
+    titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    descriptionNode.truncationMode = NSLineBreakMode.byTruncatingTail
 
     imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
@@ -167,7 +170,7 @@ extension ArticleCardPostCellNode: ArticleCardViewModelDelegate {
     node.articleDescription = values.content.description
     node.imageUrl = values.content.imageUrl
     articleCommentsSummary = values.content.comments
-    setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
-    setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
+    setWitValue(witted: values.content.wit.is)
+    actionInfoValue = values.content.wit.info
   }
 }

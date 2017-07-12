@@ -50,12 +50,12 @@ struct UserAPI {
   }
 
 
-  public static func registerUser(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String? = nil, countryISO3166: String, password: String, language: String, completionBlock: @escaping (_ success: Bool, _ user: User?, _ error: BookwittyAPIError?)->()) -> Cancellable {
+  public static func registerUser(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String? = nil, countryISO3166: String, password: String, language: String, completionBlock: @escaping (_ success: Bool, _ user: User?, _ error: BookwittyAPIError?)->()) -> Cancellable? {
 
     let successStatusCode = 201
     let emailAlreadyUsedStatusCode = 409
 
-    return apiRequest(target: BookwittyAPI.register(firstName: firstName, lastName: lastName, email: email, dateOfBirthISO8601: dateOfBirthISO8601, countryISO3166: countryISO3166, password: password, language: language)) {
+    return signedAPIRequest(target: BookwittyAPI.register(firstName: firstName, lastName: lastName, email: email, dateOfBirthISO8601: dateOfBirthISO8601, countryISO3166: countryISO3166, password: password, language: language)) {
       (data, statusCode, response, error) in
       var success: Bool = false
       var user: User? = nil
@@ -123,6 +123,16 @@ struct UserAPI {
   }
 
   public static func updateUser(identifier: String, firstName: String? = nil, lastName: String? = nil, email: String? = nil, currentPassword: String? = nil, password: String? = nil, dateOfBirthISO8601: String? = nil, countryISO3166: String? = nil, badges: [String : Any]? = nil, preferences: [String : Any]? = nil, completionBlock: @escaping (_ success: Bool, _ user: User?, _ error: BookwittyAPIError?)->()) -> Cancellable? {
+
+    let successStatusCode = 200
+    let errorStatusCode = 422
+    /** Discussion
+     * Status Code 422 represents multiple errors in the updateUser endpoint.
+     * Changing Password allows the detection of this particular error. 
+     * Returned as BookwittyAPIError.invalidCurrentPassword
+     */
+    let changingPassword = (!currentPassword.isEmptyOrNil() || !password.isEmptyOrNil())
+
     return signedAPIRequest(target: BookwittyAPI.updateUser(identifier: identifier, firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirthISO8601, email: email, currentPassword: currentPassword, password: password, country: countryISO3166, badges: badges, preferences: preferences), completion: {
       (data, statusCode, response, error) in
       var success: Bool = false
@@ -130,6 +140,15 @@ struct UserAPI {
       var error: BookwittyAPIError? = error
       defer {
         completionBlock(success, user, error)
+      }
+
+      guard statusCode == successStatusCode else {
+        if statusCode == errorStatusCode && changingPassword {
+          error = BookwittyAPIError.invalidCurrentPassword
+        } else {
+          error = BookwittyAPIError.undefined
+        }
+        return
       }
 
       if let data = data {
@@ -170,7 +189,7 @@ struct UserAPI {
 
         if let data = data {
           // Parse Data
-          guard let parsedData: (resources: [Resource]?, next: URL?, errors: [APIError]?) = Parser.parseDataArray(data: data) else {
+          guard let parsedData = Parser.parseDataArray(data: data) else {
             error = BookwittyAPIError.failToParseData
             return
           }
@@ -203,7 +222,7 @@ struct UserAPI {
   static func resetPassword(email: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let successStatusCode = 204
 
-    return apiRequest(target: .resetPassword(email: email)) {
+    return signedAPIRequest(target: .resetPassword(email: email)) {
       (data, statusCode, response, error) in
       var success: Bool = false
       var error: BookwittyAPIError? = error

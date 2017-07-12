@@ -127,7 +127,7 @@ class RegisterViewController: UIViewController {
     passwordField.configuration = InputFieldConfiguration(
       descriptionLabelText: Strings.password(),
       textFieldPlaceholder: Strings.enter_your_password(),
-      invalidationErrorMessage: Strings.password_invalid(),
+      invalidationErrorMessage: Strings.password_minimum_characters_error(),
       returnKeyType: UIReturnKeyType.done)
 
     countryField.configuration = InputFieldConfiguration(
@@ -175,59 +175,78 @@ class RegisterViewController: UIViewController {
     let firstNameValidationResult = firstNameField.validateField()
     let lastNameValidationResult = lastNameField.validateField()
     let countryValidationResult = countryField.validateField()
-    if(emailValidationResult.isValid && passwordValidationResult.isValid
-      && firstNameValidationResult.isValid && lastNameValidationResult.isValid
-      && countryValidationResult.isValid) {
-      let email = emailValidationResult.value!
-      let password = passwordValidationResult.value!
-      let firstName = firstNameValidationResult.value!
-      let lastName = lastNameValidationResult.value!
-      let country = viewModel.country!.code
 
-      showLoader()
-      
-      //MARK: [Analytics] Event
-      let event: Analytics.Event = Analytics.Event(category: .Account,
-                                                   action: .Register)
-      Analytics.shared.send(event: event)
-
-      viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, completionBlock: { (success: Bool, user: User?, error: BookwittyAPIError?) in
-        self.hideLoader()
-        let successBlock = {
-          UserManager.shared.shouldEditPenName = true
-          UserManager.shared.shouldDisplayOnboarding = true
-          NotificationCenter.default.post(name: AppNotification.registrationSuccess, object: user)
-        }
-        let failBlock = { (message: String) in
-          self.showAlertErrorWith(title: Strings.ooops(), message: message)
-        }
-        
-        if user != nil, success {
-          successBlock()
-        } else if let error = error {
-          switch(error) {
-          case BookwittyAPIError.emailAlreadyExists:
-            failBlock(Strings.email_already_registered())
-          case .failToSignIn:
-            /*
-             Registration is successful, but since the sign in failed then
-             The root vc will re-display the sign in vc for signing in again
-             */
-            successBlock()
-          default: break
-          }
-        } else {
-          failBlock(Strings.some_thing_wrong_error())
-        }
-      })
-    } else {
-      NotificationView.show(notificationMessages:
-        [
-          NotificationMessage(text: Strings.please_fill_required_field())
-        ]
-      )
-
+    //Make sure simple fields are not empty
+    guard firstNameValidationResult.isValid, lastNameValidationResult.isValid, countryValidationResult.isValid else {
+      NotificationView.show(notificationMessages: [NotificationMessage(text: Strings.please_fill_required_field())])
+      return
     }
+
+    //Make sure the e-mail is valid
+    guard emailValidationResult.isValid else {
+      if let email = emailValidationResult.value, email.characters.count > 0 {
+        let error = emailValidationResult.errorMessage ?? Strings.please_fill_required_field()
+        NotificationView.show(notificationMessages: [NotificationMessage(text: error)])
+      } else {
+        NotificationView.show(notificationMessages: [NotificationMessage(text: Strings.please_fill_required_field())])
+      }
+      return
+    }
+
+    //Make sure the password is valid
+    guard passwordValidationResult.isValid else {
+      if let password = passwordValidationResult.value, password.characters.count > 0 {
+        let error = passwordValidationResult.errorMessage ?? Strings.please_fill_required_field()
+        NotificationView.show(notificationMessages: [NotificationMessage(text: error)])
+      } else {
+        NotificationView.show(notificationMessages: [NotificationMessage(text: Strings.please_fill_required_field())])
+      }
+      return
+    }
+
+    //Make sure we have values
+    guard let firstName = firstNameValidationResult.value, let lastName = lastNameValidationResult.value, let country = viewModel.country?.code,
+    let email = emailValidationResult.value, let password = passwordValidationResult.value else {
+      NotificationView.show(notificationMessages: [NotificationMessage(text: Strings.please_fill_required_field())])
+      return
+    }
+
+    showLoader()
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .Account,
+                                                 action: .Register)
+    Analytics.shared.send(event: event)
+
+    viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, completionBlock: { (success: Bool, user: User?, error: BookwittyAPIError?) in
+      self.hideLoader()
+      let successBlock = {
+        UserManager.shared.shouldEditPenName = true
+        UserManager.shared.shouldDisplayOnboarding = true
+        NotificationCenter.default.post(name: AppNotification.registrationSuccess, object: user)
+      }
+      let failBlock = { (message: String) in
+        self.showAlertErrorWith(title: Strings.ooops(), message: message)
+      }
+
+      if user != nil, success {
+        successBlock()
+      } else if let error = error {
+        switch(error) {
+        case BookwittyAPIError.emailAlreadyExists:
+          failBlock(Strings.email_already_registered())
+        case .failToSignIn:
+          /*
+           Registration is successful, but since the sign in failed then
+           The root vc will re-display the sign in vc for signing in again
+           */
+          successBlock()
+        default: break
+        }
+      } else {
+        failBlock(Strings.some_thing_wrong_error())
+      }
+    })
   }
 
   func showAlertErrorWith(title: String, message: String) {
@@ -316,7 +335,7 @@ extension RegisterViewController:  EMCCountryDelegate {
 
 extension RegisterViewController: TTTAttributedLabelDelegate {
   func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
-    WebViewController.present(url: url)
+    WebViewController.present(url: url, inViewController: self)
 
     let name: Analytics.ScreenName
     switch url.relativeString {
@@ -408,7 +427,7 @@ extension RegisterViewController: Localizable {
     passwordField.configuration = InputFieldConfiguration(
       descriptionLabelText: Strings.password(),
       textFieldPlaceholder: Strings.enter_your_password(),
-      invalidationErrorMessage: Strings.password_invalid(),
+      invalidationErrorMessage: Strings.password_minimum_characters_error(),
       returnKeyType: UIReturnKeyType.done)
 
     countryField.configuration = InputFieldConfiguration(

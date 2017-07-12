@@ -17,11 +17,18 @@ final class TopicViewModel {
     case editions
     case relatedBooks
     case followers
+    case initialize
   }
 
   var callback: ((CallbackCategory) -> ())?
   
-  var resource: ModelCommonProperties?
+  var resource: ModelCommonProperties? {
+    didSet {
+      if oldValue == nil {
+        self.callback?(.initialize)
+      }
+    }
+  }
 
   fileprivate var latest: [String] = []
   fileprivate var latestNextUrl: URL? = nil
@@ -35,6 +42,8 @@ final class TopicViewModel {
   fileprivate var followers: [String] = []
   fileprivate var followersNextUrl: URL? = nil
   
+  var bookRegistry: BookTypeRegistry = BookTypeRegistry()
+
   func initialize(with resource: ModelCommonProperties?) {
     self.resource = resource
     initiateContentCalls()
@@ -129,14 +138,40 @@ final class TopicViewModel {
         getAuthorContent()
       case Book.resourceType:
         getBookContent()
-        getEditions()
       default: break
       }
     }
-    
-    getLatest()
-    getRelatedBooks()
-    getFollowers()
+  }
+
+  func loadData(for category: TopicViewController.Category, completion: @escaping (Bool, TopicViewController.Category) -> ()) {
+    switch category {
+    case .editions:
+      if numberOfEditions() == 0 {
+        getEditions(category: category, completion: completion)
+      } else {
+        completion(true, category)
+      }
+    case .latest:
+      if numberOfLatest() == 0 {
+        getLatest(category: category, completion: completion)
+      } else {
+        completion(true, category)
+      }
+    case .relatedBooks:
+      if numberOfRelatedBooks() == 0 {
+        getRelatedBooks(category: category, completion: completion)
+      } else {
+        completion(true, category)
+      }
+    case .followers:
+      if numberOfFollowers() == 0 {
+        getFollowers(category: category, completion: completion)
+      } else {
+        completion(true, category)
+      }
+    default:
+      completion(false, category)
+    }
   }
 
   func resourceFor(id: String?) -> ModelResource? {
@@ -264,18 +299,23 @@ extension TopicViewModel {
     return (latestResource.id, latestResource.registeredResourceType)
   }
 
-  func getLatest() {
+  func getLatest(category: TopicViewController.Category, completion: @escaping (Bool, TopicViewController.Category) -> ()) {
     guard let identifier = identifier else {
+      completion(false, category)
       return
     }
 
     _ = GeneralAPI.postsLinkedContent(contentIdentifier: identifier, type: nil) {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
+      defer {
+        completion(success, category)
+      }
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
+        self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.topicLatest)
+
         let resourcesIds: [String] = resources.flatMap({ $0.id })
         _ = self.handleLatest(results: resourcesIds, next: next, reset: true)
-        self.callback?(.latest)
       }
     }
   }
@@ -327,18 +367,21 @@ extension TopicViewModel {
     return (book.id, book.title, book.productDetails?.author, book.productDetails?.productFormat, book.preferredPrice?.formattedValue, book.thumbnailImageUrl)
   }
 
-  func getEditions() {
+  func getEditions(category: TopicViewController.Category, completion: @escaping (Bool, TopicViewController.Category) -> ()) {
     guard let identifier = identifier else {
+      completion(false, category)
       return
     }
 
-    _ = GeneralAPI.editions(contentIdentifier: identifier) {
+    _ = ContentAPI.editions(contentIdentifier: identifier, formats: nil) {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
+      defer {
+        completion(success, category)
+      }
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
         let resourcesIds: [String] = resources.flatMap({ $0.id })
         _ = self.handleEdition(results: resourcesIds, next: next, reset: true)
-        self.callback?(.editions)
       }
     }
   }
@@ -390,20 +433,23 @@ extension TopicViewModel {
     return (book.id, book.title, book.productDetails?.author, book.productDetails?.productFormat, book.preferredPrice?.formattedValue, book.thumbnailImageUrl)
   }
 
-  func getRelatedBooks() {
+  func getRelatedBooks(category: TopicViewController.Category, completion: @escaping (Bool, TopicViewController.Category) -> ()) {
     guard let identifier = identifier else {
+      completion(false, category)
       return
     }
 
     _ = GeneralAPI.postsLinkedContent(contentIdentifier: identifier, type: [Book.resourceType]) {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
+      defer {
+        completion(success, category)
+      }
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
         self.relatedBooks.removeAll()
         let books = resources.filter({ $0.registeredResourceType == Book.resourceType })
         let resourcesIds: [String] = books.flatMap({ $0.id })
         _ = self.handleRelatedBooks(results: resourcesIds, next: next, reset: true)
-        self.callback?(.relatedBooks)
       }
     }
   }
@@ -461,18 +507,21 @@ extension TopicViewModel {
     return (penName.id, penName.name, penName.biography, penName.avatarUrl, penName.following, isMyPenName(penName))
   }
 
-  func getFollowers() {
+  func getFollowers(category: TopicViewController.Category, completion: @escaping (Bool, TopicViewController.Category) -> ()) {
     guard let identifier = identifier else {
+      completion(false, category)
       return
     }
 
     _ = PenNameAPI.followers(contentIdentifier: identifier) {
       (success: Bool, penNames: [PenName]?, next: URL?, error: BookwittyAPIError?) in
+      defer {
+        completion(success, category)
+      }
       if let penNames = penNames, success {
         DataManager.shared.update(resources: penNames)
         let followersIds: [String] = penNames.flatMap({ $0.id })
         _ = self.handleFollowers(results: followersIds, next: next, reset: true)
-        self.callback?(.followers)
       }
     }
   }
@@ -537,7 +586,7 @@ extension TopicViewModel {
         indices = self.handleRelatedBooks(results: resourcesIdentifiers, next: next)
       case .followers:
         indices = self.handleFollowers(results: resourcesIdentifiers, next: next)
-      case .content:
+      case .content, .initialize:
         break
       }
     }

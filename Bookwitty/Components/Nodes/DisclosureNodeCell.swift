@@ -68,14 +68,26 @@ class DisclosureNodeCell: ASCellNode {
     
     var layoutElements: ASLayoutSpec = insetSpec
     
-    if configuration.addInternalBottomSeparator {
-      let separatorInsetsSpec = ASInsetLayoutSpec(insets: configuration.separatorInsets, child: separator())
+    
+    if configuration.addInternalBottomSeparator || configuration.addInternalTopSeparator {
+      let topSeparatorInsetsSpec = ASInsetLayoutSpec(insets: configuration.topSeparatorInsets, child: separator())
+      let bottomSeparatorInsetsSpec = ASInsetLayoutSpec(insets: configuration.separatorInsets, child: separator())
+      
+      var verticalStackElements = [ASLayoutElement]()
+      if configuration.addInternalTopSeparator {
+        verticalStackElements.append(topSeparatorInsetsSpec)
+      }
+      verticalStackElements.append(spacer(flexGrow: 1.0))
+      if configuration.addInternalBottomSeparator {
+        verticalStackElements.append(bottomSeparatorInsetsSpec)
+      }
+      
       let verticalStack = ASStackLayoutSpec(
         direction: .vertical,
         spacing: 0,
         justifyContent: .start,
         alignItems: .stretch,
-        children: [spacer(flexGrow: 1.0), separatorInsetsSpec])
+        children: verticalStackElements)
       let backgroundSpec = ASBackgroundLayoutSpec(
         child: insetSpec, background: verticalStack)
       layoutElements = backgroundSpec
@@ -144,11 +156,17 @@ extension DisclosureNodeCell {
     var nodeEdgeInsets = UIEdgeInsets(
       top: 0, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: 0, right: 0)
+    var topSeparatorInsets = UIEdgeInsets(
+      top: 0, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      bottom: 0, right: 0)
     var textEdgeInsets = UIEdgeInsets(
       top: 0, left: 0,
-      bottom: 5, right: 0)
-    var imageNodeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 19)
+      bottom: 0, right: 0)
+    var imageNodeInsets = UIEdgeInsets(
+      top: 0, left: 10, bottom: 0,
+      right: ThemeManager.shared.currentTheme.generalExternalMargin())
     var style: Style = .normal
+    var addInternalTopSeparator: Bool = false
     var addInternalBottomSeparator: Bool = false
     var separatorInsets = UIEdgeInsets.zero
     fileprivate var backgroundSelectionView: UIView {

@@ -40,7 +40,7 @@ class VideoCardPostCellNode: BaseCardPostNode {
 }
 
 protocol VideoCardContentDelegate {
-  func videoImageTouchUpInside(sender: ASImageNode)
+  func videoViewTouchUpInside(sender: ASImageNode)
 }
 
 class VideoCardContentNode: ASDisplayNode {
@@ -55,6 +55,16 @@ class VideoCardContentNode: ASDisplayNode {
   var playNode: ASImageNode
 
   var delegate: VideoCardContentDelegate?
+
+  var tappableTitle: Bool = false {
+    didSet {
+      if tappableTitle {
+        titleNode.addTarget(self, action: #selector(videoViewTouchUpInside(_:)), forControlEvents: .touchUpInside)
+      } else {
+        titleNode.removeTarget(self, action: #selector(videoViewTouchUpInside(_:)), forControlEvents: .touchUpInside)
+      }
+    }
+  }
 
   var articleTitle: String? {
     didSet {
@@ -71,7 +81,7 @@ class VideoCardContentNode: ASDisplayNode {
 
   var articleDescription: String? {
     didSet {
-      if let articleDescription = articleDescription {
+      if let articleDescription = articleDescription?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
         descriptionNode.attributedText = AttributedStringBuilder(fontDynamicType: .body)
           .append(text: articleDescription, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
       } else {
@@ -122,23 +132,27 @@ class VideoCardContentNode: ASDisplayNode {
     playNode.style.preferredSize = playIconSize
 
     imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
-    imageNode.addTarget(self, action: #selector(videoImageTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    imageNode.addTarget(self, action: #selector(videoViewTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
 
   func setupMode(fullViewMode: Bool) {
     titleNode.maximumNumberOfLines = fullViewMode ? 0 : 3
     descriptionNode.maximumNumberOfLines = fullViewMode ? 0 : 3
+
+    titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    descriptionNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     setNeedsLayout()
   }
 
-  func videoImageTouchUpInside(_ sender: ASImageNode?) {
+  func videoViewTouchUpInside(_ sender: ASImageNode?) {
     guard let videoUrl = videoUrl else {
       return
     }
 
     WebViewController.present(url: videoUrl)
 
-    delegate?.videoImageTouchUpInside(sender: imageNode)
+    delegate?.videoViewTouchUpInside(sender: imageNode)
   }
 
   private func titleInset() -> UIEdgeInsets {
@@ -207,7 +221,7 @@ extension VideoCardPostCellNode: VideoCardViewModelDelegate {
     node.videoUrl = values.content.properties.url
     node.imageUrl = values.content.properties.thumbnail
     articleCommentsSummary = values.content.comments
-    setWitValue(witted: values.content.wit.is, wits: values.content.wit.count)
-    setDimValue(dimmed: values.content.dim.is, dims: values.content.dim.count)
+    setWitValue(witted: values.content.wit.is)
+    actionInfoValue = values.content.wit.info
   }
 }

@@ -22,15 +22,22 @@ public enum BookwittyAPI {
   case bookStore
   case categoryCuratedContent(categoryIdentifier: String)
   case newsFeed()
-  case Search(filter: (query: String?, category: [String]?)?, page: (number: String?, size: String?)?)
+  case search(filter: Filter?, page: (number: String?, size: String?)?, includeFacets: Bool)
+  case createPenName(name: String, biography: String?, avatarId: String?, avatarUrl: String?, facebookUrl: String?, tumblrUrl: String?, googlePlusUrl: String?, twitterUrl: String?, instagramUrl: String?, pinterestUrl: String?, youtubeUrl: String?, linkedinUrl: String?, wordpressUrl: String?, websiteUrl: String?)
   case updatePenName(identifier: String, name: String?, biography: String?, avatarId: String?, avatarUrl: String?, facebookUrl: String?, tumblrUrl: String?, googlePlusUrl: String?, twitterUrl: String?, instagramUrl: String?, pinterestUrl: String?, youtubeUrl: String?, linkedinUrl: String?, wordpressUrl: String?, websiteUrl: String?)
   case batch(identifiers: [String])
+  case batchPenNames(identifiers: [String])
   case updatePreference(preference: String, value: String)
   case penNames
+  case comments(postIdentifier: String)
+  case replies(commentIdentifier: String)
+  case createComment(postIdentifier: String, comment: String, parentCommentIdentifier: String?)
+  case witComment(identifier: String)
+  case unwitComment(identifier: String)
+  case dimComment(identifier: String)
+  case undimComment(identifier: String)
   case wit(contentId: String)
   case unwit(contentId: String)
-  case dim(contentId: String)
-  case undim(contentId: String)
   case absolute(url: URL)
   case discover
   case onBoarding
@@ -43,7 +50,8 @@ public enum BookwittyAPI {
   case followers(identifier: String)
   case posts(identifier: String, type: [String]?)
   case postsLinkedContent(identifier: String, type: [String]?)
-  case editions(identifier: String)
+  case preferredFormats(bookIdentifier: String)
+  case editions(identifier: String, formats: [String]?)
   case resetPassword(email: String)
   case penName(identifier: String)
   case penNameContent(identifier: String)
@@ -53,6 +61,7 @@ public enum BookwittyAPI {
   case resendAccountConfirmation
   case uploadPolicy(file: (name: String, size: Int), fileType: UploadAPI.FileType, assetType: UploadAPI.AssetType)
   case uploadMultipart(url: URL, parameters: [String : String]?, multipart: (data: Data, name: String))
+  case votes(identifier: String)
 }
 
 // MARK: - Target Type
@@ -105,8 +114,10 @@ extension BookwittyAPI: TargetType {
       path = "/curated_collection/category/\(categoryIdentifier)"
     case .newsFeed:
       path = "/pen_name/feed"
-    case .Search:
+    case .search:
       path = "/search"
+    case .createPenName:
+      path = "/user/pen_names"
     case .updatePenName(let identifier, _, _, _, _, _, _, _, _, _, _, _, _, _, _):
       path = "/pen_names/\(identifier)"
     case .batch:
@@ -115,14 +126,20 @@ extension BookwittyAPI: TargetType {
       path = "/user/update_preference"
     case .penNames:
       path = "/user/pen_names"
+    case .comments(let postIdentifier):
+      path = "/content/\(postIdentifier)/comments"
+    case .replies(let commentIdentifier):
+      path = "/comments/\(commentIdentifier)/children"
+    case .createComment(let postIdentifier, _, _):
+      path = "/content/\(postIdentifier)/comments"
+    case .witComment(let identifier), .unwitComment(let identifier):
+      path = "/comments/\(identifier)/wit"
+    case .dimComment(let identifier), .undimComment(let identifier):
+      path = "/comments/\(identifier)/dim"
     case .wit(let contentId):
       path = "/content/\(contentId)/wit"
     case .unwit(let contentId):
       path = "/content/\(contentId)/wit"
-    case .dim(let contentId):
-      path = "/content/\(contentId)/dim"
-    case .undim(let contentId):
-      path = "/content/\(contentId)/dim"
     case .discover:
       path = "/curated_collection/discover_page"
     case .onBoarding:
@@ -147,8 +164,12 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(identifier)/posts"
     case .postsLinkedContent(let identifier, _):
       path = "/content/\(identifier)/linked_content"
-    case .editions(let identifier):
+    case .editions(let identifier, _):
       path = "/content/\(identifier)/editions"
+    case .votes(let identifier):
+      path = "/content/\(identifier)/votes"
+    case .preferredFormats(let bookIdentifier):
+      path = "/content/\(bookIdentifier)/preferred_formats"
     case .resetPassword:
       path = "/user/reset_password"
     case .penNameContent(let identifier):
@@ -159,6 +180,8 @@ extension BookwittyAPI: TargetType {
       path = "/pen_names/\(identifier)/following"
     case .penName(let identifier):
       path = "/pen_names/\(identifier)"
+    case .batchPenNames:
+      path = "/pen_name/batch"
     case .status:
       path = "/status"
     case .resendAccountConfirmation:
@@ -178,15 +201,15 @@ extension BookwittyAPI: TargetType {
   
   public var method: Moya.Method {
     switch self {
-    case .oAuth, .refreshToken, .resendAccountConfirmation:
+    case .oAuth, .refreshToken, .resendAccountConfirmation, .createPenName:
       return .post
-  case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .Search, .penNames, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .search, .penNames, .comments, .replies, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent, .votes, .preferredFormats:
       return .get
-    case .register, .batch, .updatePreference, .wit, .follow, .dim, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart:
+    case .register, .batch, .updatePreference, .wit, .follow, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart, .batchPenNames, .createComment, .witComment, .dimComment:
       return .post
     case .updateUser, .updatePenName:
       return .patch
-    case .unwit, .unfollow, .undim, .unfollowPenName:
+    case .unwit, .unfollow, .unfollowPenName, .unwitComment, .undimComment:
       return .delete
     }
   }
@@ -222,27 +245,37 @@ extension BookwittyAPI: TargetType {
       ]
     case .batch(let identifiers):
       return UserAPI.batchPostBody(identifiers: identifiers)
+    case .batchPenNames(let identifiers):
+      return GeneralAPI.batchPenNamesPostBody(identifiers: identifiers)
     case .register(let firstName, let lastName, let email, let dateOfBirth, let country, let password, let language):
       return UserAPI.registerPostBody(firstName: firstName, lastName: lastName, email: email, dateOfBirth: dateOfBirth, country: country, password: password, language: language)
     case .updateUser(let identifier, let firstName, let lastName, let dateOfBirth, let email, let currentPassword, let password, let country, let badges, let preferences):
       return UserAPI.updatePostBody(identifier: identifier, firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirth, email: email, currentPassword: currentPassword, password: password, country: country, badges: badges, preferences: preferences)
-    case .Search(let filter, let page):
-      return SearchAPI.parameters(filter: filter, page: page)
+    case .search(let filter, let page, let includeFacets):
+      return SearchAPI.parameters(filter: filter, page: page, includeFacets: includeFacets)
+    case .createPenName(let name, let biography, let avatarId, let avatarUrl, let facebookUrl, let tumblrUrl, let googlePlusUrl, let twitterUrl, let instagramUrl, let pinterestUrl, let youtubeUrl, let linkedinUrl, let wordpressUrl, let websiteUrl):
+      return PenNameAPI.createPostBody(name: name, biography: biography, avatarId: avatarId, avatarUrl: avatarUrl, facebookUrl: facebookUrl, tumblrUrl: tumblrUrl, googlePlusUrl: googlePlusUrl, twitterUrl: twitterUrl, instagramUrl: instagramUrl, pinterestUrl: pinterestUrl, youtubeUrl: youtubeUrl, linkedinUrl: linkedinUrl, wordpressUrl: wordpressUrl, websiteUrl: websiteUrl)
     case .updatePenName(let identifier, let name, let biography, let avatarId, let avatarUrl, let facebookUrl, let tumblrUrl, let googlePlusUrl, let twitterUrl, let instagramUrl, let pinterestUrl, let youtubeUrl, let linkedinUrl, let wordpressUrl, let websiteUrl):
       return PenNameAPI.updatePostBody(identifier: identifier, name: name, biography: biography, avatarId: avatarId, avatarUrl: avatarUrl, facebookUrl: facebookUrl, tumblrUrl: tumblrUrl, googlePlusUrl: googlePlusUrl, twitterUrl: twitterUrl, instagramUrl: instagramUrl, pinterestUrl: pinterestUrl, youtubeUrl: youtubeUrl, linkedinUrl: linkedinUrl, wordpressUrl: wordpressUrl, websiteUrl: websiteUrl)
     case .updatePreference(let preference, let value):
       return UserAPI.updatePostBody(preference: preference, value: value)
     case .posts(_, let type):
       return GeneralAPI.postsParameters(type: type)
+    case .votes:
+      return GeneralAPI.votesParameters()
     case .postsLinkedContent(_, let type):
       return GeneralAPI.postsParameters(type: type)
     case .resetPassword(let email):
       return UserAPI.resetPasswordBody(email: email)
     case .postsContent(_ , let page):
       return GeneralAPI.postsContentParameters(page: page)
+    case .createComment(_, let comment, let parentCommentIdentifier):
+      return CommentAPI.createCommentBody(comment: comment, parentCommentIdentifier: parentCommentIdentifier)
     case .uploadPolicy(let file, let fileType, let assetType):
       return UploadAPI.uploadPolicyParameters(file: file, fileType: fileType, assetType: assetType)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .editions, .dim, .undim, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart:
+    case .editions(_, let formats):
+      return ContentAPI.editionsFilterParameters(formats: formats)
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment, .dimComment, .undimComment, .preferredFormats:
       return nil
     }
   }
@@ -303,16 +336,18 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .user, .register:
       return [PenName.resourceType]
-    case .batch, .Search, .discover, .penNameContent, .penNameFollowing, .posts, .postsLinkedContent:
+    case .batch, .search, .discover, .penNameContent, .penNameFollowing, .posts, .postsLinkedContent, .comments, .replies:
       return ["pen-name"]
     case .newsFeed:
-      return ["pen-name", "contributors", "commenters"]
+      return ["pen-name", "contributors", "commenters", "top-votes", "top-votes.pen-name"]
     case .content(_, let include):
       var includes = include ?? []
       if !includes.contains("pen-name") {
         includes.append("pen-name")
       }
       return include
+    case .batchPenNames:
+      return []
     default:
       return ["pen-name"]
     }

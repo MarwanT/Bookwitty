@@ -165,8 +165,10 @@ extension DisclosureNode {
       bottom: 0, right: 0)
     var textEdgeInsets = UIEdgeInsets(
       top: 0, left: 0,
-      bottom: 5, right: 0)
-    var imageNodeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 19)
+      bottom: 0, right: 0)
+    var imageNodeInsets = UIEdgeInsets(
+      top: 0, left: 10, bottom: 0,
+      right: ThemeManager.shared.currentTheme.generalExternalMargin())
     var normalBackgroundColor: UIColor = ThemeManager.shared.currentTheme.colorNumber23()
     var selectedBackgroundColor: UIColor = ThemeManager.shared.currentTheme.defaultSelectionColor()
     var isAutoDeselectable: Bool = true

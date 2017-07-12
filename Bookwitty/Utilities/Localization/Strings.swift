@@ -9,6 +9,10 @@
 import UIKit
 
 class Strings {
+  static func a_minute_ago() -> String {
+    return localizedString(key: "a_minute_ago")
+  }
+  
   static func about_this_book() -> String {
     return localizedString(key: "about_this_book")
   }
@@ -36,15 +40,31 @@ class Strings {
   static func address_book() -> String {
     return localizedString(key: "address_book")
   }
-  
+
+  static func and() -> String {
+    return localizedString(key: "and")
+  }
+
   static func already_have_an_account() -> String {
     return localizedString(key: "already_have_an_account")
+  }
+
+  static func apply() -> String {
+    return localizedString(key: "apply")
+  }
+
+  static func an_hour_ago() -> String {
+    return localizedString(key: "an_hour_ago")
   }
   
   static func article() -> String {
     return localizedString(key: "article")
   }
-  
+
+  static func audio() -> String {
+    return localizedString(key: "audio")
+  }
+
   static func author() -> String {
     return localizedString(key: "author")
   }
@@ -76,7 +96,11 @@ class Strings {
   static func books() -> String {
     return localizedString(key: "books")
   }
-  
+
+  static func books_you_may_be_interested_in() -> String {
+    return localizedString(key: "books_you_may_be_interested_in")
+  }
+
   static func bookwitty() -> String {
     return localizedString(key: "bookwitty")
   }
@@ -113,6 +137,10 @@ class Strings {
     return localizedString(key: "change_password_success")
   }
   
+  static func choose_format() -> String {
+    return localizedString(key: "choose_format")
+  }
+  
   static func choose_from_library() -> String {
     return localizedString(key: "choose_from_library")
   }
@@ -121,20 +149,40 @@ class Strings {
     return localizedString(key: "choose_pen_name")
   }
   
+  static func clear_all() -> String {
+    return localizedString(key: "clear_all")
+  }
+
   static func clear_profile_photo() -> String {
     return localizedString(key: "clear_profile_photo")
+  }
+  
+  static func comments() -> String {
+    return localizedString(key: "comments")
   }
   
   static func contact_us() -> String {
     return localizedString(key: "contact_us")
   }
-  
+
+  static func content() -> String {
+    return localizedString(key: "content")
+  }
+
   static func `continue`() -> String {
     return localizedString(key: "continue")
   }
   
   static func contributors() -> String {
     return localizedString(key: "contributors")
+  }
+  
+  static func couldnt_load_selected_edition_message() -> String {
+    return localizedString(key: "couldnt_load_selected_edition_message")
+  }
+  
+  static func couldnt_load_selected_edition_title() -> String {
+    return localizedString(key: "couldnt_load_selected_edition_title")
   }
   
   static func couldnt_load_your_data() -> String {
@@ -157,20 +205,20 @@ class Strings {
     return localizedString(key: "current_password")
   }
   
+  static func current_password_is_empty_error() -> String {
+    return localizedString(key: "current_password_is_empty_error")
+  }
+
   static func customer_service() -> String {
     return localizedString(key: "customer_service")
   }
   
-  static func dim() -> String {
-    return localizedString(key: "dim")
-  }
-  
-  static func dimmed() -> String {
-    return localizedString(key: "dimmed")
-  }
-  
   static func discover() -> String {
     return localizedString(key: "discover")
+  }
+  
+  static func discover_banner_message() -> String {
+    return localizedString(key: "discover_banner_message")
   }
   
   static func done() -> String {
@@ -201,6 +249,10 @@ class Strings {
     return localizedString(key: "email_already_registered")
   }
   
+  static func email_empty() -> String {
+    return localizedString(key: "email_empty")
+  }
+
   static func email_invalid() -> String {
     return localizedString(key: "email_invalid")
   }
@@ -248,7 +300,15 @@ class Strings {
   static func fail_to_refresh_token_alert_title() -> String {
     return localizedString(key: "fail_to_refresh_token_alert_title")
   }
-  
+
+  static func filter() -> String {
+    return localizedString(key: "filter")
+  }
+
+  static func filters() -> String {
+    return localizedString(key: "filters")
+  }
+
   static func first_name() -> String {
     return localizedString(key: "first_name")
   }
@@ -309,6 +369,10 @@ class Strings {
     return localizedString(key: "help")
   }
   
+  static func hide_formats_and_editions() -> String {
+    return localizedString(key: "hide_formats_and_editions")
+  }
+  
   static func image() -> String {
     return localizedString(key: "image")
   }
@@ -341,12 +405,24 @@ class Strings {
     return localizedString(key: "join_us_to_personalize_feed_title")
   }
   
+  static func just_now() -> String {
+    return localizedString(key: "just_now")
+  }
+  
   static func language() -> String {
     return localizedString(key: "language")
   }
-  
+
+  static func languages() -> String {
+    return localizedString(key: "languages")
+  }
+
   static func language_of_text() -> String {
     return localizedString(key: "language_of_text")
+  }
+  
+  static func last_month() -> String {
+    return localizedString(key: "last_month")
   }
   
   static func last_name() -> String {
@@ -355,6 +431,14 @@ class Strings {
   
   static func last_name_invalid() -> String {
     return localizedString(key: "last_name_invalid")
+  }
+  
+  static func last_week() -> String {
+    return localizedString(key: "last_week")
+  }
+  
+  static func last_year() -> String {
+    return localizedString(key: "last_year")
   }
   
   static func latest() -> String {
@@ -385,6 +469,10 @@ class Strings {
     return localizedString(key: "new_password")
   }
   
+  static func new_password_is_empty_error() -> String {
+    return localizedString(key: "new_password_is_empty_error")
+  }
+
   static func new_version_available_description() -> String {
     return localizedString(key: "new_version_available_description")
   }
@@ -397,6 +485,10 @@ class Strings {
     return localizedString(key: "news")
   }
   
+  static func newsletter() -> String {
+    return localizedString(key: "newsletter")
+  }
+
   static func no_internet_error_description() -> String {
     return localizedString(key: "no_internet_error_description")
   }
@@ -440,15 +532,35 @@ class Strings {
   static func out_of_stock() -> String {
     return localizedString(key: "out_of_stock")
   }
-  
+
+  static func pages() -> String {
+    return localizedString(key: "pages")
+  }
+
+  static func pages_you_may_be_interested_in() -> String {
+    return localizedString(key: "pages_you_may_be_interested_in")
+  }
+
   static func password() -> String {
     return localizedString(key: "password")
   }
   
+  static func password_change_unknown_error() -> String {
+    return localizedString(key: "password_change_unknown_error")
+  }
+
   static func password_invalid() -> String {
     return localizedString(key: "password_invalid")
   }
   
+  static func password_is_wrong_error() -> String {
+    return localizedString(key: "password_is_wrong_error")
+  }
+
+  static func password_minimum_characters_error() -> String {
+    return localizedString(key: "password_minimum_characters_error")
+  }
+
   static func payment_methods() -> String {
     return localizedString(key: "payment_methods")
   }
@@ -461,6 +573,18 @@ class Strings {
     return localizedString(key: "pen_name_cant_be_empty")
   }
   
+  static func pen_name_error_was_already_taken() -> String {
+    return localizedString(key: "pen_name_error_was_already_taken")
+  }
+
+  static func pen_name_error_could_not_create() -> String {
+    return localizedString(key: "pen_name_error_could_not_create")
+  }
+
+  static func pen_name_max_number_of_characters_thirty_six() -> String {
+    return localizedString(key: "pen_name_max_number_of_characters_thirty_six")
+  }
+
   static func pen_names() -> String {
     return localizedString(key: "pen_names")
   }
@@ -491,6 +615,26 @@ class Strings {
   
   static func publication_date() -> String {
     return localizedString(key: "publication_date")
+  }
+  
+  static func publish() -> String {
+    return localizedString(key: "publish")
+  }
+  
+  static func publishCommentGeneralErrorMessage() -> String {
+    return localizedString(key: "publish_comment_general_error_message")
+  }
+  
+  static func publishCommentGeneralErrorTitle() -> String {
+    return localizedString(key: "publish_comment_general_error_title")
+  }
+  
+  static func publishEmptyCommentErrorMessage() -> String {
+    return localizedString(key: "publish_empty_comment_error_message")
+  }
+  
+  static func publishEmptyCommentErrorTitle() -> String {
+    return localizedString(key: "publish_empty_comment_error_title")
   }
   
   static func publisher() -> String {
@@ -525,6 +669,10 @@ class Strings {
     return localizedString(key: "related_posts")
   }
   
+  static func reply() -> String {
+    return localizedString(key: "reply")
+  }
+  
   static func reset_password() -> String {
     return localizedString(key: "reset_password")
   }
@@ -536,9 +684,21 @@ class Strings {
   static func search_placeholder() -> String {
     return localizedString(key: "search_placeholder")
   }
-  
+
+  static func see_whats_happening_on_bookwitty() -> String {
+    return localizedString(key: "see_whats_happening_on_bookwitty")
+  }
+
   static func settings() -> String {
     return localizedString(key: "settings")
+  }
+  
+  static func shop_banner_message() -> String {
+    return localizedString(key: "shop_banner_message")
+  }
+  
+  static func shop_for_books() -> String {
+    return localizedString(key: "shop_for_books")
   }
   
   static func shop_in_app_coming_soon_message() -> String {
@@ -600,7 +760,11 @@ class Strings {
   static func topics_to_follow() -> String {
     return localizedString(key: "topics_to_follow")
   }
-  
+
+  static func pen_names_to_follow() -> String {
+    return localizedString(key: "pen_names_to_follow")
+  }
+
   static func try_again() -> String {
     return localizedString(key: "try_again")
   }
@@ -644,11 +808,23 @@ class Strings {
   static func tutorial_third_page_title() -> String {
     return localizedString(key: "tutorial_third_page_title")
   }
+
+  static func types() -> String {
+    return localizedString(key: "types")
+  }
   
+  static func unknown_format() -> String {
+    return localizedString(key: "unknown_format")
+  }
+
   static func update_now() -> String {
     return localizedString(key: "update_now")
   }
-  
+
+  static func user() -> String {
+    return localizedString(key: "user")
+  }
+
   static func user_not_signed_in_alert_message() -> String {
     return localizedString(key: "user_not_signed_in_alert_message")
   }
@@ -671,6 +847,10 @@ class Strings {
   
   static func view_all_categories() -> String {
     return localizedString(key: "view_all_categories")
+  }
+  
+  static func view_all_comments() -> String {
+    return localizedString(key: "view_all_comments")
   }
   
   static func view_all_related_books() -> String {
@@ -697,6 +877,18 @@ class Strings {
     return localizedString(key: "weight")
   }
   
+  static func welcome_banner_message() -> String {
+    return localizedString(key: "welcome_banner_message")
+  }
+  
+  static func welcome_to_bookwitty() -> String {
+    return localizedString(key: "welcome_to_bookwitty")
+  }
+
+  static func what_are_your_thoughts() -> String {
+    return localizedString(key: "what_are_your_thoughts")
+  }
+  
   static func width() -> String {
     return localizedString(key: "width")
   }
@@ -709,6 +901,18 @@ class Strings {
     return localizedString(key: "witted")
   }
   
+  static func yesterday() -> String {
+    return localizedString(key: "yesterday")
+  }
+
+  static func you() -> String {
+    return localizedString(key: "you")
+  }
+
+  static func you_find_witty() -> String {
+    return localizedString(key: "you_find_witty")
+  }
+
   static func you_dont_have_account() -> String {
     return localizedString(key: "you_dont_have_account")
   }
@@ -724,20 +928,75 @@ class Strings {
   /**
    * Formatted Strings
    */
+
+  static func andOthersFindThisWitty(witters: String, others: Int) -> String {
+    let otherWitters = othersFindThisWitty(witters: others)
+    return localizedString(key: "f_and_others_find_witty", formatVariables: witters, otherWitters)
+  }
+
+  static func findThisWitty(witters: String) -> String {
+    return localizedString(key: "f_find_witty", formatVariables: witters)
+  }
+
+  static func findThisWitty(witters: Int) -> String {
+    return localizedString(key: "f_number_find_witty", formatVariables: witters)
+  }
+
   static func contributors(number: Int) -> String {
-    return localizedString(key: "f_number_of_contributors", formatVariable: number)
+    return localizedString(key: "f_number_of_contributors", formatVariables: number)
+  }
+  
+  static func days_ago(number: Int) -> String {
+    return localizedString(key: "f_number_of_days_ago", formatVariables: number)
   }
 
   static func followers(number: Int) -> String {
-    return localizedString(key: "f_number_of_followers", formatVariable: number)
+    return localizedString(key: "f_number_of_followers", formatVariables: number)
+  }
+  
+  static func hours_ago(number: Int) -> String {
+    return localizedString(key: "f_number_of_hours_ago", formatVariables: number)
+  }
+  
+  static func minutes_ago(number: Int) -> String {
+    return localizedString(key: "f_number_of_minutes_ago", formatVariables: number)
+  }
+  
+  static func months_ago(number: Int) -> String {
+    return localizedString(key: "f_number_of_months_ago", formatVariables: number)
   }
 
   static func posts(number: Int) -> String {
-    return localizedString(key: "f_number_of_posts", formatVariable: number)
+    return localizedString(key: "f_number_of_posts", formatVariables: number)
   }
 
   static func books(number: Int) -> String {
-    return localizedString(key: "f_number_of_books", formatVariable: number)
+    return localizedString(key: "f_number_of_books", formatVariables: number)
+  }
+  
+  static func seconds_ago(number: Int) -> String {
+    return localizedString(key: "f_number_of_seconds_ago", formatVariables: number)
+  }
+  
+  static func view_all_replies(number: Int) -> String {
+    return localizedString(key: "f_view_all_replies", formatVariables: number)
+  }
+  
+  static func view_formats_and_editions(number: Int) -> String {
+    return localizedString(key: "f_view_formats_and_editions", formatVariables: number)
+  }
+
+  static func weeks_ago(number: Int) -> String {
+    return localizedString(key: "f_number_of_weeks_ago", formatVariables: number)
+  }
+  
+  static func years_ago(number: Int) -> String {
+    return localizedString(key: "f_number_of_years_ago", formatVariables: number)
+  }
+  
+
+  private static func othersFindThisWitty(witters: Int) -> String {
+    return localizedString(key: "f_others_find_witty", formatVariables: witters)
   }
 
   /**

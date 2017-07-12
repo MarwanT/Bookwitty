@@ -14,6 +14,8 @@ enum Storyboard: String {
   case Root
   case Books
   case Account
+  case Misc
+  case Details
   
   public func instantiate<VC: UIViewController>(_ viewController: VC.Type,
                    inBundle bundle: Bundle? = nil) -> VC {

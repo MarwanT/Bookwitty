@@ -10,7 +10,6 @@ import Foundation
 
 protocol ModelCommonActions {
   var wit: Bool { get set }
-  var dim: Bool { get set }
   var voteValue: String? { get set }
   var isFollowing: Bool { get set }
   var counts: Counts? { get }
@@ -25,39 +24,13 @@ extension ModelCommonActions {
       return Vote.isWitted(vote: vote)
     }
     set {
-      let wasDimmed = dim
       //Set Value
-      voteValue = newValue ? Vote.witted.rawValue : ""
+      voteValue = newValue ? Vote.Options.witted.rawValue : ""
 
       guard let counts = counts else {
         return
       }
       counts.wits = (counts.wits ?? 0) + (newValue ? 1 : -1)
-      if wasDimmed {
-        counts.dims = (counts.dims ?? 1) - 1
-      }
-    }
-  }
-
-  var dim: Bool {
-    get {
-      guard let vote = voteValue else {
-        return false
-      }
-      return Vote.isDimmed(vote: vote)
-    }
-    set {
-      let wasWitted = wit
-      //Set Value
-      voteValue = newValue ? Vote.dimmed.rawValue : ""
-
-      guard let counts = counts else {
-        return
-      }
-      counts.dims = (counts.dims ?? 0) + (newValue ? 1 : -1)
-      if wasWitted {
-        counts.wits = (counts.wits ?? 1) - 1
-      }
     }
   }
 }
@@ -242,5 +215,18 @@ extension PenName: ModelCommonActions {
         counts.followers = (counts.followers ?? 1) - 1
       }
     }
+  }
+}
+
+// MARK: - Comment
+extension Comment: ModelCommonActions {
+  var voteValue: String? {
+    get { return vote }
+    set { vote = newValue }
+  }
+  
+  var isFollowing: Bool {
+    get { return false }
+    set { /* */ }
   }
 }

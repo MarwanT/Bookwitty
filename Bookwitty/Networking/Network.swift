@@ -23,6 +23,8 @@ public enum BookwittyAPIError: Swift.Error {
   case failToRetrieveDictionary
   case failToParseData
   case failToSignIn
+  case invalidCurrentPassword
+  case penNameHasAlreadyBeenTaken
   case undefined
   
   init(moyaError: MoyaError) {
@@ -90,8 +92,14 @@ public struct APIProvider {
     switch target{
     case .uploadMultipart:
       break
-    case .oAuth, .register, .refreshToken:
-      headerParameters["Content-Type"] = "application/json";
+    case .register:
+      let accessToken = AccessToken.shared
+      if let token = accessToken.token, accessToken.isValid {
+        headerParameters["Authorization"] = "Bearer \(token)"
+      }
+      fallthrough
+    case .oAuth, .refreshToken:
+      headerParameters["Content-Type"] = "application/json"
       headerParameters["Accept"] = "application/json"
     default:
       let accessToken = AccessToken.shared
@@ -102,15 +110,16 @@ public struct APIProvider {
           headerParameters["X-Bookwitty-Pen-Name"] = id
         }
       }
-      headerParameters["Content-Type"] = "application/vnd.api+json";
+      headerParameters["Content-Type"] = "application/vnd.api+json"
       headerParameters["Accept"] = "application/vnd.api+json"
-      headerParameters["User-Agent"] = userAgentValue
 
       if let language = Localization.Language(rawValue: GeneralSettings.sharedInstance.preferredLanguage) {
         headerParameters["Accept-Language"] = language.rawValue
       }
     }
-    
+
+    headerParameters["User-Agent"] = userAgentValue
+
     // Add required header fields for target
     if let targetHeaders = target.headerParameters {
       for (key, value) in targetHeaders {
