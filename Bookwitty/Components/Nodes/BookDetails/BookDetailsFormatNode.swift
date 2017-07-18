@@ -27,6 +27,8 @@ class BookDetailsFormatNode: ASCellNode {
   func initializeComponents() {
     automaticallyManagesSubnodes = true
     textNode.isLayerBacked = true
+    textNode.style.flexShrink = 1.0
+    textNode.style.flexGrow = 1.0
     borderNode.isLayerBacked = true
     
     disclosureImageNode.image = #imageLiteral(resourceName: "rightArrow")
@@ -37,7 +39,7 @@ class BookDetailsFormatNode: ASCellNode {
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    let stackSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start, alignItems: .center, children: [textNode, ASLayoutSpec.spacer(flexGrow: 1.0), disclosureImageNode])
+    let stackSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start, alignItems: .center, children: [textNode, ASLayoutSpec.spacer(width: ThemeManager.shared.currentTheme.cardInternalMargin() / 2.0), disclosureImageNode])
     let formatTextSpec = ASInsetLayoutSpec(insets: configuration.formatTextEdgeInsets, child: stackSpec)
     let backgroundSpec = ASBackgroundLayoutSpec(child: formatTextSpec, background: borderNode)
     let externalInsets = ASInsetLayoutSpec(insets: configuration.externalEdgeInsets, child: backgroundSpec)
