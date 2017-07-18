@@ -5,25 +5,44 @@
     <key>f_find_witty</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>%#@value@</string>
-      <key>value</key>
+      <string>%#@value1@ %#@value2@</string>
+      <key>value1</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>%@ find this witty</string>
+        <string>%@</string>
         <key>one</key>
-        <string>%@ find this witty</string>
+        <string>%@</string>
         <key>two</key>
-        <string>%@ find this witty</string>
+        <string>%@</string>
         <key>few</key>
-        <string>%@ find this witty</string>
+        <string>%@</string>
         <key>many</key>
-        <string>%@ find this witty</string>
+        <string>%@</string>
         <key>other</key>
-        <string>%@ find this witty</string>
+        <string>%@</string>
+      </dict>
+      <key>value2</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>find this witty</string>
+        <key>one</key>
+        <string>find this witty</string>
+        <key>two</key>
+        <string>find this witty</string>
+        <key>few</key>
+        <string>find this witty</string>
+        <key>many</key>
+        <string>find this witty</string>
+        <key>other</key>
+        <string>find this witty</string>
       </dict>
     </dict>
     <key>f_number_find_witty</key>
@@ -327,7 +346,7 @@
         <key>zero</key>
         <string>and %d others find this witty</string>
         <key>one</key>
-        <string>and %d others find this witty</string>
+        <string>and %d other find this witty</string>
         <key>two</key>
         <string>and %d others find this witty</string>
         <key>few</key>
