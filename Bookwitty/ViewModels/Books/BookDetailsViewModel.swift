@@ -148,7 +148,7 @@ extension BookDetailsViewModel {
       node = headerNode
     case .format:
       let formatNode = BookDetailsFormatNode()
-      formatNode.format = book.productDetails?.productFormat
+      formatNode.format = book.productDetails?.productForm?.value
       node = formatNode
     case .eCommerce:
       let eCommerceNode = BookDetailsECommerceNode()
