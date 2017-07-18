@@ -5,25 +5,44 @@
     <key>f_find_witty</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>%#@value@</string>
-      <key>value</key>
+      <string>%#@value1@ %#@value2@</string>
+      <key>value1</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>personne n'a witté ceci</string>
+        <string>%@</string>
         <key>one</key>
-        <string>une personne a witté ceci</string>
+        <string>%@</string>
         <key>two</key>
-        <string>deux personnes ont witté ceci</string>
+        <string>%@</string>
         <key>few</key>
-        <string>quelques personnes ont witté ceci</string>
+        <string>%@</string>
         <key>many</key>
-        <string>plusieurs personnes ont witté ceci</string>
+        <string>%@</string>
         <key>other</key>
-        <string>%@ autres personnes ont witté ceci</string>
+        <string>%@</string>
+      </dict>
+      <key>value2</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>ont witté ceci</string>
+        <key>one</key>
+        <string>a witté ceci</string>
+        <key>two</key>
+        <string>ont witté ceci</string>
+        <key>few</key>
+        <string>ont witté ceci</string>
+        <key>many</key>
+        <string>ont witté ceci</string>
+        <key>other</key>
+        <string>ont witté ceci</string>
       </dict>
     </dict>
     <key>f_number_find_witty</key>
@@ -37,7 +56,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>personne n'a witté ceci</string>
+        <string>personne n&apos;a witté ceci</string>
         <key>one</key>
         <string>une personne a witté ceci</string>
         <key>two</key>
@@ -47,7 +66,7 @@
         <key>many</key>
         <string>plusieurs personnes ont witté ceci</string>
         <key>other</key>
-        <string>%d autres personnes ont witté ceci</string>
+        <string>%d personnes ont witté ceci</string>
       </dict>
     </dict>
     <key>f_number_of_books</key>
@@ -109,7 +128,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>il y a moins d'une journée</string>
+        <string>il y a moins d&apos;une journée</string>
         <key>one</key>
         <string>il y a un jour</string>
         <key>two</key>
@@ -157,7 +176,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>il y a moins d'une heure</string>
+        <string>il y a moins d&apos;une heure</string>
         <key>one</key>
         <string>il y a une heure</string>
         <key>two</key>
@@ -181,7 +200,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>il y a moins d'une minute</string>
+        <string>il y a moins d&apos;une minute</string>
         <key>one</key>
         <string>il y a une minute</string>
         <key>two</key>
@@ -205,7 +224,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>il y a moins d'un mois</string>
+        <string>il y a moins d&apos;un mois</string>
         <key>one</key>
         <string>il y a un mois</string>
         <key>two</key>
@@ -253,7 +272,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>il y a moins d'une seconde</string>
+        <string>il y a moins d&apos;une seconde</string>
         <key>one</key>
         <string>il y a une seconde</string>
         <key>two</key>
@@ -277,7 +296,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>il y a moins d'une semaine</string>
+        <string>il y a moins d&apos;une semaine</string>
         <key>one</key>
         <string>il y a une semaine</string>
         <key>two</key>
@@ -301,7 +320,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>il y a moins d'un an</string>
+        <string>il y a moins d&apos;un an</string>
         <key>one</key>
         <string>il y a un an</string>
         <key>two</key>
@@ -325,7 +344,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>et personne d'autre n'a witté ceci</string>
+        <string>et personne d&apos;autre n&apos;a witté ceci</string>
         <key>one</key>
         <string>et une autre personne avez witté ceci</string>
         <key>two</key>
@@ -373,9 +392,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>zero</key>
-        <string>Il n'y a pas d'autre édition</string>
+        <string>Il n&apos;y a pas d&apos;autre édition</string>
         <key>one</key>
-        <string>Voir l'édition disponible </string>
+        <string>Voir l&apos;édition disponible </string>
         <key>two</key>
         <string>Voir les deux éditions</string>
         <key>few</key>
