@@ -223,9 +223,9 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
     self.pullToRefresher.beginRefreshing()
     viewModel.refreshData(for: activeSegment) { [weak self] (success, segment) in
       guard let strongSelf = self else { return }
-      strongSelf.loadingStatus = .none
-      strongSelf.pullToRefresher.endRefreshing()
       strongSelf.updateCollection(orReloadAll: true)
+      strongSelf.pullToRefresher.endRefreshing()
+      strongSelf.loadingStatus = .none
     }
     return true
   }
