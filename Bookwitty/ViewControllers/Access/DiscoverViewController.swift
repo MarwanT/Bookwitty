@@ -218,6 +218,11 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
       return false
     }
 
+    //Make sure the view is loaded
+    guard self.isViewLoaded else {
+      return false
+    }
+
     loadingStatus = .reloading
     updateCollection(loaderSection: true)
     self.pullToRefresher.beginRefreshing()
