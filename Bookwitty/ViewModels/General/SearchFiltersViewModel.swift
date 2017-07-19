@@ -199,8 +199,8 @@ extension SearchFiltersViewModel {
   }
 
   func values(for section: Int) -> (title: String?, subtitle: String?, mode: CollapsableTableViewSectionHeaderView.Mode) {
-    let title = self.title(for: section)
-    let subtitle = self.subtitle(for: section)
+    let title = self.title(for: section)?.capitalized
+    let subtitle = self.subtitle(for: section)?.capitalized
     let mode: CollapsableTableViewSectionHeaderView.Mode = expandedSections.contains(section) ? .expanded : .collapsed
     return (title, subtitle, mode)
   }
@@ -216,15 +216,15 @@ extension SearchFiltersViewModel {
     switch option {
     case .categories:
       let cat = category(at: indexPath.row)
-      title = cat?.value
+      title = cat?.value?.capitalized
       selected = candidateFilter?.categories.contains(cat?.key ?? "") ?? false
     case .languages:
       let lang = language(at: indexPath.row)
-      title = lang.localized
+      title = lang.localized?.capitalized
       selected = candidateFilter?.languages.contains(lang.code ?? "") ?? false
     case .types:
       let typ = type(at: indexPath.row)
-      title = typ.localized
+      title = typ.localized?.capitalized
       selected = candidateFilter?.types.contains(typ.resourceType ?? "") ?? false
     }
 
