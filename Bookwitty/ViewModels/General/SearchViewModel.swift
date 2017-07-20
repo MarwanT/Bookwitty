@@ -117,7 +117,7 @@ extension SearchViewModel {
   func filterDictionary() -> [String : String] {
     var dictionary = [String : String]()
 
-    if let category = self.filter.categories.first {
+    if let category = self.filter.categories.first?.key {
       dictionary["category"] = category
     }
 

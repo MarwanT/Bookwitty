@@ -80,7 +80,7 @@ class SearchFiltersViewModel {
 
     switch option {
     case .categories:
-      let localized = facet?.categories?.filter({ candidateFilter?.categories.contains($0.key ?? "") ?? false }).flatMap({ $0.value }) ?? []
+      let localized = candidateFilter?.categories.flatMap({ $0.value }) ?? []
       return localized.joined(separator: ", ")
     case .languages:
       let localized = candidateFilter?.languages.flatMap({ Locale.application.localizedString(forLanguageCode: $0) }) ?? []
@@ -105,15 +105,15 @@ class SearchFiltersViewModel {
   }
 
   fileprivate func toggleCategory(at row: Int) {
-    guard let filter = candidateFilter, let cat = category(at: row), let key = cat.key else {
+    guard let filter = candidateFilter, let cat = category(at: row) else {
       return
     }
 
-    if filter.categories.contains(key) {
+    if filter.categories.contains(where: { $0.key == cat.key ?? "" }) {
       filter.categories.removeAll()
     } else {
       filter.categories.removeAll()
-      filter.categories.append(key)
+      filter.categories.append(cat)
     }
   }
 
@@ -217,7 +217,7 @@ extension SearchFiltersViewModel {
     case .categories:
       let cat = category(at: indexPath.row)
       title = cat?.value?.capitalized
-      selected = candidateFilter?.categories.contains(cat?.key ?? "") ?? false
+      selected = candidateFilter?.categories.contains(where: { $0.key == cat?.key ?? ""}) ?? false
     case .languages:
       let lang = language(at: indexPath.row)
       title = lang.localized?.capitalized

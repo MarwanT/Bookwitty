@@ -11,7 +11,7 @@ import UIKit
 public class Filter {
   var query: String?
 
-  var categories: [String]
+  var categories: [Category]
   var languages: [String]
   var types: [String]
 
