@@ -55,7 +55,10 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     let categories = facet.categories?.count ?? 0 > 0
     let languages = facet.languages?.count ?? 0 > 0
     let types = facet.types?.count ?? 0 > 0
-    return categories || languages || types
+
+    let containsFilter: Bool = (viewModel.filter.categories.count > 0 || viewModel.filter.languages.count > 0 || viewModel.filter.types.count > 0)
+
+    return categories || languages || types || containsFilter
   }
 
   required init?(coder aDecoder: NSCoder) {
