@@ -56,6 +56,7 @@ class User: Resource {
       "password": Attribute().serializeAs("password"),
       "currentPassword": Attribute().serializeAs("current-password"),
       "language": Attribute().serializeAs("language"),
+      "preferences" : PreferencesAttribute().serializeAs("preferences"),
       "penNamesCollection" : ToManyRelationship(PenName.self).serializeAs("pen-names")
       ])
   }
