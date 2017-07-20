@@ -54,8 +54,8 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     }
     let categories = facet.categories?.count ?? 0 > 0
     let languages = facet.languages?.count ?? 0 > 0
-    let typs = facet.types?.count ?? 0 > 0
-    return categories || languages || typs
+    let types = facet.types?.count ?? 0 > 0
+    return categories || languages || types
   }
 
   required init?(coder aDecoder: NSCoder) {
