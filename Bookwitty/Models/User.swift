@@ -70,6 +70,36 @@ extension User {
   }
 }
 
+// MARK: - Preferences
+extension User {
+  var emailNewsletter: Bool {
+    guard let preferences = self.preferences else {
+      return false
+    }
+
+    guard let newsletter = preferences[Preference.emailNewsletter.rawValue] as? String else {
+      return false
+    }
+
+    //Negated because the preferences are unsub
+    return !(newsletter.lowercased() == "true")
+  }
+
+  //One for both email values, they are combined as one
+  var emailNotifications: Bool {
+    guard let preferences = self.preferences else {
+      return false
+    }
+
+    guard let notification = preferences[Preference.emailNotificationFollowers.rawValue] as? String else {
+      return false
+    }
+
+    //Negated because the preferences are unsub
+    return !(notification.lowercased() == "true")
+  }
+}
+
 // MARK: - Parser
 extension User: Parsable {
   typealias AbstractType = User
