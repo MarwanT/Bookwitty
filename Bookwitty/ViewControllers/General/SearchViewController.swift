@@ -188,6 +188,18 @@ class SearchViewController: ASViewController<ASCollectionNode> {
       return
     }
 
+    if facet.categories?.count == 0 && viewModel.filter.categories.count > 0 {
+      facet.categories = viewModel.filter.categories
+    }
+
+    if facet.languages?.count == 0 && viewModel.filter.languages.count > 0 {
+      facet.languages = viewModel.filter.languages
+    }
+
+    if facet.types?.count == 0 && viewModel.filter.types.count > 0 {
+      facet.types = viewModel.filter.types
+    }
+
     let searchFiltersViewController = Storyboard.Misc.instantiate(SearchFiltersViewController.self)
     searchFiltersViewController.viewModel.initialize(with: facet, and: viewModel.filter)
     searchFiltersViewController.delegate = self
