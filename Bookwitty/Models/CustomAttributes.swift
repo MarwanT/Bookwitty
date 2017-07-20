@@ -41,6 +41,14 @@ class CountsAttribute: Attribute {
   }
 }
 
+class PreferencesAttribute: Attribute {
+  var preferences: [String : Any]?
+
+  init(preferences: [String : Any]? = nil) {
+    self.preferences = preferences
+  }
+}
+
 class MediaAttribute: Attribute {
   let media: [String : Any]?
 
