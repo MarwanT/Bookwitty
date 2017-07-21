@@ -158,6 +158,8 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
         return UITableViewCell()
       }
 
+      cell.detailsLabel.font = FontDynamicType.caption1.font
+      cell.detailsLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
       return cell
     }
   }
@@ -181,7 +183,8 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
         return
       }
 
-      currentCell.label.text = "\(values.form.value) (\(values.numberOfEditions))"
+      currentCell.label.text = values.form.value + " " + values.form.value
+      currentCell.detailsLabel.text = "(" + String(describing: values.numberOfEditions) + ")"
     }
   }
   
