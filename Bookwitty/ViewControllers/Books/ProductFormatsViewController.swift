@@ -157,6 +157,8 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
       guard let cell = tableView.dequeueReusableCell(withIdentifier: DisclosureTableViewCell.identifier, for: indexPath) as? DisclosureTableViewCell else {
         return UITableViewCell()
       }
+
+      cell.label.lineBreakMode = .byTruncatingMiddle
       return cell
     }
   }
