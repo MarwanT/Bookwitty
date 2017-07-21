@@ -158,7 +158,6 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
         return UITableViewCell()
       }
 
-      cell.label.lineBreakMode = .byTruncatingMiddle
       return cell
     }
   }
