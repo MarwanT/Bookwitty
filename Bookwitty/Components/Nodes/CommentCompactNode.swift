@@ -71,11 +71,18 @@ class CommentCompactNode: ASCellNode {
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let imageNodeInsetSpec = ASInsetLayoutSpec(insets: imageInset, child: imageNode)
-    let horizontalSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start, alignItems: .center, children: [imageNodeInsetSpec, messageNode])
+    let messageNodeInsetSpec = ASInsetLayoutSpec(insets: messageInset, child: messageNode)
+    messageNodeInsetSpec.style.flexGrow = 1.0
+    messageNodeInsetSpec.style.flexShrink = 1.0
+    let horizontalSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start, alignItems: .center, children: [imageNodeInsetSpec, messageNodeInsetSpec])
     return horizontalSpec
   }
 
   var imageInset: UIEdgeInsets {
     return UIEdgeInsets(top: 5.0, left: 5.0, bottom: 5.0, right: 5.0)
+  }
+
+  var messageInset: UIEdgeInsets {
+    return UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 5.0)
   }
 }
