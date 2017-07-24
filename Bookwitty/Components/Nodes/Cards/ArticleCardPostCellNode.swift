@@ -171,7 +171,7 @@ extension ArticleCardPostCellNode: ArticleCardViewModelDelegate {
     node.imageUrl = values.content.imageUrl
     articleCommentsSummary = values.content.comments
     setWitValue(witted: values.content.wit.is)
-    setTopComment(comment: values.content.topComment)
+    topComment = values.content.topComment
     actionInfoValue = values.content.wit.info
   }
 }

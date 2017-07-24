@@ -223,6 +223,6 @@ extension VideoCardPostCellNode: VideoCardViewModelDelegate {
     articleCommentsSummary = values.content.comments
     setWitValue(witted: values.content.wit.is)
     actionInfoValue = values.content.wit.info
-    setTopComment(comment: values.content.topComment)
+    topComment = values.content.topComment
   }
 }

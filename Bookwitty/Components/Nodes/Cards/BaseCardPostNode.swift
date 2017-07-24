@@ -139,8 +139,12 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     actionBarNode.setWitButton(witted: witted)
   }
 
-  func setTopComment(comment: Comment?) {
-
+  var topComment: Comment? {
+    didSet {
+      topCommentNode.set(fullName: topComment?.penName?.name, message: topComment?.body)
+      topCommentNode.imageURL = URL(string: topComment?.penName?.avatarUrl ?? "")
+      topCommentNode.setNeedsLayout()
+    }
   }
 
   private func setupCellNode() {
