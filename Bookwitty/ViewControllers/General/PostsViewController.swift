@@ -311,8 +311,11 @@ extension PostsViewController: BaseCardPostNodeDelegate {
       viewModel.unfollow(indexPath: indexPath) { (success) in
         didFinishAction?(success)
       }
+    case .comment:
+      guard let resource = viewModel.resourceForIndexPath(indexPath: indexPath) else { return }
+      pushCommentsViewController(for: resource as? ModelCommonProperties)
+      didFinishAction?(true)
     default:
-      //TODO: handle comment
       break
     }
 

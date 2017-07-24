@@ -342,8 +342,10 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
       if let sharingInfo: [String] = viewModel.sharingPost() {
         presentShareSheet(shareContent: sharingInfo)
       }
+    case .comment:
+      pushCommentsViewController(for: viewModel.resource as? ModelCommonProperties)
+      didFinishAction?(true)
     default:
-      //TODO: handle comment
       break
     }
 
@@ -700,9 +702,11 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
       viewModel.unfollowRelatedPost(index: index) { (success) in
         didFinishAction?(success)
       }
-
+    case .comment:
+      guard let resource = viewModel.relatedPost(at: index) else { return }
+      pushCommentsViewController(for: resource as? ModelCommonProperties)
+      didFinishAction?(true)
     default:
-      //TODO: handle comment
       break
     }
 

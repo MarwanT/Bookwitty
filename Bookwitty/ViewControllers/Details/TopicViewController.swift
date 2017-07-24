@@ -902,9 +902,10 @@ extension TopicViewController: BaseCardPostNodeDelegate {
       viewModel.unfollow(resource: resource) { (success) in
         didFinishAction?(success)
       }
-
+    case .comment:      
+      pushCommentsViewController(for: resource as? ModelCommonProperties)
+      didFinishAction?(true)
     default:
-      //TODO: handle comment
       break
     }
 

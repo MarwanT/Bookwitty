@@ -490,8 +490,11 @@ extension ProfileDetailsViewController: BaseCardPostNodeDelegate {
       viewModel.unfollow(segment: activeSegment, indexPath: indexPath) { (success) in
         didFinishAction?(success)
       }
+    case .comment:
+      guard let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment) else { return }
+      pushCommentsViewController(for: resource as? ModelCommonProperties)
+      didFinishAction?(true)
     default:
-      //TODO: handle comment
       break
     }
 

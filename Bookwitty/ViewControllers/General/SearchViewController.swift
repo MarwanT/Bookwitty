@@ -376,8 +376,11 @@ extension SearchViewController: BaseCardPostNodeDelegate {
       viewModel.unfollow(indexPath: indexPath) { (success) in
         didFinishAction?(success)
       }
-    default:
-      //TODO: handle comment
+    case .comment:
+      guard let resource = viewModel.resourceForIndex(indexPath: indexPath) else { return }
+      pushCommentsViewController(for: resource as? ModelCommonProperties)
+      didFinishAction?(true)
+    default:      
       break
     }
 

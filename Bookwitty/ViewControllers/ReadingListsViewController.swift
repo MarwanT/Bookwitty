@@ -219,8 +219,11 @@ extension ReadingListsViewController: BaseCardPostNodeDelegate {
       if let sharingInfo: [String] = viewModel.sharingContent(indexPath: indexPath) {
         presentShareSheet(shareContent: sharingInfo)
       }
+    case .comment:
+      guard let resource = viewModel.resourceForIndex(indexPath: indexPath) else { return }
+      pushCommentsViewController(for: resource as? ModelCommonProperties)
+      didFinishAction?(true)
     default:
-      //TODO: handle comment
       break
     }
 

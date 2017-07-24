@@ -616,8 +616,11 @@ extension DiscoverViewController: BaseCardPostNodeDelegate {
       viewModel.unfollow(for: activeSegment, index: index) { (success) in
         didFinishAction?(success)
       }
+    case .comment:
+      guard let resource = viewModel.resourceForIndex(for: activeSegment, index: index) else { return }
+      pushCommentsViewController(for: resource as? ModelCommonProperties)
+      didFinishAction?(true)
     default:
-      //TODO: handle comment
       break
     }
 
