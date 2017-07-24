@@ -219,7 +219,7 @@ extension BaseCardPostNode {
       verticalStack.children?.append(separatorNodeInset)
       verticalStack.children?.append(actionBarNodeInset)
     } else {
-      verticalStack.children?.append(ASLayoutSpec.spacer(height: actionBarInset().bottom))
+      verticalStack.children?.append(ASLayoutSpec.spacer(height: externalInset().bottom))
     }
 
     if shouldShowTopCommentNode {
@@ -294,7 +294,7 @@ extension BaseCardPostNode {
     let externalInset = self.externalInset()
     return UIEdgeInsets(top: 0,
                         left: externalInset.left,
-                        bottom: externalInset.bottom ,
+                        bottom: 0,
                         right: externalInset.right)
   }
 
