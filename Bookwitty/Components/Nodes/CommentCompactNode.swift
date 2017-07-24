@@ -30,6 +30,8 @@ class CommentCompactNode: ASCellNode {
     imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0.0, nil)
     imageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
 
+    messageNode.backgroundColor = UIColor.clear
+
     messageNode.style.flexGrow = 1.0
     messageNode.style.flexShrink = 1.0
 
