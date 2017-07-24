@@ -50,6 +50,8 @@ class CommentCompactNode: ASCellNode {
 
   func set(fullName: String?, message: String?) {
     guard let fullName = fullName, let message = message else {
+      messageNode.set(attributedString: NSAttributedString(string: ""))
+      messageNode.setNeedsLayout()
       return
     }
 
