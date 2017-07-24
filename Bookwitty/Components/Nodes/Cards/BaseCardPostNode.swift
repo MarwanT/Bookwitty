@@ -285,6 +285,14 @@ extension BaseCardPostNode {
                         right: externalInset.right)
   }
 
+  private func commentNodeInset() -> UIEdgeInsets {
+    let externalInset = self.internalInset()
+    return UIEdgeInsets(top: 5,
+                        left: externalInset.left,
+                        bottom: 5,
+                        right: externalInset.right)
+  }
+
   private func separatorInset() -> UIEdgeInsets {
     let externalInset = self.externalInset()
     return UIEdgeInsets(top: 0,
@@ -322,6 +330,11 @@ extension BaseCardPostNode: BaseCardPostNodeContentProvider {
   internal var shouldShowActionBarNode: Bool {
     return true
   }
+
+  internal var shouldShowTopCommentNode: Bool {
+    return self.topComment != nil
+  }
+
 
   internal var contentShouldExtendBorders: Bool {
     return false
