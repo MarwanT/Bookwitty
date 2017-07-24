@@ -64,6 +64,8 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
   fileprivate let separatorNode: ASDisplayNode
   fileprivate let commentsSummaryNode: ASTextNode
 
+  fileprivate let topCommentNode: CommentCompactNode
+
   fileprivate var shouldShowCommentSummaryNode: Bool {
     return !articleCommentsSummary.isEmptyOrNil()
   }
@@ -108,6 +110,7 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     backgroundNode = ASDisplayNode()
     separatorNode = ASDisplayNode()
     commentsSummaryNode = ASTextNode()
+    topCommentNode = CommentCompactNode()
     super.init()
     setupCellNode()
   }
