@@ -595,3 +595,35 @@ extension BookDetailsViewController: ProductFormatsViewControllerDelegate {
     }
   }
 }
+
+// MARK: - Compose comment delegate implementation
+extension BookDetailsViewController: CommentComposerViewControllerDelegate {
+  func commentComposerCancel(_ viewController: CommentComposerViewController) {
+    dismiss(animated: true, completion: nil)
+  }
+
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, postId: String?, parentCommentId: String?) {
+    guard let postId = postId else {
+      _ = viewController.becomeFirstResponder()
+      return
+    }
+
+    SwiftLoader.show(animated: true)
+    let commentManager = CommentsManager()
+    commentManager.initialize(postIdentifier: postId)
+    commentManager.publishComment(content: content, parentCommentId: nil) {
+      (success: Bool, error: CommentsManager.Error?) in
+      SwiftLoader.hide()
+      guard success else {
+        guard let error = error else { return }
+        self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
+          _ in
+          _ = viewController.becomeFirstResponder()
+        })
+        return
+      }
+      self.dismiss(animated: true, completion: nil)
+    }
+    dismiss(animated: true, completion: nil)
+  }
+}
