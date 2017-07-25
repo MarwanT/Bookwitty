@@ -15,10 +15,12 @@ class CommentCompactNode: ASCellNode {
 
   fileprivate let imageNode: ASNetworkImageNode
   fileprivate let messageNode: DTAttributedLabelNode
+  fileprivate let overlayNode: ASControlNode
 
   override init() {
     imageNode = ASNetworkImageNode()
     messageNode = DTAttributedLabelNode()
+    overlayNode = ASControlNode()
     super.init()
     setupNode()
   }
@@ -38,6 +40,8 @@ class CommentCompactNode: ASCellNode {
     self.style.preferredSize = CGSize(width: 45.0, height: 45.0)
 
     messageNode.maxNumberOfLines = 3
+
+    overlayNode.addTarget(self, action: #selector(nodeTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
 
   // MARK: Data Setters
@@ -75,7 +79,7 @@ class CommentCompactNode: ASCellNode {
     messageNodeInsetSpec.style.flexGrow = 1.0
     messageNodeInsetSpec.style.flexShrink = 1.0
     let horizontalSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start, alignItems: .center, children: [imageNodeInsetSpec, messageNodeInsetSpec])
-    return horizontalSpec
+    return ASOverlayLayoutSpec(child: horizontalSpec, overlay: overlayNode)
   }
 
   var imageInset: UIEdgeInsets {
@@ -84,5 +88,13 @@ class CommentCompactNode: ASCellNode {
 
   var messageInset: UIEdgeInsets {
     return UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 5.0)
+  }
+}
+
+// MARK: Actions
+extension CommentCompactNode {
+  @objc
+  fileprivate func nodeTouchUpInside(_ sender: Any) {
+    
   }
 }
