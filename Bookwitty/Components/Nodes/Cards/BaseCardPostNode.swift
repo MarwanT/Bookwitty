@@ -189,8 +189,13 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     separatorNode.style.height = ASDimensionMake(1)
     separatorNode.style.flexGrow = 1
 
-    writeCommentNode.configuration.textNodeMinimumHeight = 40
+    writeCommentNode.configuration.imageSize = CGSize(width: 30.0, height: 30.0)
+    writeCommentNode.configuration.textContainerInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+    writeCommentNode.style.preferredSize = CGSize(width: 35.0, height: 35.0)
+    writeCommentNode.configuration.textNodeMinimumHeight = 30
     writeCommentNode.configuration.externalInsets = UIEdgeInsets.zero
+    writeCommentNode.configuration.alignItems = .center
+    writeCommentNode.imageURL = URL(string: UserManager.shared.defaultPenName?.avatarUrl ?? "")
   }
 
   private func manageNodes() {
