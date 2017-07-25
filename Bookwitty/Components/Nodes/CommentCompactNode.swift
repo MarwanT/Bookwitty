@@ -10,12 +10,18 @@ import UIKit
 import AsyncDisplayKit
 import DTCoreText
 
+protocol CommentCompactNodeDelegate: class {
+  func commentCompactNodeDidTap(_ node: CommentCompactNode)
+}
+
 class CommentCompactNode: ASCellNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
 
   fileprivate let imageNode: ASNetworkImageNode
   fileprivate let messageNode: DTAttributedLabelNode
   fileprivate let overlayNode: ASControlNode
+
+  var delegate: CommentCompactNodeDelegate?
 
   override init() {
     imageNode = ASNetworkImageNode()
@@ -94,7 +100,7 @@ class CommentCompactNode: ASCellNode {
 // MARK: Actions
 extension CommentCompactNode {
   @objc
-  fileprivate func nodeTouchUpInside(_ sender: Any) {
-    
+  fileprivate func nodeTouchUpInside(_ sender: Any) {    
+    delegate?.commentCompactNodeDidTap(self)
   }
 }
