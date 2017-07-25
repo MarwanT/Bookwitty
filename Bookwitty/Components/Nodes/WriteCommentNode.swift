@@ -33,6 +33,7 @@ class WriteCommentNode: ASCellNode {
     automaticallyManagesSubnodes = true
     
     imageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
+    imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0.0, nil)
     imageNode.isLayerBacked = true
   
     overlayNode.addTarget(self, action: #selector(didTapNode(_:)), forControlEvents: .touchUpInside)
