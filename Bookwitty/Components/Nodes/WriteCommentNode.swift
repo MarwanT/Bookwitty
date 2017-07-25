@@ -92,7 +92,7 @@ class WriteCommentNode: ASCellNode {
 extension WriteCommentNode {
   struct Configuration {
     private static var subnodesSpace = ThemeManager.shared.currentTheme.cardInternalMargin()
-    fileprivate var textContainerInset = UIEdgeInsetsMake(
+    var textContainerInset = UIEdgeInsetsMake(
       ThemeManager.shared.currentTheme.cardInternalMargin(),
       ThemeManager.shared.currentTheme.cardInternalMargin(),
       ThemeManager.shared.currentTheme.cardInternalMargin(),
