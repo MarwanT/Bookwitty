@@ -44,12 +44,20 @@ extension BaseCardPostNode: CardPostInfoNodeDelegate {
 extension BaseCardPostNode: CommentCompactNodeDelegate {
   func commentCompactNodeDidTap(_ node: CommentCompactNode) {
 
+    delegate?.cardNode(card: self, didRequestAction: BaseCardPostNode.Action.listComments, from: node)
   }
 }
 
 extension BaseCardPostNode: WriteCommentNodeDelegate {
   func writeCommentNodeDidTap(_ writeCommentNode: WriteCommentNode) {
 
+    guard UserManager.shared.isSignedIn else {
+      //If user is not signed In post notification and do not fall through
+      NotificationCenter.default.post( name: AppNotification.callToAction, object: nil)
+      return
+    }
+
+    delegate?.cardNode(card: self, didRequestAction: BaseCardPostNode.Action.publishComment, from: writeCommentNode)
   }
 }
 
