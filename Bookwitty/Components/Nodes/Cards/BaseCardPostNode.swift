@@ -48,6 +48,11 @@ protocol BaseCardPostNodeDelegate: class {
 
 class BaseCardPostNode: ASCellNode, NodeTapProtocol {
 
+  enum Action {
+    case listComments
+    case publishComment
+  }
+
   var baseViewModel: CardViewModelProtocol? {
     return nil
   }
