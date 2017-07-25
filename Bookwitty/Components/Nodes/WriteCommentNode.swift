@@ -39,7 +39,6 @@ class WriteCommentNode: ASCellNode {
     
     placeholder = Strings.what_are_your_thoughts()
     textNode.style.flexGrow = 1.0
-    textNode.textContainerInset = configuration.textContainerInset
   }
   
   override func didLoad() {
@@ -51,6 +50,7 @@ class WriteCommentNode: ASCellNode {
     textNode.borderWidth = configuration.textNodeBorderWidth
     
     textNode.style.minHeight = ASDimensionMake(configuration.textNodeMinimumHeight)
+    textNode.textContainerInset = configuration.textContainerInset
     
     imageNode.style.preferredSize = configuration.imageSize
     let imageInsetsSpec = ASInsetLayoutSpec(insets: configuration.imageNodeInsets, child: imageNode)
