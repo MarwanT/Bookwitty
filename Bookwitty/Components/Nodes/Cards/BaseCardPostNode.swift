@@ -41,6 +41,18 @@ extension BaseCardPostNode: CardPostInfoNodeDelegate {
   }
 }
 
+extension BaseCardPostNode: CommentCompactNodeDelegate {
+  func commentCompactNodeDidTap(_ node: CommentCompactNode) {
+
+  }
+}
+
+extension BaseCardPostNode: WriteCommentNodeDelegate {
+  func writeCommentNodeDidTap(_ writeCommentNode: WriteCommentNode) {
+
+  }
+}
+
 protocol BaseCardPostNodeDelegate: class {
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
   func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any)
@@ -160,6 +172,8 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
   private func setupCellNode() {
     actionBarNode.delegate = self
     infoNode.delegate = self
+    topCommentNode.delegate = self
+    writeCommentNode.delegate = self
     manageNodes()
     setupCardTheme()
     
