@@ -227,27 +227,20 @@ extension BaseCardPostNode {
       verticalStack.children?.append(ASLayoutSpec.spacer(height: externalInset().bottom))
     }
 
+    let commentSeparator = ASDisplayNode()
+    commentSeparator.style.height = ASDimensionMake(1)
+    commentSeparator.style.flexGrow = 1
+    commentSeparator.isLayerBacked = true
+    commentSeparator.backgroundColor = ThemeManager.shared.currentTheme.colorNumber18()
+    let commentSeparatorNodeInset = ASInsetLayoutSpec(insets: actionBarInset(), child: commentSeparator)
+    verticalStack.children?.append(commentSeparatorNodeInset)
+
     if shouldShowTopCommentNode {
       let topCommentNodeInset = ASInsetLayoutSpec(insets: commentNodeInset(), child: topCommentNode)
-      let commentSeparator = ASDisplayNode()
-      commentSeparator.style.height = ASDimensionMake(1)
-      commentSeparator.style.flexGrow = 1
-      commentSeparator.isLayerBacked = true
-      commentSeparator.backgroundColor = ThemeManager.shared.currentTheme.colorNumber18()
-      let commentSeparatorNodeInset = ASInsetLayoutSpec(insets: actionBarInset(), child: commentSeparator)
-      verticalStack.children?.append(commentSeparatorNodeInset)
       verticalStack.children?.append(topCommentNodeInset)
       verticalStack.children?.append(ASLayoutSpec.spacer(height: externalInset().bottom))
     } else {
       let writeCommentNodeInset = ASInsetLayoutSpec(insets: commentNodeInset(), child: writeCommentNode)
-
-      let commentSeparator = ASDisplayNode()
-      commentSeparator.style.height = ASDimensionMake(1)
-      commentSeparator.style.flexGrow = 1
-      commentSeparator.isLayerBacked = true
-      commentSeparator.backgroundColor = ThemeManager.shared.currentTheme.colorNumber18()
-      let commentSeparatorNodeInset = ASInsetLayoutSpec(insets: actionBarInset(), child: commentSeparator)
-      verticalStack.children?.append(commentSeparatorNodeInset)
       verticalStack.children?.append(writeCommentNodeInset)
       verticalStack.children?.append(ASLayoutSpec.spacer(height: externalInset().bottom))
     }
