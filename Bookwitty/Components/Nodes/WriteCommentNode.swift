@@ -54,7 +54,7 @@ class WriteCommentNode: ASCellNode {
     
     imageNode.style.preferredSize = configuration.imageSize
     let imageInsetsSpec = ASInsetLayoutSpec(insets: configuration.imageNodeInsets, child: imageNode)
-    let contentSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start, alignItems: .start, children: [imageInsetsSpec, textNode])
+    let contentSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start, alignItems: configuration.alignItems, children: [imageInsetsSpec, textNode])
     let contentInsetsSpec = ASInsetLayoutSpec(insets: configuration.externalInsets, child: contentSpec)
     return ASOverlayLayoutSpec(child: contentInsetsSpec, overlay: overlayNode)
   }
@@ -97,7 +97,9 @@ extension WriteCommentNode {
       ThemeManager.shared.currentTheme.cardInternalMargin(),
       ThemeManager.shared.currentTheme.cardInternalMargin(),
       ThemeManager.shared.currentTheme.cardInternalMargin())
-    
+
+    var alignItems: ASStackLayoutAlignItems = ASStackLayoutAlignItems.start
+
     var externalInsets = UIEdgeInsets(
       top: ThemeManager.shared.currentTheme.generalExternalMargin(),
       left: ThemeManager.shared.currentTheme.generalExternalMargin(),
