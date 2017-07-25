@@ -540,6 +540,19 @@ extension BookDetailsViewController: BaseCardPostNodeDelegate {
                                                  name: name)
     Analytics.shared.send(event: event)
   }
+
+  func cardNode(card: BaseCardPostNode, didRequestAction action: BaseCardPostNode.Action, from: ASDisplayNode) {
+    guard let indexPath = card.indexPath else {
+      return
+    }
+
+    switch(action) {
+    case .listComments:
+      break
+    case .publishComment:
+      break
+    }
+  }
 }
 
 //MARK: - Localizable implementation

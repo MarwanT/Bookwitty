@@ -583,6 +583,21 @@ extension NewsFeedViewController: BaseCardPostNodeDelegate {
                                                  name: name)
     Analytics.shared.send(event: event)
   }
+
+  func cardNode(card: BaseCardPostNode, didRequestAction action: BaseCardPostNode.Action, from: ASDisplayNode) {
+    guard let indexPath = card.indexPath else {
+      return
+    }
+
+    switch(action) {
+    case .listComments:
+      print("[debug]: \(NSURL(string: #file)?.deletingPathExtension?.lastPathComponent ?? "").\(#function) [Line \(#line)]")
+      break
+    case .publishComment:
+      print("[debug]: \(NSURL(string: #file)?.deletingPathExtension?.lastPathComponent ?? "").\(#function) [Line \(#line)]")
+      break
+    }
+  }
 }
 
 extension NewsFeedViewController: ASCollectionDelegate {
