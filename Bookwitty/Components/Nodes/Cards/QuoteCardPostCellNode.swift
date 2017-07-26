@@ -27,6 +27,7 @@ class QuoteCardPostCellNode: BaseCardPostNode {
     node = QuoteCardPostContentNode()
     viewModel = QuoteCardViewModel()
     super.init()
+    shouldHandleTopComments = true
     viewModel.delegate = self
   }
 

@@ -30,6 +30,7 @@ class VideoCardPostCellNode: BaseCardPostNode {
     node = VideoCardContentNode()
     viewModel = VideoCardViewModel()
     super.init()
+    shouldHandleTopComments = true
     viewModel.delegate = self
   }
 

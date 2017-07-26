@@ -25,6 +25,7 @@ class ReadingListCardPostCellNode: BaseCardPostNode {
     node = ReadingListCardContentNode()
     viewModel = ReadingListCardViewModel()
     super.init()
+    shouldHandleTopComments = true
     viewModel.delegate = self
   }
 

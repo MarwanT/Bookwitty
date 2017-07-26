@@ -31,6 +31,7 @@ class LinkCardPostCellNode: BaseCardPostNode {
     node = LinkCardPostContentNode()
     viewModel = LinkCardViewModel()
     super.init()
+    shouldHandleTopComments = true
     viewModel.delegate = self
   }
 

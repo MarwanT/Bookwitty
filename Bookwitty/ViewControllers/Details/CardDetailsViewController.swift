@@ -37,6 +37,7 @@ class CardDetailsViewController: GenericNodeViewController {
     
     node.delegate = self
     node.updateMode(fullMode: true)
+    node.shouldHandleTopComments = false
 
     if let photoNode = node as? PhotoCardPostCellNode {
       photoNode.node.delegate = self

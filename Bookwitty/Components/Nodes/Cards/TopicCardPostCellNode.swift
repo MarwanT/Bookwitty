@@ -26,6 +26,7 @@ class TopicCardPostCellNode: BaseCardPostNode {
     node = TopicCardPostContentNode()
     viewModel = TopicCardViewModel()
     super.init()
+    shouldHandleTopComments = true
     viewModel.delegate = self
   }
 
