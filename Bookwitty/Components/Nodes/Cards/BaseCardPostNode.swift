@@ -93,6 +93,8 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
   fileprivate let topCommentNode: CommentCompactNode
   fileprivate let writeCommentNode: WriteCommentNode
 
+  var shouldHandleTopComments: Bool = true
+
   fileprivate var shouldShowCommentSummaryNode: Bool {
     return !articleCommentsSummary.isEmptyOrNil()
   }
@@ -260,22 +262,24 @@ extension BaseCardPostNode {
       verticalStack.children?.append(ASLayoutSpec.spacer(height: externalInset().bottom))
     }
 
-    let commentSeparator = ASDisplayNode()
-    commentSeparator.style.height = ASDimensionMake(1)
-    commentSeparator.style.flexGrow = 1
-    commentSeparator.isLayerBacked = true
-    commentSeparator.backgroundColor = ThemeManager.shared.currentTheme.colorNumber18()
-    let commentSeparatorNodeInset = ASInsetLayoutSpec(insets: actionBarInset(), child: commentSeparator)
-    verticalStack.children?.append(commentSeparatorNodeInset)
+    if shouldHandleTopComments {
+      let commentSeparator = ASDisplayNode()
+      commentSeparator.style.height = ASDimensionMake(1)
+      commentSeparator.style.flexGrow = 1
+      commentSeparator.isLayerBacked = true
+      commentSeparator.backgroundColor = ThemeManager.shared.currentTheme.colorNumber18()
+      let commentSeparatorNodeInset = ASInsetLayoutSpec(insets: actionBarInset(), child: commentSeparator)
+      verticalStack.children?.append(commentSeparatorNodeInset)
 
-    if shouldShowTopCommentNode {
-      let topCommentNodeInset = ASInsetLayoutSpec(insets: commentNodeInset(), child: topCommentNode)
-      verticalStack.children?.append(topCommentNodeInset)
-      verticalStack.children?.append(ASLayoutSpec.spacer(height: externalInset().bottom))
-    } else {
-      let writeCommentNodeInset = ASInsetLayoutSpec(insets: commentNodeInset(), child: writeCommentNode)
-      verticalStack.children?.append(writeCommentNodeInset)
-      verticalStack.children?.append(ASLayoutSpec.spacer(height: externalInset().bottom))
+      if shouldShowTopCommentNode {
+        let topCommentNodeInset = ASInsetLayoutSpec(insets: commentNodeInset(), child: topCommentNode)
+        verticalStack.children?.append(topCommentNodeInset)
+        verticalStack.children?.append(ASLayoutSpec.spacer(height: externalInset().bottom))
+      } else {
+        let writeCommentNodeInset = ASInsetLayoutSpec(insets: commentNodeInset(), child: writeCommentNode)
+        verticalStack.children?.append(writeCommentNodeInset)
+        verticalStack.children?.append(ASLayoutSpec.spacer(height: externalInset().bottom))
+      }
     }
 
     //Note: If we used children or background properties instead of init -> Order would be important,
