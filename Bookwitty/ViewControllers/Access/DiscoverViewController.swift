@@ -667,15 +667,17 @@ extension DiscoverViewController: BaseCardPostNodeDelegate {
   }
 
   func cardNode(card: BaseCardPostNode, didRequestAction action: BaseCardPostNode.Action, from: ASDisplayNode) {
-    guard let indexPath = card.indexPath else {
-      return
+    guard let indexPath = collectionNode.indexPath(for: card),
+      let resource = viewModel.resourceForIndex(for: activeSegment, index: indexPath.item),
+      let postId = resource.id else {
+        return
     }
 
     switch(action) {
     case .listComments:
-      break
+      pushCommentsViewController(for: resource as? ModelCommonProperties)
     case .publishComment:
-      break
+      CommentComposerViewController.show(from: self, delegate: self, postId: postId, parentCommentId: nil)
     }
   }
 }

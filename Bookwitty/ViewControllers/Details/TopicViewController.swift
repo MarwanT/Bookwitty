@@ -950,15 +950,36 @@ extension TopicViewController: BaseCardPostNodeDelegate {
   }
   
   func cardNode(card: BaseCardPostNode, didRequestAction action: BaseCardPostNode.Action, from: ASDisplayNode) {
-    guard let indexPath = card.indexPath else {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+        return
+    }
+
+    let index: Int = indexPath.row
+    var candidateResource: ModelResource?
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+    switch category {
+    case .latest:
+      candidateResource = viewModel.latest(at: index)
+    case .editions:
+      candidateResource = viewModel.edition(at: index)
+    case .relatedBooks:
+      candidateResource = viewModel.relatedBook(at: index)
+    case .followers:
+      candidateResource = viewModel.follower(at: index)
+    case .none:
+      return
+    }
+
+    guard let resource = candidateResource,
+    let postId = resource.id else {
       return
     }
 
     switch(action) {
     case .listComments:
-      break
+      pushCommentsViewController(for: resource as? ModelCommonProperties)
     case .publishComment:
-      break
+      CommentComposerViewController.show(from: self, delegate: self, postId: postId, parentCommentId: nil)
     }
   }
 }
