@@ -37,6 +37,8 @@ class SignInViewController: UIViewController {
 
     navigationItem.backBarButtonItem = UIBarButtonItem.back
 
+    facebookSignInButton.delegate = self
+    
     //MARK: [Analytics] Screen Name
     Analytics.shared.send(screenName: Analytics.ScreenNames.SignIn)
   }
@@ -316,4 +318,32 @@ extension SignInViewController: Localizable {
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
   }
+}
+
+//MARK: - Facebook Login Button Delegate
+extension SignInViewController: FBSDKLoginButtonDelegate {
+  func loginButtonWillLogin(_ loginButton: FBSDKLoginButton!) -> Bool {
+    startFacebookLoginProcess()
+    return false
+  }
+  
+  func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) { }
+  
+  func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) { }
+}
+
+// MARK: - Facebook Login Logic
+extension SignInViewController: WebViewControllerDelegate {
+  func startFacebookLoginProcess() {
+    let facebookLoginURL = Environment.current.baseURL.appendingPathComponent("account/auth/facebook")
+    WebViewController.present(url: facebookLoginURL, delegate: self, inViewController: self)
+  }
+  
+  func webViewController(_ webViewController: WebViewController, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    print("[URL] = \(request.url?.absoluteString ?? "NIL")")
+    return true
+  }
+  func webViewController(_ webViewController: WebViewController, didFailLoadWithError error: Error) {}
+  func webViewControllerDidStartLoad(_ webViewController: WebViewController) {}
+  func webViewControllerDidFinishLoad(_ webViewController: WebViewController) {}
 }
