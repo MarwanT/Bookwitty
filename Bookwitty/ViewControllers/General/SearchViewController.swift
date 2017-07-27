@@ -853,7 +853,7 @@ extension SearchViewController: CommentComposerViewControllerDelegate {
     let commentManager = CommentsManager()
     commentManager.initialize(postIdentifier: postId)
     commentManager.publishComment(content: content, parentCommentId: nil) {
-      (success: Bool, error: CommentsManager.Error?) in
+      (success: Bool, comment: Comment?, error: CommentsManager.Error?) in
       SwiftLoader.hide()
       guard success else {
         guard let error = error else { return }
