@@ -335,8 +335,13 @@ extension SignInViewController: FBSDKLoginButtonDelegate {
 // MARK: - Facebook Login Logic
 extension SignInViewController: WebViewControllerDelegate {
   func startFacebookLoginProcess() {
-    let facebookLoginURL = Environment.current.baseURL.appendingPathComponent("account/auth/facebook")
-    WebViewController.present(url: facebookLoginURL, delegate: self, inViewController: self)
+    _ = UserAPI.signInAonymously {
+      (success: Bool, error :BookwittyAPIError?) in
+      if success {
+        let facebookLoginURL = Environment.current.baseURL.appendingPathComponent("account/auth/facebook")
+        WebViewController.present(url: facebookLoginURL, delegate: self, inViewController: self)
+      }
+    }
   }
   
   func webViewController(_ webViewController: WebViewController, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
