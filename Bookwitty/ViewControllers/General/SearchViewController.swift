@@ -54,8 +54,11 @@ class SearchViewController: ASViewController<ASCollectionNode> {
     }
     let categories = facet.categories?.count ?? 0 > 0
     let languages = facet.languages?.count ?? 0 > 0
-    let typs = facet.types?.count ?? 0 > 0
-    return categories || languages || typs
+    let types = facet.types?.count ?? 0 > 0
+
+    let containsFilter: Bool = (viewModel.filter.categories.count > 0 || viewModel.filter.languages.count > 0 || viewModel.filter.types.count > 0)
+
+    return categories || languages || types || containsFilter
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -186,6 +189,18 @@ class SearchViewController: ASViewController<ASCollectionNode> {
   fileprivate func pushFilterViewController() {
     guard let facet = viewModel.facet else {
       return
+    }
+
+    if facet.categories?.count == 0 && viewModel.filter.categories.count > 0 {
+      facet.categories = viewModel.filter.categories
+    }
+
+    if facet.languages?.count == 0 && viewModel.filter.languages.count > 0 {
+      facet.languages = viewModel.filter.languages
+    }
+
+    if facet.types?.count == 0 && viewModel.filter.types.count > 0 {
+      facet.types = viewModel.filter.types
     }
 
     let searchFiltersViewController = Storyboard.Misc.instantiate(SearchFiltersViewController.self)

@@ -80,7 +80,7 @@ class SearchFiltersViewModel {
 
     switch option {
     case .categories:
-      let localized = facet?.categories?.filter({ candidateFilter?.categories.contains($0.key ?? "") ?? false }).flatMap({ $0.value }) ?? []
+      let localized = candidateFilter?.categories.flatMap({ $0.value }) ?? []
       return localized.joined(separator: ", ")
     case .languages:
       let localized = candidateFilter?.languages.flatMap({ Locale.application.localizedString(forLanguageCode: $0) }) ?? []
@@ -105,15 +105,15 @@ class SearchFiltersViewModel {
   }
 
   fileprivate func toggleCategory(at row: Int) {
-    guard let filter = candidateFilter, let cat = category(at: row), let key = cat.key else {
+    guard let filter = candidateFilter, let cat = category(at: row) else {
       return
     }
 
-    if filter.categories.contains(key) {
+    if filter.categories.contains(where: { $0.key == cat.key ?? "" }) {
       filter.categories.removeAll()
     } else {
       filter.categories.removeAll()
-      filter.categories.append(key)
+      filter.categories.append(cat)
     }
   }
 
@@ -199,8 +199,8 @@ extension SearchFiltersViewModel {
   }
 
   func values(for section: Int) -> (title: String?, subtitle: String?, mode: CollapsableTableViewSectionHeaderView.Mode) {
-    let title = self.title(for: section)
-    let subtitle = self.subtitle(for: section)
+    let title = self.title(for: section)?.capitalized
+    let subtitle = self.subtitle(for: section)?.capitalized
     let mode: CollapsableTableViewSectionHeaderView.Mode = expandedSections.contains(section) ? .expanded : .collapsed
     return (title, subtitle, mode)
   }
@@ -216,15 +216,15 @@ extension SearchFiltersViewModel {
     switch option {
     case .categories:
       let cat = category(at: indexPath.row)
-      title = cat?.value
-      selected = candidateFilter?.categories.contains(cat?.key ?? "") ?? false
+      title = cat?.value?.capitalized
+      selected = candidateFilter?.categories.contains(where: { $0.key == cat?.key ?? ""}) ?? false
     case .languages:
       let lang = language(at: indexPath.row)
-      title = lang.localized
+      title = lang.localized?.capitalized
       selected = candidateFilter?.languages.contains(lang.code ?? "") ?? false
     case .types:
       let typ = type(at: indexPath.row)
-      title = typ.localized
+      title = typ.localized?.capitalized
       selected = candidateFilter?.types.contains(typ.resourceType ?? "") ?? false
     }
 

@@ -71,7 +71,7 @@ final class CategoryViewModel {
     
     
     group.enter()
-    categoryBooksRequest = loadCategoryBooks(categoryIdentifier: categoryIdentifier, completion: {
+    categoryBooksRequest = loadCategoryBooks(category: category, completion: {
       (success, error) in
       self.categoryBooksRequest = nil
       categoryBooksAPISuccess = success
@@ -152,11 +152,11 @@ final class CategoryViewModel {
     })
   }
   
-  private func loadCategoryBooks(categoryIdentifier: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  private func loadCategoryBooks(category: Category, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     categoryBooks = nil
 
     let filter = Filter()
-    filter.categories.append(categoryIdentifier)
+    filter.categories.append(category)
     return SearchAPI.search(filter: filter, page: nil, completion: {
       (success, resources, nextPage, facet, error) in
       defer {
