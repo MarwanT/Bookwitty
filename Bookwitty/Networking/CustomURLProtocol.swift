@@ -36,8 +36,10 @@ class CustomURLProtocol: URLProtocol {
     var jsonRequest = request
     if request.url?.absoluteString.contains("account/auth/facebook/callback") ?? false {
       var dictionary = jsonRequest.allHTTPHeaderFields ?? [:]
+      let token = AccessToken.shared.token ?? ""
       dictionary.updateValue("application/json", forKey: "Accept")
       dictionary.updateValue("application/json", forKey: "Content-Type")
+      dictionary.updateValue("Bearer \(token)", forKey: "Authorization")
       jsonRequest.allHTTPHeaderFields = dictionary
     }
     return jsonRequest
