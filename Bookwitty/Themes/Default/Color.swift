@@ -138,4 +138,9 @@ extension UIColor {
   static var bwSangria: UIColor {
     return UIColor(red: 162/255, green: 0, blue: 9/255, alpha: 1)
   }
+
+  /// Design Comments on Book Formats Table View Header Background
+  static var bwOrangeLight: UIColor {
+    return UIColor(red: 255/255, green: 247/255.0, blue: 245/255, alpha:1.0)
+  }
 }

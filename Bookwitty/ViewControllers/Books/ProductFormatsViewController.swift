@@ -222,6 +222,17 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
         return nil
       }
       headerView.textLabel?.text = values as? String
+      let color = UIColor.bwOrangeLight
+
+      /** Discussion
+       * Setting the background color on UITableViewHeaderFooterView has been deprecated, BUT contentView.backgroundColor was not working on the IPOD or IPHONE-5/s
+       * so we kept both until 'contentView.backgroundColor' work 100% on all supported devices
+       */
+      headerView.contentView.backgroundColor = color
+      if let imagebg = color.image(size: CGSize(width: headerView.frame.width, height: headerView.frame.height)) {
+        headerView.backgroundView = UIImageView(image: imagebg)
+      }
+
       return headerView
     case .availableFormats:
       guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CollapsableTableViewSectionHeaderView.reuseIdentifier) as? CollapsableTableViewSectionHeaderView, let values = values as? ProductFormatsViewModel.AvailableFormatHeaderValues else {

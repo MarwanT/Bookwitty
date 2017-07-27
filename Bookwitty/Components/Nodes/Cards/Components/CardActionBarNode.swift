@@ -133,6 +133,8 @@ class CardActionBarNode: ASCellNode {
     witButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
     witButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
 
+    witButton.style.preferredSize.width = 75.0
+
     witButton.setTitle(Strings.wit_it(), with: buttonFont, with: textColor, for: .normal)
     witButton.setTitle(Strings.witted(), with: buttonFont, with: selectedTextColor, for: .selected)
 

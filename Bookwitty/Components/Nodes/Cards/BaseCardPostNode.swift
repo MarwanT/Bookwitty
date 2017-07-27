@@ -114,7 +114,7 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     didSet {
       if let actionInfoValue = actionInfoValue {
         actionInfoNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
-          .append(text: actionInfoValue, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+          .append(text: actionInfoValue, color: ThemeManager.shared.currentTheme.colorNumber15()).attributedString
       } else {
         actionInfoNode.attributedText = nil
       }
@@ -242,18 +242,23 @@ extension BaseCardPostNode {
     let contentTopInset = (shouldShowInfoNode && !forceHideInfoNode) ? 0 : defaultInset.top
     let contentInset = ASInsetLayoutSpec(insets: UIEdgeInsets(top: contentTopInset, left: contentSideInsets, bottom: 0, right: contentSideInsets), child: contentNode)
 
-    let commentSummaryInset: ASLayoutElement = shouldShowCommentSummaryNode ? commentSummaryLayoutSpecs() : spacer(height: internalMargin)
-
     let verticalStack = ASStackLayoutSpec.vertical()
     verticalStack.justifyContent = .center
     verticalStack.alignItems = .stretch
-    verticalStack.children = (shouldShowInfoNode && !forceHideInfoNode)
-      ? [infoNodeInset, contentInset, commentSummaryInset]
-      : [contentInset, commentSummaryInset]
+    verticalStack.children = []
+
+    if (shouldShowInfoNode && !forceHideInfoNode) {
+      verticalStack.children?.append(infoNodeInset)
+    }
+
+    verticalStack.children?.append(contentInset)
 
     if shouldShowActionInfoNode {
+      verticalStack.children?.append(spacer(height: internalMargin / 2.0))
       verticalStack.children?.append(actionInfoNodeInset)
     }
+
+    verticalStack.children?.append(spacer(height: internalMargin / 2.0))
 
     if shouldShowActionBarNode {
       verticalStack.children?.append(separatorNodeInset)
