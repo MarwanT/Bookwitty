@@ -41,12 +41,38 @@ extension BaseCardPostNode: CardPostInfoNodeDelegate {
   }
 }
 
+extension BaseCardPostNode: CommentCompactNodeDelegate {
+  func commentCompactNodeDidTap(_ node: CommentCompactNode) {
+
+    delegate?.cardNode(card: self, didRequestAction: BaseCardPostNode.Action.listComments, from: node)
+  }
+}
+
+extension BaseCardPostNode: WriteCommentNodeDelegate {
+  func writeCommentNodeDidTap(_ writeCommentNode: WriteCommentNode) {
+
+    guard UserManager.shared.isSignedIn else {
+      //If user is not signed In post notification and do not fall through
+      NotificationCenter.default.post( name: AppNotification.callToAction, object: nil)
+      return
+    }
+
+    delegate?.cardNode(card: self, didRequestAction: BaseCardPostNode.Action.publishComment, from: writeCommentNode)
+  }
+}
+
 protocol BaseCardPostNodeDelegate: class {
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
   func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any)
+  func cardNode(card: BaseCardPostNode, didRequestAction action: BaseCardPostNode.Action, from: ASDisplayNode)
 }
 
 class BaseCardPostNode: ASCellNode, NodeTapProtocol {
+
+  enum Action {
+    case listComments
+    case publishComment
+  }
 
   var baseViewModel: CardViewModelProtocol? {
     return nil
@@ -63,6 +89,11 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
   fileprivate let backgroundNode: ASDisplayNode
   fileprivate let separatorNode: ASDisplayNode
   fileprivate let commentsSummaryNode: ASTextNode
+
+  fileprivate let topCommentNode: CommentCompactNode
+  fileprivate let writeCommentNode: WriteCommentNode
+
+  var shouldHandleTopComments: Bool = true
 
   fileprivate var shouldShowCommentSummaryNode: Bool {
     return !articleCommentsSummary.isEmptyOrNil()
@@ -108,6 +139,8 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     backgroundNode = ASDisplayNode()
     separatorNode = ASDisplayNode()
     commentsSummaryNode = ASTextNode()
+    topCommentNode = CommentCompactNode()
+    writeCommentNode = WriteCommentNode()
     super.init()
     setupCellNode()
   }
@@ -139,14 +172,32 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     actionBarNode.setWitButton(witted: witted)
   }
 
+  var topComment: Comment? {
+    didSet {
+      topCommentNode.set(fullName: topComment?.penName?.name, message: topComment?.body)
+      topCommentNode.imageURL = URL(string: topComment?.penName?.avatarUrl ?? "")
+      topCommentNode.setNeedsLayout()
+    }
+  }
+
   private func setupCellNode() {
     actionBarNode.delegate = self
     infoNode.delegate = self
+    topCommentNode.delegate = self
+    writeCommentNode.delegate = self
     manageNodes()
     setupCardTheme()
     
     separatorNode.style.height = ASDimensionMake(1)
     separatorNode.style.flexGrow = 1
+
+    writeCommentNode.configuration.imageSize = CGSize(width: 30.0, height: 30.0)
+    writeCommentNode.configuration.textContainerInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+    writeCommentNode.style.preferredSize = CGSize(width: 35.0, height: 35.0)
+    writeCommentNode.configuration.textNodeMinimumHeight = 30
+    writeCommentNode.configuration.externalInsets = UIEdgeInsets.zero
+    writeCommentNode.configuration.alignItems = .center
+    writeCommentNode.imageURL = URL(string: UserManager.shared.defaultPenName?.avatarUrl ?? "")
   }
 
   private func manageNodes() {
@@ -208,7 +259,27 @@ extension BaseCardPostNode {
       verticalStack.children?.append(separatorNodeInset)
       verticalStack.children?.append(actionBarNodeInset)
     } else {
-      verticalStack.children?.append(ASLayoutSpec.spacer(height: actionBarInset().bottom))
+      verticalStack.children?.append(ASLayoutSpec.spacer(height: externalInset().bottom))
+    }
+
+    if shouldHandleTopComments {
+      let commentSeparator = ASDisplayNode()
+      commentSeparator.style.height = ASDimensionMake(1)
+      commentSeparator.style.flexGrow = 1
+      commentSeparator.isLayerBacked = true
+      commentSeparator.backgroundColor = ThemeManager.shared.currentTheme.colorNumber18()
+      let commentSeparatorNodeInset = ASInsetLayoutSpec(insets: actionBarInset(), child: commentSeparator)
+      verticalStack.children?.append(commentSeparatorNodeInset)
+
+      if shouldShowTopCommentNode {
+        let topCommentNodeInset = ASInsetLayoutSpec(insets: commentNodeInset(), child: topCommentNode)
+        verticalStack.children?.append(topCommentNodeInset)
+        verticalStack.children?.append(ASLayoutSpec.spacer(height: externalInset().bottom))
+      } else {
+        let writeCommentNodeInset = ASInsetLayoutSpec(insets: commentNodeInset(), child: writeCommentNode)
+        verticalStack.children?.append(writeCommentNodeInset)
+        verticalStack.children?.append(ASLayoutSpec.spacer(height: externalInset().bottom))
+      }
     }
 
     //Note: If we used children or background properties instead of init -> Order would be important,
@@ -270,7 +341,15 @@ extension BaseCardPostNode {
     let externalInset = self.externalInset()
     return UIEdgeInsets(top: 0,
                         left: externalInset.left,
-                        bottom: externalInset.bottom ,
+                        bottom: 0,
+                        right: externalInset.right)
+  }
+
+  private func commentNodeInset() -> UIEdgeInsets {
+    let externalInset = self.internalInset()
+    return UIEdgeInsets(top: 5,
+                        left: externalInset.left,
+                        bottom: 5,
                         right: externalInset.right)
   }
 
@@ -311,6 +390,11 @@ extension BaseCardPostNode: BaseCardPostNodeContentProvider {
   internal var shouldShowActionBarNode: Bool {
     return true
   }
+
+  internal var shouldShowTopCommentNode: Bool {
+    return self.topComment != nil
+  }
+
 
   internal var contentShouldExtendBorders: Bool {
     return false

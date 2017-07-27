@@ -10,7 +10,7 @@ import UIKit
 
 protocol CommentComposerViewControllerDelegate: class {
   func commentComposerCancel(_ viewController: CommentComposerViewController)
-  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, parentCommentId: String?)
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, postId: String?, parentCommentId: String?)
 }
 
 class CommentComposerViewController: UIViewController {
@@ -19,6 +19,7 @@ class CommentComposerViewController: UIViewController {
   @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
   
   fileprivate var parentCommentId: String?
+  fileprivate var postId: String?
   
   var blurEffectView: UIVisualEffectView?
   
@@ -47,7 +48,8 @@ class CommentComposerViewController: UIViewController {
     self.blurEffectView?.removeFromSuperview()
   }
   
-  func initialize(with parentCommentId: String?) {
+  func initialize(with postId: String?, parentCommentId: String?) {
+    self.postId = postId
     self.parentCommentId = parentCommentId
   }
   
@@ -101,7 +103,7 @@ class CommentComposerViewController: UIViewController {
   
   func didTapPublish(_ sender: Any) {
     dismissKeyboard()
-    delegate?.commentComposerPublish(self, content: textView.text, parentCommentId: parentCommentId)
+    delegate?.commentComposerPublish(self, content: textView.text, postId: postId, parentCommentId: parentCommentId)
   }
   
   // MARK: - Helpers
@@ -130,9 +132,9 @@ extension CommentComposerViewController: Themeable {
 
 // MARK: -
 extension CommentComposerViewController {
-  class func show(from viewController: UIViewController, delegate: CommentComposerViewControllerDelegate?, parentCommentId: String?) {
+  class func show(from viewController: UIViewController, delegate: CommentComposerViewControllerDelegate?, postId: String?, parentCommentId: String?) {
     let composeCommentVC = Storyboard.Details.instantiate(CommentComposerViewController.self)
-    composeCommentVC.initialize(with: parentCommentId)
+    composeCommentVC.initialize(with: postId, parentCommentId: parentCommentId)
     composeCommentVC.delegate = delegate
     composeCommentVC.addBlurEffectView(to: viewController.view)
     

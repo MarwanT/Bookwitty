@@ -25,9 +25,9 @@ class QuoteCardViewModel: CardViewModelProtocol {
     delegate?.resourceUpdated(viewModel: self)
   }
 
-  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (quote: String?, publisher: String?, comments: String?, wit: (is: Bool, count: Int, info: String?))) {
+  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (quote: String?, publisher: String?, topComment: Comment?, comments: String?, wit: (is: Bool, count: Int, info: String?))) {
     guard let resource = resource, let quote = resource as? Quote else {
-      return (false, nil, content: (nil, nil, nil, wit: (false, 0, nil)))
+      return (false, nil, content: (nil, nil, nil, nil, wit: (false, 0, nil)))
     }
 
     let cardPostInfoData: CardPostInfoNodeData?
@@ -51,8 +51,9 @@ class QuoteCardViewModel: CardViewModelProtocol {
 
     let publisher: String? = quote.author
     let comments: String? = nil
+    let topComment: Comment? = resource.topComments?.first
     let wit = (is: resource.isWitted, count: resource.counts?.wits ?? 0, resource.witters)
 
-    return (infoNode, cardPostInfoData, content: (body, publisher, comments, wit: wit))
+    return (infoNode, cardPostInfoData, content: (body, publisher, topComment, comments, wit: wit))
   }
 }

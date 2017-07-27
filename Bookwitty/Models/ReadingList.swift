@@ -39,6 +39,12 @@ class ReadingList: Resource {
     return self.postsCollection?.resources
   }()
 
+  @objc
+  private var topCommentsCollection: LinkedResourceCollection?
+  lazy var topComments: [Comment]? = {
+    return self.topCommentsCollection?.resources as? [Comment]
+  }()
+
   override class var resourceType: ResourceType {
     return "reading-lists"
   }
@@ -59,7 +65,8 @@ class ReadingList: Resource {
       "counts" : CountsAttribute().serializeAs("counts"),
       "postsCollection" : ToManyRelationship(Resource.self).serializeAs("posts"),
       "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name"),
-      "topVotesCollection" : ToManyRelationship(PenName.self).serializeAs("top-votes")
+      "topVotesCollection" : ToManyRelationship(PenName.self).serializeAs("top-votes"),
+      "topCommentsCollection" : ToManyRelationship(Comment.self).serializeAs("top-comments")
       ])
   }
 }

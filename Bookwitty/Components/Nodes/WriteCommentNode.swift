@@ -33,13 +33,13 @@ class WriteCommentNode: ASCellNode {
     automaticallyManagesSubnodes = true
     
     imageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
+    imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0.0, nil)
     imageNode.isLayerBacked = true
   
     overlayNode.addTarget(self, action: #selector(didTapNode(_:)), forControlEvents: .touchUpInside)
     
     placeholder = Strings.what_are_your_thoughts()
     textNode.style.flexGrow = 1.0
-    textNode.textContainerInset = configuration.textContainerInset
   }
   
   override func didLoad() {
@@ -51,10 +51,11 @@ class WriteCommentNode: ASCellNode {
     textNode.borderWidth = configuration.textNodeBorderWidth
     
     textNode.style.minHeight = ASDimensionMake(configuration.textNodeMinimumHeight)
+    textNode.textContainerInset = configuration.textContainerInset
     
     imageNode.style.preferredSize = configuration.imageSize
     let imageInsetsSpec = ASInsetLayoutSpec(insets: configuration.imageNodeInsets, child: imageNode)
-    let contentSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start, alignItems: .start, children: [imageInsetsSpec, textNode])
+    let contentSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start, alignItems: configuration.alignItems, children: [imageInsetsSpec, textNode])
     let contentInsetsSpec = ASInsetLayoutSpec(insets: configuration.externalInsets, child: contentSpec)
     return ASOverlayLayoutSpec(child: contentInsetsSpec, overlay: overlayNode)
   }
@@ -92,12 +93,14 @@ class WriteCommentNode: ASCellNode {
 extension WriteCommentNode {
   struct Configuration {
     private static var subnodesSpace = ThemeManager.shared.currentTheme.cardInternalMargin()
-    fileprivate var textContainerInset = UIEdgeInsetsMake(
+    var textContainerInset = UIEdgeInsetsMake(
       ThemeManager.shared.currentTheme.cardInternalMargin(),
       ThemeManager.shared.currentTheme.cardInternalMargin(),
       ThemeManager.shared.currentTheme.cardInternalMargin(),
       ThemeManager.shared.currentTheme.cardInternalMargin())
-    
+
+    var alignItems: ASStackLayoutAlignItems = ASStackLayoutAlignItems.start
+
     var externalInsets = UIEdgeInsets(
       top: ThemeManager.shared.currentTheme.generalExternalMargin(),
       left: ThemeManager.shared.currentTheme.generalExternalMargin(),

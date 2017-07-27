@@ -23,6 +23,12 @@ class Topic: Resource {
   var counts: Counts?
 
   @objc
+  private var topCommentsCollection: LinkedResourceCollection?
+  lazy var topComments: [Comment]? = {
+    return self.topCommentsCollection?.resources as? [Comment]
+  }()
+
+  @objc
   private var followingNumber: NSNumber?
   var following: Bool {
     get {
@@ -61,6 +67,7 @@ class Topic: Resource {
       "followingNumber": Attribute().serializeAs("following"),
       "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name"),
       "contributorsCollection" : ToManyRelationship(PenName.self).serializeAs("contributors"),
+      "topCommentsCollection" : ToManyRelationship(Comment.self).serializeAs("top-comments")
       ])
   }
 }

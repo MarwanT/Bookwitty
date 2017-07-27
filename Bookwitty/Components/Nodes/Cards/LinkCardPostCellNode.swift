@@ -31,6 +31,7 @@ class LinkCardPostCellNode: BaseCardPostNode {
     node = LinkCardPostContentNode()
     viewModel = LinkCardViewModel()
     super.init()
+    shouldHandleTopComments = true
     viewModel.delegate = self
   }
 
@@ -253,5 +254,6 @@ extension LinkCardPostCellNode: LinkCardViewModelDelegate {
     articleCommentsSummary = values.content.comments
     setWitValue(witted: values.content.wit.is)
     actionInfoValue = values.content.wit.info
+    topComment = values.content.topComment
   }
 }

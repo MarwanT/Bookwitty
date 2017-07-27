@@ -25,6 +25,7 @@ class PhotoCardPostCellNode: BaseCardPostNode {
     node = PhotoCardContentNode()
     viewModel = PhotoCardViewModel()
     super.init()
+    shouldHandleTopComments = true
     viewModel.delegate = self
   }
 
@@ -196,5 +197,6 @@ extension PhotoCardPostCellNode: PhotoCardViewModelDelegate {
     articleCommentsSummary = values.content.comments
     setWitValue(witted: values.content.wit.is)
     actionInfoValue = values.content.wit.info
+    topComment = values.content.topComment
   }
 }

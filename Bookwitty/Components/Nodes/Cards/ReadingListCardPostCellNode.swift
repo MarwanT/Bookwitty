@@ -25,6 +25,7 @@ class ReadingListCardPostCellNode: BaseCardPostNode {
     node = ReadingListCardContentNode()
     viewModel = ReadingListCardViewModel()
     super.init()
+    shouldHandleTopComments = true
     viewModel.delegate = self
   }
 
@@ -218,6 +219,7 @@ extension ReadingListCardPostCellNode: ReadingListCardViewModelDelegate {
     articleCommentsSummary = values.content.comments
     setWitValue(witted: values.content.wit.is)
     actionInfoValue = values.content.wit.info
+    topComment = values.content.topComment
 
     if !node.isImageCollectionLoaded {
       if values.content.relatedContent.posts.count > 0 {

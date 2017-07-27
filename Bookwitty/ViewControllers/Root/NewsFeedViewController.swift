@@ -8,6 +8,7 @@
 import UIKit
 import AsyncDisplayKit
 import Spine
+import SwiftLoader
 
 class NewsFeedViewController: ASViewController<ASCollectionNode> {
   enum LoadingStatus {
@@ -535,8 +536,11 @@ extension NewsFeedViewController: BaseCardPostNodeDelegate {
       viewModel.unfollow(index: index) { (success) in
         didFinishAction?(success)
       }
+    case .comment:
+      guard let resource = viewModel.resourceForIndex(index: index) else { return }
+      pushCommentsViewController(for: resource as? ModelCommonProperties)
+      didFinishAction?(true)
     default:
-      //TODO: handle comment
       break
     }
 
@@ -579,6 +583,21 @@ extension NewsFeedViewController: BaseCardPostNodeDelegate {
                                                  action: analyticsAction,
                                                  name: name)
     Analytics.shared.send(event: event)
+  }
+
+  func cardNode(card: BaseCardPostNode, didRequestAction action: BaseCardPostNode.Action, from: ASDisplayNode) {
+    guard let indexPath = collectionNode.indexPath(for: card),
+      let resource = viewModel.resourceForIndex(index: indexPath.item),
+      let postId = resource.id else {
+        return
+    }
+
+    switch(action) {
+    case .listComments:
+      pushCommentsViewController(for: resource as? ModelCommonProperties)
+    case .publishComment:
+      CommentComposerViewController.show(from: self, delegate: self, postId: postId, parentCommentId: nil)
+    }
   }
 }
 
@@ -935,5 +954,45 @@ extension NewsFeedViewController: IntroductoryBannerDelegate {
   func introductoryBannerDidTapDismissButton(_ introductoryBanner: IntroductoryBanner) {
     viewModel.shouldDisplayIntroductoryBanner = false
     updateCollection(introductorySection: true)
+  }
+}
+
+// MARK: - Compose comment delegate implementation
+extension NewsFeedViewController: CommentComposerViewControllerDelegate {
+  func commentComposerCancel(_ viewController: CommentComposerViewController) {
+    dismiss(animated: true, completion: nil)
+  }
+
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, postId: String?, parentCommentId: String?) {
+    guard let postId = postId else {
+      _ = viewController.becomeFirstResponder()
+      return
+    }
+
+    SwiftLoader.show(animated: true)
+    let commentManager = CommentsManager()
+    commentManager.initialize(postIdentifier: postId)
+    commentManager.publishComment(content: content, parentCommentId: nil) {
+      (success: Bool, comment: Comment?, error: CommentsManager.Error?) in
+      SwiftLoader.hide()
+      guard success else {
+        guard let error = error else { return }
+        self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
+          _ in
+          _ = viewController.becomeFirstResponder()
+        })
+        return
+      }
+
+      if let resource = DataManager.shared.fetchResource(with: postId), let comment = comment {
+        var topComments = (resource as? ModelCommonProperties)?.topComments ?? []
+        topComments.append(comment)
+        (resource as? ModelCommonProperties)?.topComments = topComments
+        DataManager.shared.update(resource: resource)
+      }
+
+      self.dismiss(animated: true, completion: nil)
+    }
+    dismiss(animated: true, completion: nil)
   }
 }

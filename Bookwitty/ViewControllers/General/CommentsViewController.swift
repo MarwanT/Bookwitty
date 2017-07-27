@@ -56,7 +56,7 @@ extension CommentsViewController: CommentsNodeDelegate {
     case .viewAllComments(let commentsManager):
       break
     case .writeComment(let parentCommentIdentifier, _):
-      CommentComposerViewController.show(from: self, delegate: self, parentCommentId: parentCommentIdentifier)
+      CommentComposerViewController.show(from: self, delegate: self, postId: nil, parentCommentId: parentCommentIdentifier)
     case .commentAction(let comment, let action):
       switch action {
       case .wit:
@@ -64,7 +64,7 @@ extension CommentsViewController: CommentsNodeDelegate {
       case .unwit:
         commentsNode.unwit(comment: comment, completion: nil)
       case .reply:
-        CommentComposerViewController.show(from: self, delegate: self, parentCommentId: comment.id)
+        CommentComposerViewController.show(from: self, delegate: self, postId: nil, parentCommentId: comment.id)
       default:
         break
       }
@@ -78,7 +78,7 @@ extension CommentsViewController: CommentComposerViewControllerDelegate {
     dismiss(animated: true, completion: nil)
   }
   
-  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, parentCommentId: String?) {
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, postId: String?, parentCommentId: String?) {
     SwiftLoader.show(animated: true)
     commentsNode.publishComment(content: content, parentCommentId: parentCommentId) {
       (success, error) in

@@ -61,6 +61,19 @@ extension UIViewController {
 //    penNamesListVC.initializeWith(resource: resource)
 //    self.navigationController?.pushViewController(penNamesListVC, animated: true)
   }
+
+  func pushCommentsViewController(for resource: ModelCommonProperties?) {
+    guard let identifier = resource?.id else {
+      return
+    }
+
+    let commentsManager = CommentsManager()
+    commentsManager.initialize(postIdentifier: identifier)
+
+    let commentsVC = CommentsViewController()
+    commentsVC.initialize(with: commentsManager)
+    self.navigationController?.pushViewController(commentsVC, animated: true)
+  }
 }
 
 extension UIViewController {

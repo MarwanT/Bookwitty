@@ -112,7 +112,7 @@ extension CommentsViewModel {
     }
     
     commentsManager.publishComment(content: content, parentCommentId: parentCommentId, completion: {
-      (success, error) in
+      (success, comment, error) in
       completion(success, error)
     })
   }

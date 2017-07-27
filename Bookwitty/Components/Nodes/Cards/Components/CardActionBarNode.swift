@@ -39,7 +39,7 @@ class CardActionBarNode: ASCellNode {
     }
   }
 
-  var hideCommentButton: Bool = true {
+  var hideCommentButton: Bool = false {
     didSet {
       setNeedsLayout()
     }
@@ -84,8 +84,7 @@ class CardActionBarNode: ASCellNode {
 
     //Note: Had a Problem with the selected and highlighted states of the button images
     commentButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
-    commentButton.setImage(#imageLiteral(resourceName: "comment"), for: .normal)
-    commentButton.isHidden = true
+    commentButton.setImage(#imageLiteral(resourceName: "comment"), for: .normal)    
 
     shareButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
     shareButton.setImage(#imageLiteral(resourceName: "shareOutside"), for: .normal)

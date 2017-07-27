@@ -28,6 +28,7 @@ class BookCardPostCellNode: BaseCardPostNode {
     node = BookCardPostContentNode()
     viewModel = BookCardViewModel()
     super.init()
+    shouldHandleTopComments = false
     viewModel.delegate = self
   }
 

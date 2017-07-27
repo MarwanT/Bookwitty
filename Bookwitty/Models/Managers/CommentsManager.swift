@@ -158,21 +158,21 @@ extension CommentsManager {
     })
   }
   
-  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ comment: Comment?, _ error: CommentsManager.Error?) -> Void) {
     guard let postIdentifier = postIdentifier else {
-      completion(false, CommentsManager.Error.missingPostId)
+      completion(false, nil, CommentsManager.Error.missingPostId)
       return
     }
     
     guard let content = content, !content.isBlank else {
-      completion(false, CommentsManager.Error.publishEmptyComment)
+      completion(false, nil, CommentsManager.Error.publishEmptyComment)
       return
     }
     
     _ = CommentAPI.createComment(postIdentifier: postIdentifier, commentMessage: content, parentCommentIdentifier: parentCommentId, completion: {
       (success, comment, error) in
       defer {
-        completion(success, CommentsManager.Error.api(error))
+        completion(success, comment, CommentsManager.Error.api(error))
       }
       
       guard success else {

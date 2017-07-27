@@ -9,6 +9,7 @@
 import UIKit
 import AsyncDisplayKit
 import GSImageViewerController
+import SwiftLoader
 
 class TopicViewController: ASViewController<ASCollectionNode> {
 
@@ -902,9 +903,10 @@ extension TopicViewController: BaseCardPostNodeDelegate {
       viewModel.unfollow(resource: resource) { (success) in
         didFinishAction?(success)
       }
-
+    case .comment:      
+      pushCommentsViewController(for: resource as? ModelCommonProperties)
+      didFinishAction?(true)
     default:
-      //TODO: handle comment
       break
     }
 
@@ -945,6 +947,40 @@ extension TopicViewController: BaseCardPostNodeDelegate {
                                                  action: analyticsAction,
                                                  name: name)
     Analytics.shared.send(event: event)
+  }
+  
+  func cardNode(card: BaseCardPostNode, didRequestAction action: BaseCardPostNode.Action, from: ASDisplayNode) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+        return
+    }
+
+    let index: Int = indexPath.row
+    var candidateResource: ModelResource?
+    let category = self.category(withIndex: segmentedNode.selectedIndex)
+    switch category {
+    case .latest:
+      candidateResource = viewModel.latest(at: index)
+    case .editions:
+      candidateResource = viewModel.edition(at: index)
+    case .relatedBooks:
+      candidateResource = viewModel.relatedBook(at: index)
+    case .followers:
+      candidateResource = viewModel.follower(at: index)
+    case .none:
+      return
+    }
+
+    guard let resource = candidateResource,
+    let postId = resource.id else {
+      return
+    }
+
+    switch(action) {
+    case .listComments:
+      pushCommentsViewController(for: resource as? ModelCommonProperties)
+    case .publishComment:
+      CommentComposerViewController.show(from: self, delegate: self, postId: postId, parentCommentId: nil)
+    }
   }
 }
 
@@ -1198,5 +1234,45 @@ extension TopicViewController {
         }
       }, completion: completionBlock)
     }
+  }
+}
+
+// MARK: - Compose comment delegate implementation
+extension TopicViewController: CommentComposerViewControllerDelegate {
+  func commentComposerCancel(_ viewController: CommentComposerViewController) {
+    dismiss(animated: true, completion: nil)
+  }
+
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, postId: String?, parentCommentId: String?) {
+    guard let postId = postId else {
+      _ = viewController.becomeFirstResponder()
+      return
+    }
+
+    SwiftLoader.show(animated: true)
+    let commentManager = CommentsManager()
+    commentManager.initialize(postIdentifier: postId)
+    commentManager.publishComment(content: content, parentCommentId: nil) {
+      (success: Bool, comment: Comment?, error: CommentsManager.Error?) in
+      SwiftLoader.hide()
+      guard success else {
+        guard let error = error else { return }
+        self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
+          _ in
+          _ = viewController.becomeFirstResponder()
+        })
+        return
+      }
+
+      if let resource = DataManager.shared.fetchResource(with: postId), let comment = comment {
+        var topComments = (resource as? ModelCommonProperties)?.topComments ?? []
+        topComments.append(comment)
+        (resource as? ModelCommonProperties)?.topComments = topComments
+        DataManager.shared.update(resource: resource)
+      }
+
+      self.dismiss(animated: true, completion: nil)
+    }
+    dismiss(animated: true, completion: nil)
   }
 }

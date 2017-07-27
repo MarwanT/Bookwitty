@@ -342,8 +342,10 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
       if let sharingInfo: [String] = viewModel.sharingPost() {
         presentShareSheet(shareContent: sharingInfo)
       }
+    case .comment:
+      pushCommentsViewController(for: viewModel.resource as? ModelCommonProperties)
+      didFinishAction?(true)
     default:
-      //TODO: handle comment
       break
     }
 
@@ -405,7 +407,7 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
     case .viewAllComments(let commentsManager):
       pushCommentsViewController(with: commentsManager)
     case .writeComment(let parentCommentIdentifier, _):
-      CommentComposerViewController.show(from: self, delegate: self, parentCommentId: parentCommentIdentifier)
+      CommentComposerViewController.show(from: self, delegate: self, postId: nil, parentCommentId: parentCommentIdentifier)
     case .commentAction(let comment, let action):
       switch action {
       case .wit:
@@ -413,7 +415,7 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
       case .unwit:
         postDetailsNode.unwit(comment: comment, completion: nil)
       case .reply:
-        CommentComposerViewController.show(from: self, delegate: self, parentCommentId: comment.id)
+        CommentComposerViewController.show(from: self, delegate: self, postId: nil, parentCommentId: comment.id)
       default:
         break
       }
@@ -700,9 +702,11 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
       viewModel.unfollowRelatedPost(index: index) { (success) in
         didFinishAction?(success)
       }
-
+    case .comment:
+      guard let resource = viewModel.relatedPost(at: index) else { return }
+      pushCommentsViewController(for: resource as? ModelCommonProperties)
+      didFinishAction?(true)
     default:
-      //TODO: handle comment
       break
     }
 
@@ -744,6 +748,13 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
                                                  action: analyticsAction,
                                                  name: name)
     Analytics.shared.send(event: event)
+  }
+
+  func cardNode(card: BaseCardPostNode, didRequestAction action: BaseCardPostNode.Action, from: ASDisplayNode) {
+    //Empty Implementation
+    /* Discussion
+     * Top Comment Node Is Not Visible Here
+     */
   }
 }
 
@@ -1048,7 +1059,7 @@ extension PostDetailsViewController: CommentComposerViewControllerDelegate {
     dismiss(animated: true, completion: nil)
   }
   
-  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, parentCommentId: String?) {
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, postId: String?, parentCommentId: String?) {
     SwiftLoader.show(animated: true)
     postDetailsNode.publishComment(content: content, parentCommentId: parentCommentId) {
       (success, error) in

@@ -25,9 +25,9 @@ class ReadingListCardViewModel: CardViewModelProtocol {
     delegate?.resourceUpdated(viewModel: self)
   }
 
-  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, comments: String?, relatedContent: (posts: [String], count: Int), statistics: (posts: Int?, relatedBooks: Int?, followers: Int?), wit: (is: Bool, count: Int, info: String?))) {
+  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, topComment: Comment?, comments: String?, relatedContent: (posts: [String], count: Int), statistics: (posts: Int?, relatedBooks: Int?, followers: Int?), wit: (is: Bool, count: Int, info: String?))) {
     guard let resource = resource, let readingList = resource as? ReadingList else {
-      return (false, nil, content: (nil, nil, nil, relatedContent: ([], 0), statistics: (nil, nil, nil), wit: (false, 0, nil)))
+      return (false, nil, content: (nil, nil, nil, nil, relatedContent: ([], 0), statistics: (nil, nil, nil), wit: (false, 0, nil)))
     }
 
     let cardPostInfoData: CardPostInfoNodeData?
@@ -44,6 +44,7 @@ class ReadingListCardViewModel: CardViewModelProtocol {
     let title = resource.title
     let description = resource.shortDescription
     let comments: String? = nil
+    let topComment: Comment? = resource.topComments?.first
     let posts = resource.counts?.posts
     let relatedBooks: Int? = nil
     let followers = resource.counts?.followers
@@ -54,6 +55,6 @@ class ReadingListCardViewModel: CardViewModelProtocol {
     let images = readingList.posts?.flatMap({ ($0 as? ModelCommonProperties)?.thumbnailImageUrl }) ?? []
     let relatedContent = (images, postsCount)
 
-    return (infoNode, cardPostInfoData, content: (title, description, comments, relatedContent: relatedContent, statistics: statistics, wit: wit))
+    return (infoNode, cardPostInfoData, content: (title, description, topComment, comments, relatedContent: relatedContent, statistics: statistics, wit: wit))
   }
 }

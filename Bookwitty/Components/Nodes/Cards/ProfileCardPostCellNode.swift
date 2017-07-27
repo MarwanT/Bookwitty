@@ -26,6 +26,7 @@ class ProfileCardPostCellNode: BaseCardPostNode {
     node = ProfileCardPostContentNode()
     viewModel = ProfileCardViewModel()
     super.init()
+    shouldHandleTopComments = true
     viewModel.delegate = self
   }
 

@@ -30,6 +30,7 @@ class VideoCardPostCellNode: BaseCardPostNode {
     node = VideoCardContentNode()
     viewModel = VideoCardViewModel()
     super.init()
+    shouldHandleTopComments = true
     viewModel.delegate = self
   }
 
@@ -223,5 +224,6 @@ extension VideoCardPostCellNode: VideoCardViewModelDelegate {
     articleCommentsSummary = values.content.comments
     setWitValue(witted: values.content.wit.is)
     actionInfoValue = values.content.wit.info
+    topComment = values.content.topComment
   }
 }

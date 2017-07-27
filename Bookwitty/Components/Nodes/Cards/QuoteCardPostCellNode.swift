@@ -27,6 +27,7 @@ class QuoteCardPostCellNode: BaseCardPostNode {
     node = QuoteCardPostContentNode()
     viewModel = QuoteCardViewModel()
     super.init()
+    shouldHandleTopComments = true
     viewModel.delegate = self
   }
 
@@ -128,5 +129,6 @@ extension QuoteCardPostCellNode: QuoteCardViewModelDelegate {
     articleCommentsSummary = values.content.comments
     setWitValue(witted: values.content.wit.is)
     actionInfoValue = values.content.wit.info
+    topComment = values.content.topComment
   }
 }

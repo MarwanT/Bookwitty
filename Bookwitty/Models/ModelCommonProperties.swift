@@ -9,7 +9,7 @@
 import Foundation
 import Spine
 
-protocol ModelCommonProperties {
+protocol ModelCommonProperties: class {
   var id: String? { get }
   var title: String? { get }
   var createdAt: NSDate? { get }
@@ -22,6 +22,7 @@ protocol ModelCommonProperties {
   var following: Bool { get }
   var canonicalURL: URL? { get }
   var counts: Counts? { get set }
+  var topComments: [Comment]? { get set }
 
   var registeredResourceType: ResourceType { get }
   var penName: PenName? { get set }
@@ -145,6 +146,11 @@ extension Author: ModelCommonProperties {
   var topVotes: [Vote]? {
     get { return nil }
     set { /* Not a valid property of model */ }
+  }
+
+  var topComments: [Comment]? {
+    get { return nil }
+    set { /*Not a valid property of model*/ }
   }
 }
 
@@ -276,6 +282,11 @@ extension Book: ModelCommonProperties {
     get { return nil }
     set { /* Not a valid property of model */ }
   }
+
+  var topComments: [Comment]? {
+    get { return nil }
+    set { /*Not a valid property of model*/ }
+  }
 }
 
 extension PenName: ModelCommonProperties {
@@ -308,6 +319,11 @@ extension PenName: ModelCommonProperties {
 
   var coverImageUrl: String? {
     return nil
+  }
+
+  var topComments: [Comment]? {
+    get { return nil }
+    set { /*Not a valid property of model*/ }
   }
 
   var vote: String? {
@@ -356,7 +372,12 @@ extension Comment: ModelCommonProperties {
       //Not a valid property of model
     }
   }
-  
+
+  var topComments: [Comment]? {
+    get { return nil }
+    set { /*Not a valid property of model*/ }
+  }
+
   var isWitted: Bool {
     guard let vote = vote else {
       return false

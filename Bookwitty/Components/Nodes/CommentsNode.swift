@@ -225,7 +225,7 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
         return headerNode
       case Section.write.rawValue:
         let writeCommentNode = WriteCommentNode()
-        writeCommentNode.imageURL = URL(string: UserManager.shared.defaultPenName?.coverImageUrl ?? "")
+        writeCommentNode.imageURL = URL(string: UserManager.shared.defaultPenName?.avatarUrl ?? "")
         writeCommentNode.delegate = self
         return writeCommentNode
       case Section.read.rawValue:
