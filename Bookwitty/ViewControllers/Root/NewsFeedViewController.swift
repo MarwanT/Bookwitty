@@ -983,6 +983,14 @@ extension NewsFeedViewController: CommentComposerViewControllerDelegate {
         })
         return
       }
+
+      if let resource = DataManager.shared.fetchResource(with: postId), let comment = comment {
+        var topComments = (resource as? ModelCommonProperties)?.topComments ?? []
+        topComments.append(comment)
+        (resource as? ModelCommonProperties)?.topComments = topComments
+        DataManager.shared.update(resource: resource)
+      }
+
       self.dismiss(animated: true, completion: nil)
     }
     dismiss(animated: true, completion: nil)
