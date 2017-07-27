@@ -149,21 +149,42 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
     
     switch section {
     case .preferredFormats:
-      guard let cell = tableView.dequeueReusableCell(withIdentifier: PreferredFormatTableViewCell.reuseIdentifier, for: indexPath) as? PreferredFormatTableViewCell, let values = viewModel.values(for: indexPath) as? ProductFormatsViewModel.PreferredFormatValues else {
+      guard let cell = tableView.dequeueReusableCell(withIdentifier: PreferredFormatTableViewCell.reuseIdentifier, for: indexPath) as? PreferredFormatTableViewCell else {
         return UITableViewCell()
-      }
-      cell.primaryLabel.text = values.form.value
-      cell.secondaryLabel.text = values.price?.formattedValue
-      if values.isSelected {
-        tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
       }
       return cell
     case .availableFormats:
-      guard let cell = tableView.dequeueReusableCell(withIdentifier: DisclosureTableViewCell.identifier, for: indexPath) as? DisclosureTableViewCell, let values = viewModel.values(for: indexPath) as? ProductFormatsViewModel.AvailableFormatValues else {
+      guard let cell = tableView.dequeueReusableCell(withIdentifier: DisclosureTableViewCell.identifier, for: indexPath) as? DisclosureTableViewCell else {
         return UITableViewCell()
       }
-      cell.label.text = "\(values.form.value) (\(values.numberOfEditions))"
+
+      cell.detailsLabel.font = FontDynamicType.caption1.font
+      cell.detailsLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
       return cell
+    }
+  }
+
+  func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    guard let section = Section(rawValue: indexPath.section) else {
+      return
+    }
+
+    switch section {
+    case .preferredFormats:
+      guard let currentCell = cell as? PreferredFormatTableViewCell, let values = viewModel.values(for: indexPath) as? ProductFormatsViewModel.PreferredFormatValues else {
+        return
+      }
+
+      currentCell.primaryLabel.text = values.form.value
+      currentCell.secondaryLabel.text = values.price?.formattedValue
+      currentCell.isSelected = values.isSelected
+    case .availableFormats:
+      guard let currentCell = cell as? DisclosureTableViewCell, let values = viewModel.values(for: indexPath) as? ProductFormatsViewModel.AvailableFormatValues else {
+        return
+      }
+
+      currentCell.label.text = values.form.value + " " + values.form.value
+      currentCell.detailsLabel.text = "(" + String(describing: values.numberOfEditions) + ")"
     }
   }
   
@@ -174,19 +195,24 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
     
     switch section {
     case .preferredFormats:
-      viewModel.selectPreferredFormat(indexPath)
-      
+
       guard let values = viewModel.values(for: indexPath) as? ProductFormatsViewModel.PreferredFormatValues else {
         return
       }
+
+      viewModel.selectPreferredFormat(indexPath)
+
+      tableView.reloadSections(IndexSet(integer: section.rawValue), with: UITableViewRowAnimation.none)
+
       didSelectEdition(id: values.id)
-      
+
       //MARK: [Analytics] Event
       let event: Analytics.Event = Analytics.Event(
         category: .BookProduct,
         action: .ChoosePreferredFormat,
         name: "\(viewModel.productTitle ?? "") - \(values.form.value)" )
       Analytics.shared.send(event: event)
+
     case .availableFormats:
       guard let values = viewModel.values(for: indexPath) as? ProductFormatsViewModel.AvailableFormatValues, let productId = viewModel.productId else {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -202,10 +228,6 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
         name: "\(viewModel.productTitle ?? "") - \(values.form.value)" )
       Analytics.shared.send(event: event)
     }
-  }
-  
-  func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-    viewModel.deselectPreferredFormat()
   }
   
   

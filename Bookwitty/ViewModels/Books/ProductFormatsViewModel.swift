@@ -94,7 +94,8 @@ final class ProductFormatsViewModel {
     guard case ProductFormatsViewController.Section.preferredFormats = section else {
       return
     }
-    
+
+    deselectPreferredFormat()
     preferredFormats[indexPath.item].isSelected = true
   }
   

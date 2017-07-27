@@ -27,7 +27,7 @@ extension DisclosureTableViewCell: Themeable {
     let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
     
     contentView.layoutMargins = UIEdgeInsets(
-      top: 0, left: leftMargin, bottom: 0, right: 0)
+      top: 0, left: leftMargin, bottom: 0, right: leftMargin)
     selectedBackgroundView = UIImageView(
       image: UIImage(color: ThemeManager.shared.currentTheme.defaultSelectionColor()))
     tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
