@@ -21,8 +21,6 @@ class CommentComposerViewController: UIViewController {
   fileprivate var parentCommentId: String?
   fileprivate var postId: String?
   
-  var blurEffectView: UIVisualEffectView?
-  
   weak var delegate: CommentComposerViewControllerDelegate?
   
   override func viewDidLoad() {
@@ -36,16 +34,6 @@ class CommentComposerViewController: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     textView.becomeFirstResponder()
-    self.blurEffectView?.alpha = 1
-  }
-  
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-    self.blurEffectView?.alpha = 0
-  }
-  
-  deinit {
-    self.blurEffectView?.removeFromSuperview()
   }
   
   func initialize(with postId: String?, parentCommentId: String?) {
@@ -54,7 +42,7 @@ class CommentComposerViewController: UIViewController {
   }
   
   private func setupNavigationItems() {
-    let leftBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(didTapCancel(_:)))
+    let leftBarButton = UIBarButtonItem(title: Strings.cancel(), style: .plain, target: self, action: #selector(didTapCancel(_:)))
     let rightBarButton = UIBarButtonItem(title: Strings.publish(), style: .plain, target: self, action: #selector(didTapPublish(_:)))
     rightBarButton.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
     self.navigationItem.leftBarButtonItem = leftBarButton
@@ -110,14 +98,6 @@ class CommentComposerViewController: UIViewController {
   func dismissKeyboard() {
     textView.resignFirstResponder()
   }
-  
-  func addBlurEffectView(to view: UIView) {
-    blurEffectView = UIVisualEffectView()
-    blurEffectView?.effect = UIBlurEffect(style: UIBlurEffectStyle.light)
-    blurEffectView?.frame = view.bounds
-    blurEffectView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    view.addSubview(blurEffectView!)
-  }
 }
 
 // MARK: - Themeable protocol
@@ -136,7 +116,6 @@ extension CommentComposerViewController {
     let composeCommentVC = Storyboard.Details.instantiate(CommentComposerViewController.self)
     composeCommentVC.initialize(with: postId, parentCommentId: parentCommentId)
     composeCommentVC.delegate = delegate
-    composeCommentVC.addBlurEffectView(to: viewController.view)
     
     let navigationController = UINavigationController(rootViewController: composeCommentVC)
     navigationController.modalPresentationStyle = .overCurrentContext
