@@ -73,14 +73,14 @@ final class SettingsViewModel {
   private func handleGeneralSwitchValueChanged(atRow row: Int, newValue: Bool, completion: @escaping ((_ value: Bool)->())) {
     switch row {
     case 0: //email
-      updateUserEmailNotificationsPreferences(value: "\(newValue)", completion: { (success: Bool) -> () in
+      updateUserEmailNotificationsPreferences(value: "\(!newValue)", completion: { (success: Bool) -> () in
         if success {
           GeneralSettings.sharedInstance.shouldSendEmailNotifications = newValue
         }
         completion(GeneralSettings.sharedInstance.shouldSendEmailNotifications)
       })
     case 1: //newsletter
-      updateUserEmailNewsletterPreference(value: "\(newValue)", completion: { (success: Bool) in
+      updateUserEmailNewsletterPreference(value: "\(!newValue)", completion: { (success: Bool) in
         if success {
           GeneralSettings.sharedInstance.shouldSendNewsletter = newValue
         }

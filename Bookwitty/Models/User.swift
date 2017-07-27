@@ -56,6 +56,7 @@ class User: Resource {
       "password": Attribute().serializeAs("password"),
       "currentPassword": Attribute().serializeAs("current-password"),
       "language": Attribute().serializeAs("language"),
+      "preferences" : PreferencesAttribute().serializeAs("preferences"),
       "penNamesCollection" : ToManyRelationship(PenName.self).serializeAs("pen-names")
       ])
   }
@@ -66,6 +67,36 @@ class User: Resource {
 extension User {
   func isMy(penName: PenName) -> Bool {
    return self.penNames?.contains(where: { $0.id == penName.id }) ?? false
+  }
+}
+
+// MARK: - Preferences
+extension User {
+  var emailNewsletter: Bool {
+    guard let preferences = self.preferences else {
+      return false
+    }
+
+    guard let newsletter = preferences[Preference.emailNewsletter.rawValue] as? String else {
+      return false
+    }
+
+    //Negated because the preferences are unsub
+    return !(newsletter.lowercased() == "true")
+  }
+
+  //One for both email values, they are combined as one
+  var emailNotifications: Bool {
+    guard let preferences = self.preferences else {
+      return false
+    }
+
+    guard let notification = preferences[Preference.emailNotificationFollowers.rawValue] as? String else {
+      return false
+    }
+
+    //Negated because the preferences are unsub
+    return !(notification.lowercased() == "true")
   }
 }
 

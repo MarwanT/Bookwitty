@@ -69,6 +69,21 @@ class CountsValueFormatter: ValueFormatter {
   }
 }
 
+class PreferencesValueFormatter: ValueFormatter {
+  typealias FormattedType = [String : Any]
+  typealias UnformattedType = [String : Any]
+  typealias AttributeType = PreferencesAttribute
+
+  func unformatValue(_ value: [String : Any], forAttribute: PreferencesAttribute) -> [String : Any] {
+    return value
+  }
+
+  func formatValue(_ value: [String : Any], forAttribute: PreferencesAttribute) -> [String : Any] {
+    // TODO: Implement this
+    return ["" : ""]
+  }
+}
+
 class MediaValueFormatter: ValueFormatter {
   typealias FormattedType = [String : Any]
   typealias UnformattedType = MediaModel

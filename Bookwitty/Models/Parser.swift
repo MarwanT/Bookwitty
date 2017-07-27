@@ -157,6 +157,7 @@ class Parser {
     serializer.registerValueFormatter(SupplierInformationValueFormatter())
     serializer.registerValueFormatter(CountsValueFormatter())
     serializer.registerValueFormatter(MediaValueFormatter())
+    serializer.registerValueFormatter(PreferencesValueFormatter())
   }
 
   static func parseData(data: Data?, mappingTargets: [Resource]? = nil) -> JSONAPIDocument? {
