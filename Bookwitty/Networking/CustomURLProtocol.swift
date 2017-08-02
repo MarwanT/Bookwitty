@@ -66,6 +66,27 @@ class CustomURLProtocol: URLProtocol {
 
 extension CustomURLProtocol: URLSessionDataDelegate {
   func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+    let isFacebookLoginCallback: Bool = dataTask.response?.url?.absoluteString.contains(Environment.current.facebookLoginCallbackPath) ?? false
+
+    if isFacebookLoginCallback {
+      var didAuthenticate: Bool = false
+      do{
+        // Save token
+        if let dictionary = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as? NSDictionary {
+          AccessToken.shared.save(dictionary: dictionary)
+          didAuthenticate = true
+        }
+      } catch {}
+
+      if didAuthenticate {
+        client?.urlProtocolDidFinishLoading(self)
+      } else {
+        let error = SignInViewController.AuthPlatforms.facebook.error
+        client?.urlProtocol(self, didFailWithError: error)
+      }
+      return
+    }
+
     client?.urlProtocol(self, didLoad: data)
   }
 
