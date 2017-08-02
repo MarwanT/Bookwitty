@@ -126,6 +126,11 @@ extension WebViewController: UIWebViewDelegate {
   
   func webViewDidFinishLoad(_ webView: UIWebView) {
     delegate?.webViewControllerDidFinishLoad(self)
+
+    let isFacebookLoginCallback: Bool = webView.request?.url?.absoluteString.contains(Environment.current.facebookLoginCallbackPath) ?? false
+    if isFacebookLoginCallback {
+      delegate?.webViewController(self, didAuthenticate: .facebook)
+    }
   }
 }
 
