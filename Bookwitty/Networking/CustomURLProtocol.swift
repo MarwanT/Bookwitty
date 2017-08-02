@@ -44,6 +44,17 @@ class CustomURLProtocol: URLProtocol {
   override func startLoading() {
     let newRequest = ((request as NSURLRequest).mutableCopy() as? NSMutableURLRequest)!
     CustomURLProtocol.setProperty(true, forKey: Constants.RequestHandledKey, in: newRequest)
+
+    let isFacebookLoginCallback: Bool = request.url?.absoluteString.contains(Environment.current.facebookLoginCallbackPath) ?? false
+    if isFacebookLoginCallback {
+      var dictionary = newRequest.allHTTPHeaderFields ?? [:]
+      let token = AccessToken.shared.token ?? ""
+      dictionary.updateValue("application/json", forKey: "Accept")
+      dictionary.updateValue("application/json", forKey: "Content-Type")
+      dictionary.updateValue("Bearer \(token)", forKey: "Authorization")
+      newRequest.allHTTPHeaderFields = dictionary
+    }
+
     sessionTask = session?.dataTask(with: newRequest as URLRequest)
     sessionTask?.resume()
   }
