@@ -26,6 +26,11 @@ class CustomURLProtocol: URLProtocol {
   }
 
   override class func canInit(with request: URLRequest) -> Bool {
+    let isFacebookLoginCallback: Bool = request.url?.absoluteString.contains(Environment.current.facebookLoginCallbackPath) ?? false
+    if isFacebookLoginCallback {
+      return true
+    }
+
     if CustomURLProtocol.property(forKey: Constants.RequestHandledKey, in: request) != nil {
       return false
     }
