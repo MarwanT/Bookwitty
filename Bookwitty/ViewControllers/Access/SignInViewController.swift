@@ -338,7 +338,7 @@ extension SignInViewController: WebViewControllerDelegate {
     _ = UserAPI.signInAonymously {
       (success: Bool, error :BookwittyAPIError?) in
       if success {
-        let facebookLoginURL = Environment.current.baseURL.appendingPathComponent("account/auth/facebook")
+        let facebookLoginURL = Environment.current.facebookLoginURL
         WebViewController.present(url: facebookLoginURL, delegate: self, inViewController: self)
       }
     }

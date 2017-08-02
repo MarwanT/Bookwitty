@@ -34,7 +34,8 @@ class CustomURLProtocol: URLProtocol {
 
   override class func canonicalRequest(for request: URLRequest) -> URLRequest {
     var jsonRequest = request
-    if request.url?.absoluteString.contains("account/auth/facebook/callback") ?? false {
+    let isFacebookLoginCallback: Bool = request.url?.absoluteString.contains(Environment.current.facebookLoginCallbackPath) ?? false
+    if isFacebookLoginCallback {
       var dictionary = jsonRequest.allHTTPHeaderFields ?? [:]
       let token = AccessToken.shared.token ?? ""
       dictionary.updateValue("application/json", forKey: "Accept")
