@@ -367,4 +367,8 @@ extension SignInViewController: WebViewControllerDelegate {
   func webViewController(_ webViewController: WebViewController, didFailLoadWithError error: Error) {}
   func webViewControllerDidStartLoad(_ webViewController: WebViewController) {}
   func webViewControllerDidFinishLoad(_ webViewController: WebViewController) {}
+
+  func webViewController(_ webViewController: WebViewController, didAuthenticate platform: SignInViewController.AuthPlatforms) {
+
+  }
 }
