@@ -12,6 +12,22 @@ import SwiftLoader
 import FBSDKLoginKit
 
 class SignInViewController: UIViewController {
+
+  enum AuthPlatforms {
+    case facebook
+
+    var error: AuthErrors {
+      switch self {
+      case .facebook:
+        return AuthErrors.facebookAuthError
+      }
+    }
+
+    enum AuthErrors: Error {
+      case facebookAuthError
+    }
+  }
+
   @IBOutlet weak var stackView: UIStackView!
   @IBOutlet weak var emailField: InputField!
   @IBOutlet weak var stackViewBackgroundView: UIView!
