@@ -16,15 +16,11 @@ class SignInViewController: UIViewController {
   enum AuthPlatforms {
     case facebook
 
-    var error: AuthErrors {
-      switch self {
-      case .facebook:
-        return AuthErrors.facebookAuthError
-      }
-    }
-
-    enum AuthErrors: Error {
-      case facebookAuthError
+    struct AuthErrors {
+      private init() {}
+      static let domain: String = "AuthPlatforms"
+      static let error = NSError(domain: AuthErrors.domain, code: 1, userInfo: nil)
+      static let facebookAuthMissingEmailError = NSError(domain: AuthErrors.domain, code: 2, userInfo: nil)
     }
   }
 
