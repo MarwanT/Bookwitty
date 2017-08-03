@@ -43,21 +43,25 @@ final class SignInViewModel {
         return
       }
       
-      self.request = UserAPI.user(completion: { (success, user, _, error) in
-        var success = success
-        var error = error
-        defer {
-          self.request = nil
-          completion(success, error)
-        }
-        
-        guard user != nil, success else {
-          success = false
-          return
-        }
+      self.getSignedInUser(completion: completion)
+    })
+  }
 
-        success = true
-      })
+  func getSignedInUser(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?)-> Void) {
+    self.request = UserAPI.user(completion: { (success, user, _, error) in
+      var success = success
+      var error = error
+      defer {
+        self.request = nil
+        completion(success, error)
+      }
+
+      guard user != nil, success else {
+        success = false
+        return
+      }
+
+      success = true
     })
   }
   
