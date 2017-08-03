@@ -12,6 +12,22 @@ import SwiftLoader
 import FBSDKLoginKit
 
 class SignInViewController: UIViewController {
+
+  enum AuthPlatforms {
+    case facebook
+
+    var error: AuthErrors {
+      switch self {
+      case .facebook:
+        return AuthErrors.facebookAuthError
+      }
+    }
+
+    enum AuthErrors: Error {
+      case facebookAuthError
+    }
+  }
+
   @IBOutlet weak var stackView: UIStackView!
   @IBOutlet weak var emailField: InputField!
   @IBOutlet weak var stackViewBackgroundView: UIView!
@@ -335,8 +351,13 @@ extension SignInViewController: FBSDKLoginButtonDelegate {
 // MARK: - Facebook Login Logic
 extension SignInViewController: WebViewControllerDelegate {
   func startFacebookLoginProcess() {
-    let facebookLoginURL = Environment.current.baseURL.appendingPathComponent("account/auth/facebook")
-    WebViewController.present(url: facebookLoginURL, delegate: self, inViewController: self)
+    _ = UserAPI.signInAonymously {
+      (success: Bool, error :BookwittyAPIError?) in
+      if success {
+        let facebookLoginURL = Environment.current.facebookLoginURL
+        WebViewController.present(url: facebookLoginURL, delegate: self, inViewController: self)
+      }
+    }
   }
   
   func webViewController(_ webViewController: WebViewController, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
@@ -346,4 +367,8 @@ extension SignInViewController: WebViewControllerDelegate {
   func webViewController(_ webViewController: WebViewController, didFailLoadWithError error: Error) {}
   func webViewControllerDidStartLoad(_ webViewController: WebViewController) {}
   func webViewControllerDidFinishLoad(_ webViewController: WebViewController) {}
+
+  func webViewController(_ webViewController: WebViewController, didAuthenticate platform: SignInViewController.AuthPlatforms) {
+
+  }
 }

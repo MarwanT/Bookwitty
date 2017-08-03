@@ -14,6 +14,7 @@ protocol WebViewControllerDelegate: class {
   func webViewController(_ webViewController: WebViewController, didFailLoadWithError error: Error)
   func webViewControllerDidStartLoad(_ webViewController: WebViewController)
   func webViewControllerDidFinishLoad(_ webViewController: WebViewController)
+  func webViewController(_ webViewController: WebViewController, didAuthenticate platform: SignInViewController.AuthPlatforms)
 }
 
 class WebViewController: UIViewController {
@@ -125,6 +126,11 @@ extension WebViewController: UIWebViewDelegate {
   
   func webViewDidFinishLoad(_ webView: UIWebView) {
     delegate?.webViewControllerDidFinishLoad(self)
+
+    let isFacebookLoginCallback: Bool = webView.request?.url?.absoluteString.contains(Environment.current.facebookLoginCallbackPath) ?? false
+    if isFacebookLoginCallback {
+      delegate?.webViewController(self, didAuthenticate: .facebook)
+    }
   }
 }
 

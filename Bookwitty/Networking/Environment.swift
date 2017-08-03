@@ -25,15 +25,22 @@ struct Environment {
   let googleClientIdentifier: String
   let googleServerIdentifier: String
   
+  let facebookLoginURL: URL
+  let facebookLoginCallbackPath: String
+
   private init() {
     type = EnvironmentType(rawValue: AppKeys.shared.environmentString) ?? .mockServer
     switch type {
     default:
       baseURL = URL(string: AppKeys.shared.bookwittyServerBaseURLAbsoluteString)!
       googleAnalyticsIdentifier = AppKeys.shared.googleAnalyticsIdentifier
+
       //Note: this also exists in reverse in the info.plist as a url-type
       googleClientIdentifier = AppKeys.shared.googleClientIdentifier
       googleServerIdentifier = AppKeys.shared.googleServerIdentifier
+
+      facebookLoginURL = URL(string: "account/auth/facebook", relativeTo: self.baseURL)!
+      facebookLoginCallbackPath = "account/auth/facebook/callback"
     }
   }
 

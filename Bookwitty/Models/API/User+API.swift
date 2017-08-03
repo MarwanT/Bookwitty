@@ -63,6 +63,43 @@ struct UserAPI {
     }
   }
 
+  public static func signInAonymously(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    return apiRequest(
+    target: BookwittyAPI.oAuth(credentials: nil)) {
+      (data, statusCode, response, error) in
+      // Ensure the completion block is always called
+      var success: Bool = false
+      var completionError: BookwittyAPIError? = error
+      defer {
+        completion(success, error)
+      }
+
+      // If status code is not available then break
+      guard let statusCode = statusCode else {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      // If status code != success then break
+      if statusCode != 200 {
+        completionError = BookwittyAPIError.invalidStatusCode
+        return
+      }
+
+      // Retrieve Dictionary from data
+      do {
+        guard let data = data, let dictionary = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as? NSDictionary else {
+          return
+        }
+        // Save token
+        AccessToken.shared.save(dictionary: dictionary)
+        success = true
+        completionError = nil
+      } catch {
+        completionError = BookwittyAPIError.failToRetrieveDictionary
+      }
+    }
+  }
 
   public static func registerUser(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String? = nil, countryISO3166: String, password: String, language: String, completionBlock: @escaping (_ success: Bool, _ user: User?, _ error: BookwittyAPIError?)->()) -> Cancellable? {
 
