@@ -206,11 +206,11 @@ class SignInViewController: UIViewController {
   
   // MARK: - Network indicator handling
   
-  private func showLoader() {
+  fileprivate func showLoader() {
     SwiftLoader.show(animated: true)
   }
   
-  private func hideLoader() {
+  fileprivate func hideLoader() {
     SwiftLoader.hide()
   }
   
@@ -360,11 +360,41 @@ extension SignInViewController: WebViewControllerDelegate {
     print("[URL] = \(request.url?.absoluteString ?? "NIL")")
     return true
   }
-  func webViewController(_ webViewController: WebViewController, didFailLoadWithError error: Error) {}
+
+  func webViewController(_ webViewController: WebViewController, didFailLoadWithError error: Error) {
+    let err = error as NSError
+
+    if err.domain.hasPrefix(AuthPlatforms.AuthErrors.domain) {
+      switch err.code {
+      case AuthPlatforms.AuthErrors.facebookAuthMissingEmailError.code:
+        print("[debug]: \(NSURL(string: #file)?.deletingPathExtension?.lastPathComponent ?? "").\(#function) [Line \(#line)] \(err.userInfo)")
+        break
+      case AuthPlatforms.AuthErrors.error.code:
+        break
+      default:
+        break
+      }
+
+      self.presentedViewController?.dismiss(animated: true, completion: nil)
+    }
+  }
+
   func webViewControllerDidStartLoad(_ webViewController: WebViewController) {}
   func webViewControllerDidFinishLoad(_ webViewController: WebViewController) {}
 
   func webViewController(_ webViewController: WebViewController, didAuthenticate platform: SignInViewController.AuthPlatforms) {
+    self.presentedViewController?.dismiss(animated: true, completion: nil)
 
+    self.showLoader()
+    self.viewModel.getSignedInUser { (success: Bool, error: BookwittyAPIError?) in
+      self.hideLoader()
+      if success {
+        NotificationCenter.default.post(name: AppNotification.didSignIn, object: nil)
+      } else {
+        self.showAlertWith(
+          title: Strings.sign_in(),
+          message: Strings.something_wrong_in_credentials())
+      }
+    }
   }
 }
