@@ -148,6 +148,9 @@ class RegisterViewController: UIViewController {
     firstNameField.delegate = self
     lastNameField.delegate = self
 
+    lastNameField.textField.text = viewModel.userInfo.lastName
+    firstNameField.textField.text = viewModel.userInfo.firstName
+
     countryField.informativeInputFieldDelegate = self
 
     stackView.isLayoutMarginsRelativeArrangement = true
@@ -168,6 +171,9 @@ class RegisterViewController: UIViewController {
     NotificationCenter.default.removeObserver(self)
   }
 
+  func prefillUserInfo(firstName: String?, lastName: String?, facebookUserIdentifier: String?) {
+    viewModel.userInfo = (firstName, lastName, facebookUserIdentifier)
+  }
 
   @IBAction func continueButtonTouchUpInside(_ sender: Any) {
     let emailValidationResult = emailField.validateField()

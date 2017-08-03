@@ -13,6 +13,8 @@ import CoreTelephony
 final class RegisterViewModel {
   var country: (code: String, name: String)?
 
+  var userInfo: (firstName: String?, lastName:String?, facebookUserIdentifier: String?)
+
   init() {
     self.country = loadDeviceDefaultCountry()
   }
