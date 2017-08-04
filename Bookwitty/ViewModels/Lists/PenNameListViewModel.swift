@@ -84,6 +84,12 @@ extension PenNameListViewModel {
       completion(success)
     }
   }
+
+  private func batchPenNames(identifiers: [String], completion: @escaping (_ success: Bool, _ penNames: [PenName]?)->()) {
+    _ = GeneralAPI.batchPenNames(identifiers: identifiers, completion: { (success: Bool, penNames: [ModelResource]?, error: BookwittyAPIError?) in
+      completion(success, penNames as? [PenName])
+    })
+  }
 }
 
 //MARK: - Actions
