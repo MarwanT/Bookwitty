@@ -17,7 +17,7 @@ public enum BookwittyAPI {
   case googleSignIn(token: String)
   case refreshToken(refreshToken: String)
   case allAddresses
-  case register(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String?, countryISO3166: String, password: String, language: String)
+  case register(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String?, countryISO3166: String, password: String, language: String, facebookUserIdentifier: String?)
   case user
   case updateUser(identifier: String, firstName: String?, lastName: String?, dateOfBirth: String?, email: String?, currentPassword: String?, password: String?, country: String?, completeOnboarding: Bool?, badges: [String : Any]?, preferences: [String : Any]?)
   case bookStore
@@ -311,8 +311,8 @@ extension BookwittyAPI: TargetType {
       return UserAPI.batchPostBody(identifiers: identifiers)
     case .batchPenNames(let identifiers):
       return GeneralAPI.batchPenNamesPostBody(identifiers: identifiers)
-    case .register(let firstName, let lastName, let email, let dateOfBirth, let country, let password, let language):
-      return UserAPI.registerPostBody(firstName: firstName, lastName: lastName, email: email, dateOfBirth: dateOfBirth, country: country, password: password, language: language)
+            case .register(let firstName, let lastName, let email, let dateOfBirth, let country, let password, let language, let facebookUserIdentifier):
+      return UserAPI.registerPostBody(firstName: firstName, lastName: lastName, email: email, dateOfBirth: dateOfBirth, country: country, password: password, language: language, facebookUserIdentifier: facebookUserIdentifier)
     case .updateUser(let identifier, let firstName, let lastName, let dateOfBirth, let email, let currentPassword, let password, let country, let completeOnboarding, let badges, let preferences):
       return UserAPI.updatePostBody(identifier: identifier, firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirth, email: email, currentPassword: currentPassword, password: password, country: country, completeOnboarding: completeOnboarding, badges: badges, preferences: preferences)
     case .search(let filter, let page, let includeFacets):
