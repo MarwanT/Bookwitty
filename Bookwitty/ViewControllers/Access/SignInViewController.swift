@@ -217,8 +217,9 @@ class SignInViewController: UIViewController {
   
   // MARK: - Helper methods
   
-  fileprivate func pushRegisterViewController() {
+  fileprivate func pushRegisterViewController(_ firstName: String? = nil, _ lastName: String? = nil, _ facebookUserIdentifier: String? = nil) {
     let registerViewController = Storyboard.Access.instantiate(RegisterViewController.self)
+    registerViewController.prefillUserInfo(firstName: firstName, lastName: lastName, facebookUserIdentifier: facebookUserIdentifier)
     navigationController?.pushViewController(registerViewController, animated: true)
   }
 }
@@ -367,8 +368,11 @@ extension SignInViewController: WebViewControllerDelegate {
     if err.domain.hasPrefix(AuthPlatforms.AuthErrors.domain) {
       switch err.code {
       case AuthPlatforms.AuthErrors.facebookAuthMissingEmailError.code:
-        print("[debug]: \(NSURL(string: #file)?.deletingPathExtension?.lastPathComponent ?? "").\(#function) [Line \(#line)] \(err.userInfo)")
-        break
+        let userIdentifier = err.userInfo["userIdentifier"] as? String
+        let message = err.userInfo["message"] as? String
+        let fullName = err.userInfo["name"] as? String
+        let components = fullName?.components(separatedBy: " ") ?? []
+        self.pushRegisterViewController(components.first, components.last, userIdentifier)
       case AuthPlatforms.AuthErrors.error.code:
         break
       default:
