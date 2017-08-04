@@ -69,6 +69,25 @@ struct ContentAPI {
       bookMeta = Book.Meta(dictionary: values.metadata)
     })
   }
+
+  static func report(identifier: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let successStatusCode: Int = 204
+
+    return signedAPIRequest(target: .report(identifier: identifier), completion: {
+      (data, statusCode, response, error) in
+      let success: Bool = statusCode == successStatusCode
+      var error: BookwittyAPIError? = error
+
+      defer {
+        completion(success, error)
+      }
+
+      guard statusCode == successStatusCode else {
+        error = BookwittyAPIError.invalidStatusCode
+        return
+      }
+    })
+  }
 }
 
 extension ContentAPI {
