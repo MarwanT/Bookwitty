@@ -27,6 +27,7 @@ class CardActionBarNode: ASCellNode {
   var witButton: ASButtonNode
   var commentButton: ASButtonNode
   var shareButton: ASButtonNode
+  var moreButton: ASButtonNode
   var replyNode: ASTextNode
   weak var delegate: CardActionBarNodeDelegate? = nil
 
@@ -51,6 +52,12 @@ class CardActionBarNode: ASCellNode {
     }
   }
   
+  var hideMoreButton: Bool = false {
+    didSet {
+      setNeedsLayout()
+    }
+  }
+
   var hideReplyButton: Bool = true {
     didSet {
       setNeedsLayout()
@@ -67,6 +74,7 @@ class CardActionBarNode: ASCellNode {
     witButton = ASButtonNode()
     commentButton = ASButtonNode()
     shareButton = ASButtonNode()
+    moreButton = ASButtonNode()
     followButton = ASButtonNode()
     replyNode = ASTextNode()
     super.init()
@@ -88,6 +96,9 @@ class CardActionBarNode: ASCellNode {
 
     shareButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
     shareButton.setImage(#imageLiteral(resourceName: "shareOutside"), for: .normal)
+
+    moreButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
+    moreButton.setImage(#imageLiteral(resourceName: "threeDots"), for: .normal)
 
     setupWitButtonStyling()
     setupFollowButtonStyling()
@@ -143,7 +154,7 @@ class CardActionBarNode: ASCellNode {
     witButton.borderWidth = 2
     witButton.clipsToBounds = true
   }
-  
+
   private func setupReplyNodeStyling() {
     replyNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.footnote)
       .append(text: Strings.reply(), color: ThemeManager.shared.currentTheme.defaultGrayedTextColor()).attributedString
@@ -261,6 +272,7 @@ class CardActionBarNode: ASCellNode {
     //Setup other buttons
     commentButton.style.preferredSize = configuration.iconSize
     shareButton.style.preferredSize = configuration.iconSize
+    moreButton.style.preferredSize = configuration.iconSize
     
     // • Layout visible subnodes
     var horizontalStackElements = [ASLayoutElement]()
@@ -289,6 +301,15 @@ class CardActionBarNode: ASCellNode {
         horizontalStackElements.append(spacer(width: 10))
       }
       horizontalStackElements.append(shareButton)
+      shouldAddSpace = true
+    }
+
+    // • Add Share Button
+    if !hideMoreButton {
+      if shouldAddSpace {
+        horizontalStackElements.append(spacer(width: 10))
+      }
+      horizontalStackElements.append(moreButton)
       shouldAddSpace = true
     }
     
