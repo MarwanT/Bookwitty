@@ -22,11 +22,13 @@ class PenNameFollowNode: ASCellNode {
   fileprivate let imageSize: CGSize = CGSize(width: 45.0, height: 45.0)
   fileprivate let largeImageSize: CGSize = CGSize(width: 60.0, height: 60.0)
   fileprivate let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
+  fileprivate let iconSize: CGSize = CGSize(width: 40.0, height: 40.0)
 
   private var imageNode: ASNetworkImageNode
   private var nameNode: ASTextNode
   private var biographyNode: ASTextNode
   private var actionButton: ButtonWithLoader
+  private var moreButton: ASButtonNode
   private let separatorNode: ASDisplayNode
   private var enlarged: Bool = false
   fileprivate var largePadding: Bool = false
@@ -38,12 +40,14 @@ class PenNameFollowNode: ASCellNode {
     nameNode = ASTextNode()
     biographyNode = ASTextNode()
     actionButton = ButtonWithLoader()
+    moreButton = ASButtonNode()
     separatorNode = ASDisplayNode()
     super.init()
     addSubnode(imageNode)
     addSubnode(nameNode)
     addSubnode(biographyNode)
     addSubnode(actionButton)
+    addSubnode(moreButton)
     addSubnode(separatorNode)
   }
 
@@ -123,6 +127,10 @@ class PenNameFollowNode: ASCellNode {
     actionButton.style.height = ASDimensionMake(buttonSize.height)
     actionButton.delegate = self
 
+    moreButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.colorNumber15())
+    moreButton.setImage(#imageLiteral(resourceName: "threeDots"), for: .normal)
+    moreButton.style.preferredSize = iconSize
+
     imageNode.style.preferredSize = enlarged ? largeImageSize : imageSize
 
     nameNode.addTarget(self, action: #selector(actionPenNameFollowTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
@@ -173,6 +181,7 @@ class PenNameFollowNode: ASCellNode {
     nodesArray.append(verticalSpec)
     nodesArray.append(spacer(flexGrow: 1.0))
     nodesArray.append(spacer(width: internalMargin / 2.0))
+    nodesArray.append(moreButton)
 
     let horizontalSpec = ASStackLayoutSpec(direction: .horizontal,
                                            spacing: 0,
