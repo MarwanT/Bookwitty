@@ -158,6 +158,11 @@ class PenNameFollowNode: ASCellNode {
       infoNodes.append(biographyNode)
     }
 
+    if !disabled {
+      infoNodes.append(spacer(flexGrow: 1.0))
+      infoNodes.append(actionButton)
+    }
+
     let verticalSpec = ASStackLayoutSpec(direction: .vertical,
                                          spacing: internalMargin / 3.0,
                                          justifyContent: .start,
@@ -168,9 +173,6 @@ class PenNameFollowNode: ASCellNode {
     nodesArray.append(verticalSpec)
     nodesArray.append(spacer(flexGrow: 1.0))
     nodesArray.append(spacer(width: internalMargin / 2.0))
-    if !disabled {
-      nodesArray.append(actionButton)
-    }
 
     let horizontalSpec = ASStackLayoutSpec(direction: .horizontal,
                                            spacing: 0,
