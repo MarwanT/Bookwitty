@@ -221,6 +221,10 @@ class Strings {
     return localizedString(key: "discover_banner_message")
   }
   
+  static func dismiss() -> String {
+    return localizedString(key: "dismiss")
+  }
+
   static func done() -> String {
     return localizedString(key: "done")
   }
@@ -489,6 +493,10 @@ class Strings {
     return localizedString(key: "newsletter")
   }
 
+  static func no_forget_it() -> String {
+    return localizedString(key: "no_forget_it")
+  }
+
   static func no_internet_error_description() -> String {
     return localizedString(key: "no_internet_error_description")
   }
@@ -673,6 +681,18 @@ class Strings {
     return localizedString(key: "reply")
   }
   
+  static func report() -> String {
+    return localizedString(key: "report")
+  }
+
+  static func reported() -> String {
+    return localizedString(key: "reported")
+  }
+
+  static func report_this_content() -> String {
+    return localizedString(key: "report_this_content")
+  }
+
   static func reset_password() -> String {
     return localizedString(key: "reset_password")
   }
@@ -753,6 +773,10 @@ class Strings {
     return localizedString(key: "text")
   }
   
+  static func thank_you_for_report() -> String {
+    return localizedString(key: "thank_you_for_report")
+  }
+
   static func topic() -> String {
     return localizedString(key: "topic")
   }
@@ -901,6 +925,10 @@ class Strings {
     return localizedString(key: "witted")
   }
   
+  static func yes_this_is_spam() -> String {
+    return localizedString(key: "yes_this_is_spam")
+  }
+
   static func yesterday() -> String {
     return localizedString(key: "yesterday")
   }
