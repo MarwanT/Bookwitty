@@ -250,7 +250,7 @@ class CardActionBarNode: ASCellNode {
   
   func moreButtonTouchUpInside(_ sender: ASButtonNode?) {
     guard let sender = sender else { return }
-    
+    delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: CardActionBarNode.Action.more, forSender: sender, didFinishAction: nil)
   }
 
   func replyButtonTouchUpInside(_ sender: ASButtonNode?) {
