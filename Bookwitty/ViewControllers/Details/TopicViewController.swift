@@ -437,6 +437,10 @@ extension TopicViewController: PenNameFollowNodeDelegate {
                                                  name: penName.name ?? "")
     Analytics.shared.send(event: event)
   }
+
+  func penName(node: PenNameFollowNode, moreButtonTouchUpInside button: ASButtonNode?) {
+    
+  }
 }
 
 

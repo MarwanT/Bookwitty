@@ -13,7 +13,7 @@ protocol PenNameFollowNodeDelegate: class {
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader)
   func penName(node: PenNameFollowNode, actionPenNameFollowTouchUpInside button: Any?)
   func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
-
+  func penName(node: PenNameFollowNode, moreButtonTouchUpInside button: ASButtonNode?)
 }
 
 class PenNameFollowNode: ASCellNode {
@@ -211,7 +211,7 @@ extension PenNameFollowNode {
   }
 
   func moreButtonTouchUpInside(_ sender: ASButtonNode?) {
-    
+    delegate?.penName(node: self, moreButtonTouchUpInside: sender)
   }
 }
 

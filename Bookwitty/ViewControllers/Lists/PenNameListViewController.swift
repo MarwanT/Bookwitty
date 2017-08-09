@@ -223,4 +223,8 @@ extension PenNameListViewController: PenNameFollowNodeDelegate {
   func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode){    
     penName(node: node, actionPenNameFollowTouchUpInside: imageNode)
   }
+
+  func penName(node: PenNameFollowNode, moreButtonTouchUpInside button: ASButtonNode?) {
+    
+  }
 }

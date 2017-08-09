@@ -208,6 +208,10 @@ extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
       }
     }
   }
+
+  func penName(node: PenNameFollowNode, moreButtonTouchUpInside button: ASButtonNode?) {
+    
+  }
 }
 
 extension ProfileDetailsViewController: ASCollectionDelegate {

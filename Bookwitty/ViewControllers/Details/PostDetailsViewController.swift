@@ -837,6 +837,10 @@ extension PostDetailsViewController: PenNameFollowNodeDelegate {
       Analytics.shared.send(event: event)
     }
   }
+
+  func penName(node: PenNameFollowNode, moreButtonTouchUpInside button: ASButtonNode?) {
+    
+  }
 }
 
 // MARK - Actions
