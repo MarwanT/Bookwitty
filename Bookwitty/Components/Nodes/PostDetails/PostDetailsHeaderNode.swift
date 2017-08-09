@@ -57,7 +57,7 @@ class PostDetailsHeaderNode: ASCellNode {
     didSet {
       if let actionInfoValue = actionInfoValue {
         actionInfoNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
-          .append(text: actionInfoValue, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+          .append(text: actionInfoValue, color: ThemeManager.shared.currentTheme.colorNumber15()).attributedString
       } else {
         actionInfoNode.attributedText = nil
       }
