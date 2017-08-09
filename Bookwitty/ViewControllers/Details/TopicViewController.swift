@@ -906,6 +906,12 @@ extension TopicViewController: BaseCardPostNodeDelegate {
     case .comment:      
       pushCommentsViewController(for: resource as? ModelCommonProperties)
       didFinishAction?(true)
+    case .more:
+      guard let resource = resource as? ModelCommonProperties,
+        let identifier = resource.id else { return }
+      self.showMoreActionSheet(identifier: identifier, actions: [.report(.content)], completion: { (success: Bool) in
+        didFinishAction?(success)
+      })
     default:
       break
     }
