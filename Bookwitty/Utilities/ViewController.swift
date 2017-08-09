@@ -74,6 +74,34 @@ extension UIViewController {
     commentsVC.initialize(with: commentsManager)
     self.navigationController?.pushViewController(commentsVC, animated: true)
   }
+
+  func showReportContentAlert(identifier: String, completion: @escaping (_ success: Bool)->()) {
+    let title = Strings.report()
+    let message = Strings.report_this_content()
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    alert.addAction(UIAlertAction(title: Strings.yes_this_is_spam(), style: .destructive, handler: { (action: UIAlertAction) in
+      //TODO: Send Report
+      self.showReportSuccessfullAlert(completion: { 
+        completion(true)
+      })
+    }))
+
+    alert.addAction(UIAlertAction(title: Strings.no_forget_it(), style: .default, handler: { (action: UIAlertAction) in
+      //TODO: Cancel Report
+      completion(false)
+    }))
+    self.present(alert, animated: true, completion: nil)
+  }
+
+  private func showReportSuccessfullAlert(completion: @escaping ()->()) {
+    let title = Strings.reported()
+    let message = Strings.thank_you_for_report()
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    alert.addAction(UIAlertAction(title: Strings.dismiss(), style: .default, handler: { (action: UIAlertAction) in
+      //TODO: Send Report
+    }))
+    self.present(alert, animated: true, completion: nil)
+  }
 }
 
 extension UIViewController {
