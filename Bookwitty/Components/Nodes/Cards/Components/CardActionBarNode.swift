@@ -22,6 +22,7 @@ class CardActionBarNode: ASCellNode {
     case follow
     case unfollow
     case reply
+    case more
   }
   var followButton: ASButtonNode
   var witButton: ASButtonNode
