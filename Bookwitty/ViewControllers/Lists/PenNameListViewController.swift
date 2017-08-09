@@ -226,5 +226,14 @@ extension PenNameListViewController: PenNameFollowNodeDelegate {
 
   func penName(node: PenNameFollowNode, moreButtonTouchUpInside button: ASButtonNode?) {
     
+    guard let indexPath = collectionNode.indexPath(for: node),
+      let identifier = viewModel.penName(at: indexPath.row)?.id else {
+        return
+    }
+
+    self.showMoreActionSheet(identifier: identifier, actions: [.report(.penName)], completion: {
+      (success: Bool) in
+
+    })
   }
 }

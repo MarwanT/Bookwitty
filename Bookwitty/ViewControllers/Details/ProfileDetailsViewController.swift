@@ -211,6 +211,26 @@ extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
 
   func penName(node: PenNameFollowNode, moreButtonTouchUpInside button: ASButtonNode?) {
     
+    let penNameIdentifier: String
+    if penNameHeaderNode === node {
+      guard let identifier = viewModel.penName.id else {
+        return
+      }
+      penNameIdentifier = identifier
+    } else {
+      guard let indexPath = collectionNode.indexPath(for: node),
+        let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment),
+        let penName = resource as? PenName,
+        let identifier = penName.id else {
+          return
+      }
+      penNameIdentifier = identifier
+    }
+
+    self.showMoreActionSheet(identifier: penNameIdentifier, actions: [.report(.penName)], completion: {
+      (success: Bool) in
+
+    })
   }
 }
 

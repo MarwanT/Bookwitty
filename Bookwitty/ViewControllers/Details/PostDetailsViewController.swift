@@ -840,6 +840,14 @@ extension PostDetailsViewController: PenNameFollowNodeDelegate {
 
   func penName(node: PenNameFollowNode, moreButtonTouchUpInside button: ASButtonNode?) {
     
+    guard let penName = viewModel.penName,
+      let identifier = penName.id else {
+        return
+    }
+    self.showMoreActionSheet(identifier: identifier, actions: [.report(.penName)], completion: {
+      (success: Bool) in
+
+    })
   }
 }
 
