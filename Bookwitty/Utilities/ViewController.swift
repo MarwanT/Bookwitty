@@ -85,6 +85,29 @@ extension UIViewController {
     self.navigationController?.pushViewController(commentsVC, animated: true)
   }
 
+  func showMoreActionSheet(identifier: String, actions: [MoreAction], completion: @escaping (_ success: Bool)->()) {
+    let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+
+    if actions.contains(where: { $0 == .report(.content) }) {
+      alert.addAction(UIAlertAction(title: Strings.report(), style: .destructive, handler: { (action: UIAlertAction) in
+        self.showReportContentAlert(identifier: identifier, completion: { (success: Bool) in
+          completion(success)
+        })
+      }))
+    }
+
+    if actions.contains(where: { $0 == .report(.penName) }) {
+      alert.addAction(UIAlertAction(title: Strings.report(), style: .destructive, handler: { (action: UIAlertAction) in
+        self.showReportPenNameAlert(identifier: identifier, completion: { (success: Bool) in
+          completion(success)
+        })
+      }))
+    }
+
+    alert.addAction(UIAlertAction(title: Strings.cancel(), style: .cancel, handler: nil))
+    self.present(alert, animated: true, completion: nil)
+  }
+
   func showReportContentAlert(identifier: String, completion: @escaping (_ success: Bool)->()) {
     let title = Strings.report()
     let message = Strings.report_this_content()
