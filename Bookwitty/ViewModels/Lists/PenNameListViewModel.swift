@@ -61,9 +61,24 @@ extension PenNameListViewModel {
     }
 
     _ = GeneralAPI.votes(contentIdentifier: id) { (success: Bool, votes: [Vote]?, next: URL?, error: BookwittyAPIError?) in
-      self.penNames = votes?.flatMap({ $0.penName }) ?? []
+      guard success, let votes = votes else {
+        self.nextPage = nil
+        completion(false)
+        return
+      }
+
       self.nextPage = next
-      completion(success)
+
+      let penNames = votes.flatMap({ $0.penName })
+      let identifiers = penNames.flatMap({ $0.id })
+      if identifiers.count > 0 {
+        self.batchPenNames(identifiers: identifiers, completion: {
+          (success: Bool, penNames: [PenName]?) in
+          self.penNames.removeAll()
+          self.penNames += penNames ?? []
+          completion(success)
+        })
+      }
     }
   }
 
@@ -74,15 +89,29 @@ extension PenNameListViewModel {
     }
 
     _ = GeneralAPI.nextPage(nextPage: next) { (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
-      guard let votes = resources as? [Vote] else {
+      guard success, let votes = resources as? [Vote] else {
         completion(false)
         return
       }
 
-      self.penNames += votes.flatMap({ $0.penName })
       self.nextPage = next
-      completion(success)
+
+      let penNames = votes.flatMap({ $0.penName })
+      let identifiers = penNames.flatMap({ $0.id })
+      if identifiers.count > 0 {
+        self.batchPenNames(identifiers: identifiers, completion: {
+          (success: Bool, penNames: [PenName]?) in
+          self.penNames += penNames ?? []
+          completion(success)
+        })
+      }
     }
+  }
+
+  private func batchPenNames(identifiers: [String], completion: @escaping (_ success: Bool, _ penNames: [PenName]?)->()) {
+    _ = GeneralAPI.batchPenNames(identifiers: identifiers, completion: { (success: Bool, penNames: [ModelResource]?, error: BookwittyAPIError?) in
+      completion(success, penNames as? [PenName])
+    })
   }
 }
 

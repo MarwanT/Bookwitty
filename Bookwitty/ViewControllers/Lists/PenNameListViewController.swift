@@ -167,11 +167,8 @@ extension PenNameListViewController: ASCollectionDataSource, ASCollectionDelegat
     context.beginBatchFetching()
 
     viewModel.getNextPage { (success: Bool) in
-      collectionNode.performBatchUpdates({
-        self.loadingStatus = .none
-        collectionNode.reloadData()
-      }, completion: nil)
-
+      self.loadingStatus = .none
+      collectionNode.reloadData()
       context.completeBatchFetching(true)
     }
   }
