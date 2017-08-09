@@ -136,6 +136,7 @@ class PenNameFollowNode: ASCellNode {
     nameNode.addTarget(self, action: #selector(actionPenNameFollowTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
     imageNode.addTarget(self, action: #selector(imageNodeTouchUpInside(sender:)), forControlEvents: ASControlNodeEvent.touchUpInside)
     biographyNode.addTarget(self, action: #selector(actionPenNameFollowTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
+    moreButton.addTarget(self, action: #selector(moreButtonTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
 
     separatorNode.style.height = ASDimensionMake(1)
     separatorNode.style.flexGrow = 1
@@ -207,6 +208,10 @@ class PenNameFollowNode: ASCellNode {
 extension PenNameFollowNode {
   func actionPenNameFollowTouchUpInside(_ sender: Any?) {
     delegate?.penName(node: self, actionPenNameFollowTouchUpInside: sender)
+  }
+
+  func moreButtonTouchUpInside(_ sender: ASButtonNode?) {
+    
   }
 }
 
