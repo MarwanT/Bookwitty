@@ -9,6 +9,16 @@
 import Foundation
 
 extension UIViewController {
+
+  enum ReportType: Int {
+    case content = 0
+    case penName = 1
+  }
+
+  enum MoreAction {
+    case report(ReportType)
+  }
+
   func add(asChildViewController viewController: UIViewController, toView view: UIView) -> UIView {
     guard let childView = viewController.view else {
       return UIView()
@@ -111,5 +121,14 @@ extension UIViewController {
   
   public static var storyboardIdentifier: String {
     return self.description().components(separatedBy: ".").dropFirst().joined(separator: ".")
+  }
+}
+
+extension UIViewController.MoreAction: Equatable {
+  static func ==(lhs: UIViewController.MoreAction, rhs: UIViewController.MoreAction) -> Bool {
+    switch (lhs, rhs) {
+    case (let .report(type1), let .report(type2)):
+      return type1 == type2
+    }
   }
 }
