@@ -64,3 +64,77 @@ extension TagFeedViewController {
     }
   }
 }
+
+//MARK: ASCollectionDataSource, ASCollectionDelegate implementation
+extension TagFeedViewController: ASCollectionDataSource, ASCollectionDelegate {
+  private func nodeForItem(atIndex index: Int) -> BaseCardPostNode? {
+    guard let resource = self.viewModel.resourceForIndex(index: index) else {
+      return nil
+    }
+
+    let card = CardFactory.createCardFor(resourceType: resource.registeredResourceType)
+    card?.baseViewModel?.resource = resource as? ModelCommonProperties
+    return card
+  }
+
+
+  func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+    return Section.numberOfSections
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+    switch section {
+    case TagFeedViewController.Section.cards.rawValue:
+      return self.viewModel.data.count
+    case TagFeedViewController.Section.activityIndicator.rawValue:
+      return shouldShowLoader ? 1 : 0
+    default:
+      return 0
+    }
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+    let index = indexPath.row
+    let section = indexPath.section
+    return {
+      if section == Section.cards.rawValue {
+        let baseCardNode = self.nodeForItem(atIndex: index) ?? BaseCardPostNode()
+        return baseCardNode
+      } else if section == Section.activityIndicator.rawValue {
+        return self.loaderNode
+      } else {
+        return ASCellNode()
+      }
+    }
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+    if node is LoaderNode {
+      loaderNode.updateLoaderVisibility(show: shouldShowLoader)
+    } else if let card = node as? BaseCardPostNode {
+      guard let indexPath = collectionNode.indexPath(for: node),
+        let resource = viewModel.resourceForIndex(index: indexPath.row), let commonResource =  resource as? ModelCommonProperties else {
+          return
+      }
+
+      if let sameInstance = card.baseViewModel?.resource?.sameInstanceAs(newResource: commonResource), !sameInstance {
+        card.baseViewModel?.resource = commonResource
+      }
+    }
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    guard indexPath.section == Section.cards.rawValue else {
+      return
+    }
+
+    //TODO: do action
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
+    return ASSizeRange(
+      min: CGSize(width: collectionNode.frame.width, height: 0),
+      max: CGSize(width: collectionNode.frame.width, height: .infinity)
+    )
+  }
+}
