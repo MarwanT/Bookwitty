@@ -43,6 +43,9 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
+    collectionNode.dataSource = self
+    collectionNode.delegate = self
+
   }
 }
 
