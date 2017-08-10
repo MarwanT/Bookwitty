@@ -54,4 +54,13 @@ extension TagFeedViewController {
     case reloading
     case loading
   }
+
+  enum Section: Int {
+    case cards
+    case activityIndicator
+
+    static var numberOfSections: Int {
+      return 2
+    }
+  }
 }
