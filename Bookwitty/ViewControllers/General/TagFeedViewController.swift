@@ -13,8 +13,15 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
 
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
+  let loaderNode: LoaderNode
 
   fileprivate let viewModel = TagFeedViewModel()
+
+
+  fileprivate var loadingStatus: LoadingStatus = .none
+  fileprivate var shouldShowLoader: Bool {
+    return (loadingStatus != .none && loadingStatus != .reloading)
+  }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -27,6 +34,8 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
     flowLayout.minimumLineSpacing = 0
 
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+    loaderNode = LoaderNode()
+
     super.init(node: collectionNode)
   }
 
@@ -34,5 +43,15 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
+  }
+}
+
+// MARK: - Declarations
+extension TagFeedViewController {
+  enum LoadingStatus {
+    case none
+    case loadMore
+    case reloading
+    case loading
   }
 }
