@@ -23,4 +23,34 @@ class TagFeedViewModel {
     let resource = resourceFor(id: data[index])
     return resource
   }
+
+  func loadReadingListImages(atIndex index: Int, maxNumberOfImages: Int, completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
+    guard let readingList = resourceForIndex(index: index) as? ReadingList,
+      let identifier = readingList.id else {
+        completionBlock(nil)
+        return
+    }
+
+    let pageSize: String = String(maxNumberOfImages)
+    let page: (number: String?, size: String?) = (nil, pageSize)
+    _ = GeneralAPI.postsContent(contentIdentifier: identifier, page: page) {
+      (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
+      var imageCollection: [String]? = nil
+      defer {
+        completionBlock(imageCollection)
+      }
+      if let resources = resources, success {
+        var images: [String] = []
+        resources.forEach({ (resource) in
+          if let res = resource as? ModelCommonProperties {
+            if let imageUrl = res.thumbnailImageUrl {
+              images.append(imageUrl)
+            }
+          }
+        })
+        imageCollection = images
+      }
+    }
+  }
+
 }

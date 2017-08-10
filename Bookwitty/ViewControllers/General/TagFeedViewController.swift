@@ -102,6 +102,18 @@ extension TagFeedViewController: ASCollectionDataSource, ASCollectionDelegate {
     return {
       if section == Section.cards.rawValue {
         let baseCardNode = self.nodeForItem(atIndex: index) ?? BaseCardPostNode()
+
+        if let readingListCell = baseCardNode as? ReadingListCardPostCellNode,
+          !readingListCell.node.isImageCollectionLoaded {
+          let max = readingListCell.node.maxNumberOfImages
+          self.viewModel.loadReadingListImages(atIndex: index, maxNumberOfImages: max, completionBlock: { (imageCollection) in
+            if let imageCollection = imageCollection, imageCollection.count > 0 {
+              readingListCell.node.prepareImages(imageCount: imageCollection.count)
+              readingListCell.node.loadImages(with: imageCollection)
+            }
+          })
+        }
+
         return baseCardNode
       } else if section == Section.activityIndicator.rawValue {
         return self.loaderNode
