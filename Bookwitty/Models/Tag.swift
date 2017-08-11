@@ -11,4 +11,29 @@ import Spine
 
 class Tag: Resource {
 
+  var slug: String?
+  var title: String?
+
+  @objc
+  private var followingNumber: NSNumber?
+  var following: Bool {
+    get {
+      return ((followingNumber?.intValue ?? 0) == 1)
+    }
+    set {
+      followingNumber = NSNumber(value: newValue)
+    }
+  }
+
+  override class var resourceType: ResourceType {
+    return "tags"
+  }
+
+  override class var fields: [Field] {
+    return fieldsFromDictionary([
+      "slug": Attribute().serializeAs("slug"),
+      "title": Attribute().serializeAs("title"),
+      "followingNumber": Attribute().serializeAs("following"),
+      ])
+  }
 }
