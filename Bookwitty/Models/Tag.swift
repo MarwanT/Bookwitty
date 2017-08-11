@@ -37,3 +37,8 @@ class Tag: Resource {
       ])
   }
 }
+
+// MARK: - Parser
+extension Tag: Parsable {
+  typealias AbstractType = Tag
+}

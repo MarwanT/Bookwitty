@@ -148,6 +148,7 @@ class Parser {
     serializer.registerResource(Comment.self)
     serializer.registerResource(UploadPolicy.self)
     serializer.registerResource(Vote.self)
+    serializer.registerResource(Tag.self)
   }
 
   private func registerValueFormatters() {
