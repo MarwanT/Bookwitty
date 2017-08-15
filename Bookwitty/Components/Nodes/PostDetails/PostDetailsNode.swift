@@ -62,6 +62,7 @@ class PostDetailsNode: ASScrollNode {
 
 
   fileprivate let descriptionNode: DTAttributedTextContentNode
+  fileprivate let tagCollectionNode: TagCollectionNode
   fileprivate let separator: SeparatorNode
   fileprivate let conculsionNode: DTAttributedTextContentNode
   fileprivate let postItemsNodeLoader: LoaderNode
@@ -152,6 +153,7 @@ class PostDetailsNode: ASScrollNode {
   override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
     headerNode = PostDetailsHeaderNode()
     descriptionNode = DTAttributedTextContentNode()
+    tagCollectionNode = TagCollectionNode()
     postItemsNode = PostDetailsItemNode()
     separator = SeparatorNode()
     conculsionNode = DTAttributedTextContentNode()
@@ -183,6 +185,7 @@ class PostDetailsNode: ASScrollNode {
   override init() {
     headerNode = PostDetailsHeaderNode()
     descriptionNode = DTAttributedTextContentNode()
+    tagCollectionNode = TagCollectionNode()
     postItemsNode = PostDetailsItemNode()
     separator = SeparatorNode()
     conculsionNode = DTAttributedTextContentNode()
@@ -311,11 +314,14 @@ class PostDetailsNode: ASScrollNode {
     let vStackSpec = ASStackLayoutSpec.vertical()
     vStackSpec.spacing = 0.0
 
-    let descriptionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: descriptionNode)
+    let descriptionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: descriptionNode)    
+    let tagCollectionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: tagCollectionNode)
+
     let separatorInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: separator)
 
     vStackSpec.children = [headerNode, ASLayoutSpec.spacer(height: contentSpacing),
                            descriptionInsetSpec, ASLayoutSpec.spacer(height: contentSpacing),
+                           tagCollectionInsetSpec, ASLayoutSpec.spacer(height: contentSpacing),
                            separatorInsetSpec]
 
     postItemsNodeLoader.updateLoaderVisibility(show: showPostsLoader)
