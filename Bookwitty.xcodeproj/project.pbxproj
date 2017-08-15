@@ -82,6 +82,7 @@
 		56E09DBE1E546B2100B7C6E6 /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E09DBD1E546B2100B7C6E6 /* ChangePasswordViewModel.swift */; };
 		56E87D341E6EFFCA00AF6CFD /* BookNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E87D331E6EFFCA00AF6CFD /* BookNode.swift */; };
 		56E8B6441E6971C900D8E71E /* TopicControllerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E8B6431E6971C900D8E71E /* TopicControllerNode.swift */; };
+		56F49E131F42FF8C004FFAAD /* TagNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F49E121F42FF8C004FFAAD /* TagNode.swift */; };
 		56F9FDCC1E82F39B00A48CEB /* UIBarButtonItem+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F9FDCB1E82F39B00A48CEB /* UIBarButtonItem+Utils.swift */; };
 		56FC41971E58CBA100D9B1CE /* NSBundle+Language.m in Sources */ = {isa = PBXBuildFile; fileRef = 56FC41961E58CBA100D9B1CE /* NSBundle+Language.m */; };
 		5903394C1E9E6719004ED1C3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5903394B1E9E6719004ED1C3 /* Utilities.swift */; };
@@ -387,6 +388,7 @@
 		56E09DBD1E546B2100B7C6E6 /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
 		56E87D331E6EFFCA00AF6CFD /* BookNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookNode.swift; sourceTree = "<group>"; };
 		56E8B6431E6971C900D8E71E /* TopicControllerNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicControllerNode.swift; sourceTree = "<group>"; };
+		56F49E121F42FF8C004FFAAD /* TagNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagNode.swift; sourceTree = "<group>"; };
 		56F9FDCB1E82F39B00A48CEB /* UIBarButtonItem+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Utils.swift"; sourceTree = "<group>"; };
 		56FC41951E58CBA100D9B1CE /* NSBundle+Language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+Language.h"; sourceTree = "<group>"; };
 		56FC41961E58CBA100D9B1CE /* NSBundle+Language.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+Language.m"; sourceTree = "<group>"; };
@@ -1004,6 +1006,7 @@
 				59CB4DEC1EDEA49C00E7A60B /* CommentsNode.swift */,
 				59CB4DF01EE0600800E7A60B /* WriteCommentNode.swift */,
 				56C54C671F05092000C5FE85 /* CommentCompactNode.swift */,
+				56F49E121F42FF8C004FFAAD /* TagNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -1819,6 +1822,7 @@
 				59D106CC1E802C2F00BB9695 /* AppManager.swift in Sources */,
 				F417B1D21E71C3D400B0FAFE /* PostDetailsItemNode.swift in Sources */,
 				59BD55781E302EB800D3B805 /* Analytics.swift in Sources */,
+				56F49E131F42FF8C004FFAAD /* TagNode.swift in Sources */,
 				56205DEB1E5324BC000CA4D7 /* TableViewSectionHeaderView.swift in Sources */,
 				59CB4DEF1EDEC15800E7A60B /* CommentsManager.swift in Sources */,
 				56929CE61E671BE700B3D00A /* SegmentedControl.swift in Sources */,
