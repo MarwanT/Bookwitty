@@ -25,6 +25,8 @@ class User: Resource {
   var onboardCompleteAt: NSDate? = nil
   var onboardComplete: NSNumber? = nil
 
+  var facebookId: String?
+
   /* Discussion
   * Only ussed to verify password update
   */
@@ -62,7 +64,8 @@ class User: Resource {
       "onboardComplete": BooleanAttribute().serializeAs("onboard-complete"),
       "onboardCompleteAt": DateAttribute().serializeAs("onboard-complete-at"),
       "preferences" : PreferencesAttribute().serializeAs("preferences"),
-      "penNamesCollection" : ToManyRelationship(PenName.self).serializeAs("pen-names")
+      "penNamesCollection" : ToManyRelationship(PenName.self).serializeAs("pen-names"),
+      "facebookId": Attribute().serializeAs("facebook-id")
       ])
   }
 }

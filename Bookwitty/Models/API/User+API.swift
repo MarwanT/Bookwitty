@@ -306,6 +306,7 @@ extension UserAPI {
     user.country = country
     user.password = password
     user.language = language
+    user.facebookId = facebookUserIdentifier
     //Serialize Body to conform to JSONAPI
     return user.serializeData(options: [.OmitNullValues])
   }

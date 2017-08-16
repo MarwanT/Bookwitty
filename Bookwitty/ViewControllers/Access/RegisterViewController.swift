@@ -224,7 +224,8 @@ class RegisterViewController: UIViewController {
                                                  action: .Register)
     Analytics.shared.send(event: event)
 
-    viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, completionBlock: { (success: Bool, user: User?, error: BookwittyAPIError?) in
+    let facebookUserIdentifier = viewModel.userInfo.facebookUserIdentifier
+    viewModel.registerUserWithData(firstName: firstName, lastName: lastName, email: email, country: country, password: password, facebookUserIdentifier: facebookUserIdentifier, completionBlock: { (success: Bool, user: User?, error: BookwittyAPIError?) in
       self.hideLoader()
       let successBlock = {
         UserManager.shared.shouldEditPenName = true

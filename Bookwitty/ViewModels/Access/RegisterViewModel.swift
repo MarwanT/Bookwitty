@@ -49,13 +49,13 @@ final class RegisterViewModel {
 
   private var request: Cancellable? = nil
 
-  func registerUserWithData(firstName: String, lastName: String, email: String, country: String, password: String, completionBlock: @escaping (_ success: Bool, _ user: User?, _ error: BookwittyAPIError?)->()) {
+  func registerUserWithData(firstName: String, lastName: String, email: String, country: String, password: String, facebookUserIdentifier: String?, completionBlock: @escaping (_ success: Bool, _ user: User?, _ error: BookwittyAPIError?)->()) {
     if let request = self.request {
       request.cancel()
     }
 
     let language = GeneralSettings.sharedInstance.preferredLanguage
-    request = UserAPI.registerUser(firstName: firstName, lastName: lastName, email: email, dateOfBirthISO8601: nil, countryISO3166: country.uppercased(), password: password, language: language, completionBlock: { (success, user, error) in
+    request = UserAPI.registerUser(firstName: firstName, lastName: lastName, email: email, dateOfBirthISO8601: nil, countryISO3166: country.uppercased(), password: password, language: language, facebookUserIdentifier: facebookUserIdentifier, completionBlock: { (success, user, error) in
       guard success, let registeredUser = user else {
         self.request = nil
         completionBlock(success, user, error)
