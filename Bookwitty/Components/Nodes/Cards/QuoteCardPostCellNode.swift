@@ -130,5 +130,6 @@ extension QuoteCardPostCellNode: QuoteCardViewModelDelegate {
     setWitValue(witted: values.content.wit.is)
     actionInfoValue = values.content.wit.info
     topComment = values.content.topComment
+    tags = values.content.tags
   }
 }
