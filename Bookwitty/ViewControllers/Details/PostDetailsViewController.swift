@@ -79,7 +79,9 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.actionInfoValue = viewModel.actionInfoValue
     postDetailsNode.conculsion = viewModel.conculsion
     postDetailsNode.headerNode.profileBarNode.updateMode(disabled: viewModel.isMyPenName())
-    postDetailsNode.setWitValue(witted: viewModel.isWitted)    
+    postDetailsNode.setWitValue(witted: viewModel.isWitted)
+
+    postDetailsNode.tags = viewModel.tags
   }
 
   fileprivate func addDelegatesAndDataSources() {

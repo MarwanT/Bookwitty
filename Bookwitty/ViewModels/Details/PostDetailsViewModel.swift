@@ -44,6 +44,9 @@ class PostDetailsViewModel {
       setPenNameFromResource(resource: resource, penName: newValue)
     }
   }
+  var tags: [String]? {
+    return (resource as? ModelCommonProperties)?.tags?.flatMap({ $0.title })
+  }
   var actionInfoValue: String? {
     return (resource as? ModelCommonProperties)?.witters
   }
