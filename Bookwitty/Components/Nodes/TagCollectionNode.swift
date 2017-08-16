@@ -67,7 +67,6 @@ class TagCollectionNode: ASCellNode {
   func set(tags: [String]) {
     self.tags.removeAll()
     self.tags += tags
-    collectionNode.reloadData()
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
