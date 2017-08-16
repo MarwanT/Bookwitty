@@ -115,6 +115,15 @@ class PostDetailsNode: ASScrollNode {
     }
   }
 
+  var tags: [String]? {
+    didSet {
+      tagCollectionNode.set(tags: tags ?? [])
+      if isNodeLoaded {
+        setNeedsLayout()
+      }
+    }
+  }
+
   var actionInfoValue: String? {
     didSet {
       headerNode.actionInfoValue = actionInfoValue
@@ -320,9 +329,14 @@ class PostDetailsNode: ASScrollNode {
     let separatorInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: separator)
 
     vStackSpec.children = [headerNode, ASLayoutSpec.spacer(height: contentSpacing),
-                           descriptionInsetSpec, ASLayoutSpec.spacer(height: contentSpacing),
-                           tagCollectionInsetSpec, ASLayoutSpec.spacer(height: contentSpacing),
-                           separatorInsetSpec]
+                           descriptionInsetSpec, ASLayoutSpec.spacer(height: contentSpacing)]
+
+    if self.tags?.count ?? 0 > 0 {
+      let tagNodes: [ASLayoutElement] = [tagCollectionInsetSpec, ASLayoutSpec.spacer(height: contentSpacing)]
+      vStackSpec.children?.append(contentsOf: tagNodes)
+    }
+
+    vStackSpec.children?.append(separatorInsetSpec)
 
     postItemsNodeLoader.updateLoaderVisibility(show: showPostsLoader)
     if showPostsLoader {
