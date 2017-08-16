@@ -48,6 +48,11 @@ class RegisterViewController: UIViewController {
     super.viewWillAppear(animated)
     self.navigationController?.setNavigationBarHidden(false, animated: true)
     navigationController?.navigationBar.backItem?.title = ""
+
+    if case Optional.some = viewModel.userInfo.facebookUserIdentifier {
+      //TODO: Localize
+      NotificationView.show(notificationMessages: [NotificationMessage(text: "required e-mail, your facebook account will be automatically connected once you complete your registration")])
+    }
   }
   
   override func viewWillDisappear(_ animated: Bool) {
