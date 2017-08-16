@@ -90,6 +90,8 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
   fileprivate let separatorNode: ASDisplayNode
   fileprivate let commentsSummaryNode: ASTextNode
 
+  fileprivate let tagCollectionNode: TagCollectionNode
+
   fileprivate let topCommentNode: CommentCompactNode
   fileprivate let writeCommentNode: WriteCommentNode
 
@@ -141,6 +143,7 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     commentsSummaryNode = ASTextNode()
     topCommentNode = CommentCompactNode()
     writeCommentNode = WriteCommentNode()
+    tagCollectionNode = TagCollectionNode()
     super.init()
     setupCellNode()
   }
@@ -177,6 +180,13 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
       topCommentNode.set(fullName: topComment?.penName?.name, message: topComment?.body)
       topCommentNode.imageURL = URL(string: topComment?.penName?.avatarUrl ?? "")
       topCommentNode.setNeedsLayout()
+    }
+  }
+
+  var tags: [String]? {
+    didSet {
+      tagCollectionNode.set(tags: tags ?? [])
+      tagCollectionNode.setNeedsLayout()
     }
   }
 
@@ -252,6 +262,12 @@ extension BaseCardPostNode {
     }
 
     verticalStack.children?.append(contentInset)
+
+    if canShowTagsNode {
+      verticalStack.children?.append(spacer(height: internalMargin / 2.0))
+      let tagCollectionNodeInset = ASInsetLayoutSpec(insets: tagsInset(), child: tagCollectionNode)
+      verticalStack.children?.append(tagCollectionNodeInset)
+    }
 
     if shouldShowActionInfoNode {
       verticalStack.children?.append(spacer(height: internalMargin / 2.0))
@@ -342,6 +358,14 @@ extension BaseCardPostNode {
                         right: externalInset.right)
   }
 
+  private func tagsInset() -> UIEdgeInsets {
+    let externalInset = self.externalInset()
+    return UIEdgeInsets(top: 0,
+                        left: externalInset.left,
+                        bottom: 0,
+                        right: externalInset.right + internalMargin)
+  }
+
   private func actionBarInset() -> UIEdgeInsets {
     let externalInset = self.externalInset()
     return UIEdgeInsets(top: 0,
@@ -392,6 +416,10 @@ extension BaseCardPostNode: BaseCardPostNodeContentProvider {
     return self.actionInfoValue != nil
   }
   
+  internal var canShowTagsNode: Bool {
+    return (self.tags?.count ?? 0) > 0
+  }
+
   internal var shouldShowActionBarNode: Bool {
     return true
   }
