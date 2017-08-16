@@ -37,6 +37,7 @@ class QuoteCardPostCellNode: BaseCardPostNode {
   }
 
   override func updateMode(fullMode: Bool) {
+    super.updateMode(fullMode: fullMode)
     node.setupMode(fullViewMode: fullMode)
   }
 }

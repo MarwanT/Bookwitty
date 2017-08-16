@@ -96,6 +96,7 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
   fileprivate let writeCommentNode: WriteCommentNode
 
   var shouldHandleTopComments: Bool = true
+  var shouldShowTagsNode: Bool = false
 
   fileprivate var shouldShowCommentSummaryNode: Bool {
     return !articleCommentsSummary.isEmptyOrNil()
@@ -263,7 +264,7 @@ extension BaseCardPostNode {
 
     verticalStack.children?.append(contentInset)
 
-    if canShowTagsNode {
+    if canShowTagsNode && shouldShowTagsNode {
       verticalStack.children?.append(spacer(height: internalMargin / 2.0))
       let tagCollectionNodeInset = ASInsetLayoutSpec(insets: tagsInset(), child: tagCollectionNode)
       verticalStack.children?.append(tagCollectionNodeInset)
@@ -438,6 +439,6 @@ extension BaseCardPostNode: BaseCardPostNodeContentProvider {
   }
 
   func updateMode(fullMode: Bool) {
-    //Override in child
+    shouldShowTagsNode = true
   }
 }
