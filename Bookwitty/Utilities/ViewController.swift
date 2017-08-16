@@ -9,6 +9,16 @@
 import Foundation
 
 extension UIViewController {
+
+  enum ReportType: Int {
+    case content = 0
+    case penName = 1
+  }
+
+  enum MoreAction {
+    case report(ReportType)
+  }
+
   func add(asChildViewController viewController: UIViewController, toView view: UIView) -> UIView {
     guard let childView = viewController.view else {
       return UIView()
@@ -75,19 +85,64 @@ extension UIViewController {
     self.navigationController?.pushViewController(commentsVC, animated: true)
   }
 
+  func showMoreActionSheet(identifier: String, actions: [MoreAction], completion: @escaping (_ success: Bool)->()) {
+    let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+
+    if actions.contains(where: { $0 == .report(.content) }) {
+      alert.addAction(UIAlertAction(title: Strings.report(), style: .destructive, handler: { (action: UIAlertAction) in
+        self.showReportContentAlert(identifier: identifier, completion: { (success: Bool) in
+          completion(success)
+        })
+      }))
+    }
+
+    if actions.contains(where: { $0 == .report(.penName) }) {
+      alert.addAction(UIAlertAction(title: Strings.report(), style: .destructive, handler: { (action: UIAlertAction) in
+        self.showReportPenNameAlert(identifier: identifier, completion: { (success: Bool) in
+          completion(success)
+        })
+      }))
+    }
+
+    alert.addAction(UIAlertAction(title: Strings.cancel(), style: .cancel, handler: nil))
+    self.present(alert, animated: true, completion: nil)
+  }
+
+  func showReportPenNameAlert(identifier: String, completion: @escaping (_ success: Bool)->()) {
+    let title = Strings.report()
+    let message = Strings.report_this_content()
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    alert.addAction(UIAlertAction(title: Strings.yes_this_is_spam(), style: .destructive, handler: { (action: UIAlertAction) in
+      _ = PenNameAPI.report(identifier: identifier, completion: { (success: Bool, error: BookwittyAPIError?) in
+        if success {
+          self.showReportSuccessfullAlert(completion: {
+            completion(success)
+          })
+        }
+      })
+    }))
+
+    alert.addAction(UIAlertAction(title: Strings.no_forget_it(), style: .default, handler: { (action: UIAlertAction) in
+      completion(false)
+    }))
+    self.present(alert, animated: true, completion: nil)
+  }
+
   func showReportContentAlert(identifier: String, completion: @escaping (_ success: Bool)->()) {
     let title = Strings.report()
     let message = Strings.report_this_content()
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
     alert.addAction(UIAlertAction(title: Strings.yes_this_is_spam(), style: .destructive, handler: { (action: UIAlertAction) in
-      //TODO: Send Report
-      self.showReportSuccessfullAlert(completion: { 
-        completion(true)
+      _ = ContentAPI.report(identifier: identifier, completion: { (success: Bool, error: BookwittyAPIError?) in
+        if success {
+          self.showReportSuccessfullAlert(completion: {
+            completion(success)
+          })
+        }
       })
     }))
 
     alert.addAction(UIAlertAction(title: Strings.no_forget_it(), style: .default, handler: { (action: UIAlertAction) in
-      //TODO: Cancel Report
       completion(false)
     }))
     self.present(alert, animated: true, completion: nil)
@@ -98,7 +153,7 @@ extension UIViewController {
     let message = Strings.thank_you_for_report()
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
     alert.addAction(UIAlertAction(title: Strings.dismiss(), style: .default, handler: { (action: UIAlertAction) in
-      //TODO: Send Report
+      completion()
     }))
     self.present(alert, animated: true, completion: nil)
   }
@@ -111,5 +166,14 @@ extension UIViewController {
   
   public static var storyboardIdentifier: String {
     return self.description().components(separatedBy: ".").dropFirst().joined(separator: ".")
+  }
+}
+
+extension UIViewController.MoreAction: Equatable {
+  static func ==(lhs: UIViewController.MoreAction, rhs: UIViewController.MoreAction) -> Bool {
+    switch (lhs, rhs) {
+    case (let .report(type1), let .report(type2)):
+      return type1 == type2
+    }
   }
 }

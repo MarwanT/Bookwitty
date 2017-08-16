@@ -13,7 +13,7 @@ protocol PenNameFollowNodeDelegate: class {
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader)
   func penName(node: PenNameFollowNode, actionPenNameFollowTouchUpInside button: Any?)
   func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
-
+  func penName(node: PenNameFollowNode, moreButtonTouchUpInside button: ASButtonNode?)
 }
 
 class PenNameFollowNode: ASCellNode {
@@ -136,6 +136,7 @@ class PenNameFollowNode: ASCellNode {
     nameNode.addTarget(self, action: #selector(actionPenNameFollowTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
     imageNode.addTarget(self, action: #selector(imageNodeTouchUpInside(sender:)), forControlEvents: ASControlNodeEvent.touchUpInside)
     biographyNode.addTarget(self, action: #selector(actionPenNameFollowTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
+    moreButton.addTarget(self, action: #selector(moreButtonTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
 
     separatorNode.style.height = ASDimensionMake(1)
     separatorNode.style.flexGrow = 1
@@ -207,6 +208,10 @@ class PenNameFollowNode: ASCellNode {
 extension PenNameFollowNode {
   func actionPenNameFollowTouchUpInside(_ sender: Any?) {
     delegate?.penName(node: self, actionPenNameFollowTouchUpInside: sender)
+  }
+
+  func moreButtonTouchUpInside(_ sender: ASButtonNode?) {
+    delegate?.penName(node: self, moreButtonTouchUpInside: sender)
   }
 }
 

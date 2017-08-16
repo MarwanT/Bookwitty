@@ -22,6 +22,7 @@ class CardActionBarNode: ASCellNode {
     case follow
     case unfollow
     case reply
+    case more
   }
   var followButton: ASButtonNode
   var witButton: ASButtonNode
@@ -104,6 +105,7 @@ class CardActionBarNode: ASCellNode {
     setupFollowButtonStyling()
     setupReplyNodeStyling()
 
+    moreButton.addTarget(self, action: #selector(moreButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     shareButton.addTarget(self, action: #selector(shareButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     commentButton.addTarget(self, action: #selector(commentButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
     witButton.addTarget(self, action: #selector(witButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
@@ -246,6 +248,11 @@ class CardActionBarNode: ASCellNode {
     delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: CardActionBarNode.Action.share, forSender: sender, didFinishAction: nil)
   }
   
+  func moreButtonTouchUpInside(_ sender: ASButtonNode?) {
+    guard let sender = sender else { return }
+    delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: CardActionBarNode.Action.more, forSender: sender, didFinishAction: nil)
+  }
+
   func replyButtonTouchUpInside(_ sender: ASButtonNode?) {
     guard let sender = sender else { return }
     delegate?.cardActionBarNode(cardActionBar: self, didRequestAction: CardActionBarNode.Action.reply, forSender: sender, didFinishAction: nil)

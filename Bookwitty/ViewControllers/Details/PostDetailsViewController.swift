@@ -358,6 +358,12 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
     case .comment:
       pushCommentsViewController(for: viewModel.resource as? ModelCommonProperties)
       didFinishAction?(true)
+    case .more:
+      guard let resource = viewModel.resource as? ModelCommonProperties,
+        let identifier = resource.id else { return }
+      self.showMoreActionSheet(identifier: identifier, actions: [.report(.content)], completion: { (success: Bool) in
+        didFinishAction?(success)
+      })
     default:
       break
     }
@@ -735,6 +741,12 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
       guard let resource = viewModel.relatedPost(at: index) else { return }
       pushCommentsViewController(for: resource as? ModelCommonProperties)
       didFinishAction?(true)
+    case .more:
+      guard let resource = viewModel.relatedPost(at: index),
+        let identifier = resource.id else { return }
+      self.showMoreActionSheet(identifier: identifier, actions: [.report(.content)], completion: { (success: Bool) in
+        didFinishAction?(success)
+      })
     default:
       break
     }
@@ -824,6 +836,18 @@ extension PostDetailsViewController: PenNameFollowNodeDelegate {
                                                    name: penName.name ?? "")
       Analytics.shared.send(event: event)
     }
+  }
+
+  func penName(node: PenNameFollowNode, moreButtonTouchUpInside button: ASButtonNode?) {
+    
+    guard let penName = viewModel.penName,
+      let identifier = penName.id else {
+        return
+    }
+    self.showMoreActionSheet(identifier: identifier, actions: [.report(.penName)], completion: {
+      (success: Bool) in
+
+    })
   }
 }
 

@@ -224,6 +224,12 @@ extension ReadingListsViewController: BaseCardPostNodeDelegate {
       guard let resource = viewModel.resourceForIndex(indexPath: indexPath) else { return }
       pushCommentsViewController(for: resource as? ModelCommonProperties)
       didFinishAction?(true)
+    case .more:
+      guard let resource = viewModel.resourceForIndex(indexPath: indexPath),
+        let identifier = resource.id else { return }
+      self.showMoreActionSheet(identifier: identifier, actions: [.report(.content)], completion: { (success: Bool) in
+        didFinishAction?(success)
+      })
     default:
       break
     }
