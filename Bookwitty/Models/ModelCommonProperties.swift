@@ -31,6 +31,8 @@ protocol ModelCommonProperties: class {
   var topVotes: [Vote]? { get set }
   var witters: String? { get }
 
+  var tags: [Tag]? { get set }
+
   func sameInstanceAs(newResource: ModelCommonProperties?) -> Bool?
 }
 
@@ -113,6 +115,11 @@ extension Topic: ModelCommonProperties {
     get { return nil }
     set { /* Not a valid property of model */ }
   }
+
+  var tags: [Tag]? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
+  }
 }
 
 extension Image: ModelCommonProperties {
@@ -151,6 +158,11 @@ extension Author: ModelCommonProperties {
   var topComments: [Comment]? {
     get { return nil }
     set { /*Not a valid property of model*/ }
+  }
+
+  var tags: [Tag]? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
   }
 }
 
@@ -287,6 +299,11 @@ extension Book: ModelCommonProperties {
     get { return nil }
     set { /*Not a valid property of model*/ }
   }
+
+  var tags: [Tag]? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
+  }
 }
 
 extension PenName: ModelCommonProperties {
@@ -347,6 +364,11 @@ extension PenName: ModelCommonProperties {
     get { return nil }
     set { /* Not a valid property of model */ }
   }
+
+  var tags: [Tag]? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
+  }
 }
 
 extension Comment: ModelCommonProperties {
@@ -390,6 +412,11 @@ extension Comment: ModelCommonProperties {
   }
 
   var topVotes: [Vote]? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
+  }
+
+  var tags: [Tag]? {
     get { return nil }
     set { /* Not a valid property of model */ }
   }

@@ -36,6 +36,12 @@ class Image: Resource {
     return self.topCommentsCollection?.resources as? [Comment]
   }()
 
+  @objc
+  private var tagsCollection: LinkedResourceCollection?
+  lazy var tags: [Tag]? = {
+    return self.tagsCollection?.resources as? [Tag]
+  }()
+
   override class var resourceType: ResourceType {
     return "images"
   }
@@ -56,7 +62,8 @@ class Image: Resource {
       "counts" : CountsAttribute().serializeAs("counts"),
       "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name"),
       "topVotesCollection" : ToManyRelationship(PenName.self).serializeAs("top-votes"),
-      "topCommentsCollection" : ToManyRelationship(Comment.self).serializeAs("top-comments")
+      "topCommentsCollection" : ToManyRelationship(Comment.self).serializeAs("top-comments"),
+      "tagsCollection" : ToManyRelationship(Tag.self).serializeAs("tags")
       ])
   }
 }
