@@ -38,6 +38,9 @@ class Video: Resource {
 
   @objc
   private var tagsCollection: LinkedResourceCollection?
+  lazy var tagsRelations: [ResourceIdentifier]? = {
+    return self.tagsCollection?.linkage
+  }()
   lazy var tags: [Tag]? = {
     return self.tagsCollection?.resources as? [Tag]
   }()

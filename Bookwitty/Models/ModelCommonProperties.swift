@@ -32,6 +32,7 @@ protocol ModelCommonProperties: class {
   var witters: String? { get }
 
   var tags: [Tag]? { get set }
+  var tagsRelations: [ResourceIdentifier]? { get }
 
   func sameInstanceAs(newResource: ModelCommonProperties?) -> Bool?
 }
@@ -120,6 +121,10 @@ extension Topic: ModelCommonProperties {
     get { return nil }
     set { /* Not a valid property of model */ }
   }
+
+  var tagsRelations: [ResourceIdentifier]? {
+    return nil
+  }
 }
 
 extension Image: ModelCommonProperties {
@@ -163,6 +168,10 @@ extension Author: ModelCommonProperties {
   var tags: [Tag]? {
     get { return nil }
     set { /* Not a valid property of model */ }
+  }
+
+  var tagsRelations: [ResourceIdentifier]? {
+    return nil
   }
 }
 
@@ -304,6 +313,10 @@ extension Book: ModelCommonProperties {
     get { return nil }
     set { /* Not a valid property of model */ }
   }
+
+  var tagsRelations: [ResourceIdentifier]? {
+    return nil
+  }
 }
 
 extension PenName: ModelCommonProperties {
@@ -369,6 +382,10 @@ extension PenName: ModelCommonProperties {
     get { return nil }
     set { /* Not a valid property of model */ }
   }
+
+  var tagsRelations: [ResourceIdentifier]? {
+    return nil
+  }
 }
 
 extension Comment: ModelCommonProperties {
@@ -419,5 +436,9 @@ extension Comment: ModelCommonProperties {
   var tags: [Tag]? {
     get { return nil }
     set { /* Not a valid property of model */ }
+  }
+  
+  var tagsRelations: [ResourceIdentifier]? {
+    return nil
   }
 }
