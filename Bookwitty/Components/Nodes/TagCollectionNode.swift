@@ -9,6 +9,10 @@
 import UIKit
 import AsyncDisplayKit
 
+protocol TagCollectionNodeDelegate {
+  func tagCollection(node: TagCollectionNode, didSelectItemAt index: Int)
+}
+
 class TagCollectionNode: ASCellNode {
   fileprivate let imageSize: CGSize = CGSize(width: 45.0, height: 45.0)
 
@@ -17,6 +21,8 @@ class TagCollectionNode: ASCellNode {
   let imageNode: ASImageNode
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
+
+  var delegate: TagCollectionNodeDelegate?
 
   override init() {
     tags = []
