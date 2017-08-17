@@ -47,6 +47,7 @@ class CardDetailsViewController: GenericNodeViewController {
       videoCard.node.tappableTitle = true
     }
 
+    loadTags(node: node)
 
     viewControllerAnalyticsScreenName(for: resource)
   }
@@ -62,6 +63,17 @@ class CardDetailsViewController: GenericNodeViewController {
 
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+  }
+
+  func loadTags(node: BaseCardPostNode) {
+    guard viewModel.tags?.count ?? 0 == 0 else {
+      return
+    }
+
+    viewModel.loadTags { (success: Bool, error: BookwittyAPIError?) in
+      node.tags = self.viewModel.tags
+      node.setNeedsLayout()
+    }
   }
 
   func updatedResources(_ notification: NSNotification) {
