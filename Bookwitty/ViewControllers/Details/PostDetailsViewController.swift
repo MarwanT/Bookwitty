@@ -35,6 +35,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     viewModel.loadPenName { (success) in
       self.postDetailsNode.penName = self.viewModel.penName
     }
+    loadTags()
     loadContentPosts()
     loadComments()
     loadRelatedBooks()
@@ -110,6 +111,16 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
   func shareOutsideButton(_ sender: Any?) {
     if let sharingInfo: [String] = viewModel.sharingPost() {
       presentShareSheet(shareContent: sharingInfo)
+    }
+  }
+
+  func loadTags() {
+    guard viewModel.tags?.count ?? 0 == 0 else {
+      return
+    }
+
+    viewModel.loadTags { (success: Bool, error: BookwittyAPIError?) in
+      self.postDetailsNode.tags = self.viewModel.tags
     }
   }
 
