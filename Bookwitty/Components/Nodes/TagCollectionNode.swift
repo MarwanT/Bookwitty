@@ -94,4 +94,8 @@ extension TagCollectionNode: ASCollectionDataSource, ASCollectionDelegate {
       return tagNode
     }
   }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    delegate?.tagCollection(node: self, didSelectItemAt: indexPath.item)
+  }
 }
