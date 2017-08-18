@@ -54,6 +54,10 @@ class TagFeedViewModel {
     }
   }
 
+  func hasNextPage() -> Bool {
+    return (nextPage != nil)
+  }
+
   func loadReadingListImages(atIndex index: Int, maxNumberOfImages: Int, completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
     guard let readingList = resourceForIndex(index: index) as? ReadingList,
       let identifier = readingList.id else {
