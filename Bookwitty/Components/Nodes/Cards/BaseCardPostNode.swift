@@ -61,6 +61,13 @@ extension BaseCardPostNode: WriteCommentNodeDelegate {
   }
 }
 
+//MARK: - TagCollectionNodeDelegate implementation
+extension BaseCardPostNode: TagCollectionNodeDelegate {
+  func tagCollection(node: TagCollectionNode, didSelectItemAt index: Int) {
+    
+  }
+}
+
 protocol BaseCardPostNodeDelegate: class {
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
   func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any)
@@ -157,6 +164,8 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     }
 
     actionInfoNode.addTarget(self, action: #selector(actionInfoNodeTouchUpInside(_:)), forControlEvents: .touchUpInside)
+
+    tagCollectionNode.delegate = self
   }
 
   func didTapOnView(_ sender: Any?) {
