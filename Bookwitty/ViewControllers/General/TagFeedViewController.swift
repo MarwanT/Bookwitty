@@ -46,6 +46,12 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
     collectionNode.delegate = self
 
   }
+
+  fileprivate func loadFeeds() {
+    viewModel.loadFeeds { (success: Bool) in
+      self.collectionNode.reloadData()
+    }
+  }
 }
 
 // MARK: - Declarations
