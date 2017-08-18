@@ -27,6 +27,25 @@ class TagFeedViewModel {
     return resource
   }
 
+  func loadFeeds(completion: @escaping (_ success: Bool)->()) {
+    guard let identifier = tag?.id else {
+      return
+    }
+
+    _ = GeneralAPI.postsLinkedContent(contentIdentifier: identifier, type: nil) {
+      (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
+      defer {
+        completion(success)
+      }
+
+      if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
+        self.data.removeAll()
+        self.data += resources.flatMap( { $0.id })
+      }
+    }
+  }
+
   func loadReadingListImages(atIndex index: Int, maxNumberOfImages: Int, completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
     guard let readingList = resourceForIndex(index: index) as? ReadingList,
       let identifier = readingList.id else {
