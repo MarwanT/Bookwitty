@@ -260,6 +260,8 @@ class PostDetailsNode: ASScrollNode {
     descriptionNode.style.flexGrow = 1.0
     descriptionNode.style.flexShrink = 1.0
 
+    tagCollectionNode.delegate = self
+
     conculsionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 25.0)
     conculsionNode.style.flexGrow = 1.0
     conculsionNode.style.flexShrink = 1.0
@@ -446,5 +448,11 @@ extension PostDetailsNode {
       (success, error) in
       completion?(success, error)
     }
+  }
+}
+
+extension PostDetailsNode: TagCollectionNodeDelegate {
+  func tagCollection(node: TagCollectionNode, didSelectItemAt index: Int) {
+
   }
 }
