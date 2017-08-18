@@ -15,8 +15,7 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
   let flowLayout: UICollectionViewFlowLayout
   let loaderNode: LoaderNode
 
-  fileprivate let viewModel = TagFeedViewModel()
-
+  let viewModel = TagFeedViewModel()
 
   fileprivate var loadingStatus: LoadingStatus = .none
   fileprivate var shouldShowLoader: Bool {

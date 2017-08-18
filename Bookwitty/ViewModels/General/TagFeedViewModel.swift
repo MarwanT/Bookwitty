@@ -9,6 +9,9 @@
 import Foundation
 
 class TagFeedViewModel {
+
+  var tag: Tag? = nil
+
   var data: [String] = []
 
   func resourceFor(id: String?) -> ModelResource? {
