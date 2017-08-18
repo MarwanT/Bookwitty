@@ -53,6 +53,7 @@ protocol PostDetailsNodeDelegate: class {
   func postDetails(node: PostDetailsNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
   func postDetails(node: PostDetailsNode, didRequestActionInfo fromNode: ASTextNode)
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action)
+  func postDetails(node: PostDetailsNode, didSelectTagAt index: Int)
 }
 
 class PostDetailsNode: ASScrollNode {
@@ -453,6 +454,6 @@ extension PostDetailsNode {
 
 extension PostDetailsNode: TagCollectionNodeDelegate {
   func tagCollection(node: TagCollectionNode, didSelectItemAt index: Int) {
-
+    delegate?.postDetails(node: self, didSelectTagAt: index)
   }
 }

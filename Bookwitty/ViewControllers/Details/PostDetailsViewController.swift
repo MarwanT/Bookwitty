@@ -434,6 +434,10 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
       }
     }
   }
+
+  func postDetails(node: PostDetailsNode, didSelectTagAt index: Int) {
+
+  }
 }
 
 extension PostDetailsViewController: PostDetailsItemNodeDelegate {
