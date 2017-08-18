@@ -14,6 +14,7 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
   let loaderNode: LoaderNode
+  let refreshControllerer = UIRefreshControl()
 
   let viewModel = TagFeedViewModel()
 
@@ -47,13 +48,37 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
 
     title = viewModel.tag?.title
 
+    collectionNode.view.addSubview(refreshControllerer)
+    collectionNode.view.alwaysBounceVertical = true
+    refreshControllerer.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+
     loadFeeds()
   }
 
   fileprivate func loadFeeds() {
     viewModel.loadFeeds { (success: Bool) in
       self.collectionNode.reloadData()
+
+      if self.refreshControllerer.isRefreshing {
+        self.refreshControllerer.endRefreshing()
+      }
     }
+  }
+
+  func pullToRefresh() {
+    guard refreshControllerer.isRefreshing else {
+      //Making sure that only UIRefreshControl will trigger this on valueChanged
+      return
+    }
+    guard loadingStatus == .none else {
+      refreshControllerer.endRefreshing()
+      //Making sure that only UIRefreshControl will trigger this on valueChanged
+      return
+    }
+
+    self.loadingStatus = .reloading
+    self.refreshControllerer.beginRefreshing()
+    loadFeeds()
   }
 }
 
