@@ -187,4 +187,29 @@ extension TagFeedViewController: ASCollectionDataSource, ASCollectionDelegate {
       max: CGSize(width: collectionNode.frame.width, height: .infinity)
     )
   }
+
+  public func shouldBatchFetch(for collectionNode: ASCollectionNode) -> Bool {
+    return viewModel.hasNextPage()
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
+    guard context.isFetching() else {
+      return
+    }
+    guard loadingStatus == .none else {
+      context.completeBatchFetching(true)
+      return
+    }
+    context.beginBatchFetching()
+    self.loadingStatus = .loadMore
+
+    viewModel.loadNext { (success: Bool) in
+      collectionNode.performBatchUpdates({ 
+        collectionNode.reloadSections(IndexSet(integer: Section.cards.rawValue))
+        collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
+      }, completion: { (finished: Bool) in
+        self.loadingStatus = .none
+      })
+    }
+  }
 }
