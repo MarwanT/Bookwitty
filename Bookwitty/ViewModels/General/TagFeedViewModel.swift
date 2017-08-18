@@ -58,6 +58,26 @@ class TagFeedViewModel {
     return (nextPage != nil)
   }
 
+  func loadNext(completion: @escaping (_ success: Bool) -> ()) {
+    guard let nextPage = nextPage else {
+      completion(false)
+      return
+    }
+
+    _ = GeneralAPI.nextPage(nextPage: nextPage) {
+      (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
+      defer {
+        completion(success)
+      }
+
+      if let resources = resources, success {
+        DataManager.shared.update(resources: resources)
+        self.data += resources.flatMap( { $0.id })
+        self.nextPage = next
+      }
+    }
+  }
+
   func loadReadingListImages(atIndex index: Int, maxNumberOfImages: Int, completionBlock: @escaping (_ imageCollection: [String]?) -> ()) {
     guard let readingList = resourceForIndex(index: index) as? ReadingList,
       let identifier = readingList.id else {
