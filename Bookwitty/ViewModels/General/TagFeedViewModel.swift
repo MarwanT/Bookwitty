@@ -11,8 +11,15 @@ import Foundation
 class TagFeedViewModel {
 
   var tag: Tag? = nil
+  var nextPage: URL?
 
-  var data: [String] = []
+  var data: [String] = [] {
+    didSet {
+      if data.count == 0 {
+        nextPage = nil
+      }
+    }
+  }
 
   func resourceFor(id: String?) -> ModelResource? {
     guard let id = id else {
@@ -42,6 +49,7 @@ class TagFeedViewModel {
         DataManager.shared.update(resources: resources)
         self.data.removeAll()
         self.data += resources.flatMap( { $0.id })
+        self.nextPage = next
       }
     }
   }
