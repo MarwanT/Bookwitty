@@ -64,7 +64,7 @@ extension BaseCardPostNode: WriteCommentNodeDelegate {
 //MARK: - TagCollectionNodeDelegate implementation
 extension BaseCardPostNode: TagCollectionNodeDelegate {
   func tagCollection(node: TagCollectionNode, didSelectItemAt index: Int) {
-    
+    delegate?.cardNode(card: self, didSelectTagAt: index)
   }
 }
 
