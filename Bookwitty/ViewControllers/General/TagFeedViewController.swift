@@ -52,6 +52,7 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
     collectionNode.view.alwaysBounceVertical = true
     refreshControllerer.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
 
+    self.loadingStatus = .loading
     loadFeeds()
   }
 
@@ -59,6 +60,7 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
     viewModel.loadFeeds { (success: Bool) in
       self.collectionNode.reloadData()
 
+      self.loadingStatus = .none
       if self.refreshControllerer.isRefreshing {
         self.refreshControllerer.endRefreshing()
       }
