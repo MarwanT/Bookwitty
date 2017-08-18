@@ -272,6 +272,10 @@ extension CardDetailsViewController: BaseCardPostNodeDelegate {
      * Top Comment Node Is Not Visible Here
      */
   }
+
+  func cardNode(card: BaseCardPostNode, didSelectTagAt index: Int) {
+    //Empty Implementation
+  }
 }
 
 extension CardDetailsViewController: PhotoCardContentNodeDelegate {

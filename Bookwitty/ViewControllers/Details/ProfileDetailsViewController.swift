@@ -554,6 +554,10 @@ extension ProfileDetailsViewController: BaseCardPostNodeDelegate {
       CommentComposerViewController.show(from: self, delegate: self, postId: postId, parentCommentId: nil)
     }
   }
+
+  func cardNode(card: BaseCardPostNode, didSelectTagAt index: Int) {
+    //Empty Implementation
+  }
 }
 
 // MARK: - Actions For Cards
