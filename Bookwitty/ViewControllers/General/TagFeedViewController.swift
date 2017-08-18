@@ -47,6 +47,7 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
 
     title = viewModel.tag?.title
 
+    loadFeeds()
   }
 
   fileprivate func loadFeeds() {
