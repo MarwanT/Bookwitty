@@ -272,6 +272,22 @@ extension CardDetailsViewController: BaseCardPostNodeDelegate {
      * Top Comment Node Is Not Visible Here
      */
   }
+
+  func cardNode(card: BaseCardPostNode, didSelectTagAt index: Int) {
+    guard let tags = (self.viewModel.resource as? ModelCommonProperties)?.tags else {
+      return
+    }
+
+    guard index >= 0 && index < tags.count else {
+      return
+    }
+
+    let tag = tags[index]
+
+    let tagController = TagFeedViewController()
+    tagController.viewModel.tag = tag
+    self.navigationController?.pushViewController(tagController, animated: true)
+  }
 }
 
 extension CardDetailsViewController: PhotoCardContentNodeDelegate {

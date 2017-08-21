@@ -51,6 +51,10 @@ class DataManager {
         newResource.contributors = existingResource.contributors
       }
 
+      if newResource.tags?.count ?? 0 <= existingResource.tags?.count ?? 0 {
+        newResource.tags = existingResource.tags
+      }
+
       if let newBook = newResource as? Book, newBook.productFormats?.count ?? 0 == 0,
         let existingBook = existingResource as? Book {
         newBook.productFormats = existingBook.productFormats

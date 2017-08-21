@@ -14,9 +14,9 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
   let loaderNode: LoaderNode
+  let refreshControllerer = UIRefreshControl()
 
-  fileprivate let viewModel = TagFeedViewModel()
-
+  let viewModel = TagFeedViewModel()
 
   fileprivate var loadingStatus: LoadingStatus = .none
   fileprivate var shouldShowLoader: Bool {
@@ -46,6 +46,58 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
     collectionNode.dataSource = self
     collectionNode.delegate = self
 
+    title = viewModel.tag?.title
+
+    collectionNode.view.addSubview(refreshControllerer)
+    collectionNode.view.alwaysBounceVertical = true
+    refreshControllerer.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+
+    self.loadingStatus = .loading
+    loadFeeds()
+    setupNavigationBarButtons()
+  }
+
+  fileprivate func loadFeeds() {
+    viewModel.loadFeeds { (success: Bool) in
+      self.collectionNode.reloadData()
+
+      self.loadingStatus = .none
+      if self.refreshControllerer.isRefreshing {
+        self.refreshControllerer.endRefreshing()
+      }
+    }
+  }
+
+  fileprivate func setupNavigationBarButtons() {
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
+
+    let title = Strings.follow()
+    let rightBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(rightBarButtonTouchUpInside(_:)))
+    navigationItem.rightBarButtonItem = rightBarButtonItem
+  }
+
+  func pullToRefresh() {
+    guard refreshControllerer.isRefreshing else {
+      //Making sure that only UIRefreshControl will trigger this on valueChanged
+      return
+    }
+    guard loadingStatus == .none else {
+      refreshControllerer.endRefreshing()
+      //Making sure that only UIRefreshControl will trigger this on valueChanged
+      return
+    }
+
+    self.loadingStatus = .reloading
+    self.refreshControllerer.beginRefreshing()
+    loadFeeds()
+  }
+}
+
+// MARK: - Navigation Actions
+extension TagFeedViewController {
+  @objc
+  fileprivate func rightBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
+    //TODO: Follow the tag
   }
 }
 
@@ -151,5 +203,30 @@ extension TagFeedViewController: ASCollectionDataSource, ASCollectionDelegate {
       min: CGSize(width: collectionNode.frame.width, height: 0),
       max: CGSize(width: collectionNode.frame.width, height: .infinity)
     )
+  }
+
+  public func shouldBatchFetch(for collectionNode: ASCollectionNode) -> Bool {
+    return viewModel.hasNextPage()
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
+    guard context.isFetching() else {
+      return
+    }
+    guard loadingStatus == .none else {
+      context.completeBatchFetching(true)
+      return
+    }
+    context.beginBatchFetching()
+    self.loadingStatus = .loadMore
+
+    viewModel.loadNext { (success: Bool) in
+      collectionNode.performBatchUpdates({ 
+        collectionNode.reloadSections(IndexSet(integer: Section.cards.rawValue))
+        collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
+      }, completion: { (finished: Bool) in
+        self.loadingStatus = .none
+      })
+    }
   }
 }

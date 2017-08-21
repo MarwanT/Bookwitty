@@ -53,6 +53,7 @@ protocol PostDetailsNodeDelegate: class {
   func postDetails(node: PostDetailsNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
   func postDetails(node: PostDetailsNode, didRequestActionInfo fromNode: ASTextNode)
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action)
+  func postDetails(node: PostDetailsNode, didSelectTagAt index: Int)
 }
 
 class PostDetailsNode: ASScrollNode {
@@ -260,6 +261,8 @@ class PostDetailsNode: ASScrollNode {
     descriptionNode.style.flexGrow = 1.0
     descriptionNode.style.flexShrink = 1.0
 
+    tagCollectionNode.delegate = self
+
     conculsionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 25.0)
     conculsionNode.style.flexGrow = 1.0
     conculsionNode.style.flexShrink = 1.0
@@ -446,5 +449,11 @@ extension PostDetailsNode {
       (success, error) in
       completion?(success, error)
     }
+  }
+}
+
+extension PostDetailsNode: TagCollectionNodeDelegate {
+  func tagCollection(node: TagCollectionNode, didSelectItemAt index: Int) {
+    delegate?.postDetails(node: self, didSelectTagAt: index)
   }
 }
