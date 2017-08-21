@@ -240,3 +240,120 @@ extension TagFeedViewController: ASCollectionDataSource, ASCollectionDelegate {
     }
   }
 }
+
+// MARK: - Actions For Cards
+extension TagFeedViewController {
+  func actionForCard(resource: ModelResource?) {
+    guard let resource = resource else {
+      return
+    }
+    let registeredType = resource.registeredResourceType
+
+    switch registeredType {
+    case Image.resourceType:
+      actionForImageResourceType(resource: resource)
+    case ReadingList.resourceType:
+      actionForReadingListResourceType(resource: resource)
+    case Text.resourceType:
+      actionForTextResourceType(resource: resource)
+    case Quote.resourceType:
+      actionForQuoteResourceType(resource: resource)
+    case Video.resourceType:
+      actionForVideoResourceType(resource: resource)
+    case Audio.resourceType:
+      actionForAudioResourceType(resource: resource)
+    case Link.resourceType:
+      actionForLinkResourceType(resource: resource)
+    default:
+      print("Type Is Not Registered: \(resource.registeredResourceType) \n Contact Your Admin ;)")
+      break
+    }
+  }
+
+  func pushPostDetailsViewController(resource: ModelResource) {
+    let nodeVc = PostDetailsViewController(resource: resource)
+    nodeVc.hidesBottomBarWhenPushed = true
+    self.navigationController?.pushViewController(nodeVc, animated: true)
+  }
+
+  func pushGenericViewControllerCard(resource: ModelResource, title: String? = nil) {
+    guard let cardNode = CardFactory.createCardFor(resourceType: resource.registeredResourceType) else {
+      return
+    }
+
+    cardNode.baseViewModel?.resource = resource as? ModelCommonProperties
+    let genericVC = CardDetailsViewController(node: cardNode, title: title, resource: resource)
+    genericVC.hidesBottomBarWhenPushed = true
+    navigationController?.pushViewController(genericVC, animated: true)
+  }
+
+  fileprivate func actionForImageResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Image)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Image,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushGenericViewControllerCard(resource: resource)
+  }
+
+  fileprivate func actionForReadingListResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? ReadingList)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .ReadingList,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushPostDetailsViewController(resource: resource)
+  }
+
+  fileprivate func actionForTextResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Text)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Text,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushPostDetailsViewController(resource: resource)
+  }
+
+  fileprivate func actionForQuoteResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Quote)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Quote,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushGenericViewControllerCard(resource: resource)
+  }
+
+  fileprivate func actionForVideoResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Video)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Video,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushGenericViewControllerCard(resource: resource)
+  }
+
+  fileprivate func actionForAudioResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Audio)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Audio,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushGenericViewControllerCard(resource: resource)
+  }
+
+  fileprivate func actionForLinkResourceType(resource: ModelResource) {
+    //MARK: [Analytics] Event
+    let name: String = (resource as? Link)?.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .Link,
+                                                 action: .GoToDetails,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+    pushGenericViewControllerCard(resource: resource)
+  }
+}
