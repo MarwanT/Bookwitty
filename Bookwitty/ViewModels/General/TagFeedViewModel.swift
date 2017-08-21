@@ -34,6 +34,26 @@ class TagFeedViewModel {
     return resource
   }
 
+  func loadTagDetails(completion: @escaping (_ success: Bool)->()) {
+    guard let identifier = tag?.id else {
+      completion(false)
+      return
+    }
+
+    _ = GeneralAPI.content(of: identifier, include: nil, completion: { (success: Bool, tag: Tag?, error: BookwittyAPIError?) in
+      defer {
+        completion(success)
+      }
+
+      guard success, let tag = tag else {
+        return
+      }
+
+      self.tag = tag
+      DataManager.shared.update(resource: tag)
+    })
+  }
+
   func loadFeeds(completion: @escaping (_ success: Bool)->()) {
     guard let identifier = tag?.id else {
       return

@@ -58,6 +58,12 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
     setupNavigationBarButtons()
   }
 
+  fileprivate func loadTagDetails() {
+    viewModel.loadTagDetails { (success: Bool) in
+      self.setupNavigationBarButtons()
+    }
+  }
+
   fileprivate func loadFeeds() {
     viewModel.loadFeeds { (success: Bool) in
       self.collectionNode.reloadData()
