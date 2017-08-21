@@ -205,7 +205,8 @@ extension TagFeedViewController: ASCollectionDataSource, ASCollectionDelegate {
       return
     }
 
-    //TODO: do action
+    let resource = viewModel.resourceForIndex(index: indexPath.item)
+    actionForCard(resource: resource)
   }
 
   public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
