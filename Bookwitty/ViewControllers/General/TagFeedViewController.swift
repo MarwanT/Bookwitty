@@ -125,6 +125,14 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
         }
       })
     }
+
+    //MARK: [Analytics] Event
+    let name: String = viewModel.tag?.title ?? ""
+    let action: Analytics.Action = following ? .Unfollow : .Follow
+    let event: Analytics.Event = Analytics.Event(category: .Tag,
+                                                 action: action,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 }
 
