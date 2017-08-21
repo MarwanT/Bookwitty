@@ -108,13 +108,31 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
     self.refreshControllerer.beginRefreshing()
     loadFeeds()
   }
+
+  fileprivate func toggleTagFollowStatus() {
+    let following = viewModel.tag?.following ?? false
+
+    if following {
+      viewModel.unfollowTag(completionBlock: { (success: Bool) in
+        if success {
+          self.loadTagDetails()
+        }
+      })
+    } else {
+      viewModel.followTag(completionBlock: { (success: Bool) in
+        if success {
+          self.loadTagDetails()
+        }
+      })
+    }
+  }
 }
 
 // MARK: - Navigation Actions
 extension TagFeedViewController {
   @objc
   fileprivate func rightBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
-    //TODO: Follow the tag
+    toggleTagFollowStatus()
   }
 }
 

@@ -181,6 +181,24 @@ extension TagFeedViewModel {
 
 // MARK: - PenName Follow/Unfollow
 extension TagFeedViewModel {
+  func followTag(completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let identifier = self.tag?.id else {
+      completionBlock(false)
+      return
+    }
+
+    followRequest(identifier: identifier, completionBlock: completionBlock)
+  }
+
+  func unfollowTag(completionBlock: @escaping (_ success: Bool) -> ()) {
+    guard let identifier = self.tag?.id else {
+      completionBlock(false)
+      return
+    }
+
+    unfollowRequest(identifier: identifier, completionBlock: completionBlock)
+  }
+
   func follow(index: Int, completionBlock: @escaping (_ success: Bool) -> ()) {
     guard let resource = resourceForIndex(index: index),
       let resourceId = resource.id else {
