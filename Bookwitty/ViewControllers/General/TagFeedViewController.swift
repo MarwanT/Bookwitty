@@ -71,8 +71,18 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
   fileprivate func setupNavigationBarButtons() {
     navigationItem.backBarButtonItem = UIBarButtonItem.back
 
-    let title = Strings.follow()
-    let rightBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(rightBarButtonTouchUpInside(_:)))
+    let following = viewModel.tag?.following ?? false
+    let title =  following ? Strings.following() : Strings.follow()
+    let button = UIButton(type: .custom)
+
+    let attributedTitle = AttributedStringBuilder(fontDynamicType: .subheadline)
+      .append(text: title, color: ThemeManager.shared.currentTheme.defaultButtonColor())
+      .attributedString
+
+    button.setAttributedTitle(attributedTitle, for: .normal)
+    button.addTarget(self, action: #selector(self.rightBarButtonTouchUpInside(_:)), for: .touchUpInside)
+    button.sizeToFit()
+    let rightBarButtonItem = UIBarButtonItem(customView: button)
     navigationItem.rightBarButtonItem = rightBarButtonItem
   }
 
