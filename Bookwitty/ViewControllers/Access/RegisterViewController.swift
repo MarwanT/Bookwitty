@@ -49,9 +49,12 @@ class RegisterViewController: UIViewController {
     self.navigationController?.setNavigationBarHidden(false, animated: true)
     navigationController?.navigationBar.backItem?.title = ""
 
-    if case Optional.some = viewModel.userInfo.facebookUserIdentifier {
-      //TODO: Localize
-      NotificationView.show(notificationMessages: [NotificationMessage(text: "required e-mail, your facebook account will be automatically connected once you complete your registration")])
+    if viewModel.userInfo.facebookUserIdentifier != nil {
+      let title = Strings.please_tell_us_your_email()
+      let message = Strings.your_facebook_no_email()
+      let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+      alertController.addAction(UIAlertAction(title: Strings.continue(), style: .default, handler: nil))
+      navigationController?.present(alertController, animated: true, completion: nil)
     }
   }
   
