@@ -13,8 +13,9 @@ import FBSDKLoginKit
 
 class SignInViewController: UIViewController {
 
-  enum AuthPlatforms {
-    case facebook
+  enum AuthPlatforms: String {
+    case bookwitty = "bookwitty"
+    case facebook = "facebook"
 
     struct AuthErrors {
       private init() {}
@@ -159,7 +160,8 @@ class SignInViewController: UIViewController {
 
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .Account,
-                                                 action: .SignIn)
+                                                 action: .SignIn,
+                                                 name: AuthPlatforms.bookwitty.rawValue)
     Analytics.shared.send(event: event)
 
     viewModel.signIn(
@@ -388,6 +390,11 @@ extension SignInViewController: WebViewControllerDelegate {
 
   func webViewController(_ webViewController: WebViewController, didAuthenticate platform: SignInViewController.AuthPlatforms) {
     self.presentedViewController?.dismiss(animated: true, completion: nil)
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .Account,
+                                                 action: .SignIn, name: platform.rawValue)
+    Analytics.shared.send(event: event)
 
     self.showLoader()
     self.viewModel.getSignedInUser { (success: Bool, error: BookwittyAPIError?) in
