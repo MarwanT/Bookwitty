@@ -54,6 +54,7 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
 
     self.loadingStatus = .loading
     loadFeeds()
+    setupNavigationBarButtons()
   }
 
   fileprivate func loadFeeds() {
@@ -65,6 +66,14 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
         self.refreshControllerer.endRefreshing()
       }
     }
+  }
+
+  fileprivate func setupNavigationBarButtons() {
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
+
+    let title = Strings.follow()
+    let rightBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(rightBarButtonTouchUpInside(_:)))
+    navigationItem.rightBarButtonItem = rightBarButtonItem
   }
 
   func pullToRefresh() {
@@ -81,6 +90,14 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
     self.loadingStatus = .reloading
     self.refreshControllerer.beginRefreshing()
     loadFeeds()
+  }
+}
+
+// MARK: - Navigation Actions
+extension TagFeedViewController {
+  @objc
+  fileprivate func rightBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
+    //TODO: Follow the tag
   }
 }
 
