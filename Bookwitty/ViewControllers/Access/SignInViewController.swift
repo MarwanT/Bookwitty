@@ -355,15 +355,15 @@ extension SignInViewController: WebViewControllerDelegate {
   func webViewController(_ webViewController: WebViewController, didFailLoadWithError error: Error) {
     let err = error as NSError
 
-    if err.domain.hasPrefix(AuthPlatforms.AuthErrors.domain) {
+    if err.domain.hasPrefix(AuthPlatforms.AuthErrorConstants.domain) {
       switch err.code {
-      case AuthPlatforms.AuthErrors.facebookAuthMissingEmailError.code:
-        let userIdentifier = err.userInfo["userIdentifier"] as? String
-        let message = err.userInfo["message"] as? String
-        let fullName = err.userInfo["name"] as? String
+      case AuthPlatforms.AuthErrorConstants.facebookMissingEmailErrorCode:
+        let userIdentifier = err.userInfo[AuthPlatforms.UserInfoKeys.userIdentifier] as? String
+        let message = err.userInfo[AuthPlatforms.UserInfoKeys.message] as? String
+        let fullName = err.userInfo[AuthPlatforms.UserInfoKeys.name] as? String
         let components = fullName?.components(separatedBy: " ") ?? []
         self.pushRegisterViewController(components.first, components.last, userIdentifier)
-      case AuthPlatforms.AuthErrors.error.code:
+      case AuthPlatforms.AuthErrorConstants.genericErrorCode:
         break
       default:
         break
