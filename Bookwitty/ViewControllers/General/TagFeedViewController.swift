@@ -54,8 +54,8 @@ class TagFeedViewController: ASViewController<ASCollectionNode> {
     refreshControllerer.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
 
     self.loadingStatus = .loading
+    loadTagDetails()
     loadFeeds()
-    setupNavigationBarButtons()
   }
 
   fileprivate func loadTagDetails() {
