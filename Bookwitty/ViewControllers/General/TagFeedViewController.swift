@@ -8,6 +8,7 @@
 
 import UIKit
 import AsyncDisplayKit
+import SwiftLoader
 
 class TagFeedViewController: ASViewController<ASCollectionNode> {
 
@@ -175,7 +176,7 @@ extension TagFeedViewController: ASCollectionDataSource, ASCollectionDelegate {
             }
           })
         }
-
+        baseCardNode.delegate = self
         return baseCardNode
       } else if section == Section.activityIndicator.rawValue {
         return self.loaderNode
@@ -356,5 +357,214 @@ extension TagFeedViewController {
                                                  name: name)
     Analytics.shared.send(event: event)
     pushGenericViewControllerCard(resource: resource)
+  }
+}
+
+// MARK - BaseCardPostNode Delegate
+extension TagFeedViewController: BaseCardPostNodeDelegate {
+
+  private func userProfileHandler(at indexPath: IndexPath) {
+    let resource = viewModel.resourceForIndex(index: indexPath.item)
+    if let resource = resource as? ModelCommonProperties,
+      let penName = resource.penName {
+      pushProfileViewController(penName: penName)
+
+      //MARK: [Analytics] Event
+      let category: Analytics.Category
+      switch resource.registeredResourceType {
+      case Image.resourceType:
+        category = .Image
+      case Quote.resourceType:
+        category = .Quote
+      case Video.resourceType:
+        category = .Video
+      case Audio.resourceType:
+        category = .Audio
+      case Link.resourceType:
+        category = .Link
+      case Author.resourceType:
+        category = .Author
+      case ReadingList.resourceType:
+        category = .ReadingList
+      case Topic.resourceType:
+        category = .Topic
+      case Text.resourceType:
+        category = .Text
+      case Book.resourceType:
+        category = .TopicBook
+      case PenName.resourceType:
+        category = .PenName
+      default:
+        category = .Default
+      }
+
+      let event: Analytics.Event = Analytics.Event(category: category,
+                                                   action: .GoToPenName,
+                                                   name: penName.name ?? "")
+      Analytics.shared.send(event: event)
+    } else if let penName = resource as? PenName  {
+      pushProfileViewController(penName: penName)
+
+      //MARK: [Analytics] Event
+      let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                   action: .GoToDetails,
+                                                   name: penName.name ?? "")
+      Analytics.shared.send(event: event)
+    }
+  }
+
+  private func actionInfoHandler(at indexPath: IndexPath) {
+    guard let resource = viewModel.resourceForIndex(index: indexPath.item) else {
+      return
+    }
+
+    pushPenNamesListViewController(with: resource)
+  }
+
+  func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    guard let indexPath = collectionNode.indexPath(for: card) else {
+      return
+    }
+
+    switch action {
+    case .userProfile:
+      userProfileHandler(at: indexPath)
+    case .actionInfo:
+      actionInfoHandler(at: indexPath)
+    }
+  }
+
+  func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
+    guard let index = collectionNode.indexPath(for: card)?.item else {
+      return
+    }
+
+    switch(action) {
+    case .wit:
+      viewModel.witContent(index: index) { (success) in
+        didFinishAction?(success)
+      }
+    case .unwit:
+      viewModel.unwitContent(index: index) { (success) in
+        didFinishAction?(success)
+      }
+    case .share:
+      if let sharingInfo: [String] = viewModel.sharingContent(index: index) {
+        presentShareSheet(shareContent: sharingInfo)
+      }
+    case .follow:
+      viewModel.follow(index: index) { (success) in
+        didFinishAction?(success)
+      }
+    case .unfollow:
+      viewModel.unfollow(index: index) { (success) in
+        didFinishAction?(success)
+      }
+    case .comment:
+      guard let resource = viewModel.resourceForIndex(index: index) else { return }
+      pushCommentsViewController(for: resource as? ModelCommonProperties)
+      didFinishAction?(true)
+    default:
+      break
+    }
+
+    //MARK: [Analytics] Event
+    guard let resource = viewModel.resourceForIndex(index: index) else { return }
+    let category: Analytics.Category
+    var name: String = (resource as? ModelCommonProperties)?.title ?? ""
+
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+      name = (resource as? Author)?.name ?? ""
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+      name = (resource as? PenName)?.name ?? ""
+    default:
+      category = .Default
+    }
+
+    let analyticsAction = Analytics.Action.actionFrom(cardAction: action, with: category)
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: analyticsAction,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+  }
+
+  func cardNode(card: BaseCardPostNode, didRequestAction action: BaseCardPostNode.Action, from: ASDisplayNode) {
+    guard let indexPath = collectionNode.indexPath(for: card),
+      let resource = viewModel.resourceForIndex(index: indexPath.item),
+      let postId = resource.id else {
+        return
+    }
+
+    switch(action) {
+    case .listComments:
+      pushCommentsViewController(for: resource as? ModelCommonProperties)
+    case .publishComment:
+      CommentComposerViewController.show(from: self, delegate: self, postId: postId, parentCommentId: nil)
+    }
+  }
+
+  func cardNode(card: BaseCardPostNode, didSelectTagAt index: Int) {
+    //Empty Implementation
+  }
+}
+
+// MARK: - Compose comment delegate implementation
+extension TagFeedViewController: CommentComposerViewControllerDelegate {
+  func commentComposerCancel(_ viewController: CommentComposerViewController) {
+    dismiss(animated: true, completion: nil)
+  }
+
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, postId: String?, parentCommentId: String?) {
+    guard let postId = postId else {
+      _ = viewController.becomeFirstResponder()
+      return
+    }
+
+    SwiftLoader.show(animated: true)
+    let commentManager = CommentsManager()
+    commentManager.initialize(postIdentifier: postId)
+    commentManager.publishComment(content: content, parentCommentId: nil) {
+      (success: Bool, comment: Comment?, error: CommentsManager.Error?) in
+      SwiftLoader.hide()
+      guard success else {
+        guard let error = error else { return }
+        self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
+          _ in
+          _ = viewController.becomeFirstResponder()
+        })
+        return
+      }
+
+      if let resource = DataManager.shared.fetchResource(with: postId), let comment = comment {
+        var topComments = (resource as? ModelCommonProperties)?.topComments ?? []
+        topComments.append(comment)
+        (resource as? ModelCommonProperties)?.topComments = topComments
+        DataManager.shared.update(resource: resource)
+      }
+
+      self.dismiss(animated: true, completion: nil)
+    }
+    dismiss(animated: true, completion: nil)
   }
 }
