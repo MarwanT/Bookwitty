@@ -13,18 +13,6 @@ import FBSDKLoginKit
 
 class SignInViewController: UIViewController {
 
-  enum AuthPlatforms: String {
-    case bookwitty = "bookwitty"
-    case facebook = "facebook"
-
-    struct AuthErrors {
-      private init() {}
-      static let domain: String = "AuthPlatforms"
-      static let error = NSError(domain: AuthErrors.domain, code: 1, userInfo: nil)
-      static let facebookAuthMissingEmailError = NSError(domain: AuthErrors.domain, code: 2, userInfo: nil)
-    }
-  }
-
   @IBOutlet weak var stackView: UIStackView!
   @IBOutlet weak var emailField: InputField!
   @IBOutlet weak var stackViewBackgroundView: UIView!
@@ -388,7 +376,7 @@ extension SignInViewController: WebViewControllerDelegate {
   func webViewControllerDidStartLoad(_ webViewController: WebViewController) {}
   func webViewControllerDidFinishLoad(_ webViewController: WebViewController) {}
 
-  func webViewController(_ webViewController: WebViewController, didAuthenticate platform: SignInViewController.AuthPlatforms) {
+  func webViewController(_ webViewController: WebViewController, didAuthenticate platform: AuthPlatforms) {
     self.presentedViewController?.dismiss(animated: true, completion: nil)
 
     //MARK: [Analytics] Event

@@ -86,8 +86,8 @@ extension CustomURLProtocol: URLSessionDataDelegate {
               let message = errorDictionary["message"] as? String ?? ""
               let fullName = (attributes?["info"] as? NSDictionary)?["name"] as? String ?? ""
               let userIdentifier = attributes?["uid"] as? String ?? ""
-              let code = SignInViewController.AuthPlatforms.AuthErrors.facebookAuthMissingEmailError.code
-              let domain = SignInViewController.AuthPlatforms.AuthErrors.facebookAuthMissingEmailError.domain + "-" + message
+              let code = AuthPlatforms.AuthErrors.facebookAuthMissingEmailError.code
+              let domain = AuthPlatforms.AuthErrors.facebookAuthMissingEmailError.domain + "-" + message
 
               let userInfo = [
                 "userIdentifier" : userIdentifier,
@@ -104,7 +104,7 @@ extension CustomURLProtocol: URLSessionDataDelegate {
       if didAuthenticate {
         client?.urlProtocolDidFinishLoading(self)
       } else {
-        client?.urlProtocol(self, didFailWithError: error ?? SignInViewController.AuthPlatforms.AuthErrors.error)
+        client?.urlProtocol(self, didFailWithError: error ?? AuthPlatforms.AuthErrors.error)
       }
       return
     }
