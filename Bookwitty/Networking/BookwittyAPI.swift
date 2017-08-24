@@ -129,7 +129,7 @@ extension BookwittyAPI: TargetType {
     case .penNames:
       path = "/user/pen_names"
     case .reportPenName(let identifier):
-      path = "/user/pen_names/\(identifier)/report"
+      path = "/pen_names/\(identifier)/report"
     case .comments(let postIdentifier):
       path = "/content/\(postIdentifier)/comments"
     case .replies(let commentIdentifier):
