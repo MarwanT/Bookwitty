@@ -74,29 +74,13 @@ extension CustomURLProtocol: URLSessionDataDelegate {
       do{
         // Save token
         if let dictionary = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as? NSDictionary {
-          if (dictionary.allKeys as? [String])?.contains("access_token") ?? false {
+          let result: AuthPlatforms.AuthResult = AuthPlatforms.parse(dictionary: dictionary)
+          switch result {
+          case .success(let dictionary):
             AccessToken.shared.save(dictionary: dictionary)
             didAuthenticate = true
-          } else if (dictionary.allKeys as? [String])?.contains("errors") ?? false {
-            guard let errors = dictionary["errors"] as? [NSDictionary] else {
-              return
-            }
-            if let errorDictionary: NSDictionary = errors.first {
-              let attributes = errorDictionary["attributes"] as? NSDictionary
-              let message = errorDictionary["message"] as? String ?? ""
-              let fullName = (attributes?["info"] as? NSDictionary)?["name"] as? String ?? ""
-              let userIdentifier = attributes?["uid"] as? String ?? ""
-              let code = SignInViewController.AuthPlatforms.AuthErrors.facebookAuthMissingEmailError.code
-              let domain = SignInViewController.AuthPlatforms.AuthErrors.facebookAuthMissingEmailError.domain + "-" + message
-
-              let userInfo = [
-                "userIdentifier" : userIdentifier,
-                "message" : message,
-                "name" : fullName,
-              ]
-
-              error = NSError(domain: domain, code: code, userInfo: userInfo)
-            }
+          case .error(let authError):
+            error = authError
           }
         }
       } catch {}
@@ -104,7 +88,7 @@ extension CustomURLProtocol: URLSessionDataDelegate {
       if didAuthenticate {
         client?.urlProtocolDidFinishLoading(self)
       } else {
-        client?.urlProtocol(self, didFailWithError: error ?? SignInViewController.AuthPlatforms.AuthErrors.error)
+        client?.urlProtocol(self, didFailWithError: error ?? AuthPlatforms.genericError)
       }
       return
     }
