@@ -50,6 +50,12 @@ class PostDetailsHeaderNode: ASCellNode {
       profileBarNode.penName = penName?.name
       profileBarNode.imageUrl = penName?.avatarUrl
       profileBarNode.following = penName?.following ?? false
+      var sowMoreButton = true
+      if let penName = penName {
+         sowMoreButton = !UserManager.shared.isMy(penName: penName)
+      }
+
+      profileBarNode.showMoreButton = sowMoreButton
     }
   }
 

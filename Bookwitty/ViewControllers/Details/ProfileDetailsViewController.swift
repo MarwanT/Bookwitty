@@ -105,6 +105,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     penNameHeaderNode.penName = viewModel.penName.name
     penNameHeaderNode.following = viewModel.penName.following
     penNameHeaderNode.imageUrl = viewModel.penName.avatarUrl
+    penNameHeaderNode.showMoreButton = !viewModel.isMyPenName()
     penNameHeaderNode.delegate = self
     penNameHeaderNode.updateMode(disabled: viewModel.isMyPenName())
   }
@@ -412,6 +413,9 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
     penNameNode.biography = follower?.biography
     penNameNode.imageUrl = follower?.avatarUrl
     penNameNode.following = follower?.following ?? false
+    if let follower = follower {
+      penNameNode.showMoreButton = !UserManager.shared.isMy(penName: follower)
+    }
   }
 }
 

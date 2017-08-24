@@ -757,6 +757,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
       cell.biography = followerValues?.biography
       cell.imageUrl = followerValues?.imageUrl
       cell.following = followerValues?.following ?? false
+      cell.showMoreButton = !(followerValues?.isMyPenName ?? false)
       cell.updateMode(disabled: followerValues?.isMyPenName ?? false)
     case .none:
       break

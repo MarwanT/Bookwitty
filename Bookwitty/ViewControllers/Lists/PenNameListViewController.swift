@@ -141,6 +141,7 @@ extension PenNameListViewController: ASCollectionDataSource, ASCollectionDelegat
       cell.biography = values?.biography
       cell.imageUrl = values?.imageUrl
       cell.following = values?.following ?? false
+      cell.showMoreButton = !(values?.isMyPenName ?? false)
       cell.updateMode(disabled: values?.isMyPenName ?? false)
     }
   }

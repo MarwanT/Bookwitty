@@ -94,8 +94,15 @@ class PenNameFollowNode: ASCellNode {
     }
   }
 
+  var showMoreButton: Bool = true {
+    didSet {
+      setNeedsLayout()
+    }
+  }
+
   var showBottomSeparator: Bool = false
   var disabled: Bool = false
+
 
   private func setupNode() {
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
@@ -182,7 +189,10 @@ class PenNameFollowNode: ASCellNode {
     nodesArray.append(verticalSpec)
     nodesArray.append(spacer(flexGrow: 1.0))
     nodesArray.append(spacer(width: internalMargin / 2.0))
-    nodesArray.append(moreButton)
+
+    if showMoreButton {
+      nodesArray.append(moreButton)
+    }
 
     let horizontalSpec = ASStackLayoutSpec(direction: .horizontal,
                                            spacing: 0,
