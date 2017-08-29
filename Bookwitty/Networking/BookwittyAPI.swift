@@ -62,6 +62,8 @@ public enum BookwittyAPI {
   case uploadPolicy(file: (name: String, size: Int), fileType: UploadAPI.FileType, assetType: UploadAPI.AssetType)
   case uploadMultipart(url: URL, parameters: [String : String]?, multipart: (data: Data, name: String))
   case votes(identifier: String)
+  case report(identifier: String)
+  case reportPenName(identifier: String)
 }
 
 // MARK: - Target Type
@@ -126,6 +128,8 @@ extension BookwittyAPI: TargetType {
       path = "/user/update_preference"
     case .penNames:
       path = "/user/pen_names"
+    case .reportPenName(let identifier):
+      path = "/pen_names/\(identifier)/report"
     case .comments(let postIdentifier):
       path = "/content/\(postIdentifier)/comments"
     case .replies(let commentIdentifier):
@@ -168,6 +172,8 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(identifier)/editions"
     case .votes(let identifier):
       path = "/content/\(identifier)/votes"
+    case .report(let identifier):
+      path = "/content/\(identifier)/report"
     case .preferredFormats(let bookIdentifier):
       path = "/content/\(bookIdentifier)/preferred_formats"
     case .resetPassword:
@@ -205,7 +211,7 @@ extension BookwittyAPI: TargetType {
       return .post
     case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .search, .penNames, .comments, .replies, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent, .votes, .preferredFormats:
       return .get
-    case .register, .batch, .updatePreference, .wit, .follow, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart, .batchPenNames, .createComment, .witComment, .dimComment:
+    case .register, .batch, .updatePreference, .wit, .follow, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart, .batchPenNames, .createComment, .witComment, .dimComment, .report, .reportPenName:
       return .post
     case .updateUser, .updatePenName:
       return .patch
@@ -275,7 +281,7 @@ extension BookwittyAPI: TargetType {
       return UploadAPI.uploadPolicyParameters(file: file, fileType: fileType, assetType: assetType)
     case .editions(_, let formats):
       return ContentAPI.editionsFilterParameters(formats: formats)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment, .dimComment, .undimComment, .preferredFormats:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment, .dimComment, .undimComment, .preferredFormats, .report, .reportPenName:
       return nil
     }
   }

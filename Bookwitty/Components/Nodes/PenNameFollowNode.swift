@@ -13,7 +13,7 @@ protocol PenNameFollowNodeDelegate: class {
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader)
   func penName(node: PenNameFollowNode, actionPenNameFollowTouchUpInside button: Any?)
   func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
-
+  func penName(node: PenNameFollowNode, moreButtonTouchUpInside button: ASButtonNode?)
 }
 
 class PenNameFollowNode: ASCellNode {
@@ -22,11 +22,13 @@ class PenNameFollowNode: ASCellNode {
   fileprivate let imageSize: CGSize = CGSize(width: 45.0, height: 45.0)
   fileprivate let largeImageSize: CGSize = CGSize(width: 60.0, height: 60.0)
   fileprivate let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
+  fileprivate let iconSize: CGSize = CGSize(width: 40.0, height: 40.0)
 
   private var imageNode: ASNetworkImageNode
   private var nameNode: ASTextNode
   private var biographyNode: ASTextNode
   private var actionButton: ButtonWithLoader
+  private var moreButton: ASButtonNode
   private let separatorNode: ASDisplayNode
   private var enlarged: Bool = false
   fileprivate var largePadding: Bool = false
@@ -38,12 +40,14 @@ class PenNameFollowNode: ASCellNode {
     nameNode = ASTextNode()
     biographyNode = ASTextNode()
     actionButton = ButtonWithLoader()
+    moreButton = ASButtonNode()
     separatorNode = ASDisplayNode()
     super.init()
     addSubnode(imageNode)
     addSubnode(nameNode)
     addSubnode(biographyNode)
     addSubnode(actionButton)
+    addSubnode(moreButton)
     addSubnode(separatorNode)
   }
 
@@ -90,8 +94,15 @@ class PenNameFollowNode: ASCellNode {
     }
   }
 
+  var showMoreButton: Bool = true {
+    didSet {
+      setNeedsLayout()
+    }
+  }
+
   var showBottomSeparator: Bool = false
   var disabled: Bool = false
+
 
   private func setupNode() {
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
@@ -123,11 +134,16 @@ class PenNameFollowNode: ASCellNode {
     actionButton.style.height = ASDimensionMake(buttonSize.height)
     actionButton.delegate = self
 
+    moreButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.colorNumber15())
+    moreButton.setImage(#imageLiteral(resourceName: "threeDots"), for: .normal)
+    moreButton.style.preferredSize = iconSize
+
     imageNode.style.preferredSize = enlarged ? largeImageSize : imageSize
 
     nameNode.addTarget(self, action: #selector(actionPenNameFollowTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
     imageNode.addTarget(self, action: #selector(imageNodeTouchUpInside(sender:)), forControlEvents: ASControlNodeEvent.touchUpInside)
     biographyNode.addTarget(self, action: #selector(actionPenNameFollowTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
+    moreButton.addTarget(self, action: #selector(moreButtonTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
 
     separatorNode.style.height = ASDimensionMake(1)
     separatorNode.style.flexGrow = 1
@@ -158,6 +174,11 @@ class PenNameFollowNode: ASCellNode {
       infoNodes.append(biographyNode)
     }
 
+    if !disabled {
+      infoNodes.append(spacer(flexGrow: 1.0))
+      infoNodes.append(actionButton)
+    }
+
     let verticalSpec = ASStackLayoutSpec(direction: .vertical,
                                          spacing: internalMargin / 3.0,
                                          justifyContent: .start,
@@ -168,8 +189,9 @@ class PenNameFollowNode: ASCellNode {
     nodesArray.append(verticalSpec)
     nodesArray.append(spacer(flexGrow: 1.0))
     nodesArray.append(spacer(width: internalMargin / 2.0))
-    if !disabled {
-      nodesArray.append(actionButton)
+
+    if showMoreButton {
+      nodesArray.append(moreButton)
     }
 
     let horizontalSpec = ASStackLayoutSpec(direction: .horizontal,
@@ -196,6 +218,10 @@ class PenNameFollowNode: ASCellNode {
 extension PenNameFollowNode {
   func actionPenNameFollowTouchUpInside(_ sender: Any?) {
     delegate?.penName(node: self, actionPenNameFollowTouchUpInside: sender)
+  }
+
+  func moreButtonTouchUpInside(_ sender: ASButtonNode?) {
+    delegate?.penName(node: self, moreButtonTouchUpInside: sender)
   }
 }
 

@@ -59,6 +59,7 @@
 "customer_service" = "Customer Service";
 "discover" = "Discover";
 "discover_banner_message" = "Check back here anytime to find the best stories from the community.";
+"dismiss" = "Dismiss";
 "done" = "Done";
 "dont_worry_you_can_change_it_later" = "Don't worry : you can always change it later";
 "drafts" = "Drafts";
@@ -126,6 +127,7 @@
 "new_version_available_title" = "New version available";
 "news" = "News";
 "newsletter" = "Newsletter";
+"no_forget_it" = "No, forget it";
 "no_internet_error_description" = "Your internet connection appears\nto be offline.";
 "no_internet_error_title" = "No Internet!";
 "no_results_found_description" = "We can't find what you were\nlooking for. Check the spelling or try a different search.";
@@ -174,6 +176,9 @@
 "related_posts" = "Related posts";
 "replies" = "Replies";
 "reply" = "Reply";
+"report" = "Report";
+"reported" = "Reported";
+"report_this_content" = "Report this content as spam or inappropriate ?";
 "reset_password" = "Reset password";
 "reset_password_text" = "You will receive an email with instructions on how to reset your password in a few minutes.";
 "search_placeholder" = "Search";
@@ -194,6 +199,7 @@
 "take_Profile_photo" = "Take profile photo";
 "terms_of_use_and_privacy_policy" = "By tapping Sign up : you agree to the\n•Terms of Use• and •Privacy Policy•";
 "text" = "Text";
+"thank_you_for_report" = "Thank you for your report";
 "topic" = "Topic";
 "topics_to_follow" = "Topics to Follow";
 "try_again" = "Try again";
@@ -230,6 +236,7 @@
 "width" = "Width";
 "wit_it" = "Wit";
 "witted" = "Witted";
+"yes_this_is_spam" = "Yes, this is spam";
 "yesterday" = "Yesterday";
 "you" = "You";
 "you_dont_have_account" = "You don't have an account";

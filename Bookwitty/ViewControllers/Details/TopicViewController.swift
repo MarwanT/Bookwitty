@@ -437,6 +437,19 @@ extension TopicViewController: PenNameFollowNodeDelegate {
                                                  name: penName.name ?? "")
     Analytics.shared.send(event: event)
   }
+
+  func penName(node: PenNameFollowNode, moreButtonTouchUpInside button: ASButtonNode?) {
+    
+    guard let indexPath = collectionNode.indexPath(for: node),
+      let identifier = viewModel.follower(at: indexPath.row)?.id else {
+        return
+    }
+    
+    self.showMoreActionSheet(identifier: identifier, actions: [.report(.penName)], completion: {
+      (success: Bool) in
+
+    })
+  }
 }
 
 
@@ -744,6 +757,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
       cell.biography = followerValues?.biography
       cell.imageUrl = followerValues?.imageUrl
       cell.following = followerValues?.following ?? false
+      cell.showMoreButton = !(followerValues?.isMyPenName ?? false)
       cell.updateMode(disabled: followerValues?.isMyPenName ?? false)
     case .none:
       break
@@ -906,6 +920,12 @@ extension TopicViewController: BaseCardPostNodeDelegate {
     case .comment:      
       pushCommentsViewController(for: resource as? ModelCommonProperties)
       didFinishAction?(true)
+    case .more:
+      guard let resource = resource as? ModelCommonProperties,
+        let identifier = resource.id else { return }
+      self.showMoreActionSheet(identifier: identifier, actions: [.report(.content)], completion: { (success: Bool) in
+        didFinishAction?(success)
+      })
     default:
       break
     }

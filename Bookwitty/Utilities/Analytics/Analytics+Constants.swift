@@ -184,6 +184,8 @@ extension Analytics {
     //
     case SearchOnBookwitty
     //
+    case Report
+    //
     case Default
 
     var name: String {
@@ -302,6 +304,8 @@ extension Analytics {
         return "Load More"
       case .SearchOnBookwitty:
         return "Search On Bookwitty"
+      case .Report:
+        return "Report"
       case .Default:
         return "[DEFAULT]"
       }
@@ -412,6 +416,8 @@ extension Analytics.Action {
       }
     case .reply:
       return .ReplyToComment
+    case .more:
+      return .Report
     }
   }
 }

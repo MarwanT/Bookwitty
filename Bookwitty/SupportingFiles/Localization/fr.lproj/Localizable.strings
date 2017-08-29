@@ -59,6 +59,7 @@
 "customer_service" = "Service client";
 "discover" = "Découvrir";
 "discover_banner_message" = "Chaque jour, retrouvez ici les meilleurs articles de la communauté Bookwitty";
+"dismiss" = "Dismiss";
 "done" = "OK";
 "dont_worry_you_can_change_it_later" = "Pas d'inquiétude : vous pourrez toujours le modifier ultérieurement";
 "drafts" = "Brouillons";
@@ -126,6 +127,7 @@
 "new_version_available_title" = "Mise à jour disponible";
 "news" = "Actualités";
 "newsletter" = "Newsletter";
+"no_forget_it" = "No, forget it";
 "no_internet_error_description" = "Vous n'êtes pas connecté à Internet";
 "no_internet_error_title" = "Pas d'Internet";
 "no_results_found_description" = "Nous n'avons pas trouvé de résultats pour votre recherche. Veuillez vérifier l'orthographe ou faites une nouvelle recherche.";
@@ -174,6 +176,9 @@
 "related_posts" = "Articles associés";
 "replies" = "Réponses";
 "reply" = "Répondre";
+"report" = "Report";
+"reported" = "Reported";
+"report_this_content" = "Report this content as spam or inappropriate ?";
 "reset_password" = "Réinitialiser mon mot de passe";
 "reset_password_text" = "Dans quelques instants, vous recevrez un e-mail pour réinitialiser votre mot de passe.";
 "search_placeholder" = "Rechercher ";
@@ -194,6 +199,7 @@
 "take_Profile_photo" = "Prenez une photo de profil";
 "terms_of_use_and_privacy_policy" = "En cliquant sur \"s'inscrire\" vous acceptez nos \n•termes d'utilisation• et notre •politique de confidentialité•";
 "text" = "texte";
+"thank_you_for_report" = "Thank you for your report";
 "topic" = "Sujet";
 "topics_to_follow" = "Sujets à suivre";
 "try_again" = "Essayez à nouveau";
@@ -230,6 +236,7 @@
 "width" = "Largeur";
 "wit_it" = "Wit";
 "witted" = "Witté";
+"yes_this_is_spam" = "Yes, this is spam";
 "yesterday" = "Hier";
 "you" = "Vous";
 "you_dont_have_account" = "Vous n'avez pas de compte";

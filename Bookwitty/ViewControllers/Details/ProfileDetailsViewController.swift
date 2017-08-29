@@ -105,6 +105,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     penNameHeaderNode.penName = viewModel.penName.name
     penNameHeaderNode.following = viewModel.penName.following
     penNameHeaderNode.imageUrl = viewModel.penName.avatarUrl
+    penNameHeaderNode.showMoreButton = !viewModel.isMyPenName()
     penNameHeaderNode.delegate = self
     penNameHeaderNode.updateMode(disabled: viewModel.isMyPenName())
   }
@@ -207,6 +208,30 @@ extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
         Analytics.shared.send(event: event)
       }
     }
+  }
+
+  func penName(node: PenNameFollowNode, moreButtonTouchUpInside button: ASButtonNode?) {
+    
+    let penNameIdentifier: String
+    if penNameHeaderNode === node {
+      guard let identifier = viewModel.penName.id else {
+        return
+      }
+      penNameIdentifier = identifier
+    } else {
+      guard let indexPath = collectionNode.indexPath(for: node),
+        let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment),
+        let penName = resource as? PenName,
+        let identifier = penName.id else {
+          return
+      }
+      penNameIdentifier = identifier
+    }
+
+    self.showMoreActionSheet(identifier: penNameIdentifier, actions: [.report(.penName)], completion: {
+      (success: Bool) in
+
+    })
   }
 }
 
@@ -388,6 +413,9 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
     penNameNode.biography = follower?.biography
     penNameNode.imageUrl = follower?.avatarUrl
     penNameNode.following = follower?.following ?? false
+    if let follower = follower {
+      penNameNode.showMoreButton = !UserManager.shared.isMy(penName: follower)
+    }
   }
 }
 
@@ -495,6 +523,12 @@ extension ProfileDetailsViewController: BaseCardPostNodeDelegate {
       guard let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment) else { return }
       pushCommentsViewController(for: resource as? ModelCommonProperties)
       didFinishAction?(true)
+    case .more:
+      guard let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment),
+        let identifier = resource.id else { return }
+      self.showMoreActionSheet(identifier: identifier, actions: [.report(.content)], completion: { (success: Bool) in
+        didFinishAction?(success)
+      })
     default:
       break
     }
