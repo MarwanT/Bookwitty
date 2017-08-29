@@ -35,6 +35,7 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     viewModel.loadPenName { (success) in
       self.postDetailsNode.penName = self.viewModel.penName
     }
+    loadTags()
     loadContentPosts()
     loadComments()
     loadRelatedBooks()
@@ -79,7 +80,9 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.actionInfoValue = viewModel.actionInfoValue
     postDetailsNode.conculsion = viewModel.conculsion
     postDetailsNode.headerNode.profileBarNode.updateMode(disabled: viewModel.isMyPenName())
-    postDetailsNode.setWitValue(witted: viewModel.isWitted)    
+    postDetailsNode.setWitValue(witted: viewModel.isWitted)
+
+    postDetailsNode.tags = viewModel.tags
   }
 
   fileprivate func addDelegatesAndDataSources() {
@@ -108,6 +111,16 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
   func shareOutsideButton(_ sender: Any?) {
     if let sharingInfo: [String] = viewModel.sharingPost() {
       presentShareSheet(shareContent: sharingInfo)
+    }
+  }
+
+  func loadTags() {
+    guard viewModel.tags?.count ?? 0 == 0 else {
+      return
+    }
+
+    viewModel.loadTags { (success: Bool, error: BookwittyAPIError?) in
+      self.postDetailsNode.tags = self.viewModel.tags
     }
   }
 
@@ -420,6 +433,22 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
         break
       }
     }
+  }
+
+  func postDetails(node: PostDetailsNode, didSelectTagAt index: Int) {
+    guard let tags = (self.viewModel.resource as? ModelCommonProperties)?.tags else {
+      return
+    }
+
+    guard index >= 0 && index < tags.count else {
+      return
+    }
+
+    let tag = tags[index]
+
+    let tagController = TagFeedViewController()
+    tagController.viewModel.tag = tag
+    self.navigationController?.pushViewController(tagController, animated: true)
   }
 }
 
@@ -755,6 +784,10 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
     /* Discussion
      * Top Comment Node Is Not Visible Here
      */
+  }
+
+  func cardNode(card: BaseCardPostNode, didSelectTagAt index: Int) {
+    //Empty Implementation
   }
 }
 

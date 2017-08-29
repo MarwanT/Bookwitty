@@ -220,6 +220,7 @@ extension ReadingListCardPostCellNode: ReadingListCardViewModelDelegate {
     setWitValue(witted: values.content.wit.is)
     actionInfoValue = values.content.wit.info
     topComment = values.content.topComment
+    tags = values.content.tags
 
     if !node.isImageCollectionLoaded {
       if values.content.relatedContent.posts.count > 0 {

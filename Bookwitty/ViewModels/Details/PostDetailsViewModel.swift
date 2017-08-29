@@ -44,6 +44,12 @@ class PostDetailsViewModel {
       setPenNameFromResource(resource: resource, penName: newValue)
     }
   }
+  var tags: [String]? {
+    return (resource as? ModelCommonProperties)?.tags?.flatMap({ $0.title })
+  }
+  fileprivate var tagsRelations: [String]? {
+    return (resource as? ModelCommonProperties)?.tagsRelations?.flatMap({ $0.id })
+  }
   var actionInfoValue: String? {
     return (resource as? ModelCommonProperties)?.witters
   }
@@ -209,6 +215,25 @@ class PostDetailsViewModel {
         self.contentPostsNextPage = next
       }
     }
+  }
+
+  func loadTags(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    guard let tagsIdentifiers = tagsRelations, tagsIdentifiers.count > 0 else {
+      completion(true, nil)
+      return
+    }
+
+    _ = UserAPI.batch(identifiers: tagsIdentifiers, completion: {
+      (success, resources, error) in
+      guard success, let tags = resources as? [Tag] else {
+        completion(success, nil)
+        return
+      }
+
+      (self.resource as? ModelCommonProperties)?.tags = tags
+      DataManager.shared.update(resource: self.resource)
+      completion(success, nil)
+    })
   }
 
   private func loadBatch(listOfIdentifiers: [String], completion: @escaping (_ success: Bool, _ resources: [Resource]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {

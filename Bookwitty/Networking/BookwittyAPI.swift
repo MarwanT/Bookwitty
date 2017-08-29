@@ -336,10 +336,12 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .user, .register:
       return [PenName.resourceType]
-    case .batch, .search, .discover, .penNameContent, .penNameFollowing, .posts, .postsLinkedContent, .comments, .replies:
+    case .batch, .search, .discover, .penNameContent, .penNameFollowing, .posts, .comments, .replies:
       return ["pen-name"]
     case .newsFeed:
       return ["pen-name", "contributors", "commenters", "top-votes", "top-votes.pen-name", "top-comments", "top-comments.pen-name"]
+    case .postsLinkedContent:
+      return ["pen-name", "contributors"]
     case .content(_, let include):
       var includes = include ?? []
       if !includes.contains("pen-name") {

@@ -53,6 +53,7 @@ protocol PostDetailsNodeDelegate: class {
   func postDetails(node: PostDetailsNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
   func postDetails(node: PostDetailsNode, didRequestActionInfo fromNode: ASTextNode)
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action)
+  func postDetails(node: PostDetailsNode, didSelectTagAt index: Int)
 }
 
 class PostDetailsNode: ASScrollNode {
@@ -62,6 +63,7 @@ class PostDetailsNode: ASScrollNode {
 
 
   fileprivate let descriptionNode: DTAttributedTextContentNode
+  fileprivate let tagCollectionNode: TagCollectionNode
   fileprivate let separator: SeparatorNode
   fileprivate let conculsionNode: DTAttributedTextContentNode
   fileprivate let postItemsNodeLoader: LoaderNode
@@ -114,6 +116,15 @@ class PostDetailsNode: ASScrollNode {
     }
   }
 
+  var tags: [String]? {
+    didSet {
+      tagCollectionNode.set(tags: tags ?? [])
+      if isNodeLoaded {
+        setNeedsLayout()
+      }
+    }
+  }
+
   var actionInfoValue: String? {
     didSet {
       headerNode.actionInfoValue = actionInfoValue
@@ -152,6 +163,7 @@ class PostDetailsNode: ASScrollNode {
   override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
     headerNode = PostDetailsHeaderNode()
     descriptionNode = DTAttributedTextContentNode()
+    tagCollectionNode = TagCollectionNode()
     postItemsNode = PostDetailsItemNode()
     separator = SeparatorNode()
     conculsionNode = DTAttributedTextContentNode()
@@ -183,6 +195,7 @@ class PostDetailsNode: ASScrollNode {
   override init() {
     headerNode = PostDetailsHeaderNode()
     descriptionNode = DTAttributedTextContentNode()
+    tagCollectionNode = TagCollectionNode()
     postItemsNode = PostDetailsItemNode()
     separator = SeparatorNode()
     conculsionNode = DTAttributedTextContentNode()
@@ -248,6 +261,8 @@ class PostDetailsNode: ASScrollNode {
     descriptionNode.style.flexGrow = 1.0
     descriptionNode.style.flexShrink = 1.0
 
+    tagCollectionNode.delegate = self
+
     conculsionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 25.0)
     conculsionNode.style.flexGrow = 1.0
     conculsionNode.style.flexShrink = 1.0
@@ -311,12 +326,20 @@ class PostDetailsNode: ASScrollNode {
     let vStackSpec = ASStackLayoutSpec.vertical()
     vStackSpec.spacing = 0.0
 
-    let descriptionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: descriptionNode)
+    let descriptionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: descriptionNode)    
+    let tagCollectionInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: tagCollectionNode)
+
     let separatorInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: separator)
 
     vStackSpec.children = [headerNode, ASLayoutSpec.spacer(height: contentSpacing),
-                           descriptionInsetSpec, ASLayoutSpec.spacer(height: contentSpacing),
-                           separatorInsetSpec]
+                           descriptionInsetSpec, ASLayoutSpec.spacer(height: contentSpacing)]
+
+    if self.tags?.count ?? 0 > 0 {
+      let tagNodes: [ASLayoutElement] = [tagCollectionInsetSpec, ASLayoutSpec.spacer(height: contentSpacing)]
+      vStackSpec.children?.append(contentsOf: tagNodes)
+    }
+
+    vStackSpec.children?.append(separatorInsetSpec)
 
     postItemsNodeLoader.updateLoaderVisibility(show: showPostsLoader)
     if showPostsLoader {
@@ -426,5 +449,11 @@ extension PostDetailsNode {
       (success, error) in
       completion?(success, error)
     }
+  }
+}
+
+extension PostDetailsNode: TagCollectionNodeDelegate {
+  func tagCollection(node: TagCollectionNode, didSelectItemAt index: Int) {
+    delegate?.postDetails(node: self, didSelectTagAt: index)
   }
 }

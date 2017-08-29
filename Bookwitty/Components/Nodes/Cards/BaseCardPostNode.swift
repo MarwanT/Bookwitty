@@ -61,10 +61,18 @@ extension BaseCardPostNode: WriteCommentNodeDelegate {
   }
 }
 
+//MARK: - TagCollectionNodeDelegate implementation
+extension BaseCardPostNode: TagCollectionNodeDelegate {
+  func tagCollection(node: TagCollectionNode, didSelectItemAt index: Int) {
+    delegate?.cardNode(card: self, didSelectTagAt: index)
+  }
+}
+
 protocol BaseCardPostNodeDelegate: class {
   func cardActionBarNode(card: BaseCardPostNode, cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
   func cardInfoNode(card: BaseCardPostNode, cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any)
   func cardNode(card: BaseCardPostNode, didRequestAction action: BaseCardPostNode.Action, from: ASDisplayNode)
+  func cardNode(card: BaseCardPostNode, didSelectTagAt index: Int)
 }
 
 class BaseCardPostNode: ASCellNode, NodeTapProtocol {
@@ -90,10 +98,13 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
   fileprivate let separatorNode: ASDisplayNode
   fileprivate let commentsSummaryNode: ASTextNode
 
+  fileprivate let tagCollectionNode: TagCollectionNode
+
   fileprivate let topCommentNode: CommentCompactNode
   fileprivate let writeCommentNode: WriteCommentNode
 
   var shouldHandleTopComments: Bool = true
+  var shouldShowTagsNode: Bool = false
 
   fileprivate var shouldShowCommentSummaryNode: Bool {
     return !articleCommentsSummary.isEmptyOrNil()
@@ -141,6 +152,7 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     commentsSummaryNode = ASTextNode()
     topCommentNode = CommentCompactNode()
     writeCommentNode = WriteCommentNode()
+    tagCollectionNode = TagCollectionNode()
     super.init()
     setupCellNode()
   }
@@ -153,6 +165,8 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     }
 
     actionInfoNode.addTarget(self, action: #selector(actionInfoNodeTouchUpInside(_:)), forControlEvents: .touchUpInside)
+
+    tagCollectionNode.delegate = self
   }
 
   func didTapOnView(_ sender: Any?) {
@@ -177,6 +191,13 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
       topCommentNode.set(fullName: topComment?.penName?.name, message: topComment?.body)
       topCommentNode.imageURL = URL(string: topComment?.penName?.avatarUrl ?? "")
       topCommentNode.setNeedsLayout()
+    }
+  }
+
+  var tags: [String]? {
+    didSet {
+      tagCollectionNode.set(tags: tags ?? [])
+      tagCollectionNode.setNeedsLayout()
     }
   }
 
@@ -252,6 +273,12 @@ extension BaseCardPostNode {
     }
 
     verticalStack.children?.append(contentInset)
+
+    if canShowTagsNode && shouldShowTagsNode {
+      verticalStack.children?.append(spacer(height: internalMargin / 2.0))
+      let tagCollectionNodeInset = ASInsetLayoutSpec(insets: tagsInset(), child: tagCollectionNode)
+      verticalStack.children?.append(tagCollectionNodeInset)
+    }
 
     if shouldShowActionInfoNode {
       verticalStack.children?.append(spacer(height: internalMargin / 2.0))
@@ -342,6 +369,14 @@ extension BaseCardPostNode {
                         right: externalInset.right)
   }
 
+  private func tagsInset() -> UIEdgeInsets {
+    let externalInset = self.externalInset()
+    return UIEdgeInsets(top: 0,
+                        left: externalInset.left,
+                        bottom: 0,
+                        right: externalInset.right + internalMargin)
+  }
+
   private func actionBarInset() -> UIEdgeInsets {
     let externalInset = self.externalInset()
     return UIEdgeInsets(top: 0,
@@ -392,6 +427,10 @@ extension BaseCardPostNode: BaseCardPostNodeContentProvider {
     return self.actionInfoValue != nil
   }
   
+  internal var canShowTagsNode: Bool {
+    return (self.tags?.count ?? 0) > 0
+  }
+
   internal var shouldShowActionBarNode: Bool {
     return true
   }
@@ -410,6 +449,6 @@ extension BaseCardPostNode: BaseCardPostNodeContentProvider {
   }
 
   func updateMode(fullMode: Bool) {
-    //Override in child
+    shouldShowTagsNode = true
   }
 }

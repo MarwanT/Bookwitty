@@ -35,6 +35,7 @@ class PhotoCardPostCellNode: BaseCardPostNode {
   }
 
   override func updateMode(fullMode: Bool) {
+    super.updateMode(fullMode: fullMode)
     node.setupMode(fullViewMode: fullMode)
   }
 }
@@ -198,5 +199,6 @@ extension PhotoCardPostCellNode: PhotoCardViewModelDelegate {
     setWitValue(witted: values.content.wit.is)
     actionInfoValue = values.content.wit.info
     topComment = values.content.topComment
+    tags = values.content.tags
   }
 }

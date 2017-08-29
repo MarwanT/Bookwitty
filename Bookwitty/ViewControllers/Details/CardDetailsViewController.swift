@@ -47,6 +47,7 @@ class CardDetailsViewController: GenericNodeViewController {
       videoCard.node.tappableTitle = true
     }
 
+    loadTags(node: node)
 
     viewControllerAnalyticsScreenName(for: resource)
   }
@@ -62,6 +63,17 @@ class CardDetailsViewController: GenericNodeViewController {
 
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
+  }
+
+  func loadTags(node: BaseCardPostNode) {
+    guard viewModel.tags?.count ?? 0 == 0 else {
+      return
+    }
+
+    viewModel.loadTags { (success: Bool, error: BookwittyAPIError?) in
+      node.tags = self.viewModel.tags
+      node.setNeedsLayout()
+    }
   }
 
   func updatedResources(_ notification: NSNotification) {
@@ -259,6 +271,22 @@ extension CardDetailsViewController: BaseCardPostNodeDelegate {
     /* Discussion
      * Top Comment Node Is Not Visible Here
      */
+  }
+
+  func cardNode(card: BaseCardPostNode, didSelectTagAt index: Int) {
+    guard let tags = (self.viewModel.resource as? ModelCommonProperties)?.tags else {
+      return
+    }
+
+    guard index >= 0 && index < tags.count else {
+      return
+    }
+
+    let tag = tags[index]
+
+    let tagController = TagFeedViewController()
+    tagController.viewModel.tag = tag
+    self.navigationController?.pushViewController(tagController, animated: true)
   }
 }
 

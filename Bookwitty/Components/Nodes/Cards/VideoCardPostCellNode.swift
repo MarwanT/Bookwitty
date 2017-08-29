@@ -23,6 +23,7 @@ class VideoCardPostCellNode: BaseCardPostNode {
   }
 
   override func updateMode(fullMode: Bool) {
+    super.updateMode(fullMode: fullMode)
     node.setupMode(fullViewMode: fullMode)
   }
 
@@ -225,5 +226,6 @@ extension VideoCardPostCellNode: VideoCardViewModelDelegate {
     setWitValue(witted: values.content.wit.is)
     actionInfoValue = values.content.wit.info
     topComment = values.content.topComment
+    tags = values.content.tags
   }
 }

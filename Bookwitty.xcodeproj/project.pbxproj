@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		19C00714F09A1D3937F9AAE7 /* Pods_BookwittyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */; };
 		2D1D0880B4A8EB8C8A6AD1A8 /* Pods_Bookwitty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */; };
+		560341AD1F3DAE3400E60F44 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560341AC1F3DAE3400E60F44 /* Tag.swift */; };
 		561229E11EA5E440004CE079 /* TopicCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561229E01EA5E440004CE079 /* TopicCardViewModel.swift */; };
 		561229E31EA5FA5D004CE079 /* ProfileCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561229E21EA5FA5D004CE079 /* ProfileCardViewModel.swift */; };
 		561229E51EA60423004CE079 /* BookCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561229E41EA60423004CE079 /* BookCardViewModel.swift */; };
@@ -19,6 +20,8 @@
 		5613402E1E5221730085B8A5 /* AccountPenNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5613402D1E5221730085B8A5 /* AccountPenNameTableViewCell.swift */; };
 		56205DEB1E5324BC000CA4D7 /* TableViewSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56205DE91E5324BC000CA4D7 /* TableViewSectionHeaderView.swift */; };
 		56205DEC1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56205DEA1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib */; };
+		5625D5301F3C5E3400D94FF8 /* TagFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5625D52F1F3C5E3400D94FF8 /* TagFeedViewController.swift */; };
+		5625D5321F3C673E00D94FF8 /* TagFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5625D5311F3C673E00D94FF8 /* TagFeedViewModel.swift */; };
 		562A31201E659919002851DE /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562A311F1E659919002851DE /* Strings.swift */; };
 		562A31231E65D7F2002851DE /* TopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562A31221E65D7F2002851DE /* TopicViewController.swift */; };
 		562A31261E65E214002851DE /* TopicHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562A31251E65E214002851DE /* TopicHeaderNode.swift */; };
@@ -80,6 +83,8 @@
 		56E09DBE1E546B2100B7C6E6 /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E09DBD1E546B2100B7C6E6 /* ChangePasswordViewModel.swift */; };
 		56E87D341E6EFFCA00AF6CFD /* BookNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E87D331E6EFFCA00AF6CFD /* BookNode.swift */; };
 		56E8B6441E6971C900D8E71E /* TopicControllerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E8B6431E6971C900D8E71E /* TopicControllerNode.swift */; };
+		56F49E131F42FF8C004FFAAD /* TagNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F49E121F42FF8C004FFAAD /* TagNode.swift */; };
+		56F49E151F430959004FFAAD /* TagCollectionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F49E141F430959004FFAAD /* TagCollectionNode.swift */; };
 		56F9FDCC1E82F39B00A48CEB /* UIBarButtonItem+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F9FDCB1E82F39B00A48CEB /* UIBarButtonItem+Utils.swift */; };
 		56FC41971E58CBA100D9B1CE /* NSBundle+Language.m in Sources */ = {isa = PBXBuildFile; fileRef = 56FC41961E58CBA100D9B1CE /* NSBundle+Language.m */; };
 		5903394C1E9E6719004ED1C3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5903394B1E9E6719004ED1C3 /* Utilities.swift */; };
@@ -310,6 +315,7 @@
 
 /* Begin PBXFileReference section */
 		2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bookwitty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		560341AC1F3DAE3400E60F44 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		561229E01EA5E440004CE079 /* TopicCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCardViewModel.swift; sourceTree = "<group>"; };
 		561229E21EA5FA5D004CE079 /* ProfileCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCardViewModel.swift; sourceTree = "<group>"; };
 		561229E41EA60423004CE079 /* BookCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookCardViewModel.swift; sourceTree = "<group>"; };
@@ -320,6 +326,8 @@
 		5613402D1E5221730085B8A5 /* AccountPenNameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountPenNameTableViewCell.swift; sourceTree = "<group>"; };
 		56205DE91E5324BC000CA4D7 /* TableViewSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewSectionHeaderView.swift; sourceTree = "<group>"; };
 		56205DEA1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewSectionHeaderView.xib; sourceTree = "<group>"; };
+		5625D52F1F3C5E3400D94FF8 /* TagFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagFeedViewController.swift; sourceTree = "<group>"; };
+		5625D5311F3C673E00D94FF8 /* TagFeedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagFeedViewModel.swift; sourceTree = "<group>"; };
 		562A311F1E659919002851DE /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		562A31221E65D7F2002851DE /* TopicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicViewController.swift; sourceTree = "<group>"; };
 		562A31251E65E214002851DE /* TopicHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicHeaderNode.swift; sourceTree = "<group>"; };
@@ -383,6 +391,8 @@
 		56E09DBD1E546B2100B7C6E6 /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
 		56E87D331E6EFFCA00AF6CFD /* BookNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookNode.swift; sourceTree = "<group>"; };
 		56E8B6431E6971C900D8E71E /* TopicControllerNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicControllerNode.swift; sourceTree = "<group>"; };
+		56F49E121F42FF8C004FFAAD /* TagNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagNode.swift; sourceTree = "<group>"; };
+		56F49E141F430959004FFAAD /* TagCollectionNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCollectionNode.swift; sourceTree = "<group>"; };
 		56F9FDCB1E82F39B00A48CEB /* UIBarButtonItem+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Utils.swift"; sourceTree = "<group>"; };
 		56FC41951E58CBA100D9B1CE /* NSBundle+Language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+Language.h"; sourceTree = "<group>"; };
 		56FC41961E58CBA100D9B1CE /* NSBundle+Language.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+Language.m"; sourceTree = "<group>"; };
@@ -887,6 +897,7 @@
 				563482BA1ED59F2B005428BF /* Filter.swift */,
 				563482BC1ED5BD61005428BF /* Facet.swift */,
 				56BFE6311F065D62009ABECC /* Vote.swift */,
+				560341AC1F3DAE3400E60F44 /* Tag.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1000,6 +1011,8 @@
 				59CB4DEC1EDEA49C00E7A60B /* CommentsNode.swift */,
 				59CB4DF01EE0600800E7A60B /* WriteCommentNode.swift */,
 				56C54C671F05092000C5FE85 /* CommentCompactNode.swift */,
+				56F49E121F42FF8C004FFAAD /* TagNode.swift */,
+				56F49E141F430959004FFAAD /* TagCollectionNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -1179,6 +1192,7 @@
 				F400CDC71E7AF62600B7EF26 /* SearchViewModel.swift */,
 				567B3C051ED4330F00E02E16 /* SearchFiltersViewModel.swift */,
 				59CB4DEA1EDDC64200E7A60B /* CommentsViewModel.swift */,
+				5625D5311F3C673E00D94FF8 /* TagFeedViewModel.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -1405,6 +1419,7 @@
 				59871F191E78ADFB000A86CD /* PostsViewController.swift */,
 				567B3C031ED4310600E02E16 /* SearchFiltersViewController.swift */,
 				59CB4DE81EDDBFAE00E7A60B /* CommentsViewController.swift */,
+				5625D52F1F3C5E3400D94FF8 /* TagFeedViewController.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -1796,6 +1811,7 @@
 				564EEC0E1E7027A100700474 /* ReadingListsViewController.swift in Sources */,
 				59D602201E36387A00271315 /* Color.swift in Sources */,
 				59D106D01E804D2100BB9695 /* AppMeta.swift in Sources */,
+				5625D5321F3C673E00D94FF8 /* TagFeedViewModel.swift in Sources */,
 				F4A426331E5628080090CD51 /* Quote.swift in Sources */,
 				562A31231E65D7F2002851DE /* TopicViewController.swift in Sources */,
 				56620FCC1E8954CA00BD92BB /* UploadPolicy.swift in Sources */,
@@ -1812,11 +1828,13 @@
 				59D106CC1E802C2F00BB9695 /* AppManager.swift in Sources */,
 				F417B1D21E71C3D400B0FAFE /* PostDetailsItemNode.swift in Sources */,
 				59BD55781E302EB800D3B805 /* Analytics.swift in Sources */,
+				56F49E131F42FF8C004FFAAD /* TagNode.swift in Sources */,
 				56205DEB1E5324BC000CA4D7 /* TableViewSectionHeaderView.swift in Sources */,
 				59CB4DEF1EDEC15800E7A60B /* CommentsManager.swift in Sources */,
 				56929CE61E671BE700B3D00A /* SegmentedControl.swift in Sources */,
 				594B9F6F1E55F557007C49E1 /* RootTabBarViewModel.swift in Sources */,
 				59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */,
+				560341AD1F3DAE3400E60F44 /* Tag.swift in Sources */,
 				562A996C1ED8683000382ADD /* FilterCellNode.swift in Sources */,
 				F4CDDD371E60263800474CAA /* RotatingImageNode.swift in Sources */,
 				59C997BF1ED5AD70009A8451 /* Comment.swift in Sources */,
@@ -1887,6 +1905,7 @@
 				56C54C681F05092000C5FE85 /* CommentCompactNode.swift in Sources */,
 				59A341571E575D3100CF90B3 /* NewsFeedViewModel.swift in Sources */,
 				5657A5431E8BCF02000EE647 /* Utilities+API.swift in Sources */,
+				5625D5301F3C5E3400D94FF8 /* TagFeedViewController.swift in Sources */,
 				561229ED1EA66D82004CE079 /* ReadingListCardViewModel.swift in Sources */,
 				594290291E5347670006B2F1 /* DisclosureView.swift in Sources */,
 				56320C8F1EA748FB00642934 /* QuoteCardPostCellNode.swift in Sources */,
@@ -1961,6 +1980,7 @@
 				F426008B1E6CD18800E14D93 /* OnBoardingCellSectionNode.swift in Sources */,
 				59B67CE01E7C57F000CB823F /* Loader.swift in Sources */,
 				59C048821E735C4500CADE38 /* BagNode.swift in Sources */,
+				56F49E151F430959004FFAAD /* TagCollectionNode.swift in Sources */,
 				59DA476A1E3B876900BA90A5 /* SignInViewController.swift in Sources */,
 				56E87D341E6EFFCA00AF6CFD /* BookNode.swift in Sources */,
 				59EC5BA91E6C5987006E1CB9 /* BookDetailsPricesNode.swift in Sources */,
