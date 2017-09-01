@@ -390,10 +390,10 @@
             </objects>
             <point key="canvasLocation" x="482" y="-347"/>
         </scene>
-        <!--View Controller-->
+        <!--Email Settings View Controller-->
         <scene sceneID="ja2-aY-h5d">
             <objects>
-                <viewController id="Tur-XI-TZE" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EmailSettingsViewController" id="Tur-XI-TZE" customClass="EmailSettingsViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="IXa-kJ-32I"/>
                         <viewControllerLayoutGuide type="bottom" id="N78-lx-9UF"/>
