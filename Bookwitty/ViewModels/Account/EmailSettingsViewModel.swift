@@ -10,4 +10,19 @@ import Foundation
 
 final class EmailSettingsViewModel {
 
+  enum Sections: Int {
+    case Email = 0
+  }
+
+  enum Accessory {
+    case Disclosure
+    case Switch
+    case None
+  }
+
+  private let sectionTitles: [String]
+
+  init () {
+    sectionTitles = [""]
+  }
 }
