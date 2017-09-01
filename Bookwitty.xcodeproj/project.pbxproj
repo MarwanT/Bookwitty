@@ -72,6 +72,7 @@
 		56A623B61EA0C02D00D930A7 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A623B51EA0C02D00D930A7 /* DataManager.swift */; };
 		56AC22C91EA50D2700484449 /* ArticleCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56AC22C81EA50D2700484449 /* ArticleCardViewModel.swift */; };
 		56B985FD1F59B3FD00E32874 /* EmailSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B985FC1F59B3FD00E32874 /* EmailSettingsViewController.swift */; };
+		56B985FF1F59B66B00E32874 /* EmailSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B985FE1F59B66B00E32874 /* EmailSettingsViewModel.swift */; };
 		56BEF6371E6825C80012FDE5 /* SegmentedControlNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BEF6361E6825C80012FDE5 /* SegmentedControlNode.swift */; };
 		56BEF6391E6836DB0012FDE5 /* ContributorsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BEF6381E6836DB0012FDE5 /* ContributorsNode.swift */; };
 		56BFE6321F065D62009ABECC /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BFE6311F065D62009ABECC /* Vote.swift */; };
@@ -381,6 +382,7 @@
 		56A623B51EA0C02D00D930A7 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		56AC22C81EA50D2700484449 /* ArticleCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleCardViewModel.swift; sourceTree = "<group>"; };
 		56B985FC1F59B3FD00E32874 /* EmailSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailSettingsViewController.swift; sourceTree = "<group>"; };
+		56B985FE1F59B66B00E32874 /* EmailSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailSettingsViewModel.swift; sourceTree = "<group>"; };
 		56BEF6361E6825C80012FDE5 /* SegmentedControlNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlNode.swift; sourceTree = "<group>"; };
 		56BEF6381E6836DB0012FDE5 /* ContributorsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContributorsNode.swift; path = TopicsDetails/ContributorsNode.swift; sourceTree = "<group>"; };
 		56BFE6311F065D62009ABECC /* Vote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
@@ -720,6 +722,7 @@
 				56399DC11E51D0F0005192AC /* AccountViewModel.swift */,
 				56E09DBD1E546B2100B7C6E6 /* ChangePasswordViewModel.swift */,
 				5644F21B1E55A77100B7D8E7 /* SettingsViewModel.swift */,
+				56B985FE1F59B66B00E32874 /* EmailSettingsViewModel.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -1758,6 +1761,7 @@
 				F440FD7A1ECB005F00AEBF96 /* BookTypeRegistry.swift in Sources */,
 				F42041C71E73088500E7D208 /* CardDetailsViewModel.swift in Sources */,
 				564EEC101E70298200700474 /* ReadingListsViewModel.swift in Sources */,
+				56B985FF1F59B66B00E32874 /* EmailSettingsViewModel.swift in Sources */,
 				59CF76481E5C8079003EAB6B /* UserManager.swift in Sources */,
 				594290201E5316380006B2F1 /* FeaturedContentCollectionViewCell.swift in Sources */,
 				59CB4DF51EE59BAD00E7A60B /* CommentComposerViewController.swift in Sources */,
