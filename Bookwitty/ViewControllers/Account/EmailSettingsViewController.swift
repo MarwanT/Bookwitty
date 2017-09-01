@@ -22,3 +22,10 @@ class EmailSettingsViewController: UIViewController {
     
   }
 }
+
+extension EmailSettingsViewController: Themeable {
+  func applyTheme() {
+    tableView.backgroundColor = UIColor.clear
+    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+  }
+}
