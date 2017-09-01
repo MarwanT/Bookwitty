@@ -12,6 +12,8 @@ class EmailSettingsViewController: UIViewController {
 
   @IBOutlet var tableView: UITableView!
 
+  fileprivate let viewModel = EmailSettingsViewModel()
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
