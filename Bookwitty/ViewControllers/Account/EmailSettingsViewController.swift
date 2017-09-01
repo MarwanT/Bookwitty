@@ -23,7 +23,10 @@ class EmailSettingsViewController: UIViewController {
   }
 
   fileprivate func initializeComponents() {
-    
+    tableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
+    tableView.register(TableViewSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: TableViewSectionHeaderView.reuseIdentifier)
+
+    tableView.tableFooterView = UIView.defaultSeparator(useAutoLayout: false)
   }
 }
 
