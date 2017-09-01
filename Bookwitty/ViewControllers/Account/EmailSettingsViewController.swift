@@ -10,6 +10,8 @@ import UIKit
 
 class EmailSettingsViewController: UIViewController {
 
+  @IBOutlet var tableView: UITableView!
+
   override func viewDidLoad() {
     super.viewDidLoad()
 

@@ -415,6 +415,9 @@
                             <constraint firstItem="N78-lx-9UF" firstAttribute="top" secondItem="GMz-Xh-PaG" secondAttribute="bottom" id="ugB-4L-KA5"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="GMz-Xh-PaG" id="84D-K8-0fB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cHe-fw-pvz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
