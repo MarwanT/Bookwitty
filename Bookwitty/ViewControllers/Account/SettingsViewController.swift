@@ -43,25 +43,6 @@ class SettingsViewController: UIViewController {
     
   }
 
-  func switchValueChanged(_ sender: UISwitch) {
-    let switchPoint = sender.convert(CGPoint.zero, to: tableView)
-    guard let indexPath = tableView.indexPathForRow(at: switchPoint) else {
-      return
-    }
-
-    //MARK: [Analytics] Event
-    let label: String = sender.isOn ? "On" : "Off"
-    let event: Analytics.Event = Analytics.Event(category: .Account,
-                                                 action: .SwitchEmailNotification,
-                                                 name: label)
-    Analytics.shared.send(event: event)
-
-    viewModel.handleSwitchValueChanged(forRowAt: indexPath, newValue: sender.isOn) {
-      (value: Bool) -> () in
-      sender.isOn = value
-    }
-  }
-
   fileprivate func dispatchSelectionAt(_ indexPath: IndexPath) {
     switch indexPath.section {
     case SettingsViewModel.Sections.General.rawValue:
@@ -179,7 +160,6 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     case .Switch:
       let switchView = UISwitch()
       switchView.isOn = (values.value as? Bool ?? false)
-      switchView.addTarget(self, action: #selector(self.switchValueChanged(_:)) , for: UIControlEvents.valueChanged)
       currentCell.accessoryView = switchView
     case .None:
       break

@@ -149,13 +149,4 @@ final class SettingsViewModel {
     }
     return accessory
   }
-
-  func handleSwitchValueChanged(forRowAt indexPath: IndexPath, newValue: Bool, completion: @escaping ((_ value: Bool)->())) {
-    switch indexPath.section {
-    case Sections.General.rawValue:
-      break
-    default:
-      break
-    }
-  }
 }
