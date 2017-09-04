@@ -158,9 +158,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     case .Disclosure:
       hideDiclosure = false
     case .Switch:
-      let switchView = UISwitch()
-      switchView.isOn = (values.value as? Bool ?? false)
-      currentCell.accessoryView = switchView
+      break
     case .None:
       break
     }
