@@ -37,15 +37,12 @@ final class SettingsViewModel {
     case 0: //email
       let sendEmailNotification = GeneralSettings.sharedInstance.shouldSendEmailNotifications
       return (Strings.email_notifications(), sendEmailNotification)
-    case 1: //newsletter
-      let sendNewsletter = GeneralSettings.sharedInstance.shouldSendNewsletter
-      return (Strings.newsletter(), sendNewsletter)
-    case 2: //change password
+    case 1: //change password
       return (Strings.change_password(), "")
-    case 3: //change language
+    case 2: //change language
       let languageDisplayName: String = Locale.application.localizedString(forLanguageCode: GeneralSettings.sharedInstance.preferredLanguage) ?? ""
       return (Strings.language(), languageDisplayName.capitalized)
-    case 4: //country/region
+    case 3: //country/region
       let countryName = Locale.application.localizedString(forRegionCode: countryCode) ?? ""
       return (Strings.country_region(), countryName)
     default:
@@ -57,13 +54,11 @@ final class SettingsViewModel {
     switch row {
     case 0: //email
       return .Switch
-    case 1: //newsletter
-      return .Switch
-    case 2: //change password
+    case 1: //change password
       return .Disclosure
-    case 3: //change language
+    case 2: //change language
       return .Disclosure
-    case 4: //country/region
+    case 3: //country/region
       return .Disclosure
     default:
       return .None
@@ -113,8 +108,8 @@ final class SettingsViewModel {
     var numberOfRows = 0
     switch section {
     case Sections.General.rawValue:
-      //email notifications, newsletter, change password, change language, country/region
-      numberOfRows = 5
+      //email notifications, change password, change language, country/region
+      numberOfRows = 4
     case Sections.SignOut.rawValue:
       //sign out
       numberOfRows = 1
