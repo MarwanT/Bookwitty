@@ -53,7 +53,7 @@ final class SettingsViewModel {
   private func accessoryForGeneral(atRow row: Int) -> Accessory {
     switch row {
     case 0: //email
-      return .Switch
+      return .Disclosure
     case 1: //change password
       return .Disclosure
     case 2: //change language
