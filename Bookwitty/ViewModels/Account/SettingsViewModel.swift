@@ -73,52 +73,11 @@ final class SettingsViewModel {
   private func handleGeneralSwitchValueChanged(atRow row: Int, newValue: Bool, completion: @escaping ((_ value: Bool)->())) {
     switch row {
     case 0: //email
-      updateUserEmailNotificationsPreferences(value: "\(!newValue)", completion: { (success: Bool) -> () in
-        if success {
-          GeneralSettings.sharedInstance.shouldSendEmailNotifications = newValue
-        }
-        completion(GeneralSettings.sharedInstance.shouldSendEmailNotifications)
-      })
+      break
     case 1: //newsletter
-      updateUserEmailNewsletterPreference(value: "\(!newValue)", completion: { (success: Bool) in
-        if success {
-          GeneralSettings.sharedInstance.shouldSendNewsletter = newValue
-        }
-        completion(GeneralSettings.sharedInstance.shouldSendNewsletter)
-      })
+      break
     default:
       break
-    }
-  }
-
-  private func updateUserEmailNotificationsPreferences(value: String, completion: @escaping ((Bool)->())) {
-    var followersPreferenceSuccess: Bool = false
-    var commentsPreferenceSuccess: Bool = false
-
-    let group = DispatchGroup()
-    group.enter()
-    _ = UserAPI.updateUser(preference: User.Preference.emailNotificationFollowers, value: value) {
-      (success: Bool, error: BookwittyAPIError?) in
-      followersPreferenceSuccess = success
-      group.leave()
-    }
-
-    group.enter()
-    _ = UserAPI.updateUser(preference: User.Preference.emailNotificationComments, value: value) {
-      (success: Bool, error: BookwittyAPIError?) in
-      commentsPreferenceSuccess = success
-      group.leave()
-    }
-
-    group.notify(queue: DispatchQueue.main) {
-      completion(followersPreferenceSuccess && commentsPreferenceSuccess)
-    }
-  }
-
-  private func updateUserEmailNewsletterPreference(value: String, completion: @escaping ((Bool)->())) {
-    _ = UserAPI.updateUser(preference: User.Preference.emailNewsletter, value: value) {
-      (success: Bool, error: BookwittyAPIError?) in
-      completion(success)
     }
   }
 
