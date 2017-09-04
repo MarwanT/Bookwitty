@@ -28,6 +28,39 @@ class EmailSettingsViewController: UIViewController {
 
     tableView.tableFooterView = UIView.defaultSeparator(useAutoLayout: false)
   }
+
+  @objc
+  fileprivate func switchValueChanged(_ sender: UISwitch) {
+    let switchPoint = sender.convert(CGPoint.zero, to: tableView)
+    guard let indexPath = tableView.indexPathForRow(at: switchPoint) else {
+      return
+    }
+
+    //MARK: [Analytics] Event
+    let label: String = sender.isOn ? "On" : "Off"
+
+    var action = Analytics.Action.Default
+    switch indexPath.row {
+    case 0:
+      action = Analytics.Action.SwitchCommentsEmailNotification
+    case 1:
+      action = Analytics.Action.SwitchFollowersEmailNotification
+    case 2:
+      action = Analytics.Action.SwitchNewsletterEmailNotification
+    default:
+      break
+    }
+
+    let event: Analytics.Event = Analytics.Event(category: .Account,
+                                                 action: action,
+                                                 name: label)
+    Analytics.shared.send(event: event)
+
+    viewModel.handleSwitchValueChanged(forRowAt: indexPath, newValue: sender.isOn) {
+      (value: Bool) -> () in
+      sender.isOn = value
+    }
+  }
 }
 
 extension EmailSettingsViewController: Themeable {
@@ -74,6 +107,7 @@ extension EmailSettingsViewController: UITableViewDataSource, UITableViewDelegat
     case .Switch:
       let switchView = UISwitch()
       switchView.isOn = (values.value as? Bool ?? false)
+      switchView.addTarget(self, action: #selector(self.switchValueChanged(_:)) , for: UIControlEvents.valueChanged)
       currentCell.accessoryView = switchView
     case .None:
       break
