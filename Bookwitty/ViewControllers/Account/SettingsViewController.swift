@@ -48,7 +48,7 @@ class SettingsViewController: UIViewController {
     case SettingsViewModel.Sections.General.rawValue:
       switch indexPath.row {
       case 0: //email
-        break
+        pushEmailSettingsViewController()
       case 1: //newsletter
         break
       case 2: //change password
@@ -65,6 +65,11 @@ class SettingsViewController: UIViewController {
     default:
       break
     }
+  }
+
+  private func pushEmailSettingsViewController() {
+    let viewController = Storyboard.Account.instantiate(EmailSettingsViewController.self)
+    self.navigationController?.pushViewController(viewController, animated: true)
   }
 
   private func pushChangePasswordViewController() {
