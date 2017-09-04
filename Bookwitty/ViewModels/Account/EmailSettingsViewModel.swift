@@ -107,6 +107,43 @@ final class EmailSettingsViewModel {
       return .None
     }
   }
+
+  func handleSwitchValueChanged(forRowAt indexPath: IndexPath, newValue: Bool, completion: @escaping ((_ value: Bool)->())) {
+    switch indexPath.section {
+    case Sections.Email.rawValue:
+      handleEmailSwitchValueChanged(atRow: indexPath.row, newValue: newValue, completion: completion)
+    default:
+      break
+    }
+  }
+
+  private func handleEmailSwitchValueChanged(atRow row: Int, newValue: Bool, completion: @escaping ((_ value: Bool)->())) {
+    switch row {
+    case 0: //comments
+      updateUserEmailCommentsPreference(value: "\(!newValue)", completion: { (success: Bool) in
+        if success {
+          GeneralSettings.sharedInstance.shouldSendCommentsEmail = newValue
+        }
+        completion(GeneralSettings.sharedInstance.shouldSendCommentsEmail)
+      })
+    case 1: //followers
+      updateUserEmailFollowersPreference(value: "\(!newValue)", completion: { (success: Bool) in
+        if success {
+          GeneralSettings.sharedInstance.shouldSendFollowersEmail = newValue
+        }
+        completion(GeneralSettings.sharedInstance.shouldSendFollowersEmail)
+      })
+    case 2: //newsletter
+      updateUserEmailNewsletterPreference(value: "\(!newValue)", completion: { (success: Bool) in
+        if success {
+          GeneralSettings.sharedInstance.shouldSendNewsletter = newValue
+        }
+        completion(GeneralSettings.sharedInstance.shouldSendNewsletter)
+      })
+    default:
+      break
+    }
+  }
 }
 
 //MARK: - API Handlers
