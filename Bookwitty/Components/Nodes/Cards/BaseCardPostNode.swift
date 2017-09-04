@@ -327,6 +327,44 @@ extension BaseCardPostNode {
     return layoutSpec
   }
 
+
+  private func reportedLayoutSpecs() -> ASLayoutSpec {
+    let backgroundInset = externalInset()
+    let backgroundNodeInset = ASInsetLayoutSpec(insets: backgroundInset, child: backgroundNode)
+
+    let titleNode = ASTextNode()
+    titleNode.maximumNumberOfLines = 1
+    titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
+    let detailsNode = ASTextNode()
+    detailsNode.maximumNumberOfLines = 1
+    detailsNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
+    let title = "Thank you for your report."
+    titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
+      .append(text: title, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+
+    let details = "You won't see this post in the future."
+    detailsNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+      .append(text: details, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+
+    let titleInsetLayoutSpec = ASInsetLayoutSpec(insets: reportTextInset(), child: titleNode)
+    let detailsInsetLayoutSpec = ASInsetLayoutSpec(insets: reportTextInset(), child: detailsNode)
+
+    let innerItemsSpacer = spacer(height: internalMargin / 2.0)
+
+    let children: [ASLayoutElement] = [
+      titleInsetLayoutSpec, innerItemsSpacer, detailsInsetLayoutSpec
+    ]
+
+    let verticalStack = ASStackLayoutSpec(direction: .vertical, spacing: 0.0, justifyContent: .spaceBetween, alignItems: .start, children: children)
+    let insetLayoutSpec = ASInsetLayoutSpec(insets: reportInset(), child: verticalStack)
+
+    let layoutSpec = ASBackgroundLayoutSpec(child: insetLayoutSpec, background: backgroundNodeInset)
+
+    return layoutSpec
+  }
+
   private func commentSummaryLayoutSpecs() -> ASStackLayoutSpec {
     let contentSideInsets = internalInset().left
     let commentSummarySideSpace = shouldShowCommentSummaryNode ? contentSideInsets : 0
@@ -405,6 +443,20 @@ extension BaseCardPostNode {
                         left: externalInset.left + internalMargin,
                         bottom: 0,
                         right: externalInset.right + internalMargin)
+  }
+
+  private func reportTextInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top:0,
+                        left: internalMargin,
+                        bottom: 0,
+                        right: internalMargin)
+  }
+
+  private func reportInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: (externalMargin / 2.0) + internalMargin,
+                        left: externalMargin,
+                        bottom: (externalMargin / 2.0) + internalMargin,
+                        right: externalMargin)
   }
 
   private func spacer(height: CGFloat = 0, width: CGFloat = 0) -> ASLayoutSpec {
