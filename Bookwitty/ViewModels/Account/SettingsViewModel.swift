@@ -70,17 +70,6 @@ final class SettingsViewModel {
     }
   }
 
-  private func handleGeneralSwitchValueChanged(atRow row: Int, newValue: Bool, completion: @escaping ((_ value: Bool)->())) {
-    switch row {
-    case 0: //email
-      break
-    case 1: //newsletter
-      break
-    default:
-      break
-    }
-  }
-
   func updateUserCountry(country: String, completion:((Bool)->())?) {
     guard let identifier = user.id else {
       completion?(false)
@@ -169,7 +158,7 @@ final class SettingsViewModel {
   func handleSwitchValueChanged(forRowAt indexPath: IndexPath, newValue: Bool, completion: @escaping ((_ value: Bool)->())) {
     switch indexPath.section {
     case Sections.General.rawValue:
-      handleGeneralSwitchValueChanged(atRow: indexPath.row, newValue: newValue, completion: completion)
+      break
     default:
       break
     }
