@@ -147,6 +147,12 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     }
   }
 
+  var reported: Bool = false {
+    didSet {
+      setNeedsLayout()
+    }
+  }
+
   override init() {
     infoNode = CardPostInfoNode()
     actionInfoNode = ASTextNode()
@@ -256,6 +262,11 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
 extension BaseCardPostNode {  
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+
+    if reported {
+      return reportedLayoutSpecs()
+    }
+
     let backgroundInset = externalInset()
     let defaultInset = internalInset()
 
