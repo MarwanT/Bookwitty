@@ -108,3 +108,27 @@ final class EmailSettingsViewModel {
     }
   }
 }
+
+//MARK: - API Handlers
+extension EmailSettingsViewModel {
+  fileprivate func updateUserEmailCommentsPreference(value: String, completion: @escaping ((Bool)->())) {
+    _ = UserAPI.updateUser(preference: User.Preference.emailNotificationComments, value: value) {
+      (success: Bool, error: BookwittyAPIError?) in
+      completion(success)
+    }
+  }
+
+  fileprivate func updateUserEmailFollowersPreference(value: String, completion: @escaping ((Bool)->())) {
+    _ = UserAPI.updateUser(preference: User.Preference.emailNotificationFollowers, value: value) {
+      (success: Bool, error: BookwittyAPIError?) in
+      completion(success)
+    }
+  }
+
+  fileprivate func updateUserEmailNewsletterPreference(value: String, completion: @escaping ((Bool)->())) {
+    _ = UserAPI.updateUser(preference: User.Preference.emailNewsletter, value: value) {
+      (success: Bool, error: BookwittyAPIError?) in
+      completion(success)
+    }
+  }
+}
