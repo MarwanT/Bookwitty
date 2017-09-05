@@ -58,6 +58,8 @@ class CommentNode: ASCellNode {
     actionBar.setup(forFollowingMode: false)
     actionBar.configuration.externalHorizontalMargin = 0
     actionBar.hideShareButton = true
+    actionBar.hideCommentButton = true
+    actionBar.hideMoreButton = true
     actionBar.delegate = self
   }
   
