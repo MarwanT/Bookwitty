@@ -153,6 +153,9 @@ extension CommentsManager {
       guard success, let comments = resources as? [Comment] else {
         return
       }
+
+      comments.forEach({ $0.parentId = self.parentComment?.id })
+
       self.comments.append(contentsOf: comments)
       self.nextPageURL = url
     })
