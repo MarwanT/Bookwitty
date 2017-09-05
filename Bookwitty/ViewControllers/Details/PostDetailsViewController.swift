@@ -418,8 +418,8 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
   func postDetails(node: PostDetailsNode, didRequestActionInfo fromNode: ASTextNode) {
     pushPenNamesListViewController(with: viewModel.resource)
   }
-  
-  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
+
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action, didFinishAction: ((Bool) -> ())?) {
     switch action {
     case .viewRepliesForComment(let comment, let postId):
       break
@@ -430,9 +430,15 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
     case .commentAction(let comment, let action):
       switch action {
       case .wit:
-        postDetailsNode.wit(comment: comment, completion: nil)
+        postDetailsNode.wit(comment: comment, completion: {
+          (success: Bool, _) in
+          didFinishAction?(success)
+        })
       case .unwit:
-        postDetailsNode.unwit(comment: comment, completion: nil)
+        postDetailsNode.unwit(comment: comment, completion: {
+          (success: Bool, _) in
+          didFinishAction?(success)
+        })
       case .reply:
         CommentComposerViewController.show(from: self, delegate: self, postId: nil, parentCommentId: comment.id)
       default:

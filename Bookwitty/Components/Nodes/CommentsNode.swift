@@ -9,7 +9,7 @@
 import AsyncDisplayKit
 
 protocol CommentsNodeDelegate: class {
-  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action)
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action, didFinishAction: ((_ success: Bool) -> ())?)
 }
 
 class CommentsNode: ASCellNode {
@@ -289,7 +289,7 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
     
     if viewCommentsDisclosureNode === collectionNode.nodeForItem(at: indexPath) {
       if let commentsManager = viewModel.commentsManagerClone() {
-        delegate?.commentsNode(self, reactFor: .viewAllComments(commentsManager: commentsManager))
+        delegate?.commentsNode(self, reactFor: .viewAllComments(commentsManager: commentsManager), didFinishAction: nil)
       }
     }
   }
@@ -345,14 +345,14 @@ extension CommentsNode: CommentTreeNodeDelegate {
       return
     }
     
-    delegate?.commentsNode(self, reactFor: .commentAction(comment: comment, action: action))
+    delegate?.commentsNode(self, reactFor: .commentAction(comment: comment, action: action), didFinishAction: didFinishAction)
   }
   
   func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, comment: Comment) {
     guard let postId = viewModel.postId else {
       return
     }
-    delegate?.commentsNode(self, reactFor: .viewRepliesForComment(comment: comment, postId: postId))
+    delegate?.commentsNode(self, reactFor: .viewRepliesForComment(comment: comment, postId: postId), didFinishAction: nil)
   }
 }
 
@@ -368,7 +368,7 @@ extension CommentsNode: WriteCommentNodeDelegate {
     guard let postId = viewModel.postId else {
       return
     }
-    delegate?.commentsNode(self, reactFor: .writeComment(parentCommentIdentifier: viewModel.parentCommentIdentifier, postId: postId))
+    delegate?.commentsNode(self, reactFor: .writeComment(parentCommentIdentifier: viewModel.parentCommentIdentifier, postId: postId), didFinishAction: nil)
   }
 }
 
