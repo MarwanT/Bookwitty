@@ -138,6 +138,27 @@ class SignInViewController: UIViewController {
       }
       return
     }
+
+    showLoader()
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .Account,
+                                                 action: .SignIn)
+    Analytics.shared.send(event: event)
+
+    viewModel.signIn(
+      username: emailValidationResult.value!,
+      password: passwordValidationResult.value!,
+      completion: { (success, error) in
+        self.hideLoader()
+        if success {
+          NotificationCenter.default.post(name: AppNotification.didSignIn, object: nil)
+        } else {
+          self.showAlertWith(
+            title: Strings.sign_in(),
+            message: Strings.something_wrong_in_credentials())
+        }
+    })
   }
   
   
