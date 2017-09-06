@@ -102,7 +102,7 @@ class SignInViewController: UIViewController {
   
   func emailValidation() -> (String?) -> Bool {
     return { (email: String?) -> Bool in
-      email?.isValidEmail() ?? false
+      return email?.isValidEmail() ?? false
     }
   }
   
