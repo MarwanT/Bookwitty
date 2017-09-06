@@ -116,35 +116,6 @@ class SignInViewController: UIViewController {
   @IBAction func signInButtonTouchUpInside(_ sender: Any) {
     let emailValidationResult = emailField.validateField()
     let passwordValidationResult = passwordField.validateField()
-    
-    if emailValidationResult.isValid && passwordValidationResult.isValid {
-      showLoader()
-
-      //MARK: [Analytics] Event
-      let event: Analytics.Event = Analytics.Event(category: .Account,
-                                                   action: .SignIn)
-      Analytics.shared.send(event: event)
-
-      viewModel.signIn(
-        username: emailValidationResult.value!,
-        password: passwordValidationResult.value!,
-        completion: { (success, error) in
-          self.hideLoader()
-          if success {
-            NotificationCenter.default.post(name: AppNotification.didSignIn, object: nil)
-          } else {
-            self.showAlertWith(
-              title: Strings.sign_in(),
-              message: Strings.something_wrong_in_credentials())
-          }
-      })
-    } else {
-      NotificationView.show(notificationMessages:
-        [
-          NotificationMessage(text: Strings.please_fill_required_field())
-        ]
-      )
-    }
   }
   
   
