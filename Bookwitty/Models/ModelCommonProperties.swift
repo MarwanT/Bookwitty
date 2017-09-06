@@ -44,6 +44,17 @@ extension ModelCommonProperties {
       return nil
     }
 
+    let typesWithoutWit = [
+      Topic.resourceType,
+      Author.resourceType,
+      Book.resourceType,
+      PenName.resourceType
+    ]
+
+    guard !typesWithoutWit.contains(self.registeredResourceType) else {
+      return nil
+    }
+
     let voters: [String] = self.topVotes?
       .filter({
       guard let penName = $0.penName else { return false }
