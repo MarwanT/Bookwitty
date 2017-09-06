@@ -116,6 +116,28 @@ class SignInViewController: UIViewController {
   @IBAction func signInButtonTouchUpInside(_ sender: Any) {
     let emailValidationResult = emailField.validateField()
     let passwordValidationResult = passwordField.validateField()
+
+    //Make sure the e-mail is valid
+    guard emailValidationResult.isValid else {
+      if let email = emailValidationResult.value, email.characters.count > 0 {
+        let error = emailValidationResult.errorMessage ?? Strings.please_fill_required_field()
+        NotificationView.show(notificationMessages: [NotificationMessage(text: error)])
+      } else {
+        NotificationView.show(notificationMessages: [NotificationMessage(text: Strings.please_fill_required_field())])
+      }
+      return
+    }
+
+    //Make sure the password is valid
+    guard passwordValidationResult.isValid else {
+      if let password = passwordValidationResult.value, password.characters.count > 0 {
+        let error = passwordValidationResult.errorMessage ?? Strings.please_fill_required_field()
+        NotificationView.show(notificationMessages: [NotificationMessage(text: error)])
+      } else {
+        NotificationView.show(notificationMessages: [NotificationMessage(text: Strings.please_fill_required_field())])
+      }
+      return
+    }
   }
   
   
