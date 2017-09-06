@@ -288,7 +288,7 @@ extension SignInViewController: Localizable {
     passwordField.configuration = InputFieldConfiguration(
       descriptionLabelText: Strings.password(),
       textFieldPlaceholder: Strings.enter_your_password(),
-      invalidationErrorMessage: Strings.password_invalid(),
+      invalidationErrorMessage: Strings.password_minimum_characters_error(),
       returnKeyType: UIReturnKeyType.done)
   }
 
