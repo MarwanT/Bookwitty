@@ -183,7 +183,7 @@ extension ProductFormatsViewController: UITableViewDataSource, UITableViewDelega
         return
       }
 
-      currentCell.label.text = values.form.value + " " + values.form.value
+      currentCell.label.text = values.form.value
       currentCell.detailsLabel.text = "(" + String(describing: values.numberOfEditions) + ")"
     }
   }
