@@ -282,5 +282,6 @@ extension BookCardPostCellNode: BookCardViewModelDelegate {
     node.setTopicStatistics(numberOfPosts: values.content.statistics.posts, numberOfBooks: values.content.statistics.relatedBooks, numberOfFollowers: values.content.statistics.followers)
     articleCommentsSummary = values.content.comments
     actionInfoValue = values.content.wit.info
+    shouldHandleTopComments = false
   }
 }
