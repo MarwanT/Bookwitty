@@ -222,7 +222,7 @@ class BookStoreViewController: UIViewController {
     if canDisplayIntroductoryBanner && viewModel.shouldDisplayIntroductoryBanner {
       stackView.addArrangedSubview(self.introductoryBanner.view)
       introductoryBanner.view.alignLeading("0", trailing: "0", toView: self.stackView)
-      let calculatedSize = introductoryBanner.calculateLayoutThatFits(ASSizeRange.init(min: CGSize.zero, max: self.view.frame.size)).frame.size
+      let calculatedSize = introductoryBanner.calculateLayoutThatFits(ASSizeRange(min: CGSize.zero, max: self.view.frame.size)).frame.size
 
       if introductoryBannerHeightConstraint == nil {
         introductoryBannerHeightConstraint = introductoryBanner.view.heightAnchor.constraint(equalToConstant: calculatedSize.height)
