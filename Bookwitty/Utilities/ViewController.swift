@@ -115,6 +115,7 @@ extension UIViewController {
     alert.addAction(UIAlertAction(title: Strings.yes_this_is_spam(), style: .destructive, handler: { (action: UIAlertAction) in
       _ = PenNameAPI.report(identifier: identifier, completion: { (success: Bool, error: BookwittyAPIError?) in
         if success {
+          DataManager.shared.updateResource(with: identifier, after: .report)
           self.showReportSuccessfullAlert(completion: {
             completion(success)
           })
@@ -135,6 +136,7 @@ extension UIViewController {
     alert.addAction(UIAlertAction(title: Strings.yes_this_is_spam(), style: .destructive, handler: { (action: UIAlertAction) in
       _ = ContentAPI.report(identifier: identifier, completion: { (success: Bool, error: BookwittyAPIError?) in
         if success {
+          DataManager.shared.updateResource(with: identifier, after: .report)
           self.showReportSuccessfullAlert(completion: {
             completion(success)
           })
