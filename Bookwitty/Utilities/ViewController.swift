@@ -121,6 +121,17 @@ extension UIViewController {
           })
         }
       })
+
+      //MARK: [Analytics] Event
+      guard let resource = DataManager.shared.fetchResource(with: identifier) as? PenName else {
+        return
+      }
+
+      var name: String = resource.name ?? ""
+      let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                   action: .ConfirmReport,
+                                                   name: name)
+      Analytics.shared.send(event: event)
     }))
 
     alert.addAction(UIAlertAction(title: Strings.no_forget_it(), style: .default, handler: { (action: UIAlertAction) in
