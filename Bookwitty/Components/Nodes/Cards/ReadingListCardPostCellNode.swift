@@ -221,6 +221,7 @@ extension ReadingListCardPostCellNode: ReadingListCardViewModelDelegate {
     actionInfoValue = values.content.wit.info
     topComment = values.content.topComment
     tags = values.content.tags
+    reported = values.reported
 
     if !node.isImageCollectionLoaded {
       if values.content.relatedContent.posts.count > 0 {

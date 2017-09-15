@@ -257,5 +257,6 @@ extension LinkCardPostCellNode: LinkCardViewModelDelegate {
     actionInfoValue = values.content.wit.info
     topComment = values.content.topComment
     tags = values.content.tags
+    reported = values.reported
   }
 }
