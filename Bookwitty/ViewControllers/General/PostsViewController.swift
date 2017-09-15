@@ -421,7 +421,8 @@ extension PostsViewController: BaseCardPostNodeDelegate {
 // MARK: - Actions For Cards
 extension PostsViewController {
   fileprivate func actionForCard(resource: ModelResource?) {
-    guard let resource = resource else {
+    guard let resource = resource,
+      !DataManager.shared.isReported(resource) else {
       return
     }
     let registeredType = resource.registeredResourceType

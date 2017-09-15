@@ -926,7 +926,8 @@ extension PostDetailsViewController {
 // MARK: - Actions For Cards
 extension PostDetailsViewController {
   func actionForCard(resource: ModelResource?) {
-    guard let resource = resource else {
+    guard let resource = resource,
+      !DataManager.shared.isReported(resource) else {
       return
     }
     let registeredType = resource.registeredResourceType

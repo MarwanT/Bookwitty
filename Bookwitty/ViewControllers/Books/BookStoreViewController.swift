@@ -578,9 +578,11 @@ extension BookStoreViewController: DisclosureViewDelegate {
 // MARK: - Actions For Selected Resource
 extension BookStoreViewController {
   func actionForCard(resource: ModelResource?) {
-    guard let resource = resource else {
+    guard let resource = resource,
+      !DataManager.shared.isReported(resource) else {
       return
     }
+
     let registeredType = resource.registeredResourceType
     
     switch registeredType {
