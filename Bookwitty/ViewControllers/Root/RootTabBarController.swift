@@ -284,7 +284,7 @@ extension RootTabBarController {
   }
 
   func serverBusy(notification: Notification?) {
-    //TODO: handle server error `server busy`
+    displayServerBusyAlert()
   }
 
   func showRootViewController() {
@@ -397,6 +397,18 @@ extension RootTabBarController {
       style: UIAlertActionStyle.cancel, handler: nil)
     alertController.addAction(signInAction)
     alertController.addAction(registerAction)
+    alertController.addAction(neutralAction)
+    present(alertController, animated: true, completion: nil)
+  }
+
+  fileprivate func displayServerBusyAlert() {
+    let alertController = UIAlertController(
+      title: Strings.some_thing_wrong_error(), //TODO: Localize
+      message: Strings.try_again(), //TODO: Localize
+      preferredStyle: .alert)
+    let neutralAction = UIAlertAction(
+      title: Strings.ok(),
+      style: UIAlertActionStyle.cancel, handler: nil)
     alertController.addAction(neutralAction)
     present(alertController, animated: true, completion: nil)
   }
