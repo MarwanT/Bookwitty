@@ -103,7 +103,11 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
   fileprivate let topCommentNode: CommentCompactNode
   fileprivate let writeCommentNode: WriteCommentNode
 
-  var shouldHandleTopComments: Bool = true
+  var shouldHandleTopComments: Bool = true {
+    didSet {
+      actionBarNode.hideCommentButton = !shouldHandleTopComments
+    }
+  }
   var shouldShowTagsNode: Bool = false
 
   fileprivate var shouldShowCommentSummaryNode: Bool {
