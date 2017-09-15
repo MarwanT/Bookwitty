@@ -192,6 +192,7 @@ extension Analytics {
     case SearchOnBookwitty
     //
     case Report
+    case ConfirmReport
     //
     case Default
 
@@ -325,6 +326,8 @@ extension Analytics {
         return "Search On Bookwitty"
       case .Report:
         return "Report"
+      case .ConfirmReport:
+        return "ConfirmReport"
       case .Default:
         return "[DEFAULT]"
       }
