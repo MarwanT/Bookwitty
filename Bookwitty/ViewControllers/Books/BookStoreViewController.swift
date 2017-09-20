@@ -31,6 +31,8 @@ class BookStoreViewController: UIViewController {
   fileprivate let leftMargin = ThemeManager.shared.currentTheme.generalExternalMargin()
   fileprivate let sectionSpacing = ThemeManager.shared.currentTheme.sectionSpacing()
 
+  fileprivate var introductoryBannerHeightConstraint: NSLayoutConstraint?
+
   override func awakeFromNib() {
     super.awakeFromNib()
 
@@ -220,8 +222,15 @@ class BookStoreViewController: UIViewController {
     if canDisplayIntroductoryBanner && viewModel.shouldDisplayIntroductoryBanner {
       stackView.addArrangedSubview(self.introductoryBanner.view)
       introductoryBanner.view.alignLeading("0", trailing: "0", toView: self.stackView)
-      let calculatedSize = introductoryBanner.calculateLayoutThatFits(ASSizeRange.init(min: CGSize.zero, max: self.view.frame.size)).frame.size
-      introductoryBanner.view.constrainHeight("\(calculatedSize.height)")
+      let calculatedSize = introductoryBanner.calculateLayoutThatFits(ASSizeRange(min: CGSize.zero, max: self.view.frame.size)).frame.size
+
+      if introductoryBannerHeightConstraint == nil {
+        introductoryBannerHeightConstraint = introductoryBanner.view.heightAnchor.constraint(equalToConstant: calculatedSize.height)
+        introductoryBannerHeightConstraint?.isActive = true
+      }
+
+      introductoryBannerHeightConstraint?.constant = calculatedSize.height
+      introductoryBanner.view.layoutIfNeeded()
     }
   }
   
