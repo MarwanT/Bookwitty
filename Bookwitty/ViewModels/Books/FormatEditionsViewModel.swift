@@ -35,7 +35,7 @@ extension FormatEditionsViewModel {
   
   func valueForRow(at indexPath: IndexPath) -> (id: String?, description: String?, formattedPrice: String?)? {
     let editionValues = editions[indexPath.item]
-    return (editionValues.id, editionValues.description, editionValues.price?.formattedValue)
+    return (editionValues.id, editionValues.form?.value, editionValues.price?.formattedValue)
   }
   
   func analyticsValues(for indexPath: IndexPath) -> (productTitle: String, format: String, date: String) {
