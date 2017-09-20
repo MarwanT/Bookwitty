@@ -49,7 +49,8 @@ class CommentsViewController: ASViewController<ASDisplayNode> {
 
 // MARK: - Comments node delegate
 extension CommentsViewController: CommentsNodeDelegate {
-  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
+
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action, didFinishAction: ((Bool) -> ())?) {
     switch action {
     case .viewRepliesForComment(let comment, let postId):
       pushCommentsViewControllerForReplies(comment: comment, postId: postId)
