@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FAC60761F73B71C00D47B0A /* Content.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0FAC60751F73B71C00D47B0A /* Content.storyboard */; };
+		0FAC60D21F73BBC100D47B0A /* ContentEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAC60D11F73BBC100D47B0A /* ContentEditorViewController.swift */; };
+		0FAC60D51F73BC4D00D47B0A /* ContentEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAC60D41F73BC4D00D47B0A /* ContentEditorViewModel.swift */; };
 		19C00714F09A1D3937F9AAE7 /* Pods_BookwittyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */; };
 		2D1D0880B4A8EB8C8A6AD1A8 /* Pods_Bookwitty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */; };
 		560341AD1F3DAE3400E60F44 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560341AC1F3DAE3400E60F44 /* Tag.swift */; };
@@ -323,6 +326,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0FAC60751F73B71C00D47B0A /* Content.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Content.storyboard; sourceTree = "<group>"; };
+		0FAC60D11F73BBC100D47B0A /* ContentEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentEditorViewController.swift; sourceTree = "<group>"; };
+		0FAC60D41F73BC4D00D47B0A /* ContentEditorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentEditorViewModel.swift; sourceTree = "<group>"; };
 		2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bookwitty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		560341AC1F3DAE3400E60F44 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		561229E01EA5E440004CE079 /* TopicCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCardViewModel.swift; sourceTree = "<group>"; };
@@ -660,6 +666,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0FAC60D01F73BB4A00D47B0A /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				0FAC60D11F73BBC100D47B0A /* ContentEditorViewController.swift */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
+		0FAC60D31F73BC2200D47B0A /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				0FAC60D41F73BC4D00D47B0A /* ContentEditorViewModel.swift */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
 		4C423FDC175E8B1F93C4EB6B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -852,16 +874,17 @@
 		59057FC51E252C500036AAF3 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				5641F96B1EFBE8F1001CC72F /* Lists */,
-				56AC22C71EA50B6E00484449 /* Cards */,
-				564EEC081E70192300700474 /* Details */,
-				56399DC01E51D0DA005192AC /* Account */,
-				59DA475A1E3B7A8F00BA90A5 /* Introduction */,
 				59D27D0D1E40D2C400468C29 /* Access */,
+				56399DC01E51D0DA005192AC /* Account */,
 				594290071E4FF0740006B2F1 /* Books */,
-				594B9F6D1E55F470007C49E1 /* Root */,
-				59871F1B1E78AF00000A86CD /* General */,
+				56AC22C71EA50B6E00484449 /* Cards */,
 				59C0487E1E735A6E00CADE38 /* Checkout */,
+				0FAC60D31F73BC2200D47B0A /* Content */,
+				564EEC081E70192300700474 /* Details */,
+				59DA475A1E3B7A8F00BA90A5 /* Introduction */,
+				59871F1B1E78AF00000A86CD /* General */,
+				5641F96B1EFBE8F1001CC72F /* Lists */,
+				594B9F6D1E55F470007C49E1 /* Root */,
 				564EEC0F1E70298200700474 /* ReadingListsViewModel.swift */,
 			);
 			path = ViewModels;
@@ -974,6 +997,7 @@
 				56399DBB1E51CF2D005192AC /* Account.storyboard */,
 				567B3C011ED42ECF00E02E16 /* Misc.storyboard */,
 				59CB4DF21EE59ABD00E7A60B /* Details.storyboard */,
+				0FAC60751F73B71C00D47B0A /* Content.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -1235,15 +1259,16 @@
 		59B65FD41E2524D60093FF44 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				5641F9681EFBAFD9001CC72F /* Lists */,
-				562A31211E65D7E4002851DE /* Details */,
 				56399DBD1E51CFF2005192AC /* Account */,
-				59DA475F1E3B7A9B00BA90A5 /* Introduction */,
 				59DA47681E3B874B00BA90A5 /* Access */,
 				594290041E4FEE8D0006B2F1 /* Books */,
-				F48278B91E4B214A003D82F2 /* Root */,
-				B4ECA3451E4E05E7004B3EE2 /* General */,
 				59C0487D1E735A5F00CADE38 /* Checkout */,
+				0FAC60D01F73BB4A00D47B0A /* Content */,
+				562A31211E65D7E4002851DE /* Details */,
+				B4ECA3451E4E05E7004B3EE2 /* General */,
+				59DA475F1E3B7A9B00BA90A5 /* Introduction */,
+				5641F9681EFBAFD9001CC72F /* Lists */,
+				F48278B91E4B214A003D82F2 /* Root */,
 				564EEC0D1E7027A100700474 /* ReadingListsViewController.swift */,
 			);
 			path = ViewControllers;
@@ -1645,6 +1670,7 @@
 				594290031E4F737B0006B2F1 /* Books.storyboard in Resources */,
 				566EE87B1E5DC677004B990D /* Localizable.strings in Resources */,
 				59956E041EFD808B004DA794 /* Formats.fr.json in Resources */,
+				0FAC60761F73B71C00D47B0A /* Content.storyboard in Resources */,
 				59DBA6631E731C640049B427 /* Categories.fr.json in Resources */,
 				563C1EA71E93D14600675B42 /* Localizable.stringsdict in Resources */,
 				567B3C091ED4740A00E02E16 /* CollapsableTableViewSectionHeaderView.xib in Resources */,
@@ -1872,6 +1898,7 @@
 				5903EB211FCC6F580002B91D /* CommentComposerViewModel.swift in Sources */,
 				F42600891E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift in Sources */,
 				566EE82D1E5D7082004B990D /* Search+API.swift in Sources */,
+				0FAC60D21F73BBC100D47B0A /* ContentEditorViewController.swift in Sources */,
 				59C273311F070223009C51D9 /* FormatEditionTableViewCell.swift in Sources */,
 				59C2732F1F06BD33009C51D9 /* FormatEditionsViewModel.swift in Sources */,
 				59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */,
@@ -2021,6 +2048,7 @@
 				594F4EAF1E440A4900A947FA /* User+API.swift in Sources */,
 				56E09DBE1E546B2100B7C6E6 /* ChangePasswordViewModel.swift in Sources */,
 				56535F341E7CB9ED0045E73D /* Media.swift in Sources */,
+				0FAC60D51F73BC4D00D47B0A /* ContentEditorViewModel.swift in Sources */,
 				591E15561E70E381008CA78A /* SectionSubtitleHeaderNode.swift in Sources */,
 				F42041C31E72E84C00E7D208 /* PostDetailsViewModel.swift in Sources */,
 				594290061E4FEEC10006B2F1 /* CategoriesTableViewController.swift in Sources */,
