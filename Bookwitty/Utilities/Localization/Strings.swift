@@ -508,6 +508,10 @@ class Strings {
   static func newsletter() -> String {
     return localizedString(key: "newsletter")
   }
+  
+  static func next() -> String {
+    return localizedString(key: "next")
+  }
 
   static func no_forget_it() -> String {
     return localizedString(key: "no_forget_it")
