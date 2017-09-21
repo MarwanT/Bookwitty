@@ -131,6 +131,7 @@ extension Analytics {
     case UnwitComment
     //
     case AddComment
+    case PublishComment
     case ReplyToComment
     //
     case Share
@@ -159,6 +160,8 @@ extension Analytics {
     //
     case ViewBanner
     //
+    case ViewTopComment
+    //
     case ViewAllTopics
     case ViewAllReadingLists
     case ViewAllReadingListContent
@@ -167,6 +170,7 @@ extension Analytics {
     case ViewAllComments
     case ViewAllCategories
     case ViewAllBooks
+    case ViewAllReplies
     //
     case Follow
     case FollowTopic
@@ -183,6 +187,7 @@ extension Analytics {
     //
     case PullToRefresh
     case LoadMore
+    case LoadMoreComments
     //
     case SearchOnBookwitty
     //
@@ -226,6 +231,8 @@ extension Analytics {
         return "Unwit Comment"
       case .AddComment:
         return "Add Comment"
+      case .PublishComment:
+        return "Publish Comment"
       case .ReplyToComment:
         return "Reply To Comment"
       case .Share:
@@ -266,6 +273,8 @@ extension Analytics {
         return "Go To Filters"
       case .ViewBanner:
         return "View Banner"
+      case .ViewTopComment:
+        return "View Top Comment"
       case .ViewAllTopics:
         return "View All Topics"
       case .ViewAllReadingLists:
@@ -282,6 +291,8 @@ extension Analytics {
         return "View All Categories"
       case .ViewAllBooks:
         return "View All Books"
+      case .ViewAllReplies:
+        return "View All Replies"
       case .Follow:
         return "Follow"
       case .FollowTopic:
@@ -308,6 +319,8 @@ extension Analytics {
         return "Pull To Refresh"
       case .LoadMore:
         return "Load More"
+      case .LoadMoreComments:
+        return "Load More Comments"
       case .SearchOnBookwitty:
         return "Search On Bookwitty"
       case .Report:
