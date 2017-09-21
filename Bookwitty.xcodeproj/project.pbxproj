@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FAC60761F73B71C00D47B0A /* ContentEditor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0FAC60751F73B71C00D47B0A /* ContentEditor.storyboard */; };
 		19C00714F09A1D3937F9AAE7 /* Pods_BookwittyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */; };
 		2D1D0880B4A8EB8C8A6AD1A8 /* Pods_Bookwitty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */; };
 		560341AD1F3DAE3400E60F44 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560341AC1F3DAE3400E60F44 /* Tag.swift */; };
@@ -323,6 +324,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0FAC60751F73B71C00D47B0A /* ContentEditor.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ContentEditor.storyboard; sourceTree = "<group>"; };
 		2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bookwitty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		560341AC1F3DAE3400E60F44 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		561229E01EA5E440004CE079 /* TopicCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCardViewModel.swift; sourceTree = "<group>"; };
@@ -974,6 +976,7 @@
 				56399DBB1E51CF2D005192AC /* Account.storyboard */,
 				567B3C011ED42ECF00E02E16 /* Misc.storyboard */,
 				59CB4DF21EE59ABD00E7A60B /* Details.storyboard */,
+				0FAC60751F73B71C00D47B0A /* ContentEditor.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -1645,6 +1648,7 @@
 				594290031E4F737B0006B2F1 /* Books.storyboard in Resources */,
 				566EE87B1E5DC677004B990D /* Localizable.strings in Resources */,
 				59956E041EFD808B004DA794 /* Formats.fr.json in Resources */,
+				0FAC60761F73B71C00D47B0A /* ContentEditor.storyboard in Resources */,
 				59DBA6631E731C640049B427 /* Categories.fr.json in Resources */,
 				563C1EA71E93D14600675B42 /* Localizable.stringsdict in Resources */,
 				567B3C091ED4740A00E02E16 /* CollapsableTableViewSectionHeaderView.xib in Resources */,
