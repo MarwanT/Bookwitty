@@ -92,6 +92,42 @@ class CommentComposerViewController: UIViewController {
   func didTapPublish(_ sender: Any) {
     dismissKeyboard()
     delegate?.commentComposerPublish(self, content: textView.text, postId: postId, parentCommentId: parentCommentId)
+
+    //MARK: [Analytics] Event
+    guard let resource = (DataManager.shared.fetchResource(with: postId ?? "") as? ModelCommonProperties) else { return }
+    let category: Analytics.Category
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+    default:
+      category = .Default
+    }
+
+    let name: String = resource.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: .PublishComment,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
   
   // MARK: - Helpers
