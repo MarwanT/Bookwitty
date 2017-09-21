@@ -157,6 +157,10 @@ class Strings {
     return localizedString(key: "clear_profile_photo")
   }
   
+  static func close() -> String {
+    return localizedString(key: "close")
+  }
+  
   static func comments() -> String {
     return localizedString(key: "comments")
   }
