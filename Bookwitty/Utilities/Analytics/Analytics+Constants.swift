@@ -130,7 +130,7 @@ extension Analytics {
     case WitComment
     case UnwitComment
     //
-    case Comment
+    case AddComment
     case ReplyToComment
     //
     case Share
@@ -224,8 +224,8 @@ extension Analytics {
         return "Wit Comment"
       case .UnwitComment:
         return "Unwit Comment"
-      case .Comment:
-        return "Comment"
+      case .AddComment:
+        return "Add Comment"
       case .ReplyToComment:
         return "Reply To Comment"
       case .Share:
