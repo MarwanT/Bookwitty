@@ -391,7 +391,7 @@ extension Analytics.Action {
     case .unwit:
       return .Unwit
     case .comment:
-      return .Comment
+      return .GoToComments
     case .share:
       return .Share
     case .follow:
