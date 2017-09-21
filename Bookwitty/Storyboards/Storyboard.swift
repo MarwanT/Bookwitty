@@ -16,7 +16,7 @@ enum Storyboard: String {
   case Account
   case Misc
   case Details
-  
+    
   public func instantiate<VC: UIViewController>(_ viewController: VC.Type,
                    inBundle bundle: Bundle? = nil) -> VC {
     guard let vc = UIStoryboard(name: self.rawValue, bundle: bundle).instantiateViewController(withIdentifier: VC.storyboardIdentifier) as? VC else {
