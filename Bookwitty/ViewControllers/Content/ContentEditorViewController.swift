@@ -54,4 +54,23 @@ class ContentEditorViewController: UIViewController {
     navigationItem.leftBarButtonItems = leftBarButtonItems
     navigationItem.rightBarButtonItems = rightBarButtonItems
   }
+  
+  @objc private func toggleEnableState(of barButtonItem: UIBarButtonItem) -> Void {
+    barButtonItem.isEnabled = !barButtonItem.isEnabled
+  }
+  
+  @objc private func toggleTextAppearanceState(of barButtonItem:UIBarButtonItem) -> Void {
+    toggleEnableState(of:barButtonItem)
+    var oldAttributes = barButtonItem.titleTextAttributes(for: .normal) ?? [:]
+
+    if barButtonItem.isEnabled {
+      let defaultTextColor = ThemeManager.shared.currentTheme.defaultTextColor()
+      oldAttributes[NSForegroundColorAttributeName] = defaultTextColor
+      barButtonItem.setTitleTextAttributes(oldAttributes, for: .normal)
+    } else {
+      let grayedTextColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
+      oldAttributes[NSForegroundColorAttributeName] = grayedTextColor
+      barButtonItem.setTitleTextAttributes(oldAttributes, for: .normal)
+    }
+  }
 }
