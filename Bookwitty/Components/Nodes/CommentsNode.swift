@@ -144,6 +144,45 @@ class CommentsNode: ASCellNode {
       self.shouldShowLoader = false
       completion(success)
     }
+
+    //MARK: [Analytics] Event
+    guard let postId = viewModel.postId,
+      let resource = DataManager.shared.fetchResource(with: postId) as? ModelCommonProperties
+      else { return }
+
+    let category: Analytics.Category
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+    default:
+      category = .Default
+    }
+
+    let name: String = resource.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: .LoadMoreComments,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
   
   func updateCollectionNode(updateLoaderNode: Bool = false) {
