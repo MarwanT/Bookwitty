@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0FAC60761F73B71C00D47B0A /* Content.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0FAC60751F73B71C00D47B0A /* Content.storyboard */; };
+		0FAC60D21F73BBC100D47B0A /* ContentEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAC60D11F73BBC100D47B0A /* ContentEditorViewController.swift */; };
 		19C00714F09A1D3937F9AAE7 /* Pods_BookwittyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */; };
 		2D1D0880B4A8EB8C8A6AD1A8 /* Pods_Bookwitty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */; };
 		560341AD1F3DAE3400E60F44 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560341AC1F3DAE3400E60F44 /* Tag.swift */; };
@@ -325,6 +326,7 @@
 
 /* Begin PBXFileReference section */
 		0FAC60751F73B71C00D47B0A /* Content.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Content.storyboard; sourceTree = "<group>"; };
+		0FAC60D11F73BBC100D47B0A /* ContentEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentEditorViewController.swift; sourceTree = "<group>"; };
 		2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bookwitty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		560341AC1F3DAE3400E60F44 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		561229E01EA5E440004CE079 /* TopicCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCardViewModel.swift; sourceTree = "<group>"; };
@@ -662,6 +664,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0FAC60D01F73BB4A00D47B0A /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				0FAC60D11F73BBC100D47B0A /* ContentEditorViewController.swift */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
 		4C423FDC175E8B1F93C4EB6B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1238,15 +1248,16 @@
 		59B65FD41E2524D60093FF44 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				5641F9681EFBAFD9001CC72F /* Lists */,
-				562A31211E65D7E4002851DE /* Details */,
 				56399DBD1E51CFF2005192AC /* Account */,
-				59DA475F1E3B7A9B00BA90A5 /* Introduction */,
 				59DA47681E3B874B00BA90A5 /* Access */,
 				594290041E4FEE8D0006B2F1 /* Books */,
-				F48278B91E4B214A003D82F2 /* Root */,
-				B4ECA3451E4E05E7004B3EE2 /* General */,
 				59C0487D1E735A5F00CADE38 /* Checkout */,
+				0FAC60D01F73BB4A00D47B0A /* Content */,
+				562A31211E65D7E4002851DE /* Details */,
+				B4ECA3451E4E05E7004B3EE2 /* General */,
+				59DA475F1E3B7A9B00BA90A5 /* Introduction */,
+				5641F9681EFBAFD9001CC72F /* Lists */,
+				F48278B91E4B214A003D82F2 /* Root */,
 				564EEC0D1E7027A100700474 /* ReadingListsViewController.swift */,
 			);
 			path = ViewControllers;
@@ -1876,6 +1887,7 @@
 				5903EB211FCC6F580002B91D /* CommentComposerViewModel.swift in Sources */,
 				F42600891E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift in Sources */,
 				566EE82D1E5D7082004B990D /* Search+API.swift in Sources */,
+				0FAC60D21F73BBC100D47B0A /* ContentEditorViewController.swift in Sources */,
 				59C273311F070223009C51D9 /* FormatEditionTableViewCell.swift in Sources */,
 				59C2732F1F06BD33009C51D9 /* FormatEditionsViewModel.swift in Sources */,
 				59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */,
