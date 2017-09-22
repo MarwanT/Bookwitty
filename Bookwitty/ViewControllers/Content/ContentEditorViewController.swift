@@ -29,22 +29,22 @@ class ContentEditorViewController: UIViewController {
     let close = UIBarButtonItem(title: Strings.close(),
                                 style: UIBarButtonItemStyle.plain,
                                 target: self,
-                                action: nil)
+                                action: #selector(self.close(_:)))
     
     let drafts = UIBarButtonItem(title: Strings.drafts(),
                                  style: UIBarButtonItemStyle.plain,
                                  target: self,
-                                 action: nil)
+                                 action: #selector(self.drafts(_:)))
     
     let undo = UIBarButtonItem(image: #imageLiteral(resourceName: "undo"),
                                style: UIBarButtonItemStyle.plain,
                                target: self,
-                               action: nil)
+                               action: #selector(self.undo(_:)))
     
     let redo = UIBarButtonItem(image: #imageLiteral(resourceName: "redo"),
                                style: UIBarButtonItemStyle.plain,
                                target: self,
-                               action: nil)
+                               action: #selector(self.redo(_:)))
     let plus = UIBarButtonItem(image: #imageLiteral(resourceName: "plus"),
                                style: UIBarButtonItemStyle.plain,
                                target: self,
@@ -53,7 +53,7 @@ class ContentEditorViewController: UIViewController {
     let next = UIBarButtonItem(title: Strings.next(),
                                 style: UIBarButtonItemStyle.plain,
                                 target: self,
-                                action: nil)
+                                action: #selector(self.next(_:)))
    
     let leftBarButtonItems = [close,drafts,undo]
     let rightBarButtonItems = [next,plus,redo]
@@ -61,7 +61,40 @@ class ContentEditorViewController: UIViewController {
     navigationItem.leftBarButtonItems = leftBarButtonItems
     navigationItem.rightBarButtonItems = rightBarButtonItems
   }
-
+  
+  // MARK: - Navigation items actions
+  @objc private func close(_ sender:UIBarButtonItem) {
+    //Todo: Implementation
+  }
+  
+  @objc private func drafts(_ sender:UIBarButtonItem) {
+    //Todo: Implementation
+  }
+  
+  @objc private func undo(_ sender:UIBarButtonItem) {
+    guard let toolbar = editor.inputAccessoryView as? RichEditorToolbar else {
+      return
+    }
+    
+    ContentEditorOption.undo.action(toolbar)
+  }
+  
+  @objc private func redo(_ sender:UIBarButtonItem) {
+    guard let toolbar = editor.inputAccessoryView as? RichEditorToolbar else {
+      return
+    }
+    
+    ContentEditorOption.redo.action(toolbar)
+  }
+  
+  @objc private func plus(_ sender:UIBarButtonItem) {
+    //Todo: Implementation
+  }
+  
+  @objc private func next(_ sender:UIBarButtonItem) {
+    //Todo: Implementation
+  }
+  
   @objc private func toggleEnableState(of barButtonItem: UIBarButtonItem) -> Void {
     barButtonItem.isEnabled = !barButtonItem.isEnabled
   }
