@@ -17,6 +17,7 @@ class ContentEditorViewController: UIViewController {
     super.viewDidLoad()
 
     loadNavigationBarButtons()
+    addKeyboardNotifications()
   }
   
   private func loadNavigationBarButtons() {
@@ -74,6 +75,35 @@ class ContentEditorViewController: UIViewController {
       let grayedTextColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
       oldAttributes[NSForegroundColorAttributeName] = grayedTextColor
       barButtonItem.setTitleTextAttributes(oldAttributes, for: .normal)
+    }
+  }
+  
+  // MARK: - Keyboard Handling
+  private func addKeyboardNotifications() {
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(keyboardWillShow(_:)),
+                                           name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+    
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(keyboardWillHide(_:)),
+                                           name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+  }
+  
+  func keyboardWillShow(_ notification: NSNotification) {
+    if let value = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+      let frame = value.cgRectValue
+      contentViewBottomConstraintToSuperview.constant = -frame.height
+    }
+    
+    UIView.animate(withDuration: 0.44) {
+      self.view.layoutSubviews()
+    }
+  }
+  
+  func keyboardWillHide(_ notification: NSNotification) {
+    contentViewBottomConstraintToSuperview.constant = 0
+    UIView.animate(withDuration: 0.44) {
+      self.view.layoutSubviews()
     }
   }
 }
