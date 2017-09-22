@@ -72,5 +72,23 @@
             </objects>
             <point key="canvasLocation" x="24.800000000000001" y="303.59820089955025"/>
         </scene>
+        <!--Rich Content Menu View Controller-->
+        <scene sceneID="1oS-4P-Lob">
+            <objects>
+                <viewController storyboardIdentifier="RichContentMenuViewController" id="UJ6-Gs-wOy" customClass="RichContentMenuViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ISQ-SN-aXe"/>
+                        <viewControllerLayoutGuide type="bottom" id="Cig-5s-M09"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="00h-xM-Rr5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Lc-V2-t9r" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="898" y="407"/>
+        </scene>
     </scenes>
 </document>
