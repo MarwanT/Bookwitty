@@ -157,10 +157,10 @@
             </objects>
             <point key="canvasLocation" x="733.60000000000002" y="303.59820089955025"/>
         </scene>
-        <!--View Controller-->
+        <!--Rich Link Preview View Controller-->
         <scene sceneID="Cw4-7e-TlU">
             <objects>
-                <viewController id="6Mb-9s-GFq" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RichLinkPreviewViewController" id="6Mb-9s-GFq" customClass="RichLinkPreviewViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZG1-ZG-A5j"/>
                         <viewControllerLayoutGuide type="bottom" id="Ys2-Hv-Rdn"/>
