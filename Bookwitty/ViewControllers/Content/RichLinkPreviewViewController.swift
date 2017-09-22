@@ -24,6 +24,15 @@ class RichLinkPreviewViewController: UIViewController {
   }
 }
 
+//MARK: - Themable implementation
+extension RichLinkPreviewViewController: Themeable {
+  func applyTheme() {
+    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
+
+    separators.forEach({ $0.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()})
+  }
+}
+
 extension RichLinkPreviewViewController: UITextViewDelegate {
   public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
     textView.isScrollEnabled = false
