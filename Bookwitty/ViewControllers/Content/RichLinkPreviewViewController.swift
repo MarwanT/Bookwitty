@@ -23,6 +23,13 @@ class RichLinkPreviewViewController: UIViewController {
   @IBOutlet var videoPreview: UIView!
   @IBOutlet var videoImageView: UIImageView!
 
+  //Audio Preview
+  @IBOutlet var audioPreview: UIView!
+  @IBOutlet var audioImageView: UIImageView!
+  @IBOutlet var audioTitleLabel: UILabel!
+  @IBOutlet var audioDescriptionLabel: UILabel!
+  @IBOutlet var audioHostLabel: UILabel!
+
   fileprivate let viewModel = RichLinkPreviewViewModel()
 
   override func viewDidLoad() {

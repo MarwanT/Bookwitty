@@ -247,16 +247,65 @@
                                     <constraint firstItem="83O-RU-DQe" firstAttribute="top" secondItem="YWI-Du-F8B" secondAttribute="top" id="tqG-4b-qhj"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jkh-w1-SGI" userLabel="AudioPreview">
+                                <rect key="frame" x="16" y="70" width="343" height="100"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ogc-NJ-TDO">
+                                        <rect key="frame" x="8" y="0.0" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="Ogc-NJ-TDO" secondAttribute="height" multiplier="1:1" id="76B-GK-VqZ"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rD4-m7-lw6">
+                                        <rect key="frame" x="123" y="8" width="212" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s5t-Hv-GbU">
+                                        <rect key="frame" x="123" y="29" width="212" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x3C-v0-DuL">
+                                        <rect key="frame" x="123" y="50" width="212" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="s5t-Hv-GbU" firstAttribute="leading" secondItem="Ogc-NJ-TDO" secondAttribute="trailing" constant="15" id="3Q7-VB-Cmx"/>
+                                    <constraint firstItem="rD4-m7-lw6" firstAttribute="leading" secondItem="Ogc-NJ-TDO" secondAttribute="trailing" constant="15" id="Ae1-fo-yUo"/>
+                                    <constraint firstItem="rD4-m7-lw6" firstAttribute="top" secondItem="jkh-w1-SGI" secondAttribute="topMargin" id="EPj-2O-R1P"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="rD4-m7-lw6" secondAttribute="trailing" id="FGc-vS-o5V"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="s5t-Hv-GbU" secondAttribute="trailing" id="HwE-y5-Fpc"/>
+                                    <constraint firstItem="s5t-Hv-GbU" firstAttribute="top" secondItem="rD4-m7-lw6" secondAttribute="bottom" id="PJs-tV-oYk"/>
+                                    <constraint firstAttribute="height" constant="100" id="TnM-aA-l72"/>
+                                    <constraint firstItem="Ogc-NJ-TDO" firstAttribute="leading" secondItem="jkh-w1-SGI" secondAttribute="leadingMargin" id="Ypd-bf-aGN"/>
+                                    <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="x3C-v0-DuL" secondAttribute="bottom" id="c3s-X2-Osq"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ogc-NJ-TDO" secondAttribute="bottom" id="ibL-99-IGp"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="x3C-v0-DuL" secondAttribute="trailing" id="iod-uR-BaP"/>
+                                    <constraint firstItem="Ogc-NJ-TDO" firstAttribute="top" secondItem="jkh-w1-SGI" secondAttribute="top" id="kSV-7r-eYK"/>
+                                    <constraint firstItem="x3C-v0-DuL" firstAttribute="top" secondItem="s5t-Hv-GbU" secondAttribute="bottom" id="o6c-hG-whO"/>
+                                    <constraint firstItem="x3C-v0-DuL" firstAttribute="leading" secondItem="Ogc-NJ-TDO" secondAttribute="trailing" constant="15" id="rK2-P8-6m0"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="vP5-z9-AHH" firstAttribute="leading" secondItem="Y2T-TF-HME" secondAttribute="leading" id="2dS-4K-VUW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="jkh-w1-SGI" secondAttribute="trailing" id="5xR-1f-uPV"/>
                             <constraint firstItem="PTX-Xf-lmX" firstAttribute="leading" secondItem="Y2T-TF-HME" secondAttribute="leading" id="697-1M-UZy"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="jkh-w1-SGI" secondAttribute="leading" id="DHI-oF-N3c"/>
                             <constraint firstItem="A7P-dP-Vpz" firstAttribute="top" secondItem="orr-zY-2To" secondAttribute="bottom" constant="15" id="E8e-2B-Ssg"/>
                             <constraint firstItem="vP5-z9-AHH" firstAttribute="top" secondItem="ZG1-ZG-A5j" secondAttribute="bottom" id="ERs-Bk-WKB"/>
                             <constraint firstAttribute="trailing" secondItem="vP5-z9-AHH" secondAttribute="trailing" id="HTe-k7-Juj"/>
                             <constraint firstItem="orr-zY-2To" firstAttribute="top" secondItem="PTX-Xf-lmX" secondAttribute="bottom" id="He8-8S-wou"/>
                             <constraint firstAttribute="leadingMargin" secondItem="YWI-Du-F8B" secondAttribute="leading" id="QG8-mZ-DqI"/>
+                            <constraint firstItem="jkh-w1-SGI" firstAttribute="top" secondItem="orr-zY-2To" secondAttribute="bottom" constant="15" id="RHa-kW-IrI"/>
                             <constraint firstItem="PTX-Xf-lmX" firstAttribute="height" relation="lessThanOrEqual" secondItem="Y2T-TF-HME" secondAttribute="height" multiplier="1:3" id="W92-Ef-Pb8"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YWI-Du-F8B" secondAttribute="trailing" id="Ynz-wK-iCP"/>
                             <constraint firstItem="YWI-Du-F8B" firstAttribute="top" secondItem="orr-zY-2To" secondAttribute="bottom" constant="15" id="bU2-sn-HFm"/>
@@ -269,6 +318,11 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="audioDescriptionLabel" destination="s5t-Hv-GbU" id="oxn-b9-4tF"/>
+                        <outlet property="audioHostLabel" destination="x3C-v0-DuL" id="Zw3-p4-PWf"/>
+                        <outlet property="audioImageView" destination="Ogc-NJ-TDO" id="4JF-OO-YZA"/>
+                        <outlet property="audioPreview" destination="jkh-w1-SGI" id="2r6-s6-PBY"/>
+                        <outlet property="audioTitleLabel" destination="rD4-m7-lw6" id="QXz-Bj-7In"/>
                         <outlet property="linkDescriptionLabel" destination="8RV-MX-MiP" id="9p8-Xp-u8t"/>
                         <outlet property="linkHostLabel" destination="wWS-lt-QO5" id="oyZ-R4-cC9"/>
                         <outlet property="linkPreview" destination="A7P-dP-Vpz" id="ZtF-At-oFe"/>
