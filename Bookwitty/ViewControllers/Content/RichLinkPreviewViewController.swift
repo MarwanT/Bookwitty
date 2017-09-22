@@ -36,7 +36,22 @@ class RichLinkPreviewViewController: UIViewController {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
+    initializeComponents()
     applyTheme()
+  }
+
+  fileprivate func initializeComponents() {
+    linkPreview.isHidden = true
+    linkTitleLabel.text = nil
+    linkDescriptionLabel.text = nil
+    linkHostLabel.text = nil
+
+    videoPreview.isHidden = true
+
+    audioPreview.isHidden = true
+    audioTitleLabel.text = nil
+    audioDescriptionLabel.text = nil
+    audioHostLabel.text = nil
   }
 }
 
