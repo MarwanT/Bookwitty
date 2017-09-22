@@ -10,6 +10,12 @@ import UIKit
 
 class RichLinkPreviewViewController: UIViewController {
 
+  enum Mode {
+    case link
+    case video
+    case audio
+  }
+
   @IBOutlet var textView: UITextView!
   @IBOutlet var separators: [UIView]!
 
@@ -31,6 +37,7 @@ class RichLinkPreviewViewController: UIViewController {
   @IBOutlet var audioHostLabel: UILabel!
 
   fileprivate let viewModel = RichLinkPreviewViewModel()
+  var mode: Mode = .link
 
   override func viewDidLoad() {
     super.viewDidLoad()
