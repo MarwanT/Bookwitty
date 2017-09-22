@@ -51,6 +51,11 @@ extension RichLinkPreviewViewController: Themeable {
     linkTitleLabel.font = FontDynamicType.title1.font
     linkDescriptionLabel.font = FontDynamicType.body.font
     linkHostLabel.font = FontDynamicType.caption2.font
+
+    //Video Preview
+    videoPreview.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
+    videoPreview.layer.borderColor = ThemeManager.shared.currentTheme.defaultSeparatorColor().cgColor
+    videoPreview.layer.borderWidth = 1.0
   }
 }
 
