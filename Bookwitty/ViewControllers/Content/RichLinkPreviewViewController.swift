@@ -63,6 +63,14 @@ extension RichLinkPreviewViewController: Themeable {
     videoPreview.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
     videoPreview.layer.borderColor = ThemeManager.shared.currentTheme.defaultSeparatorColor().cgColor
     videoPreview.layer.borderWidth = 1.0
+
+    //Audio Preview
+    audioPreview.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
+    audioPreview.layer.borderColor = ThemeManager.shared.currentTheme.defaultSeparatorColor().cgColor
+    audioPreview.layer.borderWidth = 1.0
+    audioTitleLabel.font = FontDynamicType.title1.font
+    audioDescriptionLabel.font = FontDynamicType.body.font
+    audioHostLabel.font = FontDynamicType.caption2.font
   }
 }
 
