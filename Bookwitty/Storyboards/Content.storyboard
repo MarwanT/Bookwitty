@@ -6,6 +6,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -168,8 +169,25 @@
                     <view key="view" contentMode="scaleToFill" id="Y2T-TF-HME">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="PTX-Xf-lmX">
+                                <rect key="frame" x="0.0" y="20" width="375" height="33"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="PTX-Xf-lmX" firstAttribute="leading" secondItem="Y2T-TF-HME" secondAttribute="leading" id="697-1M-UZy"/>
+                            <constraint firstItem="PTX-Xf-lmX" firstAttribute="height" relation="lessThanOrEqual" secondItem="Y2T-TF-HME" secondAttribute="height" multiplier="1:3" id="W92-Ef-Pb8"/>
+                            <constraint firstItem="PTX-Xf-lmX" firstAttribute="top" secondItem="ZG1-ZG-A5j" secondAttribute="bottom" id="Zad-vX-NbN"/>
+                            <constraint firstAttribute="trailing" secondItem="PTX-Xf-lmX" secondAttribute="trailing" id="gOs-zz-g9L"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="textView" destination="PTX-Xf-lmX" id="EPQ-vT-KX7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kJu-wz-Ucg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
