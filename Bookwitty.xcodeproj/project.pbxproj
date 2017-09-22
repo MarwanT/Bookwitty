@@ -11,6 +11,7 @@
 		0FAC60D21F73BBC100D47B0A /* ContentEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAC60D11F73BBC100D47B0A /* ContentEditorViewController.swift */; };
 		0FAC60D51F73BC4D00D47B0A /* ContentEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAC60D41F73BC4D00D47B0A /* ContentEditorViewModel.swift */; };
 		0FF723C01F74F3E400891FFE /* UIView+Autolayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF723BF1F74F3E400891FFE /* UIView+Autolayout.swift */; };
+		0FF723C41F75188900891FFE /* RichEditorOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF723C31F75188900891FFE /* RichEditorOption.swift */; };
 		19C00714F09A1D3937F9AAE7 /* Pods_BookwittyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */; };
 		2D1D0880B4A8EB8C8A6AD1A8 /* Pods_Bookwitty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */; };
 		560341AD1F3DAE3400E60F44 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560341AC1F3DAE3400E60F44 /* Tag.swift */; };
@@ -331,6 +332,7 @@
 		0FAC60D11F73BBC100D47B0A /* ContentEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentEditorViewController.swift; sourceTree = "<group>"; };
 		0FAC60D41F73BC4D00D47B0A /* ContentEditorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentEditorViewModel.swift; sourceTree = "<group>"; };
 		0FF723BF1F74F3E400891FFE /* UIView+Autolayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Autolayout.swift"; sourceTree = "<group>"; };
+		0FF723C31F75188900891FFE /* RichEditorOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichEditorOption.swift; sourceTree = "<group>"; };
 		2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bookwitty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		560341AC1F3DAE3400E60F44 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		561229E01EA5E440004CE079 /* TopicCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCardViewModel.swift; sourceTree = "<group>"; };
@@ -684,6 +686,22 @@
 			path = Content;
 			sourceTree = "<group>";
 		};
+		0FF723C11F75180700891FFE /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				0FF723C21F75182D00891FFE /* Editor */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
+		0FF723C21F75182D00891FFE /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				0FF723C31F75188900891FFE /* RichEditorOption.swift */,
+			);
+			path = Editor;
+			sourceTree = "<group>";
+		};
 		4C423FDC175E8B1F93C4EB6B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -952,6 +970,7 @@
 		59057FCE1E2530900036AAF3 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				0FF723C11F75180700891FFE /* Content */,
 				56535F2E1E7CB9D80045E73D /* IFramely */,
 				56FC41941E58CB7E00D9B1CE /* Localization */,
 				59BD55741E302EB800D3B805 /* Analytics */,
@@ -2068,6 +2087,7 @@
 				56BEF6371E6825C80012FDE5 /* SegmentedControlNode.swift in Sources */,
 				F4A426371E562A9F0090CD51 /* Audio.swift in Sources */,
 				56320C891EA748FB00642934 /* BookCardPostCellNode.swift in Sources */,
+				0FF723C41F75188900891FFE /* RichEditorOption.swift in Sources */,
 				59D8FCBC1E4DA394001C1EDB /* CategoryManager.swift in Sources */,
 				56320C881EA748FB00642934 /* BaseCardPostNode.swift in Sources */,
 				F42A0AFF1E80829600ED52D2 /* UISearchBar+Utils.swift in Sources */,
