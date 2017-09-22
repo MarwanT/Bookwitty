@@ -9,23 +9,22 @@
 import RichEditorView
 import UIKit
 
-enum RichEditorBookwittyOption : RichEditorOption {
-  
-//  case clear
-//  case undo
-//  case redo
+enum ContentEditorOption : RichEditorOption {
+
   case bold
   case italic
-  case header(Int)
+  case header
   case unorderedList
   case link
+  case undo
+  case redo
   
-  public static let all: [RichEditorBookwittyOption] = [
-    .header(2),
+  public static let toolbarOptions: [ContentEditorOption] = [
+    .header,
     .bold,
     .italic,
     .unorderedList,
-    .link
+    .link,
   ]
   
   // MARK: RichEditorOption
@@ -35,9 +34,11 @@ enum RichEditorBookwittyOption : RichEditorOption {
     switch self {
     case .bold: name = "bold"
     case .italic: name = "italic"
-    case .header( _): name = "textSize"
+    case .header: name = "textSize"
     case .unorderedList: name = "bullets"
     case .link: name = "hyperlinkSmall"
+    case .undo: name = "undo"
+    case .redo: name = "redo"
     }
     
     let bundle = Bundle.main
@@ -45,22 +46,18 @@ enum RichEditorBookwittyOption : RichEditorOption {
   }
   
   public var title: String {
-    switch self {
-    case .bold: return NSLocalizedString("Bold", comment: "")
-    case .italic: return NSLocalizedString("Italic", comment: "")
-    case .header(let h): return NSLocalizedString("H\(h)", comment: "")
-    case .unorderedList: return NSLocalizedString("Unordered List", comment: "")
-    case .link: return NSLocalizedString("Link", comment: "")
-    }
+    return ""
   }
   
   public func action(_ toolbar: RichEditorToolbar) {
     switch self {
     case .bold: toolbar.editor?.bold()
     case .italic: toolbar.editor?.italic()
-    case .header(let h): toolbar.editor?.header(h)
+    case .header: toolbar.editor?.header(2)
     case .unorderedList: toolbar.editor?.unorderedList()
     case .link: toolbar.delegate?.richEditorToolbarInsertLink?(toolbar)
+    case .undo : toolbar.editor?.undo()
+    case .redo : toolbar.editor?.redo()
     }
   }
 }
