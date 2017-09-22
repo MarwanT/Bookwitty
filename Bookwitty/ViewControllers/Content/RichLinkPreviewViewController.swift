@@ -19,6 +19,10 @@ class RichLinkPreviewViewController: UIViewController {
   @IBOutlet var linkDescriptionLabel: UILabel!
   @IBOutlet var linkHostLabel: UILabel!
 
+  //Video Preview
+  @IBOutlet var videoPreview: UIView!
+  @IBOutlet var videoImageView: UIImageView!
+
   fileprivate let viewModel = RichLinkPreviewViewModel()
 
   override func viewDidLoad() {
