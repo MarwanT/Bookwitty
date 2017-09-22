@@ -86,6 +86,15 @@ class ContentEditorViewController: UIViewController {
     editor.bindFrameToSuperviewBounds()
     //TODO: Localize
     editor.placeholder = "Write Here"
+    setupToolbar(of: editor)
+  }
+  
+  private func setupToolbar(of editor:RichEditorView) {
+    let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
+    toolbar.tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    toolbar.options = RichEditorBookwittyOption.all
+    toolbar.editor = editor // Previously instantiated RichEditorView
+    editor.inputAccessoryView = toolbar
   }
 
   // MARK: - Keyboard Handling

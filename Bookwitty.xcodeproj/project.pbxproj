@@ -12,6 +12,7 @@
 		0FAC60D51F73BC4D00D47B0A /* ContentEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAC60D41F73BC4D00D47B0A /* ContentEditorViewModel.swift */; };
 		0FF723C01F74F3E400891FFE /* UIView+Autolayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF723BF1F74F3E400891FFE /* UIView+Autolayout.swift */; };
 		0FF723C41F75188900891FFE /* RichEditorOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF723C31F75188900891FFE /* RichEditorOption.swift */; };
+		0FF723C61F75242400891FFE /* RichEditorView+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF723C51F75242400891FFE /* RichEditorView+Actions.swift */; };
 		19C00714F09A1D3937F9AAE7 /* Pods_BookwittyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 818A1F91D01CB7BB5A6D072B /* Pods_BookwittyTests.framework */; };
 		2D1D0880B4A8EB8C8A6AD1A8 /* Pods_Bookwitty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */; };
 		560341AD1F3DAE3400E60F44 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560341AC1F3DAE3400E60F44 /* Tag.swift */; };
@@ -333,6 +334,7 @@
 		0FAC60D41F73BC4D00D47B0A /* ContentEditorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentEditorViewModel.swift; sourceTree = "<group>"; };
 		0FF723BF1F74F3E400891FFE /* UIView+Autolayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Autolayout.swift"; sourceTree = "<group>"; };
 		0FF723C31F75188900891FFE /* RichEditorOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichEditorOption.swift; sourceTree = "<group>"; };
+		0FF723C51F75242400891FFE /* RichEditorView+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RichEditorView+Actions.swift"; sourceTree = "<group>"; };
 		2DCB4871AA2D1FFE934BA599 /* Pods_Bookwitty.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bookwitty.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		560341AC1F3DAE3400E60F44 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		561229E01EA5E440004CE079 /* TopicCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCardViewModel.swift; sourceTree = "<group>"; };
@@ -698,6 +700,7 @@
 			isa = PBXGroup;
 			children = (
 				0FF723C31F75188900891FFE /* RichEditorOption.swift */,
+				0FF723C51F75242400891FFE /* RichEditorView+Actions.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -1978,6 +1981,7 @@
 				56BEF6391E6836DB0012FDE5 /* ContributorsNode.swift in Sources */,
 				F49AE93E1E47CFEA0031B355 /* Parser.swift in Sources */,
 				595C4F0D1E3F8C0200BE3942 /* InputField.swift in Sources */,
+				0FF723C61F75242400891FFE /* RichEditorView+Actions.swift in Sources */,
 				59049B131E81E44400EDF796 /* JoinUsNode.swift in Sources */,
 				567EE1B11E7A9F1200A0CA0D /* ForgotPasswordViewController.swift in Sources */,
 				F4A426311E5623EE0090CD51 /* Text.swift in Sources */,
