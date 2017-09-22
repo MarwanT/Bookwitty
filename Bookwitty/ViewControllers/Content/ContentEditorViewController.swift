@@ -14,6 +14,8 @@ class ContentEditorViewController: UIViewController {
   @IBOutlet weak var contentView: UIView!
   @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
   
+  private let editor = RichEditorView()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -59,7 +61,7 @@ class ContentEditorViewController: UIViewController {
     navigationItem.leftBarButtonItems = leftBarButtonItems
     navigationItem.rightBarButtonItems = rightBarButtonItems
   }
-  
+
   @objc private func toggleEnableState(of barButtonItem: UIBarButtonItem) -> Void {
     barButtonItem.isEnabled = !barButtonItem.isEnabled
   }
@@ -79,9 +81,8 @@ class ContentEditorViewController: UIViewController {
     }
   }
   
-// MARK: - RichEditor
+  // MARK: - RichEditor
   private func addRichEditorView() {
-    let editor = RichEditorView()
     self.contentView.addSubview(editor)
     editor.bindFrameToSuperviewBounds()
     //TODO: Localize
@@ -92,7 +93,7 @@ class ContentEditorViewController: UIViewController {
   private func setupToolbar(of editor:RichEditorView) {
     let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
     toolbar.tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
-    toolbar.options = RichEditorBookwittyOption.all
+    toolbar.options = ContentEditorOption.toolbarOptions
     toolbar.editor = editor // Previously instantiated RichEditorView
     editor.inputAccessoryView = toolbar
   }
