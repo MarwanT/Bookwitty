@@ -13,6 +13,12 @@ class RichLinkPreviewViewController: UIViewController {
   @IBOutlet var textView: UITextView!
   @IBOutlet var separators: [UIView]!
 
+  //Link Preview
+  @IBOutlet var linkPreview: UIView!
+  @IBOutlet var linkTitleLabel: UILabel!
+  @IBOutlet var linkDescriptionLabel: UILabel!
+  @IBOutlet var linkHostLabel: UILabel!
+
   fileprivate let viewModel = RichLinkPreviewViewModel()
 
   override func viewDidLoad() {
