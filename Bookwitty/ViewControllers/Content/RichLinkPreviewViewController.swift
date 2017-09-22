@@ -38,6 +38,15 @@ extension RichLinkPreviewViewController: Themeable {
     textView.textContainerInset = ThemeManager.shared.currentTheme.defaultLayoutMargin()
 
     separators.forEach({ $0.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()})
+
+    //Link Preview
+    linkPreview.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
+    linkPreview.layer.borderColor = ThemeManager.shared.currentTheme.defaultSeparatorColor().cgColor
+    linkPreview.layer.borderWidth = 1.0
+
+    linkTitleLabel.font = FontDynamicType.title1.font
+    linkDescriptionLabel.font = FontDynamicType.body.font
+    linkHostLabel.font = FontDynamicType.caption2.font
   }
 }
 
