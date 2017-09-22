@@ -10,6 +10,8 @@ import UIKit
 
 class RichLinkPreviewViewController: UIViewController {
 
+  fileprivate let viewModel = RichLinkPreviewViewModel()
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
