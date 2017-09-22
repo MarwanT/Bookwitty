@@ -969,6 +969,10 @@ class Strings {
     return localizedString(key: "witted")
   }
   
+  static func writeHere() -> String {
+    return localizedString(key: "write_here")
+  }
+  
   static func yes_this_is_spam() -> String {
     return localizedString(key: "yes_this_is_spam")
   }
