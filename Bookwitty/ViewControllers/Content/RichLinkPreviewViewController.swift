@@ -18,5 +18,7 @@ class RichLinkPreviewViewController: UIViewController {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
+    view.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
+    textView.textContainerInset = ThemeManager.shared.currentTheme.defaultLayoutMargin()
   }
 }
