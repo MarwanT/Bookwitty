@@ -37,6 +37,10 @@ class Strings {
     return localizedString(key: "account_needs_confirmation_alert_title")
   }
   
+  static func addLink() -> String {
+    return localizedString(key: "add_a_link")
+  }
+  
   static func address_book() -> String {
     return localizedString(key: "address_book")
   }
