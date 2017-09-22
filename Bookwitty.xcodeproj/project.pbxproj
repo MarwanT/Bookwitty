@@ -103,6 +103,7 @@
 		56F49E151F430959004FFAAD /* TagCollectionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F49E141F430959004FFAAD /* TagCollectionNode.swift */; };
 		56F9FDCC1E82F39B00A48CEB /* UIBarButtonItem+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F9FDCB1E82F39B00A48CEB /* UIBarButtonItem+Utils.swift */; };
 		56FC41971E58CBA100D9B1CE /* NSBundle+Language.m in Sources */ = {isa = PBXBuildFile; fileRef = 56FC41961E58CBA100D9B1CE /* NSBundle+Language.m */; };
+		56FFE15A1F74EEE600EEED42 /* RichLinkPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56FFE1591F74EEE600EEED42 /* RichLinkPreviewViewController.swift */; };
 		5903394C1E9E6719004ED1C3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5903394B1E9E6719004ED1C3 /* Utilities.swift */; };
 		5903EB211FCC6F580002B91D /* CommentComposerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5903EB201FCC6F580002B91D /* CommentComposerViewModel.swift */; };
 		5903EB241FCDBE090002B91D /* ASWitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5903EB231FCDBE090002B91D /* ASWitButton.swift */; };
@@ -435,6 +436,7 @@
 		56F9FDCB1E82F39B00A48CEB /* UIBarButtonItem+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Utils.swift"; sourceTree = "<group>"; };
 		56FC41951E58CBA100D9B1CE /* NSBundle+Language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+Language.h"; sourceTree = "<group>"; };
 		56FC41961E58CBA100D9B1CE /* NSBundle+Language.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+Language.m"; sourceTree = "<group>"; };
+		56FFE1591F74EEE600EEED42 /* RichLinkPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichLinkPreviewViewController.swift; sourceTree = "<group>"; };
 		5903394B1E9E6719004ED1C3 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		5903EB201FCC6F580002B91D /* CommentComposerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentComposerViewModel.swift; sourceTree = "<group>"; };
 		5903EB231FCDBE090002B91D /* ASWitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASWitButton.swift; sourceTree = "<group>"; };
@@ -711,6 +713,7 @@
 				0FAC60D11F73BBC100D47B0A /* ContentEditorViewController.swift */,
 				0FF723C71F755A9A00891FFE /* RichContentMenuViewController.swift */,
 				0FAA01691F7A41A30011FDBA /* RichBookViewController.swift */,
+				56FFE1591F74EEE600EEED42 /* RichLinkPreviewViewController.swift */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -2096,6 +2099,7 @@
 				561229E91EA65451004CE079 /* LinkCardViewModel.swift in Sources */,
 				59D6021E1E36363400271315 /* Font.swift in Sources */,
 				593769D71E3689FB00F23226 /* Appearance.swift in Sources */,
+				56FFE15A1F74EEE600EEED42 /* RichLinkPreviewViewController.swift in Sources */,
 				591E15581E70FE37008CA78A /* GenericNodeViewController.swift in Sources */,
 				594290091E4FF0E30006B2F1 /* CategoriesTableViewModel.swift in Sources */,
 				56320C921EA748FB00642934 /* VideoCardPostCellNode.swift in Sources */,
