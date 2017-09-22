@@ -19,8 +19,7 @@ class RichLinkPreviewViewController: UIViewController {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
-    view.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
-    textView.textContainerInset = ThemeManager.shared.currentTheme.defaultLayoutMargin()
+    applyTheme()
   }
 }
 
@@ -28,6 +27,9 @@ class RichLinkPreviewViewController: UIViewController {
 extension RichLinkPreviewViewController: Themeable {
   func applyTheme() {
     view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
+
+    view.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
+    textView.textContainerInset = ThemeManager.shared.currentTheme.defaultLayoutMargin()
 
     separators.forEach({ $0.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()})
   }
