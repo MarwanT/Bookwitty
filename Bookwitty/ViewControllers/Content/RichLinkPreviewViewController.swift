@@ -22,3 +22,17 @@ class RichLinkPreviewViewController: UIViewController {
     textView.textContainerInset = ThemeManager.shared.currentTheme.defaultLayoutMargin()
   }
 }
+
+extension RichLinkPreviewViewController: UITextViewDelegate {
+  public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    textView.isScrollEnabled = false
+    return true
+  }
+
+  public func textViewDidChange(_ textView: UITextView) {
+    let time: DispatchTime = DispatchTime.now() + DispatchTimeInterval.microseconds(200)
+    DispatchQueue.main.asyncAfter(deadline: time) {
+      textView.isScrollEnabled = textView.intrinsicContentSize.height > textView.frame.height
+    }
+  }
+}
