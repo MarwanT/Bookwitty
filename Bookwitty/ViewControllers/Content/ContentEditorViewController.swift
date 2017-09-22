@@ -10,6 +10,9 @@ import UIKit
 
 class ContentEditorViewController: UIViewController {
   
+  @IBOutlet weak var contentView: UIView!
+  @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
 
