@@ -11,6 +11,7 @@ import UIKit
 class RichLinkPreviewViewController: UIViewController {
 
   @IBOutlet var textView: UITextView!
+  @IBOutlet var separators: [UIView]!
 
   fileprivate let viewModel = RichLinkPreviewViewModel()
 

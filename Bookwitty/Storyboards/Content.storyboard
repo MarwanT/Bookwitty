@@ -170,8 +170,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vP5-z9-AHH" userLabel="Long Separator View">
+                                <rect key="frame" x="0.0" y="20" width="375" height="1"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="Y8R-qB-FDZ"/>
+                                </constraints>
+                            </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="PTX-Xf-lmX">
-                                <rect key="frame" x="0.0" y="20" width="375" height="33"/>
+                                <rect key="frame" x="0.0" y="21" width="375" height="33"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -179,17 +186,32 @@
                                     <outlet property="delegate" destination="6Mb-9s-GFq" id="FJ4-Xb-b0F"/>
                                 </connections>
                             </textView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="orr-zY-2To" userLabel="Long Separator View">
+                                <rect key="frame" x="0.0" y="54" width="375" height="1"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="fbJ-sq-HwQ"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="vP5-z9-AHH" firstAttribute="leading" secondItem="Y2T-TF-HME" secondAttribute="leading" id="2dS-4K-VUW"/>
                             <constraint firstItem="PTX-Xf-lmX" firstAttribute="leading" secondItem="Y2T-TF-HME" secondAttribute="leading" id="697-1M-UZy"/>
+                            <constraint firstItem="vP5-z9-AHH" firstAttribute="top" secondItem="ZG1-ZG-A5j" secondAttribute="bottom" id="ERs-Bk-WKB"/>
+                            <constraint firstAttribute="trailing" secondItem="vP5-z9-AHH" secondAttribute="trailing" id="HTe-k7-Juj"/>
+                            <constraint firstItem="orr-zY-2To" firstAttribute="top" secondItem="PTX-Xf-lmX" secondAttribute="bottom" id="He8-8S-wou"/>
                             <constraint firstItem="PTX-Xf-lmX" firstAttribute="height" relation="lessThanOrEqual" secondItem="Y2T-TF-HME" secondAttribute="height" multiplier="1:3" id="W92-Ef-Pb8"/>
-                            <constraint firstItem="PTX-Xf-lmX" firstAttribute="top" secondItem="ZG1-ZG-A5j" secondAttribute="bottom" id="Zad-vX-NbN"/>
                             <constraint firstAttribute="trailing" secondItem="PTX-Xf-lmX" secondAttribute="trailing" id="gOs-zz-g9L"/>
+                            <constraint firstItem="orr-zY-2To" firstAttribute="leading" secondItem="Y2T-TF-HME" secondAttribute="leading" id="k5v-bb-UOV"/>
+                            <constraint firstAttribute="trailing" secondItem="orr-zY-2To" secondAttribute="trailing" id="lfh-5K-wp0"/>
+                            <constraint firstItem="vP5-z9-AHH" firstAttribute="bottom" secondItem="PTX-Xf-lmX" secondAttribute="top" id="lxM-2o-2BE"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="textView" destination="PTX-Xf-lmX" id="EPQ-vT-KX7"/>
+                        <outletCollection property="separators" destination="vP5-z9-AHH" collectionClass="NSMutableArray" id="2XN-VP-WZM"/>
+                        <outletCollection property="separators" destination="orr-zY-2To" collectionClass="NSMutableArray" id="6AP-P0-DEf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kJu-wz-Ucg" userLabel="First Responder" sceneMemberID="firstResponder"/>
