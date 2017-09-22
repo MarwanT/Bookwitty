@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RichEditorView
 
 class ContentEditorViewController: UIViewController {
   
@@ -78,6 +79,15 @@ class ContentEditorViewController: UIViewController {
     }
   }
   
+// MARK: - RichEditor
+  private func addRichEditorView() {
+    let editor = RichEditorView()
+    self.contentView.addSubview(editor)
+    editor.bindFrameToSuperviewBounds()
+    //TODO: Localize
+    editor.placeholder = "Write Here"
+  }
+
   // MARK: - Keyboard Handling
   private func addKeyboardNotifications() {
     NotificationCenter.default.addObserver(self,
