@@ -81,6 +81,26 @@ class ContentEditorViewController: UIViewController {
     }
   }
   
+  func showAddLinkAlertView() {
+    
+    let alertController = UIAlertController(title: Strings.addLink(), message: "", preferredStyle: .alert)
+    alertController.addTextField(configurationHandler: {(_ textField: UITextField) -> Void in
+      textField.placeholder = "http://"
+    })
+    let confirmAction = UIAlertAction(title: Strings.ok(), style: .default, handler: {(_ action: UIAlertAction) -> Void in
+      
+      guard let toolbar = self.editor.inputAccessoryView as? RichEditorToolbar else {
+          return
+        }
+      ContentEditorOption.redo.action(toolbar)
+    })
+    alertController.addAction(confirmAction)
+    
+    let cancelAction = UIAlertAction(title: Strings.cancel(), style: .cancel, handler: nil)
+    alertController.addAction(cancelAction)
+    present(alertController, animated: true, completion: nil)
+  }
+
   // MARK: - RichEditor
   private func addRichEditorView() {
     self.contentView.addSubview(editor)
@@ -95,6 +115,7 @@ class ContentEditorViewController: UIViewController {
     toolbar.tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
     toolbar.options = ContentEditorOption.toolbarOptions
     toolbar.editor = editor // Previously instantiated RichEditorView
+    toolbar.delegate = self
     editor.inputAccessoryView = toolbar
   }
 
@@ -125,5 +146,12 @@ class ContentEditorViewController: UIViewController {
     UIView.animate(withDuration: 0.44) {
       self.view.layoutSubviews()
     }
+  }
+}
+
+extension ContentEditorViewController: RichEditorToolbarDelegate {
+  
+  func richEditorToolbarInsertLink(_ toolbar: RichEditorToolbar) {
+    self.showAddLinkAlertView()
   }
 }
