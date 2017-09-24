@@ -20,6 +20,26 @@ class RichContentMenuViewController: UIViewController {
     case video
     case audio
     case quote
+    
+    func localizedString() -> String {
+      
+      switch self {
+      case .imageCamera:
+        return Strings.imageFromCamera()
+      case .imageLibrary:
+        return Strings.imageFromPhotoLibrary()
+      case .link:
+        return Strings.link()
+      case .book:
+        return Strings.book()
+      case .video:
+        return Strings.video()
+      case .audio:
+        return Strings.audio()
+      case .quote:
+        return Strings.quote()
+      }
+    }
   }
   
   override func viewDidLoad() {
