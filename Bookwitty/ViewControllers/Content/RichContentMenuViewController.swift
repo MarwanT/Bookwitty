@@ -12,6 +12,8 @@ class RichContentMenuViewController: UIViewController {
 
   enum Item {
     case imageCamera
+  @IBOutlet weak var tableView: UITableView!
+  @IBOutlet weak var tableViewHeightContraint: NSLayoutConstraint!
     case imageLibrary
     case link
     case book

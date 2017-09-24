@@ -83,12 +83,30 @@
                     <view key="view" contentMode="scaleToFill" id="00h-xM-Rr5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Haf-RN-1yq">
+                                <rect key="frame" x="0.0" y="307" width="375" height="360"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="360" id="Ovr-gf-Q3f"/>
+                                </constraints>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Haf-RN-1yq" secondAttribute="trailing" id="HNO-FI-qgq"/>
+                            <constraint firstItem="Haf-RN-1yq" firstAttribute="leading" secondItem="00h-xM-Rr5" secondAttribute="leading" id="PYm-gC-bOC"/>
+                            <constraint firstItem="Cig-5s-M09" firstAttribute="top" secondItem="Haf-RN-1yq" secondAttribute="bottom" id="wgI-iA-xhd"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="Haf-RN-1yq" id="gia-Jg-YzL"/>
+                        <outlet property="tableViewHeightContraint" destination="Ovr-gf-Q3f" id="YJj-ba-1bs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Lc-V2-t9r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="898" y="407"/>
+            <point key="canvasLocation" x="733.60000000000002" y="303.59820089955025"/>
         </scene>
     </scenes>
 </document>
