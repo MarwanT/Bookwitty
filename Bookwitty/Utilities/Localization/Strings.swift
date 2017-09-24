@@ -393,6 +393,14 @@ class Strings {
     return localizedString(key: "image")
   }
   
+  static func imageFromCamera() -> String {
+    return localizedString(key: "image_from_camera")
+  }
+  
+  static func imageFromPhotoLibrary() -> String {
+    return localizedString(key: "image_from_photo_library")
+  }
+  
   static func imprint() -> String {
     return localizedString(key: "imprint")
   }

@@ -102,6 +102,8 @@
 "help" = "Help";
 "hide_formats_and_editions" = "Hide formats and editions";
 "image" = "Image";
+"image_from_camera" = "Image from camera";
+"image_from_photo_library" = "Image from photo library";
 "imprint" = "Publisher";
 "in_response_to" = "In response to:";
 "in_stock" = "In stock";
