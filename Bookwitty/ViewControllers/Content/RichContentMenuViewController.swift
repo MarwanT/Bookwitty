@@ -10,10 +10,10 @@ import UIKit
 
 class RichContentMenuViewController: UIViewController {
 
-  enum Item {
-    case imageCamera
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var tableViewHeightContraint: NSLayoutConstraint!
+  enum Item: Int {
+    case imageCamera = 0
     case imageLibrary
     case link
     case book
