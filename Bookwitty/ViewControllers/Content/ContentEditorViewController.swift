@@ -48,7 +48,7 @@ class ContentEditorViewController: UIViewController {
     let plus = UIBarButtonItem(image: #imageLiteral(resourceName: "plus"),
                                style: UIBarButtonItemStyle.plain,
                                target: self,
-                               action: nil)
+                               action: #selector(self.plus(_:)))
     
     let next = UIBarButtonItem(title: Strings.next(),
                                 style: UIBarButtonItemStyle.plain,
