@@ -9,5 +9,11 @@
 import Foundation
 
 final class RichContentMenuViewModel {
+ 
+  let items: [RichContentMenuViewController.Item] = [.imageCamera, .imageLibrary, .link, .book, .video, .audio, .quote]
   
+  //MARK: - TableView functions
+  func numberOfRows() -> Int {
+    return items.count
+  }
 }
