@@ -88,6 +88,9 @@ class RichContentMenuViewController: UIViewController {
     self.tableViewHeightContraint.constant = self.tableViewCellHeight * CGFloat(self.viewModel.numberOfRows()) + 49.0 // tabbar Height
   }
   
+  @IBAction func cancelTapped(_ sender: UIBarButtonItem) {
+    self.delegate?.richContentMenuViewControllerDidCancel(self)
+  }
 }
 
 extension RichContentMenuViewController : UITableViewDataSource {

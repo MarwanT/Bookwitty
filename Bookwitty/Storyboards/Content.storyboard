@@ -91,12 +91,27 @@
                                     <constraint firstAttribute="height" constant="360" id="Ovr-gf-Q3f"/>
                                 </constraints>
                             </tableView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aGO-8n-6I1">
+                                <rect key="frame" x="0.0" y="263" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem title="Insert" id="ebE-FX-bOx"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="J36-oE-hGW"/>
+                                    <barButtonItem title="Cancel" id="MD2-qi-mn8">
+                                        <connections>
+                                            <action selector="cancelTapped:" destination="UJ6-Gs-wOy" id="Jhf-za-eTw"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Haf-RN-1yq" secondAttribute="trailing" id="HNO-FI-qgq"/>
+                            <constraint firstItem="Haf-RN-1yq" firstAttribute="bottom" secondItem="Cig-5s-M09" secondAttribute="top" id="PTd-eO-4lb"/>
                             <constraint firstItem="Haf-RN-1yq" firstAttribute="leading" secondItem="00h-xM-Rr5" secondAttribute="leading" id="PYm-gC-bOC"/>
-                            <constraint firstItem="Cig-5s-M09" firstAttribute="top" secondItem="Haf-RN-1yq" secondAttribute="bottom" id="wgI-iA-xhd"/>
+                            <constraint firstAttribute="trailing" secondItem="aGO-8n-6I1" secondAttribute="trailing" id="a0E-ZB-bIU"/>
+                            <constraint firstItem="aGO-8n-6I1" firstAttribute="leading" secondItem="00h-xM-Rr5" secondAttribute="leading" id="qTv-uu-SyA"/>
+                            <constraint firstItem="Haf-RN-1yq" firstAttribute="top" secondItem="aGO-8n-6I1" secondAttribute="bottom" id="zfw-vp-16b"/>
                         </constraints>
                     </view>
                     <connections>
