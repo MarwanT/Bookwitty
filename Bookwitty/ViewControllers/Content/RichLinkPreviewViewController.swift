@@ -103,6 +103,49 @@ extension RichLinkPreviewViewController: Themeable {
     audioDescriptionLabel.font = FontDynamicType.body.font
     audioHostLabel.font = FontDynamicType.caption2.font
   }
+
+  fileprivate func showLinkPreview() {
+    //re-initilize components
+    initializeComponents()
+    
+    guard let response = viewModel.response else {
+      return
+    }
+
+    switch mode {
+    case .link:
+      fillLinkPreview(with: response)
+    case .video:
+      fillVideoPreview(with: response)
+    case .audio:
+      fillAudioPreview(with: response)
+    }
+  }
+
+  fileprivate func fillLinkPreview(with response: Response) {
+    linkTitleLabel.text = response.title
+    linkDescriptionLabel.text = response.shortDescription
+    linkHostLabel.text = response.embedUrl?.host
+
+    linkPreview.isHidden = false
+  }
+
+  fileprivate func fillVideoPreview(with response: Response) {
+    let imageUrl = URL(string: response.thumbnails?.first?.url?.absoluteString ?? "")
+    videoImageView.sd_setImage(with: imageUrl)
+
+    videoPreview.isHidden = false
+  }
+
+  fileprivate func fillAudioPreview(with response: Response) {
+    let imageUrl = URL(string: response.thumbnails?.first?.url?.absoluteString ?? "")
+    audioImageView.sd_setImage(with: imageUrl)
+    audioTitleLabel.text = response.title
+    audioDescriptionLabel.text = response.shortDescription
+    audioHostLabel.text = response.embedUrl?.host
+
+    audioPreview.isHidden = false
+  }
 }
 
 extension RichLinkPreviewViewController: UITextViewDelegate {
