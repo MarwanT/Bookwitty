@@ -9,7 +9,7 @@
 import UIKit
 
 protocol RichContentMenuViewControllerDelegate: class {
-  func richContentMenuViewController(_ richContentMenuViewController: RichContentMenuViewController, didSelect:RichContentMenuViewController.Item)
+  func richContentMenuViewController(_ richContentMenuViewController: RichContentMenuViewController, didSelect item:RichContentMenuViewController.Item)
   func richContentMenuViewControllerDidCancel(_ richContentMenuViewController: RichContentMenuViewController)
 }
 
