@@ -40,6 +40,28 @@ class RichContentMenuViewController: UIViewController {
         return Strings.quote()
       }
     }
+    
+    func image() -> UIImage {
+      
+      switch self {
+      case .imageCamera:
+        return #imageLiteral(resourceName: "camera")
+      case .imageLibrary:
+        return #imageLiteral(resourceName: "gallery")
+      case .link:
+        return #imageLiteral(resourceName: "hyperlinkSmall")
+      case .book:
+        return #imageLiteral(resourceName: "books")
+      case .video:
+        return #imageLiteral(resourceName: "video")
+      case .audio:
+        return #imageLiteral(resourceName: "audio")
+      case .quote:
+        return #imageLiteral(resourceName: "quotes")
+      }
+    }
+  }
+  
   }
   
   override func viewDidLoad() {
