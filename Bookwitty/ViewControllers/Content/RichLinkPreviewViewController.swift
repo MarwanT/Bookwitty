@@ -154,8 +154,14 @@ extension RichLinkPreviewViewController: Themeable {
 
   fileprivate func fillVideoPreview(with response: Response) {
     let imageUrl = URL(string: response.thumbnails?.first?.url?.absoluteString ?? "")
-    videoImageView.sd_setImage(with: imageUrl)
-
+    videoImageView.sd_setImage(with: imageUrl) { (image: UIImage?, _, _, _) in
+      guard let image = image else {
+        return
+      }
+      let ratio = self.videoImageView.frame.width / image.size.width
+      let height = image.size.height * ratio
+      self.videoPreviewHeightConstraint.constant = height
+    }
     videoPreview.isHidden = false
   }
 
