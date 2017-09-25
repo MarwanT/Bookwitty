@@ -148,6 +148,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cancel" destination="2Cc-NE-GYZ" id="Og2-DX-Nra"/>
                         <outlet property="insert" destination="89y-Qz-iBa" id="4jg-Bl-dWY"/>
                         <outlet property="tableView" destination="Haf-RN-1yq" id="gia-Jg-YzL"/>
                         <outlet property="tableViewHeightContraint" destination="Ovr-gf-Q3f" id="YJj-ba-1bs"/>
