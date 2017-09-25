@@ -89,7 +89,7 @@ class ContentEditorViewController: UIViewController {
   
   @objc private func plus(_ sender:UIBarButtonItem) {
     let richContentMenuViewController = Storyboard.Content.instantiate(RichContentMenuViewController.self)
-
+    richContentMenuViewController.delegate = self
     self.definesPresentationContext = true
     richContentMenuViewController.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
     richContentMenuViewController.modalPresentationStyle = .overCurrentContext
@@ -192,5 +192,19 @@ extension ContentEditorViewController: RichEditorToolbarDelegate {
   
   func richEditorToolbarInsertLink(_ toolbar: RichEditorToolbar) {
     self.showAddLinkAlertView()
+  }
+}
+
+extension ContentEditorViewController : RichContentMenuViewControllerDelegate {
+  
+  func richContentMenuViewControllerDidCancel(_ richContentMenuViewController: RichContentMenuViewController) {
+    richContentMenuViewController.dismiss(animated: true, completion: nil)
+  }
+  
+  func richContentMenuViewController(_ richContentMenuViewController: RichContentMenuViewController, didSelect item: RichContentMenuViewController.Item) {
+    richContentMenuViewController.dismiss(animated: true, completion: nil)
+    let item = item
+    //TODO: Implementation
+    print(item)
   }
 }
