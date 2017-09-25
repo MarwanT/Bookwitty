@@ -127,7 +127,7 @@ extension RichContentMenuViewController : UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     guard let item = Item(rawValue: indexPath.row) else {
-      fatalError()
+      return
     }
     self.delegate?.richContentMenuViewController(self, didSelect: item)
   }
