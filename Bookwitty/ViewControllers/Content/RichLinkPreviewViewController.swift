@@ -106,6 +106,9 @@ extension RichLinkPreviewViewController: Themeable {
   }
 
   fileprivate func getUrlInfo() {
+    //re-initilize components
+    initializeComponents()
+    
     guard !textView.text.isEmpty, let url = URL(string: textView.text) else {
       return
     }
@@ -127,9 +130,6 @@ extension RichLinkPreviewViewController: Themeable {
   }
 
   fileprivate func showLinkPreview() {
-    //re-initilize components
-    initializeComponents()
-    
     guard let response = viewModel.response else {
       return
     }
