@@ -134,6 +134,7 @@ extension RichLinkPreviewViewController: Themeable {
   fileprivate func getUrlInfo() {
     //re-initilize components
     initializeComponents()
+    setupNavigationBarButtons()
     
     guard !textView.text.isEmpty, let url = URL(string: textView.text) else {
       return
@@ -143,6 +144,7 @@ extension RichLinkPreviewViewController: Themeable {
       defer {
         DispatchQueue.main.async {
           self.showLinkPreview()
+          self.setupNavigationBarButtons()
         }
       }
 
