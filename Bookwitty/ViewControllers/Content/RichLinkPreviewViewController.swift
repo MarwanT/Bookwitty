@@ -53,6 +53,7 @@ class RichLinkPreviewViewController: UIViewController {
     // Do any additional setup after loading the view.
     initializeComponents()
     applyTheme()
+    setupNavigationBarButtons()
   }
 
   fileprivate func initializeComponents() {
@@ -69,6 +70,27 @@ class RichLinkPreviewViewController: UIViewController {
     audioHostLabel.text = nil
 
     viewModel.response = nil
+  }
+
+  fileprivate func setupNavigationBarButtons() {
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
+    navigationItem.leftBarButtonItem = UIBarButtonItem(title: Strings.cancel(),
+                                                       style: .plain,
+                                                       target: self,
+                                                       action: #selector(cancelBarButtonTouchUpInside(_:)))
+
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: Strings.add(),
+                                                       style: .plain,
+                                                       target: self,
+                                                       action: #selector(addBarButtonTouchUpInside(_:)))
+  }
+
+  @objc fileprivate func cancelBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
+    //TODO: Empty implementation
+  }
+
+  @objc fileprivate func addBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
+    //TODO: Empty implementation
   }
 }
 
