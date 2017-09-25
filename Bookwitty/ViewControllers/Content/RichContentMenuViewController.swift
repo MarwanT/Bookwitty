@@ -8,8 +8,12 @@
 
 import UIKit
 
-class RichContentMenuViewController: UIViewController {
+protocol RichContentMenuViewControllerDelegate: class {
+  func richContentMenuViewController(_ richContentMenuViewController: RichContentMenuViewController, didSelect:RichContentMenuViewController.Item)
+  func richContentMenuViewControllerDidCancel(_ richContentMenuViewController: RichContentMenuViewController)
+}
 
+class RichContentMenuViewController: UIViewController {
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var tableViewHeightContraint: NSLayoutConstraint!
   enum Item: Int {
@@ -63,6 +67,7 @@ class RichContentMenuViewController: UIViewController {
   }
   
   }
+  weak var delegate: RichContentMenuViewControllerDelegate?
   
   override func viewDidLoad() {
     super.viewDidLoad()
