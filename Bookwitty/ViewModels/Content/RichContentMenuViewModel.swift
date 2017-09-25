@@ -17,9 +17,9 @@ final class RichContentMenuViewModel {
     return items.count
   }
   
-  func values(forRowAt indexPath: IndexPath) -> (label:String, image:UIImage) {
+  func values(forRowAt indexPath: IndexPath) -> (label:String?, image:UIImage?) {
     guard let item =  RichContentMenuViewController.Item(rawValue:indexPath.row) else {
-      fatalError()
+      return (nil, nil)
     }
     return (item.localizedString(), item.image())
   }
