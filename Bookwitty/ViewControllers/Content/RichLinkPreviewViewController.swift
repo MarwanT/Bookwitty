@@ -70,6 +70,15 @@ class RichLinkPreviewViewController: UIViewController {
     audioHostLabel.text = nil
 
     viewModel.response = nil
+
+    switch self.mode {
+    case .link:
+      title = Strings.link()
+    case .video:
+      title = Strings.video()
+    case .audio:
+      title = Strings.audio()
+    }
   }
 
   fileprivate func setupNavigationBarButtons() {
