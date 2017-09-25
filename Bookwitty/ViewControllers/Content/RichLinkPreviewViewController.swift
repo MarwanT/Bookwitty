@@ -79,10 +79,14 @@ class RichLinkPreviewViewController: UIViewController {
                                                        target: self,
                                                        action: #selector(cancelBarButtonTouchUpInside(_:)))
 
-    navigationItem.rightBarButtonItem = UIBarButtonItem(title: Strings.add(),
-                                                       style: .plain,
-                                                       target: self,
-                                                       action: #selector(addBarButtonTouchUpInside(_:)))
+    let addBarButtonItem = UIBarButtonItem(title: Strings.add(),
+                                           style: .plain,
+                                           target: self,
+                                           action: #selector(addBarButtonTouchUpInside(_:)))
+
+    addBarButtonItem.isEnabled = viewModel.response != nil
+    
+    navigationItem.rightBarButtonItem = addBarButtonItem
   }
 
   @objc fileprivate func cancelBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
