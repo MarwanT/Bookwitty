@@ -66,6 +66,8 @@ class RichContentMenuViewController: UIViewController {
     }
   }
   
+  var tableViewCellHeight: CGFloat {
+    return 45.0
   }
   weak var delegate: RichContentMenuViewControllerDelegate?
   
