@@ -71,9 +71,58 @@ class RichContentMenuViewController: UIViewController {
   }
   weak var delegate: RichContentMenuViewControllerDelegate?
   
+  let viewModel = RichContentMenuViewModel()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    // Do any additional setup after loading the view.
+    self.setupTableView()
+  }
+  
+  func setupTableView() {
+    self.tableView.delegate = self
+    self.tableView.dataSource = self
+    self.tableView.register(UINib(nibName: "RichMenuCellTableViewCell", bundle: nil), forCellReuseIdentifier: RichMenuCellTableViewCell.identifier)
+    self.tableView.tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    self.tableView.isScrollEnabled = false
+    self.tableViewHeightContraint.constant = self.tableViewCellHeight * CGFloat(self.viewModel.numberOfRows()) + 49.0 // tabbar Height
+  }
+  
+}
+
+extension RichContentMenuViewController : UITableViewDataSource {
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return self.viewModel.numberOfRows()
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    return tableView.dequeueReusableCell(withIdentifier: RichMenuCellTableViewCell.identifier, for: indexPath)
+  }
+  
+  func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    let values = self.viewModel.values(forRowAt: indexPath)
+    
+    guard let currentCell = cell as? RichMenuCellTableViewCell else {
+      return
+    }
+    currentCell.menuImageView.image = values.image
+    currentCell.menuLabel.text = values.label
+  }
+}
+
+
+extension RichContentMenuViewController : UITableViewDelegate {
+  
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return self.tableViewCellHeight
+  }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+    guard let item = Item(rawValue: indexPath.row) else {
+      fatalError()
+    }
+    self.delegate?.richContentMenuViewController(self, didSelect: item)
   }
 }
