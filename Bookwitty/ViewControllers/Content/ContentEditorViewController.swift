@@ -186,6 +186,15 @@ class ContentEditorViewController: UIViewController {
       self.view.layoutSubviews()
     }
   }
+  
+  // MARK: - User Import Action(s) Handling
+  func presentImagePicker(with source: UIImagePickerControllerSourceType) {
+    let imagePickerController = UIImagePickerController()
+    imagePickerController.delegate = self
+    imagePickerController.sourceType = source
+    imagePickerController.allowsEditing = true
+    self.navigationController?.present(imagePickerController, animated: true, completion: nil)
+  }
 }
 
 extension ContentEditorViewController: RichEditorToolbarDelegate {
@@ -206,5 +215,16 @@ extension ContentEditorViewController : RichContentMenuViewControllerDelegate {
     let item = item
     //TODO: Implementation
     print(item)
+  }
+}
+
+extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    
+    guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+      return
+    }
+    //TODO: Send Image to Bucket.
+    self.dismiss(animated: true, completion: nil)
   }
 }
