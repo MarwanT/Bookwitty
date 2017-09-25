@@ -413,6 +413,10 @@ class Strings {
     return localizedString(key: "in_stock")
   }
   
+  static func insert() -> String {
+    return localizedString(key: "insert")
+  }
+  
   static func interests() -> String {
     return localizedString(key: "interests")
   }
