@@ -104,6 +104,27 @@ extension RichLinkPreviewViewController: Themeable {
     audioHostLabel.font = FontDynamicType.caption2.font
   }
 
+  fileprivate func getUrlInfo() {
+    guard !textView.text.isEmpty, let url = URL(string: textView.text) else {
+      return
+    }
+
+    IFramely.shared.loadResponseFor(url: url, closure: { (response: Response?) in
+      defer {
+        DispatchQueue.main.async {
+          self.showLinkPreview()
+        }
+      }
+
+      guard response?.embedUrl != nil else {
+        self.viewModel.response = nil
+        return
+      }
+
+      self.viewModel.response = response
+    })
+  }
+
   fileprivate func showLinkPreview() {
     //re-initilize components
     initializeComponents()
