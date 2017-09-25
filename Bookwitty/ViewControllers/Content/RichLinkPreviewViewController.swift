@@ -176,6 +176,8 @@ extension RichLinkPreviewViewController: UITextViewDelegate {
   }
 
   public func textViewDidChange(_ textView: UITextView) {
+    getUrlInfo()
+
     let time: DispatchTime = DispatchTime.now() + DispatchTimeInterval.microseconds(200)
     DispatchQueue.main.asyncAfter(deadline: time) {
       textView.isScrollEnabled = textView.intrinsicContentSize.height > textView.frame.height
