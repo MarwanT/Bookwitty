@@ -212,9 +212,22 @@ extension ContentEditorViewController : RichContentMenuViewControllerDelegate {
   
   func richContentMenuViewController(_ richContentMenuViewController: RichContentMenuViewController, didSelect item: RichContentMenuViewController.Item) {
     richContentMenuViewController.dismiss(animated: true, completion: nil)
-    let item = item
-    //TODO: Implementation
-    print(item)
+    switch item {
+    case .imageCamera:
+      self.presentImagePicker(with: .camera)
+    case .imageLibrary:
+      self.presentImagePicker(with: .photoLibrary)
+    case .link:
+      break
+    case .book:
+      break
+    case .video:
+      break
+    case .audio:
+      break
+    case .quote:
+      break
+    }
   }
 }
 
