@@ -131,7 +131,7 @@ class ContentEditorViewController: UIViewController {
       guard let toolbar = self.editor.inputAccessoryView as? RichEditorToolbar else {
           return
         }
-      ContentEditorOption.redo.action(toolbar)
+      ContentEditorOption.link.action(toolbar)
     })
     alertController.addAction(confirmAction)
     
