@@ -16,6 +16,7 @@ protocol RichContentMenuViewControllerDelegate: class {
 class RichContentMenuViewController: UIViewController {
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var tableViewHeightContraint: NSLayoutConstraint!
+  @IBOutlet weak var insert: UILabel!
   enum Item: Int {
     case imageCamera = 0
     case imageLibrary
@@ -75,20 +76,23 @@ class RichContentMenuViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    self.setupTableView()
+    self.initializeComponents()
   }
   
-  func setupTableView() {
-    self.tableView.delegate = self
-    self.tableView.dataSource = self
+  private func initializeComponents() {
+    
+    let attributedString = AttributedStringBuilder(fontDynamicType: .caption1)
+      .append(text: Strings.insert(), color: ThemeManager.shared.currentTheme.colorNumber13())
+      .attributedString
+    
+    self.insert.attributedText = attributedString
     self.tableView.register(UINib(nibName: "RichMenuCellTableViewCell", bundle: nil), forCellReuseIdentifier: RichMenuCellTableViewCell.identifier)
     self.tableView.tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
     self.tableView.isScrollEnabled = false
     self.tableViewHeightContraint.constant = self.tableViewCellHeight * CGFloat(self.viewModel.numberOfRows()) + 49.0 // tabbar Height
   }
   
-  @IBAction func cancelTapped(_ sender: UIBarButtonItem) {
+  @IBAction func cancelButtonTouchUpInside(_ sender: UIButton) {
     self.delegate?.richContentMenuViewControllerDidCancel(self)
   }
 }
