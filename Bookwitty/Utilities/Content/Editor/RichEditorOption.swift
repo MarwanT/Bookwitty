@@ -32,13 +32,20 @@ enum ContentEditorOption : RichEditorOption {
   public var image: UIImage? {
     var name = ""
     switch self {
-    case .bold: name = "bold"
-    case .italic: name = "italic"
-    case .header: name = "textSize"
-    case .unorderedList: name = "bullets"
-    case .link: name = "hyperlinkSmall"
-    case .undo: name = "undo"
-    case .redo: name = "redo"
+    case .bold:
+      name = "bold"
+    case .italic:
+      name = "italic"
+    case .header:
+      name = "textSize"
+    case .unorderedList:
+      name = "bullets"
+    case .link:
+      name = "hyperlinkSmall"
+    case .undo:
+      name = "undo"
+    case .redo:
+      name = "redo"
     }
     
     let bundle = Bundle.main
