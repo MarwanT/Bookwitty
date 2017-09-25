@@ -91,7 +91,7 @@ class ContentEditorViewController: UIViewController {
     let richContentMenuViewController = Storyboard.Content.instantiate(RichContentMenuViewController.self)
     richContentMenuViewController.delegate = self
     self.definesPresentationContext = true
-    richContentMenuViewController.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+    richContentMenuViewController.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber20().withAlphaComponent(0.5)
     richContentMenuViewController.modalPresentationStyle = .overCurrentContext
     
     self.navigationController?.present(richContentMenuViewController, animated: true, completion: nil)
@@ -151,7 +151,7 @@ class ContentEditorViewController: UIViewController {
   
   private func setupToolbar(of editor:RichEditorView) {
     let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
-    toolbar.tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    toolbar.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
     toolbar.options = ContentEditorOption.toolbarOptions
     toolbar.editor = editor // Previously instantiated RichEditorView
     toolbar.delegate = self
