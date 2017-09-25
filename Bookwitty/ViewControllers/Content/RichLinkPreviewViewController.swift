@@ -66,6 +66,8 @@ class RichLinkPreviewViewController: UIViewController {
     audioTitleLabel.text = nil
     audioDescriptionLabel.text = nil
     audioHostLabel.text = nil
+
+    viewModel.response = nil
   }
 }
 
