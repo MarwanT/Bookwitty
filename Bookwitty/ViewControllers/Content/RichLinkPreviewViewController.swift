@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol RichLinkPreviewViewControllerDelegate {
+  func richLinkPreview(viewController: RichLinkPreviewViewController, didRequestLinkAdd: URL, with response: Response)
+  func richLinkPreviewViewControllerDidCancel(_ viewController: RichLinkPreviewViewController)
+}
+
 class RichLinkPreviewViewController: UIViewController {
 
   enum Mode {
@@ -38,6 +43,8 @@ class RichLinkPreviewViewController: UIViewController {
 
   fileprivate let viewModel = RichLinkPreviewViewModel()
   var mode: Mode = .link
+
+  var delegate: RichLinkPreviewViewControllerDelegate?
 
   override func viewDidLoad() {
     super.viewDidLoad()
