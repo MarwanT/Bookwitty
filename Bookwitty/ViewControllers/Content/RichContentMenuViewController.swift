@@ -67,9 +67,8 @@ class RichContentMenuViewController: UIViewController {
     }
   }
   
-  var tableViewCellHeight: CGFloat {
-    return 45.0
-  }
+  let height: CGFloat = 45.0
+  
   weak var delegate: RichContentMenuViewControllerDelegate?
   
   let viewModel = RichContentMenuViewModel()
@@ -89,7 +88,7 @@ class RichContentMenuViewController: UIViewController {
     self.tableView.register(UINib(nibName: "RichMenuCellTableViewCell", bundle: nil), forCellReuseIdentifier: RichMenuCellTableViewCell.identifier)
     self.tableView.tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
     self.tableView.isScrollEnabled = false
-    self.tableViewHeightContraint.constant = self.tableViewCellHeight * CGFloat(self.viewModel.numberOfRows()) + 49.0 // tabbar Height
+    self.tableViewHeightContraint.constant = self.height * CGFloat(self.viewModel.numberOfRows()) + 49.0 // tabbar Height
   }
   
   @IBAction func cancelButtonTouchUpInside(_ sender: UIButton) {
@@ -122,7 +121,7 @@ extension RichContentMenuViewController : UITableViewDataSource {
 extension RichContentMenuViewController : UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return self.tableViewCellHeight
+    return self.height
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
