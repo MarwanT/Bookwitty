@@ -86,11 +86,15 @@ class RichLinkPreviewViewController: UIViewController {
   }
 
   @objc fileprivate func cancelBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
-    //TODO: Empty implementation
+    delegate?.richLinkPreviewViewControllerDidCancel(self)
   }
 
   @objc fileprivate func addBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
-    //TODO: Empty implementation
+    guard let response = viewModel.response,
+    let url = URL(string: textView.text) else {
+      return
+    }
+    delegate?.richLinkPreview(viewController: self, didRequestLinkAdd: url, with: response)
   }
 }
 
