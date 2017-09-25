@@ -88,7 +88,13 @@ class ContentEditorViewController: UIViewController {
   }
   
   @objc private func plus(_ sender:UIBarButtonItem) {
-    //Todo: Implementation
+    let richContentMenuViewController = Storyboard.Content.instantiate(RichContentMenuViewController.self)
+
+    self.definesPresentationContext = true
+    richContentMenuViewController.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+    richContentMenuViewController.modalPresentationStyle = .overCurrentContext
+    
+    self.navigationController?.present(richContentMenuViewController, animated: true, completion: nil)
   }
   
   @objc private func next(_ sender:UIBarButtonItem) {
