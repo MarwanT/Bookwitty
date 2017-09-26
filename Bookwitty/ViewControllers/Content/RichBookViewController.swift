@@ -16,6 +16,7 @@ final class RichBookViewController: ASViewController<ASCollectionNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+    self.hideNavigationShadowImage()
     loadNavigationBarButtons()
     configureSearchBar()
     searchBar?.becomeFirstResponder()
@@ -48,6 +49,10 @@ final class RichBookViewController: ASViewController<ASCollectionNode> {
     
   }
   
+  private func hideNavigationShadowImage() {
+    self.navigationController?.navigationBar.shadowImage = UIImage()
+    self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+  }
   @objc private func setTextAppearanceState(of barButtonItem: UIBarButtonItem) -> Void {
     
     var attributes = barButtonItem.titleTextAttributes(for: .normal) ?? [:]
