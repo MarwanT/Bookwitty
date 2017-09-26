@@ -21,9 +21,33 @@ class QuoteEditorViewController: UIViewController {
 
     // Do any additional setup after loading the view.
     initializeComponents()
+    applyTheme()
   }
 
   fileprivate func initializeComponents() {
     title = Strings.quote()
   }
 }
+
+//MARK: - Themable implementation
+extension QuoteEditorViewController: Themeable {
+  func applyTheme() {
+    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
+
+    view.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
+    quoteTextView.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
+    authorTextView.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
+
+    quoteTextView.textContainerInset = ThemeManager.shared.currentTheme.defaultLayoutMargin()
+    authorTextView.textContainerInset = ThemeManager.shared.currentTheme.defaultLayoutMargin()
+
+    separators.forEach({ $0.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()})
+
+    quoteTextView.font = FontDynamicType.title4.font
+    quoteTextView.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+
+    authorTextView.font = FontDynamicType.caption1.font
+    authorTextView.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+  }
+}
+
