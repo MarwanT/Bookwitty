@@ -67,11 +67,13 @@ class QuoteEditorViewController: UIViewController {
   }
 
   @objc fileprivate func cancelBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
-    //TODO: Empty Implementation
+    delegate?.quoteEditorViewControllerDidCancel(self)
   }
 
   @objc fileprivate func addBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
-    //TODO: Empty Implementation
+    let quote: String = quoteTextView.text
+    let author: String? = authorTextView.text.isEmpty ? nil : authorTextView.text
+    delegate?.quoteEditor(viewController: self, didRequestAdd: quote, with: author)
   }
 }
 
