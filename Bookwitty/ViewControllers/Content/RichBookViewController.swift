@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import AsyncDisplayKit
 
-final class RichBookViewController: UIViewController {
+final class RichBookViewController: ASViewController<ASCollectionNode> {
 
     override func viewDidLoad() {
         super.viewDidLoad()
