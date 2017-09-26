@@ -10,6 +10,8 @@ import UIKit
 
 class QuoteEditorViewController: UIViewController {
 
+  fileprivate let viewModel = QuoteEditorViewModel()
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
