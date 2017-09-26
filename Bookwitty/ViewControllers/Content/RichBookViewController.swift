@@ -42,7 +42,7 @@ final class RichBookViewController: ASViewController<ASCollectionNode> {
   }
   
   @objc private func cancel(_ sender: UIBarButtonItem) {
-
+    self.dismiss(animated: true, completion: nil)
   }
   
   @objc private func add(_ sender: UIBarButtonItem) {
