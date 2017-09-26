@@ -158,7 +158,10 @@ extension RichLinkPreviewViewController: Themeable {
     audioDescriptionLabel.font = FontDynamicType.body.font
     audioHostLabel.font = FontDynamicType.caption2.font
   }
+}
 
+//MARK: - URL Handling
+extension RichLinkPreviewViewController {
   fileprivate func getUrlInfo() {
     //re-initilize components
     initializeComponents()
