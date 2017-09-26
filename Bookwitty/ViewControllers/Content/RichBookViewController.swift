@@ -15,6 +15,7 @@ final class RichBookViewController: ASViewController<ASCollectionNode> {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.view.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     loadNavigationBarButtons()
     configureSearchBar()
     searchBar?.becomeFirstResponder()
