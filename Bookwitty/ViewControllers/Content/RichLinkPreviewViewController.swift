@@ -171,7 +171,7 @@ extension RichLinkPreviewViewController {
       return
     }
 
-    IFramely.shared.loadResponseFor(url: url, closure: { (response: Response?) in
+    IFramely.shared.loadResponseFor(url: url, closure: { (success: Bool, response: Response?) in
       defer {
         DispatchQueue.main.async {
           self.showLinkPreview()
