@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol QuoteEditorViewControllerDelegate {
+  func quoteEditor(viewController: QuoteEditorViewController, didRequestAdd quote: String, with author: String?)
+  func quoteEditorViewControllerDidCancel(_ viewController: QuoteEditorViewController)
+}
+
 class QuoteEditorViewController: UIViewController {
 
   @IBOutlet var quoteTextView: UITextView!
@@ -15,6 +20,8 @@ class QuoteEditorViewController: UIViewController {
   @IBOutlet var separators: [UIView]!
 
   fileprivate let viewModel = QuoteEditorViewModel()
+
+  var delegate: QuoteEditorViewControllerDelegate?
 
   override func viewDidLoad() {
     super.viewDidLoad()
