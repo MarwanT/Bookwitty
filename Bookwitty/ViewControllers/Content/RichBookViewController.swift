@@ -11,9 +11,11 @@ import AsyncDisplayKit
 
 final class RichBookViewController: ASViewController<ASCollectionNode> {
 
+  var searchBar: UISearchBar?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+      searchBar?.becomeFirstResponder()
     }
 }
