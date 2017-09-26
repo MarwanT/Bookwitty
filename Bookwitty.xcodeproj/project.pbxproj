@@ -32,6 +32,7 @@
 		5613402E1E5221730085B8A5 /* AccountPenNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5613402D1E5221730085B8A5 /* AccountPenNameTableViewCell.swift */; };
 		56205DEB1E5324BC000CA4D7 /* TableViewSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56205DE91E5324BC000CA4D7 /* TableViewSectionHeaderView.swift */; };
 		56205DEC1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56205DEA1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib */; };
+		56218A051F7A5CE5000456F9 /* QuoteEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56218A041F7A5CE5000456F9 /* QuoteEditorViewController.swift */; };
 		5625D5301F3C5E3400D94FF8 /* TagFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5625D52F1F3C5E3400D94FF8 /* TagFeedViewController.swift */; };
 		5625D5321F3C673E00D94FF8 /* TagFeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5625D5311F3C673E00D94FF8 /* TagFeedViewModel.swift */; };
 		562A31201E659919002851DE /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562A311F1E659919002851DE /* Strings.swift */; };
@@ -363,6 +364,7 @@
 		5613402D1E5221730085B8A5 /* AccountPenNameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountPenNameTableViewCell.swift; sourceTree = "<group>"; };
 		56205DE91E5324BC000CA4D7 /* TableViewSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewSectionHeaderView.swift; sourceTree = "<group>"; };
 		56205DEA1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewSectionHeaderView.xib; sourceTree = "<group>"; };
+		56218A041F7A5CE5000456F9 /* QuoteEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteEditorViewController.swift; sourceTree = "<group>"; };
 		5625D52F1F3C5E3400D94FF8 /* TagFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagFeedViewController.swift; sourceTree = "<group>"; };
 		5625D5311F3C673E00D94FF8 /* TagFeedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagFeedViewModel.swift; sourceTree = "<group>"; };
 		562A311F1E659919002851DE /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -716,6 +718,7 @@
 				0FF723C71F755A9A00891FFE /* RichContentMenuViewController.swift */,
 				0FAA01691F7A41A30011FDBA /* RichBookViewController.swift */,
 				56FFE1591F74EEE600EEED42 /* RichLinkPreviewViewController.swift */,
+				56218A041F7A5CE5000456F9 /* QuoteEditorViewController.swift */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -2052,6 +2055,7 @@
 				594B9F6F1E55F557007C49E1 /* RootTabBarViewModel.swift in Sources */,
 				59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */,
 				560341AD1F3DAE3400E60F44 /* Tag.swift in Sources */,
+				56218A051F7A5CE5000456F9 /* QuoteEditorViewController.swift in Sources */,
 				562A996C1ED8683000382ADD /* FilterCellNode.swift in Sources */,
 				F4CDDD371E60263800474CAA /* RotatingImageNode.swift in Sources */,
 				59C997BF1ED5AD70009A8451 /* Comment.swift in Sources */,
