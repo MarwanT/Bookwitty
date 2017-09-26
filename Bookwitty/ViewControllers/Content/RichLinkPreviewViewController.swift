@@ -98,6 +98,17 @@ class RichLinkPreviewViewController: UIViewController {
     navigationItem.rightBarButtonItem = addBarButtonItem
   }
 
+  fileprivate func setTextAppearanceState(of barButtonItem: UIBarButtonItem) -> Void {
+    var attributes = barButtonItem.titleTextAttributes(for: .normal) ?? [:]
+    let defaultTextColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+    attributes[NSForegroundColorAttributeName] = defaultTextColor
+    barButtonItem.setTitleTextAttributes(attributes, for: .normal)
+
+    let grayedTextColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
+    attributes[NSForegroundColorAttributeName] = grayedTextColor
+    barButtonItem.setTitleTextAttributes(attributes, for: .disabled)
+  }
+
   @objc fileprivate func cancelBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
     delegate?.richLinkPreviewViewControllerDidCancel(self)
   }
