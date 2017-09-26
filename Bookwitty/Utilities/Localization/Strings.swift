@@ -309,6 +309,10 @@ class Strings {
     return localizedString(key: "enter_your_pen_name")
   }
   
+  static func error() -> String {
+    return localizedString(key: "error")
+  }
+
   static func error_loading_data() -> String {
     return localizedString(key: "error_loading_data")
   }
@@ -425,6 +429,10 @@ class Strings {
     return localizedString(key: "interests")
   }
   
+  static func invalid_url() -> String {
+    return localizedString(key: "invalid_url")
+  }
+
   static func isbn10() -> String {
     return localizedString(key: "isbn10")
   }

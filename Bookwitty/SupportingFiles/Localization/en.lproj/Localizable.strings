@@ -81,6 +81,7 @@
 "enter_your_last_name" = "Enter your last name";
 "enter_your_password" = "Enter your password";
 "enter_your_pen_name" = "Enter your pen name";
+"error" = "Error";
 "error_loading_data" = "Error Loading Data";
 "fail_to_refresh_token_alert_message" = "It seems that your session expired and you need to sign in again";
 "fail_to_refresh_token_alert_title" = "Please sign in again";
@@ -110,6 +111,7 @@
 "in_stock" = "In stock";
 "insert" = "Insert";
 "interests" = "Interests";
+"invalid_url" = "Invalid url";
 "isbn10" = "ISBN-10";
 "isbn13" = "ISBN-13";
 "join_us_to_personalize_feed_description" = "View articles reading lists and book recommendations in your feed based on your interests.";
