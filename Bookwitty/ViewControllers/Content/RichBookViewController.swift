@@ -16,6 +16,7 @@ final class RichBookViewController: ASViewController<ASCollectionNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     loadNavigationBarButtons()
+    configureSearchBar()
     searchBar?.becomeFirstResponder()
   }
   
@@ -39,7 +40,7 @@ final class RichBookViewController: ASViewController<ASCollectionNode> {
   }
   
   @objc private func cancel(_ sender: UIBarButtonItem) {
-    
+
   }
   
   @objc private func add(_ sender: UIBarButtonItem) {
@@ -58,4 +59,32 @@ final class RichBookViewController: ASViewController<ASCollectionNode> {
     attributes[NSForegroundColorAttributeName] = grayedTextColor
     barButtonItem.setTitleTextAttributes(attributes, for: .disabled)
   }
+  
+  func configureSearchBar() {
+    searchBar = UISearchBar()
+    searchBar?.translatesAutoresizingMaskIntoConstraints = false
+    if let searchBar = self.searchBar {
+      self.view.addSubview(searchBar)
+      NSLayoutConstraint.activate([
+        searchBar.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor),
+        searchBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+        searchBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+        ])
+    }
+    searchBar?.placeholder = Strings.search_placeholder()
+    searchBar?.delegate = self
+    searchBar?.showsCancelButton = false
+    searchBar?.searchBarStyle = .minimal
+    searchBar?.barTintColor = .clear
+    
+    searchBar?.setTextColor(color: ThemeManager.shared.currentTheme.defaultTextColor())
+    searchBar?.setTextFieldColor(color: ThemeManager.shared.currentTheme.colorNumber18().withAlphaComponent(0.7))
+    searchBar?.setPlaceholderTextColor(color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+    searchBar?.setSearchImageColor(color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+    searchBar?.setTextFieldClearButtonColor(color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+  }
+}
+
+extension RichBookViewController: UISearchBarDelegate {
+  
 }
