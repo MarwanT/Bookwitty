@@ -339,10 +339,10 @@
             </objects>
             <point key="canvasLocation" x="983" y="304"/>
         </scene>
-        <!--View Controller-->
+        <!--Quote Editor View Controller-->
         <scene sceneID="1U1-fm-z3e">
             <objects>
-                <viewController id="YaL-6g-aXE" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="QuoteEditorViewController" id="YaL-6g-aXE" customClass="QuoteEditorViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6Il-U5-Sro"/>
                         <viewControllerLayoutGuide type="bottom" id="Ay9-DD-IYL"/>
