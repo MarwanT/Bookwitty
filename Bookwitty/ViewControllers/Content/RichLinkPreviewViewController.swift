@@ -235,6 +235,25 @@ extension RichLinkPreviewViewController {
   }
 }
 
+//MARK: - Error handling
+extension RichLinkPreviewViewController {
+  fileprivate func showInvalidUrlAlert() {
+    let alertController = UIAlertController(title: Strings.error(), message: Strings.invalid_url(), preferredStyle: .alert)
+    alertController.addAction(UIAlertAction(title: Strings.cancel(), style: .cancel, handler: nil))
+    self.present(alertController, animated: true, completion: nil)
+  }
+
+  fileprivate func showTryAgainAlert() {
+    let alertController = UIAlertController(title: Strings.ooops(), message: Strings.some_thing_wrong_error(), preferredStyle: .alert)
+    alertController.addAction(UIAlertAction(title: Strings.cancel(), style: .cancel, handler: nil))
+    alertController.addAction(UIAlertAction(title: Strings.try_again(), style: .cancel, handler: {
+      (action: UIAlertAction) in
+      self.getUrlInfo()
+    }))
+    self.present(alertController, animated: true, completion: nil)
+  }
+}
+
 extension RichLinkPreviewViewController: UITextViewDelegate {
   public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
     textView.isScrollEnabled = false
