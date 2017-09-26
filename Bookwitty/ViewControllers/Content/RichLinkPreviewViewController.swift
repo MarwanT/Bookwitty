@@ -83,10 +83,10 @@ class RichLinkPreviewViewController: UIViewController {
 
   fileprivate func setupNavigationBarButtons() {
     navigationItem.backBarButtonItem = UIBarButtonItem.back
-    navigationItem.leftBarButtonItem = UIBarButtonItem(title: Strings.cancel(),
-                                                       style: .plain,
-                                                       target: self,
-                                                       action: #selector(cancelBarButtonTouchUpInside(_:)))
+    let cancelBarButtonItem = UIBarButtonItem(title: Strings.cancel(),
+                                              style: .plain,
+                                              target: self,
+                                              action: #selector(cancelBarButtonTouchUpInside(_:)))
 
     let addBarButtonItem = UIBarButtonItem(title: Strings.add(),
                                            style: .plain,
@@ -94,8 +94,12 @@ class RichLinkPreviewViewController: UIViewController {
                                            action: #selector(addBarButtonTouchUpInside(_:)))
 
     addBarButtonItem.isEnabled = viewModel.response != nil
-    
+
+    navigationItem.leftBarButtonItem = cancelBarButtonItem
     navigationItem.rightBarButtonItem = addBarButtonItem
+
+    setTextAppearanceState(of: addBarButtonItem)
+    setTextAppearanceState(of: cancelBarButtonItem)
   }
 
   fileprivate func setTextAppearanceState(of barButtonItem: UIBarButtonItem) -> Void {
