@@ -53,6 +53,18 @@ final class RichBookViewController: ASViewController<ASCollectionNode> {
     self.navigationController?.navigationBar.shadowImage = UIImage()
     self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
   }
+  
+  private func addSeparatorBelow(_ view:UIView) {
+    let  separator = UIView()
+    separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    self.view.addAutoLayoutSubview(separator)
+    //Constraints
+    separator.addHeightConstraint(1)
+    self.view.addSiblingVerticalContiguous(top: view, bottom: separator, value: 0)
+    self.view.addParentLeadingConstraint(separator)
+    self.view.addParentTrailingConstraint(separator)
+  }
+  
   @objc private func setTextAppearanceState(of barButtonItem: UIBarButtonItem) -> Void {
     
     var attributes = barButtonItem.titleTextAttributes(for: .normal) ?? [:]
@@ -76,6 +88,7 @@ final class RichBookViewController: ASViewController<ASCollectionNode> {
         searchBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
         searchBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
+      self.addSeparatorBelow(searchBar)
     }
     searchBar?.placeholder = Strings.search_placeholder()
     searchBar?.delegate = self
