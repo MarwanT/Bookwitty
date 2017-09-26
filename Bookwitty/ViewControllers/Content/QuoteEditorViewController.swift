@@ -10,6 +10,10 @@ import UIKit
 
 class QuoteEditorViewController: UIViewController {
 
+  @IBOutlet var quoteTextView: UITextView!
+  @IBOutlet var authorTextView: UITextView!
+  @IBOutlet var separators: [UIView]!
+
   fileprivate let viewModel = QuoteEditorViewModel()
 
   override func viewDidLoad() {
