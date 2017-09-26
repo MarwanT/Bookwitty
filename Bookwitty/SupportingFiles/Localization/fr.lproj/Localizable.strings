@@ -13,6 +13,7 @@
 "account_needs_confirmation_alert_message" = "Vous devez confirmer votre compte en cliquant sur le lien que vous avez reçu par email.";
 "account_needs_confirmation_alert_resend_confirmation_button_title" = "Envoyer à nouveau";
 "account_needs_confirmation_alert_title" = "Votre compte";
+"add" = "Add";
 "add_a_link" = "Add a Link";
 "address_book" = "Adresses de livraison";
 "already_have_an_account" = "Déjà inscrit ?";

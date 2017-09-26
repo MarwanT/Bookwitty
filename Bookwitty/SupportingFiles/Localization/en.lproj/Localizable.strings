@@ -13,6 +13,7 @@
 "account_needs_confirmation_alert_message" = "You haven't yet confirmed your account.  Please check your email and click on the confirmation link.";
 "account_needs_confirmation_alert_resend_confirmation_button_title" = "Resend";
 "account_needs_confirmation_alert_title" = "Account";
+"add" = "Add";
 "add_a_link" = "Add a Link";
 "address_book" = "Address Book";
 "already_have_an_account" = "Already have an account?";
