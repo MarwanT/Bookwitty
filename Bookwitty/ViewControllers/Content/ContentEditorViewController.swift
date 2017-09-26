@@ -220,7 +220,9 @@ extension ContentEditorViewController : RichContentMenuViewControllerDelegate {
     case .link:
       break
     case .book:
-      break
+      let richBookViewController = RichBookViewController()
+      let navigationController = UINavigationController(rootViewController: richBookViewController)
+      self.navigationController?.present(navigationController, animated: true, completion: nil)
     case .video:
       break
     case .audio:
