@@ -100,6 +100,10 @@ class RootTabBarController: UITabBarController {
       #selector(self.shouldDisplayRegistration(notification:)), name: AppNotification.shouldDisplayRegistration, object: nil)
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.shouldDisplaySignIn(notification:)), name: AppNotification.shouldDisplaySignIn, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.tooManyRequests(notification:)), name: AppNotification.tooManyRequests, object: nil)
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(self.serverBusy(notification:)), name: AppNotification.serverIsBusy, object: nil)
   }
   
   private func addObserversWhenNotVisible() {
@@ -275,6 +279,14 @@ extension RootTabBarController {
     showRootViewController()
   }
   
+  func tooManyRequests(notification: Notification?) {
+    //TODO: handle server error `too many requests`
+  }
+
+  func serverBusy(notification: Notification?) {
+    displayServerBusyAlert()
+  }
+
   func showRootViewController() {
     self.dismiss(animated: true,completion: {
       self.refreshTabBarViewController()
@@ -385,6 +397,18 @@ extension RootTabBarController {
       style: UIAlertActionStyle.cancel, handler: nil)
     alertController.addAction(signInAction)
     alertController.addAction(registerAction)
+    alertController.addAction(neutralAction)
+    present(alertController, animated: true, completion: nil)
+  }
+
+  fileprivate func displayServerBusyAlert() {
+    let alertController = UIAlertController(
+      title: Strings.some_thing_wrong_error(), //TODO: Localize
+      message: Strings.try_again(), //TODO: Localize
+      preferredStyle: .alert)
+    let neutralAction = UIAlertAction(
+      title: Strings.ok(),
+      style: UIAlertActionStyle.cancel, handler: nil)
     alertController.addAction(neutralAction)
     present(alertController, animated: true, completion: nil)
   }

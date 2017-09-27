@@ -228,6 +228,12 @@ public func apiRequest(target: BookwittyAPI, completion: @escaping BookwittyAPIC
       if response.statusCode == 403, ErrorManager.shared.dataContainsAccountNeedsConfirmationError(data: response.data).hasError {
         NotificationCenter.default.post(
           name: AppNotification.accountNeedsConfirmation, object: nil)
+      } else if response.statusCode == 429 {
+        NotificationCenter.default.post(
+          name: AppNotification.tooManyRequests, object: nil)
+      } else if response.statusCode == 503 {
+        NotificationCenter.default.post(
+          name: AppNotification.serverIsBusy, object: nil)
       }
       completion(response.data, response.statusCode, response.response, nil)
     case .failure(let error):

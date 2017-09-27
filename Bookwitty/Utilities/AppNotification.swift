@@ -21,6 +21,8 @@ struct AppNotification {
   static let accountNeedsConfirmation: Notification.Name = Notification.Name("AppNotification.accountNeedsConfirmation")
   static let callToAction: Notification.Name = Notification.Name("AppNotification.callToAction")
   static let authenticationStatusChanged: Notification.Name = Notification.Name("AppNotification.authenticationStatusChanged")
+  static let tooManyRequests: Notification.Name = Notification.Name("AppNotification.tooManyRequests")
+  static let serverIsBusy: Notification.Name = Notification.Name("AppNotification.serverIsBusy")
 
   struct Key {
     private init() {}
