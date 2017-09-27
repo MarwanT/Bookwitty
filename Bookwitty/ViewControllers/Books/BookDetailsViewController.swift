@@ -90,12 +90,27 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
   }
   
   private func loadNavigationBarButtons() {
-    let shareButton = UIBarButtonItem(
-      image: #imageLiteral(resourceName: "shareOutside"),
-      style: UIBarButtonItemStyle.plain,
-      target: self,
-      action: #selector(shareOutsideButton(_:)))
-    navigationItem.rightBarButtonItem = shareButton
+    switch self.mode {
+    case .select:
+      let add = UIBarButtonItem(title: Strings.add(),
+                                style: UIBarButtonItemStyle.plain,
+                                target: self,
+                                action: #selector(self.add(_:)))
+      add.tintColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+      navigationItem.rightBarButtonItem = add
+      
+    case .view:
+      let shareButton = UIBarButtonItem(
+        image: #imageLiteral(resourceName: "shareOutside"),
+        style: UIBarButtonItemStyle.plain,
+        target: self,
+        action: #selector(shareOutsideButton(_:)))
+      navigationItem.rightBarButtonItem = shareButton
+    }
+  }
+  
+  @objc func add(_ sender: UIBarButtonItem) {
+    self.delegate?.bookDetails(viewController: self, didSelect: self.viewModel.book)
   }
   
   func showBottomLoader(reloadSection: Bool = false) {
