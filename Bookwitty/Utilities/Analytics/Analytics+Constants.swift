@@ -119,7 +119,9 @@ extension Analytics {
     case Register
     case EditPenName
     case CreatePenName
-    case SwitchEmailNotification
+    case SwitchCommentsEmailNotification
+    case SwitchFollowersEmailNotification
+    case SwitchNewsletterEmailNotification
     case ChangePassword
     case SignOut
     //
@@ -200,8 +202,12 @@ extension Analytics {
         return "Edit Pen Name"
       case .CreatePenName:
         return "Create Pen Name"
-      case .SwitchEmailNotification:
-        return "Switch Email Notification"
+      case .SwitchCommentsEmailNotification:
+        return "Switch Email Notification - Comments"
+      case .SwitchFollowersEmailNotification:
+        return "Switch Email Notification - Followers"
+      case .SwitchNewsletterEmailNotification:
+        return "Switch Email Notification - Newsletter"
       case .ChooseEdition:
         return "Choose Edition"
       case .ChangePassword:
