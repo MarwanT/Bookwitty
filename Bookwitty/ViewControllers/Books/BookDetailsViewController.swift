@@ -13,12 +13,18 @@ import GSImageViewerController
 import SwiftLoader
 
 class BookDetailsViewController: ASViewController<ASCollectionNode> {
+  enum Mode {
+    case view
+    case select
+  }
+  
   let viewModel = BookDetailsViewModel()
   
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
   
   let loaderNode = LoaderNode()
+  var mode: Mode = .view
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
