@@ -221,6 +221,7 @@ extension ContentEditorViewController : RichContentMenuViewControllerDelegate {
       break
     case .book:
       let richBookViewController = RichBookViewController()
+      richBookViewController.delegate = self
       let navigationController = UINavigationController(rootViewController: richBookViewController)
       self.navigationController?.present(navigationController, animated: true, completion: nil)
     case .video:
@@ -241,5 +242,12 @@ extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePi
     }
     //TODO: Send Image to Bucket.
     self.dismiss(animated: true, completion: nil)
+  }
+}
+
+extension ContentEditorViewController: RichBookViewControllerDelegate {
+  func richBookViewController(_ richBookViewController: RichBookViewController, didSelect book: Book) {
+    self.navigationController?.dismiss(animated: true, completion: nil)
+    //TODO: Send to JS
   }
 }
