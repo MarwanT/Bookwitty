@@ -92,23 +92,11 @@ final class RichBookViewController: ASViewController<ASCollectionNode> {
                                 target: self,
                                 action: #selector(self.cancel(_:)))
     cancel.tintColor = ThemeManager.shared.currentTheme.defaultButtonColor()
-    
-    let add = UIBarButtonItem(title: Strings.add(),
-                                 style: UIBarButtonItemStyle.plain,
-                                 target: self,
-                                 action: #selector(self.add(_:)))
-    setTextAppearanceState(of: add)
-
     navigationItem.leftBarButtonItem = cancel
-    navigationItem.rightBarButtonItem = add
   }
   
   @objc private func cancel(_ sender: UIBarButtonItem) {
     self.dismiss(animated: true, completion: nil)
-  }
-  
-  @objc private func add(_ sender: UIBarButtonItem) {
-    
   }
   
   private func hideNavigationShadowImage() {
@@ -125,19 +113,6 @@ final class RichBookViewController: ASViewController<ASCollectionNode> {
     self.view.addSiblingVerticalContiguous(top: view, bottom: separator, value: 0)
     self.view.addParentLeadingConstraint(separator)
     self.view.addParentTrailingConstraint(separator)
-  }
-  
-  @objc private func setTextAppearanceState(of barButtonItem: UIBarButtonItem) -> Void {
-    
-    var attributes = barButtonItem.titleTextAttributes(for: .normal) ?? [:]
-    //Normal
-    let defaultTextColor = ThemeManager.shared.currentTheme.defaultButtonColor()
-    attributes[NSForegroundColorAttributeName] = defaultTextColor
-    barButtonItem.setTitleTextAttributes(attributes, for: .normal)
-    //Disabled
-    let grayedTextColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
-    attributes[NSForegroundColorAttributeName] = grayedTextColor
-    barButtonItem.setTitleTextAttributes(attributes, for: .disabled)
   }
   
   func configureSearchBar() {
