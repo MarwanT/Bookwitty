@@ -15,17 +15,18 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gDs-dl-nOj" id="dJP-EX-Thu">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Dj-Ix-aSb">
-                        <rect key="frame" x="8" y="8" width="28" height="28"/>
+                        <rect key="frame" x="8" y="-0.5" width="45" height="45"/>
                         <constraints>
+                            <constraint firstAttribute="width" constant="45" id="RWc-0K-G1o"/>
                             <constraint firstAttribute="width" secondItem="8Dj-Ix-aSb" secondAttribute="height" multiplier="1:1" id="RfQ-aH-jeK"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p7Z-g3-4nR">
-                        <rect key="frame" x="44" y="12" width="42" height="21"/>
+                        <rect key="frame" x="61" y="12" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -33,10 +34,9 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="p7Z-g3-4nR" firstAttribute="centerY" secondItem="dJP-EX-Thu" secondAttribute="centerY" id="5ta-E1-ixW"/>
-                    <constraint firstAttribute="bottom" secondItem="8Dj-Ix-aSb" secondAttribute="bottom" constant="8" id="BVt-MO-ejb"/>
                     <constraint firstItem="p7Z-g3-4nR" firstAttribute="leading" secondItem="8Dj-Ix-aSb" secondAttribute="trailing" constant="8" id="bSF-02-WL5"/>
                     <constraint firstItem="8Dj-Ix-aSb" firstAttribute="leading" secondItem="dJP-EX-Thu" secondAttribute="leading" constant="8" id="ed3-YM-ppA"/>
-                    <constraint firstItem="8Dj-Ix-aSb" firstAttribute="top" secondItem="dJP-EX-Thu" secondAttribute="top" constant="8" id="f48-S4-Qdt"/>
+                    <constraint firstItem="8Dj-Ix-aSb" firstAttribute="centerY" secondItem="dJP-EX-Thu" secondAttribute="centerY" id="w56-hP-It3"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
