@@ -144,6 +144,45 @@ class CommentsNode: ASCellNode {
       self.shouldShowLoader = false
       completion(success)
     }
+
+    //MARK: [Analytics] Event
+    guard let postId = viewModel.postId,
+      let resource = DataManager.shared.fetchResource(with: postId) as? ModelCommonProperties
+      else { return }
+
+    let category: Analytics.Category
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+    default:
+      category = .Default
+    }
+
+    let name: String = resource.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: .LoadMoreComments,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
   
   func updateCollectionNode(updateLoaderNode: Bool = false) {
@@ -290,6 +329,45 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
     if viewCommentsDisclosureNode === collectionNode.nodeForItem(at: indexPath) {
       if let commentsManager = viewModel.commentsManagerClone() {
         delegate?.commentsNode(self, reactFor: .viewAllComments(commentsManager: commentsManager), didFinishAction: nil)
+
+        //MARK: [Analytics] Event
+        guard let postId = commentsManager.postIdentifier,
+          let resource = DataManager.shared.fetchResource(with: postId) as? ModelCommonProperties
+          else { return }
+
+        let category: Analytics.Category
+        switch resource.registeredResourceType {
+        case Image.resourceType:
+          category = .Image
+        case Quote.resourceType:
+          category = .Quote
+        case Video.resourceType:
+          category = .Video
+        case Audio.resourceType:
+          category = .Audio
+        case Link.resourceType:
+          category = .Link
+        case Author.resourceType:
+          category = .Author
+        case ReadingList.resourceType:
+          category = .ReadingList
+        case Topic.resourceType:
+          category = .Topic
+        case Text.resourceType:
+          category = .Text
+        case Book.resourceType:
+          category = .TopicBook
+        case PenName.resourceType:
+          category = .PenName
+        default:
+          category = .Default
+        }
+
+        let name: String = resource.title ?? ""
+        let event: Analytics.Event = Analytics.Event(category: category,
+                                                     action: .ViewAllComments,
+                                                     name: name)
+        Analytics.shared.send(event: event)
       }
     }
   }
@@ -346,13 +424,105 @@ extension CommentsNode: CommentTreeNodeDelegate {
     }
     
     delegate?.commentsNode(self, reactFor: .commentAction(comment: comment, action: action), didFinishAction: didFinishAction)
+
+    //MARK: [Analytics] Event
+    guard let postId = viewModel.postId,
+      let resource = DataManager.shared.fetchResource(with: postId) as? ModelCommonProperties
+      else { return }
+
+    let analyticsAction: Analytics.Action
+
+    let allowedActions: [CardActionBarNode.Action] = [.wit, .unwit, .reply]
+    guard allowedActions.contains(action) else { return }
+
+    let category: Analytics.Category
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+    default:
+      category = .Default
+    }
+
+    switch action {
+    case .wit:
+      analyticsAction = .WitComment
+    case .unwit:
+      analyticsAction = .UnwitComment
+    case .reply:
+      analyticsAction = .ReplyToComment
+    default:
+      analyticsAction = .Default
+    }
+
+    let name: String = resource.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: analyticsAction,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
   
   func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, comment: Comment) {
     guard let postId = viewModel.postId else {
       return
     }
+
     delegate?.commentsNode(self, reactFor: .viewRepliesForComment(comment: comment, postId: postId), didFinishAction: nil)
+
+    //MARK: [Analytics] Event
+    guard let resource = DataManager.shared.fetchResource(with: postId) as? ModelCommonProperties else { return }
+    let category: Analytics.Category
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+    default:
+      category = .Default
+    }
+
+    let name: String = resource.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: .ViewAllReplies,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 }
 
@@ -368,7 +538,44 @@ extension CommentsNode: WriteCommentNodeDelegate {
     guard let postId = viewModel.postId else {
       return
     }
+
     delegate?.commentsNode(self, reactFor: .writeComment(parentCommentIdentifier: viewModel.parentCommentIdentifier, postId: postId), didFinishAction: nil)
+
+    //MARK: [Analytics] Event
+    guard let resource = DataManager.shared.fetchResource(with: postId) as? ModelCommonProperties else { return }
+    let category: Analytics.Category
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+    default:
+      category = .Default
+    }
+
+    let name: String = resource.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: .AddComment,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 }
 
