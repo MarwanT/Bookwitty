@@ -253,12 +253,50 @@ extension ReadingListsViewController: BaseCardPostNodeDelegate {
         return
     }
 
+    let analyticsAction: Analytics.Action
     switch(action) {
     case .listComments:
       pushCommentsViewController(for: resource as? ModelCommonProperties)
+      analyticsAction = .ViewTopComment
     case .publishComment:
       CommentComposerViewController.show(from: self, delegate: self, postId: postId, parentCommentId: nil)
+      analyticsAction = .AddComment
     }
+
+    //MARK: [Analytics] Event
+    let category: Analytics.Category
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+    default:
+      category = .Default
+    }
+    
+    let name: String = resource.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: analyticsAction,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 
   func cardNode(card: BaseCardPostNode, didSelectTagAt index: Int) {

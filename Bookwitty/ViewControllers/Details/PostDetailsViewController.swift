@@ -83,6 +83,10 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.setWitValue(witted: viewModel.isWitted)
 
     postDetailsNode.tags = viewModel.tags
+
+    //The action bar should not show the comment button
+    //This VC contains a comment section at the bottom
+    postDetailsNode.headerNode.actionBarNode.hideCommentButton = true
   }
 
   fileprivate func addDelegatesAndDataSources() {

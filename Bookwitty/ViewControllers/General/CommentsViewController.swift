@@ -32,6 +32,8 @@ class CommentsViewController: ASViewController<ASDisplayNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     reloadData()
+
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
   
   func reloadData() {
