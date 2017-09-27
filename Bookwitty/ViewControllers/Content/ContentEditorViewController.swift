@@ -241,7 +241,7 @@ extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePi
       return
     }
     //TODO: Send Image to Bucket.
-    self.dismiss(animated: true, completion: nil)
+    self.navigationController?.dismiss(animated: true, completion: nil)
   }
 }
 
