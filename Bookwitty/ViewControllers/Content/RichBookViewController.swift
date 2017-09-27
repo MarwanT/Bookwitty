@@ -285,8 +285,16 @@ extension RichBookViewController: ASCollectionDataSource {
 }
 
 extension RichBookViewController: ASCollectionDelegate {
-  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
-    //TODO: Implementation
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {    
+    guard let resource = viewModel.resourceForIndex(indexPath: indexPath) as? Book else {
+      return
+    }
+    
+    let bookDetailsViewController = BookDetailsViewController()
+    bookDetailsViewController.mode = .select
+    bookDetailsViewController.delegate = self
+    bookDetailsViewController.initialize(with: resource)
+    navigationController?.pushViewController(bookDetailsViewController, animated: true)    
   }
   
   public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
@@ -386,4 +394,9 @@ extension RichBookViewController {
   }
 }
 
-
+extension RichBookViewController: BookDetailsViewControllerDelegate {
+  func bookDetails(viewController: BookDetailsViewController, didSelect book: Book) {
+    _ = self.navigationController?.popViewController(animated: true)
+    self.delegate?.richBookViewController(self, didSelect: book)
+  }
+}
