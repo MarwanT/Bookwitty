@@ -25,9 +25,9 @@ class ProfileCardViewModel: CardViewModelProtocol {
     delegate?.resourceUpdated(viewModel: self)
   }
 
-  func values() -> (name: String?, biography: String?, imageUrl: String?, following: Bool, followers: Int?) {
+  func values() -> (name: String?, biography: String?, imageUrl: String?, following: Bool, followers: Int?, reported: Bool) {
     guard let resource = resource, let penName = resource as? PenName else {
-      return (nil, nil, nil, false, nil)
+      return (nil, nil, nil, false, nil, false)
     }
 
     let name = penName.name
@@ -35,7 +35,8 @@ class ProfileCardViewModel: CardViewModelProtocol {
     let imageUrl = penName.avatarUrl
     let following = resource.following
     let followers = resource.counts?.followers
+    let reported: Bool = DataManager.shared.isReported(resource as? ModelResource)
 
-    return (name: name, biography: biography, imageUrl: imageUrl, following: following, followers: followers)
+    return (name: name, biography: biography, imageUrl: imageUrl, following: following, followers: followers, reported: reported)
   }
 }

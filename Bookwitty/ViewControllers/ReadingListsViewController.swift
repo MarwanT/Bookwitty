@@ -324,9 +324,11 @@ extension ReadingListsViewController: Localizable {
 extension ReadingListsViewController {
 
   fileprivate func actionForCard(resource: ModelResource?) {
-    guard let resource = resource else {
+    guard let resource = resource,
+      !DataManager.shared.isReported(resource) else {
       return
     }
+    
     let registeredType = resource.registeredResourceType
 
     switch registeredType {

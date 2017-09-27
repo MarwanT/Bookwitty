@@ -115,11 +115,23 @@ extension UIViewController {
     alert.addAction(UIAlertAction(title: Strings.yes_this_is_spam(), style: .destructive, handler: { (action: UIAlertAction) in
       _ = PenNameAPI.report(identifier: identifier, completion: { (success: Bool, error: BookwittyAPIError?) in
         if success {
+          DataManager.shared.updateResource(with: identifier, after: .report)
           self.showReportSuccessfullAlert(completion: {
             completion(success)
           })
         }
       })
+
+      //MARK: [Analytics] Event
+      guard let resource = DataManager.shared.fetchResource(with: identifier) as? PenName else {
+        return
+      }
+
+      var name: String = resource.name ?? ""
+      let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                   action: .ConfirmReport,
+                                                   name: name)
+      Analytics.shared.send(event: event)
     }))
 
     alert.addAction(UIAlertAction(title: Strings.no_forget_it(), style: .default, handler: { (action: UIAlertAction) in
@@ -135,11 +147,53 @@ extension UIViewController {
     alert.addAction(UIAlertAction(title: Strings.yes_this_is_spam(), style: .destructive, handler: { (action: UIAlertAction) in
       _ = ContentAPI.report(identifier: identifier, completion: { (success: Bool, error: BookwittyAPIError?) in
         if success {
+          DataManager.shared.updateResource(with: identifier, after: .report)
           self.showReportSuccessfullAlert(completion: {
             completion(success)
           })
         }
       })
+
+      //MARK: [Analytics] Event
+      guard let resource = DataManager.shared.fetchResource(with: identifier) as? ModelCommonProperties else {
+        return
+      }
+
+      let category: Analytics.Category
+      var name: String = resource.title ?? ""
+      switch resource.registeredResourceType {
+      case Image.resourceType:
+        category = .Image
+      case Quote.resourceType:
+        category = .Quote
+      case Video.resourceType:
+        category = .Video
+      case Audio.resourceType:
+        category = .Audio
+      case Link.resourceType:
+        category = .Link
+      case Author.resourceType:
+        category = .Author
+        name = (resource as? Author)?.name ?? ""
+      case ReadingList.resourceType:
+        category = .ReadingList
+      case Topic.resourceType:
+        category = .Topic
+      case Text.resourceType:
+        category = .Text
+      case Book.resourceType:
+        category = .TopicBook
+      case PenName.resourceType:
+        category = .PenName
+        name = (resource as? PenName)?.name ?? ""
+      default:
+        category = .Default
+      }
+
+      let event: Analytics.Event = Analytics.Event(category: category,
+                                                   action: .ConfirmReport,
+                                                   name: name)
+      Analytics.shared.send(event: event)
     }))
 
     alert.addAction(UIAlertAction(title: Strings.no_forget_it(), style: .default, handler: { (action: UIAlertAction) in

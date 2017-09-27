@@ -278,7 +278,8 @@ extension TagFeedViewController: ASCollectionDataSource, ASCollectionDelegate {
 // MARK: - Actions For Cards
 extension TagFeedViewController {
   func actionForCard(resource: ModelResource?) {
-    guard let resource = resource else {
+    guard let resource = resource,
+      !DataManager.shared.isReported(resource) else {
       return
     }
     let registeredType = resource.registeredResourceType

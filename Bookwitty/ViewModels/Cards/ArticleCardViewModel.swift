@@ -25,9 +25,9 @@ class ArticleCardViewModel: CardViewModelProtocol {
     delegate?.resourceUpdated(viewModel: self)
   }
 
-  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, imageUrl: String?, topComment: Comment?, comments: String?, tags: [String]?, wit: (is: Bool, count: Int, info: String?))) {
+  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, imageUrl: String?, topComment: Comment?, comments: String?, tags: [String]?, wit: (is: Bool, count: Int, info: String?)), reported: Bool) {
     guard let resource = resource else {
-      return (false, nil, content: (nil, nil, nil, nil, nil, nil, wit: (false, 0, nil)))
+      return (false, nil, content: (nil, nil, nil, nil, nil, nil, wit: (false, 0, nil)), false)
     }
 
 
@@ -49,7 +49,8 @@ class ArticleCardViewModel: CardViewModelProtocol {
     let topComment: Comment? = resource.topComments?.first
     let tags = resource.tags?.flatMap({ $0.title })
     let wit = (is: resource.isWitted, count: resource.counts?.wits ?? 0, resource.witters)
-
-    return (infoNode, cardPostInfoData, content: (title, description, imageUrl, topComment, comments, tags, wit: wit))
+    let reported: Bool = DataManager.shared.isReported(resource as? ModelResource)
+    
+    return (infoNode, cardPostInfoData, content: (title, description, imageUrl, topComment, comments, tags, wit: wit), reported: reported)
   }
 }

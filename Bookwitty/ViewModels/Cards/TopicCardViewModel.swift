@@ -25,9 +25,9 @@ class TopicCardViewModel: CardViewModelProtocol {
     delegate?.resourceUpdated(viewModel: self)
   }
 
-  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, image: (cover: String?, thumbnail: String?), comments: String?, statistics: (posts: Int?, relatedBooks: Int?, followers: Int?), following: Bool, wit: (is: Bool, count: Int, info: String?))) {
+  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, image: (cover: String?, thumbnail: String?), comments: String?, statistics: (posts: Int?, relatedBooks: Int?, followers: Int?), following: Bool, wit: (is: Bool, count: Int, info: String?)), reported: Bool) {
     guard let resource = resource else {
-      return (false, nil, content: (nil, nil, image: (nil, nil), nil, statistics: (nil, nil, nil), false, wit: (false, 0, nil)))
+      return (false, nil, content: (nil, nil, image: (nil, nil), nil, statistics: (nil, nil, nil), false, wit: (false, 0, nil)), false)
     }
 
     let cardPostInfoData: CardPostInfoNodeData?
@@ -59,7 +59,8 @@ class TopicCardViewModel: CardViewModelProtocol {
     let followers = resource.counts?.followers
     let statistics = (posts, relatedBooks, followers)
     let wit = (is: resource.isWitted, count: resource.counts?.wits ?? 0, resource.witters)
+    let reported: Bool = DataManager.shared.isReported(resource as? ModelResource)
 
-    return (infoNode, cardPostInfoData, content: (title, description, image: (imageUrl, nil), comments, statistics: statistics, following, wit: wit))
+    return (infoNode, cardPostInfoData, content: (title, description, image: (imageUrl, nil), comments, statistics: statistics, following, wit: wit), reported: reported)
   }
 }

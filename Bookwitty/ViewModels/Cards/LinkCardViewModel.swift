@@ -25,9 +25,9 @@ class LinkCardViewModel: CardViewModelProtocol {
     delegate?.resourceUpdated(viewModel: self)
   }
 
-  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, linkUrl: String?, imageUrl: String?, topComment: Comment?, comments: String?, tags: [String]?, wit: (is: Bool, count: Int, info: String?))) {
+  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, linkUrl: String?, imageUrl: String?, topComment: Comment?, comments: String?, tags: [String]?, wit: (is: Bool, count: Int, info: String?)), reported: Bool) {
     guard let resource = resource else {
-      return (false, nil, content: (nil, nil, nil, nil, nil, nil, nil, wit: (false, 0, nil)))
+      return (false, nil, content: (nil, nil, nil, nil, nil, nil, nil, wit: (false, 0, nil)), false)
     }
 
     let cardPostInfoData: CardPostInfoNodeData?
@@ -56,7 +56,8 @@ class LinkCardViewModel: CardViewModelProtocol {
     }
 
     let wit = (is: resource.isWitted, count: resource.counts?.wits ?? 0, resource.witters)
+    let reported: Bool = DataManager.shared.isReported(resource as? ModelResource)
     
-    return (infoNode, cardPostInfoData, content: (title, description, linkUrl, imageUrl, topComment, comments, tags, wit: wit))
+    return (infoNode, cardPostInfoData, content: (title, description, linkUrl, imageUrl, topComment, comments, tags, wit: wit), reported: reported)
   }
 }

@@ -185,5 +185,6 @@ extension ProfileCardPostCellNode: ProfileCardViewModelDelegate {
     node.followersCount = String(counting: values.followers)
     node.imageUrl = values.imageUrl
     shouldHandleTopComments = false
+    reported = values.reported
   }
 }

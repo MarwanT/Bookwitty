@@ -15,12 +15,14 @@ class DataManager {
     case unwit
     case follow
     case unfollow
+    case report
   }
 
   static let shared = DataManager()
   private init() {}
 
   fileprivate var pool: [String : ModelResource] = [:]
+  fileprivate var reported: [String] = []
 
   //MARK: - Accessing Resources
   func fetchResource(with identifier: String) -> ModelResource? {
@@ -94,6 +96,8 @@ class DataManager {
       follow(resource)
     case .unfollow:
       unfollow(resource)
+    case .report:
+      report(resource)
     }
 
     notifyUpdate(resources: [identifier])
@@ -101,6 +105,14 @@ class DataManager {
 
   private func notifyUpdate(resources: [String]) {
     NotificationCenter.default.post(name: Notifications.Name.UpdateResource, object: resources)
+  }
+
+  //MARK: - Reported Resource
+  func isReported(_ resource: ModelResource?) -> Bool {
+    guard let identifier = resource?.id else {
+      return false
+    }
+    return reported.contains(identifier)
   }
 
   //MARK: - Remove Resources
@@ -128,6 +140,16 @@ extension DataManager {
   fileprivate func unfollow(_ resource: ModelResource) {
     var actionableRes = resource as? ModelCommonActions
     actionableRes?.isFollowing = false
+  }
+}
+
+//MARK: - Update After Action Implementations - Extra Actions
+extension DataManager {
+  fileprivate func report(_ resource: ModelResource) {
+    guard let identifier = resource.id else {
+      return
+    }
+    reported.append(identifier)
   }
 }
 

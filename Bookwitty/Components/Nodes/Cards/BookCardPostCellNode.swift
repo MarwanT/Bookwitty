@@ -283,5 +283,6 @@ extension BookCardPostCellNode: BookCardViewModelDelegate {
     articleCommentsSummary = values.content.comments
     actionInfoValue = values.content.wit.info
     shouldHandleTopComments = false
+    reported = values.reported
   }
 }

@@ -174,5 +174,6 @@ extension ArticleCardPostCellNode: ArticleCardViewModelDelegate {
     topComment = values.content.topComment
     tags = values.content.tags
     actionInfoValue = values.content.wit.info
+    reported = values.reported
   }
 }
