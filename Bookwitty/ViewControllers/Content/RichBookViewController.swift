@@ -9,6 +9,10 @@
 import UIKit
 import AsyncDisplayKit
 
+protocol RichBookViewControllerDelegate: class {
+  func richBookViewController(_ richBookViewController: RichBookViewController, didSelect book: Book)
+}
+
 final class RichBookViewController: ASViewController<ASCollectionNode> {
   enum LoadingStatus {
     case none
@@ -23,7 +27,7 @@ final class RichBookViewController: ASViewController<ASCollectionNode> {
   let misfortuneNode: MisfortuneNode
   let filterNode: FilterCellNode
   let viewModel = RichBookViewModel()
-  
+  weak var delegate: RichBookViewControllerDelegate?
   var loadingStatus: LoadingStatus = .none {
     didSet {
       var showLoader: Bool = false
