@@ -91,6 +91,7 @@
 		56C54C681F05092000C5FE85 /* CommentCompactNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C54C671F05092000C5FE85 /* CommentCompactNode.swift */; };
 		56D341C31EE6AE2800A852C6 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D341C21EE6AE2800A852C6 /* AdSupport.framework */; };
 		56D36E821E6DAB3400791098 /* PenNameFollowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D36E811E6DAB3400791098 /* PenNameFollowNode.swift */; };
+		56D5D0971F7BD59000746913 /* SearchNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D5D0961F7BD59000746913 /* SearchNode.swift */; };
 		56D5F73B1E5B60BF00F6A164 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D5F73A1E5B60BF00F6A164 /* Book.swift */; };
 		56D5F73D1E5B7D0000F6A164 /* PenName+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D5F73C1E5B7D0000F6A164 /* PenName+API.swift */; };
 		56E09DBC1E5463EA00B7C6E6 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E09DBB1E5463EA00B7C6E6 /* ChangePasswordViewController.swift */; };
@@ -420,6 +421,7 @@
 		56C54C671F05092000C5FE85 /* CommentCompactNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCompactNode.swift; sourceTree = "<group>"; };
 		56D341C21EE6AE2800A852C6 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		56D36E811E6DAB3400791098 /* PenNameFollowNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameFollowNode.swift; sourceTree = "<group>"; };
+		56D5D0961F7BD59000746913 /* SearchNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchNode.swift; sourceTree = "<group>"; };
 		56D5F73A1E5B60BF00F6A164 /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		56D5F73C1E5B7D0000F6A164 /* PenName+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PenName+API.swift"; sourceTree = "<group>"; };
 		56E09DBB1E5463EA00B7C6E6 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
@@ -909,6 +911,14 @@
 			path = Cards;
 			sourceTree = "<group>";
 		};
+		56D5D0951F7BD55A00746913 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				56D5D0961F7BD59000746913 /* SearchNode.swift */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
 		56E8B6421E6971B900D8E71E /* ControllerNodes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1072,6 +1082,7 @@
 		59057FD81E2533010036AAF3 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				56D5D0951F7BD55A00746913 /* Content */,
 				59EC5B9E1E6C5987006E1CB9 /* BookDetails */,
 				F417B1C41E712C7100B0FAFE /* Cards */,
 				56E8B6421E6971B900D8E71E /* ControllerNodes */,
@@ -2105,6 +2116,7 @@
 				59CB4DF11EE0600800E7A60B /* WriteCommentNode.swift in Sources */,
 				561229E31EA5FA5D004CE079 /* ProfileCardViewModel.swift in Sources */,
 				56C54C681F05092000C5FE85 /* CommentCompactNode.swift in Sources */,
+				56D5D0971F7BD59000746913 /* SearchNode.swift in Sources */,
 				59A341571E575D3100CF90B3 /* NewsFeedViewModel.swift in Sources */,
 				5657A5431E8BCF02000EE647 /* Utilities+API.swift in Sources */,
 				5625D5301F3C5E3400D94FF8 /* TagFeedViewController.swift in Sources */,
