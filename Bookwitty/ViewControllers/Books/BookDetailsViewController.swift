@@ -12,6 +12,9 @@ import Spine
 import GSImageViewerController
 import SwiftLoader
 
+protocol BookDetailsViewControllerDelegate: class {
+  func bookDetails(viewController: BookDetailsViewController, didSelect book: Book)
+}
 class BookDetailsViewController: ASViewController<ASCollectionNode> {
   enum Mode {
     case view
@@ -25,6 +28,7 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
   
   let loaderNode = LoaderNode()
   var mode: Mode = .view
+  weak var delegate: BookDetailsViewControllerDelegate?
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
