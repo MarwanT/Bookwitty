@@ -102,7 +102,7 @@ class SignInViewController: UIViewController {
   
   func emailValidation() -> (String?) -> Bool {
     return { (email: String?) -> Bool in
-      email?.isValidEmail() ?? false
+      return email?.isValidEmail() ?? false
     }
   }
   
@@ -116,35 +116,49 @@ class SignInViewController: UIViewController {
   @IBAction func signInButtonTouchUpInside(_ sender: Any) {
     let emailValidationResult = emailField.validateField()
     let passwordValidationResult = passwordField.validateField()
-    
-    if emailValidationResult.isValid && passwordValidationResult.isValid {
-      showLoader()
 
-      //MARK: [Analytics] Event
-      let event: Analytics.Event = Analytics.Event(category: .Account,
-                                                   action: .SignIn)
-      Analytics.shared.send(event: event)
-
-      viewModel.signIn(
-        username: emailValidationResult.value!,
-        password: passwordValidationResult.value!,
-        completion: { (success, error) in
-          self.hideLoader()
-          if success {
-            NotificationCenter.default.post(name: AppNotification.didSignIn, object: nil)
-          } else {
-            self.showAlertWith(
-              title: Strings.sign_in(),
-              message: Strings.something_wrong_in_credentials())
-          }
-      })
-    } else {
-      NotificationView.show(notificationMessages:
-        [
-          NotificationMessage(text: Strings.please_fill_required_field())
-        ]
-      )
+    //Make sure the e-mail is valid
+    guard emailValidationResult.isValid else {
+      if let email = emailValidationResult.value, email.characters.count > 0 {
+        let error = emailValidationResult.errorMessage ?? Strings.please_fill_required_field()
+        NotificationView.show(notificationMessages: [NotificationMessage(text: error)])
+      } else {
+        NotificationView.show(notificationMessages: [NotificationMessage(text: Strings.please_fill_required_field())])
+      }
+      return
     }
+
+    //Make sure the password is valid
+    guard passwordValidationResult.isValid else {
+      if let password = passwordValidationResult.value, password.characters.count > 0 {
+        let error = passwordValidationResult.errorMessage ?? Strings.please_fill_required_field()
+        NotificationView.show(notificationMessages: [NotificationMessage(text: error)])
+      } else {
+        NotificationView.show(notificationMessages: [NotificationMessage(text: Strings.please_fill_required_field())])
+      }
+      return
+    }
+
+    showLoader()
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .Account,
+                                                 action: .SignIn)
+    Analytics.shared.send(event: event)
+
+    viewModel.signIn(
+      username: emailValidationResult.value!,
+      password: passwordValidationResult.value!,
+      completion: { (success, error) in
+        self.hideLoader()
+        if success {
+          NotificationCenter.default.post(name: AppNotification.didSignIn, object: nil)
+        } else {
+          self.showAlertWith(
+            title: Strings.sign_in(),
+            message: Strings.something_wrong_in_credentials())
+        }
+    })
   }
   
   
@@ -288,7 +302,7 @@ extension SignInViewController: Localizable {
     passwordField.configuration = InputFieldConfiguration(
       descriptionLabelText: Strings.password(),
       textFieldPlaceholder: Strings.enter_your_password(),
-      invalidationErrorMessage: Strings.password_invalid(),
+      invalidationErrorMessage: Strings.password_minimum_characters_error(),
       returnKeyType: UIReturnKeyType.done)
   }
 

@@ -307,7 +307,7 @@ extension CardDetailsViewController: PhotoCardContentNodeDelegate {
 }
 
 extension CardDetailsViewController: CommentsNodeDelegate {
-  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action, didFinishAction: ((Bool) -> ())?) {
     switch action {
     case .viewRepliesForComment(let comment, let postId):
       break

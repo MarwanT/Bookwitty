@@ -52,7 +52,7 @@ protocol PostDetailsNodeDelegate: class {
   func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
   func postDetails(node: PostDetailsNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
   func postDetails(node: PostDetailsNode, didRequestActionInfo fromNode: ASTextNode)
-  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action)
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action, didFinishAction: ((_ success: Bool) -> ())?)
   func postDetails(node: PostDetailsNode, didSelectTagAt index: Int)
 }
 
@@ -423,8 +423,8 @@ extension PostDetailsNode: PostDetailsHeaderNodeDelegate {
 }
 
 extension PostDetailsNode: CommentsNodeDelegate {
-  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action) {
-    delegate?.commentsNode(commentsNode, reactFor: action)
+  func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action, didFinishAction: ((Bool) -> ())?) {
+    delegate?.commentsNode(commentsNode, reactFor: action, didFinishAction: didFinishAction)
   }
 }
 

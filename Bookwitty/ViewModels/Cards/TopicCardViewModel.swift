@@ -41,7 +41,15 @@ class TopicCardViewModel: CardViewModelProtocol {
     }
 
     let infoNode: Bool = !(cardPostInfoData?.name.isEmpty ?? true)
-    let title = resource.title
+    
+    let title: String?
+    switch resource {
+    case is Author:
+      title = (resource as? Author)?.name
+    default:
+       title = resource.title
+    }
+
     let description = resource.shortDescription
     let imageUrl = resource.coverImageUrl
     let comments: String? = nil

@@ -240,5 +240,6 @@ extension TopicCardPostCellNode: TopicCardViewModelDelegate {
     setFollowingValue(following: values.content.following)
     setWitValue(witted: values.content.wit.is)
     actionInfoValue = values.content.wit.info
+    shouldHandleTopComments = false
   }
 }

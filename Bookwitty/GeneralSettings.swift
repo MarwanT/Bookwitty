@@ -16,6 +16,8 @@ public class GeneralSettings {
     public static let SendUsageData = "SendUsageData"
     public static let SendEmailNotifications = "SendEmailNotifications"
     public static let SendNewsletter = "SendNewsletter"
+    public static let SendCommentsEmail = "SendCommentsEmail"
+    public static let SendFollowersEmail = "SendFollowersEmail"
     public static let ShouldShowIntroduction = "ShouldShowIntroduction"
     public static let PreferredLanguage = "PreferredLanguage"
     public static let ShouldDisplayNewsFeedIntroductoryBanner = "ShouldDisplayNewsFeedIntroductoryBanner"
@@ -33,6 +35,8 @@ public class GeneralSettings {
       Keys.PreferredLanguage : defaultLanguage,
       Keys.SendUsageData : true,
       Keys.SendEmailNotifications : true,
+      Keys.SendCommentsEmail : true,
+      Keys.SendFollowersEmail : true,
       Keys.SendNewsletter : true,
       Keys.ShouldShowIntroduction : true,
       Keys.ShouldDisplayNewsFeedIntroductoryBanner : true,
@@ -43,6 +47,8 @@ public class GeneralSettings {
     defaults.register(defaults: defaultValues)
     shouldSendUsageData = defaults.bool(forKey: Keys.SendUsageData)
     shouldSendEmailNotifications = defaults.bool(forKey: Keys.SendEmailNotifications)
+    shouldSendCommentsEmail = defaults.bool(forKey: Keys.SendCommentsEmail)
+    shouldSendFollowersEmail = defaults.bool(forKey: Keys.SendFollowersEmail)
     shouldSendNewsletter = defaults.bool(forKey: Keys.SendNewsletter)
     shouldShowIntroduction = defaults.bool(forKey: Keys.ShouldShowIntroduction)
     preferredLanguage = defaults.string(forKey: Keys.PreferredLanguage) ?? Localization.Language.English.rawValue
@@ -63,6 +69,18 @@ public class GeneralSettings {
   public var shouldSendEmailNotifications: Bool {
     didSet {
       defaults.set(self.shouldSendEmailNotifications, forKey: Keys.SendEmailNotifications)
+    }
+  }
+
+  public var shouldSendCommentsEmail: Bool {
+    didSet {
+      defaults.set(self.shouldSendCommentsEmail, forKey: Keys.SendCommentsEmail)
+    }
+  }
+
+  public var shouldSendFollowersEmail: Bool {
+    didSet {
+      defaults.set(self.shouldSendFollowersEmail, forKey: Keys.SendFollowersEmail)
     }
   }
 

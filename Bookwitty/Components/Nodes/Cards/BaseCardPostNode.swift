@@ -103,7 +103,11 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
   fileprivate let topCommentNode: CommentCompactNode
   fileprivate let writeCommentNode: WriteCommentNode
 
-  var shouldHandleTopComments: Bool = true
+  var shouldHandleTopComments: Bool = true {
+    didSet {
+      actionBarNode.hideCommentButton = !shouldHandleTopComments
+    }
+  }
   var shouldShowTagsNode: Bool = false
 
   fileprivate var shouldShowCommentSummaryNode: Bool {
@@ -213,7 +217,9 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     separatorNode.style.flexGrow = 1
 
     writeCommentNode.configuration.imageSize = CGSize(width: 30.0, height: 30.0)
-    writeCommentNode.configuration.textContainerInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+    writeCommentNode.configuration.textContainerInset = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 5)
+    writeCommentNode.configuration.textNodeBorderWidth = 0.0
+    writeCommentNode.configuration.placeholderTextColor = ThemeManager.shared.currentTheme.colorNumber15()
     writeCommentNode.style.preferredSize = CGSize(width: 35.0, height: 35.0)
     writeCommentNode.configuration.textNodeMinimumHeight = 30
     writeCommentNode.configuration.externalInsets = UIEdgeInsets.zero

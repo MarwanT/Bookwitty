@@ -82,8 +82,8 @@ class ProductDetails: NSObject {
       let language = Locale.application.localizedString(forLanguageCode: languageOfText) ?? languageOfText
       associatedInformation.append((Strings.language_of_text(), language))
     }
-    if let productFormat = productFormat, !productFormat.isBlank {
-      associatedInformation.append((Strings.product_format(), productFormat))
+    if let productForm = productForm, !productForm.value.isBlank {
+      associatedInformation.append((Strings.product_format(), productForm.value))
     }
     if let publisher = publisher, !publisher.isBlank {
       associatedInformation.append((Strings.publisher(), publisher))

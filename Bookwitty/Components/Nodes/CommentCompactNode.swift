@@ -18,6 +18,7 @@ class CommentCompactNode: ASCellNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
 
   fileprivate let imageNode: ASNetworkImageNode
+  fileprivate let fullNameNode: ASTextNode
   fileprivate let messageNode: DTAttributedLabelNode
   fileprivate let overlayNode: ASControlNode
 
@@ -25,6 +26,7 @@ class CommentCompactNode: ASCellNode {
 
   override init() {
     imageNode = ASNetworkImageNode()
+    fullNameNode = ASTextNode()
     messageNode = DTAttributedLabelNode()
     overlayNode = ASControlNode()
     super.init()
@@ -38,14 +40,18 @@ class CommentCompactNode: ASCellNode {
     imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0.0, nil)
     imageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
 
+    fullNameNode.backgroundColor = UIColor.clear
+    fullNameNode.style.flexGrow = 1.0
+    fullNameNode.style.flexShrink = 1.0
+
     messageNode.backgroundColor = UIColor.clear
 
     messageNode.style.flexGrow = 1.0
     messageNode.style.flexShrink = 1.0
 
-    self.style.preferredSize = CGSize(width: 45.0, height: 45.0)
+    self.style.preferredSize = CGSize(width: 45.0, height: 60.0)
 
-    messageNode.maxNumberOfLines = 3
+    messageNode.maxNumberOfLines = 2
 
     overlayNode.addTarget(self, action: #selector(nodeTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
@@ -67,24 +73,35 @@ class CommentCompactNode: ASCellNode {
 
     let fullNameAttributedString = AttributedStringBuilder(fontDynamicType: .footnote)
       .append(text: fullName, color: ThemeManager.shared.currentTheme.defaultTextColor())
-      .append(text: ": ")
       .attributedString
+
+    fullNameNode.attributedText = fullNameAttributedString
+    fullNameNode.setNeedsLayout()
 
     let commentAttributedString = messageNode.htmlAttributedString(text: message, fontDynamicType: .body, color: ThemeManager.shared.currentTheme.defaultTextColor())
       ?? NSAttributedString(string: message)
 
-    let attributedString: NSMutableAttributedString = NSMutableAttributedString(attributedString: fullNameAttributedString)
-    attributedString.append(commentAttributedString)
-    messageNode.set(attributedString: attributedString)
+    messageNode.set(attributedString: commentAttributedString)
     messageNode.setNeedsLayout()
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let imageNodeInsetSpec = ASInsetLayoutSpec(insets: imageInset, child: imageNode)
+
+    let fullNameNodeInsetSpec = ASInsetLayoutSpec(insets: messageInset, child: fullNameNode)
+    fullNameNodeInsetSpec.style.flexGrow = 1.0
+    fullNameNodeInsetSpec.style.flexShrink = 1.0
+
+    messageNode.width = constrainedSize.max.width
     let messageNodeInsetSpec = ASInsetLayoutSpec(insets: messageInset, child: messageNode)
     messageNodeInsetSpec.style.flexGrow = 1.0
     messageNodeInsetSpec.style.flexShrink = 1.0
-    let horizontalSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start, alignItems: .center, children: [imageNodeInsetSpec, messageNodeInsetSpec])
+
+    let commentSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0.0, justifyContent: .center, alignItems: .start, children: [fullNameNodeInsetSpec, messageNodeInsetSpec])
+    commentSpec.style.flexGrow = 1.0
+    commentSpec.style.flexShrink = 1.0
+
+    let horizontalSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0.0, justifyContent: .start, alignItems: .center, children: [imageNodeInsetSpec, commentSpec])
     return ASOverlayLayoutSpec(child: horizontalSpec, overlay: overlayNode)
   }
 
@@ -93,7 +110,7 @@ class CommentCompactNode: ASCellNode {
   }
 
   var messageInset: UIEdgeInsets {
-    return UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 5.0)
+    return UIEdgeInsets(top: 5.0, left: 5.0, bottom: 2.0, right: 5.0)
   }
 }
 

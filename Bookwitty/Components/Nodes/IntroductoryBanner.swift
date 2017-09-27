@@ -74,14 +74,14 @@ class IntroductoryBanner: ASCellNode {
     didSet {
       titleNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.callout)
         .append(text: titleText ?? "", color: mode.titleTextColor).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
-      setNeedsLayout()
+      titleNode.setNeedsLayout()
     }
   }
   
   fileprivate var subtitleText: String? {
     didSet {
       subtitleNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1).append(text: subtitleText ?? "", color: mode.subtitleTextColor).applyParagraphStyling(alignment: NSTextAlignment.center).attributedString
-      setNeedsLayout()
+      subtitleNode.setNeedsLayout()
     }
   }
 }
