@@ -13,7 +13,7 @@ protocol RichBookViewControllerDelegate: class {
   func richBookViewController(_ richBookViewController: RichBookViewController, didSelect book: Book)
 }
 
-final class RichBookViewController: ASViewController<ASCollectionNode> {
+final class RichBookViewController: ASViewController<ASDisplayNode> {
   enum LoadingStatus {
     case none
     case loadMore
@@ -22,12 +22,15 @@ final class RichBookViewController: ASViewController<ASCollectionNode> {
   }
 
   let flowLayout: UICollectionViewFlowLayout
+  let controllerNode: ASDisplayNode
   let collectionNode: ASCollectionNode
   let loaderNode: LoaderNode
   let misfortuneNode: MisfortuneNode
 
   let viewModel = RichBookViewModel()
+
   weak var delegate: RichBookViewControllerDelegate?
+
   var loadingStatus: LoadingStatus = .none {
     didSet {
       var showLoader: Bool = false
@@ -64,8 +67,10 @@ final class RichBookViewController: ASViewController<ASCollectionNode> {
     misfortuneNode = MisfortuneNode(mode: MisfortuneNode.Mode.empty)
     misfortuneNode.style.height = ASDimensionMake(0)
     misfortuneNode.style.width = ASDimensionMake(0)
-    super.init(node: collectionNode)
-    
+
+    controllerNode = ASDisplayNode()
+    super.init(node: controllerNode)
+
     misfortuneNode.delegate = self
   }
   
