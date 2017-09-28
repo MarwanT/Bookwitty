@@ -91,6 +91,7 @@ class RichContentBookNode: ASCellNode {
                                                     children: infoArray)
 
     titleAuthorVerticalSpec.style.flexShrink = 1.0
+    titleAuthorVerticalSpec.style.flexGrow = 1.0
 
     nodesArray.append(titleAuthorVerticalSpec)
     nodesArray.append(addButton)
