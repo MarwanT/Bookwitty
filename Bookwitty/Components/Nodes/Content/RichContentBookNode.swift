@@ -70,6 +70,36 @@ class RichContentBookNode: ASCellNode {
     separatorNode.style.flexShrink = 1
     separatorNode.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
   }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    var nodesArray: [ASLayoutElement] = []
+    nodesArray.append(imageNode)
+
+    let infoArray: [ASLayoutElement] = [titleNode, authorNode]
+    let titleAuthorVerticalSpec = ASStackLayoutSpec(direction: .vertical,
+                                                    spacing: 0,
+                                                    justifyContent: .start,
+                                                    alignItems: .start,
+                                                    children: infoArray)
+
+    titleAuthorVerticalSpec.style.flexShrink = 1.0
+
+    nodesArray.append(titleAuthorVerticalSpec)
+    nodesArray.append(addButton)
+    let horizontalSpec = ASStackLayoutSpec(direction: .horizontal,
+                                           spacing: internalMargin,
+                                           justifyContent: .start,
+                                           alignItems: .center,
+                                           children: nodesArray)
+
+    let horizontalInsetSpec = ASInsetLayoutSpec(insets: edgeInset(), child: horizontalSpec)
+
+    let separatorSpaceFromStart = imageSize.width + (internalMargin * 2)
+    let separatorHorizontalSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start, alignItems: .stretch, children:  [spacer(width: separatorSpaceFromStart), separatorNode])
+    let verticalSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0.0, justifyContent: .center, alignItems: .stretch, children: [spacer(flexGrow: 1), horizontalInsetSpec, spacer(flexGrow: 1), separatorHorizontalSpec])
+
+    return verticalSpec
+  }
 }
 
 //Helpers
