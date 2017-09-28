@@ -111,7 +111,7 @@ class RichContentBookNode: ASCellNode {
 
   @objc
   fileprivate func addButtonTouchUpInside(_ sender: ASButtonNode?) {
-    //TODO: delegate the add action 
+    delegate?.richContentBookDidRequestAddAction(node: self)
   }
 
   //MARK: - Data handlers
