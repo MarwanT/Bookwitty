@@ -71,3 +71,25 @@ class RichContentBookNode: ASCellNode {
     separatorNode.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
   }
 }
+
+//Helpers
+extension RichContentBookNode {
+  fileprivate func edgeInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: internalMargin,
+                        left: internalMargin,
+                        bottom: internalMargin,
+                        right: internalMargin)
+  }
+
+  fileprivate func spacer(flexGrow: CGFloat = 0.0, height: CGFloat = 0.0, width: CGFloat = 0.0) -> ASLayoutSpec {
+    return ASLayoutSpec().styled { (style) in
+      style.height = ASDimensionMake(height)
+      style.width = ASDimensionMake(width)
+      style.flexGrow = flexGrow
+    }
+  }
+
+  fileprivate func isValid(_ value: String?) -> Bool {
+    return !value.isEmptyOrNil()
+  }
+}
