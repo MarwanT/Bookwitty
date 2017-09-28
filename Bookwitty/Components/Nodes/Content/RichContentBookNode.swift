@@ -100,6 +100,36 @@ class RichContentBookNode: ASCellNode {
 
     return verticalSpec
   }
+
+  //MARK: - Data handlers
+  var title: String? {
+    didSet {
+      if let title = title {
+        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title3)
+          .append(text: title, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+        setNeedsLayout()
+      }
+    }
+  }
+
+  var author: String? {
+    didSet {
+      if let author = author {
+        authorNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption1)
+          .append(text: author, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+        setNeedsLayout()
+      }
+    }
+  }
+
+  var imageUrl: String? {
+    didSet {
+      if let imageUrl = imageUrl {
+        imageNode.url = URL(string: imageUrl)
+        setNeedsLayout()
+      }
+    }
+  }
 }
 
 //Helpers
