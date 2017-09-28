@@ -25,7 +25,7 @@ final class RichBookViewController: ASViewController<ASCollectionNode> {
   let collectionNode: ASCollectionNode
   let loaderNode: LoaderNode
   let misfortuneNode: MisfortuneNode
-  let filterNode: FilterCellNode
+
   let viewModel = RichBookViewModel()
   weak var delegate: RichBookViewControllerDelegate?
   var loadingStatus: LoadingStatus = .none {
@@ -64,10 +64,6 @@ final class RichBookViewController: ASViewController<ASCollectionNode> {
     misfortuneNode = MisfortuneNode(mode: MisfortuneNode.Mode.empty)
     misfortuneNode.style.height = ASDimensionMake(0)
     misfortuneNode.style.width = ASDimensionMake(0)
-    
-    filterNode = FilterCellNode()
-    filterNode.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
-    
     super.init(node: collectionNode)
     
     misfortuneNode.delegate = self
