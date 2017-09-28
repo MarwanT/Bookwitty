@@ -9,6 +9,10 @@
 import UIKit
 import AsyncDisplayKit
 
+protocol RichContentBookNodeDelegate: NSObjectProtocol {
+  func richContentBookDidRequestAddAction(node: RichContentBookNode)
+}
+
 class RichContentBookNode: ASCellNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let imageSize: CGSize = CGSize(width: 60.0, height: 90.0)
@@ -18,6 +22,8 @@ class RichContentBookNode: ASCellNode {
   private var authorNode: ASTextNode
   private var addButton: ASButtonNode
   private var separatorNode: ASDisplayNode
+
+  weak var delegate: RichContentBookNodeDelegate?
 
   override init() {
     imageNode = ASNetworkImageNode()
