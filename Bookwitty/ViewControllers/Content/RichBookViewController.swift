@@ -24,6 +24,7 @@ final class RichBookViewController: ASViewController<ASDisplayNode> {
   let flowLayout: UICollectionViewFlowLayout
   let controllerNode: ASDisplayNode
   let collectionNode: ASCollectionNode
+  let searchNode: SearchNode
   let loaderNode: LoaderNode
   let misfortuneNode: MisfortuneNode
 
@@ -63,6 +64,8 @@ final class RichBookViewController: ASViewController<ASDisplayNode> {
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     loaderNode = LoaderNode()
     loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
+
+    searchNode = SearchNode()
     
     misfortuneNode = MisfortuneNode(mode: MisfortuneNode.Mode.empty)
     misfortuneNode.style.height = ASDimensionMake(0)
@@ -72,6 +75,7 @@ final class RichBookViewController: ASViewController<ASDisplayNode> {
     super.init(node: controllerNode)
 
     misfortuneNode.delegate = self
+    searchNode.searchBarDelegate = self
   }
   
   required init?(coder aDecoder: NSCoder) {
