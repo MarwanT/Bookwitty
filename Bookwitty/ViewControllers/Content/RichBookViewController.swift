@@ -146,6 +146,7 @@ final class RichBookViewController: ASViewController<ASDisplayNode> {
     bookNode.imageUrl = resource.thumbnailImageUrl
     bookNode.title = resource.title
     bookNode.author = book.productDetails?.author
+    bookNode.delegate = self
 
     return bookNode
   }
@@ -388,6 +389,18 @@ extension RichBookViewController {
         }
       }, completion: completionBlock)
     }
+  }
+}
+
+//MARK: - RichContentBookNodeDelegate implementation
+extension RichBookViewController: RichContentBookNodeDelegate {
+  func richContentBookDidRequestAddAction(node: RichContentBookNode) {
+    guard let indexPath = node.indexPath,
+    let book = viewModel.resourceForIndex(indexPath: indexPath) as? Book else {
+      return
+    }
+
+    delegate?.richBookViewController(self, didSelect: book)
   }
 }
 
