@@ -20,7 +20,7 @@ final class RichBookViewController: ASViewController<ASCollectionNode> {
     case reloading
     case loading
   }
-  var searchBar: UISearchBar?
+
   let flowLayout: UICollectionViewFlowLayout
   let collectionNode: ASCollectionNode
   let loaderNode: LoaderNode
@@ -84,8 +84,6 @@ final class RichBookViewController: ASViewController<ASCollectionNode> {
     self.view.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     self.hideNavigationShadowImage()
     loadNavigationBarButtons()
-    configureSearchBar()
-    searchBar?.becomeFirstResponder()
   }
   
   private func loadNavigationBarButtons() {
@@ -118,32 +116,7 @@ final class RichBookViewController: ASViewController<ASCollectionNode> {
     self.view.addParentLeadingConstraint(separator)
     self.view.addParentTrailingConstraint(separator)
   }
-  
-  func configureSearchBar() {
-    searchBar = UISearchBar()
-    searchBar?.translatesAutoresizingMaskIntoConstraints = false
-    if let searchBar = self.searchBar {
-      self.view.addSubview(searchBar)
-      NSLayoutConstraint.activate([
-        searchBar.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor),
-        searchBar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-        searchBar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-        ])
-      self.addSeparatorBelow(searchBar)
-    }
-    searchBar?.placeholder = Strings.search_placeholder()
-    searchBar?.delegate = self
-    searchBar?.showsCancelButton = false
-    searchBar?.searchBarStyle = .minimal
-    searchBar?.barTintColor = .clear
-    
 
-    searchBar?.setTextColor(color: ThemeManager.shared.currentTheme.defaultTextColor())
-    searchBar?.setTextFieldColor(color: ThemeManager.shared.currentTheme.colorNumber18().withAlphaComponent(0.7))
-    searchBar?.setPlaceholderTextColor(color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
-    searchBar?.setSearchImageColor(color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
-    searchBar?.setTextFieldClearButtonColor(color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
-  }
   
   func nodeForItem(atIndexPath indexPath: IndexPath) -> BaseCardPostNode? {
     guard let resource = self.viewModel.resourceForIndex(indexPath: indexPath) else {
@@ -325,7 +298,8 @@ extension RichBookViewController: ASCollectionDelegate {
     let initialLastIndexPath: Int = viewModel.numberOfItemsInSection(section: Section.cards.rawValue)
     
     //MARK: [Analytics] Event
-    let query = searchBar?.text ?? ""
+    //TODO: Grab the query from the search bar
+    let query = ""
     let event: Analytics.Event = Analytics.Event(category: .Search,
                                                  action: .LoadMore,
                                                  name: query)
