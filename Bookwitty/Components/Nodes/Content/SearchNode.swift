@@ -27,8 +27,13 @@ class SearchNode: ASCellNode {
     self.searchBar = self.view as? UISearchBar
     self.searchBar?.delegate = searchBarDelegate
   }
-
+  
   override func calculateSizeThatFits(_ constrainedSize: CGSize) -> CGSize {
     return CGSize(width: constrainedSize.width, height: SearchNode.cellHeight)
+  }
+
+  var text: String? {
+    get { return searchBar?.text }
+    set { searchBar?.text = newValue }
   }
 }
