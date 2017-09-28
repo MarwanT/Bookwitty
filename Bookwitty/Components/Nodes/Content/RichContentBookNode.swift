@@ -26,5 +26,48 @@ class RichContentBookNode: ASCellNode {
     addButton = ASButtonNode()
     separatorNode = ASDisplayNode()
     super.init()
+    setupNode()
+  }
+
+  fileprivate func setupNode() {
+    automaticallyManagesSubnodes = true
+    style.preferredSize = CGSize(width: 0.0, height: imageSize.height + (internalMargin * 2))
+    backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+
+    imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
+    imageNode.style.preferredSize = imageSize
+    imageNode.contentMode = UIViewContentMode.scaleAspectFit
+
+    titleNode.maximumNumberOfLines = 4
+    authorNode.maximumNumberOfLines = 1
+
+    titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    authorNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
+    let buttonFont = FontDynamicType.subheadline.font
+
+    let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultBackgroundColor())
+    let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+    let selectedButtonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultButtonColor())
+
+    addButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
+    addButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
+
+    addButton.setTitle(Strings.add(), with: buttonFont, with: textColor, for: .normal)
+
+    addButton.titleNode.maximumNumberOfLines = 1
+    addButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    addButton.style.height = ASDimensionMake(36.0)
+    addButton.style.minWidth = ASDimension(unit: .points, value: 50.0)
+
+    addButton.cornerRadius = 2.0
+    addButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
+    addButton.borderWidth = 2
+    addButton.clipsToBounds = true
+
+    separatorNode.style.height = ASDimensionMake(1)
+    separatorNode.style.flexGrow = 1
+    separatorNode.style.flexShrink = 1
+    separatorNode.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
   }
 }
