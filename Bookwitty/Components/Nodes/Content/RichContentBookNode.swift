@@ -71,6 +71,8 @@ class RichContentBookNode: ASCellNode {
     addButton.borderWidth = 2
     addButton.clipsToBounds = true
 
+    addButton.addTarget(self, action: #selector(addButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
+
     separatorNode.style.height = ASDimensionMake(1)
     separatorNode.style.flexGrow = 1
     separatorNode.style.flexShrink = 1
@@ -105,6 +107,11 @@ class RichContentBookNode: ASCellNode {
     let verticalSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0.0, justifyContent: .center, alignItems: .stretch, children: [spacer(flexGrow: 1), horizontalInsetSpec, spacer(flexGrow: 1), separatorHorizontalSpec])
 
     return verticalSpec
+  }
+
+  @objc
+  fileprivate func addButtonTouchUpInside(_ sender: ASButtonNode?) {
+    //TODO: delegate the add action 
   }
 
   //MARK: - Data handlers
