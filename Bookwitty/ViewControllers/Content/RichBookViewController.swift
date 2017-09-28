@@ -135,14 +135,19 @@ final class RichBookViewController: ASViewController<ASDisplayNode> {
     self.view.addParentTrailingConstraint(separator)
   }
 
-  
-  func nodeForItem(atIndexPath indexPath: IndexPath) -> BaseCardPostNode? {
-    guard let resource = self.viewModel.resourceForIndex(indexPath: indexPath) else {
+
+  func nodeForItem(atIndexPath indexPath: IndexPath) -> RichContentBookNode? {
+    guard let resource = self.viewModel.resourceForIndex(indexPath: indexPath) as? ModelCommonProperties,
+    let book = resource as? Book else {
       return nil
     }
-    let card = CardFactory.createCardFor(resourceType: resource.registeredResourceType)
-    card?.baseViewModel?.resource = resource as? ModelCommonProperties
-    return card
+
+    let bookNode = RichContentBookNode()
+    bookNode.imageUrl = resource.thumbnailImageUrl
+    bookNode.title = resource.title
+    bookNode.author = book.productDetails?.author
+
+    return bookNode
   }
   
   func searchAction() {
