@@ -25,6 +25,7 @@ final class RichBookViewController: ASViewController<ASDisplayNode> {
   let controllerNode: ASDisplayNode
   let collectionNode: ASCollectionNode
   let searchNode: SearchNode
+  let separatorNode: ASDisplayNode
   let loaderNode: LoaderNode
   let misfortuneNode: MisfortuneNode
 
@@ -74,12 +75,16 @@ final class RichBookViewController: ASViewController<ASDisplayNode> {
     misfortuneNode.style.height = ASDimensionMake(0)
     misfortuneNode.style.width = ASDimensionMake(0)
 
+    separatorNode = ASDisplayNode()
+    separatorNode.style.height = ASDimensionMake(1)
+    separatorNode.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+
     controllerNode = ASDisplayNode()
     super.init(node: controllerNode)
 
     controllerNode.automaticallyManagesSubnodes = true
     controllerNode.layoutSpecBlock = { [weak self] (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
-      let nodes = [self?.searchNode, self?.collectionNode]
+      let nodes = [self?.searchNode, self?.separatorNode, self?.collectionNode]
       let verticalStackSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0,
                                                 justifyContent: .start,
                                                 alignItems: .stretch,
