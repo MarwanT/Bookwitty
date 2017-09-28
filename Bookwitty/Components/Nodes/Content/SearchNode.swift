@@ -13,7 +13,7 @@ class SearchNode: ASCellNode {
   static let cellHeight: CGFloat = 44.0
 
   var searchBarDelegate: UISearchBarDelegate?
-  private var searchBar: UISearchBar?
+  fileprivate var searchBar: UISearchBar?
 
   convenience override init() {
     self.init(viewBlock: { () -> UIView in
@@ -26,6 +26,7 @@ class SearchNode: ASCellNode {
   override func didLoad() {
     self.searchBar = self.view as? UISearchBar
     self.searchBar?.delegate = searchBarDelegate
+    applyTheme()
   }
   
   override func calculateSizeThatFits(_ constrainedSize: CGSize) -> CGSize {
@@ -35,5 +36,20 @@ class SearchNode: ASCellNode {
   var text: String? {
     get { return searchBar?.text }
     set { searchBar?.text = newValue }
+  }
+}
+
+extension SearchNode: Themeable {
+  func applyTheme() {
+    searchBar?.placeholder = Strings.search_placeholder()
+    searchBar?.showsCancelButton = false
+    searchBar?.searchBarStyle = .minimal
+    searchBar?.barTintColor = .clear
+
+    searchBar?.setTextColor(color: ThemeManager.shared.currentTheme.defaultTextColor())
+    searchBar?.setTextFieldColor(color: ThemeManager.shared.currentTheme.colorNumber18().withAlphaComponent(0.7))
+    searchBar?.setPlaceholderTextColor(color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+    searchBar?.setSearchImageColor(color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+    searchBar?.setTextFieldClearButtonColor(color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
   }
 }
