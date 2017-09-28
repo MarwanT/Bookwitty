@@ -62,6 +62,9 @@ final class RichBookViewController: ASViewController<ASDisplayNode> {
     flowLayout.minimumLineSpacing       = 0
     
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
+    collectionNode.style.flexGrow = 1.0
+    collectionNode.style.flexShrink = 1.0
+    
     loaderNode = LoaderNode()
     loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
 
@@ -73,6 +76,16 @@ final class RichBookViewController: ASViewController<ASDisplayNode> {
 
     controllerNode = ASDisplayNode()
     super.init(node: controllerNode)
+
+    controllerNode.automaticallyManagesSubnodes = true
+    controllerNode.layoutSpecBlock = { [weak self] (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
+      let nodes = [self?.searchNode, self?.collectionNode]
+      let verticalStackSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0,
+                                                justifyContent: .start,
+                                                alignItems: .stretch,
+                                                children: nodes.flatMap({ return $0 }))
+      return verticalStackSpec
+    }
 
     misfortuneNode.delegate = self
     searchNode.searchBarDelegate = self
