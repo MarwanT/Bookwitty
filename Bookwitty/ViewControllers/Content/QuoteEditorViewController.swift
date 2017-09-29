@@ -44,8 +44,7 @@ class QuoteEditorViewController: UIViewController {
                                               target: self,
                                               action: #selector(cancelBarButtonTouchUpInside(_:)))
 
-    //TODO: Localize
-    let addBarButtonItem = UIBarButtonItem(title: "Add",
+    let addBarButtonItem = UIBarButtonItem(title: Strings.add(),
                                            style: .plain,
                                            target: self,
                                            action: #selector(addBarButtonTouchUpInside(_:)))
