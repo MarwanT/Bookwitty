@@ -144,8 +144,7 @@ class ContentEditorViewController: UIViewController {
   private func addRichEditorView() {
     self.contentView.addSubview(editor)
     editor.bindFrameToSuperviewBounds()
-    //TODO: Localize
-    editor.placeholder = "Write Here"
+    editor.placeholder = Strings.write_here()
     setupToolbar(of: editor)
   }
   
