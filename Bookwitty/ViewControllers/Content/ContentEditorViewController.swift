@@ -203,6 +203,13 @@ class ContentEditorViewController: UIViewController {
     let navigationController = UINavigationController(rootViewController: controller)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
   }
+
+  fileprivate func presentQuoteEditorViewController() {
+    let controller = Storyboard.Content.instantiate(QuoteEditorViewController.self)
+    controller.delegate = self
+    let navigationController = UINavigationController(rootViewController: controller)
+    self.navigationController?.present(navigationController, animated: true, completion: nil)
+  }
 }
 
 extension ContentEditorViewController: RichEditorToolbarDelegate {
@@ -237,7 +244,7 @@ extension ContentEditorViewController : RichContentMenuViewControllerDelegate {
     case .audio:
       self.presentRichLinkViewController(with: .audio)
     case .quote:
-      break
+      self.presentQuoteEditorViewController()
     }
   }
 }
@@ -267,6 +274,17 @@ extension ContentEditorViewController: RichLinkPreviewViewControllerDelegate {
   }
 
   func richLinkPreviewViewControllerDidCancel(_ viewController: RichLinkPreviewViewController) {
+    viewController.navigationController?.dismiss(animated: true, completion: nil)
+  }
+}
+
+extension ContentEditorViewController: QuoteEditorViewControllerDelegate {
+  func quoteEditor(viewController: QuoteEditorViewController, didRequestAdd quote: String, with author: String?) {
+    viewController.navigationController?.dismiss(animated: true, completion: nil)
+    //TODO: Sendt to JS
+  }
+
+  func quoteEditorViewControllerDidCancel(_ viewController: QuoteEditorViewController) {
     viewController.navigationController?.dismiss(animated: true, completion: nil)
   }
 }
