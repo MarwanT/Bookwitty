@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol QuoteEditorViewControllerDelegate {
+  func quoteEditor(viewController: QuoteEditorViewController, didRequestAdd quote: String, with author: String?)
+  func quoteEditorViewControllerDidCancel(_ viewController: QuoteEditorViewController)
+}
+
 class QuoteEditorViewController: UIViewController {
 
   @IBOutlet var quoteTextView: UITextView!
@@ -15,6 +20,8 @@ class QuoteEditorViewController: UIViewController {
   @IBOutlet var separators: [UIView]!
 
   fileprivate let viewModel = QuoteEditorViewModel()
+
+  var delegate: QuoteEditorViewControllerDelegate?
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -60,11 +67,13 @@ class QuoteEditorViewController: UIViewController {
   }
 
   @objc fileprivate func cancelBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
-    //TODO: Empty Implementation
+    delegate?.quoteEditorViewControllerDidCancel(self)
   }
 
   @objc fileprivate func addBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
-    //TODO: Empty Implementation
+    let quote: String = quoteTextView.text
+    let author: String? = authorTextView.text.isEmpty ? nil : authorTextView.text
+    delegate?.quoteEditor(viewController: self, didRequestAdd: quote, with: author)
   }
 }
 
