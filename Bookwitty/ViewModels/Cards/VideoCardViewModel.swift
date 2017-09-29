@@ -38,7 +38,7 @@ class VideoCardViewModel: CardViewModelProtocol {
       let url = URL(string: urlStr) {
       if videoProperties.mediaLink != urlStr {
         videoProperties.mediaLink = urlStr
-        IFramely.shared.loadResponseFor(url: url, closure: { (response: Response?) in
+        IFramely.shared.loadResponseFor(url: url, closure: { (success: Bool, response: Response?) in
           self.videoProperties.url = response?.embedUrl
           self.videoProperties.thumbnail = response?.thumbnails?.first?.url?.absoluteString ?? video.coverImageUrl
           self.notifyChange()

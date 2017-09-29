@@ -9,7 +9,7 @@
 import Foundation
 
 public class IFramely {
-  public typealias IFramelyResponse = (Response?) -> ()
+  public typealias IFramelyResponse = (_ success: Bool, _ response: Response?) -> ()
 
   fileprivate let baseURL: URL = URL(string: "http://iframe.ly")!
   fileprivate let endpoint: String = "/api/iframely"
@@ -38,9 +38,10 @@ public class IFramely {
 
     URLSession.shared.dataTask(with: requestURL) {
       (data: Data?, response: URLResponse?, error: Error?) in
+      var success: Bool = error == nil
       var value: Response? = nil
       defer {
-        closure?(value)
+        closure?(success, value)
       }
 
       value = Response(data: data)
