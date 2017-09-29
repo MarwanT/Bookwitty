@@ -30,6 +30,7 @@ class QuoteEditorViewController: UIViewController {
     initializeComponents()
     applyTheme()
     setupNavigationBarButtons()
+    self.quoteTextView.becomeFirstResponder()
   }
 
   fileprivate func initializeComponents() {
