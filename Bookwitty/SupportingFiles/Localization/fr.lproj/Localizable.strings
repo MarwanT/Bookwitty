@@ -81,6 +81,7 @@
 "enter_your_last_name" = "Indiquez votre nom";
 "enter_your_password" = "Indiquez votre mot de passe";
 "enter_your_pen_name" = "Indiquez votre pseudo";
+"error" = "Error";
 "error_loading_data" = "Erreur dans le chargement des données";
 "fail_to_refresh_token_alert_message" = "Votre session est expirée et vous devez vous connecter à nouveau";
 "fail_to_refresh_token_alert_title" = "Veuillez vous connecter";
@@ -110,6 +111,7 @@
 "in_stock" = "Disponible";
 "insert" = "Insert";
 "interests" = "Intérêts";
+"invalid_url" = "Invalid url";
 "isbn10" = "ISBN-10";
 "isbn13" = "ISBN-13";
 "join_us_to_personalize_feed_description" = "Afficher des articles, des listes de lecture et des recommendations personnalisées dans votre fil d'actualité. ";

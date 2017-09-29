@@ -9,5 +9,5 @@
 import Foundation
 
 class RichLinkPreviewViewModel {
-
+  var response: Response? = nil
 }

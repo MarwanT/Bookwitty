@@ -194,7 +194,7 @@
                                     <constraint firstAttribute="height" constant="1" id="fbJ-sq-HwQ"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A7P-dP-Vpz" userLabel="LinkPreview">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A7P-dP-Vpz" userLabel="LinkPreview">
                                 <rect key="frame" x="16" y="70" width="343" height="100"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uaq-Vq-eZo">
@@ -231,7 +231,7 @@
                                     <constraint firstItem="uaq-Vq-eZo" firstAttribute="top" secondItem="A7P-dP-Vpz" secondAttribute="topMargin" id="sJg-GZ-Qvv"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YWI-Du-F8B" userLabel="VideoPreview">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YWI-Du-F8B" userLabel="VideoPreview">
                                 <rect key="frame" x="16" y="70" width="343" height="100"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="83O-RU-DQe">
@@ -330,6 +330,7 @@
                         <outlet property="textView" destination="PTX-Xf-lmX" id="EPQ-vT-KX7"/>
                         <outlet property="videoImageView" destination="83O-RU-DQe" id="OzP-zx-6q8"/>
                         <outlet property="videoPreview" destination="YWI-Du-F8B" id="Fjx-a8-8x9"/>
+                        <outlet property="videoPreviewHeightConstraint" destination="gxz-mm-ctj" id="Zeo-1d-ncP"/>
                         <outletCollection property="separators" destination="vP5-z9-AHH" collectionClass="NSMutableArray" id="2XN-VP-WZM"/>
                         <outletCollection property="separators" destination="orr-zY-2To" collectionClass="NSMutableArray" id="6AP-P0-DEf"/>
                     </connections>
