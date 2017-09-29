@@ -29,6 +29,7 @@ class QuoteEditorViewController: UIViewController {
     // Do any additional setup after loading the view.
     initializeComponents()
     applyTheme()
+    setupNavigationBarButtons()
   }
 
   fileprivate func initializeComponents() {
