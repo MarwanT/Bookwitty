@@ -57,7 +57,7 @@ extension UIImage {
     scaledImageRect.origin.x = 0
     scaledImageRect.origin.y = 0
 
-    UIGraphicsBeginImageContextWithOptions(size, false, 0)
+    UIGraphicsBeginImageContextWithOptions(scaledImageRect.size, false, 0)
 
     self.draw(in: scaledImageRect)
 

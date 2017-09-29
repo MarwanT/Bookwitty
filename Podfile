@@ -42,6 +42,7 @@ target 'Bookwitty' do
   pod 'Version', :git => 'https://github.com/opwoco/Version'
   pod 'ReachabilitySwift', '3'
   pod 'GSImageViewerController', '1.2.1'
+  pod 'RichEditorView', '4.0.0'
   
   target 'BookwittyTests' do
     inherit! :search_paths

@@ -12,13 +12,23 @@ import Spine
 import GSImageViewerController
 import SwiftLoader
 
+protocol BookDetailsViewControllerDelegate: class {
+  func bookDetails(viewController: BookDetailsViewController, didSelect book: Book)
+}
 class BookDetailsViewController: ASViewController<ASCollectionNode> {
+  enum Mode {
+    case view
+    case select
+  }
+  
   let viewModel = BookDetailsViewModel()
   
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
   
   let loaderNode = LoaderNode()
+  var mode: Mode = .view
+  weak var delegate: BookDetailsViewControllerDelegate?
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -80,12 +90,27 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
   }
   
   private func loadNavigationBarButtons() {
-    let shareButton = UIBarButtonItem(
-      image: #imageLiteral(resourceName: "shareOutside"),
-      style: UIBarButtonItemStyle.plain,
-      target: self,
-      action: #selector(shareOutsideButton(_:)))
-    navigationItem.rightBarButtonItem = shareButton
+    switch self.mode {
+    case .select:
+      let add = UIBarButtonItem(title: Strings.add(),
+                                style: UIBarButtonItemStyle.plain,
+                                target: self,
+                                action: #selector(self.add(_:)))
+      add.tintColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+      navigationItem.rightBarButtonItem = add
+      
+    case .view:
+      let shareButton = UIBarButtonItem(
+        image: #imageLiteral(resourceName: "shareOutside"),
+        style: UIBarButtonItemStyle.plain,
+        target: self,
+        action: #selector(shareOutsideButton(_:)))
+      navigationItem.rightBarButtonItem = shareButton
+    }
+  }
+  
+  @objc func add(_ sender: UIBarButtonItem) {
+    self.delegate?.bookDetails(viewController: self, didSelect: self.viewModel.book)
   }
   
   func showBottomLoader(reloadSection: Bool = false) {

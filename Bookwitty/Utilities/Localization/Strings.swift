@@ -37,6 +37,14 @@ class Strings {
     return localizedString(key: "account_needs_confirmation_alert_title")
   }
   
+  static func add() -> String {
+    return localizedString(key: "add")
+  }
+  
+  static func addLink() -> String {
+    return localizedString(key: "add_a_link")
+  }
+  
   static func address_book() -> String {
     return localizedString(key: "address_book")
   }
@@ -389,6 +397,14 @@ class Strings {
     return localizedString(key: "image")
   }
   
+  static func imageFromCamera() -> String {
+    return localizedString(key: "image_from_camera")
+  }
+  
+  static func imageFromPhotoLibrary() -> String {
+    return localizedString(key: "image_from_photo_library")
+  }
+  
   static func imprint() -> String {
     return localizedString(key: "imprint")
   }
@@ -399,6 +415,10 @@ class Strings {
   
   static func in_stock() -> String {
     return localizedString(key: "in_stock")
+  }
+  
+  static func insert() -> String {
+    return localizedString(key: "insert")
   }
   
   static func interests() -> String {

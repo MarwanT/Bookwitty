@@ -81,6 +81,7 @@ PODS:
     - PINRemoteImage/Core
   - ReachabilitySwift (3)
   - Result (3.2.4)
+  - RichEditorView (4.0.0)
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
@@ -112,6 +113,7 @@ DEPENDENCIES:
   - Keys (from `Pods/CocoaPodsKeys`)
   - Moya (= 8.0.5)
   - ReachabilitySwift (= 3)
+  - RichEditorView (= 4.0.0)
   - SDWebImage (= 4.0.0)
   - Segmentio (= 2.1.2)
   - Spine (from `https://github.com/Keeward/Spine.git`, tag `0.3.2`)
@@ -179,6 +181,7 @@ SPEC CHECKSUMS:
   PINRemoteImage: c4f9f16932840c597f32e69dd288e10e111a1929
   ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
+  RichEditorView: e5990b1a092539559def9df135e064b29ab97e68
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   Segmentio: f85114993e305bd9c522952eef8c2c4db732fd17
   Spine: 9a5076f732897dc67c0303b4b3d871cfee903efa
@@ -190,6 +193,6 @@ SPEC CHECKSUMS:
   UIImageViewAlignedSwift: e57cc89b4738a82ffad1b76e8ab01f898215bbfb
   Version: 31221742495765fc798d08eae45de3c936dce0db
 
-PODFILE CHECKSUM: 0dc083f87c90ea546bf1d22536d237306d55b576
+PODFILE CHECKSUM: 2cf5ee813ae389d7872ae326f1d457b22dd32f0e
 
 COCOAPODS: 1.3.1

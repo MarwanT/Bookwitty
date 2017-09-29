@@ -13,6 +13,8 @@
 "account_needs_confirmation_alert_message" = "Vous devez confirmer votre compte en cliquant sur le lien que vous avez reçu par email.";
 "account_needs_confirmation_alert_resend_confirmation_button_title" = "Envoyer à nouveau";
 "account_needs_confirmation_alert_title" = "Votre compte";
+"add" = "Add";
+"add_a_link" = "Add a Link";
 "address_book" = "Adresses de livraison";
 "already_have_an_account" = "Déjà inscrit ?";
 "an_hour_ago" = "Il y a une heure";
@@ -101,9 +103,12 @@
 "help" = "Aide";
 "hide_formats_and_editions" = "Cacher les formats et les éditions";
 "image" = "Image";
+"image_from_camera" = "Image from camera";
+"image_from_photo_library" = "Image from photo library";
 "imprint" = "Éditeur";
 "in_response_to" = "En reponse à:";
 "in_stock" = "Disponible";
+"insert" = "Insert";
 "interests" = "Intérêts";
 "isbn10" = "ISBN-10";
 "isbn13" = "ISBN-13";

@@ -13,6 +13,8 @@
 "account_needs_confirmation_alert_message" = "You haven't yet confirmed your account.  Please check your email and click on the confirmation link.";
 "account_needs_confirmation_alert_resend_confirmation_button_title" = "Resend";
 "account_needs_confirmation_alert_title" = "Account";
+"add" = "Add";
+"add_a_link" = "Add a Link";
 "address_book" = "Address Book";
 "already_have_an_account" = "Already have an account?";
 "an_hour_ago" = "An hour ago";
@@ -101,9 +103,12 @@
 "help" = "Help";
 "hide_formats_and_editions" = "Hide formats and editions";
 "image" = "Image";
+"image_from_camera" = "Image from camera";
+"image_from_photo_library" = "Image from photo library";
 "imprint" = "Publisher";
 "in_response_to" = "In response to:";
 "in_stock" = "In stock";
+"insert" = "Insert";
 "interests" = "Interests";
 "isbn10" = "ISBN-10";
 "isbn13" = "ISBN-13";
