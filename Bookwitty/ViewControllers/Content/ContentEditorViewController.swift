@@ -195,6 +195,14 @@ class ContentEditorViewController: UIViewController {
     imagePickerController.allowsEditing = true
     self.navigationController?.present(imagePickerController, animated: true, completion: nil)
   }
+
+  func presentRichLinkViewController(with mode: RichLinkPreviewViewController.Mode) {
+    let controller = Storyboard.Content.instantiate(RichLinkPreviewViewController.self)
+    controller.mode = mode
+    controller.delegate = self
+    let navigationController = UINavigationController(rootViewController: controller)
+    self.navigationController?.present(navigationController, animated: true, completion: nil)
+  }
 }
 
 extension ContentEditorViewController: RichEditorToolbarDelegate {
@@ -218,16 +226,16 @@ extension ContentEditorViewController : RichContentMenuViewControllerDelegate {
     case .imageLibrary:
       self.presentImagePicker(with: .photoLibrary)
     case .link:
-      break
+      self.presentRichLinkViewController(with: .link)
     case .book:
       let richBookViewController = RichBookViewController()
       richBookViewController.delegate = self
       let navigationController = UINavigationController(rootViewController: richBookViewController)
       self.navigationController?.present(navigationController, animated: true, completion: nil)
     case .video:
-      break
+      self.presentRichLinkViewController(with: .video)
     case .audio:
-      break
+      self.presentRichLinkViewController(with: .audio)
     case .quote:
       break
     }
@@ -251,3 +259,15 @@ extension ContentEditorViewController: RichBookViewControllerDelegate {
     //TODO: Send to JS
   }
 }
+
+extension ContentEditorViewController: RichLinkPreviewViewControllerDelegate {
+  func richLinkPreview(viewController: RichLinkPreviewViewController, didRequestLinkAdd: URL, with response: Response) {
+    viewController.navigationController?.dismiss(animated: true, completion: nil)
+    //TODO: Sendt to JS
+  }
+
+  func richLinkPreviewViewControllerDidCancel(_ viewController: RichLinkPreviewViewController) {
+    viewController.navigationController?.dismiss(animated: true, completion: nil)
+  }
+}
+
