@@ -14,7 +14,7 @@ class ContentEditorViewController: UIViewController {
   @IBOutlet weak var contentView: UIView!
   @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
   
-  private let editor = RichEditorView()
+  @IBOutlet weak var editor: RichEditorView!
 
   fileprivate let viewModel = ContentEditorViewModel()
   

@@ -45,7 +45,19 @@
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="04b-Ug-WhV">
                                 <rect key="frame" x="8" y="63" width="359" height="604"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jmZ-Hn-0Dh" customClass="RichEditorView" customModule="RichEditorView">
+                                        <rect key="frame" x="0.0" y="0.0" width="359" height="604"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="jmZ-Hn-0Dh" secondAttribute="trailing" id="45J-CI-Kf7"/>
+                                    <constraint firstAttribute="bottom" secondItem="jmZ-Hn-0Dh" secondAttribute="bottom" id="hMh-XU-n3U"/>
+                                    <constraint firstItem="jmZ-Hn-0Dh" firstAttribute="leading" secondItem="04b-Ug-WhV" secondAttribute="leading" id="svj-oG-5Oh"/>
+                                    <constraint firstItem="jmZ-Hn-0Dh" firstAttribute="top" secondItem="04b-Ug-WhV" secondAttribute="top" id="tHh-UW-u79"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -68,6 +80,7 @@
                     <connections>
                         <outlet property="contentView" destination="04b-Ug-WhV" id="fG7-rc-oym"/>
                         <outlet property="contentViewBottomConstraintToSuperview" destination="da3-cc-OeT" id="tIr-wU-UzJ"/>
+                        <outlet property="editor" destination="jmZ-Hn-0Dh" id="JAb-9g-QI6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OZB-jU-as1" userLabel="First Responder" sceneMemberID="firstResponder"/>
