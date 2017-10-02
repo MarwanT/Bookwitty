@@ -15,6 +15,8 @@ class ContentEditorViewController: UIViewController {
   @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
   
   private let editor = RichEditorView()
+
+  fileprivate let viewModel = ContentEditorViewModel()
   
   override func viewDidLoad() {
     super.viewDidLoad()
