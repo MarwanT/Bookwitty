@@ -21,6 +21,7 @@ class ContentEditorViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    initializeComponents()
     loadNavigationBarButtons()
     addKeyboardNotifications()
   }
@@ -143,20 +144,18 @@ class ContentEditorViewController: UIViewController {
   }
 
   // MARK: - RichEditor
-  private func addRichEditorView() {
-    self.contentView.addSubview(editorView)
-    editorView.bindFrameToSuperviewBounds()
+  private func initializeComponents() {
     editorView.placeholder = Strings.write_here()
-    setupToolbar(of: editorView)
+    setupEditorToolbar()
   }
   
-  private func setupToolbar(of editor:RichEditorView) {
+  private func setupEditorToolbar() {
     let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
     toolbar.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
     toolbar.options = ContentEditorOption.toolbarOptions
-    toolbar.editor = editor // Previously instantiated RichEditorView
+    toolbar.editor = editorView // Previously instantiated RichEditorView
     toolbar.delegate = self
-    editor.inputAccessoryView = toolbar
+    editorView.inputAccessoryView = toolbar
   }
 
   // MARK: - Keyboard Handling
