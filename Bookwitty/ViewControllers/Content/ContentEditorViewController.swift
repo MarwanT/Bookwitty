@@ -256,8 +256,13 @@ extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePi
     guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
       return
     }
-    //TODO: Send Image to Bucket.
+
     self.navigationController?.dismiss(animated: true, completion: nil)
+
+    viewModel.upload(image: image) {
+      (success: Bool, link: String?) in
+      //TODO: Send to JS
+    }
   }
 }
 
