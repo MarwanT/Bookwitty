@@ -15,6 +15,8 @@ class ContentEditorViewController: UIViewController {
   @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
   
   private let editor = RichEditorView()
+
+  fileprivate let viewModel = ContentEditorViewModel()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -144,8 +146,7 @@ class ContentEditorViewController: UIViewController {
   private func addRichEditorView() {
     self.contentView.addSubview(editor)
     editor.bindFrameToSuperviewBounds()
-    //TODO: Localize
-    editor.placeholder = "Write Here"
+    editor.placeholder = Strings.write_here()
     setupToolbar(of: editor)
   }
   
@@ -195,6 +196,21 @@ class ContentEditorViewController: UIViewController {
     imagePickerController.allowsEditing = true
     self.navigationController?.present(imagePickerController, animated: true, completion: nil)
   }
+
+  func presentRichLinkViewController(with mode: RichLinkPreviewViewController.Mode) {
+    let controller = Storyboard.Content.instantiate(RichLinkPreviewViewController.self)
+    controller.mode = mode
+    controller.delegate = self
+    let navigationController = UINavigationController(rootViewController: controller)
+    self.navigationController?.present(navigationController, animated: true, completion: nil)
+  }
+
+  fileprivate func presentQuoteEditorViewController() {
+    let controller = Storyboard.Content.instantiate(QuoteEditorViewController.self)
+    controller.delegate = self
+    let navigationController = UINavigationController(rootViewController: controller)
+    self.navigationController?.present(navigationController, animated: true, completion: nil)
+  }
 }
 
 extension ContentEditorViewController: RichEditorToolbarDelegate {
@@ -218,18 +234,18 @@ extension ContentEditorViewController : RichContentMenuViewControllerDelegate {
     case .imageLibrary:
       self.presentImagePicker(with: .photoLibrary)
     case .link:
-      break
+      self.presentRichLinkViewController(with: .link)
     case .book:
       let richBookViewController = RichBookViewController()
       richBookViewController.delegate = self
       let navigationController = UINavigationController(rootViewController: richBookViewController)
       self.navigationController?.present(navigationController, animated: true, completion: nil)
     case .video:
-      break
+      self.presentRichLinkViewController(with: .video)
     case .audio:
-      break
+      self.presentRichLinkViewController(with: .audio)
     case .quote:
-      break
+      self.presentQuoteEditorViewController()
     }
   }
 }
@@ -240,8 +256,13 @@ extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePi
     guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
       return
     }
-    //TODO: Send Image to Bucket.
+
     self.navigationController?.dismiss(animated: true, completion: nil)
+
+    viewModel.upload(image: image) {
+      (success: Bool, link: String?) in
+      //TODO: Send to JS
+    }
   }
 }
 
@@ -251,3 +272,26 @@ extension ContentEditorViewController: RichBookViewControllerDelegate {
     //TODO: Send to JS
   }
 }
+
+extension ContentEditorViewController: RichLinkPreviewViewControllerDelegate {
+  func richLinkPreview(viewController: RichLinkPreviewViewController, didRequestLinkAdd: URL, with response: Response) {
+    viewController.navigationController?.dismiss(animated: true, completion: nil)
+    //TODO: Sendt to JS
+  }
+
+  func richLinkPreviewViewControllerDidCancel(_ viewController: RichLinkPreviewViewController) {
+    viewController.navigationController?.dismiss(animated: true, completion: nil)
+  }
+}
+
+extension ContentEditorViewController: QuoteEditorViewControllerDelegate {
+  func quoteEditor(viewController: QuoteEditorViewController, didRequestAdd quote: String, with author: String?) {
+    viewController.navigationController?.dismiss(animated: true, completion: nil)
+    //TODO: Sendt to JS
+  }
+
+  func quoteEditorViewControllerDidCancel(_ viewController: QuoteEditorViewController) {
+    viewController.navigationController?.dismiss(animated: true, completion: nil)
+  }
+}
+

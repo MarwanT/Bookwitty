@@ -977,7 +977,7 @@ class Strings {
     return localizedString(key: "witted")
   }
   
-  static func writeHere() -> String {
+  static func write_here() -> String {
     return localizedString(key: "write_here")
   }
   

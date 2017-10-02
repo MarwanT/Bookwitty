@@ -89,7 +89,7 @@ class RichContentMenuViewController: UIViewController {
     self.tableView.register(UINib(nibName: "RichMenuCellTableViewCell", bundle: nil), forCellReuseIdentifier: RichMenuCellTableViewCell.identifier)
     self.tableView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
     self.tableView.isScrollEnabled = false
-    self.tableViewHeightContraint.constant = self.height * CGFloat(self.viewModel.numberOfRows()) + 49.0 // tabbar Height
+    self.tableViewHeightContraint.constant = self.height * CGFloat(self.viewModel.numberOfRows())
     cancel.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
   }
   

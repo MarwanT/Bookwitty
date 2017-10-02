@@ -29,6 +29,8 @@ class QuoteEditorViewController: UIViewController {
     // Do any additional setup after loading the view.
     initializeComponents()
     applyTheme()
+    setupNavigationBarButtons()
+    self.quoteTextView.becomeFirstResponder()
   }
 
   fileprivate func initializeComponents() {
@@ -42,8 +44,7 @@ class QuoteEditorViewController: UIViewController {
                                               target: self,
                                               action: #selector(cancelBarButtonTouchUpInside(_:)))
 
-    //TODO: Localize
-    let addBarButtonItem = UIBarButtonItem(title: "Add",
+    let addBarButtonItem = UIBarButtonItem(title: Strings.add(),
                                            style: .plain,
                                            target: self,
                                            action: #selector(addBarButtonTouchUpInside(_:)))

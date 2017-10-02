@@ -54,6 +54,7 @@ class RichLinkPreviewViewController: UIViewController {
     initializeComponents()
     applyTheme()
     setupNavigationBarButtons()
+    self.textView.becomeFirstResponder()
   }
 
   fileprivate func initializeComponents() {
