@@ -197,6 +197,13 @@ class ContentEditorViewController: UIViewController {
     self.navigationController?.present(imagePickerController, animated: true, completion: nil)
   }
 
+  func presentRichBookViewController() {
+    let richBookViewController = RichBookViewController()
+    richBookViewController.delegate = self
+    let navigationController = UINavigationController(rootViewController: richBookViewController)
+    self.navigationController?.present(navigationController, animated: true, completion: nil)
+  }
+
   func presentRichLinkViewController(with mode: RichLinkPreviewViewController.Mode) {
     let controller = Storyboard.Content.instantiate(RichLinkPreviewViewController.self)
     controller.mode = mode
@@ -236,10 +243,7 @@ extension ContentEditorViewController : RichContentMenuViewControllerDelegate {
     case .link:
       self.presentRichLinkViewController(with: .link)
     case .book:
-      let richBookViewController = RichBookViewController()
-      richBookViewController.delegate = self
-      let navigationController = UINavigationController(rootViewController: richBookViewController)
-      self.navigationController?.present(navigationController, animated: true, completion: nil)
+      self.presentRichBookViewController()
     case .video:
       self.presentRichLinkViewController(with: .video)
     case .audio:
