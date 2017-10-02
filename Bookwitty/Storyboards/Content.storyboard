@@ -80,7 +80,7 @@
                     <connections>
                         <outlet property="contentView" destination="04b-Ug-WhV" id="fG7-rc-oym"/>
                         <outlet property="contentViewBottomConstraintToSuperview" destination="da3-cc-OeT" id="tIr-wU-UzJ"/>
-                        <outlet property="editor" destination="jmZ-Hn-0Dh" id="JAb-9g-QI6"/>
+                        <outlet property="editorView" destination="jmZ-Hn-0Dh" id="9aZ-Bt-FTl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OZB-jU-as1" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -14,7 +14,7 @@ class ContentEditorViewController: UIViewController {
   @IBOutlet weak var contentView: UIView!
   @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
   
-  @IBOutlet weak var editor: RichEditorView!
+  @IBOutlet weak var editorView: RichEditorView!
 
   fileprivate let viewModel = ContentEditorViewModel()
   
@@ -74,7 +74,7 @@ class ContentEditorViewController: UIViewController {
   }
   
   @objc private func undo(_ sender:UIBarButtonItem) {
-    guard let toolbar = editor.inputAccessoryView as? RichEditorToolbar else {
+    guard let toolbar = editorView.inputAccessoryView as? RichEditorToolbar else {
       return
     }
     
@@ -82,7 +82,7 @@ class ContentEditorViewController: UIViewController {
   }
   
   @objc private func redo(_ sender:UIBarButtonItem) {
-    guard let toolbar = editor.inputAccessoryView as? RichEditorToolbar else {
+    guard let toolbar = editorView.inputAccessoryView as? RichEditorToolbar else {
       return
     }
     
@@ -130,7 +130,7 @@ class ContentEditorViewController: UIViewController {
     })
     let confirmAction = UIAlertAction(title: Strings.ok(), style: .default, handler: {(_ action: UIAlertAction) -> Void in
       
-      guard let toolbar = self.editor.inputAccessoryView as? RichEditorToolbar else {
+      guard let toolbar = self.editorView.inputAccessoryView as? RichEditorToolbar else {
           return
         }
       ContentEditorOption.link.action(toolbar)
@@ -144,10 +144,10 @@ class ContentEditorViewController: UIViewController {
 
   // MARK: - RichEditor
   private func addRichEditorView() {
-    self.contentView.addSubview(editor)
-    editor.bindFrameToSuperviewBounds()
-    editor.placeholder = Strings.write_here()
-    setupToolbar(of: editor)
+    self.contentView.addSubview(editorView)
+    editorView.bindFrameToSuperviewBounds()
+    editorView.placeholder = Strings.write_here()
+    setupToolbar(of: editorView)
   }
   
   private func setupToolbar(of editor:RichEditorView) {
