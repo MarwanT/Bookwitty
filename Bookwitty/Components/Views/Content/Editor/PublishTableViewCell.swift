@@ -18,11 +18,30 @@ final class PublishTableViewCell: UITableViewCell {
   override func awakeFromNib() {
     super.awakeFromNib()
     self.initializeComponents()
+    applyTheme()
   }
   
   private func initializeComponents() {
     profileImageView.layer.masksToBounds = true
     profileImageView.layer.cornerRadius = profileImageView.frame.width / 2.0
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+  }
+}
+
+extension PublishTableViewCell: Themeable {
+  
+  func applyTheme() {
+    
+    selectedBackgroundView = UIImageView(
+      image: UIImage(color: ThemeManager.shared.currentTheme.defaultSelectionColor()))
+    tintColor = ThemeManager.shared.currentTheme.defaultTextColor()
+
+    userNameLabel.font = FontDynamicType.caption1.font
+    userNameLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+
+    cellLabel.font = FontDynamicType.caption1.font
+    cellLabel.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    
+    disclosureIndicatorImageView.image = #imageLiteral(resourceName: "rightArrow")
   }
 }
