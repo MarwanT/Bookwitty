@@ -45,6 +45,10 @@ class Strings {
     return localizedString(key: "add_a_link")
   }
   
+  static func add_tags() -> String {
+    return localizedString(key: "add_tags")
+  }
+  
   static func address_book() -> String {
     return localizedString(key: "address_book")
   }
