@@ -10,6 +10,7 @@ import UIKit
 
 class PublishMenuViewController: UIViewController {
 
+  @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
 
