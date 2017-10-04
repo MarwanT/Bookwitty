@@ -118,6 +118,9 @@
                             <constraint firstAttribute="trailing" secondItem="PmJ-QI-0gm" secondAttribute="trailing" id="fMd-pd-tP2"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableViewHeightConstraint" destination="bTj-Of-glU" id="aPT-Eh-vox"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hIl-VX-leX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
