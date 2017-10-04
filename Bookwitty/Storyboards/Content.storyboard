@@ -138,9 +138,6 @@
                                             <constraint firstAttribute="width" secondItem="az3-76-zAc" secondAttribute="height" multiplier="1:1" id="bf2-FL-ht7"/>
                                         </constraints>
                                         <state key="normal" image="x"/>
-                                        <connections>
-                                            <action selector="cancelButtonTouchUpInside:" destination="UJ6-Gs-wOy" eventType="touchUpInside" id="xcU-8b-0xd"/>
-                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FDO-Be-fSh">
                                         <rect key="frame" x="8" y="12" width="42" height="21"/>
@@ -181,6 +178,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cancelButton" destination="az3-76-zAc" id="GQ9-FH-VuT"/>
+                        <outlet property="publishLabel" destination="FDO-Be-fSh" id="RrP-Mn-Swa"/>
+                        <outlet property="tableView" destination="PmJ-QI-0gm" id="ZaU-qY-vex"/>
                         <outlet property="tableViewHeightConstraint" destination="bTj-Of-glU" id="aPT-Eh-vox"/>
                     </connections>
                 </viewController>

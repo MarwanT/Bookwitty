@@ -12,6 +12,9 @@ class PublishMenuViewController: UIViewController {
 
   @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
   
+  @IBOutlet weak var cancelButton: UIButton!
+  @IBOutlet weak var tableView: UITableView!
+  @IBOutlet weak var publishLabel: UILabel!
   enum Item: Int {
     case penName = 0
     case linkTopics
