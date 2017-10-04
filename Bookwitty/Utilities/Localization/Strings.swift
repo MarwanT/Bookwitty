@@ -389,6 +389,10 @@ class Strings {
     return localizedString(key: "get_started")
   }
   
+  static func go_back() -> String {
+    return localizedString(key: "go_back")
+  }
+  
   static func height() -> String {
     return localizedString(key: "height")
   }
