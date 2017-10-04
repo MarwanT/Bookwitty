@@ -31,19 +31,19 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rightArrow" translatesAutoresizingMaskIntoConstraints="NO" id="vsu-h6-ESr">
-                        <rect key="frame" x="279" y="5" width="33" height="33"/>
+                        <rect key="frame" x="279" y="6" width="33" height="33"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="33" id="OKM-GO-Osf"/>
                             <constraint firstAttribute="width" constant="33" id="S64-WS-WXl"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0a4-0N-X4v">
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0a4-0N-X4v">
                         <rect key="frame" x="188" y="11" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="acQ-Qe-UAU">
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="acQ-Qe-UAU">
                         <rect key="frame" x="238" y="5" width="33" height="33"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="33" id="3IS-a3-F3b"/>
@@ -71,7 +71,7 @@
                 <outlet property="profileImageView" destination="acQ-Qe-UAU" id="NSh-rB-3Yz"/>
                 <outlet property="userNameLabel" destination="0a4-0N-X4v" id="bwN-La-ahc"/>
             </connections>
-            <point key="canvasLocation" x="-154" y="-284"/>
+            <point key="canvasLocation" x="-156" y="-361"/>
         </tableViewCell>
     </objects>
     <resources>
