@@ -63,6 +63,7 @@ class PublishMenuViewController: UIViewController {
     }
   }
   
+  let viewModel = PublishMenuViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
 
