@@ -14,7 +14,8 @@ final class PublishTableViewCell: UITableViewCell {
   @IBOutlet weak var userNameLabel: UILabel!
   @IBOutlet weak var cellLabel: UILabel!
   @IBOutlet weak var disclosureIndicatorImageView: UIImageView!
-
+  static let identifier: String = "PublishTableViewCellReuseIdentifier"
+  static let height: CGFloat = 44.0
   override func awakeFromNib() {
     super.awakeFromNib()
     self.initializeComponents()
