@@ -83,3 +83,29 @@ class PublishMenuViewController: UIViewController {
     publishLabel.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
   }
 }
+
+extension PublishMenuViewController: UITableViewDataSource {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return self.viewModel.numberOfRows()
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    return tableView.dequeueReusableCell(withIdentifier: PublishTableViewCell.identifier, for: indexPath)
+  }
+  
+  func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    let values = self.viewModel.values(forRowAt: indexPath)
+    
+    guard let currentCell = cell as? PublishTableViewCell else {
+      return
+    }
+    currentCell.cellImageView.image = values.image
+    currentCell.cellLabel.text = values.label
+  }
+}
+
+extension PublishMenuViewController: UITableViewDelegate {
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return PublishTableViewCell.height
+  }
+}
