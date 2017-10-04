@@ -87,6 +87,24 @@
             </objects>
             <point key="canvasLocation" x="24.800000000000001" y="303.59820089955025"/>
         </scene>
+        <!--Publish Menu View Controller-->
+        <scene sceneID="Y53-hP-tbo">
+            <objects>
+                <viewController storyboardIdentifier="PublishMenuViewController" id="Mlg-Yu-Z1l" customClass="PublishMenuViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Dth-SA-p2H"/>
+                        <viewControllerLayoutGuide type="bottom" id="H6I-xk-59r"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="afp-Pz-ovi">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hIl-VX-leX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="25" y="947"/>
+        </scene>
         <!--Rich Content Menu View Controller-->
         <scene sceneID="1oS-4P-Lob">
             <objects>
@@ -170,7 +188,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Lc-V2-t9r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="733.60000000000002" y="303.59820089955025"/>
+            <point key="canvasLocation" x="761" y="304"/>
         </scene>
         <!--Rich Link Preview View Controller-->
         <scene sceneID="Cw4-7e-TlU">
@@ -350,7 +368,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kJu-wz-Ucg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="983" y="304"/>
+            <point key="canvasLocation" x="2090" y="304"/>
         </scene>
         <!--Quote Editor View Controller-->
         <scene sceneID="1U1-fm-z3e">
@@ -372,26 +390,26 @@
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="UrR-ov-wMF">
-                                <rect key="frame" x="0.0" y="21" width="375" height="222.5"/>
+                                <rect key="frame" x="0.0" y="21" width="375" height="223"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ycp-SQ-D0P" userLabel="Long Separator View">
-                                <rect key="frame" x="0.0" y="243.5" width="375" height="1"/>
+                                <rect key="frame" x="0.0" y="244" width="375" height="1"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="aN5-hG-jas"/>
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="7IR-pM-XEB">
-                                <rect key="frame" x="0.0" y="244.5" width="375" height="33"/>
+                                <rect key="frame" x="0.0" y="245" width="375" height="33"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Kp-KK-GcX" userLabel="Long Separator View">
-                                <rect key="frame" x="0.0" y="277.5" width="375" height="1"/>
+                                <rect key="frame" x="0.0" y="278" width="375" height="1"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="h8y-0T-JUg"/>
@@ -428,7 +446,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tDg-dE-fhT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="890" y="304"/>
+            <point key="canvasLocation" x="1439" y="304"/>
         </scene>
     </scenes>
     <resources>

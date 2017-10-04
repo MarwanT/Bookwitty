@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F1AF1B21F84D1E8004DF12A /* PublishMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1AF1B11F84D1E8004DF12A /* PublishMenuViewController.swift */; };
+		0F1AF1B41F84D3EE004DF12A /* PublishMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1AF1B31F84D3EE004DF12A /* PublishMenuViewModel.swift */; };
 		0F525E9D1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F525E9C1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib */; };
 		0F525E9F1F77E98700E225B1 /* RichMenuCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F525E9E1F77E98700E225B1 /* RichMenuCellTableViewCell.swift */; };
 		0FAA01681F7A3D0B0011FDBA /* RichBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAA01671F7A3D0B0011FDBA /* RichBookViewModel.swift */; };
@@ -342,6 +344,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0F1AF1B11F84D1E8004DF12A /* PublishMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishMenuViewController.swift; sourceTree = "<group>"; };
+		0F1AF1B31F84D3EE004DF12A /* PublishMenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishMenuViewModel.swift; sourceTree = "<group>"; };
 		0F525E9C1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RichMenuCellTableViewCell.xib; sourceTree = "<group>"; };
 		0F525E9E1F77E98700E225B1 /* RichMenuCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichMenuCellTableViewCell.swift; sourceTree = "<group>"; };
 		0FAA01671F7A3D0B0011FDBA /* RichBookViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichBookViewModel.swift; sourceTree = "<group>"; };
@@ -723,6 +727,7 @@
 				0FAA01691F7A41A30011FDBA /* RichBookViewController.swift */,
 				56FFE1591F74EEE600EEED42 /* RichLinkPreviewViewController.swift */,
 				56218A041F7A5CE5000456F9 /* QuoteEditorViewController.swift */,
+				0F1AF1B11F84D1E8004DF12A /* PublishMenuViewController.swift */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -735,6 +740,7 @@
 				0FF723C91F755B0100891FFE /* RichContentMenuViewModel.swift */,
 				0FAA01671F7A3D0B0011FDBA /* RichBookViewModel.swift */,
 				56FFE15D1F74F16900EEED42 /* RichLinkPreviewViewModel.swift */,
+				0F1AF1B31F84D3EE004DF12A /* PublishMenuViewModel.swift */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -1971,6 +1977,7 @@
 			files = (
 				59903FED1E3B9D90006043EF /* View.swift in Sources */,
 				59DCFD7D1E96754C00C94D21 /* Price.swift in Sources */,
+				0F1AF1B21F84D1E8004DF12A /* PublishMenuViewController.swift in Sources */,
 				597CE07E1F0523BA00B67BA4 /* ProductForm.swift in Sources */,
 				F440FD7A1ECB005F00AEBF96 /* BookTypeRegistry.swift in Sources */,
 				F42041C71E73088500E7D208 /* CardDetailsViewModel.swift in Sources */,
@@ -2113,6 +2120,7 @@
 				561229E91EA65451004CE079 /* LinkCardViewModel.swift in Sources */,
 				59D6021E1E36363400271315 /* Font.swift in Sources */,
 				561723FE1F8FA4F100CD979E /* CandidatePost.swift in Sources */,
+				0F1AF1B41F84D3EE004DF12A /* PublishMenuViewModel.swift in Sources */,
 				593769D71E3689FB00F23226 /* Appearance.swift in Sources */,
 				56FFE15A1F74EEE600EEED42 /* RichLinkPreviewViewController.swift in Sources */,
 				591E15581E70FE37008CA78A /* GenericNodeViewController.swift in Sources */,
