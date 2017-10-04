@@ -64,9 +64,22 @@ class PublishMenuViewController: UIViewController {
   }
   
   let viewModel = PublishMenuViewModel()
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    initializeComponents()
+    // Do any additional setup after loading the view.
+  }
+  private func initializeComponents() {
+    
+    let attributedString = AttributedStringBuilder(fontDynamicType: .caption1)
+      .append(text: Strings.publish(), color: ThemeManager.shared.currentTheme.colorNumber13())
+      .attributedString
+    
+    self.publishLabel.attributedText = attributedString
+    self.tableView.register(UINib(nibName: "PublishTableViewCell", bundle: nil), forCellReuseIdentifier: RichMenuCellTableViewCell.identifier)
+    self.tableView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
+    self.tableView.isScrollEnabled = false
+    self.tableViewHeightConstraint.constant = PublishTableViewCell.height * CGFloat(self.viewModel.numberOfRows())
+    publishLabel.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
+  }
 }
