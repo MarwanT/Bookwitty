@@ -765,6 +765,10 @@ class Strings {
     return localizedString(key: "reset_password_text")
   }
   
+  static func save_as_draft() -> String {
+    return localizedString(key: "save_as_draft")
+  }
+  
   static func search_placeholder() -> String {
     return localizedString(key: "search_placeholder")
   }
