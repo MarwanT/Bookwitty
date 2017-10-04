@@ -16,6 +16,8 @@
 		0FAC60761F73B71C00D47B0A /* Content.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0FAC60751F73B71C00D47B0A /* Content.storyboard */; };
 		0FAC60D21F73BBC100D47B0A /* ContentEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAC60D11F73BBC100D47B0A /* ContentEditorViewController.swift */; };
 		0FAC60D51F73BC4D00D47B0A /* ContentEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAC60D41F73BC4D00D47B0A /* ContentEditorViewModel.swift */; };
+		0FC440EF1F85254600A5A638 /* PublishTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC440ED1F85254600A5A638 /* PublishTableViewCell.swift */; };
+		0FC440F01F85254600A5A638 /* PublishTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FC440EE1F85254600A5A638 /* PublishTableViewCell.xib */; };
 		0FF723C01F74F3E400891FFE /* UIView+Autolayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF723BF1F74F3E400891FFE /* UIView+Autolayout.swift */; };
 		0FF723C41F75188900891FFE /* RichEditorOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF723C31F75188900891FFE /* RichEditorOption.swift */; };
 		0FF723C61F75242400891FFE /* RichEditorView+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF723C51F75242400891FFE /* RichEditorView+Actions.swift */; };
@@ -353,6 +355,8 @@
 		0FAC60751F73B71C00D47B0A /* Content.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Content.storyboard; sourceTree = "<group>"; };
 		0FAC60D11F73BBC100D47B0A /* ContentEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentEditorViewController.swift; sourceTree = "<group>"; };
 		0FAC60D41F73BC4D00D47B0A /* ContentEditorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentEditorViewModel.swift; sourceTree = "<group>"; };
+		0FC440ED1F85254600A5A638 /* PublishTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishTableViewCell.swift; sourceTree = "<group>"; };
+		0FC440EE1F85254600A5A638 /* PublishTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PublishTableViewCell.xib; sourceTree = "<group>"; };
 		0FF723BF1F74F3E400891FFE /* UIView+Autolayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Autolayout.swift"; sourceTree = "<group>"; };
 		0FF723C31F75188900891FFE /* RichEditorOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichEditorOption.swift; sourceTree = "<group>"; };
 		0FF723C51F75242400891FFE /* RichEditorView+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RichEditorView+Actions.swift"; sourceTree = "<group>"; };
@@ -715,6 +719,8 @@
 			children = (
 				0F525E9C1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib */,
 				0F525E9E1F77E98700E225B1 /* RichMenuCellTableViewCell.swift */,
+				0FC440ED1F85254600A5A638 /* PublishTableViewCell.swift */,
+				0FC440EE1F85254600A5A638 /* PublishTableViewCell.xib */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -1743,6 +1749,7 @@
 				59DA47671E3B84ED00BA90A5 /* Access.storyboard in Resources */,
 				59139E051E895CDC002022F6 /* Volkhov-BoldItalic.ttf in Resources */,
 				0F525E9D1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib in Resources */,
+				0FC440F01F85254600A5A638 /* PublishTableViewCell.xib in Resources */,
 				5942902A1E5347670006B2F1 /* DisclosureView.xib in Resources */,
 				59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */,
 				594290211E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib in Resources */,
@@ -2161,6 +2168,7 @@
 				F42041C31E72E84C00E7D208 /* PostDetailsViewModel.swift in Sources */,
 				594290061E4FEEC10006B2F1 /* CategoriesTableViewController.swift in Sources */,
 				F40700521E55F55A00DA48A4 /* Image.swift in Sources */,
+				0FC440EF1F85254600A5A638 /* PublishTableViewCell.swift in Sources */,
 				0FF723C01F74F3E400891FFE /* UIView+Autolayout.swift in Sources */,
 				563482BD1ED5BD61005428BF /* Facet.swift in Sources */,
 				F4A4262B1E5617A30090CD51 /* PageAuthor.swift in Sources */,
