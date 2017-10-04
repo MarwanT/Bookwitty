@@ -492,6 +492,10 @@ class Strings {
   static func link() -> String {
     return localizedString(key: "link")
   }
+
+  static func link_topics() -> String {
+    return localizedString(key: "link_topics")
+  }
   
   static func list_price() -> String {
     return localizedString(key: "list_price")
