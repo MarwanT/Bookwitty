@@ -661,6 +661,10 @@ class Strings {
     return localizedString(key: "post")
   }
   
+  static func post_preview() -> String {
+    return localizedString(key: "post_preview")
+  }
+  
   static func posts() -> String {
     return localizedString(key: "posts")
   }
