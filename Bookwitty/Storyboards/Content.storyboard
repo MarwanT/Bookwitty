@@ -98,7 +98,25 @@
                     <view key="view" contentMode="scaleToFill" id="afp-Pz-ovi">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PmJ-QI-0gm">
+                                <rect key="frame" x="0.0" y="388" width="375" height="279"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="279" id="bTj-Of-glU"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="Mlg-Yu-Z1l" id="A4q-Gm-CSb"/>
+                                    <outlet property="delegate" destination="Mlg-Yu-Z1l" id="xiT-Ki-tCJ"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="H6I-xk-59r" firstAttribute="top" secondItem="PmJ-QI-0gm" secondAttribute="bottom" id="8a1-1m-H1V"/>
+                            <constraint firstItem="PmJ-QI-0gm" firstAttribute="leading" secondItem="afp-Pz-ovi" secondAttribute="leading" id="NWu-MB-2Tc"/>
+                            <constraint firstAttribute="trailing" secondItem="PmJ-QI-0gm" secondAttribute="trailing" id="fMd-pd-tP2"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hIl-VX-leX" userLabel="First Responder" sceneMemberID="firstResponder"/>
