@@ -705,6 +705,10 @@ class Strings {
     return localizedString(key: "publish_empty_comment_error_title")
   }
   
+  static func publish_your_post() -> String {
+    return localizedString(key: "publish_your_post")
+  }
+  
   static func publisher() -> String {
     return localizedString(key: "publisher")
   }

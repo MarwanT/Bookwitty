@@ -181,6 +181,7 @@
 "publish_comment_general_error_title" = "Oups";
 "publish_empty_comment_error_message" = "Les mots vous manquent ?";
 "publish_empty_comment_error_title" = "Oups";
+"publish_your_post" = "Publish your post";
 "publisher" = "Éditeur";
 "quote" = "Citation";
 "reading_list" = "Liste de lecture";

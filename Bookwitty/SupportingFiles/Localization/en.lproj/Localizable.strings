@@ -181,6 +181,7 @@
 "publish_comment_general_error_title" = "Ooops";
 "publish_empty_comment_error_message" = "You seem to have forgotten your words!?";
 "publish_empty_comment_error_title" = "Ooops";
+"publish_your_post" = "Publish your post";
 "publisher" = "Publisher";
 "quote" = "Quote";
 "reading_list" = "Reading List";
