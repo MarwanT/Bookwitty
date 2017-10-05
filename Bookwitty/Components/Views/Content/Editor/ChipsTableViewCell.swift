@@ -7,6 +7,10 @@
 //
 
 import UIKit
-
+import WSTagsField
 class ChipsTableViewCell: UITableViewCell {
+  @IBOutlet weak var cellImageView: UIImageView!
+  @IBOutlet weak var tagsView: WSTagsField!
+  
+  static let identifier = "ChipsTableViewCellReuseableIdentifier"
 }

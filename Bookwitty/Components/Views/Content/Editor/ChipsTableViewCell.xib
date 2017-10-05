@@ -1,19 +1,47 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="ChipsTableViewCell" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="ChipsTableViewCell" customModule="Bookwitty" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="320" height="43"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="S4H-2X-lIg">
+                        <rect key="frame" x="8" y="6" width="33" height="33"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="33" id="hda-Yi-7KI"/>
+                            <constraint firstAttribute="height" constant="33" id="jsD-yE-dw4"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tWt-l8-EMj" customClass="WSTagsField" customModule="WSTagsField">
+                        <rect key="frame" x="49" y="8" width="263" height="27"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="tWt-l8-EMj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="8ab-Hh-Lyy"/>
+                    <constraint firstItem="S4H-2X-lIg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="Gjz-l0-ZZv"/>
+                    <constraint firstAttribute="trailing" secondItem="tWt-l8-EMj" secondAttribute="trailing" constant="8" id="M9a-QU-lev"/>
+                    <constraint firstItem="tWt-l8-EMj" firstAttribute="leading" secondItem="S4H-2X-lIg" secondAttribute="trailing" constant="8" id="ORL-7Q-M9B"/>
+                    <constraint firstItem="S4H-2X-lIg" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="iGh-b7-oEx"/>
+                    <constraint firstAttribute="bottom" secondItem="tWt-l8-EMj" secondAttribute="bottom" constant="8" id="zf9-lJ-5Bx"/>
+                </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="cellImageView" destination="S4H-2X-lIg" id="nc7-lA-Uat"/>
+                <outlet property="tagsView" destination="tWt-l8-EMj" id="qMp-Ep-V2d"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>
