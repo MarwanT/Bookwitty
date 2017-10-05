@@ -19,3 +19,15 @@ final class SelectPenNameViewModel {
     return penNames[row]
   }
 }
+
+//MARK: - table view helpers
+extension SelectPenNameViewModel {
+  func numberOfRows() -> Int {
+    return penNames.count
+  }
+
+  func values(for row: Int) -> (title: String?, value: String?, imageUrl: String?) {
+    let penName = self.penName(at: row)
+    return (penName?.name, "", penName?.avatarUrl)
+  }
+}
