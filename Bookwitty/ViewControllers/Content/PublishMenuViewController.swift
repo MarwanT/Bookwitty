@@ -76,6 +76,11 @@ class PublishMenuViewController: UIViewController {
   }
   private func initializeComponents() {
     
+    self.tableView.estimatedRowHeight = 44.0
+    self.tableView.rowHeight = UITableViewAutomaticDimension
+    self.tableView.reloadData()
+    self.tableView.layoutIfNeeded()
+
     let attributedString = AttributedStringBuilder(fontDynamicType: .caption1)
       .append(text: Strings.publish(), color: ThemeManager.shared.currentTheme.colorNumber13())
       .attributedString
@@ -84,9 +89,10 @@ class PublishMenuViewController: UIViewController {
     self.tableView.register(UINib(nibName: "PublishTableViewCell", bundle: nil), forCellReuseIdentifier: RichMenuCellTableViewCell.identifier)
     self.tableView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
     self.tableView.isScrollEnabled = false
-    self.tableViewHeightConstraint.constant = PublishTableViewCell.height * CGFloat(self.viewModel.numberOfRows())
     cancelButton.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
     self.tableView.register(UINib(nibName: "PublishTableViewCell", bundle: nil), forCellReuseIdentifier: PublishTableViewCell.identifier)
+    self.tableView.register(UINib(nibName: "ChipsTableViewCell", bundle: nil), forCellReuseIdentifier: ChipsTableViewCell.identifier)
+    self.tableViewHeightConstraint.constant = tableView.contentSize.height
   }
 }
 
