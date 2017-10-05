@@ -27,9 +27,10 @@ extension SelectPenNameViewModel {
     return penNames.count
   }
 
-  func values(for row: Int) -> (title: String?, value: String?, imageUrl: String?) {
+  func values(for row: Int) -> (title: String?, value: String?, imageUrl: String?, selected: Bool) {
     let penName = self.penName(at: row)
-    return (penName?.name, "", penName?.avatarUrl)
+    let selected: Bool = selectedPenName == nil ? false : selectedPenName === penName
+    return (penName?.name, "", penName?.avatarUrl, selected)
   }
 
   func toggleSelection(at row: Int) {
