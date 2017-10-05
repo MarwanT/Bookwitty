@@ -15,4 +15,8 @@ class SelectPenNameViewController: UIViewController {
 
     // Do any additional setup after loading the view.
   }
+
+  fileprivate func initializeComponents() {
+
+  }
 }
