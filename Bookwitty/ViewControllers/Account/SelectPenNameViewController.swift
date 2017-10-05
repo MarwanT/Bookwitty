@@ -10,7 +10,7 @@ import UIKit
 
 class SelectPenNameViewController: UIViewController {
 
-  fileprivate let viewModel = SelectPenNameViewModel()
+  let viewModel = SelectPenNameViewModel()
 
   @IBOutlet weak var tableView: UITableView!
   
