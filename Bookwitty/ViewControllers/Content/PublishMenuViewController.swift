@@ -19,6 +19,11 @@ class PublishMenuViewController: UIViewController {
   @IBOutlet weak var cancelButton: UIButton!
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var publishLabel: UILabel!
+  enum Section: Int {
+    case penName = 0
+    case link
+    case publish
+  }
   enum Item: Int {
     case penName = 0
     case linkTopics
