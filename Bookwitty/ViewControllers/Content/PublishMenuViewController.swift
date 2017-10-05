@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol PublishMenuViewControllerDelegate: class {
+  func publishMenu(_ viewController: PublishMenuViewController, didSelect item:PublishMenuViewController.Item)
+}
+
 class PublishMenuViewController: UIViewController {
 
   @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
@@ -63,6 +67,7 @@ class PublishMenuViewController: UIViewController {
     }
   }
   
+  weak var delegate: PublishMenuViewControllerDelegate?
   let viewModel = PublishMenuViewModel()
   override func viewDidLoad() {
     super.viewDidLoad()
