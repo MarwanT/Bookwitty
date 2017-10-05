@@ -86,6 +86,7 @@ class PublishMenuViewController: UIViewController {
     self.tableView.isScrollEnabled = false
     self.tableViewHeightConstraint.constant = PublishTableViewCell.height * CGFloat(self.viewModel.numberOfRows())
     cancelButton.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
+    self.tableView.register(UINib(nibName: "PublishTableViewCell", bundle: nil), forCellReuseIdentifier: PublishTableViewCell.identifier)
   }
 }
 
