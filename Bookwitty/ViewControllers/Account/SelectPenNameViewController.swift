@@ -19,10 +19,18 @@ class SelectPenNameViewController: UIViewController {
 
     // Do any additional setup after loading the view.
     initializeComponents()
+    applyTheme()
   }
 
   fileprivate func initializeComponents() {
     tableView.tableFooterView = UIView.defaultSeparator(useAutoLayout: false)
+  }
+}
+
+extension SelectPenNameViewController: Themeable {
+  func applyTheme() {
+    tableView.backgroundColor = UIColor.clear
+    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
   }
 }
 
