@@ -20,10 +20,34 @@ class SelectPenNameViewController: UIViewController {
     // Do any additional setup after loading the view.
     initializeComponents()
     applyTheme()
+    setupNavigationBarButtons()
   }
 
   fileprivate func initializeComponents() {
     tableView.tableFooterView = UIView.defaultSeparator(useAutoLayout: false)
+  }
+
+  func setupNavigationBarButtons() {
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
+
+    let doneBarButtonItem = UIBarButtonItem(title: Strings.done(),
+                                           style: .plain,
+                                           target: self,
+                                           action: #selector(doneBarButtonTouchUpInside(_:)))
+    navigationItem.rightBarButtonItem = doneBarButtonItem
+
+    setTextAppearanceState(of: doneBarButtonItem)
+  }
+
+  fileprivate func setTextAppearanceState(of barButtonItem: UIBarButtonItem) -> Void {
+    var attributes = barButtonItem.titleTextAttributes(for: .normal) ?? [:]
+    let defaultTextColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+    attributes[NSForegroundColorAttributeName] = defaultTextColor
+    barButtonItem.setTitleTextAttributes(attributes, for: .normal)
+
+    let grayedTextColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
+    attributes[NSForegroundColorAttributeName] = grayedTextColor
+    barButtonItem.setTitleTextAttributes(attributes, for: .disabled)
   }
 }
 
@@ -31,6 +55,13 @@ extension SelectPenNameViewController: Themeable {
   func applyTheme() {
     tableView.backgroundColor = UIColor.clear
     view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+  }
+}
+
+//MARK: - Actions
+extension SelectPenNameViewController {
+  @objc fileprivate func doneBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
+    //TODO: Empty Implementation
   }
 }
 
