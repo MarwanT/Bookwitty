@@ -10,6 +10,7 @@ import Foundation
 
 final class SelectPenNameViewModel {
   fileprivate let penNames: [PenName] = UserManager.shared.signedInUser.penNames ?? []
+  fileprivate var selectedPenName: PenName?
 
   fileprivate func penName(at row: Int) -> PenName? {
     guard row >= 0 && row < penNames.count else {
@@ -29,5 +30,17 @@ extension SelectPenNameViewModel {
   func values(for row: Int) -> (title: String?, value: String?, imageUrl: String?) {
     let penName = self.penName(at: row)
     return (penName?.name, "", penName?.avatarUrl)
+  }
+
+  func toggleSelection(at row: Int) {
+    guard let penName = self.penName(at: row) else {
+      return
+    }
+
+    if selectedPenName == penName {
+      selectedPenName = nil
+    } else {
+      selectedPenName = penName
+    }
   }
 }
