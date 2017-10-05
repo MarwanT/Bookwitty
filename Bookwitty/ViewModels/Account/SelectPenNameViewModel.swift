@@ -9,5 +9,13 @@
 import Foundation
 
 final class SelectPenNameViewModel {
+  fileprivate let penNames: [PenName] = UserManager.shared.signedInUser.penNames ?? []
 
+  fileprivate func penName(at row: Int) -> PenName? {
+    guard row >= 0 && row < penNames.count else {
+      return nil
+    }
+
+    return penNames[row]
+  }
 }
