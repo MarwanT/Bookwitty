@@ -113,6 +113,24 @@
             </objects>
             <point key="canvasLocation" x="-439" y="-346"/>
         </scene>
+        <!--Select Pen Name View Controller-->
+        <scene sceneID="UeS-W4-ybD">
+            <objects>
+                <viewController storyboardIdentifier="SelectPenNameViewController" id="igW-e6-VKU" customClass="SelectPenNameViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mdv-Ov-Kar"/>
+                        <viewControllerLayoutGuide type="bottom" id="IOG-Cg-3Rk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gs6-p3-fSY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dbO-Lw-sgm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-439" y="377"/>
+        </scene>
         <!--Change Password View Controller-->
         <scene sceneID="CZY-ee-IUb">
             <objects>

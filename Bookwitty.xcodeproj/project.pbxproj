@@ -105,6 +105,8 @@
 		56BEF6391E6836DB0012FDE5 /* ContributorsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BEF6381E6836DB0012FDE5 /* ContributorsNode.swift */; };
 		56BFE6321F065D62009ABECC /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BFE6311F065D62009ABECC /* Vote.swift */; };
 		56C54C681F05092000C5FE85 /* CommentCompactNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C54C671F05092000C5FE85 /* CommentCompactNode.swift */; };
+		56C82F381F8636600089DF84 /* SelectPenNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C82F371F8636600089DF84 /* SelectPenNameViewController.swift */; };
+		56C82F3A1F8637EF0089DF84 /* SelectPenNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C82F391F8637EF0089DF84 /* SelectPenNameViewModel.swift */; };
 		56D341C31EE6AE2800A852C6 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56D341C21EE6AE2800A852C6 /* AdSupport.framework */; };
 		56D36E821E6DAB3400791098 /* PenNameFollowNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D36E811E6DAB3400791098 /* PenNameFollowNode.swift */; };
 		56D5D0971F7BD59000746913 /* SearchNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D5D0961F7BD59000746913 /* SearchNode.swift */; };
@@ -453,6 +455,8 @@
 		56BEF6381E6836DB0012FDE5 /* ContributorsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContributorsNode.swift; path = TopicsDetails/ContributorsNode.swift; sourceTree = "<group>"; };
 		56BFE6311F065D62009ABECC /* Vote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
 		56C54C671F05092000C5FE85 /* CommentCompactNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCompactNode.swift; sourceTree = "<group>"; };
+		56C82F371F8636600089DF84 /* SelectPenNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPenNameViewController.swift; sourceTree = "<group>"; };
+		56C82F391F8637EF0089DF84 /* SelectPenNameViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPenNameViewModel.swift; sourceTree = "<group>"; };
 		56D341C21EE6AE2800A852C6 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		56D36E811E6DAB3400791098 /* PenNameFollowNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameFollowNode.swift; sourceTree = "<group>"; };
 		56D5D0961F7BD59000746913 /* SearchNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchNode.swift; sourceTree = "<group>"; };
@@ -856,6 +860,7 @@
 				5644F2191E55A2F100B7D8E7 /* SettingsViewController.swift */,
 				567EE1B01E7A9F1200A0CA0D /* ForgotPasswordViewController.swift */,
 				56B985FC1F59B3FD00E32874 /* EmailSettingsViewController.swift */,
+				56C82F371F8636600089DF84 /* SelectPenNameViewController.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -867,6 +872,7 @@
 				56E09DBD1E546B2100B7C6E6 /* ChangePasswordViewModel.swift */,
 				5644F21B1E55A77100B7D8E7 /* SettingsViewModel.swift */,
 				56B985FE1F59B66B00E32874 /* EmailSettingsViewModel.swift */,
+				56C82F391F8637EF0089DF84 /* SelectPenNameViewModel.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -2039,6 +2045,7 @@
 				56535F351E7CB9ED0045E73D /* Thumbnail.swift in Sources */,
 				0F4691DC1F862B9600BB92BF /* ChipsTableViewCell.swift in Sources */,
 				F43996851E76C76700FE9D8B /* PostsListViewController.swift in Sources */,
+				56C82F3A1F8637EF0089DF84 /* SelectPenNameViewModel.swift in Sources */,
 				562A31201E659919002851DE /* Strings.swift in Sources */,
 				F4AAADAD1E93F2230073EA50 /* ButtonWithLoader.swift in Sources */,
 				59EC5BAC1E6C5B51006E1CB9 /* SectionTitleHeaderNode.swift in Sources */,
@@ -2108,6 +2115,7 @@
 				59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */,
 				560341AD1F3DAE3400E60F44 /* Tag.swift in Sources */,
 				56218A051F7A5CE5000456F9 /* QuoteEditorViewController.swift in Sources */,
+				56C82F381F8636600089DF84 /* SelectPenNameViewController.swift in Sources */,
 				562A996C1ED8683000382ADD /* FilterCellNode.swift in Sources */,
 				F4CDDD371E60263800474CAA /* RotatingImageNode.swift in Sources */,
 				59C997BF1ED5AD70009A8451 /* Comment.swift in Sources */,
