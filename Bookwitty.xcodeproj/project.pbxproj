@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0F1AF1B21F84D1E8004DF12A /* PublishMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1AF1B11F84D1E8004DF12A /* PublishMenuViewController.swift */; };
 		0F1AF1B41F84D3EE004DF12A /* PublishMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1AF1B31F84D3EE004DF12A /* PublishMenuViewModel.swift */; };
+		0F4691DC1F862B9600BB92BF /* ChipsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4691DA1F862B9600BB92BF /* ChipsTableViewCell.swift */; };
+		0F4691DD1F862B9600BB92BF /* ChipsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F4691DB1F862B9600BB92BF /* ChipsTableViewCell.xib */; };
 		0F525E9D1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F525E9C1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib */; };
 		0F525E9F1F77E98700E225B1 /* RichMenuCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F525E9E1F77E98700E225B1 /* RichMenuCellTableViewCell.swift */; };
 		0FAA01681F7A3D0B0011FDBA /* RichBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAA01671F7A3D0B0011FDBA /* RichBookViewModel.swift */; };
@@ -348,6 +350,8 @@
 /* Begin PBXFileReference section */
 		0F1AF1B11F84D1E8004DF12A /* PublishMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishMenuViewController.swift; sourceTree = "<group>"; };
 		0F1AF1B31F84D3EE004DF12A /* PublishMenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishMenuViewModel.swift; sourceTree = "<group>"; };
+		0F4691DA1F862B9600BB92BF /* ChipsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChipsTableViewCell.swift; sourceTree = "<group>"; };
+		0F4691DB1F862B9600BB92BF /* ChipsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChipsTableViewCell.xib; sourceTree = "<group>"; };
 		0F525E9C1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RichMenuCellTableViewCell.xib; sourceTree = "<group>"; };
 		0F525E9E1F77E98700E225B1 /* RichMenuCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichMenuCellTableViewCell.swift; sourceTree = "<group>"; };
 		0FAA01671F7A3D0B0011FDBA /* RichBookViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichBookViewModel.swift; sourceTree = "<group>"; };
@@ -721,6 +725,8 @@
 				0F525E9E1F77E98700E225B1 /* RichMenuCellTableViewCell.swift */,
 				0FC440ED1F85254600A5A638 /* PublishTableViewCell.swift */,
 				0FC440EE1F85254600A5A638 /* PublishTableViewCell.xib */,
+				0F4691DA1F862B9600BB92BF /* ChipsTableViewCell.swift */,
+				0F4691DB1F862B9600BB92BF /* ChipsTableViewCell.xib */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -1751,6 +1757,7 @@
 				0F525E9D1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib in Resources */,
 				0FC440F01F85254600A5A638 /* PublishTableViewCell.xib in Resources */,
 				5942902A1E5347670006B2F1 /* DisclosureView.xib in Resources */,
+				0F4691DD1F862B9600BB92BF /* ChipsTableViewCell.xib in Resources */,
 				59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */,
 				594290211E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib in Resources */,
 				594290371E548FA10006B2F1 /* BookTableViewCell.xib in Resources */,
@@ -2009,6 +2016,7 @@
 				59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */,
 				567B3C111ED4886F00E02E16 /* CheckmarkTableViewCell.swift in Sources */,
 				56535F351E7CB9ED0045E73D /* Thumbnail.swift in Sources */,
+				0F4691DC1F862B9600BB92BF /* ChipsTableViewCell.swift in Sources */,
 				F43996851E76C76700FE9D8B /* PostsListViewController.swift in Sources */,
 				562A31201E659919002851DE /* Strings.swift in Sources */,
 				F4AAADAD1E93F2230073EA50 /* ButtonWithLoader.swift in Sources */,
