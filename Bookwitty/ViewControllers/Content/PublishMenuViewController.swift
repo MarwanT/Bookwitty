@@ -114,4 +114,14 @@ extension PublishMenuViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return PublishTableViewCell.height
   }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+    
+    guard let item = Item(rawValue: indexPath.row) else {
+      return
+    }
+    
+    self.delegate?.publishMenu(self, didSelect: item)
+  }
 }
