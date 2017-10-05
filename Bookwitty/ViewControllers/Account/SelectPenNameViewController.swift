@@ -18,9 +18,10 @@ class SelectPenNameViewController: UIViewController {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
+    initializeComponents()
   }
 
   fileprivate func initializeComponents() {
-
+    tableView.tableFooterView = UIView.defaultSeparator(useAutoLayout: false)
   }
 }
