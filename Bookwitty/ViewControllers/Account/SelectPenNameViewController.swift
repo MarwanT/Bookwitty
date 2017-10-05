@@ -10,6 +10,8 @@ import UIKit
 
 class SelectPenNameViewController: UIViewController {
 
+  fileprivate let viewModel = SelectPenNameViewModel()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
 
