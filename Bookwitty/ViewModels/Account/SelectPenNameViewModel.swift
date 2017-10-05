@@ -19,6 +19,10 @@ final class SelectPenNameViewModel {
 
     return penNames[row]
   }
+
+  func preselect(penName: PenName?) {
+    selectedPenName = penName
+  }
 }
 
 //MARK: - table view helpers
