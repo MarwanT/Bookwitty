@@ -11,6 +11,8 @@ import UIKit
 class SelectPenNameViewController: UIViewController {
 
   fileprivate let viewModel = SelectPenNameViewModel()
+
+  @IBOutlet weak var tableView: UITableView!
   
   override func viewDidLoad() {
     super.viewDidLoad()
