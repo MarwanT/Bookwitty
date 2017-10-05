@@ -52,10 +52,16 @@ extension SelectPenNameViewController: UITableViewDataSource, UITableViewDelegat
 
     currentCell.label.text = values.title
     currentCell.profileImageView.sd_setImage(with: URL(string: values.imageUrl ?? ""), placeholderImage: ThemeManager.shared.currentTheme.penNamePlaceholder)
-    currentCell.disclosureIndicatorImageView.isHidden = true
+    currentCell.disclosureIndicatorImageView.isHidden = !values.selected
+    if values.selected {
+      currentCell.disclosureIndicatorImageView.image = #imageLiteral(resourceName: "tick")
+      currentCell.disclosureIndicatorImageView.tintColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+    }
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
+    viewModel.toggleSelection(at: indexPath.row)
+    tableView.reloadData()
   }
 }
