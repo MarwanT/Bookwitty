@@ -70,6 +70,7 @@ class SelectPenNameViewController: UIViewController {
     let penNameViewController = Storyboard.Access.instantiate(PenNameViewController.self)
     penNameViewController.mode = .New
     penNameViewController.showNoteLabel = false
+    penNameViewController.delegate = self
     navigationController?.pushViewController(penNameViewController, animated: true)
   }
 }
@@ -183,5 +184,17 @@ extension SelectPenNameViewController: UITableViewDataSource, UITableViewDelegat
     }
 
     return 15.0
+  }
+}
+
+extension SelectPenNameViewController: PenNameViewControllerDelegate {
+  func penName(viewController: PenNameViewController, didFinish: PenNameViewController.Mode, with penName: PenName?) {
+    guard let penName = penName else {
+      return
+    }
+
+    viewModel.reloadData()
+    viewModel.preselect(penName: penName)
+    tableView.reloadData()
   }
 }
