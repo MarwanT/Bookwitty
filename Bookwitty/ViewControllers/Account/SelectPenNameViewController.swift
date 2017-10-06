@@ -158,7 +158,7 @@ extension SelectPenNameViewController: UITableViewDataSource, UITableViewDelegat
 
     switch section {
     case .list:
-      viewModel.toggleSelection(at: indexPath.row)
+      viewModel.selectPenName(at: indexPath.row)
       tableView.reloadData()
     case .new:
       pushPenNameViewController()

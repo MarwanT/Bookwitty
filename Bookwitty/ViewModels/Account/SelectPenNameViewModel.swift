@@ -50,14 +50,12 @@ extension SelectPenNameViewModel {
     return (penName?.name, "", penName?.avatarUrl, selected)
   }
 
-  func toggleSelection(at row: Int) {
+  func selectPenName(at row: Int) {
     guard let penName = self.penName(at: row) else {
       return
     }
 
-    if selectedPenName == penName {
-      selectedPenName = nil
-    } else {
+    if selectedPenName != penName {
       selectedPenName = penName
     }
   }
