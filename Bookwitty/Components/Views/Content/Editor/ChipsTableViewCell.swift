@@ -13,4 +13,8 @@ class ChipsTableViewCell: UITableViewCell {
   @IBOutlet weak var tagsView: WSTagsField!
   
   static let identifier = "ChipsTableViewCellReuseableIdentifier"
+  
+  func detTags(_ tags:[String])  {
+    tags.forEach { tagsView.addTag($0) }
+  }
 }
