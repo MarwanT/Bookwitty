@@ -65,6 +65,14 @@ class SelectPenNameViewController: UIViewController {
     attributes[NSForegroundColorAttributeName] = grayedTextColor
     barButtonItem.setTitleTextAttributes(attributes, for: .disabled)
   }
+
+  fileprivate func pushPenNameViewController() {
+    let penNameViewController = Storyboard.Access.instantiate(PenNameViewController.self)
+    penNameViewController.mode = .New
+    penNameViewController.showNoteLabel = false
+    penNameViewController.delegate = self
+    navigationController?.pushViewController(penNameViewController, animated: true)
+  }
 }
 
 extension SelectPenNameViewController: Themeable {
@@ -77,7 +85,7 @@ extension SelectPenNameViewController: Themeable {
 //MARK: - Actions
 extension SelectPenNameViewController {
   @objc fileprivate func doneBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
-    //TODO: Empty Implementation
+    self.delegate?.selectPenName(controller: self, didSelect: viewModel.selectedPenName)
   }
 }
 
@@ -140,14 +148,19 @@ extension SelectPenNameViewController: UITableViewDataSource, UITableViewDelegat
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    guard let section = SelectPenNameViewController.Sections(rawValue: indexPath.section),
-    case .list = section else {
+    tableView.deselectRow(at: indexPath, animated: true)
+
+    guard let section = SelectPenNameViewController.Sections(rawValue: indexPath.section) else {
       return
     }
 
-    tableView.deselectRow(at: indexPath, animated: true)
-    viewModel.toggleSelection(at: indexPath.row)
-    tableView.reloadData()
+    switch section {
+    case .list:
+      viewModel.toggleSelection(at: indexPath.row)
+      tableView.reloadData()
+    case .new:
+      pushPenNameViewController()
+    }
   }
 
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -171,5 +184,17 @@ extension SelectPenNameViewController: UITableViewDataSource, UITableViewDelegat
     }
 
     return 15.0
+  }
+}
+
+extension SelectPenNameViewController: PenNameViewControllerDelegate {
+  func penName(viewController: PenNameViewController, didFinish: PenNameViewController.Mode, with penName: PenName?) {
+    guard let penName = penName else {
+      return
+    }
+
+    viewModel.reloadData()
+    viewModel.preselect(penName: penName)
+    tableView.reloadData()
   }
 }

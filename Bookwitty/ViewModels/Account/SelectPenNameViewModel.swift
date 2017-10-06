@@ -9,8 +9,8 @@
 import Foundation
 
 final class SelectPenNameViewModel {
-  fileprivate let penNames: [PenName] = UserManager.shared.signedInUser.penNames ?? []
-  fileprivate var selectedPenName: PenName?
+  fileprivate(set) var penNames: [PenName] = UserManager.shared.signedInUser.penNames ?? []
+  fileprivate(set) var selectedPenName: PenName?
 
   fileprivate func penName(at row: Int) -> PenName? {
     guard row >= 0 && row < penNames.count else {
@@ -22,6 +22,10 @@ final class SelectPenNameViewModel {
 
   func preselect(penName: PenName?) {
     selectedPenName = penName
+  }
+
+  func reloadData() {
+    self.penNames = UserManager.shared.signedInUser.penNames ?? []
   }
 }
 
