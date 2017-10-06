@@ -20,6 +20,8 @@ class SelectPenNameViewController: UIViewController {
 
   weak var delegate: SelectPenNameViewControllerDelegate?
 
+  var showCreatePenName: Bool = true
+
   enum Sections: Int {
     case list
     case new
@@ -95,7 +97,7 @@ extension SelectPenNameViewController {
 extension SelectPenNameViewController: UITableViewDataSource, UITableViewDelegate {
 
   func numberOfSections(in tableView: UITableView) -> Int {
-    return Sections.count
+    return showCreatePenName ? Sections.count : Sections.count - 1
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
