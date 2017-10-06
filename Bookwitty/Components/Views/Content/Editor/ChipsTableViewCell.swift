@@ -13,8 +13,12 @@ class ChipsTableViewCell: UITableViewCell {
   @IBOutlet weak var tagsView: WSTagsField!
   
   static let identifier = "ChipsTableViewCellReuseableIdentifier"
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    tagsView.readOnly = true
+  }
   
-  func detTags(_ tags:[String])  {
+  func setTags(_ tags:[String])  {
     tags.forEach { tagsView.addTag($0) }
   }
 }
