@@ -27,8 +27,17 @@ final class SelectPenNameViewModel {
 
 //MARK: - table view helpers
 extension SelectPenNameViewModel {
-  func numberOfRows() -> Int {
-    return penNames.count
+  func numberOfRows(in section: Int) -> Int {
+    guard let section = SelectPenNameViewController.Sections(rawValue: section) else {
+      return 0
+    }
+
+    switch section {
+    case .list:
+      return penNames.count
+    case .new:
+      return 1
+    }
   }
 
   func values(for row: Int) -> (title: String?, value: String?, imageUrl: String?, selected: Bool) {
