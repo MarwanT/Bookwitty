@@ -10,6 +10,17 @@ import AsyncDisplayKit
 
 class PostPreviewViewController: ASViewController<ASCollectionNode> {
 
+  enum Sections: Int {
+    case customize
+    case penName
+    case cover
+    case title
+    case description
+    case newCover
+    case newTitle
+
+    static let count: Int = 7
+  }
   fileprivate var flowLayout: UICollectionViewFlowLayout
   fileprivate let collectionNode: ASCollectionNode
   
