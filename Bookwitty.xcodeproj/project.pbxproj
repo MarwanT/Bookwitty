@@ -72,6 +72,7 @@
 		56399DC21E51D0F0005192AC /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56399DC11E51D0F0005192AC /* AccountViewModel.swift */; };
 		5639A4081EA5359600528D6F /* VideoCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5639A4071EA5359600528D6F /* VideoCardViewModel.swift */; };
 		563C1EA71E93D14600675B42 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 563C1EA91E93D14600675B42 /* Localizable.stringsdict */; };
+		563D3E401F87BEA6004CE67A /* PostPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563D3E3F1F87BEA6004CE67A /* PostPreviewViewController.swift */; };
 		5641F96A1EFBB015001CC72F /* PenNameListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5641F9691EFBB015001CC72F /* PenNameListViewController.swift */; };
 		5641F96D1EFBE902001CC72F /* PenNameListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5641F96C1EFBE902001CC72F /* PenNameListViewModel.swift */; };
 		5644F21A1E55A2F100B7D8E7 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5644F2191E55A2F100B7D8E7 /* SettingsViewController.swift */; };
@@ -421,6 +422,7 @@
 		5639A4071EA5359600528D6F /* VideoCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCardViewModel.swift; sourceTree = "<group>"; };
 		563C1EA81E93D14600675B42 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		563C1EAA1E93D14900675B42 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = fr; path = fr.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		563D3E3F1F87BEA6004CE67A /* PostPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostPreviewViewController.swift; sourceTree = "<group>"; };
 		5641F9691EFBB015001CC72F /* PenNameListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameListViewController.swift; sourceTree = "<group>"; };
 		5641F96C1EFBE902001CC72F /* PenNameListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PenNameListViewModel.swift; sourceTree = "<group>"; };
 		5644F2191E55A2F100B7D8E7 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -758,6 +760,7 @@
 				0F1AF1B11F84D1E8004DF12A /* PublishMenuViewController.swift */,
 				0F7767D11F8CE5A900D54E4D /* LinkTagsViewController.swift */,
 				0F7767D51F8F511C00D54E4D /* LinkTopicsViewController.swift */,
+				563D3E3F1F87BEA6004CE67A /* PostPreviewViewController.swift */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -2285,6 +2288,7 @@
 				56B985FD1F59B3FD00E32874 /* EmailSettingsViewController.swift in Sources */,
 				59DA476A1E3B876900BA90A5 /* SignInViewController.swift in Sources */,
 				56E87D341E6EFFCA00AF6CFD /* BookNode.swift in Sources */,
+				563D3E401F87BEA6004CE67A /* PostPreviewViewController.swift in Sources */,
 				59EC5BA91E6C5987006E1CB9 /* BookDetailsPricesNode.swift in Sources */,
 				5641F96D1EFBE902001CC72F /* PenNameListViewModel.swift in Sources */,
 				594290391E549FF40006B2F1 /* UIColor.swift in Sources */,
