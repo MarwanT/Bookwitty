@@ -85,7 +85,7 @@ extension SelectPenNameViewController: Themeable {
 //MARK: - Actions
 extension SelectPenNameViewController {
   @objc fileprivate func doneBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
-    //TODO: Empty Implementation
+    self.delegate?.selectPenName(controller: self, didSelect: viewModel.selectedPenName)
   }
 }
 
