@@ -20,6 +20,8 @@ class SelectPenNameViewController: UIViewController {
 
   weak var delegate: SelectPenNameViewControllerDelegate?
 
+  var showCreatePenName: Bool = true
+
   enum Sections: Int {
     case list
     case new
@@ -34,6 +36,8 @@ class SelectPenNameViewController: UIViewController {
     initializeComponents()
     applyTheme()
     setupNavigationBarButtons()
+
+    title = PenName.resourceType.localizedName
   }
 
   fileprivate func initializeComponents() {
@@ -93,7 +97,7 @@ extension SelectPenNameViewController {
 extension SelectPenNameViewController: UITableViewDataSource, UITableViewDelegate {
 
   func numberOfSections(in tableView: UITableView) -> Int {
-    return Sections.count
+    return showCreatePenName ? Sections.count : Sections.count - 1
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -156,7 +160,7 @@ extension SelectPenNameViewController: UITableViewDataSource, UITableViewDelegat
 
     switch section {
     case .list:
-      viewModel.toggleSelection(at: indexPath.row)
+      viewModel.selectPenName(at: indexPath.row)
       tableView.reloadData()
     case .new:
       pushPenNameViewController()
