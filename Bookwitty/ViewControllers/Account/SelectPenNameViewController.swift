@@ -147,14 +147,19 @@ extension SelectPenNameViewController: UITableViewDataSource, UITableViewDelegat
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    guard let section = SelectPenNameViewController.Sections(rawValue: indexPath.section),
-    case .list = section else {
+    tableView.deselectRow(at: indexPath, animated: true)
+
+    guard let section = SelectPenNameViewController.Sections(rawValue: indexPath.section) else {
       return
     }
 
-    tableView.deselectRow(at: indexPath, animated: true)
-    viewModel.toggleSelection(at: indexPath.row)
-    tableView.reloadData()
+    switch section {
+    case .list:
+      viewModel.toggleSelection(at: indexPath.row)
+      tableView.reloadData()
+    case .new:
+      pushPenNameViewController()
+    }
   }
 
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
