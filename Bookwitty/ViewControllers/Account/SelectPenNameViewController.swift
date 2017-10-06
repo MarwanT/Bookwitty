@@ -34,6 +34,8 @@ class SelectPenNameViewController: UIViewController {
     initializeComponents()
     applyTheme()
     setupNavigationBarButtons()
+
+    title = PenName.resourceType.localizedName
   }
 
   fileprivate func initializeComponents() {
