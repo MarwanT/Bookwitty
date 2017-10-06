@@ -8,12 +8,18 @@
 
 import UIKit
 
+protocol SelectPenNameViewControllerDelegate: class {
+  func selectPenName(controller: SelectPenNameViewController, didSelect penName: PenName?)
+}
+
 class SelectPenNameViewController: UIViewController {
 
   let viewModel = SelectPenNameViewModel()
 
   @IBOutlet weak var tableView: UITableView!
-  
+
+  weak var delegate: SelectPenNameViewControllerDelegate?
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
