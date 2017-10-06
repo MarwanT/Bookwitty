@@ -65,6 +65,13 @@ class SelectPenNameViewController: UIViewController {
     attributes[NSForegroundColorAttributeName] = grayedTextColor
     barButtonItem.setTitleTextAttributes(attributes, for: .disabled)
   }
+
+  fileprivate func pushPenNameViewController() {
+    let penNameViewController = Storyboard.Access.instantiate(PenNameViewController.self)
+    penNameViewController.mode = .New
+    penNameViewController.showNoteLabel = false
+    navigationController?.pushViewController(penNameViewController, animated: true)
+  }
 }
 
 extension SelectPenNameViewController: Themeable {
