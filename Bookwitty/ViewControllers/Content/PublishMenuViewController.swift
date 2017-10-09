@@ -149,6 +149,9 @@ extension PublishMenuViewController: UITableViewDataSource {
 
 extension PublishMenuViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    if indexPath.section == Section.link.rawValue {
+      return UITableViewAutomaticDimension
+    }
     return PublishTableViewCell.height
   }
   
