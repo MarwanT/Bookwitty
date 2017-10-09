@@ -6,6 +6,8 @@
 //  Copyright © 2017 Keeward. All rights reserved.
 //
 
+import Moya
+
 public struct TagAPI {
   
 }
