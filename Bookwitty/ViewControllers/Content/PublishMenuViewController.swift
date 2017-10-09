@@ -19,8 +19,16 @@ class PublishMenuViewController: UIViewController {
   @IBOutlet weak var cancelButton: UIButton!
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var publishLabel: UILabel!
-  enum Item: Int {
+  enum Section: Int {
     case penName = 0
+    case link
+    case preview
+    case publish
+    
+    static let numberOfSections: Int = 4
+  }
+  enum Item {
+    case penName
     case linkTopics
     case addTags
     case postPreview
@@ -75,53 +83,109 @@ class PublishMenuViewController: UIViewController {
     // Do any additional setup after loading the view.
   }
   private func initializeComponents() {
-    
+    self.tableView.register(UINib(nibName: "PublishTableViewCell", bundle: nil), forCellReuseIdentifier: PublishTableViewCell.identifier)
+    self.tableView.register(UINib(nibName: "ChipsTableViewCell", bundle: nil), forCellReuseIdentifier: ChipsTableViewCell.identifier)
+    self.tableView.estimatedRowHeight = 44.0
+    self.tableView.rowHeight = UITableViewAutomaticDimension
+    self.tableView.reloadData()
+    self.tableView.layoutIfNeeded()
+
     let attributedString = AttributedStringBuilder(fontDynamicType: .caption1)
       .append(text: Strings.publish(), color: ThemeManager.shared.currentTheme.colorNumber13())
       .attributedString
     
     self.publishLabel.attributedText = attributedString
-    self.tableView.register(UINib(nibName: "PublishTableViewCell", bundle: nil), forCellReuseIdentifier: RichMenuCellTableViewCell.identifier)
     self.tableView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
     self.tableView.isScrollEnabled = false
-    self.tableViewHeightConstraint.constant = PublishTableViewCell.height * CGFloat(self.viewModel.numberOfRows())
     cancelButton.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
-    self.tableView.register(UINib(nibName: "PublishTableViewCell", bundle: nil), forCellReuseIdentifier: PublishTableViewCell.identifier)
+    self.tableViewHeightConstraint.constant = tableView.contentSize.height
   }
 }
 
 extension PublishMenuViewController: UITableViewDataSource {
+  
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return self.viewModel.numberOfSections()
+  }
+  
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return self.viewModel.numberOfRows()
+    return self.viewModel.numberOfRows(in: section)
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    return tableView.dequeueReusableCell(withIdentifier: PublishTableViewCell.identifier, for: indexPath)
+    switch (indexPath.section, indexPath.row) {
+    case (Section.publish.rawValue, _):
+      return tableView.dequeueReusableCell(withIdentifier: "PublishCellReuseIdentifier", for: indexPath)
+    case (Section.link.rawValue, 0) where viewModel.tags.count > 0:
+      fallthrough
+    case (Section.link.rawValue, 1) where viewModel.links.count > 0:
+      return tableView.dequeueReusableCell(withIdentifier: ChipsTableViewCell.identifier, for: indexPath)
+    default:
+      return tableView.dequeueReusableCell(withIdentifier: PublishTableViewCell.identifier, for: indexPath)
+    }
   }
   
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     let values = self.viewModel.values(forRowAt: indexPath)
     
-    guard let currentCell = cell as? PublishTableViewCell else {
-      return
+    if let currentCell = cell as? PublishTableViewCell  {
+      currentCell.cellImageView.image = values.label.image
+      currentCell.cellLabel.text = values.label.title
+    } else if let currentCell = cell as? ChipsTableViewCell  {
+      currentCell.cellImageView.image = values.label.image
+      currentCell.setTags(["a","b"])//.text = values.label.title
+    } else {
+      //From storyboard
+      cell.textLabel?.text = values.label.title
+      if indexPath.row == 0 {
+        cell.contentView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber19()
+        cell.textLabel?.backgroundColor = ThemeManager.shared.currentTheme.colorNumber19()
+        cell.textLabel?.textColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+      }
+      cell.textLabel?.font = FontDynamicType.caption1.font
     }
-    currentCell.cellImageView.image = values.image
-    currentCell.cellLabel.text = values.label
   }
 }
 
 extension PublishMenuViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    if indexPath.section == Section.link.rawValue {
+      return UITableViewAutomaticDimension
+    }
     return PublishTableViewCell.height
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
-    guard let item = Item(rawValue: indexPath.row) else {
+    guard let item = Item.value(for: indexPath) else {
       return
     }
     
     self.delegate?.publishMenu(self, didSelect: item)
+  }
+}
+
+extension PublishMenuViewController.Item {
+  
+  static func value(for indexPath: IndexPath) -> PublishMenuViewController.Item?  {
+    switch (indexPath.section, indexPath.row) {
+    case (PublishMenuViewController.Section.penName.rawValue, _):
+      return .penName
+    case (PublishMenuViewController.Section.link.rawValue, let row) where row == 0:
+      return .linkTopics
+    case (PublishMenuViewController.Section.link.rawValue, let row) where row == 1:
+      return .addTags
+    case (PublishMenuViewController.Section.preview.rawValue, _):
+      return .postPreview
+    case (PublishMenuViewController.Section.publish.rawValue, let row) where row == 0:
+      return .publishYourPost
+    case (PublishMenuViewController.Section.publish.rawValue, let row) where row == 1:
+      return .saveAsDraft
+    case (PublishMenuViewController.Section.publish.rawValue, let row) where row == 2:
+      return .goBack
+    default:
+      return nil
+    }
   }
 }
