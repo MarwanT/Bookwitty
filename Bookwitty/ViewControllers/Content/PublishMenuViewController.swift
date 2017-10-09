@@ -27,8 +27,8 @@ class PublishMenuViewController: UIViewController {
     
     static let numberOfSections: Int = 4
   }
-  enum Item: Int {
-    case penName = 0
+  enum Item {
+    case penName
     case linkTopics
     case addTags
     case postPreview
