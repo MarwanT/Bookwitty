@@ -104,6 +104,22 @@ struct ContentAPI {
       success = statusCode == successStatusCode
     })
   }
+  
+  func unlinkContent(for contentIdentifier: String, with topicIdentifier: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let successStatusCode = 204
+    return signedAPIRequest(target: .unlinkContent(contentIdentifier: contentIdentifier, topicIdentifier: topicIdentifier), completion: { (data, statusCode, response, error) in
+      var success: Bool = false
+      var error: BookwittyAPIError? = nil
+      defer {
+        completion(success, error)
+      }
+      guard data != nil, let statusCode = statusCode else {
+        error = BookwittyAPIError.invalidStatusCode
+        return
+      }
+      success = statusCode == successStatusCode
+    })
+  }
 }
 
 extension ContentAPI {
