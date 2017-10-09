@@ -22,7 +22,10 @@ class PublishMenuViewController: UIViewController {
   enum Section: Int {
     case penName = 0
     case link
+    case preview
     case publish
+    
+    static let numberOfSections: Int = 4
   }
   enum Item: Int {
     case penName = 0
