@@ -31,6 +31,9 @@ class LimitedEditableTextNode: ASCellNode {
     charactersLeftNode.style.flexShrink = 1.0
   }
 
+  var hardCharactersLimit: Int = 200
+  var softCharactersLimit: Int = 140
+
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let nodesArray: [ASLayoutElement] = [textNode, charactersLeftNode]
     let verticalSpec = ASStackLayoutSpec(direction: .vertical,
