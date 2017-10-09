@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0F1AF1B21F84D1E8004DF12A /* PublishMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1AF1B11F84D1E8004DF12A /* PublishMenuViewController.swift */; };
 		0F1AF1B41F84D3EE004DF12A /* PublishMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1AF1B31F84D3EE004DF12A /* PublishMenuViewModel.swift */; };
+		0F2020CB1F8B7ED0007706B6 /* Publish+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2020CA1F8B7ED0007706B6 /* Publish+API.swift */; };
 		0F4691DC1F862B9600BB92BF /* ChipsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4691DA1F862B9600BB92BF /* ChipsTableViewCell.swift */; };
 		0F4691DD1F862B9600BB92BF /* ChipsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F4691DB1F862B9600BB92BF /* ChipsTableViewCell.xib */; };
 		0F525E9D1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F525E9C1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib */; };
@@ -350,6 +351,7 @@
 /* Begin PBXFileReference section */
 		0F1AF1B11F84D1E8004DF12A /* PublishMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishMenuViewController.swift; sourceTree = "<group>"; };
 		0F1AF1B31F84D3EE004DF12A /* PublishMenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishMenuViewModel.swift; sourceTree = "<group>"; };
+		0F2020CA1F8B7ED0007706B6 /* Publish+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Publish+API.swift"; sourceTree = "<group>"; };
 		0F4691DA1F862B9600BB92BF /* ChipsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChipsTableViewCell.swift; sourceTree = "<group>"; };
 		0F4691DB1F862B9600BB92BF /* ChipsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChipsTableViewCell.xib; sourceTree = "<group>"; };
 		0F525E9C1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RichMenuCellTableViewCell.xib; sourceTree = "<group>"; };
@@ -1290,6 +1292,7 @@
 				56620FC71E89470600BD92BB /* Upload+API.swift */,
 				5657A5421E8BCF02000EE647 /* Utilities+API.swift */,
 				59C997BC1ED5A0FD009A8451 /* CommentAPI.swift */,
+				0F2020CA1F8B7ED0007706B6 /* Publish+API.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -2084,6 +2087,7 @@
 				59CB4DEF1EDEC15800E7A60B /* CommentsManager.swift in Sources */,
 				56929CE61E671BE700B3D00A /* SegmentedControl.swift in Sources */,
 				594B9F6F1E55F557007C49E1 /* RootTabBarViewModel.swift in Sources */,
+				0F2020CB1F8B7ED0007706B6 /* Publish+API.swift in Sources */,
 				59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */,
 				560341AD1F3DAE3400E60F44 /* Tag.swift in Sources */,
 				56218A051F7A5CE5000456F9 /* QuoteEditorViewController.swift in Sources */,
