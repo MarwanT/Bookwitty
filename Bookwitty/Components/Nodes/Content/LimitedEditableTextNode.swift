@@ -48,6 +48,7 @@ class LimitedEditableTextNode: ASCellNode {
 
   override func didLoad() {
     super.didLoad()
+    applyTheme()
     textNode.delegate = self
     numberOfCharactersLeft = hardCharactersLimit
   }
@@ -73,6 +74,13 @@ class LimitedEditableTextNode: ASCellNode {
   }
 }
 
+extension LimitedEditableTextNode: Themeable {
+  func applyTheme() {
+    textNode.textView.font = FontDynamicType.body.font
+    textNode.textView.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+  }
+}
 
 extension LimitedEditableTextNode: ASEditableTextNodeDelegate {
   func editableTextNode(_ editableTextNode: ASEditableTextNode, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
