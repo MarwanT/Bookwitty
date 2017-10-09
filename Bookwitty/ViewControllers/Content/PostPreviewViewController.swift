@@ -60,6 +60,8 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
     }
 
     switch section {
+    case .customize:
+      return 0
     case .penName:
       return 0
     case .cover:
@@ -67,8 +69,6 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
     case .title:
       return 0
     case .description:
-      return 0
-    case .characters:
       return 0
     case .newCover:
       return 0
@@ -79,7 +79,26 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
 
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
     return {
-      return ASCellNode()
+      guard let section = Sections(rawValue: indexPath.section) else {
+        return ASCellNode()
+      }
+
+      switch section {
+      case .customize:
+        return ASCellNode()
+      case .penName:
+        return ASCellNode()
+      case .cover:
+        return ASCellNode()
+      case .title:
+        return ASCellNode()
+      case .description:
+        return ASCellNode()
+      case .newCover:
+        return ASCellNode()
+      case .newTitle:
+        return ASCellNode()
+      }
     }
   }
 
