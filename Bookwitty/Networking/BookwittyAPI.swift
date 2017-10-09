@@ -69,6 +69,7 @@ public enum BookwittyAPI {
   case linkTag(contentIdentifier: String, tagIdentifier: String)
   case removeTag(contentIdentifier: String, tagIdentifier: String)
   case linkContent(contentIdentifier: String, topicIdentifier: String)
+  case unlinkContent(contentIdentifier: String, topicIdentifier: String)
 }
 
 // MARK: - Target Type
@@ -209,6 +210,8 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(contentIdentifier)/relationships/tags"
     case .linkContent(let contentIdentifier, _):
       path = "/content/\(contentIdentifier)/relationships/topics"
+    case .unlinkContent(let contentIdentifier, _):
+      path = "/content/\(contentIdentifier)/relationships/topics"
     case .uploadMultipart:
       /*
       * Uploading to Amazon S3 servers, 
@@ -230,7 +233,7 @@ extension BookwittyAPI: TargetType {
       return .post
     case .updateUser, .updatePenName:
       return .patch
-    case .unwit, .unfollow, .unfollowPenName, .unwitComment, .undimComment, .removeComment, .removeTag:
+    case .unwit, .unfollow, .unfollowPenName, .unwitComment, .undimComment, .removeComment, .removeTag, .unlinkContent:
       return .delete
     }
   }
@@ -264,6 +267,8 @@ extension BookwittyAPI: TargetType {
         "refresh_token": refreshToken,
         "grant_type": "refresh_token"
       ]
+    case .unlinkContent(_, let topicIdentifier):
+      return ContentAPI.unlinkContent(topicIdentifier)
     case .linkContent(_, let topicIdentifier):
       return ContentAPI.linkContent(topicIdentifier)
     case .removeTag(_, let tagIdentifier):
