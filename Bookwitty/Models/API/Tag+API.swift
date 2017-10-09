@@ -39,4 +39,16 @@ extension TagAPI {
     ]
     return dictionary
   }
+  
+  static func removeTag(_ identifier: String) -> [String:Any]? {
+    let dictionary = [
+      "data" : [
+        "attributes" : [
+          "type" : Tag.resourceType,
+          "id" : identifier,
+        ]
+      ]
+    ]
+    return dictionary
+  }
 }
