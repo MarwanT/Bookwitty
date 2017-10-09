@@ -128,11 +128,22 @@ extension PublishMenuViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     let values = self.viewModel.values(forRowAt: indexPath)
     
-    guard let currentCell = cell as? PublishTableViewCell else {
-      return
+    if let currentCell = cell as? PublishTableViewCell  {
+      currentCell.cellImageView.image = values.label.image
+      currentCell.cellLabel.text = values.label.title
+    } else if let currentCell = cell as? ChipsTableViewCell  {
+      currentCell.cellImageView.image = values.label.image
+      currentCell.setTags(["a","b"])//.text = values.label.title
+    } else {
+      //From storyboard
+      cell.textLabel?.text = values.label.title
+      if indexPath.row == 0 {
+        cell.contentView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber19()
+        cell.textLabel?.backgroundColor = ThemeManager.shared.currentTheme.colorNumber19()
+        cell.textLabel?.textColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+      }
+      cell.textLabel?.font = FontDynamicType.caption1.font
     }
-    currentCell.cellImageView.image = values.image
-    currentCell.cellLabel.text = values.label
   }
 }
 
