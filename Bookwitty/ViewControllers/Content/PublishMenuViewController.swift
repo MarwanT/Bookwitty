@@ -83,7 +83,8 @@ class PublishMenuViewController: UIViewController {
     // Do any additional setup after loading the view.
   }
   private func initializeComponents() {
-    
+    self.tableView.register(UINib(nibName: "PublishTableViewCell", bundle: nil), forCellReuseIdentifier: PublishTableViewCell.identifier)
+    self.tableView.register(UINib(nibName: "ChipsTableViewCell", bundle: nil), forCellReuseIdentifier: ChipsTableViewCell.identifier)
     self.tableView.estimatedRowHeight = 44.0
     self.tableView.rowHeight = UITableViewAutomaticDimension
     self.tableView.reloadData()
@@ -94,12 +95,9 @@ class PublishMenuViewController: UIViewController {
       .attributedString
     
     self.publishLabel.attributedText = attributedString
-    self.tableView.register(UINib(nibName: "PublishTableViewCell", bundle: nil), forCellReuseIdentifier: RichMenuCellTableViewCell.identifier)
     self.tableView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
     self.tableView.isScrollEnabled = false
     cancelButton.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
-    self.tableView.register(UINib(nibName: "PublishTableViewCell", bundle: nil), forCellReuseIdentifier: PublishTableViewCell.identifier)
-    self.tableView.register(UINib(nibName: "ChipsTableViewCell", bundle: nil), forCellReuseIdentifier: ChipsTableViewCell.identifier)
     self.tableViewHeightConstraint.constant = tableView.contentSize.height
   }
 }
