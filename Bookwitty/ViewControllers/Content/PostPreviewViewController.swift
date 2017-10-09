@@ -116,4 +116,13 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
 
   }
+
+  fileprivate func createSeparatorNode() -> ASCellNode {
+    let separatorNode = ASCellNode()
+    separatorNode.style.height = ASDimensionMake(1)
+    separatorNode.style.flexGrow = 0.0
+    separatorNode.style.flexShrink = 1
+    separatorNode.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    return separatorNode
+  }
 }
