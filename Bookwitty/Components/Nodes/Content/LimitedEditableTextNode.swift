@@ -34,6 +34,17 @@ class LimitedEditableTextNode: ASCellNode {
   var hardCharactersLimit: Int = 200
   var softCharactersLimit: Int = 140
 
+  fileprivate(set) var numberOfCharactersLeft: Int = 200 {
+    didSet {
+      let characters = String(numberOfCharactersLeft)
+      let color = numberOfCharactersLeft > 0 ? ThemeManager.shared.currentTheme.defaultGrayedTextColor() : ThemeManager.shared.currentTheme.colorNumber19()
+      charactersLeftNode.attributedText = AttributedStringBuilder(fontDynamicType: .label)
+        .append(text: characters, color: color)
+        .applyParagraphStyling(alignment: .right)
+        .attributedString
+      charactersLeftNode.setNeedsLayout()
+    }
+  }
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let nodesArray: [ASLayoutElement] = [textNode, charactersLeftNode]
     let verticalSpec = ASStackLayoutSpec(direction: .vertical,
