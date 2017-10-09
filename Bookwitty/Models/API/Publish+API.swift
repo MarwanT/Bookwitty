@@ -15,3 +15,18 @@ public struct PublishAPI {
     case `public` = "public"
   }
 }
+
+extension PublishAPI {
+  static func createContentParameters(title: String, body: String, status: PublishStatus) -> [String : Any]? {
+    let dictionary = [
+      "data" : [
+        "attributes" : [
+          "title" : title,
+          "body" : body,
+          "status": status.rawValue,
+        ]
+      ]
+    ]
+    return dictionary
+  }
+}
