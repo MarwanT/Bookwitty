@@ -100,6 +100,9 @@ class PublishMenuViewController: UIViewController {
     cancelButton.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
     self.tableViewHeightConstraint.constant = tableView.contentSize.height
   }
+  @IBAction func cancelButtonTouchUpInside(_ sender: UIButton) {
+    self.dismiss(animated: true, completion: nil)
+  }
 }
 
 extension PublishMenuViewController: UITableViewDataSource {
