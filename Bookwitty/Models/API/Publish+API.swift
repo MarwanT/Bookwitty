@@ -12,3 +12,7 @@ enum PublishStatus {
   case draft
   case `public`
 }
+
+struct PublishAPI {
+
+}
