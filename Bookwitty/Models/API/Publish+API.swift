@@ -9,11 +9,9 @@
 import Foundation
 import Moya
 
-enum PublishStatus {
-  case draft
-  case `public`
-}
-
-struct PublishAPI {
-
+public struct PublishAPI {
+  public enum PublishStatus: String {
+    case draft = "draft"
+    case `public` = "public"
+  }
 }
