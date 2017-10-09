@@ -68,6 +68,7 @@ public enum BookwittyAPI {
   case createContent(title: String, body: String, status: PublishAPI.PublishStatus)
   case linkTag(contentIdentifier: String, tagIdentifier: String)
   case removeTag(contentIdentifier: String, tagIdentifier: String)
+  case linkContent(contentIdentifier: String, topicIdentifier: String)
 }
 
 // MARK: - Target Type
@@ -206,6 +207,8 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(contentIdentifier)/relationships/tags"
     case .removeTag(let contentIdentifier, _):
       path = "/content/\(contentIdentifier)/relationships/tags"
+    case .linkContent(let contentIdentifier, _):
+      path = "/content/\(contentIdentifier)/relationships/topics"
     case .uploadMultipart:
       /*
       * Uploading to Amazon S3 servers, 
@@ -219,7 +222,7 @@ extension BookwittyAPI: TargetType {
   
   public var method: Moya.Method {
     switch self {
-    case .oAuth, .refreshToken, .resendAccountConfirmation, .createPenName, .createContent, .linkTag:
+    case .oAuth, .refreshToken, .resendAccountConfirmation, .createPenName, .createContent, .linkTag, .linkContent:
       return .post
     case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .search, .penNames, .comments, .replies, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent, .votes, .preferredFormats:
       return .get
@@ -261,6 +264,8 @@ extension BookwittyAPI: TargetType {
         "refresh_token": refreshToken,
         "grant_type": "refresh_token"
       ]
+    case .linkContent(_, let topicIdentifier):
+      return ContentAPI.linkContent(topicIdentifier)
     case .removeTag(_, let tagIdentifier):
       return TagAPI.removeTag(tagIdentifier)
     case .linkTag(_, let tagIdentifier):
