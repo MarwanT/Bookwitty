@@ -45,6 +45,13 @@ class LimitedEditableTextNode: ASCellNode {
       charactersLeftNode.setNeedsLayout()
     }
   }
+
+  override func didLoad() {
+    super.didLoad()
+    textNode.delegate = self
+    numberOfCharactersLeft = hardCharactersLimit
+  }
+  
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let nodesArray: [ASLayoutElement] = [textNode, charactersLeftNode]
     let verticalSpec = ASStackLayoutSpec(direction: .vertical,
@@ -63,5 +70,17 @@ class LimitedEditableTextNode: ASCellNode {
       left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: ThemeManager.shared.currentTheme.generalExternalMargin(),
       right: ThemeManager.shared.currentTheme.generalExternalMargin())
+  }
+}
+
+
+extension LimitedEditableTextNode: ASEditableTextNodeDelegate {
+  func editableTextNode(_ editableTextNode: ASEditableTextNode, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    let newLength =  editableTextNode.textView.text.characters.count + text.characters.count - range.length
+    return newLength <= self.hardCharactersLimit
+  }
+
+  func editableTextNodeDidUpdateText(_ editableTextNode: ASEditableTextNode) {
+    self.numberOfCharactersLeft = self.softCharactersLimit - editableTextNode.textView.text.characters.count
   }
 }
