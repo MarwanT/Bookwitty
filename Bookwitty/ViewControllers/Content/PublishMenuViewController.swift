@@ -165,3 +165,27 @@ extension PublishMenuViewController: UITableViewDelegate {
     self.delegate?.publishMenu(self, didSelect: item)
   }
 }
+
+extension PublishMenuViewController.Item {
+  
+  static func value(for indexPath: IndexPath) -> PublishMenuViewController.Item?  {
+    switch (indexPath.section, indexPath.row) {
+    case (PublishMenuViewController.Section.penName.rawValue, _):
+      return .penName
+    case (PublishMenuViewController.Section.link.rawValue, let row) where row == 0:
+      return .addTags
+    case (PublishMenuViewController.Section.link.rawValue, let row) where row == 1:
+      return .linkTopics
+    case (PublishMenuViewController.Section.preview.rawValue, _):
+      return .postPreview
+    case (PublishMenuViewController.Section.publish.rawValue, let row) where row == 0:
+      return .publishYourPost
+    case (PublishMenuViewController.Section.publish.rawValue, let row) where row == 1:
+      return .saveAsDraft
+    case (PublishMenuViewController.Section.publish.rawValue, let row) where row == 2:
+      return .goBack
+    default:
+      return nil
+    }
+  }
+}
