@@ -31,4 +31,23 @@ class EditableTextNode: ASCellNode {
     clearButtonNode.imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0.0, nil)
     clearButtonNode.setImage(#imageLiteral(resourceName: "x"), for: .normal)
   }
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let nodesArray: [ASLayoutElement] = [textNode, clearButtonNode]
+    let horizontalSpec = ASStackLayoutSpec(direction: .horizontal,
+                                         spacing: 0.0,
+                                         justifyContent: .start,
+                                         alignItems: .center,
+                                         children: nodesArray)
+
+    let insetSpec = ASInsetLayoutSpec(insets: externalEdgeInsets(), child: horizontalSpec)
+    return insetSpec
+  }
+
+  private func externalEdgeInsets() -> UIEdgeInsets {
+    return UIEdgeInsets(
+      top: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      left: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      bottom: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      right: ThemeManager.shared.currentTheme.generalExternalMargin())
+  }
 }
