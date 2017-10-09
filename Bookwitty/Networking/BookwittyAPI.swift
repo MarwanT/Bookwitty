@@ -66,6 +66,7 @@ public enum BookwittyAPI {
   case report(identifier: String)
   case reportPenName(identifier: String)
   case createContent(title: String, body: String, status: PublishAPI.PublishStatus)
+  case removeContent(contentIdentifier: String)
   case linkTag(contentIdentifier: String, tagIdentifier: String)
   case removeTag(contentIdentifier: String, tagIdentifier: String)
   case linkContent(contentIdentifier: String, topicIdentifier: String)
@@ -212,6 +213,8 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(contentIdentifier)/relationships/topics"
     case .unlinkContent(let contentIdentifier, _):
       path = "/content/\(contentIdentifier)/relationships/topics"
+    case .removeContent(let contentIdentifier):
+      path = "/content/\(contentIdentifier)"
     case .uploadMultipart:
       /*
       * Uploading to Amazon S3 servers, 
@@ -233,7 +236,7 @@ extension BookwittyAPI: TargetType {
       return .post
     case .updateUser, .updatePenName:
       return .patch
-    case .unwit, .unfollow, .unfollowPenName, .unwitComment, .undimComment, .removeComment, .removeTag, .unlinkContent:
+    case .unwit, .unfollow, .unfollowPenName, .unwitComment, .undimComment, .removeComment, .removeTag, .unlinkContent, .removeContent:
       return .delete
     }
   }
@@ -309,7 +312,7 @@ extension BookwittyAPI: TargetType {
       return UploadAPI.uploadPolicyParameters(file: file, fileType: fileType, assetType: assetType)
     case .editions(_, let formats):
       return ContentAPI.editionsFilterParameters(formats: formats)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment, .dimComment, .undimComment, .preferredFormats, .report, .reportPenName, .removeComment:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment, .dimComment, .undimComment, .preferredFormats, .report, .reportPenName, .removeComment, .removeContent:
       return nil
     }
   }
