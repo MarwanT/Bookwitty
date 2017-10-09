@@ -31,6 +31,12 @@ class EditableTextNode: ASCellNode {
     clearButtonNode.imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0.0, nil)
     clearButtonNode.setImage(#imageLiteral(resourceName: "x"), for: .normal)
   }
+
+  override func didLoad() {
+    super.didLoad()
+    applyTheme()
+  }
+
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let nodesArray: [ASLayoutElement] = [textNode, clearButtonNode]
     let horizontalSpec = ASStackLayoutSpec(direction: .horizontal,
@@ -49,5 +55,13 @@ class EditableTextNode: ASCellNode {
       left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: ThemeManager.shared.currentTheme.generalExternalMargin(),
       right: ThemeManager.shared.currentTheme.generalExternalMargin())
+  }
+}
+
+extension EditableTextNode: Themeable {
+  func applyTheme() {
+    textNode.textView.font = FontDynamicType.title2.font
+    textNode.textView.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
   }
 }
