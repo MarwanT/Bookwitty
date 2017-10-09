@@ -113,7 +113,16 @@ extension PublishMenuViewController: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    return tableView.dequeueReusableCell(withIdentifier: PublishTableViewCell.identifier, for: indexPath)
+    switch (indexPath.section, indexPath.row) {
+    case (Section.publish.rawValue, _):
+      return tableView.dequeueReusableCell(withIdentifier: "PublishCellReuseIdentifier", for: indexPath)
+    case (Section.link.rawValue, 0) where viewModel.tags.count > 0:
+      fallthrough
+    case (Section.link.rawValue, 1) where viewModel.links.count > 0:
+      return tableView.dequeueReusableCell(withIdentifier: ChipsTableViewCell.identifier, for: indexPath)
+    default:
+      return tableView.dequeueReusableCell(withIdentifier: PublishTableViewCell.identifier, for: indexPath)
+    }
   }
   
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
