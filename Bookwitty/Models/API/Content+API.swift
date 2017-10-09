@@ -126,4 +126,16 @@ extension ContentAPI {
     ]
     return dictionary
   }
+  
+  static func unlinkContent(_ identifier: String) -> [String:Any]? {
+    let dictionary = [
+      "data" : [
+        "attributes" : [
+          "type" : Topic.resourceType,
+          "id" : identifier,
+        ]
+      ]
+    ]
+    return dictionary
+  }
 }
