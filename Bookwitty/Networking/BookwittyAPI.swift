@@ -65,6 +65,7 @@ public enum BookwittyAPI {
   case votes(identifier: String)
   case report(identifier: String)
   case reportPenName(identifier: String)
+  case createContent(title: String, body: String, status: PublishAPI.PublishStatus)
 }
 
 // MARK: - Target Type
@@ -163,6 +164,8 @@ extension BookwittyAPI: TargetType {
         path = "/pen_names/\(identifier)/follow"
     case .content(let identifier, _):
       path = "/content/\(identifier)"
+    case .createContent:
+      path = "/content"
     case .followers(let identifier):
       path = "/content/\(identifier)/followers"
     case .postsContent(let identifier, _):
@@ -210,7 +213,7 @@ extension BookwittyAPI: TargetType {
   
   public var method: Moya.Method {
     switch self {
-    case .oAuth, .refreshToken, .resendAccountConfirmation, .createPenName:
+    case .oAuth, .refreshToken, .resendAccountConfirmation, .createPenName, .createContent:
       return .post
     case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .search, .penNames, .comments, .replies, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent, .votes, .preferredFormats:
       return .get
@@ -252,6 +255,8 @@ extension BookwittyAPI: TargetType {
         "refresh_token": refreshToken,
         "grant_type": "refresh_token"
       ]
+    case .createContent(let title, let body, let status):
+      return PublishAPI.createContentParameters(title: title, body: body, status: status)
     case .batch(let identifiers):
       return UserAPI.batchPostBody(identifiers: identifiers)
     case .batchPenNames(let identifiers):
