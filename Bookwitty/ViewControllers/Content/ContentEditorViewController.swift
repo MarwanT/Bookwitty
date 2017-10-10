@@ -101,7 +101,12 @@ class ContentEditorViewController: UIViewController {
   }
   
   @objc private func next(_ sender:UIBarButtonItem) {
-    //Todo: Implementation
+    let publishMenuViewController = Storyboard.Content.instantiate(PublishMenuViewController.self)
+    publishMenuViewController.delegate = self
+    self.definesPresentationContext = true
+    publishMenuViewController.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber20().withAlphaComponent(0.5)
+    publishMenuViewController.modalPresentationStyle = .overCurrentContext
+    self.navigationController?.present(publishMenuViewController, animated: true, completion: nil)
   }
   
   @objc private func toggleEnableState(of barButtonItem: UIBarButtonItem) -> Void {
@@ -295,6 +300,30 @@ extension ContentEditorViewController: QuoteEditorViewControllerDelegate {
 
   func quoteEditorViewControllerDidCancel(_ viewController: QuoteEditorViewController) {
     viewController.navigationController?.dismiss(animated: true, completion: nil)
+  }
+}
+
+extension ContentEditorViewController: PublishMenuViewControllerDelegate {
+  
+  func publishMenu(_ viewController: PublishMenuViewController, didSelect item: PublishMenuViewController.Item) {
+    viewController.dismiss(animated: true, completion: nil)
+    
+    switch item {
+    case .penName:
+      break
+    case .linkTopics:
+      break
+    case .addTags:
+      break
+    case .postPreview:
+      break
+    case .publishYourPost:
+      break
+    case .saveAsDraft:
+      break
+    case .goBack:
+      break
+    }
   }
 }
 

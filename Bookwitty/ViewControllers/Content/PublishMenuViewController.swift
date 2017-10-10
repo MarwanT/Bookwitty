@@ -176,9 +176,9 @@ extension PublishMenuViewController.Item {
     case (PublishMenuViewController.Section.penName.rawValue, _):
       return .penName
     case (PublishMenuViewController.Section.link.rawValue, let row) where row == 0:
-      return .linkTopics
-    case (PublishMenuViewController.Section.link.rawValue, let row) where row == 1:
       return .addTags
+    case (PublishMenuViewController.Section.link.rawValue, let row) where row == 1:
+      return .linkTopics
     case (PublishMenuViewController.Section.preview.rawValue, _):
       return .postPreview
     case (PublishMenuViewController.Section.publish.rawValue, let row) where row == 0:
