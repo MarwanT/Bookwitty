@@ -266,6 +266,7 @@
                     </view>
                     <connections>
                         <outlet property="tableViewBottomConstraintToSuperview" destination="fhe-bf-9Qa" id="JJd-13-6dO"/>
+                        <outlet property="tagsView" destination="7pR-LE-Emm" id="zWK-bh-Fgc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZKf-Rg-Bjb" userLabel="First Responder" sceneMemberID="firstResponder"/>

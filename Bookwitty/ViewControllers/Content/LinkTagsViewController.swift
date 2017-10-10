@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WSTagsField
 
 protocol LinkTagsViewControllerDelegate: class {
   func linkTags(viewController: LinkTagsViewController, didLink tags:[String])
@@ -14,6 +15,7 @@ protocol LinkTagsViewControllerDelegate: class {
 
 class LinkTagsViewController: UIViewController {
   
+  @IBOutlet weak var tagsView: WSTagsField!
   @IBOutlet weak var tableViewBottomConstraintToSuperview: NSLayoutConstraint!
   weak var delegate: LinkTagsViewControllerDelegate?
   override func viewDidLoad() {
