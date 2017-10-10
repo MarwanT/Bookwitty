@@ -29,8 +29,11 @@ class CoverPhotoNode: ASCellNode {
 
     photoButton.style.preferredSize = CGSize(width: 25.0, height: 25.0)
     photoButton.clipsToBounds = true
+    photoButton.addTarget(self, action: #selector(photoButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
+
     deleteButton.style.preferredSize = CGSize(width: 25.0, height: 25.0)
     deleteButton.clipsToBounds = true
+    deleteButton.addTarget(self, action: #selector(deleteButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -56,5 +59,19 @@ class CoverPhotoNode: ASCellNode {
     let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
     let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
     return UIEdgeInsets(top: 0.0, left: internalMargin, bottom: contentSpacing, right: internalMargin)
+  }
+}
+
+//MARK: - Actions
+extension CoverPhotoNode {
+  func photoButtonTouchUpInside(_ sender: ASButtonNode?) {
+    guard let sender = sender else { return }
+    //TODO: delegate the work
+  }
+
+
+  func deleteButtonTouchUpInside(_ sender: ASButtonNode?) {
+    guard let sender = sender else { return }
+    //TODO: delegate the work    
   }
 }
