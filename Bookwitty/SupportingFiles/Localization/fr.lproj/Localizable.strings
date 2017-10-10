@@ -15,6 +15,7 @@
 "account_needs_confirmation_alert_title" = "Votre compte";
 "add" = "Add";
 "add_a_link" = "Add a Link";
+"add_tags" = "Add Tags";
 "address_book" = "Adresses de livraison";
 "already_have_an_account" = "Déjà inscrit ?";
 "an_hour_ago" = "Il y a une heure";
@@ -100,6 +101,7 @@
 "format" = "Format";
 "free_shipping_internationally" = "Livraison gratuite où que vous soyez";
 "get_started" = "Débuter";
+"go_back" = "Go back";
 "height" = "Hauteur";
 "help" = "Aide";
 "hide_formats_and_editions" = "Cacher les formats et les éditions";
@@ -127,6 +129,7 @@
 "last_year" = "L'an dernier";
 "latest" = "Nouveautés";
 "link" = "Lien";
+"link_topics" = "Link Topics";
 "list_price" = "Prix conseillé";
 "more" = "Plus";
 "most_popular" = "Les plus populaires";
@@ -168,6 +171,7 @@
 "pen_names_to_follow" = "Des contributeurs que vous pouvez suivre";
 "please_fill_required_field" = "Veuillez remplir les champs obligatoires";
 "post" = "Post";
+"post_preview" = "Post Preview";
 "posts" = "Posts";
 "product_format" = "Format";
 "profile" = "Profil";
@@ -178,6 +182,7 @@
 "publish_comment_general_error_title" = "Oups";
 "publish_empty_comment_error_message" = "Les mots vous manquent ?";
 "publish_empty_comment_error_title" = "Oups";
+"publish_your_post" = "Publish your post";
 "publisher" = "Éditeur";
 "quote" = "Citation";
 "reading_list" = "Liste de lecture";
@@ -193,6 +198,7 @@
 "report_this_content" = "Report this content as spam or inappropriate ?";
 "reset_password" = "Réinitialiser mon mot de passe";
 "reset_password_text" = "Dans quelques instants, vous recevrez un e-mail pour réinitialiser votre mot de passe.";
+"save_as_draft" = "Save as draft";
 "search_placeholder" = "Rechercher ";
 "see_whats_happening_on_bookwitty" = "Préparez-vous à faire des découvertes ";
 "settings" = "Paramètres ";

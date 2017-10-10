@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		0F1AF1B21F84D1E8004DF12A /* PublishMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1AF1B11F84D1E8004DF12A /* PublishMenuViewController.swift */; };
 		0F1AF1B41F84D3EE004DF12A /* PublishMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1AF1B31F84D3EE004DF12A /* PublishMenuViewModel.swift */; };
+		0F2020CB1F8B7ED0007706B6 /* Publish+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2020CA1F8B7ED0007706B6 /* Publish+API.swift */; };
+		0F2020CD1F8BB9C3007706B6 /* Tag+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2020CC1F8BB9C3007706B6 /* Tag+API.swift */; };
+		0F4691DC1F862B9600BB92BF /* ChipsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4691DA1F862B9600BB92BF /* ChipsTableViewCell.swift */; };
+		0F4691DD1F862B9600BB92BF /* ChipsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F4691DB1F862B9600BB92BF /* ChipsTableViewCell.xib */; };
 		0F525E9D1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F525E9C1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib */; };
 		0F525E9F1F77E98700E225B1 /* RichMenuCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F525E9E1F77E98700E225B1 /* RichMenuCellTableViewCell.swift */; };
 		0FAA01681F7A3D0B0011FDBA /* RichBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAA01671F7A3D0B0011FDBA /* RichBookViewModel.swift */; };
@@ -348,6 +352,10 @@
 /* Begin PBXFileReference section */
 		0F1AF1B11F84D1E8004DF12A /* PublishMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishMenuViewController.swift; sourceTree = "<group>"; };
 		0F1AF1B31F84D3EE004DF12A /* PublishMenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishMenuViewModel.swift; sourceTree = "<group>"; };
+		0F2020CA1F8B7ED0007706B6 /* Publish+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Publish+API.swift"; sourceTree = "<group>"; };
+		0F2020CC1F8BB9C3007706B6 /* Tag+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tag+API.swift"; sourceTree = "<group>"; };
+		0F4691DA1F862B9600BB92BF /* ChipsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChipsTableViewCell.swift; sourceTree = "<group>"; };
+		0F4691DB1F862B9600BB92BF /* ChipsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChipsTableViewCell.xib; sourceTree = "<group>"; };
 		0F525E9C1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RichMenuCellTableViewCell.xib; sourceTree = "<group>"; };
 		0F525E9E1F77E98700E225B1 /* RichMenuCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichMenuCellTableViewCell.swift; sourceTree = "<group>"; };
 		0FAA01671F7A3D0B0011FDBA /* RichBookViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichBookViewModel.swift; sourceTree = "<group>"; };
@@ -721,6 +729,8 @@
 				0F525E9E1F77E98700E225B1 /* RichMenuCellTableViewCell.swift */,
 				0FC440ED1F85254600A5A638 /* PublishTableViewCell.swift */,
 				0FC440EE1F85254600A5A638 /* PublishTableViewCell.xib */,
+				0F4691DA1F862B9600BB92BF /* ChipsTableViewCell.swift */,
+				0F4691DB1F862B9600BB92BF /* ChipsTableViewCell.xib */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -1284,6 +1294,8 @@
 				56620FC71E89470600BD92BB /* Upload+API.swift */,
 				5657A5421E8BCF02000EE647 /* Utilities+API.swift */,
 				59C997BC1ED5A0FD009A8451 /* CommentAPI.swift */,
+				0F2020CA1F8B7ED0007706B6 /* Publish+API.swift */,
+				0F2020CC1F8BB9C3007706B6 /* Tag+API.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1751,6 +1763,7 @@
 				0F525E9D1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib in Resources */,
 				0FC440F01F85254600A5A638 /* PublishTableViewCell.xib in Resources */,
 				5942902A1E5347670006B2F1 /* DisclosureView.xib in Resources */,
+				0F4691DD1F862B9600BB92BF /* ChipsTableViewCell.xib in Resources */,
 				59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */,
 				594290211E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib in Resources */,
 				594290371E548FA10006B2F1 /* BookTableViewCell.xib in Resources */,
@@ -1871,6 +1884,7 @@
 				"${BUILT_PRODUCTS_DIR}/TTTAttributedLabel/TTTAttributedLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/UIImageViewAlignedSwift/UIImageViewAlignedSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Version/Version.framework",
+				"${BUILT_PRODUCTS_DIR}/WSTagsField/WSTagsField.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1908,6 +1922,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTTAttributedLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIImageViewAlignedSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Version.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WSTagsField.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2009,6 +2024,7 @@
 				59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */,
 				567B3C111ED4886F00E02E16 /* CheckmarkTableViewCell.swift in Sources */,
 				56535F351E7CB9ED0045E73D /* Thumbnail.swift in Sources */,
+				0F4691DC1F862B9600BB92BF /* ChipsTableViewCell.swift in Sources */,
 				F43996851E76C76700FE9D8B /* PostsListViewController.swift in Sources */,
 				562A31201E659919002851DE /* Strings.swift in Sources */,
 				F4AAADAD1E93F2230073EA50 /* ButtonWithLoader.swift in Sources */,
@@ -2074,6 +2090,7 @@
 				59CB4DEF1EDEC15800E7A60B /* CommentsManager.swift in Sources */,
 				56929CE61E671BE700B3D00A /* SegmentedControl.swift in Sources */,
 				594B9F6F1E55F557007C49E1 /* RootTabBarViewModel.swift in Sources */,
+				0F2020CB1F8B7ED0007706B6 /* Publish+API.swift in Sources */,
 				59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */,
 				560341AD1F3DAE3400E60F44 /* Tag.swift in Sources */,
 				56218A051F7A5CE5000456F9 /* QuoteEditorViewController.swift in Sources */,
@@ -2253,6 +2270,7 @@
 				59DA475D1E3B7A8F00BA90A5 /* IntroductionViewModel.swift in Sources */,
 				56535F331E7CB9ED0045E73D /* Response.swift in Sources */,
 				59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */,
+				0F2020CD1F8BB9C3007706B6 /* Tag+API.swift in Sources */,
 				59CBE4F81E8090280068C7AD /* AppError.swift in Sources */,
 				56320C871EA748FB00642934 /* ArticleCardPostCellNode.swift in Sources */,
 				59D6021B1E32597B00271315 /* AppKeys.swift in Sources */,
