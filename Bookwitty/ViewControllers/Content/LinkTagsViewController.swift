@@ -14,3 +14,10 @@ class LinkTagsViewController: UIViewController {
     super.viewDidLoad()
   }
 }
+
+extension LinkTagsViewController: Themeable {
+  
+  func applyTheme() {
+    self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+  }
+}
