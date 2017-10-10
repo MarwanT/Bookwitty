@@ -16,6 +16,17 @@ class LinkTagsViewController: UIViewController {
     super.viewDidLoad()
     applyTheme()
     self.addKeyboardNotifications()
+    self.initializeComponents()
+  }
+  
+  private func initializeComponents() {
+    let doneButton = UIBarButtonItem(title: Strings.done(), style: .plain, target: self, action: #selector(doneButtonTouchUpInside(_:)))
+    doneButton.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
+    self.navigationItem.rightBarButtonItem = doneButton
+  }
+  
+  @objc private func doneButtonTouchUpInside(_ sender:UIBarButtonItem) {
+
   }
   
   // MARK: - Keyboard Handling
