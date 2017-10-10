@@ -15,6 +15,7 @@
 "account_needs_confirmation_alert_title" = "Account";
 "add" = "Add";
 "add_a_link" = "Add a Link";
+"add_tags" = "Add Tags";
 "address_book" = "Address Book";
 "already_have_an_account" = "Already have an account?";
 "an_hour_ago" = "An hour ago";
@@ -100,6 +101,7 @@
 "format" = "Format";
 "free_shipping_internationally" = "Free shipping internationally";
 "get_started" = "Get started";
+"go_back" = "Go back";
 "height" = "Height";
 "help" = "Help";
 "hide_formats_and_editions" = "Hide formats and editions";
@@ -127,6 +129,7 @@
 "last_year" = "Last year";
 "latest" = "Latest";
 "link" = "Link";
+"link_topics" = "Link Topics";
 "list_price" = "List price";
 "more" = "More";
 "most_popular" = "Most popular";
@@ -168,6 +171,7 @@
 "pen_names_to_follow" = "Pennames To Follow";
 "please_fill_required_field" = "Please fill the required fields";
 "post" = "Post";
+"post_preview" = "Post Preview";
 "posts" = "Posts";
 "product_format" = "Product Format";
 "profile" = "Profile";
@@ -178,6 +182,7 @@
 "publish_comment_general_error_title" = "Ooops";
 "publish_empty_comment_error_message" = "You seem to have forgotten your words!?";
 "publish_empty_comment_error_title" = "Ooops";
+"publish_your_post" = "Publish your post";
 "publisher" = "Publisher";
 "quote" = "Quote";
 "reading_list" = "Reading List";
@@ -193,6 +198,7 @@
 "report_this_content" = "Report this content as spam or inappropriate ?";
 "reset_password" = "Reset password";
 "reset_password_text" = "You will receive an email with instructions on how to reset your password in a few minutes.";
+"save_as_draft" = "Save as draft";
 "search_placeholder" = "Search";
 "see_whats_happening_on_bookwitty" = "See what's happening on Bookwitty";
 "settings" = "Settings";
