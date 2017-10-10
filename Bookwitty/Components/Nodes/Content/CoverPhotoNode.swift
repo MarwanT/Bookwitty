@@ -33,4 +33,28 @@ class CoverPhotoNode: ASCellNode {
     deleteButton.clipsToBounds = true
   }
 
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let imageSize = CGSize(width: constrainedSize.max.width, height: 190.0)
+    imageNode.style.preferredSize = imageSize
+
+    let imageInsetLayoutSpec = ASInsetLayoutSpec(insets: UIEdgeInsets.zero , child: imageNode)
+    imageInsetLayoutSpec.style.flexGrow = 1.0
+
+    let horizontalStackLayoutSpec = ASStackLayoutSpec(direction: .horizontal,
+                                                      spacing: 0.0,
+                                                      justifyContent: .spaceBetween,
+                                                      alignItems: .end,
+                                                      children: [photoButton, deleteButton])
+
+    let actionsInsetLayoutSpec = ASInsetLayoutSpec(insets: actionButtonsInset(), child: horizontalStackLayoutSpec)
+
+    let overlayLayoutSpec = ASOverlayLayoutSpec(child: imageInsetLayoutSpec, overlay: actionsInsetLayoutSpec)
+    return overlayLayoutSpec
+  }
+
+  fileprivate func actionButtonsInset() -> UIEdgeInsets {
+    let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+    let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+    return UIEdgeInsets(top: 0.0, left: internalMargin, bottom: contentSpacing, right: internalMargin)
+  }
 }
