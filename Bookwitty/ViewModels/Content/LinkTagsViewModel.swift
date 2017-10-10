@@ -9,5 +9,5 @@
 import Foundation
 
 final class LinkTagsViewModel {
-  
+  var limit: Int = 1
 }
