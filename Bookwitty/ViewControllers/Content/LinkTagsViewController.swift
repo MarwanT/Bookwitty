@@ -15,7 +15,7 @@ protocol LinkTagsViewControllerDelegate: class {
 class LinkTagsViewController: UIViewController {
   
   @IBOutlet weak var tableViewBottomConstraintToSuperview: NSLayoutConstraint!
-  
+  weak var delegate: LinkTagsViewControllerDelegate?
   override func viewDidLoad() {
     super.viewDidLoad()
     applyTheme()
