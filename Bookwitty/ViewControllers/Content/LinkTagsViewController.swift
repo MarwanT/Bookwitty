@@ -12,6 +12,7 @@ class LinkTagsViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    applyTheme()
   }
 }
 
