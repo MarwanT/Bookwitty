@@ -62,6 +62,6 @@ extension LinkTagsViewController: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    return tableView.dequeueReusableCell(withIdentifier: "aCell", for: indexPath)
+    return tableView.dequeueReusableCell(withIdentifier: "tagCellIdentifier", for: indexPath)
   }
 }
