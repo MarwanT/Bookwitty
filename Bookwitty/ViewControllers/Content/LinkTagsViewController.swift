@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol LinkTagsViewControllerDelegate: class {
+  func linkTags(viewController: LinkTagsViewController, didLink tags:[String])
+}
+
 class LinkTagsViewController: UIViewController {
   
   @IBOutlet weak var tableViewBottomConstraintToSuperview: NSLayoutConstraint!
