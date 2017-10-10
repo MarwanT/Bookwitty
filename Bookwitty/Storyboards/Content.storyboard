@@ -238,6 +238,9 @@
                             <constraint firstItem="hav-Tg-amk" firstAttribute="leading" secondItem="kr6-Cp-Fuk" secondAttribute="leading" id="yIn-rB-HVq"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableViewBottomConstraintToSuperview" destination="fhe-bf-9Qa" id="JJd-13-6dO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZKf-Rg-Bjb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
