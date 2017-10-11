@@ -21,10 +21,21 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
 
     static let count: Int = 7
   }
+
+  fileprivate let penNameNode: PenNameCellNode
+  fileprivate let titleNode: ASEditableTextNode
+  fileprivate let descriptionNode: ASEditableTextNode
+  fileprivate let coverNode: ASNetworkImageNode
+
   fileprivate var flowLayout: UICollectionViewFlowLayout
   fileprivate let collectionNode: ASCollectionNode
   
   init() {
+    penNameNode = PenNameCellNode(withSeparator: false, withCellHeight: 45.0)
+    titleNode = ASEditableTextNode()
+    descriptionNode = ASEditableTextNode()
+    coverNode = ASNetworkImageNode()
+
     flowLayout = UICollectionViewFlowLayout()
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     super.init(node: collectionNode)
