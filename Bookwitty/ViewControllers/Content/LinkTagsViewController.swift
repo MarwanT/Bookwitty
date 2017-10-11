@@ -43,7 +43,21 @@ class LinkTagsViewController: UIViewController {
   }
 
   @objc private func reload(with text: String?) {
-    //Todo: Implementation.
+    guard let text = text, text.characters.count > 0 else {
+      return
+    }
+    
+    self.viewModel.filter.query = text
+    //Perform request
+    _ = SearchAPI.search(filter: self.viewModel.filter, page: nil) { (success, tags, _, _, error) in
+      guard success, let tags = tags as? [Tag] else {
+        self.viewModel.tags = []
+        self.viewModel.canLink = false
+        return
+      }
+      self.viewModel.tags = tags
+      self.tableView.reloadData()
+    }
   }
 
   @objc private func doneButtonTouchUpInside(_ sender:UIBarButtonItem) {
