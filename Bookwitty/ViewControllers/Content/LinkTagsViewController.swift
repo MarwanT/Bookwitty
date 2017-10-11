@@ -109,13 +109,27 @@ extension LinkTagsViewController: Themeable {
   }
 }
 
-extension LinkTagsViewController: UITableViewDataSource {
+extension LinkTagsViewController: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 0
+    return self.viewModel.numberOfItemsInSection(section: section)
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     return tableView.dequeueReusableCell(withIdentifier: "tagCellIdentifier", for: indexPath)
+  }
+  
+  func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    cell.textLabel?.text = self.viewModel.values(forRowAt: indexPath)
+    cell.textLabel?.font = FontDynamicType.caption1.font
+    cell.detailTextLabel?.text = ""
+  }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+    self.viewModel.append(self.viewModel.tags[indexPath.row])
+    self.tagsView.addTags(self.viewModel.selectedTags.flatMap { $0.title })
+    self.viewModel.tags = []
+    tableView.reloadData()
   }
 }
