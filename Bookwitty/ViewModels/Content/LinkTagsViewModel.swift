@@ -10,4 +10,5 @@ import Foundation
 
 final class LinkTagsViewModel {
   var limit: Int = 1
+  var tags: [Tag] = []
 }
