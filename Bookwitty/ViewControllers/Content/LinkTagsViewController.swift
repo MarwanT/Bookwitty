@@ -33,7 +33,7 @@ class LinkTagsViewController: UIViewController {
     self.navigationItem.rightBarButtonItem = doneButton
     
     tagsView.onVerifyTag = { field, candidate in
-      return field.tags.count <= self.viewModel.limit
+      return self.viewModel.canLink && self.viewModel.selectedTags.flatMap { $0.title }.contains(candidate)
     }
     
     tagsView.onDidChangeText = { field, text in
