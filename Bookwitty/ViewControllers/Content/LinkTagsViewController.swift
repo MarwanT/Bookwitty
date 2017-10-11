@@ -40,6 +40,12 @@ class LinkTagsViewController: UIViewController {
       NSObject.cancelPreviousPerformRequests(withTarget: self)
       self.perform(#selector(LinkTagsViewController.reload), with: text, afterDelay: 0.5)
     }
+    tagsView.onShouldReturn = { _ in
+      return false
+    }
+    tagsView.onDidRemoveTag = { _, tag in
+      self.viewModel.selectedTags = self.viewModel.selectedTags.filter { !($0.title == tag.text) }
+    }
   }
 
   @objc private func reload(with text: String?) {
