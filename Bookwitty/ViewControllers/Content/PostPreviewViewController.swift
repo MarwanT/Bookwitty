@@ -49,6 +49,7 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
     super.viewDidLoad()
 
     initializeComponents()
+    applyTheme()
   }
 
   fileprivate func initializeComponents() {
@@ -57,6 +58,15 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
 
     collectionNode.delegate = self
     collectionNode.dataSource = self
+  }
+}
+
+//MARK: - Themeable implementation
+extension PostPreviewViewController: Themeable {
+  func applyTheme() {
+    collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+    penNameNode.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+    coverNode.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
   }
 }
 
