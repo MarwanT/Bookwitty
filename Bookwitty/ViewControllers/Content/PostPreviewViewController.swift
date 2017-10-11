@@ -23,18 +23,18 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
   }
 
   fileprivate let penNameNode: PenNameCellNode
-  fileprivate let titleNode: ASEditableTextNode
-  fileprivate let descriptionNode: ASEditableTextNode
-  fileprivate let coverNode: ASNetworkImageNode
+  fileprivate let titleNode: EditableTextNode
+  fileprivate let descriptionNode: LimitedEditableTextNode
+  fileprivate let coverNode: CoverPhotoNode
 
   fileprivate var flowLayout: UICollectionViewFlowLayout
   fileprivate let collectionNode: ASCollectionNode
   
   init() {
     penNameNode = PenNameCellNode(withSeparator: false, withCellHeight: 45.0)
-    titleNode = ASEditableTextNode()
-    descriptionNode = ASEditableTextNode()
-    coverNode = ASNetworkImageNode()
+    titleNode = EditableTextNode()
+    descriptionNode = LimitedEditableTextNode()
+    coverNode = CoverPhotoNode()
 
     flowLayout = UICollectionViewFlowLayout()
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
