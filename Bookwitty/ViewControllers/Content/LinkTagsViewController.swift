@@ -15,6 +15,7 @@ protocol LinkTagsViewControllerDelegate: class {
 
 class LinkTagsViewController: UIViewController {
   
+  @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var tagsView: WSTagsField!
   @IBOutlet weak var tableViewBottomConstraintToSuperview: NSLayoutConstraint!
   weak var delegate: LinkTagsViewControllerDelegate?
