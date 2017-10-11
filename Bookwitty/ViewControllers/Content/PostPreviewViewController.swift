@@ -58,6 +58,8 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
 
     collectionNode.delegate = self
     collectionNode.dataSource = self
+
+    coverNode.delegate = self
   }
 }
 
@@ -147,3 +149,11 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
     return separatorNode
   }
 }
+
+//MARK: - CoverPhotoNodeDelegate implementation
+extension PostPreviewViewController: CoverPhotoNodeDelegate {
+  func coverPhoto(node: CoverPhotoNode, didRequest action: CoverPhotoNode.Action) {
+    //TODO: Empty implementation
+  }
+}
+
