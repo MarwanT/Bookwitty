@@ -11,4 +11,9 @@ import Foundation
 final class LinkTagsViewModel {
   var limit: Int = 1
   var tags: [Tag] = []
+  let filter: Filter = Filter()
+  
+  init() {
+    self.filter.types = [Tag.resourceType]
+  }
 }
