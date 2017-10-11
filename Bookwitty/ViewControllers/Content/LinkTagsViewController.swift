@@ -30,8 +30,21 @@ class LinkTagsViewController: UIViewController {
     let doneButton = UIBarButtonItem(title: Strings.done(), style: .plain, target: self, action: #selector(doneButtonTouchUpInside(_:)))
     doneButton.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
     self.navigationItem.rightBarButtonItem = doneButton
+    
+    tagsView.onVerifyTag = { field, candidate in
+      return field.tags.count <= self.viewModel.limit
+    }
+    
+    tagsView.onDidChangeText = { field, text in
+      NSObject.cancelPreviousPerformRequests(withTarget: self)
+      self.perform(#selector(LinkTagsViewController.reload), with: text, afterDelay: 0.5)
+    }
   }
-  
+
+  @objc private func reload(with text: String?) {
+    //Todo: Implementation.
+  }
+
   @objc private func doneButtonTouchUpInside(_ sender:UIBarButtonItem) {
 
   }
