@@ -148,6 +148,57 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
     separatorNode.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     return separatorNode
   }
+
+  fileprivate func createCustomizeCellNode() -> ASCellNode {
+    let node = ASCellNode()
+    node.automaticallyManagesSubnodes = true
+    node.style.flexGrow = 1.0
+    node.style.height = ASDimension(unit: .points, value: 45.0)
+    node.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
+      let textNode = ASTextNode()
+      textNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+        //TODO: Localize
+        .append(text: "Customize your post's card.", color: ThemeManager.shared.currentTheme.defaultTextColor())
+        .attributedString
+      let centerSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: .minimumXY, child: textNode)
+      return centerSpec
+    }
+    return node
+  }
+
+  fileprivate func createAddImageCellNode() -> ASCellNode {
+    let node = ASCellNode()
+    node.automaticallyManagesSubnodes = true
+    node.style.flexGrow = 1.0
+    node.style.height = ASDimension(unit: .points, value: 45.0)
+    node.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
+      let textNode = ASTextNode()
+      textNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+        //TODO: Localize
+        .append(text: "Add an image", color: ThemeManager.shared.currentTheme.defaultButtonColor())
+        .attributedString
+      let centerSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: .minimumXY, child: textNode)
+      return centerSpec
+    }
+    return node
+  }
+
+  fileprivate func createAddTitleCellNode() -> ASCellNode {
+    let node = ASCellNode()
+    node.automaticallyManagesSubnodes = true
+    node.style.flexGrow = 1.0
+    node.style.height = ASDimension(unit: .points, value: 45.0)
+    node.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
+      let textNode = ASTextNode()
+      textNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+        //TODO: Localize
+        .append(text: "Add a title", color: ThemeManager.shared.currentTheme.defaultButtonColor())
+        .attributedString
+      let centerSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: .minimumXY, child: textNode)
+      return centerSpec
+    }
+    return node
+  }
 }
 
 //MARK: - CoverPhotoNodeDelegate implementation
