@@ -29,6 +29,9 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
 
   fileprivate var flowLayout: UICollectionViewFlowLayout
   fileprivate let collectionNode: ASCollectionNode
+
+  fileprivate var shouldShowTitle: Bool = false
+  fileprivate var shouldShowCover: Bool = false
   
   init() {
     penNameNode = PenNameCellNode(withSeparator: false, withCellHeight: 45.0)
@@ -84,19 +87,19 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
 
     switch section {
     case .customize:
-      return 0
+      return 3 // sep - node - sep
     case .penName:
-      return 0
+      return 2 // node - sep
     case .cover:
-      return 0
+      return shouldShowCover ? 1 : 0 //node
     case .title:
-      return 0
+      return shouldShowTitle ? 2 : 0 //node
     case .description:
       return 0
     case .newCover:
-      return 0
+      return shouldShowCover ? 0 : 1 //shows only if no cover
     case .newTitle:
-      return 0
+      return shouldShowTitle ? 0 : 1 //shows only if no title
     }
   }
 
@@ -108,19 +111,34 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
 
       switch section {
       case .customize:
-        return ASCellNode()
+        switch indexPath.row {
+        case 1:
+          return self.createCustomizeCellNode()
+        default:
+          return self.createSeparatorNode()
+        }
       case .penName:
-        return ASCellNode()
+        switch indexPath.row {
+        case 0:
+          return self.penNameNode
+        default:
+          return self.createSeparatorNode()
+        }
       case .cover:
-        return ASCellNode()
+        return self.coverNode
       case .title:
-        return ASCellNode()
+        switch indexPath.row {
+        case 0:
+          return self.titleNode
+        default:
+          return self.createSeparatorNode()
+        }
       case .description:
-        return ASCellNode()
+        return self.descriptionNode
       case .newCover:
-        return ASCellNode()
+        return self.createAddImageCellNode()
       case .newTitle:
-        return ASCellNode()
+        return self.createAddTitleCellNode()
       }
     }
   }
