@@ -46,6 +46,8 @@ class LinkTagsViewController: UIViewController {
     tagsView.onDidRemoveTag = { _, tag in
       self.viewModel.selectedTags = self.viewModel.selectedTags.filter { !($0.title == tag.text) }
     }
+    tableView.tableFooterView = UIView() //Hacky
+    tableView.backgroundColor = .clear
   }
 
   @objc private func reload(with text: String?) {
