@@ -24,4 +24,14 @@ final class LinkTagsViewModel {
     }
   }
 }
+// Mark: - TableView helper
+extension LinkTagsViewModel {
+  func numberOfItemsInSection(section: Int) -> Int {
+    return tags.count
+  }
+  func values(forRowAt indexPath: IndexPath) -> String? {
+    guard tags.count > indexPath.row else { return nil }
+    let resourceId = tags[indexPath.row]
+    return resourceId.title
+  }
 }
