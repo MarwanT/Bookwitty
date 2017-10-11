@@ -17,4 +17,11 @@ final class LinkTagsViewModel {
   init() {
     self.filter.types = [Tag.resourceType]
   }
+  
+  func append(_ tag: Tag) {
+    if !selectedTags.contains(tag) {
+      selectedTags.append(tag)
+    }
+  }
+}
 }
