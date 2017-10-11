@@ -8,11 +8,22 @@
 
 import AsyncDisplayKit
 
+protocol CoverPhotoNodeDelegate: class {
+  func coverPhoto(node: CoverPhotoNode, didRequest action: CoverPhotoNode.Action)
+}
+
 class CoverPhotoNode: ASCellNode {
+
+  enum Action {
+    case gallery
+    case delete
+  }
 
   let imageNode: ASNetworkImageNode
   let photoButton: ASButtonNode
   let deleteButton: ASButtonNode
+
+  weak var delegate: CoverPhotoNodeDelegate?
 
   override init() {
     imageNode = ASNetworkImageNode()
@@ -66,12 +77,12 @@ class CoverPhotoNode: ASCellNode {
 extension CoverPhotoNode {
   func photoButtonTouchUpInside(_ sender: ASButtonNode?) {
     guard let sender = sender else { return }
-    //TODO: delegate the work
+    delegate?.coverPhoto(node: self, didRequest: .gallery)
   }
 
 
   func deleteButtonTouchUpInside(_ sender: ASButtonNode?) {
     guard let sender = sender else { return }
-    //TODO: delegate the work    
+    delegate?.coverPhoto(node: self, didRequest: .delete)
   }
 }
