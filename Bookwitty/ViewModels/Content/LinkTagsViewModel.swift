@@ -11,6 +11,7 @@ import Foundation
 final class LinkTagsViewModel {
   var canLink: Bool = true
   var tags: [Tag] = []
+  var selectedTags: [Tag] = []
   let filter: Filter = Filter()
   
   init() {
