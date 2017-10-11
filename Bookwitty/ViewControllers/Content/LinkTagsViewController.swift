@@ -60,7 +60,6 @@ class LinkTagsViewController: UIViewController {
     _ = SearchAPI.search(filter: self.viewModel.filter, page: nil) { (success, tags, _, _, error) in
       guard success, let tags = tags as? [Tag] else {
         self.viewModel.tags = []
-        self.viewModel.canLink = false
         return
       }
       self.viewModel.tags = tags
