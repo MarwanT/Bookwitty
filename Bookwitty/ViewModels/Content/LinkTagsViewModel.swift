@@ -9,7 +9,7 @@
 import Foundation
 
 final class LinkTagsViewModel {
-  var limit: Int = 1
+  var canLink: Bool = true
   var tags: [Tag] = []
   let filter: Filter = Filter()
   
