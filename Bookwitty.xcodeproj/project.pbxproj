@@ -17,6 +17,8 @@
 		0F525E9F1F77E98700E225B1 /* RichMenuCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F525E9E1F77E98700E225B1 /* RichMenuCellTableViewCell.swift */; };
 		0F7767D21F8CE5A900D54E4D /* LinkTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7767D11F8CE5A900D54E4D /* LinkTagsViewController.swift */; };
 		0F7767D41F8CE68400D54E4D /* LinkTagsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7767D31F8CE68400D54E4D /* LinkTagsViewModel.swift */; };
+		0F7767D61F8F511C00D54E4D /* LinkTopicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7767D51F8F511C00D54E4D /* LinkTopicsViewController.swift */; };
+		0F7767D81F8F516000D54E4D /* LinkTopicsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7767D71F8F516000D54E4D /* LinkTopicsViewModel.swift */; };
 		0FAA01681F7A3D0B0011FDBA /* RichBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAA01671F7A3D0B0011FDBA /* RichBookViewModel.swift */; };
 		0FAA016A1F7A41A30011FDBA /* RichBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAA01691F7A41A30011FDBA /* RichBookViewController.swift */; };
 		0FAC60761F73B71C00D47B0A /* Content.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0FAC60751F73B71C00D47B0A /* Content.storyboard */; };
@@ -362,6 +364,8 @@
 		0F525E9E1F77E98700E225B1 /* RichMenuCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichMenuCellTableViewCell.swift; sourceTree = "<group>"; };
 		0F7767D11F8CE5A900D54E4D /* LinkTagsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkTagsViewController.swift; sourceTree = "<group>"; };
 		0F7767D31F8CE68400D54E4D /* LinkTagsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkTagsViewModel.swift; sourceTree = "<group>"; };
+		0F7767D51F8F511C00D54E4D /* LinkTopicsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkTopicsViewController.swift; sourceTree = "<group>"; };
+		0F7767D71F8F516000D54E4D /* LinkTopicsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkTopicsViewModel.swift; sourceTree = "<group>"; };
 		0FAA01671F7A3D0B0011FDBA /* RichBookViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichBookViewModel.swift; sourceTree = "<group>"; };
 		0FAA01691F7A41A30011FDBA /* RichBookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichBookViewController.swift; sourceTree = "<group>"; };
 		0FAC60751F73B71C00D47B0A /* Content.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Content.storyboard; sourceTree = "<group>"; };
@@ -749,6 +753,7 @@
 				56218A041F7A5CE5000456F9 /* QuoteEditorViewController.swift */,
 				0F1AF1B11F84D1E8004DF12A /* PublishMenuViewController.swift */,
 				0F7767D11F8CE5A900D54E4D /* LinkTagsViewController.swift */,
+				0F7767D51F8F511C00D54E4D /* LinkTopicsViewController.swift */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -763,6 +768,7 @@
 				56FFE15D1F74F16900EEED42 /* RichLinkPreviewViewModel.swift */,
 				0F1AF1B31F84D3EE004DF12A /* PublishMenuViewModel.swift */,
 				0F7767D31F8CE68400D54E4D /* LinkTagsViewModel.swift */,
+				0F7767D71F8F516000D54E4D /* LinkTopicsViewModel.swift */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -2025,6 +2031,7 @@
 				F42600891E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift in Sources */,
 				566EE82D1E5D7082004B990D /* Search+API.swift in Sources */,
 				0FAC60D21F73BBC100D47B0A /* ContentEditorViewController.swift in Sources */,
+				0F7767D81F8F516000D54E4D /* LinkTopicsViewModel.swift in Sources */,
 				59C273311F070223009C51D9 /* FormatEditionTableViewCell.swift in Sources */,
 				59C2732F1F06BD33009C51D9 /* FormatEditionsViewModel.swift in Sources */,
 				59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */,
@@ -2063,6 +2070,7 @@
 				F43A690D1E79441D001C3657 /* Counts.swift in Sources */,
 				590E30021EDC1A68006C6D5C /* CommentNode.swift in Sources */,
 				59CB4DEB1EDDC64200E7A60B /* CommentsViewModel.swift in Sources */,
+				0F7767D61F8F511C00D54E4D /* LinkTopicsViewController.swift in Sources */,
 				561229EB1EA65F21004CE079 /* PhotoCardViewModel.swift in Sources */,
 				5644F21C1E55A77100B7D8E7 /* SettingsViewModel.swift in Sources */,
 				F4A426351E5629210090CD51 /* Video.swift in Sources */,
