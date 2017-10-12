@@ -310,6 +310,15 @@ extension ContentEditorViewController {
     self.navigationController?.present(navigationController, animated: true, completion: nil)
   }
 }
+
+extension ContentEditorViewController {
+  func presentLinkTopicsViewController(with tags: [String] = []) {
+    let linkTopicsViewController = Storyboard.Content.instantiate(LinkTopicsViewController.self)
+    let navigationController = UINavigationController(rootViewController: linkTopicsViewController)
+    self.navigationController?.present(navigationController, animated: true, completion: nil)
+  }
+}
+
 extension ContentEditorViewController: PublishMenuViewControllerDelegate {
   
   func publishMenu(_ viewController: PublishMenuViewController, didSelect item: PublishMenuViewController.Item) {
@@ -319,7 +328,7 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
     case .penName:
       break
     case .linkTopics:
-      break
+      self.presentLinkTopicsViewController()
     case .addTags:
       self.presentTagsViewController()
     case .postPreview:
