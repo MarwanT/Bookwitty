@@ -67,7 +67,7 @@ class ContentEditorViewController: UIViewController {
   
   // MARK: - Navigation items actions
   @objc private func close(_ sender:UIBarButtonItem) {
-    //Todo: Implementation
+    self.dismiss(animated: true, completion: nil)
   }
   
   @objc private func drafts(_ sender:UIBarButtonItem) {
