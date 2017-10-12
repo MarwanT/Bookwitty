@@ -303,6 +303,13 @@ extension ContentEditorViewController: QuoteEditorViewControllerDelegate {
   }
 }
 
+extension ContentEditorViewController {
+  func presentTagsViewController(with tags: [String] = []) {
+    let linkTagsViewController = Storyboard.Content.instantiate(LinkTagsViewController.self)
+    let navigationController = UINavigationController(rootViewController: linkTagsViewController)
+    self.navigationController?.present(navigationController, animated: true, completion: nil)
+  }
+}
 extension ContentEditorViewController: PublishMenuViewControllerDelegate {
   
   func publishMenu(_ viewController: PublishMenuViewController, didSelect item: PublishMenuViewController.Item) {
@@ -314,7 +321,7 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
     case .linkTopics:
       break
     case .addTags:
-      break
+      self.presentTagsViewController()
     case .postPreview:
       break
     case .publishYourPost:
