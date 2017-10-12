@@ -11,6 +11,10 @@ import AsyncDisplayKit
 import GSImageViewerController
 import SwiftLoader
 
+protocol TopicViewControllerDelegate: class {
+  func topic(viewController: TopicViewController, didRequestToLink topic: Topic)
+}
+
 class TopicViewController: ASViewController<ASCollectionNode> {
 
   enum LoadingStatus {
