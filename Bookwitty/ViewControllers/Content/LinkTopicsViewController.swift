@@ -27,6 +27,9 @@ class LinkTopicsViewController: UIViewController {
     self.tableView.tableFooterView = UIView()
     self.tableView.backgroundColor = .clear
     
+    tagsView.onVerifyTag = { field, candidate in
+      return self.viewModel.canLink && self.viewModel.selectedTopics.flatMap { $0.title }.contains(candidate)
+    }
     tagsView.onDidChangeText = { field, text in
       NSObject.cancelPreviousPerformRequests(withTarget: self)
       self.perform(#selector(LinkTopicsViewController.reload), with: text, afterDelay: 0.5)
