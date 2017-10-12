@@ -25,6 +25,11 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     case relatedData
     case activityIndicator
   }
+  
+  enum TopicAction {
+    case link
+    case unlink
+  }
 
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
