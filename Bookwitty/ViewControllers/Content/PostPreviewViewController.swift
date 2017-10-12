@@ -175,8 +175,7 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
     node.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
       let textNode = ASTextNode()
       textNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
-        //TODO: Localize
-        .append(text: "Customize your post's card.", color: ThemeManager.shared.currentTheme.defaultTextColor())
+        .append(text: Strings.customize_your_posts_card(), color: ThemeManager.shared.currentTheme.defaultTextColor())
         .attributedString
       let centerSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: .minimumXY, child: textNode)
       return centerSpec
@@ -192,8 +191,7 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
     node.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
       let textNode = ASTextNode()
       textNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
-        //TODO: Localize
-        .append(text: "Add an image", color: ThemeManager.shared.currentTheme.defaultButtonColor())
+        .append(text: Strings.add_an_image(), color: ThemeManager.shared.currentTheme.defaultButtonColor())
         .attributedString
       let centerSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: .minimumXY, child: textNode)
       return centerSpec
@@ -209,8 +207,7 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
     node.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
       let textNode = ASTextNode()
       textNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
-        //TODO: Localize
-        .append(text: "Add a title", color: ThemeManager.shared.currentTheme.defaultButtonColor())
+        .append(text: Strings.add_a_title(), color: ThemeManager.shared.currentTheme.defaultButtonColor())
         .attributedString
       let centerSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: .minimumXY, child: textNode)
       return centerSpec
