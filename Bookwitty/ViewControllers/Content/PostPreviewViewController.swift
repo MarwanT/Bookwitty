@@ -162,7 +162,23 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    guard let section = Sections(rawValue: indexPath.section) else {
+      return
+    }
 
+    switch section {
+    case .newCover:
+      self.presentImagePicker()
+    case .newTitle:
+      shouldShowTitle = !shouldShowTitle
+      collectionNode.reloadData(completion: {
+        if self.shouldShowTitle {
+          self.titleNode.textNode.becomeFirstResponder()
+        }
+      })
+    default:
+      break
+    }
   }
 
   fileprivate func createSeparatorNode() -> ASCellNode {
