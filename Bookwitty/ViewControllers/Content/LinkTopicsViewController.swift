@@ -9,7 +9,7 @@
 import UIKit
 
 class LinkTopicsViewController: UIViewController {
-  
+  let viewModel = LinkTopicsViewModel()
   override func viewDidLoad() {
     super.viewDidLoad()
   }
