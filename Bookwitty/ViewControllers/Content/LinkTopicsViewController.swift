@@ -19,6 +19,7 @@ class LinkTopicsViewController: UIViewController {
     self.initializeComponents()
     self.addKeyboardNotifications()
     self.applyTheme()
+    self.tagsView.beginEditing() // becomeFirstResponder
   }
   
   private func initializeComponents() {
