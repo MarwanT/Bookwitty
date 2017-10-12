@@ -360,6 +360,7 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="pMY-7w-llS" id="mAj-Ia-9Ks"/>
+                        <outlet property="tableViewBottomConstraintToSuperview" destination="W4L-M0-UjQ" id="eBu-7F-UjJ"/>
                         <outlet property="tagsView" destination="bwJ-jG-GZs" id="rBC-2e-W3z"/>
                     </connections>
                 </viewController>
