@@ -17,6 +17,7 @@ class LinkTopicsViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.initializeComponents()
+    self.addKeyboardNotifications()
   }
   
   private func initializeComponents() {
