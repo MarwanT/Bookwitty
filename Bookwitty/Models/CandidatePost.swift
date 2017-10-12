@@ -14,3 +14,10 @@ protocol CandidatePost {
   var shortDescription: String? { get set }
   var imageUrl: String? { get set }
 }
+
+extension Text: CandidatePost {
+  var imageUrl: String? {
+    get { return coverImageUrl }
+    set { coverImageUrl = newValue }
+  }
+}
