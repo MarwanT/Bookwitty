@@ -274,6 +274,24 @@
             </objects>
             <point key="canvasLocation" x="760.79999999999995" y="946.77661169415296"/>
         </scene>
+        <!--Link Topics View Controller-->
+        <scene sceneID="XtR-T4-Xq0">
+            <objects>
+                <viewController storyboardIdentifier="LinkTopicsViewController" id="nqs-bK-DIq" customClass="LinkTopicsViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="z4d-IH-KMn"/>
+                        <viewControllerLayoutGuide type="bottom" id="pEm-OC-DaV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pK4-Yp-CDV">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g90-uA-RTV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1438" y="947"/>
+        </scene>
         <!--Rich Content Menu View Controller-->
         <scene sceneID="1oS-4P-Lob">
             <objects>
