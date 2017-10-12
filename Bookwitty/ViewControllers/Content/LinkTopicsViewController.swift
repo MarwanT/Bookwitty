@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import WSTagsField
 
 class LinkTopicsViewController: UIViewController {
   let viewModel = LinkTopicsViewModel()
+  @IBOutlet weak var tagsView: WSTagsField!
+  @IBOutlet weak var tableView: UITableView!
   override func viewDidLoad() {
     super.viewDidLoad()
   }
