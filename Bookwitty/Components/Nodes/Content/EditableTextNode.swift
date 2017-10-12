@@ -30,6 +30,8 @@ class EditableTextNode: ASCellNode {
     clearButtonNode.style.preferredSize = CGSize(width: 25.0, height: 25.0)
     clearButtonNode.imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0.0, nil)
     clearButtonNode.setImage(#imageLiteral(resourceName: "x"), for: .normal)
+
+    clearButtonNode.addTarget(self, action: #selector(clearButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
 
   override func didLoad() {
@@ -55,6 +57,10 @@ class EditableTextNode: ASCellNode {
       left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: ThemeManager.shared.currentTheme.generalExternalMargin(),
       right: ThemeManager.shared.currentTheme.generalExternalMargin())
+  }
+
+  @objc fileprivate func clearButtonTouchUpInside(_ sender: ASButtonNode) {
+    //TODO: Empty impementation
   }
 }
 
