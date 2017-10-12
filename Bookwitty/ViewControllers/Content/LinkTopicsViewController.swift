@@ -103,6 +103,15 @@ extension LinkTopicsViewController: Themeable {
   }
 }
 
+extension LinkTopicsViewController: TopicViewControllerDelegate {
+  func topic(viewController: TopicViewController, didRequest action: TopicAction, for topic: Topic) {
+  self.viewModel.append(topic)
+    self.tagsView.addTags(self.viewModel.selectedTopics.flatMap { $0.title })
+    self.viewModel.topics = []
+    _ = self.navigationController?.popViewController(animated: true)
+  }
+}
+
 extension LinkTopicsViewController: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
