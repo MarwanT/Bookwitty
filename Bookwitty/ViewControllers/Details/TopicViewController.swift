@@ -17,7 +17,7 @@ enum TopicAction {
 }
 
 protocol TopicViewControllerDelegate: class {
-  func topic(viewController: TopicViewController, didRequestToLink topic: Topic)
+  func topic(viewController: TopicViewController, didRequest action: TopicAction, for topic: Topic)
 }
 
 class TopicViewController: ASViewController<ASCollectionNode> {
@@ -232,7 +232,13 @@ class TopicViewController: ASViewController<ASCollectionNode> {
 
   func linkUnlinkTouchUpInside(_ sender: UIBarButtonItem) {
     if let topic = self.viewModel.resource as? Topic {
-      self.delegate?.topic(viewController: self, didRequestToLink: topic)
+      switch self.navigationItemMode {
+      case .action(let action):
+        self.delegate?.topic(viewController: self, didRequest: action, for: topic)
+
+      default:
+        break
+      }
     }
   }
   
