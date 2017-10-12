@@ -26,10 +26,38 @@ class LinkTopicsViewController: UIViewController {
     
     self.tableView.tableFooterView = UIView()
     self.tableView.backgroundColor = .clear
+    
+    tagsView.onDidChangeText = { field, text in
+      NSObject.cancelPreviousPerformRequests(withTarget: self)
+      self.perform(#selector(LinkTopicsViewController.reload), with: text, afterDelay: 0.5)
+    }
+    tagsView.onShouldReturn = { _ in
+      return false
+    }
+    tagsView.onDidRemoveTag = { _, tag in
+      self.viewModel.selectedTopics = self.viewModel.selectedTopics.filter { !($0.title == tag.text) }
+    }
   }
   
   @objc private func doneButtonTouchUpInside(_ sender:UIBarButtonItem) {
     self.dismiss(animated: true, completion: nil)
+  }
+  
+  @objc private func reload(with text: String?) {
+    guard let text = text, text.characters.count > 0 else {
+      return
+    }
+    
+    self.viewModel.filter.query = text
+    //Perform request
+    _ = SearchAPI.search(filter: self.viewModel.filter, page: nil) { (success, topics, _, _, error) in
+      guard success, let topics = topics as? [Topic] else {
+        self.viewModel.topics = []
+        return
+      }
+      self.viewModel.topics = topics
+      self.tableView.reloadData()
+    }
   }
   
   // MARK: - Keyboard Handling
