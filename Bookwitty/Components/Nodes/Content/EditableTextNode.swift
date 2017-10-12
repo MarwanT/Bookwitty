@@ -8,9 +8,15 @@
 
 import AsyncDisplayKit
 
+protocol EditableTextNodeDelegate: class {
+  func editableTextNodeDidRequestClear(textNode: EditableTextNode)
+}
+
 class EditableTextNode: ASCellNode {
   let textNode: ASEditableTextNode
   let clearButtonNode: ASButtonNode
+
+  weak var delegate: EditableTextNodeDelegate?
 
   override init() {
     textNode = ASEditableTextNode()
@@ -60,7 +66,8 @@ class EditableTextNode: ASCellNode {
   }
 
   @objc fileprivate func clearButtonTouchUpInside(_ sender: ASButtonNode) {
-    //TODO: Empty impementation
+    textNode.resignFirstResponder()
+    delegate?.editableTextNodeDidRequestClear(textNode: self)
   }
 }
 
