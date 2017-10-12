@@ -15,6 +15,8 @@
 "account_needs_confirmation_alert_title" = "Votre compte";
 "add" = "Add";
 "add_a_link" = "Add a Link";
+"add_a_title" = "Add a title";
+"add_an_image" = "Add an image";
 "add_tags" = "Add Tags";
 "address_book" = "Adresses de livraison";
 "already_have_an_account" = "Déjà inscrit ?";
@@ -61,6 +63,7 @@
 "current_password" = "Mot de passe actuel";
 "current_password_is_empty_error" = "Vous n'avez pas entré votre mot de passe";
 "customer_service" = "Service client";
+"customize_your_posts_card" = "Customize your post's card.";
 "delete" = "Supprimer";
 "discover" = "Découvrir";
 "discover_banner_message" = "Chaque jour, retrouvez ici les meilleurs articles de la communauté Bookwitty";
