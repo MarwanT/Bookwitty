@@ -230,3 +230,14 @@ extension PostPreviewViewController: CoverPhotoNodeDelegate {
   }
 }
 
+//MARK: - UIImagePickerControllerDelegate & UINavigationControllerDelegate implementation
+extension PostPreviewViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+      return
+    }
+
+    //TODO: use the image
+    self.navigationController?.dismiss(animated: true, completion: nil)
+  }
+}
