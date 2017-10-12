@@ -14,6 +14,7 @@ class LinkTopicsViewController: UIViewController {
   @IBOutlet weak var tagsView: WSTagsField!
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var tableViewBottomConstraintToSuperview: NSLayoutConstraint!
+  @IBOutlet weak var separatorView: UIView!
   override func viewDidLoad() {
     super.viewDidLoad()
     self.initializeComponents()
@@ -29,7 +30,7 @@ class LinkTopicsViewController: UIViewController {
     
     self.tableView.tableFooterView = UIView()
     self.tableView.backgroundColor = .clear
-    
+    self.separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     tagsView.onVerifyTag = { field, candidate in
       return self.viewModel.canLink && self.viewModel.selectedTopics.flatMap { $0.title }.contains(candidate)
     }
