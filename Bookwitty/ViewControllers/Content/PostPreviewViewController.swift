@@ -64,6 +64,9 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
   }
 
   fileprivate func initializeComponents() {
+
+    title = Strings.post_preview()
+
     flowLayout.minimumInteritemSpacing = 0
     flowLayout.minimumLineSpacing = 0
 
