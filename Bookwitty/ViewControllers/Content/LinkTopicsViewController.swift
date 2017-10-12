@@ -14,3 +14,9 @@ class LinkTopicsViewController: UIViewController {
     super.viewDidLoad()
   }
 }
+
+extension LinkTopicsViewController: Themeable {
+  func applyTheme() {
+    self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+  }
+}
