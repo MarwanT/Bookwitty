@@ -15,6 +15,8 @@
 "account_needs_confirmation_alert_title" = "Account";
 "add" = "Add";
 "add_a_link" = "Add a Link";
+"add_a_title" = "Add a title";
+"add_an_image" = "Add an image";
 "add_tags" = "Add Tags";
 "address_book" = "Address Book";
 "already_have_an_account" = "Already have an account?";
@@ -61,6 +63,7 @@
 "current_password" = "Current Password";
 "current_password_is_empty_error" = "Current password was left empty!";
 "customer_service" = "Customer Service";
+"customize_your_posts_card" = "Customize your post's card.";
 "delete" = "Delete";
 "discover" = "Discover";
 "discover_banner_message" = "Check back here anytime to find the best stories from the community.";
