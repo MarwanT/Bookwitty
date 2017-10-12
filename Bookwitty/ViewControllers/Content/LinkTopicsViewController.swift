@@ -119,9 +119,19 @@ extension LinkTopicsViewController {
 
 extension LinkTopicsViewController: TopicViewControllerDelegate {
   func topic(viewController: TopicViewController, didRequest action: TopicAction, for topic: Topic) {
-  self.viewModel.append(topic)
-    self.tagsView.addTags(self.viewModel.selectedTopics.flatMap { $0.title })
+    switch action {
+    case .link:
+      self.viewModel.append(topic)
+      self.tagsView.addTags(self.viewModel.selectedTopics.flatMap { $0.title })
+    case .unlink:
+      self.viewModel.remove(topic)
+      if let title = topic.title {
+        self.tagsView.removeTag(title)
+      }
+    }
     self.viewModel.topics = []
+    self.tableView.reloadData()
+    
     _ = self.navigationController?.popViewController(animated: true)
   }
 }
