@@ -221,6 +221,14 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
     }
     return node
   }
+
+  fileprivate func presentImagePicker() {
+    let imagePickerController = UIImagePickerController()
+    imagePickerController.delegate = self
+    imagePickerController.sourceType = .photoLibrary
+    imagePickerController.allowsEditing = true
+    self.navigationController?.present(imagePickerController, animated: true, completion: nil)
+  }
 }
 
 //MARK: - CoverPhotoNodeDelegate implementation
