@@ -70,6 +70,7 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
     collectionNode.delegate = self
     collectionNode.dataSource = self
 
+    titleNode.delegate = self
     coverNode.delegate = self
   }
 
@@ -263,6 +264,13 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
     imagePickerController.sourceType = .photoLibrary
     imagePickerController.allowsEditing = true
     self.navigationController?.present(imagePickerController, animated: true, completion: nil)
+  }
+}
+
+//MARK: - EditableTextNodeDelegate implementation
+extension PostPreviewViewController: EditableTextNodeDelegate {
+  func editableTextNodeDidRequestClear(textNode: EditableTextNode) {
+    //TODO: Empty implementation
   }
 }
 
