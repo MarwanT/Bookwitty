@@ -30,6 +30,7 @@
 		561229EB1EA65F21004CE079 /* PhotoCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561229EA1EA65F21004CE079 /* PhotoCardViewModel.swift */; };
 		561229ED1EA66D82004CE079 /* ReadingListCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561229EC1EA66D82004CE079 /* ReadingListCardViewModel.swift */; };
 		5613402E1E5221730085B8A5 /* AccountPenNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5613402D1E5221730085B8A5 /* AccountPenNameTableViewCell.swift */; };
+		561723FE1F8FA4F100CD979E /* CandidatePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561723FD1F8FA4F100CD979E /* CandidatePost.swift */; };
 		56205DEB1E5324BC000CA4D7 /* TableViewSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56205DE91E5324BC000CA4D7 /* TableViewSectionHeaderView.swift */; };
 		56205DEC1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56205DEA1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib */; };
 		56218A051F7A5CE5000456F9 /* QuoteEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56218A041F7A5CE5000456F9 /* QuoteEditorViewController.swift */; };
@@ -363,6 +364,7 @@
 		561229EA1EA65F21004CE079 /* PhotoCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCardViewModel.swift; sourceTree = "<group>"; };
 		561229EC1EA66D82004CE079 /* ReadingListCardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingListCardViewModel.swift; sourceTree = "<group>"; };
 		5613402D1E5221730085B8A5 /* AccountPenNameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountPenNameTableViewCell.swift; sourceTree = "<group>"; };
+		561723FD1F8FA4F100CD979E /* CandidatePost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandidatePost.swift; sourceTree = "<group>"; };
 		56205DE91E5324BC000CA4D7 /* TableViewSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewSectionHeaderView.swift; sourceTree = "<group>"; };
 		56205DEA1E5324BC000CA4D7 /* TableViewSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewSectionHeaderView.xib; sourceTree = "<group>"; };
 		56218A041F7A5CE5000456F9 /* QuoteEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteEditorViewController.swift; sourceTree = "<group>"; };
@@ -1024,6 +1026,7 @@
 				563482BC1ED5BD61005428BF /* Facet.swift */,
 				56BFE6311F065D62009ABECC /* Vote.swift */,
 				560341AC1F3DAE3400E60F44 /* Tag.swift */,
+				561723FD1F8FA4F100CD979E /* CandidatePost.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2109,6 +2112,7 @@
 				56FC41971E58CBA100D9B1CE /* NSBundle+Language.m in Sources */,
 				561229E91EA65451004CE079 /* LinkCardViewModel.swift in Sources */,
 				59D6021E1E36363400271315 /* Font.swift in Sources */,
+				561723FE1F8FA4F100CD979E /* CandidatePost.swift in Sources */,
 				593769D71E3689FB00F23226 /* Appearance.swift in Sources */,
 				56FFE15A1F74EEE600EEED42 /* RichLinkPreviewViewController.swift in Sources */,
 				591E15581E70FE37008CA78A /* GenericNodeViewController.swift in Sources */,
