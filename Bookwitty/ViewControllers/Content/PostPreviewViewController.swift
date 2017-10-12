@@ -270,7 +270,9 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
 //MARK: - EditableTextNodeDelegate implementation
 extension PostPreviewViewController: EditableTextNodeDelegate {
   func editableTextNodeDidRequestClear(textNode: EditableTextNode) {
-    //TODO: Empty implementation
+    textNode.text = nil
+    shouldShowTitle = false
+    collectionNode.reloadData()
   }
 }
 
