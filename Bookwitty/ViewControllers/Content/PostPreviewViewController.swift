@@ -66,6 +66,13 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
   }
 }
 
+//MARK: - Actions
+extension PostPreviewViewController {
+  @objc fileprivate func doneBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
+    //TODO: Empty implementation
+  }
+}
+
 //MARK: - Themeable implementation
 extension PostPreviewViewController: Themeable {
   func applyTheme() {
