@@ -53,6 +53,7 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
 
     initializeComponents()
     applyTheme()
+    setupNavigationBarButtons()
   }
 
   fileprivate func initializeComponents() {
@@ -63,6 +64,17 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
     collectionNode.dataSource = self
 
     coverNode.delegate = self
+  }
+
+  fileprivate func setupNavigationBarButtons() {
+    navigationItem.backBarButtonItem = UIBarButtonItem.back
+
+    let doneBarButtonItem = UIBarButtonItem(title: Strings.done(),
+                                            style: UIBarButtonItemStyle.plain,
+                                            target: self,
+                                            action: #selector(self.doneBarButtonTouchUpInside(_:)))
+    doneBarButtonItem.tintColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+    navigationItem.rightBarButtonItem = doneBarButtonItem
   }
 }
 
