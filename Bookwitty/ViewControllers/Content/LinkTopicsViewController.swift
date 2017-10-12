@@ -108,7 +108,7 @@ extension LinkTopicsViewController {
     let topicViewController = TopicViewController()
     topicViewController.initialize(with: topic)
     topicViewController.delegate = self
-    if self.viewModel.selectedTopics.contains(topic) {
+    if self.viewModel.has(topic) {
       topicViewController.navigationItemMode = .action(.unlink)
     } else {
       topicViewController.navigationItemMode = .action(.link)
