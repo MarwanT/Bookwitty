@@ -18,6 +18,19 @@ class EditableTextNode: ASCellNode {
 
   weak var delegate: EditableTextNodeDelegate?
 
+  var text: String? {
+    didSet {
+      if let text = text {
+        textNode.attributedText = AttributedStringBuilder(fontDynamicType: .title2)
+          .append(text: text)
+          .attributedString
+      } else {
+        textNode.attributedText = nil
+      }
+      textNode.setNeedsLayout()
+    }
+  }
+
   override init() {
     textNode = ASEditableTextNode()
     clearButtonNode = ASButtonNode()
