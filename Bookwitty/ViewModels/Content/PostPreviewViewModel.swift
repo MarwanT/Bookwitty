@@ -9,5 +9,9 @@
 import Foundation
 
 final class PostPreviewViewModel {
+  var candidatePost: CandidatePost!
 
+  func initialize(with post: CandidatePost) {
+    self.candidatePost = post
+  }
 }
