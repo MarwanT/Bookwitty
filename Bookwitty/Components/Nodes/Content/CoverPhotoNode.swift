@@ -25,6 +25,20 @@ class CoverPhotoNode: ASCellNode {
 
   weak var delegate: CoverPhotoNodeDelegate?
 
+  var image: UIImage? {
+    didSet {
+      imageNode.image = image
+      imageNode.setNeedsLayout()
+    }
+  }
+
+  var url: String? {
+    didSet {
+      imageNode.url = URL(string: url ?? "")
+      imageNode.setNeedsLayout()
+    }
+  }
+
   override init() {
     imageNode = ASNetworkImageNode()
     photoButton = ASButtonNode()
