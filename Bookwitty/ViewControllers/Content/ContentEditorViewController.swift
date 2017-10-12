@@ -67,7 +67,7 @@ class ContentEditorViewController: UIViewController {
   
   // MARK: - Navigation items actions
   @objc private func close(_ sender:UIBarButtonItem) {
-    //Todo: Implementation
+    self.dismiss(animated: true, completion: nil)
   }
   
   @objc private func drafts(_ sender:UIBarButtonItem) {
@@ -303,6 +303,22 @@ extension ContentEditorViewController: QuoteEditorViewControllerDelegate {
   }
 }
 
+extension ContentEditorViewController {
+  func presentTagsViewController(with tags: [String] = []) {
+    let linkTagsViewController = Storyboard.Content.instantiate(LinkTagsViewController.self)
+    let navigationController = UINavigationController(rootViewController: linkTagsViewController)
+    self.navigationController?.present(navigationController, animated: true, completion: nil)
+  }
+}
+
+extension ContentEditorViewController {
+  func presentLinkTopicsViewController(with tags: [String] = []) {
+    let linkTopicsViewController = Storyboard.Content.instantiate(LinkTopicsViewController.self)
+    let navigationController = UINavigationController(rootViewController: linkTopicsViewController)
+    self.navigationController?.present(navigationController, animated: true, completion: nil)
+  }
+}
+
 extension ContentEditorViewController: PublishMenuViewControllerDelegate {
   
   func publishMenu(_ viewController: PublishMenuViewController, didSelect item: PublishMenuViewController.Item) {
@@ -312,9 +328,9 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
     case .penName:
       break
     case .linkTopics:
-      break
+      self.presentLinkTopicsViewController()
     case .addTags:
-      break
+      self.presentTagsViewController()
     case .postPreview:
       break
     case .publishYourPost:
