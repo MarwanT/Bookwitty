@@ -103,6 +103,20 @@ extension LinkTopicsViewController: Themeable {
   }
 }
 
+extension LinkTopicsViewController {
+  func viewTopicViewController(with topic: Topic) {
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(with: topic)
+    topicViewController.delegate = self
+    if self.viewModel.selectedTopics.contains(topic) {
+      topicViewController.navigationItemMode = .action(.unlink)
+    } else {
+      topicViewController.navigationItemMode = .action(.link)
+    }
+    navigationController?.pushViewController(topicViewController, animated: true)
+  }
+}
+
 extension LinkTopicsViewController: TopicViewControllerDelegate {
   func topic(viewController: TopicViewController, didRequest action: TopicAction, for topic: Topic) {
   self.viewModel.append(topic)
