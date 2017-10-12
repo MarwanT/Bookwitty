@@ -18,6 +18,7 @@ class LinkTopicsViewController: UIViewController {
     super.viewDidLoad()
     self.initializeComponents()
     self.addKeyboardNotifications()
+    self.applyTheme()
   }
   
   private func initializeComponents() {
