@@ -231,7 +231,9 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   }
 
   func linkUnlinkTouchUpInside(_ sender: UIBarButtonItem) {
-    //TODO: delegate Implementation
+    if let topic = self.viewModel.resource as? Topic {
+      self.delegate?.topic(viewController: self, didRequestToLink: topic)
+    }
   }
   
   func loadData() {
