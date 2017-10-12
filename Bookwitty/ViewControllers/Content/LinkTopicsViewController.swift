@@ -27,7 +27,7 @@ class LinkTopicsViewController: UIViewController {
     let doneButton = UIBarButtonItem(title: Strings.done(), style: .plain, target: self, action: #selector(doneButtonTouchUpInside(_:)))
     doneButton.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
     self.navigationItem.rightBarButtonItem = doneButton
-    
+    self.navigationItem.backBarButtonItem = .back
     self.tableView.tableFooterView = UIView()
     self.tableView.backgroundColor = .clear
     self.separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
