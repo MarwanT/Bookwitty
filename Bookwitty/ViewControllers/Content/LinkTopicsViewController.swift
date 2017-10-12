@@ -144,9 +144,8 @@ extension LinkTopicsViewController: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-    self.viewModel.append(self.viewModel.topics[indexPath.row])
-    self.tagsView.addTags(self.viewModel.selectedTopics.flatMap { $0.title })
-    self.viewModel.topics = []
+    let topic = self.viewModel.topics[indexPath.row]
+    self.viewTopicViewController(with: topic)
     tableView.reloadData()
   }
 }
