@@ -30,7 +30,12 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     case link
     case unlink
   }
-
+  
+  enum NavigationItemMode {
+    case view
+    case action(TopicAction)
+  }
+  
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let segmentedNodeHeight: CGFloat = 45.0
