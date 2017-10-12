@@ -269,7 +269,14 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
 //MARK: - CoverPhotoNodeDelegate implementation
 extension PostPreviewViewController: CoverPhotoNodeDelegate {
   func coverPhoto(node: CoverPhotoNode, didRequest action: CoverPhotoNode.Action) {
-    //TODO: Empty implementation
+    switch action {
+    case .gallery:
+      self.presentImagePicker()
+    case .delete:
+      //TODO: remove the image from the model
+      shouldShowCover = false
+      collectionNode.reloadData()
+    }
   }
 }
 
@@ -280,7 +287,11 @@ extension PostPreviewViewController: UINavigationControllerDelegate, UIImagePick
       return
     }
 
-    //TODO: use the image
+    //TODO: this should be done after `successfully` uploading to amazon
+    shouldShowCover = true
+    coverNode.image = image
+    collectionNode.reloadData()
+
     self.navigationController?.dismiss(animated: true, completion: nil)
   }
 }
