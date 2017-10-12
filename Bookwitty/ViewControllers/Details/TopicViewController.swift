@@ -11,6 +11,11 @@ import AsyncDisplayKit
 import GSImageViewerController
 import SwiftLoader
 
+enum TopicAction {
+  case link
+  case unlink
+}
+
 protocol TopicViewControllerDelegate: class {
   func topic(viewController: TopicViewController, didRequestToLink topic: Topic)
 }
@@ -28,11 +33,6 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     case header = 0
     case relatedData
     case activityIndicator
-  }
-  
-  enum TopicAction {
-    case link
-    case unlink
   }
   
   enum NavigationItemMode {
