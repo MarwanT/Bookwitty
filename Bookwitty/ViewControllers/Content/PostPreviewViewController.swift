@@ -8,6 +8,11 @@
 
 import AsyncDisplayKit
 
+protocol PostPreviewViewControllerDelegate: class {
+  //TODO: Modify signature, Replace `Any` with the correct model once there
+  func postPreview(viewController: PostPreviewViewController, didFinishPreviewing post: Any)
+}
+
 class PostPreviewViewController: ASViewController<ASCollectionNode> {
 
   enum Sections: Int {
@@ -32,6 +37,8 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
 
   fileprivate var shouldShowTitle: Bool = false
   fileprivate var shouldShowCover: Bool = false
+
+  weak var delegate: PostPreviewViewControllerDelegate?
   
   init() {
     penNameNode = PenNameCellNode(withSeparator: false, withCellHeight: 45.0)
