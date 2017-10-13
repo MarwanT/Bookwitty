@@ -81,6 +81,7 @@
                         <outlet property="contentView" destination="04b-Ug-WhV" id="fG7-rc-oym"/>
                         <outlet property="contentViewBottomConstraintToSuperview" destination="da3-cc-OeT" id="tIr-wU-UzJ"/>
                         <outlet property="editorView" destination="jmZ-Hn-0Dh" id="9aZ-Bt-FTl"/>
+                        <outlet property="titleTextField" destination="Kte-j8-eG9" id="Bqa-Dg-H1b"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OZB-jU-as1" userLabel="First Responder" sceneMemberID="firstResponder"/>

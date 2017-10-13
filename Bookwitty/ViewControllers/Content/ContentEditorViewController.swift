@@ -16,6 +16,7 @@ class ContentEditorViewController: UIViewController {
   
   @IBOutlet weak var editorView: RichEditorView!
 
+  @IBOutlet weak var titleTextField: UITextField!
   fileprivate let viewModel = ContentEditorViewModel()
   
   override func viewDidLoad() {
@@ -319,6 +320,19 @@ extension ContentEditorViewController {
   }
 }
 
+extension ContentEditorViewController {
+  func saveAsDraft() {
+    //Ask the content editor for the body.
+    let html = "<p>Hello</p>"
+    _ = PublishAPI.createContent(title: self.titleTextField.text ?? "", body: html) { (success, error) in
+      guard success else {
+        return
+      }
+      //TODO: Use Model
+    }
+  }
+}
+
 extension ContentEditorViewController: PublishMenuViewControllerDelegate {
   
   func publishMenu(_ viewController: PublishMenuViewController, didSelect item: PublishMenuViewController.Item) {
@@ -336,7 +350,7 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
     case .publishYourPost:
       break
     case .saveAsDraft:
-      break
+      self.saveAsDraft()
     case .goBack:
       break
     }

@@ -16,7 +16,7 @@ public struct PublishAPI {
   }
   
   static func createContent(title: String, body: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
-    let successStatusCode: Int = 200
+    let successStatusCode: Int = 201
     return signedAPIRequest(target: BookwittyAPI.createContent(title: title, body: body, status: .draft), completion: { (data, statusCode, response, error) in
       var success: Bool = false
       var error: BookwittyAPIError? = nil
@@ -31,6 +31,23 @@ public struct PublishAPI {
     })
   }
 
+  static func updateContent(id: String, title: String?, body: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let successStatusCode: Int = 201
+    return signedAPIRequest(target: BookwittyAPI.updateContent(id: id, title: title, body: body, status: .draft), completion: { (data, statusCode, response, error) in
+      var success: Bool = false
+      var error: BookwittyAPIError? = nil
+      defer {
+        completion(success, error)
+      }
+      guard data != nil, let statusCode = statusCode else {
+        error = BookwittyAPIError.invalidStatusCode
+        return
+        
+      }
+      success = statusCode == successStatusCode
+    })
+  }
+  
   static func removeContent(contentIdentifier: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let successStatusCode: Int = 204
     return signedAPIRequest(target: BookwittyAPI.removeContent(contentIdentifier:contentIdentifier), completion: { (data, statusCode, response, error) in
@@ -53,6 +70,7 @@ extension PublishAPI {
   static func createContentParameters(title: String, body: String, status: PublishStatus) -> [String : Any]? {
     let dictionary = [
       "data" : [
+        "type": "texts",
         "attributes" : [
           "title" : title,
           "body" : body,
@@ -62,4 +80,18 @@ extension PublishAPI {
     ]
     return dictionary
   }
+  static func updateContentParameters(title: String?, body: String?, status: PublishStatus?) -> [String : Any]? {
+    let dictionary = [
+      "data" : [
+        "type": "texts",
+        "attributes" : [
+          "title" : title,
+          "body" : body,
+          "status": status?.rawValue,
+        ]
+      ]
+    ]
+    return dictionary
+  }
+
 }

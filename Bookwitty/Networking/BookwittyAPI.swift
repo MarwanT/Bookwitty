@@ -66,6 +66,7 @@ public enum BookwittyAPI {
   case report(identifier: String)
   case reportPenName(identifier: String)
   case createContent(title: String, body: String, status: PublishAPI.PublishStatus)
+  case updateContent(id: String, title: String?, body: String?, status: PublishAPI.PublishStatus?)
   case removeContent(contentIdentifier: String)
   case linkTag(contentIdentifier: String, tagIdentifier: String)
   case removeTag(contentIdentifier: String, tagIdentifier: String)
@@ -171,6 +172,8 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(identifier)"
     case .createContent:
       path = "/content"
+    case .updateContent(let id, _, _, _ ):
+      path = "/content/(\(id))"
     case .followers(let identifier):
       path = "/content/\(identifier)/followers"
     case .postsContent(let identifier, _):
@@ -234,7 +237,7 @@ extension BookwittyAPI: TargetType {
       return .get
     case .register, .batch, .updatePreference, .wit, .follow, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart, .batchPenNames, .createComment, .witComment, .dimComment, .report, .reportPenName:
       return .post
-    case .updateUser, .updatePenName:
+    case .updateUser, .updatePenName, .updateContent:
       return .patch
     case .unwit, .unfollow, .unfollowPenName, .unwitComment, .undimComment, .removeComment, .removeTag, .unlinkContent, .removeContent:
       return .delete
@@ -280,6 +283,8 @@ extension BookwittyAPI: TargetType {
       return TagAPI.linkTag(tagIdentifier)
     case .createContent(let title, let body, let status):
       return PublishAPI.createContentParameters(title: title, body: body, status: status)
+    case .updateContent(_, let title, let body, let status):
+      return PublishAPI.updateContentParameters(title: title, body: body, status: status)
     case .batch(let identifiers):
       return UserAPI.batchPostBody(identifiers: identifiers)
     case .batchPenNames(let identifiers):
