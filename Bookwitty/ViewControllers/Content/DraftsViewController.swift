@@ -30,7 +30,8 @@ class DraftsViewController: ASViewController<ASCollectionNode> {
   }
 
   fileprivate func initializeComponents() {
-    
+    collectionNode.dataSource = self
+    collectionNode.delegate = self
   }
 }
 
