@@ -32,6 +32,10 @@ class EditableTextNode: ASCellNode {
     }
   }
 
+  var contentText: String? {
+    return textNode.textView.text
+  }
+
   override init() {
     textNode = ASEditableTextNode()
     clearButtonNode = ASButtonNode()

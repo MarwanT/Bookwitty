@@ -38,6 +38,8 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
   fileprivate var shouldShowTitle: Bool = false
   fileprivate var shouldShowCover: Bool = false
 
+  let viewModel = PostPreviewViewModel()
+
   weak var delegate: PostPreviewViewControllerDelegate?
   
   init() {
@@ -272,10 +274,21 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
 
 //MARK: - EditableTextNodeDelegate implementation
 extension PostPreviewViewController: EditableTextNodeDelegate {
+  func editableTextNodeDidFinishEditing(textNode: EditableTextNode) {
+    viewModel.candidatePost.title = textNode.contentText
+  }
+
   func editableTextNodeDidRequestClear(textNode: EditableTextNode) {
+    viewModel.candidatePost.title = nil
     textNode.text = nil
     shouldShowTitle = false
     collectionNode.reloadData()
+  }
+}
+
+extension PostPreviewViewController: LimitedEditableTextNodeDelegate {
+  func limitedEditableTextNodeDidFinishEditing(textNode: LimitedEditableTextNode) {
+    viewModel.candidatePost.shortDescription = textNode.contentText
   }
 }
 
@@ -286,7 +299,7 @@ extension PostPreviewViewController: CoverPhotoNodeDelegate {
     case .gallery:
       self.presentImagePicker()
     case .delete:
-      //TODO: remove the image from the model
+      self.viewModel.candidatePost.imageUrl = nil
       shouldShowCover = false
       collectionNode.reloadData()
     }
@@ -300,11 +313,20 @@ extension PostPreviewViewController: UINavigationControllerDelegate, UIImagePick
       return
     }
 
-    //TODO: this should be done after `successfully` uploading to amazon
-    shouldShowCover = true
-    coverNode.image = image
-    collectionNode.reloadData()
+    viewModel.upload(image: image) {
+      (success: Bool, url: String?) in
+      guard success else {
+        //TODO: should we alert the user ?
+        self.navigationController?.dismiss(animated: true, completion: nil)
+        return
+      }
+      
+      self.viewModel.candidatePost.imageUrl = url
+      self.shouldShowCover = true
+      self.coverNode.url = url
+      self.collectionNode.reloadData()
 
-    self.navigationController?.dismiss(animated: true, completion: nil)
+      self.navigationController?.dismiss(animated: true, completion: nil)
+    }
   }
 }
