@@ -52,9 +52,12 @@ class EditableTextNode: ASCellNode {
     textNode.style.flexShrink = 1.0
     textNode.delegate = self
 
-    clearButtonNode.style.preferredSize = CGSize(width: 25.0, height: 25.0)
-    clearButtonNode.imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0.0, nil)
-    clearButtonNode.setImage(#imageLiteral(resourceName: "x"), for: .normal)
+    clearButtonNode.style.preferredSize = CGSize(width: 12.5, height: 12.5)
+    clearButtonNode.cornerRadius = 12.5 / 2.0
+    clearButtonNode.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+    clearButtonNode.imageNode.contentMode = UIViewContentMode.scaleAspectFit
+    clearButtonNode.setImage(#imageLiteral(resourceName: "clear"), for: .normal)
+    clearButtonNode.clipsToBounds = true
 
     clearButtonNode.addTarget(self, action: #selector(clearButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
