@@ -8,9 +8,15 @@
 
 import AsyncDisplayKit
 
+protocol LimitedEditableTextNodeDelegate: class {
+  func limitedEditableTextNodeDidFinishEditing(textNode: LimitedEditableTextNode)
+}
+
 class LimitedEditableTextNode: ASCellNode {
   let textNode: ASEditableTextNode
   let charactersLeftNode: ASTextNode
+
+  weak var delegate: LimitedEditableTextNodeDelegate?
 
   override init() {
     textNode = ASEditableTextNode()
@@ -90,5 +96,9 @@ extension LimitedEditableTextNode: ASEditableTextNodeDelegate {
 
   func editableTextNodeDidUpdateText(_ editableTextNode: ASEditableTextNode) {
     self.numberOfCharactersLeft = self.softCharactersLimit - editableTextNode.textView.text.characters.count
+  }
+
+  func editableTextNodeDidFinishEditing(_ editableTextNode: ASEditableTextNode) {
+    self.delegate?.limitedEditableTextNodeDidFinishEditing(textNode: self)
   }
 }
