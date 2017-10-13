@@ -17,6 +17,7 @@ public struct UploadAPI {
   public enum AssetType: String {
     case profile = "profile"
     case content = "content"
+    case inline = "inline"
   }
 
   static func uploadPolicy(file: (name: String, size: Int), fileType: FileType, assetType: AssetType, completion: @escaping (_ success: Bool, _ policy: UploadPolicy?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
