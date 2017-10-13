@@ -288,7 +288,7 @@ extension PostPreviewViewController: CoverPhotoNodeDelegate {
     case .gallery:
       self.presentImagePicker()
     case .delete:
-      //TODO: remove the image from the model
+      self.viewModel.candidatePost.imageUrl = nil
       shouldShowCover = false
       collectionNode.reloadData()
     }
