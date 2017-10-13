@@ -38,6 +38,8 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
   fileprivate var shouldShowTitle: Bool = false
   fileprivate var shouldShowCover: Bool = false
 
+  let viewModel = PostPreviewViewModel()
+
   weak var delegate: PostPreviewViewControllerDelegate?
   
   init() {
