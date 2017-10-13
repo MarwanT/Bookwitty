@@ -52,7 +52,12 @@ class CoverPhotoNode: ASCellNode {
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
     imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
 
+    photoButton.backgroundColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+    photoButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.defaultBackgroundColor())
     photoButton.style.preferredSize = CGSize(width: 25.0, height: 25.0)
+    photoButton.cornerRadius = 25.0 / 2.0
+    photoButton.imageNode.contentMode = UIViewContentMode.scaleAspectFit
+    photoButton.setImage(#imageLiteral(resourceName: "gallery"), for: .normal)
     photoButton.clipsToBounds = true
     photoButton.addTarget(self, action: #selector(photoButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
 
