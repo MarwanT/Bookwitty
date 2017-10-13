@@ -64,6 +64,10 @@ class EditableTextNode: ASCellNode {
     applyTheme()
   }
 
+  override func resignFirstResponder() -> Bool {
+    return textNode.resignFirstResponder()
+  }
+
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let nodesArray: [ASLayoutElement] = [textNode, clearButtonNode]
     let horizontalSpec = ASStackLayoutSpec(direction: .horizontal,

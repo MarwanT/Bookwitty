@@ -63,6 +63,10 @@ class LimitedEditableTextNode: ASCellNode {
     numberOfCharactersLeft = hardCharactersLimit
   }
   
+  override func resignFirstResponder() -> Bool {
+    return textNode.resignFirstResponder()
+  }
+
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let nodesArray: [ASLayoutElement] = [textNode, charactersLeftNode]
     let verticalSpec = ASStackLayoutSpec(direction: .vertical,
