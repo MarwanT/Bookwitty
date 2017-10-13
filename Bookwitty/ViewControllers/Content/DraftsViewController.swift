@@ -33,3 +33,14 @@ class DraftsViewController: ASViewController<ASCollectionNode> {
     
   }
 }
+
+//MARK: - Enum declarations
+extension DraftsViewController {
+  //Collection Node Sections
+  enum Section: Int {
+    case drafts
+    case activityIndicator
+
+    static let count: Int = 2
+  }
+}
