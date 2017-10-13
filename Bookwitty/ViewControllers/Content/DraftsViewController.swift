@@ -44,3 +44,51 @@ extension DraftsViewController {
     static let count: Int = 2
   }
 }
+
+//MARK: - ASCollectionDataSource & ASCollectionDelegate implementation
+extension DraftsViewController: ASCollectionDataSource, ASCollectionDelegate {
+  func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+    return Section.count
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+    guard let section = Section(rawValue: section) else {
+      return 0
+    }
+
+    switch section {
+    case .drafts:
+      return 0
+    case .activityIndicator:
+      return 1
+    }
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+    return {
+      guard let section = Section(rawValue: indexPath.section) else {
+        return ASCellNode()
+      }
+
+      switch section {
+      case .drafts:
+        return ASCellNode()
+      case .activityIndicator:
+        return ASCellNode()
+      }
+    }
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
+    return ASSizeRange(
+      min: CGSize(width: collectionNode.frame.width, height: 0),
+      max: CGSize(width: collectionNode.frame.width, height: .infinity)
+    )
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+    guard let section = Section(rawValue: indexPath.section) else {
+      return
+    }
+  }
+}
