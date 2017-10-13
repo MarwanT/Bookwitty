@@ -8,9 +8,15 @@
 
 import AsyncDisplayKit
 
+protocol LimitedEditableTextNodeDelegate: class {
+  func limitedEditableTextNodeDidFinishEditing(textNode: LimitedEditableTextNode)
+}
+
 class LimitedEditableTextNode: ASCellNode {
   let textNode: ASEditableTextNode
   let charactersLeftNode: ASTextNode
+
+  weak var delegate: LimitedEditableTextNodeDelegate?
 
   override init() {
     textNode = ASEditableTextNode()
