@@ -361,7 +361,7 @@ extension BookwittyAPI: TargetType {
       return include
     case .batchPenNames:
       return []
-    case .absolute, .removeComment:
+    case .absolute, .removeComment, .uploadPolicy:
       return nil
     default:
       return ["pen-name"]
