@@ -16,7 +16,7 @@ public struct PublishAPI {
   }
   
   static func createContent(title: String, body: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
-    let successStatusCode: Int = 200
+    let successStatusCode: Int = 201
     return signedAPIRequest(target: BookwittyAPI.createContent(title: title, body: body, status: .draft), completion: { (data, statusCode, response, error) in
       var success: Bool = false
       var error: BookwittyAPIError? = nil
