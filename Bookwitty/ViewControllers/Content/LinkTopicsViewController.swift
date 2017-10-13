@@ -27,7 +27,7 @@ class LinkTopicsViewController: UIViewController {
     let doneButton = UIBarButtonItem(title: Strings.done(), style: .plain, target: self, action: #selector(doneButtonTouchUpInside(_:)))
     doneButton.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
     self.navigationItem.rightBarButtonItem = doneButton
-    
+    self.navigationItem.backBarButtonItem = .back
     self.tableView.tableFooterView = UIView()
     self.tableView.backgroundColor = .clear
     self.separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
@@ -103,6 +103,39 @@ extension LinkTopicsViewController: Themeable {
   }
 }
 
+extension LinkTopicsViewController {
+  func viewTopicViewController(with topic: Topic) {
+    let topicViewController = TopicViewController()
+    topicViewController.initialize(with: topic)
+    topicViewController.delegate = self
+    if self.viewModel.has(topic) {
+      topicViewController.navigationItemMode = .action(.unlink)
+    } else {
+      topicViewController.navigationItemMode = .action(.link)
+    }
+    navigationController?.pushViewController(topicViewController, animated: true)
+  }
+}
+
+extension LinkTopicsViewController: TopicViewControllerDelegate {
+  func topic(viewController: TopicViewController, didRequest action: TopicAction, for topic: Topic) {
+    switch action {
+    case .link:
+      self.viewModel.append(topic)
+      self.tagsView.addTags(self.viewModel.selectedTopics.flatMap { $0.title })
+    case .unlink:
+      self.viewModel.remove(topic)
+      if let title = topic.title {
+        self.tagsView.removeTag(title)
+      }
+    }
+    self.viewModel.topics = []
+    self.tableView.reloadData()
+    
+    _ = self.navigationController?.popViewController(animated: true)
+  }
+}
+
 extension LinkTopicsViewController: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -121,9 +154,8 @@ extension LinkTopicsViewController: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-    self.viewModel.append(self.viewModel.topics[indexPath.row])
-    self.tagsView.addTags(self.viewModel.selectedTopics.flatMap { $0.title })
-    self.viewModel.topics = []
+    let topic = self.viewModel.topics[indexPath.row]
+    self.viewTopicViewController(with: topic)
     tableView.reloadData()
   }
 }

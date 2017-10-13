@@ -19,8 +19,21 @@ final class LinkTopicsViewModel {
   }
   
   func append(_ topic: Topic) {
-    if !selectedTopics.contains(topic) {
+    if !self.has(topic) {
       selectedTopics.append(topic)
+    }
+  }
+  func remove(_ topic: Topic) {
+    if let id = topic.id {
+      self.selectedTopics = self.selectedTopics.filter { $0.id != id }
+    }
+  }
+  
+  func has(_ topic: Topic) -> Bool {
+    if let id = topic.id {
+      return selectedTopics.flatMap { $0.id }.contains(id)
+    } else {
+      return false
     }
   }
 }

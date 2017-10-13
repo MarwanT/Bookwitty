@@ -500,6 +500,14 @@ class Strings {
   static func link() -> String {
     return localizedString(key: "link")
   }
+  
+  static func link_topic() -> String {
+    return localizedString(key: "link_topic")
+  }
+  
+  static func unlink_topic() -> String {
+    return localizedString(key: "unlink_topic")
+  }
 
   static func link_topics() -> String {
     return localizedString(key: "link_topics")

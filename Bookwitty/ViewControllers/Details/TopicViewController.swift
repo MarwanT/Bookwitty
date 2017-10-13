@@ -11,6 +11,15 @@ import AsyncDisplayKit
 import GSImageViewerController
 import SwiftLoader
 
+enum TopicAction {
+  case link
+  case unlink
+}
+
+protocol TopicViewControllerDelegate: class {
+  func topic(viewController: TopicViewController, didRequest action: TopicAction, for topic: Topic)
+}
+
 class TopicViewController: ASViewController<ASCollectionNode> {
 
   enum LoadingStatus {
@@ -25,7 +34,12 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     case relatedData
     case activityIndicator
   }
-
+  
+  enum NavigationItemMode {
+    case view
+    case action(TopicAction)
+  }
+  
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let segmentedNodeHeight: CGFloat = 45.0
@@ -46,7 +60,8 @@ class TopicViewController: ASViewController<ASCollectionNode> {
 
   fileprivate var loadingStatus: LoadingStatus = .none
 
-
+  var navigationItemMode: NavigationItemMode = .view
+  weak var delegate: TopicViewControllerDelegate?
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -115,12 +130,34 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   }
   
   private func loadNavigationBarButtons() {
-    let shareButton = UIBarButtonItem(
-      image: #imageLiteral(resourceName: "shareOutside"),
-      style: UIBarButtonItemStyle.plain,
-      target: self,
-      action: #selector(shareOutsideButton(_:)))
-    navigationItem.rightBarButtonItem = shareButton
+  
+    func setupShareNavigationItem() {
+      let shareButton = UIBarButtonItem(
+        image: #imageLiteral(resourceName: "shareOutside"),
+        style: UIBarButtonItemStyle.plain,
+        target: self,
+        action: #selector(shareOutsideButton(_:)))
+      navigationItem.rightBarButtonItem = shareButton
+    }
+    
+    func setupRightNavigationItem(with action: TopicAction) {
+      let title = action == .link ? Strings.link_topic() : Strings.unlink_topic()
+      let actionButton = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(TopicViewController.linkUnlinkTouchUpInside(_ :)))
+      navigationController?.navigationBar.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
+      actionButton.setTitleTextAttributes([
+        NSFontAttributeName: FontDynamicType.caption1.font,
+        NSForegroundColorAttributeName : ThemeManager.shared.currentTheme.colorNumber19()], for: UIControlState.normal)
+      
+
+      navigationItem.rightBarButtonItem = actionButton
+    }
+    
+    switch self.navigationItemMode {
+    case .view:
+      setupShareNavigationItem()
+    case .action(let action):
+      setupRightNavigationItem(with: action)
+    }
   }
 
   fileprivate func fillHeaderNode() {
@@ -193,6 +230,18 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     presentShareSheet(shareContent: sharingContent)
   }
 
+  func linkUnlinkTouchUpInside(_ sender: UIBarButtonItem) {
+    if let topic = self.viewModel.resource as? Topic {
+      switch self.navigationItemMode {
+      case .action(let action):
+        self.delegate?.topic(viewController: self, didRequest: action, for: topic)
+
+      default:
+        break
+      }
+    }
+  }
+  
   func loadData() {
     setLoading(status: TopicViewController.LoadingStatus.loading)
     self.updateCollection(relatedDataSection: true, loaderSection: true)

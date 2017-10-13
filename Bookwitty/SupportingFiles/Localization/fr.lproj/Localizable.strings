@@ -129,6 +129,7 @@
 "last_year" = "L'an dernier";
 "latest" = "Nouveautés";
 "link" = "Lien";
+"link_topic" = "Link Topic";
 "link_topics" = "Link Topics";
 "list_price" = "Prix conseillé";
 "more" = "Plus";
@@ -233,6 +234,7 @@
 "tutorial_third_page_title" = "Partagez vos idées";
 "types" = "Types";
 "unknown_format" = "Format de produit inconnu";
+"unlink_topic" = "Unlink Topic";
 "update_now" = "Mettre à jour";
 "user" = "Utilisateur";
 "user_not_signed_in_alert_message" = "Vous devez être connecté pour effectuer cette action";
