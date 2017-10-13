@@ -97,4 +97,8 @@ extension LimitedEditableTextNode: ASEditableTextNodeDelegate {
   func editableTextNodeDidUpdateText(_ editableTextNode: ASEditableTextNode) {
     self.numberOfCharactersLeft = self.softCharactersLimit - editableTextNode.textView.text.characters.count
   }
+
+  func editableTextNodeDidFinishEditing(_ editableTextNode: ASEditableTextNode) {
+    self.delegate?.limitedEditableTextNodeDidFinishEditing(textNode: self)
+  }
 }
