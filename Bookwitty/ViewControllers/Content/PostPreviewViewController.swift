@@ -282,6 +282,12 @@ extension PostPreviewViewController: EditableTextNodeDelegate {
   }
 }
 
+extension PostPreviewViewController: LimitedEditableTextNodeDelegate {
+  func limitedEditableTextNodeDidFinishEditing(textNode: LimitedEditableTextNode) {
+    viewModel.candidatePost.shortDescription = textNode.contentText
+  }
+}
+
 //MARK: - CoverPhotoNodeDelegate implementation
 extension PostPreviewViewController: CoverPhotoNodeDelegate {
   func coverPhoto(node: CoverPhotoNode, didRequest action: CoverPhotoNode.Action) {
