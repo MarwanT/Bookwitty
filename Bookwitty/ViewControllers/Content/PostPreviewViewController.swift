@@ -302,11 +302,20 @@ extension PostPreviewViewController: UINavigationControllerDelegate, UIImagePick
       return
     }
 
-    //TODO: this should be done after `successfully` uploading to amazon
-    shouldShowCover = true
-    coverNode.image = image
-    collectionNode.reloadData()
+    viewModel.upload(image: image) {
+      (success: Bool, url: String?) in
+      guard success else {
+        //TODO: should we alert the user ?
+        self.navigationController?.dismiss(animated: true, completion: nil)
+        return
+      }
+      
+      self.viewModel.candidatePost.imageUrl = url
+      self.shouldShowCover = true
+      self.coverNode.url = url
+      self.collectionNode.reloadData()
 
-    self.navigationController?.dismiss(animated: true, completion: nil)
+      self.navigationController?.dismiss(animated: true, completion: nil)
+    }
   }
 }
