@@ -49,7 +49,7 @@ class CoverPhotoNode: ASCellNode {
 
   private func setupNode() {
     automaticallyManagesSubnodes = true
-    imageNode.backgroundColor = UIColor.clear
+    imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
     imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
 
     photoButton.style.preferredSize = CGSize(width: 25.0, height: 25.0)
