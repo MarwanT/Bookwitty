@@ -18,6 +18,10 @@ class LimitedEditableTextNode: ASCellNode {
 
   weak var delegate: LimitedEditableTextNodeDelegate?
 
+  var contentText: String? {
+    return textNode.textView.text
+  }
+
   override init() {
     textNode = ASEditableTextNode()
     charactersLeftNode = ASTextNode()
