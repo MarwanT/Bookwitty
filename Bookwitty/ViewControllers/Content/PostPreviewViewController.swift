@@ -127,7 +127,7 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
     case .title:
       return shouldShowTitle ? 2 : 0 //node
     case .description:
-      return 0
+      return 1
     case .newCover:
       return shouldShowCover ? 0 : 1 //shows only if no cover
     case .newTitle:
