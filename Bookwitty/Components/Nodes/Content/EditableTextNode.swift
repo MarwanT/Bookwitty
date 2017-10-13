@@ -45,6 +45,7 @@ class EditableTextNode: ASCellNode {
 
     textNode.style.flexGrow = 1.0
     textNode.style.flexShrink = 1.0
+    textNode.delegate = self
 
     clearButtonNode.style.preferredSize = CGSize(width: 25.0, height: 25.0)
     clearButtonNode.imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0.0, nil)
@@ -89,5 +90,12 @@ extension EditableTextNode: Themeable {
     textNode.textView.font = FontDynamicType.title2.font
     textNode.textView.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+  }
+}
+
+//MARK: - ASEditableTextNodeDelegate implementation
+extension EditableTextNode: ASEditableTextNodeDelegate {
+  func editableTextNodeDidFinishEditing(_ editableTextNode: ASEditableTextNode) {
+    //TODO: Empty implemetation 
   }
 }
