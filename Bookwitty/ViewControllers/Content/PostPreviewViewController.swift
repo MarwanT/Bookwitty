@@ -264,6 +264,10 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
   }
 
   fileprivate func presentImagePicker() {
+
+    titleNode.resignFirstResponder()
+    descriptionNode.resignFirstResponder()
+
     let imagePickerController = UIImagePickerController()
     imagePickerController.delegate = self
     imagePickerController.sourceType = .photoLibrary
