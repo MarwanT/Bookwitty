@@ -44,6 +44,14 @@ extension DraftsViewController {
 
     static let count: Int = 2
   }
+
+  //Loader node loading statuses
+  enum LoadingStatus {
+    case none
+    case loadMore
+    case reloading
+    case loading
+  }
 }
 
 //MARK: - ASCollectionDataSource & ASCollectionDelegate implementation
