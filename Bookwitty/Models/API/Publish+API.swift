@@ -53,6 +53,7 @@ extension PublishAPI {
   static func createContentParameters(title: String, body: String, status: PublishStatus) -> [String : Any]? {
     let dictionary = [
       "data" : [
+        "type": "texts",
         "attributes" : [
           "title" : title,
           "body" : body,
