@@ -10,6 +10,7 @@ import AsyncDisplayKit
 
 protocol EditableTextNodeDelegate: class {
   func editableTextNodeDidRequestClear(textNode: EditableTextNode)
+  func editableTextNodeDidFinishEditing(textNode: EditableTextNode)
 }
 
 class EditableTextNode: ASCellNode {
@@ -96,6 +97,6 @@ extension EditableTextNode: Themeable {
 //MARK: - ASEditableTextNodeDelegate implementation
 extension EditableTextNode: ASEditableTextNodeDelegate {
   func editableTextNodeDidFinishEditing(_ editableTextNode: ASEditableTextNode) {
-    //TODO: Empty implemetation 
+    self.delegate?.editableTextNodeDidFinishEditing(textNode: self)
   }
 }
