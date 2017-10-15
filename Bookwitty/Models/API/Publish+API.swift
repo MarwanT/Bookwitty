@@ -15,19 +15,22 @@ public struct PublishAPI {
     case `public` = "public"
   }
   
-  static func createContent(title: String, body: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  static func createContent(title: String, body: String, completion: @escaping (_ success: Bool, _ candidatePost: CandidatePost?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let successStatusCode: Int = 201
     return signedAPIRequest(target: BookwittyAPI.createContent(title: title, body: body, status: .draft), completion: { (data, statusCode, response, error) in
       var success: Bool = false
       var error: BookwittyAPIError? = nil
+      var post: CandidatePost? = nil
       defer {
-        completion(success, error)
+        completion(success, post, error)
       }
       guard data != nil, let statusCode = statusCode else {
         error = BookwittyAPIError.invalidStatusCode
         return
       }
       success = statusCode == successStatusCode
+      
+      post = Parser.parseData(data: data) as? CandidatePost
     })
   }
 

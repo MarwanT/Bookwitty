@@ -32,7 +32,9 @@ class LinkTopicsViewController: UIViewController {
     self.tableView.backgroundColor = .clear
     self.separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     tagsView.onVerifyTag = { field, candidate in
-      return self.viewModel.canLink && self.viewModel.selectedTopics.flatMap { $0.title }.contains(candidate)
+      let canLink =  self.viewModel.canLink
+      let hasSimilarTitle = self.viewModel.hasSimilarTitle(candidate)
+      return canLink && hasSimilarTitle
     }
     tagsView.onDidChangeText = { field, text in
       NSObject.cancelPreviousPerformRequests(withTarget: self)
@@ -42,7 +44,7 @@ class LinkTopicsViewController: UIViewController {
       return false
     }
     tagsView.onDidRemoveTag = { _, tag in
-      self.viewModel.selectedTopics = self.viewModel.selectedTopics.filter { !($0.title == tag.text) }
+      self.viewModel.unselectTopic(with: tag.text)
     }
   }
   
@@ -59,10 +61,10 @@ class LinkTopicsViewController: UIViewController {
     //Perform request
     _ = SearchAPI.search(filter: self.viewModel.filter, page: nil) { (success, topics, _, _, error) in
       guard success, let topics = topics as? [Topic] else {
-        self.viewModel.topics = []
+        self.viewModel.setTopics([])
         return
       }
-      self.viewModel.topics = topics
+      self.viewModel.setTopics(topics)
       self.tableView.reloadData()
     }
   }
@@ -108,7 +110,7 @@ extension LinkTopicsViewController {
     let topicViewController = TopicViewController()
     topicViewController.initialize(with: topic)
     topicViewController.delegate = self
-    if self.viewModel.has(topic) {
+    if self.viewModel.isSelected(topic) {
       topicViewController.navigationItemMode = .action(.unlink)
     } else {
       topicViewController.navigationItemMode = .action(.link)
@@ -121,15 +123,15 @@ extension LinkTopicsViewController: TopicViewControllerDelegate {
   func topic(viewController: TopicViewController, didRequest action: TopicAction, for topic: Topic) {
     switch action {
     case .link:
-      self.viewModel.append(topic)
-      self.tagsView.addTags(self.viewModel.selectedTopics.flatMap { $0.title })
+      self.viewModel.select(topic)
+      self.tagsView.addTags(self.viewModel.titlesForSelectedTopics)
     case .unlink:
-      self.viewModel.remove(topic)
+      self.viewModel.unselect(topic)
       if let title = topic.title {
         self.tagsView.removeTag(title)
       }
     }
-    self.viewModel.topics = []
+    self.viewModel.setTopics([])
     self.tableView.reloadData()
     
     _ = self.navigationController?.popViewController(animated: true)
@@ -147,14 +149,17 @@ extension LinkTopicsViewController: UITableViewDataSource, UITableViewDelegate {
   }
   
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-    cell.textLabel?.text = self.viewModel.values(forRowAt: indexPath)
+    let topic = self.viewModel.values(for: indexPath.row).topic
+    cell.textLabel?.text = topic?.title
     cell.textLabel?.font = FontDynamicType.caption1.font
     cell.detailTextLabel?.text = ""
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-    let topic = self.viewModel.topics[indexPath.row]
+    guard let topic = self.viewModel.values(for: indexPath.row).topic else {
+      return
+    }
     self.viewTopicViewController(with: topic)
     tableView.reloadData()
   }
