@@ -9,5 +9,17 @@
 import AsyncDisplayKit
 
 class DraftNode: ASCellNode {
-  
+  fileprivate let titleNode: ASTextNode
+  fileprivate let descriptionNode: ASTextNode
+
+  override init() {
+    titleNode = ASTextNode()
+    descriptionNode = ASTextNode()
+    super.init()
+    setupNode()
+  }
+
+  fileprivate func setupNode() {
+    automaticallyManagesSubnodes = true
+  }
 }
