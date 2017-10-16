@@ -23,3 +23,10 @@ class DraftNode: ASCellNode {
     automaticallyManagesSubnodes = true
   }
 }
+
+extension DraftNode {
+  fileprivate func textEdgeInset() -> UIEdgeInsets {
+    let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+    return UIEdgeInsets(top: 5.0, left: internalMargin, bottom: 5.0, right: internalMargin)
+  }
+}
