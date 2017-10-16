@@ -51,7 +51,14 @@ class LinkTopicsViewController: UIViewController {
       return false
     }
     tagsView.onDidRemoveTag = { _, tag in
-      self.viewModel.unselectTopic(with: tag.text)
+      guard let topic = self.viewModel.unselectTopic(with: tag.text), let topicIdentifier = topic.id else {
+        return
+      }
+      _ = ContentAPI.unlinkContent(for: self.viewModel.contentIdentifier, with: topicIdentifier, completion: { (success, error) in
+        guard success else {
+          return
+        }
+      })
     }
   }
   
@@ -132,8 +139,24 @@ extension LinkTopicsViewController: TopicViewControllerDelegate {
     case .link:
       self.viewModel.select(topic)
       self.tagsView.addTags(self.viewModel.titlesForSelectedTopics)
+      guard let topicIdentifier = topic.id else {
+        return
+      }
+      _ = ContentAPI.linkContent(for: self.viewModel.contentIdentifier, with: topicIdentifier, completion: { (success, error) in
+        guard success else {
+          return
+        }
+      })
     case .unlink:
       self.viewModel.unselect(topic)
+      guard let topicIdentifier = topic.id else {
+        return
+      }
+      _ = ContentAPI.unlinkContent(for: self.viewModel.contentIdentifier, with: topicIdentifier, completion: { (success, error) in
+        guard success else {
+          return
+        }
+      })
       if let title = topic.title {
         self.tagsView.removeTag(title)
       }
