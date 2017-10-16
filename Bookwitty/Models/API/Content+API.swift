@@ -89,7 +89,7 @@ struct ContentAPI {
     })
   }
   
-  func linkContent(for contentIdentifier: String, with topicIdentifier: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  static func linkContent(for contentIdentifier: String, with topicIdentifier: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let successStatusCode = 204
     return signedAPIRequest(target: .linkContent(contentIdentifier: contentIdentifier, topicIdentifier: topicIdentifier), completion: { (data, statusCode, response, error) in
       var success: Bool = false
@@ -105,7 +105,7 @@ struct ContentAPI {
     })
   }
   
-  func unlinkContent(for contentIdentifier: String, with topicIdentifier: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  static func unlinkContent(for contentIdentifier: String, with topicIdentifier: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let successStatusCode = 204
     return signedAPIRequest(target: .unlinkContent(contentIdentifier: contentIdentifier, topicIdentifier: topicIdentifier), completion: { (data, statusCode, response, error) in
       var success: Bool = false
