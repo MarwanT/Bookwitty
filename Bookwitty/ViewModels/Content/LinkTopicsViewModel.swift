@@ -13,6 +13,7 @@ final class LinkTopicsViewModel {
   fileprivate var topics: [Topic] = []
   fileprivate var selectedTopics: [Topic] = []
   let filter: Filter = Filter()
+  private(set) var contentIdentifier: String!
   
   var getSelectedTopics: [Topic] {
     return self.selectedTopics
@@ -24,6 +25,10 @@ final class LinkTopicsViewModel {
   
   init() {
     self.filter.types = [Topic.resourceType]
+  }
+  
+  func initialize(with contentIdentifier: String) {
+    self.contentIdentifier = contentIdentifier
   }
   
   func select(_ topic: Topic) {
