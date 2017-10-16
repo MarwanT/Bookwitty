@@ -45,7 +45,21 @@ class LinkTagsViewController: UIViewController {
     }
     tagsView.onDidRemoveTag = { _, tag in
       self.viewModel.selectedTags = self.viewModel.selectedTags.filter { !($0.title == tag.text) }
+      _ = TagAPI.removeTag(for: self.viewModel.contentIdentifier, with: tag.text, completion: { (success, error) in
+        guard success else {
+          return
+        }
+      })
     }
+    
+    tagsView.onDidAddTag = { _, tag in
+      _ = TagAPI.linkTag(for: self.viewModel.contentIdentifier, with: tag.text, completion: { (success, error) in
+        guard success else {
+          return
+        }
+      })
+    }
+    
     tableView.tableFooterView = UIView() //Hacky
     tableView.backgroundColor = .clear
   }
