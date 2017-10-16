@@ -13,9 +13,14 @@ final class LinkTagsViewModel {
   var tags: [Tag] = []
   var selectedTags: [Tag] = []
   let filter: Filter = Filter()
+  private(set) var contentIdentifier: String!
   
   init() {
     self.filter.types = [Tag.resourceType]
+  }
+  
+  func initialize(with contentIdentifier: String) {
+    self.contentIdentifier = contentIdentifier
   }
   
   func append(_ tag: Tag) {

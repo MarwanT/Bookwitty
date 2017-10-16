@@ -307,6 +307,7 @@ extension ContentEditorViewController: QuoteEditorViewControllerDelegate {
 extension ContentEditorViewController {
   func presentTagsViewController(with tags: [String] = []) {
     let linkTagsViewController = Storyboard.Content.instantiate(LinkTagsViewController.self)
+    linkTagsViewController.delegate = self
     let navigationController = UINavigationController(rootViewController: linkTagsViewController)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
   }
@@ -315,6 +316,7 @@ extension ContentEditorViewController {
 extension ContentEditorViewController {
   func presentLinkTopicsViewController(with tags: [String] = []) {
     let linkTopicsViewController = Storyboard.Content.instantiate(LinkTopicsViewController.self)
+    linkTopicsViewController.delegate = self
     let navigationController = UINavigationController(rootViewController: linkTopicsViewController)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
   }
@@ -325,11 +327,20 @@ extension ContentEditorViewController {
     //Ask the content editor for the body.
     let html = "<p>Hello</p>"
     _ = PublishAPI.createContent(title: self.titleTextField.text ?? "", body: html) { (success, candidatePost, error) in
+      guard success, let candidatePost = candidatePost else {
+        return
+      }
+      self.viewModel.set(candidatePost)
+    }
+  }
+  
+  func updateContent(for candidatePost: CandidatePost) {
+    //TODO: figure out the id below
+    _ = PublishAPI.updateContent(id: "", title: candidatePost.title, body: candidatePost.body, completion: { (success, error) in
       guard success else {
         return
       }
-      //TODO: Use Model
-    }
+    })
   }
 }
 
@@ -357,3 +368,14 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
   }
 }
 
+extension ContentEditorViewController: LinkTagsViewControllerDelegate {
+  func linkTags(viewController: LinkTagsViewController, didLink tags:[Tag]) {
+    //TODO: Implementation
+  }
+}
+
+extension ContentEditorViewController: LinkTopicsViewControllerDelegate {
+  func linkTopics(viewController: LinkTopicsViewController, didLink topics: [Topic]) {
+    //TODO: Implementation
+  }
+}

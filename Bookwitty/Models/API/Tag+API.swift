@@ -10,7 +10,7 @@ import Moya
 
 public struct TagAPI {
   
-  func linkTag(for contentIdentifier: String, with tagIdentifier: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  static func linkTag(for contentIdentifier: String, with tagIdentifier: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let successStatusCode = 204
     return signedAPIRequest(target: .linkTag(contentIdentifier: contentIdentifier, tagIdentifier: tagIdentifier), completion: { (data, statusCode, response, error) in
         var success: Bool = false
@@ -26,7 +26,7 @@ public struct TagAPI {
       })
   }
   
-  func removeTag(for contentIdentifier: String, with tagIdentifier: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  static func removeTag(for contentIdentifier: String, with tagIdentifier: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let successStatusCode = 204
     return signedAPIRequest(target: .linkTag(contentIdentifier: contentIdentifier, tagIdentifier: tagIdentifier), completion: { (data, statusCode, response, error) in
       var success: Bool = false
@@ -44,7 +44,7 @@ public struct TagAPI {
 }
 
 extension TagAPI {
-  static func linkTag(_ identifier: String) -> [String:Any]? {
+  static func linkTagParameters(_ identifier: String) -> [String:Any]? {
     let dictionary = [
       "data" : [
         "attributes" : [
@@ -56,7 +56,7 @@ extension TagAPI {
     return dictionary
   }
   
-  static func removeTag(_ identifier: String) -> [String:Any]? {
+  static func removeTagParameters(_ identifier: String) -> [String:Any]? {
     let dictionary = [
       "data" : [
         "attributes" : [

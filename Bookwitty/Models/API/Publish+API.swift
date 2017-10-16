@@ -34,7 +34,7 @@ public struct PublishAPI {
     })
   }
 
-  static func updateContent(id: String, title: String?, body: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  static func updateContent(id: String, title: String?, body: String?, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let successStatusCode: Int = 201
     return signedAPIRequest(target: BookwittyAPI.updateContent(id: id, title: title, body: body, status: .draft), completion: { (data, statusCode, response, error) in
       var success: Bool = false

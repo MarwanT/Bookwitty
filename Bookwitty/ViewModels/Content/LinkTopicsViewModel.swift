@@ -13,6 +13,11 @@ final class LinkTopicsViewModel {
   fileprivate var topics: [Topic] = []
   fileprivate var selectedTopics: [Topic] = []
   let filter: Filter = Filter()
+  private(set) var contentIdentifier: String!
+  
+  var getSelectedTopics: [Topic] {
+    return self.selectedTopics
+  }
   
   var titlesForSelectedTopics: [String] {
     return self.selectedTopics.flatMap { $0.title }
@@ -20,6 +25,10 @@ final class LinkTopicsViewModel {
   
   init() {
     self.filter.types = [Topic.resourceType]
+  }
+  
+  func initialize(with contentIdentifier: String) {
+    self.contentIdentifier = contentIdentifier
   }
   
   func select(_ topic: Topic) {
@@ -40,8 +49,10 @@ final class LinkTopicsViewModel {
     return self.selectedTopics.flatMap { $0.title }.contains(title)
   }
   
-  func unselectTopic(with title: String) {
+  func unselectTopic(with title: String) -> Topic? {
+    let unselectedTopic = self.selectedTopics.first { $0.title == title }
     self.selectedTopics = self.selectedTopics.filter { !($0.title == title) }
+    return unselectedTopic
   }
   
   func setTopics(_ topics: [Topic]) {

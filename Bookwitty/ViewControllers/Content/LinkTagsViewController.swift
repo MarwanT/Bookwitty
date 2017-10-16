@@ -10,7 +10,7 @@ import UIKit
 import WSTagsField
 
 protocol LinkTagsViewControllerDelegate: class {
-  func linkTags(viewController: LinkTagsViewController, didLink tags:[String])
+  func linkTags(viewController: LinkTagsViewController, didLink tags:[Tag])
 }
 
 class LinkTagsViewController: UIViewController {
@@ -45,7 +45,21 @@ class LinkTagsViewController: UIViewController {
     }
     tagsView.onDidRemoveTag = { _, tag in
       self.viewModel.selectedTags = self.viewModel.selectedTags.filter { !($0.title == tag.text) }
+      _ = TagAPI.removeTag(for: self.viewModel.contentIdentifier, with: tag.text, completion: { (success, error) in
+        guard success else {
+          return
+        }
+      })
     }
+    
+    tagsView.onDidAddTag = { _, tag in
+      _ = TagAPI.linkTag(for: self.viewModel.contentIdentifier, with: tag.text, completion: { (success, error) in
+        guard success else {
+          return
+        }
+      })
+    }
+    
     tableView.tableFooterView = UIView() //Hacky
     tableView.backgroundColor = .clear
   }
@@ -68,7 +82,7 @@ class LinkTagsViewController: UIViewController {
   }
 
   @objc private func doneButtonTouchUpInside(_ sender:UIBarButtonItem) {
-
+    self.delegate?.linkTags(viewController: self, didLink: self.viewModel.selectedTags)
   }
   
   // MARK: - Keyboard Handling

@@ -9,8 +9,16 @@
 import UIKit
 
 class PublishMenuViewModel {
-  var tags: [String] = []
-  var links: [String] = []
+  private var tags: [Tag] = []
+  private var topics: [Topic] = []
+  
+  var getTags: [Tag] {
+    return self.tags
+  }
+  
+  var getTopics: [Tag] {
+    return self.tags
+  }
   
   var penName: PenName? = UserManager.shared.defaultPenName
   
