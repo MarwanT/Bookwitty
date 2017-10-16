@@ -45,6 +45,14 @@ class Strings {
     return localizedString(key: "add_a_link")
   }
   
+  static func add_a_title() -> String {
+    return localizedString(key: "add_a_title")
+  }
+
+  static func add_an_image() -> String {
+    return localizedString(key: "add_an_image")
+  }
+
   static func add_tags() -> String {
     return localizedString(key: "add_tags")
   }
@@ -229,6 +237,10 @@ class Strings {
     return localizedString(key: "customer_service")
   }
   
+  static func customize_your_posts_card() -> String {
+    return localizedString(key: "customize_your_posts_card")
+  }
+
   static func delete() -> String {
     return localizedString(key: "delete")
   }
