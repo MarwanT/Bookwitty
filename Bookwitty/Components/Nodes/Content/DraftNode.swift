@@ -22,6 +22,20 @@ class DraftNode: ASCellNode {
   fileprivate func setupNode() {
     automaticallyManagesSubnodes = true
   }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let titleInsetLayoutSpec = ASInsetLayoutSpec(insets: textEdgeInset(), child: titleNode)
+    let descriptionInsetLayoutSpec = ASInsetLayoutSpec(insets: textEdgeInset(), child: descriptionNode)
+    let separatorNode = SeparatorNode()
+
+    let verticalStackLayoutSpec = ASStackLayoutSpec(direction: .vertical,
+                                                    spacing: 0.0,
+                                                    justifyContent: .spaceBetween,
+                                                    alignItems: .start,
+                                                    children: [titleInsetLayoutSpec, descriptionInsetLayoutSpec, separatorNode])
+    
+    return verticalStackLayoutSpec
+  }
 }
 
 extension DraftNode {
