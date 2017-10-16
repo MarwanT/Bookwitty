@@ -331,6 +331,15 @@ extension ContentEditorViewController {
       self.viewModel.set(candidatePost)
     }
   }
+  
+  func updateContent(for candidatePost: CandidatePost) {
+    //TODO: figure out the id below
+    _ = PublishAPI.updateContent(id: "", title: candidatePost.title, body: candidatePost.body, completion: { (success, error) in
+      guard success else {
+        return
+      }
+    })
+  }
 }
 
 extension ContentEditorViewController: PublishMenuViewControllerDelegate {
