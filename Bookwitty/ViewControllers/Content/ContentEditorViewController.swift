@@ -16,6 +16,7 @@ class ContentEditorViewController: UIViewController {
   
   @IBOutlet weak var editorView: RichEditorView!
 
+  @IBOutlet weak var titleTextField: UITextField!
   fileprivate let viewModel = ContentEditorViewModel()
   
   override func viewDidLoad() {
@@ -67,7 +68,7 @@ class ContentEditorViewController: UIViewController {
   
   // MARK: - Navigation items actions
   @objc private func close(_ sender:UIBarButtonItem) {
-    //Todo: Implementation
+    self.dismiss(animated: true, completion: nil)
   }
   
   @objc private func drafts(_ sender:UIBarButtonItem) {
@@ -101,7 +102,12 @@ class ContentEditorViewController: UIViewController {
   }
   
   @objc private func next(_ sender:UIBarButtonItem) {
-    //Todo: Implementation
+    let publishMenuViewController = Storyboard.Content.instantiate(PublishMenuViewController.self)
+    publishMenuViewController.delegate = self
+    self.definesPresentationContext = true
+    publishMenuViewController.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber20().withAlphaComponent(0.5)
+    publishMenuViewController.modalPresentationStyle = .overCurrentContext
+    self.navigationController?.present(publishMenuViewController, animated: true, completion: nil)
   }
   
   @objc private func toggleEnableState(of barButtonItem: UIBarButtonItem) -> Void {
@@ -298,3 +304,78 @@ extension ContentEditorViewController: QuoteEditorViewControllerDelegate {
   }
 }
 
+extension ContentEditorViewController {
+  func presentTagsViewController(with tags: [String] = []) {
+    let linkTagsViewController = Storyboard.Content.instantiate(LinkTagsViewController.self)
+    linkTagsViewController.delegate = self
+    let navigationController = UINavigationController(rootViewController: linkTagsViewController)
+    self.navigationController?.present(navigationController, animated: true, completion: nil)
+  }
+}
+
+extension ContentEditorViewController {
+  func presentLinkTopicsViewController(with tags: [String] = []) {
+    let linkTopicsViewController = Storyboard.Content.instantiate(LinkTopicsViewController.self)
+    linkTopicsViewController.delegate = self
+    let navigationController = UINavigationController(rootViewController: linkTopicsViewController)
+    self.navigationController?.present(navigationController, animated: true, completion: nil)
+  }
+}
+
+extension ContentEditorViewController {
+  func saveAsDraft() {
+    //Ask the content editor for the body.
+    let html = "<p>Hello</p>"
+    _ = PublishAPI.createContent(title: self.titleTextField.text ?? "", body: html) { (success, candidatePost, error) in
+      guard success, let candidatePost = candidatePost else {
+        return
+      }
+      self.viewModel.set(candidatePost)
+    }
+  }
+  
+  func updateContent(for candidatePost: CandidatePost) {
+    //TODO: figure out the id below
+    _ = PublishAPI.updateContent(id: "", title: candidatePost.title, body: candidatePost.body, completion: { (success, error) in
+      guard success else {
+        return
+      }
+    })
+  }
+}
+
+extension ContentEditorViewController: PublishMenuViewControllerDelegate {
+  
+  func publishMenu(_ viewController: PublishMenuViewController, didSelect item: PublishMenuViewController.Item) {
+    viewController.dismiss(animated: true, completion: nil)
+    
+    switch item {
+    case .penName:
+      break
+    case .linkTopics:
+      self.presentLinkTopicsViewController()
+    case .addTags:
+      self.presentTagsViewController()
+    case .postPreview:
+      break
+    case .publishYourPost:
+      break
+    case .saveAsDraft:
+      self.saveAsDraft()
+    case .goBack:
+      break
+    }
+  }
+}
+
+extension ContentEditorViewController: LinkTagsViewControllerDelegate {
+  func linkTags(viewController: LinkTagsViewController, didLink tags:[Tag]) {
+    //TODO: Implementation
+  }
+}
+
+extension ContentEditorViewController: LinkTopicsViewControllerDelegate {
+  func linkTopics(viewController: LinkTopicsViewController, didLink topics: [Topic]) {
+    //TODO: Implementation
+  }
+}

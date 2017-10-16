@@ -7,13 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F1AF1B21F84D1E8004DF12A /* PublishMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1AF1B11F84D1E8004DF12A /* PublishMenuViewController.swift */; };
+		0F1AF1B41F84D3EE004DF12A /* PublishMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1AF1B31F84D3EE004DF12A /* PublishMenuViewModel.swift */; };
+		0F2020CB1F8B7ED0007706B6 /* Publish+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2020CA1F8B7ED0007706B6 /* Publish+API.swift */; };
+		0F2020CD1F8BB9C3007706B6 /* Tag+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2020CC1F8BB9C3007706B6 /* Tag+API.swift */; };
+		0F4691DC1F862B9600BB92BF /* ChipsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4691DA1F862B9600BB92BF /* ChipsTableViewCell.swift */; };
+		0F4691DD1F862B9600BB92BF /* ChipsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F4691DB1F862B9600BB92BF /* ChipsTableViewCell.xib */; };
 		0F525E9D1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F525E9C1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib */; };
 		0F525E9F1F77E98700E225B1 /* RichMenuCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F525E9E1F77E98700E225B1 /* RichMenuCellTableViewCell.swift */; };
+		0F7767D21F8CE5A900D54E4D /* LinkTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7767D11F8CE5A900D54E4D /* LinkTagsViewController.swift */; };
+		0F7767D41F8CE68400D54E4D /* LinkTagsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7767D31F8CE68400D54E4D /* LinkTagsViewModel.swift */; };
+		0F7767D61F8F511C00D54E4D /* LinkTopicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7767D51F8F511C00D54E4D /* LinkTopicsViewController.swift */; };
+		0F7767D81F8F516000D54E4D /* LinkTopicsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7767D71F8F516000D54E4D /* LinkTopicsViewModel.swift */; };
 		0FAA01681F7A3D0B0011FDBA /* RichBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAA01671F7A3D0B0011FDBA /* RichBookViewModel.swift */; };
 		0FAA016A1F7A41A30011FDBA /* RichBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAA01691F7A41A30011FDBA /* RichBookViewController.swift */; };
 		0FAC60761F73B71C00D47B0A /* Content.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0FAC60751F73B71C00D47B0A /* Content.storyboard */; };
 		0FAC60D21F73BBC100D47B0A /* ContentEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAC60D11F73BBC100D47B0A /* ContentEditorViewController.swift */; };
 		0FAC60D51F73BC4D00D47B0A /* ContentEditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAC60D41F73BC4D00D47B0A /* ContentEditorViewModel.swift */; };
+		0FC440EF1F85254600A5A638 /* PublishTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC440ED1F85254600A5A638 /* PublishTableViewCell.swift */; };
+		0FC440F01F85254600A5A638 /* PublishTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FC440EE1F85254600A5A638 /* PublishTableViewCell.xib */; };
 		0FF723C01F74F3E400891FFE /* UIView+Autolayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF723BF1F74F3E400891FFE /* UIView+Autolayout.swift */; };
 		0FF723C41F75188900891FFE /* RichEditorOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF723C31F75188900891FFE /* RichEditorOption.swift */; };
 		0FF723C61F75242400891FFE /* RichEditorView+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF723C51F75242400891FFE /* RichEditorView+Actions.swift */; };
@@ -342,13 +354,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0F1AF1B11F84D1E8004DF12A /* PublishMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishMenuViewController.swift; sourceTree = "<group>"; };
+		0F1AF1B31F84D3EE004DF12A /* PublishMenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishMenuViewModel.swift; sourceTree = "<group>"; };
+		0F2020CA1F8B7ED0007706B6 /* Publish+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Publish+API.swift"; sourceTree = "<group>"; };
+		0F2020CC1F8BB9C3007706B6 /* Tag+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tag+API.swift"; sourceTree = "<group>"; };
+		0F4691DA1F862B9600BB92BF /* ChipsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChipsTableViewCell.swift; sourceTree = "<group>"; };
+		0F4691DB1F862B9600BB92BF /* ChipsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChipsTableViewCell.xib; sourceTree = "<group>"; };
 		0F525E9C1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RichMenuCellTableViewCell.xib; sourceTree = "<group>"; };
 		0F525E9E1F77E98700E225B1 /* RichMenuCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichMenuCellTableViewCell.swift; sourceTree = "<group>"; };
+		0F7767D11F8CE5A900D54E4D /* LinkTagsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkTagsViewController.swift; sourceTree = "<group>"; };
+		0F7767D31F8CE68400D54E4D /* LinkTagsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkTagsViewModel.swift; sourceTree = "<group>"; };
+		0F7767D51F8F511C00D54E4D /* LinkTopicsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkTopicsViewController.swift; sourceTree = "<group>"; };
+		0F7767D71F8F516000D54E4D /* LinkTopicsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkTopicsViewModel.swift; sourceTree = "<group>"; };
 		0FAA01671F7A3D0B0011FDBA /* RichBookViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichBookViewModel.swift; sourceTree = "<group>"; };
 		0FAA01691F7A41A30011FDBA /* RichBookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichBookViewController.swift; sourceTree = "<group>"; };
 		0FAC60751F73B71C00D47B0A /* Content.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Content.storyboard; sourceTree = "<group>"; };
 		0FAC60D11F73BBC100D47B0A /* ContentEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentEditorViewController.swift; sourceTree = "<group>"; };
 		0FAC60D41F73BC4D00D47B0A /* ContentEditorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentEditorViewModel.swift; sourceTree = "<group>"; };
+		0FC440ED1F85254600A5A638 /* PublishTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishTableViewCell.swift; sourceTree = "<group>"; };
+		0FC440EE1F85254600A5A638 /* PublishTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PublishTableViewCell.xib; sourceTree = "<group>"; };
 		0FF723BF1F74F3E400891FFE /* UIView+Autolayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Autolayout.swift"; sourceTree = "<group>"; };
 		0FF723C31F75188900891FFE /* RichEditorOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichEditorOption.swift; sourceTree = "<group>"; };
 		0FF723C51F75242400891FFE /* RichEditorView+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RichEditorView+Actions.swift"; sourceTree = "<group>"; };
@@ -711,6 +735,10 @@
 			children = (
 				0F525E9C1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib */,
 				0F525E9E1F77E98700E225B1 /* RichMenuCellTableViewCell.swift */,
+				0FC440ED1F85254600A5A638 /* PublishTableViewCell.swift */,
+				0FC440EE1F85254600A5A638 /* PublishTableViewCell.xib */,
+				0F4691DA1F862B9600BB92BF /* ChipsTableViewCell.swift */,
+				0F4691DB1F862B9600BB92BF /* ChipsTableViewCell.xib */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -723,6 +751,9 @@
 				0FAA01691F7A41A30011FDBA /* RichBookViewController.swift */,
 				56FFE1591F74EEE600EEED42 /* RichLinkPreviewViewController.swift */,
 				56218A041F7A5CE5000456F9 /* QuoteEditorViewController.swift */,
+				0F1AF1B11F84D1E8004DF12A /* PublishMenuViewController.swift */,
+				0F7767D11F8CE5A900D54E4D /* LinkTagsViewController.swift */,
+				0F7767D51F8F511C00D54E4D /* LinkTopicsViewController.swift */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -735,6 +766,9 @@
 				0FF723C91F755B0100891FFE /* RichContentMenuViewModel.swift */,
 				0FAA01671F7A3D0B0011FDBA /* RichBookViewModel.swift */,
 				56FFE15D1F74F16900EEED42 /* RichLinkPreviewViewModel.swift */,
+				0F1AF1B31F84D3EE004DF12A /* PublishMenuViewModel.swift */,
+				0F7767D31F8CE68400D54E4D /* LinkTagsViewModel.swift */,
+				0F7767D71F8F516000D54E4D /* LinkTopicsViewModel.swift */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -1272,6 +1306,8 @@
 				56620FC71E89470600BD92BB /* Upload+API.swift */,
 				5657A5421E8BCF02000EE647 /* Utilities+API.swift */,
 				59C997BC1ED5A0FD009A8451 /* CommentAPI.swift */,
+				0F2020CA1F8B7ED0007706B6 /* Publish+API.swift */,
+				0F2020CC1F8BB9C3007706B6 /* Tag+API.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1737,7 +1773,9 @@
 				59DA47671E3B84ED00BA90A5 /* Access.storyboard in Resources */,
 				59139E051E895CDC002022F6 /* Volkhov-BoldItalic.ttf in Resources */,
 				0F525E9D1F77E94F00E225B1 /* RichMenuCellTableViewCell.xib in Resources */,
+				0FC440F01F85254600A5A638 /* PublishTableViewCell.xib in Resources */,
 				5942902A1E5347670006B2F1 /* DisclosureView.xib in Resources */,
+				0F4691DD1F862B9600BB92BF /* ChipsTableViewCell.xib in Resources */,
 				59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */,
 				594290211E5316380006B2F1 /* FeaturedContentCollectionViewCell.xib in Resources */,
 				594290371E548FA10006B2F1 /* BookTableViewCell.xib in Resources */,
@@ -1858,6 +1896,7 @@
 				"${BUILT_PRODUCTS_DIR}/TTTAttributedLabel/TTTAttributedLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/UIImageViewAlignedSwift/UIImageViewAlignedSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Version/Version.framework",
+				"${BUILT_PRODUCTS_DIR}/WSTagsField/WSTagsField.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1895,6 +1934,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTTAttributedLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIImageViewAlignedSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Version.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WSTagsField.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1971,6 +2011,7 @@
 			files = (
 				59903FED1E3B9D90006043EF /* View.swift in Sources */,
 				59DCFD7D1E96754C00C94D21 /* Price.swift in Sources */,
+				0F1AF1B21F84D1E8004DF12A /* PublishMenuViewController.swift in Sources */,
 				597CE07E1F0523BA00B67BA4 /* ProductForm.swift in Sources */,
 				F440FD7A1ECB005F00AEBF96 /* BookTypeRegistry.swift in Sources */,
 				F42041C71E73088500E7D208 /* CardDetailsViewModel.swift in Sources */,
@@ -1990,11 +2031,13 @@
 				F42600891E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift in Sources */,
 				566EE82D1E5D7082004B990D /* Search+API.swift in Sources */,
 				0FAC60D21F73BBC100D47B0A /* ContentEditorViewController.swift in Sources */,
+				0F7767D81F8F516000D54E4D /* LinkTopicsViewModel.swift in Sources */,
 				59C273311F070223009C51D9 /* FormatEditionTableViewCell.swift in Sources */,
 				59C2732F1F06BD33009C51D9 /* FormatEditionsViewModel.swift in Sources */,
 				59BD55771E302EB800D3B805 /* Analytics+Constants.swift in Sources */,
 				567B3C111ED4886F00E02E16 /* CheckmarkTableViewCell.swift in Sources */,
 				56535F351E7CB9ED0045E73D /* Thumbnail.swift in Sources */,
+				0F4691DC1F862B9600BB92BF /* ChipsTableViewCell.swift in Sources */,
 				F43996851E76C76700FE9D8B /* PostsListViewController.swift in Sources */,
 				562A31201E659919002851DE /* Strings.swift in Sources */,
 				F4AAADAD1E93F2230073EA50 /* ButtonWithLoader.swift in Sources */,
@@ -2027,6 +2070,7 @@
 				F43A690D1E79441D001C3657 /* Counts.swift in Sources */,
 				590E30021EDC1A68006C6D5C /* CommentNode.swift in Sources */,
 				59CB4DEB1EDDC64200E7A60B /* CommentsViewModel.swift in Sources */,
+				0F7767D61F8F511C00D54E4D /* LinkTopicsViewController.swift in Sources */,
 				561229EB1EA65F21004CE079 /* PhotoCardViewModel.swift in Sources */,
 				5644F21C1E55A77100B7D8E7 /* SettingsViewModel.swift in Sources */,
 				F4A426351E5629210090CD51 /* Video.swift in Sources */,
@@ -2060,6 +2104,7 @@
 				59CB4DEF1EDEC15800E7A60B /* CommentsManager.swift in Sources */,
 				56929CE61E671BE700B3D00A /* SegmentedControl.swift in Sources */,
 				594B9F6F1E55F557007C49E1 /* RootTabBarViewModel.swift in Sources */,
+				0F2020CB1F8B7ED0007706B6 /* Publish+API.swift in Sources */,
 				59DA474A1E3A329C00BA90A5 /* FontBook.swift in Sources */,
 				560341AD1F3DAE3400E60F44 /* Tag.swift in Sources */,
 				56218A051F7A5CE5000456F9 /* QuoteEditorViewController.swift in Sources */,
@@ -2113,6 +2158,7 @@
 				561229E91EA65451004CE079 /* LinkCardViewModel.swift in Sources */,
 				59D6021E1E36363400271315 /* Font.swift in Sources */,
 				561723FE1F8FA4F100CD979E /* CandidatePost.swift in Sources */,
+				0F1AF1B41F84D3EE004DF12A /* PublishMenuViewModel.swift in Sources */,
 				593769D71E3689FB00F23226 /* Appearance.swift in Sources */,
 				56FFE15A1F74EEE600EEED42 /* RichLinkPreviewViewController.swift in Sources */,
 				591E15581E70FE37008CA78A /* GenericNodeViewController.swift in Sources */,
@@ -2153,6 +2199,7 @@
 				F42041C31E72E84C00E7D208 /* PostDetailsViewModel.swift in Sources */,
 				594290061E4FEEC10006B2F1 /* CategoriesTableViewController.swift in Sources */,
 				F40700521E55F55A00DA48A4 /* Image.swift in Sources */,
+				0FC440EF1F85254600A5A638 /* PublishTableViewCell.swift in Sources */,
 				0FF723C01F74F3E400891FFE /* UIView+Autolayout.swift in Sources */,
 				563482BD1ED5BD61005428BF /* Facet.swift in Sources */,
 				F4A4262B1E5617A30090CD51 /* PageAuthor.swift in Sources */,
@@ -2214,7 +2261,9 @@
 				F458C5F41E5AFEAA00AFD0FC /* PenNameCellNode.swift in Sources */,
 				0FF723C81F755A9A00891FFE /* RichContentMenuViewController.swift in Sources */,
 				59CB4DED1EDEA49C00E7A60B /* CommentsNode.swift in Sources */,
+				0F7767D21F8CE5A900D54E4D /* LinkTagsViewController.swift in Sources */,
 				F42ED4F21E686BF9002B65DF /* OnBoardingViewController.swift in Sources */,
+				0F7767D41F8CE68400D54E4D /* LinkTagsViewModel.swift in Sources */,
 				59F0020C1F01230400D17883 /* ProductFormatsViewModel.swift in Sources */,
 				56535F361E7CB9ED0045E73D /* IFramely.swift in Sources */,
 				F478D92E1E7C275D00B9EF18 /* ProfileDetailsViewModel.swift in Sources */,
@@ -2237,6 +2286,7 @@
 				59DA475D1E3B7A8F00BA90A5 /* IntroductionViewModel.swift in Sources */,
 				56535F331E7CB9ED0045E73D /* Response.swift in Sources */,
 				59FBBC4D1E1D074400FC84E5 /* AppDelegate.swift in Sources */,
+				0F2020CD1F8BB9C3007706B6 /* Tag+API.swift in Sources */,
 				59CBE4F81E8090280068C7AD /* AppError.swift in Sources */,
 				56320C871EA748FB00642934 /* ArticleCardPostCellNode.swift in Sources */,
 				59D6021B1E32597B00271315 /* AppKeys.swift in Sources */,

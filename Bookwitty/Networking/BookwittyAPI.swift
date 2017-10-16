@@ -65,6 +65,13 @@ public enum BookwittyAPI {
   case votes(identifier: String)
   case report(identifier: String)
   case reportPenName(identifier: String)
+  case createContent(title: String, body: String, status: PublishAPI.PublishStatus)
+  case updateContent(id: String, title: String?, body: String?, status: PublishAPI.PublishStatus?)
+  case removeContent(contentIdentifier: String)
+  case linkTag(contentIdentifier: String, tagIdentifier: String)
+  case removeTag(contentIdentifier: String, tagIdentifier: String)
+  case linkContent(contentIdentifier: String, topicIdentifier: String)
+  case unlinkContent(contentIdentifier: String, topicIdentifier: String)
 }
 
 // MARK: - Target Type
@@ -163,6 +170,10 @@ extension BookwittyAPI: TargetType {
         path = "/pen_names/\(identifier)/follow"
     case .content(let identifier, _):
       path = "/content/\(identifier)"
+    case .createContent:
+      path = "/content"
+    case .updateContent(let id, _, _, _ ):
+      path = "/content/(\(id))"
     case .followers(let identifier):
       path = "/content/\(identifier)/followers"
     case .postsContent(let identifier, _):
@@ -197,6 +208,16 @@ extension BookwittyAPI: TargetType {
       path = "/user/resend_confirmation"
     case .uploadPolicy:
       path = "/upload_policies"
+    case .linkTag(let contentIdentifier, _):
+      path = "/content/\(contentIdentifier)/relationships/tags"
+    case .removeTag(let contentIdentifier, _):
+      path = "/content/\(contentIdentifier)/relationships/tags"
+    case .linkContent(let contentIdentifier, _):
+      path = "/content/\(contentIdentifier)/relationships/topics"
+    case .unlinkContent(let contentIdentifier, _):
+      path = "/content/\(contentIdentifier)/relationships/topics"
+    case .removeContent(let contentIdentifier):
+      path = "/content/\(contentIdentifier)"
     case .uploadMultipart:
       /*
       * Uploading to Amazon S3 servers, 
@@ -210,15 +231,15 @@ extension BookwittyAPI: TargetType {
   
   public var method: Moya.Method {
     switch self {
-    case .oAuth, .refreshToken, .resendAccountConfirmation, .createPenName:
+    case .oAuth, .refreshToken, .resendAccountConfirmation, .createPenName, .createContent, .linkTag, .linkContent:
       return .post
     case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .search, .penNames, .comments, .replies, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent, .votes, .preferredFormats:
       return .get
     case .register, .batch, .updatePreference, .wit, .follow, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart, .batchPenNames, .createComment, .witComment, .dimComment, .report, .reportPenName:
       return .post
-    case .updateUser, .updatePenName:
+    case .updateUser, .updatePenName, .updateContent:
       return .patch
-    case .unwit, .unfollow, .unfollowPenName, .unwitComment, .undimComment, .removeComment:
+    case .unwit, .unfollow, .unfollowPenName, .unwitComment, .undimComment, .removeComment, .removeTag, .unlinkContent, .removeContent:
       return .delete
     }
   }
@@ -252,6 +273,18 @@ extension BookwittyAPI: TargetType {
         "refresh_token": refreshToken,
         "grant_type": "refresh_token"
       ]
+    case .unlinkContent(_, let topicIdentifier):
+      return ContentAPI.unlinkContent(topicIdentifier)
+    case .linkContent(_, let topicIdentifier):
+      return ContentAPI.linkContent(topicIdentifier)
+    case .removeTag(_, let tagIdentifier):
+      return TagAPI.removeTagParameters(tagIdentifier)
+    case .linkTag(_, let tagIdentifier):
+      return TagAPI.linkTagParameters(tagIdentifier)
+    case .createContent(let title, let body, let status):
+      return PublishAPI.createContentParameters(title: title, body: body, status: status)
+    case .updateContent(_, let title, let body, let status):
+      return PublishAPI.updateContentParameters(title: title, body: body, status: status)
     case .batch(let identifiers):
       return UserAPI.batchPostBody(identifiers: identifiers)
     case .batchPenNames(let identifiers):
@@ -284,7 +317,7 @@ extension BookwittyAPI: TargetType {
       return UploadAPI.uploadPolicyParameters(file: file, fileType: fileType, assetType: assetType)
     case .editions(_, let formats):
       return ContentAPI.editionsFilterParameters(formats: formats)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment, .dimComment, .undimComment, .preferredFormats, .report, .reportPenName, .removeComment:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment, .dimComment, .undimComment, .preferredFormats, .report, .reportPenName, .removeComment, .removeContent:
       return nil
     }
   }

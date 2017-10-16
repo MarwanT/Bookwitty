@@ -45,6 +45,10 @@ class Strings {
     return localizedString(key: "add_a_link")
   }
   
+  static func add_tags() -> String {
+    return localizedString(key: "add_tags")
+  }
+  
   static func address_book() -> String {
     return localizedString(key: "address_book")
   }
@@ -385,6 +389,10 @@ class Strings {
     return localizedString(key: "get_started")
   }
   
+  static func go_back() -> String {
+    return localizedString(key: "go_back")
+  }
+  
   static func height() -> String {
     return localizedString(key: "height")
   }
@@ -491,6 +499,18 @@ class Strings {
   
   static func link() -> String {
     return localizedString(key: "link")
+  }
+  
+  static func link_topic() -> String {
+    return localizedString(key: "link_topic")
+  }
+  
+  static func unlink_topic() -> String {
+    return localizedString(key: "unlink_topic")
+  }
+
+  static func link_topics() -> String {
+    return localizedString(key: "link_topics")
   }
   
   static func list_price() -> String {
@@ -653,6 +673,10 @@ class Strings {
     return localizedString(key: "post")
   }
   
+  static func post_preview() -> String {
+    return localizedString(key: "post_preview")
+  }
+  
   static func posts() -> String {
     return localizedString(key: "posts")
   }
@@ -691,6 +715,10 @@ class Strings {
   
   static func publishEmptyCommentErrorTitle() -> String {
     return localizedString(key: "publish_empty_comment_error_title")
+  }
+  
+  static func publish_your_post() -> String {
+    return localizedString(key: "publish_your_post")
   }
   
   static func publisher() -> String {
@@ -747,6 +775,10 @@ class Strings {
   
   static func reset_password_text() -> String {
     return localizedString(key: "reset_password_text")
+  }
+  
+  static func save_as_draft() -> String {
+    return localizedString(key: "save_as_draft")
   }
   
   static func search_placeholder() -> String {

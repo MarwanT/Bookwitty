@@ -43,6 +43,7 @@ target 'Bookwitty' do
   pod 'ReachabilitySwift', '3'
   pod 'GSImageViewerController', '1.2.1'
   pod 'RichEditorView', '4.0.0'
+  pod 'WSTagsField', '2.1.2'
   
   target 'BookwittyTests' do
     inherit! :search_paths
