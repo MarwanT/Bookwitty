@@ -278,9 +278,9 @@ extension BookwittyAPI: TargetType {
     case .linkContent(_, let topicIdentifier):
       return ContentAPI.linkContent(topicIdentifier)
     case .removeTag(_, let tagIdentifier):
-      return TagAPI.removeTag(tagIdentifier)
+      return TagAPI.removeTagParameters(tagIdentifier)
     case .linkTag(_, let tagIdentifier):
-      return TagAPI.linkTag(tagIdentifier)
+      return TagAPI.linkTagParameters(tagIdentifier)
     case .createContent(let title, let body, let status):
       return PublishAPI.createContentParameters(title: title, body: body, status: status)
     case .updateContent(_, let title, let body, let status):
