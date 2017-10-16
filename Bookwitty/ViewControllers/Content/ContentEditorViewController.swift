@@ -307,6 +307,7 @@ extension ContentEditorViewController: QuoteEditorViewControllerDelegate {
 extension ContentEditorViewController {
   func presentTagsViewController(with tags: [String] = []) {
     let linkTagsViewController = Storyboard.Content.instantiate(LinkTagsViewController.self)
+    linkTagsViewController.delegate = self
     let navigationController = UINavigationController(rootViewController: linkTagsViewController)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
   }
