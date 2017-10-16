@@ -9,12 +9,19 @@
 import UIKit
 import WSTagsField
 
+protocol LinkTopicsViewControllerDelegate: class {
+  func linkTopics(viewController: LinkTopicsViewController, didLink topics: [Topic])
+}
+
 class LinkTopicsViewController: UIViewController {
   let viewModel = LinkTopicsViewModel()
   @IBOutlet weak var tagsView: WSTagsField!
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var tableViewBottomConstraintToSuperview: NSLayoutConstraint!
   @IBOutlet weak var separatorView: UIView!
+  
+  var delegate: LinkTopicsViewControllerDelegate?
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     self.initializeComponents()
@@ -49,7 +56,7 @@ class LinkTopicsViewController: UIViewController {
   }
   
   @objc private func doneButtonTouchUpInside(_ sender:UIBarButtonItem) {
-    self.dismiss(animated: true, completion: nil)
+    self.delegate?.linkTopics(viewController: self, didLink: self.viewModel.getSelectedTopics)
   }
   
   @objc private func reload(with text: String?) {
