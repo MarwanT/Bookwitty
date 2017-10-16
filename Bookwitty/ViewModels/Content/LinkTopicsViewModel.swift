@@ -49,8 +49,10 @@ final class LinkTopicsViewModel {
     return self.selectedTopics.flatMap { $0.title }.contains(title)
   }
   
-  func unselectTopic(with title: String) {
+  func unselectTopic(with title: String) -> Topic? {
+    let unselectedTopic = self.selectedTopics.first { $0.title == title }
     self.selectedTopics = self.selectedTopics.filter { !($0.title == title) }
+    return unselectedTopic
   }
   
   func setTopics(_ topics: [Topic]) {
