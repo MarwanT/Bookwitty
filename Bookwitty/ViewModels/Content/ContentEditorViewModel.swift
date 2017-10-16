@@ -10,6 +10,21 @@ import UIKit
 
 class ContentEditorViewModel  {
   
+  var currentPost: CandidatePost!
+  
+  func initialize(with candidatPost: CandidatePost) -> Void {
+    self.currentPost = candidatPost
+  }
+  
+  func set(_ currentPost: CandidatePost) {
+    self.currentPost = currentPost
+  }
+  
+  
+  var getCurrentPost: CandidatePost {
+    return self.currentPost
+  }
+  
   func upload(image: UIImage?, completion: @escaping (_ success: Bool, _ imageId: String?) -> Void) {
     guard let image = image, let data = image.dataForPNGRepresentation() else {
       completion(false, nil)
