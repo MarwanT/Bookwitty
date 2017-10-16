@@ -10,7 +10,7 @@ import UIKit
 import WSTagsField
 
 protocol LinkTagsViewControllerDelegate: class {
-  func linkTags(viewController: LinkTagsViewController, didLink tags:[String])
+  func linkTags(viewController: LinkTagsViewController, didLink tags:[Tag])
 }
 
 class LinkTagsViewController: UIViewController {
@@ -68,7 +68,7 @@ class LinkTagsViewController: UIViewController {
   }
 
   @objc private func doneButtonTouchUpInside(_ sender:UIBarButtonItem) {
-
+    self.delegate?.linkTags(viewController: self, didLink: self.viewModel.selectedTags)
   }
   
   // MARK: - Keyboard Handling
