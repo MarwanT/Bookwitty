@@ -44,7 +44,7 @@ public struct TagAPI {
 }
 
 extension TagAPI {
-  static func linkTag(_ identifier: String) -> [String:Any]? {
+  static func linkTagParameters(_ identifier: String) -> [String:Any]? {
     let dictionary = [
       "data" : [
         "attributes" : [
@@ -56,7 +56,7 @@ extension TagAPI {
     return dictionary
   }
   
-  static func removeTag(_ identifier: String) -> [String:Any]? {
+  static func removeTagParameters(_ identifier: String) -> [String:Any]? {
     let dictionary = [
       "data" : [
         "attributes" : [
