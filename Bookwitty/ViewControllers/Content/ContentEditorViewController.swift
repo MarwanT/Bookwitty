@@ -316,6 +316,7 @@ extension ContentEditorViewController {
 extension ContentEditorViewController {
   func presentLinkTopicsViewController(with tags: [String] = []) {
     let linkTopicsViewController = Storyboard.Content.instantiate(LinkTopicsViewController.self)
+    linkTopicsViewController.delegate = self
     let navigationController = UINavigationController(rootViewController: linkTopicsViewController)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
   }
@@ -367,3 +368,14 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
   }
 }
 
+extension ContentEditorViewController: LinkTagsViewControllerDelegate {
+  func linkTags(viewController: LinkTagsViewController, didLink tags:[Tag]) {
+    //TODO: Implementation
+  }
+}
+
+extension ContentEditorViewController: LinkTopicsViewControllerDelegate {
+  func linkTopics(viewController: LinkTopicsViewController, didLink topics: [Topic]) {
+    //TODO: Implementation
+  }
+}

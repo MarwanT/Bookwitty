@@ -192,9 +192,3 @@ extension PublishMenuViewController.Item {
     }
   }
 }
-
-extension ContentEditorViewController: LinkTagsViewControllerDelegate {
-  func linkTags(viewController: LinkTagsViewController, didLink tags:[Tag]) {
-    //TODO: Implementation
-  }
-}
