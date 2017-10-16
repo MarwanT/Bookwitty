@@ -90,6 +90,7 @@
 		56535F351E7CB9ED0045E73D /* Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56535F311E7CB9ED0045E73D /* Thumbnail.swift */; };
 		56535F361E7CB9ED0045E73D /* IFramely.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56535F321E7CB9ED0045E73D /* IFramely.swift */; };
 		5657A5431E8BCF02000EE647 /* Utilities+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5657A5421E8BCF02000EE647 /* Utilities+API.swift */; };
+		5661253E1F94AFEE00F35E5B /* DraftsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5661253D1F94AFEE00F35E5B /* DraftsViewModel.swift */; };
 		56620FC81E89470600BD92BB /* Upload+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56620FC71E89470600BD92BB /* Upload+API.swift */; };
 		56620FCC1E8954CA00BD92BB /* UploadPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56620FCB1E8954CA00BD92BB /* UploadPolicy.swift */; };
 		566EE82D1E5D7082004B990D /* Search+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566EE82C1E5D7082004B990D /* Search+API.swift */; };
@@ -445,6 +446,7 @@
 		56535F311E7CB9ED0045E73D /* Thumbnail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thumbnail.swift; sourceTree = "<group>"; };
 		56535F321E7CB9ED0045E73D /* IFramely.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IFramely.swift; sourceTree = "<group>"; };
 		5657A5421E8BCF02000EE647 /* Utilities+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Utilities+API.swift"; sourceTree = "<group>"; };
+		5661253D1F94AFEE00F35E5B /* DraftsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraftsViewModel.swift; sourceTree = "<group>"; };
 		56620FC71E89470600BD92BB /* Upload+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Upload+API.swift"; sourceTree = "<group>"; };
 		56620FCB1E8954CA00BD92BB /* UploadPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadPolicy.swift; sourceTree = "<group>"; };
 		566EE82C1E5D7082004B990D /* Search+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Search+API.swift"; sourceTree = "<group>"; };
@@ -788,6 +790,7 @@
 				0F7767D31F8CE68400D54E4D /* LinkTagsViewModel.swift */,
 				0F7767D71F8F516000D54E4D /* LinkTopicsViewModel.swift */,
 				561724011F8FAD6000CD979E /* PostPreviewViewModel.swift */,
+				5661253D1F94AFEE00F35E5B /* DraftsViewModel.swift */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -2067,6 +2070,7 @@
 				562A31201E659919002851DE /* Strings.swift in Sources */,
 				F4AAADAD1E93F2230073EA50 /* ButtonWithLoader.swift in Sources */,
 				59EC5BAC1E6C5B51006E1CB9 /* SectionTitleHeaderNode.swift in Sources */,
+				5661253E1F94AFEE00F35E5B /* DraftsViewModel.swift in Sources */,
 				F461B25C1E4B73B0005EA5A8 /* NewsFeedViewController.swift in Sources */,
 				F4A4262F1E5622190090CD51 /* Topic.swift in Sources */,
 				56D5F73B1E5B60BF00F6A164 /* Book.swift in Sources */,
