@@ -13,6 +13,8 @@ class DraftsViewController: ASViewController<ASCollectionNode> {
   fileprivate var flowLayout: UICollectionViewFlowLayout
   fileprivate let collectionNode: ASCollectionNode
 
+  let viewModel = DraftsViewModel()
+
   init() {
     flowLayout = UICollectionViewFlowLayout()
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
