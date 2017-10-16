@@ -55,7 +55,7 @@ public enum BookwittyAPI {
   case editions(identifier: String, formats: [String]?)
   case resetPassword(email: String)
   case penName(identifier: String)
-  case penNameContent(identifier: String)
+  case penNameContent(identifier: String, status: PublishAPI.PublishStatus?)
   case penNameFollowers(identifier: String)
   case penNameFollowing(identifier: String)
   case status
@@ -192,7 +192,7 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(bookIdentifier)/preferred_formats"
     case .resetPassword:
       path = "/user/reset_password"
-    case .penNameContent(let identifier):
+    case .penNameContent(let identifier, _):
       path = "/pen_names/\(identifier)/content"
     case .penNameFollowers(let identifier):
       path = "/pen_names/\(identifier)/followers"
@@ -299,6 +299,8 @@ extension BookwittyAPI: TargetType {
       return PenNameAPI.createPostBody(name: name, biography: biography, avatarId: avatarId, avatarUrl: avatarUrl, facebookUrl: facebookUrl, tumblrUrl: tumblrUrl, googlePlusUrl: googlePlusUrl, twitterUrl: twitterUrl, instagramUrl: instagramUrl, pinterestUrl: pinterestUrl, youtubeUrl: youtubeUrl, linkedinUrl: linkedinUrl, wordpressUrl: wordpressUrl, websiteUrl: websiteUrl)
     case .updatePenName(let identifier, let name, let biography, let avatarId, let avatarUrl, let facebookUrl, let tumblrUrl, let googlePlusUrl, let twitterUrl, let instagramUrl, let pinterestUrl, let youtubeUrl, let linkedinUrl, let wordpressUrl, let websiteUrl):
       return PenNameAPI.updatePostBody(identifier: identifier, name: name, biography: biography, avatarId: avatarId, avatarUrl: avatarUrl, facebookUrl: facebookUrl, tumblrUrl: tumblrUrl, googlePlusUrl: googlePlusUrl, twitterUrl: twitterUrl, instagramUrl: instagramUrl, pinterestUrl: pinterestUrl, youtubeUrl: youtubeUrl, linkedinUrl: linkedinUrl, wordpressUrl: wordpressUrl, websiteUrl: websiteUrl)
+    case .penNameContent(_, let status):
+      return PenNameAPI.penNameContent(with: status)
     case .updatePreference(let preference, let value):
       return UserAPI.updatePostBody(preference: preference, value: value)
     case .posts(_, let type):
