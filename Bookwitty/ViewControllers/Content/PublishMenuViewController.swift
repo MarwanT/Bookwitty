@@ -119,9 +119,9 @@ extension PublishMenuViewController: UITableViewDataSource {
     switch (indexPath.section, indexPath.row) {
     case (Section.publish.rawValue, _):
       return tableView.dequeueReusableCell(withIdentifier: "PublishCellReuseIdentifier", for: indexPath)
-    case (Section.link.rawValue, 0) where viewModel.tags.count > 0:
+    case (Section.link.rawValue, 0) where viewModel.getTags.count > 0:
       fallthrough
-    case (Section.link.rawValue, 1) where viewModel.links.count > 0:
+    case (Section.link.rawValue, 1) where viewModel.getTopics.count > 0:
       return tableView.dequeueReusableCell(withIdentifier: ChipsTableViewCell.identifier, for: indexPath)
     default:
       return tableView.dequeueReusableCell(withIdentifier: PublishTableViewCell.identifier, for: indexPath)
