@@ -14,6 +14,10 @@ final class LinkTopicsViewModel {
   fileprivate var selectedTopics: [Topic] = []
   let filter: Filter = Filter()
   
+  var getSelectedTopics: [Topic] {
+    return self.selectedTopics
+  }
+  
   var titlesForSelectedTopics: [String] {
     return self.selectedTopics.flatMap { $0.title }
   }
