@@ -9,5 +9,7 @@
 import Foundation
 
 final class DraftsViewModel {
+  fileprivate var drafts: [ModelResource] = []
+  fileprivate var nextPage: URL?
 
 }
