@@ -25,4 +25,12 @@ final class DraftsViewModel {
       completion(success, error)
     }
   }
+
+  fileprivate func resource(at index: Int) -> ModelResource? {
+    guard index >= 0, index < drafts.count else {
+      return nil
+    }
+
+    return drafts[index]
+  }
 }
