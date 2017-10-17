@@ -49,3 +49,25 @@ extension DraftsViewModel {
     return (draft.title, draft.updatedAt, draft is CandidatePost)
   }
 }
+
+//MARK: - Next Page
+extension DraftsViewModel {
+  func hasNextPage() -> Bool {
+    return nextPage != nil
+  }
+
+  func loadNext(closure: ((_ success: Bool)->())?) {
+    guard let next = nextPage else {
+      closure?(false)
+      return
+    }
+
+    _ = GeneralAPI.nextPage(nextPage: next) {
+      (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
+
+      self.nextPage = next
+      self.drafts += resources ?? []
+      closure?(success)
+    }
+  }
+}
