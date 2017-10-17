@@ -12,4 +12,17 @@ final class DraftsViewModel {
   fileprivate var drafts: [ModelResource] = []
   fileprivate var nextPage: URL?
 
+  func loadDrafts(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    guard let id = UserManager.shared.defaultPenName?.id else {
+      completion(false, nil)
+      return
+    }
+
+    _ = PenNameAPI.penNameContent(identifier: id, status: .draft) {
+      (success, resources, nextUrl, error) in
+      self.drafts = resources ?? []
+      self.nextPage = nextUrl
+      completion(success, error)
+    }
+  }
 }
