@@ -19,6 +19,40 @@ class DraftNode: ASCellNode {
     setupNode()
   }
 
+  var title: String? {
+    didSet {
+      var text: NSAttributedString? = nil
+      if let title = title {
+        if title.isEmpty {
+          text = AttributedStringBuilder(fontDynamicType: .quote)
+            .append(text: "Untitled")
+            .attributedString
+        } else {
+          text = AttributedStringBuilder(fontDynamicType: .title2)
+            .append(text: title)
+            .attributedString
+        }
+      }
+      titleNode.attributedText = text
+      titleNode.setNeedsLayout()
+    }
+  }
+
+  var updatedAt: NSDate? {
+    didSet {
+      var text: NSAttributedString? = nil
+      if let updatedAt = updatedAt {
+        let lastEditedString = Strings.last_edited() + " " 
+        text = AttributedStringBuilder(fontDynamicType: .callout)
+          .append(text: lastEditedString, color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+          .append(text: updatedAt.formatted(format: "MMM.dd"), color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+          .attributedString
+      }
+      descriptionNode.attributedText = text
+      descriptionNode.setNeedsLayout()
+    }
+  }
+
   fileprivate func setupNode() {
     automaticallyManagesSubnodes = true
   }
