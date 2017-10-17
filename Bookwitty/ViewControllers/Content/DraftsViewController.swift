@@ -103,7 +103,8 @@ extension DraftsViewController: ASCollectionDataSource, ASCollectionDelegate {
         let values = self.viewModel.values(for: indexPath.item)
         let draftNode = DraftNode()
         draftNode.title = values.title
-        draftNode.shortDescription = values.updated
+        draftNode.updatedAt = values.lastUpdated
+
         return draftNode
       case .activityIndicator:
         return self.loaderNode
@@ -127,6 +128,30 @@ extension DraftsViewController: ASCollectionDataSource, ASCollectionDelegate {
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
     guard let section = Section(rawValue: indexPath.section) else {
       return
+    }
+  }
+
+  public func shouldBatchFetch(for collectionNode: ASCollectionNode) -> Bool {
+    return viewModel.hasNextPage()
+  }
+
+  public func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
+    guard context.isFetching() else {
+      return
+    }
+
+    guard loadingStatus == .none else {
+      context.completeBatchFetching(true)
+      return
+    }
+
+    self.loadingStatus = .loadMore
+    context.beginBatchFetching()
+
+    viewModel.loadNext { (sucess: Bool) in
+      self.loadingStatus = .none
+      collectionNode.reloadData()
+      context.completeBatchFetching(true)
     }
   }
 }
