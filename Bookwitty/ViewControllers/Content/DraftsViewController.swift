@@ -8,10 +8,10 @@
 
 import AsyncDisplayKit
 
-class DraftsViewController: ASViewController<ASCollectionNode> {
+class DraftsViewController: ASViewController<ASTableNode> {
 
-  fileprivate var flowLayout: UICollectionViewFlowLayout
-  fileprivate let collectionNode: ASCollectionNode
+  fileprivate let tableNode: ASTableNode
+
   fileprivate let loaderNode: LoaderNode
   fileprivate var loadingStatus: LoadingStatus = .none
 
@@ -20,9 +20,8 @@ class DraftsViewController: ASViewController<ASCollectionNode> {
   init() {
     loaderNode = LoaderNode()
 
-    flowLayout = UICollectionViewFlowLayout()
-    collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
-    super.init(node: collectionNode)
+    tableNode = ASTableNode()
+    super.init(node: tableNode)
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -37,15 +36,16 @@ class DraftsViewController: ASViewController<ASCollectionNode> {
   }
 
   fileprivate func initializeComponents() {
-    collectionNode.dataSource = self
-    collectionNode.delegate = self
+    tableNode.delegate = self
+    tableNode.dataSource = self
+    tableNode.view.tableFooterView = UIView.defaultSeparator(useAutoLayout: false)
   }
 
   fileprivate func loadDrafts() {
     loadingStatus = .loading
     viewModel.loadDrafts { (success: Bool, error: BookwittyAPIError?) in
       self.loadingStatus = .none
-      self.collectionNode.reloadData()
+      self.tableNode.reloadData()
     }
   }
 }
@@ -73,13 +73,12 @@ extension DraftsViewController {
   }
 }
 
-//MARK: - ASCollectionDataSource & ASCollectionDelegate implementation
-extension DraftsViewController: ASCollectionDataSource, ASCollectionDelegate {
-  func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
+extension DraftsViewController: ASTableDataSource, ASTableDelegate {
+  func numberOfSections(in tableNode: ASTableNode) -> Int {
     return Section.count
   }
 
-  func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+  func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
     guard let section = Section(rawValue: section) else {
       return 0
     }
@@ -92,7 +91,7 @@ extension DraftsViewController: ASCollectionDataSource, ASCollectionDelegate {
     }
   }
 
-  func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+  func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
     return {
       guard let section = Section(rawValue: indexPath.section) else {
         return ASCellNode()
@@ -112,30 +111,28 @@ extension DraftsViewController: ASCollectionDataSource, ASCollectionDelegate {
     }
   }
 
-  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+  func tableNode(_ tableNode: ASTableNode, willDisplayRowWith node: ASCellNode) {
     if node is LoaderNode {
       loaderNode.updateLoaderVisibility(show: showLoader)
     }
   }
 
-  public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
+  func tableNode(_ tableNode: ASTableNode, constrainedSizeForRowAt indexPath: IndexPath) -> ASSizeRange {
     return ASSizeRange(
-      min: CGSize(width: collectionNode.frame.width, height: 0),
-      max: CGSize(width: collectionNode.frame.width, height: .infinity)
+      min: CGSize(width: tableNode.frame.width, height: 0),
+      max: CGSize(width: tableNode.frame.width, height: .infinity)
     )
   }
 
-  func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
-    guard let section = Section(rawValue: indexPath.section) else {
-      return
-    }
+  func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
+    tableNode.deselectRow(at: indexPath, animated: true)
   }
 
-  public func shouldBatchFetch(for collectionNode: ASCollectionNode) -> Bool {
+  func shouldBatchFetch(for tableNode: ASTableNode) -> Bool {
     return viewModel.hasNextPage()
   }
 
-  public func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
+  func tableNode(_ tableNode: ASTableNode, willBeginBatchFetchWith context: ASBatchContext) {
     guard context.isFetching() else {
       return
     }
@@ -146,11 +143,15 @@ extension DraftsViewController: ASCollectionDataSource, ASCollectionDelegate {
     }
 
     self.loadingStatus = .loadMore
+    DispatchQueue.main.async {
+      tableNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue), with: .automatic)
+    }
+
     context.beginBatchFetching()
 
     viewModel.loadNext { (sucess: Bool) in
       self.loadingStatus = .none
-      collectionNode.reloadData()
+      tableNode.reloadData()
       context.completeBatchFetching(true)
     }
   }
