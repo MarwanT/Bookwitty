@@ -485,6 +485,10 @@ class Strings {
     return localizedString(key: "language_of_text")
   }
   
+  static func last_edited() -> String {
+    return localizedString(key: "last_edited")
+  }
+
   static func last_month() -> String {
     return localizedString(key: "last_month")
   }
