@@ -33,11 +33,20 @@ class DraftsViewController: ASViewController<ASCollectionNode> {
     super.viewDidLoad()
 
     initializeComponents()
+    loadDrafts()
   }
 
   fileprivate func initializeComponents() {
     collectionNode.dataSource = self
     collectionNode.delegate = self
+  }
+
+  fileprivate func loadDrafts() {
+    loadingStatus = .loading
+    viewModel.loadDrafts { (success: Bool, error: BookwittyAPIError?) in
+      self.loadingStatus = .none
+      self.collectionNode.reloadData()
+    }
   }
 }
 
