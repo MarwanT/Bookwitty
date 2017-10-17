@@ -69,7 +69,7 @@ extension DraftsViewController: ASCollectionDataSource, ASCollectionDelegate {
 
     switch section {
     case .drafts:
-      return 0
+      return viewModel.numberOfRows()
     case .activityIndicator:
       return 1
     }
@@ -83,7 +83,11 @@ extension DraftsViewController: ASCollectionDataSource, ASCollectionDelegate {
 
       switch section {
       case .drafts:
-        return ASCellNode()
+        let values = self.viewModel.values(for: indexPath.item)
+        let draftNode = DraftNode()
+        draftNode.title = values.title
+        draftNode.shortDescription = values.updated
+        return draftNode
       case .activityIndicator:
         return ASCellNode()
       }
