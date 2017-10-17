@@ -34,3 +34,18 @@ final class DraftsViewModel {
     return drafts[index]
   }
 }
+
+//MARK: - Collection Helpers
+extension DraftsViewModel {
+  func numberOfRows() -> Int {
+    return drafts.count
+  }
+
+  func values(for item: Int) -> (title: String?, lastUpdated: NSDate?, editable: Bool) {
+    guard let draft = resource(at: item) as? ModelCommonProperties else {
+      return (nil, nil, false)
+    }
+
+    return (draft.title, draft.updatedAt, draft is CandidatePost)
+  }
+}
