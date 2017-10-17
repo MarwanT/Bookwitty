@@ -12,10 +12,14 @@ class DraftsViewController: ASViewController<ASCollectionNode> {
 
   fileprivate var flowLayout: UICollectionViewFlowLayout
   fileprivate let collectionNode: ASCollectionNode
+  fileprivate let loaderNode: LoaderNode
+  fileprivate var loadingStatus: LoadingStatus = .none
 
   let viewModel = DraftsViewModel()
 
   init() {
+    loaderNode = LoaderNode()
+
     flowLayout = UICollectionViewFlowLayout()
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     super.init(node: collectionNode)
@@ -54,6 +58,10 @@ extension DraftsViewController {
     case reloading
     case loading
   }
+
+  var showLoader: Bool {
+    return loadingStatus != .none
+  }
 }
 
 //MARK: - ASCollectionDataSource & ASCollectionDelegate implementation
@@ -71,7 +79,7 @@ extension DraftsViewController: ASCollectionDataSource, ASCollectionDelegate {
     case .drafts:
       return viewModel.numberOfRows()
     case .activityIndicator:
-      return 1
+      return showLoader ? 1 : 0
     }
   }
 
@@ -89,8 +97,14 @@ extension DraftsViewController: ASCollectionDataSource, ASCollectionDelegate {
         draftNode.shortDescription = values.updated
         return draftNode
       case .activityIndicator:
-        return ASCellNode()
+        return self.loaderNode
       }
+    }
+  }
+
+  func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+    if node is LoaderNode {
+      loaderNode.updateLoaderVisibility(show: showLoader)
     }
   }
 
