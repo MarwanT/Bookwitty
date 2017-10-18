@@ -30,17 +30,18 @@ public struct PublishAPI {
       }
       success = statusCode == successStatusCode
       
-      post = Parser.parseData(data: data) as? CandidatePost
+      post = Text.parseData(data: data) as? CandidatePost
     })
   }
 
-  static func updateContent(id: String, title: String?, body: String?, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
-    let successStatusCode: Int = 201
-    return signedAPIRequest(target: BookwittyAPI.updateContent(id: id, title: title, body: body, status: .draft), completion: { (data, statusCode, response, error) in
+  static func updateContent(id: String, title: String?, body: String?, imageURL: String?, shortDescription: String?, status: PublishStatus? = .draft, completion: @escaping (_ success: Bool, _ candidatePost: CandidatePost?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let successStatusCode: Int = 200
+    return signedAPIRequest(target: BookwittyAPI.updateContent(id: id, title: title, body: body, imageURL: imageURL, shortDescription: shortDescription, status: status), completion: { (data, statusCode, response, error) in
       var success: Bool = false
       var error: BookwittyAPIError? = nil
+      var post: CandidatePost? = nil
       defer {
-        completion(success, error)
+        completion(success, post, error)
       }
       guard data != nil, let statusCode = statusCode else {
         error = BookwittyAPIError.invalidStatusCode
@@ -48,6 +49,7 @@ public struct PublishAPI {
         
       }
       success = statusCode == successStatusCode
+      post = Text.parseData(data: data) as? CandidatePost
     })
   }
   
@@ -83,13 +85,14 @@ extension PublishAPI {
     ]
     return dictionary
   }
-  static func updateContentParameters(title: String?, body: String?, status: PublishStatus?) -> [String : Any]? {
+  static func updateContentParameters(title: String?, body: String?, imageURL: String?, shortDescription: String?, status: PublishStatus?) -> [String : Any]? {
     let dictionary = [
       "data" : [
-        "type": "texts",
         "attributes" : [
           "title" : title,
           "body" : body,
+          "short-description": shortDescription,
+          "cover-image-url": imageURL,
           "status": status?.rawValue,
         ]
       ]
