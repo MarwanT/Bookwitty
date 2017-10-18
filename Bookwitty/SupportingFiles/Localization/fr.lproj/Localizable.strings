@@ -218,11 +218,13 @@
 "something_wrong_error_title" = "Il y a quelque chose qui cloche";
 "something_wrong_in_credentials" = "Votre e-mail ou votre mot de passe est erroné";
 "subtitle" = "Sous-titre";
+"tags" = "Tags";
 "take_Profile_photo" = "Prenez une photo de profil";
 "terms_of_use_and_privacy_policy" = "En cliquant sur \"s'inscrire\" vous acceptez nos \n•termes d'utilisation• et notre •politique de confidentialité•";
 "text" = "texte";
 "thank_you_for_report" = "Thank you for your report";
 "topic" = "Sujet";
+"topics" = "Sujets";
 "topics_to_follow" = "Sujets à suivre";
 "try_again" = "Essayez à nouveau";
 "tutorial_fifth_page_description" = "Inscrivez-vous pour faire partie de notre communauté";

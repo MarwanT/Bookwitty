@@ -853,6 +853,10 @@ class Strings {
     return localizedString(key: "subtitle")
   }
   
+  static func tags() -> String {
+    return localizedString(key: "tags")
+  }
+  
   static func take_Profile_photo() -> String {
     return localizedString(key: "take_Profile_photo")
   }
@@ -871,6 +875,10 @@ class Strings {
 
   static func topic() -> String {
     return localizedString(key: "topic")
+  }
+  
+  static func topics() -> String {
+    return localizedString(key: "topics")
   }
   
   static func topics_to_follow() -> String {
