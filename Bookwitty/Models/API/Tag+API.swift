@@ -46,10 +46,9 @@ public struct TagAPI {
 extension TagAPI {
   static func linkTagParameters(_ identifier: String) -> [String:Any]? {
     let dictionary = [
-      "data" : [
-        "attributes" : [
-          "type" : Tag.resourceType,
-          "id" : identifier,
+      "data" : [[
+        "type" : Tag.resourceType,
+        "id" : identifier,
         ]
       ]
     ]
@@ -58,10 +57,9 @@ extension TagAPI {
   
   static func removeTagParameters(_ identifier: String) -> [String:Any]? {
     let dictionary = [
-      "data" : [
-        "attributes" : [
-          "type" : Tag.resourceType,
-          "id" : identifier,
+      "data" : [[
+        "type" : Tag.resourceType,
+        "id" : identifier,
         ]
       ]
     ]
