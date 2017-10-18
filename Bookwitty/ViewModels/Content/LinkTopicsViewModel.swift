@@ -27,8 +27,9 @@ final class LinkTopicsViewModel {
     self.filter.types = [Topic.resourceType]
   }
   
-  func initialize(with contentIdentifier: String) {
+  func initialize(with contentIdentifier: String, linkedTopics: [Topic]) {
     self.contentIdentifier = contentIdentifier
+    self.selectedTopics = linkedTopics
   }
   
   func select(_ topic: Topic) {
