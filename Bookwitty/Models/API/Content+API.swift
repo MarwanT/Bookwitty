@@ -131,24 +131,22 @@ extension ContentAPI {
     return dictionary
   }
   
-  static func linkContent(_ identifier: String) -> [String:Any]? {
+  static func linkContentParameters(_ identifier: String) -> [String:Any]? {
     let dictionary = [
-      "data" : [
-        "attributes" : [
+      "data" : [[
           "type" : Topic.resourceType,
           "id" : identifier,
-        ]
+          ]
       ]
     ]
     return dictionary
   }
   
-  static func unlinkContent(_ identifier: String) -> [String:Any]? {
+  static func unlinkContentParameters(_ identifier: String) -> [String:Any]? {
     let dictionary = [
-      "data" : [
-        "attributes" : [
-          "type" : Topic.resourceType,
-          "id" : identifier,
+      "data" : [[
+        "type" : Topic.resourceType,
+        "id" : identifier,
         ]
       ]
     ]
