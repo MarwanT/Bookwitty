@@ -218,11 +218,13 @@
 "something_wrong_error_title" = "Something's wrong!";
 "something_wrong_in_credentials" = "This email and password combination could not be found";
 "subtitle" = "Subtitle";
+"tags" = "Tags";
 "take_Profile_photo" = "Take profile photo";
 "terms_of_use_and_privacy_policy" = "By tapping Sign up : you agree to the\n•Terms of Use• and •Privacy Policy•";
 "text" = "Text";
 "thank_you_for_report" = "Thank you for your report";
 "topic" = "Topic";
+"topics" = "Topics";
 "topics_to_follow" = "Topics to Follow";
 "try_again" = "Try again";
 "tutorial_fifth_page_description" = "Sign up to be a part of this vibrant community.";

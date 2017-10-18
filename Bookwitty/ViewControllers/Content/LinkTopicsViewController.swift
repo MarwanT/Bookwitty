@@ -28,6 +28,7 @@ class LinkTopicsViewController: UIViewController {
     self.addKeyboardNotifications()
     self.applyTheme()
     self.tagsView.beginEditing() // becomeFirstResponder
+    self.title = Strings.topic()
   }
   
   private func initializeComponents() {
@@ -38,6 +39,9 @@ class LinkTopicsViewController: UIViewController {
     self.tableView.tableFooterView = UIView()
     self.tableView.backgroundColor = .clear
     self.separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+
+    tagsView.addTags(self.viewModel.getSelectedTopics.flatMap { $0.title } )
+
     tagsView.onVerifyTag = { field, candidate in
       let canLink =  self.viewModel.canLink
       let hasSimilarTitle = self.viewModel.hasSimilarTitle(candidate)

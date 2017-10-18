@@ -18,6 +18,7 @@ class LinkTagsViewController: UIViewController {
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var tagsView: WSTagsField!
   @IBOutlet weak var tableViewBottomConstraintToSuperview: NSLayoutConstraint!
+  @IBOutlet weak var separatorView: UIView!
   weak var delegate: LinkTagsViewControllerDelegate?
   let viewModel = LinkTagsViewModel()
   override func viewDidLoad() {
@@ -25,12 +26,18 @@ class LinkTagsViewController: UIViewController {
     applyTheme()
     self.addKeyboardNotifications()
     self.initializeComponents()
+    self.tagsView.beginEditing()
+    self.title = Strings.tags()
   }
   
   private func initializeComponents() {
     let doneButton = UIBarButtonItem(title: Strings.done(), style: .plain, target: self, action: #selector(doneButtonTouchUpInside(_:)))
     doneButton.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
     self.navigationItem.rightBarButtonItem = doneButton
+    
+    self.separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+
+    tagsView.addTags(self.viewModel.selectedTags.flatMap { $0.title } )
     
     tagsView.onVerifyTag = { field, candidate in
       return self.viewModel.canLink && self.viewModel.selectedTags.flatMap { $0.title }.contains(candidate)

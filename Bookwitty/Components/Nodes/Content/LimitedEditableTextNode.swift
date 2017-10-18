@@ -19,7 +19,8 @@ class LimitedEditableTextNode: ASCellNode {
   weak var delegate: LimitedEditableTextNodeDelegate?
 
   var contentText: String? {
-    return textNode.textView.text
+    get { return textNode.textView.text }
+    set { textNode.textView.text = newValue }
   }
 
   override init() {

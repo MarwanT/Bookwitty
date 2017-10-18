@@ -89,7 +89,7 @@ class PublishMenuViewController: UIViewController {
     self.tableView.rowHeight = UITableViewAutomaticDimension
     self.tableView.reloadData()
     self.tableView.layoutIfNeeded()
-
+    
     let attributedString = AttributedStringBuilder(fontDynamicType: .caption1)
       .append(text: Strings.publish(), color: ThemeManager.shared.currentTheme.colorNumber13())
       .attributedString
@@ -135,8 +135,13 @@ extension PublishMenuViewController: UITableViewDataSource {
       currentCell.cellImageView.image = values.label.image
       currentCell.cellLabel.text = values.label.title
     } else if let currentCell = cell as? ChipsTableViewCell  {
-      currentCell.cellImageView.image = values.label.image
-      currentCell.setTags(["a","b"])//.text = values.label.title
+      if indexPath.row == 0 {
+        currentCell.cellImageView.image = values.label.image
+        currentCell.setTags(self.viewModel.getTags.flatMap { $0.title })
+      } else {
+        currentCell.cellImageView.image = values.label.image
+        currentCell.setTags(self.viewModel.getTopics.flatMap { $0.title })
+      }
     } else {
       //From storyboard
       cell.textLabel?.text = values.label.title
@@ -153,7 +158,7 @@ extension PublishMenuViewController: UITableViewDataSource {
 extension PublishMenuViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     if indexPath.section == Section.link.rawValue {
-      return UITableViewAutomaticDimension
+      return (tableView.cellForRow(at: indexPath) as? ChipsTableViewCell)?.height ?? 44.0
     }
     return PublishTableViewCell.height
   }

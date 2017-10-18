@@ -9,6 +9,8 @@
 import UIKit
 
 class ContentEditorViewModel  {
+  var linkedTags: [Tag] = []
+  var linkedTopics: [Topic] = []
   
   var currentPost: CandidatePost!
   
