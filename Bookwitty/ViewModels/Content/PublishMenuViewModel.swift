@@ -9,19 +9,25 @@
 import UIKit
 
 class PublishMenuViewModel {
-  private var tags: [Tag] = []
-  private var topics: [Topic] = []
+  private var linkedTags: [Tag] = []
+  private var linkedTopics: [Topic] = []
+  private(set) var contentIdentifier: String!
   
   var getTags: [Tag] {
-    return self.tags
+    return self.linkedTags
   }
   
-  var getTopics: [Tag] {
-    return self.tags
+  var getTopics: [Topic] {
+    return self.linkedTopics
+  }
+  
+  func initialize(with linkedTags: [Tag], linkedTopics: [Topic]) {
+    self.linkedTags = linkedTags
+    self.linkedTopics = linkedTopics
   }
   
   var penName: PenName? = UserManager.shared.defaultPenName
-  
+
   private func valuesForPenName() -> (profileImage: String?, name:String?) {
     return (self.penName?.avatarUrl, self.penName?.name)
   }
