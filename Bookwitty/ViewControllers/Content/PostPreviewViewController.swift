@@ -10,7 +10,7 @@ import AsyncDisplayKit
 
 protocol PostPreviewViewControllerDelegate: class {
   //TODO: Modify signature, Replace `Any` with the correct model once there
-  func postPreview(viewController: PostPreviewViewController, didFinishPreviewing post: Any)
+  func postPreview(viewController: PostPreviewViewController, didFinishPreviewing post: CandidatePost)
 }
 
 class PostPreviewViewController: ASViewController<ASCollectionNode> {
@@ -77,6 +77,13 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
 
     titleNode.delegate = self
     coverNode.delegate = self
+    
+    let values = viewModel.postValues()
+    
+    titleNode.text = values.title
+    penNameNode.penNameSummary = values.penName
+    penNameNode.penNamePictureUrl = values.url?.absoluteString
+    descriptionNode.contentText = values.shortDescription
   }
 
   fileprivate func setupNavigationBarButtons() {
@@ -94,7 +101,7 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
 //MARK: - Actions
 extension PostPreviewViewController {
   @objc fileprivate func doneBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
-    //TODO: Empty implementation
+    self.delegate?.postPreview(viewController: self, didFinishPreviewing: viewModel.candidatePost)
   }
 }
 
@@ -265,8 +272,8 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
 
   fileprivate func presentImagePicker() {
 
-    titleNode.resignFirstResponder()
-    descriptionNode.resignFirstResponder()
+    _ = titleNode.resignFirstResponder()
+    _ = descriptionNode.resignFirstResponder()
 
     let imagePickerController = UIImagePickerController()
     imagePickerController.delegate = self

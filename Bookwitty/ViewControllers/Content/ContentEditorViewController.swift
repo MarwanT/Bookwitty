@@ -377,5 +377,10 @@ extension ContentEditorViewController: LinkTagsViewControllerDelegate {
 extension ContentEditorViewController: LinkTopicsViewControllerDelegate {
   func linkTopics(viewController: LinkTopicsViewController, didLink topics: [Topic]) {
     //TODO: Implementation
+extension ContentEditorViewController: PostPreviewViewControllerDelegate {
+  func postPreview(viewController: PostPreviewViewController, didFinishPreviewing post: CandidatePost) {
+    self.updateContent(with: post.title, body: post.body, imageURL: post.imageUrl, shortDescription: post.shortDescription)
+  }
+}
   }
 }
