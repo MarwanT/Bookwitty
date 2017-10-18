@@ -66,7 +66,7 @@ public enum BookwittyAPI {
   case report(identifier: String)
   case reportPenName(identifier: String)
   case createContent(title: String, body: String, status: PublishAPI.PublishStatus)
-  case updateContent(id: String, title: String?, body: String?, status: PublishAPI.PublishStatus?)
+  case updateContent(id: String, title: String?, body: String?, imageURL: String?, shortDescription: String? , status: PublishAPI.PublishStatus?)
   case removeContent(contentIdentifier: String)
   case linkTag(contentIdentifier: String, tagIdentifier: String)
   case removeTag(contentIdentifier: String, tagIdentifier: String)
@@ -172,8 +172,8 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(identifier)"
     case .createContent:
       path = "/content"
-    case .updateContent(let id, _, _, _ ):
-      path = "/content/(\(id))"
+    case .updateContent(let id, _, _, _, _, _ ):
+      path = "/content/\(id)"
     case .followers(let identifier):
       path = "/content/\(identifier)/followers"
     case .postsContent(let identifier, _):
@@ -274,17 +274,17 @@ extension BookwittyAPI: TargetType {
         "grant_type": "refresh_token"
       ]
     case .unlinkContent(_, let topicIdentifier):
-      return ContentAPI.unlinkContent(topicIdentifier)
+      return ContentAPI.unlinkContentParameters(topicIdentifier)
     case .linkContent(_, let topicIdentifier):
-      return ContentAPI.linkContent(topicIdentifier)
+      return ContentAPI.linkContentParameters(topicIdentifier)
     case .removeTag(_, let tagIdentifier):
       return TagAPI.removeTagParameters(tagIdentifier)
     case .linkTag(_, let tagIdentifier):
       return TagAPI.linkTagParameters(tagIdentifier)
     case .createContent(let title, let body, let status):
       return PublishAPI.createContentParameters(title: title, body: body, status: status)
-    case .updateContent(_, let title, let body, let status):
-      return PublishAPI.updateContentParameters(title: title, body: body, status: status)
+    case .updateContent(_, let title, let body, let imageURL, let shortDescription, let status):
+      return PublishAPI.updateContentParameters(title: title, body: body, imageURL: imageURL, shortDescription: shortDescription, status: status)
     case .batch(let identifiers):
       return UserAPI.batchPostBody(identifiers: identifiers)
     case .batchPenNames(let identifiers):
