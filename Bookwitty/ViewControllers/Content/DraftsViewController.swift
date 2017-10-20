@@ -49,12 +49,34 @@ class DraftsViewController: ASViewController<ASTableNode> {
     tableNode.view.tableFooterView = UIView.defaultSeparator(useAutoLayout: false)
   }
 
+  fileprivate func setupNavigationBarButtons() {
+    let closeBarButtonItem = UIBarButtonItem(title: Strings.close(),
+                                           style: .plain,
+                                           target: self,
+                                           action: #selector(closeBarButtonTouchUpInside(_:)))
+
+    navigationItem.leftBarButtonItem = closeBarButtonItem
+
+    var attributes = closeBarButtonItem.titleTextAttributes(for: .normal) ?? [:]
+    let defaultTextColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+    attributes[NSForegroundColorAttributeName] = defaultTextColor
+    closeBarButtonItem.setTitleTextAttributes(attributes, for: .normal)
+  }
+
   fileprivate func loadDrafts() {
     loadingStatus = .loading
     viewModel.loadDrafts { (success: Bool, error: BookwittyAPIError?) in
       self.loadingStatus = .none
       self.tableNode.reloadData()
     }
+  }
+}
+
+//MARK: - Actions
+extension DraftsViewController {
+  @objc
+  fileprivate func closeBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
+    //TODO: Should dismiss / pop the controller 
   }
 }
 
