@@ -43,6 +43,7 @@ class DraftsViewController: ASViewController<ASTableNode> {
   }
 
   fileprivate func initializeComponents() {
+    title = Strings.drafts()
     tableNode.delegate = self
     tableNode.dataSource = self
     tableNode.view.tableFooterView = UIView.defaultSeparator(useAutoLayout: false)
