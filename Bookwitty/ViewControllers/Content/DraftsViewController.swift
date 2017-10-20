@@ -32,6 +32,7 @@ class DraftsViewController: ASViewController<ASTableNode> {
     super.viewDidLoad()
 
     initializeComponents()
+    applyTheme()
     loadDrafts()
   }
 
@@ -70,6 +71,12 @@ extension DraftsViewController {
 
   var showLoader: Bool {
     return loadingStatus != .none
+  }
+}
+
+extension DraftsViewController: Themeable {
+  func applyTheme() {
+    tableNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
   }
 }
 
