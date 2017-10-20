@@ -148,6 +148,11 @@ extension DraftsViewController: ASTableDataSource, ASTableDelegate {
       return
     }
 
+    guard let candidate = self.viewModel.resource(at: indexPath.row) as? CandidatePost else {
+      return
+    }
+    
+    delegate?.drafts(viewController: self, didRequestEdit: candidate)
   }
 
   func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
