@@ -26,6 +26,27 @@ final class DraftsViewModel {
     }
   }
 
+  func deleteDraft(at row: Int, closure: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    guard let draft = resource(at: row),
+    let identifier = draft.id else {
+      closure(false, nil)
+      return
+    }
+
+    _ = PublishAPI.removeContent(contentIdentifier: identifier) { (success, error) in
+
+      defer {
+        closure(success, error)
+      }
+
+      guard success else {
+        return
+      }
+
+      self.drafts.remove(at: row)
+    }
+  }
+
   fileprivate func resource(at index: Int) -> ModelResource? {
     guard index >= 0, index < drafts.count else {
       return nil
