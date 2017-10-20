@@ -141,6 +141,13 @@ extension DraftsViewController: ASTableDataSource, ASTableDelegate {
 
   func tableNode(_ tableNode: ASTableNode, didSelectRowAt indexPath: IndexPath) {
     tableNode.deselectRow(at: indexPath, animated: true)
+
+    guard viewModel.values(for: indexPath.row).editable else {
+      let supported: String = "Editing this type of content is not yet supported here, you can still edit it on the website"
+      self.showAlertWith(title: "", message: supported)
+      return
+    }
+
   }
 
   func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
