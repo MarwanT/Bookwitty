@@ -47,7 +47,7 @@ final class DraftsViewModel {
     }
   }
 
-  fileprivate func resource(at index: Int) -> ModelResource? {
+  func resource(at index: Int) -> ModelResource? {
     guard index >= 0, index < drafts.count else {
       return nil
     }
