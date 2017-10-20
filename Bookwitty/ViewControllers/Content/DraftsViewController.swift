@@ -116,6 +116,7 @@ extension DraftsViewController: ASTableDataSource, ASTableDelegate {
         let draftNode = DraftNode()
         draftNode.title = values.title
         draftNode.updatedAt = values.lastUpdated
+        draftNode.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
 
         return draftNode
       case .activityIndicator:
