@@ -8,6 +8,10 @@
 
 import AsyncDisplayKit
 
+protocol DraftsViewControllerDelegate: class {
+  func drafts(viewController: DraftsViewController, didRequestEdit draft: CandidatePost)
+}
+
 class DraftsViewController: ASViewController<ASTableNode> {
 
   fileprivate let tableNode: ASTableNode
@@ -16,6 +20,8 @@ class DraftsViewController: ASViewController<ASTableNode> {
   fileprivate var loadingStatus: LoadingStatus = .none
 
   let viewModel = DraftsViewModel()
+
+  weak var delegate: DraftsViewControllerDelegate? = nil
 
   init() {
     loaderNode = LoaderNode()
