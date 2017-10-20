@@ -128,6 +128,24 @@ extension DraftsViewController: ASTableDataSource, ASTableDelegate {
     tableNode.deselectRow(at: indexPath, animated: true)
   }
 
+  func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    return .delete
+  }
+
+  func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+    return Strings.delete()
+  }
+
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    viewModel.deleteDraft(at: indexPath.row) { (success: Bool, error: BookwittyAPIError?) in
+      guard success else {
+        return
+      }
+
+      self.tableNode.deleteRows(at: [indexPath], with: .automatic)
+    }
+  }
+
   func shouldBatchFetch(for tableNode: ASTableNode) -> Bool {
     return viewModel.hasNextPage()
   }
