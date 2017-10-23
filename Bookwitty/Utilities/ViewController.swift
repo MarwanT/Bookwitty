@@ -18,6 +18,31 @@ extension UIViewController {
   enum MoreAction {
     case modify(edit: Bool, delete: Bool)
     case report(ReportType)
+
+    static func actions(for resource: ModelCommonProperties?) -> [MoreAction] {
+      guard let resource = resource else {
+        return []
+      }
+
+      var actions: [MoreAction] = []
+      if let penName = resource as? PenName {
+        if !UserManager.shared.isMyDefault(penName: penName) {
+          actions.append(.report(.penName))
+        }
+      }
+
+      if let penName = resource.penName {
+        let mine = UserManager.shared.isMyDefault(penName: penName)
+        let editable = mine && (resource is CandidatePost)
+
+        if mine {
+          actions.append(.modify(edit: editable, delete: mine))
+        } else {
+          actions.append(.report(.content))
+        }
+      }
+      return actions
+    }
   }
 
   func add(asChildViewController viewController: UIViewController, toView view: UIView) -> UIView {
