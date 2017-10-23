@@ -269,6 +269,10 @@ class Strings {
     return localizedString(key: "drafts")
   }
   
+  static func edit() -> String {
+    return localizedString(key: "edit")
+  }
+
   static func edit_pen_name() -> String {
     return localizedString(key: "edit_pen_name")
   }
