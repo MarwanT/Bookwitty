@@ -22,6 +22,7 @@ class RootTabBarController: UITabBarController {
     applyTheme()
     addObservers()
     setupCenterButton()
+    self.delegate = self
     navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
   
@@ -453,5 +454,18 @@ extension RootTabBarController: MisfortuneNodeDelegate {
     default:
       break
     }
+  }
+}
+
+extension RootTabBarController: UITabBarControllerDelegate {
+  
+  func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+    
+    if viewController is EmptyNavigationViewController {
+      let editor = Storyboard.Content.instantiate(ContentEditorViewController.self)
+      self.present(UINavigationController(rootViewController:editor), animated:true, completion:nil)
+      return false
+    }
+    return true
   }
 }
