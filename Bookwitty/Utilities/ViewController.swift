@@ -16,6 +16,7 @@ extension UIViewController {
   }
 
   enum MoreAction {
+    case modify(edit: Bool, delete: Bool)
     case report(ReportType)
   }
 
@@ -235,6 +236,10 @@ extension UIViewController.MoreAction: Equatable {
     switch (lhs, rhs) {
     case (let .report(type1), let .report(type2)):
       return type1 == type2
+    case (let .modify(edit1, delete1), let .modify(edit2, delete2)):
+      return edit1 == edit2 && delete1 == delete2
+    default:
+      return false
     }
   }
 }
