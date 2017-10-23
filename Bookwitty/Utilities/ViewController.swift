@@ -112,6 +112,31 @@ extension UIViewController {
   func showMoreActionSheet(identifier: String, actions: [MoreAction], completion: @escaping (_ success: Bool)->()) {
     let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
 
+
+    //Check if .modify is in the actions
+    let modifyIndex: Int? = actions.index(where: {
+      if case .modify = $0 {
+        return true
+      }
+      return false
+    })
+
+    if let index = modifyIndex {
+      if case let MoreAction.modify(edit, delete) = actions[index] {
+        if edit {
+          alert.addAction(UIAlertAction(title: Strings.edit(), style: .destructive, handler: { (action: UIAlertAction) in
+            //TODO: Empty Implementation
+          }))
+        }
+
+        if delete {
+          alert.addAction(UIAlertAction(title: Strings.delete(), style: .destructive, handler: { (action: UIAlertAction) in
+            //TODO: Empty Implementation
+          }))
+        }
+      }
+    }
+
     if actions.contains(where: { $0 == .report(.content) }) {
       alert.addAction(UIAlertAction(title: Strings.report(), style: .destructive, handler: { (action: UIAlertAction) in
         self.showReportContentAlert(identifier: identifier, completion: { (success: Bool) in
