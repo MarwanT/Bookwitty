@@ -408,7 +408,9 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
     case .more:
       guard let resource = viewModel.resource as? ModelCommonProperties,
         let identifier = resource.id else { return }
-      self.showMoreActionSheet(identifier: identifier, actions: [.report(.content)], completion: { (success: Bool) in
+
+      let actions: [MoreAction] = MoreAction.actions(for: resource)
+      self.showMoreActionSheet(identifier: identifier, actions: actions, completion: { (success: Bool) in
         didFinishAction?(success)
       })
     default:
@@ -803,7 +805,9 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
     case .more:
       guard let resource = viewModel.relatedPost(at: index),
         let identifier = resource.id else { return }
-      self.showMoreActionSheet(identifier: identifier, actions: [.report(.content)], completion: { (success: Bool) in
+
+      let actions: [MoreAction] = MoreAction.actions(for: resource as? ModelCommonProperties)
+      self.showMoreActionSheet(identifier: identifier, actions: actions, completion: { (success: Bool) in
         didFinishAction?(success)
       })
     default:
@@ -903,7 +907,9 @@ extension PostDetailsViewController: PenNameFollowNodeDelegate {
       let identifier = penName.id else {
         return
     }
-    self.showMoreActionSheet(identifier: identifier, actions: [.report(.penName)], completion: {
+
+    let actions: [MoreAction] = MoreAction.actions(for: penName as? ModelCommonProperties)
+    self.showMoreActionSheet(identifier: identifier, actions: actions, completion: {
       (success: Bool) in
 
     })

@@ -490,11 +490,13 @@ extension TopicViewController: PenNameFollowNodeDelegate {
   func penName(node: PenNameFollowNode, moreButtonTouchUpInside button: ASButtonNode?) {
     
     guard let indexPath = collectionNode.indexPath(for: node),
-      let identifier = viewModel.follower(at: indexPath.row)?.id else {
+      let resource = viewModel.follower(at: indexPath.row),
+      let identifier = resource.id else {
         return
     }
-    
-    self.showMoreActionSheet(identifier: identifier, actions: [.report(.penName)], completion: {
+
+    let actions: [MoreAction] = MoreAction.actions(for: resource as? ModelCommonProperties)
+    self.showMoreActionSheet(identifier: identifier, actions: actions, completion: {
       (success: Bool) in
 
     })
@@ -984,7 +986,9 @@ extension TopicViewController: BaseCardPostNodeDelegate {
     case .more:
       guard let resource = resource as? ModelCommonProperties,
         let identifier = resource.id else { return }
-      self.showMoreActionSheet(identifier: identifier, actions: [.report(.content)], completion: { (success: Bool) in
+
+      let actions: [MoreAction] = MoreAction.actions(for: resource as? ModelCommonProperties)
+      self.showMoreActionSheet(identifier: identifier, actions: actions, completion: { (success: Bool) in
         didFinishAction?(success)
       })
     default:
