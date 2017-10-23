@@ -58,11 +58,14 @@ class RootTabBarController: UITabBarController {
     self.view.addSubview(button)
     button.isUserInteractionEnabled = false
   }
+  
   private func initializeTabBarViewControllers() {
     let newsFeedViewController = newsFeedViewControllerCreator()
     let bookStoreViewController = Storyboard.Books.instantiate(BookStoreViewController.self)
+    let emptyViewController = UIViewController()
     let discoverViewController = DiscoverViewController()
-    
+    let settingsViewController = Storyboard.Account.instantiate(AccountViewController.self)
+
     newsFeedViewController.viewController.tabBarItem = UITabBarItem(
       title: Strings.news().uppercased(),
       image: #imageLiteral(resourceName: "newsfeed"),
@@ -75,12 +78,22 @@ class RootTabBarController: UITabBarController {
       title: Strings.books().uppercased(),
       image: #imageLiteral(resourceName: "books"),
       tag:3)
-
+    emptyViewController.tabBarItem = UITabBarItem(
+      title: "",
+      image: nil,
+      tag:4)
+    settingsViewController.tabBarItem = UITabBarItem(
+      title: Strings.me(),
+      image: #imageLiteral(resourceName: "person"),
+      tag:4)
+    
     // Set The View controller
     self.viewControllers = [
       UINavigationController(rootViewController: newsFeedViewController.viewController),
       UINavigationController(rootViewController: discoverViewController),
+      EmptyNavigationViewController(rootViewController: emptyViewController),
       UINavigationController(rootViewController: bookStoreViewController),
+      UINavigationController(rootViewController: settingsViewController),
     ]
     
     // Hide navigation bar for news feed if necessary
