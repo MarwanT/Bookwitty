@@ -138,9 +138,9 @@ struct PenNameAPI {
     })
   }
 
-  public static func penNameContent(identifier: String, completion: @escaping (_ success: Bool, _ resources: [ModelResource]?, _ nextPage: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  public static func penNameContent(identifier: String, status: PublishAPI.PublishStatus? = nil, completion: @escaping (_ success: Bool, _ resources: [ModelResource]?, _ nextPage: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     return signedAPIRequest(
-    target: BookwittyAPI.penNameContent(identifier: identifier)) {
+    target: BookwittyAPI.penNameContent(identifier: identifier, status: status)) {
       (data, statusCode, response, error) in
       DispatchQueue.global(qos: .background).async {
         // Ensure the completion block is always called
@@ -326,5 +326,15 @@ extension PenNameAPI {
     penName.wordpressUrl = wordpressUrl
     penName.websiteUrl = websiteUrl
     return penName.serializeData(options: [.IncludeID, .OmitNullValues])
+  }
+
+  static func penNameContent(with status: PublishAPI.PublishStatus?) -> [String : Any]? {
+    guard let status = status else {
+      return nil
+    }
+
+    var dictionary = [String : Any]()
+    dictionary["filter[status]"] = status.rawValue
+    return dictionary
   }
 }
