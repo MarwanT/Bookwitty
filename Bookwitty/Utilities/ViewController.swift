@@ -157,6 +157,25 @@ extension UIViewController {
     self.present(alert, animated: true, completion: nil)
   }
 
+  fileprivate func showDeleteConfirmationAlert(identifier: String, completion: @escaping (_ success: Bool)->()) {
+    let message = "Are you sure you want to delete this post ?"
+    let alert = UIAlertController(title: nil, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action: UIAlertAction) in
+      _ = PublishAPI.removeContent(contentIdentifier: identifier, completion: { (success: Bool, error: BookwittyAPIError?) in
+        if success {
+          self.showDeleteContentSuccessfullAlert(completion: { 
+            completion(success)
+          })
+        }
+      })
+    }))
+
+    alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction) in
+      completion(false)
+    }))
+    self.present(alert, animated: true, completion: nil)
+  }
+
   func showReportPenNameAlert(identifier: String, completion: @escaping (_ success: Bool)->()) {
     let title = Strings.report()
     let message = Strings.report_this_content()
@@ -256,6 +275,16 @@ extension UIViewController {
     let message = Strings.thank_you_for_report()
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
     alert.addAction(UIAlertAction(title: Strings.dismiss(), style: .default, handler: { (action: UIAlertAction) in
+      completion()
+    }))
+    self.present(alert, animated: true, completion: nil)
+  }
+
+  private func showDeleteContentSuccessfullAlert(completion: @escaping ()->()) {
+    let title = "deleted"
+    let message = "Your post has been deleted"
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction) in
       completion()
     }))
     self.present(alert, animated: true, completion: nil)
