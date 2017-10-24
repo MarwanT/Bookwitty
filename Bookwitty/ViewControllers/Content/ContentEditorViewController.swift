@@ -441,14 +441,7 @@ extension ContentEditorViewController {
   func saveAsDraft() {
     //Ask the content editor for the body.
     let html = "<p>Hello</p>"
-    _ = PublishAPI.createContent(title: self.titleTextField.text ?? "", body: html) { (success, candidatePost, error) in
-      
-      guard success, let candidatePost = candidatePost else {
-        return
-      }
-      self.viewModel.set(candidatePost)
-      
-    }
+   self.updateContent(with: self.titleTextField.text, body: html, imageURL: self.viewModel.currentPost.imageUrl, shortDescription: self.viewModel.currentPost.shortDescription)
   }
 }
 
