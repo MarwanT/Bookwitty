@@ -602,7 +602,7 @@ extension DiscoverViewController: BaseCardPostNodeDelegate {
         let identifier = resource.id else { return }
 
       let actions: [MoreAction] = MoreAction.actions(for: resource as? ModelCommonProperties)
-      self.showMoreActionSheet(identifier: identifier, actions: actions, completion: { (success: Bool) in
+      self.showMoreActionSheet(identifier: identifier, actions: actions, completion: { (success: Bool, action: MoreAction) in
         didFinishAction?(success)
       })
     default:

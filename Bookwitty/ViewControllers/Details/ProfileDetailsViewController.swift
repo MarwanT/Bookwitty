@@ -233,7 +233,7 @@ extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
 
     let actions: [MoreAction] = MoreAction.actions(for: penNameResource as? ModelCommonProperties)
     self.showMoreActionSheet(identifier: penNameIdentifier, actions: actions, completion: {
-      (success: Bool) in
+      (success: Bool, action: MoreAction) in
 
     })
   }
@@ -532,7 +532,7 @@ extension ProfileDetailsViewController: BaseCardPostNodeDelegate {
         let identifier = resource.id else { return }
 
       let actions: [MoreAction] = MoreAction.actions(for: resource as? ModelCommonProperties)
-      self.showMoreActionSheet(identifier: identifier, actions: actions, completion: { (success: Bool) in
+      self.showMoreActionSheet(identifier: identifier, actions: actions, completion: { (success: Bool, action: MoreAction) in
         didFinishAction?(success)
       })
     default:

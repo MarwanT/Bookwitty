@@ -234,7 +234,7 @@ extension PenNameListViewController: PenNameFollowNodeDelegate {
 
     let actions: [MoreAction] = MoreAction.actions(for: resource as? ModelCommonProperties)
     self.showMoreActionSheet(identifier: identifier, actions: actions, completion: {
-      (success: Bool) in
+      (success: Bool, action: MoreAction) in
 
     })
   }

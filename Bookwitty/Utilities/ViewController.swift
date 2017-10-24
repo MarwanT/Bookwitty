@@ -109,7 +109,7 @@ extension UIViewController {
     self.navigationController?.pushViewController(commentsVC, animated: true)
   }
 
-  func showMoreActionSheet(identifier: String, actions: [MoreAction], completion: @escaping (_ success: Bool)->()) {
+  func showMoreActionSheet(identifier: String, actions: [MoreAction], completion: @escaping (_ success: Bool, _ action: MoreAction)->()) {
     let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
 
 
@@ -140,7 +140,7 @@ extension UIViewController {
     if actions.contains(where: { $0 == .report(.content) }) {
       alert.addAction(UIAlertAction(title: Strings.report(), style: .destructive, handler: { (action: UIAlertAction) in
         self.showReportContentAlert(identifier: identifier, completion: { (success: Bool) in
-          completion(success)
+          completion(success, .report(.content))
         })
       }))
     }
@@ -148,7 +148,7 @@ extension UIViewController {
     if actions.contains(where: { $0 == .report(.penName) }) {
       alert.addAction(UIAlertAction(title: Strings.report(), style: .destructive, handler: { (action: UIAlertAction) in
         self.showReportPenNameAlert(identifier: identifier, completion: { (success: Bool) in
-          completion(success)
+          completion(success, .report(.penName))
         })
       }))
     }
