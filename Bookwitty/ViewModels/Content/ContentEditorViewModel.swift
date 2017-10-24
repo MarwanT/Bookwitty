@@ -11,6 +11,7 @@ import UIKit
 class ContentEditorViewModel  {
   var linkedTags: [Tag] = []
   var linkedTopics: [Topic] = []
+  private(set) var latestHashValue: Int = 0
   
   var currentPost: CandidatePost!
   
@@ -20,6 +21,7 @@ class ContentEditorViewModel  {
   
   func set(_ currentPost: CandidatePost) {
     self.currentPost = currentPost
+    self.latestHashValue = currentPost.hash
   }
   
   
