@@ -131,7 +131,9 @@ extension UIViewController {
 
         if delete {
           alert.addAction(UIAlertAction(title: Strings.delete(), style: .destructive, handler: { (action: UIAlertAction) in
-            //TODO: Empty Implementation
+            self.showDeleteConfirmationAlert(identifier: identifier, completion: { (success: Bool) in
+              completion(success, .modify(edit: false, delete: true))
+            })
           }))
         }
       }
