@@ -125,7 +125,8 @@ extension UIViewController {
       if case let MoreAction.modify(edit, delete) = actions[index] {
         if edit {
           alert.addAction(UIAlertAction(title: Strings.edit(), style: .destructive, handler: { (action: UIAlertAction) in
-            //TODO: Empty Implementation
+            //TODO: Present the Content Editor initialized with this Post
+            completion(true, .modify(edit: true, delete: false))
           }))
         }
 
