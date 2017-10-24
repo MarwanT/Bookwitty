@@ -220,21 +220,26 @@ class ContentEditorViewController: UIViewController {
     })
   }
   
-  @objc private func tick() {
+  private func dispatchContent() {
     
-    guard let currentPost =  self.viewModel.currentPost else {
-        createContent()
-      return
-    }
-    //We have current post
-    let currentPostHashValue = currentPost.titleBodyHashValue
-    let title = self.titleTextField.text ?? ""
+    print(self.viewModel.currentPost.title)
+    let newHashValue = self.viewModel.currentPost.hash
+    print(newHashValue)
+    let latestHashValue = self.viewModel.latestHashValue
+    print(latestHashValue)
+    
     let body = "<p>Hello0</p>"
-    let newHashValue = title.hashValue + body.hashValue
     
-    if newHashValue != currentPostHashValue {
+    if self.viewModel.currentPost.id == nil {
+      self.createContent()
+    } else if newHashValue != latestHashValue {
       self.updateContent(with: title, body: body, imageURL: self.viewModel.currentPost.imageUrl, shortDescription: self.viewModel.currentPost.shortDescription)
     }
+
+  }
+  
+  @objc private func tick() {
+    dispatchContent()
   }
   
   private func setupEditorToolbar() {
