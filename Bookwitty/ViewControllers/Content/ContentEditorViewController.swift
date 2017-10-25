@@ -18,6 +18,8 @@ class ContentEditorViewController: UIViewController {
   @IBOutlet weak var editorView: RichEditorView!
 
   @IBOutlet weak var titleTextField: UITextField!
+
+  fileprivate var currentRequest: Cancellable?
   let viewModel = ContentEditorViewModel()
   
   private var timer: Timer!
