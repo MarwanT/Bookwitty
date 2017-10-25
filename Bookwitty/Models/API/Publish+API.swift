@@ -15,7 +15,7 @@ public struct PublishAPI {
     case `public` = "public"
   }
   
-  static func createContent(title: String, body: String, completion: @escaping (_ success: Bool, _ candidatePost: CandidatePost?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  static func createContent(title: String?, body: String?, completion: @escaping (_ success: Bool, _ candidatePost: CandidatePost?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let successStatusCode: Int = 201
     return signedAPIRequest(target: BookwittyAPI.createContent(title: title, body: body, status: .draft), completion: { (data, statusCode, response, error) in
       var success: Bool = false
@@ -72,7 +72,7 @@ public struct PublishAPI {
 }
 
 extension PublishAPI {
-  static func createContentParameters(title: String, body: String, status: PublishStatus) -> [String : Any]? {
+  static func createContentParameters(title: String?, body: String?, status: PublishStatus) -> [String : Any]? {
     let dictionary = [
       "data" : [
         "type": "texts",
