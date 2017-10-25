@@ -13,4 +13,12 @@ class ActionBarNode: ASCellNode {
   let editButton = ASButtonNode()
   let moreButton = ASButtonNode()
 
+  override init() {
+    super.init()
+    initializeComponents()
+  }
+
+  fileprivate func initializeComponents() {
+    automaticallyManagesSubnodes = true
+  }
 }
