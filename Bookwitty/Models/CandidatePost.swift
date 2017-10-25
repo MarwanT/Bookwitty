@@ -14,8 +14,8 @@ protocol CandidatePost {
   var body: String? { get set }
   var shortDescription: String? { get set }
   var imageUrl: String? { get set }
-//  var hash: Int { get }
   var penName: PenName? { get set }
+  var status: String? { get set }
 }
 
 extension CandidatePost {
