@@ -8,7 +8,6 @@
 
 import UIKit
 import RichEditorView
-import Moya
 
 class ContentEditorViewController: UIViewController {
   
@@ -19,7 +18,6 @@ class ContentEditorViewController: UIViewController {
 
   @IBOutlet weak var titleTextField: UITextField!
 
-  fileprivate var currentRequest: Cancellable?
   let viewModel = ContentEditorViewModel()
   
   private var timer: Timer!
@@ -200,56 +198,8 @@ class ContentEditorViewController: UIViewController {
     self.timer.tolerance = 0.5
   }
   
-  fileprivate func createContent() {
-    self.resetPreviousRequest()
-    self.currentRequest = PublishAPI.createContent(title: self.viewModel.currentPost.title, body: self.viewModel.currentPost.body) { (success, candidatePost, error) in
-      defer { self.currentRequest = nil }
-      
-      guard success, let candidatePost = candidatePost else {
-        return
-      }
-      self.viewModel.set(candidatePost)
-    }
-  }
-  
-  fileprivate func updateContent() {
-    guard let currentPost = self.viewModel.currentPost, let id = currentPost.id else {
-      return
-    }
-    self.resetPreviousRequest()
-    let status = PublishAPI.PublishStatus(rawValue: self.viewModel.currentPost.status ?? "") ?? PublishAPI.PublishStatus.draft
-    self.currentRequest = PublishAPI.updateContent(id: id, title: currentPost.title, body: currentPost.body, imageURL: currentPost.imageUrl, shortDescription: currentPost.shortDescription, status: status, completion: { (success, candidatePost, error) in
-      defer { self.currentRequest = nil }
-      guard success, let candidatePost = candidatePost else {
-        return
-      }
-      self.viewModel.set(candidatePost)
-    })
-  }
-  
-  fileprivate func dispatchContent() {
-    
-    let newHashValue = self.viewModel.currentPost.hash
-    let latestHashValue = self.viewModel.latestHashValue    
-    
-    if self.viewModel.currentPost.id == nil {
-      self.createContent()
-    } else if newHashValue != latestHashValue {
-      self.updateContent()
-    }
-
-  }
-  
   @objc private func tick() {
-    dispatchContent()
-  }
-  
-  fileprivate func resetPreviousRequest() {
-    
-    if let previousRequest = currentRequest {
-      previousRequest.cancel()
-      currentRequest = nil
-    }
+    self.viewModel.dispatchContent()
   }
   
   private func setupEditorToolbar() {
@@ -442,14 +392,14 @@ extension ContentEditorViewController {
   }
   
   func publishYourPost() {
-    self.dispatchContent()
+    self.viewModel.dispatchContent()
   }
 }
 
 extension ContentEditorViewController {
   func saveAsDraft() {
     //Ask the content editor for the body.
-   self.dispatchContent()
+   self.viewModel.dispatchContent()
   }
 }
 
@@ -496,7 +446,7 @@ extension ContentEditorViewController: LinkTopicsViewControllerDelegate {
 //MARK: - PostPreviewViewControllerDelegate Implementation
 extension ContentEditorViewController: PostPreviewViewControllerDelegate {
   func postPreview(viewController: PostPreviewViewController, didFinishPreviewing post: CandidatePost) {
-    self.dispatchContent()
+    self.viewModel.dispatchContent()
   }
 }
 
