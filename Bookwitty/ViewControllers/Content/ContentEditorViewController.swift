@@ -222,12 +222,8 @@ class ContentEditorViewController: UIViewController {
   
   private func dispatchContent() {
     
-    print(self.viewModel.currentPost.title)
     let newHashValue = self.viewModel.currentPost.hash
-    print(newHashValue)
-    let latestHashValue = self.viewModel.latestHashValue
-    print(latestHashValue)
-    
+    let latestHashValue = self.viewModel.latestHashValue    
     let body = "<p>Hello0</p>"
     
     if self.viewModel.currentPost.id == nil {
