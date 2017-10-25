@@ -200,9 +200,10 @@ class ContentEditorViewController: UIViewController {
     self.timer.tolerance = 0.5
   }
   
-  private func createContent() {
-    let html = "<p>Hello0</p>"
-    _ = PublishAPI.createContent(title: self.titleTextField.text ?? "", body: html) { (success, candidatePost, error) in
+  fileprivate func createContent() {
+    self.resetPreviousRequest()
+    self.currentRequest = PublishAPI.createContent(title: self.viewModel.currentPost.title, body: self.viewModel.currentPost.body) { (success, candidatePost, error) in
+      defer { self.currentRequest = nil }
       
       guard success, let candidatePost = candidatePost else {
         return
@@ -211,11 +212,13 @@ class ContentEditorViewController: UIViewController {
     }
   }
   
-  fileprivate func updateContent(with title: String?, body: String?, imageURL: String?, shortDescription: String?) {
-    guard let id = self.viewModel.currentPost.id else {
+  fileprivate func updateContent(_ status: PublishAPI.PublishStatus = .draft) {
+    guard let currentPost = self.viewModel.currentPost, let id = currentPost.id else {
       return
     }
-    _ = PublishAPI.updateContent(id: id, title: title, body: body, imageURL: imageURL, shortDescription: shortDescription, completion: { (success, candidatePost, error) in
+    self.resetPreviousRequest()
+    self.currentRequest = PublishAPI.updateContent(id: id, title: currentPost.title, body: currentPost.body, imageURL: currentPost.imageUrl, shortDescription: currentPost.shortDescription, status: status, completion: { (success, candidatePost, error) in
+      defer { self.currentRequest = nil }
       guard success, let candidatePost = candidatePost else {
         return
       }
@@ -227,12 +230,11 @@ class ContentEditorViewController: UIViewController {
     
     let newHashValue = self.viewModel.currentPost.hash
     let latestHashValue = self.viewModel.latestHashValue    
-    let body = "<p>Hello0</p>"
     
     if self.viewModel.currentPost.id == nil {
       self.createContent()
     } else if newHashValue != latestHashValue {
-      self.updateContent(with: title, body: body, imageURL: self.viewModel.currentPost.imageUrl, shortDescription: self.viewModel.currentPost.shortDescription)
+      self.updateContent()
     }
 
   }
@@ -436,24 +438,14 @@ extension ContentEditorViewController {
   }
   
   func publishYourPost() {
-    
-    guard let currentPost = self.viewModel.currentPost, let currentPostId = currentPost.id else {
-      return
-    }
-    
-    _ = PublishAPI.updateContent(id: currentPostId, title: self.viewModel.currentPost.title, body: self.viewModel.currentPost.body, imageURL: self.viewModel.currentPost.imageUrl, shortDescription: self.viewModel.currentPost.shortDescription, status: .public, completion: { (success, post, error) in
-      guard success else {
-        return
-      }
-    })
+    self.updateContent(.public)
   }
 }
 
 extension ContentEditorViewController {
   func saveAsDraft() {
     //Ask the content editor for the body.
-    let html = "<p>Hello</p>"
-   self.updateContent(with: self.titleTextField.text, body: html, imageURL: self.viewModel.currentPost.imageUrl, shortDescription: self.viewModel.currentPost.shortDescription)
+   self.updateContent()
   }
 }
 
@@ -497,7 +489,7 @@ extension ContentEditorViewController: LinkTopicsViewControllerDelegate {
 
 extension ContentEditorViewController: PostPreviewViewControllerDelegate {
   func postPreview(viewController: PostPreviewViewController, didFinishPreviewing post: CandidatePost) {
-    self.updateContent(with: post.title, body: post.body, imageURL: post.imageUrl, shortDescription: post.shortDescription)
+    self.updateContent()
   }
 }
 
