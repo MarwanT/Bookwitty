@@ -227,7 +227,7 @@ class ContentEditorViewController: UIViewController {
     })
   }
   
-  private func dispatchContent() {
+  fileprivate func dispatchContent() {
     
     let newHashValue = self.viewModel.currentPost.hash
     let latestHashValue = self.viewModel.latestHashValue    
@@ -442,14 +442,14 @@ extension ContentEditorViewController {
   }
   
   func publishYourPost() {
-    self.updateContent()
+    self.dispatchContent()
   }
 }
 
 extension ContentEditorViewController {
   func saveAsDraft() {
     //Ask the content editor for the body.
-   self.updateContent()
+   self.dispatchContent()
   }
 }
 
@@ -496,7 +496,7 @@ extension ContentEditorViewController: LinkTopicsViewControllerDelegate {
 //MARK: - PostPreviewViewControllerDelegate Implementation
 extension ContentEditorViewController: PostPreviewViewControllerDelegate {
   func postPreview(viewController: PostPreviewViewController, didFinishPreviewing post: CandidatePost) {
-    self.updateContent()
+    self.dispatchContent()
   }
 }
 
