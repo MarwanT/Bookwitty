@@ -21,7 +21,8 @@ class RootTabBarController: UITabBarController {
     initializeTabBarViewControllers()
     applyTheme()
     addObservers()
-
+    setupCenterButton()
+    self.delegate = self
     navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
   
@@ -49,11 +50,32 @@ class RootTabBarController: UITabBarController {
     }
   }
   
+  private func setupCenterButton() {
+    let button = UIButton(frame: .zero)
+    button.translatesAutoresizingMaskIntoConstraints = false
+    //Constraints
+    self.tabBar.addSubview(button)
+    button.addWidthConstraint(44.0)
+    button.addHeightConstraint(44.0)
+    NSLayoutConstraint.activate([
+      button.centerXAnchor.constraint(equalTo: tabBar.centerXAnchor),
+      button.centerYAnchor.constraint(equalTo: tabBar.centerYAnchor)
+      ])
+    
+    //TODO: use real icon
+    button.setImage(#imageLiteral(resourceName: "newsfeed"), for: .normal)
+    button.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
+    button.center = self.tabBar.center
+    button.isUserInteractionEnabled = false
+  }
+  
   private func initializeTabBarViewControllers() {
     let newsFeedViewController = newsFeedViewControllerCreator()
     let bookStoreViewController = Storyboard.Books.instantiate(BookStoreViewController.self)
+    let emptyViewController = UIViewController()
     let discoverViewController = DiscoverViewController()
-    
+    let settingsViewController = Storyboard.Account.instantiate(AccountViewController.self)
+
     newsFeedViewController.viewController.tabBarItem = UITabBarItem(
       title: Strings.news().uppercased(),
       image: #imageLiteral(resourceName: "newsfeed"),
@@ -66,12 +88,22 @@ class RootTabBarController: UITabBarController {
       title: Strings.books().uppercased(),
       image: #imageLiteral(resourceName: "books"),
       tag:3)
-
+    emptyViewController.tabBarItem = UITabBarItem(
+      title: "",
+      image: nil,
+      tag:4)
+    settingsViewController.tabBarItem = UITabBarItem(
+      title: Strings.me(),
+      image: #imageLiteral(resourceName: "person"),
+      tag:4)
+    
     // Set The View controller
     self.viewControllers = [
       UINavigationController(rootViewController: newsFeedViewController.viewController),
       UINavigationController(rootViewController: discoverViewController),
+      EmptyNavigationViewController(rootViewController: emptyViewController),
       UINavigationController(rootViewController: bookStoreViewController),
+      UINavigationController(rootViewController: settingsViewController),
     ]
     
     // Hide navigation bar for news feed if necessary
@@ -431,5 +463,18 @@ extension RootTabBarController: MisfortuneNodeDelegate {
     default:
       break
     }
+  }
+}
+
+extension RootTabBarController: UITabBarControllerDelegate {
+  
+  func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+    
+    if viewController is EmptyNavigationViewController {
+      let editor = Storyboard.Content.instantiate(ContentEditorViewController.self)
+      self.present(UINavigationController(rootViewController:editor), animated:true, completion:nil)
+      return false
+    }
+    return true
   }
 }

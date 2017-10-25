@@ -82,7 +82,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     addObservers()
-    initializeNavigationItems()
 
     collectionNode.delegate = self
     collectionNode.dataSource = self
@@ -132,21 +131,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       self.pullToRefresher.beginRefreshing()
       collectionView.contentOffset = offset
     }
-  }
-
-  fileprivate func initializeNavigationItems() {
-    if !UserManager.shared.isSignedIn {
-      navigationItem.leftBarButtonItems = nil
-      return
-    }
-
-    let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
-      UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
-    leftNegativeSpacer.width = -10
-    let settingsBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "person"), style:
-      UIBarButtonItemStyle.plain, target: self, action:
-      #selector(self.settingsButtonTap(_:)))
-    navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
   }
   
   func refreshViewControllerData() {
@@ -260,9 +244,7 @@ extension NewsFeedViewController {
   }
 
   func refreshData(_ notification: Notification) {
-    if UserManager.shared.isSignedIn {
-      initializeNavigationItems()
-    } else {
+    if !UserManager.shared.isSignedIn {
       signOutAction()
     }
   }
@@ -284,15 +266,6 @@ extension NewsFeedViewController {
 extension NewsFeedViewController: Themeable {
   func applyTheme() {
     collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
-  }
-}
-
-// MARK: - Action
-extension NewsFeedViewController {
-  func settingsButtonTap(_ sender: UIBarButtonItem) {
-    let settingsVC = Storyboard.Account.instantiate(AccountViewController.self)
-    settingsVC.hidesBottomBarWhenPushed = true
-    self.navigationController?.pushViewController(settingsVC, animated: true)
   }
 }
 

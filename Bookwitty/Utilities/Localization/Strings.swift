@@ -533,6 +533,10 @@ class Strings {
     return localizedString(key: "list_price")
   }
   
+  static func me() -> String {
+    return localizedString(key: "me")
+  }
+  
   static func more() -> String {
     return localizedString(key: "more")
   }
