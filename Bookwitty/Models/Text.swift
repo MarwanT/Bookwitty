@@ -22,7 +22,8 @@ class Text: Resource {
   var penName: PenName?
   var vote: String?
   var counts: Counts?
-
+  var status: String?
+  
   @objc
   private var topVotesCollection: LinkedResourceCollection?
   lazy var topVotes: [Vote]? = {
@@ -50,6 +51,7 @@ class Text: Resource {
 
   override class var fields: [Field] {
     return fieldsFromDictionary([
+      "status": Attribute().serializeAs("status"),
       "createdAt": DateAttribute().serializeAs("created-at"),
       "updatedAt": DateAttribute().serializeAs("updated-at"),
       "userId": Attribute().serializeAs("user-id"),

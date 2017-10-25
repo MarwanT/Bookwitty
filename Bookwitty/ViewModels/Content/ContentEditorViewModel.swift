@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import Moya
 
 class ContentEditorViewModel  {
   var linkedTags: [Tag] = []
   var linkedTopics: [Topic] = []
-  
+  private(set) var latestHashValue: Int = 0
+  private(set) var currentRequest: Cancellable?
+
   var currentPost: CandidatePost!
   
   func initialize(with candidatPost: CandidatePost) -> Void {
@@ -20,11 +23,60 @@ class ContentEditorViewModel  {
   
   func set(_ currentPost: CandidatePost) {
     self.currentPost = currentPost
+    self.latestHashValue = currentPost.hash
   }
   
   
   var getCurrentPost: CandidatePost {
     return self.currentPost
+  }
+  
+  func resetPreviousRequest() {
+    
+    if let previousRequest = currentRequest {
+      previousRequest.cancel()
+      currentRequest = nil
+    }
+  }
+  
+  fileprivate func createContent() {
+    self.resetPreviousRequest()
+    self.currentRequest = PublishAPI.createContent(title: self.currentPost.title, body: self.currentPost.body) { (success, candidatePost, error) in
+      defer { self.currentRequest = nil }
+      
+      guard success, let candidatePost = candidatePost else {
+        return
+      }
+      self.set(candidatePost)
+    }
+  }
+  
+  fileprivate func updateContent() {
+    guard let currentPost = self.currentPost, let id = currentPost.id else {
+      return
+    }
+    self.resetPreviousRequest()
+    let status = PublishAPI.PublishStatus(rawValue: self.currentPost.status ?? "") ?? PublishAPI.PublishStatus.draft
+    self.currentRequest = PublishAPI.updateContent(id: id, title: currentPost.title, body: currentPost.body, imageURL: currentPost.imageUrl, shortDescription: currentPost.shortDescription, status: status, completion: { (success, candidatePost, error) in
+      defer { self.currentRequest = nil }
+      guard success, let candidatePost = candidatePost else {
+        return
+      }
+      self.set(candidatePost)
+    })
+  }
+  
+  func dispatchContent() {
+    
+    let newHashValue = self.currentPost.hash
+    let latestHashValue = self.latestHashValue
+    
+    if self.currentPost.id == nil {
+      self.createContent()
+    } else if newHashValue != latestHashValue {
+      self.updateContent()
+    }
+    
   }
   
   func upload(image: UIImage?, completion: @escaping (_ success: Bool, _ imageId: String?) -> Void) {

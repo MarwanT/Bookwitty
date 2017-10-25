@@ -65,7 +65,7 @@ public enum BookwittyAPI {
   case votes(identifier: String)
   case report(identifier: String)
   case reportPenName(identifier: String)
-  case createContent(title: String, body: String, status: PublishAPI.PublishStatus)
+  case createContent(title: String?, body: String?, status: PublishAPI.PublishStatus)
   case updateContent(id: String, title: String?, body: String?, imageURL: String?, shortDescription: String? , status: PublishAPI.PublishStatus?)
   case removeContent(contentIdentifier: String)
   case linkTag(contentIdentifier: String, tagIdentifier: String)

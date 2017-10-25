@@ -17,7 +17,8 @@ class ContentEditorViewController: UIViewController {
   @IBOutlet weak var editorView: RichEditorView!
 
   @IBOutlet weak var titleTextField: UITextField!
-  fileprivate let viewModel = ContentEditorViewModel()
+
+  let viewModel = ContentEditorViewModel()
   
   private var timer: Timer!
   
@@ -27,6 +28,11 @@ class ContentEditorViewController: UIViewController {
     initializeComponents()
     loadNavigationBarButtons()
     addKeyboardNotifications()
+    self.titleTextField.addTarget(self, action: #selector(ContentEditorViewController.textChanged(_:)), for: .editingChanged)
+  }
+  
+  @objc private func textChanged(_ sender: UITextField) {
+    self.viewModel.currentPost?.title = sender.text
   }
   
   private func loadNavigationBarButtons() {
@@ -192,44 +198,8 @@ class ContentEditorViewController: UIViewController {
     self.timer.tolerance = 0.5
   }
   
-  private func createContent() {
-    let html = "<p>Hello0</p>"
-    _ = PublishAPI.createContent(title: self.titleTextField.text ?? "", body: html) { (success, candidatePost, error) in
-      
-      guard success, let candidatePost = candidatePost else {
-        return
-      }
-      self.viewModel.set(candidatePost)
-    }
-  }
-  
-  fileprivate func updateContent(with title: String?, body: String?, imageURL: String?, shortDescription: String?) {
-    guard let id = self.viewModel.currentPost.id else {
-      return
-    }
-    _ = PublishAPI.updateContent(id: id, title: title, body: body, imageURL: imageURL, shortDescription: shortDescription, completion: { (success, candidatePost, error) in
-      guard success, let candidatePost = candidatePost else {
-        return
-      }
-      self.viewModel.set(candidatePost)
-    })
-  }
-  
   @objc private func tick() {
-    
-    guard let currentPost =  self.viewModel.currentPost else {
-        createContent()
-      return
-    }
-    //We have current post
-    let currentPostHashValue = currentPost.titleBodyHashValue
-    let title = self.titleTextField.text ?? ""
-    let body = "<p>Hello0</p>"
-    let newHashValue = title.hashValue + body.hashValue
-    
-    if newHashValue != currentPostHashValue {
-      self.updateContent(with: title, body: body, imageURL: self.viewModel.currentPost.imageUrl, shortDescription: self.viewModel.currentPost.shortDescription)
-    }
+    self.viewModel.dispatchContent()
   }
   
   private func setupEditorToolbar() {
@@ -302,6 +272,7 @@ class ContentEditorViewController: UIViewController {
   }
 }
 
+//MARK: - RichEditorToolbarDelegate Implementation
 extension ContentEditorViewController: RichEditorToolbarDelegate {
   
   func richEditorToolbarInsertLink(_ toolbar: RichEditorToolbar) {
@@ -309,6 +280,7 @@ extension ContentEditorViewController: RichEditorToolbarDelegate {
   }
 }
 
+//MARK: - RichContentMenuViewControllerDelegate Implementation
 extension ContentEditorViewController : RichContentMenuViewControllerDelegate {
   
   func richContentMenuViewControllerDidCancel(_ richContentMenuViewController: RichContentMenuViewController) {
@@ -335,7 +307,7 @@ extension ContentEditorViewController : RichContentMenuViewControllerDelegate {
     }
   }
 }
-
+//MARK: - UINavigationControllerDelegate, UIImagePickerControllerDelegate Implementation
 extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
     
@@ -352,6 +324,7 @@ extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePi
   }
 }
 
+//MARK: - RichBookViewControllerDelegate Implementation
 extension ContentEditorViewController: RichBookViewControllerDelegate {
   func richBookViewController(_ richBookViewController: RichBookViewController, didSelect book: Book) {
     self.navigationController?.dismiss(animated: true, completion: nil)
@@ -419,34 +392,18 @@ extension ContentEditorViewController {
   }
   
   func publishYourPost() {
-    
-    guard let currentPost = self.viewModel.currentPost, let currentPostId = currentPost.id else {
-      return
-    }
-    
-    _ = PublishAPI.updateContent(id: currentPostId, title: self.viewModel.currentPost.title, body: self.viewModel.currentPost.body, imageURL: self.viewModel.currentPost.imageUrl, shortDescription: self.viewModel.currentPost.shortDescription, status: .public, completion: { (success, post, error) in
-      guard success else {
-        return
-      }
-    })
+    self.viewModel.dispatchContent()
   }
 }
 
 extension ContentEditorViewController {
   func saveAsDraft() {
     //Ask the content editor for the body.
-    let html = "<p>Hello</p>"
-    _ = PublishAPI.createContent(title: self.titleTextField.text ?? "", body: html) { (success, candidatePost, error) in
-      
-      guard success, let candidatePost = candidatePost else {
-        return
-      }
-      self.viewModel.set(candidatePost)
-      
-    }
+   self.viewModel.dispatchContent()
   }
 }
 
+//MARK: - PublishMenuViewControllerDelegate Implementation
 extension ContentEditorViewController: PublishMenuViewControllerDelegate {
   
   func publishMenu(_ viewController: PublishMenuViewController, didSelect item: PublishMenuViewController.Item) {
@@ -478,6 +435,7 @@ extension ContentEditorViewController: LinkTagsViewControllerDelegate {
   }
 }
 
+//MARK: - LinkTopicsViewControllerDelegate Implementation
 extension ContentEditorViewController: LinkTopicsViewControllerDelegate {
   func linkTopics(viewController: LinkTopicsViewController, didLink topics: [Topic]) {
     self.viewModel.linkedTopics = topics
@@ -485,12 +443,14 @@ extension ContentEditorViewController: LinkTopicsViewControllerDelegate {
   }
 }
 
+//MARK: - PostPreviewViewControllerDelegate Implementation
 extension ContentEditorViewController: PostPreviewViewControllerDelegate {
   func postPreview(viewController: PostPreviewViewController, didFinishPreviewing post: CandidatePost) {
-    self.updateContent(with: post.title, body: post.body, imageURL: post.imageUrl, shortDescription: post.shortDescription)
+    self.viewModel.dispatchContent()
   }
 }
 
+//MARK: - PenNameViewControllerDelegate Implementatio
 extension ContentEditorViewController: PenNameViewControllerDelegate {
   func penName(viewController: PenNameViewController, didFinish: PenNameViewController.Mode, with penName: PenName?) {
     

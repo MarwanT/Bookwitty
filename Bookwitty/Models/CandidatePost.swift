@@ -14,16 +14,34 @@ protocol CandidatePost {
   var body: String? { get set }
   var shortDescription: String? { get set }
   var imageUrl: String? { get set }
-  var tags: [Tag]? { get set }
-  var titleBodyHashValue: Int { get }
   var penName: PenName? { get set }
-
+  var status: String? { get set }
 }
 
 extension CandidatePost {
-  var titleBodyHashValue: Int {
-    return (title?.hashValue ?? 0)
-      + (body?.hashValue ?? 0)
+  
+  fileprivate func combineHashes(_ hashes: [Int]) -> Int {
+    return hashes.reduce(0, combineHashValues)
+  }
+  
+  fileprivate func combineHashValues(_ initial: Int, _ other: Int) -> Int {
+    #if arch(x86_64) || arch(arm64)
+      let magic: UInt = 0x9e3779b97f4a7c15
+    #elseif arch(i386) || arch(arm)
+      let magic: UInt = 0x9e3779b9
+    #endif
+    var lhs = UInt(bitPattern: initial)
+    let rhs = UInt(bitPattern: other)
+    lhs ^= rhs &+ magic &+ (lhs << 6) &+ (lhs >> 2)
+    return Int(bitPattern: lhs)
+  }
+  
+  var hash: Int {
+    let titleHash = title?.hashValue ?? 0
+    let bodyHash = body?.hashValue ?? 0
+    let shortDescriptionHash = shortDescription?.hashValue ?? 0
+    let imageUrlHash =  imageUrl?.hashValue ?? 0
+    return combineHashes([titleHash, bodyHash, shortDescriptionHash, imageUrlHash])
   }
 }
 
