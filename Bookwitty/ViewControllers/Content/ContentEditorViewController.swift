@@ -8,6 +8,7 @@
 
 import UIKit
 import RichEditorView
+import Moya
 
 class ContentEditorViewController: UIViewController {
   
