@@ -9,5 +9,8 @@
 import AsyncDisplayKit
 
 class ActionBarNode: ASCellNode {
+  let actionButton = ButtonWithLoader()
+  let editButton = ASButtonNode()
+  let moreButton = ASButtonNode()
 
 }
