@@ -51,12 +51,21 @@ class RootTabBarController: UITabBarController {
   }
   
   private func setupCenterButton() {
-    let button = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+    let button = UIButton(frame: .zero)
+    button.translatesAutoresizingMaskIntoConstraints = false
+    //Constraints
+    self.tabBar.addSubview(button)
+    button.addWidthConstraint(44.0)
+    button.addHeightConstraint(44.0)
+    NSLayoutConstraint.activate([
+      button.centerXAnchor.constraint(equalTo: tabBar.centerXAnchor),
+      button.centerYAnchor.constraint(equalTo: tabBar.centerYAnchor)
+      ])
+    
     //TODO: use real icon
     button.setImage(#imageLiteral(resourceName: "newsfeed"), for: .normal)
     button.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
     button.center = self.tabBar.center
-    self.view.addSubview(button)
     button.isUserInteractionEnabled = false
   }
   
