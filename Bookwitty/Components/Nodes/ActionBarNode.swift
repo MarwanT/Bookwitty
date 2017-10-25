@@ -27,6 +27,29 @@ class ActionBarNode: ASCellNode {
   fileprivate func initializeComponents() {
     automaticallyManagesSubnodes = true
   }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let leftNodes: [ASLayoutElement] = [actionButton]
+    let leftStackLayoutSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0.0, justifyContent: .start, alignItems: .stretch, children: leftNodes)
+    leftStackLayoutSpec.style.flexGrow = 1.0
+
+    let rightNodes: [ASLayoutElement] = [editButton, moreButton]
+    let rightStackLayoutSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0.0, justifyContent: .end, alignItems: .stretch, children: rightNodes)
+    rightStackLayoutSpec.style.flexGrow = 1.0
+
+    let toolbarNodes: [ASLayoutElement] = [leftStackLayoutSpec, rightStackLayoutSpec]
+    let toolbarStackLayoutSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0.0, justifyContent: .spaceBetween, alignItems: .center, children: toolbarNodes)
+    toolbarStackLayoutSpec.style.flexShrink = 1.0
+
+    let insetLayoutSpec = ASInsetLayoutSpec(insets: configuration.insets, child: toolbarStackLayoutSpec)
+    insetLayoutSpec.style.flexGrow = 1.0
+    insetLayoutSpec.style.flexShrink = 1.0
+
+    let verticalLayoutSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0.0, justifyContent: .center, alignItems: .stretch, children: [SeparatorNode(), insetLayoutSpec])
+    verticalLayoutSpec.style.height = ASDimensionMake(configuration.height)
+    verticalLayoutSpec.style.flexShrink = 1.0
+    return verticalLayoutSpec
+  }
 }
 
 extension ActionBarNode {
