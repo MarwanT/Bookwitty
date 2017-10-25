@@ -241,6 +241,14 @@ class ContentEditorViewController: UIViewController {
     dispatchContent()
   }
   
+  fileprivate func resetPreviousRequest() {
+    
+    if let previousRequest = currentRequest {
+      previousRequest.cancel()
+      currentRequest = nil
+    }
+  }
+  
   private func setupEditorToolbar() {
     let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
     toolbar.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
