@@ -70,16 +70,16 @@ class ContentEditorViewController: UIViewController {
     undoButton.translatesAutoresizingMaskIntoConstraints = false
     undoButton.addWidthConstraint(size)
     undoButton.addHeightConstraint(size)
-    undoButton.addTarget(self, action: #selector(ContentEditorViewController.undoButtonTouchUpInside(_:)), for: .touchUpInside)
+    undoButton.addTarget(self, action: #selector(self.undoButtonTouchUpInside(_:)), for: .touchUpInside)
     
     let redoButton = UIButton(type: .custom)
     redoButton.setImage(#imageLiteral(resourceName: "redo"), for: .normal)
     redoButton.translatesAutoresizingMaskIntoConstraints = false
     redoButton.addWidthConstraint(size)
     redoButton.addHeightConstraint(size)
-    redoButton.addTarget(self, action: #selector(ContentEditorViewController.redoButtonTouchUpInside(_:)), for: .touchUpInside)
+    redoButton.addTarget(self, action: #selector(self.redoButtonTouchUpInside(_:)), for: .touchUpInside)
 
-    let stackView = UIStackView.init(frame: .zero)
+    let stackView = UIStackView(frame: .zero)
     stackView.spacing = 5
     stackView.alignment = .center
     stackView.distribution = .fill
