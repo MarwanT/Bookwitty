@@ -31,69 +31,96 @@ class ContentEditorViewController: UIViewController {
   
   private func loadNavigationBarButtons() {
     navigationItem.backBarButtonItem = UIBarButtonItem.back
+    let redColor = ThemeManager.shared.currentTheme.colorNumber19()
     
-    let close = UIBarButtonItem(title: Strings.close(),
+    let closeBarButtonItem = UIBarButtonItem(title: Strings.close(),
                                 style: UIBarButtonItemStyle.plain,
                                 target: self,
-                                action: #selector(self.close(_:)))
+                                action: #selector(self.closeBarButtonTouchUpInside(_:)))
     
-    let drafts = UIBarButtonItem(title: Strings.drafts(),
+    closeBarButtonItem.setTitleTextAttributes([
+      NSFontAttributeName: FontDynamicType.caption1.font,
+      NSForegroundColorAttributeName : redColor], for: UIControlState.normal)
+    
+    let draftsBarButtonItem = UIBarButtonItem(title: Strings.drafts(),
                                  style: UIBarButtonItemStyle.plain,
                                  target: self,
-                                 action: #selector(self.drafts(_:)))
+                                 action: #selector(self.draftsBarButtonTouchUpInside(_:)))
     
-    let undo = UIBarButtonItem(image: #imageLiteral(resourceName: "undo"),
+    draftsBarButtonItem.setTitleTextAttributes([
+      NSFontAttributeName: FontDynamicType.caption1.font,
+      NSForegroundColorAttributeName : redColor], for: UIControlState.normal)
+    
+    let imageSize = CGSize(width: 28.0, height: 28.0)
+    
+    let plusBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "plus").imageWithSize(size: imageSize),
                                style: UIBarButtonItemStyle.plain,
                                target: self,
-                               action: #selector(self.undo(_:)))
+                               action: #selector(self.plusBarButtonTouchUpInside(_:)))
     
-    let redo = UIBarButtonItem(image: #imageLiteral(resourceName: "redo"),
+    let nextBarButtonItem = UIBarButtonItem(title: Strings.next(),
                                style: UIBarButtonItemStyle.plain,
                                target: self,
-                               action: #selector(self.redo(_:)))
-    let plus = UIBarButtonItem(image: #imageLiteral(resourceName: "plus"),
-                               style: UIBarButtonItemStyle.plain,
-                               target: self,
-                               action: #selector(self.plus(_:)))
+                               action: #selector(self.nextBarButtonTouchUpInside(_:)))
     
-    let next = UIBarButtonItem(title: Strings.next(),
-                                style: UIBarButtonItemStyle.plain,
-                                target: self,
-                                action: #selector(self.next(_:)))
-   
-    let leftBarButtonItems = [close,drafts,undo]
-    let rightBarButtonItems = [next,plus,redo]
+    let size: CGFloat = 44.0
+    
+    let undoButton = UIButton(type: .custom)
+    undoButton.setImage(#imageLiteral(resourceName: "undo"), for: .normal)
+    undoButton.translatesAutoresizingMaskIntoConstraints = false
+    undoButton.addWidthConstraint(size)
+    undoButton.addHeightConstraint(size)
+    undoButton.addTarget(self, action: #selector(self.undoButtonTouchUpInside(_:)), for: .touchUpInside)
+    
+    let redoButton = UIButton(type: .custom)
+    redoButton.setImage(#imageLiteral(resourceName: "redo"), for: .normal)
+    redoButton.translatesAutoresizingMaskIntoConstraints = false
+    redoButton.addWidthConstraint(size)
+    redoButton.addHeightConstraint(size)
+    redoButton.addTarget(self, action: #selector(self.redoButtonTouchUpInside(_:)), for: .touchUpInside)
+
+    let stackView = UIStackView(frame: .zero)
+    stackView.spacing = 5
+    stackView.alignment = .center
+    stackView.distribution = .fill
+    stackView.axis = .horizontal
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    stackView.addArrangedSubview(undoButton)
+    stackView.addArrangedSubview(redoButton)
+    
+    navigationItem.titleView = stackView
+    
+    let leftBarButtonItems = [closeBarButtonItem, draftsBarButtonItem]
+    let rightBarButtonItems = [nextBarButtonItem, plusBarButtonItem]
     
     navigationItem.leftBarButtonItems = leftBarButtonItems
     navigationItem.rightBarButtonItems = rightBarButtonItems
   }
   
   // MARK: - Navigation items actions
-  @objc private func close(_ sender:UIBarButtonItem) {
-    self.dismiss(animated: true, completion: nil)
-  }
-  
-  @objc private func drafts(_ sender:UIBarButtonItem) {
-    //Todo: Implementation
-  }
-  
-  @objc private func undo(_ sender:UIBarButtonItem) {
+  @objc private func undoButtonTouchUpInside(_ sender: UIButton) {
     guard let toolbar = editorView.inputAccessoryView as? RichEditorToolbar else {
       return
     }
-    
     ContentEditorOption.undo.action(toolbar)
   }
   
-  @objc private func redo(_ sender:UIBarButtonItem) {
+  @objc private func redoButtonTouchUpInside(_ sender: UIButton) {
     guard let toolbar = editorView.inputAccessoryView as? RichEditorToolbar else {
       return
     }
-    
     ContentEditorOption.redo.action(toolbar)
   }
   
-  @objc private func plus(_ sender:UIBarButtonItem) {
+  @objc private func closeBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
+    self.dismiss(animated: true, completion: nil)
+  }
+  
+  @objc private func draftsBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
+    //Todo: Implementation
+  }
+  
+  @objc private func plusBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
     let richContentMenuViewController = Storyboard.Content.instantiate(RichContentMenuViewController.self)
     richContentMenuViewController.delegate = self
     self.definesPresentationContext = true
@@ -103,7 +130,7 @@ class ContentEditorViewController: UIViewController {
     self.navigationController?.present(richContentMenuViewController, animated: true, completion: nil)
   }
   
-  @objc private func next(_ sender:UIBarButtonItem) {
+  @objc private func nextBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
     
     self.saveAsDraft()
     
