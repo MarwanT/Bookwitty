@@ -321,6 +321,7 @@ class ContentEditorViewController: UIViewController {
   }
 }
 
+//MARK: - RichEditorToolbarDelegate Implementation
 extension ContentEditorViewController: RichEditorToolbarDelegate {
   
   func richEditorToolbarInsertLink(_ toolbar: RichEditorToolbar) {
@@ -328,6 +329,7 @@ extension ContentEditorViewController: RichEditorToolbarDelegate {
   }
 }
 
+//MARK: - RichContentMenuViewControllerDelegate Implementation
 extension ContentEditorViewController : RichContentMenuViewControllerDelegate {
   
   func richContentMenuViewControllerDidCancel(_ richContentMenuViewController: RichContentMenuViewController) {
@@ -354,7 +356,7 @@ extension ContentEditorViewController : RichContentMenuViewControllerDelegate {
     }
   }
 }
-
+//MARK: - UINavigationControllerDelegate, UIImagePickerControllerDelegate Implementation
 extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
     
@@ -371,6 +373,7 @@ extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePi
   }
 }
 
+//MARK: - RichBookViewControllerDelegate Implementation
 extension ContentEditorViewController: RichBookViewControllerDelegate {
   func richBookViewController(_ richBookViewController: RichBookViewController, didSelect book: Book) {
     self.navigationController?.dismiss(animated: true, completion: nil)
@@ -449,6 +452,7 @@ extension ContentEditorViewController {
   }
 }
 
+//MARK: - PublishMenuViewControllerDelegate Implementation
 extension ContentEditorViewController: PublishMenuViewControllerDelegate {
   
   func publishMenu(_ viewController: PublishMenuViewController, didSelect item: PublishMenuViewController.Item) {
@@ -480,6 +484,7 @@ extension ContentEditorViewController: LinkTagsViewControllerDelegate {
   }
 }
 
+//MARK: - LinkTopicsViewControllerDelegate Implementation
 extension ContentEditorViewController: LinkTopicsViewControllerDelegate {
   func linkTopics(viewController: LinkTopicsViewController, didLink topics: [Topic]) {
     self.viewModel.linkedTopics = topics
@@ -487,12 +492,14 @@ extension ContentEditorViewController: LinkTopicsViewControllerDelegate {
   }
 }
 
+//MARK: - PostPreviewViewControllerDelegate Implementation
 extension ContentEditorViewController: PostPreviewViewControllerDelegate {
   func postPreview(viewController: PostPreviewViewController, didFinishPreviewing post: CandidatePost) {
     self.updateContent()
   }
 }
 
+//MARK: - PenNameViewControllerDelegate Implementatio
 extension ContentEditorViewController: PenNameViewControllerDelegate {
   func penName(viewController: PenNameViewController, didFinish: PenNameViewController.Mode, with penName: PenName?) {
     
