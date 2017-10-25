@@ -212,11 +212,12 @@ class ContentEditorViewController: UIViewController {
     }
   }
   
-  fileprivate func updateContent(_ status: PublishAPI.PublishStatus = .draft) {
+  fileprivate func updateContent() {
     guard let currentPost = self.viewModel.currentPost, let id = currentPost.id else {
       return
     }
     self.resetPreviousRequest()
+    let status = PublishAPI.PublishStatus(rawValue: self.viewModel.currentPost.status ?? "") ?? PublishAPI.PublishStatus.draft
     self.currentRequest = PublishAPI.updateContent(id: id, title: currentPost.title, body: currentPost.body, imageURL: currentPost.imageUrl, shortDescription: currentPost.shortDescription, status: status, completion: { (success, candidatePost, error) in
       defer { self.currentRequest = nil }
       guard success, let candidatePost = candidatePost else {
@@ -441,7 +442,7 @@ extension ContentEditorViewController {
   }
   
   func publishYourPost() {
-    self.updateContent(.public)
+    self.updateContent()
   }
 }
 
