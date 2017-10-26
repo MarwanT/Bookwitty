@@ -128,29 +128,93 @@ extension PublishMenuViewController: UITableViewDataSource {
     }
   }
   
-  func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+  func willDisplayPenName(_ cell: UITableViewCell, at indexPath: IndexPath) {
     let values = self.viewModel.values(forRowAt: indexPath)
+    guard let currentCell = cell as? PublishTableViewCell else {
+      return
+    }
+    currentCell.cellImageView.image = values.label.image
+    currentCell.cellLabel.text = values.label.title
+    currentCell.userNameLabel.text = UserManager.shared.defaultPenName?.name
+    currentCell.userNameLabel.textColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
+    currentCell.userNameLabel.isHidden = false
+    currentCell.profileImageView.isHidden = false
+    currentCell.disclosureIndicatorImageView.isHidden = false
+    if let avatar = UserManager.shared.defaultPenName?.avatarUrl, let imageURL = URL(string: avatar) {
+      currentCell.profileImageView.sd_setImage(with: imageURL, placeholderImage: ThemeManager.shared.currentTheme.penNamePlaceholder)
+    } else {
+      currentCell.profileImageView.image = ThemeManager.shared.currentTheme.penNamePlaceholder
+    }
+  }
+  
+  func willDisplayLink(_ cell: UITableViewCell, at indexPath: IndexPath) {
+    let values = self.viewModel.values(forRowAt: indexPath)
+    let row = indexPath.row
     
-    if let currentCell = cell as? PublishTableViewCell  {
-      currentCell.cellImageView.image = values.label.image
-      currentCell.cellLabel.text = values.label.title
-    } else if let currentCell = cell as? ChipsTableViewCell  {
-      if indexPath.row == 0 {
+    if row == 0 {
+      if viewModel.getTags.count > 0 {
+        guard let currentCell = cell as? ChipsTableViewCell else {
+          return
+        }
         currentCell.cellImageView.image = values.label.image
         currentCell.setTags(self.viewModel.getTags.flatMap { $0.title })
       } else {
+        guard let currentCell = cell as? PublishTableViewCell else {
+          return
+        }
+        currentCell.cellImageView.image = values.label.image
+        currentCell.cellLabel.text = values.label.title
+      }
+      
+    } else if row == 1 {
+      
+      if viewModel.getTopics.count > 0 {
+        guard let currentCell = cell as? ChipsTableViewCell else {
+          return
+        }
         currentCell.cellImageView.image = values.label.image
         currentCell.setTags(self.viewModel.getTopics.flatMap { $0.title })
+      } else {
+        guard let currentCell = cell as? PublishTableViewCell else {
+          return
+        }
+        currentCell.cellImageView.image = values.label.image
+        currentCell.cellLabel.text = values.label.title
       }
-    } else {
-      //From storyboard
-      cell.textLabel?.text = values.label.title
-      if indexPath.row == 0 {
-        cell.contentView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber19()
-        cell.textLabel?.backgroundColor = ThemeManager.shared.currentTheme.colorNumber19()
-        cell.textLabel?.textColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+    }
+  }
+  
+  func willDisplayPublish(_ cell: UITableViewCell, at indexPath: IndexPath) {
+    let values = self.viewModel.values(forRowAt: indexPath)
+    //From storyboard
+    cell.textLabel?.text = values.label.title
+    if indexPath.row == 0 {
+      cell.contentView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber19()
+      cell.textLabel?.backgroundColor = ThemeManager.shared.currentTheme.colorNumber19()
+      cell.textLabel?.textColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+    }
+    cell.textLabel?.font = FontDynamicType.caption1.font
+  }
+  
+  func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    let values = self.viewModel.values(forRowAt: indexPath)
+    
+    guard let section = Section(rawValue: indexPath.section) else {
+      return
+    }
+    switch section {
+    case .penName:
+      self.willDisplayPenName(cell, at: indexPath)
+    case .link:
+      self.willDisplayLink(cell, at: indexPath)
+    case .preview:
+      guard let currentCell = cell as? PublishTableViewCell else {
+        return
       }
-      cell.textLabel?.font = FontDynamicType.caption1.font
+      currentCell.cellImageView.image = values.label.image
+      currentCell.cellLabel.text = values.label.title
+    case .publish:
+      self.willDisplayPublish(cell, at: indexPath)
     }
   }
 }
