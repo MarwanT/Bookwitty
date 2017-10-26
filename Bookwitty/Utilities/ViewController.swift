@@ -166,6 +166,7 @@ extension UIViewController {
   }
 
   fileprivate func showDeleteConfirmationAlert(identifier: String, completion: @escaping (_ success: Bool)->()) {
+    //TODO: Localize
     let message = "Are you sure you want to delete this post ?"
     let alert = UIAlertController(title: nil, message: message, preferredStyle: UIAlertControllerStyle.alert)
     alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action: UIAlertAction) in
@@ -178,6 +179,7 @@ extension UIViewController {
       })
     }))
 
+    //TODO: Localize
     alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction) in
       completion(false)
     }))
@@ -289,6 +291,7 @@ extension UIViewController {
   }
 
   private func showDeleteContentSuccessfullAlert(completion: @escaping ()->()) {
+    //TODO: Localize
     let title = "deleted"
     let message = "Your post has been deleted"
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
