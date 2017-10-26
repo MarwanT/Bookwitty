@@ -124,8 +124,13 @@ extension UIViewController {
     if let index = modifyIndex {
       if case let MoreAction.modify(edit, delete) = actions[index] {
         if edit {
+          guard let post = DataManager.shared.fetchResource(with: identifier) as? CandidatePost else {
+            completion(false, .modify(edit: true, delete: false))
+            return
+          }
+
           alert.addAction(UIAlertAction(title: Strings.edit(), style: .destructive, handler: { (action: UIAlertAction) in
-            //TODO: Present the Content Editor initialized with this Post
+            self.presentContentEditor(with: post)
             completion(true, .modify(edit: true, delete: false))
           }))
         }
