@@ -213,11 +213,13 @@ extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
   func penName(node: PenNameFollowNode, moreButtonTouchUpInside button: ASButtonNode?) {
     
     let penNameIdentifier: String
+    let penNameResource: PenName
     if penNameHeaderNode === node {
       guard let identifier = viewModel.penName.id else {
         return
       }
       penNameIdentifier = identifier
+      penNameResource = viewModel.penName
     } else {
       guard let indexPath = collectionNode.indexPath(for: node),
         let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment),
@@ -226,10 +228,12 @@ extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
           return
       }
       penNameIdentifier = identifier
+      penNameResource = penName
     }
 
-    self.showMoreActionSheet(identifier: penNameIdentifier, actions: [.report(.penName)], completion: {
-      (success: Bool) in
+    let actions: [MoreAction] = MoreAction.actions(for: penNameResource as? ModelCommonProperties)
+    self.showMoreActionSheet(identifier: penNameIdentifier, actions: actions, completion: {
+      (success: Bool, action: MoreAction) in
 
     })
   }
@@ -526,7 +530,9 @@ extension ProfileDetailsViewController: BaseCardPostNodeDelegate {
     case .more:
       guard let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment),
         let identifier = resource.id else { return }
-      self.showMoreActionSheet(identifier: identifier, actions: [.report(.content)], completion: { (success: Bool) in
+
+      let actions: [MoreAction] = MoreAction.actions(for: resource as? ModelCommonProperties)
+      self.showMoreActionSheet(identifier: identifier, actions: actions, completion: { (success: Bool, action: MoreAction) in
         didFinishAction?(success)
       })
     default:

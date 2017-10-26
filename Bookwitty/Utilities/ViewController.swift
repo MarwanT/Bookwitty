@@ -16,7 +16,33 @@ extension UIViewController {
   }
 
   enum MoreAction {
+    case modify(edit: Bool, delete: Bool)
     case report(ReportType)
+
+    static func actions(for resource: ModelCommonProperties?) -> [MoreAction] {
+      guard let resource = resource else {
+        return []
+      }
+
+      var actions: [MoreAction] = []
+      if let penName = resource as? PenName {
+        if !UserManager.shared.isMyDefault(penName: penName) {
+          actions.append(.report(.penName))
+        }
+      }
+
+      if let penName = resource.penName {
+        let mine = UserManager.shared.isMyDefault(penName: penName)
+        let editable = mine && (resource is CandidatePost)
+
+        if mine {
+          actions.append(.modify(edit: editable, delete: mine))
+        } else {
+          actions.append(.report(.content))
+        }
+      }
+      return actions
+    }
   }
 
   func add(asChildViewController viewController: UIViewController, toView view: UIView) -> UIView {
@@ -83,13 +109,46 @@ extension UIViewController {
     self.navigationController?.pushViewController(commentsVC, animated: true)
   }
 
-  func showMoreActionSheet(identifier: String, actions: [MoreAction], completion: @escaping (_ success: Bool)->()) {
+  func showMoreActionSheet(identifier: String, actions: [MoreAction], completion: @escaping (_ success: Bool, _ action: MoreAction)->()) {
     let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+
+
+    //Check if .modify is in the actions
+    let modifyIndex: Int? = actions.index(where: {
+      if case .modify = $0 {
+        return true
+      }
+      return false
+    })
+
+    if let index = modifyIndex {
+      if case let MoreAction.modify(edit, delete) = actions[index] {
+        if edit {
+          guard let post = DataManager.shared.fetchResource(with: identifier) as? CandidatePost else {
+            completion(false, .modify(edit: true, delete: false))
+            return
+          }
+
+          alert.addAction(UIAlertAction(title: Strings.edit(), style: .destructive, handler: { (action: UIAlertAction) in
+            self.presentContentEditor(with: post)
+            completion(true, .modify(edit: true, delete: false))
+          }))
+        }
+
+        if delete {
+          alert.addAction(UIAlertAction(title: Strings.delete(), style: .destructive, handler: { (action: UIAlertAction) in
+            self.showDeleteConfirmationAlert(identifier: identifier, completion: { (success: Bool) in
+              completion(success, .modify(edit: false, delete: true))
+            })
+          }))
+        }
+      }
+    }
 
     if actions.contains(where: { $0 == .report(.content) }) {
       alert.addAction(UIAlertAction(title: Strings.report(), style: .destructive, handler: { (action: UIAlertAction) in
         self.showReportContentAlert(identifier: identifier, completion: { (success: Bool) in
-          completion(success)
+          completion(success, .report(.content))
         })
       }))
     }
@@ -97,12 +156,33 @@ extension UIViewController {
     if actions.contains(where: { $0 == .report(.penName) }) {
       alert.addAction(UIAlertAction(title: Strings.report(), style: .destructive, handler: { (action: UIAlertAction) in
         self.showReportPenNameAlert(identifier: identifier, completion: { (success: Bool) in
-          completion(success)
+          completion(success, .report(.penName))
         })
       }))
     }
 
     alert.addAction(UIAlertAction(title: Strings.cancel(), style: .cancel, handler: nil))
+    self.present(alert, animated: true, completion: nil)
+  }
+
+  fileprivate func showDeleteConfirmationAlert(identifier: String, completion: @escaping (_ success: Bool)->()) {
+    //TODO: Localize
+    let message = "Are you sure you want to delete this post ?"
+    let alert = UIAlertController(title: nil, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action: UIAlertAction) in
+      _ = PublishAPI.removeContent(contentIdentifier: identifier, completion: { (success: Bool, error: BookwittyAPIError?) in
+        if success {
+          self.showDeleteContentSuccessfullAlert(completion: { 
+            completion(success)
+          })
+        }
+      })
+    }))
+
+    //TODO: Localize
+    alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction) in
+      completion(false)
+    }))
     self.present(alert, animated: true, completion: nil)
   }
 
@@ -209,6 +289,17 @@ extension UIViewController {
     }))
     self.present(alert, animated: true, completion: nil)
   }
+
+  private func showDeleteContentSuccessfullAlert(completion: @escaping ()->()) {
+    //TODO: Localize
+    let title = "deleted"
+    let message = "Your post has been deleted"
+    let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction) in
+      completion()
+    }))
+    self.present(alert, animated: true, completion: nil)
+  }
 }
 
 extension UIViewController {
@@ -235,6 +326,10 @@ extension UIViewController.MoreAction: Equatable {
     switch (lhs, rhs) {
     case (let .report(type1), let .report(type2)):
       return type1 == type2
+    case (let .modify(edit1, delete1), let .modify(edit2, delete2)):
+      return edit1 == edit2 && delete1 == delete2
+    default:
+      return false
     }
   }
 }

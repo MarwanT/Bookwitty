@@ -399,7 +399,9 @@ extension SearchViewController: BaseCardPostNodeDelegate {
     case .more:
       guard let resource = viewModel.resourceForIndex(indexPath: indexPath),
         let identifier = resource.id else { return }
-      self.showMoreActionSheet(identifier: identifier, actions: [.report(.content)], completion: { (success: Bool) in
+
+      let actions: [MoreAction] = MoreAction.actions(for: resource as? ModelCommonProperties)
+      self.showMoreActionSheet(identifier: identifier, actions: actions, completion: { (success: Bool, action: MoreAction) in
         didFinishAction?(success)
       })
     default:
