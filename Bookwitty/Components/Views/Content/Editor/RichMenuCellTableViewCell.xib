@@ -6,6 +6,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,14 +20,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Dj-Ix-aSb">
-                        <rect key="frame" x="8" y="-0.5" width="45" height="45"/>
+                        <rect key="frame" x="8" y="8" width="28.5" height="28.5"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="45" id="RWc-0K-G1o"/>
-                            <constraint firstAttribute="width" secondItem="8Dj-Ix-aSb" secondAttribute="height" multiplier="1:1" id="RfQ-aH-jeK"/>
+                            <constraint firstAttribute="width" secondItem="8Dj-Ix-aSb" secondAttribute="height" multiplier="1:1" id="CwI-Ku-ZdF"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p7Z-g3-4nR">
-                        <rect key="frame" x="61" y="12" width="42" height="21"/>
+                        <rect key="frame" x="44.5" y="12" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -34,9 +34,10 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="p7Z-g3-4nR" firstAttribute="centerY" secondItem="dJP-EX-Thu" secondAttribute="centerY" id="5ta-E1-ixW"/>
-                    <constraint firstItem="p7Z-g3-4nR" firstAttribute="leading" secondItem="8Dj-Ix-aSb" secondAttribute="trailing" constant="8" id="bSF-02-WL5"/>
-                    <constraint firstItem="8Dj-Ix-aSb" firstAttribute="leading" secondItem="dJP-EX-Thu" secondAttribute="leading" constant="8" id="ed3-YM-ppA"/>
-                    <constraint firstItem="8Dj-Ix-aSb" firstAttribute="centerY" secondItem="dJP-EX-Thu" secondAttribute="centerY" id="w56-hP-It3"/>
+                    <constraint firstItem="p7Z-g3-4nR" firstAttribute="leading" secondItem="8Dj-Ix-aSb" secondAttribute="trailing" constant="8" id="7aJ-gk-7O9"/>
+                    <constraint firstItem="8Dj-Ix-aSb" firstAttribute="bottom" secondItem="dJP-EX-Thu" secondAttribute="bottomMargin" id="KdP-5e-lVG"/>
+                    <constraint firstItem="8Dj-Ix-aSb" firstAttribute="leading" secondItem="dJP-EX-Thu" secondAttribute="leadingMargin" id="Zur-hY-0fG"/>
+                    <constraint firstItem="8Dj-Ix-aSb" firstAttribute="top" secondItem="dJP-EX-Thu" secondAttribute="topMargin" id="f38-pa-5S0"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
