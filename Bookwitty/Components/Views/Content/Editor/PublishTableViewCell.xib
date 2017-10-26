@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -31,20 +32,20 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rightArrow" translatesAutoresizingMaskIntoConstraints="NO" id="vsu-h6-ESr">
-                        <rect key="frame" x="279" y="6" width="33" height="33"/>
+                        <rect key="frame" x="306" y="17.5" width="6" height="10"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="33" id="OKM-GO-Osf"/>
-                            <constraint firstAttribute="width" constant="33" id="S64-WS-WXl"/>
+                            <constraint firstAttribute="width" constant="6" id="UMt-1h-Gq4"/>
+                            <constraint firstAttribute="height" constant="10" id="yyi-Mm-Uk3"/>
                         </constraints>
                     </imageView>
                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0a4-0N-X4v">
-                        <rect key="frame" x="188" y="11" width="42" height="21"/>
+                        <rect key="frame" x="219" y="11" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="acQ-Qe-UAU">
-                        <rect key="frame" x="238" y="5" width="33" height="33"/>
+                        <rect key="frame" x="269" y="5" width="33" height="33"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="33" id="3IS-a3-F3b"/>
                             <constraint firstAttribute="height" constant="33" id="KCj-hq-RDs"/>
@@ -52,15 +53,15 @@
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="vsu-h6-ESr" secondAttribute="trailing" constant="8" id="Gyf-5d-gLv"/>
+                    <constraint firstItem="vsu-h6-ESr" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="GeV-c2-MPR"/>
                     <constraint firstItem="Uhs-9M-zvx" firstAttribute="leading" secondItem="P3t-DT-lPU" secondAttribute="trailing" constant="8" id="SO6-0u-2uG"/>
                     <constraint firstItem="P3t-DT-lPU" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="SnA-0a-KAb"/>
                     <constraint firstItem="0a4-0N-X4v" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="SxD-W8-Zxf"/>
                     <constraint firstItem="acQ-Qe-UAU" firstAttribute="leading" secondItem="0a4-0N-X4v" secondAttribute="trailing" constant="8" id="Xed-fz-B93"/>
-                    <constraint firstItem="vsu-h6-ESr" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Zu3-tK-UVp"/>
                     <constraint firstItem="P3t-DT-lPU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="c2v-NQ-WMn"/>
+                    <constraint firstItem="vsu-h6-ESr" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="e0g-k6-kcF"/>
+                    <constraint firstItem="vsu-h6-ESr" firstAttribute="leading" secondItem="acQ-Qe-UAU" secondAttribute="trailing" constant="4" id="iuw-lb-D0P"/>
                     <constraint firstItem="Uhs-9M-zvx" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="r6f-yP-MDp"/>
-                    <constraint firstItem="vsu-h6-ESr" firstAttribute="leading" secondItem="acQ-Qe-UAU" secondAttribute="trailing" constant="8" id="v21-VO-XHX"/>
                     <constraint firstItem="acQ-Qe-UAU" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="zqz-xG-8Gn"/>
                 </constraints>
             </tableViewCellContentView>
