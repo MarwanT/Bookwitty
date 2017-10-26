@@ -27,6 +27,16 @@ class ActionBarNode: ASCellNode {
 
   fileprivate func initializeComponents() {
     automaticallyManagesSubnodes = true
+
+    let imageTintColor: UIColor = ThemeManager.shared.currentTheme.colorNumber15()
+
+    editButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
+    editButton.setImage(#imageLiteral(resourceName: "threeDots"), for: .normal)
+    editButton.style.preferredSize = configuration.iconSize
+
+    moreButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
+    moreButton.setImage(#imageLiteral(resourceName: "threeDots"), for: .normal)
+    moreButton.style.preferredSize = configuration.iconSize
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
