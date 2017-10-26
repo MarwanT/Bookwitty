@@ -74,7 +74,7 @@ class RootTabBarController: UITabBarController {
     let bookStoreViewController = Storyboard.Books.instantiate(BookStoreViewController.self)
     let emptyViewController = UIViewController()
     let discoverViewController = DiscoverViewController()
-    let settingsViewController = Storyboard.Account.instantiate(AccountViewController.self)
+    let settingsViewController = accountControllerCreator()
 
     newsFeedViewController.viewController.tabBarItem = UITabBarItem(
       title: Strings.news().uppercased(),
@@ -92,7 +92,7 @@ class RootTabBarController: UITabBarController {
       title: "",
       image: nil,
       tag:4)
-    settingsViewController.tabBarItem = UITabBarItem(
+    settingsViewController.viewController.tabBarItem = UITabBarItem(
       title: Strings.me(),
       image: #imageLiteral(resourceName: "person"),
       tag:4)
@@ -103,11 +103,12 @@ class RootTabBarController: UITabBarController {
       UINavigationController(rootViewController: discoverViewController),
       EmptyNavigationViewController(rootViewController: emptyViewController),
       UINavigationController(rootViewController: bookStoreViewController),
-      UINavigationController(rootViewController: settingsViewController),
+      UINavigationController(rootViewController: settingsViewController.viewController),
     ]
     
     // Hide navigation bar for news feed if necessary
     newsFeedViewController.viewController.navigationController?.setNavigationBarHidden(newsFeedViewController.hideNavigationBar, animated: true)
+    settingsViewController.viewController.navigationController?.setNavigationBarHidden(settingsViewController.hideNavigationBar, animated: true)
     
     // Set Default select tab index
     self.selectedIndex = 0
@@ -165,7 +166,25 @@ class RootTabBarController: UITabBarController {
     
     return (viewController, hideNavigationBar)
   }
-  
+
+  fileprivate func accountControllerCreator() -> (viewController: UIViewController, hideNavigationBar: Bool) {
+    let viewController: UIViewController
+    let hideNavigationBar: Bool
+
+    if UserManager.shared.isSignedIn {
+      viewController = Storyboard.Account.instantiate(AccountViewController.self)
+      hideNavigationBar = false
+    } else {
+      viewController = UIViewController()
+      hideNavigationBar = true
+    }
+
+    // Add search button
+    viewController.navigationItem.rightBarButtonItems = searchBarButton()
+
+    return (viewController, hideNavigationBar)
+  }
+
   fileprivate func presentIntroductionOrSignInViewController() {
     if GeneralSettings.sharedInstance.shouldShowIntroduction {
       let introductionVC = Storyboard.Introduction.instantiate(IntroductionViewController.self)
@@ -193,6 +212,11 @@ class RootTabBarController: UITabBarController {
   }
   
   fileprivate func refreshTabBarViewController() {
+
+    defer {
+      NotificationCenter.default.post(name: AppNotification.authenticationStatusChanged, object: nil, userInfo: [AppNotification.Key.status : UserManager.shared.isSignedIn])
+    }
+
     guard let newsNavigationController = viewControllers?.first as? UINavigationController else {
       return
     }
@@ -204,10 +228,20 @@ class RootTabBarController: UITabBarController {
       tag: 1)
     
     newsNavigationController.setNavigationBarHidden(newsFeedViewController.hideNavigationBar, animated: true)
-    
     newsNavigationController.viewControllers.replaceSubrange(0...0, with: [newsFeedViewController.viewController])
 
-    NotificationCenter.default.post(name: AppNotification.authenticationStatusChanged, object: nil, userInfo: [AppNotification.Key.status : UserManager.shared.isSignedIn])
+    guard let settingsNavigationController = viewControllers?.last as? UINavigationController else {
+      return
+    }
+
+    let settingsViewController = accountControllerCreator()
+    settingsViewController.viewController.tabBarItem = UITabBarItem(
+      title: Strings.me(),
+      image: #imageLiteral(resourceName: "person"),
+      tag:4)
+    
+    settingsViewController.viewController.navigationController?.setNavigationBarHidden(settingsViewController.hideNavigationBar, animated: true)
+    settingsNavigationController.viewControllers.replaceSubrange(0...0, with: [settingsViewController.viewController])
   }
 
   fileprivate func displayAppNeedsUpdate(with updateURL: URL?) {
