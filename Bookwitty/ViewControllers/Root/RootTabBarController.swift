@@ -502,11 +502,10 @@ extension RootTabBarController: MisfortuneNodeDelegate {
 
 extension RootTabBarController: UITabBarControllerDelegate {
   
-  func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-    
+  func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {    
     if viewController is EmptyNavigationViewController {
-      let editor = Storyboard.Content.instantiate(ContentEditorViewController.self)
-      self.present(UINavigationController(rootViewController:editor), animated:true, completion:nil)
+      let post: CandidatePost = Text()
+      self.presentContentEditor(with: post)
       return false
     }
     return true

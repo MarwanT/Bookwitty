@@ -221,6 +221,15 @@ extension UIViewController {
   }
 }
 
+extension UIViewController {
+  func presentContentEditor(with post: CandidatePost) {
+    let editorController = Storyboard.Content.instantiate(ContentEditorViewController.self)
+    editorController.viewModel.initialize(with: post)
+    let navigationController = UINavigationController(rootViewController: editorController)
+    self.present(navigationController, animated: true, completion: nil)
+  }
+}
+
 extension UIViewController.MoreAction: Equatable {
   static func ==(lhs: UIViewController.MoreAction, rhs: UIViewController.MoreAction) -> Bool {
     switch (lhs, rhs) {
