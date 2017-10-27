@@ -73,6 +73,7 @@ class TopicViewController: ASViewController<ASDisplayNode> {
     headerNode = TopicHeaderNode()
     segmentedNode = SegmentedControlNode()
     loaderNode = LoaderNode()
+    actionBarNode = ActionBarNode()
 
     flowLayout = UICollectionViewFlowLayout()
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
