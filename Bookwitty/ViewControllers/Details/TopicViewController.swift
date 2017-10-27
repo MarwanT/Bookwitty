@@ -20,7 +20,7 @@ protocol TopicViewControllerDelegate: class {
   func topic(viewController: TopicViewController, didRequest action: TopicAction, for topic: Topic)
 }
 
-class TopicViewController: ASViewController<ASCollectionNode> {
+class TopicViewController: ASViewController<ASDisplayNode> {
 
   enum LoadingStatus {
     case none
@@ -44,12 +44,15 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let segmentedNodeHeight: CGFloat = 45.0
 
+  fileprivate let controllerNode: ASDisplayNode
   fileprivate let collectionNode: ASCollectionNode
 
   fileprivate var headerNode: TopicHeaderNode
   fileprivate var segmentedNode: SegmentedControlNode
   fileprivate let loaderNode: LoaderNode
   fileprivate var flowLayout: UICollectionViewFlowLayout
+
+  fileprivate let actionBarNode: ActionBarNode
 
   fileprivate var normal: [Category] = [.latest(index: 0), .relatedBooks(index: 1), .followers(index: 2) ]
   fileprivate var book: [Category] = [.latest(index: 0), .editions(index: 1), .relatedBooks(index: 2), .followers(index: 3)]
@@ -73,7 +76,14 @@ class TopicViewController: ASViewController<ASCollectionNode> {
 
     flowLayout = UICollectionViewFlowLayout()
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
-    super.init(node: collectionNode)
+    controllerNode = ASDisplayNode()
+
+    super.init(node: controllerNode)
+    controllerNode.automaticallyManagesSubnodes = true
+
+    controllerNode.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
+      return ASLayoutSpec()
+    }
   }
   
   func initialize(with resource: ModelCommonProperties?) {
