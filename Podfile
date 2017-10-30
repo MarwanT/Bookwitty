@@ -43,7 +43,7 @@ target 'Bookwitty' do
   pod 'ReachabilitySwift', '3'
   pod 'GSImageViewerController', '1.2.1'
   pod 'RichEditorView', '4.0.0'
-  pod 'WSTagsField', '2.1.2'
+  pod 'WSTagsField', :git => 'https://github.com/Keeward/WSTagsField.git'
   
   target 'BookwittyTests' do
     inherit! :search_paths
