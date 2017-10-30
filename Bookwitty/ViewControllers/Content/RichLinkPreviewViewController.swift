@@ -266,7 +266,12 @@ extension RichLinkPreviewViewController {
 //MARK: - Gestures
 extension RichLinkPreviewViewController {
   @objc fileprivate func tapGestureHandler(_ sender: UITapGestureRecognizer) {
-    //TODO: Play the video
+    guard let response = viewModel.response,
+    let videoUrl = response.embedUrl else {
+      return
+    }
+
+    WebViewController.present(url: videoUrl, inViewController: self)
   }
 }
 
