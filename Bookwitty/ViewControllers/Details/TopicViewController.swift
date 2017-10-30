@@ -1342,6 +1342,21 @@ extension TopicViewController {
   }
 }
 
+//MARK: - Action Bar
+extension TopicViewController {
+
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    var position = actionBarNode.style.layoutPosition
+    let actionBarHeight = actionBarNode.configuration.height
+
+    let initialOffset = min(headerNode.calculatedSize.height, scrollView.contentSize.height - headerNode.calculatedSize.height)
+    let value = actionBarHeight > (initialOffset - scrollView.contentOffset.y) ? actionBarHeight : 0
+    position.y = scrollView.frame.size.height - value
+    actionBarNode.style.layoutPosition = position
+    controllerNode.transitionLayout(withAnimation: true, shouldMeasureAsync: false, measurementCompletion: nil)
+  }
+}
+
 //MARK: - Localizable implementation
 extension TopicViewController: Localizable {
   func applyLocalization() {
