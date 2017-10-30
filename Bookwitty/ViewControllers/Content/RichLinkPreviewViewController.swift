@@ -65,6 +65,8 @@ class RichLinkPreviewViewController: UIViewController {
     linkHostLabel.text = nil
 
     videoPreview.isHidden = true
+    videoImageView.isUserInteractionEnabled = false
+    videoPlayView.isUserInteractionEnabled = false
 
     audioPreview.isHidden = true
     audioTitleLabel.text = nil
