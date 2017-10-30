@@ -32,6 +32,7 @@ class RichLinkPreviewViewController: UIViewController {
 
   //Video Preview
   @IBOutlet var videoPreview: UIView!
+  @IBOutlet var videoPlayView: UIImageView!
   @IBOutlet var videoImageView: UIImageView!
   @IBOutlet var videoPreviewHeightConstraint: NSLayoutConstraint!
 

@@ -570,13 +570,22 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="83O-RU-DQe">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="100"/>
                                     </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iBJ-hd-Ya0">
+                                        <rect key="frame" x="111" y="-10" width="120" height="120"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="120" id="8UI-9L-pYs"/>
+                                            <constraint firstAttribute="height" constant="120" id="r8r-Ug-huX"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="83O-RU-DQe" firstAttribute="leading" secondItem="YWI-Du-F8B" secondAttribute="leading" id="VjJ-ZA-Yy3"/>
                                     <constraint firstAttribute="trailing" secondItem="83O-RU-DQe" secondAttribute="trailing" id="alh-BI-SKi"/>
                                     <constraint firstAttribute="height" constant="100" id="gxz-mm-ctj"/>
+                                    <constraint firstItem="iBJ-hd-Ya0" firstAttribute="centerX" secondItem="YWI-Du-F8B" secondAttribute="centerX" id="n1M-tQ-UCC"/>
                                     <constraint firstAttribute="bottom" secondItem="83O-RU-DQe" secondAttribute="bottom" id="pKz-9e-1Dn"/>
+                                    <constraint firstItem="iBJ-hd-Ya0" firstAttribute="centerY" secondItem="YWI-Du-F8B" secondAttribute="centerY" id="rag-eg-32b"/>
                                     <constraint firstItem="83O-RU-DQe" firstAttribute="top" secondItem="YWI-Du-F8B" secondAttribute="top" id="tqG-4b-qhj"/>
                                 </constraints>
                             </view>
@@ -662,6 +671,7 @@
                         <outlet property="linkTitleLabel" destination="uaq-Vq-eZo" id="SBN-YU-ucY"/>
                         <outlet property="textView" destination="PTX-Xf-lmX" id="EPQ-vT-KX7"/>
                         <outlet property="videoImageView" destination="83O-RU-DQe" id="OzP-zx-6q8"/>
+                        <outlet property="videoPlayView" destination="iBJ-hd-Ya0" id="BsN-rt-wTH"/>
                         <outlet property="videoPreview" destination="YWI-Du-F8B" id="Fjx-a8-8x9"/>
                         <outlet property="videoPreviewHeightConstraint" destination="gxz-mm-ctj" id="Zeo-1d-ncP"/>
                         <outletCollection property="separators" destination="vP5-z9-AHH" collectionClass="NSMutableArray" id="2XN-VP-WZM"/>
