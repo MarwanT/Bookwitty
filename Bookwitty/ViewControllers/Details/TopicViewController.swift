@@ -142,6 +142,15 @@ class TopicViewController: ASViewController<ASDisplayNode> {
     flowLayout.sectionHeadersPinToVisibleBounds = true
 
     viewModel.callback = self.callback(for:)
+
+    var insets = UIEdgeInsets.zero
+    insets.bottom = actionBarNode.calculatedSize.height
+    collectionNode.view.contentInset = insets
+    collectionNode.view.scrollIndicatorInsets = insets
+
+    var position = actionBarNode.style.layoutPosition
+    position.y = collectionNode.calculatedSize.height + 50.0
+    actionBarNode.style.layoutPosition = position
   }
   
   private func loadNavigationBarButtons() {
