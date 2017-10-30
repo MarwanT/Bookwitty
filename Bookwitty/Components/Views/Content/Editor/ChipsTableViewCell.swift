@@ -16,9 +16,6 @@ class ChipsTableViewCell: UITableViewCell {
   override func awakeFromNib() {
     super.awakeFromNib()
     tagsView.readOnly = true
-    tagsView.onDidChangeHeightTo = { _, height in
-      self.height = height
-    }
   }
   
   func setTags(_ tags:[String])  {
