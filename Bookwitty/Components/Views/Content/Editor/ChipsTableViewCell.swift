@@ -11,7 +11,7 @@ import WSTagsField
 class ChipsTableViewCell: UITableViewCell {
   @IBOutlet weak var cellImageView: UIImageView!
   @IBOutlet weak var tagsView: WSTagsField!
-  var height: CGFloat = 44.0
+
   static let identifier = "ChipsTableViewCellReuseableIdentifier"
   override func awakeFromNib() {
     super.awakeFromNib()
