@@ -151,6 +151,9 @@ extension RichLinkPreviewViewController: Themeable {
     videoPreview.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
     videoPreview.layer.borderColor = ThemeManager.shared.currentTheme.defaultSeparatorColor().cgColor
     videoPreview.layer.borderWidth = 1.0
+    videoPlayView.image = #imageLiteral(resourceName: "play")
+    videoPlayView.tintColor = ThemeManager.shared.currentTheme.colorNumber23().withAlphaComponent(0.9)
+    videoPlayView.contentMode = .scaleAspectFit
 
     //Audio Preview
     audioPreview.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
