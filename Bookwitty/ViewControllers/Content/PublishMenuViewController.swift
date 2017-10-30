@@ -222,7 +222,7 @@ extension PublishMenuViewController: UITableViewDataSource {
 extension PublishMenuViewController: UITableViewDelegate {
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     if indexPath.section == Section.link.rawValue {
-      return (tableView.cellForRow(at: indexPath) as? ChipsTableViewCell)?.height ?? 44.0
+      return (tableView.cellForRow(at: indexPath) as? ChipsTableViewCell)?.tagsView.bounds.height ?? 44.0
     }
     return PublishTableViewCell.height
   }
