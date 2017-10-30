@@ -67,6 +67,8 @@ class RichLinkPreviewViewController: UIViewController {
     videoPreview.isHidden = true
     videoImageView.isUserInteractionEnabled = false
     videoPlayView.isUserInteractionEnabled = false
+    let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(tapGestureHandler(_:)))
+    videoPreview.addGestureRecognizer(tapGesture)
 
     audioPreview.isHidden = true
     audioTitleLabel.text = nil
@@ -258,6 +260,13 @@ extension RichLinkPreviewViewController {
       self.getUrlInfo()
     }))
     self.present(alertController, animated: true, completion: nil)
+  }
+}
+
+//MARK: - Gestures
+extension RichLinkPreviewViewController {
+  @objc fileprivate func tapGestureHandler(_ sender: UITapGestureRecognizer) {
+    //TODO: Play the video
   }
 }
 
