@@ -84,6 +84,10 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
     penNameNode.penNameSummary = values.penName
     penNameNode.penNamePictureUrl = values.url?.absoluteString
     descriptionNode.contentText = values.shortDescription
+    let imageUrl = values.imageUrl
+    
+    shouldShowCover = imageUrl != nil
+    shouldShowTitle = !values.title.isEmptyOrNil()
   }
 
   fileprivate func setupNavigationBarButtons() {
