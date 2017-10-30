@@ -83,7 +83,11 @@ class TopicViewController: ASViewController<ASDisplayNode> {
     controllerNode.automaticallyManagesSubnodes = true
 
     controllerNode.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
-      return ASLayoutSpec()
+      self.collectionNode.style.maxSize = constrainedSize.max
+      let wrapperLayoutSpec = ASWrapperLayoutSpec(layoutElement: self.collectionNode)
+      let absoluteLayoutSpec = ASAbsoluteLayoutSpec(sizing: .default, children: [self.actionBarNode])
+      let overlayLayoutSpec = ASOverlayLayoutSpec(child: wrapperLayoutSpec, overlay: absoluteLayoutSpec)
+      return overlayLayoutSpec
     }
   }
   
