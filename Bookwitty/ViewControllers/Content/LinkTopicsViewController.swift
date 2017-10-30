@@ -42,23 +42,33 @@ class LinkTopicsViewController: UIViewController {
 
     tagsView.addTags(self.viewModel.getSelectedTopics.flatMap { $0.title } )
 
-    tagsView.onVerifyTag = { field, candidate in
-      let canLink =  self.viewModel.canLink
-      let hasSimilarTitle = self.viewModel.hasSimilarTitle(candidate)
+    tagsView.onVerifyTag = { [weak self] field, candidate in
+      guard let strongSelf = self else {
+        return false
+      }
+      let canLink =  strongSelf.viewModel.canLink
+      let hasSimilarTitle = strongSelf.viewModel.hasSimilarTitle(candidate)
       return canLink && hasSimilarTitle
     }
-    tagsView.onDidChangeText = { field, text in
-      NSObject.cancelPreviousPerformRequests(withTarget: self)
-      self.perform(#selector(LinkTopicsViewController.reload), with: text, afterDelay: 0.5)
+    tagsView.onDidChangeText = { [weak self] field, text in
+      guard let strongSelf = self else {
+        return
+      }
+      NSObject.cancelPreviousPerformRequests(withTarget: strongSelf)
+      strongSelf.perform(#selector(LinkTopicsViewController.reload), with: text, afterDelay: 0.5)
     }
     tagsView.onShouldReturn = { _ in
       return false
     }
-    tagsView.onDidRemoveTag = { _, tag in
-      guard let topic = self.viewModel.unselectTopic(with: tag.text), let topicIdentifier = topic.id else {
+    tagsView.onDidRemoveTag = { [weak self] _, tag in
+      guard let strongSelf = self else {
         return
       }
-      _ = ContentAPI.unlinkContent(for: self.viewModel.contentIdentifier, with: topicIdentifier, completion: { (success, error) in
+      
+      guard let topic = strongSelf.viewModel.unselectTopic(with: tag.text), let topicIdentifier = topic.id else {
+        return
+      }
+      _ = ContentAPI.unlinkContent(for: strongSelf.viewModel.contentIdentifier, with: topicIdentifier, completion: { (success, error) in
         guard success else {
           return
         }
