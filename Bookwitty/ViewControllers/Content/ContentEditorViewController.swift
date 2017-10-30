@@ -446,6 +446,7 @@ extension ContentEditorViewController: LinkTopicsViewControllerDelegate {
 //MARK: - PostPreviewViewControllerDelegate Implementation
 extension ContentEditorViewController: PostPreviewViewControllerDelegate {
   func postPreview(viewController: PostPreviewViewController, didFinishPreviewing post: CandidatePost) {
+    viewController.dismiss(animated: true, completion: nil)
     self.viewModel.dispatchContent()
   }
 }
