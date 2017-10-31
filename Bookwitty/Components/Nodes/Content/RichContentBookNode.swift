@@ -37,7 +37,7 @@ class RichContentBookNode: ASCellNode {
 
   fileprivate func setupNode() {
     automaticallyManagesSubnodes = true
-    style.preferredSize = CGSize(width: 0.0, height: imageSize.height + (internalMargin * 2))
+    style.minSize = CGSize(width: 0.0, height: imageSize.height + (internalMargin * 2))
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
 
     imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
