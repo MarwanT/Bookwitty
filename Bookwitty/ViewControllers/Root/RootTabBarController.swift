@@ -62,8 +62,7 @@ class RootTabBarController: UITabBarController {
       button.centerYAnchor.constraint(equalTo: tabBar.centerYAnchor)
       ])
     
-    //TODO: use real icon
-    button.setImage(#imageLiteral(resourceName: "newsfeed"), for: .normal)
+    button.setImage(#imageLiteral(resourceName: "contentCreation"), for: .normal)
     button.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
     button.center = self.tabBar.center
     button.isUserInteractionEnabled = false
