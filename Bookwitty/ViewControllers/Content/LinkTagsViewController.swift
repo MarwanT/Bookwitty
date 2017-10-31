@@ -39,28 +39,41 @@ class LinkTagsViewController: UIViewController {
 
     tagsView.addTags(self.viewModel.selectedTags.flatMap { $0.title } )
     
-    tagsView.onVerifyTag = { field, candidate in
-      return self.viewModel.canLink && self.viewModel.selectedTags.flatMap { $0.title }.contains(candidate)
+    tagsView.onVerifyTag = { [weak self] field, candidate in
+      guard let strongSelf = self else {
+        return false
+      }
+      return strongSelf.viewModel.canLink && strongSelf.viewModel.selectedTags.flatMap { $0.title }.contains(candidate)
     }
     
-    tagsView.onDidChangeText = { field, text in
-      NSObject.cancelPreviousPerformRequests(withTarget: self)
-      self.perform(#selector(LinkTagsViewController.reload), with: text, afterDelay: 0.5)
+    tagsView.onDidChangeText = { [weak self] field, text in
+      guard let strongSelf = self else {
+        return
+      }
+      NSObject.cancelPreviousPerformRequests(withTarget: strongSelf)
+      strongSelf.perform(#selector(LinkTagsViewController.reload), with: text, afterDelay: 0.5)
     }
     tagsView.onShouldReturn = { _ in
       return false
     }
-    tagsView.onDidRemoveTag = { _, tag in
-      self.viewModel.selectedTags = self.viewModel.selectedTags.filter { !($0.title == tag.text) }
-      _ = TagAPI.removeTag(for: self.viewModel.contentIdentifier, with: tag.text, completion: { (success, error) in
+    tagsView.onDidRemoveTag = { [weak self] _, tag in
+      guard let strongSelf = self else {
+        return
+      }
+      strongSelf.viewModel.selectedTags = strongSelf.viewModel.selectedTags.filter { !($0.title == tag.text) }
+      _ = TagAPI.removeTag(for: strongSelf.viewModel.contentIdentifier, with: tag.text, completion: { (success, error) in
         guard success else {
           return
         }
       })
     }
     
-    tagsView.onDidAddTag = { _, tag in
-      _ = TagAPI.linkTag(for: self.viewModel.contentIdentifier, with: tag.text, completion: { (success, error) in
+    tagsView.onDidAddTag = { [weak self] _, tag in
+      guard let strongSelf = self else {
+        return
+      }
+      
+      _ = TagAPI.linkTag(for: strongSelf.viewModel.contentIdentifier, with: tag.text, completion: { (success, error) in
         guard success else {
           return
         }
