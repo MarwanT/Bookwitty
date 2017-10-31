@@ -85,7 +85,7 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
     penNameNode.penNamePictureUrl = values.url?.absoluteString
     descriptionNode.contentText = values.shortDescription
     let imageUrl = values.imageUrl
-    
+    coverNode.url = imageUrl
     shouldShowCover = imageUrl != nil
     shouldShowTitle = !values.title.isEmptyOrNil()
   }
