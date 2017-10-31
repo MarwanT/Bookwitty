@@ -32,6 +32,7 @@ class RichLinkPreviewViewController: UIViewController {
 
   //Video Preview
   @IBOutlet var videoPreview: UIView!
+  @IBOutlet var videoPlayView: UIImageView!
   @IBOutlet var videoImageView: UIImageView!
   @IBOutlet var videoPreviewHeightConstraint: NSLayoutConstraint!
 
@@ -64,6 +65,10 @@ class RichLinkPreviewViewController: UIViewController {
     linkHostLabel.text = nil
 
     videoPreview.isHidden = true
+    videoImageView.isUserInteractionEnabled = false
+    videoPlayView.isUserInteractionEnabled = false
+    let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(tapGestureHandler(_:)))
+    videoPreview.addGestureRecognizer(tapGesture)
 
     audioPreview.isHidden = true
     audioTitleLabel.text = nil
@@ -150,6 +155,9 @@ extension RichLinkPreviewViewController: Themeable {
     videoPreview.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
     videoPreview.layer.borderColor = ThemeManager.shared.currentTheme.defaultSeparatorColor().cgColor
     videoPreview.layer.borderWidth = 1.0
+    videoPlayView.image = #imageLiteral(resourceName: "play")
+    videoPlayView.tintColor = ThemeManager.shared.currentTheme.colorNumber23().withAlphaComponent(0.9)
+    videoPlayView.contentMode = .scaleAspectFit
 
     //Audio Preview
     audioPreview.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
@@ -252,6 +260,18 @@ extension RichLinkPreviewViewController {
       self.getUrlInfo()
     }))
     self.present(alertController, animated: true, completion: nil)
+  }
+}
+
+//MARK: - Gestures
+extension RichLinkPreviewViewController {
+  @objc fileprivate func tapGestureHandler(_ sender: UITapGestureRecognizer) {
+    guard let response = viewModel.response,
+    let videoUrl = response.embedUrl else {
+      return
+    }
+
+    WebViewController.present(url: videoUrl, inViewController: self)
   }
 }
 
