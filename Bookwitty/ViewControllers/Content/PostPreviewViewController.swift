@@ -99,6 +99,15 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
                                             action: #selector(self.doneBarButtonTouchUpInside(_:)))
     doneBarButtonItem.tintColor = ThemeManager.shared.currentTheme.defaultButtonColor()
     navigationItem.rightBarButtonItem = doneBarButtonItem
+
+    var attributes = doneBarButtonItem.titleTextAttributes(for: .normal) ?? [:]
+    let defaultTextColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+    attributes[NSForegroundColorAttributeName] = defaultTextColor
+    doneBarButtonItem.setTitleTextAttributes(attributes, for: .normal)
+
+    let grayedTextColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
+    attributes[NSForegroundColorAttributeName] = grayedTextColor
+    doneBarButtonItem.setTitleTextAttributes(attributes, for: .disabled)
   }
 }
 
