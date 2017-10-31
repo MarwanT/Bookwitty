@@ -371,11 +371,30 @@ extension PostPreviewViewController {
   }
 
   @objc fileprivate func keyboardWillShow(_ notification: NSNotification) {
-    //TODO: Handle keyboard
+    var insets = UIEdgeInsets.zero
+    if let value = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+      let frame = value.cgRectValue
+      insets.bottom = frame.height
+    }
+    self.collectionNode.view.contentInset = insets
+
+    var indexPath: IndexPath? = nil
+    if titleNode.textNode.isFirstResponder() {
+      indexPath = collectionNode.indexPath(for: titleNode)
+    }
+
+    if descriptionNode.textNode.isFirstResponder() {
+      indexPath = collectionNode.indexPath(for: descriptionNode)
+    }
+
+    guard let cellIndexPath = indexPath else {
+      return
+    }
+    self.collectionNode.scrollToItem(at: cellIndexPath, at: .bottom, animated: true)
   }
 
   @objc fileprivate func keyboardWillHide(_ notification: NSNotification) {
-    //TODO: Handle keyboard
+    self.collectionNode.view.contentInset = UIEdgeInsets.zero
   }
 }
 
