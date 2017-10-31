@@ -63,6 +63,7 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
     initializeComponents()
     applyTheme()
     setupNavigationBarButtons()
+    addKeyboardNotifications()
   }
 
   fileprivate func initializeComponents() {
@@ -354,3 +355,27 @@ extension PostPreviewViewController: UINavigationControllerDelegate, UIImagePick
     }
   }
 }
+
+
+//MARK: - Keyboard Handling
+extension PostPreviewViewController {
+  fileprivate func addKeyboardNotifications() {
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillShow(_:)),
+      name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillHide(_:)),
+      name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+  }
+
+  @objc fileprivate func keyboardWillShow(_ notification: NSNotification) {
+    //TODO: Handle keyboard
+  }
+
+  @objc fileprivate func keyboardWillHide(_ notification: NSNotification) {
+    //TODO: Handle keyboard
+  }
+}
+
