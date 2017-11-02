@@ -78,6 +78,8 @@ class CardDetailsViewController: GenericNodeViewController {
 
   func updatedResources(_ notification: NSNotification) {
     let updateKey = DataManager.Notifications.Key.Update
+    let deleteKey = DataManager.Notifications.Key.Delete
+
     guard let resourceId = viewModel.resource.id,
       let dictionary = notification.object as? [String : [String]],
       let updatedIdentifiers = dictionary[updateKey], updatedIdentifiers.count > 0,

@@ -126,6 +126,32 @@ final class DiscoverViewModel {
       return resourcesIdentifiers.contains(identifier)
     })
   }
+
+  func deleteResource(with identifier: String) {
+    if let contentIdIndex = contentIdentifiers.index(where: { $0 == identifier }) {
+      contentIdentifiers.remove(at: contentIdIndex)
+    }
+
+    if let booksIdIndex = booksIdentifiers.index(where: { $0 == identifier }) {
+      booksIdentifiers.remove(at: booksIdIndex)
+    }
+
+    if let pagesIdIndex = pagesIdentifiers.index(where: { $0 == identifier }) {
+      pagesIdentifiers.remove(at: pagesIdIndex)
+    }
+
+    if let contentIndex = contentData.index(where: { $0 == identifier }) {
+      contentData.remove(at: contentIndex)
+    }
+
+    if let booksIndex = booksData.index(where: { $0 == identifier }) {
+      booksData.remove(at: booksIndex)
+    }
+
+    if let pagesIndex = pagesData.index(where: { $0 == identifier }) {
+      pagesData.remove(at: pagesIndex)
+    }
+  }
 }
 
 // MARK: - Segments Helper

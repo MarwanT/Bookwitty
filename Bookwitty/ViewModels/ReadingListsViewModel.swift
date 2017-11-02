@@ -141,6 +141,12 @@ extension ReadingListsViewModel {
       return resourcesIdentifiers.contains(identifier)
     })
   }
+
+  func deleteResource(with identifier: String) {
+    if let index = dataArray.index(where: { $0.id == identifier }) {
+      dataArray.remove(at: index)
+    }
+  }
 }
 
 // MARK: - Posts Actions
