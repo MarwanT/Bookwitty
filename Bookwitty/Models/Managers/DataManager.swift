@@ -159,5 +159,10 @@ extension DataManager {
     struct Name {
       static let UpdateResource = Notification.Name("DataManager.Notifications.Name.UpdateResource")
     }
+
+    struct Key {
+      static let Update = "Update"
+      static let Delete = "Delete"
+    }
   }
 }
