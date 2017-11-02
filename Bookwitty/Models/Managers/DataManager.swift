@@ -119,6 +119,16 @@ class DataManager {
     return reported.contains(identifier)
   }
 
+  func deleteResource(with identifier: String) {
+    guard let index = pool.index(forKey: identifier) else {
+      return
+    }
+
+    pool.remove(at: index)
+    let dictionary = [Notifications.Key.Delete : [identifier]]
+    notifyUpdate(resources: dictionary)
+  }
+
   //MARK: - Remove Resources
   //TODO: Will be discussed and implemented later
 }
