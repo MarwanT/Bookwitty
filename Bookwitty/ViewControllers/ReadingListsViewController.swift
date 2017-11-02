@@ -68,13 +68,14 @@ class ReadingListsViewController: ASViewController<ASCollectionNode> {
   private func updatedResources(_ notification: NSNotification) {
     let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems
 
-    guard let identifiers = notification.object as? [String],
-      identifiers.count > 0,
+    let updateKey = DataManager.Notifications.Key.Update
+    guard let dictionary = notification.object as? [String : [String]],
+      let updatedIdentifiers = dictionary[updateKey], updatedIdentifiers.count > 0,
       visibleItemsIndexPaths.count > 0 else {
         return
     }
 
-    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: updatedIdentifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
     collectionNode.reloadItems(at: indexPathForAffectedItems)
   }
 }

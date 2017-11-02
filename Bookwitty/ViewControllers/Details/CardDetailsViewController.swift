@@ -77,10 +77,11 @@ class CardDetailsViewController: GenericNodeViewController {
   }
 
   func updatedResources(_ notification: NSNotification) {
+    let updateKey = DataManager.Notifications.Key.Update
     guard let resourceId = viewModel.resource.id,
-      let identifiers = notification.object as? [String],
-      identifiers.count > 0,
-      identifiers.contains( where: { $0 == resourceId } ) else {
+      let dictionary = notification.object as? [String : [String]],
+      let updatedIdentifiers = dictionary[updateKey], updatedIdentifiers.count > 0,
+      updatedIdentifiers.contains( where: { $0 == resourceId } ) else {
         return
     }
 

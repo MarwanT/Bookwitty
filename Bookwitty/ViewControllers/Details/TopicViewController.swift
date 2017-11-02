@@ -267,14 +267,15 @@ extension TopicViewController {
   func updatedResources(_ notification: Notification) {
     let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.header.rawValue || $0.section == Section.relatedData.rawValue })
 
-    guard let identifiers = notification.object as? [String],
-      identifiers.count > 0,
+    let updateKey = DataManager.Notifications.Key.Update
+    guard let dictionary = notification.object as? [String : [String]],
+      let updatedIdentifiers = dictionary[updateKey], updatedIdentifiers.count > 0,
       visibleItemsIndexPaths.count > 0 else {
         return
     }
 
     if let id = viewModel.resource?.id {
-      let found = identifiers.contains(id)
+      let found = updatedIdentifiers.contains(id)
       if found {
         viewModel.updateResourceIfNeeded()
       }
@@ -285,7 +286,7 @@ extension TopicViewController {
       guard let resourceIdentifier = resourceIdentifierForIndex(indexPath: indexPath) else {
         return false
       }
-      return identifiers.contains(resourceIdentifier)
+      return updatedIdentifiers.contains(resourceIdentifier)
     })
 
     if let index = indexPathForAffectedItems.index(where: { $0.section == Section.header.rawValue }) {

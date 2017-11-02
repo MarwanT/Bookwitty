@@ -1146,13 +1146,14 @@ extension PostDetailsViewController {
 
   @objc
   fileprivate func updatedResources(_ notification: NSNotification) {
+    let updateKey = DataManager.Notifications.Key.Update
     guard let resourceId = viewModel.resource.id,
-      let identifiers = notification.object as? [String],
-      identifiers.count > 0 else {
+      let dictionary = notification.object as? [String : [String]],
+      let updatedIdentifiers = dictionary[updateKey], updatedIdentifiers.count > 0 else {
         return
     }
     
-    if viewModel.updateAffectedPostDetails(resourcesIdentifiers: identifiers) {
+    if viewModel.updateAffectedPostDetails(resourcesIdentifiers: updatedIdentifiers) {
       guard let resource = DataManager.shared.fetchResource(with: resourceId) else {
         return
       }
@@ -1162,7 +1163,7 @@ extension PostDetailsViewController {
 
     //Update the cards custom collection only.
     let visibleCardIndices: [Int] = postDetailsNode.postCardsNode.visibleNodes()
-    let affectedCardItems = viewModel.relatedPostsAffectedItems(identifiers: identifiers, visibleItemsIndices: visibleCardIndices)
+    let affectedCardItems = viewModel.relatedPostsAffectedItems(identifiers: updatedIdentifiers, visibleItemsIndices: visibleCardIndices)
     if affectedCardItems.count > 0 {
       postDetailsNode.postCardsNode.updateNodes(with: affectedCardItems)
     }

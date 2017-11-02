@@ -71,7 +71,8 @@ class DataManager {
     poolUpdate(resource: resource)
 
     if let identifier = resource.id {
-      notifyUpdate(resources: [identifier])
+      let dictionary = [Notifications.Key.Update : [identifier]]
+      notifyUpdate(resources: dictionary)
     }
   }
 
@@ -79,7 +80,9 @@ class DataManager {
     resources.forEach(self.poolUpdate(resource:))
 
     let identifiers = resources.flatMap({ $0.id })
-    notifyUpdate(resources: identifiers)
+
+    let dictionary = [Notifications.Key.Update : identifiers]
+    notifyUpdate(resources: dictionary)
   }
 
   func updateResource(with identifier: String, after action: Action) {
@@ -100,10 +103,11 @@ class DataManager {
       report(resource)
     }
 
-    notifyUpdate(resources: [identifier])
+    let dictionary = [Notifications.Key.Update : [identifier]]
+    notifyUpdate(resources: dictionary)
   }
 
-  private func notifyUpdate(resources: [String]) {
+  private func notifyUpdate(resources: [String : [String]]) {
     NotificationCenter.default.post(name: Notifications.Name.UpdateResource, object: resources)
   }
 
