@@ -38,6 +38,12 @@ class QuoteEditorViewController: UIViewController {
 
   fileprivate func initializeComponents() {
     title = Strings.quote()
+
+    quoteTextView.addSubview(quotePlaceholderLabel)
+    quotePlaceholderLabel.text = Strings.quote()
+
+    authorTextView.addSubview(authorPlaceholderLabel)
+    authorPlaceholderLabel.text = Strings.author()
   }
 
   fileprivate func setupNavigationBarButtons() {
