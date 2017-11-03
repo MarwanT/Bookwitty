@@ -435,7 +435,47 @@ extension TopicViewController {
 //MARK: - ActionBarNodeDelegate implementation
 extension TopicViewController: ActionBarNodeDelegate {
   func actionBar(node: ActionBarNode, actionButtonTouchUpInside button: ButtonWithLoader) {
-    //TODO: Empty Implementation 
+    button.state = .loading
+    if button.isSelected {
+      viewModel.unfollowContent(completionBlock: { (success: Bool) in
+        if success {
+          node.actionButtonSelected = false
+        }
+        button.state = success ? .normal : .selected
+      })
+    } else {
+      viewModel.followContent(completionBlock: { (success: Bool) in
+        if success {
+          node.actionButtonSelected = true
+        }
+        button.state = success ? .selected : .normal
+      })
+    }
+
+    //MARK: [Analytics] Event
+    var analyticsAction: Analytics.Action = .Default
+    var analyticsCategory: Analytics.Category = .Default
+    if let resourceType = viewModel.resourceType {
+      switch resourceType {
+      case Topic.resourceType:
+        analyticsCategory = .Topic
+        analyticsAction = button.isSelected ? .UnfollowTopic : .FollowTopic
+      case Author.resourceType:
+        analyticsCategory = .Author
+        analyticsAction = button.isSelected ? .UnfollowAuthor : .FollowAuthor
+      case Book.resourceType:
+        analyticsCategory = .TopicBook
+        analyticsAction = button.isSelected ? .UnfollowTopicBook : .FollowTopicBook
+      default:
+        break
+      }
+    }
+
+    let name = viewModel.valuesForHeader().title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: analyticsCategory,
+                                                 action: analyticsAction,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 
   func actionBar(node: ActionBarNode, editButtonTouchUpInside button: ASButtonNode) {
