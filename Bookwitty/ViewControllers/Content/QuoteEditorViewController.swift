@@ -36,6 +36,20 @@ class QuoteEditorViewController: UIViewController {
     self.quoteTextView.becomeFirstResponder()
   }
 
+  override func updateViewConstraints() {
+    var insets = quoteTextView.textContainerInset
+    quotePlaceholderLabel.translatesAutoresizingMaskIntoConstraints = false
+    quotePlaceholderLabel.topAnchor.constraint(equalTo: quoteTextView.topAnchor, constant: insets.top).isActive = true
+    quotePlaceholderLabel.leftAnchor.constraint(equalTo: quoteTextView.leftAnchor, constant: insets.left + 5).isActive = true
+
+    insets = authorTextView.textContainerInset
+    authorPlaceholderLabel.translatesAutoresizingMaskIntoConstraints = false
+    authorPlaceholderLabel.topAnchor.constraint(equalTo: authorTextView.topAnchor, constant: insets.top).isActive = true
+    authorPlaceholderLabel.leftAnchor.constraint(equalTo: authorTextView.leftAnchor, constant: insets.left + 5).isActive = true
+
+    super.updateViewConstraints()
+  }
+
   fileprivate func initializeComponents() {
     title = Strings.quote()
 
