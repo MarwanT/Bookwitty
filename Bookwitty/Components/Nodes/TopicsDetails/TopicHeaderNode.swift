@@ -25,7 +25,6 @@ class TopicHeaderNode: ASCellNode {
   private var thumbnailImageNode: ASNetworkImageNode
   private var titleNode: ASTextNode
   private var topicStatsNode: ASTextNode
-  private var actionButton: ButtonWithLoader
   private var contributorsNode: ContributorsNode
 
   weak var delegate: TopicHeaderNodeDelegate?
@@ -35,13 +34,11 @@ class TopicHeaderNode: ASCellNode {
     thumbnailImageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
     topicStatsNode = ASTextNode()
-    actionButton = ButtonWithLoader()
     contributorsNode = ContributorsNode()
     super.init()
     addSubnode(coverImageNode)
     addSubnode(titleNode)
     addSubnode(topicStatsNode)
-    addSubnode(actionButton)
     addSubnode(contributorsNode)
     addSubnode(thumbnailImageNode)
     setupNode()
@@ -56,21 +53,6 @@ class TopicHeaderNode: ASCellNode {
 
     titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
     topicStatsNode.truncationMode = NSLineBreakMode.byTruncatingTail
-
-    let buttonFont = FontDynamicType.subheadline.font
-    let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()
-    let selectedTextColor = ThemeManager.shared.currentTheme.colorNumber23()
-    actionButton.setupSelectionButton(defaultBackgroundColor: ThemeManager.shared.currentTheme.defaultBackgroundColor(),
-                                      selectedBackgroundColor: ThemeManager.shared.currentTheme.defaultButtonColor(),
-                                      borderStroke: true,
-                                      borderColor: ThemeManager.shared.currentTheme.defaultButtonColor(),
-                                      borderWidth: 2.0,
-                                      cornerRadius: 2.0)
-    actionButton.setTitle(title: Strings.follow(), with: buttonFont, with: textColor, for: .normal)
-    actionButton.setTitle(title: Strings.following(), with: buttonFont, with: selectedTextColor, for: .selected)
-    actionButton.state = self.following ? .selected : .normal
-    actionButton.style.height = ASDimensionMake(buttonSize.height)
-    actionButton.delegate = self
 
     coverImageNode.delegate = self
     thumbnailImageNode.delegate = self
@@ -104,11 +86,7 @@ class TopicHeaderNode: ASCellNode {
     }
   }
 
-  var following: Bool = false {
-    didSet {
-      actionButton.state = following ? .selected : .normal
-    }
-  }
+  var following: Bool = false
 
   func setContributorsValues(numberOfContributors: String?, imageUrls: [String]?) {
     contributorsNode.imagesUrls = imageUrls
@@ -169,8 +147,6 @@ class TopicHeaderNode: ASCellNode {
       statsAndActionNodes.append(spacer(flexGrow: 1.0))
       statsAndActionNodes.append(spacer(width: internalMargin))
     }
-
-    statsAndActionNodes.append(actionButton)
 
     let statsAndActionHorizontalSpec = ASStackLayoutSpec(direction: .horizontal,
                                                 spacing: 0,
