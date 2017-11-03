@@ -55,9 +55,11 @@ class QuoteEditorViewController: UIViewController {
 
     quoteTextView.addSubview(quotePlaceholderLabel)
     quotePlaceholderLabel.text = Strings.quote()
+    quoteTextView.delegate = self
 
     authorTextView.addSubview(authorPlaceholderLabel)
     authorPlaceholderLabel.text = Strings.author()
+    authorTextView.delegate = self
   }
 
   fileprivate func setupNavigationBarButtons() {
@@ -129,3 +131,15 @@ extension QuoteEditorViewController: Themeable {
   }
 }
 
+//MARK: - UITextViewDelegate implementation
+extension QuoteEditorViewController: UITextViewDelegate {
+  public func textViewDidChange(_ textView: UITextView) {
+    let count = textView.text.characters.count
+    let alpha: CGFloat = count == 0 ? 1.0 : 0.0
+    if textView === quoteTextView {
+      quotePlaceholderLabel.alpha = alpha
+    } else if textView === authorTextView {
+      authorPlaceholderLabel.alpha = alpha
+    }
+  }
+}
