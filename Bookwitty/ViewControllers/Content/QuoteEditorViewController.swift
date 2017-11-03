@@ -19,6 +19,9 @@ class QuoteEditorViewController: UIViewController {
   @IBOutlet var authorTextView: UITextView!
   @IBOutlet var separators: [UIView]!
 
+  fileprivate let authorPlaceholderLabel = UILabel()
+  fileprivate let quotePlaceholderLabel = UILabel()
+
   fileprivate let viewModel = QuoteEditorViewModel()
 
   var delegate: QuoteEditorViewControllerDelegate?
