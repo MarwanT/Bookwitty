@@ -94,14 +94,15 @@ extension ActionBarNode: Themeable {
                                       borderWidth: 2.0,
                                       cornerRadius: 2.0)
 
-    //TODO: Check if `follow`
-    actionButton.setTitle(title: Strings.follow(), with: buttonFont, with: buttonColor, for: .normal)
-    actionButton.setTitle(title: Strings.following(), with: buttonFont, with: backgroundColor, for: .selected)
-
-    //TODO: Check if `wit`
-    actionButton.style.preferredSize.width = 75.0
-    actionButton.setTitle(title: Strings.wit_it(), with: buttonFont, with: buttonColor, for: .normal)
-    actionButton.setTitle(title: Strings.witted(), with: buttonFont, with: backgroundColor, for: .selected)
+    switch action {
+    case .follow:
+      actionButton.setTitle(title: Strings.follow(), with: buttonFont, with: buttonColor, for: .normal)
+      actionButton.setTitle(title: Strings.following(), with: buttonFont, with: backgroundColor, for: .selected)
+    case .wit:
+      actionButton.style.preferredSize.width = 75.0
+      actionButton.setTitle(title: Strings.wit_it(), with: buttonFont, with: buttonColor, for: .normal)
+      actionButton.setTitle(title: Strings.witted(), with: buttonFont, with: backgroundColor, for: .selected)
+    }
   }
 }
 
