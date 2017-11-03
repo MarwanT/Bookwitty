@@ -126,7 +126,20 @@ extension ActionBarNode: Themeable {
 //MARK: - ButtonWithLoaderDelegate implementation
 extension ActionBarNode: ButtonWithLoaderDelegate {
   func buttonTouchUpInside(buttonWithLoader: ButtonWithLoader) {
-    //TODO: Empty implementation
+    guard UserManager.shared.isSignedIn else {
+      //If user is not signed In post notification and do not fall through
+      let callToAction: CallToAction
+      switch self.action {
+      case .follow:
+        callToAction = .follow
+      case .wit:
+        callToAction = .wit
+      }
+      NotificationCenter.default.post( name: AppNotification.callToAction, object: callToAction)
+      return
+    }
+
+    delegate?.actionBar(node: self, actionButtonTouchUpInside: buttonWithLoader)
   }
 }
 
