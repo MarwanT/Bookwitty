@@ -432,6 +432,21 @@ extension TopicViewController {
   }
 }
 
+//MARK: - ActionBarNodeDelegate implementation
+extension TopicViewController: ActionBarNodeDelegate {
+  func actionBar(node: ActionBarNode, actionButtonTouchUpInside button: ButtonWithLoader) {
+    //TODO: Empty Implementation 
+  }
+
+  func actionBar(node: ActionBarNode, editButtonTouchUpInside button: ASButtonNode) {
+    //TODO: Empty Implementation
+  }
+
+  func actionBar(node: ActionBarNode, moreButtonTouchUpInside button: ASButtonNode){
+    //TODO: Empty Implementation
+  }
+}
+
 extension TopicViewController: TopicHeaderNodeDelegate {
   func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ButtonWithLoader) {
     button.state = .loading
