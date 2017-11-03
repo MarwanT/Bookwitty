@@ -129,7 +129,7 @@ extension UIViewController {
             return
           }
 
-          alert.addAction(UIAlertAction(title: Strings.edit(), style: .destructive, handler: { (action: UIAlertAction) in
+          alert.addAction(UIAlertAction(title: Strings.edit(), style: .default, handler: { (action: UIAlertAction) in
             self.presentContentEditor(with: post)
             completion(true, .modify(edit: true, delete: false))
           }))
