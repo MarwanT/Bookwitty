@@ -10,7 +10,6 @@ import UIKit
 import AsyncDisplayKit
 
 protocol TopicHeaderNodeDelegate: class {
-  func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ButtonWithLoader)
   func topicHeader(node: TopicHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
 }
 
