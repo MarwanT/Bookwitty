@@ -151,6 +151,8 @@ class TopicViewController: ASViewController<ASDisplayNode> {
     var position = actionBarNode.style.layoutPosition
     position.y = collectionNode.calculatedSize.height + 50.0
     actionBarNode.style.layoutPosition = position
+
+    actionBarNode.action = .follow
   }
   
   private func loadNavigationBarButtons() {
