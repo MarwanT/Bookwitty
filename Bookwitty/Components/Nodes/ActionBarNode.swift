@@ -29,6 +29,13 @@ class ActionBarNode: ASCellNode {
       self.styleActionButton()
     }
   }
+
+  var actionButtonSelected: Bool = false {
+    didSet {
+      actionButton.state = self.actionButtonSelected ? .selected : .normal
+      actionButton.setNeedsLayout()
+    }
+  }
   
   override init() {
     super.init()
