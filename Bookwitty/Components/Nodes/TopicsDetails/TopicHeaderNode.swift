@@ -175,17 +175,7 @@ class TopicHeaderNode: ASCellNode {
 }
 
 //Actions
-extension TopicHeaderNode: ButtonWithLoaderDelegate {
-  func buttonTouchUpInside(buttonWithLoader: ButtonWithLoader) {
-    guard UserManager.shared.isSignedIn else {
-      //If user is not signed In post notification and do not fall through
-      NotificationCenter.default.post( name: AppNotification.callToAction, object: CallToAction.follow)
-      return
-    }
-
-    delegate?.topicHeader(node: self, actionButtonTouchUpInside: buttonWithLoader)
-  }
-
+extension TopicHeaderNode {
   @objc
   fileprivate func imageNodeTouchUpInside(sender: ASNetworkImageNode) {
     guard let image = sender.image else {
