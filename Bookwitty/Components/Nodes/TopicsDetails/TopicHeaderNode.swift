@@ -86,8 +86,6 @@ class TopicHeaderNode: ASCellNode {
     }
   }
 
-  var following: Bool = false
-
   func setContributorsValues(numberOfContributors: String?, imageUrls: [String]?) {
     contributorsNode.imagesUrls = imageUrls
     contributorsNode.numberOfContributors = numberOfContributors
