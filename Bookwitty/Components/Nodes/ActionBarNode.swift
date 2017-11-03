@@ -55,6 +55,8 @@ class ActionBarNode: ASCellNode {
     moreButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
     moreButton.setImage(#imageLiteral(resourceName: "threeDots"), for: .normal)
     moreButton.style.preferredSize = configuration.iconSize
+
+    actionButton.delegate = self
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -110,6 +112,13 @@ extension ActionBarNode: Themeable {
       actionButton.setTitle(title: Strings.wit_it(), with: buttonFont, with: buttonColor, for: .normal)
       actionButton.setTitle(title: Strings.witted(), with: buttonFont, with: backgroundColor, for: .selected)
     }
+  }
+}
+
+//MARK: - ButtonWithLoaderDelegate implementation
+extension ActionBarNode: ButtonWithLoaderDelegate {
+  func buttonTouchUpInside(buttonWithLoader: ButtonWithLoader) {
+    //TODO: Empty implementation
   }
 }
 
