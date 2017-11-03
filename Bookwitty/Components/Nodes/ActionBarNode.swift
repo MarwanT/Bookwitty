@@ -8,6 +8,12 @@
 
 import AsyncDisplayKit
 
+protocol ActionBarNodeDelegate: class {
+  func actionBar(node: ActionBarNode, actionButtonTouchUpInside button: ButtonWithLoader)
+  func actionBar(node: ActionBarNode, editButtonTouchUpInside button: ASButtonNode)
+  func actionBar(node: ActionBarNode, moreButtonTouchUpInside button: ASButtonNode)
+}
+
 class ActionBarNode: ASCellNode {
   enum Action {
     case wit
@@ -37,6 +43,8 @@ class ActionBarNode: ASCellNode {
     }
   }
   
+  weak var delegate: ActionBarNodeDelegate? = nil
+
   override init() {
     super.init()
     initializeComponents()
