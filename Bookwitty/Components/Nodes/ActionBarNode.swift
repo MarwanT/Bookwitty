@@ -9,6 +9,11 @@
 import AsyncDisplayKit
 
 class ActionBarNode: ASCellNode {
+  enum Action {
+    case wit
+    case follow
+  }
+
   let actionButton = ButtonWithLoader()
   let editButton = ASButtonNode()
   let moreButton = ASButtonNode()
@@ -19,6 +24,12 @@ class ActionBarNode: ASCellNode {
     }
   }
 
+  var action: Action = .follow {
+    didSet {
+      self.styleActionButton()
+    }
+  }
+  
   override init() {
     super.init()
     initializeComponents()
