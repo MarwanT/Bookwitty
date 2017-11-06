@@ -14,7 +14,7 @@ extension RichEditorView {
   }
   
   func generate(photo: URL?, alt: String?) {
-    runJS("RE.createPhoto(\"\(photo?.absoluteString ?? "" )\", \"\(alt ?? "")\");")
+    runJS("RE.generatePhoto(\"\(photo?.absoluteString ?? "" )\", \"\(alt ?? "")\");")
   }
   
   func generate(link href: URL?, text: String?) {
