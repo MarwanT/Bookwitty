@@ -103,3 +103,12 @@ extension Book {
     }
   }
 }
+
+//MARK: - Pandacraft
+extension Book {
+  private static let pandacraftResourcesIdentifiers = [
+    "BKW00000000010000000",
+    "BKW00000000020000000",
+    "BKW00000000030000000"
+  ]
+}
