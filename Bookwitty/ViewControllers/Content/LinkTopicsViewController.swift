@@ -28,6 +28,7 @@ class LinkTopicsViewController: UIViewController {
     self.addKeyboardNotifications()
     self.applyTheme()
     self.tagsView.beginEditing() // becomeFirstResponder
+    self.tagsView.delimiter = "\n"
     self.title = Strings.topic()
   }
   
