@@ -523,6 +523,14 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
   }
 }
 
+//MARK: - SelectPenNameViewControllerDelegate implementation
+extension ContentEditorViewController: SelectPenNameViewControllerDelegate {
+  func selectPenName(controller: SelectPenNameViewController, didSelect penName: PenName?) {
+    controller.dismiss(animated: true, completion: nil)
+    //TODO: Empty Implementation
+  }
+}
+
 extension ContentEditorViewController: LinkTagsViewControllerDelegate {
   func linkTags(viewController: LinkTagsViewController, didLink tags:[Tag]) {
     self.viewModel.linkedTags = tags
