@@ -111,4 +111,8 @@ extension Book {
     "BKW00000000020000000",
     "BKW00000000030000000"
   ]
+  
+  var isPandacraft: Bool {
+    return Book.pandacraftResourcesIdentifiers.contains(id ?? "")
+  }
 }
