@@ -130,11 +130,11 @@ extension ActionBarNode: Themeable {
 //MARK: - Actions
 extension ActionBarNode {
   @objc fileprivate func editButtonTouchUpInside(_ sender: ASButtonNode) {
-    //TODO: Empty Implementation
+    delegate?.actionBar(node: self, editButtonTouchUpInside: sender)
   }
 
   @objc fileprivate func moreButtonTouchUpInside(_ sender: ASButtonNode) {
-    //TODO: Empty Implementation
+    delegate?.actionBar(node: self, moreButtonTouchUpInside: sender)
   }
 }
 
