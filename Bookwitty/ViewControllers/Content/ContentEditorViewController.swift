@@ -120,17 +120,11 @@ class ContentEditorViewController: UIViewController {
   
   // MARK: - Navigation items actions
   @objc private func undoButtonTouchUpInside(_ sender: UIButton) {
-    guard let toolbar = editorView.inputAccessoryView as? RichEditorToolbar else {
-      return
-    }
-    ContentEditorOption.undo.action(toolbar)
+    self.editorView.undo()
   }
   
   @objc private func redoButtonTouchUpInside(_ sender: UIButton) {
-    guard let toolbar = editorView.inputAccessoryView as? RichEditorToolbar else {
-      return
-    }
-    ContentEditorOption.redo.action(toolbar)
+    self.editorView.redo()
   }
   
   @objc private func closeBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
