@@ -152,6 +152,7 @@ class TopicViewController: ASViewController<ASDisplayNode> {
     position.y = collectionNode.calculatedSize.height + 50.0
     actionBarNode.style.layoutPosition = position
 
+    actionBarNode.delegate = self
     actionBarNode.action = .follow
   }
   
