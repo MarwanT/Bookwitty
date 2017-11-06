@@ -25,7 +25,7 @@ extension RichEditorView {
     runJS("RE.generateLinkPreview(\"\(type ?? "")\", \"\(title ?? "")\", \"\(description ?? "")\", \"\(description ?? "")\", \"\(url?.absoluteString ?? "")\", \"\(imageUrl?.absoluteString ?? "")\");")
   }
   
-  func generate(embed: String) {
-    runJS("RE.generateEmbed(\"\(embed)\");")
+  func generate(embed: String?) {
+    runJS("RE.generateEmbed(\"\(embed ?? "")\");")
   }
 }
