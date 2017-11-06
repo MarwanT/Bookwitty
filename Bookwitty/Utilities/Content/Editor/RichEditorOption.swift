@@ -48,8 +48,8 @@ enum ContentEditorOption : Int, RichEditorOption {
       name = "redo"
     }
     
-    let bundle = Bundle.main
-    return UIImage(named: name, in: bundle, compatibleWith: nil)?.imageWithSize(size: CGSize(width: CGFloat(Int.max), height: 44))
+//    let bundle = Bundle.main
+    return UIImage(named: name)
   }
   
   public var title: String {
