@@ -44,6 +44,7 @@ target 'Bookwitty' do
   pod 'GSImageViewerController', '1.2.1'
   pod 'RichEditorView', '4.0.0'
   pod 'WSTagsField', :git => 'https://github.com/Keeward/WSTagsField.git'
+  pod 'MobileEditor', :git => 'git@gitlab.help-counter.com:ios-libraries/ContentEditor.git', :submodules => true
   
   target 'BookwittyTests' do
     inherit! :search_paths
