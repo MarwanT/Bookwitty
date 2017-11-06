@@ -8,7 +8,7 @@
 
 import UIKit
 import RichEditorView
-
+import MobileEditor
 class ContentEditorViewController: UIViewController {
   
   @IBOutlet weak var contentView: UIView!
@@ -193,9 +193,17 @@ class ContentEditorViewController: UIViewController {
   private func initializeComponents() {
     editorView.placeholder = Strings.write_here()
     setupEditorToolbar()
-    
+    setupContentEditorHtml()
     self.timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(ContentEditorViewController.tick), userInfo: nil, repeats: true)
     self.timer.tolerance = 0.5
+  }
+  
+  func setupContentEditorHtml() {
+    let bundle = Bundle(for: MobileEditor.self)
+    bundle.load()
+    if let editor = bundle.url(forResource: "editor", withExtension: "html") {
+      self.editorView.webView.loadRequest(URLRequest(url: editor))
+    }
   }
   
   @objc private func tick() {
