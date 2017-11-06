@@ -20,7 +20,7 @@ protocol TopicViewControllerDelegate: class {
   func topic(viewController: TopicViewController, didRequest action: TopicAction, for topic: Topic)
 }
 
-class TopicViewController: ASViewController<ASCollectionNode> {
+class TopicViewController: ASViewController<ASDisplayNode> {
 
   enum LoadingStatus {
     case none
@@ -44,12 +44,15 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let segmentedNodeHeight: CGFloat = 45.0
 
+  fileprivate let controllerNode: ASDisplayNode
   fileprivate let collectionNode: ASCollectionNode
 
   fileprivate var headerNode: TopicHeaderNode
   fileprivate var segmentedNode: SegmentedControlNode
   fileprivate let loaderNode: LoaderNode
   fileprivate var flowLayout: UICollectionViewFlowLayout
+
+  fileprivate let actionBarNode: ActionBarNode
 
   fileprivate var normal: [Category] = [.latest(index: 0), .relatedBooks(index: 1), .followers(index: 2) ]
   fileprivate var book: [Category] = [.latest(index: 0), .editions(index: 1), .relatedBooks(index: 2), .followers(index: 3)]
@@ -70,10 +73,22 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     headerNode = TopicHeaderNode()
     segmentedNode = SegmentedControlNode()
     loaderNode = LoaderNode()
+    actionBarNode = ActionBarNode()
 
     flowLayout = UICollectionViewFlowLayout()
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
-    super.init(node: collectionNode)
+    controllerNode = ASDisplayNode()
+
+    super.init(node: controllerNode)
+    controllerNode.automaticallyManagesSubnodes = true
+
+    controllerNode.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
+      self.collectionNode.style.maxSize = constrainedSize.max
+      let wrapperLayoutSpec = ASWrapperLayoutSpec(layoutElement: self.collectionNode)
+      let absoluteLayoutSpec = ASAbsoluteLayoutSpec(sizing: .default, children: [self.actionBarNode])
+      let overlayLayoutSpec = ASOverlayLayoutSpec(child: wrapperLayoutSpec, overlay: absoluteLayoutSpec)
+      return overlayLayoutSpec
+    }
   }
   
   func initialize(with resource: ModelCommonProperties?) {
@@ -127,6 +142,18 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     flowLayout.sectionHeadersPinToVisibleBounds = true
 
     viewModel.callback = self.callback(for:)
+
+    var insets = UIEdgeInsets.zero
+    insets.bottom = actionBarNode.calculatedSize.height
+    collectionNode.view.contentInset = insets
+    collectionNode.view.scrollIndicatorInsets = insets
+
+    var position = actionBarNode.style.layoutPosition
+    position.y = collectionNode.calculatedSize.height + 50.0
+    actionBarNode.style.layoutPosition = position
+
+    actionBarNode.delegate = self
+    actionBarNode.action = .follow
   }
   
   private func loadNavigationBarButtons() {
@@ -166,10 +193,11 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     headerNode.topicTitle = values.title
     headerNode.coverImageUrl = values.coverImageUrl
     headerNode.thumbnailImageUrl = values.thumbnailImageUrl
-    headerNode.following = values.following
 
     headerNode.setTopicStatistics(numberOfFollowers: Int(values.stats.followers ?? ""), numberOfPosts: Int(values.stats.posts ?? ""))
     headerNode.setContributorsValues(numberOfContributors: values.contributors.count, imageUrls: values.contributors.imageUrls)
+
+    actionBarNode.actionButtonSelected = values.following
   }
 
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
@@ -406,20 +434,21 @@ extension TopicViewController {
   }
 }
 
-extension TopicViewController: TopicHeaderNodeDelegate {
-  func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ButtonWithLoader) {
+//MARK: - ActionBarNodeDelegate implementation
+extension TopicViewController: ActionBarNodeDelegate {
+  func actionBar(node: ActionBarNode, actionButtonTouchUpInside button: ButtonWithLoader) {
     button.state = .loading
     if button.isSelected {
       viewModel.unfollowContent(completionBlock: { (success: Bool) in
         if success {
-          node.following = false
+          node.actionButtonSelected = false
         }
         button.state = success ? .normal : .selected
       })
     } else {
       viewModel.followContent(completionBlock: { (success: Bool) in
         if success {
-          node.following = true
+          node.actionButtonSelected = true
         }
         button.state = success ? .selected : .normal
       })
@@ -451,6 +480,19 @@ extension TopicViewController: TopicHeaderNodeDelegate {
     Analytics.shared.send(event: event)
   }
 
+  func actionBar(node: ActionBarNode, editButtonTouchUpInside button: ASButtonNode) {
+    guard let identifier = viewModel.identifier else {
+      return
+    }
+    self.presentContentEditor(with: Text(), prelink: identifier)
+  }
+
+  func actionBar(node: ActionBarNode, moreButtonTouchUpInside button: ASButtonNode){
+    //TODO: Empty Implementation
+  }
+}
+
+extension TopicViewController: TopicHeaderNodeDelegate {
   func topicHeader(node: TopicHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
     let imageInfo = GSImageInfo(image: image, imageMode: .aspectFit, imageHD: nil)
     let transitionInfo = GSTransitionInfo(fromView: imageNode.view)
@@ -1315,6 +1357,21 @@ extension TopicViewController {
       bookDetailsViewController.initialize(with: resource)
       navigationController?.pushViewController(bookDetailsViewController, animated: true)
     }
+  }
+}
+
+//MARK: - Action Bar
+extension TopicViewController {
+
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    var position = actionBarNode.style.layoutPosition
+    let actionBarHeight = actionBarNode.configuration.height
+
+    let initialOffset = min(headerNode.calculatedSize.height, scrollView.contentSize.height - headerNode.calculatedSize.height)
+    let value = actionBarHeight > (initialOffset - scrollView.contentOffset.y) ? actionBarHeight : 0
+    position.y = scrollView.frame.size.height - value
+    actionBarNode.style.layoutPosition = position
+    controllerNode.transitionLayout(withAnimation: true, shouldMeasureAsync: false, measurementCompletion: nil)
   }
 }
 

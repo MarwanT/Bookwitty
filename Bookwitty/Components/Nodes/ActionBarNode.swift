@@ -8,7 +8,18 @@
 
 import AsyncDisplayKit
 
+protocol ActionBarNodeDelegate: class {
+  func actionBar(node: ActionBarNode, actionButtonTouchUpInside button: ButtonWithLoader)
+  func actionBar(node: ActionBarNode, editButtonTouchUpInside button: ASButtonNode)
+  func actionBar(node: ActionBarNode, moreButtonTouchUpInside button: ASButtonNode)
+}
+
 class ActionBarNode: ASCellNode {
+  enum Action {
+    case wit
+    case follow
+  }
+
   let actionButton = ButtonWithLoader()
   let editButton = ASButtonNode()
   let moreButton = ASButtonNode()
@@ -18,6 +29,21 @@ class ActionBarNode: ASCellNode {
       setNeedsLayout()
     }
   }
+
+  var action: Action = .follow {
+    didSet {
+      self.styleActionButton()
+    }
+  }
+
+  var actionButtonSelected: Bool = false {
+    didSet {
+      actionButton.state = self.actionButtonSelected ? .selected : .normal
+      actionButton.setNeedsLayout()
+    }
+  }
+  
+  weak var delegate: ActionBarNodeDelegate? = nil
 
   override init() {
     super.init()
@@ -34,9 +60,15 @@ class ActionBarNode: ASCellNode {
     editButton.setImage(#imageLiteral(resourceName: "threeDots"), for: .normal)
     editButton.style.preferredSize = configuration.iconSize
 
+    editButton.addTarget(self, action: #selector(self.editButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
+
     moreButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
     moreButton.setImage(#imageLiteral(resourceName: "threeDots"), for: .normal)
     moreButton.style.preferredSize = configuration.iconSize
+
+    moreButton.addTarget(self, action: #selector(self.moreButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
+
+    actionButton.delegate = self
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -83,14 +115,46 @@ extension ActionBarNode: Themeable {
                                       borderWidth: 2.0,
                                       cornerRadius: 2.0)
 
-    //TODO: Check if `follow`
-    actionButton.setTitle(title: Strings.follow(), with: buttonFont, with: buttonColor, for: .normal)
-    actionButton.setTitle(title: Strings.following(), with: buttonFont, with: backgroundColor, for: .selected)
+    switch action {
+    case .follow:
+      actionButton.setTitle(title: Strings.follow(), with: buttonFont, with: buttonColor, for: .normal)
+      actionButton.setTitle(title: Strings.following(), with: buttonFont, with: backgroundColor, for: .selected)
+    case .wit:
+      actionButton.style.preferredSize.width = 75.0
+      actionButton.setTitle(title: Strings.wit_it(), with: buttonFont, with: buttonColor, for: .normal)
+      actionButton.setTitle(title: Strings.witted(), with: buttonFont, with: backgroundColor, for: .selected)
+    }
+  }
+}
 
-    //TODO: Check if `wit`
-    actionButton.style.preferredSize.width = 75.0
-    actionButton.setTitle(title: Strings.wit_it(), with: buttonFont, with: buttonColor, for: .normal)
-    actionButton.setTitle(title: Strings.witted(), with: buttonFont, with: backgroundColor, for: .selected)
+//MARK: - Actions
+extension ActionBarNode {
+  @objc fileprivate func editButtonTouchUpInside(_ sender: ASButtonNode) {
+    delegate?.actionBar(node: self, editButtonTouchUpInside: sender)
+  }
+
+  @objc fileprivate func moreButtonTouchUpInside(_ sender: ASButtonNode) {
+    delegate?.actionBar(node: self, moreButtonTouchUpInside: sender)
+  }
+}
+
+//MARK: - ButtonWithLoaderDelegate implementation
+extension ActionBarNode: ButtonWithLoaderDelegate {
+  func buttonTouchUpInside(buttonWithLoader: ButtonWithLoader) {
+    guard UserManager.shared.isSignedIn else {
+      //If user is not signed In post notification and do not fall through
+      let callToAction: CallToAction
+      switch self.action {
+      case .follow:
+        callToAction = .follow
+      case .wit:
+        callToAction = .wit
+      }
+      NotificationCenter.default.post( name: AppNotification.callToAction, object: callToAction)
+      return
+    }
+
+    delegate?.actionBar(node: self, actionButtonTouchUpInside: buttonWithLoader)
   }
 }
 
