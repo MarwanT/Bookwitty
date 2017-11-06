@@ -9,10 +9,12 @@
 import RichEditorView
 
 extension RichEditorView {
-  func generate(quote: String, author: String) {
+  func generate(quote: String, author: String, citeText: String, citeUrl: String) {
+    runJS("RE.generateQuote(\"\(quote)\", \"\(author)\", \"\(citeText)\", \"\(citeUrl)\");")
   }
   
-  func generate(photo: URL) {
+  func generate(photo: URL?, alt: String?) {
+    runJS("RE.createPhoto(\"\(photo?.absoluteString ?? "" )\", \"\(alt ?? "")\");")
   }
   
   func generate(link href: URL?, text: String?) {
