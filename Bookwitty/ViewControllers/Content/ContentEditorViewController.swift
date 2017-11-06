@@ -128,6 +128,7 @@ class ContentEditorViewController: UIViewController {
   }
   
   @objc private func closeBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
+    self.timer.invalidate()
     self.dismiss(animated: true, completion: nil)
   }
   
