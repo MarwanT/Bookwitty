@@ -60,9 +60,13 @@ class ActionBarNode: ASCellNode {
     editButton.setImage(#imageLiteral(resourceName: "threeDots"), for: .normal)
     editButton.style.preferredSize = configuration.iconSize
 
+    editButton.addTarget(self, action: #selector(self.editButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
+
     moreButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
     moreButton.setImage(#imageLiteral(resourceName: "threeDots"), for: .normal)
     moreButton.style.preferredSize = configuration.iconSize
+
+    moreButton.addTarget(self, action: #selector(self.moreButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
 
     actionButton.delegate = self
   }
@@ -120,6 +124,17 @@ extension ActionBarNode: Themeable {
       actionButton.setTitle(title: Strings.wit_it(), with: buttonFont, with: buttonColor, for: .normal)
       actionButton.setTitle(title: Strings.witted(), with: buttonFont, with: backgroundColor, for: .selected)
     }
+  }
+}
+
+//MARK: - Actions
+extension ActionBarNode {
+  @objc fileprivate func editButtonTouchUpInside(_ sender: ASButtonNode) {
+    //TODO: Empty Implementation
+  }
+
+  @objc fileprivate func moreButtonTouchUpInside(_ sender: ASButtonNode) {
+    //TODO: Empty Implementation
   }
 }
 
