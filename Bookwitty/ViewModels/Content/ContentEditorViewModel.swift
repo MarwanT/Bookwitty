@@ -69,6 +69,20 @@ class ContentEditorViewModel  {
     })
   }
   
+  fileprivate func dispatchPrelinkIfNeeded() {
+    guard let prelink = prelink,
+      let identifier = self.currentPost?.id else {
+      return
+    }
+    _ = ContentAPI.linkContent(for: identifier, with: prelink, completion: { (success, error) in
+      guard success else {
+        return
+      }
+
+      self.prelink = nil
+    })
+  }
+
   func dispatchContent() {
     
     let newHashValue = self.currentPost.hash
