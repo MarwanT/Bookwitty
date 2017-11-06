@@ -326,9 +326,9 @@ extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePi
 
     self.navigationController?.dismiss(animated: true, completion: nil)
 
-    viewModel.upload(image: image) {
-      (success: Bool, link: String?) in
-      //TODO: Send to JS
+    viewModel.upload(image: image) { (success: Bool, link: String?) in
+      guard let link = link, let Url = URL(string: link) else { return }
+      self.editorView.generate(photo: Url, alt: "Image")
     }
   }
 }
@@ -338,13 +338,24 @@ extension ContentEditorViewController: RichBookViewControllerDelegate {
   func richBookViewController(_ richBookViewController: RichBookViewController, didSelect book: Book) {
     self.navigationController?.dismiss(animated: true, completion: nil)
     //TODO: Send to JS
+    self.editorView.generate(link: book.canonicalURL, text: book.title)
   }
 }
 
 extension ContentEditorViewController: RichLinkPreviewViewControllerDelegate {
   func richLinkPreview(viewController: RichLinkPreviewViewController, didRequestLinkAdd: URL, with response: Response) {
     viewController.navigationController?.dismiss(animated: true, completion: nil)
-    //TODO: Sendt to JS
+    var mode: String = ""
+    switch viewController.mode {
+    case .link:
+      mode = "link"
+    case .audio:
+      mode = "audio"
+    case .video:
+      mode = "video"
+    }
+    
+    self.editorView.generateLinkPreview(type: mode, title: response.title, description: response.shortDescription, url: response.url, imageUrl: response.thumbnails?.first?.url)
   }
 
   func richLinkPreviewViewControllerDidCancel(_ viewController: RichLinkPreviewViewController) {
@@ -355,7 +366,7 @@ extension ContentEditorViewController: RichLinkPreviewViewControllerDelegate {
 extension ContentEditorViewController: QuoteEditorViewControllerDelegate {
   func quoteEditor(viewController: QuoteEditorViewController, didRequestAdd quote: String, with author: String?) {
     viewController.navigationController?.dismiss(animated: true, completion: nil)
-    //TODO: Sendt to JS
+    self.editorView.generate(quote: quote, author: author ?? "", citeText: "", citeUrl: "")
   }
 
   func quoteEditorViewControllerDidCancel(_ viewController: QuoteEditorViewController) {
