@@ -9,9 +9,9 @@
 import RichEditorView
 import UIKit
 
-enum ContentEditorOption : RichEditorOption {
+enum ContentEditorOption : Int, RichEditorOption {
 
-  case bold
+  case bold = 1000
   case italic
   case header
   case unorderedList
