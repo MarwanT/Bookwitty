@@ -15,10 +15,13 @@ class ContentEditorViewModel  {
   private(set) var latestHashValue: Int = 0
   private(set) var currentRequest: Cancellable?
 
+  fileprivate var prelink: String?
+
   var currentPost: CandidatePost!
   
-  func initialize(with candidatPost: CandidatePost) -> Void {
+  func initialize(with candidatPost: CandidatePost, prelink: String? = nil) -> Void {
     self.currentPost = candidatPost
+    self.prelink = prelink
   }
   
   func set(_ currentPost: CandidatePost) {
