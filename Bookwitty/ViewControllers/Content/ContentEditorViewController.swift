@@ -244,6 +244,16 @@ class ContentEditorViewController: UIViewController {
       break
     }
   }
+  
+  func createToolbarItems(with options:[ContentEditorOption]) -> [UIBarButtonItem] {
+    var items = [UIBarButtonItem]()
+    options.forEach {
+      let barButton = UIBarButtonItem(image: $0.image, style: .plain, target: self, action: #selector(self.header(_:)))
+      barButton.tag = $0.rawValue
+      items.append(barButton)
+    }
+    return items
+  }
 
   // MARK: - Keyboard Handling
   private func addKeyboardNotifications() {
