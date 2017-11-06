@@ -224,6 +224,26 @@ class ContentEditorViewController: UIViewController {
       myToolbar.items = items
     editorView.inputAccessoryView = myToolbar
   }
+  
+  func header(_ sender:UIBarButtonItem) {
+    guard let option = ContentEditorOption(rawValue: sender.tag) else { return }
+    
+    switch option {
+
+    case .bold:
+      self.editorView.bold()
+    case .italic:
+      self.editorView.italic()
+    case .header:
+      self.editorView.header(2)
+    case .unorderedList:
+      self.editorView.unorderedList()
+    case .link:
+        break
+    case .undo, .redo :
+      break
+    }
+  }
 
   // MARK: - Keyboard Handling
   private func addKeyboardNotifications() {
