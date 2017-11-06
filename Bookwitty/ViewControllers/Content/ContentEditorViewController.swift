@@ -560,9 +560,9 @@ extension ContentEditorViewController: RichEditorDelegate {
   func richEditor(_ editor: RichEditorView, handle action: String) {
     
     if action == "selectionchange" {
-      let editingItems = self.editorView.runJS("RE.enabledEditingItems()")
-      print(editingItems)
-      self.set(option: .header, selected: editingItems.contains("h"))
+      let editingItems = self.editorView.runJS("RE.enabledEditingItems()").components(separatedBy: ",")
+      
+      self.set(option: .header, selected: editingItems.contains("h2"))
       self.set(option: .bold, selected: editingItems.contains("bold"))
       self.set(option: .italic, selected: editingItems.contains("italic"))
       self.set(option: .link, selected: editingItems.contains("a"))
