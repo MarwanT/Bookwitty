@@ -24,7 +24,7 @@ class ContentEditorViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-
+    self.editorView.delegate = self
     initializeComponents()
     loadNavigationBarButtons()
     addKeyboardNotifications()
@@ -468,6 +468,38 @@ extension ContentEditorViewController: PenNameViewControllerDelegate {
       break
     case .New:
       break
+    }
+  }
+}
+
+//MARK: - RichEditorDelegate implementation
+extension ContentEditorViewController: RichEditorDelegate {
+  func richEditor(_ editor: RichEditorView, contentDidChange content: String) {
+    print(content)
+  }
+  
+  func richEditorDidLoad(_ editor: RichEditorView) {
+    editor.runJS("RE.focus();")
+  }
+  
+  func richEditorTookFocus(_ editor: RichEditorView) {
+    self.navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = true }
+  }
+  
+  func richEditorLostFocus(_ editor: RichEditorView) {
+    self.navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = false }
+  }
+  
+  func richEditor(_ editor: RichEditorView, handle action: String) {
+    
+    if action == "selectionchange" {
+      let editingItems = self.editorView.runJS("RE.enabledEditingItems()")
+      print(editingItems)
+      self.set(option: .header, selected: editingItems.contains("h"))
+      self.set(option: .bold, selected: editingItems.contains("bold"))
+      self.set(option: .italic, selected: editingItems.contains("italic"))
+      self.set(option: .link, selected: editingItems.contains("a"))
+      self.set(option: .unorderedList, selected: editingItems.contains("unorderedList"))
     }
   }
 }
