@@ -90,8 +90,11 @@ class ContentEditorViewModel  {
     
     if self.currentPost.id == nil {
       self.createContent()
-    } else if newHashValue != latestHashValue {
-      self.updateContent()
+    } else {
+      self.dispatchPrelinkIfNeeded()
+      if newHashValue != latestHashValue {
+        self.updateContent()
+      }
     }
     
   }
