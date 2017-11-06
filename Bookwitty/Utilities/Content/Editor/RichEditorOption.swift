@@ -41,7 +41,7 @@ enum ContentEditorOption : Int, RichEditorOption {
     case .unorderedList:
       name = "bullets"
     case .link:
-      name = "hyperlinkSmall"
+      name = "hyperlink"
     case .undo:
       name = "undo"
     case .redo:
