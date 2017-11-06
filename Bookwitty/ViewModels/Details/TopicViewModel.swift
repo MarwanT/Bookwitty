@@ -802,3 +802,24 @@ extension TopicViewModel {
     }
   }
 }
+
+// MARK: - Handle Deleting Resource
+extension TopicViewModel {
+  func deleteResource(with identifier: String) {
+    if let index = latest.index(where: { $0 == identifier }) {
+      latest.remove(at: index)
+    }
+
+    if let index = editions.index(where: { $0 == identifier }) {
+      editions.remove(at: index)
+    }
+
+    if let index = relatedBooks.index(where: { $0 == identifier }) {
+      relatedBooks.remove(at: index)
+    }
+
+    if let index = followers.index(where: { $0 == identifier }) {
+      followers.remove(at: index)
+    }
+  }
+}

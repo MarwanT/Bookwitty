@@ -172,6 +172,7 @@ extension UIViewController {
     alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action: UIAlertAction) in
       _ = PublishAPI.removeContent(contentIdentifier: identifier, completion: { (success: Bool, error: BookwittyAPIError?) in
         if success {
+          DataManager.shared.deleteResource(with: identifier)
           self.showDeleteContentSuccessfullAlert(completion: { 
             completion(success)
           })

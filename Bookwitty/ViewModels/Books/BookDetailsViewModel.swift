@@ -110,6 +110,24 @@ final class BookDetailsViewModel {
       return resourcesIdentifiers.contains(identifier)
     })
   }
+
+  func deleteResource(with identifier: String) {
+    if let prefixedReadingListsIndex = self.relatedReadingLists?.prefixed?.index(where: { $0.id == identifier }) {
+      self.relatedReadingLists?.readingLists?.remove(at: prefixedReadingListsIndex)
+    }
+
+    if let readingListsIndex = self.relatedReadingLists?.readingLists?.index(where: { $0.id == identifier }) {
+      self.relatedReadingLists?.readingLists?.remove(at: readingListsIndex)
+    }
+
+    if let prefixedTopicIndex = self.relatedTopics?.prefixed?.index(where: { $0.id == identifier }) {
+      self.relatedTopics?.prefixed?.remove(at: prefixedTopicIndex)
+    }
+
+    if let topicsIndex = self.relatedTopics?.topics?.index(where: { $0.id == identifier }) {
+      self.relatedTopics?.topics?.remove(at: topicsIndex)
+    }
+  }
 }
 
 // MARK: - Helpers 

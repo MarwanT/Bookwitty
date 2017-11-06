@@ -267,34 +267,45 @@ extension TopicViewController {
   func updatedResources(_ notification: Notification) {
     let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.header.rawValue || $0.section == Section.relatedData.rawValue })
 
-    guard let identifiers = notification.object as? [String],
-      identifiers.count > 0,
-      visibleItemsIndexPaths.count > 0 else {
+    let updateKey = DataManager.Notifications.Key.Update
+    let deleteKey = DataManager.Notifications.Key.Delete
+
+    guard let dictionary = notification.object as? [String : [String]] else {
         return
     }
 
-    if let id = viewModel.resource?.id {
-      let found = identifiers.contains(id)
-      if found {
+    if let deletedIdentifiers = dictionary[deleteKey], deletedIdentifiers.count > 0 {
+      if let resourceId = viewModel.resource?.id, deletedIdentifiers.contains(where: { $0 == resourceId }) {
+        _ = self.navigationController?.popViewController(animated: true)
+      } else {
+        deletedIdentifiers.forEach({ viewModel.deleteResource(with: $0) })
         viewModel.updateResourceIfNeeded()
       }
-    }
+    } else if let updatedIdentifiers = dictionary[updateKey], updatedIdentifiers.count > 0, visibleItemsIndexPaths.count > 0 {
 
-    var indexPathForAffectedItems = visibleItemsIndexPaths.filter({
-      indexPath in
-      guard let resourceIdentifier = resourceIdentifierForIndex(indexPath: indexPath) else {
-        return false
+      if let id = viewModel.resource?.id {
+        let found = updatedIdentifiers.contains(id)
+        if found {
+          viewModel.updateResourceIfNeeded()
+        }
       }
-      return identifiers.contains(resourceIdentifier)
-    })
 
-    if let index = indexPathForAffectedItems.index(where: { $0.section == Section.header.rawValue }) {
-      //Note: Fill Header manually and remove index from indexPathForAffectedItems to bypass auto-reload-collection-animation issue
-      self.fillHeaderNode()
-      indexPathForAffectedItems.remove(at: index)
-    }
-    if indexPathForAffectedItems.count > 0 {
-      updateCollectionNodes(indexPathForAffectedItems: indexPathForAffectedItems)
+      var indexPathForAffectedItems = visibleItemsIndexPaths.filter({
+        indexPath in
+        guard let resourceIdentifier = resourceIdentifierForIndex(indexPath: indexPath) else {
+          return false
+        }
+        return updatedIdentifiers.contains(resourceIdentifier)
+      })
+
+      if let index = indexPathForAffectedItems.index(where: { $0.section == Section.header.rawValue }) {
+        //Note: Fill Header manually and remove index from indexPathForAffectedItems to bypass auto-reload-collection-animation issue
+        self.fillHeaderNode()
+        indexPathForAffectedItems.remove(at: index)
+      }
+      if indexPathForAffectedItems.count > 0 {
+        updateCollectionNodes(indexPathForAffectedItems: indexPathForAffectedItems)
+      }
     }
   }
   

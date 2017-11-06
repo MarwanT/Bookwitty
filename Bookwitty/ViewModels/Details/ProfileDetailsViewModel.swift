@@ -61,6 +61,12 @@ class ProfileDetailsViewModel {
       return resourcesIdentifiers.contains(identifier)
     })
   }
+
+  func deleteResource(with identifier: String) {
+    if let index = latestData.index(where: { $0 == identifier }) {
+      latestData.remove(at: index)
+    }
+  }
 }
 
 // MARK: - API requests

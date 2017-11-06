@@ -873,14 +873,22 @@ extension ProfileDetailsViewController {
   private func updatedResources(_ notification: NSNotification) {
     let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.cells.rawValue })
 
-    guard let identifiers = notification.object as? [String],
-      identifiers.count > 0,
-      visibleItemsIndexPaths.count > 0 else {
+    let updateKey = DataManager.Notifications.Key.Update
+    let deleteKey = DataManager.Notifications.Key.Delete
+
+    guard let dictionary = notification.object as? [String : [String]],
+      let updatedIdentifiers = dictionary[updateKey], updatedIdentifiers.count > 0 else {
         return
     }
 
-    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths, segment: activeSegment)
-    updateCollection(with: indexPathForAffectedItems, shouldReloadItems: true, loaderSection: true, cellsSection: false, orReloadAll: false, completionBlock: nil)
+
+    if let deletedIdentifiers = dictionary[deleteKey], deletedIdentifiers.count > 0 {
+      deletedIdentifiers.forEach({ viewModel.deleteResource(with: $0) })
+      collectionNode.reloadData()
+    } else if let updatedIdentifiers = dictionary[updateKey], updatedIdentifiers.count > 0, visibleItemsIndexPaths.count > 0 {
+      let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: updatedIdentifiers, visibleItemsIndexPaths: visibleItemsIndexPaths, segment: activeSegment)
+      updateCollection(with: indexPathForAffectedItems, shouldReloadItems: true, loaderSection: true, cellsSection: false, orReloadAll: false, completionBlock: nil)
+    }
   }
 
 }

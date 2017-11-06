@@ -309,6 +309,13 @@ extension PostDetailsViewModel {
 
 // MARK: - Related Books Section
 extension PostDetailsViewModel {
+
+  func deleteResource(with identifier: String) {
+    if let index = relatedPosts.index(where: { $0 == identifier }) {
+      relatedPosts.remove(at: index)
+    }
+  }
+
   func updateAffectedPostDetails(resourcesIdentifiers: [String]) -> Bool {
     guard resourcesIdentifiers.count > 0 else {
       return false

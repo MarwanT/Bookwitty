@@ -624,14 +624,20 @@ extension PostsViewController {
   func updatedResources(_ notification: NSNotification) {
     let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.posts.rawValue })
 
-    guard let identifiers = notification.object as? [String],
-      identifiers.count > 0,
-      visibleItemsIndexPaths.count > 0 else {
+    let updateKey = DataManager.Notifications.Key.Update
+    let deleteKey = DataManager.Notifications.Key.Delete
+
+    guard let dictionary = notification.object as? [String : [String]] else {
         return
     }
 
-    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
-    reloadCollectionViewSections(with: indexPathForAffectedItems, shouldReloadItems: true, orReloadAll: false)
+    if let deletedIdentifiers = dictionary[deleteKey], deletedIdentifiers.count > 0 {
+      deletedIdentifiers.forEach({ viewModel.deleteResource(with: $0) })
+      collectionNode.reloadData()
+    } else if let updatedIdentifiers = dictionary[updateKey], updatedIdentifiers.count > 0 {
+      let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: updatedIdentifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+      reloadCollectionViewSections(with: indexPathForAffectedItems, shouldReloadItems: true, orReloadAll: false)
+    }
   }
 }
 

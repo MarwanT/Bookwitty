@@ -110,6 +110,12 @@ class SearchViewModel {
       return resourcesIdentifiers.contains(identifier)
     })
   }
+
+  func deleteResource(with identifier: String) {
+    if let index = data.index(where: { $0 == identifier }) {
+      data.remove(at: index)
+    }
+  }
 }
 
 //MARK: - Filter helper

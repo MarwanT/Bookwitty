@@ -1146,25 +1146,36 @@ extension PostDetailsViewController {
 
   @objc
   fileprivate func updatedResources(_ notification: NSNotification) {
+    let updateKey = DataManager.Notifications.Key.Update
+    let deleteKey = DataManager.Notifications.Key.Delete
+
     guard let resourceId = viewModel.resource.id,
-      let identifiers = notification.object as? [String],
-      identifiers.count > 0 else {
+      let dictionary = notification.object as? [String : [String]] else {
         return
-    }
-    
-    if viewModel.updateAffectedPostDetails(resourcesIdentifiers: identifiers) {
-      guard let resource = DataManager.shared.fetchResource(with: resourceId) else {
-        return
-      }
-      viewModel.resource = resource
-      initialize()
     }
 
-    //Update the cards custom collection only.
-    let visibleCardIndices: [Int] = postDetailsNode.postCardsNode.visibleNodes()
-    let affectedCardItems = viewModel.relatedPostsAffectedItems(identifiers: identifiers, visibleItemsIndices: visibleCardIndices)
-    if affectedCardItems.count > 0 {
-      postDetailsNode.postCardsNode.updateNodes(with: affectedCardItems)
+    if let deletedIdentifiers = dictionary[deleteKey], deletedIdentifiers.count > 0 {
+      if deletedIdentifiers.contains(where: { $0 == resourceId }) {
+        _ = self.navigationController?.popViewController(animated: true)
+      } else {
+        deletedIdentifiers.forEach({ viewModel.deleteResource(with: $0) })
+        initialize()
+      }
+    } else if let updatedIdentifiers = dictionary[updateKey], updatedIdentifiers.count > 0 {
+      if viewModel.updateAffectedPostDetails(resourcesIdentifiers: updatedIdentifiers) {
+        guard let resource = DataManager.shared.fetchResource(with: resourceId) else {
+          return
+        }
+        viewModel.resource = resource
+        initialize()
+      }
+
+      //Update the cards custom collection only.
+      let visibleCardIndices: [Int] = postDetailsNode.postCardsNode.visibleNodes()
+      let affectedCardItems = viewModel.relatedPostsAffectedItems(identifiers: updatedIdentifiers, visibleItemsIndices: visibleCardIndices)
+      if affectedCardItems.count > 0 {
+        postDetailsNode.postCardsNode.updateNodes(with: affectedCardItems)
+      }
     }
 
     //Note: Do not update the books sections
