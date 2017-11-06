@@ -185,12 +185,11 @@ class ContentEditorViewController: UIViewController {
     alertController.addTextField(configurationHandler: {(_ textField: UITextField) -> Void in
       textField.placeholder = "http://"
     })
+    
     let confirmAction = UIAlertAction(title: Strings.ok(), style: .default, handler: {(_ action: UIAlertAction) -> Void in
-      
-      guard let toolbar = self.editorView.inputAccessoryView as? RichEditorToolbar else {
-          return
-        }
-      ContentEditorOption.link.action(toolbar)
+      if let alertTextField = alertController.textFields?.first, alertTextField.text != nil, let link = alertTextField.text {
+        self.editorView.generate(link: URL(string: link), text: "Link")
+      }
     })
     alertController.addAction(confirmAction)
     
