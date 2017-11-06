@@ -63,6 +63,7 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
     initializeComponents()
     applyTheme()
     setupNavigationBarButtons()
+    addKeyboardNotifications()
   }
 
   fileprivate func initializeComponents() {
@@ -84,6 +85,10 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
     penNameNode.penNameSummary = values.penName
     penNameNode.penNamePictureUrl = values.url?.absoluteString
     descriptionNode.contentText = values.shortDescription
+    let imageUrl = values.imageUrl
+    coverNode.url = imageUrl
+    shouldShowCover = imageUrl != nil
+    shouldShowTitle = !values.title.isEmptyOrNil()
   }
 
   fileprivate func setupNavigationBarButtons() {
@@ -95,6 +100,15 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
                                             action: #selector(self.doneBarButtonTouchUpInside(_:)))
     doneBarButtonItem.tintColor = ThemeManager.shared.currentTheme.defaultButtonColor()
     navigationItem.rightBarButtonItem = doneBarButtonItem
+
+    var attributes = doneBarButtonItem.titleTextAttributes(for: .normal) ?? [:]
+    let defaultTextColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+    attributes[NSForegroundColorAttributeName] = defaultTextColor
+    doneBarButtonItem.setTitleTextAttributes(attributes, for: .normal)
+
+    let grayedTextColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
+    attributes[NSForegroundColorAttributeName] = grayedTextColor
+    doneBarButtonItem.setTitleTextAttributes(attributes, for: .disabled)
   }
 }
 
@@ -341,3 +355,46 @@ extension PostPreviewViewController: UINavigationControllerDelegate, UIImagePick
     }
   }
 }
+
+
+//MARK: - Keyboard Handling
+extension PostPreviewViewController {
+  fileprivate func addKeyboardNotifications() {
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillShow(_:)),
+      name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillHide(_:)),
+      name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+  }
+
+  @objc fileprivate func keyboardWillShow(_ notification: NSNotification) {
+    var insets = UIEdgeInsets.zero
+    if let value = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+      let frame = value.cgRectValue
+      insets.bottom = frame.height
+    }
+    self.collectionNode.view.contentInset = insets
+
+    var indexPath: IndexPath? = nil
+    if titleNode.textNode.isFirstResponder() {
+      indexPath = collectionNode.indexPath(for: titleNode)
+    }
+
+    if descriptionNode.textNode.isFirstResponder() {
+      indexPath = collectionNode.indexPath(for: descriptionNode)
+    }
+
+    guard let cellIndexPath = indexPath else {
+      return
+    }
+    self.collectionNode.scrollToItem(at: cellIndexPath, at: .bottom, animated: true)
+  }
+
+  @objc fileprivate func keyboardWillHide(_ notification: NSNotification) {
+    self.collectionNode.view.contentInset = UIEdgeInsets.zero
+  }
+}
+

@@ -15,12 +15,13 @@ final class PostPreviewViewModel {
     self.candidatePost = post
   }
   
-  func postValues() -> (title: String?, shortDescription: String?, penName: String?, url: URL?) {
+  func postValues() -> (title: String?, shortDescription: String?, penName: String?, url: URL?, imageUrl: String?) {
     let title = candidatePost.title
     let shortDescription = candidatePost.shortDescription
     let penName = candidatePost.penName?.name
     let url = candidatePost.penName?.url
-    return (title, shortDescription, penName, url)
+    let imageUrl = candidatePost.imageUrl
+    return (title, shortDescription, penName, url, imageUrl)
   }
 
   func upload(image: UIImage?, completion: @escaping (_ success: Bool, _ imageId: String?) -> Void) {
