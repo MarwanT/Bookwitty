@@ -220,59 +220,79 @@ class ContentEditorViewController: UIViewController {
   }
   
   private func setupEditorToolbar() {
-    let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
-    toolbar.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
-    toolbar.options = ContentEditorOption.toolbarOptions
-    toolbar.editor = editorView // Previously instantiated RichEditorView
-    toolbar.delegate = self
+    let toolbar = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 45.0))
+    toolbar.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
+    editorView.inputAccessoryView = toolbar
+
     
-    let myToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
     let options = ContentEditorOption.toolbarOptions
     let items = createToolbarItems(with: options)
-      myToolbar.items = items
-    editorView.inputAccessoryView = myToolbar
+    
+    let stackView = UIStackView(arrangedSubviews: items)
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    let verticalStackView = UIStackView()
+    verticalStackView.axis = .vertical
+    let onePixelView = UIView()
+    onePixelView.translatesAutoresizingMaskIntoConstraints = false
+    onePixelView.addHeightConstraint(1)
+    onePixelView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber18()
+    verticalStackView.distribution = .fillProportionally
+    verticalStackView.addArrangedSubview(onePixelView)
+    verticalStackView.addArrangedSubview(stackView)
+    toolbar.addSubview(verticalStackView)
+    verticalStackView.bindFrameToSuperviewBounds()
   }
   
-  func header(_ sender:UIBarButtonItem) {
-    guard let option = ContentEditorOption(rawValue: sender.tag) else { return }
-    
+  func toolbarItemTouchUpInside(_ sender: UITapGestureRecognizer) {
+    guard let option = ContentEditorOption(rawValue: sender.view!.tag) else { return }
+    let isSelected = self.toolbarButtons[option]?.isSelected ?? false
+
     switch option {
 
     case .bold:
       self.editorView.bold()
     case .italic:
-      self.editorView.italic()
+        self.editorView.italic()
     case .header:
-      self.editorView.header(2)
+      if (isSelected) {
+        self.editorView.runJS("HL.removeSelectedElements('h2')")
+      } else {
+        self.editorView.header(2)
+      }
     case .unorderedList:
       self.editorView.unorderedList()
     case .link:
-        break
+        self.showAddLinkAlertView()
     case .undo, .redo :
       break
     }
+    
+    self.richEditor(self.editorView, handle: "selectionchange")
   }
   
-  func createToolbarItems(with options:[ContentEditorOption]) -> [UIBarButtonItem] {
-    var items = [UIBarButtonItem]()
+  func createToolbarItems(with options:[ContentEditorOption]) -> [SelectedImageView] {
+    var items = [SelectedImageView]()
     options.forEach {
-      let barButton = UIBarButtonItem(image: $0.image, style: .plain, target: self, action: #selector(self.header(_:)))
-      barButton.tag = $0.rawValue
-      items.append(barButton)
+      let toolbarImageView = SelectedImageView(image: $0.image)
+      toolbarImageView.isUserInteractionEnabled = true
+      let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.toolbarItemTouchUpInside(_:)))
+      toolbarImageView.addGestureRecognizer(tapGestureRecognizer)
+      toolbarImageView.tag = $0.rawValue
+      toolbarImageView.translatesAutoresizingMaskIntoConstraints = false
+      toolbarImageView.addSizeConstraints(width: 44.0, height: 44.0)
+      toolbarImageView.tintColor = ThemeManager.shared.currentTheme.colorNumber15()
+      items.append(toolbarImageView)
+      self.toolbarButtons[$0] = toolbarImageView
     }
+    items.append(SelectedImageView())
     return items
   }
   
-  func set(option:ContentEditorOption, selected:Bool) {
-    
-    guard let toolbar = editorView.inputAccessoryView as? UIToolbar else {
-      return
-    }
-    if let index = toolbar.items?.index(where: {$0.tag == option.rawValue}) {
-      let item = toolbar.items?[index]
-      let tint = selected ? ThemeManager.shared.currentTheme.colorNumber19() : ThemeManager.shared.currentTheme.defaultTextColor()
-      item?.tintColor = tint
-    }
+  func set(option:ContentEditorOption, selected: Bool) {
+    guard let item = self.toolbarButtons[option] else { return }
+    item.isSelected = selected
+    let tint: UIColor = selected ? ThemeManager.shared.currentTheme.colorNumber19() : ThemeManager.shared.currentTheme.colorNumber15()
+    item.tintColor = tint
   }
 
   // MARK: - Keyboard Handling
