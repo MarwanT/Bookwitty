@@ -351,7 +351,7 @@ extension CardActionBarNode {
     var internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
     var externalHorizontalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
     
-    var actionBarHeight: CGFloat = 60.0
+    var actionBarHeight: CGFloat = 50.0
     var buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
     var iconSize: CGSize = CGSize(width: 40.0, height: 40.0)
   }

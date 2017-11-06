@@ -15,10 +15,13 @@ class ContentEditorViewModel  {
   private(set) var latestHashValue: Int = 0
   private(set) var currentRequest: Cancellable?
 
+  fileprivate var prelink: String?
+
   var currentPost: CandidatePost!
   
-  func initialize(with candidatPost: CandidatePost) -> Void {
+  func initialize(with candidatPost: CandidatePost, prelink: String? = nil) -> Void {
     self.currentPost = candidatPost
+    self.prelink = prelink
   }
   
   func set(_ currentPost: CandidatePost) {
@@ -66,6 +69,20 @@ class ContentEditorViewModel  {
     })
   }
   
+  fileprivate func dispatchPrelinkIfNeeded() {
+    guard let prelink = prelink,
+      let identifier = self.currentPost?.id else {
+      return
+    }
+    _ = ContentAPI.linkContent(for: identifier, with: prelink, completion: { (success, error) in
+      guard success else {
+        return
+      }
+
+      self.prelink = nil
+    })
+  }
+
   func dispatchContent() {
     
     let newHashValue = self.currentPost.hash
@@ -73,8 +90,11 @@ class ContentEditorViewModel  {
     
     if self.currentPost.id == nil {
       self.createContent()
-    } else if newHashValue != latestHashValue {
-      self.updateContent()
+    } else {
+      self.dispatchPrelinkIfNeeded()
+      if newHashValue != latestHashValue {
+        self.updateContent()
+      }
     }
     
   }
