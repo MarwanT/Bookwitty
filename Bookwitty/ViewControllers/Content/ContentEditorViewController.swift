@@ -450,6 +450,17 @@ extension ContentEditorViewController: QuoteEditorViewControllerDelegate {
 }
 
 extension ContentEditorViewController {
+  func presentSelectPenNameViewController() {
+    guard let currentPost = self.viewModel.currentPost, let currentPostId = currentPost.id else {
+      return
+    }
+
+    let selectPenNameViewController = Storyboard.Account.instantiate(SelectPenNameViewController.self)
+    selectPenNameViewController.delegate = self
+    let navigationController = UINavigationController(rootViewController: selectPenNameViewController)
+    self.navigationController?.present(navigationController, animated: true, completion: nil)
+  }
+
   func presentTagsViewController() {
     guard let currentPost = self.viewModel.currentPost, let currentPostId = currentPost.id else {
       return
@@ -506,7 +517,7 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
     
     switch item {
     case .penName:
-      break
+      self.presentSelectPenNameViewController()
     case .linkTopics:
       self.presentLinkTopicsViewController()
     case .addTags:
