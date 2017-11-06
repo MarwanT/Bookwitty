@@ -14,4 +14,16 @@ extension RichEditorView {
   
   func generate(photo: URL) {
   }
+  
+  func generate(link href: URL?, text: String?) {
+    runJS("RE.generateLink(\"\(href?.absoluteString ?? "" )\", \"\(text ?? "" )\");")
+  }
+  
+  func generateLinkPreview(type: String?, title: String?, description: String?, url: URL?, imageUrl: URL?) {
+    runJS("RE.generateLinkPreview(\"\(type ?? "")\", \"\(title ?? "")\", \"\(description ?? "")\", \"\(description ?? "")\", \"\(url?.absoluteString ?? "")\", \"\(imageUrl?.absoluteString ?? "")\");")
+  }
+  
+  func generate(embed: String) {
+    runJS("RE.generateEmbed(\"\(embed)\");")
+  }
 }
