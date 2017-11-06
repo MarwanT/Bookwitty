@@ -289,7 +289,7 @@ class ContentEditorViewController: UIViewController {
   func keyboardWillShow(_ notification: NSNotification) {
     if let value = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
       let frame = value.cgRectValue
-      contentViewBottomConstraintToSuperview.constant = -frame.height
+      contentViewBottomConstraintToSuperview.constant = frame.height
     }
     
     UIView.animate(withDuration: 0.44) {
