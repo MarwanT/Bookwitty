@@ -34,6 +34,7 @@ class ContentEditorViewController: UIViewController {
   let viewModel = ContentEditorViewModel()
   
   private var timer: Timer!
+  var toolbarButtons: [ContentEditorOption:SelectedImageView] = [:]
   
   override func viewDidLoad() {
     super.viewDidLoad()
