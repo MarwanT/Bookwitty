@@ -217,7 +217,12 @@ class ContentEditorViewController: UIViewController {
     toolbar.options = ContentEditorOption.toolbarOptions
     toolbar.editor = editorView // Previously instantiated RichEditorView
     toolbar.delegate = self
-    editorView.inputAccessoryView = toolbar
+    
+    let myToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
+    let options = ContentEditorOption.toolbarOptions
+    let items = createToolbarItems(with: options)
+      myToolbar.items = items
+    editorView.inputAccessoryView = myToolbar
   }
 
   // MARK: - Keyboard Handling
