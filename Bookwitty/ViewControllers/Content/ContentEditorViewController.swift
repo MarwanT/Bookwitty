@@ -69,6 +69,7 @@ class ContentEditorViewController: UIViewController {
                                target: self,
                                action: #selector(self.nextBarButtonTouchUpInside(_:)))
     
+    nextBarButtonItem.setTitleTextAttributes([NSForegroundColorAttributeName: ThemeManager.shared.currentTheme.defaultGrayedTextColor()], for: .disabled)
     let size: CGFloat = 44.0
     
     let undoButton = UIButton(type: .custom)
