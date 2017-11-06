@@ -254,6 +254,18 @@ class ContentEditorViewController: UIViewController {
     }
     return items
   }
+  
+  func set(option:ContentEditorOption, selected:Bool) {
+    
+    guard let toolbar = editorView.inputAccessoryView as? UIToolbar else {
+      return
+    }
+    if let index = toolbar.items?.index(where: {$0.tag == option.rawValue}) {
+      let item = toolbar.items?[index]
+      let tint = selected ? ThemeManager.shared.currentTheme.colorNumber19() : ThemeManager.shared.currentTheme.defaultTextColor()
+      item?.tintColor = tint
+    }
+  }
 
   // MARK: - Keyboard Handling
   private func addKeyboardNotifications() {
