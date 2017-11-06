@@ -481,7 +481,10 @@ extension TopicViewController: ActionBarNodeDelegate {
   }
 
   func actionBar(node: ActionBarNode, editButtonTouchUpInside button: ASButtonNode) {
-    //TODO: Empty Implementation
+    guard let identifier = viewModel.identifier else {
+      return
+    }
+    self.presentContentEditor(with: Text(), prelink: identifier)
   }
 
   func actionBar(node: ActionBarNode, moreButtonTouchUpInside button: ASButtonNode){
