@@ -148,7 +148,7 @@ class ContentEditorViewController: UIViewController {
   
   @objc private func nextBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
     
-    self.saveAsDraft()
+    self.viewModel.dispatchContent()
     
     let publishMenuViewController = Storyboard.Content.instantiate(PublishMenuViewController.self)
     publishMenuViewController.delegate = self
