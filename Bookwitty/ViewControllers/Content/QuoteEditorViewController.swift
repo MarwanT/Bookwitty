@@ -19,6 +19,9 @@ class QuoteEditorViewController: UIViewController {
   @IBOutlet var authorTextView: UITextView!
   @IBOutlet var separators: [UIView]!
 
+  fileprivate let authorPlaceholderLabel = UILabel()
+  fileprivate let quotePlaceholderLabel = UILabel()
+
   fileprivate let viewModel = QuoteEditorViewModel()
 
   var delegate: QuoteEditorViewControllerDelegate?
@@ -33,8 +36,30 @@ class QuoteEditorViewController: UIViewController {
     self.quoteTextView.becomeFirstResponder()
   }
 
+  override func updateViewConstraints() {
+    var insets = quoteTextView.textContainerInset
+    quotePlaceholderLabel.translatesAutoresizingMaskIntoConstraints = false
+    quotePlaceholderLabel.topAnchor.constraint(equalTo: quoteTextView.topAnchor, constant: insets.top).isActive = true
+    quotePlaceholderLabel.leftAnchor.constraint(equalTo: quoteTextView.leftAnchor, constant: insets.left + 5).isActive = true
+
+    insets = authorTextView.textContainerInset
+    authorPlaceholderLabel.translatesAutoresizingMaskIntoConstraints = false
+    authorPlaceholderLabel.topAnchor.constraint(equalTo: authorTextView.topAnchor, constant: insets.top).isActive = true
+    authorPlaceholderLabel.leftAnchor.constraint(equalTo: authorTextView.leftAnchor, constant: insets.left + 5).isActive = true
+
+    super.updateViewConstraints()
+  }
+
   fileprivate func initializeComponents() {
     title = Strings.quote()
+
+    quoteTextView.addSubview(quotePlaceholderLabel)
+    quotePlaceholderLabel.text = Strings.quote()
+    quoteTextView.delegate = self
+
+    authorTextView.addSubview(authorPlaceholderLabel)
+    authorPlaceholderLabel.text = Strings.author()
+    authorTextView.delegate = self
   }
 
   fileprivate func setupNavigationBarButtons() {
@@ -97,6 +122,24 @@ extension QuoteEditorViewController: Themeable {
 
     authorTextView.font = FontDynamicType.caption1.font
     authorTextView.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+
+    quotePlaceholderLabel.font = FontDynamicType.title4.font
+    quotePlaceholderLabel.textColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
+
+    authorPlaceholderLabel.font = FontDynamicType.caption1.font
+    authorPlaceholderLabel.textColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
   }
 }
 
+//MARK: - UITextViewDelegate implementation
+extension QuoteEditorViewController: UITextViewDelegate {
+  public func textViewDidChange(_ textView: UITextView) {
+    let count = textView.text.characters.count
+    let alpha: CGFloat = count == 0 ? 1.0 : 0.0
+    if textView === quoteTextView {
+      quotePlaceholderLabel.alpha = alpha
+    } else if textView === authorTextView {
+      authorPlaceholderLabel.alpha = alpha
+    }
+  }
+}
