@@ -57,7 +57,7 @@ class ContentEditorViewController: UIViewController {
       NSFontAttributeName: FontDynamicType.caption1.font,
       NSForegroundColorAttributeName : redColor], for: UIControlState.normal)
     
-    let imageSize = CGSize(width: 28.0, height: 28.0)
+    let imageSize = CGSize(width: 32.0, height: 32.0)
     
     let plusBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "plus").imageWithSize(size: imageSize),
                                style: UIBarButtonItemStyle.plain,
