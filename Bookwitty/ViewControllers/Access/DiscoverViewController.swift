@@ -917,6 +917,12 @@ extension DiscoverViewController {
       topicViewController.hidesBottomBarWhenPushed = true
       navigationController?.pushViewController(topicViewController, animated: true)
     } else {
+      guard !resource.isPandacraft else {
+        if let url = resource.canonicalURL {
+          WebViewController.present(url: url)
+        }
+        return
+      }
       let bookDetailsViewController = BookDetailsViewController()
       bookDetailsViewController.initialize(with: resource)
       bookDetailsViewController.hidesBottomBarWhenPushed = true

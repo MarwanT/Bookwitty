@@ -341,6 +341,12 @@ class BookStoreViewController: UIViewController {
   }
   
   fileprivate func pushBookDetailsViewController(with book: Book) {
+    guard !book.isPandacraft else {
+      if let url = book.canonicalURL {
+        WebViewController.present(url: url)
+      }
+      return
+    }
     let bookDetailsViewController = BookDetailsViewController()
     bookDetailsViewController.initialize(with: book)
     bookDetailsViewController.hidesBottomBarWhenPushed = true

@@ -762,6 +762,12 @@ extension ProfileDetailsViewController {
       topicViewController.initialize(with: resource as ModelCommonProperties)
       navigationController?.pushViewController(topicViewController, animated: true)
     } else {
+      guard !resource.isPandacraft else {
+        if let url = resource.canonicalURL {
+          WebViewController.present(url: url)
+        }
+        return
+      }
       let bookDetailsViewController = BookDetailsViewController()
       bookDetailsViewController.initialize(with: resource)
       navigationController?.pushViewController(bookDetailsViewController, animated: true)
