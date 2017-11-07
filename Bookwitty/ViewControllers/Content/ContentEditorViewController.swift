@@ -133,7 +133,7 @@ class ContentEditorViewController: UIViewController {
   }
   
   @objc private func draftsBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
-    //Todo: Implementation
+    self.presentDraftsViewController()
   }
   
   @objc private func plusBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
@@ -337,6 +337,13 @@ class ContentEditorViewController: UIViewController {
     let richBookViewController = RichBookViewController()
     richBookViewController.delegate = self
     let navigationController = UINavigationController(rootViewController: richBookViewController)
+    self.navigationController?.present(navigationController, animated: true, completion: nil)
+  }
+
+  func presentDraftsViewController() {
+    let controller = DraftsViewController()
+    controller.delegate = self
+    let navigationController = UINavigationController(rootViewController: controller)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
   }
 
