@@ -610,6 +610,12 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
     case .relatedBooks:
       //TODO: [DataManager]
       if let resource = viewModel.relatedBook(at: indexPath.item) {
+        guard !resource.isPandacraft else {
+          if let url = resource.canonicalURL {
+            WebViewController.present(url: url)
+          }
+          return
+        }
         let vc = BookDetailsViewController()
         vc.initialize(with: resource)
         navigationController?.pushViewController(vc, animated: true)
@@ -617,6 +623,12 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
     case .editions:
       //TODO: [DataManager]
       if let resource = viewModel.edition(at: indexPath.item) {
+        guard !resource.isPandacraft else {
+          if let url = resource.canonicalURL {
+            WebViewController.present(url: url)
+          }
+          return
+        }
         let vc = BookDetailsViewController()
         vc.initialize(with: resource)
         navigationController?.pushViewController(vc, animated: true)
@@ -1230,6 +1242,12 @@ extension TopicViewController {
       topicViewController.initialize(with: resource as ModelCommonProperties)
       navigationController?.pushViewController(topicViewController, animated: true)
     } else {
+      guard !resource.isPandacraft else {
+        if let url = resource.canonicalURL {
+          WebViewController.present(url: url)
+        }
+        return
+      }
       let bookDetailsViewController = BookDetailsViewController()
       bookDetailsViewController.initialize(with: resource)
       navigationController?.pushViewController(bookDetailsViewController, animated: true)
