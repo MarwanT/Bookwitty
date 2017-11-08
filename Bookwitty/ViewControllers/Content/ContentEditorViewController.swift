@@ -420,6 +420,7 @@ extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePi
 extension ContentEditorViewController: DraftsViewControllerDelegate {
   func drafts(viewController: DraftsViewController, didRequestEdit draft: CandidatePost) {
     //TODO: Set the candidate post and reload the editor
+    self.navigationController?.dismiss(animated: true, completion: nil)
   }
 }
 
