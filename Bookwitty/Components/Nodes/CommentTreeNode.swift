@@ -60,6 +60,7 @@ class CommentTreeNode: ASCellNode {
     if let createDate = comment?.createdAt as Date? {
       commentNode.date = createDate
     }
+    // TODO: add the minimal case
     commentNode.mode = isReply ? .reply : .normal
     setNeedsLayout()
   }

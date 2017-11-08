@@ -169,6 +169,7 @@ extension CommentNode {
   enum DisplayMode {
     case normal
     case reply
+    case minimal
   }
 }
 
