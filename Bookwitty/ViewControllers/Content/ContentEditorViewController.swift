@@ -42,6 +42,7 @@ class ContentEditorViewController: UIViewController {
     initializeComponents()
     loadNavigationBarButtons()
     addKeyboardNotifications()
+    self.editorView.clipsToBounds = true
     self.titleTextField.addTarget(self, action: #selector(ContentEditorViewController.textChanged(_:)), for: .editingChanged)
   }
   
