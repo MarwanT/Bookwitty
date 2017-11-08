@@ -20,7 +20,7 @@ class CommentNode: ASCellNode {
   fileprivate let messageNode: DTAttributedLabelNode
   fileprivate let actionBar: CardActionBarNode
   
-  var mode = DisplayMode.primary {
+  var mode = DisplayMode.normal {
     didSet {
       setNeedsLayout()
     }
@@ -64,7 +64,7 @@ class CommentNode: ASCellNode {
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    actionBar.hideReplyButton = mode == .primary ? false : true
+    actionBar.hideReplyButton = mode == .normal ? false : true
     
     var infoStackElements = [ASLayoutElement]()
     
@@ -92,7 +92,7 @@ class CommentNode: ASCellNode {
   var bodyInsets: UIEdgeInsets {
     let bodyLeftMargin: CGFloat
     switch mode {
-    case .primary:
+    case .normal:
       bodyLeftMargin = configuration.indentationMargin
     default:
       bodyLeftMargin = 0
@@ -167,8 +167,8 @@ extension CommentNode {
 // MARK: Modes declaration
 extension CommentNode {
   enum DisplayMode {
-    case primary
-    case secondary
+    case normal
+    case reply
   }
 }
 

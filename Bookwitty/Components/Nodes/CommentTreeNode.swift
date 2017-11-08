@@ -60,7 +60,7 @@ class CommentTreeNode: ASCellNode {
     if let createDate = comment?.createdAt as Date? {
       commentNode.date = createDate
     }
-    commentNode.mode = isReply ? .secondary : .primary
+    commentNode.mode = isReply ? .reply : .normal
     setNeedsLayout()
   }
   
