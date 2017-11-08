@@ -20,7 +20,7 @@ class CommentNode: ASCellNode {
   fileprivate let messageNode: DTAttributedLabelNode
   fileprivate let actionBar: CardActionBarNode
   
-  var mode = Mode.primary {
+  var mode = DisplayMode.primary {
     didSet {
       setNeedsLayout()
     }
@@ -166,7 +166,7 @@ extension CommentNode {
 
 // MARK: Modes declaration
 extension CommentNode {
-  enum Mode {
+  enum DisplayMode {
     case primary
     case secondary
   }
