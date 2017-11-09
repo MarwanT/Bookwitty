@@ -27,8 +27,6 @@ class LinkTopicsViewController: UIViewController {
     self.initializeComponents()
     self.addKeyboardNotifications()
     self.applyTheme()
-    self.tagsView.beginEditing() // becomeFirstResponder
-    self.tagsView.delimiter = "\n"
     self.title = Strings.topic()
   }
   
@@ -40,6 +38,9 @@ class LinkTopicsViewController: UIViewController {
     self.tableView.tableFooterView = UIView()
     self.tableView.backgroundColor = .clear
     self.separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+
+    tagsView.delimiter = "\n"
+    tagsView.beginEditing() // becomeFirstResponder
 
     tagsView.addTags(self.viewModel.getSelectedTopics.flatMap { $0.title } )
 
