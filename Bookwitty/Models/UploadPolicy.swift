@@ -19,7 +19,7 @@ class UploadPolicy: Resource {
   }
   
   var link: String? {
-    return asset?["url"] as? String
+    return asset?["preview_url"] as? String
   }
 
   override class var resourceType: ResourceType {

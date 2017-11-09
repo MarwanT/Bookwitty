@@ -106,7 +106,7 @@ class ContentEditorViewModel  {
     }
     
     let fileName = UUID().uuidString
-    _ = UploadAPI.uploadPolicy(file: (fileName, size: data.count), fileType: UploadAPI.FileType.image, assetType: UploadAPI.AssetType.content) {
+    _ = UploadAPI.uploadPolicy(file: (fileName, size: data.count), fileType: UploadAPI.FileType.image, assetType: UploadAPI.AssetType.inline) {
       (success, policy, error) in
       guard success, let policy = policy, let url = URL(string: policy.uploadUrl ?? "") else {
         completion(false, nil)

@@ -8,6 +8,19 @@
 
 import UIKit
 import RichEditorView
+import MobileEditor
+final class SelectedImageView: UIImageView {
+  private var selected = false
+  
+  var isSelected : Bool {
+    get {
+      return selected
+    }
+    set {
+      selected = newValue
+    }
+  }
+}
 
 class ContentEditorViewController: UIViewController {
   
@@ -21,13 +34,15 @@ class ContentEditorViewController: UIViewController {
   let viewModel = ContentEditorViewModel()
   
   private var timer: Timer!
+  var toolbarButtons: [ContentEditorOption:SelectedImageView] = [:]
   
   override func viewDidLoad() {
     super.viewDidLoad()
-
+    self.editorView.delegate = self
     initializeComponents()
     loadNavigationBarButtons()
     addKeyboardNotifications()
+    self.editorView.clipsToBounds = true
     self.titleTextField.addTarget(self, action: #selector(ContentEditorViewController.textChanged(_:)), for: .editingChanged)
   }
   
@@ -57,7 +72,7 @@ class ContentEditorViewController: UIViewController {
       NSFontAttributeName: FontDynamicType.caption1.font,
       NSForegroundColorAttributeName : redColor], for: UIControlState.normal)
     
-    let imageSize = CGSize(width: 28.0, height: 28.0)
+    let imageSize = CGSize(width: 32.0, height: 32.0)
     
     let plusBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "plus").imageWithSize(size: imageSize),
                                style: UIBarButtonItemStyle.plain,
@@ -69,6 +84,7 @@ class ContentEditorViewController: UIViewController {
                                target: self,
                                action: #selector(self.nextBarButtonTouchUpInside(_:)))
     
+    nextBarButtonItem.setTitleTextAttributes([NSForegroundColorAttributeName: ThemeManager.shared.currentTheme.defaultGrayedTextColor()], for: .disabled)
     let size: CGFloat = 44.0
     
     let undoButton = UIButton(type: .custom)
@@ -105,25 +121,20 @@ class ContentEditorViewController: UIViewController {
   
   // MARK: - Navigation items actions
   @objc private func undoButtonTouchUpInside(_ sender: UIButton) {
-    guard let toolbar = editorView.inputAccessoryView as? RichEditorToolbar else {
-      return
-    }
-    ContentEditorOption.undo.action(toolbar)
+    self.editorView.undo()
   }
   
   @objc private func redoButtonTouchUpInside(_ sender: UIButton) {
-    guard let toolbar = editorView.inputAccessoryView as? RichEditorToolbar else {
-      return
-    }
-    ContentEditorOption.redo.action(toolbar)
+    self.editorView.redo()
   }
   
   @objc private func closeBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
+    self.timer.invalidate()
     self.dismiss(animated: true, completion: nil)
   }
   
   @objc private func draftsBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
-    //Todo: Implementation
+    self.presentDraftsViewController()
   }
   
   @objc private func plusBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
@@ -138,7 +149,7 @@ class ContentEditorViewController: UIViewController {
   
   @objc private func nextBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
     
-    self.saveAsDraft()
+    self.viewModel.dispatchContent()
     
     let publishMenuViewController = Storyboard.Content.instantiate(PublishMenuViewController.self)
     publishMenuViewController.delegate = self
@@ -175,12 +186,11 @@ class ContentEditorViewController: UIViewController {
     alertController.addTextField(configurationHandler: {(_ textField: UITextField) -> Void in
       textField.placeholder = "http://"
     })
+    
     let confirmAction = UIAlertAction(title: Strings.ok(), style: .default, handler: {(_ action: UIAlertAction) -> Void in
-      
-      guard let toolbar = self.editorView.inputAccessoryView as? RichEditorToolbar else {
-          return
-        }
-      ContentEditorOption.link.action(toolbar)
+      if let alertTextField = alertController.textFields?.first, alertTextField.text != nil, let link = alertTextField.text {
+        self.editorView.generate(link: URL(string: link), text: "Link")
+      }
     })
     alertController.addAction(confirmAction)
     
@@ -193,9 +203,17 @@ class ContentEditorViewController: UIViewController {
   private func initializeComponents() {
     editorView.placeholder = Strings.write_here()
     setupEditorToolbar()
-    
+    setupContentEditorHtml()
     self.timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(ContentEditorViewController.tick), userInfo: nil, repeats: true)
     self.timer.tolerance = 0.5
+  }
+  
+  func setupContentEditorHtml() {
+    let bundle = Bundle(for: MobileEditor.self)
+    bundle.load()
+    if let editor = bundle.url(forResource: "editor", withExtension: "html") {
+      self.editorView.webView.loadRequest(URLRequest(url: editor))
+    }
   }
   
   @objc private func tick() {
@@ -203,12 +221,79 @@ class ContentEditorViewController: UIViewController {
   }
   
   private func setupEditorToolbar() {
-    let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
-    toolbar.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
-    toolbar.options = ContentEditorOption.toolbarOptions
-    toolbar.editor = editorView // Previously instantiated RichEditorView
-    toolbar.delegate = self
+    let toolbar = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 45.0))
+    toolbar.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
     editorView.inputAccessoryView = toolbar
+
+    
+    let options = ContentEditorOption.toolbarOptions
+    let items = createToolbarItems(with: options)
+    
+    let stackView = UIStackView(arrangedSubviews: items)
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    let verticalStackView = UIStackView()
+    verticalStackView.axis = .vertical
+    let onePixelView = UIView()
+    onePixelView.translatesAutoresizingMaskIntoConstraints = false
+    onePixelView.addHeightConstraint(1)
+    onePixelView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber18()
+    verticalStackView.distribution = .fillProportionally
+    verticalStackView.addArrangedSubview(onePixelView)
+    verticalStackView.addArrangedSubview(stackView)
+    toolbar.addSubview(verticalStackView)
+    verticalStackView.bindFrameToSuperviewBounds()
+  }
+  
+  func toolbarItemTouchUpInside(_ sender: UITapGestureRecognizer) {
+    guard let option = ContentEditorOption(rawValue: sender.view!.tag) else { return }
+    let isSelected = self.toolbarButtons[option]?.isSelected ?? false
+
+    switch option {
+
+    case .bold:
+      self.editorView.bold()
+    case .italic:
+        self.editorView.italic()
+    case .header:
+      if (isSelected) {
+        self.editorView.runJS("HL.removeSelectedElements('h2')")
+      } else {
+        self.editorView.header(2)
+      }
+    case .unorderedList:
+      self.editorView.unorderedList()
+    case .link:
+        self.showAddLinkAlertView()
+    case .undo, .redo :
+      break
+    }
+    
+    self.richEditor(self.editorView, handle: "selectionchange")
+  }
+  
+  func createToolbarItems(with options:[ContentEditorOption]) -> [SelectedImageView] {
+    var items = [SelectedImageView]()
+    options.forEach {
+      let toolbarImageView = SelectedImageView(image: $0.image)
+      toolbarImageView.isUserInteractionEnabled = true
+      let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.toolbarItemTouchUpInside(_:)))
+      toolbarImageView.addGestureRecognizer(tapGestureRecognizer)
+      toolbarImageView.tag = $0.rawValue
+      toolbarImageView.translatesAutoresizingMaskIntoConstraints = false
+      toolbarImageView.addSizeConstraints(width: 44.0, height: 44.0)
+      toolbarImageView.tintColor = ThemeManager.shared.currentTheme.colorNumber15()
+      items.append(toolbarImageView)
+      self.toolbarButtons[$0] = toolbarImageView
+    }
+    items.append(SelectedImageView())
+    return items
+  }
+  
+  func set(option:ContentEditorOption, selected: Bool) {
+    guard let item = self.toolbarButtons[option] else { return }
+    item.isSelected = selected
+    let tint: UIColor = selected ? ThemeManager.shared.currentTheme.colorNumber19() : ThemeManager.shared.currentTheme.colorNumber15()
+    item.tintColor = tint
   }
 
   // MARK: - Keyboard Handling
@@ -225,7 +310,7 @@ class ContentEditorViewController: UIViewController {
   func keyboardWillShow(_ notification: NSNotification) {
     if let value = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
       let frame = value.cgRectValue
-      contentViewBottomConstraintToSuperview.constant = -frame.height
+      contentViewBottomConstraintToSuperview.constant = frame.height
     }
     
     UIView.animate(withDuration: 0.44) {
@@ -253,6 +338,13 @@ class ContentEditorViewController: UIViewController {
     let richBookViewController = RichBookViewController()
     richBookViewController.delegate = self
     let navigationController = UINavigationController(rootViewController: richBookViewController)
+    self.navigationController?.present(navigationController, animated: true, completion: nil)
+  }
+
+  func presentDraftsViewController() {
+    let controller = DraftsViewController()
+    controller.delegate = self
+    let navigationController = UINavigationController(rootViewController: controller)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
   }
 
@@ -317,10 +409,18 @@ extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePi
 
     self.navigationController?.dismiss(animated: true, completion: nil)
 
-    viewModel.upload(image: image) {
-      (success: Bool, link: String?) in
-      //TODO: Send to JS
+    viewModel.upload(image: image) { (success: Bool, link: String?) in
+      guard let link = link, let Url = URL(string: link) else { return }
+      self.editorView.generate(photo: Url, alt: "Image")
     }
+  }
+}
+
+//MARK: - DraftsViewControllerDelegate Implementation
+extension ContentEditorViewController: DraftsViewControllerDelegate {
+  func drafts(viewController: DraftsViewController, didRequestEdit draft: CandidatePost) {
+    //TODO: Set the candidate post and reload the editor
+    self.navigationController?.dismiss(animated: true, completion: nil)
   }
 }
 
@@ -329,13 +429,24 @@ extension ContentEditorViewController: RichBookViewControllerDelegate {
   func richBookViewController(_ richBookViewController: RichBookViewController, didSelect book: Book) {
     self.navigationController?.dismiss(animated: true, completion: nil)
     //TODO: Send to JS
+    self.editorView.generate(link: book.canonicalURL, text: book.title)
   }
 }
 
 extension ContentEditorViewController: RichLinkPreviewViewControllerDelegate {
   func richLinkPreview(viewController: RichLinkPreviewViewController, didRequestLinkAdd: URL, with response: Response) {
     viewController.navigationController?.dismiss(animated: true, completion: nil)
-    //TODO: Sendt to JS
+    var mode: String = ""
+    switch viewController.mode {
+    case .link:
+      mode = "link"
+    case .audio:
+      mode = "audio"
+    case .video:
+      mode = "video"
+    }
+    
+    self.editorView.generate(embed: response.html)
   }
 
   func richLinkPreviewViewControllerDidCancel(_ viewController: RichLinkPreviewViewController) {
@@ -346,7 +457,7 @@ extension ContentEditorViewController: RichLinkPreviewViewControllerDelegate {
 extension ContentEditorViewController: QuoteEditorViewControllerDelegate {
   func quoteEditor(viewController: QuoteEditorViewController, didRequestAdd quote: String, with author: String?) {
     viewController.navigationController?.dismiss(animated: true, completion: nil)
-    //TODO: Sendt to JS
+    self.editorView.generate(quote: quote, author: author ?? "", citeText: "", citeUrl: "")
   }
 
   func quoteEditorViewControllerDidCancel(_ viewController: QuoteEditorViewController) {
@@ -355,6 +466,17 @@ extension ContentEditorViewController: QuoteEditorViewControllerDelegate {
 }
 
 extension ContentEditorViewController {
+  func presentSelectPenNameViewController() {
+    guard let currentPost = self.viewModel.currentPost, let currentPostId = currentPost.id else {
+      return
+    }
+
+    let selectPenNameViewController = Storyboard.Account.instantiate(SelectPenNameViewController.self)
+    selectPenNameViewController.delegate = self
+    let navigationController = UINavigationController(rootViewController: selectPenNameViewController)
+    self.navigationController?.present(navigationController, animated: true, completion: nil)
+  }
+
   func presentTagsViewController() {
     guard let currentPost = self.viewModel.currentPost, let currentPostId = currentPost.id else {
       return
@@ -411,7 +533,7 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
     
     switch item {
     case .penName:
-      break
+      self.presentSelectPenNameViewController()
     case .linkTopics:
       self.presentLinkTopicsViewController()
     case .addTags:
@@ -425,6 +547,14 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
     case .goBack:
       break
     }
+  }
+}
+
+//MARK: - SelectPenNameViewControllerDelegate implementation
+extension ContentEditorViewController: SelectPenNameViewControllerDelegate {
+  func selectPenName(controller: SelectPenNameViewController, didSelect penName: PenName?) {
+    controller.dismiss(animated: true, completion: nil)
+    //TODO: Empty Implementation
   }
 }
 
@@ -460,6 +590,37 @@ extension ContentEditorViewController: PenNameViewControllerDelegate {
       break
     case .New:
       break
+    }
+  }
+}
+
+//MARK: - RichEditorDelegate implementation
+extension ContentEditorViewController: RichEditorDelegate {
+  func richEditor(_ editor: RichEditorView, contentDidChange content: String) {
+  }
+  
+  func richEditorDidLoad(_ editor: RichEditorView) {
+    editor.runJS("RE.focus();")
+  }
+  
+  func richEditorTookFocus(_ editor: RichEditorView) {
+    self.navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = true }
+  }
+  
+  func richEditorLostFocus(_ editor: RichEditorView) {
+    self.navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = false }
+  }
+  
+  func richEditor(_ editor: RichEditorView, handle action: String) {
+    
+    if action == "selectionchange" {
+      let editingItems = self.editorView.runJS("RE.enabledCommands()").components(separatedBy: ",")
+      
+      self.set(option: .header, selected: editingItems.contains("h2"))
+      self.set(option: .bold, selected: editingItems.contains("bold"))
+      self.set(option: .italic, selected: editingItems.contains("italic"))
+      self.set(option: .link, selected: editingItems.contains("a"))
+      self.set(option: .unorderedList, selected: editingItems.contains("unorderedList"))
     }
   }
 }

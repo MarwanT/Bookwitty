@@ -9,9 +9,9 @@
 import RichEditorView
 import UIKit
 
-enum ContentEditorOption : RichEditorOption {
+enum ContentEditorOption : Int, RichEditorOption {
 
-  case bold
+  case bold = 1000
   case italic
   case header
   case unorderedList
@@ -41,15 +41,15 @@ enum ContentEditorOption : RichEditorOption {
     case .unorderedList:
       name = "bullets"
     case .link:
-      name = "hyperlinkSmall"
+      name = "hyperlink"
     case .undo:
       name = "undo"
     case .redo:
       name = "redo"
     }
     
-    let bundle = Bundle.main
-    return UIImage(named: name, in: bundle, compatibleWith: nil)?.imageWithSize(size: CGSize(width: CGFloat(Int.max), height: 44))
+//    let bundle = Bundle.main
+    return UIImage(named: name)
   }
   
   public var title: String {

@@ -15,6 +15,7 @@ public struct Response {
   let duration: TimeInterval?
   let shortDescription: String?
   let site: String?
+  let html: String?
 
   let url: URL?
   var embedUrl: URL? {
@@ -43,5 +44,6 @@ public struct Response {
     self.url = URL(string: json["meta"]["canonical"].stringValue)
     self.medias = json["links"]["player"].array?.map({ Media(json: $0) })
     self.thumbnails = json["links"]["thumbnail"].array?.map({ Thumbnail(json: $0) })
+    self.html = json["html"].string
   }
 }
