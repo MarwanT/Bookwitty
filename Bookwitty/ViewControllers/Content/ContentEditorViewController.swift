@@ -610,11 +610,11 @@ extension ContentEditorViewController: RichEditorDelegate {
     
     if action == "selectionchange" {
       let editingItems = self.editorView.runJS("RE.enabledCommands()").components(separatedBy: ",")
-      
+
       self.set(option: .header, selected: editingItems.contains("h2"))
       self.set(option: .bold, selected: editingItems.contains("bold"))
       self.set(option: .italic, selected: editingItems.contains("italic"))
-      self.set(option: .link, selected: editingItems.contains("a"))
+      self.set(option: .link, selected: editingItems.contains("link"))
       self.set(option: .unorderedList, selected: editingItems.contains("unorderedList"))
     }
   }
