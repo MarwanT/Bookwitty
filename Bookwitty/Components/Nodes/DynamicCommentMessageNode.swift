@@ -46,6 +46,28 @@ class DynamicCommentMessageNode: ASCellNode {
     self.textContentView?.truncationString = self.configuration.truncationString
     self.textContentView?.attributedString = self.attributedString
   }
+  
+  // MARK: APIs
+  //===========
+  func htmlString(text: String?, fontDynamicType: FontDynamicType? = nil,
+                  color: UIColor? = nil) {
+    guard let text = text else {
+      attributedString = nil
+      return
+    }
+    
+    if let givenFontDynamicType = fontDynamicType {
+      configuration.fontBook = givenFontDynamicType
+    }
+    
+    attributedString = DTAttributedTextContentView.htmlAttributedString(
+      text: text, fontDynamicType: configuration.fontBook,
+      color: color ?? configuration.defaultTextColor,
+      htmlImageWidth: UIScreen.main.bounds.width,
+      defaultLineHeightMultiple: AttributedStringBuilder.defaultHTMLLineHeightMultiple)
+    
+    setNeedsLayout()
+  }
 }
 
                                   //******\\
