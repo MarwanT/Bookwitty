@@ -15,4 +15,19 @@ class DynamicCommentMessageNode: ASCellNode {
   //=================
   var textContentView: DTAttributedLabel?
   
+  // MARK: Layout Variables
+  //=======================
+  fileprivate var configuration = Configuration()
+}
+
+                                  //******\\
+
+//MARK: - Configuration
+extension DynamicCommentMessageNode {
+  struct Configuration {
+    fileprivate var defaultTextColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    fileprivate var truncationString = AttributedStringBuilder(fontDynamicType: .body)
+      .append(text: "...").attributedString
+    fileprivate var fontBook: FontDynamicType = .body
+  }
 }
