@@ -177,7 +177,7 @@ class ContentEditorViewController: UIViewController {
     
     let confirmAction = UIAlertAction(title: Strings.ok(), style: .default, handler: {(_ action: UIAlertAction) -> Void in
       if let alertTextField = alertController.textFields?.first, alertTextField.text != nil, let link = alertTextField.text {
-        self.editorView.generate(link: URL(string: link), text: "Link")
+      self.editorView.insertLink(link, title: "")
       }
     })
     alertController.addAction(confirmAction)
