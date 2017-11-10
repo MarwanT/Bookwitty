@@ -10,6 +10,7 @@ import AsyncDisplayKit
 
 protocol DraftsViewControllerDelegate: class {
   func drafts(viewController: DraftsViewController, didRequestEdit draft: CandidatePost)
+  func draftsViewControllerRequestClose(_ viewController: DraftsViewController)
 }
 
 class DraftsViewController: ASViewController<ASTableNode> {
@@ -75,9 +76,8 @@ class DraftsViewController: ASViewController<ASTableNode> {
 
 //MARK: - Actions
 extension DraftsViewController {
-  @objc
-  fileprivate func closeBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
-    //TODO: Should dismiss / pop the controller 
+  @objc fileprivate func closeBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
+    delegate?.draftsViewControllerRequestClose(self)
   }
 }
 
