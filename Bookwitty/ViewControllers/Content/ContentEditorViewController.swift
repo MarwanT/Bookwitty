@@ -9,18 +9,6 @@
 import UIKit
 import RichEditorView
 import MobileEditor
-final class SelectedImageView: UIImageView {
-  private var selected = false
-  
-  var isSelected : Bool {
-    get {
-      return selected
-    }
-    set {
-      selected = newValue
-    }
-  }
-}
 
 class ContentEditorViewController: UIViewController {
   
