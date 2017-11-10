@@ -83,6 +83,14 @@ class DynamicCommentMessageNode: ASCellNode {
     layoutFrame.truncationString = self.configuration.truncationString
     return layoutFrame.frame.size
   }
+  
+  fileprivate func preferredSize() -> CGSize? {
+    guard isNodeLoaded, let textContentView = textContentView else {
+      return nil
+    }
+    return textContentView.suggestedFrameSizeToFitEntireStringConstrainted(
+      toWidth: constrainedSizeForCalculatedLayout.max.width)
+  }
 }
 
                                   //******\\
