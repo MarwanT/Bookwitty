@@ -26,7 +26,7 @@ class LinkTagsViewController: UIViewController {
     applyTheme()
     self.addKeyboardNotifications()
     self.initializeComponents()
-    self.tagsView.beginEditing()
+
     self.title = Strings.tags()
   }
   
@@ -36,6 +36,9 @@ class LinkTagsViewController: UIViewController {
     self.navigationItem.rightBarButtonItem = doneButton
     
     self.separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+
+    tagsView.delimiter = "\n"
+    tagsView.beginEditing() // becomeFirstResponder
 
     tagsView.addTags(self.viewModel.selectedTags.flatMap { $0.title } )
     
