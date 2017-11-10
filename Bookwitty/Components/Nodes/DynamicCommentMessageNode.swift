@@ -37,6 +37,15 @@ class DynamicCommentMessageNode: ASCellNode {
     })
     style.maxHeight = ASDimensionMake(10000)
   }
+  
+  override func didLoad() {
+    super.didLoad()
+    self.textContentView = self.view as? DTAttributedLabel
+    self.textContentView?.delegate = self
+    self.textContentView?.lineBreakMode = .byTruncatingTail
+    self.textContentView?.truncationString = self.configuration.truncationString
+    self.textContentView?.attributedString = self.attributedString
+  }
 }
 
                                   //******\\
