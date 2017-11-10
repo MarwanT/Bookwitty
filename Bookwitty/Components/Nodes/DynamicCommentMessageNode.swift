@@ -70,6 +70,19 @@ class DynamicCommentMessageNode: ASCellNode {
     
     setNeedsLayout()
   }
+  
+  //MARK: Helpers
+  //=============
+  fileprivate func preferredLayoutSize(for constrainedSize: CGSize) -> CGSize? {
+    guard let layoutFrame = layouter.layoutFrame(
+      with: CGRect.init(x: 0, y: 0, width: constrainedSize.width, height: 1),
+      range: NSMakeRange(0, 0)) else {
+        return nil
+    }
+    layoutFrame.lineBreakMode = .byTruncatingTail
+    layoutFrame.truncationString = self.configuration.truncationString
+    return layoutFrame.frame.size
+  }
 }
 
                                   //******\\
