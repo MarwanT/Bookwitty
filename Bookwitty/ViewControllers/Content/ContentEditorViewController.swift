@@ -243,11 +243,7 @@ class ContentEditorViewController: UIViewController {
     case .italic:
         self.editorView.italic()
     case .header:
-      if (isSelected) {
-        self.editorView.runJS("HL.removeSelectedElements('h2')")
-      } else {
-        self.editorView.header(2)
-      }
+        self.editorView.setHeader()
     case .unorderedList:
       self.editorView.unorderedList()
     case .link:
