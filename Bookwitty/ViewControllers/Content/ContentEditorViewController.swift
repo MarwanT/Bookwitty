@@ -560,10 +560,10 @@ extension ContentEditorViewController: LinkTagsViewControllerDelegate {
   }
 }
 
-//MARK: - LinkTopicsViewControllerDelegate Implementation
-extension ContentEditorViewController: LinkTopicsViewControllerDelegate {
-  func linkTopics(viewController: LinkPagesViewController, didLink topics: [Topic]) {
-    self.viewModel.linkedTopics = topics
+//MARK: - LinkPagesViewControllerDelegate Implementation
+extension ContentEditorViewController: LinkPagesViewControllerDelegate {
+  func linkPages(viewController: LinkPagesViewController, didLink pages: [Topic]) {
+    self.viewModel.linkedTopics = pages
     viewController.dismiss(animated: true, completion: nil)
   }
 }

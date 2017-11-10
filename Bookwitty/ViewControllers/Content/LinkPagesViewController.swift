@@ -9,8 +9,8 @@
 import UIKit
 import WSTagsField
 
-protocol LinkTopicsViewControllerDelegate: class {
-  func linkTopics(viewController: LinkPagesViewController, didLink topics: [Topic])
+protocol LinkPagesViewControllerDelegate: class {
+  func linkPages(viewController: LinkPagesViewController, didLink pages: [Topic])
 }
 
 class LinkPagesViewController: UIViewController {
@@ -20,7 +20,7 @@ class LinkPagesViewController: UIViewController {
   @IBOutlet weak var tableViewBottomConstraintToSuperview: NSLayoutConstraint!
   @IBOutlet weak var separatorView: UIView!
   
-  var delegate: LinkTopicsViewControllerDelegate?
+  var delegate: LinkPagesViewControllerDelegate?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -79,7 +79,7 @@ class LinkPagesViewController: UIViewController {
   }
   
   @objc private func doneButtonTouchUpInside(_ sender:UIBarButtonItem) {
-    self.delegate?.linkTopics(viewController: self, didLink: self.viewModel.getSelectedTopics)
+    self.delegate?.linkPages(viewController: self, didLink: self.viewModel.getSelectedTopics)
   }
   
   @objc private func reload(with text: String?) {
