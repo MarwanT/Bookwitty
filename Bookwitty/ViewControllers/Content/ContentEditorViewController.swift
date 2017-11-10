@@ -295,7 +295,13 @@ class ContentEditorViewController: UIViewController {
     let tint: UIColor = selected ? ThemeManager.shared.currentTheme.colorNumber19() : ThemeManager.shared.currentTheme.colorNumber15()
     item.tintColor = tint
   }
-
+  
+  // MARK: - UI Refresh
+  fileprivate func refresh() {
+    self.titleTextField.text  = self.viewModel.currentPost.title
+    //TODO: send body to JS
+  }
+  
   // MARK: - Keyboard Handling
   private func addKeyboardNotifications() {
     NotificationCenter.default.addObserver(self,
@@ -577,6 +583,7 @@ extension ContentEditorViewController: LinkTopicsViewControllerDelegate {
 extension ContentEditorViewController: PostPreviewViewControllerDelegate {
   func postPreview(viewController: PostPreviewViewController, didFinishPreviewing post: CandidatePost) {
     viewController.dismiss(animated: true, completion: nil)
+    self.refresh()
     self.viewModel.dispatchContent()
   }
 }
