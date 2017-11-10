@@ -42,7 +42,7 @@ class LinkPagesViewController: UIViewController {
     tagsView.delimiter = "\n"
     tagsView.beginEditing() // becomeFirstResponder
 
-    tagsView.addTags(self.viewModel.getSelectedTopics.flatMap { $0.title } )
+    tagsView.addTags(self.viewModel.getSelectedPages.flatMap { $0.title } )
 
     tagsView.onVerifyTag = { [weak self] field, candidate in
       guard let strongSelf = self else {
@@ -67,10 +67,10 @@ class LinkPagesViewController: UIViewController {
         return
       }
       
-      guard let topic = strongSelf.viewModel.unselectTopic(with: tag.text), let topicIdentifier = topic.id else {
+      guard let page = strongSelf.viewModel.unselectPage(with: tag.text), let pageIdentifier = page.id else {
         return
       }
-      _ = ContentAPI.unlinkContent(for: strongSelf.viewModel.contentIdentifier, with: topicIdentifier, completion: { (success, error) in
+      _ = ContentAPI.unlinkContent(for: strongSelf.viewModel.contentIdentifier, with: pageIdentifier, completion: { (success, error) in
         guard success else {
           return
         }
@@ -79,7 +79,7 @@ class LinkPagesViewController: UIViewController {
   }
   
   @objc private func doneButtonTouchUpInside(_ sender:UIBarButtonItem) {
-    self.delegate?.linkPages(viewController: self, didLink: self.viewModel.getSelectedTopics)
+    self.delegate?.linkPages(viewController: self, didLink: self.viewModel.getSelectedPages)
   }
   
   @objc private func reload(with text: String?) {
@@ -89,12 +89,12 @@ class LinkPagesViewController: UIViewController {
     
     self.viewModel.filter.query = text
     //Perform request
-    _ = SearchAPI.autocomplete(filter: self.viewModel.filter, page: nil) { (success, topics, _, _, error) in
-      guard success, let topics = topics as? [Topic] else {
-        self.viewModel.setTopics([])
+    _ = SearchAPI.autocomplete(filter: self.viewModel.filter, page: nil) { (success, pages, _, _, error) in
+      guard success, let pages = pages?.flatMap({ $0 as? ModelCommonProperties }) else {
+        self.viewModel.setPages([])
         return
       }
-      self.viewModel.setTopics(topics)
+      self.viewModel.setPages(pages)
       self.tableView.reloadData()
     }
   }
@@ -136,11 +136,11 @@ extension LinkPagesViewController: Themeable {
 }
 
 extension LinkPagesViewController {
-  func viewTopicViewController(with topic: ModelCommonProperties) {
+  func viewTopicViewController(with page: ModelCommonProperties) {
     let topicViewController = TopicViewController()
-    topicViewController.initialize(with: topic)
+    topicViewController.initialize(with: page)
     topicViewController.delegate = self
-    if self.viewModel.isSelected(topic) {
+    if self.viewModel.isSelected(page) {
       topicViewController.navigationItemMode = .action(.unlink)
     } else {
       topicViewController.navigationItemMode = .action(.link)
@@ -150,34 +150,34 @@ extension LinkPagesViewController {
 }
 
 extension LinkPagesViewController: TopicViewControllerDelegate {
-  func topic(viewController: TopicViewController, didRequest action: TopicAction, for topic: Topic) {
+  func topic(viewController: TopicViewController, didRequest action: PageAction, for page: ModelCommonProperties) {
     switch action {
     case .link:
-      self.viewModel.select(topic)
-      self.tagsView.addTags(self.viewModel.titlesForSelectedTopics)
-      guard let topicIdentifier = topic.id else {
+      self.viewModel.select(page)
+      self.tagsView.addTags(self.viewModel.titlesForSelectedPages)
+      guard let pageIdentifier = page.id else {
         return
       }
-      _ = ContentAPI.linkContent(for: self.viewModel.contentIdentifier, with: topicIdentifier, completion: { (success, error) in
+      _ = ContentAPI.linkContent(for: self.viewModel.contentIdentifier, with: pageIdentifier, completion: { (success, error) in
         guard success else {
           return
         }
       })
     case .unlink:
-      self.viewModel.unselect(topic)
-      guard let topicIdentifier = topic.id else {
+      self.viewModel.unselect(page)
+      guard let pageIdentifier = page.id else {
         return
       }
-      _ = ContentAPI.unlinkContent(for: self.viewModel.contentIdentifier, with: topicIdentifier, completion: { (success, error) in
+      _ = ContentAPI.unlinkContent(for: self.viewModel.contentIdentifier, with: pageIdentifier, completion: { (success, error) in
         guard success else {
           return
         }
       })
-      if let title = topic.title {
+      if let title = page.title {
         self.tagsView.removeTag(title)
       }
     }
-    self.viewModel.setTopics([])
+    self.viewModel.setPages([])
     self.tableView.reloadData()
     
     _ = self.navigationController?.popViewController(animated: true)
@@ -195,18 +195,18 @@ extension LinkPagesViewController: UITableViewDataSource, UITableViewDelegate {
   }
   
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-    let topic = self.viewModel.values(for: indexPath.row).topic
-    cell.textLabel?.text = topic?.title
+    let page = self.viewModel.values(for: indexPath.row).page
+    cell.textLabel?.text = page?.title
     cell.textLabel?.font = FontDynamicType.caption1.font
     cell.detailTextLabel?.text = ""
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-    guard let topic = self.viewModel.values(for: indexPath.row).topic else {
+    guard let page = self.viewModel.values(for: indexPath.row).page else {
       return
     }
-    self.viewTopicViewController(with: topic)
+    self.viewTopicViewController(with: page)
     tableView.reloadData()
   }
 }

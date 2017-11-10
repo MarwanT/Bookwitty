@@ -11,7 +11,7 @@ import Moya
 
 class ContentEditorViewModel  {
   var linkedTags: [Tag] = []
-  var linkedTopics: [ModelCommonProperties] = []
+  var linkedPages: [ModelCommonProperties] = []
   private(set) var latestHashValue: Int = 0
   private(set) var currentRequest: Cancellable?
 

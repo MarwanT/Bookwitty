@@ -10,79 +10,79 @@ import Foundation
 
 final class LinkPagesViewModel {
   var canLink: Bool = true
-  fileprivate var topics: [ModelCommonProperties] = []
-  fileprivate var selectedTopics: [ModelCommonProperties] = []
+  fileprivate var pages: [ModelCommonProperties] = []
+  fileprivate var selectedPages: [ModelCommonProperties] = []
   let filter: Filter = Filter()
   private(set) var contentIdentifier: String!
   
-  var getSelectedTopics: [ModelCommonProperties] {
-    return self.selectedTopics
+  var getSelectedPages: [ModelCommonProperties] {
+    return self.selectedPages
   }
   
-  var titlesForSelectedTopics: [String] {
-    return self.selectedTopics.flatMap { $0.title }
+  var titlesForSelectedPages: [String] {
+    return self.selectedPages.flatMap { $0.title }
   }
   
   init() {
     self.filter.types = [Topic.resourceType]
   }
   
-  func initialize(with contentIdentifier: String, linkedTopics: [ModelCommonProperties]) {
+  func initialize(with contentIdentifier: String, linkedPages: [ModelCommonProperties]) {
     self.contentIdentifier = contentIdentifier
-    self.selectedTopics = linkedTopics
+    self.selectedPages = linkedPages
   }
   
-  func select(_ topic: ModelCommonProperties) {
-    if !self.isSelected(topic) {
-      selectedTopics.append(topic)
+  func select(_ page: ModelCommonProperties) {
+    if !self.isSelected(page) {
+      selectedPages.append(page)
     }
   }
   
-  func unselect(_ topic: ModelCommonProperties) {
-    guard let index = self.selectedTopics.index(where: { $0.id == topic.id }) else {
+  func unselect(_ page: ModelCommonProperties) {
+    guard let index = self.selectedPages.index(where: { $0.id == page.id }) else {
       return
     }
     
-    self.selectedTopics.remove(at: index)
+    self.selectedPages.remove(at: index)
   }
   
   func hasSimilarTitle(_ title: String) -> Bool {
-    return self.selectedTopics.flatMap { $0.title }.contains(title)
+    return self.selectedPages.flatMap { $0.title }.contains(title)
   }
   
-  func unselectTopic(with title: String) -> ModelCommonProperties? {
-    let unselectedTopic = self.selectedTopics.first { $0.title == title }
-    self.selectedTopics = self.selectedTopics.filter { !($0.title == title) }
-    return unselectedTopic
+  func unselectPage(with title: String) -> ModelCommonProperties? {
+    let unselectedPage = self.selectedPages.first { $0.title == title }
+    self.selectedPages = self.selectedPages.filter { !($0.title == title) }
+    return unselectedPage
   }
   
-  func setTopics(_ topics: [ModelCommonProperties]) {
-    self.topics = topics
+  func setPages(_ pages: [ModelCommonProperties]) {
+    self.pages = pages
   }
   
-  fileprivate func topic(for row: Int) -> ModelCommonProperties? {
-    guard row >= 0 && row < topics.count else {
+  fileprivate func page(for row: Int) -> ModelCommonProperties? {
+    guard row >= 0 && row < pages.count else {
       return nil
     }
     
-    return topics[row]
+    return pages[row]
   }
   
-  func isSelected(_ topic: ModelCommonProperties) -> Bool {
-    return selectedTopics.contains(where: { $0.id == topic.id })
+  func isSelected(_ page: ModelCommonProperties) -> Bool {
+    return selectedPages.contains(where: { $0.id == page.id })
   }
 }
 // Mark: - TableView helper
 extension LinkPagesViewModel {
   func numberOfItemsInSection(section: Int) -> Int {
-    return topics.count
+    return pages.count
   }
 
-  func values(for row: Int) -> (topic: ModelCommonProperties?, linked: Bool) {
-    guard let topic = self.topic(for: row) else {
+  func values(for row: Int) -> (page: ModelCommonProperties?, linked: Bool) {
+    guard let page = self.page(for: row) else {
       return (nil, false)
     }
     
-    return (topic, self.isSelected(topic))
+    return (page, self.isSelected(page))
   }
 }
