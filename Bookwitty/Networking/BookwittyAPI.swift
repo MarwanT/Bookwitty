@@ -23,6 +23,7 @@ public enum BookwittyAPI {
   case categoryCuratedContent(categoryIdentifier: String)
   case newsFeed()
   case search(filter: Filter?, page: (number: String?, size: String?)?, includeFacets: Bool)
+  case autocomplete(filter: Filter?, page: (number: String?, size: String?)?, includeFacets: Bool)
   case createPenName(name: String, biography: String?, avatarId: String?, avatarUrl: String?, facebookUrl: String?, tumblrUrl: String?, googlePlusUrl: String?, twitterUrl: String?, instagramUrl: String?, pinterestUrl: String?, youtubeUrl: String?, linkedinUrl: String?, wordpressUrl: String?, websiteUrl: String?)
   case updatePenName(identifier: String, name: String?, biography: String?, avatarId: String?, avatarUrl: String?, facebookUrl: String?, tumblrUrl: String?, googlePlusUrl: String?, twitterUrl: String?, instagramUrl: String?, pinterestUrl: String?, youtubeUrl: String?, linkedinUrl: String?, wordpressUrl: String?, websiteUrl: String?)
   case batch(identifiers: [String])
@@ -126,6 +127,8 @@ extension BookwittyAPI: TargetType {
       path = "/pen_name/feed"
     case .search:
       path = "/search"
+    case .autocomplete:
+      path = "/search/autocomplete"
     case .createPenName:
       path = "/user/pen_names"
     case .updatePenName(let identifier, _, _, _, _, _, _, _, _, _, _, _, _, _, _):
@@ -233,7 +236,7 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .oAuth, .refreshToken, .resendAccountConfirmation, .createPenName, .createContent, .linkTag, .linkContent:
       return .post
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .search, .penNames, .comments, .replies, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent, .votes, .preferredFormats:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .search, .autocomplete, .penNames, .comments, .replies, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent, .votes, .preferredFormats:
       return .get
     case .register, .batch, .updatePreference, .wit, .follow, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart, .batchPenNames, .createComment, .witComment, .dimComment, .report, .reportPenName:
       return .post
@@ -294,6 +297,8 @@ extension BookwittyAPI: TargetType {
     case .updateUser(let identifier, let firstName, let lastName, let dateOfBirth, let email, let currentPassword, let password, let country, let badges, let preferences):
       return UserAPI.updatePostBody(identifier: identifier, firstName: firstName, lastName: lastName, dateOfBirth: dateOfBirth, email: email, currentPassword: currentPassword, password: password, country: country, badges: badges, preferences: preferences)
     case .search(let filter, let page, let includeFacets):
+      return SearchAPI.parameters(filter: filter, page: page, includeFacets: includeFacets)
+    case .autocomplete(let filter, let page, let includeFacets):
       return SearchAPI.parameters(filter: filter, page: page, includeFacets: includeFacets)
     case .createPenName(let name, let biography, let avatarId, let avatarUrl, let facebookUrl, let tumblrUrl, let googlePlusUrl, let twitterUrl, let instagramUrl, let pinterestUrl, let youtubeUrl, let linkedinUrl, let wordpressUrl, let websiteUrl):
       return PenNameAPI.createPostBody(name: name, biography: biography, avatarId: avatarId, avatarUrl: avatarUrl, facebookUrl: facebookUrl, tumblrUrl: tumblrUrl, googlePlusUrl: googlePlusUrl, twitterUrl: twitterUrl, instagramUrl: instagramUrl, pinterestUrl: pinterestUrl, youtubeUrl: youtubeUrl, linkedinUrl: linkedinUrl, wordpressUrl: wordpressUrl, websiteUrl: websiteUrl)
