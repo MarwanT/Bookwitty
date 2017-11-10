@@ -17,7 +17,7 @@ class CommentNode: ASCellNode {
   fileprivate let imageNode: ASNetworkImageNode
   fileprivate let fullNameNode: ASTextNode
   fileprivate let dateNode: ASTextNode
-  fileprivate let messageNode: DTAttributedLabelNode
+  fileprivate let messageNode: DynamicCommentMessageNode
   fileprivate let actionBar: CardActionBarNode
   
   var mode = DisplayMode.normal {
@@ -38,7 +38,7 @@ class CommentNode: ASCellNode {
     imageNode = ASNetworkImageNode()
     fullNameNode = ASTextNode()
     dateNode = ASTextNode()
-    messageNode = DTAttributedLabelNode()
+    messageNode = DynamicCommentMessageNode()
     actionBar = CardActionBarNode()
     super.init()
     setupNode()
@@ -51,9 +51,6 @@ class CommentNode: ASCellNode {
     imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(
       configuration.imageBorderWidth, configuration.imageBorderColor)
     imageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
-    
-    messageNode.maxNumberOfLines = 1000
-    messageNode.delegate = self
     
     actionBar.setup(forFollowingMode: false)
     actionBar.configuration.externalHorizontalMargin = 0
@@ -177,16 +174,5 @@ extension CommentNode {
 extension CommentNode: CardActionBarNodeDelegate {
   func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
     delegate?.commentNode(self, didRequestAction: action, forSender: sender, didFinishAction: didFinishAction)
-  }
-}
-
-// MARK: Modes declaration
-extension CommentNode: DTAttributedTextContentNodeDelegate {
-  func attributedTextContentNode(node: ASCellNode, button: DTLinkButton, didTapOnLink link: URL) {
-    WebViewController.present(url: link)
-  }
-  
-  func attributedTextContentNodeNeedsLayout(node: ASCellNode) {
-    self.setNeedsLayout()
   }
 }
