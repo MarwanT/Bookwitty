@@ -91,6 +91,15 @@ class DynamicCommentMessageNode: ASCellNode {
     return textContentView.suggestedFrameSizeToFitEntireStringConstrainted(
       toWidth: constrainedSizeForCalculatedLayout.max.width)
   }
+  
+  func refreshLayout() {
+    guard let calculatedSize = preferredSize() else {
+      style.preferredSize = CGSize(width: 0, height: 0)
+      return
+    }
+    style.preferredSize = calculatedSize
+    // TODO: Call delegate
+  }
 }
 
                                   //******\\
