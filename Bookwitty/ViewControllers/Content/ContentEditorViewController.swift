@@ -402,10 +402,10 @@ extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePi
     }
 
     self.navigationController?.dismiss(animated: true, completion: nil)
-
+    let id = self.editorView.runJS("RE.generatePhotoWrapper();")
     viewModel.upload(image: image) { (success: Bool, link: String?) in
       guard let link = link, let Url = URL(string: link) else { return }
-      self.editorView.generate(photo: Url, alt: "Image")
+      self.editorView.generate(photo: Url, alt: "Image", wrapperId: id)
     }
   }
 }
