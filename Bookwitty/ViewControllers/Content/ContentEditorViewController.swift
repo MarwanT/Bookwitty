@@ -462,6 +462,7 @@ extension ContentEditorViewController {
     }
 
     let selectPenNameViewController = Storyboard.Account.instantiate(SelectPenNameViewController.self)
+    selectPenNameViewController.viewModel.preselect(penName: currentPost.penName)
     selectPenNameViewController.delegate = self
     let navigationController = UINavigationController(rootViewController: selectPenNameViewController)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
