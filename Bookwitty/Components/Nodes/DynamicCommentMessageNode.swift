@@ -17,12 +17,14 @@ class DynamicCommentMessageNode: ASCellNode {
   
   // MARK: Layout Variables
   //=======================
+  fileprivate let layouter = DTCoreTextLayouter()
   fileprivate var configuration = Configuration()
   
   // MARK: Content Variables
   //========================
   private var attributedString: NSAttributedString? {
     didSet {
+      layouter.attributedString = attributedString
       textContentView?.attributedString = attributedString
     }
   }
