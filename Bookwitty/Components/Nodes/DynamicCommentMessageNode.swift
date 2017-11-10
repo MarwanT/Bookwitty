@@ -49,6 +49,12 @@ class DynamicCommentMessageNode: ASCellNode {
     self.textContentView?.attributedString = self.attributedString
   }
   
+  // MARK: Layout
+  //=============
+  override func calculateSizeThatFits(_ constrainedSize: CGSize) -> CGSize {
+    return preferredLayoutSize(for: constrainedSize) ?? constrainedSize
+  }
+  
   // MARK: APIs
   //===========
   func htmlString(text: String?, fontDynamicType: FontDynamicType? = nil,
