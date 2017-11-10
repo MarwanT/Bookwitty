@@ -300,10 +300,10 @@
             </objects>
             <point key="canvasLocation" x="760.79999999999995" y="946.77661169415296"/>
         </scene>
-        <!--Link Topics View Controller-->
+        <!--Link Pages View Controller-->
         <scene sceneID="XtR-T4-Xq0">
             <objects>
-                <viewController storyboardIdentifier="LinkTopicsViewController" id="nqs-bK-DIq" customClass="LinkTopicsViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LinkPagesViewController" id="nqs-bK-DIq" customClass="LinkPagesViewController" customModule="Bookwitty" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="z4d-IH-KMn"/>
                         <viewControllerLayoutGuide type="bottom" id="pEm-OC-DaV"/>

@@ -1,5 +1,5 @@
 //
-//  LinkTopicsViewController.swift
+//  LinkPagesViewController.swift
 //  Bookwitty
 //
 //  Created by ibrahim on 10/12/17.
@@ -10,10 +10,10 @@ import UIKit
 import WSTagsField
 
 protocol LinkTopicsViewControllerDelegate: class {
-  func linkTopics(viewController: LinkTopicsViewController, didLink topics: [Topic])
+  func linkTopics(viewController: LinkPagesViewController, didLink topics: [Topic])
 }
 
-class LinkTopicsViewController: UIViewController {
+class LinkPagesViewController: UIViewController {
   let viewModel = LinkTopicsViewModel()
   @IBOutlet weak var tagsView: WSTagsField!
   @IBOutlet weak var tableView: UITableView!
@@ -57,7 +57,7 @@ class LinkTopicsViewController: UIViewController {
         return
       }
       NSObject.cancelPreviousPerformRequests(withTarget: strongSelf)
-      strongSelf.perform(#selector(LinkTopicsViewController.reload), with: text, afterDelay: 0.5)
+      strongSelf.perform(#selector(LinkPagesViewController.reload), with: text, afterDelay: 0.5)
     }
     tagsView.onShouldReturn = { _ in
       return false
@@ -129,13 +129,13 @@ class LinkTopicsViewController: UIViewController {
   }
 }
 
-extension LinkTopicsViewController: Themeable {
+extension LinkPagesViewController: Themeable {
   func applyTheme() {
     self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
   }
 }
 
-extension LinkTopicsViewController {
+extension LinkPagesViewController {
   func viewTopicViewController(with topic: Topic) {
     let topicViewController = TopicViewController()
     topicViewController.initialize(with: topic)
@@ -149,7 +149,7 @@ extension LinkTopicsViewController {
   }
 }
 
-extension LinkTopicsViewController: TopicViewControllerDelegate {
+extension LinkPagesViewController: TopicViewControllerDelegate {
   func topic(viewController: TopicViewController, didRequest action: TopicAction, for topic: Topic) {
     switch action {
     case .link:
@@ -184,7 +184,7 @@ extension LinkTopicsViewController: TopicViewControllerDelegate {
   }
 }
 
-extension LinkTopicsViewController: UITableViewDataSource, UITableViewDelegate {
+extension LinkPagesViewController: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return self.viewModel.numberOfItemsInSection(section: section)

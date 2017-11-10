@@ -489,7 +489,7 @@ extension ContentEditorViewController {
       return
     }
     
-    let linkTopicsViewController = Storyboard.Content.instantiate(LinkTopicsViewController.self)
+    let linkTopicsViewController = Storyboard.Content.instantiate(LinkPagesViewController.self)
     linkTopicsViewController.viewModel.initialize(with: currentPostId, linkedTopics: self.viewModel.linkedTopics)
     linkTopicsViewController.delegate = self
     let navigationController = UINavigationController(rootViewController: linkTopicsViewController)
@@ -562,7 +562,7 @@ extension ContentEditorViewController: LinkTagsViewControllerDelegate {
 
 //MARK: - LinkTopicsViewControllerDelegate Implementation
 extension ContentEditorViewController: LinkTopicsViewControllerDelegate {
-  func linkTopics(viewController: LinkTopicsViewController, didLink topics: [Topic]) {
+  func linkTopics(viewController: LinkPagesViewController, didLink topics: [Topic]) {
     self.viewModel.linkedTopics = topics
     viewController.dismiss(animated: true, completion: nil)
   }

@@ -17,7 +17,7 @@
 		0F525E9F1F77E98700E225B1 /* RichMenuCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F525E9E1F77E98700E225B1 /* RichMenuCellTableViewCell.swift */; };
 		0F7767D21F8CE5A900D54E4D /* LinkTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7767D11F8CE5A900D54E4D /* LinkTagsViewController.swift */; };
 		0F7767D41F8CE68400D54E4D /* LinkTagsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7767D31F8CE68400D54E4D /* LinkTagsViewModel.swift */; };
-		0F7767D61F8F511C00D54E4D /* LinkTopicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7767D51F8F511C00D54E4D /* LinkTopicsViewController.swift */; };
+		0F7767D61F8F511C00D54E4D /* LinkPagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7767D51F8F511C00D54E4D /* LinkPagesViewController.swift */; };
 		0F7767D81F8F516000D54E4D /* LinkTopicsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7767D71F8F516000D54E4D /* LinkTopicsViewModel.swift */; };
 		0FA81A1F1F9DDB1D006D9DB6 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA81A1E1F9DDB1D006D9DB6 /* NavigationController.swift */; };
 		0FAA01681F7A3D0B0011FDBA /* RichBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FAA01671F7A3D0B0011FDBA /* RichBookViewModel.swift */; };
@@ -377,7 +377,7 @@
 		0F525E9E1F77E98700E225B1 /* RichMenuCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichMenuCellTableViewCell.swift; sourceTree = "<group>"; };
 		0F7767D11F8CE5A900D54E4D /* LinkTagsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkTagsViewController.swift; sourceTree = "<group>"; };
 		0F7767D31F8CE68400D54E4D /* LinkTagsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkTagsViewModel.swift; sourceTree = "<group>"; };
-		0F7767D51F8F511C00D54E4D /* LinkTopicsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkTopicsViewController.swift; sourceTree = "<group>"; };
+		0F7767D51F8F511C00D54E4D /* LinkPagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkPagesViewController.swift; sourceTree = "<group>"; };
 		0F7767D71F8F516000D54E4D /* LinkTopicsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkTopicsViewModel.swift; sourceTree = "<group>"; };
 		0FA81A1E1F9DDB1D006D9DB6 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		0FAA01671F7A3D0B0011FDBA /* RichBookViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichBookViewModel.swift; sourceTree = "<group>"; };
@@ -779,7 +779,7 @@
 				56218A041F7A5CE5000456F9 /* QuoteEditorViewController.swift */,
 				0F1AF1B11F84D1E8004DF12A /* PublishMenuViewController.swift */,
 				0F7767D11F8CE5A900D54E4D /* LinkTagsViewController.swift */,
-				0F7767D51F8F511C00D54E4D /* LinkTopicsViewController.swift */,
+				0F7767D51F8F511C00D54E4D /* LinkPagesViewController.swift */,
 				563D3E3F1F87BEA6004CE67A /* PostPreviewViewController.swift */,
 				5638FB3A1F91315900FEE01E /* DraftsViewController.swift */,
 			);
@@ -2114,7 +2114,7 @@
 				F43A690D1E79441D001C3657 /* Counts.swift in Sources */,
 				590E30021EDC1A68006C6D5C /* CommentNode.swift in Sources */,
 				59CB4DEB1EDDC64200E7A60B /* CommentsViewModel.swift in Sources */,
-				0F7767D61F8F511C00D54E4D /* LinkTopicsViewController.swift in Sources */,
+				0F7767D61F8F511C00D54E4D /* LinkPagesViewController.swift in Sources */,
 				561229EB1EA65F21004CE079 /* PhotoCardViewModel.swift in Sources */,
 				5644F21C1E55A77100B7D8E7 /* SettingsViewModel.swift in Sources */,
 				F4A426351E5629210090CD51 /* Video.swift in Sources */,
