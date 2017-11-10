@@ -440,7 +440,7 @@ extension ContentEditorViewController: RichLinkPreviewViewControllerDelegate {
       mode = "video"
     }
     
-    self.editorView.generate(embed: response.html)
+    self.editorView.generateLinkPreview(type: mode, title: response.title, description: response.shortDescription, url: response.url, imageUrl: response.thumbnails?.first?.url)
   }
 
   func richLinkPreviewViewControllerDidCancel(_ viewController: RichLinkPreviewViewController) {
