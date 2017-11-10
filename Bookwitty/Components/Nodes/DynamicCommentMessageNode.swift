@@ -72,6 +72,25 @@ class DynamicCommentMessageNode: ASCellNode {
 
                                   //******\\
 
+//MARK: - DTAttributedTextContentViewDelegate
+extension DynamicCommentMessageNode: DTAttributedTextContentViewDelegate {
+  public func attributedTextContentView(
+    _ attributedTextContentView: DTAttributedTextContentView!,
+    didDraw layoutFrame: DTCoreTextLayoutFrame!,
+    in context: CGContext!) {
+  }
+  
+  public func attributedTextContentView(
+    _ attributedTextContentView: DTAttributedTextContentView!,
+    viewForLink url: URL!,
+    identifier: String!,
+    frame: CGRect) -> UIView! {
+    return nil
+  }
+}
+
+                                  //******\\
+
 //MARK: - Configuration
 extension DynamicCommentMessageNode {
   struct Configuration {
