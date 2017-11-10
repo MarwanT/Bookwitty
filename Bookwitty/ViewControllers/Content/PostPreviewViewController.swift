@@ -115,6 +115,8 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
 //MARK: - Actions
 extension PostPreviewViewController {
   @objc fileprivate func doneBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
+    _ = titleNode.resignFirstResponder()
+    _ = descriptionNode.resignFirstResponder()
     self.delegate?.postPreview(viewController: self, didFinishPreviewing: viewModel.candidatePost)
   }
 }
