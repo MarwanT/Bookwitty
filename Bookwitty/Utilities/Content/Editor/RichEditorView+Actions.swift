@@ -29,4 +29,8 @@ extension RichEditorView {
   func generate(embed: String?) {
     runJS("RE.generateEmbed(\"\(embed ?? "")\");")
   }
+  
+  func setHeader() {
+    runJS("RE.setHeader();")
+  }
 }
