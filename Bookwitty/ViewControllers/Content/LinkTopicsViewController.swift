@@ -89,7 +89,7 @@ class LinkTopicsViewController: UIViewController {
     
     self.viewModel.filter.query = text
     //Perform request
-    _ = SearchAPI.search(filter: self.viewModel.filter, page: nil) { (success, topics, _, _, error) in
+    _ = SearchAPI.autocomplete(filter: self.viewModel.filter, page: nil) { (success, topics, _, _, error) in
       guard success, let topics = topics as? [Topic] else {
         self.viewModel.setTopics([])
         return
