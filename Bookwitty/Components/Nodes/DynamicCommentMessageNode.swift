@@ -7,8 +7,12 @@
 //
 
 import AsyncDisplayKit
+import DTCoreText
 import Foundation
 
 class DynamicCommentMessageNode: ASCellNode {
+  // MARK: - Subviews
+  //=================
+  var textContentView: DTAttributedLabel?
   
 }
