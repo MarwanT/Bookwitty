@@ -18,6 +18,14 @@ class DynamicCommentMessageNode: ASCellNode {
   // MARK: Layout Variables
   //=======================
   fileprivate var configuration = Configuration()
+  
+  // MARK: Content Variables
+  //========================
+  private var attributedString: NSAttributedString? {
+    didSet {
+      textContentView?.attributedString = attributedString
+    }
+  }
 }
 
                                   //******\\
