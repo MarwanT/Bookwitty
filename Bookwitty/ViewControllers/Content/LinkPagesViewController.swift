@@ -10,7 +10,7 @@ import UIKit
 import WSTagsField
 
 protocol LinkPagesViewControllerDelegate: class {
-  func linkPages(viewController: LinkPagesViewController, didLink pages: [Topic])
+  func linkPages(viewController: LinkPagesViewController, didLink pages: [ModelCommonProperties])
 }
 
 class LinkPagesViewController: UIViewController {
@@ -136,7 +136,7 @@ extension LinkPagesViewController: Themeable {
 }
 
 extension LinkPagesViewController {
-  func viewTopicViewController(with topic: Topic) {
+  func viewTopicViewController(with topic: ModelCommonProperties) {
     let topicViewController = TopicViewController()
     topicViewController.initialize(with: topic)
     topicViewController.delegate = self

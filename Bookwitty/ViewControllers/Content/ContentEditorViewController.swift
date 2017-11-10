@@ -562,7 +562,7 @@ extension ContentEditorViewController: LinkTagsViewControllerDelegate {
 
 //MARK: - LinkPagesViewControllerDelegate Implementation
 extension ContentEditorViewController: LinkPagesViewControllerDelegate {
-  func linkPages(viewController: LinkPagesViewController, didLink pages: [Topic]) {
+  func linkPages(viewController: LinkPagesViewController, didLink pages: [ModelCommonProperties]) {
     self.viewModel.linkedTopics = pages
     viewController.dismiss(animated: true, completion: nil)
   }

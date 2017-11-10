@@ -10,18 +10,18 @@ import UIKit
 
 class PublishMenuViewModel {
   private var linkedTags: [Tag] = []
-  private var linkedTopics: [Topic] = []
+  private var linkedTopics: [ModelCommonProperties] = []
   private(set) var contentIdentifier: String!
   
   var getTags: [Tag] {
     return self.linkedTags
   }
   
-  var getTopics: [Topic] {
+  var getTopics: [ModelCommonProperties] {
     return self.linkedTopics
   }
   
-  func initialize(with linkedTags: [Tag], linkedTopics: [Topic]) {
+  func initialize(with linkedTags: [Tag], linkedTopics: [ModelCommonProperties]) {
     self.linkedTags = linkedTags
     self.linkedTopics = linkedTopics
   }

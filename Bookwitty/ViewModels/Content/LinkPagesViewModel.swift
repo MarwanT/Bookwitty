@@ -10,12 +10,12 @@ import Foundation
 
 final class LinkPagesViewModel {
   var canLink: Bool = true
-  fileprivate var topics: [Topic] = []
-  fileprivate var selectedTopics: [Topic] = []
+  fileprivate var topics: [ModelCommonProperties] = []
+  fileprivate var selectedTopics: [ModelCommonProperties] = []
   let filter: Filter = Filter()
   private(set) var contentIdentifier: String!
   
-  var getSelectedTopics: [Topic] {
+  var getSelectedTopics: [ModelCommonProperties] {
     return self.selectedTopics
   }
   
@@ -27,18 +27,18 @@ final class LinkPagesViewModel {
     self.filter.types = [Topic.resourceType]
   }
   
-  func initialize(with contentIdentifier: String, linkedTopics: [Topic]) {
+  func initialize(with contentIdentifier: String, linkedTopics: [ModelCommonProperties]) {
     self.contentIdentifier = contentIdentifier
     self.selectedTopics = linkedTopics
   }
   
-  func select(_ topic: Topic) {
+  func select(_ topic: ModelCommonProperties) {
     if !self.isSelected(topic) {
       selectedTopics.append(topic)
     }
   }
   
-  func unselect(_ topic: Topic) {
+  func unselect(_ topic: ModelCommonProperties) {
     guard let index = self.selectedTopics.index(where: { $0.id == topic.id }) else {
       return
     }
@@ -50,17 +50,17 @@ final class LinkPagesViewModel {
     return self.selectedTopics.flatMap { $0.title }.contains(title)
   }
   
-  func unselectTopic(with title: String) -> Topic? {
+  func unselectTopic(with title: String) -> ModelCommonProperties? {
     let unselectedTopic = self.selectedTopics.first { $0.title == title }
     self.selectedTopics = self.selectedTopics.filter { !($0.title == title) }
     return unselectedTopic
   }
   
-  func setTopics(_ topics: [Topic]) {
+  func setTopics(_ topics: [ModelCommonProperties]) {
     self.topics = topics
   }
   
-  fileprivate func topic(for row: Int) -> Topic? {
+  fileprivate func topic(for row: Int) -> ModelCommonProperties? {
     guard row >= 0 && row < topics.count else {
       return nil
     }
@@ -68,7 +68,7 @@ final class LinkPagesViewModel {
     return topics[row]
   }
   
-  func isSelected(_ topic:Topic) -> Bool {
+  func isSelected(_ topic: ModelCommonProperties) -> Bool {
     return selectedTopics.contains(where: { $0.id == topic.id })
   }
 }
@@ -77,7 +77,8 @@ extension LinkPagesViewModel {
   func numberOfItemsInSection(section: Int) -> Int {
     return topics.count
   }
-  func values(for row: Int) -> (topic: Topic?, linked: Bool) {
+
+  func values(for row: Int) -> (topic: ModelCommonProperties?, linked: Bool) {
     guard let topic = self.topic(for: row) else {
       return (nil, false)
     }
