@@ -38,6 +38,7 @@ class DraftsViewController: ASViewController<ASTableNode> {
     super.viewDidLoad()
 
     initializeComponents()
+    setupNavigationBarButtons()
     applyTheme()
     loadDrafts()
   }
