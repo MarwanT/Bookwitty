@@ -14,7 +14,7 @@ protocol LinkTopicsViewControllerDelegate: class {
 }
 
 class LinkPagesViewController: UIViewController {
-  let viewModel = LinkTopicsViewModel()
+  let viewModel = LinkPagesViewModel()
   @IBOutlet weak var tagsView: WSTagsField!
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var tableViewBottomConstraintToSuperview: NSLayoutConstraint!

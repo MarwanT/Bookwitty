@@ -1,5 +1,5 @@
 //
-//  LinkTopicsViewModel.swift
+//  LinkPagesViewModel.swift
 //  Bookwitty
 //
 //  Created by ibrahim on 10/12/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class LinkTopicsViewModel {
+final class LinkPagesViewModel {
   var canLink: Bool = true
   fileprivate var topics: [Topic] = []
   fileprivate var selectedTopics: [Topic] = []
@@ -73,7 +73,7 @@ final class LinkTopicsViewModel {
   }
 }
 // Mark: - TableView helper
-extension LinkTopicsViewModel {
+extension LinkPagesViewModel {
   func numberOfItemsInSection(section: Int) -> Int {
     return topics.count
   }
