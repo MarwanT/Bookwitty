@@ -22,10 +22,10 @@ class DynamicCommentMessageNode: ASCellNode {
   
   // MARK: Content Variables
   //========================
-  private var attributedString: NSAttributedString? {
+  private var originalAttributedString: NSAttributedString? {
     didSet {
-      layouter.attributedString = attributedString
-      textContentView?.attributedString = attributedString
+      layouter.attributedString = originalAttributedString
+      textContentView?.attributedString = originalAttributedString
     }
   }
   
@@ -46,7 +46,7 @@ class DynamicCommentMessageNode: ASCellNode {
     self.textContentView?.delegate = self
     self.textContentView?.lineBreakMode = .byTruncatingTail
     self.textContentView?.truncationString = self.configuration.truncationString
-    self.textContentView?.attributedString = self.attributedString
+    self.textContentView?.attributedString = self.originalAttributedString
   }
   
   // MARK: Layout
@@ -60,7 +60,7 @@ class DynamicCommentMessageNode: ASCellNode {
   func htmlString(text: String?, fontDynamicType: FontDynamicType? = nil,
                   color: UIColor? = nil) {
     guard let text = text else {
-      attributedString = nil
+      originalAttributedString = nil
       return
     }
     
@@ -68,7 +68,7 @@ class DynamicCommentMessageNode: ASCellNode {
       configuration.fontBook = givenFontDynamicType
     }
     
-    attributedString = DTAttributedTextContentView.htmlAttributedString(
+    originalAttributedString = DTAttributedTextContentView.htmlAttributedString(
       text: text, fontDynamicType: configuration.fontBook,
       color: color ?? configuration.defaultTextColor,
       htmlImageWidth: UIScreen.main.bounds.width,
