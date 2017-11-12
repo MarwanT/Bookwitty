@@ -44,10 +44,10 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="04b-Ug-WhV">
-                                <rect key="frame" x="8" y="63" width="359" height="604"/>
+                                <rect key="frame" x="0.0" y="63" width="375" height="604"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jmZ-Hn-0Dh" customClass="RichEditorView" customModule="RichEditorView">
-                                        <rect key="frame" x="0.0" y="0.0" width="359" height="604"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="604"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
@@ -62,9 +62,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="04b-Ug-WhV" secondAttribute="trailing" constant="8" id="2EB-xc-8i5"/>
+                            <constraint firstAttribute="trailing" secondItem="04b-Ug-WhV" secondAttribute="trailing" id="2EB-xc-8i5"/>
                             <constraint firstItem="eGS-IG-FhM" firstAttribute="leading" secondItem="l1M-FC-Kae" secondAttribute="leading" id="3rT-25-jCX"/>
-                            <constraint firstItem="04b-Ug-WhV" firstAttribute="leading" secondItem="l1M-FC-Kae" secondAttribute="leading" constant="8" id="AZR-sZ-eAE"/>
+                            <constraint firstItem="04b-Ug-WhV" firstAttribute="leading" secondItem="l1M-FC-Kae" secondAttribute="leading" id="AZR-sZ-eAE"/>
                             <constraint firstAttribute="trailing" secondItem="Kte-j8-eG9" secondAttribute="trailing" constant="8" id="CBt-9b-9AS"/>
                             <constraint firstItem="Kte-j8-eG9" firstAttribute="top" secondItem="vXH-Vf-HC5" secondAttribute="bottom" constant="8" id="Hdp-R9-1EB"/>
                             <constraint firstItem="vXH-Vf-HC5" firstAttribute="top" secondItem="ZC7-Rk-f5X" secondAttribute="bottom" id="Kz8-MN-TFa"/>
