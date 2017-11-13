@@ -47,6 +47,7 @@ class DynamicCommentMessageNode: ASCellNode {
     self.textContentView?.lineBreakMode = .byTruncatingTail
     self.textContentView?.truncationString = self.configuration.truncationString
     self.textContentView?.attributedString = self.originalAttributedString
+    self.textContentView?.numberOfLines = self.configuration.numberOfLines
   }
   
   // MARK: Layout
@@ -147,5 +148,6 @@ extension DynamicCommentMessageNode {
     fileprivate var truncationString = AttributedStringBuilder(fontDynamicType: .body)
       .append(text: "...").attributedString
     fileprivate var fontBook: FontDynamicType = .body
+    var numberOfLines: Int = 10000
   }
 }
