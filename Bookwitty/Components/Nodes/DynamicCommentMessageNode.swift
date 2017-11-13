@@ -23,6 +23,11 @@ class DynamicCommentMessageNode: ASCellNode {
       refreshNode()
     }
   }
+  var mode: DynamicMode = .collapsed {
+    didSet {
+      refreshNode()
+    }
+  }
   
   // MARK: Content Variables
   //========================
