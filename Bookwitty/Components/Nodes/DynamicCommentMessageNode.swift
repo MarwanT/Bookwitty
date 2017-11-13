@@ -129,6 +129,17 @@ extension DynamicCommentMessageNode: DTAttributedTextContentViewDelegate {
 
                                   //******\\
 
+//MARK: - DynamicMode
+extension DynamicCommentMessageNode {
+  enum DynamicMode {
+    case extended
+    case collapsed
+    case minimal
+  }
+}
+
+                                  //******\\
+
 //MARK: - Configuration
 extension DynamicCommentMessageNode {
   struct Configuration {
