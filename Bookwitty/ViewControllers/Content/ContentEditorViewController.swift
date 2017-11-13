@@ -412,6 +412,10 @@ extension ContentEditorViewController: DraftsViewControllerDelegate {
     //TODO: Set the candidate post and reload the editor
     self.navigationController?.dismiss(animated: true, completion: nil)
   }
+
+  func draftsViewControllerRequestClose(_ viewController: DraftsViewController) {
+    self.navigationController?.dismiss(animated: true, completion: nil)
+  }
 }
 
 //MARK: - RichBookViewControllerDelegate Implementation
