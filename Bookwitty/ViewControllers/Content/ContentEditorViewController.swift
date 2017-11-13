@@ -297,7 +297,7 @@ class ContentEditorViewController: UIViewController {
   }
   
   // MARK: - UI Refresh
-  fileprivate func refresh() {
+  fileprivate func loadUIFromPost() {
     self.titleTextField.text  = self.viewModel.currentPost.title
     //TODO: send body to JS
   }
@@ -583,7 +583,7 @@ extension ContentEditorViewController: LinkTopicsViewControllerDelegate {
 extension ContentEditorViewController: PostPreviewViewControllerDelegate {
   func postPreview(viewController: PostPreviewViewController, didFinishPreviewing post: CandidatePost) {
     viewController.dismiss(animated: true, completion: nil)
-    self.refresh()
+    self.loadUIFromPost()
     self.viewModel.dispatchContent()
   }
 }
