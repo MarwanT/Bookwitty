@@ -28,6 +28,11 @@ class DynamicCommentMessageNode: ASCellNode {
       refreshNode()
     }
   }
+  var numberOfWits: Int? {
+    didSet {
+      refreshNode()
+    }
+  }
   
   // MARK: Content Variables
   //========================
