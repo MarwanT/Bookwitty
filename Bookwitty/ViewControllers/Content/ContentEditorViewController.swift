@@ -177,7 +177,7 @@ class ContentEditorViewController: UIViewController {
     
     let confirmAction = UIAlertAction(title: Strings.ok(), style: .default, handler: {(_ action: UIAlertAction) -> Void in
       if let alertTextField = alertController.textFields?.first, alertTextField.text != nil, let link = alertTextField.text {
-        self.editorView.generate(link: URL(string: link), text: "Link")
+      self.editorView.insertLink(link, title: "")
       }
     })
     alertController.addAction(confirmAction)
@@ -243,11 +243,7 @@ class ContentEditorViewController: UIViewController {
     case .italic:
         self.editorView.italic()
     case .header:
-      if (isSelected) {
-        self.editorView.runJS("HL.removeSelectedElements('h2')")
-      } else {
-        self.editorView.header(2)
-      }
+        self.editorView.setHeader()
     case .unorderedList:
       self.editorView.unorderedList()
     case .link:
@@ -402,10 +398,10 @@ extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePi
     }
 
     self.navigationController?.dismiss(animated: true, completion: nil)
-
+    let id = self.editorView.runJS("RE.generatePhotoWrapper();")
     viewModel.upload(image: image) { (success: Bool, link: String?) in
       guard let link = link, let Url = URL(string: link) else { return }
-      self.editorView.generate(photo: Url, alt: "Image")
+      self.editorView.generate(photo: Url, alt: "Image", wrapperId: id)
     }
   }
 }
@@ -440,7 +436,7 @@ extension ContentEditorViewController: RichLinkPreviewViewControllerDelegate {
       mode = "video"
     }
     
-    self.editorView.generate(embed: response.html)
+    self.editorView.generateLinkPreview(type: mode, title: response.title, description: response.shortDescription, url: response.url, imageUrl: response.thumbnails?.first?.url)
   }
 
   func richLinkPreviewViewControllerDidCancel(_ viewController: RichLinkPreviewViewController) {
@@ -610,11 +606,11 @@ extension ContentEditorViewController: RichEditorDelegate {
     
     if action == "selectionchange" {
       let editingItems = self.editorView.runJS("RE.enabledCommands()").components(separatedBy: ",")
-      
+
       self.set(option: .header, selected: editingItems.contains("h2"))
       self.set(option: .bold, selected: editingItems.contains("bold"))
       self.set(option: .italic, selected: editingItems.contains("italic"))
-      self.set(option: .link, selected: editingItems.contains("a"))
+      self.set(option: .link, selected: editingItems.contains("link"))
       self.set(option: .unorderedList, selected: editingItems.contains("unorderedList"))
     }
   }
