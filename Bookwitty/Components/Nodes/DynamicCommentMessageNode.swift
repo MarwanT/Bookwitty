@@ -46,7 +46,7 @@ class DynamicCommentMessageNode: ASCellNode {
     self.textContentView?.delegate = self
     self.textContentView?.lineBreakMode = .byTruncatingTail
     self.textContentView?.truncationString = self.configuration.truncationString
-    self.textContentView?.attributedString = self.originalAttributedString
+    self.textContentView?.attributedString = currentAttributedString()
     self.textContentView?.numberOfLines = self.configuration.numberOfLines
   }
   
@@ -54,6 +54,12 @@ class DynamicCommentMessageNode: ASCellNode {
   //=============
   override func calculateSizeThatFits(_ constrainedSize: CGSize) -> CGSize {
     return preferredLayoutSize(for: constrainedSize) ?? constrainedSize
+  }
+  
+  /// Generates the string to be displayed based on the current context
+  fileprivate func currentAttributedString() -> NSAttributedString? {
+    //TODO: Form the displayed attributed text
+    return originalAttributedString
   }
   
   // MARK: APIs
