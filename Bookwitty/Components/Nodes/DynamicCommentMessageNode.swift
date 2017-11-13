@@ -18,7 +18,11 @@ class DynamicCommentMessageNode: ASCellNode {
   // MARK: Layout Variables
   //=======================
   fileprivate let layouter = DTCoreTextLayouter()
-  fileprivate var configuration = Configuration()
+  var configuration = Configuration() {
+    didSet {
+      refreshNode()
+    }
+  }
   
   // MARK: Content Variables
   //========================
