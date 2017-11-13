@@ -56,6 +56,11 @@ class DynamicCommentMessageNode: ASCellNode {
     return preferredLayoutSize(for: constrainedSize) ?? constrainedSize
   }
   
+  fileprivate func refreshNode() {
+    self.textContentView?.numberOfLines = self.configuration.numberOfLines
+    self.textContentView?.attributedString = currentAttributedString()
+  }
+  
   /// Generates the string to be displayed based on the current context
   fileprivate func currentAttributedString() -> NSAttributedString? {
     //TODO: Form the displayed attributed text
