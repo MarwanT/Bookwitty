@@ -124,7 +124,15 @@ extension DynamicCommentMessageNode: DTAttributedTextContentViewDelegate {
     viewForLink url: URL!,
     identifier: String!,
     frame: CGRect) -> UIView! {
-    return nil
+    let button = DTLinkButton(type: UIButtonType.custom)
+    button.url = url
+    button.frame = frame
+    button.addTarget(self, action: #selector(didTapOnLinkButton(_:)), for: UIControlEvents.touchUpInside)
+    return button
+  }
+  
+  func didTapOnLinkButton(_ sender: DTLinkButton) {
+    //TODO: Handle (call delegate)
   }
 }
 
