@@ -46,7 +46,14 @@ extension SelectPenNameViewModel {
 
   func values(for row: Int) -> (title: String?, value: String?, imageUrl: String?, selected: Bool) {
     let penName = self.penName(at: row)
-    let selected: Bool = selectedPenName == nil ? false : selectedPenName === penName
+
+    let selected: Bool
+    if let selectedPenName = selectedPenName, let penName = penName,
+      let selectedIdentifier = selectedPenName.id, let penIdentifier = penName.id {
+      selected = selectedIdentifier == penIdentifier
+    } else {
+      selected = false
+    }
     return (penName?.name, "", penName?.avatarUrl, selected)
   }
 
