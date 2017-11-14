@@ -96,10 +96,10 @@ class LinkTagsViewController: UIViewController {
     //Perform request
     _ = SearchAPI.autocomplete(filter: self.viewModel.filter, page: nil) { (success, tags, _, _, error) in
       guard success, let tags = tags as? [Tag] else {
-        self.viewModel.tags = []
+        self.viewModel.resetTags()
         return
       }
-      self.viewModel.tags = tags
+      self.viewModel.set(tags)
       self.tableView.reloadData()
     }
   }
@@ -163,9 +163,11 @@ extension LinkTagsViewController: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-    self.viewModel.append(self.viewModel.tags[indexPath.row])
-    self.tagsView.addTags(self.viewModel.selectedTags.flatMap { $0.title })
-    self.viewModel.tags = []
+    self.viewModel.append(self.viewModel.getFetchedTag(at: indexPath.row))
+    if let tagTitle = self.viewModel.selectedTags.last?.title {
+      self.tagsView.addTag(tagTitle)
+    }
+    self.viewModel.resetTags()
     tableView.reloadData()
   }
 }
