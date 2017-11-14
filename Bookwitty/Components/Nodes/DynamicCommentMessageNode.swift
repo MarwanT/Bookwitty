@@ -182,5 +182,6 @@ extension DynamicCommentMessageNode {
       .append(text: "...").attributedString
     fileprivate var fontBook: FontDynamicType = .body
     var numberOfLines: Int = 10000
+    var characterLengthOfCollapsedMessage: Int = 300
   }
 }
