@@ -123,6 +123,11 @@ class CommentTreeNode: ASCellNode {
 }
 
 extension CommentTreeNode {
+  enum DisplayMode {
+    case normal
+    case minimal
+  }
+  
   struct Configuration {
     fileprivate let indentationMargin = CommentNode.Configuration().indentationMargin
     let disclosureInsets: UIEdgeInsets
