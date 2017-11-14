@@ -11,6 +11,7 @@ import DTCoreText
 
 protocol CommentNodeDelegate: class {
   func commentNode(_ node: CommentNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?)
+  func commentNodeShouldUpdateLayout(_ node: CommentNode)
 }
 
 class CommentNode: ASCellNode {

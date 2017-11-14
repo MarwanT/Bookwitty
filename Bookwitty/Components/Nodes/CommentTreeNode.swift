@@ -136,6 +136,9 @@ extension CommentTreeNode: CommentNodeDelegate {
 
     delegate?.commentTreeDidPerformAction(self, comment: comment, action: action, forSender: sender, didFinishAction: didFinishAction)
   }
+  
+  func commentNodeShouldUpdateLayout(_ node: CommentNode) {
+  }
 }
 
 // MARK: - Disclosure node delegate
