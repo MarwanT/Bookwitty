@@ -77,8 +77,51 @@ class DynamicCommentMessageNode: ASCellNode {
   
   /// Generates the string to be displayed based on the current context
   fileprivate func currentAttributedString() -> NSAttributedString? {
-    //TODO: Form the displayed attributed text
-    return originalAttributedString
+    guard let originalAttributedString = originalAttributedString else {
+      return nil
+    }
+    
+    // Prepare the main comment message
+    let mutableAttributedString = NSMutableAttributedString(
+      attributedString: originalAttributedString)
+    var rangeOfAttributedString = NSRange(location: 0, length: mutableAttributedString.length)
+    let paragraphStyle = mutableAttributedString.attribute(NSParagraphStyleAttributeName, at: 0, effectiveRange: nil)
+    mutableAttributedString.removeAttribute(NSParagraphStyleAttributeName, range: rangeOfAttributedString)
+    
+    // Perform the changes to the string
+    switch mode {
+    case .collapsed:
+      if shouldBeTruncated {
+        mutableAttributedString.mutableString.setString(
+          (mutableAttributedString.string as NSString).substring(with:
+            NSRange(location: 0, length: configuration.characterLengthOfCollapsedMessage)
+          )
+        )
+        mutableAttributedString.append(NSAttributedString(string: "  "))
+        mutableAttributedString.append(CommentAttributedLinks.more.attributedString)
+      }
+    case .minimal:
+      if shouldBeTruncated {
+        mutableAttributedString.mutableString.setString(
+          (mutableAttributedString.string as NSString).substring(with:
+            NSRange(location: 0, length: configuration.characterLengthOfCollapsedMessage)
+          ) + "..."
+        )
+      }
+    case .extended:
+      break
+    }
+    
+    // Add the number of wits if available
+    if let numberOfWits = numberOfWits {
+      mutableAttributedString.append(NSAttributedString(string: "  "))
+      mutableAttributedString.append(CommentAttributedLinks.wits(numberOfWits: numberOfWits).attributedString)
+    }
+    
+    // Reset the paragraph style on the whole string
+    rangeOfAttributedString = NSRange(location: 0, length: mutableAttributedString.length)
+    mutableAttributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: rangeOfAttributedString)
+    return mutableAttributedString
   }
   
   // MARK: APIs
