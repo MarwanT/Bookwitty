@@ -171,6 +171,55 @@ extension DynamicCommentMessageNode {
     case minimal
   }
 }
+  
+                                  //******\\
+
+//MARK: - Comment Attributed Links
+extension DynamicCommentMessageNode {
+  fileprivate enum CommentAttributedLinks {
+    case more
+    case wits(numberOfWits: Int)
+    
+    var attributedString: NSAttributedString {
+      var handyAttributedString = NSMutableAttributedString()
+      switch self {
+      case .more:
+        handyAttributedString.append(
+          NSAttributedString(string: "...\(Strings.more().uppercased())", attributes:
+            [
+              NSFontAttributeName : FontDynamicType.footnote.font,
+              NSForegroundColorAttributeName : ThemeManager.shared.currentTheme.defaultTextColor()
+            ]
+          )
+        )
+      case .wits(let numberOfWits):
+        handyAttributedString.append(
+          NSAttributedString(string: "\(Strings.wits(numberOfWits))", attributes:
+            [
+              NSFontAttributeName : FontDynamicType.caption1.font,
+              NSForegroundColorAttributeName : ThemeManager.shared.currentTheme.colorNumber15()
+            ]
+          )
+        )
+      }
+      
+      handyAttributedString.addAttribute(
+        DTLinkAttribute, value: self.url ,
+        range: NSRange(location: 0, length: handyAttributedString.length))
+      
+      return handyAttributedString
+    }
+    
+    var url: URL {
+      switch self {
+      case .more:
+        return URL(string: "bookwitty://comment/read.more")!
+      case .wits:
+        return URL(string: "bookwitty://comment/number.of.wits")!
+      }
+    }
+  }
+}
 
                                   //******\\
 
