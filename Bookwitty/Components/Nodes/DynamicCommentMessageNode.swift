@@ -70,6 +70,8 @@ class DynamicCommentMessageNode: ASCellNode {
     self.textContentView?.lineBreakMode = .byTruncatingTail
     self.textContentView?.truncationString = self.configuration.truncationString
     self.textContentView?.numberOfLines = self.configuration.numberOfLines
+    let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapNode(_:)))
+    self.textContentView?.addGestureRecognizer(tapGestureRecognizer)
     refreshAttributedString()
   }
   
@@ -136,6 +138,15 @@ class DynamicCommentMessageNode: ASCellNode {
     rangeOfAttributedString = NSRange(location: 0, length: mutableAttributedString.length)
     mutableAttributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: rangeOfAttributedString)
     return mutableAttributedString
+  }
+  
+  // MARK: Actions
+  //==============
+  
+  func didTapNode(_ sender: DTAttributedLabel) {
+    if shouldBeTruncated {
+      delegate?.dynamicCommentMessageNodeDidTapMoreButton(self)
+    }
   }
   
   // MARK: APIs
