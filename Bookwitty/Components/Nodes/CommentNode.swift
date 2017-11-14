@@ -23,6 +23,7 @@ class CommentNode: ASCellNode {
   
   var mode = DisplayMode.normal {
     didSet {
+      refreshMessageNodeForMode()
       setNeedsLayout()
     }
   }
@@ -141,6 +142,10 @@ class CommentNode: ASCellNode {
   
   func setWitValue(witted: Bool) {
     actionBar.setWitButton(witted: witted)
+  }
+  
+  fileprivate func refreshMessageNodeForMode() {
+    messageNode.mode = mode == .minimal ? .minimal : .collapsed
   }
 }
 
