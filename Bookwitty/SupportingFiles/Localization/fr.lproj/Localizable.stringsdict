@@ -405,5 +405,29 @@
         <string>Voir les %d éditions</string>
       </dict>
     </dict>
+    <key>f_wits</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@value@</string>
+      <key>value</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>%d wits</string>
+        <key>one</key>
+        <string>%d wit</string>
+        <key>two</key>
+        <string>%d wits</string>
+        <key>few</key>
+        <string>%d wits</string>
+        <key>many</key>
+        <string>%d wits</string>
+        <key>other</key>
+        <string>%d wits</string>
+      </dict>
+    </dict>
   </dict>
 </plist>
