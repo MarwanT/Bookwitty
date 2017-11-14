@@ -17,6 +17,13 @@ class CommentTreeNode: ASCellNode {
   let commentNode: CommentNode
   let viewRepliesDisclosureNode: DisclosureNode
   
+  var mode: DisplayMode = .normal {
+    didSet {
+      refreshCommentNodeMode()
+      setNeedsLayout()
+    }
+  }
+  
   var configuration = Configuration() {
     didSet {
       setNeedsLayout()
@@ -68,8 +75,12 @@ class CommentTreeNode: ASCellNode {
     if let createDate = comment?.createdAt as Date? {
       commentNode.date = createDate
     }
-    // TODO: add the minimal case
-    commentNode.mode = isReply ? .reply : .normal
+    refreshCommentNodeMode()
+    setNeedsLayout()
+  }
+  
+  fileprivate func refreshCommentNodeMode() {
+    commentNode.mode = (mode == .minimal) ? .minimal : (isReply ? .reply : .normal)
     setNeedsLayout()
   }
   
