@@ -132,6 +132,13 @@ class DynamicCommentMessageNode: ASCellNode {
     style.preferredSize = calculatedSize
     // TODO: Call delegate
   }
+  
+  var shouldBeTruncated: Bool {
+    guard let originalAttributedString = originalAttributedString else {
+      return false
+    }
+    return originalAttributedString.string.count >= configuration.characterLengthOfCollapsedMessage
+  }
 }
 
                                   //******\\
