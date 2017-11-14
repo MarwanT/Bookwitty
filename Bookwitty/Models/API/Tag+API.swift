@@ -41,6 +41,23 @@ public struct TagAPI {
       success = statusCode == successStatusCode
     })
   }
+  
+  static func replaceTags(for contentIdentifier: String, with tags: [String]?, status: PublishAPI.PublishStatus?, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let successStatusCode = 200
+    return signedAPIRequest(target: .replaceTags(contentIdentifier: contentIdentifier, tags: tags, status: status), completion: { (data, statusCode, response, error) in
+      var success: Bool = false
+      var error: BookwittyAPIError? = nil
+      defer {
+        completion(success, error)
+      }
+      guard data != nil, let statusCode = statusCode else {
+        error = BookwittyAPIError.invalidStatusCode
+        return
+      }
+      success = statusCode == successStatusCode
+    })
+  }
+
 }
 
 extension TagAPI {
