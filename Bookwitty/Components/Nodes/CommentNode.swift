@@ -58,6 +58,8 @@ class CommentNode: ASCellNode {
     actionBar.hideCommentButton = true
     actionBar.hideMoreButton = true
     actionBar.delegate = self
+    
+    messageNode.delegate = self
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -174,5 +176,15 @@ extension CommentNode {
 extension CommentNode: CardActionBarNodeDelegate {
   func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
     delegate?.commentNode(self, didRequestAction: action, forSender: sender, didFinishAction: didFinishAction)
+  }
+}
+
+// MARK: Dynamic Comment Message Node Delegate
+extension CommentNode: DynamicCommentMessageNodeDelegate {
+  func dynamicCommentMessageNodeDidTapMoreButton(_ node: DynamicCommentMessageNode) {
+  }
+  
+  func dynamicCommentMessageNodeDidTapWitsButton(_ node: DynamicCommentMessageNode) {
+    // TODO: open the list of witters
   }
 }
