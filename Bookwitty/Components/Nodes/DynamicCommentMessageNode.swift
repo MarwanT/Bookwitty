@@ -10,6 +10,11 @@ import AsyncDisplayKit
 import DTCoreText
 import Foundation
 
+protocol DynamicCommentMessageNodeDelegate: class {
+  func dynamicCommentMessageNodeDidTapMoreButton(_ node: DynamicCommentMessageNode)
+  func dynamicCommentMessageNodeDidTapWitsButton(_ node: DynamicCommentMessageNode)
+}
+
 class DynamicCommentMessageNode: ASCellNode {
   // MARK: - Subviews
   //=================
@@ -42,6 +47,10 @@ class DynamicCommentMessageNode: ASCellNode {
       textContentView?.attributedString = currentAttributedString()
     }
   }
+  
+  // MARK: Delegate
+  //===============
+  weak var delegate: DynamicCommentMessageNodeDelegate?
   
   // MARK: - Lifecycle
   //==================
