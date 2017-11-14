@@ -221,7 +221,7 @@ class DynamicCommentMessageNode: ASCellNode {
   }
   
   var shouldBeTruncated: Bool {
-    guard let originalAttributedString = originalAttributedString else {
+    guard mode != .minimal, let originalAttributedString = originalAttributedString else {
       return false
     }
     return originalAttributedString.string.count >= configuration.characterLengthOfCollapsedMessage
