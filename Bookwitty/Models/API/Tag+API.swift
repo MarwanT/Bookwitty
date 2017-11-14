@@ -65,4 +65,16 @@ extension TagAPI {
     ]
     return dictionary
   }
+  
+  static func replaceTagsParameters(tags: [String]?, status: PublishAPI.PublishStatus?) -> [String : Any]? {
+    let dictionary = [
+      "data" : [
+        "attributes" : [
+          "tag-titles" : tags,
+          "status": status?.rawValue,
+        ]
+      ]
+    ]
+    return dictionary
+  }
 }
