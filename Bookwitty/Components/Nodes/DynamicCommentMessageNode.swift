@@ -223,7 +223,16 @@ extension DynamicCommentMessageNode: DTAttributedTextContentViewDelegate {
   }
   
   func didTapOnLinkButton(_ sender: DTLinkButton) {
-    //TODO: Handle (call delegate)
+    guard let commentAttributedLink = CommentAttributedLinks(url: sender.url) else {
+      return
+    }
+    
+    switch commentAttributedLink {
+    case .more:
+      delegate?.dynamicCommentMessageNodeDidTapMoreButton(self)
+    case .wits:
+      delegate?.dynamicCommentMessageNodeDidTapWitsButton(self)
+    }
   }
 }
 
