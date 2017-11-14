@@ -38,8 +38,8 @@ class DynamicCommentMessageNode: ASCellNode {
   //========================
   private var originalAttributedString: NSAttributedString? {
     didSet {
-      layouter.attributedString = originalAttributedString
-      textContentView?.attributedString = originalAttributedString
+      layouter.attributedString = currentAttributedString()
+      textContentView?.attributedString = currentAttributedString()
     }
   }
   
