@@ -274,6 +274,7 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
         let commentTreeNode = CommentTreeNode()
         commentTreeNode.delegate = self
         commentTreeNode.comment = comment
+        commentTreeNode.mode = self.displayMode == .compact ? .minimal : .normal
         var configuration = CommentTreeNode.Configuration()
         configuration.shouldHideViewRepliesDisclosureNode = self.displayMode == .compact
         configuration.leftIndentToParentNode = self.viewModel.isDisplayingACommentReplies
