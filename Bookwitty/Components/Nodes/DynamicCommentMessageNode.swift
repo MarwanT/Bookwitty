@@ -43,8 +43,7 @@ class DynamicCommentMessageNode: ASCellNode {
   //========================
   private var originalAttributedString: NSAttributedString? {
     didSet {
-      layouter.attributedString = currentAttributedString()
-      textContentView?.attributedString = currentAttributedString()
+      refreshAttributedString()
     }
   }
   
@@ -69,8 +68,8 @@ class DynamicCommentMessageNode: ASCellNode {
     self.textContentView?.delegate = self
     self.textContentView?.lineBreakMode = .byTruncatingTail
     self.textContentView?.truncationString = self.configuration.truncationString
-    self.textContentView?.attributedString = currentAttributedString()
     self.textContentView?.numberOfLines = self.configuration.numberOfLines
+    refreshAttributedString()
   }
   
   // MARK: Layout
@@ -79,9 +78,14 @@ class DynamicCommentMessageNode: ASCellNode {
     return preferredLayoutSize(for: constrainedSize) ?? constrainedSize
   }
   
+  fileprivate func refreshAttributedString() {
+    layouter.attributedString = currentAttributedString()
+    textContentView?.attributedString = layouter.attributedString
+  }
+  
   fileprivate func refreshNode() {
     self.textContentView?.numberOfLines = self.configuration.numberOfLines
-    self.textContentView?.attributedString = currentAttributedString()
+    refreshAttributedString()
   }
   
   /// Generates the string to be displayed based on the current context
