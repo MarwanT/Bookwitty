@@ -182,6 +182,8 @@ extension CommentNode: CardActionBarNodeDelegate {
 // MARK: Dynamic Comment Message Node Delegate
 extension CommentNode: DynamicCommentMessageNodeDelegate {
   func dynamicCommentMessageNodeDidTapMoreButton(_ node: DynamicCommentMessageNode) {
+    node.mode = .extended
+    setNeedsLayout()
   }
   
   func dynamicCommentMessageNodeDidTapWitsButton(_ node: DynamicCommentMessageNode) {
