@@ -57,6 +57,7 @@ class DynamicCommentMessageNode: ASCellNode {
     self.init(viewBlock: { () -> UIView in
       let textContentView = DTAttributedLabel()
       textContentView.frame = CGRect(x: 0, y: 0, width: 1, height: 1)
+      textContentView.backgroundColor = UIColor.clear
       return textContentView
     })
     style.maxHeight = ASDimensionMake(10000)
