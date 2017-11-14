@@ -178,6 +178,18 @@ class DynamicCommentMessageNode: ASCellNode {
     setNeedsLayout()
   }
   
+  /// Does not work if the mode was .minimal
+  func toggleMode() {
+    switch mode {
+    case .collapsed:
+      mode = .extended
+    case .extended:
+      mode = .collapsed
+    default:
+      return
+    }
+  }
+  
   //MARK: Helpers
   //=============
   fileprivate func preferredLayoutSize(for constrainedSize: CGSize) -> CGSize? {
