@@ -246,8 +246,19 @@ extension DynamicCommentMessageNode {
     case more
     case wits(numberOfWits: Int)
     
+    init?(url: URL) {
+      switch url {
+      case CommentAttributedLinks.more.url:
+        self = .more
+      case CommentAttributedLinks.wits(numberOfWits: 0).url:
+        self = .wits(numberOfWits: 0)
+      default:
+        return nil
+      }
+    }
+    
     var attributedString: NSAttributedString {
-      var handyAttributedString = NSMutableAttributedString()
+      let handyAttributedString = NSMutableAttributedString()
       switch self {
       case .more:
         handyAttributedString.append(
