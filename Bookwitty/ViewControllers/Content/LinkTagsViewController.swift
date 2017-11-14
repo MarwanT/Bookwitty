@@ -46,7 +46,7 @@ class LinkTagsViewController: UIViewController {
       guard let strongSelf = self else {
         return false
       }
-      return strongSelf.viewModel.canLink && strongSelf.viewModel.selectedTags.flatMap { $0.title }.contains(candidate)
+      return strongSelf.viewModel.canLink
     }
     
     tagsView.onDidChangeText = { [weak self] field, text in
