@@ -94,11 +94,18 @@ class DynamicCommentMessageNode: ASCellNode {
       configuration.fontBook = givenFontDynamicType
     }
     
-    originalAttributedString = DTAttributedTextContentView.htmlAttributedString(
+    
+    if let generatedAttributedString = DTAttributedTextContentView.htmlAttributedString(
       text: text, fontDynamicType: configuration.fontBook,
       color: color ?? configuration.defaultTextColor,
       htmlImageWidth: UIScreen.main.bounds.width,
-      defaultLineHeightMultiple: AttributedStringBuilder.defaultHTMLLineHeightMultiple)
+      defaultLineHeightMultiple: AttributedStringBuilder.defaultHTMLLineHeightMultiple) {
+      let candidateAttributedString = NSMutableAttributedString(attributedString: generatedAttributedString)
+      candidateAttributedString.mutableString.removeTrailingWhitespace()
+      originalAttributedString = candidateAttributedString
+    } else {
+      originalAttributedString = nil
+    }
     
     setNeedsLayout()
   }
