@@ -72,15 +72,31 @@ class LinkTagsViewController: UIViewController {
     }
     
     tagsView.onDidAddTag = { [weak self] _, tag in
+      //TODO: Handle error
       guard let strongSelf = self else {
         return
       }
-      
-      _ = TagAPI.linkTag(for: strongSelf.viewModel.contentIdentifier, with: tag.text, completion: { (success, error) in
-        guard success else {
-          return
-        }
-      })
+      let text = tag.text
+      if strongSelf.viewModel.hasTag(with: text) {
+        _ = TagAPI.linkTag(for: strongSelf.viewModel.contentIdentifier, with: text, completion: { (success, error) in
+          guard success else {
+            //TODO: if we get `no more tags are allowed error` we should set viewModel.canLink = false
+            return
+          }
+        })
+
+      } else {
+        //Create (user hit return)
+        //NOTE: linkedTags here is not enough maybe the user had replaced the tags before. One solution is to read from the tags view
+        let linkedTags = strongSelf.viewModel.selectedTags.flatMap { $0.title }
+        let allTags = linkedTags + [text]
+        //TODO: change .draft value below to a proper status value
+        _ = TagAPI.replaceTags(for: strongSelf.viewModel.contentIdentifier, with: allTags, status: .draft, completion: { (success, error) in
+          guard success else {
+            return
+          }
+        })
+      }
     }
     
     tableView.tableFooterView = UIView() //Hacky
