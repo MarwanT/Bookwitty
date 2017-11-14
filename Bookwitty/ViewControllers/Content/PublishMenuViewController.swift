@@ -60,7 +60,7 @@ class PublishMenuViewController: UIViewController {
       case .penName:
         return #imageLiteral(resourceName: "person")
       case .linkTopics:
-        return nil
+        return #imageLiteral(resourceName: "linkTopic")
       case .addTags:
         return #imageLiteral(resourceName: "tag")
       case .postPreview:
