@@ -25,6 +25,17 @@ class ActionBarNode: ASCellNode {
   let secondaryButton = ASButtonNode()
   let moreButton = ASButtonNode()
 
+  var actionLabelText: String? {
+    didSet {
+      if let actionLabelText = actionLabelText {
+        actionLabel.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1)
+          .append(text: actionLabelText, color: ThemeManager.shared.currentTheme.defaultButtonColor()).attributedString
+      } else {
+        actionLabel.attributedText = nil
+      }
+    }
+  }
+
   var configuration = Configuration() {
     didSet {
       setNeedsLayout()
