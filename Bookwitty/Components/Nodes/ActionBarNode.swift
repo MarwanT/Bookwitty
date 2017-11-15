@@ -23,6 +23,7 @@ class ActionBarNode: ASCellNode {
   let actionButton = ButtonWithLoader()
   let actionLabel = ASTextNode()
   let secondaryButton = ASButtonNode()
+  let secondaryLabel = ASTextNode()
   let moreButton = ASButtonNode()
 
   var actionLabelText: String? {
@@ -77,6 +78,10 @@ class ActionBarNode: ASCellNode {
     secondaryButton.style.preferredSize = configuration.iconSize
 
     secondaryButton.addTarget(self, action: #selector(self.editButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
+
+    secondaryLabel.style.maxWidth = ASDimensionMake(configuration.labelWidth)
+    secondaryLabel.maximumNumberOfLines = 1
+    secondaryLabel.truncationMode = NSLineBreakMode.byTruncatingTail
 
     moreButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
     moreButton.setImage(#imageLiteral(resourceName: "threeDots"), for: .normal)
