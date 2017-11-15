@@ -170,6 +170,7 @@ extension ActionBarNode {
     }
 
     var height: CGFloat = 50.0
+    var labelWidth: CGFloat = 60.0
     var buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
     var iconSize: CGSize = CGSize(width: 40.0, height: 40.0)
   }
