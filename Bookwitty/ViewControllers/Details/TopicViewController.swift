@@ -480,7 +480,7 @@ extension TopicViewController: ActionBarNodeDelegate {
     Analytics.shared.send(event: event)
   }
 
-  func actionBar(node: ActionBarNode, editButtonTouchUpInside button: ASButtonNode) {
+  func actionBar(node: ActionBarNode, secondaryButtonTouchUpInside button: ASButtonNode) {
     guard let identifier = viewModel.identifier else {
       return
     }

@@ -10,7 +10,7 @@ import AsyncDisplayKit
 
 protocol ActionBarNodeDelegate: class {
   func actionBar(node: ActionBarNode, actionButtonTouchUpInside button: ButtonWithLoader)
-  func actionBar(node: ActionBarNode, editButtonTouchUpInside button: ASButtonNode)
+  func actionBar(node: ActionBarNode, secondaryButtonTouchUpInside button: ASButtonNode)
   func actionBar(node: ActionBarNode, moreButtonTouchUpInside button: ASButtonNode)
 }
 
@@ -21,7 +21,7 @@ class ActionBarNode: ASCellNode {
   }
 
   let actionButton = ButtonWithLoader()
-  let editButton = ASButtonNode()
+  let secondaryButton = ASButtonNode()
   let moreButton = ASButtonNode()
 
   var configuration = Configuration() {
@@ -56,11 +56,11 @@ class ActionBarNode: ASCellNode {
 
     let imageTintColor: UIColor = ThemeManager.shared.currentTheme.colorNumber15()
 
-    editButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
-    editButton.setImage(#imageLiteral(resourceName: "threeDots"), for: .normal)
-    editButton.style.preferredSize = configuration.iconSize
+    secondaryButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
+    secondaryButton.setImage(#imageLiteral(resourceName: "threeDots"), for: .normal)
+    secondaryButton.style.preferredSize = configuration.iconSize
 
-    editButton.addTarget(self, action: #selector(self.editButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    secondaryButton.addTarget(self, action: #selector(self.editButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
 
     moreButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
     moreButton.setImage(#imageLiteral(resourceName: "threeDots"), for: .normal)
@@ -76,7 +76,7 @@ class ActionBarNode: ASCellNode {
     let leftStackLayoutSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0.0, justifyContent: .start, alignItems: .stretch, children: leftNodes)
     leftStackLayoutSpec.style.flexGrow = 1.0
 
-    let rightNodes: [ASLayoutElement] = [editButton, moreButton]
+    let rightNodes: [ASLayoutElement] = [secondaryButton, moreButton]
     let rightStackLayoutSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0.0, justifyContent: .end, alignItems: .stretch, children: rightNodes)
     rightStackLayoutSpec.style.flexGrow = 1.0
 
@@ -130,7 +130,7 @@ extension ActionBarNode: Themeable {
 //MARK: - Actions
 extension ActionBarNode {
   @objc fileprivate func editButtonTouchUpInside(_ sender: ASButtonNode) {
-    delegate?.actionBar(node: self, editButtonTouchUpInside: sender)
+    delegate?.actionBar(node: self, secondaryButtonTouchUpInside: sender)
   }
 
   @objc fileprivate func moreButtonTouchUpInside(_ sender: ASButtonNode) {
