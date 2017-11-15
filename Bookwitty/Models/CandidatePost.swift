@@ -16,6 +16,7 @@ protocol CandidatePost {
   var imageUrl: String? { get set }
   var penName: PenName? { get set }
   var status: String? { get set }
+  var tags: [Tag]? { get set }
 }
 
 extension CandidatePost {
