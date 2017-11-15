@@ -88,8 +88,11 @@ class ActionBarNode: ASCellNode {
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    let leftNodes: [ASLayoutElement] = [actionButton]
-    let leftStackLayoutSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0.0, justifyContent: .start, alignItems: .stretch, children: leftNodes)
+    var leftNodes: [ASLayoutElement] = [actionButton]
+    if actionLabelText?.characters.count ?? 0 > 0 {
+      leftNodes.append(actionLabel)
+    }
+    let leftStackLayoutSpec = ASStackLayoutSpec(direction: .horizontal, spacing: configuration.internalSpacing, justifyContent: .start, alignItems: .center, children: leftNodes)
     leftStackLayoutSpec.style.flexGrow = 1.0
 
     let rightNodes: [ASLayoutElement] = [secondaryButton, moreButton]
