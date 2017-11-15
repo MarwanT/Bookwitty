@@ -87,7 +87,6 @@ class LinkTagsViewController: UIViewController {
 
       } else {
         //Create (user hit return)
-        //NOTE: linkedTags here is not enough maybe the user had replaced the tags before. One solution is to read from the tags view
         let linkedTags = strongSelf.viewModel.selectedTags.flatMap { $0.title }
         let allTags = linkedTags + [text]
         //TODO: change .draft value below to a proper status value
