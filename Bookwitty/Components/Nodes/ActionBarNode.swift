@@ -37,6 +37,18 @@ class ActionBarNode: ASCellNode {
     }
   }
 
+  var secondaryLabelText: String? {
+    didSet {
+      if let actionLabelText = actionLabelText {
+        secondaryLabel.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1)
+          .append(text: actionLabelText, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      } else {
+        secondaryLabel.attributedText = nil
+      }
+      secondaryLabel.setNeedsLayout()
+    }
+  }
+
   var configuration = Configuration() {
     didSet {
       setNeedsLayout()
