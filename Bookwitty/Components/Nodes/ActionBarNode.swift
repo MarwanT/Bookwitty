@@ -21,6 +21,7 @@ class ActionBarNode: ASCellNode {
   }
 
   let actionButton = ButtonWithLoader()
+  let actionLabel = ASTextNode()
   let secondaryButton = ASButtonNode()
   let moreButton = ASButtonNode()
 
@@ -55,6 +56,10 @@ class ActionBarNode: ASCellNode {
     automaticallyManagesSubnodes = true
 
     let imageTintColor: UIColor = ThemeManager.shared.currentTheme.colorNumber15()
+
+    actionLabel.style.maxWidth = ASDimensionMake(configuration.labelWidth)
+    actionLabel.maximumNumberOfLines = 1
+    actionLabel.truncationMode = NSLineBreakMode.byTruncatingTail
 
     secondaryButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
     secondaryButton.setImage(#imageLiteral(resourceName: "threeDots"), for: .normal)
