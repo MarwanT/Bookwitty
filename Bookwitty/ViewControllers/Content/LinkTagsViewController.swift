@@ -91,10 +91,12 @@ class LinkTagsViewController: UIViewController {
         let linkedTags = strongSelf.viewModel.selectedTags.flatMap { $0.title }
         let allTags = linkedTags + [text]
         //TODO: change .draft value below to a proper status value
-        _ = TagAPI.replaceTags(for: strongSelf.viewModel.contentIdentifier, with: allTags, status: .draft, completion: { (success, error) in
-          guard success else {
+        _ = TagAPI.replaceTags(for: strongSelf.viewModel.contentIdentifier, with: allTags, status: .draft, completion: { (success, post, error) in
+          guard success, let post = post, let tags = post.tags else {
             return
           }
+
+          strongSelf.viewModel.selectedTags = tags
         })
       }
     }
