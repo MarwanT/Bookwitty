@@ -31,8 +31,11 @@ extension RichEditorView {
   }
   
   func generateLinkPreview(type: String?, title: String?, description: String?, url: URL?, imageUrl: URL?, html: String?) {
-    let function = "RE.generateLinkPreview(\"\(type ?? "")\", \"\(title ?? "")\", \"\(description ?? "")\", \"\(url?.absoluteString ?? "")\", \"\(imageUrl?.absoluteString ?? "")\", \"\(html ?? "")\");"
-    runJS(function)
+    let functionName = "RE.generateLinkPreview"
+    let parameters = [type, title, description, url?.absoluteString, imageUrl?.absoluteString, html]
+    
+    callJavascript(with: functionName, and: parameters)
+
   }
   
   func generate(embed: String?) {
