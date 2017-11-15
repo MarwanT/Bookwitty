@@ -17,7 +17,10 @@ extension RichEditorView {
   }
   
   func generate(photo: URL?, alt: String?, wrapperId: String) {
-    runJS("RE.generatePhoto(\"\(photo?.absoluteString ?? "" )\", \"\(alt ?? "")\", \"\(wrapperId)\");")
+    let functionName = "RE.generatePhoto"
+    let parameters = [photo?.absoluteString, alt, wrapperId]
+    
+    callJavascript(with: functionName, and: parameters)
   }
   
   func generate(link href: URL?, text: String?) {
