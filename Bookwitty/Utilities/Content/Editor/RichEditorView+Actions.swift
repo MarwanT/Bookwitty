@@ -33,4 +33,12 @@ extension RichEditorView {
   func setHeader() {
     runJS("RE.setHeader();")
   }
+  
+  func generatePhotoWrapper() -> String {
+    return runJS("RE.generatePhotoWrapper();")
+  }
+  
+  func enabledCommands() -> [String] {
+    return runJS("RE.enabledCommands()").components(separatedBy: ",")
+  }
 }
