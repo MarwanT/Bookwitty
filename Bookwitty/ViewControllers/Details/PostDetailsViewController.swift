@@ -13,7 +13,8 @@ import Moya
 import GSImageViewerController
 import SwiftLoader
 
-class PostDetailsViewController: ASViewController<PostDetailsNode> {
+class PostDetailsViewController: ASViewController<ASDisplayNode> {
+  let controllerNode: ASDisplayNode
   let postDetailsNode: PostDetailsNode
   var viewModel: PostDetailsViewModel
 
@@ -24,7 +25,14 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
   init(title: String? = nil, resource: Resource) {
     viewModel = PostDetailsViewModel(resource: resource)
     postDetailsNode = PostDetailsNode()
-    super.init(node: postDetailsNode)    
+    controllerNode = ASDisplayNode()
+    super.init(node: controllerNode)
+    controllerNode.automaticallyManagesSubnodes = true
+    
+    controllerNode.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
+      let wrapperLayoutSpec = ASWrapperLayoutSpec(layoutElement: self.postDetailsNode)
+      return wrapperLayoutSpec
+    }
   }
 
   override func viewDidLoad() {
