@@ -18,6 +18,12 @@ class Comment: Resource {
   var counts: Counts?
   var vote: String?
   
+  @objc
+  private var repliesCollection: LinkedResourceCollection?
+  lazy var replies: [Comment]? = {
+    return self.repliesCollection?.resources as? [Comment]
+  }()
+  
   override class var resourceType: ResourceType {
     return "comments"
   }
@@ -29,7 +35,8 @@ class Comment: Resource {
       "body" : Attribute().serializeAs("body"),
       "vote": Attribute().serializeAs("vote"),
       "counts" : CountsAttribute().serializeAs("counts"),
-      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")
+      "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name"),
+      "repliesCollection" : ToManyRelationship(Comment.self).serializeAs("children")
       ])
   }
 }
