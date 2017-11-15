@@ -112,8 +112,13 @@ class ActionBarNode: ASCellNode {
     let leftStackLayoutSpec = ASStackLayoutSpec(direction: .horizontal, spacing: configuration.internalSpacing, justifyContent: .start, alignItems: .center, children: leftNodes)
     leftStackLayoutSpec.style.flexGrow = 1.0
 
-    let rightNodes: [ASLayoutElement] = [secondaryButton, moreButton]
-    let rightStackLayoutSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0.0, justifyContent: .end, alignItems: .stretch, children: rightNodes)
+    var rightNodes: [ASLayoutElement] = []
+    rightNodes.append(secondaryButton)
+    if secondaryLabelText?.characters.count ?? 0 > 0 {
+      rightNodes.append(secondaryLabel)
+    }
+    rightNodes.append(moreButton)
+    let rightStackLayoutSpec = ASStackLayoutSpec(direction: .horizontal, spacing: configuration.internalSpacing, justifyContent: .end, alignItems: .center, children: rightNodes)
     rightStackLayoutSpec.style.flexGrow = 1.0
 
     let toolbarNodes: [ASLayoutElement] = [leftStackLayoutSpec, rightStackLayoutSpec]
