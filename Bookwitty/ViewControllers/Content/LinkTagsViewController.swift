@@ -46,7 +46,7 @@ class LinkTagsViewController: UIViewController {
       guard let strongSelf = self else {
         return false
       }
-      return strongSelf.viewModel.canLink && strongSelf.viewModel.selectedTags.flatMap { $0.title }.contains(candidate)
+      return strongSelf.viewModel.canLink
     }
     
     tagsView.onDidChangeText = { [weak self] field, text in
@@ -72,15 +72,32 @@ class LinkTagsViewController: UIViewController {
     }
     
     tagsView.onDidAddTag = { [weak self] _, tag in
+      //TODO: Handle error
       guard let strongSelf = self else {
         return
       }
-      
-      _ = TagAPI.linkTag(for: strongSelf.viewModel.contentIdentifier, with: tag.text, completion: { (success, error) in
-        guard success else {
-          return
-        }
-      })
+      let text = tag.text
+      if strongSelf.viewModel.hasTag(with: text) {
+        _ = TagAPI.linkTag(for: strongSelf.viewModel.contentIdentifier, with: text, completion: { (success, error) in
+          guard success else {
+            //TODO: if we get `no more tags are allowed error` we should set viewModel.canLink = false
+            return
+          }
+        })
+
+      } else {
+        //Create (user hit return)
+        let linkedTags = strongSelf.viewModel.selectedTags.flatMap { $0.title }
+        let allTags = linkedTags + [text]
+        //TODO: change .draft value below to a proper status value
+        _ = TagAPI.replaceTags(for: strongSelf.viewModel.contentIdentifier, with: allTags, status: .draft, completion: { (success, post, error) in
+          guard success, let post = post, let tags = post.tags else {
+            return
+          }
+
+          strongSelf.viewModel.selectedTags = tags
+        })
+      }
     }
     
     tableView.tableFooterView = UIView() //Hacky
@@ -96,10 +113,10 @@ class LinkTagsViewController: UIViewController {
     //Perform request
     _ = SearchAPI.autocomplete(filter: self.viewModel.filter, page: nil) { (success, tags, _, _, error) in
       guard success, let tags = tags as? [Tag] else {
-        self.viewModel.tags = []
+        self.viewModel.resetTags()
         return
       }
-      self.viewModel.tags = tags
+      self.viewModel.set(tags)
       self.tableView.reloadData()
     }
   }
@@ -163,9 +180,11 @@ extension LinkTagsViewController: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-    self.viewModel.append(self.viewModel.tags[indexPath.row])
-    self.tagsView.addTags(self.viewModel.selectedTags.flatMap { $0.title })
-    self.viewModel.tags = []
+    self.viewModel.append(self.viewModel.getFetchedTag(at: indexPath.row))
+    if let tagTitle = self.viewModel.selectedTags.last?.title {
+      self.tagsView.addTag(tagTitle)
+    }
+    self.viewModel.resetTags()
     tableView.reloadData()
   }
 }

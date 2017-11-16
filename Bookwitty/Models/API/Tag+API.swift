@@ -41,6 +41,26 @@ public struct TagAPI {
       success = statusCode == successStatusCode
     })
   }
+  
+  static func replaceTags(for contentIdentifier: String, with tags: [String]?, status: PublishAPI.PublishStatus?, completion: @escaping (_ success: Bool, _ candidatePost: CandidatePost?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let successStatusCode = 200
+    return signedAPIRequest(target: .replaceTags(contentIdentifier: contentIdentifier, tags: tags, status: status), completion: { (data, statusCode, response, error) in
+      var success: Bool = false
+      var error: BookwittyAPIError? = nil
+      var post: CandidatePost? = nil
+      defer {
+        completion(success, post, error)
+      }
+      guard data != nil, let statusCode = statusCode else {
+        error = BookwittyAPIError.invalidStatusCode
+        return
+      }
+      success = statusCode == successStatusCode
+      post = Text.parseData(data: data) as? CandidatePost
+
+    })
+  }
+
 }
 
 extension TagAPI {
@@ -60,6 +80,18 @@ extension TagAPI {
       "data" : [[
         "type" : Tag.resourceType,
         "id" : identifier,
+        ]
+      ]
+    ]
+    return dictionary
+  }
+  
+  static func replaceTagsParameters(tags: [String]?, status: PublishAPI.PublishStatus?) -> [String : Any]? {
+    let dictionary = [
+      "data" : [
+        "attributes" : [
+          "tag-titles" : tags,
+          "status": status?.rawValue,
         ]
       ]
     ]

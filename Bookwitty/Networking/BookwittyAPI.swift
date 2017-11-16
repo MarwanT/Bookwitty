@@ -69,6 +69,7 @@ public enum BookwittyAPI {
   case createContent(title: String?, body: String?, status: PublishAPI.PublishStatus)
   case updateContent(id: String, title: String?, body: String?, imageURL: String?, shortDescription: String? , status: PublishAPI.PublishStatus?)
   case removeContent(contentIdentifier: String)
+  case replaceTags(contentIdentifier: String, tags: [String]?, status: PublishAPI.PublishStatus?)
   case linkTag(contentIdentifier: String, tagIdentifier: String)
   case removeTag(contentIdentifier: String, tagIdentifier: String)
   case linkContent(contentIdentifier: String, topicIdentifier: String)
@@ -211,6 +212,8 @@ extension BookwittyAPI: TargetType {
       path = "/user/resend_confirmation"
     case .uploadPolicy:
       path = "/upload_policies"
+    case .replaceTags(let contentIdentifier, _, _):
+      path = "/content/\(contentIdentifier)"
     case .linkTag(let contentIdentifier, _):
       path = "/content/\(contentIdentifier)/relationships/tags"
     case .removeTag(let contentIdentifier, _):
@@ -240,7 +243,7 @@ extension BookwittyAPI: TargetType {
       return .get
     case .register, .batch, .updatePreference, .wit, .follow, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart, .batchPenNames, .createComment, .witComment, .dimComment, .report, .reportPenName:
       return .post
-    case .updateUser, .updatePenName, .updateContent:
+    case .updateUser, .updatePenName, .updateContent, .replaceTags:
       return .patch
     case .unwit, .unfollow, .unfollowPenName, .unwitComment, .undimComment, .removeComment, .removeTag, .unlinkContent, .removeContent:
       return .delete
@@ -280,6 +283,8 @@ extension BookwittyAPI: TargetType {
       return ContentAPI.unlinkContentParameters(topicIdentifier)
     case .linkContent(_, let topicIdentifier):
       return ContentAPI.linkContentParameters(topicIdentifier)
+    case .replaceTags(_ , let tags, let status):
+      return TagAPI.replaceTagsParameters(tags: tags, status: status)
     case .removeTag(_, let tagIdentifier):
       return TagAPI.removeTagParameters(tagIdentifier)
     case .linkTag(_, let tagIdentifier):
@@ -403,6 +408,8 @@ extension BookwittyAPI: TargetType {
       return []
     case .absolute, .removeComment, .uploadPolicy:
       return nil
+    case .replaceTags:
+      return [Tag.resourceType]
     default:
       return ["pen-name"]
     }
