@@ -248,13 +248,13 @@ class PostDetailsNode: ASScrollNode {
     style.flexGrow = 1.0
     style.flexShrink = 1.0
 
-    descriptionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 25.0)
+    descriptionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 5.0)
     descriptionNode.style.flexGrow = 1.0
     descriptionNode.style.flexShrink = 1.0
 
     tagCollectionNode.delegate = self
 
-    conculsionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 25.0)
+    conculsionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 5.0)
     conculsionNode.style.flexGrow = 1.0
     conculsionNode.style.flexShrink = 1.0
 
