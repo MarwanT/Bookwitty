@@ -58,6 +58,7 @@ class ActionBarNode: ASCellNode {
   var action: Action = .follow {
     didSet {
       self.styleActionButton()
+      self.styleSecondaryButton()
     }
   }
 
@@ -86,7 +87,6 @@ class ActionBarNode: ASCellNode {
     actionLabel.truncationMode = NSLineBreakMode.byTruncatingTail
 
     secondaryButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
-    secondaryButton.setImage(#imageLiteral(resourceName: "threeDots"), for: .normal)
     secondaryButton.style.preferredSize = configuration.iconSize
 
     secondaryButton.addTarget(self, action: #selector(self.editButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
@@ -140,6 +140,7 @@ extension ActionBarNode: Themeable {
   func applyTheme() {
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     self.styleActionButton()
+    self.styleSecondaryButton()
   }
 
   fileprivate func styleActionButton() {
@@ -164,6 +165,15 @@ extension ActionBarNode: Themeable {
       actionButton.style.preferredSize.width = 75.0
       actionButton.setTitle(title: Strings.wit_it(), with: buttonFont, with: buttonColor, for: .normal)
       actionButton.setTitle(title: Strings.witted(), with: buttonFont, with: backgroundColor, for: .selected)
+    }
+  }
+
+  fileprivate func styleSecondaryButton() {
+    switch action {
+    case .follow:
+      secondaryButton.setImage(#imageLiteral(resourceName: "pen"), for: .normal)
+    case .wit:
+      secondaryButton.setImage(#imageLiteral(resourceName: "comment"), for: .normal)
     }
   }
 }
