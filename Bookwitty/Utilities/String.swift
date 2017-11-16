@@ -38,6 +38,18 @@ extension String {
   }
 }
 
+extension String {
+  /// Returns a newly created string with no spaces or new lines.
+  var trimmed: String {
+    return trimmingCharacters(in: .whitespacesAndNewlines)
+  }
+  
+  /// String with no spaces or new lines in beginning and end.
+  mutating func trim() {
+    self = self.trimmed
+  }
+}
+
 //Adds a failable init that mirrors the Int? given
 extension String {
   init?(counting: Int?) {

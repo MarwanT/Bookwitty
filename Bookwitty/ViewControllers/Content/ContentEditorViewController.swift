@@ -398,7 +398,7 @@ extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePi
     }
 
     self.navigationController?.dismiss(animated: true, completion: nil)
-    let id = self.editorView.runJS("RE.generatePhotoWrapper();")
+    let id = self.editorView.generatePhotoWrapper()
     viewModel.upload(image: image) { (success: Bool, link: String?) in
       guard let link = link, let Url = URL(string: link) else { return }
       self.editorView.generate(photo: Url, alt: "Image", wrapperId: id)
@@ -440,7 +440,7 @@ extension ContentEditorViewController: RichLinkPreviewViewControllerDelegate {
       mode = "video"
     }
     
-    self.editorView.generateLinkPreview(type: mode, title: response.title, description: response.shortDescription, url: response.url, imageUrl: response.thumbnails?.first?.url)
+    self.editorView.generateLinkPreview(type: mode, title: response.title, description: response.shortDescription, url: response.url, imageUrl: response.thumbnails?.first?.url, html: response.html)
   }
 
   func richLinkPreviewViewControllerDidCancel(_ viewController: RichLinkPreviewViewController) {
@@ -596,7 +596,7 @@ extension ContentEditorViewController: RichEditorDelegate {
   }
   
   func richEditorDidLoad(_ editor: RichEditorView) {
-    editor.runJS("RE.focus();")
+    editor.focus()
   }
   
   func richEditorTookFocus(_ editor: RichEditorView) {
@@ -610,8 +610,8 @@ extension ContentEditorViewController: RichEditorDelegate {
   func richEditor(_ editor: RichEditorView, handle action: String) {
     
     if action == "selectionchange" {
-      let editingItems = self.editorView.runJS("RE.enabledCommands()").components(separatedBy: ",")
-
+      let editingItems = self.editorView.enabledCommands()
+      
       self.set(option: .header, selected: editingItems.contains("h2"))
       self.set(option: .bold, selected: editingItems.contains("bold"))
       self.set(option: .italic, selected: editingItems.contains("italic"))
