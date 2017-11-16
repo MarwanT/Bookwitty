@@ -32,22 +32,16 @@ class CommentTreeNode: ASCellNode {
   
   weak var delegate: CommentTreeNodeDelegate?
   
+  //MARK: LIFE CYCLE
+  //================
   override init() {
     commentNode = CommentNode()
     viewRepliesDisclosureNode = DisclosureNode()
     super.init()
-    setupNode()
+    initializeNode()
   }
   
-  override func animateLayoutTransition(_ context: ASContextTransitioning) {
-    UIView.animate(withDuration: 0.60, animations: {
-      self.backgroundColor = self.configuration.defaultColor
-    }) { (success) in
-      context.completeTransition(true)
-    }
-  }
-  
-  private func setupNode() {
+  private func initializeNode() {
     automaticallyManagesSubnodes = true
     
     commentNode.delegate = self
@@ -60,41 +54,14 @@ class CommentTreeNode: ASCellNode {
     viewRepliesDisclosureNode.delegate = self
   }
   
-  var comment: Comment? {
-    didSet {
-      refreshCommentNode()
-      refreshDisclosureNodeText()
+  //MARK: LAYOUT
+  //============
+  override func animateLayoutTransition(_ context: ASContextTransitioning) {
+    UIView.animate(withDuration: 0.60, animations: {
+      self.backgroundColor = self.configuration.defaultColor
+    }) { (success) in
+      context.completeTransition(true)
     }
-  }
-  
-  func refreshCommentNode() {
-    commentNode.imageURL = URL(string: comment?.penName?.avatarUrl ?? "")
-    commentNode.fullName = comment?.penName?.name
-    commentNode.message = comment?.body
-    commentNode.setWitValue(witted: comment?.isWitted ?? false)
-    if let createDate = comment?.createdAt as Date? {
-      commentNode.date = createDate
-    }
-    refreshCommentNodeMode()
-    setNeedsLayout()
-  }
-  
-  fileprivate func refreshCommentNodeMode() {
-    commentNode.mode = (mode == .minimal) ? .minimal : (isReply ? .reply : .normal)
-    setNeedsLayout()
-  }
-  
-  func refreshDisclosureNodeText() {
-    viewRepliesDisclosureNode.text = Strings.view_all_replies(number: comment?.counts?.children ?? 0)
-    setNeedsLayout()
-  }
-  
-  var hasReplies: Bool {
-    return (comment?.counts?.children ?? 0) > 0
-  }
-  
-  var isReply: Bool {
-    return !(comment?.parentId.isEmptyOrNil() ?? true)
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -125,7 +92,58 @@ class CommentTreeNode: ASCellNode {
     unHighlightNode()
   }
   
-  private func separator() -> ASDisplayNode {
+  func refreshCommentNode() {
+    commentNode.imageURL = URL(string: comment?.penName?.avatarUrl ?? "")
+    commentNode.fullName = comment?.penName?.name
+    commentNode.message = comment?.body
+    commentNode.setWitValue(witted: comment?.isWitted ?? false)
+    if let createDate = comment?.createdAt as Date? {
+      commentNode.date = createDate
+    }
+    refreshCommentNodeMode()
+    setNeedsLayout()
+  }
+  
+  fileprivate func refreshCommentNodeMode() {
+    commentNode.mode = (mode == .minimal) ? .minimal : (isReply ? .reply : .normal)
+    setNeedsLayout()
+  }
+  
+  func refreshDisclosureNodeText() {
+    viewRepliesDisclosureNode.text = Strings.view_all_replies(number: comment?.counts?.children ?? 0)
+    setNeedsLayout()
+  }
+  
+  //MARK: APIs
+  //==========
+  var comment: Comment? {
+    didSet {
+      refreshCommentNode()
+      refreshDisclosureNodeText()
+    }
+  }
+  
+  var hasReplies: Bool {
+    return (comment?.counts?.children ?? 0) > 0
+  }
+  
+  var isReply: Bool {
+    return !(comment?.parentId.isEmptyOrNil() ?? true)
+  }
+  
+  //MARK: HELPERS
+  //=============
+  fileprivate func highlightNode() {
+    backgroundColor = configuration.highlightColor
+  }
+  
+  fileprivate func unHighlightNode() {
+    if backgroundColor != configuration.defaultColor {
+      transitionLayout(withAnimation: true, shouldMeasureAsync: false, measurementCompletion: nil)
+    }
+  }
+  
+  fileprivate func separator() -> ASDisplayNode {
     let separator = ASDisplayNode()
     separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     separator.style.height = ASDimensionMake(1)
@@ -133,12 +151,20 @@ class CommentTreeNode: ASCellNode {
   }
 }
 
+                                  //******\\
+
+// MARK: - Display Mode
 extension CommentTreeNode {
   enum DisplayMode {
     case normal
     case minimal
   }
-  
+}
+
+                                  //******\\
+
+// MARK: - Configuration
+extension CommentTreeNode {
   struct Configuration {
     fileprivate let indentationMargin = CommentNode.Configuration().indentationMargin
     let disclosureInsets: UIEdgeInsets
@@ -158,6 +184,8 @@ extension CommentTreeNode {
   }
 }
 
+                                  //******\\
+
 // MARK: - Comment node delegate
 extension CommentTreeNode: CommentNodeDelegate {
   func commentNode(_ node: CommentNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
@@ -172,17 +200,9 @@ extension CommentTreeNode: CommentNodeDelegate {
     highlightNode()
     setNeedsLayout()
   }
-  
-  func highlightNode() {
-    backgroundColor = configuration.highlightColor
-  }
-  
-  func unHighlightNode() {
-    if backgroundColor != configuration.defaultColor {
-      transitionLayout(withAnimation: true, shouldMeasureAsync: false, measurementCompletion: nil)
-    }
-  }
 }
+
+                                  //******\\
 
 // MARK: - Disclosure node delegate
 extension CommentTreeNode: DisclosureNodeDelegate {
