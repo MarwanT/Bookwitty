@@ -35,12 +35,6 @@ extension PostDetailsNode: DisclosureNodeDelegate {
   }
 }
 
-extension PostDetailsNode: CardActionBarNodeDelegate {
-  func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
-    delegate?.cardActionBarNode(cardActionBar: cardActionBar, didRequestAction: action, forSender: sender, didFinishAction: didFinishAction)
-  }
-}
-
 protocol PostDetailsNodeDelegate: class {
   func bannerTapAction(url: URL?)
   func shouldShowPostDetailsAllPosts()
@@ -243,7 +237,6 @@ class PostDetailsNode: ASScrollNode {
   }
 
   func initializeNode() {
-    headerNode.actionBarNode.delegate = self
     headerNode.delegate = self
 
     booksHorizontalCollectionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width,
@@ -307,7 +300,7 @@ class PostDetailsNode: ASScrollNode {
   }
 
   func setWitValue(witted: Bool) {
-    headerNode.actionBarNode.setWitButton(witted: witted)
+
   }
 
   func sidesEdgeInset() -> UIEdgeInsets {

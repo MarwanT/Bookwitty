@@ -24,7 +24,6 @@ class PostDetailsHeaderNode: ASCellNode {
   fileprivate let textNode: ASTextNode
   let profileBarNode: PenNameFollowNode
   fileprivate let actionInfoNode: ASTextNode
-  let actionBarNode: CardActionBarNode
   fileprivate let separator: ASDisplayNode
   fileprivate let bottomSeparator: ASDisplayNode
 
@@ -77,7 +76,6 @@ class PostDetailsHeaderNode: ASCellNode {
     textNode = ASTextNode()
     profileBarNode = PenNameFollowNode(largePadding: true)
     actionInfoNode = ASTextNode()
-    actionBarNode = CardActionBarNode()
     separator = ASDisplayNode()
     bottomSeparator = ASDisplayNode()
     super.init()
@@ -110,7 +108,7 @@ class PostDetailsHeaderNode: ASCellNode {
   }
 
   func setWitValue(witted: Bool) {
-    actionBarNode.setWitButton(witted: witted)
+
   }
   
   func sidesEdgeInset() -> UIEdgeInsets {
@@ -133,21 +131,23 @@ class PostDetailsHeaderNode: ASCellNode {
       insets.bottom = externalMargin/2.0
       let actionInfoInset =  ASInsetLayoutSpec(insets: insets, child: actionInfoNode)
       actionNodes.append(actionInfoInset)
+      actionNodes.append(bottomSeparatorInset)
     }
 
-    actionNodes.append(separatorInset)
-    actionNodes.append(actionBarNode)
-    actionNodes.append(bottomSeparatorInset)
     vStackActionBarSpec.children = actionNodes
 
     var nodesArray: [ASLayoutElement]
 
     if penName?.id == nil {
       nodesArray = [imageNode, ASLayoutSpec.spacer(height: contentSpacing),
-                    textInsetSpec, ASLayoutSpec.spacer(height: contentSpacing), vStackActionBarSpec]
+                    textInsetSpec, ASLayoutSpec.spacer(height: contentSpacing)]
     } else {
       nodesArray = [imageNode, ASLayoutSpec.spacer(height: contentSpacing),
-                    textInsetSpec, profileBarNode, vStackActionBarSpec]
+                    textInsetSpec, profileBarNode]
+    }
+
+    if actionNodes.count > 0 {
+      nodesArray.append(vStackActionBarSpec)
     }
 
     vStackSpec.children = nodesArray
