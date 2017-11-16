@@ -102,6 +102,10 @@ extension CommentsViewModel {
     return commentsManager?.parentComment?.id
   }
   
+  var totalNumberOfComments: Int? {
+    return resource?.counts?.comments
+  }
+  
   var resource: ModelCommonProperties? {
     return commentsManager?.resource
   }
