@@ -18,6 +18,8 @@ class PostDetailsViewController: ASViewController<ASDisplayNode> {
   let postDetailsNode: PostDetailsNode
   var viewModel: PostDetailsViewModel
 
+  fileprivate let actionBarNode: ActionBarNode
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -25,13 +27,17 @@ class PostDetailsViewController: ASViewController<ASDisplayNode> {
   init(title: String? = nil, resource: Resource) {
     viewModel = PostDetailsViewModel(resource: resource)
     postDetailsNode = PostDetailsNode()
+    actionBarNode = ActionBarNode()
+
     controllerNode = ASDisplayNode()
     super.init(node: controllerNode)
     controllerNode.automaticallyManagesSubnodes = true
     
     controllerNode.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
       let wrapperLayoutSpec = ASWrapperLayoutSpec(layoutElement: self.postDetailsNode)
-      return wrapperLayoutSpec
+      let absoluteLayoutSpec = ASAbsoluteLayoutSpec(sizing: .default, children: [self.actionBarNode])
+      let overlayLayoutSpec = ASOverlayLayoutSpec(child: wrapperLayoutSpec, overlay: absoluteLayoutSpec)
+      return overlayLayoutSpec
     }
   }
 
