@@ -25,8 +25,8 @@ class CardDetailsViewController: GenericNodeViewController {
   init(node: BaseCardPostNode, title: String? = nil, resource: ModelResource, includeCommentsSection: Bool = true) {
     viewModel = CardDetailsViewModel(resource: resource)
     var containerNode: ASDisplayNode = node
-    if let resourceId = resource.id {
-      let concatNode = CommentsNode.concatenate(with: node, resourceIdentifier: resourceId)
+    if let resource = resource as? ModelCommonProperties {
+      let concatNode = CommentsNode.concatenate(with: node, resource: resource)
       containerNode = concatNode.wrapperNode
       commentsNode = concatNode.commentsNode
     }
@@ -314,7 +314,7 @@ extension CardDetailsViewController: CommentsNodeDelegate {
     case .viewAllComments(let commentsManager):
       pushCommentsViewController(with: commentsManager)
     case .writeComment(let parentCommentIdentifier, _):
-      CommentComposerViewController.show(from: self, delegate: self, postId: nil, parentCommentId: parentCommentIdentifier)
+      CommentComposerViewController.show(from: self, delegate: self, resource: nil, parentCommentId: parentCommentIdentifier)
     case .commentAction(let comment, let action):
       switch action {
       case .wit:
@@ -322,7 +322,7 @@ extension CardDetailsViewController: CommentsNodeDelegate {
       case .unwit:
         commentsNode.unwit(comment: comment, completion: nil)
       case .reply:
-        CommentComposerViewController.show(from: self, delegate: self, postId: nil, parentCommentId: comment.id)
+        CommentComposerViewController.show(from: self, delegate: self, resource: nil, parentCommentId: comment.id)
       default:
         break
       }
@@ -336,7 +336,7 @@ extension CardDetailsViewController: CommentComposerViewControllerDelegate {
     dismiss(animated: true, completion: nil)
   }
   
-  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, postId: String?, parentCommentId: String?) {
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, resource: ModelCommonProperties?, parentCommentId: String?) {
     SwiftLoader.show(animated: true)
     commentsNode?.publishComment(content: content, parentCommentId: parentCommentId) {
       (success, error) in

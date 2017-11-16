@@ -237,9 +237,9 @@ class PostDetailsNode: ASScrollNode {
     setNeedsLayout()
   }
   
-  func loadComments(with resourceIdentifier: String) {
+  func loadComments(for resource: ModelCommonProperties) {
     let commentsManager = CommentsManager()
-    commentsManager.initialize(postIdentifier: resourceIdentifier)
+    commentsManager.initialize(resource: resource)
     commentsNode.initialize(with: commentsManager)
     commentsNode.reloadData()
   }

@@ -10,7 +10,7 @@ import UIKit
 
 protocol CommentComposerViewControllerDelegate: class {
   func commentComposerCancel(_ viewController: CommentComposerViewController)
-  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, postId: String?, parentCommentId: String?)
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, resource: ModelCommonProperties?, parentCommentId: String?)
 }
 
 class CommentComposerViewController: UIViewController {
@@ -19,7 +19,7 @@ class CommentComposerViewController: UIViewController {
   @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
   
   fileprivate var parentCommentId: String?
-  fileprivate var postId: String?
+  fileprivate var resource: ModelCommonProperties?
   
   weak var delegate: CommentComposerViewControllerDelegate?
   
@@ -36,8 +36,8 @@ class CommentComposerViewController: UIViewController {
     textView.becomeFirstResponder()
   }
   
-  func initialize(with postId: String?, parentCommentId: String?) {
-    self.postId = postId
+  func initialize(with resource: ModelCommonProperties?, parentCommentId: String?) {
+    self.resource = resource
     self.parentCommentId = parentCommentId
   }
   
@@ -91,10 +91,10 @@ class CommentComposerViewController: UIViewController {
   
   func didTapPublish(_ sender: Any) {
     dismissKeyboard()
-    delegate?.commentComposerPublish(self, content: textView.text, postId: postId, parentCommentId: parentCommentId)
+    delegate?.commentComposerPublish(self, content: textView.text, resource: resource, parentCommentId: parentCommentId)
 
     //MARK: [Analytics] Event
-    guard let resource = (DataManager.shared.fetchResource(with: postId ?? "") as? ModelCommonProperties) else { return }
+    guard let resource = resource else { return }
     let category: Analytics.Category
     switch resource.registeredResourceType {
     case Image.resourceType:
@@ -148,9 +148,9 @@ extension CommentComposerViewController: Themeable {
 
 // MARK: -
 extension CommentComposerViewController {
-  class func show(from viewController: UIViewController, delegate: CommentComposerViewControllerDelegate?, postId: String?, parentCommentId: String?) {
+  class func show(from viewController: UIViewController, delegate: CommentComposerViewControllerDelegate?, resource: ModelCommonProperties?, parentCommentId: String?) {
     let composeCommentVC = Storyboard.Details.instantiate(CommentComposerViewController.self)
-    composeCommentVC.initialize(with: postId, parentCommentId: parentCommentId)
+    composeCommentVC.initialize(with: resource, parentCommentId: parentCommentId)
     composeCommentVC.delegate = delegate
     
     let navigationController = UINavigationController(rootViewController: composeCommentVC)

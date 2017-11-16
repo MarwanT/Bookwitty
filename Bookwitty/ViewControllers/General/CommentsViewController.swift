@@ -40,9 +40,9 @@ class CommentsViewController: ASViewController<ASDisplayNode> {
     commentsNode.reloadData()
   }
   
-  fileprivate func pushCommentsViewControllerForReplies(comment: Comment, postId: String) {
+  fileprivate func pushCommentsViewControllerForReplies(comment: Comment, resource: ModelCommonProperties?) {
     let commentsManager = CommentsManager()
-    commentsManager.initialize(postIdentifier: postId, comment: comment)
+    commentsManager.initialize(resource: resource, comment: comment)
     let commentsViewController = CommentsViewController()
     commentsViewController.initialize(with: commentsManager)
     self.navigationController?.pushViewController(commentsViewController, animated: true)
@@ -54,12 +54,12 @@ extension CommentsViewController: CommentsNodeDelegate {
 
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action, didFinishAction: ((Bool) -> ())?) {
     switch action {
-    case .viewRepliesForComment(let comment, let postId):
-      pushCommentsViewControllerForReplies(comment: comment, postId: postId)
+    case .viewRepliesForComment(let comment, let resource):
+      pushCommentsViewControllerForReplies(comment: comment, resource: resource)
     case .viewAllComments(let commentsManager):
       break
     case .writeComment(let parentCommentIdentifier, _):
-      CommentComposerViewController.show(from: self, delegate: self, postId: nil, parentCommentId: parentCommentIdentifier)
+      CommentComposerViewController.show(from: self, delegate: self, resource: nil, parentCommentId: parentCommentIdentifier)
     case .commentAction(let comment, let action):
       switch action {
       case .wit:
@@ -67,7 +67,7 @@ extension CommentsViewController: CommentsNodeDelegate {
       case .unwit:
         commentsNode.unwit(comment: comment, completion: nil)
       case .reply:
-        CommentComposerViewController.show(from: self, delegate: self, postId: nil, parentCommentId: comment.id)
+        CommentComposerViewController.show(from: self, delegate: self, resource: nil, parentCommentId: comment.id)
       default:
         break
       }
@@ -81,7 +81,7 @@ extension CommentsViewController: CommentComposerViewControllerDelegate {
     dismiss(animated: true, completion: nil)
   }
   
-  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, postId: String?, parentCommentId: String?) {
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, resource: ModelCommonProperties?, parentCommentId: String?) {
     SwiftLoader.show(animated: true)
     commentsNode.publishComment(content: content, parentCommentId: parentCommentId) {
       (success, error) in

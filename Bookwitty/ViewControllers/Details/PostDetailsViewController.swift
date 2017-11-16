@@ -142,10 +142,10 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
   }
   
   func loadComments() {
-    guard let id = viewModel.resource.id else {
+    guard let resource = viewModel.resource as? ModelCommonProperties else {
       return
     }
-    postDetailsNode.loadComments(with: id)
+    postDetailsNode.loadComments(for: resource)
   }
 
   func loadRelatedBooks() {
@@ -430,7 +430,7 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
     case .viewAllComments(let commentsManager):
       pushCommentsViewController(with: commentsManager)
     case .writeComment(let parentCommentIdentifier, _):
-      CommentComposerViewController.show(from: self, delegate: self, postId: nil, parentCommentId: parentCommentIdentifier)
+      CommentComposerViewController.show(from: self, delegate: self, resource: nil, parentCommentId: parentCommentIdentifier)
     case .commentAction(let comment, let action):
       switch action {
       case .wit:
@@ -444,7 +444,7 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
           didFinishAction?(success)
         })
       case .reply:
-        CommentComposerViewController.show(from: self, delegate: self, postId: nil, parentCommentId: comment.id)
+        CommentComposerViewController.show(from: self, delegate: self, resource: nil, parentCommentId: comment.id)
       default:
         break
       }
@@ -1139,7 +1139,7 @@ extension PostDetailsViewController: CommentComposerViewControllerDelegate {
     dismiss(animated: true, completion: nil)
   }
   
-  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, postId: String?, parentCommentId: String?) {
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, resource: ModelCommonProperties?, parentCommentId: String?) {
     SwiftLoader.show(animated: true)
     postDetailsNode.publishComment(content: content, parentCommentId: parentCommentId) {
       (success, error) in

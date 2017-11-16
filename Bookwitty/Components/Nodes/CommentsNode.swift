@@ -408,9 +408,9 @@ extension CommentsNode {
 // MARK: - Actions Declaration
 extension CommentsNode {
   enum Action {
-    case viewRepliesForComment(comment: Comment, postId: String)
+    case viewRepliesForComment(comment: Comment, resource: ModelCommonProperties)
     case viewAllComments(commentsManager: CommentsManager)
-    case writeComment(parentCommentIdentifier: String?, postId: String)
+    case writeComment(parentCommentIdentifier: String?, resource: ModelCommonProperties)
     case commentAction(comment: Comment, action: CardActionBarNode.Action)
   }
 }
@@ -427,9 +427,7 @@ extension CommentsNode: CommentTreeNodeDelegate {
     delegate?.commentsNode(self, reactFor: .commentAction(comment: comment, action: action), didFinishAction: didFinishAction)
 
     //MARK: [Analytics] Event
-    guard let postId = viewModel.postId,
-      let resource = DataManager.shared.fetchResource(with: postId) as? ModelCommonProperties
-      else { return }
+    guard let resource = viewModel.resource else { return }
 
     let analyticsAction: Analytics.Action
 
@@ -483,14 +481,13 @@ extension CommentsNode: CommentTreeNodeDelegate {
   }
   
   func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, comment: Comment) {
-    guard let postId = viewModel.postId else {
+    guard let resource = viewModel.resource else {
       return
     }
-
-    delegate?.commentsNode(self, reactFor: .viewRepliesForComment(comment: comment, postId: postId), didFinishAction: nil)
+    
+    delegate?.commentsNode(self, reactFor: .viewRepliesForComment(comment: comment, resource: resource), didFinishAction: nil)
 
     //MARK: [Analytics] Event
-    guard let resource = DataManager.shared.fetchResource(with: postId) as? ModelCommonProperties else { return }
     let category: Analytics.Category
     switch resource.registeredResourceType {
     case Image.resourceType:
@@ -536,14 +533,13 @@ extension CommentsNode: WriteCommentNodeDelegate {
       return
     }
     
-    guard let postId = viewModel.postId else {
+    guard let resource = viewModel.resource else {
       return
     }
 
-    delegate?.commentsNode(self, reactFor: .writeComment(parentCommentIdentifier: viewModel.parentCommentIdentifier, postId: postId), didFinishAction: nil)
+    delegate?.commentsNode(self, reactFor: .writeComment(parentCommentIdentifier: viewModel.parentCommentIdentifier, resource: resource), didFinishAction: nil)
 
     //MARK: [Analytics] Event
-    guard let resource = DataManager.shared.fetchResource(with: postId) as? ModelCommonProperties else { return }
     let category: Analytics.Category
     switch resource.registeredResourceType {
     case Image.resourceType:
@@ -582,11 +578,11 @@ extension CommentsNode: WriteCommentNodeDelegate {
 
 // MARK: - Display Helpers
 extension CommentsNode {
-  static func concatenate(with node: ASDisplayNode, resourceIdentifier: String) -> (wrapperNode: ASDisplayNode, commentsNode: CommentsNode) {
+  static func concatenate(with node: ASDisplayNode, resource: ModelCommonProperties?) -> (wrapperNode: ASDisplayNode, commentsNode: CommentsNode) {
     let commentsNode = CommentsNode()
     commentsNode.displayMode = .compact
     let commentsManager = CommentsManager()
-    commentsManager.initialize(postIdentifier: resourceIdentifier)
+    commentsManager.initialize(resource: resource)
     commentsNode.initialize(with: commentsManager)
     commentsNode.reloadData()
     

@@ -1002,18 +1002,17 @@ extension TopicViewController: BaseCardPostNodeDelegate {
       return
     }
 
-    guard let resource = candidateResource,
-    let postId = resource.id else {
+    guard let resource = candidateResource as? ModelCommonProperties else {
       return
     }
 
     let analyticsAction: Analytics.Action
     switch(action) {
     case .listComments:
-      pushCommentsViewController(for: resource as? ModelCommonProperties)
+      pushCommentsViewController(for: resource)
       analyticsAction = .ViewTopComment
     case .publishComment:
-      CommentComposerViewController.show(from: self, delegate: self, postId: postId, parentCommentId: nil)
+      CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentId: nil)
       analyticsAction = .AddComment
     }
 
@@ -1324,15 +1323,15 @@ extension TopicViewController: CommentComposerViewControllerDelegate {
     dismiss(animated: true, completion: nil)
   }
 
-  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, postId: String?, parentCommentId: String?) {
-    guard let postId = postId else {
+  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, resource: ModelCommonProperties?, parentCommentId: String?) {
+    guard let resource = resource else {
       _ = viewController.becomeFirstResponder()
       return
     }
 
     SwiftLoader.show(animated: true)
     let commentManager = CommentsManager()
-    commentManager.initialize(postIdentifier: postId)
+    commentManager.initialize(resource: resource)
     commentManager.publishComment(content: content, parentCommentId: nil) {
       (success: Bool, comment: Comment?, error: CommentsManager.Error?) in
       SwiftLoader.hide()
@@ -1345,11 +1344,13 @@ extension TopicViewController: CommentComposerViewControllerDelegate {
         return
       }
 
-      if let resource = DataManager.shared.fetchResource(with: postId), let comment = comment {
-        var topComments = (resource as? ModelCommonProperties)?.topComments ?? []
+      if let comment = comment {
+        var topComments = resource.topComments ?? []
         topComments.append(comment)
-        (resource as? ModelCommonProperties)?.topComments = topComments
-        DataManager.shared.update(resource: resource)
+        resource.topComments = topComments
+        if let castedResource = resource as? ModelResource {
+          DataManager.shared.update(resource: castedResource)
+        }
       }
 
       self.dismiss(animated: true, completion: nil)

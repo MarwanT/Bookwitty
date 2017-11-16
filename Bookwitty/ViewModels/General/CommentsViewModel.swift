@@ -101,6 +101,10 @@ extension CommentsViewModel {
   var parentCommentIdentifier: String? {
     return commentsManager?.parentComment?.id
   }
+  
+  var resource: ModelCommonProperties? {
+    return commentsManager?.resource
+  }
 }
 
 // MARK: - Related methods

@@ -78,7 +78,7 @@ extension UIViewController {
     }
 
     let commentsManager = CommentsManager()
-    commentsManager.initialize(postIdentifier: identifier)
+    commentsManager.initialize(resource: resource)
 
     let commentsVC = CommentsViewController()
     commentsVC.initialize(with: commentsManager)
