@@ -35,12 +35,6 @@ extension PostDetailsNode: DisclosureNodeDelegate {
   }
 }
 
-extension PostDetailsNode: CardActionBarNodeDelegate {
-  func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?) {
-    delegate?.cardActionBarNode(cardActionBar: cardActionBar, didRequestAction: action, forSender: sender, didFinishAction: didFinishAction)
-  }
-}
-
 protocol PostDetailsNodeDelegate: class {
   func bannerTapAction(url: URL?)
   func shouldShowPostDetailsAllPosts()
@@ -243,7 +237,6 @@ class PostDetailsNode: ASScrollNode {
   }
 
   func initializeNode() {
-    headerNode.actionBarNode.delegate = self
     headerNode.delegate = self
 
     booksHorizontalCollectionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width,
@@ -255,13 +248,13 @@ class PostDetailsNode: ASScrollNode {
     style.flexGrow = 1.0
     style.flexShrink = 1.0
 
-    descriptionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 25.0)
+    descriptionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 5.0)
     descriptionNode.style.flexGrow = 1.0
     descriptionNode.style.flexShrink = 1.0
 
     tagCollectionNode.delegate = self
 
-    conculsionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 25.0)
+    conculsionNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 5.0)
     conculsionNode.style.flexGrow = 1.0
     conculsionNode.style.flexShrink = 1.0
 
@@ -304,10 +297,6 @@ class PostDetailsNode: ASScrollNode {
 
   func bannerTouchUpInside() {
     delegate?.bannerTapAction(url: Environment.current.shipementInfoURL)
-  }
-
-  func setWitValue(witted: Bool) {
-    headerNode.actionBarNode.setWitButton(witted: witted)
   }
 
   func sidesEdgeInset() -> UIEdgeInsets {
