@@ -101,6 +101,15 @@ class PostDetailsViewController: ASViewController<ASDisplayNode> {
     //The action bar should not show the comment button
     //This VC contains a comment section at the bottom
     postDetailsNode.headerNode.actionBarNode.hideCommentButton = true
+
+    var insets = UIEdgeInsets.zero
+    insets.bottom = actionBarNode.calculatedSize.height
+    postDetailsNode.view.contentInset = insets
+    postDetailsNode.view.scrollIndicatorInsets = insets
+
+    var position = actionBarNode.style.layoutPosition
+    position.y = postDetailsNode.calculatedSize.height - 50.0
+    actionBarNode.style.layoutPosition = position
   }
 
   fileprivate func addDelegatesAndDataSources() {
