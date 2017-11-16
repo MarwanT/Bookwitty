@@ -96,7 +96,7 @@ class PostDetailsViewController: ASViewController<ASDisplayNode> {
     postDetailsNode.actionInfoValue = viewModel.actionInfoValue
     postDetailsNode.conculsion = viewModel.conculsion
     postDetailsNode.headerNode.profileBarNode.updateMode(disabled: viewModel.isMyPenName())
-    postDetailsNode.setWitValue(witted: viewModel.isWitted)
+    //TODO: set action bar witted = viewModel.isWitted
 
     postDetailsNode.tags = viewModel.tags
 

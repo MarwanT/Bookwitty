@@ -106,10 +106,6 @@ class PostDetailsHeaderNode: ASCellNode {
     textNode.style.flexShrink = 1
 
   }
-
-  func setWitValue(witted: Bool) {
-
-  }
   
   func sidesEdgeInset() -> UIEdgeInsets {
     return UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: internalMargin)
@@ -120,7 +116,6 @@ class PostDetailsHeaderNode: ASCellNode {
     vStackSpec.spacing = 0.0
 
     let textInsetSpec = ASInsetLayoutSpec(insets: sidesEdgeInset(), child: textNode)
-    let separatorInset =  ASInsetLayoutSpec(insets: sidesEdgeInset(), child: separator)
     let bottomSeparatorInset =  ASInsetLayoutSpec(insets: sidesEdgeInset(), child: bottomSeparator)
 
     let vStackActionBarSpec = ASStackLayoutSpec.vertical()

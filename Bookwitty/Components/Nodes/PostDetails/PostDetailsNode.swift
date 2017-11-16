@@ -299,10 +299,6 @@ class PostDetailsNode: ASScrollNode {
     delegate?.bannerTapAction(url: Environment.current.shipementInfoURL)
   }
 
-  func setWitValue(witted: Bool) {
-
-  }
-
   func sidesEdgeInset() -> UIEdgeInsets {
     return UIEdgeInsets(top: 0, left: internalMargin, bottom: 0, right: internalMargin)
   }
