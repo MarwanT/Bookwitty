@@ -1338,6 +1338,10 @@ extension PostDetailsViewController: ActionBarNodeDelegate {
   }
 
   func actionBar(node: ActionBarNode, moreButtonTouchUpInside button: ASButtonNode){
-    //TODO: Empty Implementation
+    guard let resource = viewModel.resource as? ModelCommonProperties,
+      let identifier = resource.id else { return }
+
+    let actions: [MoreAction] = MoreAction.actions(for: resource)
+    self.showMoreActionSheet(identifier: identifier, actions: actions, completion: {_ in})
   }
 }
