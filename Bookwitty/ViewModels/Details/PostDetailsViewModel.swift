@@ -67,6 +67,10 @@ class PostDetailsViewModel {
     return  (resource as? ModelCommonProperties)?.counts?.wits
   }
 
+  var comments: Int? {
+    return  (resource as? ModelCommonProperties)?.counts?.comments
+  }
+
   var identifier: String? {
     return resource.id
   }
