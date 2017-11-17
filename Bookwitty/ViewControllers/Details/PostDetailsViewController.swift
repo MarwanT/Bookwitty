@@ -125,6 +125,7 @@ class PostDetailsViewController: ASViewController<ASDisplayNode> {
     }
 
     actionBarNode.actionButtonSelected = viewModel.isWitted
+    actionBarNode.delegate = self
   }
 
   fileprivate func addDelegatesAndDataSources() {
@@ -1265,5 +1266,20 @@ extension PostDetailsViewController: CommentComposerViewControllerDelegate {
     if success {
       self.dismiss(animated: true, completion: nil)
     }
+  }
+}
+
+//MARK: - ActionBarNodeDelegate implementation
+extension PostDetailsViewController: ActionBarNodeDelegate {
+  func actionBar(node: ActionBarNode, actionButtonTouchUpInside button: ButtonWithLoader) {
+    //TODO: Empty Implementation
+  }
+
+  func actionBar(node: ActionBarNode, secondaryButtonTouchUpInside button: ASButtonNode) {
+    //TODO: Empty Implementation
+  }
+
+  func actionBar(node: ActionBarNode, moreButtonTouchUpInside button: ASButtonNode){
+    //TODO: Empty Implementation
   }
 }
