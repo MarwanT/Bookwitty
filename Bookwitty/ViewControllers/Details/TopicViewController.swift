@@ -488,7 +488,16 @@ extension TopicViewController: ActionBarNodeDelegate {
   }
 
   func actionBar(node: ActionBarNode, moreButtonTouchUpInside button: ASButtonNode){
-    //TODO: Empty Implementation
+    guard let resource = viewModel.resource,
+      let identifier = resource.id else {
+        return
+    }
+
+    let actions: [MoreAction] = MoreAction.actions(for: resource)
+    self.showMoreActionSheet(identifier: identifier, actions: actions, completion: {
+      (success: Bool, action: MoreAction) in
+
+    })
   }
 }
 
