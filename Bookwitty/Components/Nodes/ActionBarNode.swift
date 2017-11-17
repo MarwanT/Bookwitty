@@ -34,6 +34,7 @@ class ActionBarNode: ASCellNode {
       } else {
         actionLabel.attributedText = nil
       }
+      setNeedsLayout()
     }
   }
 
@@ -45,7 +46,7 @@ class ActionBarNode: ASCellNode {
       } else {
         secondaryLabel.attributedText = nil
       }
-      secondaryLabel.setNeedsLayout()
+      setNeedsLayout()
     }
   }
 
