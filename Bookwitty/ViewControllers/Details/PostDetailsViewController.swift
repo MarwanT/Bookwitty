@@ -1330,7 +1330,11 @@ extension PostDetailsViewController: ActionBarNodeDelegate {
   }
 
   func actionBar(node: ActionBarNode, secondaryButtonTouchUpInside button: ASButtonNode) {
-    //TODO: Empty Implementation
+    guard let commentsManager = postDetailsNode.commentNodeManagerClone else {
+      return
+    }
+
+    pushCommentsViewController(with: commentsManager)
   }
 
   func actionBar(node: ActionBarNode, moreButtonTouchUpInside button: ASButtonNode){
