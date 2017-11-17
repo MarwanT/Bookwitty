@@ -1367,8 +1367,13 @@ extension TopicViewController {
     var position = actionBarNode.style.layoutPosition
     let actionBarHeight = actionBarNode.configuration.height
 
-    let initialOffset = min(headerNode.calculatedSize.height, scrollView.contentSize.height - headerNode.calculatedSize.height)
-    let value = actionBarHeight > (initialOffset - scrollView.contentOffset.y) ? actionBarHeight : 0
+    var deltaHeight = scrollView.contentSize.height - scrollView.frame.size.height //the remaining part of the scroll area
+    deltaHeight = deltaHeight < headerNode.calculatedSize.height ? deltaHeight : 0 //only consider it if it's positive
+    let scrollContentWithoutHeaderHeight = scrollView.contentSize.height - headerNode.calculatedSize.height - deltaHeight
+
+    let initialOffset = min(headerNode.calculatedSize.height, scrollContentWithoutHeaderHeight)
+    let value = scrollView.contentOffset.y >= initialOffset ? actionBarHeight : 0
+
     position.y = scrollView.frame.size.height - value
     actionBarNode.style.layoutPosition = position
     controllerNode.transitionLayout(withAnimation: true, shouldMeasureAsync: false, measurementCompletion: nil)
