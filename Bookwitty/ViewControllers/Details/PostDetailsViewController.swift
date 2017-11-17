@@ -112,6 +112,18 @@ class PostDetailsViewController: ASViewController<ASDisplayNode> {
     actionBarNode.style.layoutPosition = position
 
     actionBarNode.action = .wit
+    if let wits = viewModel.wits, wits > 0 {
+      actionBarNode.actionLabelText = String(describing: wits)
+    } else {
+      actionBarNode.actionLabelText = nil
+    }
+
+    if let comments = viewModel.comments, comments > 0 {
+      actionBarNode.secondaryLabelText = String(describing: comments)
+    } else {
+      actionBarNode.secondaryLabelText = nil
+    }
+
     actionBarNode.actionButtonSelected = viewModel.isWitted
   }
 
