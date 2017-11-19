@@ -56,6 +56,17 @@ extension RichEditorView {
   func enabledCommands() -> [String] {
     return runJS("RE.enabledCommands()").components(separatedBy: ",")
   }
+  
+  func setContent(html: String?) {
+    let functionName = "RE.setContent"
+    let parameters = [html]
+  
+    callJavascript(with: functionName, and: parameters)
+  }
+  
+  func getContent() -> String {
+    return runJS("RE.getContent();")
+  }
 }
 
 extension RichEditorView {
