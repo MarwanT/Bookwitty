@@ -593,6 +593,8 @@ extension ContentEditorViewController: PenNameViewControllerDelegate {
 //MARK: - RichEditorDelegate implementation
 extension ContentEditorViewController: RichEditorDelegate {
   func richEditor(_ editor: RichEditorView, contentDidChange content: String) {
+  
+    self.viewModel.currentPost.body = editor.getContent()
   }
   
   func richEditorDidLoad(_ editor: RichEditorView) {
