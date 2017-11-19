@@ -406,7 +406,7 @@ extension BookwittyAPI: TargetType {
       return include
     case .batchPenNames:
       return []
-    case .absolute, .removeComment, .uploadPolicy:
+    case .absolute, .removeComment, .uploadPolicy, .uploadMultipart:
       return nil
     case .replaceTags:
       return [Tag.resourceType]
