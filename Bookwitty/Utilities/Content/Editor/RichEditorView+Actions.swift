@@ -67,6 +67,10 @@ extension RichEditorView {
   func getContent() -> String {
     return runJS("RE.getContent();")
   }
+  
+  func selectedHref() -> String {
+    return runJS("RE.getSelectedHref()")
+  }
 }
 
 extension RichEditorView {
