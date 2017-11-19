@@ -168,11 +168,12 @@ class ContentEditorViewController: UIViewController {
     }
   }
   
-  func showAddLinkAlertView() {
+  func showAddLinkAlertView(with link:String?) {
     
     let alertController = UIAlertController(title: Strings.addLink(), message: "", preferredStyle: .alert)
     alertController.addTextField(configurationHandler: {(_ textField: UITextField) -> Void in
       textField.placeholder = "http://"
+      textField.text = link
     })
     
     let confirmAction = UIAlertAction(title: Strings.ok(), style: .default, handler: {(_ action: UIAlertAction) -> Void in
@@ -247,7 +248,12 @@ class ContentEditorViewController: UIViewController {
     case .unorderedList:
       self.editorView.unorderedList()
     case .link:
-        self.showAddLinkAlertView()
+      if isSelected {
+        let previousLink = self.editorView.selectedHref()
+        self.showAddLinkAlertView(with: previousLink)
+      } else {
+        self.showAddLinkAlertView(with: nil)
+      }
     case .undo, .redo :
       break
     }
@@ -358,7 +364,7 @@ class ContentEditorViewController: UIViewController {
 extension ContentEditorViewController: RichEditorToolbarDelegate {
   
   func richEditorToolbarInsertLink(_ toolbar: RichEditorToolbar) {
-    self.showAddLinkAlertView()
+    self.showAddLinkAlertView(with: nil)
   }
 }
 
