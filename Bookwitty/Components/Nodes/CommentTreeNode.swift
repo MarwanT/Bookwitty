@@ -96,7 +96,8 @@ class CommentTreeNode: ASCellNode {
     commentNode.imageURL = URL(string: comment?.penName?.avatarUrl ?? "")
     commentNode.fullName = comment?.penName?.name
     commentNode.message = comment?.body
-    commentNode.setWitValue(witted: comment?.isWitted ?? false)
+    commentNode.setWitValue(witted: comment?.isWitted ?? false,
+                            numberOfWits: comment?.counts?.wits)
     if let createDate = comment?.createdAt as Date? {
       commentNode.date = createDate
     }

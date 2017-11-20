@@ -19,7 +19,6 @@ class CommentNode: ASCellNode {
   fileprivate let fullNameNode: ASTextNode
   fileprivate let dateNode: ASTextNode
   fileprivate let messageNode: DynamicCommentMessageNode
-  fileprivate let actionBar: CardActionBarNode
   
   var mode = DisplayMode.normal {
     didSet {
@@ -41,7 +40,6 @@ class CommentNode: ASCellNode {
     fullNameNode = ASTextNode()
     dateNode = ASTextNode()
     messageNode = DynamicCommentMessageNode()
-    actionBar = CardActionBarNode()
     super.init()
     setupNode()
   }
@@ -54,19 +52,10 @@ class CommentNode: ASCellNode {
       configuration.imageBorderWidth, configuration.imageBorderColor)
     imageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
     
-    actionBar.setup(forFollowingMode: false)
-    actionBar.configuration.externalHorizontalMargin = 0
-    actionBar.hideShareButton = true
-    actionBar.hideCommentButton = true
-    actionBar.hideMoreButton = true
-    actionBar.delegate = self
-    
     messageNode.delegate = self
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    actionBar.hideReplyButton = mode == .normal ? false : true
-    
     var infoStackElements = [ASLayoutElement]()
     
     // layout the header elements: Image - Name - Date
@@ -77,7 +66,7 @@ class CommentNode: ASCellNode {
     
     // layout the body elements: Comment Message, Action Buttons
     let actionBarTopSeparatorInsetSpec = ASInsetLayoutSpec(insets: configuration.separatorInsets, child: separator())
-    var bodyStackElements: [ASLayoutElement] = [messageNode, actionBarTopSeparatorInsetSpec, actionBar]
+    var bodyStackElements: [ASLayoutElement] = [messageNode, actionBarTopSeparatorInsetSpec]
     if !configuration.hideBottomActionBarSeparator {
       bodyStackElements.append(separator())
     }
@@ -140,8 +129,8 @@ class CommentNode: ASCellNode {
     }
   }
   
-  func setWitValue(witted: Bool) {
-    actionBar.setWitButton(witted: witted)
+  func setWitValue(witted: Bool, numberOfWits: Int?) {
+    messageNode.numberOfWits = numberOfWits
   }
   
   fileprivate func refreshMessageNodeForMode() {
@@ -175,13 +164,6 @@ extension CommentNode {
     case normal
     case reply
     case minimal
-  }
-}
-
-// MARK: Modes declaration
-extension CommentNode: CardActionBarNodeDelegate {
-  func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
-    delegate?.commentNode(self, didRequestAction: action, forSender: sender, didFinishAction: didFinishAction)
   }
 }
 
