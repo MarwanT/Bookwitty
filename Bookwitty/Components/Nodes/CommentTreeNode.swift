@@ -158,6 +158,7 @@ class CommentTreeNode: ASCellNode {
 extension CommentTreeNode {
   enum DisplayMode {
     case normal
+    case parentOnly
     case minimal
   }
 }
