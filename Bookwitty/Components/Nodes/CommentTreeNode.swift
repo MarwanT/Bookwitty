@@ -71,23 +71,30 @@ class CommentTreeNode: ASCellNode {
     var elements: [ASLayoutElement] = []
     elements.append(commentNode)
     
-    if hasReplies && !configuration.shouldHideViewRepliesDisclosureNode {
-      let children: [ASLayoutElement] = [separator(), viewRepliesDisclosureNode, separator()]
-      let disclosureStackSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: children)
-      let disclosureNodeInsetsSpec = ASInsetLayoutSpec(insets: configuration.disclosureInsets, child: disclosureStackSpec)
-      elements.append(disclosureNodeInsetsSpec)
-      commentNode.configuration.hideBottomActionBarSeparator = true
-    } else {
-      commentNode.configuration.hideBottomActionBarSeparator = false
+    switch mode {
+    case .normal:
+      if !isReply, hasReplies {
+        for replyCommentNode in repliesCommentNodes {
+          elements.append(separator())
+          elements.append(replyCommentNode)
+        }
+        
+        if hasAdditionalReplies {
+          elements.append(separator())
+          elements.append(viewRepliesDisclosureNode)
+        }
+      }
+    case .parentOnly, .minimal:
+      break
     }
     
-    let verticalStack = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: elements)
-    var insets = configuration.externalInsets
-    if configuration.leftIndentToParentNode {
-      insets.left += configuration.indentationMargin
-    }
-    let externalInsetsSpec = ASInsetLayoutSpec(insets: insets, child: verticalStack)
-    return externalInsetsSpec
+    let treeStack = ASStackLayoutSpec(
+      direction: .vertical,
+      spacing: 0,
+      justifyContent: .start,
+      alignItems: .stretch,
+      children: elements)
+    return treeStack
   }
   
   override func layoutDidFinish() {
@@ -157,6 +164,12 @@ class CommentTreeNode: ASCellNode {
     return (comment?.counts?.children ?? 0) > 0
   }
   
+  /// Additional replies are not displayed
+  var hasAdditionalReplies: Bool {
+    let repliesCount = comment?.counts?.children ?? 0
+    return repliesCount > configuration.maximumRepliesDisplayed
+  }
+  
   var isReply: Bool {
     return !(comment?.parentId.isEmptyOrNil() ?? true)
   }
@@ -198,8 +211,6 @@ extension CommentTreeNode {
 extension CommentTreeNode {
   struct Configuration {
     fileprivate let indentationMargin = CommentNode.Configuration().indentationMargin
-    let disclosureInsets: UIEdgeInsets
-    var shouldHideViewRepliesDisclosureNode: Bool = true
     var leftIndentToParentNode: Bool = false
     var externalInsets = UIEdgeInsets(
       top: ThemeManager.shared.currentTheme.generalExternalMargin() / 2,
@@ -208,10 +219,7 @@ extension CommentTreeNode {
       right: ThemeManager.shared.currentTheme.generalExternalMargin())
     var highlightColor = ThemeManager.shared.currentTheme.colorNumber5()
     var defaultColor = UIColor.white
-    
-    init() {
-      disclosureInsets = UIEdgeInsets(top: 0, left: indentationMargin, bottom: 0, right: 0)
-    }
+    var maximumRepliesDisplayed = 10
   }
 }
 

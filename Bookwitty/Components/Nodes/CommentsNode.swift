@@ -248,9 +248,9 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
           return ASCellNode()
         }
         let commentTreeNode = CommentTreeNode()
+        commentTreeNode.initialize(with: CommentTreeNode.DisplayMode.parentOnly)
         commentTreeNode.delegate = self
         commentTreeNode.comment = comment
-        commentTreeNode.configuration.shouldHideViewRepliesDisclosureNode = true
         return commentTreeNode
       case Section.header.rawValue:
         let externalInsets = UIEdgeInsets(
@@ -272,11 +272,10 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
           return ASCellNode()
         }
         let commentTreeNode = CommentTreeNode()
+        commentTreeNode.initialize(with: self.displayMode == .compact ? .minimal : .normal)
         commentTreeNode.delegate = self
         commentTreeNode.comment = comment
-        commentTreeNode.mode = self.displayMode == .compact ? .minimal : .normal
         var configuration = CommentTreeNode.Configuration()
-        configuration.shouldHideViewRepliesDisclosureNode = self.displayMode == .compact
         configuration.leftIndentToParentNode = self.viewModel.isDisplayingACommentReplies
         commentTreeNode.configuration = configuration
         return commentTreeNode
