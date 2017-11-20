@@ -18,12 +18,7 @@ class CommentTreeNode: ASCellNode {
   var repliesCommentNodes: [CommentNode]
   let viewRepliesDisclosureNode: DisclosureNode
   
-  var mode: DisplayMode = .normal {
-    didSet {
-      refreshCommentNodeMode()
-      setNeedsLayout()
-    }
-  }
+  fileprivate(set) var mode: DisplayMode = .normal
   
   var configuration = Configuration() {
     didSet {
@@ -41,6 +36,12 @@ class CommentTreeNode: ASCellNode {
     repliesCommentNodes = []
     super.init()
     initializeNode()
+  }
+  
+  func initialize(with mode: DisplayMode) {
+    self.mode = mode
+    refreshCommentNodeMode()
+    refreshRepliesCommentNodes()
   }
   
   private func initializeNode() {
