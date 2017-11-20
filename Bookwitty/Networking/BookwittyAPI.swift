@@ -358,6 +358,8 @@ extension BookwittyAPI: TargetType {
       return include
     case .batchPenNames:
       return []
+    case .absolute:
+      return nil
     default:
       return ["pen-name"]
     }
