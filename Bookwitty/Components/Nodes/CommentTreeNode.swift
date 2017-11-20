@@ -15,6 +15,7 @@ protocol CommentTreeNodeDelegate: class {
 
 class CommentTreeNode: ASCellNode {
   let commentNode: CommentNode
+  var repliesCommentNodes: [CommentNode]
   let viewRepliesDisclosureNode: DisclosureNode
   
   var mode: DisplayMode = .normal {
@@ -37,6 +38,7 @@ class CommentTreeNode: ASCellNode {
   override init() {
     commentNode = CommentNode()
     viewRepliesDisclosureNode = DisclosureNode()
+    repliesCommentNodes = []
     super.init()
     initializeNode()
   }
@@ -101,12 +103,38 @@ class CommentTreeNode: ASCellNode {
     if let createDate = comment?.createdAt as Date? {
       commentNode.date = createDate
     }
+    refreshRepliesCommentNodes()
     refreshCommentNodeMode()
     setNeedsLayout()
   }
   
   fileprivate func refreshCommentNodeMode() {
     commentNode.mode = (mode == .minimal) ? .minimal : (isReply ? .reply : .normal)
+    setNeedsLayout()
+  }
+  
+  fileprivate func refreshRepliesCommentNodes() {
+    repliesCommentNodes.removeAll()
+    switch mode {
+    case .normal:
+      if let repliesComments = comment?.replies {
+        for replyComment in repliesComments {
+          let replyCommentNode = CommentNode()
+          replyCommentNode.mode = .reply
+          replyCommentNode.imageURL = URL(string: replyComment.penName?.avatarUrl ?? "")
+          replyCommentNode.fullName = replyComment.penName?.name
+          replyCommentNode.message = replyComment.body
+          replyCommentNode.setWitValue(witted: replyComment.isWitted,
+                                       numberOfWits: replyComment.counts?.wits)
+          if let createDate = replyComment.createdAt as Date? {
+            replyCommentNode.date = createDate
+          }
+          repliesCommentNodes.append(replyCommentNode)
+        }
+      }
+    default:
+      return
+    }
     setNeedsLayout()
   }
   
