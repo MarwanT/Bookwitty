@@ -125,7 +125,7 @@ class CommentTreeNode: ASCellNode {
     repliesCommentNodes.removeAll()
     switch mode {
     case .normal:
-      if let repliesComments = comment?.replies {
+      if let repliesComments = comment?.replies?.prefix(configuration.maximumRepliesDisplayed) {
         for replyComment in repliesComments {
           let replyCommentNode = CommentNode()
           replyCommentNode.mode = .reply
