@@ -501,10 +501,18 @@ extension RootTabBarController: MisfortuneNodeDelegate {
 
 extension RootTabBarController: UITabBarControllerDelegate {
   
+  func isUserSignedIn() -> Bool {
+    return UserManager.shared.isSignedIn
+  }
+  
   func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {    
     if viewController is EmptyNavigationViewController {
-      let post: CandidatePost = Text()
-      self.presentContentEditor(with: post)
+      if self.isUserSignedIn() {
+        let post: CandidatePost = Text()
+        self.presentContentEditor(with: post)
+      } else {
+        self.showAlertWith(title: "Action Needed", message: "You must be signed in to create content.")
+      }
       return false
     }
     return true
