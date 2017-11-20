@@ -279,11 +279,12 @@ class ContentEditorViewController: UIViewController {
     return items
   }
   
-  func set(option:ContentEditorOption, selected: Bool) {
+  func set(option:ContentEditorOption, selected: Bool, isEnabled: Bool = true) {
     guard let item = self.toolbarButtons[option] else { return }
     item.isSelected = selected
-    let tint: UIColor = selected ? ThemeManager.shared.currentTheme.colorNumber19() : ThemeManager.shared.currentTheme.colorNumber15()
+    let tint: UIColor = isEnabled ? (selected ? ThemeManager.shared.currentTheme.colorNumber19() : ThemeManager.shared.currentTheme.colorNumber20()) : ThemeManager.shared.currentTheme.defaultGrayedTextColor()
     item.tintColor = tint
+    item.isUserInteractionEnabled = isEnabled
   }
   
   // MARK: - UI Refresh
@@ -623,7 +624,7 @@ extension ContentEditorViewController: RichEditorDelegate {
       self.set(option: .header, selected: editingItems.contains("h2"))
       self.set(option: .bold, selected: editingItems.contains("bold"))
       self.set(option: .italic, selected: editingItems.contains("italic"))
-      self.set(option: .link, selected: editingItems.contains("link"))
+      self.set(option: .link, selected: editingItems.contains("link"), isEnabled: editingItems.contains("isRange"))
       self.set(option: .unorderedList, selected: editingItems.contains("unorderedList"))
     }
   }
