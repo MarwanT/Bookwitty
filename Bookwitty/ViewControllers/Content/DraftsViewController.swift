@@ -47,6 +47,7 @@ class DraftsViewController: ASViewController<ASTableNode> {
     loadDrafts()
 
     tableNode.view.addSubview(refreshController)
+    refreshController.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
   }
 
   fileprivate func initializeComponents() {
