@@ -69,19 +69,25 @@ class CommentTreeNode: ASCellNode {
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     var elements: [ASLayoutElement] = []
-    elements.append(commentNode)
+    let parentCommentInsets = ASInsetLayoutSpec(
+      insets: configuration.internalInsets, child: commentNode)
+    elements.append(parentCommentInsets)
     
     switch mode {
     case .normal:
       if !isReply, hasReplies {
         for replyCommentNode in repliesCommentNodes {
           elements.append(separator())
-          elements.append(replyCommentNode)
+          let replyCommentInsets = ASInsetLayoutSpec(
+            insets: configuration.replyCommentIndentation, child: replyCommentNode)
+          elements.append(replyCommentInsets)
         }
         
         if hasAdditionalReplies {
           elements.append(separator())
-          elements.append(viewRepliesDisclosureNode)
+          let disclosureNodeInsets = ASInsetLayoutSpec(
+            insets: configuration.disclosureNodeInsets, child: viewRepliesDisclosureNode)
+          elements.append(disclosureNodeInsets)
         }
       }
     case .parentOnly, .minimal:
@@ -94,8 +100,18 @@ class CommentTreeNode: ASCellNode {
       justifyContent: .start,
       alignItems: .stretch,
       children: elements)
-    return treeStack
+    
+    // Add Top Separator
+    let finalLayout = ASStackLayoutSpec(
+      direction: .vertical,
+      spacing: 0,
+      justifyContent: .start,
+      alignItems: .stretch,
+      children: [separator(), treeStack])
+    return finalLayout
   }
+  
+  
   
   override func layoutDidFinish() {
     super.layoutDidFinish()
@@ -210,13 +226,21 @@ extension CommentTreeNode {
 // MARK: - Configuration
 extension CommentTreeNode {
   struct Configuration {
-    fileprivate let indentationMargin = CommentNode.Configuration().indentationMargin
+    fileprivate let replyCommentIndentation = UIEdgeInsets(
+      top: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      left: CommentNode.Configuration().imageReservedHorizontalSpace
+        + ThemeManager.shared.currentTheme.generalExternalMargin(),
+      bottom: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      right: ThemeManager.shared.currentTheme.generalExternalMargin())
     var leftIndentToParentNode: Bool = false
-    var externalInsets = UIEdgeInsets(
-      top: ThemeManager.shared.currentTheme.generalExternalMargin() / 2,
+    var internalInsets = UIEdgeInsets(
+      top: ThemeManager.shared.currentTheme.generalExternalMargin(),
       left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: ThemeManager.shared.currentTheme.generalExternalMargin(),
       right: ThemeManager.shared.currentTheme.generalExternalMargin())
+    var disclosureNodeInsets = UIEdgeInsets(
+      top: 0, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      bottom: 0, right: ThemeManager.shared.currentTheme.generalExternalMargin())
     var highlightColor = ThemeManager.shared.currentTheme.colorNumber5()
     var defaultColor = UIColor.white
     var maximumRepliesDisplayed = 10

@@ -65,13 +65,7 @@ class CommentNode: ASCellNode {
     infoStackElements.append(headerSpec)
     
     // layout the body elements: Comment Message, Action Buttons
-    let actionBarTopSeparatorInsetSpec = ASInsetLayoutSpec(insets: configuration.separatorInsets, child: separator())
-    var bodyStackElements: [ASLayoutElement] = [messageNode, actionBarTopSeparatorInsetSpec]
-    if !configuration.hideBottomActionBarSeparator {
-      bodyStackElements.append(separator())
-    }
-    let bodySpec = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: bodyStackElements)
-    let bodyInsetSpec = ASInsetLayoutSpec(insets: bodyInsets, child: bodySpec)
+    let bodyInsetSpec = ASInsetLayoutSpec(insets: bodyInsets, child: messageNode)
     infoStackElements.append(bodyInsetSpec)
     
     let infoStackSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: infoStackElements)
@@ -83,7 +77,7 @@ class CommentNode: ASCellNode {
     let bodyLeftMargin: CGFloat
     switch mode {
     case .normal:
-      bodyLeftMargin = configuration.indentationMargin
+      bodyLeftMargin = configuration.imageReservedHorizontalSpace
     default:
       bodyLeftMargin = 0
     }
@@ -148,11 +142,9 @@ extension CommentNode {
     var imageBorderWidth: CGFloat = 0.0
     var imageBorderColor: UIColor? = nil
     var imageNodeInsets = UIEdgeInsetsMake(0, 0, 0, Configuration.subnodesSpace)
-    var separatorInsets = UIEdgeInsetsMake(10, 0, 0, 0)
     var bodyInsetTop: CGFloat = Configuration.subnodesSpace - 5
     var titleDateVerticalSpace: CGFloat = 5
-    var hideBottomActionBarSeparator = false
-    var indentationMargin: CGFloat {
+    var imageReservedHorizontalSpace: CGFloat {
       return imageSize.width + imageNodeInsets.right + imageNodeInsets.left
     }
   }
