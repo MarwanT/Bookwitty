@@ -168,11 +168,12 @@ class ContentEditorViewController: UIViewController {
     }
   }
   
-  func showAddLinkAlertView() {
+  func showAddLinkAlertView(with link:String?) {
     
     let alertController = UIAlertController(title: Strings.addLink(), message: "", preferredStyle: .alert)
     alertController.addTextField(configurationHandler: {(_ textField: UITextField) -> Void in
       textField.placeholder = "http://"
+      textField.text = link
     })
     
     let confirmAction = UIAlertAction(title: Strings.ok(), style: .default, handler: {(_ action: UIAlertAction) -> Void in
@@ -247,7 +248,12 @@ class ContentEditorViewController: UIViewController {
     case .unorderedList:
       self.editorView.unorderedList()
     case .link:
-        self.showAddLinkAlertView()
+      if isSelected {
+        let previousLink = self.editorView.selectedHref()
+        self.showAddLinkAlertView(with: previousLink)
+      } else {
+        self.showAddLinkAlertView(with: nil)
+      }
     case .undo, .redo :
       break
     }
@@ -273,11 +279,12 @@ class ContentEditorViewController: UIViewController {
     return items
   }
   
-  func set(option:ContentEditorOption, selected: Bool) {
+  func set(option:ContentEditorOption, selected: Bool, isEnabled: Bool = true) {
     guard let item = self.toolbarButtons[option] else { return }
     item.isSelected = selected
-    let tint: UIColor = selected ? ThemeManager.shared.currentTheme.colorNumber19() : ThemeManager.shared.currentTheme.colorNumber15()
+    let tint: UIColor = isEnabled ? (selected ? ThemeManager.shared.currentTheme.colorNumber19() : ThemeManager.shared.currentTheme.colorNumber20()) : ThemeManager.shared.currentTheme.defaultGrayedTextColor()
     item.tintColor = tint
+    item.isUserInteractionEnabled = isEnabled
   }
   
   // MARK: - UI Refresh
@@ -358,7 +365,7 @@ class ContentEditorViewController: UIViewController {
 extension ContentEditorViewController: RichEditorToolbarDelegate {
   
   func richEditorToolbarInsertLink(_ toolbar: RichEditorToolbar) {
-    self.showAddLinkAlertView()
+    self.showAddLinkAlertView(with: nil)
   }
 }
 
@@ -593,6 +600,8 @@ extension ContentEditorViewController: PenNameViewControllerDelegate {
 //MARK: - RichEditorDelegate implementation
 extension ContentEditorViewController: RichEditorDelegate {
   func richEditor(_ editor: RichEditorView, contentDidChange content: String) {
+  
+    self.viewModel.currentPost.body = editor.getContent()
   }
   
   func richEditorDidLoad(_ editor: RichEditorView) {
@@ -615,7 +624,7 @@ extension ContentEditorViewController: RichEditorDelegate {
       self.set(option: .header, selected: editingItems.contains("h2"))
       self.set(option: .bold, selected: editingItems.contains("bold"))
       self.set(option: .italic, selected: editingItems.contains("italic"))
-      self.set(option: .link, selected: editingItems.contains("link"))
+      self.set(option: .link, selected: editingItems.contains("link"), isEnabled: editingItems.contains("isRange"))
       self.set(option: .unorderedList, selected: editingItems.contains("unorderedList"))
     }
   }

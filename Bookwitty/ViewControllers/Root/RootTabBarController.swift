@@ -501,8 +501,17 @@ extension RootTabBarController: MisfortuneNodeDelegate {
 
 extension RootTabBarController: UITabBarControllerDelegate {
   
+  func isUserSignedIn() -> Bool {
+    return UserManager.shared.isSignedIn
+  }
+  
   func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {    
     if viewController is EmptyNavigationViewController {
+      guard UserManager.shared.isSignedIn else {
+        //If user is not signed In post notification and do not fall through
+        NotificationCenter.default.post( name: AppNotification.callToAction, object: nil)
+        return false
+      }
       let post: CandidatePost = Text()
       self.presentContentEditor(with: post)
       return false

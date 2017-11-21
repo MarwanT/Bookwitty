@@ -56,13 +56,28 @@ extension RichEditorView {
   func enabledCommands() -> [String] {
     return runJS("RE.enabledCommands()").components(separatedBy: ",")
   }
+  
+  func setContent(html: String?) {
+    let functionName = "RE.setContent"
+    let parameters = [html]
+  
+    callJavascript(with: functionName, and: parameters)
+  }
+  
+  func getContent() -> String {
+    return runJS("RE.getContent();")
+  }
+  
+  func selectedHref() -> String {
+    return runJS("RE.getSelectedHref()")
+  }
 }
 
 extension RichEditorView {
   /// Sanitize JS Call
   func callJavascript(with functionName:String, and parameters:[String?]) {
     //Here we are checking for nil in order to preserve the parameters original order
-    let sanitizedParameters = parameters.map { $0 == nil ? "" : $0! }.map{ $0.trimmed }
+    let sanitizedParameters = parameters.map { $0 == nil ? "" : $0! }.map{ $0.trimmed }.map { $0.base64Encoded ?? "" }
     let sanitizedJoinedParameters = sanitizedParameters.joined(separator: "\',\'")
     
     var javaScriptString = functionName + "("

@@ -44,7 +44,9 @@ class ContentEditorViewModel  {
   
   fileprivate func createContent() {
     self.resetPreviousRequest()
-    self.currentRequest = PublishAPI.createContent(title: self.currentPost.title, body: self.currentPost.body) { (success, candidatePost, error) in
+    //WORKAROUND: the API doesn't create a content unless we send a title
+    let contentTile = self.currentPost.title.isEmptyOrNil() ? "Untitled" : self.currentPost.title
+    self.currentRequest = PublishAPI.createContent(title: contentTile, body: self.currentPost.body) { (success, candidatePost, error) in
       defer { self.currentRequest = nil }
       
       guard success, let candidatePost = candidatePost else {
