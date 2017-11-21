@@ -168,7 +168,19 @@ class TopicViewController: ASViewController<ASDisplayNode> {
     }
     
     func setupRightNavigationItem(with action: PageAction) {
-      let title = action == .link ? Strings.link_topic() : Strings.unlink_topic()
+
+      var title: String = ""
+      if let resourceType = viewModel.resourceType {
+        switch resourceType {
+        case Topic.resourceType:
+          title = action == .link ? Strings.link_topic() : Strings.unlink_topic()
+        case Author.resourceType:
+          title = action == .link ? Strings.link_author() : Strings.unlink_author()
+        case Book.resourceType: fallthrough
+        default: break
+        }
+      }
+
       let actionButton = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(TopicViewController.linkUnlinkTouchUpInside(_ :)))
       navigationController?.navigationBar.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
       actionButton.setTitleTextAttributes([
