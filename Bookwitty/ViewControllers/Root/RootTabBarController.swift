@@ -507,12 +507,13 @@ extension RootTabBarController: UITabBarControllerDelegate {
   
   func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {    
     if viewController is EmptyNavigationViewController {
-      if self.isUserSignedIn() {
-        let post: CandidatePost = Text()
-        self.presentContentEditor(with: post)
-      } else {
-        self.showAlertWith(title: "Action Needed", message: "You must be signed in to create content.")
+      guard UserManager.shared.isSignedIn else {
+        //If user is not signed In post notification and do not fall through
+        NotificationCenter.default.post( name: AppNotification.callToAction, object: nil)
+        return false
       }
+      let post: CandidatePost = Text()
+      self.presentContentEditor(with: post)
       return false
     }
     return true
