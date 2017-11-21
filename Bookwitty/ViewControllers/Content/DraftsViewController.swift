@@ -115,6 +115,27 @@ extension DraftsViewController: Themeable {
   }
 }
 
+//MARK: -
+extension DraftsViewController {
+  @objc
+  fileprivate func pullToRefresh() {
+    guard refreshController.isRefreshing else {
+      //Making sure that only UIRefreshControl will trigger this on valueChanged
+      return
+    }
+
+    guard loadingStatus == .none else {
+      refreshController.endRefreshing()
+      //Making sure that only UIRefreshControl will trigger this on valueChanged
+      return
+    }
+
+    self.loadingStatus = .reloading
+    self.refreshController.beginRefreshing()
+    loadDrafts()
+  }
+}
+
 extension DraftsViewController: ASTableDataSource, ASTableDelegate {
   func numberOfSections(in tableNode: ASTableNode) -> Int {
     return Section.count
