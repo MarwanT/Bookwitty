@@ -76,6 +76,10 @@ class DraftsViewController: ASViewController<ASTableNode> {
     viewModel.loadDrafts { (success: Bool, error: BookwittyAPIError?) in
       self.loadingStatus = .none
       self.tableNode.reloadData()
+
+      if self.refreshController.isRefreshing {
+        self.refreshController.endRefreshing()
+      }
     }
   }
 }
