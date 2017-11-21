@@ -13,9 +13,12 @@ import Moya
 import GSImageViewerController
 import SwiftLoader
 
-class PostDetailsViewController: ASViewController<PostDetailsNode> {
+class PostDetailsViewController: ASViewController<ASDisplayNode> {
+  let controllerNode: ASDisplayNode
   let postDetailsNode: PostDetailsNode
   var viewModel: PostDetailsViewModel
+
+  fileprivate let actionBarNode: ActionBarNode
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -24,7 +27,18 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
   init(title: String? = nil, resource: Resource) {
     viewModel = PostDetailsViewModel(resource: resource)
     postDetailsNode = PostDetailsNode()
-    super.init(node: postDetailsNode)    
+    actionBarNode = ActionBarNode()
+
+    controllerNode = ASDisplayNode()
+    super.init(node: controllerNode)
+    controllerNode.automaticallyManagesSubnodes = true
+    
+    controllerNode.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
+      let wrapperLayoutSpec = ASWrapperLayoutSpec(layoutElement: self.postDetailsNode)
+      let absoluteLayoutSpec = ASAbsoluteLayoutSpec(sizing: .default, children: [self.actionBarNode])
+      let overlayLayoutSpec = ASOverlayLayoutSpec(child: wrapperLayoutSpec, overlay: absoluteLayoutSpec)
+      return overlayLayoutSpec
+    }
   }
 
   override func viewDidLoad() {
@@ -74,19 +88,44 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
     postDetailsNode.coverImage = viewModel.image
     postDetailsNode.body = viewModel.body
 
+    postDetailsNode.view.delegate = self
+
     let date = viewModel.date?.formatted() ?? ""
     postDetailsNode.date = date
     postDetailsNode.penName = viewModel.penName
     postDetailsNode.actionInfoValue = viewModel.actionInfoValue
     postDetailsNode.conculsion = viewModel.conculsion
     postDetailsNode.headerNode.profileBarNode.updateMode(disabled: viewModel.isMyPenName())
-    postDetailsNode.setWitValue(witted: viewModel.isWitted)
 
     postDetailsNode.tags = viewModel.tags
 
     //The action bar should not show the comment button
     //This VC contains a comment section at the bottom
-    postDetailsNode.headerNode.actionBarNode.hideCommentButton = true
+
+    var insets = UIEdgeInsets.zero
+    insets.bottom = actionBarNode.calculatedSize.height
+    postDetailsNode.view.contentInset = insets
+    postDetailsNode.view.scrollIndicatorInsets = insets
+
+    var position = actionBarNode.style.layoutPosition
+    position.y = postDetailsNode.calculatedSize.height - 50.0
+    actionBarNode.style.layoutPosition = position
+
+    actionBarNode.action = .wit
+    if let wits = viewModel.wits, wits > 0 {
+      actionBarNode.actionLabelText = String(describing: wits)
+    } else {
+      actionBarNode.actionLabelText = nil
+    }
+
+    if let comments = viewModel.comments, comments > 0 {
+      actionBarNode.secondaryLabelText = String(describing: comments)
+    } else {
+      actionBarNode.secondaryLabelText = nil
+    }
+
+    actionBarNode.actionButtonSelected = viewModel.isWitted
+    actionBarNode.delegate = self
   }
 
   fileprivate func addDelegatesAndDataSources() {
@@ -237,6 +276,24 @@ extension PostDetailsViewController: ASCollectionDataSource, ASCollectionDelegat
       return
     }
     pushBookDetailsViewController(with: book)
+  }
+}
+
+extension PostDetailsViewController {
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    var position = actionBarNode.style.layoutPosition
+    let actionBarHeight = actionBarNode.configuration.height
+
+    var deltaHeight = scrollView.contentSize.height - scrollView.frame.size.height //the remaining part of the scroll area
+    deltaHeight = deltaHeight < postDetailsNode.headerNode.calculatedSize.height ? deltaHeight : 0 //only consider it if it's positive
+    let scrollContentWithoutHeaderHeight = scrollView.contentSize.height - postDetailsNode.headerNode.calculatedSize.height - deltaHeight
+
+    let initialOffset = min(postDetailsNode.headerNode.calculatedSize.height, scrollContentWithoutHeaderHeight)
+    let value = scrollView.contentOffset.y >= initialOffset ? actionBarHeight : 0
+
+    position.y = scrollView.frame.size.height - value
+    actionBarNode.style.layoutPosition = position
+    controllerNode.transitionLayout(withAnimation: true, shouldMeasureAsync: false, measurementCompletion: nil)
   }
 }
 
@@ -1214,5 +1271,82 @@ extension PostDetailsViewController: CommentComposerViewControllerDelegate {
     if success {
       self.dismiss(animated: true, completion: nil)
     }
+  }
+}
+
+//MARK: - ActionBarNodeDelegate implementation
+extension PostDetailsViewController: ActionBarNodeDelegate {
+  func actionBar(node: ActionBarNode, actionButtonTouchUpInside button: ButtonWithLoader) {
+    let cardAction: CardActionBarNode.Action
+
+    button.state = .loading
+    if button.isSelected {
+      viewModel.unwitPost(completionBlock: { (success) in
+        node.actionButtonSelected = success ? false : true
+      })
+
+      cardAction = .unwit
+    } else {
+      viewModel.witPost(completionBlock: { (success) in
+        node.actionButtonSelected = success ? true : false
+      })
+
+      cardAction = .wit
+    }
+
+    //MARK: [Analytics] Event
+    let resource = viewModel.resource
+    let category: Analytics.Category
+    var name: String = (resource as? ModelCommonProperties)?.title ?? ""
+    switch resource.registeredResourceType {
+    case Image.resourceType:
+      category = .Image
+    case Quote.resourceType:
+      category = .Quote
+    case Video.resourceType:
+      category = .Video
+    case Audio.resourceType:
+      category = .Audio
+    case Link.resourceType:
+      category = .Link
+    case Author.resourceType:
+      category = .Author
+      name = (resource as? Author)?.name ?? ""
+    case ReadingList.resourceType:
+      category = .ReadingList
+    case Topic.resourceType:
+      category = .Topic
+    case Text.resourceType:
+      category = .Text
+    case Book.resourceType:
+      category = .TopicBook
+    case PenName.resourceType:
+      category = .PenName
+      name = (resource as? PenName)?.name ?? ""
+    default:
+      category = .Default
+    }
+
+    let analyticsAction = Analytics.Action.actionFrom(cardAction: cardAction, with: category)
+    let event: Analytics.Event = Analytics.Event(category: category,
+                                                 action: analyticsAction,
+                                                 name: name)
+    Analytics.shared.send(event: event)
+  }
+
+  func actionBar(node: ActionBarNode, secondaryButtonTouchUpInside button: ASButtonNode) {
+    guard let commentsManager = postDetailsNode.commentNodeManagerClone else {
+      return
+    }
+
+    pushCommentsViewController(with: commentsManager)
+  }
+
+  func actionBar(node: ActionBarNode, moreButtonTouchUpInside button: ASButtonNode){
+    guard let resource = viewModel.resource as? ModelCommonProperties,
+      let identifier = resource.id else { return }
+
+    let actions: [MoreAction] = MoreAction.actions(for: resource)
+    self.showMoreActionSheet(identifier: identifier, actions: actions, completion: {_ in})
   }
 }

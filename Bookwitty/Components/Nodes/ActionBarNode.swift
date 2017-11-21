@@ -10,7 +10,7 @@ import AsyncDisplayKit
 
 protocol ActionBarNodeDelegate: class {
   func actionBar(node: ActionBarNode, actionButtonTouchUpInside button: ButtonWithLoader)
-  func actionBar(node: ActionBarNode, editButtonTouchUpInside button: ASButtonNode)
+  func actionBar(node: ActionBarNode, secondaryButtonTouchUpInside button: ASButtonNode)
   func actionBar(node: ActionBarNode, moreButtonTouchUpInside button: ASButtonNode)
 }
 
@@ -21,8 +21,34 @@ class ActionBarNode: ASCellNode {
   }
 
   let actionButton = ButtonWithLoader()
-  let editButton = ASButtonNode()
+  let actionLabel = ASTextNode()
+  let secondaryButton = ASButtonNode()
+  let secondaryLabel = ASTextNode()
   let moreButton = ASButtonNode()
+
+  var actionLabelText: String? {
+    didSet {
+      if let actionLabelText = actionLabelText {
+        actionLabel.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1)
+          .append(text: actionLabelText, color: ThemeManager.shared.currentTheme.defaultButtonColor()).attributedString
+      } else {
+        actionLabel.attributedText = nil
+      }
+      setNeedsLayout()
+    }
+  }
+
+  var secondaryLabelText: String? {
+    didSet {
+      if let actionLabelText = actionLabelText {
+        secondaryLabel.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1)
+          .append(text: actionLabelText, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+      } else {
+        secondaryLabel.attributedText = nil
+      }
+      setNeedsLayout()
+    }
+  }
 
   var configuration = Configuration() {
     didSet {
@@ -33,6 +59,7 @@ class ActionBarNode: ASCellNode {
   var action: Action = .follow {
     didSet {
       self.styleActionButton()
+      self.styleSecondaryButton()
     }
   }
 
@@ -56,11 +83,18 @@ class ActionBarNode: ASCellNode {
 
     let imageTintColor: UIColor = ThemeManager.shared.currentTheme.colorNumber15()
 
-    editButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
-    editButton.setImage(#imageLiteral(resourceName: "threeDots"), for: .normal)
-    editButton.style.preferredSize = configuration.iconSize
+    actionLabel.style.maxWidth = ASDimensionMake(configuration.labelWidth)
+    actionLabel.maximumNumberOfLines = 1
+    actionLabel.truncationMode = NSLineBreakMode.byTruncatingTail
 
-    editButton.addTarget(self, action: #selector(self.editButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    secondaryButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
+    secondaryButton.style.preferredSize = configuration.iconSize
+
+    secondaryButton.addTarget(self, action: #selector(self.editButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
+
+    secondaryLabel.style.maxWidth = ASDimensionMake(configuration.labelWidth)
+    secondaryLabel.maximumNumberOfLines = 1
+    secondaryLabel.truncationMode = NSLineBreakMode.byTruncatingTail
 
     moreButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
     moreButton.setImage(#imageLiteral(resourceName: "threeDots"), for: .normal)
@@ -72,12 +106,20 @@ class ActionBarNode: ASCellNode {
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    let leftNodes: [ASLayoutElement] = [actionButton]
-    let leftStackLayoutSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0.0, justifyContent: .start, alignItems: .stretch, children: leftNodes)
+    var leftNodes: [ASLayoutElement] = [actionButton]
+    if actionLabelText?.characters.count ?? 0 > 0 {
+      leftNodes.append(actionLabel)
+    }
+    let leftStackLayoutSpec = ASStackLayoutSpec(direction: .horizontal, spacing: configuration.internalSpacing, justifyContent: .start, alignItems: .center, children: leftNodes)
     leftStackLayoutSpec.style.flexGrow = 1.0
 
-    let rightNodes: [ASLayoutElement] = [editButton, moreButton]
-    let rightStackLayoutSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0.0, justifyContent: .end, alignItems: .stretch, children: rightNodes)
+    var rightNodes: [ASLayoutElement] = []
+    rightNodes.append(secondaryButton)
+    if secondaryLabelText?.characters.count ?? 0 > 0 {
+      rightNodes.append(secondaryLabel)
+    }
+    rightNodes.append(moreButton)
+    let rightStackLayoutSpec = ASStackLayoutSpec(direction: .horizontal, spacing: configuration.internalSpacing, justifyContent: .end, alignItems: .center, children: rightNodes)
     rightStackLayoutSpec.style.flexGrow = 1.0
 
     let toolbarNodes: [ASLayoutElement] = [leftStackLayoutSpec, rightStackLayoutSpec]
@@ -99,6 +141,7 @@ extension ActionBarNode: Themeable {
   func applyTheme() {
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     self.styleActionButton()
+    self.styleSecondaryButton()
   }
 
   fileprivate func styleActionButton() {
@@ -125,12 +168,21 @@ extension ActionBarNode: Themeable {
       actionButton.setTitle(title: Strings.witted(), with: buttonFont, with: backgroundColor, for: .selected)
     }
   }
+
+  fileprivate func styleSecondaryButton() {
+    switch action {
+    case .follow:
+      secondaryButton.setImage(#imageLiteral(resourceName: "pen"), for: .normal)
+    case .wit:
+      secondaryButton.setImage(#imageLiteral(resourceName: "comment"), for: .normal)
+    }
+  }
 }
 
 //MARK: - Actions
 extension ActionBarNode {
   @objc fileprivate func editButtonTouchUpInside(_ sender: ASButtonNode) {
-    delegate?.actionBar(node: self, editButtonTouchUpInside: sender)
+    delegate?.actionBar(node: self, secondaryButtonTouchUpInside: sender)
   }
 
   @objc fileprivate func moreButtonTouchUpInside(_ sender: ASButtonNode) {
@@ -170,6 +222,7 @@ extension ActionBarNode {
     }
 
     var height: CGFloat = 50.0
+    var labelWidth: CGFloat = 60.0
     var buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
     var iconSize: CGSize = CGSize(width: 40.0, height: 40.0)
   }
