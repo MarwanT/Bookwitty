@@ -21,7 +21,6 @@ class Author: Resource {
   var biography: String?
   var shortDescription: String?
   var profileImageUrl: String?
-  var title: String?
   var type: String?
   var penName: PenName?
   var vote: String?
@@ -67,7 +66,6 @@ class Author: Resource {
       "counts" : CountsAttribute().serializeAs("counts"),
       "shortDescription": Attribute().serializeAs("short-description"),
       "profileImageUrl": Attribute().serializeAs("profile-image-url"),
-      "title": Attribute().serializeAs("title"),
       "followingNumber": Attribute().serializeAs("following"),
       "type": Attribute().serializeAs("type"),
       "contributorsCollection" : ToManyRelationship(PenName.self).serializeAs("contributors"),
