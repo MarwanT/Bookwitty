@@ -20,12 +20,15 @@ class DraftsViewController: ASViewController<ASTableNode> {
   fileprivate let loaderNode: LoaderNode
   fileprivate var loadingStatus: LoadingStatus = .none
 
+  fileprivate let refreshController: UIRefreshControl
+
   let viewModel = DraftsViewModel()
 
   weak var delegate: DraftsViewControllerDelegate? = nil
 
   init() {
     loaderNode = LoaderNode()
+    refreshController = UIRefreshControl()
 
     tableNode = ASTableNode()
     super.init(node: tableNode)
@@ -42,6 +45,8 @@ class DraftsViewController: ASViewController<ASTableNode> {
     setupNavigationBarButtons()
     applyTheme()
     loadDrafts()
+
+    tableNode.view.addSubview(refreshController)
   }
 
   fileprivate func initializeComponents() {
