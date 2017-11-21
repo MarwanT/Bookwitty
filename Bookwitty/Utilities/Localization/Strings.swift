@@ -249,6 +249,10 @@ class Strings {
     return localizedString(key: "delete_post_confirmation_message")
   }
 
+  static func delete_post_success_message() -> String {
+    return localizedString(key: "delete_post_success_message")
+  }
+
   static func discover() -> String {
     return localizedString(key: "discover")
   }
@@ -951,6 +955,10 @@ class Strings {
   
   static func tutorial_third_page_title() -> String {
     return localizedString(key: "tutorial_third_page_title")
+  }
+
+  static func its_done() -> String {
+    return localizedString(key: "its_done")
   }
 
   static func types() -> String {

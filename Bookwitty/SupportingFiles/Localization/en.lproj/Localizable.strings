@@ -66,6 +66,7 @@
 "customize_your_posts_card" = "Customize your post's card.";
 "delete" = "Delete";
 "delete_post_confirmation_message" = "Are you sure you want to delete this post ?";
+"delete_post_success_message" = "Your post has been deleted";
 "discover" = "Discover";
 "discover_banner_message" = "Check back here anytime to find the best stories from the community.";
 "dismiss" = "Dismiss";
@@ -242,6 +243,7 @@
 "tutorial_second_page_title" = "Discover Ideas & People";
 "tutorial_third_page_description" = "Everyone has knowledge, expertise or a topic they are passionate about.\nWrite about it.";
 "tutorial_third_page_title" = "Share Your Own Ideas";
+"its_done" = "It's Done";
 "types" = "Types";
 "unknown_format" = "Unknown format";
 "unlink_author" = "Unlink Author";

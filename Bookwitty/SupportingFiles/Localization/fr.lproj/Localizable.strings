@@ -66,6 +66,7 @@
 "customize_your_posts_card" = "Customize your post's card.";
 "delete" = "Supprimer";
 "delete_post_confirmation_message" = "Êtes-vous sur de vouloir supprimer cette publication ?";
+"delete_post_success_message" = "Votre publication a été supprimée";
 "discover" = "Découvrir";
 "discover_banner_message" = "Chaque jour, retrouvez ici les meilleurs articles de la communauté Bookwitty";
 "dismiss" = "Dismiss";
@@ -242,6 +243,7 @@
 "tutorial_second_page_title" = "Faites des découvertes";
 "tutorial_third_page_description" = "Nous sommes tous experts des sujets qui nous passionnent. Partagez votre savoir.";
 "tutorial_third_page_title" = "Partagez vos idées";
+"its_done" = "C'est fait";
 "types" = "Types";
 "unknown_format" = "Format de produit inconnu";
 "unlink_author" = "Unlink Author";
