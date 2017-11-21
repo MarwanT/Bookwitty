@@ -275,9 +275,7 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
         commentTreeNode.initialize(with: self.displayMode == .compact ? .minimal : .normal)
         commentTreeNode.delegate = self
         commentTreeNode.comment = comment
-        var configuration = CommentTreeNode.Configuration()
-        configuration.leftIndentToParentNode = self.viewModel.isDisplayingACommentReplies
-        commentTreeNode.configuration = configuration
+        commentTreeNode.isReplyTree = self.viewModel.isDisplayingACommentReplies
         return commentTreeNode
       case Section.activityIndicator.rawValue:
         return self.loaderNode

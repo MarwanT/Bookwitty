@@ -26,6 +26,15 @@ class CommentTreeNode: ASCellNode {
     }
   }
   
+  var isReplyTree: Bool {
+    get {
+      return configuration.isReplyTree
+    }
+    set {
+      configuration.isReplyTree = newValue
+    }
+  }
+  
   weak var delegate: CommentTreeNodeDelegate?
   
   //MARK: LIFE CYCLE
@@ -69,8 +78,14 @@ class CommentTreeNode: ASCellNode {
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     var elements: [ASLayoutElement] = []
-    let parentCommentInsets = ASInsetLayoutSpec(
-      insets: configuration.internalInsets, child: commentNode)
+    let parentCommentInsets: ASInsetLayoutSpec
+    if isReplyTree {
+      parentCommentInsets = ASInsetLayoutSpec(
+        insets: configuration.replyCommentIndentation, child: commentNode)
+    } else {
+      parentCommentInsets = ASInsetLayoutSpec(
+        insets: configuration.internalInsets, child: commentNode)
+    }
     elements.append(parentCommentInsets)
     
     switch mode {
@@ -232,7 +247,6 @@ extension CommentTreeNode {
         + ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: ThemeManager.shared.currentTheme.generalExternalMargin(),
       right: ThemeManager.shared.currentTheme.generalExternalMargin())
-    var leftIndentToParentNode: Bool = false
     var internalInsets = UIEdgeInsets(
       top: ThemeManager.shared.currentTheme.generalExternalMargin(),
       left: ThemeManager.shared.currentTheme.generalExternalMargin(),
@@ -242,6 +256,7 @@ extension CommentTreeNode {
       top: 0, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: 0, right: ThemeManager.shared.currentTheme.generalExternalMargin())
     var highlightColor = ThemeManager.shared.currentTheme.colorNumber5()
+    var isReplyTree: Bool = false
     var defaultColor = UIColor.white
     var maximumRepliesDisplayed = 10
   }
