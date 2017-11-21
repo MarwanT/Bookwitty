@@ -65,6 +65,7 @@
 "customer_service" = "Customer Service";
 "customize_your_posts_card" = "Customize your post's card.";
 "delete" = "Delete";
+"delete_post_confirmation_message" = "Are you sure you want to delete this post ?";
 "discover" = "Discover";
 "discover_banner_message" = "Check back here anytime to find the best stories from the community.";
 "dismiss" = "Dismiss";

@@ -65,6 +65,7 @@
 "customer_service" = "Service client";
 "customize_your_posts_card" = "Customize your post's card.";
 "delete" = "Supprimer";
+"delete_post_confirmation_message" = "Êtes-vous sur de vouloir supprimer cette publication ?";
 "discover" = "Découvrir";
 "discover_banner_message" = "Chaque jour, retrouvez ici les meilleurs articles de la communauté Bookwitty";
 "dismiss" = "Dismiss";
