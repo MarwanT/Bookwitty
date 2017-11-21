@@ -72,8 +72,8 @@ public enum BookwittyAPI {
   case replaceTags(contentIdentifier: String, tags: [String]?, status: PublishAPI.PublishStatus?)
   case linkTag(contentIdentifier: String, tagIdentifier: String)
   case removeTag(contentIdentifier: String, tagIdentifier: String)
-  case linkContent(contentIdentifier: String, topicIdentifier: String)
-  case unlinkContent(contentIdentifier: String, topicIdentifier: String)
+  case linkContent(contentIdentifier: String, pageIdentifier: String)
+  case unlinkContent(contentIdentifier: String, pageIdentifier: String)
 }
 
 // MARK: - Target Type
@@ -279,10 +279,10 @@ extension BookwittyAPI: TargetType {
         "refresh_token": refreshToken,
         "grant_type": "refresh_token"
       ]
-    case .unlinkContent(_, let topicIdentifier):
-      return ContentAPI.unlinkContentParameters(topicIdentifier)
-    case .linkContent(_, let topicIdentifier):
-      return ContentAPI.linkContentParameters(topicIdentifier)
+    case .unlinkContent(_, let pageIdentifier):
+      return ContentAPI.unlinkContentParameters(pageIdentifier)
+    case .linkContent(_, let pageIdentifier):
+      return ContentAPI.linkContentParameters(pageIdentifier)
     case .replaceTags(_ , let tags, let status):
       return TagAPI.replaceTagsParameters(tags: tags, status: status)
     case .removeTag(_, let tagIdentifier):

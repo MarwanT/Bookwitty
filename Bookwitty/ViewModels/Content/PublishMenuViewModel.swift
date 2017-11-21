@@ -10,20 +10,20 @@ import UIKit
 
 class PublishMenuViewModel {
   private var linkedTags: [Tag] = []
-  private var linkedTopics: [Topic] = []
+  private var linkedPages: [ModelCommonProperties] = []
   private(set) var contentIdentifier: String!
   
   var getTags: [Tag] {
     return self.linkedTags
   }
   
-  var getTopics: [Topic] {
-    return self.linkedTopics
+  var getTopics: [ModelCommonProperties] {
+    return self.linkedPages
   }
   
-  func initialize(with linkedTags: [Tag], linkedTopics: [Topic]) {
+  func initialize(with linkedTags: [Tag], linkedPages: [ModelCommonProperties]) {
     self.linkedTags = linkedTags
-    self.linkedTopics = linkedTopics
+    self.linkedPages = linkedPages
   }
   
   var penName: PenName? = UserManager.shared.defaultPenName

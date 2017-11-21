@@ -521,6 +521,10 @@ class Strings {
     return localizedString(key: "link")
   }
   
+  static func link_author() -> String {
+    return localizedString(key: "link_author")
+  }
+
   static func link_topic() -> String {
     return localizedString(key: "link_topic")
   }
@@ -951,6 +955,10 @@ class Strings {
   
   static func unknown_format() -> String {
     return localizedString(key: "unknown_format")
+  }
+
+  static func unlink_author() -> String {
+    return localizedString(key: "unlink_author")
   }
 
   static func update_now() -> String {

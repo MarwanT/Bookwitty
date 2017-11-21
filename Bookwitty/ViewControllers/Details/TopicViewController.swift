@@ -11,13 +11,13 @@ import AsyncDisplayKit
 import GSImageViewerController
 import SwiftLoader
 
-enum TopicAction {
+enum PageAction {
   case link
   case unlink
 }
 
 protocol TopicViewControllerDelegate: class {
-  func topic(viewController: TopicViewController, didRequest action: TopicAction, for topic: Topic)
+  func topic(viewController: TopicViewController, didRequest action: PageAction, for page: ModelCommonProperties)
 }
 
 class TopicViewController: ASViewController<ASDisplayNode> {
@@ -37,7 +37,7 @@ class TopicViewController: ASViewController<ASDisplayNode> {
   
   enum NavigationItemMode {
     case view
-    case action(TopicAction)
+    case action(PageAction)
   }
   
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
@@ -167,8 +167,20 @@ class TopicViewController: ASViewController<ASDisplayNode> {
       navigationItem.rightBarButtonItem = shareButton
     }
     
-    func setupRightNavigationItem(with action: TopicAction) {
-      let title = action == .link ? Strings.link_topic() : Strings.unlink_topic()
+    func setupRightNavigationItem(with action: PageAction) {
+
+      var title: String = ""
+      if let resourceType = viewModel.resourceType {
+        switch resourceType {
+        case Topic.resourceType:
+          title = action == .link ? Strings.link_topic() : Strings.unlink_topic()
+        case Author.resourceType:
+          title = action == .link ? Strings.link_author() : Strings.unlink_author()
+        case Book.resourceType: fallthrough
+        default: break
+        }
+      }
+
       let actionButton = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(TopicViewController.linkUnlinkTouchUpInside(_ :)))
       navigationController?.navigationBar.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
       actionButton.setTitleTextAttributes([
@@ -259,10 +271,10 @@ class TopicViewController: ASViewController<ASDisplayNode> {
   }
 
   func linkUnlinkTouchUpInside(_ sender: UIBarButtonItem) {
-    if let topic = self.viewModel.resource as? Topic {
+    if let page = self.viewModel.resource {
       switch self.navigationItemMode {
       case .action(let action):
-        self.delegate?.topic(viewController: self, didRequest: action, for: topic)
+        self.delegate?.topic(viewController: self, didRequest: action, for: page)
 
       default:
         break

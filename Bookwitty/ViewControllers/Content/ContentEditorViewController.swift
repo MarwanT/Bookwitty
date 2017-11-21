@@ -141,7 +141,7 @@ class ContentEditorViewController: UIViewController {
     
     let publishMenuViewController = Storyboard.Content.instantiate(PublishMenuViewController.self)
     publishMenuViewController.delegate = self
-    publishMenuViewController.viewModel.initialize(with: self.viewModel.linkedTags, linkedTopics: self.viewModel.linkedTopics)
+    publishMenuViewController.viewModel.initialize(with: self.viewModel.linkedTags, linkedPages: self.viewModel.linkedPages)
     self.definesPresentationContext = true
     publishMenuViewController.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber20().withAlphaComponent(0.5)
     publishMenuViewController.modalPresentationStyle = .overCurrentContext
@@ -489,8 +489,8 @@ extension ContentEditorViewController {
       return
     }
     
-    let linkTopicsViewController = Storyboard.Content.instantiate(LinkTopicsViewController.self)
-    linkTopicsViewController.viewModel.initialize(with: currentPostId, linkedTopics: self.viewModel.linkedTopics)
+    let linkTopicsViewController = Storyboard.Content.instantiate(LinkPagesViewController.self)
+    linkTopicsViewController.viewModel.initialize(with: currentPostId, linkedPages: self.viewModel.linkedPages)
     linkTopicsViewController.delegate = self
     let navigationController = UINavigationController(rootViewController: linkTopicsViewController)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
@@ -560,10 +560,10 @@ extension ContentEditorViewController: LinkTagsViewControllerDelegate {
   }
 }
 
-//MARK: - LinkTopicsViewControllerDelegate Implementation
-extension ContentEditorViewController: LinkTopicsViewControllerDelegate {
-  func linkTopics(viewController: LinkTopicsViewController, didLink topics: [Topic]) {
-    self.viewModel.linkedTopics = topics
+//MARK: - LinkPagesViewControllerDelegate Implementation
+extension ContentEditorViewController: LinkPagesViewControllerDelegate {
+  func linkPages(viewController: LinkPagesViewController, didLink pages: [ModelCommonProperties]) {
+    self.viewModel.linkedPages = pages
     viewController.dismiss(animated: true, completion: nil)
   }
 }

@@ -134,6 +134,7 @@
 "last_year" = "Last year";
 "latest" = "Latest";
 "link" = "Link";
+"link_author" = "Link Author";
 "link_topic" = "Link Topic";
 "link_topics" = "Link Topics";
 "list_price" = "List price";
@@ -242,6 +243,7 @@
 "tutorial_third_page_title" = "Share Your Own Ideas";
 "types" = "Types";
 "unknown_format" = "Unknown format";
+"unlink_author" = "Unlink Author";
 "unlink_topic" = "Unlink Topic";
 "update_now" = "Update now";
 "user" = "User";
