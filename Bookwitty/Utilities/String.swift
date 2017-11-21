@@ -50,6 +50,19 @@ extension String {
   }
 }
 
+extension String {
+  
+  /// String encoded in base64 (if applicable).
+  ///
+  ///		"Hello World!".base64Encoded -> Optional("SGVsbG8gV29ybGQh")
+  ///
+  public var base64Encoded: String? {
+    // https://github.com/Reza-Rg/Base64-Swift-Extension/blob/master/Base64.swift
+    let plainData = data(using: .utf8)
+    return plainData?.base64EncodedString()
+  }
+}
+
 //Adds a failable init that mirrors the Int? given
 extension String {
   init?(counting: Int?) {
