@@ -290,11 +290,10 @@ extension UIViewController {
   }
 
   private func showDeleteContentSuccessfullAlert(completion: @escaping ()->()) {
-    //TODO: Localize
-    let title = "deleted"
-    let message = "Your post has been deleted"
+    let title = Strings.its_done()
+    let message = Strings.delete_post_success_message()
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction) in
+    alert.addAction(UIAlertAction(title: Strings.ok(), style: .default, handler: { (action: UIAlertAction) in
       completion()
     }))
     self.present(alert, animated: true, completion: nil)
