@@ -111,7 +111,7 @@ class CommentNode: ASCellNode {
   var date: Date? {
     didSet {
       dateNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
-        .append(text: date?.relativelyFormatted() ?? "", color: configuration.defaultTextColor).attributedString
+        .append(text: date?.relativelyFormatted() ?? "", color: configuration.dateColor).attributedString
       setNeedsLayout()
     }
   }
@@ -138,6 +138,7 @@ extension CommentNode {
     private static var subnodesSpace = ThemeManager.shared.currentTheme.cardInternalMargin()
     var nameColor: UIColor = ThemeManager.shared.currentTheme.colorNumber19()
     var defaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    var dateColor: UIColor = ThemeManager.shared.currentTheme.colorNumber15()
     var imageSize: CGSize = CGSize(width: 45.0, height: 45.0)
     var imageBorderWidth: CGFloat = 0.0
     var imageBorderColor: UIColor? = nil
