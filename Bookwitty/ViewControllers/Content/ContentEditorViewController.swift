@@ -122,6 +122,7 @@ class ContentEditorViewController: UIViewController {
   }
   
   @objc private func draftsBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
+    self.viewModel.dispatchContent()
     self.presentDraftsViewController()
   }
   
