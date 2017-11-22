@@ -10,4 +10,12 @@ import AsyncDisplayKit
 
 class GetStarted: ASDisplayNode {
 
+  override init() {
+    super.init()
+    initializeComponents()
+  }
+
+  fileprivate func initializeComponents() {
+    //TODO: Empty Implementation
+  }
 }
