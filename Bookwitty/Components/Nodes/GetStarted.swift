@@ -17,7 +17,7 @@ class GetStarted: ASDisplayNode {
   }
 
   fileprivate func initializeComponents() {
-    //TODO: Empty Implementation
+    automaticallyManagesSubnodes = true
   }
 }
 
