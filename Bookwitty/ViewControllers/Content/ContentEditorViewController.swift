@@ -291,7 +291,7 @@ class ContentEditorViewController: UIViewController {
   // MARK: - UI Refresh
   fileprivate func loadUIFromPost() {
     self.titleTextField.text  = self.viewModel.currentPost.title
-    //TODO: send body to JS
+    self.editorView.setContent(html: self.viewModel.currentPost.body)
   }
   
   // MARK: - Keyboard Handling
