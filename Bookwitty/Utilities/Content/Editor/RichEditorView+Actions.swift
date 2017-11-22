@@ -59,10 +59,12 @@ extension RichEditorView {
   }
   
   func setContent(html: String?) {
-    let functionName = "RE.setContent"
-    let parameters = [html]
-  
-    callJavascript(with: functionName, and: parameters)
+    guard let html = html else {
+      runJS("RE.setContent('')")
+      return
+    }
+    self.html = ""
+    runJS("RE.setContent(\'\(html)\')")
   }
   
   func getContent() -> String {
