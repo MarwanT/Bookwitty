@@ -13,9 +13,17 @@ class GetStarted: ASDisplayNode {
   override init() {
     super.init()
     initializeComponents()
+    applyTheme()
   }
 
   fileprivate func initializeComponents() {
+    //TODO: Empty Implementation
+  }
+}
+
+//MARK: - Themeable Implementation
+extension GetStarted: Themeable {
+  func applyTheme() {
     //TODO: Empty Implementation
   }
 }
