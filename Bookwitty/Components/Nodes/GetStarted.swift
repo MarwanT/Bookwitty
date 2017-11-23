@@ -39,6 +39,48 @@ class GetStarted: ASDisplayNode {
     registerNode = createRegisterNode()
   }
 
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let wrapperSpec = ASWrapperLayoutSpec(layoutElement: backgroundNode)
+    wrapperSpec.style.preferredSize = constrainedSize.max
+    wrapperSpec.style.flexGrow = 1.0
+
+    let buttonTextColor = ThemeManager.shared.currentTheme.colorNumber2()
+    let buttonBackgroundColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+    let iconTintColor = ThemeManager.shared.currentTheme.colorNumber2()
+    let iconSize = configuration.iconSize
+
+    let googleButtonNode = createButtonNode(text: "Continue with Google", textColor: buttonTextColor, backgroundColor: buttonBackgroundColor, icon: #imageLiteral(resourceName: "comment"), iconSize: iconSize, iconTintColor: iconTintColor)
+    let faecbookButtonNode = createButtonNode(text: "Continue with Facebook", textColor: buttonTextColor, backgroundColor: buttonBackgroundColor, icon: #imageLiteral(resourceName: "comment"), iconSize: iconSize, iconTintColor: iconTintColor)
+    let emailButtonNode = createButtonNode(text: "Continue with email", textColor: buttonTextColor, backgroundColor: buttonBackgroundColor, icon: #imageLiteral(resourceName: "comment"), iconSize: iconSize, iconTintColor: iconTintColor)
+
+    let loginStackSpec = ASStackLayoutSpec(direction: .vertical,
+                                          spacing: configuration.margin,
+                                          justifyContent: .center,
+                                          alignItems: .stretch,
+                                          children: [googleButtonNode, faecbookButtonNode, emailButtonNode])
+
+    var children: [ASLayoutElement] = []
+    if let textNode = textNode {
+      children.append(textNode)
+    }
+
+    children.append(loginStackSpec)
+    children.append(registerNode)
+
+    let verticalStackSpec = ASStackLayoutSpec(direction: .vertical,
+                                              spacing: 4 * configuration.margin,
+                                              justifyContent: .start,
+                                              alignItems: .stretch,
+                                              children: children)
+
+    let vInset: CGFloat = configuration.vInset
+    let hInset = (1.0 / 3.0 * constrainedSize.max.width) / 2.0
+    let insets = UIEdgeInsets(top: vInset, left: hInset, bottom: vInset, right: hInset)
+    let insetLayoutSpec = ASInsetLayoutSpec(insets: insets, child: verticalStackSpec)
+
+    let backgroundLayoutSpec = ASBackgroundLayoutSpec(child: insetLayoutSpec, background: wrapperSpec)
+    return backgroundLayoutSpec
+  }
 
   fileprivate func createTextNode() -> ASDisplayNode? {
     guard let text = getStartedText else {
