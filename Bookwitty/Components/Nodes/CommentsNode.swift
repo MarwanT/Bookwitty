@@ -243,6 +243,10 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
   func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
     return {
       switch indexPath.section {
+      case Section.count.rawValue:
+        let countCell = CommentsCountCellNode()
+        countCell.text = self.viewModel.displayedTotalNumberOfComments
+        return countCell
       case Section.parentComment.rawValue:
         guard let comment = self.viewModel.comment(for: indexPath) else {
           return ASCellNode()
@@ -381,7 +385,8 @@ extension CommentsNode {
 // MARK: - Section Declaration
 extension CommentsNode {
   enum Section: Int {
-    case parentComment = 0
+    case count = 0
+    case parentComment
     case header
     case write
     case read
@@ -389,7 +394,7 @@ extension CommentsNode {
     case viewAllComments
     
     static var numberOfSections: Int {
-      return 6
+      return 7
     }
   }
 }

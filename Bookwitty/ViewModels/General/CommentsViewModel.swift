@@ -27,6 +27,8 @@ class CommentsViewModel {
   
   func numberOfItems(in section: Int) -> Int {
     switch section {
+    case CommentsNode.Section.count.rawValue:
+      return displayMode == .compact ? 0 : 1
     case CommentsNode.Section.parentComment.rawValue:
       return isDisplayingACommentReplies ? 1 : 0
     case CommentsNode.Section.header.rawValue:
@@ -100,6 +102,10 @@ extension CommentsViewModel {
   /// value of this property will be that parent comment id. Otherwise nil
   var parentCommentIdentifier: String? {
     return commentsManager?.parentComment?.id
+  }
+  
+  var displayedTotalNumberOfComments: String {
+    return "\(totalNumberOfComments ?? 0)" + " " + Strings.comments().lowercased()
   }
   
   var totalNumberOfComments: Int? {
