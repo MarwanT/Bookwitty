@@ -160,6 +160,7 @@ class CommentTreeNode: ASCellNode {
         for replyComment in repliesComments {
           let replyCommentNode = CommentNode()
           replyCommentNode.mode = .reply
+          replyCommentNode.delegate = self
           replyCommentNode.imageURL = URL(string: replyComment.penName?.avatarUrl ?? "")
           replyCommentNode.fullName = replyComment.penName?.name
           replyCommentNode.message = replyComment.body
