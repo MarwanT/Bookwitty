@@ -62,6 +62,7 @@
 "couldnt_load_your_data" = "We could not load your data";
 "country" = "Country";
 "country_region" = "Country/Region";
+"create_your_account" = "Create your account using email";
 "create_new_pen_name" = "Create New Pen Name";
 "current_password" = "Current Password";
 "current_password_is_empty_error" = "Current password was left empty!";

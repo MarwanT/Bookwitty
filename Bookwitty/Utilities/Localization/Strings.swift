@@ -233,6 +233,10 @@ class Strings {
     return localizedString(key: "country_region")
   }
   
+  static func create_your_account() -> String {
+    return localizedString(key: "create_your_account")
+  }
+
   static func create_new_pen_name() -> String {
     return localizedString(key: "create_new_pen_name")
   }
