@@ -26,6 +26,41 @@ class GetStarted: ASDisplayNode {
     automaticallyManagesSubnodes = true
   }
 
+  fileprivate func createButtonNode(text: String, textColor: UIColor, backgroundColor: UIColor, icon: UIImage, iconSize: CGSize, iconTintColor: UIColor) -> ASControlNode {
+    let node = ASControlNode()
+    node.automaticallyManagesSubnodes = true
+    node.backgroundColor = backgroundColor
+    node.style.height = ASDimension(unit: .points, value: 50.0)
+    node.style.flexGrow = 1.0
+
+    node.cornerRadius = 2.0
+
+    node.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
+      let textNode = ASTextNode()
+      textNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
+        .append(text: text, color: textColor)
+        .attributedString
+
+      textNode.style.flexGrow = 1.0
+
+      let iconNode = ASImageNode()
+      iconNode.image = icon
+      iconNode.style.preferredSize = iconSize
+      iconNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(iconTintColor)
+
+      let horizontalStack = ASStackLayoutSpec(direction: .horizontal,
+                                              spacing: 0.0,
+                                              justifyContent: .center,
+                                              alignItems: .center,
+                                              children: [iconNode, textNode])
+      
+      let margin = UIEdgeInsets(top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
+      let insetLayoutSpec = ASInsetLayoutSpec(insets: margin, child: horizontalStack)
+      return insetLayoutSpec
+    }
+    return node
+  }
+
   fileprivate func createRegisterNode() -> ASControlNode {
     let node = ASControlNode()
     node.automaticallyManagesSubnodes = true
