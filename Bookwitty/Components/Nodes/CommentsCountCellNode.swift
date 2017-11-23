@@ -49,6 +49,11 @@ class CommentsCountCellNode: ASCellNode {
   // MARK: HELPERS
   //==============
   private func refreshNode() {
+    if let currentText = label.attributedText?.string {
+      text = currentText
+    }
+    applyTheme()
+    setNeedsLayout()
   }
 }
 
