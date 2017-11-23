@@ -17,6 +17,9 @@ class CommentTreeNode: ASCellNode {
   let commentNode: CommentNode
   var repliesCommentNodes: [CommentNode]
   let viewRepliesDisclosureNode: DisclosureNode
+  fileprivate var highlightNode: HighlightNode?
+  
+  var commentNodeThatNeedsHighlight: ASDisplayNode?
   
   fileprivate(set) var mode: DisplayMode = .normal
   
@@ -68,14 +71,6 @@ class CommentTreeNode: ASCellNode {
   
   //MARK: LAYOUT
   //============
-  override func animateLayoutTransition(_ context: ASContextTransitioning) {
-    UIView.animate(withDuration: 0.60, animations: {
-      self.backgroundColor = self.configuration.defaultColor
-    }) { (success) in
-      context.completeTransition(true)
-    }
-  }
-  
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     var elements: [ASLayoutElement] = []
     let parentCommentInsets: ASInsetLayoutSpec
@@ -126,11 +121,9 @@ class CommentTreeNode: ASCellNode {
     return finalLayout
   }
   
-  
-  
   override func layoutDidFinish() {
     super.layoutDidFinish()
-    unHighlightNode()
+    handleHighlightOperation()
   }
   
   func refreshCommentNode() {
@@ -208,14 +201,23 @@ class CommentTreeNode: ASCellNode {
   
   //MARK: HELPERS
   //=============
-  fileprivate func highlightNode() {
-    backgroundColor = configuration.highlightColor
+  fileprivate func handleHighlightOperation() {
+    if let nodeNeedsHighlight = self.commentNodeThatNeedsHighlight {
+      self.commentNodeThatNeedsHighlight = nil
+      highlight(node: nodeNeedsHighlight)
+    } else if let highlightNode = self.highlightNode {
+      self.highlightNode = nil
+      highlightNode.startCoolDown(completion: nil)
+    }
   }
   
-  fileprivate func unHighlightNode() {
-    if backgroundColor != configuration.defaultColor {
-      transitionLayout(withAnimation: true, shouldMeasureAsync: false, measurementCompletion: nil)
+  fileprivate func highlight(node: ASDisplayNode) {
+    if let previousHighlightNode = self.highlightNode {
+      previousHighlightNode.startCoolDown(completion: nil)
     }
+    self.highlightNode = HighlightNode()
+    self.highlightNode?.frame = wideFrame(forCommentNode: node)
+    insertSubnode(self.highlightNode!, belowSubnode: node)
   }
   
   fileprivate func separator() -> ASDisplayNode {
@@ -223,6 +225,15 @@ class CommentTreeNode: ASCellNode {
     separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     separator.style.height = ASDimensionMake(1)
     return separator
+  }
+  
+  fileprivate func wideFrame(forCommentNode node: ASDisplayNode) -> CGRect {
+    var nodeFrame = node.frame
+    nodeFrame.size.height += configuration.internalInsets.top + configuration.internalInsets.bottom
+    nodeFrame.size.width = frame.width
+    nodeFrame.origin.x = 0
+    nodeFrame.origin.y -= configuration.internalInsets.top
+    return nodeFrame
   }
 }
 
@@ -276,7 +287,7 @@ extension CommentTreeNode: CommentNodeDelegate {
   }
   
   func commentNodeUpdateLayout(_ node: CommentNode, forExpandedState state: DynamicCommentMessageNode.DynamicMode) {
-    highlightNode()
+    commentNodeThatNeedsHighlight = node
     setNeedsLayout()
   }
 }
