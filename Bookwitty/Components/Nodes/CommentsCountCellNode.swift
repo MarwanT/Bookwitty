@@ -28,6 +28,13 @@ class CommentsCountCellNode: ASCellNode {
     label.isLayerBacked = true
   }
   
+  // MARK: LAYOUT
+  //=============
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let titleInsetsSpec = ASInsetLayoutSpec(insets: configuration.internalMargin, child: label)
+    return titleInsetsSpec
+  }
+
   // MARK: HELPERS
   //==============
   private func refreshNode() {
