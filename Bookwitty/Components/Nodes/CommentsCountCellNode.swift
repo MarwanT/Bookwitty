@@ -35,6 +35,17 @@ class CommentsCountCellNode: ASCellNode {
     return titleInsetsSpec
   }
 
+  // MARK: APIs
+  //===========
+  var text: String {
+    get {
+      return label.attributedText?.string ?? ""
+    }
+    set {
+      label.attributedText = AttributedStringBuilder(fontDynamicType: configuration.fontBookSelected).append(text: newValue, color: configuration.textColor).attributedString
+    }
+  }
+  
   // MARK: HELPERS
   //==============
   private func refreshNode() {
