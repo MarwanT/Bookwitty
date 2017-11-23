@@ -11,7 +11,7 @@ import DTCoreText
 
 protocol CommentNodeDelegate: class {
   func commentNode(_ node: CommentNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?)
-  func commentNodeShouldUpdateLayout(_ node: CommentNode)
+  func commentNodeUpdateLayout(_ node: CommentNode, forExpandedState state: DynamicCommentMessageNode.DynamicMode)
 }
 
 class CommentNode: ASCellNode {
@@ -164,7 +164,7 @@ extension CommentNode {
 extension CommentNode: DynamicCommentMessageNodeDelegate {
   func dynamicCommentMessageNodeDidTapMoreButton(_ node: DynamicCommentMessageNode) {
     node.toggleMode()
-    delegate?.commentNodeShouldUpdateLayout(self)
+    delegate?.commentNodeUpdateLayout(self, forExpandedState: node.mode)
   }
   
   func dynamicCommentMessageNodeDidTapWitsButton(_ node: DynamicCommentMessageNode) {

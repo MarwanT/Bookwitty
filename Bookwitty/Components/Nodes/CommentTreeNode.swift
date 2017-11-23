@@ -275,7 +275,7 @@ extension CommentTreeNode: CommentNodeDelegate {
     delegate?.commentTreeDidPerformAction(self, comment: comment, action: action, forSender: sender, didFinishAction: didFinishAction)
   }
   
-  func commentNodeShouldUpdateLayout(_ node: CommentNode) {
+  func commentNodeUpdateLayout(_ node: CommentNode, forExpandedState state: DynamicCommentMessageNode.DynamicMode) {
     highlightNode()
     setNeedsLayout()
   }
