@@ -53,6 +53,9 @@
 "contact_us" = "Contact Us";
 "content" = "Content";
 "continue" = "Continue";
+"continue_email" = "Continue with email";
+"continue_facebook" = "Continue with Facebook";
+"continue_google" = "Continue with Google";
 "contributors" = "Contributors";
 "couldnt_load_selected_edition_message" = "We could not load selected edition!";
 "couldnt_load_selected_edition_title" = "Oooops";

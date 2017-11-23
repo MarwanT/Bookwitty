@@ -196,6 +196,18 @@ class Strings {
   static func `continue`() -> String {
     return localizedString(key: "continue")
   }
+
+  static func continue_email() -> String {
+    return localizedString(key: "continue_email")
+  }
+
+  static func continue_facebook() -> String {
+    return localizedString(key: "continue_facebook")
+  }
+
+  static func continue_google() -> String {
+    return localizedString(key: "continue_google")
+  }
   
   static func contributors() -> String {
     return localizedString(key: "contributors")

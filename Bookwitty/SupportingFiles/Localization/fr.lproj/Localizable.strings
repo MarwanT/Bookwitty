@@ -53,6 +53,9 @@
 "contact_us" = "Contactez-nous";
 "content" = "Articles";
 "continue" = "Suivant";
+"continue_email" = "Continue with email";
+"continue_facebook" = "Continue with Facebook";
+"continue_google" = "Continue with Google";
 "contributors" = "Contributeurs";
 "couldnt_load_selected_edition_message" = "Oups, nous n'avons pas pu afficher cette édition";
 "couldnt_load_selected_edition_title" = "Oups...";
