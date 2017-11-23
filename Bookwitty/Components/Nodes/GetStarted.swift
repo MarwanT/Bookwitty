@@ -49,9 +49,9 @@ class GetStarted: ASDisplayNode {
     let iconTintColor = ThemeManager.shared.currentTheme.colorNumber2()
     let iconSize = configuration.iconSize
 
-    let googleButtonNode = createButtonNode(text: "Continue with Google", textColor: buttonTextColor, backgroundColor: buttonBackgroundColor, icon: #imageLiteral(resourceName: "comment"), iconSize: iconSize, iconTintColor: iconTintColor)
-    let faecbookButtonNode = createButtonNode(text: "Continue with Facebook", textColor: buttonTextColor, backgroundColor: buttonBackgroundColor, icon: #imageLiteral(resourceName: "comment"), iconSize: iconSize, iconTintColor: iconTintColor)
-    let emailButtonNode = createButtonNode(text: "Continue with email", textColor: buttonTextColor, backgroundColor: buttonBackgroundColor, icon: #imageLiteral(resourceName: "comment"), iconSize: iconSize, iconTintColor: iconTintColor)
+    let googleButtonNode = createButtonNode(text: Strings.continue_google(), textColor: buttonTextColor, backgroundColor: buttonBackgroundColor, icon: #imageLiteral(resourceName: "comment"), iconSize: iconSize, iconTintColor: iconTintColor)
+    let faecbookButtonNode = createButtonNode(text: Strings.continue_facebook(), textColor: buttonTextColor, backgroundColor: buttonBackgroundColor, icon: #imageLiteral(resourceName: "comment"), iconSize: iconSize, iconTintColor: iconTintColor)
+    let emailButtonNode = createButtonNode(text: Strings.continue_email(), textColor: buttonTextColor, backgroundColor: buttonBackgroundColor, icon: #imageLiteral(resourceName: "comment"), iconSize: iconSize, iconTintColor: iconTintColor)
 
     let loginStackSpec = ASStackLayoutSpec(direction: .vertical,
                                           spacing: configuration.margin,
