@@ -37,6 +37,10 @@ extension GetStarted: Themeable {
 //MARK: - Configuration Declaration
 extension GetStarted {
   struct Configuration {
-    let backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+    let backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+    let margin: CGFloat = ThemeManager.shared.currentTheme.cardInternalMargin()
+    let iconSize: CGSize = CGSize(width: 40.0, height: 40.0)
+    let iconTintColor = ThemeManager.shared.currentTheme.colorNumber2()
+    let vInset: CGFloat = 50.0
   }
 }
