@@ -107,6 +107,8 @@
 "format" = "Format";
 "free_shipping_internationally" = "Livraison gratuite où que vous soyez";
 "get_started" = "Débuter";
+"get_started_account_text" = "Update your profile or check the status of your orders";
+"get_started_newsfeed_text" = "Select people, topics and tags of interest to populate this section with content you like";
 "go_back" = "Go back";
 "height" = "Hauteur";
 "help" = "Aide";

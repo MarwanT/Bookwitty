@@ -412,6 +412,14 @@ class Strings {
   static func get_started() -> String {
     return localizedString(key: "get_started")
   }
+
+  static func get_started_account_text() -> String {
+    return localizedString(key: "get_started_account_text")
+  }
+
+  static func get_started_newsfeed_text() -> String {
+    return localizedString(key: "get_started_newsfeed_text")
+  }
   
   static func go_back() -> String {
     return localizedString(key: "go_back")
