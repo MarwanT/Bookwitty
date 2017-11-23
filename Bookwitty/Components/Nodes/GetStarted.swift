@@ -26,6 +26,30 @@ class GetStarted: ASDisplayNode {
     automaticallyManagesSubnodes = true
   }
 
+
+  fileprivate func createTextNode() -> ASDisplayNode? {
+    guard let text = getStartedText else {
+      return nil
+    }
+
+    let node = ASDisplayNode()
+    node.automaticallyManagesSubnodes = true
+
+    node.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
+      let textNode = ASTextNode()
+      textNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption1)
+        .append(text: text, color: ThemeManager.shared.currentTheme.defaultTextColor())
+        .applyParagraphStyling(alignment: .center)
+        .attributedString
+
+      textNode.style.flexGrow = 1.0
+
+      let centerSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: .minimumXY, child: textNode)
+      return centerSpec
+    }
+    return node
+  }
+
   fileprivate func createButtonNode(text: String, textColor: UIColor, backgroundColor: UIColor, icon: UIImage, iconSize: CGSize, iconTintColor: UIColor) -> ASControlNode {
     let node = ASControlNode()
     node.automaticallyManagesSubnodes = true
