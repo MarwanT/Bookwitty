@@ -10,3 +10,16 @@ import AsyncDisplayKit
 
 class CommentsCountCellNode: ASCellNode {
 }
+
+// MARK: - Configuration
+extension CommentsCountCellNode {
+  struct Configuration {
+    var internalMargin = UIEdgeInsets(
+      top: ThemeManager.shared.currentTheme.generalExternalMargin() - 8,
+      left: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      bottom: ThemeManager.shared.currentTheme.generalExternalMargin() - 8,
+      right: ThemeManager.shared.currentTheme.generalExternalMargin())
+    var fontBookSelected: FontDynamicType = .subheadline
+    var textColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor()
+  }
+}
