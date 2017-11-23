@@ -9,10 +9,23 @@
 import AsyncDisplayKit
 
 class CommentsCountCellNode: ASCellNode {
+  var label: ASTextNode
+  
   var configuration = Configuration() {
     didSet {
       refreshNode()
     }
+  }
+
+  override init() {
+    label = ASTextNode()
+    super.init()
+    initialize()
+  }
+  
+  private func initialize() {
+    automaticallyManagesSubnodes = true
+    label.isLayerBacked = true
   }
   
   // MARK: HELPERS
