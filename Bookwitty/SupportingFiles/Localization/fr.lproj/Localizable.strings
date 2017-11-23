@@ -118,6 +118,7 @@
 "latest" = "Nouveautés";
 "link" = "Lien";
 "list_price" = "Prix conseillé";
+"more" = "Plus";
 "most_popular" = "Les plus populaires";
 "my_interests" = "Mes intérêts";
 "my_orders" = "Mes commandes";
@@ -267,6 +268,7 @@
 "f_others_find_witty" = "et %d autres personnes avez witté ceci";
 "f_view_all_replies" = "Voir les %d réponses";
 "f_view_formats_and_editions" = "Voir les %d éditions";
+"f_wits" = "2 wits";
 
 /**
  Discussion:

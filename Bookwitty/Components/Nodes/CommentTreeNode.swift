@@ -17,6 +17,13 @@ class CommentTreeNode: ASCellNode {
   let commentNode: CommentNode
   let viewRepliesDisclosureNode: DisclosureNode
   
+  var mode: DisplayMode = .normal {
+    didSet {
+      refreshCommentNodeMode()
+      setNeedsLayout()
+    }
+  }
+  
   var configuration = Configuration() {
     didSet {
       setNeedsLayout()
@@ -30,6 +37,14 @@ class CommentTreeNode: ASCellNode {
     viewRepliesDisclosureNode = DisclosureNode()
     super.init()
     setupNode()
+  }
+  
+  override func animateLayoutTransition(_ context: ASContextTransitioning) {
+    UIView.animate(withDuration: 0.60, animations: {
+      self.backgroundColor = self.configuration.defaultColor
+    }) { (success) in
+      context.completeTransition(true)
+    }
   }
   
   private func setupNode() {
@@ -60,7 +75,12 @@ class CommentTreeNode: ASCellNode {
     if let createDate = comment?.createdAt as Date? {
       commentNode.date = createDate
     }
-    commentNode.mode = isReply ? .secondary : .primary
+    refreshCommentNodeMode()
+    setNeedsLayout()
+  }
+  
+  fileprivate func refreshCommentNodeMode() {
+    commentNode.mode = (mode == .minimal) ? .minimal : (isReply ? .reply : .normal)
     setNeedsLayout()
   }
   
@@ -100,6 +120,11 @@ class CommentTreeNode: ASCellNode {
     return externalInsetsSpec
   }
   
+  override func layoutDidFinish() {
+    super.layoutDidFinish()
+    unHighlightNode()
+  }
+  
   private func separator() -> ASDisplayNode {
     let separator = ASDisplayNode()
     separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
@@ -109,6 +134,11 @@ class CommentTreeNode: ASCellNode {
 }
 
 extension CommentTreeNode {
+  enum DisplayMode {
+    case normal
+    case minimal
+  }
+  
   struct Configuration {
     fileprivate let indentationMargin = CommentNode.Configuration().indentationMargin
     let disclosureInsets: UIEdgeInsets
@@ -119,6 +149,8 @@ extension CommentTreeNode {
       left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: ThemeManager.shared.currentTheme.generalExternalMargin(),
       right: ThemeManager.shared.currentTheme.generalExternalMargin())
+    var highlightColor = ThemeManager.shared.currentTheme.colorNumber5()
+    var defaultColor = UIColor.white
     
     init() {
       disclosureInsets = UIEdgeInsets(top: 0, left: indentationMargin, bottom: 0, right: 0)
@@ -134,6 +166,21 @@ extension CommentTreeNode: CommentNodeDelegate {
     }
 
     delegate?.commentTreeDidPerformAction(self, comment: comment, action: action, forSender: sender, didFinishAction: didFinishAction)
+  }
+  
+  func commentNodeShouldUpdateLayout(_ node: CommentNode) {
+    highlightNode()
+    setNeedsLayout()
+  }
+  
+  func highlightNode() {
+    backgroundColor = configuration.highlightColor
+  }
+  
+  func unHighlightNode() {
+    if backgroundColor != configuration.defaultColor {
+      transitionLayout(withAnimation: true, shouldMeasureAsync: false, measurementCompletion: nil)
+    }
   }
 }
 

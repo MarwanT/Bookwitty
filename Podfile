@@ -37,7 +37,7 @@ target 'Bookwitty' do
   pod 'SDWebImage', '4.0.0'
   pod 'UIImageViewAlignedSwift', '0.3.1'
   pod 'Segmentio', '2.1.2'
-  pod 'DTCoreText', '1.6.20'
+  pod 'DTCoreText', '1.6.21'
   pod 'SwiftLoader', :git => 'https://github.com/keeward/SwiftLoader', :tag => '0.3.1'
   pod 'Version', :git => 'https://github.com/opwoco/Version'
   pod 'ReachabilitySwift', '3'

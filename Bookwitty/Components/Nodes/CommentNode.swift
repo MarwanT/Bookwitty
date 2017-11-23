@@ -11,17 +11,19 @@ import DTCoreText
 
 protocol CommentNodeDelegate: class {
   func commentNode(_ node: CommentNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?)
+  func commentNodeShouldUpdateLayout(_ node: CommentNode)
 }
 
 class CommentNode: ASCellNode {
   fileprivate let imageNode: ASNetworkImageNode
   fileprivate let fullNameNode: ASTextNode
   fileprivate let dateNode: ASTextNode
-  fileprivate let messageNode: DTAttributedLabelNode
+  fileprivate let messageNode: DynamicCommentMessageNode
   fileprivate let actionBar: CardActionBarNode
   
-  var mode = Mode.primary {
+  var mode = DisplayMode.normal {
     didSet {
+      refreshMessageNodeForMode()
       setNeedsLayout()
     }
   }
@@ -38,7 +40,7 @@ class CommentNode: ASCellNode {
     imageNode = ASNetworkImageNode()
     fullNameNode = ASTextNode()
     dateNode = ASTextNode()
-    messageNode = DTAttributedLabelNode()
+    messageNode = DynamicCommentMessageNode()
     actionBar = CardActionBarNode()
     super.init()
     setupNode()
@@ -52,19 +54,18 @@ class CommentNode: ASCellNode {
       configuration.imageBorderWidth, configuration.imageBorderColor)
     imageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
     
-    messageNode.maxNumberOfLines = 1000
-    messageNode.delegate = self
-    
     actionBar.setup(forFollowingMode: false)
     actionBar.configuration.externalHorizontalMargin = 0
     actionBar.hideShareButton = true
     actionBar.hideCommentButton = true
     actionBar.hideMoreButton = true
     actionBar.delegate = self
+    
+    messageNode.delegate = self
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    actionBar.hideReplyButton = mode == .primary ? false : true
+    actionBar.hideReplyButton = mode == .normal ? false : true
     
     var infoStackElements = [ASLayoutElement]()
     
@@ -92,7 +93,7 @@ class CommentNode: ASCellNode {
   var bodyInsets: UIEdgeInsets {
     let bodyLeftMargin: CGFloat
     switch mode {
-    case .primary:
+    case .normal:
       bodyLeftMargin = configuration.indentationMargin
     default:
       bodyLeftMargin = 0
@@ -142,6 +143,10 @@ class CommentNode: ASCellNode {
   func setWitValue(witted: Bool) {
     actionBar.setWitButton(witted: witted)
   }
+  
+  fileprivate func refreshMessageNodeForMode() {
+    messageNode.mode = mode == .minimal ? .minimal : .collapsed
+  }
 }
 
 // MARK: Configuration declaration
@@ -166,9 +171,10 @@ extension CommentNode {
 
 // MARK: Modes declaration
 extension CommentNode {
-  enum Mode {
-    case primary
-    case secondary
+  enum DisplayMode {
+    case normal
+    case reply
+    case minimal
   }
 }
 
@@ -179,13 +185,14 @@ extension CommentNode: CardActionBarNodeDelegate {
   }
 }
 
-// MARK: Modes declaration
-extension CommentNode: DTAttributedTextContentNodeDelegate {
-  func attributedTextContentNode(node: ASCellNode, button: DTLinkButton, didTapOnLink link: URL) {
-    WebViewController.present(url: link)
+// MARK: Dynamic Comment Message Node Delegate
+extension CommentNode: DynamicCommentMessageNodeDelegate {
+  func dynamicCommentMessageNodeDidTapMoreButton(_ node: DynamicCommentMessageNode) {
+    node.toggleMode()
+    delegate?.commentNodeShouldUpdateLayout(self)
   }
   
-  func attributedTextContentNodeNeedsLayout(node: ASCellNode) {
-    self.setNeedsLayout()
+  func dynamicCommentMessageNodeDidTapWitsButton(_ node: DynamicCommentMessageNode) {
+    // TODO: open the list of witters
   }
 }

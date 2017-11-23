@@ -457,6 +457,10 @@ class Strings {
     return localizedString(key: "list_price")
   }
   
+  static func more() -> String {
+    return localizedString(key: "more")
+  }
+  
   static func most_popular() -> String {
     return localizedString(key: "most_popular")
   }
@@ -1022,10 +1026,15 @@ class Strings {
     return localizedString(key: "f_number_of_years_ago", formatVariables: number)
   }
   
+  static func wits(_ number: Int) -> String {
+    return localizedString(key: "f_wits", formatVariables: number)
+  }
+  
 
   private static func othersFindThisWitty(witters: Int) -> String {
     return localizedString(key: "f_others_find_witty", formatVariables: witters)
   }
+  
 
   /**
    Discussion:

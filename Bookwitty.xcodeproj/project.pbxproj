@@ -156,6 +156,7 @@
 		59871F1A1E78ADFB000A86CD /* PostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59871F191E78ADFB000A86CD /* PostsViewController.swift */; };
 		59871F1D1E78AF19000A86CD /* PostsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59871F1C1E78AF19000A86CD /* PostsViewModel.swift */; };
 		5988FCFC1EA4AC100045F82B /* TTTAttributedLabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5988FCFB1EA4AC100045F82B /* TTTAttributedLabelNode.swift */; };
+		598D84DD1FB34D8B00D5E438 /* DynamicCommentMessageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598D84DC1FB34D8B00D5E438 /* DynamicCommentMessageNode.swift */; };
 		59903FED1E3B9D90006043EF /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59903FEC1E3B9D90006043EF /* View.swift */; };
 		59956E001EFD2B62004DA794 /* Content+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59956DFF1EFD2B62004DA794 /* Content+API.swift */; };
 		59956E031EFD808B004DA794 /* Formats.en.json in Resources */ = {isa = PBXBuildFile; fileRef = 59956E011EFD808B004DA794 /* Formats.en.json */; };
@@ -467,6 +468,7 @@
 		59871F191E78ADFB000A86CD /* PostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostsViewController.swift; sourceTree = "<group>"; };
 		59871F1C1E78AF19000A86CD /* PostsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostsViewModel.swift; sourceTree = "<group>"; };
 		5988FCFB1EA4AC100045F82B /* TTTAttributedLabelNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTTAttributedLabelNode.swift; sourceTree = "<group>"; };
+		598D84DC1FB34D8B00D5E438 /* DynamicCommentMessageNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCommentMessageNode.swift; sourceTree = "<group>"; };
 		59903FEC1E3B9D90006043EF /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		59956DFF1EFD2B62004DA794 /* Content+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Content+API.swift"; sourceTree = "<group>"; };
 		59956E011EFD808B004DA794 /* Formats.en.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Formats.en.json; sourceTree = "<group>"; };
@@ -990,6 +992,7 @@
 				F4AAADAC1E93F2230073EA50 /* ButtonWithLoader.swift */,
 				F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */,
 				F42462B01E760E1500DB3A2C /* DTAttributedTextContentNode.swift */,
+				598D84DC1FB34D8B00D5E438 /* DynamicCommentMessageNode.swift */,
 				F4670AFA1E54669300159F4F /* ReadingListBookNode.swift */,
 				F42DFEC01E7836EC0025CE65 /* SeparatorNode.swift */,
 				F43A5E8D1E69858A008C018B /* OnBoardingInternalCellNode.swift */,
@@ -1948,6 +1951,7 @@
 				F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */,
 				59591F1B1E6D7E7A005592B8 /* DisclosureNode.swift in Sources */,
 				567B3C041ED4310600E02E16 /* SearchFiltersViewController.swift in Sources */,
+				598D84DD1FB34D8B00D5E438 /* DynamicCommentMessageNode.swift in Sources */,
 				F488D2791E44EB46003A7BD4 /* PenName.swift in Sources */,
 				59DBA6651E732D3F0049B427 /* Models+Utilities.swift in Sources */,
 				595A64A01E2D0C4D00655067 /* Network.swift in Sources */,
