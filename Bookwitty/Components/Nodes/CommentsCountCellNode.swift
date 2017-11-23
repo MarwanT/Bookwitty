@@ -9,6 +9,16 @@
 import AsyncDisplayKit
 
 class CommentsCountCellNode: ASCellNode {
+  var configuration = Configuration() {
+    didSet {
+      refreshNode()
+    }
+  }
+  
+  // MARK: HELPERS
+  //==============
+  private func refreshNode() {
+  }
 }
 
 // MARK: - Configuration
