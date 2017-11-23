@@ -185,6 +185,7 @@
 		59CB4DF31EE59ABD00E7A60B /* Details.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59CB4DF21EE59ABD00E7A60B /* Details.storyboard */; };
 		59CB4DF51EE59BAD00E7A60B /* CommentComposerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB4DF41EE59BAD00E7A60B /* CommentComposerViewController.swift */; };
 		59CB6EA61FC6F88400FAFDD9 /* HighlightNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB6EA51FC6F88400FAFDD9 /* HighlightNode.swift */; };
+		59CB6EAA1FC7253300FAFDD9 /* CommentsCountCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB6EA91FC7253300FAFDD9 /* CommentsCountCellNode.swift */; };
 		59CBE4F81E8090280068C7AD /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CBE4F71E8090280068C7AD /* AppError.swift */; };
 		59CBE4FA1E8094070068C7AD /* ErrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CBE4F91E8094070068C7AD /* ErrorManager.swift */; };
 		59CF3F821ECF3332002A5821 /* IntroductoryBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF3F811ECF3332002A5821 /* IntroductoryBanner.swift */; };
@@ -263,7 +264,6 @@
 		F42DFEBF1E77F39A0025CE65 /* RelatedBooksMinimalCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42DFEBE1E77F39A0025CE65 /* RelatedBooksMinimalCellNode.swift */; };
 		F42DFEC11E7836EC0025CE65 /* SeparatorNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42DFEC01E7836EC0025CE65 /* SeparatorNode.swift */; };
 		F42ED4F21E686BF9002B65DF /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42ED4F11E686BF9002B65DF /* OnBoardingViewController.swift */; };
-		F434F7911E4E16CE001812BD /* CellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F434F7901E4E16CE001812BD /* CellNode.swift */; };
 		F43996851E76C76700FE9D8B /* PostsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43996841E76C76700FE9D8B /* PostsListViewController.swift */; };
 		F43996871E770EB100FE9D8B /* PostsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43996861E770EB100FE9D8B /* PostsListViewModel.swift */; };
 		F43A5E8E1E69858A008C018B /* OnBoardingInternalCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43A5E8D1E69858A008C018B /* OnBoardingInternalCellNode.swift */; };
@@ -498,6 +498,7 @@
 		59CB4DF21EE59ABD00E7A60B /* Details.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Details.storyboard; sourceTree = "<group>"; };
 		59CB4DF41EE59BAD00E7A60B /* CommentComposerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentComposerViewController.swift; sourceTree = "<group>"; };
 		59CB6EA51FC6F88400FAFDD9 /* HighlightNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightNode.swift; sourceTree = "<group>"; };
+		59CB6EA91FC7253300FAFDD9 /* CommentsCountCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsCountCellNode.swift; sourceTree = "<group>"; };
 		59CBE4F71E8090280068C7AD /* AppError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		59CBE4F91E8094070068C7AD /* ErrorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorManager.swift; sourceTree = "<group>"; };
 		59CF3F811ECF3332002A5821 /* IntroductoryBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductoryBanner.swift; sourceTree = "<group>"; };
@@ -584,7 +585,6 @@
 		F42DFEBE1E77F39A0025CE65 /* RelatedBooksMinimalCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RelatedBooksMinimalCellNode.swift; path = PostDetails/RelatedBooksMinimalCellNode.swift; sourceTree = "<group>"; };
 		F42DFEC01E7836EC0025CE65 /* SeparatorNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorNode.swift; sourceTree = "<group>"; };
 		F42ED4F11E686BF9002B65DF /* OnBoardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
-		F434F7901E4E16CE001812BD /* CellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellNode.swift; sourceTree = "<group>"; };
 		F43996841E76C76700FE9D8B /* PostsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostsListViewController.swift; sourceTree = "<group>"; };
 		F43996861E770EB100FE9D8B /* PostsListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostsListViewModel.swift; sourceTree = "<group>"; };
 		F43A5E8D1E69858A008C018B /* OnBoardingInternalCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardingInternalCellNode.swift; sourceTree = "<group>"; };
@@ -983,7 +983,6 @@
 				562A31241E65E1DE002851DE /* TopicsDetails */,
 				F417B1C51E712FD100B0FAFE /* PostDetails */,
 				59049B121E81E44400EDF796 /* JoinUsNode.swift */,
-				F434F7901E4E16CE001812BD /* CellNode.swift */,
 				F41F3AB61E6785CB004622D3 /* LoaderNode.swift */,
 				F4207B931E58466A00216A2E /* PenNameSelectionNode.swift */,
 				F46F3F961EC5A39D002C9718 /* DiscoverNode.swift */,
@@ -1018,6 +1017,7 @@
 				59CF3F811ECF3332002A5821 /* IntroductoryBanner.swift */,
 				562A996B1ED8683000382ADD /* FilterCellNode.swift */,
 				590E30011EDC1A68006C6D5C /* CommentNode.swift */,
+				59CB6EA91FC7253300FAFDD9 /* CommentsCountCellNode.swift */,
 				59CB4DE61EDDADA800E7A60B /* CommentTreeNode.swift */,
 				59CB4DEC1EDEA49C00E7A60B /* CommentsNode.swift */,
 				59CB6EA51FC6F88400FAFDD9 /* HighlightNode.swift */,
@@ -1792,6 +1792,7 @@
 				F461B25C1E4B73B0005EA5A8 /* NewsFeedViewController.swift in Sources */,
 				F4A4262F1E5622190090CD51 /* Topic.swift in Sources */,
 				56D5F73B1E5B60BF00F6A164 /* Book.swift in Sources */,
+				59CB6EAA1FC7253300FAFDD9 /* CommentsCountCellNode.swift in Sources */,
 				56D36E821E6DAB3400791098 /* PenNameFollowNode.swift in Sources */,
 				F417B1D31E71C3D400B0FAFE /* PostDetailsNode.swift in Sources */,
 				5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */,
@@ -1868,7 +1869,6 @@
 				597B8E2D1E37F6BC00C7811B /* Image+Utils.swift in Sources */,
 				59CF764A1E5CB010003EAB6B /* BooksTableViewController.swift in Sources */,
 				567B3C061ED4330F00E02E16 /* SearchFiltersViewModel.swift in Sources */,
-				F434F7911E4E16CE001812BD /* CellNode.swift in Sources */,
 				56320C911EA748FB00642934 /* TopicCardPostCellNode.swift in Sources */,
 				56A623B61EA0C02D00D930A7 /* DataManager.swift in Sources */,
 				F4670AFB1E54669300159F4F /* ReadingListBookNode.swift in Sources */,
