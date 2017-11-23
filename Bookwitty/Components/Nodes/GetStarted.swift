@@ -15,6 +15,13 @@ class GetStarted: ASDisplayNode {
       setNeedsLayout()
     }
   }
+
+  var getStartedText: String? {
+    didSet {
+      textNode = createTextNode()
+      setNeedsLayout()
+    }
+  }
   
   override init() {
     super.init()
