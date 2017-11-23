@@ -10,6 +10,10 @@ import AsyncDisplayKit
 
 class GetStarted: ASDisplayNode {
 
+  fileprivate let backgroundNode = ASDisplayNode()
+  fileprivate var textNode: ASDisplayNode?
+  fileprivate var registerNode: ASControlNode!
+
   var configuration = Configuration() {
     didSet {
       setNeedsLayout()
@@ -31,6 +35,8 @@ class GetStarted: ASDisplayNode {
 
   fileprivate func initializeComponents() {
     automaticallyManagesSubnodes = true
+    textNode = createTextNode()
+    registerNode = createRegisterNode()
   }
 
 
