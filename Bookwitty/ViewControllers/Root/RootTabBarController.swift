@@ -156,8 +156,10 @@ class RootTabBarController: UITabBarController {
       viewController = NewsFeedViewController()
       hideNavigationBar = false
     } else {
-      viewController = JoinUsNode().viewController()
-      hideNavigationBar = true
+      let getStartedNode = GetStarted()
+      getStartedNode.getStartedText = Strings.get_started_newsfeed_text()
+      viewController = getStartedNode.viewController()
+      hideNavigationBar = false
     }
     
     // Add search button
@@ -174,12 +176,11 @@ class RootTabBarController: UITabBarController {
       viewController = Storyboard.Account.instantiate(AccountViewController.self)
       hideNavigationBar = false
     } else {
-      viewController = UIViewController()
-      hideNavigationBar = true
+      let getStartedNode = GetStarted()
+      getStartedNode.getStartedText = Strings.get_started_account_text()
+      viewController = getStartedNode.viewController()
+      hideNavigationBar = false
     }
-
-    // Add search button
-    viewController.navigationItem.rightBarButtonItems = searchBarButton()
 
     return (viewController, hideNavigationBar)
   }
