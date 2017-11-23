@@ -33,3 +33,8 @@ extension CommentsCountCellNode {
     var textColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor()
   }
 }
+
+// MARK: - Theme
+extension CommentsCountCellNode: Themeable {
+  func applyTheme() {}
+}
