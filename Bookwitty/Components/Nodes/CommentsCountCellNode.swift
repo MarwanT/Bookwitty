@@ -7,3 +7,6 @@
 //
 
 import AsyncDisplayKit
+
+class CommentsCountCellNode: ASCellNode {
+}
