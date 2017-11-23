@@ -25,6 +25,24 @@ class GetStarted: ASDisplayNode {
   fileprivate func initializeComponents() {
     automaticallyManagesSubnodes = true
   }
+
+  fileprivate func createRegisterNode() -> ASControlNode {
+    let node = ASControlNode()
+    node.automaticallyManagesSubnodes = true
+
+    node.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
+      let textNode = ASTextNode()
+      textNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption1)
+        .append(text: "Create your account using e-mail", color: ThemeManager.shared.currentTheme.defaultButtonColor())
+        .attributedString
+
+      textNode.style.flexGrow = 1.0
+
+      let centerSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: .minimumXY, child: textNode)
+      return centerSpec
+    }
+    return node
+  }
 }
 
 //MARK: - Themeable Implementation
