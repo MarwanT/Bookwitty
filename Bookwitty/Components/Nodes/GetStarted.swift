@@ -162,7 +162,7 @@ class GetStarted: ASDisplayNode {
 //MARK: - Themeable Implementation
 extension GetStarted: Themeable {
   func applyTheme() {
-    //TODO: Empty Implementation
+    backgroundNode.backgroundColor = configuration.backgroundColor
   }
 }
 
