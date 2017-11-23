@@ -147,7 +147,7 @@ class GetStarted: ASDisplayNode {
     node.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
       let textNode = ASTextNode()
       textNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption1)
-        .append(text: "Create your account using e-mail", color: ThemeManager.shared.currentTheme.defaultButtonColor())
+        .append(text: Strings.create_your_account(), color: ThemeManager.shared.currentTheme.defaultButtonColor())
         .attributedString
 
       textNode.style.flexGrow = 1.0
