@@ -82,6 +82,12 @@ class ContentEditorViewModel  {
       }
 
       self.prelink = nil
+
+      guard let resource = DataManager.shared.fetchResource(with: prelink) as? ModelCommonProperties else {
+        return
+      }
+
+      self.linkedPages.append(resource)
     })
   }
 
