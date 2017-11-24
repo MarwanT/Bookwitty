@@ -43,6 +43,10 @@ class RichLinkPreviewViewController: UIViewController {
   @IBOutlet var audioDescriptionLabel: UILabel!
   @IBOutlet var audioHostLabel: UILabel!
 
+  //Error Preview
+  @IBOutlet var errorPreview: UIView!
+  @IBOutlet var errorLabel: UILabel!
+
   fileprivate let viewModel = RichLinkPreviewViewModel()
   var mode: Mode = .link
 
