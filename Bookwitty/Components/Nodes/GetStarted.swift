@@ -194,7 +194,8 @@ extension GetStarted {
   }
 
   @objc fileprivate func continueWithEmailTouchUpInside(_ sender: ASControlNode) {
-    //TODO: Empty Implementation
+    NotificationCenter.default.post(
+      name: AppNotification.shouldDisplaySignIn, object: nil)
   }
 
   @objc fileprivate func registerNodeTouchUpInside(_ sender: ASControlNode) {
