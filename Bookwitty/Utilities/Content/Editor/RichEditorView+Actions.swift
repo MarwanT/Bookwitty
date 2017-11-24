@@ -72,6 +72,11 @@ extension RichEditorView {
   func selectedHref() -> String {
     return runJS("RE.getSelectedHref()")
   }
+  
+  func getDefaults() -> (title: String, description: String?) {
+    let jsonString =  runJS("RE.getDefaults();");
+    return parseDefaultContent(jsonString)
+  }
 }
 
 extension RichEditorView {
