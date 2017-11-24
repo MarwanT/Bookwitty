@@ -406,7 +406,9 @@ extension RichBookViewController {
     }
     
     IFramely.shared.loadResponseFor(url: url, closure: { (success: Bool, response: Response?) in
-      self.delegate?.richBookViewController(self, didSelect: book, with: response)
+      if success {
+        self.delegate?.richBookViewController(self, didSelect: book, with: response)
+      }
     })
   }
 }
