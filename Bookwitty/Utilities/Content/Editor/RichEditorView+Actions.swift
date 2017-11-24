@@ -7,6 +7,7 @@
 //
 
 import RichEditorView
+import SwiftyJSON
 
 extension RichEditorView {
   func generate(quote: String, author: String, citeText: String, citeUrl: String) {
@@ -71,6 +72,11 @@ extension RichEditorView {
   func selectedHref() -> String {
     return runJS("RE.getSelectedHref()")
   }
+  
+  func getDefaults() -> (title: String, description: String?) {
+    let jsonString =  runJS("RE.getDefaults();");
+    return parseDefaultContent(jsonString)
+  }
 }
 
 extension RichEditorView {
@@ -90,5 +96,15 @@ extension RichEditorView {
     
     javaScriptString += ")"
     runJS(javaScriptString)
+  }
+}
+
+fileprivate extension RichEditorView {
+
+  func parseDefaultContent(_ jsonString: String) -> (title: String, description: String?) {
+    let json: JSON = JSON(parseJSON: jsonString)
+    let title = json["title"].stringValue
+    let description = json["description"].string
+    return (title, description)
   }
 }

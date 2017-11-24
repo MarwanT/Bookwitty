@@ -510,8 +510,13 @@ extension ContentEditorViewController {
       return
     }
     
+    let defaultValues = self.editorView.getDefaults()
+
+    let title = currentPost.title ?? defaultValues.title
+    let description = currentPost.shortDescription ?? defaultValues.description
+    
     let postPreviewViewController = PostPreviewViewController()
-    postPreviewViewController.viewModel.initialize(with: currentPost)
+    postPreviewViewController.viewModel.initialize(with: self.viewModel.currentPost, and: (title, description))
     postPreviewViewController.delegate = self
     let navigationController = UINavigationController(rootViewController: postPreviewViewController)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
