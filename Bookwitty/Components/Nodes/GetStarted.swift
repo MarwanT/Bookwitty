@@ -199,6 +199,7 @@ extension GetStarted {
   }
 
   @objc fileprivate func registerNodeTouchUpInside(_ sender: ASControlNode) {
-    //TODO: Empty Implementation
+    NotificationCenter.default.post(
+      name: AppNotification.shouldDisplayRegistration, object: nil)
   }
 }
