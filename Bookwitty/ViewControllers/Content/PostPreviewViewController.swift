@@ -78,7 +78,7 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
 
     titleNode.delegate = self
     coverNode.delegate = self
-    
+    descriptionNode.delegate = self
     let values = viewModel.postValues()
     
     titleNode.text = values.title
