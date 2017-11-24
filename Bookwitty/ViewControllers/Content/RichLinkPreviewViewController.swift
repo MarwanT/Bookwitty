@@ -183,7 +183,12 @@ extension RichLinkPreviewViewController {
     initializeComponents()
     setupNavigationBarButtons()
     
-    guard !textView.text.isEmpty, let url = URL(string: textView.text) else {
+    guard !textView.text.isEmpty else {
+      return
+    }
+
+    guard let url = URL(string: textView.text) else {
+      fillError()
       return
     }
 
@@ -191,11 +196,12 @@ extension RichLinkPreviewViewController {
       defer {
         DispatchQueue.main.async {
           self.showLinkPreview()
+          self.fillError()
           self.setupNavigationBarButtons()
         }
       }
 
-      guard response?.embedUrl != nil else {
+      guard response?.html != nil else {
         self.viewModel.response = nil
         return
       }
