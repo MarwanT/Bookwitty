@@ -10,7 +10,7 @@ import UIKit
 import AsyncDisplayKit
 
 protocol RichBookViewControllerDelegate: class {
-  func richBookViewController(_ richBookViewController: RichBookViewController, didSelect book: Book)
+  func richBookViewController(_ richBookViewController: RichBookViewController, didSelect book: Book, with response: Response?)
 }
 
 final class RichBookViewController: ASViewController<ASDisplayNode> {
@@ -397,6 +397,20 @@ extension RichBookViewController {
   }
 }
 
+//MARK: - URL Handling
+extension RichBookViewController {
+  fileprivate func getInfo(for book: Book) {
+    
+    guard let url = book.canonicalURL  else {
+      return
+    }
+    
+    IFramely.shared.loadResponseFor(url: url, closure: { (success: Bool, response: Response?) in
+      self.delegate?.richBookViewController(self, didSelect: book, with: response)
+    })
+  }
+}
+
 //MARK: - RichContentBookNodeDelegate implementation
 extension RichBookViewController: RichContentBookNodeDelegate {
   func richContentBookDidRequestAddAction(node: RichContentBookNode) {
@@ -404,14 +418,13 @@ extension RichBookViewController: RichContentBookNodeDelegate {
     let book = viewModel.resourceForIndex(indexPath: indexPath) as? Book else {
       return
     }
-
-    delegate?.richBookViewController(self, didSelect: book)
+    self.getInfo(for: book)
   }
 }
 
 extension RichBookViewController: BookDetailsViewControllerDelegate {
   func bookDetails(viewController: BookDetailsViewController, didSelect book: Book) {
     _ = self.navigationController?.popViewController(animated: true)
-    self.delegate?.richBookViewController(self, didSelect: book)
+    self.getInfo(for: book)
   }
 }

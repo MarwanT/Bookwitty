@@ -427,10 +427,12 @@ extension ContentEditorViewController: DraftsViewControllerDelegate {
 
 //MARK: - RichBookViewControllerDelegate Implementation
 extension ContentEditorViewController: RichBookViewControllerDelegate {
-  func richBookViewController(_ richBookViewController: RichBookViewController, didSelect book: Book) {
+  func richBookViewController(_ richBookViewController: RichBookViewController, didSelect book: Book, with response: Response?) {
     self.navigationController?.dismiss(animated: true, completion: nil)
-    //TODO: Send to JS
-    self.editorView.generate(link: book.canonicalURL, text: book.title)
+    guard let response = response else {
+      return
+    }
+    self.editorView.generateLinkPreview(type: "link", title: response.title, description: response.shortDescription, url: response.url, imageUrl: response.thumbnails?.first?.url, html: response.html)
   }
 }
 
