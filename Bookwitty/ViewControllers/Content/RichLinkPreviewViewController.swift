@@ -249,6 +249,15 @@ extension RichLinkPreviewViewController {
 
     audioPreview.isHidden = false
   }
+
+  fileprivate func fillError() {
+    guard viewModel.response == nil else {
+      return
+    }
+
+    errorLabel.text = Strings.invalid_url()
+    errorPreview.isHidden = false
+  }
 }
 
 //MARK: - Error handling
