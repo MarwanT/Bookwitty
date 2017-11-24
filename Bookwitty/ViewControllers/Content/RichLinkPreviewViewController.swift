@@ -79,6 +79,9 @@ class RichLinkPreviewViewController: UIViewController {
     audioDescriptionLabel.text = nil
     audioHostLabel.text = nil
 
+    errorPreview.isHidden = true
+    errorLabel.text = nil
+
     viewModel.response = nil
 
     switch self.mode {
