@@ -166,10 +166,9 @@ extension UIViewController {
   }
 
   fileprivate func showDeleteConfirmationAlert(identifier: String, completion: @escaping (_ success: Bool)->()) {
-    //TODO: Localize
-    let message = "Are you sure you want to delete this post ?"
+    let message = Strings.delete_post_confirmation_message()
     let alert = UIAlertController(title: nil, message: message, preferredStyle: UIAlertControllerStyle.alert)
-    alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (action: UIAlertAction) in
+    alert.addAction(UIAlertAction(title: Strings.delete(), style: .destructive, handler: { (action: UIAlertAction) in
       _ = PublishAPI.removeContent(contentIdentifier: identifier, completion: { (success: Bool, error: BookwittyAPIError?) in
         if success {
           DataManager.shared.deleteResource(with: identifier)
@@ -180,8 +179,7 @@ extension UIViewController {
       })
     }))
 
-    //TODO: Localize
-    alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (action: UIAlertAction) in
+    alert.addAction(UIAlertAction(title: Strings.cancel(), style: .cancel, handler: { (action: UIAlertAction) in
       completion(false)
     }))
     self.present(alert, animated: true, completion: nil)
@@ -292,11 +290,10 @@ extension UIViewController {
   }
 
   private func showDeleteContentSuccessfullAlert(completion: @escaping ()->()) {
-    //TODO: Localize
-    let title = "deleted"
-    let message = "Your post has been deleted"
+    let title = Strings.its_done()
+    let message = Strings.delete_post_success_message()
     let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction) in
+    alert.addAction(UIAlertAction(title: Strings.ok(), style: .default, handler: { (action: UIAlertAction) in
       completion()
     }))
     self.present(alert, animated: true, completion: nil)

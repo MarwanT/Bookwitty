@@ -122,6 +122,7 @@ class ContentEditorViewController: UIViewController {
   }
   
   @objc private func draftsBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
+    self.viewModel.dispatchContent()
     self.presentDraftsViewController()
   }
   
@@ -290,7 +291,7 @@ class ContentEditorViewController: UIViewController {
   // MARK: - UI Refresh
   fileprivate func loadUIFromPost() {
     self.titleTextField.text  = self.viewModel.currentPost.title
-    //TODO: send body to JS
+    self.editorView.setContent(html: self.viewModel.currentPost.body)
   }
   
   // MARK: - Keyboard Handling
@@ -416,7 +417,8 @@ extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePi
 //MARK: - DraftsViewControllerDelegate Implementation
 extension ContentEditorViewController: DraftsViewControllerDelegate {
   func drafts(viewController: DraftsViewController, didRequestEdit draft: CandidatePost) {
-    //TODO: Set the candidate post and reload the editor
+    self.viewModel.set(draft)
+    self.loadUIFromPost()
     self.navigationController?.dismiss(animated: true, completion: nil)
   }
 

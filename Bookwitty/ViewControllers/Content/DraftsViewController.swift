@@ -20,12 +20,15 @@ class DraftsViewController: ASViewController<ASTableNode> {
   fileprivate let loaderNode: LoaderNode
   fileprivate var loadingStatus: LoadingStatus = .none
 
+  fileprivate let refreshController: UIRefreshControl
+
   let viewModel = DraftsViewModel()
 
   weak var delegate: DraftsViewControllerDelegate? = nil
 
   init() {
     loaderNode = LoaderNode()
+    refreshController = UIRefreshControl()
 
     tableNode = ASTableNode()
     super.init(node: tableNode)
@@ -42,6 +45,9 @@ class DraftsViewController: ASViewController<ASTableNode> {
     setupNavigationBarButtons()
     applyTheme()
     loadDrafts()
+
+    tableNode.view.addSubview(refreshController)
+    refreshController.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
   }
 
   fileprivate func initializeComponents() {
@@ -70,6 +76,10 @@ class DraftsViewController: ASViewController<ASTableNode> {
     viewModel.loadDrafts { (success: Bool, error: BookwittyAPIError?) in
       self.loadingStatus = .none
       self.tableNode.reloadData()
+
+      if self.refreshController.isRefreshing {
+        self.refreshController.endRefreshing()
+      }
     }
   }
 }
@@ -107,6 +117,27 @@ extension DraftsViewController {
 extension DraftsViewController: Themeable {
   func applyTheme() {
     tableNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+  }
+}
+
+//MARK: -
+extension DraftsViewController {
+  @objc
+  fileprivate func pullToRefresh() {
+    guard refreshController.isRefreshing else {
+      //Making sure that only UIRefreshControl will trigger this on valueChanged
+      return
+    }
+
+    guard loadingStatus == .none else {
+      refreshController.endRefreshing()
+      //Making sure that only UIRefreshControl will trigger this on valueChanged
+      return
+    }
+
+    self.loadingStatus = .reloading
+    self.refreshController.beginRefreshing()
+    loadDrafts()
   }
 }
 
