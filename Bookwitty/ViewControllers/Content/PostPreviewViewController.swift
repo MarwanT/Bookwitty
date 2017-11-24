@@ -117,7 +117,9 @@ extension PostPreviewViewController {
   @objc fileprivate func doneBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
     _ = titleNode.resignFirstResponder()
     _ = descriptionNode.resignFirstResponder()
-    self.delegate?.postPreview(viewController: self, didFinishPreviewing: viewModel.candidatePost)
+    DispatchQueue.main.async {
+      self.delegate?.postPreview(viewController: self, didFinishPreviewing: self.viewModel.candidatePost)
+    }
   }
 }
 
