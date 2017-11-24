@@ -53,6 +53,10 @@ class GetStarted: ASDisplayNode {
     let faecbookButtonNode = createButtonNode(text: Strings.continue_facebook(), textColor: buttonTextColor, backgroundColor: buttonBackgroundColor, icon: #imageLiteral(resourceName: "comment"), iconSize: iconSize, iconTintColor: iconTintColor)
     let emailButtonNode = createButtonNode(text: Strings.continue_email(), textColor: buttonTextColor, backgroundColor: buttonBackgroundColor, icon: #imageLiteral(resourceName: "comment"), iconSize: iconSize, iconTintColor: iconTintColor)
 
+    googleButtonNode.addTarget(self, action: #selector(self.continueWithGoogleTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    faecbookButtonNode.addTarget(self, action: #selector(self.continueWithFacebookTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    emailButtonNode.addTarget(self, action: #selector(self.continueWithEmailTouchUpInside(_:)), forControlEvents: .touchUpInside)
+
     let loginStackSpec = ASStackLayoutSpec(direction: .vertical,
                                           spacing: configuration.margin,
                                           justifyContent: .center,
@@ -174,5 +178,20 @@ extension GetStarted {
     let iconSize: CGSize = CGSize(width: 40.0, height: 40.0)
     let iconTintColor = ThemeManager.shared.currentTheme.colorNumber2()
     let vInset: CGFloat = 50.0
+  }
+}
+
+//MARK: - Actions
+extension GetStarted {
+  @objc fileprivate func continueWithGoogleTouchUpInside(_ sender: ASControlNode) {
+    //TODO: Empty Implementation
+  }
+
+  @objc fileprivate func continueWithFacebookTouchUpInside(_ sender: ASControlNode) {
+    //TODO: Empty Implementation
+  }
+
+  @objc fileprivate func continueWithEmailTouchUpInside(_ sender: ASControlNode) {
+    //TODO: Empty Implementation
   }
 }
