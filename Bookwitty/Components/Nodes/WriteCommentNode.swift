@@ -26,10 +26,10 @@ class WriteCommentNode: ASCellNode {
     textNode = ASEditableTextNode()
     overlayNode = ASControlNode()
     super.init()
-    setupNode()
+    initialize()
   }
   
-  private func setupNode() {
+  private func initialize() {
     automaticallyManagesSubnodes = true
     
     imageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
@@ -46,6 +46,8 @@ class WriteCommentNode: ASCellNode {
     textNode.textView.isEditable = false
   }
   
+  // MARK: LAYOUT
+  //=============
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     textNode.borderColor = configuration.textNodeBorderColor.cgColor
     textNode.borderWidth = configuration.textNodeBorderWidth
@@ -60,12 +62,14 @@ class WriteCommentNode: ASCellNode {
     return ASOverlayLayoutSpec(child: contentInsetsSpec, overlay: overlayNode)
   }
   
-  // MARK: Actions
+  // MARK: ACTIONS
+  //==============
   func didTapNode(_ sender: Any) {
     delegate?.writeCommentNodeDidTap(self)
   }
   
-  // MARK: Data Setters
+  // MARK: APIs
+  //===========
   var imageURL: URL?  {
     didSet {
       imageNode.url = imageURL
@@ -90,6 +94,10 @@ class WriteCommentNode: ASCellNode {
   }
 }
 
+
+
+// MARK: - CONFIGURATION
+                                    //*******\\
 extension WriteCommentNode {
   struct Configuration {
     private static var subnodesSpace = ThemeManager.shared.currentTheme.cardInternalMargin()
