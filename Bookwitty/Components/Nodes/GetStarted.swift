@@ -37,6 +37,8 @@ class GetStarted: ASDisplayNode {
     automaticallyManagesSubnodes = true
     textNode = createTextNode()
     registerNode = createRegisterNode()
+
+    registerNode.addTarget(self, action: #selector(self.registerNodeTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -192,6 +194,10 @@ extension GetStarted {
   }
 
   @objc fileprivate func continueWithEmailTouchUpInside(_ sender: ASControlNode) {
+    //TODO: Empty Implementation
+  }
+
+  @objc fileprivate func registerNodeTouchUpInside(_ sender: ASControlNode) {
     //TODO: Empty Implementation
   }
 }
