@@ -18,8 +18,8 @@ final class PostPreviewViewModel {
   }
   
   func postValues() -> (title: String?, shortDescription: String?, penName: String?, url: URL?, imageUrl: String?) {
-    let title = candidatePost.title
-    let shortDescription = candidatePost.shortDescription
+    let title = candidatePost.title ?? defaultValues.title
+    let shortDescription = candidatePost.shortDescription ?? defaultValues.description
     let penName = candidatePost.penName?.name
     let url = candidatePost.penName?.url
     let imageUrl = candidatePost.imageUrl
