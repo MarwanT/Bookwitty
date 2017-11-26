@@ -14,9 +14,12 @@ protocol WriteCommentNodeDelegate: class {
 
 class WriteCommentNode: ASCellNode {
   fileprivate let topSeparator: ASDisplayNode
+  fileprivate let contentNode: ASDisplayNode
   fileprivate let imageNode: ASNetworkImageNode
   fileprivate let textNode: ASEditableTextNode
   fileprivate let overlayNode: ASControlNode
+  
+  private(set) var mode: DisplayMode = .normal
   
   var configuration = Configuration()
   
@@ -24,6 +27,7 @@ class WriteCommentNode: ASCellNode {
   
   override init() {
     topSeparator = ASDisplayNode()
+    contentNode = ASDisplayNode()
     imageNode = ASNetworkImageNode()
     textNode = ASEditableTextNode()
     overlayNode = ASControlNode()
@@ -32,8 +36,16 @@ class WriteCommentNode: ASCellNode {
     applyTheme()
   }
   
+  func initialize(with mode: DisplayMode) {
+    self.mode = mode
+    setNeedsLayout()
+  }
+  
   private func initialize() {
     automaticallyManagesSubnodes = true
+    
+    contentNode.automaticallyManagesSubnodes = true
+    contentNode.style.flexGrow = 1.0
     
     topSeparator.style.height = ASDimensionMake(1)
     topSeparator.backgroundColor = configuration.separatorColor
@@ -45,7 +57,6 @@ class WriteCommentNode: ASCellNode {
     overlayNode.addTarget(self, action: #selector(didTapNode(_:)), forControlEvents: .touchUpInside)
     
     placeholder = Strings.what_are_your_thoughts()
-    textNode.style.flexGrow = 1.0
   }
   
   override func didLoad() {
@@ -55,19 +66,53 @@ class WriteCommentNode: ASCellNode {
   // MARK: LAYOUT
   //=============
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    textNode.borderColor = configuration.borderColor.cgColor
-    textNode.borderWidth = configuration.borderWidth
+    // Set The content border if needed
+    switch mode {
+    case .normal:
+      contentNode.borderWidth = 0
+      contentNode.borderColor = nil
+    case .bordered:
+      contentNode.borderWidth = configuration.borderWidth
+      contentNode.borderColor = configuration.borderColor.cgColor
+      contentNode.cornerRadius = 2.0
+    }
     
-    textNode.style.minHeight = ASDimensionMake(configuration.textFieldHeight)
+    // Set image node size
+    imageNode.style.preferredSize = configuration.imageSize
+    
+    // Set the text node content insets
     textNode.textContainerInset = configuration.textFieldContentInset
     
-    imageNode.style.preferredSize = configuration.imageSize
-    let textInsetsSpec = ASInsetLayoutSpec(insets: configuration.textFieldInsets, child: textNode)
-    let contentSpec = ASStackLayoutSpec(
-      direction: .horizontal, spacing: 0, justifyContent: .start,
-      alignItems: configuration.alignItems, children: [imageNode, textInsetsSpec])
-    let contentInsetsSpec = ASInsetLayoutSpec(insets: configuration.externalInsets, child: contentSpec)
-    return ASOverlayLayoutSpec(child: contentInsetsSpec, overlay: overlayNode)
+    // Layout the image and text nodes in the content node
+    contentNode.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
+      let textInsetsSpec = ASInsetLayoutSpec(
+        insets: self.configuration.textFieldInsets, child: self.textNode)
+      let mainStack = ASStackLayoutSpec(
+        direction: .horizontal, spacing: 0, justifyContent: .start,
+        alignItems: .center, children: [self.imageNode, textInsetsSpec])
+      let mainStackInsetsSpec = ASInsetLayoutSpec(
+        insets: self.configuration.internalInsets, child: mainStack)
+      return mainStackInsetsSpec
+    }
+    
+    // Add insets to the content
+    let contentInsets = ASInsetLayoutSpec(insets: configuration.externalInsets, child: contentNode)
+    
+    // Overlay all the subnodes with a touch capacitive node
+    let overlaySpec = ASOverlayLayoutSpec(child: contentInsets, overlay: overlayNode)
+    
+    // Add the separator if configured
+    let rootLayoutSpec: ASLayoutSpec
+    if configuration.displayTopSeparator {
+      rootLayoutSpec = ASStackLayoutSpec(
+        direction: .vertical, spacing: 0, justifyContent: .start,
+        alignItems: .stretch, children: [topSeparator, overlaySpec])
+    } else {
+      rootLayoutSpec = overlaySpec
+    }
+    
+    // Ready!
+    return rootLayoutSpec
   }
   
   // MARK: ACTIONS
@@ -110,6 +155,15 @@ extension WriteCommentNode: Themeable {
   }
 }
 
+// MARK: - DISPLAY MODE
+                                    //*******\\
+extension WriteCommentNode {
+  enum DisplayMode {
+    case normal
+    case bordered
+  }
+}
+
 // MARK: - CONFIGURATION
                                     //*******\\
 extension WriteCommentNode {
@@ -120,7 +174,6 @@ extension WriteCommentNode {
     var placeholderTextColor: UIColor
     var textColor: UIColor
     var borderWidth: CGFloat
-    var textFieldHeight: CGFloat
     var placeholderText: String
     var displayTopSeparator: Bool
     var externalInsets: UIEdgeInsets
@@ -128,7 +181,6 @@ extension WriteCommentNode {
     var textFieldInsets: UIEdgeInsets
     var textFieldContentInset: UIEdgeInsets
     var imageSize: CGSize
-    var alignItems: ASStackLayoutAlignItems
     
     init() {
       separatorColor = theme.defaultSeparatorColor()
@@ -137,27 +189,18 @@ extension WriteCommentNode {
       placeholderText = Strings.what_are_your_thoughts()
       displayTopSeparator = false
       imageSize = CGSize(width: 45.0, height: 45.0)
-      textFieldHeight = 45.0
       textColor = theme.defaultTextColor()
-      placeholderTextColor = theme.defaultSeparatorColor()
-      alignItems = .stretch
+      placeholderTextColor = theme.defaultGrayedTextColor()
       externalInsets = UIEdgeInsets(
-        top: theme.cardInternalMargin(),
-        left: theme.cardInternalMargin(),
-        bottom: theme.cardInternalMargin(),
-        right: theme.cardInternalMargin())
+        top: theme.cardExternalMargin(),
+        left: theme.cardExternalMargin(),
+        bottom: theme.cardExternalMargin(),
+        right: theme.cardExternalMargin())
       internalInsets = UIEdgeInsets(
-        top: 0, left: theme.cardInternalMargin(), bottom: 0, right: 0)
+        top: 8, left: 8, bottom: 8, right: 8)
       textFieldInsets = UIEdgeInsets(
-        top: theme.cardInternalMargin(),
-        left: theme.cardInternalMargin(),
-        bottom: theme.cardInternalMargin(),
-        right: theme.cardInternalMargin())
-      textFieldContentInset = UIEdgeInsets(
-        top: theme.cardInternalMargin(),
-        left: theme.cardInternalMargin(),
-        bottom: theme.cardInternalMargin(),
-        right: theme.cardInternalMargin())
+        top: 0, left: 8, bottom: 0, right: 0)
+      textFieldContentInset = UIEdgeInsets.zero
     }
   }
 }
