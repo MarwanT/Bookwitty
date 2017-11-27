@@ -301,12 +301,13 @@ extension CommentsManager {
     case api(BookwittyAPIError?)
     case missingPostId
     case unidentified
+    case missingResource
     
     var title: String? {
       switch self {
       case .publishEmptyComment:
         return Strings.publishEmptyCommentErrorTitle()
-      case .api, .missingPostId, .unidentified:
+      case .api, .missingPostId, .unidentified, .missingResource:
         return Strings.publishCommentGeneralErrorTitle()
       }
     }
@@ -315,7 +316,7 @@ extension CommentsManager {
       switch self {
       case .publishEmptyComment:
         return Strings.publishEmptyCommentErrorMessage()
-      case .api, .missingPostId, .unidentified:
+      case .api, .missingPostId, .unidentified, .missingResource:
         return Strings.publishCommentGeneralErrorMessage()
       }
     }
