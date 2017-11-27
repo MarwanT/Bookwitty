@@ -43,6 +43,10 @@ class RichLinkPreviewViewController: UIViewController {
   @IBOutlet var audioDescriptionLabel: UILabel!
   @IBOutlet var audioHostLabel: UILabel!
 
+  //Error Preview
+  @IBOutlet var errorPreview: UIView!
+  @IBOutlet var errorLabel: UILabel!
+
   fileprivate let viewModel = RichLinkPreviewViewModel()
   var mode: Mode = .link
 
@@ -74,6 +78,9 @@ class RichLinkPreviewViewController: UIViewController {
     audioTitleLabel.text = nil
     audioDescriptionLabel.text = nil
     audioHostLabel.text = nil
+
+    errorPreview.isHidden = true
+    errorLabel.text = nil
 
     viewModel.response = nil
 
@@ -176,7 +183,12 @@ extension RichLinkPreviewViewController {
     initializeComponents()
     setupNavigationBarButtons()
     
-    guard !textView.text.isEmpty, let url = URL(string: textView.text) else {
+    guard !textView.text.isEmpty else {
+      return
+    }
+
+    guard let url = URL(string: textView.text) else {
+      fillError()
       return
     }
 
@@ -184,11 +196,12 @@ extension RichLinkPreviewViewController {
       defer {
         DispatchQueue.main.async {
           self.showLinkPreview()
+          self.fillError()
           self.setupNavigationBarButtons()
         }
       }
 
-      guard response?.embedUrl != nil else {
+      guard response?.html != nil else {
         self.viewModel.response = nil
         return
       }
@@ -241,6 +254,15 @@ extension RichLinkPreviewViewController {
     audioHostLabel.text = response.embedUrl?.host
 
     audioPreview.isHidden = false
+  }
+
+  fileprivate func fillError() {
+    guard viewModel.response == nil else {
+      return
+    }
+
+    errorLabel.text = Strings.invalid_url()
+    errorPreview.isHidden = false
   }
 }
 
