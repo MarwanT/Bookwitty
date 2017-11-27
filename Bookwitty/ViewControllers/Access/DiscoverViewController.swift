@@ -1099,37 +1099,4 @@ extension DiscoverViewController: CommentComposerViewControllerDelegate {
   func commentComposerCancel(_ viewController: CommentComposerViewController) {
     dismiss(animated: true, completion: nil)
   }
-
-  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, resource: ModelCommonProperties?, parentCommentId: String?) {
-    guard let postId = resource?.id else {
-      _ = viewController.becomeFirstResponder()
-      return
-    }
-
-    SwiftLoader.show(animated: true)
-    let commentManager = CommentsManager()
-    commentManager.initialize(resource: resource)
-    commentManager.publishComment(content: content, parentCommentId: nil) {
-      (success: Bool, comment: Comment?, error: CommentsManager.Error?) in
-      SwiftLoader.hide()
-      guard success else {
-        guard let error = error else { return }
-        self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
-          _ in
-          _ = viewController.becomeFirstResponder()
-        })
-        return
-      }
-
-      if let resource = DataManager.shared.fetchResource(with: postId), let comment = comment {
-        var topComments = (resource as? ModelCommonProperties)?.topComments ?? []
-        topComments.append(comment)
-        (resource as? ModelCommonProperties)?.topComments = topComments
-        DataManager.shared.update(resource: resource)
-      }
-
-      self.dismiss(animated: true, completion: nil)
-    }
-    dismiss(animated: true, completion: nil)
-  }
 }

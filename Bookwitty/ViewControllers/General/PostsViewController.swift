@@ -653,29 +653,4 @@ extension PostsViewController: CommentComposerViewControllerDelegate {
   func commentComposerCancel(_ viewController: CommentComposerViewController) {
     dismiss(animated: true, completion: nil)
   }
-
-  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, resource: ModelCommonProperties?, parentCommentId: String?) {
-    guard let resource = resource else {
-      _ = viewController.becomeFirstResponder()
-      return
-    }
-
-    SwiftLoader.show(animated: true)
-    let commentManager = CommentsManager()
-    commentManager.initialize(resource: resource)
-    commentManager.publishComment(content: content, parentCommentId: nil) {
-      (success: Bool, comment: Comment?, error: CommentsManager.Error?) in
-      SwiftLoader.hide()
-      guard success else {
-        guard let error = error else { return }
-        self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
-          _ in
-          _ = viewController.becomeFirstResponder()
-        })
-        return
-      }
-      self.dismiss(animated: true, completion: nil)
-    }
-    dismiss(animated: true, completion: nil)
-  }
 }

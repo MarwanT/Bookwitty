@@ -927,34 +927,4 @@ extension ProfileDetailsViewController: CommentComposerViewControllerDelegate {
   func commentComposerCancel(_ viewController: CommentComposerViewController) {
     dismiss(animated: true, completion: nil)
   }
-
-  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, resource: ModelCommonProperties?, parentCommentId: String?) {
-    SwiftLoader.show(animated: true)
-    let commentManager = CommentsManager()
-    commentManager.initialize(resource: resource)
-    commentManager.publishComment(content: content, parentCommentId: nil) {
-      (success: Bool, comment: Comment?, error: CommentsManager.Error?) in
-      SwiftLoader.hide()
-      guard success else {
-        guard let error = error else { return }
-        self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
-          _ in
-          _ = viewController.becomeFirstResponder()
-        })
-        return
-      }
-
-      if let resource = resource, let comment = comment {
-        var topComments = resource.topComments ?? []
-        topComments.append(comment)
-        resource.topComments = topComments
-        if let castedResource = resource as? ModelResource {
-          DataManager.shared.update(resource: castedResource)
-        }
-      }
-
-      self.dismiss(animated: true, completion: nil)
-    }
-    dismiss(animated: true, completion: nil)
-  }
 }

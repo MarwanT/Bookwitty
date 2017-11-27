@@ -335,24 +335,4 @@ extension CardDetailsViewController: CommentComposerViewControllerDelegate {
   func commentComposerCancel(_ viewController: CommentComposerViewController) {
     dismiss(animated: true, completion: nil)
   }
-  
-  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, resource: ModelCommonProperties?, parentCommentId: String?) {
-    SwiftLoader.show(animated: true)
-    commentsNode?.publishComment(content: content, parentCommentId: parentCommentId) {
-      (success, error) in
-      SwiftLoader.hide()
-      guard success else {
-        if let error = error {
-          self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
-            (_) in
-            // Restart editing the comment
-            _ = viewController.becomeFirstResponder()
-          })
-        }
-        return
-      }
-      
-      self.dismiss(animated: true, completion: nil)
-    }
-  }
 }
