@@ -58,8 +58,8 @@ extension CommentsViewController: CommentsNodeDelegate {
       pushCommentsViewControllerForReplies(comment: comment, resource: resource)
     case .viewAllComments(let commentsManager):
       break
-    case .writeComment(let parentCommentIdentifier, _):
-      CommentComposerViewController.show(from: self, delegate: self, resource: nil, parentCommentId: parentCommentIdentifier)
+    case .writeComment(let parentCommentIdentifier, let resource):
+      CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentId: parentCommentIdentifier)
     case .commentAction(let comment, let action, let resource):
       switch action {
       case .wit:
@@ -67,7 +67,7 @@ extension CommentsViewController: CommentsNodeDelegate {
       case .unwit:
         commentsNode.unwit(comment: comment, completion: nil)
       case .reply:
-        CommentComposerViewController.show(from: self, delegate: self, resource: nil, parentCommentId: comment.id)
+        CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentId: comment.id)
       default:
         break
       }

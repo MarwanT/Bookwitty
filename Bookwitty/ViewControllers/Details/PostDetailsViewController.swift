@@ -429,8 +429,8 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
       break
     case .viewAllComments(let commentsManager):
       pushCommentsViewController(with: commentsManager)
-    case .writeComment(let parentCommentIdentifier, _):
-      CommentComposerViewController.show(from: self, delegate: self, resource: nil, parentCommentId: parentCommentIdentifier)
+    case .writeComment(let parentCommentIdentifier, let resource):
+      CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentId: parentCommentIdentifier)
     case .commentAction(let comment, let action, let resource):
       switch action {
       case .wit:
@@ -444,7 +444,7 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
           didFinishAction?(success)
         })
       case .reply:
-        CommentComposerViewController.show(from: self, delegate: self, resource: nil, parentCommentId: comment.id)
+        CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentId: comment.id)
       default:
         break
       }
