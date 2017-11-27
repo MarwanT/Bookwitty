@@ -145,6 +145,16 @@ class WriteCommentNode: ASCellNode {
       setNeedsLayout()
     }
   }
+  
+  /// Calculate the height based on the image height
+  /// TODO: Calculate the max height by basing the calculation on the text node height
+  var minCalculatedHeight: CGFloat {
+    var calculatedHeight = configuration.imageSize.height + configuration.internalInsets.top + configuration.internalInsets.bottom + configuration.externalInsets.top + configuration.externalInsets.bottom
+    if configuration.displayTopSeparator {
+      calculatedHeight += 1
+    }
+    return calculatedHeight
+  }
 }
 
 // MARK: - THEMEABLE PROTOCOL
