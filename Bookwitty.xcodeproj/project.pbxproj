@@ -184,6 +184,7 @@
 		59CB4DF11EE0600800E7A60B /* WriteCommentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB4DF01EE0600800E7A60B /* WriteCommentNode.swift */; };
 		59CB4DF31EE59ABD00E7A60B /* Details.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59CB4DF21EE59ABD00E7A60B /* Details.storyboard */; };
 		59CB4DF51EE59BAD00E7A60B /* CommentComposerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB4DF41EE59BAD00E7A60B /* CommentComposerViewController.swift */; };
+		59CB6EA61FC6F88400FAFDD9 /* HighlightNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CB6EA51FC6F88400FAFDD9 /* HighlightNode.swift */; };
 		59CBE4F81E8090280068C7AD /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CBE4F71E8090280068C7AD /* AppError.swift */; };
 		59CBE4FA1E8094070068C7AD /* ErrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CBE4F91E8094070068C7AD /* ErrorManager.swift */; };
 		59CF3F821ECF3332002A5821 /* IntroductoryBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CF3F811ECF3332002A5821 /* IntroductoryBanner.swift */; };
@@ -496,6 +497,7 @@
 		59CB4DF01EE0600800E7A60B /* WriteCommentNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WriteCommentNode.swift; sourceTree = "<group>"; };
 		59CB4DF21EE59ABD00E7A60B /* Details.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Details.storyboard; sourceTree = "<group>"; };
 		59CB4DF41EE59BAD00E7A60B /* CommentComposerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentComposerViewController.swift; sourceTree = "<group>"; };
+		59CB6EA51FC6F88400FAFDD9 /* HighlightNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightNode.swift; sourceTree = "<group>"; };
 		59CBE4F71E8090280068C7AD /* AppError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		59CBE4F91E8094070068C7AD /* ErrorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorManager.swift; sourceTree = "<group>"; };
 		59CF3F811ECF3332002A5821 /* IntroductoryBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroductoryBanner.swift; sourceTree = "<group>"; };
@@ -1018,6 +1020,7 @@
 				590E30011EDC1A68006C6D5C /* CommentNode.swift */,
 				59CB4DE61EDDADA800E7A60B /* CommentTreeNode.swift */,
 				59CB4DEC1EDEA49C00E7A60B /* CommentsNode.swift */,
+				59CB6EA51FC6F88400FAFDD9 /* HighlightNode.swift */,
 				59CB4DF01EE0600800E7A60B /* WriteCommentNode.swift */,
 				56C54C671F05092000C5FE85 /* CommentCompactNode.swift */,
 				56F49E121F42FF8C004FFAAD /* TagNode.swift */,
@@ -1878,6 +1881,7 @@
 				5945FACB1E6476A30010CF77 /* CategoryViewModel.swift in Sources */,
 				59DA47641E3B7A9B00BA90A5 /* TutorialPageViewController.swift in Sources */,
 				59DA47571E3A65A600BA90A5 /* Storyboard.swift in Sources */,
+				59CB6EA61FC6F88400FAFDD9 /* HighlightNode.swift in Sources */,
 				564EEC0A1E70194100700474 /* TopicViewModel.swift in Sources */,
 				594290361E548FA10006B2F1 /* BookTableViewCell.swift in Sources */,
 				59EC5BA71E6C5987006E1CB9 /* BookDetailsHeaderNode.swift in Sources */,

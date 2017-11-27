@@ -11,7 +11,7 @@ import DTCoreText
 
 protocol CommentNodeDelegate: class {
   func commentNode(_ node: CommentNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?)
-  func commentNodeShouldUpdateLayout(_ node: CommentNode)
+  func commentNodeUpdateLayout(_ node: CommentNode, forExpandedState state: DynamicCommentMessageNode.DynamicMode)
 }
 
 class CommentNode: ASCellNode {
@@ -19,7 +19,6 @@ class CommentNode: ASCellNode {
   fileprivate let fullNameNode: ASTextNode
   fileprivate let dateNode: ASTextNode
   fileprivate let messageNode: DynamicCommentMessageNode
-  fileprivate let actionBar: CardActionBarNode
   
   var mode = DisplayMode.normal {
     didSet {
@@ -41,7 +40,6 @@ class CommentNode: ASCellNode {
     fullNameNode = ASTextNode()
     dateNode = ASTextNode()
     messageNode = DynamicCommentMessageNode()
-    actionBar = CardActionBarNode()
     super.init()
     setupNode()
   }
@@ -54,19 +52,10 @@ class CommentNode: ASCellNode {
       configuration.imageBorderWidth, configuration.imageBorderColor)
     imageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
     
-    actionBar.setup(forFollowingMode: false)
-    actionBar.configuration.externalHorizontalMargin = 0
-    actionBar.hideShareButton = true
-    actionBar.hideCommentButton = true
-    actionBar.hideMoreButton = true
-    actionBar.delegate = self
-    
     messageNode.delegate = self
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    actionBar.hideReplyButton = mode == .normal ? false : true
-    
     var infoStackElements = [ASLayoutElement]()
     
     // layout the header elements: Image - Name - Date
@@ -76,13 +65,7 @@ class CommentNode: ASCellNode {
     infoStackElements.append(headerSpec)
     
     // layout the body elements: Comment Message, Action Buttons
-    let actionBarTopSeparatorInsetSpec = ASInsetLayoutSpec(insets: configuration.separatorInsets, child: separator())
-    var bodyStackElements: [ASLayoutElement] = [messageNode, actionBarTopSeparatorInsetSpec, actionBar]
-    if !configuration.hideBottomActionBarSeparator {
-      bodyStackElements.append(separator())
-    }
-    let bodySpec = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: bodyStackElements)
-    let bodyInsetSpec = ASInsetLayoutSpec(insets: bodyInsets, child: bodySpec)
+    let bodyInsetSpec = ASInsetLayoutSpec(insets: bodyInsets, child: messageNode)
     infoStackElements.append(bodyInsetSpec)
     
     let infoStackSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: infoStackElements)
@@ -94,7 +77,7 @@ class CommentNode: ASCellNode {
     let bodyLeftMargin: CGFloat
     switch mode {
     case .normal:
-      bodyLeftMargin = configuration.indentationMargin
+      bodyLeftMargin = configuration.imageReservedHorizontalSpace
     default:
       bodyLeftMargin = 0
     }
@@ -128,7 +111,7 @@ class CommentNode: ASCellNode {
   var date: Date? {
     didSet {
       dateNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
-        .append(text: date?.relativelyFormatted() ?? "", color: configuration.defaultTextColor).attributedString
+        .append(text: date?.relativelyFormatted() ?? "", color: configuration.dateColor).attributedString
       setNeedsLayout()
     }
   }
@@ -140,8 +123,8 @@ class CommentNode: ASCellNode {
     }
   }
   
-  func setWitValue(witted: Bool) {
-    actionBar.setWitButton(witted: witted)
+  func setWitValue(witted: Bool, numberOfWits: Int?) {
+    messageNode.numberOfWits = numberOfWits
   }
   
   fileprivate func refreshMessageNodeForMode() {
@@ -155,15 +138,14 @@ extension CommentNode {
     private static var subnodesSpace = ThemeManager.shared.currentTheme.cardInternalMargin()
     var nameColor: UIColor = ThemeManager.shared.currentTheme.colorNumber19()
     var defaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    var dateColor: UIColor = ThemeManager.shared.currentTheme.colorNumber15()
     var imageSize: CGSize = CGSize(width: 45.0, height: 45.0)
     var imageBorderWidth: CGFloat = 0.0
     var imageBorderColor: UIColor? = nil
     var imageNodeInsets = UIEdgeInsetsMake(0, 0, 0, Configuration.subnodesSpace)
-    var separatorInsets = UIEdgeInsetsMake(10, 0, 0, 0)
     var bodyInsetTop: CGFloat = Configuration.subnodesSpace - 5
     var titleDateVerticalSpace: CGFloat = 5
-    var hideBottomActionBarSeparator = false
-    var indentationMargin: CGFloat {
+    var imageReservedHorizontalSpace: CGFloat {
       return imageSize.width + imageNodeInsets.right + imageNodeInsets.left
     }
   }
@@ -178,18 +160,11 @@ extension CommentNode {
   }
 }
 
-// MARK: Modes declaration
-extension CommentNode: CardActionBarNodeDelegate {
-  func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
-    delegate?.commentNode(self, didRequestAction: action, forSender: sender, didFinishAction: didFinishAction)
-  }
-}
-
 // MARK: Dynamic Comment Message Node Delegate
 extension CommentNode: DynamicCommentMessageNodeDelegate {
   func dynamicCommentMessageNodeDidTapMoreButton(_ node: DynamicCommentMessageNode) {
     node.toggleMode()
-    delegate?.commentNodeShouldUpdateLayout(self)
+    delegate?.commentNodeUpdateLayout(self, forExpandedState: node.mode)
   }
   
   func dynamicCommentMessageNodeDidTapWitsButton(_ node: DynamicCommentMessageNode) {

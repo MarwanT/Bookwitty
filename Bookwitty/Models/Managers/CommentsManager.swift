@@ -10,7 +10,7 @@ import Foundation
 import Moya
 
 class CommentsManager {
-  private(set) var postIdentifier: String?
+  private(set) var resource: ModelCommonProperties?
   private(set) var parentComment: Comment?
   
   fileprivate var comments = [Comment]()
@@ -22,8 +22,8 @@ class CommentsManager {
   
   /// The loaded comments are replies for the comment provided
   /// if available, otherwise the comments are the post main comments
-  func initialize(postIdentifier: String, comment: Comment? = nil, comments: [Comment]? = nil, nextPageURL: URL? = nil) {
-    self.postIdentifier = postIdentifier
+  func initialize(resource: ModelCommonProperties?, comment: Comment? = nil, comments: [Comment]? = nil, nextPageURL: URL? = nil) {
+    self.resource = resource
     self.parentComment = comment
     if let comments = comments {
       self.comments = comments
@@ -31,8 +31,20 @@ class CommentsManager {
     self.nextPageURL = nextPageURL
   }
   
+  var postIdentifier: String? {
+    return resource?.id
+  }
+  
   var numberOfComments: Int {
     return comments.count
+  }
+  
+  var totalNumberOfComments: Int {
+    return resource?.counts?.comments ?? 0
+  }
+  
+  var totalNumberOfCommentors: Int {
+    return resource?.counts?.commenters ?? 0
   }
   
   func comment(at index: Int) -> Comment? {
@@ -55,12 +67,8 @@ class CommentsManager {
   }
   
   func clone() -> CommentsManager? {
-    guard let postIdentifier = postIdentifier else {
-      return nil
-    }
-    
-    var manager = CommentsManager()
-    manager.initialize(postIdentifier: postIdentifier, comment: parentComment, comments: comments, nextPageURL: nextPageURL)
+    let manager = CommentsManager()
+    manager.initialize(resource: resource, comment: parentComment, comments: comments, nextPageURL: nextPageURL)
     return manager
   }
   
@@ -162,7 +170,7 @@ extension CommentsManager {
   }
   
   func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ comment: Comment?, _ error: CommentsManager.Error?) -> Void) {
-    guard let postIdentifier = postIdentifier else {
+    guard let postIdentifier = resource?.id else {
       completion(false, nil, CommentsManager.Error.missingPostId)
       return
     }
@@ -183,9 +191,12 @@ extension CommentsManager {
       }
       
       // Do additional logic here if necessary
+      guard let resource = self.resource else {
+        return
+      }
       NotificationCenter.default.post(
         name: CommentsManager.notificationName(for: postIdentifier),
-        object: (CommentsNode.Action.writeComment(parentCommentIdentifier: nil, postId: postIdentifier), comment))
+        object: (CommentsNode.Action.writeComment(parentCommentIdentifier: nil, resource: resource), comment))
     })
   }
   
