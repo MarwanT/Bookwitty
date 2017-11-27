@@ -288,6 +288,8 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
       case Section.write.rawValue:
         let writeCommentNode = WriteCommentNode()
         writeCommentNode.initialize(with: .bordered)
+        writeCommentNode.configuration.externalInsets.top = 25
+        writeCommentNode.configuration.externalInsets.bottom = 15
         writeCommentNode.imageURL = URL(string: UserManager.shared.defaultPenName?.avatarUrl ?? "")
         writeCommentNode.delegate = self
         return writeCommentNode
