@@ -82,6 +82,7 @@ extension UIViewController {
 
     let commentsVC = CommentsViewController()
     commentsVC.initialize(with: commentsManager)
+    commentsVC.hidesBottomBarWhenPushed = true
     self.navigationController?.pushViewController(commentsVC, animated: true)
   }
 
