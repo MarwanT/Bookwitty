@@ -74,8 +74,8 @@ class GetStarted: ASDisplayNode {
     children.append(registerNode)
 
     let verticalStackSpec = ASStackLayoutSpec(direction: .vertical,
-                                              justifyContent: .start,
                                               spacing: configuration.margin,
+                                              justifyContent: .spaceAround,
                                               alignItems: .stretch,
                                               children: children)
 
