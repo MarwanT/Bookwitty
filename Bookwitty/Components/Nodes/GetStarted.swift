@@ -154,6 +154,7 @@ class GetStarted: ASDisplayNode {
       let textNode = ASTextNode()
       textNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption1)
         .append(text: Strings.create_your_account(), color: ThemeManager.shared.currentTheme.defaultButtonColor())
+        .applyParagraphStyling(alignment: .center)
         .attributedString
 
       textNode.style.flexGrow = 1.0
