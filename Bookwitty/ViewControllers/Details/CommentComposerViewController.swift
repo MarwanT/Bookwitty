@@ -10,6 +10,8 @@ import UIKit
 
 protocol CommentComposerViewControllerDelegate: class {
   func commentComposerCancel(_ viewController: CommentComposerViewController)
+  func commentComposerWillBeginPublishingComment(_ viewController: CommentComposerViewController)
+  func commentComposerDidFinishPublishingComment(_ viewController: CommentComposerViewController, success: Bool, comment: Comment?, resource: ModelCommonProperties?)
 }
 
 class CommentComposerViewController: UIViewController {
@@ -90,7 +92,7 @@ class CommentComposerViewController: UIViewController {
   
   func didTapPublish(_ sender: Any) {
     dismissKeyboard()
-//    delegate?.commentComposerPublish(self, content: textView.text, resource: resource, parentCommentId: parentCommentId)
+    publishComment()
 
     //MARK: [Analytics] Event
     guard let resource = commentsManager?.resource else { return }
@@ -127,6 +129,25 @@ class CommentComposerViewController: UIViewController {
                                                  action: .PublishComment,
                                                  name: name)
     Analytics.shared.send(event: event)
+  }
+  
+  func publishComment() {
+    guard let commentsManager = commentsManager else {
+      return
+    }
+    
+    delegate?.commentComposerWillBeginPublishingComment(self)
+    commentsManager.publishComment(content: textView.text, parentCommentId: commentsManager.parentComment?.id) {
+      (success, comment, error) in
+      if !success, let error = error {
+        self.showAlertWith(
+        title: error.title ?? "", message: error.message ?? "") { _ in
+          _ = self.becomeFirstResponder()
+        }
+      }
+      self.delegate?.commentComposerDidFinishPublishingComment(
+        self, success: success, comment: comment, resource: commentsManager.resource)
+    }
   }
   
   // MARK: - Helpers

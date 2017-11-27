@@ -1140,4 +1140,15 @@ extension PostDetailsViewController: CommentComposerViewControllerDelegate {
   func commentComposerCancel(_ viewController: CommentComposerViewController) {
     dismiss(animated: true, completion: nil)
   }
+  
+  func commentComposerWillBeginPublishingComment(_ viewController: CommentComposerViewController) {
+    SwiftLoader.show(animated: true)
+  }
+  
+  func commentComposerDidFinishPublishingComment(_ viewController: CommentComposerViewController, success: Bool, comment: Comment?, resource: ModelCommonProperties?) {
+    SwiftLoader.hide()
+    if success {
+      self.dismiss(animated: true, completion: nil)
+    }
+  }
 }
