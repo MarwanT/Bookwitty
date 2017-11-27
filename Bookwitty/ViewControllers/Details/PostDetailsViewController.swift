@@ -431,7 +431,7 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
       pushCommentsViewController(with: commentsManager)
     case .writeComment(let parentCommentIdentifier, _):
       CommentComposerViewController.show(from: self, delegate: self, resource: nil, parentCommentId: parentCommentIdentifier)
-    case .commentAction(let comment, let action):
+    case .commentAction(let comment, let action, let resource):
       switch action {
       case .wit:
         postDetailsNode.wit(comment: comment, completion: {

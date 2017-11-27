@@ -315,7 +315,7 @@ extension CardDetailsViewController: CommentsNodeDelegate {
       pushCommentsViewController(with: commentsManager)
     case .writeComment(let parentCommentIdentifier, _):
       CommentComposerViewController.show(from: self, delegate: self, resource: nil, parentCommentId: parentCommentIdentifier)
-    case .commentAction(let comment, let action):
+    case .commentAction(let comment, let action, let resource):
       switch action {
       case .wit:
         commentsNode.wit(comment: comment, completion: nil)

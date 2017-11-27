@@ -201,6 +201,11 @@ extension CommentsManager {
   }
   
   func wit(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+    guard let resource = self.resource else {
+      completion(false, CommentsManager.Error.missingResource)
+      return
+    }
+    
     guard let postIdentifier = postIdentifier else {
       completion(false, CommentsManager.Error.missingPostId)
       return
@@ -231,11 +236,16 @@ extension CommentsManager {
       self.wit(comment)
       NotificationCenter.default.post(
         name: CommentsManager.notificationName(for: postIdentifier),
-        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.wit), comment))
+        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.wit, resource: resource), comment))
     })
   }
   
   func unwit(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+    guard let resource = self.resource else {
+      completion(false, CommentsManager.Error.missingResource)
+      return
+    }
+    
     guard let postIdentifier = postIdentifier else {
       completion(false, CommentsManager.Error.missingPostId)
       return
@@ -266,7 +276,7 @@ extension CommentsManager {
       self.unwit(comment)
       NotificationCenter.default.post(
         name: CommentsManager.notificationName(for: postIdentifier),
-        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.unwit), comment))
+        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.unwit, resource: resource), comment))
     })
   }
 }
