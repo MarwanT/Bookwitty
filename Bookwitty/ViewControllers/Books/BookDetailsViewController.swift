@@ -497,7 +497,7 @@ extension BookDetailsViewController: BaseCardPostNodeDelegate {
       }
     case .comment:
       guard let resource = viewModel.resource(at: indexPath) else { return }
-      pushCommentsViewController(for: resource as? ModelCommonProperties)
+      pushCommentsViewController(for: resource)
       didFinishAction?(true)
     case .more:
       guard let resource = viewModel.resource(at: indexPath),

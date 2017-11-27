@@ -719,7 +719,7 @@ extension DiscoverViewController: BaseCardPostNodeDelegate {
       category = .Default
     }
 
-    let name: String = (resource as? ModelCommonProperties)?.title ?? ""
+    let name: String = resource.title ?? ""
     let event: Analytics.Event = Analytics.Event(category: category,
                                                  action: analyticsAction,
                                                  name: name)
