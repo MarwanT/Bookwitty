@@ -321,6 +321,12 @@ extension DefaultTheme {
     button.borderColor = color.cgColor
     button.style.height = ASDimensionMake(45)
   }
+  
+  func styleFlat(button: ASButtonNode) {
+    button.backgroundColor = UIColor.clear
+    button.clipsToBounds = true
+    button.style.height = ASDimensionMake(45)
+  }
 }
 
 // MARK: - Labels

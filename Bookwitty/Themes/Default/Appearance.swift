@@ -90,6 +90,7 @@ protocol ThemeButtonsStyle {
   func styleECommerceSecondaryButton(button: ASButtonNode)
   func stylePrimaryButton(button: ASButtonNode, withColor color: UIColor, highlightedColor: UIColor)
   func styleSecondaryButton(button: ASButtonNode, withColor color: UIColor, highlightedColor: UIColor)
+  func styleFlat(button: ASButtonNode)
 }
 
 // TODO: Needs to be revised

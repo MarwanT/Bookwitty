@@ -19,6 +19,7 @@ class CommentNode: ASCellNode {
   fileprivate let fullNameNode: ASTextNode
   fileprivate let dateNode: ASTextNode
   fileprivate let messageNode: DynamicCommentMessageNode
+  fileprivate let replyButton: ASButtonNode
   
   var mode = DisplayMode.normal {
     didSet {
@@ -40,8 +41,10 @@ class CommentNode: ASCellNode {
     fullNameNode = ASTextNode()
     dateNode = ASTextNode()
     messageNode = DynamicCommentMessageNode()
+    replyButton = ASButtonNode()
     super.init()
     setupNode()
+    applyTheme()
   }
   
   private func setupNode() {
@@ -53,22 +56,42 @@ class CommentNode: ASCellNode {
     imageNode.defaultImage = ThemeManager.shared.currentTheme.penNamePlaceholder
     
     messageNode.delegate = self
+    
+    replyButton.addTarget(
+      self, action: #selector(replyButtonTouchUpInside(_:)),
+      forControlEvents: .touchUpInside)
+    replyButtonTitle = Strings.reply().capitalized
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     var infoStackElements = [ASLayoutElement]()
     
     // layout the header elements: Image - Name - Date
-    let titleDateSpec = ASStackLayoutSpec(direction: .vertical, spacing: configuration.titleDateVerticalSpace, justifyContent: .start, alignItems: .start, children: [fullNameNode, dateNode])
-    let imageNodeInsetSpec = ASInsetLayoutSpec(insets: configuration.imageNodeInsets, child: imageNode)
-    let headerSpec = ASStackLayoutSpec(direction: .horizontal, spacing: 0, justifyContent: .start, alignItems: .center, children: [imageNodeInsetSpec, titleDateSpec])
+    let titleDateSpec = ASStackLayoutSpec(
+      direction: .vertical, spacing: configuration.titleDateVerticalSpace,
+      justifyContent: .start, alignItems: .start, children: [fullNameNode, dateNode])
+    let imageNodeInsetSpec = ASInsetLayoutSpec(
+      insets: configuration.imageNodeInsets, child: imageNode)
+    let headerSpec = ASStackLayoutSpec(
+      direction: .horizontal, spacing: 0, justifyContent: .start,
+      alignItems: .center, children: [imageNodeInsetSpec, titleDateSpec])
     infoStackElements.append(headerSpec)
     
-    // layout the body elements: Comment Message, Action Buttons
-    let bodyInsetSpec = ASInsetLayoutSpec(insets: bodyInsets, child: messageNode)
+    // layout the body elements: Comment Message, Reply Button
+    var bodyElements: [ASLayoutElement] = [messageNode]
+    if mode == .normal, messageNode.mode == .extended {
+      bodyElements.append(replyButton)
+    }
+    let bodyStack = ASStackLayoutSpec(
+      direction: .vertical, spacing: 0, justifyContent: .start,
+      alignItems: .start, children: bodyElements)
+    let bodyInsetSpec = ASInsetLayoutSpec(insets: bodyInsets, child: bodyStack)
     infoStackElements.append(bodyInsetSpec)
     
-    let infoStackSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0, justifyContent: .start, alignItems: .stretch, children: infoStackElements)
+    // Set The Main Stack Spec
+    let infoStackSpec = ASStackLayoutSpec(
+      direction: .vertical, spacing: 0, justifyContent: .start,
+      alignItems: .stretch, children: infoStackElements)
     
     return infoStackSpec
   }
@@ -92,6 +115,15 @@ class CommentNode: ASCellNode {
   }
   
   // MARK: Data Setters
+  fileprivate var replyButtonTitle: String? {
+    didSet {
+      replyButton.setTitle(
+        replyButtonTitle ?? "", with: FontDynamicType.subheadline.font,
+        with: configuration.replyButtonTextColor, for: UIControlState.normal)
+      setNeedsLayout()
+    }
+  }
+  
   var imageURL: URL?  {
     didSet {
       imageNode.url = imageURL
@@ -130,6 +162,14 @@ class CommentNode: ASCellNode {
   fileprivate func refreshMessageNodeForMode() {
     messageNode.mode = mode == .minimal ? .minimal : .collapsed
   }
+  
+  // MARK: ACTIONS
+  //==============
+  func replyButtonTouchUpInside(_ sender: ASButtonNode) {
+    delegate?.commentNode(
+      self, didRequestAction: CardActionBarNode.Action.reply,
+      forSender: sender, didFinishAction: nil)
+  }
 }
 
 // MARK: Configuration declaration
@@ -139,6 +179,7 @@ extension CommentNode {
     var nameColor: UIColor = ThemeManager.shared.currentTheme.colorNumber19()
     var defaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor()
     var dateColor: UIColor = ThemeManager.shared.currentTheme.colorNumber15()
+    var replyButtonTextColor: UIColor = ThemeManager.shared.currentTheme.defaultButtonColor()
     var imageSize: CGSize = CGSize(width: 45.0, height: 45.0)
     var imageBorderWidth: CGFloat = 0.0
     var imageBorderColor: UIColor? = nil
@@ -169,5 +210,13 @@ extension CommentNode: DynamicCommentMessageNodeDelegate {
   
   func dynamicCommentMessageNodeDidTapWitsButton(_ node: DynamicCommentMessageNode) {
     // TODO: open the list of witters
+  }
+}
+
+// MARK: Theme
+extension CommentNode: Themeable {
+  func applyTheme() {
+    let theme = ThemeManager.shared.currentTheme
+    theme.styleFlat(button: replyButton)
   }
 }
