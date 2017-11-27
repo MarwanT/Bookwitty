@@ -19,7 +19,7 @@ class CommentComposerViewController: UIViewController {
   @IBOutlet weak var contentView: UIView!
   @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
   
-  fileprivate var commentsManager: CommentsManager?
+  fileprivate var viewModel = CommentComposerViewModel()
   
   weak var delegate: CommentComposerViewControllerDelegate?
   
@@ -37,7 +37,7 @@ class CommentComposerViewController: UIViewController {
   }
   
   func initialize(with commentsManager: CommentsManager) {
-    self.commentsManager = commentsManager
+    viewModel.initialize(with: commentsManager)
   }
   
   private func setupNavigationItems() {
@@ -92,10 +92,12 @@ class CommentComposerViewController: UIViewController {
   
   func didTapPublish(_ sender: Any) {
     dismissKeyboard()
-    publishComment()
+    guard publishComment() else {
+      return
+    }
 
     //MARK: [Analytics] Event
-    guard let resource = commentsManager?.resource else { return }
+    guard let resource = viewModel.resource else { return }
     let category: Analytics.Category
     switch resource.registeredResourceType {
     case Image.resourceType:
@@ -131,14 +133,13 @@ class CommentComposerViewController: UIViewController {
     Analytics.shared.send(event: event)
   }
   
-  func publishComment() {
-    guard let commentsManager = commentsManager else {
-      return
+  func publishComment() -> Bool {
+    guard let text = textView.text, !text.isEmpty else {
+      return false
     }
     
     delegate?.commentComposerWillBeginPublishingComment(self)
-    commentsManager.publishComment(content: textView.text, parentCommentId: commentsManager.parentComment?.id) {
-      (success, comment, error) in
+    viewModel.publishComment(text: text) { (success, comment, error) in
       if !success, let error = error {
         self.showAlertWith(
         title: error.title ?? "", message: error.message ?? "") { _ in
@@ -146,8 +147,9 @@ class CommentComposerViewController: UIViewController {
         }
       }
       self.delegate?.commentComposerDidFinishPublishingComment(
-        self, success: success, comment: comment, resource: commentsManager.resource)
+        self, success: success, comment: comment, resource: self.viewModel.resource)
     }
+    return true
   }
   
   // MARK: - Helpers
