@@ -109,7 +109,11 @@ extension CommentsViewModel {
   }
   
   var totalNumberOfComments: Int? {
-    return resource?.counts?.comments
+    if isDisplayingACommentReplies {
+      return commentsManager?.parentComment?.counts?.children
+    } else {
+      return resource?.counts?.comments
+    }
   }
   
   var resource: ModelCommonProperties? {
