@@ -67,7 +67,9 @@ class DraftNode: ASCellNode {
                                                     justifyContent: .spaceBetween,
                                                     alignItems: .start,
                                                     children: [titleInsetLayoutSpec, descriptionInsetLayoutSpec, separatorNode])
-    
+
+    verticalStackLayoutSpec.style.flexShrink = 1.0
+
     return verticalStackLayoutSpec
   }
 }
