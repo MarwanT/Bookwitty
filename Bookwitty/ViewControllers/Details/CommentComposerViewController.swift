@@ -17,8 +17,7 @@ class CommentComposerViewController: UIViewController {
   @IBOutlet weak var contentView: UIView!
   @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
   
-  fileprivate var parentCommentId: String?
-  fileprivate var resource: ModelCommonProperties?
+  fileprivate var commentsManager: CommentsManager?
   
   weak var delegate: CommentComposerViewControllerDelegate?
   
@@ -35,9 +34,8 @@ class CommentComposerViewController: UIViewController {
     textView.becomeFirstResponder()
   }
   
-  func initialize(with resource: ModelCommonProperties?, parentCommentId: String?) {
-    self.resource = resource
-    self.parentCommentId = parentCommentId
+  func initialize(with commentsManager: CommentsManager) {
+    self.commentsManager = commentsManager
   }
   
   private func setupNavigationItems() {
@@ -95,7 +93,7 @@ class CommentComposerViewController: UIViewController {
 //    delegate?.commentComposerPublish(self, content: textView.text, resource: resource, parentCommentId: parentCommentId)
 
     //MARK: [Analytics] Event
-    guard let resource = resource else { return }
+    guard let resource = commentsManager?.resource else { return }
     let category: Analytics.Category
     switch resource.registeredResourceType {
     case Image.resourceType:
@@ -151,7 +149,7 @@ extension CommentComposerViewController: Themeable {
 extension CommentComposerViewController {
   class func show(from viewController: UIViewController, commentsManager: CommentsManager, delegate: CommentComposerViewControllerDelegate?) {
     let composeCommentVC = Storyboard.Details.instantiate(CommentComposerViewController.self)
-    composeCommentVC.initialize(with: commentsManager.resource, parentCommentId: commentsManager.parentComment?.id)
+    composeCommentVC.initialize(with: commentsManager)
     composeCommentVC.delegate = delegate
     
     let navigationController = UINavigationController(rootViewController: composeCommentVC)
