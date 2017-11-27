@@ -43,6 +43,9 @@ class ContentEditorViewModel  {
   }
   
   fileprivate func createContent() {
+    guard let body = self.currentPost.body, !body.isEmpty else {
+      return
+    }
     self.resetPreviousRequest()
     //WORKAROUND: the API doesn't create a content unless we send a title
     let contentTile = self.currentPost.title.isEmptyOrNil() ? "Untitled" : self.currentPost.title
