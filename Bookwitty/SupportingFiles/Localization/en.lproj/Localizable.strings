@@ -53,12 +53,16 @@
 "contact_us" = "Contact Us";
 "content" = "Content";
 "continue" = "Continue";
+"continue_email" = "Continue with email";
+"continue_facebook" = "Continue with Facebook";
+"continue_google" = "Continue with Google";
 "contributors" = "Contributors";
 "couldnt_load_selected_edition_message" = "We could not load selected edition!";
 "couldnt_load_selected_edition_title" = "Oooops";
 "couldnt_load_your_data" = "We could not load your data";
 "country" = "Country";
 "country_region" = "Country/Region";
+"create_your_account" = "Create your account using email";
 "create_new_pen_name" = "Create New Pen Name";
 "current_password" = "Current Password";
 "current_password_is_empty_error" = "Current password was left empty!";
@@ -107,6 +111,8 @@
 "format" = "Format";
 "free_shipping_internationally" = "Free shipping internationally";
 "get_started" = "Get started";
+"get_started_account_text" = "Update your profile or check the status of your orders";
+"get_started_newsfeed_text" = "Select people, topics and tags of interest to populate this section with content you like";
 "go_back" = "Go back";
 "height" = "Height";
 "help" = "Help";

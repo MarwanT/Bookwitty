@@ -53,12 +53,16 @@
 "contact_us" = "Contactez-nous";
 "content" = "Articles";
 "continue" = "Suivant";
+"continue_email" = "Continue with email";
+"continue_facebook" = "Continue with Facebook";
+"continue_google" = "Continue with Google";
 "contributors" = "Contributeurs";
 "couldnt_load_selected_edition_message" = "Oups, nous n'avons pas pu afficher cette édition";
 "couldnt_load_selected_edition_title" = "Oups...";
 "couldnt_load_your_data" = "Nous n'avons pas réussi à charger vos données";
 "country" = "Pays";
 "country_region" = "Région";
+"create_your_account" = "Create your account using email";
 "create_new_pen_name" = "Créer un nouveau pseudo";
 "current_password" = "Mot de passe actuel";
 "current_password_is_empty_error" = "Vous n'avez pas entré votre mot de passe";
@@ -107,6 +111,8 @@
 "format" = "Format";
 "free_shipping_internationally" = "Livraison gratuite où que vous soyez";
 "get_started" = "Débuter";
+"get_started_account_text" = "Update your profile or check the status of your orders";
+"get_started_newsfeed_text" = "Select people, topics and tags of interest to populate this section with content you like";
 "go_back" = "Go back";
 "height" = "Hauteur";
 "help" = "Aide";

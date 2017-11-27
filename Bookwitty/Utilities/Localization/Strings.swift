@@ -196,6 +196,18 @@ class Strings {
   static func `continue`() -> String {
     return localizedString(key: "continue")
   }
+
+  static func continue_email() -> String {
+    return localizedString(key: "continue_email")
+  }
+
+  static func continue_facebook() -> String {
+    return localizedString(key: "continue_facebook")
+  }
+
+  static func continue_google() -> String {
+    return localizedString(key: "continue_google")
+  }
   
   static func contributors() -> String {
     return localizedString(key: "contributors")
@@ -221,6 +233,10 @@ class Strings {
     return localizedString(key: "country_region")
   }
   
+  static func create_your_account() -> String {
+    return localizedString(key: "create_your_account")
+  }
+
   static func create_new_pen_name() -> String {
     return localizedString(key: "create_new_pen_name")
   }
@@ -411,6 +427,14 @@ class Strings {
   
   static func get_started() -> String {
     return localizedString(key: "get_started")
+  }
+
+  static func get_started_account_text() -> String {
+    return localizedString(key: "get_started_account_text")
+  }
+
+  static func get_started_newsfeed_text() -> String {
+    return localizedString(key: "get_started_newsfeed_text")
   }
   
   static func go_back() -> String {
