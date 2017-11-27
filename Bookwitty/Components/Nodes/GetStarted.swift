@@ -85,6 +85,7 @@ class GetStarted: ASDisplayNode {
     let insetLayoutSpec = ASInsetLayoutSpec(insets: insets, child: verticalStackSpec)
 
     let backgroundLayoutSpec = ASBackgroundLayoutSpec(child: insetLayoutSpec, background: wrapperSpec)
+    backgroundLayoutSpec.style.maxHeight = ASDimension(unit: .points, value: constrainedSize.max.height)
     return backgroundLayoutSpec
   }
 
