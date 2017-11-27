@@ -421,7 +421,7 @@ extension ContentEditorViewController : RichContentMenuViewControllerDelegate {
 extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
     
-    guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+    guard let image = info[UIImagePickerControllerEditedImage] as? UIImage else {
       return
     }
     self.navigationController?.dismiss(animated: true, completion: nil)
