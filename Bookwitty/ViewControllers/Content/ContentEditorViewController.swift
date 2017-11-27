@@ -35,7 +35,11 @@ class ContentEditorViewController: UIViewController {
   }
   
   @objc private func textChanged(_ sender: UITextField) {
-    self.viewModel.currentPost?.title = sender.text
+    guard let text = sender.text else {
+      self.viewModel.currentPost?.title = nil
+      return
+    }
+    self.viewModel.currentPost?.title = text.capitalizeFirstLetter()
   }
   
   private func loadNavigationBarButtons() {
