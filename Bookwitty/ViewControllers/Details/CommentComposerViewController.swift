@@ -149,9 +149,9 @@ extension CommentComposerViewController: Themeable {
 
 // MARK: -
 extension CommentComposerViewController {
-  class func show(from viewController: UIViewController, delegate: CommentComposerViewControllerDelegate?, resource: ModelCommonProperties?, parentCommentId: String?) {
+  class func show(from viewController: UIViewController, commentsManager: CommentsManager, delegate: CommentComposerViewControllerDelegate?) {
     let composeCommentVC = Storyboard.Details.instantiate(CommentComposerViewController.self)
-    composeCommentVC.initialize(with: resource, parentCommentId: parentCommentId)
+    composeCommentVC.initialize(with: commentsManager.resource, parentCommentId: commentsManager.parentComment?.id)
     composeCommentVC.delegate = delegate
     
     let navigationController = UINavigationController(rootViewController: composeCommentVC)

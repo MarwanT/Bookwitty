@@ -372,7 +372,9 @@ extension PostsViewController: BaseCardPostNodeDelegate {
       pushCommentsViewController(for: resource)
       analyticsAction = .ViewTopComment
     case .publishComment:
-      CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentId: nil)
+      let commentsManager = CommentsManager()
+      commentsManager.initialize(resource: resource)
+      CommentComposerViewController.show(from: self, commentsManager: commentsManager, delegate: self)
       analyticsAction = .AddComment
     }
 

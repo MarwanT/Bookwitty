@@ -434,7 +434,7 @@ extension CommentsNode {
   enum Action {
     case viewRepliesForComment(comment: Comment, resource: ModelCommonProperties)
     case viewAllComments(commentsManager: CommentsManager)
-    case writeComment(parentCommentIdentifier: String?, resource: ModelCommonProperties)
+    case writeComment(commentsManager: CommentsManager)
     case commentAction(comment: Comment, action: CardActionBarNode.Action, resource: ModelCommonProperties)
   }
 }
@@ -559,12 +559,16 @@ extension CommentsNode: WriteCommentNodeDelegate {
       return
     }
     
-    guard let resource = viewModel.resource else {
+    guard let commentsManager = viewModel.commentsManagerClone() else {
       return
     }
 
-    delegate?.commentsNode(self, reactFor: .writeComment(parentCommentIdentifier: viewModel.parentCommentIdentifier, resource: resource), didFinishAction: nil)
+    delegate?.commentsNode(self, reactFor: .writeComment(commentsManager: commentsManager), didFinishAction: nil)
 
+    guard let resource = viewModel.resource else {
+      return
+    }
+    
     //MARK: [Analytics] Event
     let category: Analytics.Category
     switch resource.registeredResourceType {
