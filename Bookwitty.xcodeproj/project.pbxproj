@@ -90,6 +90,7 @@
 		56F9FDCC1E82F39B00A48CEB /* UIBarButtonItem+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F9FDCB1E82F39B00A48CEB /* UIBarButtonItem+Utils.swift */; };
 		56FC41971E58CBA100D9B1CE /* NSBundle+Language.m in Sources */ = {isa = PBXBuildFile; fileRef = 56FC41961E58CBA100D9B1CE /* NSBundle+Language.m */; };
 		5903394C1E9E6719004ED1C3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5903394B1E9E6719004ED1C3 /* Utilities.swift */; };
+		5903EB211FCC6F580002B91D /* CommentComposerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5903EB201FCC6F580002B91D /* CommentComposerViewModel.swift */; };
 		59049B111E81E36000EDF796 /* Node+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59049B101E81E36000EDF796 /* Node+Util.swift */; };
 		59049B131E81E44400EDF796 /* JoinUsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59049B121E81E44400EDF796 /* JoinUsNode.swift */; };
 		59057FE11E25340A0036AAF3 /* Introduction.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59057FDF1E25340A0036AAF3 /* Introduction.storyboard */; };
@@ -403,6 +404,7 @@
 		56FC41951E58CBA100D9B1CE /* NSBundle+Language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+Language.h"; sourceTree = "<group>"; };
 		56FC41961E58CBA100D9B1CE /* NSBundle+Language.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+Language.m"; sourceTree = "<group>"; };
 		5903394B1E9E6719004ED1C3 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		5903EB201FCC6F580002B91D /* CommentComposerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentComposerViewModel.swift; sourceTree = "<group>"; };
 		59049B101E81E36000EDF796 /* Node+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Node+Util.swift"; sourceTree = "<group>"; };
 		59049B121E81E44400EDF796 /* JoinUsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JoinUsNode.swift; path = ../JoinUsNode.swift; sourceTree = "<group>"; };
 		59057FDF1E25340A0036AAF3 /* Introduction.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Introduction.storyboard; sourceTree = "<group>"; };
@@ -755,6 +757,7 @@
 				F478D92D1E7C275D00B9EF18 /* ProfileDetailsViewModel.swift */,
 				F42041C61E73088500E7D208 /* CardDetailsViewModel.swift */,
 				F43996861E770EB100FE9D8B /* PostsListViewModel.swift */,
+				5903EB201FCC6F580002B91D /* CommentComposerViewModel.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -1778,6 +1781,7 @@
 				56399DBF1E51D006005192AC /* AccountViewController.swift in Sources */,
 				F43A5E901E69878A008C018B /* OnBoardingCellNode.swift in Sources */,
 				F496DE041E65C75D007E22B1 /* DiscoverViewModel.swift in Sources */,
+				5903EB211FCC6F580002B91D /* CommentComposerViewModel.swift in Sources */,
 				F42600891E6CCFA300E14D93 /* OnBoardingItemHeaderNode.swift in Sources */,
 				566EE82D1E5D7082004B990D /* Search+API.swift in Sources */,
 				59C273311F070223009C51D9 /* FormatEditionTableViewCell.swift in Sources */,
