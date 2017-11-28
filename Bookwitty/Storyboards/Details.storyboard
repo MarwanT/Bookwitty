@@ -92,6 +92,7 @@
                         <outlet property="imageView" destination="SPB-DM-FGN" id="oZw-5v-u9H"/>
                         <outlet property="resourcePresenterLabel" destination="eko-e9-g49" id="ipm-b1-7kF"/>
                         <outlet property="resourceTitleLabel" destination="XUL-Cm-jGa" id="SCw-tW-EKg"/>
+                        <outlet property="resourceTitleLabelTopConstraint" destination="sc2-oA-OGN" id="HfD-Fw-bEv"/>
                         <outlet property="separatorBottomConstraint" destination="3oH-dS-v2v" id="0Hc-sS-LoP"/>
                         <outlet property="separatorTopConstraint" destination="555-jj-7Dx" id="1Gc-eJ-4BL"/>
                         <outlet property="separatorView" destination="Rr9-Pc-nGC" id="aJ0-qn-lbP"/>

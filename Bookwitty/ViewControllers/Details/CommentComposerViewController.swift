@@ -25,6 +25,7 @@ class CommentComposerViewController: UIViewController {
   @IBOutlet weak var separatorTopConstraint: NSLayoutConstraint!
   @IBOutlet weak var separatorBottomConstraint: NSLayoutConstraint!
   @IBOutlet weak var textViewLeadingToImageViewTrailingConstraint: NSLayoutConstraint!
+  @IBOutlet weak var resourceTitleLabelTopConstraint: NSLayoutConstraint!
   
   fileprivate var viewModel = CommentComposerViewModel()
   
@@ -47,6 +48,7 @@ class CommentComposerViewController: UIViewController {
     separatorTopConstraint.constant = 15
     separatorBottomConstraint.constant = 15
     textViewLeadingToImageViewTrailingConstraint.constant = 15
+    resourceTitleLabelTopConstraint.constant = 2
     super.updateViewConstraints()
   }
   
