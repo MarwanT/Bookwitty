@@ -24,7 +24,7 @@ final class CommentComposerViewModel {
   }
   
   var resourceTitlePresenterText: String {
-    return "In Response To"
+    return Strings.in_response_to()
   }
   
   var penNameImageURL: URL? {
