@@ -19,6 +19,22 @@ final class CommentComposerViewModel {
     return commentsManager?.resource
   }
   
+  var resourceExcerpt: String? {
+    return commentsManager?.resourceExcerpt
+  }
+  
+  var resourceTitlePresenterText: String {
+    return "In Response To"
+  }
+  
+  var penNameImageURL: URL? {
+    guard let stringURL = UserManager.shared.defaultPenName?.avatarUrl,
+      let url = URL(string: stringURL) else {
+        return nil
+    }
+    return url
+  }
+  
   func publishComment(text: String, completion: @escaping (_ success: Bool, _ comment: Comment?, _ error: CommentsManager.Error?) -> Void) {
     guard let commentsManager = commentsManager else {
       completion(false, nil, nil)

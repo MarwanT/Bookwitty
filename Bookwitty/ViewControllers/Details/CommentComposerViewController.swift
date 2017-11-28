@@ -35,6 +35,7 @@ class CommentComposerViewController: UIViewController {
     super.viewDidLoad()
     
     applyTheme()
+    setupContent()
     setupNavigationItems()
     addKeyboardNotifications()
   }
@@ -54,6 +55,15 @@ class CommentComposerViewController: UIViewController {
   
   func initialize(with commentsManager: CommentsManager) {
     viewModel.initialize(with: commentsManager)
+  }
+  
+  
+  private func setupContent() {
+    resourcePresenterLabel.text = viewModel.resourceTitlePresenterText
+    resourceTitleLabel.text = viewModel.resourceExcerpt
+    imageView.sd_setImage(
+      with: viewModel.penNameImageURL,
+      placeholderImage: ThemeManager.shared.currentTheme.penNamePlaceholder)
   }
   
   private func setupNavigationItems() {
