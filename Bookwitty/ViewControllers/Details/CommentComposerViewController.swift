@@ -79,6 +79,7 @@ class CommentComposerViewController: UIViewController {
     imageView.sd_setImage(
       with: viewModel.penNameImageURL,
       placeholderImage: ThemeManager.shared.currentTheme.penNamePlaceholder)
+    updateTextViewContentInsetIfNeeded()
   }
   
   private func setupNavigationItems() {
@@ -222,9 +223,29 @@ extension CommentComposerViewController: Themeable {
 // MARK: - Text View Delegate
 extension CommentComposerViewController: UITextViewDelegate {
   public func textViewDidChange(_ textView: UITextView) {
+    updateTextViewContentInsetIfNeeded()
+    
     let count = textView.text.count
     let alpha: CGFloat = count == 0 ? 1.0 : 0.0
     textViewPlaceholderLabel.alpha = alpha
+  }
+  
+  fileprivate func updateTextViewContentInsetIfNeeded() {
+    var topInsetValue: CGFloat = 12
+    if let font = textView.font {
+      let numberOfLines = floor(textView.contentSize.height / font.lineHeight)
+      if numberOfLines > 1 {
+        if textView.textContainerInset.top != 0 {
+          textView.textContainerInset.top = 0
+        }
+      } else {
+        if textView.textContainerInset.top != topInsetValue {
+          textView.textContainerInset.top = topInsetValue
+        }
+      }
+    } else {
+      textView.textContainerInset.top = topInsetValue
+    }
   }
 }
 
