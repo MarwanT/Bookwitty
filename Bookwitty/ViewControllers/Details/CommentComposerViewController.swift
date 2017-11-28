@@ -27,6 +27,8 @@ class CommentComposerViewController: UIViewController {
   @IBOutlet weak var textViewLeadingToImageViewTrailingConstraint: NSLayoutConstraint!
   @IBOutlet weak var resourceTitleLabelTopConstraint: NSLayoutConstraint!
   
+  fileprivate let textViewPlaceholderLabel = UILabel()
+  
   fileprivate var viewModel = CommentComposerViewModel()
   
   weak var delegate: CommentComposerViewControllerDelegate?
@@ -35,6 +37,7 @@ class CommentComposerViewController: UIViewController {
     super.viewDidLoad()
     
     applyTheme()
+    initialize()
     setupContent()
     setupNavigationItems()
     addKeyboardNotifications()
@@ -48,8 +51,14 @@ class CommentComposerViewController: UIViewController {
   override func updateViewConstraints() {
     separatorTopConstraint.constant = 15
     separatorBottomConstraint.constant = 15
-    textViewLeadingToImageViewTrailingConstraint.constant = 15
+    textViewLeadingToImageViewTrailingConstraint.constant = 10
     resourceTitleLabelTopConstraint.constant = 2
+    
+    let insets = textView.textContainerInset
+    textViewPlaceholderLabel.translatesAutoresizingMaskIntoConstraints = false
+    textViewPlaceholderLabel.topAnchor.constraint(equalTo: textView.topAnchor, constant: 0).isActive = true
+    textViewPlaceholderLabel.leftAnchor.constraint(equalTo: textView.leftAnchor, constant: insets.left + 5).isActive = true
+    
     super.updateViewConstraints()
   }
   
@@ -57,6 +66,12 @@ class CommentComposerViewController: UIViewController {
     viewModel.initialize(with: commentsManager)
   }
   
+  private func initialize() {
+    textView.addSubview(textViewPlaceholderLabel)
+    textViewPlaceholderLabel.text = Strings.write_a_comment()
+    textView.delegate = self
+    textViewPlaceholderLabel.constrainHeight(toView: imageView, predicate: "0")
+  }
   
   private func setupContent() {
     resourcePresenterLabel.text = viewModel.resourceTitlePresenterText
@@ -199,6 +214,17 @@ extension CommentComposerViewController: Themeable {
     resourceTitleLabel.textColor = theme.defaultTextColor()
     separatorView.backgroundColor = theme.defaultSeparatorColor()
     imageView.setRoundedCornersWithRadius(imageView.frame.height/2, width: 0, color: nil)
+    textViewPlaceholderLabel.textColor = theme.defaultGrayedTextColor()
+    textViewPlaceholderLabel.font = FontDynamicType.caption1.font
+  }
+}
+
+// MARK: - Text View Delegate
+extension CommentComposerViewController: UITextViewDelegate {
+  public func textViewDidChange(_ textView: UITextView) {
+    let count = textView.text.count
+    let alpha: CGFloat = count == 0 ? 1.0 : 0.0
+    textViewPlaceholderLabel.alpha = alpha
   }
 }
 
