@@ -43,6 +43,13 @@ class CommentComposerViewController: UIViewController {
     textView.becomeFirstResponder()
   }
   
+  override func updateViewConstraints() {
+    separatorTopConstraint.constant = 15
+    separatorBottomConstraint.constant = 15
+    textViewLeadingToImageViewTrailingConstraint.constant = 15
+    super.updateViewConstraints()
+  }
+  
   func initialize(with commentsManager: CommentsManager) {
     viewModel.initialize(with: commentsManager)
   }
@@ -168,10 +175,18 @@ class CommentComposerViewController: UIViewController {
 // MARK: - Themeable protocol
 extension CommentComposerViewController: Themeable {
   func applyTheme() {
-    contentView.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
-    textView.textContainerInset = ThemeManager.shared.currentTheme.defaultTextViewInsets()
-    textView.layer.cornerRadius = ThemeManager.shared.currentTheme.defaultCornerRadius()
+    let theme = ThemeManager.shared.currentTheme
+    contentView.layoutMargins = UIEdgeInsets(top: 15, left: 17, bottom: 10, right: 17)
+    textView.textContainerInset = UIEdgeInsets.zero
+    textView.layer.cornerRadius = theme.defaultCornerRadius()
     textView.font = FontDynamicType.body.font
+    resourcePresenterLabel.font = FontDynamicType.caption2.font
+    resourceTitleLabel.font = FontDynamicType.caption1.font
+    textView.textColor = theme.defaultTextColor()
+    resourcePresenterLabel.textColor = theme.defaultGrayedTextColor()
+    resourceTitleLabel.textColor = theme.defaultTextColor()
+    separatorView.backgroundColor = theme.defaultSeparatorColor()
+    imageView.setRoundedCornersWithRadius(imageView.frame.height/2, width: 0, color: nil)
   }
 }
 
