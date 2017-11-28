@@ -285,7 +285,7 @@ extension Quote: ModelCommonProperties {
     return false
   }
 
-  var shortDescription: String? { return nil }
+  var shortDescription: String? { return body }
 }
 
 extension Book: ModelCommonProperties {
