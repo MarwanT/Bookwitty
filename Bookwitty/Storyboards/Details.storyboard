@@ -89,7 +89,14 @@
                     <connections>
                         <outlet property="contentView" destination="JOU-1W-mzt" id="8Vq-mi-lBM"/>
                         <outlet property="contentViewBottomConstraintToSuperview" destination="mmK-oi-ShD" id="afD-lS-l6g"/>
+                        <outlet property="imageView" destination="SPB-DM-FGN" id="oZw-5v-u9H"/>
+                        <outlet property="resourcePresenterLabel" destination="eko-e9-g49" id="ipm-b1-7kF"/>
+                        <outlet property="resourceTitleLabel" destination="XUL-Cm-jGa" id="SCw-tW-EKg"/>
+                        <outlet property="separatorBottomConstraint" destination="3oH-dS-v2v" id="0Hc-sS-LoP"/>
+                        <outlet property="separatorTopConstraint" destination="555-jj-7Dx" id="1Gc-eJ-4BL"/>
+                        <outlet property="separatorView" destination="Rr9-Pc-nGC" id="aJ0-qn-lbP"/>
                         <outlet property="textView" destination="mi7-IB-NF6" id="bHG-x2-0By"/>
+                        <outlet property="textViewLeadingToImageViewTrailingConstraint" destination="1ju-Yn-ddC" id="b70-XI-D6W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sbd-ev-Mzw" userLabel="First Responder" sceneMemberID="firstResponder"/>

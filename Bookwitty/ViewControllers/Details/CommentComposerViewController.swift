@@ -15,9 +15,16 @@ protocol CommentComposerViewControllerDelegate: class {
 }
 
 class CommentComposerViewController: UIViewController {
+  @IBOutlet weak var resourcePresenterLabel: UILabel!
+  @IBOutlet weak var resourceTitleLabel: UILabel!
+  @IBOutlet weak var imageView: UIImageView!
   @IBOutlet weak var textView: UITextView!
   @IBOutlet weak var contentView: UIView!
+  @IBOutlet weak var separatorView: UIView!
   @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
+  @IBOutlet weak var separatorTopConstraint: NSLayoutConstraint!
+  @IBOutlet weak var separatorBottomConstraint: NSLayoutConstraint!
+  @IBOutlet weak var textViewLeadingToImageViewTrailingConstraint: NSLayoutConstraint!
   
   fileprivate var viewModel = CommentComposerViewModel()
   
