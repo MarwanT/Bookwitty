@@ -34,7 +34,7 @@ class CommentsViewModel {
     case CommentsNode.Section.header.rawValue:
       return displayMode == .compact ? 1 : 0
     case CommentsNode.Section.write.rawValue:
-      return isDisplayingACommentReplies ? 0 : 1
+      return displayMode == .compact ? 1 : 0
     case CommentsNode.Section.read.rawValue:
       var itemsNumber = commentsManager?.numberOfComments ?? 0
       if case displayMode = CommentsNode.DisplayMode.compact {

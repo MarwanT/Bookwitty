@@ -16,6 +16,7 @@ class CommentsNode: ASCellNode {
   let flowLayout: UICollectionViewFlowLayout
   let collectionNode: ASCollectionNode
   let loaderNode: LoaderNode
+  let composerPlaceholder: WriteCommentNode
   let viewCommentsDisclosureNode: DisclosureNodeCell
   
   var configuration = Configuration()
@@ -47,6 +48,7 @@ class CommentsNode: ASCellNode {
     
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     loaderNode = LoaderNode()
+    composerPlaceholder = WriteCommentNode()
     viewCommentsDisclosureNode = DisclosureNodeCell()
     
     super.init()
@@ -55,6 +57,10 @@ class CommentsNode: ASCellNode {
     collectionNode.dataSource = self
     
     loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
+    
+    composerPlaceholder.delegate = self
+    composerPlaceholder.configuration.displayTopSeparator = true
+    composerPlaceholder.backgroundColor = UIColor.white
     
     var disclosureNodeConfiguration = DisclosureNodeCell.Configuration()
     disclosureNodeConfiguration.style = .highlighted
@@ -110,7 +116,20 @@ class CommentsNode: ASCellNode {
       collectionSize = constrainedSize.min
     }
     collectionNode.style.preferredSize = collectionSize
-    let externalInsetsSpec = ASInsetLayoutSpec(insets: configuration.externalInsets, child: collectionNode)
+    
+    var stackElements: [ASLayoutElement] = []
+    stackElements.append(collectionNode)
+    if displayMode == .normal {
+      stackElements.append(composerPlaceholder)
+      
+      // Deduce the composer height from the collectionSize
+      collectionNode.style.preferredSize.height -= composerPlaceholder.minCalculatedHeight
+    }
+    let contentStack = ASStackLayoutSpec(
+      direction: .vertical, spacing: 0, justifyContent: .start,
+      alignItems: .stretch, children: stackElements)
+    let externalInsetsSpec = ASInsetLayoutSpec(
+      insets: configuration.externalInsets, child: contentStack)
     return externalInsetsSpec
   }
   
@@ -268,6 +287,9 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
         return headerNode
       case Section.write.rawValue:
         let writeCommentNode = WriteCommentNode()
+        writeCommentNode.initialize(with: .bordered)
+        writeCommentNode.configuration.externalInsets.top = 25
+        writeCommentNode.configuration.externalInsets.bottom = 15
         writeCommentNode.imageURL = URL(string: UserManager.shared.defaultPenName?.avatarUrl ?? "")
         writeCommentNode.delegate = self
         return writeCommentNode
