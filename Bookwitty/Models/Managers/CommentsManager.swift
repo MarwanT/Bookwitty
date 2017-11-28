@@ -31,6 +31,10 @@ class CommentsManager {
     self.nextPageURL = nextPageURL
   }
   
+  var resourceExcerpt: String? {
+    return resource?.title ?? resource?.shortDescription
+  }
+  
   var postIdentifier: String? {
     return resource?.id
   }
