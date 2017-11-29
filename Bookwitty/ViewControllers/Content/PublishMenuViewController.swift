@@ -82,6 +82,19 @@ class PublishMenuViewController: UIViewController {
     initializeComponents()
     // Do any additional setup after loading the view.
   }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    let when = DispatchTime.now() + 0.2
+    DispatchQueue.main.asyncAfter(deadline: when) {
+      UIView.animate(withDuration: 0.300) {
+        self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber20().withAlphaComponent(0.5)
+        
+      }
+    }
+  }
+  
   private func initializeComponents() {
     self.tableView.register(UINib(nibName: "PublishTableViewCell", bundle: nil), forCellReuseIdentifier: PublishTableViewCell.identifier)
     self.tableView.register(UINib(nibName: "ChipsTableViewCell", bundle: nil), forCellReuseIdentifier: ChipsTableViewCell.identifier)

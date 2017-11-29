@@ -150,7 +150,7 @@ class ContentEditorViewController: UIViewController {
     publishMenuViewController.delegate = self
     publishMenuViewController.viewModel.initialize(with: self.viewModel.linkedTags, linkedPages: self.viewModel.linkedPages)
     self.definesPresentationContext = true
-    publishMenuViewController.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber20().withAlphaComponent(0.5)
+    publishMenuViewController.view.backgroundColor = .clear
     publishMenuViewController.modalPresentationStyle = .overCurrentContext
     
     self.navigationController?.present(publishMenuViewController, animated: true, completion: nil)
