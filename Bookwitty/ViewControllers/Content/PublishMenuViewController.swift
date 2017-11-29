@@ -81,6 +81,7 @@ class PublishMenuViewController: UIViewController {
     super.viewDidLoad()
     initializeComponents()
     // Do any additional setup after loading the view.
+    addTapGesture()
   }
   
   private func addTapGesture() {
