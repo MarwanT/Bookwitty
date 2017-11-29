@@ -279,10 +279,22 @@ extension CommentTreeNode {
 // MARK: - Comment node delegate
 extension CommentTreeNode: CommentNodeDelegate {
   func commentNode(_ node: CommentNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
-    guard let comment = comment else {
+    // Detect the comment responsible for the action for it could be the parent
+    // Comment or any of the replies that are visible within the commentTreeNode
+    var targetComment: Comment?
+    if node === commentNode {
+      targetComment = comment
+    } else {
+      for (index, replyCommentNode) in repliesCommentNodes.enumerated() {
+        if node === replyCommentNode, let replies = comment?.replies, index < replies.count {
+          targetComment = replies[index]
+        }
+      }
+    }
+    
+    guard let comment = targetComment else {
       return
     }
-
     delegate?.commentTreeDidPerformAction(self, comment: comment, action: action, forSender: sender, didFinishAction: didFinishAction)
   }
   
