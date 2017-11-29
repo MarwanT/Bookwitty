@@ -14,9 +14,14 @@ class ContentEditorViewModel  {
   var linkedPages: [ModelCommonProperties] = []
   private(set) var latestHashValue: Int = 0
   private(set) var currentRequest: Cancellable?
-
+  
+  private var pendingUploadRequests: [String] = []
+  
   fileprivate var prelink: String?
-
+  var hasPendingUploadingRequest: Bool {
+    return self.pendingUploadRequests.count > 0
+  }
+  
   var currentPost: CandidatePost!
   
   func initialize(with candidatPost: CandidatePost, prelink: String? = nil) -> Void {
