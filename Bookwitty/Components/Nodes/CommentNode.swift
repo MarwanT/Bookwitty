@@ -20,6 +20,7 @@ class CommentNode: ASCellNode {
   fileprivate let dateNode: ASTextNode
   fileprivate let messageNode: DynamicCommentMessageNode
   fileprivate let replyButton: ASButtonNode
+  fileprivate let witButton: ASWitButton
   
   var mode = DisplayMode.normal {
     didSet {
@@ -42,6 +43,7 @@ class CommentNode: ASCellNode {
     dateNode = ASTextNode()
     messageNode = DynamicCommentMessageNode()
     replyButton = ASButtonNode()
+    witButton = ASWitButton()
     super.init()
     setupNode()
     applyTheme()
@@ -61,20 +63,43 @@ class CommentNode: ASCellNode {
       self, action: #selector(replyButtonTouchUpInside(_:)),
       forControlEvents: .touchUpInside)
     replyButtonTitle = Strings.reply().capitalized
+    
+    witButton.delegate = self
+    witButton.configuration.height = 27.0
+    witButton.configuration.font = FontDynamicType.footnote.font
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     var infoStackElements = [ASLayoutElement]()
     
-    // layout the header elements: Image - Name - Date
+    // layout the header elements: Image - Name - Date - Actions
+    var headerStackElements = [ASLayoutElement]()
+    
     let titleDateSpec = ASStackLayoutSpec(
       direction: .vertical, spacing: configuration.titleDateVerticalSpace,
       justifyContent: .start, alignItems: .start, children: [fullNameNode, dateNode])
     let imageNodeInsetSpec = ASInsetLayoutSpec(
       insets: configuration.imageNodeInsets, child: imageNode)
+    let leftSideHeaderSpec = ASStackLayoutSpec(
+      direction: .horizontal, spacing: 0, justifyContent: .start,
+      alignItems: .center, children: [
+        imageNodeInsetSpec,
+        titleDateSpec,
+      ])
+    headerStackElements.append(leftSideHeaderSpec)
+    
+    // Add Actions if needed
+    if mode != .minimal {
+      let actionsSpec = ASStackLayoutSpec(
+        direction: .horizontal, spacing: 0, justifyContent: .end,
+        alignItems: .start, children: [witButton])
+      headerStackElements.append(ASLayoutSpec.spacer(flexGrow: 1.0))
+      headerStackElements.append(actionsSpec)
+    }
+   
     let headerSpec = ASStackLayoutSpec(
       direction: .horizontal, spacing: 0, justifyContent: .start,
-      alignItems: .center, children: [imageNodeInsetSpec, titleDateSpec])
+      alignItems: .start, children: headerStackElements)
     infoStackElements.append(headerSpec)
     
     // layout the body elements: Comment Message, Reply Button
@@ -99,7 +124,7 @@ class CommentNode: ASCellNode {
   var bodyInsets: UIEdgeInsets {
     let bodyLeftMargin: CGFloat
     switch mode {
-    case .normal:
+    case .normal, .minimal:
       bodyLeftMargin = configuration.imageReservedHorizontalSpace
     default:
       bodyLeftMargin = 0
@@ -156,6 +181,7 @@ class CommentNode: ASCellNode {
   }
   
   func setWitValue(witted: Bool, numberOfWits: Int?) {
+    witButton.witted = witted
     messageNode.numberOfWits = numberOfWits
   }
   
@@ -176,7 +202,7 @@ class CommentNode: ASCellNode {
 extension CommentNode {
   struct Configuration {
     private static var subnodesSpace = ThemeManager.shared.currentTheme.cardInternalMargin()
-    var nameColor: UIColor = ThemeManager.shared.currentTheme.colorNumber19()
+    var nameColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor()
     var defaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor()
     var dateColor: UIColor = ThemeManager.shared.currentTheme.colorNumber15()
     var replyButtonTextColor: UIColor = ThemeManager.shared.currentTheme.defaultButtonColor()
@@ -198,6 +224,12 @@ extension CommentNode {
     case normal
     case reply
     case minimal
+  }
+}
+
+// MARK: Wit Button
+extension CommentNode: ASWitButtonDelegate {
+  func witButtonTapped(_ witButton: ASWitButton, witted: Bool, reactionBlock: @escaping (Bool) -> Void, completionBlock: @escaping (Bool) -> Void) {
   }
 }
 
