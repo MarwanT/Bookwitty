@@ -71,6 +71,8 @@ class ContentEditorViewController: UIViewController {
                                target: self,
                                action: #selector(self.plusBarButtonTouchUpInside(_:)))
     
+    plusBarButtonItem.isEnabled = self.editorView.hasFocus()
+
     let nextBarButtonItem = UIBarButtonItem(title: Strings.next(),
                                style: UIBarButtonItemStyle.plain,
                                target: self,
