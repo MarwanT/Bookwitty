@@ -64,9 +64,15 @@ extension CommentsViewController: CommentsNodeDelegate {
     case .commentAction(let comment, let action, let resource):
       switch action {
       case .wit:
-        commentsNode.wit(comment: comment, completion: nil)
+        commentsNode.wit(comment: comment, completion: {
+          (success: Bool, _) in
+          didFinishAction?(success)
+        })
       case .unwit:
-        commentsNode.unwit(comment: comment, completion: nil)
+        commentsNode.unwit(comment: comment, completion: {
+          (success: Bool, _) in
+          didFinishAction?(success)
+        })
       case .reply:
         let commentsManager = CommentsManager()
         commentsManager.initialize(resource: resource, comment: comment)

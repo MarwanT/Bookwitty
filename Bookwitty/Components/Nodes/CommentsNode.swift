@@ -444,11 +444,13 @@ extension CommentsNode: CommentTreeNodeDelegate {
   func commentTreeDidPerformAction(_ commentTreeNode: CommentTreeNode, comment: Comment, action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
     guard UserManager.shared.isSignedIn else {
       //If user is not signed In post notification and do not fall through
+      didFinishAction?(false)
       NotificationCenter.default.post( name: AppNotification.callToAction, object: nil)
       return
     }
     
     guard let resource = viewModel.resource else {
+      didFinishAction?(false)
       return
     }
     
