@@ -8,6 +8,12 @@
 
 import AsyncDisplayKit
 
+protocol ASWitButtonDelegate {
+  func witButtonTapped(_ witButton: ASWitButton, witted: Bool,
+                       reactionBlock: @escaping (_ success: Bool) -> Void,
+                       completionBlock: @escaping (_ success: Bool) -> Void)
+}
+
 class ASWitButton: ASButtonNode {
   fileprivate(set) var displayMode: DisplayMode = .lightWeight
   
@@ -17,6 +23,8 @@ class ASWitButton: ASButtonNode {
       setNeedsLayout()
     }
   }
+  
+  var delegate: ASWitButtonDelegate?
   
   override init() {
     super.init()
