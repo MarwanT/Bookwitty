@@ -74,7 +74,7 @@ class WriteCommentNode: ASCellNode {
     case .bordered:
       contentNode.borderWidth = configuration.borderWidth
       contentNode.borderColor = configuration.borderColor.cgColor
-      contentNode.cornerRadius = 2.0
+      contentNode.cornerRadius = configuration.borderRadius
     }
     
     // Set image node size
@@ -191,6 +191,7 @@ extension WriteCommentNode {
     var textFieldInsets: UIEdgeInsets
     var textFieldContentInset: UIEdgeInsets
     var imageSize: CGSize
+    var borderRadius: CGFloat
     
     init() {
       separatorColor = theme.defaultSeparatorColor()
@@ -201,6 +202,7 @@ extension WriteCommentNode {
       imageSize = CGSize(width: 45.0, height: 45.0)
       textColor = theme.defaultTextColor()
       placeholderTextColor = theme.defaultGrayedTextColor()
+      borderRadius = theme.defaultCornerRadius()
       externalInsets = UIEdgeInsets(
         top: theme.cardExternalMargin(),
         left: theme.cardExternalMargin(),
