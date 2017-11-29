@@ -56,7 +56,8 @@ class ContentEditorViewModel  {
     }
   }
   
-  fileprivate func createContent() {
+
+  fileprivate func createContent(with completion:((_ success: Bool) -> Void)? = nil) {
     guard let body = self.currentPost.body, !body.isEmpty else {
       return
     }
@@ -64,24 +65,26 @@ class ContentEditorViewModel  {
     //WORKAROUND: the API doesn't create a content unless we send a title
     let contentTile = self.currentPost.title.isEmptyOrNil() ? "Untitled" : self.currentPost.title
     self.currentRequest = PublishAPI.createContent(title: contentTile, body: self.currentPost.body) { (success, candidatePost, error) in
-      defer { self.currentRequest = nil }
+      defer { self.currentRequest = nil; completion?(success) }
       
       guard success, let candidatePost = candidatePost else {
         return
       }
       self.set(candidatePost)
+      
     }
   }
   
-  fileprivate func updateContent() {
+  fileprivate func updateContent(with completion:((_ success: Bool) -> Void)? = nil) {
     guard let currentPost = self.currentPost, let id = currentPost.id else {
       return
     }
     self.resetPreviousRequest()
     let status = PublishAPI.PublishStatus(rawValue: self.currentPost.status ?? "") ?? PublishAPI.PublishStatus.draft
     self.currentRequest = PublishAPI.updateContent(id: id, title: currentPost.title, body: currentPost.body, imageURL: currentPost.imageUrl, shortDescription: currentPost.shortDescription, status: status, completion: { (success, candidatePost, error) in
-      defer { self.currentRequest = nil }
+      defer { self.currentRequest = nil; completion?(success) }
       guard success, let candidatePost = candidatePost else {
+        
         return
       }
       self.set(candidatePost)
@@ -108,20 +111,23 @@ class ContentEditorViewModel  {
     })
   }
 
-  func dispatchContent() {
+  func dispatchContent(with completion:((_ created: Bool, _ success: Bool) -> Void)? = nil) {
     
     let newHashValue = self.currentPost.hash
     let latestHashValue = self.latestHashValue
     
     if self.currentPost.id == nil {
-      self.createContent()
+      self.createContent(with: { success in
+        completion?(true, success)
+      })
     } else {
       self.dispatchPrelinkIfNeeded()
       if newHashValue != latestHashValue {
-        self.updateContent()
+        self.updateContent(with: { success in
+          completion?(false, success)
+        })
       }
     }
-    
   }
   
   func upload(image: UIImage?, completion: @escaping (_ success: Bool, _ imageId: String?) -> Void) {
