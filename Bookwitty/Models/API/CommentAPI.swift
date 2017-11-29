@@ -112,6 +112,31 @@ struct CommentAPI {
     })
   }
   
+  public static func removeComment(commentIdentifier: String, completion: @escaping (_ success: Bool, _ commentIdentifier: String, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let removeCommentsSuccessStatusCode = 204
+    
+    return signedAPIRequest(target: .removeComment(commentId: commentIdentifier), completion: {
+      (data, statusCode, response, error) in
+      DispatchQueue.global(qos: .background).async {
+        var success: Bool = false
+        var commentIdentifier = commentIdentifier
+        var error: BookwittyAPIError? = error
+        defer {
+          DispatchQueue.main.async {
+            completion(success, commentIdentifier, error)
+          }
+        }
+        
+        guard statusCode == removeCommentsSuccessStatusCode else {
+          error = BookwittyAPIError.invalidStatusCode
+          return
+        }
+        
+        success  = true
+      }
+    })
+  }
+  
   public static func wit(commentIdentifier: String, completion: @escaping (_ success: Bool, _ commentIdentifier: String, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let witCommentSuccessfulStatusCode = 204
     
