@@ -19,6 +19,7 @@ class CommentsViewController: ASViewController<ASDisplayNode> {
   }
   
   func initialize(with commentsManager: CommentsManager) {
+    title = commentsManager.resourceExcerpt
     commentsNode.initialize(with: commentsManager)
     if isViewLoaded {
       reloadData()

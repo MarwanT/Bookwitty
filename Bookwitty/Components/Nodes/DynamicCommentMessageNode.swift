@@ -144,7 +144,7 @@ class DynamicCommentMessageNode: ASCellNode {
   //==============
   
   func didTapNode(_ sender: DTAttributedLabel) {
-    if shouldBeTruncated {
+    if shouldBeTruncated && mode != .minimal {
       delegate?.dynamicCommentMessageNodeDidTapMoreButton(self)
     }
   }
@@ -221,7 +221,7 @@ class DynamicCommentMessageNode: ASCellNode {
   }
   
   var shouldBeTruncated: Bool {
-    guard mode != .minimal, let originalAttributedString = originalAttributedString else {
+    guard let originalAttributedString = originalAttributedString else {
       return false
     }
     return originalAttributedString.string.count >= configuration.characterLengthOfCollapsedMessage
