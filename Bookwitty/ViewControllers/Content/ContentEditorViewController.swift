@@ -77,7 +77,8 @@ class ContentEditorViewController: UIViewController {
                                style: UIBarButtonItemStyle.plain,
                                target: self,
                                action: #selector(self.nextBarButtonTouchUpInside(_:)))
-    
+
+    nextBarButtonItem.isEnabled = self.viewModel.currentPost.id != nil && !self.viewModel.hasPendingUploadingRequest
     nextBarButtonItem.setTitleTextAttributes([NSForegroundColorAttributeName: ThemeManager.shared.currentTheme.defaultGrayedTextColor()], for: .disabled)
     let size: CGFloat = 44.0
     
