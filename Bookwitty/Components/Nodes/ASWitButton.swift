@@ -32,6 +32,17 @@ class ASWitButton: ASButtonNode {
     applyTheme()
     setNeedsLayout()
   }
+  
+  // MARK: APIs
+  //===========
+  var witted: Bool {
+    get {
+      return isSelected
+    }
+    set {
+      isSelected = newValue
+    }
+  }
 }
 
 // MARK: - THEMEABLE
