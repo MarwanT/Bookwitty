@@ -33,6 +33,7 @@ class ASWitButton: ASButtonNode {
   }
   
   private func initialize() {
+    addTarget(self, action: #selector(touchUpInside), forControlEvents: .touchUpInside)
   }
   
   func initialize(with displayMode: DisplayMode) {
@@ -50,6 +51,31 @@ class ASWitButton: ASButtonNode {
     set {
       isSelected = newValue
     }
+  }
+  
+  // MARK: ACTIONS
+  //==============
+  func touchUpInside() {
+    guard UserManager.shared.isSignedIn else {
+      //If user is not signed In post notification and do not fall through
+      NotificationCenter.default.post(
+        name: AppNotification.callToAction, object: CallToAction.wit)
+      return
+    }
+    
+    isEnabled = false
+    delegate?.witButtonTapped(self, witted: isSelected, reactionBlock: {
+      [weak self] (success: Bool) in
+      guard let strongSelf = self else { return }
+      guard success else { return }
+      strongSelf.witted = !strongSelf.witted
+    }, completionBlock: {
+      [weak self] (success: Bool) in
+      guard let strongSelf = self else { return }
+      strongSelf.isEnabled = true
+      guard success else { return }
+      strongSelf.witted = !strongSelf.witted
+    })
   }
 }
 
