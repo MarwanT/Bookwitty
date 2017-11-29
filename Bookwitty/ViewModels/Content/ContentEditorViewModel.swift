@@ -29,12 +29,21 @@ class ContentEditorViewModel  {
     self.prelink = prelink
   }
   
+  func addUploadRequest(_ request: String) {
+    pendingUploadRequests.append(request)
+  }
+  
+  func removeUploadRequest(_ request: String) {
+    if let index = pendingUploadRequests.index(where: { $0 == request }) {
+      pendingUploadRequests.remove(at: index)
+    }
+  }
+  
   func set(_ currentPost: CandidatePost) {
     self.currentPost = currentPost
     self.latestHashValue = currentPost.hash
   }
-  
-  
+
   var getCurrentPost: CandidatePost {
     return self.currentPost
   }
