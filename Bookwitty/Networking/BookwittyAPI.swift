@@ -32,6 +32,7 @@ public enum BookwittyAPI {
   case comments(postIdentifier: String)
   case replies(commentIdentifier: String)
   case createComment(postIdentifier: String, comment: String, parentCommentIdentifier: String?)
+  case removeComment(commentId: String)
   case witComment(identifier: String)
   case unwitComment(identifier: String)
   case dimComment(identifier: String)
@@ -136,6 +137,8 @@ extension BookwittyAPI: TargetType {
       path = "/comments/\(commentIdentifier)/children"
     case .createComment(let postIdentifier, _, _):
       path = "/content/\(postIdentifier)/comments"
+    case .removeComment(let identifier):
+      path = "/comments/\(identifier)"
     case .witComment(let identifier), .unwitComment(let identifier):
       path = "/comments/\(identifier)/wit"
     case .dimComment(let identifier), .undimComment(let identifier):
@@ -215,7 +218,7 @@ extension BookwittyAPI: TargetType {
       return .post
     case .updateUser, .updatePenName:
       return .patch
-    case .unwit, .unfollow, .unfollowPenName, .unwitComment, .undimComment:
+    case .unwit, .unfollow, .unfollowPenName, .unwitComment, .undimComment, .removeComment:
       return .delete
     }
   }
@@ -281,7 +284,7 @@ extension BookwittyAPI: TargetType {
       return UploadAPI.uploadPolicyParameters(file: file, fileType: fileType, assetType: assetType)
     case .editions(_, let formats):
       return ContentAPI.editionsFilterParameters(formats: formats)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment, .dimComment, .undimComment, .preferredFormats, .report, .reportPenName:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment, .dimComment, .undimComment, .preferredFormats, .report, .reportPenName, .removeComment:
       return nil
     }
   }
@@ -358,7 +361,7 @@ extension BookwittyAPI: TargetType {
       return include
     case .batchPenNames:
       return []
-    case .absolute:
+    case .absolute, .removeComment:
       return nil
     default:
       return ["pen-name"]
