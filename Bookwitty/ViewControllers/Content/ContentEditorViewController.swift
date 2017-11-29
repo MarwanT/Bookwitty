@@ -625,11 +625,11 @@ extension ContentEditorViewController: RichEditorDelegate {
   }
   
   func richEditorTookFocus(_ editor: RichEditorView) {
-    self.navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = true }
+    self.loadNavigationBarButtons()
   }
   
   func richEditorLostFocus(_ editor: RichEditorView) {
-    self.navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = false }
+    self.loadNavigationBarButtons()
   }
   
   func richEditor(_ editor: RichEditorView, handle action: String) {
