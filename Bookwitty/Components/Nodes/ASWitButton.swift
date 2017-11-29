@@ -9,8 +9,14 @@
 import AsyncDisplayKit
 
 class ASWitButton: ASButtonNode {
-  var configuration = Configuration() 
   fileprivate(set) var displayMode: DisplayMode = .lightWeight
+  
+  var configuration = Configuration() {
+    didSet {
+      applyTheme()
+      setNeedsLayout()
+    }
+  }
 }
 
 // MARK: - THEMEABLE
