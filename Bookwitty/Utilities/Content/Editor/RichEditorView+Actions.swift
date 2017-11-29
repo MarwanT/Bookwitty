@@ -59,7 +59,7 @@ extension RichEditorView {
   }
   
   func setContent(html: String?) {
-    guard let html = html else {
+    guard let html = html?.base64Encoded else {
       runJS("RE.setContent('')")
       return
     }
