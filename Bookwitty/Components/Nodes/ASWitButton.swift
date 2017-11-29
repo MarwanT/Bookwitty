@@ -10,6 +10,16 @@ import AsyncDisplayKit
 
 class ASWitButton: ASButtonNode {
   var configuration = Configuration() 
+  fileprivate(set) var displayMode: DisplayMode = .lightWeight
+}
+
+// MARK: - DISPLAY MODE
+                                   //****\\
+extension ASWitButton {
+  enum DisplayMode {
+    case lightWeight
+    case heavyWeight
+  }
 }
 
 // MARK: - CONFIGURATION
