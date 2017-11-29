@@ -9,4 +9,14 @@
 import AsyncDisplayKit
 
 class ASWitButton: ASButtonNode {
+  var configuration = Configuration() 
+}
+
+// MARK: - CONFIGURATION
+                                   //****\\
+extension ASWitButton {
+  struct Configuration {
+    var font = FontDynamicType.subheadline.font
+    var height: CGFloat = 45.0
+  }
 }
