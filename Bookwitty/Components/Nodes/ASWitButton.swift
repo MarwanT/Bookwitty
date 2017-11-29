@@ -26,6 +26,12 @@ class ASWitButton: ASButtonNode {
   
   private func initialize() {
   }
+  
+  func initialize(with displayMode: DisplayMode) {
+    self.displayMode = displayMode
+    applyTheme()
+    setNeedsLayout()
+  }
 }
 
 // MARK: - THEMEABLE
