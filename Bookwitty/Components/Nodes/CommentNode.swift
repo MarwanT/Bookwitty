@@ -230,6 +230,12 @@ extension CommentNode {
 // MARK: Wit Button
 extension CommentNode: ASWitButtonDelegate {
   func witButtonTapped(_ witButton: ASWitButton, witted: Bool, reactionBlock: @escaping (Bool) -> Void, completionBlock: @escaping (Bool) -> Void) {
+    reactionBlock(true)
+    delegate?.commentNode(
+      self,
+      didRequestAction: witted ? CardActionBarNode.Action.unwit : CardActionBarNode.Action.wit,
+      forSender: witButton,
+      didFinishAction: completionBlock)
   }
 }
 
