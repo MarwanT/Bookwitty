@@ -17,6 +17,15 @@ class ASWitButton: ASButtonNode {
       setNeedsLayout()
     }
   }
+  
+  override init() {
+    super.init()
+    applyTheme()
+    initialize()
+  }
+  
+  private func initialize() {
+  }
 }
 
 // MARK: - THEMEABLE
