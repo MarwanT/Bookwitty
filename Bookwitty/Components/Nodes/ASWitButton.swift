@@ -73,8 +73,9 @@ class ASWitButton: ASButtonNode {
       [weak self] (success: Bool) in
       guard let strongSelf = self else { return }
       strongSelf.isEnabled = true
-      guard success else { return }
-      strongSelf.witted = !strongSelf.witted
+      if !success {
+        strongSelf.witted = !strongSelf.witted
+      }
     })
   }
 }
