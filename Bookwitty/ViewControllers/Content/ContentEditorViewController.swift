@@ -42,7 +42,7 @@ class ContentEditorViewController: UIViewController {
     self.viewModel.currentPost?.title = text.capitalizeFirstLetter()
   }
   
-  private func loadNavigationBarButtons() {
+  fileprivate func loadNavigationBarButtons() {
     navigationItem.backBarButtonItem = UIBarButtonItem.back
     let redColor = ThemeManager.shared.currentTheme.colorNumber19()
     
