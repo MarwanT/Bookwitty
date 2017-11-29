@@ -214,7 +214,11 @@ class ContentEditorViewController: UIViewController {
   }
   
   @objc private func tick() {
-    self.viewModel.dispatchContent()
+    self.viewModel.dispatchContent() { [unowned self] created, success in
+      if created && success {
+        self.loadNavigationBarButtons()
+      }
+    }
   }
   
   private func setupEditorToolbar() {
@@ -411,12 +415,15 @@ extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePi
     guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
       return
     }
-
     self.navigationController?.dismiss(animated: true, completion: nil)
     let id = self.editorView.generatePhotoWrapper()
+    self.viewModel.addUploadRequest(id)
+    self.loadNavigationBarButtons()
     viewModel.upload(image: image) { (success: Bool, link: String?) in
       guard let link = link, let Url = URL(string: link) else { return }
       self.editorView.generate(photo: Url, alt: "Image", wrapperId: id)
+      self.viewModel.removeUploadRequest(id)
+      self.loadNavigationBarButtons()
     }
   }
 }
