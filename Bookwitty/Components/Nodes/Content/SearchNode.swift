@@ -32,7 +32,11 @@ class SearchNode: ASCellNode {
   override func calculateSizeThatFits(_ constrainedSize: CGSize) -> CGSize {
     return CGSize(width: constrainedSize.width, height: SearchNode.cellHeight)
   }
-
+  @discardableResult
+  override func becomeFirstResponder() -> Bool {
+    return searchBar?.becomeFirstResponder() ?? false
+  }
+  
   var text: String? {
     get { return searchBar?.text }
     set { searchBar?.text = newValue }
