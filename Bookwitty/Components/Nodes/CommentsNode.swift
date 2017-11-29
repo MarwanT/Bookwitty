@@ -457,7 +457,7 @@ extension CommentsNode: CommentTreeNodeDelegate {
     //MARK: [Analytics] Event
     let analyticsAction: Analytics.Action
 
-    let allowedActions: [CardActionBarNode.Action] = [.wit, .unwit, .reply]
+    let allowedActions: [CardActionBarNode.Action] = [.wit, .unwit, .reply, .remove]
     guard allowedActions.contains(action) else { return }
 
     let category: Analytics.Category
@@ -495,6 +495,8 @@ extension CommentsNode: CommentTreeNodeDelegate {
       analyticsAction = .UnwitComment
     case .reply:
       analyticsAction = .ReplyToComment
+    case .remove:
+      analyticsAction = .RemoveComment
     default:
       analyticsAction = .Default
     }

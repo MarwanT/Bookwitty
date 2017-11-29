@@ -204,6 +204,42 @@ extension CommentsManager {
     })
   }
   
+  func removeComment(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+    guard let resource = self.resource else {
+      completion(false, CommentsManager.Error.missingResource)
+      return
+    }
+    
+    guard let postIdentifier = postIdentifier else {
+      completion(false, CommentsManager.Error.missingPostId)
+      return
+    }
+    
+    guard let commentId = comment.id else {
+      completion(false, CommentsManager.Error.unidentified)
+      return
+    }
+    
+    _ = CommentAPI.removeComment(commentIdentifier: commentId, completion: {
+      (success, commentId, error) in
+      var responseError: CommentsManager.Error? = CommentsManager.Error.api(error)
+      defer {
+        completion(success, responseError)
+      }
+      
+      // Do additional logic here if necessary
+      guard let comment = self.comment(for: commentId) else {
+        responseError = CommentsManager.Error.unidentified
+        return
+      }
+      
+      self.remove(comment)
+      NotificationCenter.default.post(
+        name: CommentsManager.notificationName(for: postIdentifier),
+        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.remove, resource: resource), comment))
+    })
+  }
+  
   func wit(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
     guard let resource = self.resource else {
       completion(false, CommentsManager.Error.missingResource)
@@ -305,6 +341,10 @@ extension CommentsManager {
   fileprivate func unfollow(_ resource: ModelResource) {
     var actionableRes = resource as? ModelCommonActions
     actionableRes?.isFollowing = false
+  }
+  
+  fileprivate func remove(_ resource: ModelResource) {
+    // TODO: Implement the remove comment
   }
 }
 
