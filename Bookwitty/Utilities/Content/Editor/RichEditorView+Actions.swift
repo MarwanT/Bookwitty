@@ -79,6 +79,11 @@ extension RichEditorView {
     let jsonString =  runJS("RE.getDefaults();");
     return parseDefaultContent(jsonString)
   }
+  
+  func hasFocus() -> Bool {
+    let responder = runJS("document.activeElement.id=='editor'")
+    return responder == "true"
+  }
 }
 
 extension RichEditorView {
