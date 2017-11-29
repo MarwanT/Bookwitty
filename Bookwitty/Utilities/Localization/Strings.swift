@@ -385,6 +385,10 @@ class Strings {
     return localizedString(key: "imprint")
   }
   
+  static func in_response_to() -> String {
+    return localizedString(key: "in_response_to")
+  }
+  
   static func in_stock() -> String {
     return localizedString(key: "in_stock")
   }
@@ -923,6 +927,10 @@ class Strings {
   
   static func wit_it() -> String {
     return localizedString(key: "wit_it")
+  }
+  
+  static func write_a_comment() -> String {
+    return localizedString(key: "write_a_comment")
   }
   
   static func witted() -> String {

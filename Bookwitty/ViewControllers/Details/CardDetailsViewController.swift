@@ -313,16 +313,18 @@ extension CardDetailsViewController: CommentsNodeDelegate {
       break
     case .viewAllComments(let commentsManager):
       pushCommentsViewController(with: commentsManager)
-    case .writeComment(let parentCommentIdentifier, _):
-      CommentComposerViewController.show(from: self, delegate: self, resource: nil, parentCommentId: parentCommentIdentifier)
-    case .commentAction(let comment, let action):
+    case .writeComment(let commentsManager):
+      CommentComposerViewController.show(from: self, commentsManager: commentsManager, delegate: self)
+    case .commentAction(let comment, let action, let resource):
       switch action {
       case .wit:
         commentsNode.wit(comment: comment, completion: nil)
       case .unwit:
         commentsNode.unwit(comment: comment, completion: nil)
       case .reply:
-        CommentComposerViewController.show(from: self, delegate: self, resource: nil, parentCommentId: comment.id)
+        let commentsManager = CommentsManager()
+        commentsManager.initialize(resource: resource, comment: comment)
+        CommentComposerViewController.show(from: self, commentsManager: commentsManager, delegate: self)
       default:
         break
       }
@@ -336,22 +338,13 @@ extension CardDetailsViewController: CommentComposerViewControllerDelegate {
     dismiss(animated: true, completion: nil)
   }
   
-  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, resource: ModelCommonProperties?, parentCommentId: String?) {
+  func commentComposerWillBeginPublishingComment(_ viewController: CommentComposerViewController) {
     SwiftLoader.show(animated: true)
-    commentsNode?.publishComment(content: content, parentCommentId: parentCommentId) {
-      (success, error) in
-      SwiftLoader.hide()
-      guard success else {
-        if let error = error {
-          self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
-            (_) in
-            // Restart editing the comment
-            _ = viewController.becomeFirstResponder()
-          })
-        }
-        return
-      }
-      
+  }
+  
+  func commentComposerDidFinishPublishingComment(_ viewController: CommentComposerViewController, success: Bool, comment: Comment?, resource: ModelCommonProperties?) {
+    SwiftLoader.hide()
+    if success {
       self.dismiss(animated: true, completion: nil)
     }
   }

@@ -31,6 +31,10 @@ class CommentsManager {
     self.nextPageURL = nextPageURL
   }
   
+  var resourceExcerpt: String? {
+    return resource?.title ?? resource?.shortDescription
+  }
+  
   var postIdentifier: String? {
     return resource?.id
   }
@@ -191,16 +195,21 @@ extension CommentsManager {
       }
       
       // Do additional logic here if necessary
-      guard let resource = self.resource else {
+      guard let commentsMangerClone = self.clone() else {
         return
       }
       NotificationCenter.default.post(
         name: CommentsManager.notificationName(for: postIdentifier),
-        object: (CommentsNode.Action.writeComment(parentCommentIdentifier: nil, resource: resource), comment))
+        object: (CommentsNode.Action.writeComment(commentsManager: commentsMangerClone), comment))
     })
   }
   
   func wit(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+    guard let resource = self.resource else {
+      completion(false, CommentsManager.Error.missingResource)
+      return
+    }
+    
     guard let postIdentifier = postIdentifier else {
       completion(false, CommentsManager.Error.missingPostId)
       return
@@ -231,11 +240,16 @@ extension CommentsManager {
       self.wit(comment)
       NotificationCenter.default.post(
         name: CommentsManager.notificationName(for: postIdentifier),
-        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.wit), comment))
+        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.wit, resource: resource), comment))
     })
   }
   
   func unwit(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+    guard let resource = self.resource else {
+      completion(false, CommentsManager.Error.missingResource)
+      return
+    }
+    
     guard let postIdentifier = postIdentifier else {
       completion(false, CommentsManager.Error.missingPostId)
       return
@@ -266,7 +280,7 @@ extension CommentsManager {
       self.unwit(comment)
       NotificationCenter.default.post(
         name: CommentsManager.notificationName(for: postIdentifier),
-        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.unwit), comment))
+        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.unwit, resource: resource), comment))
     })
   }
 }
@@ -301,12 +315,13 @@ extension CommentsManager {
     case api(BookwittyAPIError?)
     case missingPostId
     case unidentified
+    case missingResource
     
     var title: String? {
       switch self {
       case .publishEmptyComment:
         return Strings.publishEmptyCommentErrorTitle()
-      case .api, .missingPostId, .unidentified:
+      case .api, .missingPostId, .unidentified, .missingResource:
         return Strings.publishCommentGeneralErrorTitle()
       }
     }
@@ -315,7 +330,7 @@ extension CommentsManager {
       switch self {
       case .publishEmptyComment:
         return Strings.publishEmptyCommentErrorMessage()
-      case .api, .missingPostId, .unidentified:
+      case .api, .missingPostId, .unidentified, .missingResource:
         return Strings.publishCommentGeneralErrorMessage()
       }
     }

@@ -100,6 +100,7 @@
 "hide_formats_and_editions" = "Hide formats and editions";
 "image" = "Image";
 "imprint" = "Publisher";
+"in_response_to" = "In response to:";
 "in_stock" = "In stock";
 "interests" = "Interests";
 "isbn10" = "ISBN-10";
@@ -237,6 +238,7 @@
 "width" = "Width";
 "wit_it" = "Wit";
 "witted" = "Witted";
+"write_a_comment" = "Write a comment";
 "yes_this_is_spam" = "Yes, this is spam";
 "yesterday" = "Yesterday";
 "you" = "You";

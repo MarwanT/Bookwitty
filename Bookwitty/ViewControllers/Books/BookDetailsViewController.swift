@@ -497,7 +497,7 @@ extension BookDetailsViewController: BaseCardPostNodeDelegate {
       }
     case .comment:
       guard let resource = viewModel.resource(at: indexPath) else { return }
-      pushCommentsViewController(for: resource as? ModelCommonProperties)
+      pushCommentsViewController(for: resource)
       didFinishAction?(true)
     case .more:
       guard let resource = viewModel.resource(at: indexPath),
@@ -559,7 +559,9 @@ extension BookDetailsViewController: BaseCardPostNodeDelegate {
       pushCommentsViewController(for: resource)
       analyticsAction = .ViewTopComment
     case .publishComment:
-      CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentId: nil)
+      let commentsManager = CommentsManager()
+      commentsManager.initialize(resource: resource)
+      CommentComposerViewController.show(from: self, commentsManager: commentsManager, delegate: self)
       analyticsAction = .AddComment
     }
 
@@ -650,39 +652,25 @@ extension BookDetailsViewController: CommentComposerViewControllerDelegate {
   func commentComposerCancel(_ viewController: CommentComposerViewController) {
     dismiss(animated: true, completion: nil)
   }
-
-  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, resource: ModelCommonProperties?, parentCommentId: String?) {
-    guard let resource = resource else {
-      _ = viewController.becomeFirstResponder()
-      return
-    }
-
+  
+  func commentComposerWillBeginPublishingComment(_ viewController: CommentComposerViewController) {
     SwiftLoader.show(animated: true)
-    let commentManager = CommentsManager()
-    commentManager.initialize(resource: resource)
-    commentManager.publishComment(content: content, parentCommentId: nil) {
-      (success: Bool, comment: Comment?, error: CommentsManager.Error?) in
-      SwiftLoader.hide()
-      guard success else {
-        guard let error = error else { return }
-        self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
-          _ in
-          _ = viewController.becomeFirstResponder()
-        })
-        return
-      }
-
-      if let comment = comment {
-        var topComments = resource.topComments ?? []
-        topComments.append(comment)
-        resource.topComments = topComments
-        if let castedResource = resource as? ModelResource {
-          DataManager.shared.update(resource: castedResource)
-        }
-      }
-
+  }
+  
+  func commentComposerDidFinishPublishingComment(_ viewController: CommentComposerViewController, success: Bool, comment: Comment?, resource: ModelCommonProperties?) {
+    SwiftLoader.hide()
+    
+    if success {
       self.dismiss(animated: true, completion: nil)
     }
-    dismiss(animated: true, completion: nil)
+    
+    if let resource = resource, let comment = comment {
+      var topComments = resource.topComments ?? []
+      topComments.append(comment)
+      resource.topComments = topComments
+      if let castedResource = resource as? ModelResource {
+        DataManager.shared.update(resource: castedResource)
+      }
+    }
   }
 }
