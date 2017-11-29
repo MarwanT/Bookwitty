@@ -77,6 +77,7 @@ class RichContentMenuViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.initializeComponents()
+    addTapGesture()
   }
   
   private func addTapGesture() {
