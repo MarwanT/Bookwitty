@@ -136,7 +136,7 @@ class ContentEditorViewController: UIViewController {
     let richContentMenuViewController = Storyboard.Content.instantiate(RichContentMenuViewController.self)
     richContentMenuViewController.delegate = self
     self.definesPresentationContext = true
-    richContentMenuViewController.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber20().withAlphaComponent(0.5)
+    richContentMenuViewController.view.backgroundColor = .clear
     richContentMenuViewController.modalPresentationStyle = .overCurrentContext
     
     self.navigationController?.present(richContentMenuViewController, animated: true, completion: nil)

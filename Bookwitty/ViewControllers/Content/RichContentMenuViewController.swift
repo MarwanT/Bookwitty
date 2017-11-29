@@ -79,6 +79,18 @@ class RichContentMenuViewController: UIViewController {
     self.initializeComponents()
   }
   
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    let when = DispatchTime.now() + 0.2
+    DispatchQueue.main.asyncAfter(deadline: when) {
+      UIView.animate(withDuration: 0.300) {
+        self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber20().withAlphaComponent(0.5)
+        
+      }
+    }
+  }
+  
   private func initializeComponents() {
     
     let attributedString = AttributedStringBuilder(fontDynamicType: .caption1)
