@@ -220,9 +220,9 @@ class ContentEditorViewController: UIViewController {
   }
   
   @objc private func tick() {
-    self.viewModel.dispatchContent() { [unowned self] created, success in
-      if created && success {
-        self.loadNavigationBarButtons()
+    self.viewModel.dispatchContent() { [unowned self] status, success in
+        if success {
+          self.loadNavigationBarButtons()
       }
     }
   }
@@ -556,9 +556,11 @@ extension ContentEditorViewController {
 }
 
 extension ContentEditorViewController {
-  func saveAsDraft() {
+  func saveAsDraft(_ completion:((_ success:Bool) -> Void)?) {
     //Ask the content editor for the body.
-   self.viewModel.dispatchContent()
+    self.viewModel.dispatchContent() { _ , success in
+      completion?(success)
+    }
   }
 }
 
@@ -583,7 +585,13 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
     case .publishYourPost:
       self.publishYourPost()
     case .saveAsDraft:
-      self.saveAsDraft()
+      self.saveAsDraft() { success in
+        if success {
+          viewController.dismiss(animated: true, completion: nil)
+        } else {
+          //TODO: show the user an error.
+        }
+      }
     case .goBack:
       viewController.dismiss(animated: true, completion: nil)
     }
