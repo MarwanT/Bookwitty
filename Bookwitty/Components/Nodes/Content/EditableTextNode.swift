@@ -76,7 +76,7 @@ class EditableTextNode: ASCellNode {
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let nodesArray: [ASLayoutElement] = [textNode, clearButtonNode]
     let horizontalSpec = ASStackLayoutSpec(direction: .horizontal,
-                                         spacing: 0.0,
+                                         spacing: 5.0,
                                          justifyContent: .start,
                                          alignItems: .center,
                                          children: nodesArray)
