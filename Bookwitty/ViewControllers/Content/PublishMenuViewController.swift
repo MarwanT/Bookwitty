@@ -89,7 +89,6 @@ class PublishMenuViewController: UIViewController {
     tapGesture.delegate = self
     tapGesture.numberOfTapsRequired = 1
     tapGesture.numberOfTouchesRequired = 1
-    tapGesture.cancelsTouchesInView = false
     self.view.addGestureRecognizer(tapGesture)
   }
   
@@ -290,6 +289,6 @@ extension PublishMenuViewController.Item {
 
 extension PublishMenuViewController: UIGestureRecognizerDelegate {
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-    return touch.view is UITableView
+    return touch.view == self.view
   }
 }
