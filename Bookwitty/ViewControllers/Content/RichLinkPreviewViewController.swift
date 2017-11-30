@@ -330,6 +330,10 @@ extension RichLinkPreviewViewController: UITextViewDelegate {
       textView.isScrollEnabled = textView.intrinsicContentSize.height > textView.frame.height
     }
   }
+
+  @objc fileprivate func setTextViewScrollEnabled() {
+    textView.isScrollEnabled = textView.intrinsicContentSize.height > textView.frame.height
+  }
 }
 
 extension RichLinkPreviewViewController {
