@@ -569,12 +569,16 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
     
     switch item {
     case .penName:
+      viewController.dismiss(animated: true, completion: nil)
       self.presentSelectPenNameViewController()
     case .linkTopics:
+      viewController.dismiss(animated: true, completion: nil)
       self.presentLinkTopicsViewController()
     case .addTags:
+      viewController.dismiss(animated: true, completion: nil)
       self.presentTagsViewController()
     case .postPreview:
+      viewController.dismiss(animated: true, completion: nil)
       self.presentPostPreviewViewController()
     case .publishYourPost:
       self.publishYourPost()
