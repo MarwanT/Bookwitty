@@ -39,7 +39,7 @@ class ContentEditorViewController: UIViewController {
       self.viewModel.currentPost?.title = nil
       return
     }
-    self.viewModel.currentPost?.title = text.capitalizeFirstLetter()
+    self.viewModel.currentPost?.title = text
   }
   
   fileprivate func loadNavigationBarButtons() {
