@@ -187,7 +187,7 @@ extension RichLinkPreviewViewController: Themeable {
 
 //MARK: - URL Handling
 extension RichLinkPreviewViewController {
-  fileprivate func getUrlInfo() {
+  @objc fileprivate func getUrlInfo() {
     //re-initilize components
     initializeComponents()
     setupNavigationBarButtons()
@@ -320,7 +320,8 @@ extension RichLinkPreviewViewController: UITextViewDelegate {
   }
 
   public func textViewDidChange(_ textView: UITextView) {
-    getUrlInfo()
+    NSObject.cancelPreviousPerformRequests(withTarget: self)
+    self.perform(#selector(getUrlInfo), with: nil, afterDelay: 0.5)
 
     let time: DispatchTime = DispatchTime.now() + DispatchTimeInterval.microseconds(200)
     DispatchQueue.main.asyncAfter(deadline: time) {
