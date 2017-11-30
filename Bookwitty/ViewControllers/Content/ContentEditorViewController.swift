@@ -24,6 +24,12 @@ class ContentEditorViewController: UIViewController {
   private var timer: Timer!
   var toolbarButtons: [ContentEditorOption:SelectedImageView] = [:]
   
+  enum DispatchStatus {
+    case create
+    case update
+    case noChanges
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     self.editorView.delegate = self
