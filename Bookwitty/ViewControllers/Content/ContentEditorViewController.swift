@@ -566,7 +566,6 @@ extension ContentEditorViewController {
 extension ContentEditorViewController: PublishMenuViewControllerDelegate {
   
   func publishMenu(_ viewController: PublishMenuViewController, didSelect item: PublishMenuViewController.Item) {
-    viewController.dismiss(animated: true, completion: nil)
     
     switch item {
     case .penName:
