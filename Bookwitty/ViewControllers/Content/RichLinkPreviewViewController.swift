@@ -64,6 +64,7 @@ class RichLinkPreviewViewController: UIViewController {
     initializeComponents()
     applyTheme()
     setupNavigationBarButtons()
+    addKeyboardNotifications()
     self.textView.becomeFirstResponder()
   }
 
@@ -316,5 +317,32 @@ extension RichLinkPreviewViewController: UITextViewDelegate {
     DispatchQueue.main.asyncAfter(deadline: time) {
       textView.isScrollEnabled = textView.intrinsicContentSize.height > textView.frame.height
     }
+  }
+}
+
+extension RichLinkPreviewViewController {
+  fileprivate func addKeyboardNotifications() {
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillShow(_:)),
+      name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillHide(_:)),
+      name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+  }
+
+  // MARK: - Keyboard Handling
+  func keyboardWillShow(_ notification: NSNotification) {
+    if let value = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+      let frame = value.cgRectValue
+      scrollViewBottomLayoutConstraint.constant = frame.height
+      self.view.setNeedsUpdateConstraints()
+    }
+  }
+
+  func keyboardWillHide(_ notification: NSNotification) {
+    scrollViewBottomLayoutConstraint.constant = 0
+    self.view.setNeedsUpdateConstraints()
   }
 }
