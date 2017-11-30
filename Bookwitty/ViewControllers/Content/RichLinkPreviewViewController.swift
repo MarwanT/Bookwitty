@@ -24,6 +24,9 @@ class RichLinkPreviewViewController: UIViewController {
   @IBOutlet var textView: UITextView!
   @IBOutlet var separators: [UIView]!
 
+  //Content Preview
+  @IBOutlet var contentHeightConstraint: NSLayoutConstraint!
+
   //Link Preview
   @IBOutlet var linkPreview: UIView!
   @IBOutlet var linkTitleLabel: UILabel!
@@ -46,6 +49,8 @@ class RichLinkPreviewViewController: UIViewController {
   //Error Preview
   @IBOutlet var errorPreview: UIView!
   @IBOutlet var errorLabel: UILabel!
+
+  @IBOutlet var scrollViewBottomLayoutConstraint: NSLayoutConstraint!
 
   fileprivate let viewModel = RichLinkPreviewViewModel()
   var mode: Mode = .link
@@ -242,6 +247,7 @@ extension RichLinkPreviewViewController {
       let ratio = self.videoImageView.frame.width / image.size.width
       let height = image.size.height * ratio
       self.videoPreviewHeightConstraint.constant = height
+      self.contentHeightConstraint.constant = 5 + height + 5
     }
     videoPreview.isHidden = false
   }
