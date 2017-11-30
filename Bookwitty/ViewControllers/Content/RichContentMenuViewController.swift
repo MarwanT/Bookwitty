@@ -55,7 +55,7 @@ class RichContentMenuViewController: UIViewController {
       case .imageLibrary:
         return #imageLiteral(resourceName: "gallery")
       case .link:
-        return #imageLiteral(resourceName: "hyperlink")
+        return #imageLiteral(resourceName: "hyperlinkMedium")
       case .book:
         return #imageLiteral(resourceName: "book")
       case .video:
