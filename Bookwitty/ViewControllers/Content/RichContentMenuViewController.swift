@@ -81,11 +81,12 @@ class RichContentMenuViewController: UIViewController {
   }
   
   private func addTapGesture() {
-    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(PublishMenuViewController.backgroundTapped(_:)))
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(RichContentMenuViewController
+      .backgroundTapped(_:)))
+    self.view.isUserInteractionEnabled = true
     tapGesture.delegate = self
     tapGesture.numberOfTapsRequired = 1
     tapGesture.numberOfTouchesRequired = 1
-    tapGesture.cancelsTouchesInView = false
     self.view.addGestureRecognizer(tapGesture)
   }
   
