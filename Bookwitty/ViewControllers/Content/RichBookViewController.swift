@@ -109,6 +109,11 @@ final class RichBookViewController: ASViewController<ASDisplayNode> {
     loadNavigationBarButtons()
   }
   
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    self.searchNode.becomeFirstResponder()
+  }
+  
   private func loadNavigationBarButtons() {
     navigationItem.backBarButtonItem = UIBarButtonItem.back
     
