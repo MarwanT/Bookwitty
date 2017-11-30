@@ -718,6 +718,7 @@
                         <outlet property="linkHostLabel" destination="wWS-lt-QO5" id="oyZ-R4-cC9"/>
                         <outlet property="linkPreview" destination="A7P-dP-Vpz" id="ZtF-At-oFe"/>
                         <outlet property="linkTitleLabel" destination="uaq-Vq-eZo" id="SBN-YU-ucY"/>
+                        <outlet property="scrollView" destination="rxD-f0-myR" id="SaF-l3-kP8"/>
                         <outlet property="scrollViewBottomLayoutConstraint" destination="SZQ-UL-FQy" id="Z1H-bU-pmw"/>
                         <outlet property="textView" destination="PTX-Xf-lmX" id="EPQ-vT-KX7"/>
                         <outlet property="videoImageView" destination="83O-RU-DQe" id="OzP-zx-6q8"/>

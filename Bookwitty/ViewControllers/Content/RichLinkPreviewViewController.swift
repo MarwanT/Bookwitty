@@ -21,6 +21,8 @@ class RichLinkPreviewViewController: UIViewController {
     case audio
   }
 
+  @IBOutlet var scrollView: UIScrollView!
+
   @IBOutlet var textView: UITextView!
   @IBOutlet var separators: [UIView]!
 
