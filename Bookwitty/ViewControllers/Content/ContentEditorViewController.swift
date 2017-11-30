@@ -581,7 +581,7 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
     case .saveAsDraft:
       self.saveAsDraft()
     case .goBack:
-      break
+      viewController.dismiss(animated: true, completion: nil)
     }
   }
 }
