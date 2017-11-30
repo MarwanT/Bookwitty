@@ -593,7 +593,9 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
 //MARK: - SelectPenNameViewControllerDelegate implementation
 extension ContentEditorViewController: SelectPenNameViewControllerDelegate {
   func selectPenName(controller: SelectPenNameViewController, didSelect penName: PenName?) {
-    controller.dismiss(animated: true, completion: nil)
+    controller.dismiss(animated: true) {
+      self.nextBarButtonTouchUpInside(UIBarButtonItem())
+    }
     //TODO: Empty Implementation
   }
 }
@@ -601,7 +603,9 @@ extension ContentEditorViewController: SelectPenNameViewControllerDelegate {
 extension ContentEditorViewController: LinkTagsViewControllerDelegate {
   func linkTags(viewController: LinkTagsViewController, didLink tags:[Tag]) {
     self.viewModel.linkedTags = tags
-    viewController.dismiss(animated: true, completion: nil)
+    viewController.dismiss(animated: true) {
+      self.nextBarButtonTouchUpInside(UIBarButtonItem())
+    }
   }
 }
 
@@ -609,14 +613,18 @@ extension ContentEditorViewController: LinkTagsViewControllerDelegate {
 extension ContentEditorViewController: LinkPagesViewControllerDelegate {
   func linkPages(viewController: LinkPagesViewController, didLink pages: [ModelCommonProperties]) {
     self.viewModel.linkedPages = pages
-    viewController.dismiss(animated: true, completion: nil)
+    viewController.dismiss(animated: true) { 
+      self.nextBarButtonTouchUpInside(UIBarButtonItem())
+    }
   }
 }
 
 //MARK: - PostPreviewViewControllerDelegate Implementation
 extension ContentEditorViewController: PostPreviewViewControllerDelegate {
   func postPreview(viewController: PostPreviewViewController, didFinishPreviewing post: CandidatePost) {
-    viewController.dismiss(animated: true, completion: nil)
+    viewController.dismiss(animated: true) {
+      self.nextBarButtonTouchUpInside(UIBarButtonItem())
+    }
     self.loadUIFromPost()
     self.viewModel.dispatchContent()
   }
