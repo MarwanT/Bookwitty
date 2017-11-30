@@ -45,7 +45,9 @@ class EditableTextNode: ASCellNode {
 
   fileprivate func setupNode() {
     automaticallyManagesSubnodes = true
-    textNode.style.height = ASDimension(unit: .points, value: 80.0)
+    let insets = externalEdgeInsets()
+    let defaultTextFieldHeight: CGFloat = 30.0
+    textNode.style.maxHeight = ASDimension(unit: .points, value: defaultTextFieldHeight + insets.top + insets.bottom)
     textNode.maximumLinesToDisplay = 2
 
     textNode.style.flexGrow = 1.0
@@ -107,6 +109,10 @@ extension EditableTextNode: Themeable {
 
 //MARK: - ASEditableTextNodeDelegate implementation
 extension EditableTextNode: ASEditableTextNodeDelegate {
+  func editableTextNodeDidUpdateText(_ editableTextNode: ASEditableTextNode) {
+    setNeedsLayout()
+  }
+  
   func editableTextNodeDidFinishEditing(_ editableTextNode: ASEditableTextNode) {
     self.delegate?.editableTextNodeDidFinishEditing(textNode: self)
   }
