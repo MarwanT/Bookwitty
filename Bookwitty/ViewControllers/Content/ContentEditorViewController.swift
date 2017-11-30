@@ -143,7 +143,7 @@ class ContentEditorViewController: UIViewController {
     self.navigationController?.present(richContentMenuViewController, animated: true, completion: nil)
   }
   
-  @objc private func nextBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
+  @objc fileprivate func nextBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
     
     self.viewModel.dispatchContent()
     
