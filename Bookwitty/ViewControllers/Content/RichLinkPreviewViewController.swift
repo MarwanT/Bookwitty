@@ -325,10 +325,7 @@ extension RichLinkPreviewViewController: UITextViewDelegate {
     NSObject.cancelPreviousPerformRequests(withTarget: self)
     self.perform(#selector(getUrlInfo), with: nil, afterDelay: 0.5)
 
-    let time: DispatchTime = DispatchTime.now() + DispatchTimeInterval.microseconds(200)
-    DispatchQueue.main.asyncAfter(deadline: time) {
-      textView.isScrollEnabled = textView.intrinsicContentSize.height > textView.frame.height
-    }
+    self.perform(#selector(setTextViewScrollEnabled), with: nil, afterDelay: 0.02)
   }
 
   @objc fileprivate func setTextViewScrollEnabled() {
