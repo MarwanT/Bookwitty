@@ -69,6 +69,9 @@ class RichLinkPreviewViewController: UIViewController {
   }
 
   fileprivate func initializeComponents() {
+    var tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapGestureHandler(_:)))
+    view.addGestureRecognizer(tapGesture)
+
     linkPreview.isHidden = true
     linkTitleLabel.text = nil
     linkDescriptionLabel.text = nil
@@ -77,7 +80,7 @@ class RichLinkPreviewViewController: UIViewController {
     videoPreview.isHidden = true
     videoImageView.isUserInteractionEnabled = false
     videoPlayView.isUserInteractionEnabled = false
-    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(playVideoTapGestureHandler(_:)))
+    tapGesture = UITapGestureRecognizer(target: self, action: #selector(playVideoTapGestureHandler(_:)))
     videoPreview.addGestureRecognizer(tapGesture)
 
     audioPreview.isHidden = true
@@ -294,6 +297,12 @@ extension RichLinkPreviewViewController {
 
 //MARK: - Gestures
 extension RichLinkPreviewViewController {
+  @objc fileprivate func viewTapGestureHandler(_ sender: UITapGestureRecognizer) {
+    if textView.isFirstResponder {
+      textView.resignFirstResponder()
+    }
+  }
+
   @objc fileprivate func playVideoTapGestureHandler(_ sender: UITapGestureRecognizer) {
     guard let response = viewModel.response,
     let videoUrl = response.embedUrl else {
