@@ -504,34 +504,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vP5-z9-AHH" userLabel="Long Separator View">
+                                <rect key="frame" x="0.0" y="20" width="375" height="1"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="Y8R-qB-FDZ"/>
+                                </constraints>
+                            </view>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="PTX-Xf-lmX">
+                                <rect key="frame" x="0.0" y="21" width="375" height="33"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="6Mb-9s-GFq" id="FJ4-Xb-b0F"/>
+                                </connections>
+                            </textView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="orr-zY-2To" userLabel="Long Separator View">
+                                <rect key="frame" x="0.0" y="54" width="375" height="1"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="fbJ-sq-HwQ"/>
+                                </constraints>
+                            </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rxD-f0-myR">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="55" width="375" height="612"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vP5-z9-AHH" userLabel="Long Separator View">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hcD-d0-md0" userLabel="Long Separator View">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="1" id="Y8R-qB-FDZ"/>
-                                        </constraints>
-                                    </view>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="PTX-Xf-lmX">
-                                        <rect key="frame" x="0.0" y="1" width="375" height="33"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="6Mb-9s-GFq" id="FJ4-Xb-b0F"/>
-                                        </connections>
-                                    </textView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="orr-zY-2To" userLabel="Long Separator View">
-                                        <rect key="frame" x="0.0" y="34" width="375" height="1"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="1" id="fbJ-sq-HwQ"/>
+                                            <constraint firstAttribute="height" constant="1" id="NKE-Cg-Ovk"/>
                                         </constraints>
                                     </view>
                                     <view autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DCj-iy-Yhd">
-                                        <rect key="frame" x="8" y="45" width="359" height="110"/>
+                                        <rect key="frame" x="8" y="6" width="359" height="110"/>
                                         <subviews>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A7P-dP-Vpz" userLabel="LinkPreview">
                                                 <rect key="frame" x="0.0" y="5" width="359" height="100"/>
@@ -680,29 +687,32 @@
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="DCj-iy-Yhd" firstAttribute="top" secondItem="orr-zY-2To" secondAttribute="bottom" constant="10" id="1xg-la-wLm"/>
-                                    <constraint firstItem="vP5-z9-AHH" firstAttribute="leading" secondItem="rxD-f0-myR" secondAttribute="leading" id="2yA-On-kWi"/>
-                                    <constraint firstItem="orr-zY-2To" firstAttribute="leading" secondItem="rxD-f0-myR" secondAttribute="leading" id="7xU-9i-zDI"/>
-                                    <constraint firstAttribute="trailing" secondItem="vP5-z9-AHH" secondAttribute="trailing" id="KpD-iU-ez8"/>
-                                    <constraint firstItem="PTX-Xf-lmX" firstAttribute="bottom" secondItem="orr-zY-2To" secondAttribute="top" id="PAl-sC-DlE"/>
-                                    <constraint firstItem="vP5-z9-AHH" firstAttribute="bottom" secondItem="PTX-Xf-lmX" secondAttribute="top" id="U1R-re-XQQ"/>
-                                    <constraint firstAttribute="trailing" secondItem="orr-zY-2To" secondAttribute="trailing" id="blX-Yc-1MF"/>
+                                    <constraint firstItem="hcD-d0-md0" firstAttribute="top" secondItem="rxD-f0-myR" secondAttribute="top" id="NjC-te-qrw"/>
+                                    <constraint firstAttribute="trailing" secondItem="hcD-d0-md0" secondAttribute="trailing" id="amL-bW-3xh"/>
                                     <constraint firstItem="DCj-iy-Yhd" firstAttribute="leading" secondItem="rxD-f0-myR" secondAttribute="leadingMargin" id="dEd-Qk-bNm"/>
-                                    <constraint firstItem="PTX-Xf-lmX" firstAttribute="leading" secondItem="rxD-f0-myR" secondAttribute="leading" id="itW-o7-aWv"/>
                                     <constraint firstAttribute="bottom" secondItem="DCj-iy-Yhd" secondAttribute="bottom" constant="5" id="jfZ-zl-BcX"/>
-                                    <constraint firstItem="vP5-z9-AHH" firstAttribute="top" secondItem="rxD-f0-myR" secondAttribute="top" id="ncL-Wb-Hbo"/>
-                                    <constraint firstAttribute="trailing" secondItem="PTX-Xf-lmX" secondAttribute="trailing" id="v0G-iu-H2i"/>
+                                    <constraint firstItem="hcD-d0-md0" firstAttribute="leading" secondItem="rxD-f0-myR" secondAttribute="leading" id="nZX-Q7-PHN"/>
+                                    <constraint firstItem="DCj-iy-Yhd" firstAttribute="top" secondItem="hcD-d0-md0" secondAttribute="bottom" constant="5" id="of4-EY-wBM"/>
                                     <constraint firstItem="DCj-iy-Yhd" firstAttribute="trailing" secondItem="rxD-f0-myR" secondAttribute="trailingMargin" id="wwJ-83-Lxk"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="vP5-z9-AHH" firstAttribute="width" secondItem="Y2T-TF-HME" secondAttribute="width" id="0gf-7S-hsB"/>
+                            <constraint firstItem="vP5-z9-AHH" firstAttribute="top" secondItem="ZG1-ZG-A5j" secondAttribute="bottom" id="LfI-C8-1LO"/>
+                            <constraint firstItem="orr-zY-2To" firstAttribute="leading" secondItem="Y2T-TF-HME" secondAttribute="leading" id="Mm9-gu-NVo"/>
+                            <constraint firstItem="orr-zY-2To" firstAttribute="top" secondItem="PTX-Xf-lmX" secondAttribute="bottom" id="NRi-1W-gke"/>
                             <constraint firstItem="Ys2-Hv-Rdn" firstAttribute="top" secondItem="rxD-f0-myR" secondAttribute="bottom" id="SZQ-UL-FQy"/>
-                            <constraint firstItem="rxD-f0-myR" firstAttribute="top" secondItem="ZG1-ZG-A5j" secondAttribute="bottom" id="ccY-WQ-BhX"/>
+                            <constraint firstItem="rxD-f0-myR" firstAttribute="top" secondItem="orr-zY-2To" secondAttribute="bottom" id="WL5-Xz-0bU"/>
+                            <constraint firstItem="vP5-z9-AHH" firstAttribute="leading" secondItem="Y2T-TF-HME" secondAttribute="leading" id="XWT-b3-WC2"/>
+                            <constraint firstItem="hcD-d0-md0" firstAttribute="width" secondItem="orr-zY-2To" secondAttribute="width" id="euJ-LL-FV4"/>
                             <constraint firstAttribute="trailing" secondItem="rxD-f0-myR" secondAttribute="trailing" id="gWy-Ws-Rpd"/>
+                            <constraint firstItem="PTX-Xf-lmX" firstAttribute="top" secondItem="vP5-z9-AHH" secondAttribute="bottom" id="jml-zn-kLj"/>
+                            <constraint firstAttribute="trailing" secondItem="orr-zY-2To" secondAttribute="trailing" id="pzh-qJ-5sG"/>
+                            <constraint firstItem="PTX-Xf-lmX" firstAttribute="leading" secondItem="Y2T-TF-HME" secondAttribute="leading" id="svu-Cj-xTG"/>
                             <constraint firstItem="rxD-f0-myR" firstAttribute="leading" secondItem="Y2T-TF-HME" secondAttribute="leading" id="xNc-C3-beD"/>
+                            <constraint firstAttribute="trailing" secondItem="PTX-Xf-lmX" secondAttribute="trailing" id="yCz-RF-B0U"/>
+                            <constraint firstAttribute="trailing" secondItem="vP5-z9-AHH" secondAttribute="trailing" id="zGr-px-uma"/>
                         </constraints>
                     </view>
                     <connections>
