@@ -21,8 +21,13 @@ class RichLinkPreviewViewController: UIViewController {
     case audio
   }
 
+  @IBOutlet var scrollView: UIScrollView!
+
   @IBOutlet var textView: UITextView!
   @IBOutlet var separators: [UIView]!
+
+  //Content Preview
+  @IBOutlet var contentHeightConstraint: NSLayoutConstraint!
 
   //Link Preview
   @IBOutlet var linkPreview: UIView!
@@ -47,6 +52,8 @@ class RichLinkPreviewViewController: UIViewController {
   @IBOutlet var errorPreview: UIView!
   @IBOutlet var errorLabel: UILabel!
 
+  @IBOutlet var scrollViewBottomLayoutConstraint: NSLayoutConstraint!
+
   fileprivate let viewModel = RichLinkPreviewViewModel()
   var mode: Mode = .link
 
@@ -59,10 +66,14 @@ class RichLinkPreviewViewController: UIViewController {
     initializeComponents()
     applyTheme()
     setupNavigationBarButtons()
+    addKeyboardNotifications()
     self.textView.becomeFirstResponder()
   }
 
   fileprivate func initializeComponents() {
+    var tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapGestureHandler(_:)))
+    view.addGestureRecognizer(tapGesture)
+
     linkPreview.isHidden = true
     linkTitleLabel.text = nil
     linkDescriptionLabel.text = nil
@@ -71,7 +82,7 @@ class RichLinkPreviewViewController: UIViewController {
     videoPreview.isHidden = true
     videoImageView.isUserInteractionEnabled = false
     videoPlayView.isUserInteractionEnabled = false
-    let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(tapGestureHandler(_:)))
+    tapGesture = UITapGestureRecognizer(target: self, action: #selector(playVideoTapGestureHandler(_:)))
     videoPreview.addGestureRecognizer(tapGesture)
 
     audioPreview.isHidden = true
@@ -178,7 +189,7 @@ extension RichLinkPreviewViewController: Themeable {
 
 //MARK: - URL Handling
 extension RichLinkPreviewViewController {
-  fileprivate func getUrlInfo() {
+  @objc fileprivate func getUrlInfo() {
     //re-initilize components
     initializeComponents()
     setupNavigationBarButtons()
@@ -242,6 +253,7 @@ extension RichLinkPreviewViewController {
       let ratio = self.videoImageView.frame.width / image.size.width
       let height = image.size.height * ratio
       self.videoPreviewHeightConstraint.constant = height
+      self.contentHeightConstraint.constant = 5 + height + 5
     }
     videoPreview.isHidden = false
   }
@@ -287,7 +299,13 @@ extension RichLinkPreviewViewController {
 
 //MARK: - Gestures
 extension RichLinkPreviewViewController {
-  @objc fileprivate func tapGestureHandler(_ sender: UITapGestureRecognizer) {
+  @objc fileprivate func viewTapGestureHandler(_ sender: UITapGestureRecognizer) {
+    if textView.isFirstResponder {
+      textView.resignFirstResponder()
+    }
+  }
+
+  @objc fileprivate func playVideoTapGestureHandler(_ sender: UITapGestureRecognizer) {
     guard let response = viewModel.response,
     let videoUrl = response.embedUrl else {
       return
@@ -304,11 +322,40 @@ extension RichLinkPreviewViewController: UITextViewDelegate {
   }
 
   public func textViewDidChange(_ textView: UITextView) {
-    getUrlInfo()
+    NSObject.cancelPreviousPerformRequests(withTarget: self)
+    self.perform(#selector(getUrlInfo), with: nil, afterDelay: 0.5)
 
-    let time: DispatchTime = DispatchTime.now() + DispatchTimeInterval.microseconds(200)
-    DispatchQueue.main.asyncAfter(deadline: time) {
-      textView.isScrollEnabled = textView.intrinsicContentSize.height > textView.frame.height
+    self.perform(#selector(setTextViewScrollEnabled), with: nil, afterDelay: 0.02)
+  }
+
+  @objc fileprivate func setTextViewScrollEnabled() {
+    textView.isScrollEnabled = textView.intrinsicContentSize.height > textView.frame.height
+  }
+}
+
+extension RichLinkPreviewViewController {
+  fileprivate func addKeyboardNotifications() {
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillShow(_:)),
+      name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(keyboardWillHide(_:)),
+      name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+  }
+
+  // MARK: - Keyboard Handling
+  func keyboardWillShow(_ notification: NSNotification) {
+    if let value = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+      let frame = value.cgRectValue
+      scrollViewBottomLayoutConstraint.constant = frame.height
+      self.view.setNeedsUpdateConstraints()
     }
+  }
+
+  func keyboardWillHide(_ notification: NSNotification) {
+    scrollViewBottomLayoutConstraint.constant = 0
+    self.view.setNeedsUpdateConstraints()
   }
 }
