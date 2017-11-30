@@ -59,7 +59,7 @@ extension RichEditorView {
   }
   
   func setContent(html: String?) {
-    guard let html = html else {
+    guard let html = html?.base64Encoded else {
       runJS("RE.setContent('')")
       return
     }
@@ -78,6 +78,11 @@ extension RichEditorView {
   func getDefaults() -> (title: String, description: String?) {
     let jsonString =  runJS("RE.getDefaults();");
     return parseDefaultContent(jsonString)
+  }
+  
+  func hasFocus() -> Bool {
+    let responder = runJS("document.activeElement.id=='editor'")
+    return responder == "true"
   }
 }
 

@@ -77,6 +77,32 @@ class RichContentMenuViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.initializeComponents()
+    addTapGesture()
+  }
+  
+  private func addTapGesture() {
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(PublishMenuViewController.backgroundTapped(_:)))
+    tapGesture.delegate = self
+    tapGesture.numberOfTapsRequired = 1
+    tapGesture.numberOfTouchesRequired = 1
+    tapGesture.cancelsTouchesInView = false
+    self.view.addGestureRecognizer(tapGesture)
+  }
+  
+  func backgroundTapped(_ sender:UIGestureRecognizer) {
+    self.dismiss(animated: true, completion: nil)
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    let when = DispatchTime.now() + 0.2
+    DispatchQueue.main.asyncAfter(deadline: when) {
+      UIView.animate(withDuration: 0.300) {
+        self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber20().withAlphaComponent(0.5)
+        
+      }
+    }
   }
   
   private func initializeComponents() {
@@ -132,5 +158,11 @@ extension RichContentMenuViewController : UITableViewDelegate {
       return
     }
     self.delegate?.richContentMenuViewController(self, didSelect: item)
+  }
+}
+
+extension RichContentMenuViewController: UIGestureRecognizerDelegate {
+  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    return touch.view is UITableView
   }
 }

@@ -42,7 +42,7 @@ class ContentEditorViewController: UIViewController {
     self.viewModel.currentPost?.title = text.capitalizeFirstLetter()
   }
   
-  private func loadNavigationBarButtons() {
+  fileprivate func loadNavigationBarButtons() {
     navigationItem.backBarButtonItem = UIBarButtonItem.back
     let redColor = ThemeManager.shared.currentTheme.colorNumber19()
     
@@ -71,11 +71,14 @@ class ContentEditorViewController: UIViewController {
                                target: self,
                                action: #selector(self.plusBarButtonTouchUpInside(_:)))
     
+    plusBarButtonItem.isEnabled = self.editorView.hasFocus()
+
     let nextBarButtonItem = UIBarButtonItem(title: Strings.next(),
                                style: UIBarButtonItemStyle.plain,
                                target: self,
                                action: #selector(self.nextBarButtonTouchUpInside(_:)))
-    
+
+    nextBarButtonItem.isEnabled = self.viewModel.currentPost.id != nil && !self.viewModel.hasPendingUploadingRequest
     nextBarButtonItem.setTitleTextAttributes([NSForegroundColorAttributeName: ThemeManager.shared.currentTheme.defaultGrayedTextColor()], for: .disabled)
     let size: CGFloat = 44.0
     
@@ -134,7 +137,7 @@ class ContentEditorViewController: UIViewController {
     let richContentMenuViewController = Storyboard.Content.instantiate(RichContentMenuViewController.self)
     richContentMenuViewController.delegate = self
     self.definesPresentationContext = true
-    richContentMenuViewController.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber20().withAlphaComponent(0.5)
+    richContentMenuViewController.view.backgroundColor = .clear
     richContentMenuViewController.modalPresentationStyle = .overCurrentContext
     
     self.navigationController?.present(richContentMenuViewController, animated: true, completion: nil)
@@ -148,7 +151,7 @@ class ContentEditorViewController: UIViewController {
     publishMenuViewController.delegate = self
     publishMenuViewController.viewModel.initialize(with: self.viewModel.linkedTags, linkedPages: self.viewModel.linkedPages)
     self.definesPresentationContext = true
-    publishMenuViewController.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber20().withAlphaComponent(0.5)
+    publishMenuViewController.view.backgroundColor = .clear
     publishMenuViewController.modalPresentationStyle = .overCurrentContext
     
     self.navigationController?.present(publishMenuViewController, animated: true, completion: nil)
@@ -211,7 +214,11 @@ class ContentEditorViewController: UIViewController {
   }
   
   @objc private func tick() {
-    self.viewModel.dispatchContent()
+    self.viewModel.dispatchContent() { [unowned self] created, success in
+      if created && success {
+        self.loadNavigationBarButtons()
+      }
+    }
   }
   
   private func setupEditorToolbar() {
@@ -408,12 +415,15 @@ extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePi
     guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
       return
     }
-
     self.navigationController?.dismiss(animated: true, completion: nil)
     let id = self.editorView.generatePhotoWrapper()
+    self.viewModel.addUploadRequest(id)
+    self.loadNavigationBarButtons()
     viewModel.upload(image: image) { (success: Bool, link: String?) in
       guard let link = link, let Url = URL(string: link) else { return }
       self.editorView.generate(photo: Url, alt: "Image", wrapperId: id)
+      self.viewModel.removeUploadRequest(id)
+      self.loadNavigationBarButtons()
     }
   }
 }
@@ -529,7 +539,13 @@ extension ContentEditorViewController {
   }
   
   func publishYourPost() {
-    self.viewModel.dispatchContent()
+    self.viewModel.dispatchContent() { _, success in
+      if success {
+        self.dismiss(animated: true, completion: nil)
+      } else {
+        //TODO: Tell the User
+      }
+    }
   }
 }
 
@@ -622,11 +638,11 @@ extension ContentEditorViewController: RichEditorDelegate {
   }
   
   func richEditorTookFocus(_ editor: RichEditorView) {
-    self.navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = true }
+    self.loadNavigationBarButtons()
   }
   
   func richEditorLostFocus(_ editor: RichEditorView) {
-    self.navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = false }
+    self.loadNavigationBarButtons()
   }
   
   func richEditor(_ editor: RichEditorView, handle action: String) {
