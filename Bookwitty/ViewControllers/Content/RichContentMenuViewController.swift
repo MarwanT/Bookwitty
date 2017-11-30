@@ -164,6 +164,6 @@ extension RichContentMenuViewController : UITableViewDelegate {
 
 extension RichContentMenuViewController: UIGestureRecognizerDelegate {
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-    return touch.view is UITableView
+    return touch.view == self.view
   }
 }
