@@ -42,7 +42,8 @@ extension CandidatePost {
     let bodyHash = body?.hashValue ?? 0
     let shortDescriptionHash = shortDescription?.hashValue ?? 0
     let imageUrlHash =  imageUrl?.hashValue ?? 0
-    return combineHashes([titleHash, bodyHash, shortDescriptionHash, imageUrlHash])
+    let statusHash = status?.hashValue ?? 0
+    return combineHashes([titleHash, bodyHash, shortDescriptionHash, imageUrlHash, statusHash])
   }
 }
 
