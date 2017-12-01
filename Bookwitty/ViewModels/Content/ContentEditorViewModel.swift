@@ -196,4 +196,15 @@ class ContentEditorViewModel  {
       })
     }
   }
+
+  func deletePost(_ closure: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    guard let identifier = self.currentPost.id else {
+        closure(true, nil)
+        return
+    }
+
+    _ = PublishAPI.removeContent(contentIdentifier: identifier) { (success, error) in
+      closure(success, error)
+    }
+  }
 }
