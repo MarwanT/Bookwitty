@@ -84,7 +84,7 @@ class ContentEditorViewModel  {
     }
   }
   
-  fileprivate func updateContent(with completion:((_ success: Bool) -> Void)? = nil) {
+  func updateContent(with completion:((_ success: Bool) -> Void)? = nil) {
     guard let currentPost = self.currentPost, let id = currentPost.id else {
       return
     }
