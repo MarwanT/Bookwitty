@@ -137,7 +137,16 @@ class ContentEditorViewController: UIViewController {
   
   @objc private func closeBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
     self.timer.invalidate()
-    self.dismiss(animated: true, completion: nil)
+    self.resignResponders()
+    presentConfirmSaveOrDiscardActionSheet { (option: ContentEditorViewController.ConfirmationOption, success: Bool) in
+      switch option {
+      case .saveDraft where success: fallthrough
+      case .discardPost where success:
+        self.dismiss(animated: true, completion: nil)
+      default:
+        break
+      }
+    }
   }
   
   @objc private func draftsBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
