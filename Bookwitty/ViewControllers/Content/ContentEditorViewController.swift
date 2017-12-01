@@ -382,6 +382,34 @@ class ContentEditorViewController: UIViewController {
   }
 }
 
+//MARK: - Save Action Sheet
+extension ContentEditorViewController {
+  fileprivate func presentConfirmSaveOrDiscardActionSheet() {
+    let alertController = UIAlertController(title: Strings.save_this_post_draft(), message: nil, preferredStyle: .actionSheet)
+
+    let saveDraft = UIAlertAction(title: Strings.save_draft(), style: .default, handler: {
+      _ in
+      //TODO: Empty Implementation
+    })
+
+    let discardPost = UIAlertAction(title: Strings.discard_post(), style: .destructive, handler: {
+      _ in
+      //TODO: Empty Implementation
+    })
+
+    let goBack = UIAlertAction(title: Strings.go_back(), style: .cancel, handler: {
+      _ in
+      //TODO: Empty Implementation
+    })
+
+    alertController.addAction(saveDraft)
+    alertController.addAction(discardPost)
+    alertController.addAction(goBack)
+
+    navigationController?.present(alertController, animated: true, completion: nil)
+  }
+}
+
 //MARK: - RichEditorToolbarDelegate Implementation
 extension ContentEditorViewController: RichEditorToolbarDelegate {
   
