@@ -24,6 +24,12 @@ class ContentEditorViewController: UIViewController {
   private var timer: Timer!
   var toolbarButtons: [ContentEditorOption:SelectedImageView] = [:]
   
+  enum DispatchStatus {
+    case create
+    case update
+    case noChanges
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     self.editorView.delegate = self
@@ -143,8 +149,7 @@ class ContentEditorViewController: UIViewController {
     self.navigationController?.present(richContentMenuViewController, animated: true, completion: nil)
   }
   
-  @objc private func nextBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
-    
+  fileprivate func presentPublishMenuViewController() {
     self.viewModel.dispatchContent()
     
     let publishMenuViewController = Storyboard.Content.instantiate(PublishMenuViewController.self)
@@ -155,6 +160,10 @@ class ContentEditorViewController: UIViewController {
     publishMenuViewController.modalPresentationStyle = .overCurrentContext
     
     self.navigationController?.present(publishMenuViewController, animated: true, completion: nil)
+  }
+  
+  @objc private func nextBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
+    self.presentPublishMenuViewController()
   }
   
   @objc private func toggleEnableState(of barButtonItem: UIBarButtonItem) -> Void {
@@ -214,9 +223,9 @@ class ContentEditorViewController: UIViewController {
   }
   
   @objc private func tick() {
-    self.viewModel.dispatchContent() { [unowned self] created, success in
-      if created && success {
-        self.loadNavigationBarButtons()
+    self.viewModel.dispatchContent() { [unowned self] status, success in
+        if success {
+          self.loadNavigationBarButtons()
       }
     }
   }
@@ -550,9 +559,11 @@ extension ContentEditorViewController {
 }
 
 extension ContentEditorViewController {
-  func saveAsDraft() {
+  func saveAsDraft(_ completion:((_ success:Bool) -> Void)?) {
     //Ask the content editor for the body.
-   self.viewModel.dispatchContent()
+    self.viewModel.dispatchContent() { _ , success in
+      completion?(success)
+    }
   }
 }
 
@@ -560,23 +571,32 @@ extension ContentEditorViewController {
 extension ContentEditorViewController: PublishMenuViewControllerDelegate {
   
   func publishMenu(_ viewController: PublishMenuViewController, didSelect item: PublishMenuViewController.Item) {
-    viewController.dismiss(animated: true, completion: nil)
     
     switch item {
     case .penName:
+      viewController.dismiss(animated: true, completion: nil)
       self.presentSelectPenNameViewController()
     case .linkTopics:
+      viewController.dismiss(animated: true, completion: nil)
       self.presentLinkTopicsViewController()
     case .addTags:
+      viewController.dismiss(animated: true, completion: nil)
       self.presentTagsViewController()
     case .postPreview:
+      viewController.dismiss(animated: true, completion: nil)
       self.presentPostPreviewViewController()
     case .publishYourPost:
       self.publishYourPost()
     case .saveAsDraft:
-      self.saveAsDraft()
+      self.saveAsDraft() { success in
+        if success {
+          viewController.dismiss(animated: true, completion: nil)
+        } else {
+          //TODO: show the user an error.
+        }
+      }
     case .goBack:
-      break
+      viewController.dismiss(animated: true, completion: nil)
     }
   }
 }
@@ -584,7 +604,9 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
 //MARK: - SelectPenNameViewControllerDelegate implementation
 extension ContentEditorViewController: SelectPenNameViewControllerDelegate {
   func selectPenName(controller: SelectPenNameViewController, didSelect penName: PenName?) {
-    controller.dismiss(animated: true, completion: nil)
+    controller.dismiss(animated: true) {
+      self.presentPublishMenuViewController()
+    }
     //TODO: Empty Implementation
   }
 }
@@ -592,7 +614,9 @@ extension ContentEditorViewController: SelectPenNameViewControllerDelegate {
 extension ContentEditorViewController: LinkTagsViewControllerDelegate {
   func linkTags(viewController: LinkTagsViewController, didLink tags:[Tag]) {
     self.viewModel.linkedTags = tags
-    viewController.dismiss(animated: true, completion: nil)
+    viewController.dismiss(animated: true) {
+      self.presentPublishMenuViewController()
+    }
   }
 }
 
@@ -600,14 +624,18 @@ extension ContentEditorViewController: LinkTagsViewControllerDelegate {
 extension ContentEditorViewController: LinkPagesViewControllerDelegate {
   func linkPages(viewController: LinkPagesViewController, didLink pages: [ModelCommonProperties]) {
     self.viewModel.linkedPages = pages
-    viewController.dismiss(animated: true, completion: nil)
+    viewController.dismiss(animated: true) { 
+      self.presentPublishMenuViewController()
+    }
   }
 }
 
 //MARK: - PostPreviewViewControllerDelegate Implementation
 extension ContentEditorViewController: PostPreviewViewControllerDelegate {
   func postPreview(viewController: PostPreviewViewController, didFinishPreviewing post: CandidatePost) {
-    viewController.dismiss(animated: true, completion: nil)
+    viewController.dismiss(animated: true) {
+      self.presentPublishMenuViewController()
+    }
     self.loadUIFromPost()
     self.viewModel.dispatchContent()
   }

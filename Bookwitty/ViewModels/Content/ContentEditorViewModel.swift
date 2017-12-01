@@ -111,21 +111,23 @@ class ContentEditorViewModel  {
     })
   }
 
-  func dispatchContent(with completion:((_ created: Bool, _ success: Bool) -> Void)? = nil) {
+  func dispatchContent(with completion:((_ created: ContentEditorViewController.DispatchStatus, _ success: Bool) -> Void)? = nil) {
     
     let newHashValue = self.currentPost.hash
     let latestHashValue = self.latestHashValue
     
     if self.currentPost.id == nil {
       self.createContent(with: { success in
-        completion?(true, success)
+        completion?(.create, success)
       })
     } else {
       self.dispatchPrelinkIfNeeded()
       if newHashValue != latestHashValue {
         self.updateContent(with: { success in
-          completion?(false, success)
+          completion?(.update, success)
         })
+      } else {
+        completion?(.noChanges, true) // no Change
       }
     }
   }
