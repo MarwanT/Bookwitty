@@ -149,8 +149,7 @@ class ContentEditorViewController: UIViewController {
     self.navigationController?.present(richContentMenuViewController, animated: true, completion: nil)
   }
   
-  @objc fileprivate func nextBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
-    
+  fileprivate func presentPublishMenuViewController() {
     self.viewModel.dispatchContent()
     
     let publishMenuViewController = Storyboard.Content.instantiate(PublishMenuViewController.self)
@@ -161,6 +160,10 @@ class ContentEditorViewController: UIViewController {
     publishMenuViewController.modalPresentationStyle = .overCurrentContext
     
     self.navigationController?.present(publishMenuViewController, animated: true, completion: nil)
+  }
+  
+  @objc private func nextBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
+    self.presentPublishMenuViewController()
   }
   
   @objc private func toggleEnableState(of barButtonItem: UIBarButtonItem) -> Void {
@@ -602,7 +605,7 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
 extension ContentEditorViewController: SelectPenNameViewControllerDelegate {
   func selectPenName(controller: SelectPenNameViewController, didSelect penName: PenName?) {
     controller.dismiss(animated: true) {
-      self.nextBarButtonTouchUpInside(UIBarButtonItem())
+      self.presentPublishMenuViewController()
     }
     //TODO: Empty Implementation
   }
@@ -612,7 +615,7 @@ extension ContentEditorViewController: LinkTagsViewControllerDelegate {
   func linkTags(viewController: LinkTagsViewController, didLink tags:[Tag]) {
     self.viewModel.linkedTags = tags
     viewController.dismiss(animated: true) {
-      self.nextBarButtonTouchUpInside(UIBarButtonItem())
+      self.presentPublishMenuViewController()
     }
   }
 }
@@ -622,7 +625,7 @@ extension ContentEditorViewController: LinkPagesViewControllerDelegate {
   func linkPages(viewController: LinkPagesViewController, didLink pages: [ModelCommonProperties]) {
     self.viewModel.linkedPages = pages
     viewController.dismiss(animated: true) { 
-      self.nextBarButtonTouchUpInside(UIBarButtonItem())
+      self.presentPublishMenuViewController()
     }
   }
 }
@@ -631,7 +634,7 @@ extension ContentEditorViewController: LinkPagesViewControllerDelegate {
 extension ContentEditorViewController: PostPreviewViewControllerDelegate {
   func postPreview(viewController: PostPreviewViewController, didFinishPreviewing post: CandidatePost) {
     viewController.dismiss(animated: true) {
-      self.nextBarButtonTouchUpInside(UIBarButtonItem())
+      self.presentPublishMenuViewController()
     }
     self.loadUIFromPost()
     self.viewModel.dispatchContent()
