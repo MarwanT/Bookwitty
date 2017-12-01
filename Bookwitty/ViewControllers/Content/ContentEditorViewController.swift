@@ -120,6 +120,11 @@ class ContentEditorViewController: UIViewController {
     navigationItem.leftBarButtonItems = leftBarButtonItems
     navigationItem.rightBarButtonItems = rightBarButtonItems
   }
+
+  func resignResponders() {
+    _ = self.titleTextField.resignFirstResponder()
+    _ = self.editorView.endEditing(true)
+  }
   
   // MARK: - Navigation items actions
   @objc private func undoButtonTouchUpInside(_ sender: UIButton) {
