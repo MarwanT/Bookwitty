@@ -401,17 +401,23 @@ extension ContentEditorViewController {
 
     let saveDraft = UIAlertAction(title: Strings.save_draft(), style: .default, handler: {
       _ in
-      //TODO: Empty Implementation
+      self.savePostAsDraft({
+        (success: Bool) in
+        closure(.saveDraft, success)
+      })
     })
 
     let discardPost = UIAlertAction(title: Strings.discard_post(), style: .destructive, handler: {
       _ in
-      //TODO: Empty Implementation
+      self.discardPost({
+        (success: Bool) in
+        closure(.discardPost, success)
+      })
     })
 
     let goBack = UIAlertAction(title: Strings.go_back(), style: .cancel, handler: {
       _ in
-      //TODO: Empty Implementation
+      closure(.goBack, true)
     })
 
     alertController.addAction(saveDraft)
