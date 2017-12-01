@@ -408,6 +408,23 @@ extension ContentEditorViewController {
 
     navigationController?.present(alertController, animated: true, completion: nil)
   }
+
+  fileprivate func showRetryAlert(with title: String?, message: String?, closure: ((_ retry: Bool) -> ())?) {
+    let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    let tryAgainAction = UIAlertAction(title: Strings.try_again(), style: .default, handler: {
+      _ in
+      closure?(true)
+    })
+
+    let cancelAction = UIAlertAction(title: Strings.cancel(), style: .cancel, handler: {
+      _ in
+      closure?(false)
+    })
+
+    alertController.addAction(tryAgainAction)
+    alertController.addAction(cancelAction)
+    navigationController?.present(alertController, animated: true, completion: nil)
+  }
 }
 
 //MARK: - RichEditorToolbarDelegate Implementation
