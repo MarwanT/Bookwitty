@@ -391,7 +391,7 @@ extension ContentEditorViewController {
     case goBack
   }
 
-  fileprivate func presentConfirmSaveOrDiscardActionSheet() {
+  fileprivate func presentConfirmSaveOrDiscardActionSheet(_ closure : @escaping (_ option: ConfirmationOption, _ success: Bool) -> ()) {
     let alertController = UIAlertController(title: Strings.save_this_post_draft(), message: nil, preferredStyle: .actionSheet)
 
     let saveDraft = UIAlertAction(title: Strings.save_draft(), style: .default, handler: {
