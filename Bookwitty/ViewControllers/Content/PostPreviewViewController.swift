@@ -267,7 +267,21 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
       textNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
         .append(text: Strings.add_an_image(), color: ThemeManager.shared.currentTheme.defaultButtonColor())
         .attributedString
-      let centerSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: .minimumXY, child: textNode)
+
+      let iconNode = ASImageNode()
+      iconNode.backgroundColor = UIColor.clear
+      iconNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.defaultButtonColor())
+      iconNode.style.preferredSize = CGSize(width: 25.0, height: 25.0)
+      iconNode.contentMode = UIViewContentMode.scaleAspectFit
+      iconNode.image = #imageLiteral(resourceName: "gallery")
+      iconNode.clipsToBounds = true
+
+      let stackLayoutSpec = ASStackLayoutSpec(direction: .horizontal,
+                                                   spacing: 5.0,
+                                                   justifyContent: .center,
+                                                   alignItems: .center, children: [iconNode, textNode])
+
+      let centerSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: .minimumXY, child: stackLayoutSpec)
       return centerSpec
     }
     return node
@@ -283,7 +297,21 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
       textNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
         .append(text: Strings.add_a_title(), color: ThemeManager.shared.currentTheme.defaultButtonColor())
         .attributedString
-      let centerSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: .minimumXY, child: textNode)
+
+      let iconNode = ASImageNode()
+      iconNode.backgroundColor = UIColor.clear
+      iconNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.defaultButtonColor())
+      iconNode.style.preferredSize = CGSize(width: 25.0, height: 25.0)
+      iconNode.contentMode = UIViewContentMode.scaleAspectFit
+      iconNode.image = #imageLiteral(resourceName: "gallery")
+      iconNode.clipsToBounds = true
+
+      let stackLayoutSpec = ASStackLayoutSpec(direction: .horizontal,
+                                                   spacing: 5.0,
+                                                   justifyContent: .center,
+                                                   alignItems: .center, children: [iconNode, textNode])
+
+      let centerSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: .minimumXY, child: stackLayoutSpec)
       return centerSpec
     }
     return node
