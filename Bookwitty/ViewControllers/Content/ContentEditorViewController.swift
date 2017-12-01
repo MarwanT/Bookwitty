@@ -9,6 +9,7 @@
 import UIKit
 import RichEditorView
 import MobileEditor
+import SwiftLoader
 
 class ContentEditorViewController: UIViewController {
   
@@ -424,6 +425,26 @@ extension ContentEditorViewController {
     alertController.addAction(tryAgainAction)
     alertController.addAction(cancelAction)
     navigationController?.present(alertController, animated: true, completion: nil)
+  }
+
+  fileprivate func discardPost(_ closure: @escaping (Bool) -> ()) {
+    SwiftLoader.show(animated: true)
+    self.viewModel.deletePost {
+      (success: Bool, error: BookwittyAPIError?) in
+      SwiftLoader.hide()
+      if success {
+        closure(success)
+      } else {
+        self.showRetryAlert(with: Strings.error(), message: Strings.some_thing_wrong_error(), closure: {
+          (retry: Bool) in
+          if retry {
+            self.discardPost(closure)
+          } else {
+            closure(false)
+          }
+        })
+      }
+    }
   }
 }
 
