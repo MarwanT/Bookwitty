@@ -71,8 +71,12 @@ class ContentEditorViewModel  {
       guard success, let candidatePost = candidatePost else {
         return
       }
+      //Workaround due to the API default behavior
+      let imageUrlValue = self.currentPost.imageUrl
       self.set(candidatePost)
-      
+      if imageUrlValue == nil {
+       self.currentPost.imageUrl = nil
+      }
     }
   }
   
@@ -88,7 +92,12 @@ class ContentEditorViewModel  {
         
         return
       }
+      //Workaround due to the API default behavior
+      let imageUrlValue = self.currentPost.imageUrl
       self.set(candidatePost)
+      if imageUrlValue == nil {
+        self.currentPost.imageUrl = nil
+      }
     })
   }
   
