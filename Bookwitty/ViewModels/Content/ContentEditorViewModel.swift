@@ -56,6 +56,10 @@ class ContentEditorViewModel  {
       currentRequest = nil
     }
   }
+
+  func preparePostForPublish() {
+    self.currentPost.status = PublishAPI.PublishStatus.public.rawValue
+  }
   
 
   fileprivate func createContent(with completion:((_ success: Bool) -> Void)? = nil) {
