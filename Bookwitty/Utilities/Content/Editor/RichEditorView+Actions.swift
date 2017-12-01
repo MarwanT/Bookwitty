@@ -75,7 +75,7 @@ extension RichEditorView {
     return runJS("RE.getSelectedHref()")
   }
   
-  func getDefaults() -> (title: String, description: String?) {
+  func getDefaults() -> (title: String, description: String?, imageURL: String?) {
     let jsonString =  runJS("RE.getDefaults();");
     return parseDefaultContent(jsonString)
   }
@@ -108,10 +108,11 @@ extension RichEditorView {
 
 fileprivate extension RichEditorView {
 
-  func parseDefaultContent(_ jsonString: String) -> (title: String, description: String?) {
+  func parseDefaultContent(_ jsonString: String) -> (title: String, description: String?, imageURL: String?) {
     let json: JSON = JSON(parseJSON: jsonString)
     let title = json["title"].stringValue
     let description = json["description"].string
-    return (title, description)
+    let imageURL = json["image"].string
+    return (title, description, imageURL)
   }
 }

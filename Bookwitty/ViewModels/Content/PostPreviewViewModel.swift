@@ -10,9 +10,9 @@ import Foundation
 
 final class PostPreviewViewModel {
   var candidatePost: CandidatePost!
-  var defaultValues: (title: String, description: String?)!
+  var defaultValues: (title: String, description: String?, image: String?)!
   
-  func initialize(with post: CandidatePost, and defaultValues:(title: String, description: String?)) {
+  func initialize(with post: CandidatePost, and defaultValues:(title: String, description: String?, image: String?)) {
     self.candidatePost = post
     self.defaultValues = defaultValues
   }
@@ -22,7 +22,7 @@ final class PostPreviewViewModel {
     let shortDescription = candidatePost.shortDescription ?? defaultValues.description
     let penName = candidatePost.penName?.name
     let url = candidatePost.penName?.url
-    let imageUrl = candidatePost.imageUrl
+    let imageUrl = candidatePost.imageUrl ?? defaultValues.image
     return (title, shortDescription, penName, url, imageUrl)
   }
 
