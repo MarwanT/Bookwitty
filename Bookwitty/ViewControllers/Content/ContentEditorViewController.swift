@@ -385,6 +385,12 @@ class ContentEditorViewController: UIViewController {
 
 //MARK: - Save Action Sheet
 extension ContentEditorViewController {
+  enum ConfirmationOption {
+    case saveDraft
+    case discardPost
+    case goBack
+  }
+
   fileprivate func presentConfirmSaveOrDiscardActionSheet() {
     let alertController = UIAlertController(title: Strings.save_this_post_draft(), message: nil, preferredStyle: .actionSheet)
 
