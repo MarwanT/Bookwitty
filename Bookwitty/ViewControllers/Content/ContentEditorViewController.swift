@@ -446,6 +446,26 @@ extension ContentEditorViewController {
       }
     }
   }
+
+  fileprivate func savePostAsDraft(_ closure: @escaping (Bool) -> ()) {
+    SwiftLoader.show(animated: true)
+    self.viewModel.updateContent {
+      (success: Bool) in
+      SwiftLoader.hide()
+      if success {
+        closure(success)
+      } else {
+        self.showRetryAlert(with: Strings.error(), message: Strings.some_thing_wrong_error(), closure: {
+          (retry: Bool) in
+          if retry {
+            self.savePostAsDraft(closure)
+          } else {
+            closure(false)
+          }
+        })
+      }
+    }
+  }
 }
 
 //MARK: - RichEditorToolbarDelegate Implementation
