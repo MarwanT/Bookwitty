@@ -65,6 +65,8 @@ class GetStarted: ASDisplayNode {
                                           alignItems: .stretch,
                                           children: [googleButtonNode, faecbookButtonNode, emailButtonNode])
 
+    loginStackSpec.style.flexShrink = 1.0
+
     var children: [ASLayoutElement] = []
     if let textNode = textNode {
       children.append(textNode)
@@ -74,17 +76,22 @@ class GetStarted: ASDisplayNode {
     children.append(registerNode)
 
     let verticalStackSpec = ASStackLayoutSpec(direction: .vertical,
-                                              spacing: 4 * configuration.margin,
-                                              justifyContent: .start,
+                                              spacing: configuration.margin,
+                                              justifyContent: .spaceAround,
                                               alignItems: .stretch,
                                               children: children)
+
+    verticalStackSpec.style.flexShrink = 1.0
 
     let vInset: CGFloat = configuration.vInset
     let hInset = (1.0 / 3.0 * constrainedSize.max.width) / 2.0
     let insets = UIEdgeInsets(top: vInset, left: hInset, bottom: vInset, right: hInset)
     let insetLayoutSpec = ASInsetLayoutSpec(insets: insets, child: verticalStackSpec)
 
+    insetLayoutSpec.style.flexShrink = 1.0
+
     let backgroundLayoutSpec = ASBackgroundLayoutSpec(child: insetLayoutSpec, background: wrapperSpec)
+    backgroundLayoutSpec.style.maxHeight = ASDimension(unit: .points, value: constrainedSize.max.height)
     return backgroundLayoutSpec
   }
 
@@ -117,6 +124,7 @@ class GetStarted: ASDisplayNode {
     node.backgroundColor = backgroundColor
     node.style.height = ASDimension(unit: .points, value: 50.0)
     node.style.flexGrow = 1.0
+    node.style.flexShrink = 1.0
 
     node.cornerRadius = 2.0
 
@@ -154,6 +162,7 @@ class GetStarted: ASDisplayNode {
       let textNode = ASTextNode()
       textNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption1)
         .append(text: Strings.create_your_account(), color: ThemeManager.shared.currentTheme.defaultButtonColor())
+        .applyParagraphStyling(alignment: .center)
         .attributedString
 
       textNode.style.flexGrow = 1.0
