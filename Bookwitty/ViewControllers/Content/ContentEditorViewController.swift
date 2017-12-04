@@ -685,9 +685,9 @@ extension ContentEditorViewController {
   
   func publishYourPost(_ completion: ((_ success: Bool) -> Void)? = nil) {
     self.viewModel.preparePostForPublish()
-    self.viewModel.dispatchContent() { _, success in
+    self.viewModel.updateContent() { success in
       if success {
-        self.dismiss(animated: true, completion: nil)
+        completion?(success)
       } else {
         //TODO: Tell the User
       }
