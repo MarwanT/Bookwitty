@@ -45,7 +45,9 @@ class EditableTextNode: ASCellNode {
 
   fileprivate func setupNode() {
     automaticallyManagesSubnodes = true
-    textNode.style.height = ASDimension(unit: .points, value: 80.0)
+    let insets = externalEdgeInsets()
+    let defaultTextFieldHeight: CGFloat = 30.0
+    textNode.style.maxHeight = ASDimension(unit: .points, value: defaultTextFieldHeight + insets.top + insets.bottom)
     textNode.maximumLinesToDisplay = 2
 
     textNode.style.flexGrow = 1.0
@@ -74,7 +76,7 @@ class EditableTextNode: ASCellNode {
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let nodesArray: [ASLayoutElement] = [textNode, clearButtonNode]
     let horizontalSpec = ASStackLayoutSpec(direction: .horizontal,
-                                         spacing: 0.0,
+                                         spacing: 5.0,
                                          justifyContent: .start,
                                          alignItems: .center,
                                          children: nodesArray)
@@ -107,6 +109,10 @@ extension EditableTextNode: Themeable {
 
 //MARK: - ASEditableTextNodeDelegate implementation
 extension EditableTextNode: ASEditableTextNodeDelegate {
+  func editableTextNodeDidUpdateText(_ editableTextNode: ASEditableTextNode) {
+    setNeedsLayout()
+  }
+  
   func editableTextNodeDidFinishEditing(_ editableTextNode: ASEditableTextNode) {
     self.delegate?.editableTextNodeDidFinishEditing(textNode: self)
   }

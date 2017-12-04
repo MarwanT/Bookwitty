@@ -61,8 +61,12 @@ class CoverPhotoNode: ASCellNode {
     photoButton.clipsToBounds = true
     photoButton.addTarget(self, action: #selector(photoButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
 
+    deleteButton.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     deleteButton.style.preferredSize = CGSize(width: 25.0, height: 25.0)
+    deleteButton.cornerRadius = deleteButton.style.preferredSize.width / 2.0
+    deleteButton.imageNode.contentMode = UIViewContentMode.scaleAspectFit
     deleteButton.clipsToBounds = true
+    deleteButton.setImage(#imageLiteral(resourceName: "bin"), for: .normal)
     deleteButton.addTarget(self, action: #selector(deleteButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
 
