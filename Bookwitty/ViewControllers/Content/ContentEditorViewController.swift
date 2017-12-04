@@ -549,6 +549,7 @@ extension ContentEditorViewController {
   }
   
   func publishYourPost() {
+    self.viewModel.preparePostForPublish()
     self.viewModel.dispatchContent() { _, success in
       if success {
         self.dismiss(animated: true, completion: nil)
