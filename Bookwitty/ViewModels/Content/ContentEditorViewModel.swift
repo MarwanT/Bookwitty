@@ -123,9 +123,8 @@ class ContentEditorViewModel  {
           completion?(true)
         }
       }
-    } catch let error {
+    } catch {
       completion?(false)
-      print(error)
       }
     }
   }
