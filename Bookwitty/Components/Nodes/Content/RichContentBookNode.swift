@@ -68,6 +68,8 @@ class RichContentBookNode: ASCellNode {
     addButton.style.minWidth = ASDimension(unit: .points, value: 50.0)
     addButton.style.flexShrink = 1.0
 
+    addButton.delegate = self
+
     separatorNode.style.height = ASDimensionMake(1)
     separatorNode.style.flexGrow = 1
     separatorNode.style.flexShrink = 1
@@ -155,5 +157,12 @@ extension RichContentBookNode {
 
   fileprivate func isValid(_ value: String?) -> Bool {
     return !value.isEmptyOrNil()
+  }
+}
+
+//MARK: - ButtonWithLoaderDelegate implementation
+extension RichContentBookNode: ButtonWithLoaderDelegate {
+  func buttonTouchUpInside(buttonWithLoader: ButtonWithLoader) {
+    //TODO: Empty Implementation
   }
 }
