@@ -407,6 +407,17 @@ extension ContentEditorViewController {
   }
 
   fileprivate func presentConfirmSaveOrDiscardActionSheet(_ closure : @escaping (_ option: ConfirmationOption, _ success: Bool) -> ()) {
+
+    guard let currentPost = self.viewModel.currentPost, currentPost.id != nil else {
+      closure(.nonNeeded, true)
+      return
+    }
+
+    guard self.viewModel.needsRemoteSync else {
+      closure(.nonNeeded, true)
+      return
+    }
+
     let alertController = UIAlertController(title: Strings.save_this_post_draft(), message: nil, preferredStyle: .actionSheet)
 
     let saveDraft = UIAlertAction(title: Strings.save_draft(), style: .default, handler: {
