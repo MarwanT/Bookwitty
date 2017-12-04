@@ -258,6 +258,7 @@
 "unknown_format" = "Unknown format";
 "unlink_author" = "Unlink Author";
 "unlink_topic" = "Unlink Topic";
+"untitled" = "Untitled";
 "update_now" = "Update now";
 "user" = "User";
 "user_not_signed_in_alert_message" = "You need to be signed in to complete this action";

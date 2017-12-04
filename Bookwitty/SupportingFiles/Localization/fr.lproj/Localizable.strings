@@ -258,6 +258,7 @@
 "unknown_format" = "Format de produit inconnu";
 "unlink_author" = "Unlink Author";
 "unlink_topic" = "Unlink Topic";
+"untitled" = "Untitled";
 "update_now" = "Mettre à jour";
 "user" = "Utilisateur";
 "user_not_signed_in_alert_message" = "Vous devez être connecté pour effectuer cette action";

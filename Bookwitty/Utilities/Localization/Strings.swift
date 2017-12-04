@@ -1013,6 +1013,10 @@ class Strings {
     return localizedString(key: "unlink_author")
   }
 
+  static func untitled() -> String {
+    return localizedString(key: "untitled")
+  }
+
   static func update_now() -> String {
     return localizedString(key: "update_now")
   }
