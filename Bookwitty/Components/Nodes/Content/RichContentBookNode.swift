@@ -35,6 +35,13 @@ class RichContentBookNode: ASCellNode {
     setupNode()
   }
 
+  var buttonState: ButtonWithLoader.State = .normal {
+    didSet {
+      addButton.state = buttonState
+      setNeedsLayout()
+    }
+  }
+
   fileprivate func setupNode() {
     automaticallyManagesSubnodes = true
     style.minSize = CGSize(width: 0.0, height: imageSize.height + (internalMargin * 2))
