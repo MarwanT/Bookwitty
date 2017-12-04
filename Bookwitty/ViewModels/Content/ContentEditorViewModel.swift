@@ -114,17 +114,17 @@ class ContentEditorViewModel  {
     if let serialized = post.serializeData(options:  [.IncludeID, .OmitNullValues]) {
       let json = JSON(serialized)
       do {
-      if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-        let dataPath = documentsDirectory.appendingPathComponent("content-editor")
-        try FileManager.default.createDirectory(atPath: dataPath.path, withIntermediateDirectories: true, attributes: nil)
-        if let jsonString = json.rawString() {
-          try jsonString.write(to: dataPath.appendingPathComponent("temp-draft").appendingPathExtension("txt"), atomically: true, encoding: .utf8)
-          self.latestHashValue = self.currentPost.hash
-          completion?(true)
+        if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+          let dataPath = documentsDirectory.appendingPathComponent("content-editor")
+          try FileManager.default.createDirectory(atPath: dataPath.path, withIntermediateDirectories: true, attributes: nil)
+          if let jsonString = json.rawString() {
+            try jsonString.write(to: dataPath.appendingPathComponent("temp-draft").appendingPathExtension("txt"), atomically: true, encoding: .utf8)
+            self.latestHashValue = self.currentPost.hash
+            completion?(true)
+          }
         }
-      }
-    } catch {
-      completion?(false)
+      } catch {
+        completion?(false)
       }
     }
   }
