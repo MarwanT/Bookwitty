@@ -217,6 +217,15 @@ extension RichLinkPreviewViewController {
         return
       }
 
+      switch self.mode {
+      case .video where response?.medias == nil: fallthrough
+      case .audio:
+        self.viewModel.response = nil
+        return
+      default:
+        break
+      }
+
       self.viewModel.response = response
     })
   }
