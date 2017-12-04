@@ -68,7 +68,7 @@ class ContentEditorViewModel  {
     }
     self.resetPreviousRequest()
     //WORKAROUND: the API doesn't create a content unless we send a title
-    let contentTile = self.currentPost.title.isEmptyOrNil() ? "Untitled" : self.currentPost.title
+    let contentTile = self.currentPost.title.isEmptyOrNil() ? Strings.untitled() : self.currentPost.title
     self.currentRequest = PublishAPI.createContent(title: contentTile, body: self.currentPost.body) { (success, candidatePost, error) in
       defer { self.currentRequest = nil; completion?(success) }
       
