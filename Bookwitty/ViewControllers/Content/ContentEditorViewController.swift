@@ -683,7 +683,7 @@ extension ContentEditorViewController {
     self.navigationController?.present(navigationController, animated: true, completion: nil)
   }
   
-  func publishYourPost() {
+  func publishYourPost(_ completion: ((_ success: Bool) -> Void)? = nil) {
     self.viewModel.preparePostForPublish()
     self.viewModel.dispatchContent() { _, success in
       if success {
