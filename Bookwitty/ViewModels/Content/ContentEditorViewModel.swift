@@ -214,6 +214,7 @@ class ContentEditorViewModel  {
     }
 
     _ = PublishAPI.removeContent(contentIdentifier: identifier) { (success, error) in
+      try? self.deleteLocalDraft()
       closure(success, error)
     }
   }
