@@ -304,6 +304,10 @@ class Strings {
   static func edit_pen_name() -> String {
     return localizedString(key: "edit_pen_name")
   }
+
+  static func editing_not_yet_supported() -> String {
+    return localizedString(key: "editing_not_yet_supported")
+  }
   
   static func editions() -> String {
     return localizedString(key: "editions")

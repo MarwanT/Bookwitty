@@ -80,6 +80,7 @@
 "drafts" = "Drafts";
 "edit" = "Edit";
 "edit_pen_name" = "Edit pen name";
+"editing_not_yet_supported" = "Editing this type of content is not yet supported here, you can still edit it on the website";
 "editions" = "Editions";
 "email" = "Email";
 "email_already_registered" = "The email address you have entered is already registered!";
