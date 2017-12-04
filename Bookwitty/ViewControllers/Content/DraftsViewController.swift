@@ -189,7 +189,7 @@ extension DraftsViewController: ASTableDataSource, ASTableDelegate {
   func tableNode(_ tableNode: ASTableNode, constrainedSizeForRowAt indexPath: IndexPath) -> ASSizeRange {
     return ASSizeRange(
       min: CGSize(width: tableNode.frame.width, height: 0),
-      max: CGSize(width: tableNode.frame.width, height: .infinity)
+      max: CGSize(width: tableNode.frame.width, height: 50.0)
     )
   }
 

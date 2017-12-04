@@ -24,11 +24,11 @@ class DraftNode: ASCellNode {
       var text: NSAttributedString? = nil
       if let title = title {
         if title.isEmpty {
-          text = AttributedStringBuilder(fontDynamicType: .quote)
+          text = AttributedStringBuilder(fontDynamicType: .subheadline)
             .append(text: "Untitled")
             .attributedString
         } else {
-          text = AttributedStringBuilder(fontDynamicType: .title2)
+          text = AttributedStringBuilder(fontDynamicType: .subheadline)
             .append(text: title)
             .attributedString
         }
@@ -43,7 +43,7 @@ class DraftNode: ASCellNode {
       var text: NSAttributedString? = nil
       if let updatedAt = updatedAt {
         let lastEditedString = Strings.last_edited() + " " 
-        text = AttributedStringBuilder(fontDynamicType: .callout)
+        text = AttributedStringBuilder(fontDynamicType: .caption2)
           .append(text: lastEditedString, color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
           .append(text: updatedAt.formatted(format: "MMM.dd"), color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
           .attributedString
@@ -67,7 +67,9 @@ class DraftNode: ASCellNode {
                                                     justifyContent: .spaceBetween,
                                                     alignItems: .start,
                                                     children: [titleInsetLayoutSpec, descriptionInsetLayoutSpec, separatorNode])
-    
+
+    verticalStackLayoutSpec.style.flexShrink = 1.0
+
     return verticalStackLayoutSpec
   }
 }
