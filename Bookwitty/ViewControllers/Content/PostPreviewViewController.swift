@@ -232,7 +232,7 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
         }
       })
     default:
-      break
+      resignResponders()
     }
   }
 
