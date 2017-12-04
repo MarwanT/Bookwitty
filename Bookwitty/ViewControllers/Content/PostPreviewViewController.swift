@@ -110,13 +110,17 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
     attributes[NSForegroundColorAttributeName] = grayedTextColor
     doneBarButtonItem.setTitleTextAttributes(attributes, for: .disabled)
   }
+
+  fileprivate func resignResponders() {
+    _ = titleNode.resignFirstResponder()
+    _ = descriptionNode.resignFirstResponder()
+  }
 }
 
 //MARK: - Actions
 extension PostPreviewViewController {
   @objc fileprivate func doneBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
-    _ = titleNode.resignFirstResponder()
-    _ = descriptionNode.resignFirstResponder()
+    resignResponders()
     self.viewModel.candidatePost.imageUrl = self.coverNode.url
     DispatchQueue.main.async {
       self.delegate?.postPreview(viewController: self, didFinishPreviewing: self.viewModel.candidatePost)
@@ -318,9 +322,7 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
   }
 
   fileprivate func presentImagePicker() {
-
-    _ = titleNode.resignFirstResponder()
-    _ = descriptionNode.resignFirstResponder()
+    resignResponders()
 
     let imagePickerController = UIImagePickerController()
     imagePickerController.delegate = self
