@@ -23,6 +23,18 @@ class LimitedEditableTextNode: ASCellNode {
     set { textNode.textView.text = newValue }
   }
 
+  var placeholder: String? {
+    didSet {
+      if let placeholder = placeholder {
+        self.textNode.attributedPlaceholderText = AttributedStringBuilder(fontDynamicType: FontDynamicType.body)
+          .append(text: placeholder, color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+          .attributedString
+      } else {
+        self.textNode.attributedPlaceholderText = nil
+      }
+    }
+  }
+
   override init() {
     textNode = ASEditableTextNode()
     charactersLeftNode = ASTextNode()
