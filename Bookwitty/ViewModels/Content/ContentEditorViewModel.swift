@@ -13,6 +13,7 @@ import SwiftyJSON
 class ContentEditorViewModel  {
   var linkedTags: [Tag] = []
   var linkedPages: [ModelCommonProperties] = []
+  private(set) var originalHashValue: Int = 0
   private(set) var latestHashValue: Int = 0
   private(set) var currentRequest: Cancellable?
   
@@ -24,6 +25,14 @@ class ContentEditorViewModel  {
   }
   
   var currentPost: CandidatePost!
+
+  var needsRemoteSync: Bool {
+    guard self.latestHashValue == self.currentPost.hash else {
+      return true
+    }
+
+    return self.originalHashValue != self.latestHashValue
+  }
   
   func initialize(with candidatPost: CandidatePost, prelink: String? = nil) -> Void {
     self.currentPost = candidatPost
@@ -42,6 +51,7 @@ class ContentEditorViewModel  {
   
   func set(_ currentPost: CandidatePost) {
     self.currentPost = currentPost
+    self.originalHashValue = currentPost.hash
     self.latestHashValue = currentPost.hash
   }
 
