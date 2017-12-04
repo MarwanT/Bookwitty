@@ -20,7 +20,7 @@ class RichContentBookNode: ASCellNode {
   private var imageNode: ASNetworkImageNode
   private var titleNode: ASTextNode
   private var authorNode: ASTextNode
-  private var addButton: ASButtonNode
+  private var addButton: ButtonWithLoader
   private var separatorNode: ASDisplayNode
 
   weak var delegate: RichContentBookNodeDelegate?
@@ -29,7 +29,7 @@ class RichContentBookNode: ASCellNode {
     imageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
     authorNode = ASTextNode()
-    addButton = ASButtonNode()
+    addButton = ButtonWithLoader()
     separatorNode = ASDisplayNode()
     super.init()
     setupNode()
@@ -38,7 +38,7 @@ class RichContentBookNode: ASCellNode {
   fileprivate func setupNode() {
     automaticallyManagesSubnodes = true
     style.minSize = CGSize(width: 0.0, height: imageSize.height + (internalMargin * 2))
-    backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+    self.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
 
     imageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
     imageNode.style.preferredSize = imageSize
@@ -51,27 +51,22 @@ class RichContentBookNode: ASCellNode {
     authorNode.truncationMode = NSLineBreakMode.byTruncatingTail
 
     let buttonFont = FontDynamicType.subheadline.font
-
-    let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultBackgroundColor())
     let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()
-    let selectedButtonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultButtonColor())
+    let buttonColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+    let backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
 
-    addButton.setBackgroundImage(buttonBackgroundImage, for: .normal)
-    addButton.setBackgroundImage(selectedButtonBackgroundImage, for: .selected)
+    addButton.setupSelectionButton(defaultBackgroundColor: backgroundColor,
+                                      selectedBackgroundColor: buttonColor,
+                                      borderStroke: true,
+                                      borderColor: buttonColor,
+                                      borderWidth: 2.0,
+                                      cornerRadius: 2.0)
 
-    addButton.setTitle(Strings.add(), with: buttonFont, with: textColor, for: .normal)
+    addButton.setTitle(title: Strings.add(), with: buttonFont, with: textColor, for: .normal)
 
-    addButton.titleNode.maximumNumberOfLines = 1
-    addButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     addButton.style.height = ASDimensionMake(36.0)
     addButton.style.minWidth = ASDimension(unit: .points, value: 50.0)
-
-    addButton.cornerRadius = 2.0
-    addButton.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
-    addButton.borderWidth = 2
-    addButton.clipsToBounds = true
-
-    addButton.addTarget(self, action: #selector(addButtonTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    addButton.style.flexShrink = 1.0
 
     separatorNode.style.height = ASDimensionMake(1)
     separatorNode.style.flexGrow = 1
@@ -108,11 +103,6 @@ class RichContentBookNode: ASCellNode {
     let verticalSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0.0, justifyContent: .center, alignItems: .stretch, children: [spacer(flexGrow: 1), horizontalInsetSpec, spacer(flexGrow: 1), separatorHorizontalSpec])
 
     return verticalSpec
-  }
-
-  @objc
-  fileprivate func addButtonTouchUpInside(_ sender: ASButtonNode?) {
-    delegate?.richContentBookDidRequestAddAction(node: self)
   }
 
   //MARK: - Data handlers
