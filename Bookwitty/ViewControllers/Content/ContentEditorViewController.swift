@@ -564,9 +564,19 @@ extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePi
 //MARK: - DraftsViewControllerDelegate Implementation
 extension ContentEditorViewController: DraftsViewControllerDelegate {
   func drafts(viewController: DraftsViewController, didRequestEdit draft: CandidatePost) {
-    self.viewModel.set(draft)
-    self.loadUIFromPost()
-    self.navigationController?.dismiss(animated: true, completion: nil)
+    self.navigationController?.dismiss(animated: true, completion: { 
+      self.presentConfirmSaveOrDiscardActionSheet { (option: ContentEditorViewController.ConfirmationOption, success: Bool) in
+        switch option {
+        case .saveDraft where success: fallthrough
+        case .discardPost where success: fallthrough
+        case .nonNeeded:
+          self.viewModel.set(draft)
+          self.loadUIFromPost()
+        default:
+          break
+        }
+      }
+    })
   }
 
   func draftsViewControllerRequestClose(_ viewController: DraftsViewController) {
