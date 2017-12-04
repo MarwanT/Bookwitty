@@ -703,13 +703,14 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
     case .publishYourPost:
       self.publishYourPost()
     case .saveAsDraft:
-      self.saveAsDraft() { success in
+      self.savePostAsDraft({ (success: Bool) in
         if success {
-          viewController.dismiss(animated: true, completion: nil)
-        } else {
-          //TODO: show the user an error.
+          self.resignResponders()
+          viewController.dismiss(animated: false, completion: {
+            self.dismiss(animated: true, completion: nil)
+          })
         }
-      }
+      })
     case .goBack:
       viewController.dismiss(animated: true, completion: nil)
     }
