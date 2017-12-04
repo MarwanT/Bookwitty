@@ -309,7 +309,7 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
       iconNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.defaultButtonColor())
       iconNode.style.preferredSize = CGSize(width: 25.0, height: 25.0)
       iconNode.contentMode = UIViewContentMode.scaleAspectFit
-      iconNode.image = #imageLiteral(resourceName: "gallery")
+      iconNode.image = #imageLiteral(resourceName: "title")
       iconNode.clipsToBounds = true
 
       let stackLayoutSpec = ASStackLayoutSpec(direction: .horizontal,
