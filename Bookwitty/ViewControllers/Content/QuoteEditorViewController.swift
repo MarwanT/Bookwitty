@@ -74,6 +74,8 @@ class QuoteEditorViewController: UIViewController {
                                            target: self,
                                            action: #selector(addBarButtonTouchUpInside(_:)))
 
+    addBarButtonItem.isEnabled = self.quoteTextView.text.trimmed.characters.count > 0
+
     navigationItem.leftBarButtonItem = cancelBarButtonItem
     navigationItem.rightBarButtonItem = addBarButtonItem
 
@@ -135,6 +137,7 @@ extension QuoteEditorViewController: Themeable {
 extension QuoteEditorViewController: UITextViewDelegate {
   public func textViewDidChange(_ textView: UITextView) {
     let count = textView.text.characters.count
+    setupNavigationBarButtons()
     let alpha: CGFloat = count == 0 ? 1.0 : 0.0
     if textView === quoteTextView {
       quotePlaceholderLabel.alpha = alpha
