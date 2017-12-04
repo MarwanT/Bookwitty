@@ -163,6 +163,6 @@ extension RichContentBookNode {
 //MARK: - ButtonWithLoaderDelegate implementation
 extension RichContentBookNode: ButtonWithLoaderDelegate {
   func buttonTouchUpInside(buttonWithLoader: ButtonWithLoader) {
-    //TODO: Empty Implementation
+    delegate?.richContentBookDidRequestAddAction(node: self)
   }
 }
