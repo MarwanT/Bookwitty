@@ -117,6 +117,13 @@ class ContentEditorViewModel  {
     }
   }
   
+  private func deleteLocalDraft() throws {
+    if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+      let dataPath = documentsDirectory.appendingPathComponent("content-editor").appendingPathComponent("temp-draft").appendingPathExtension("txt")
+      try FileManager.default.removeItem(at: dataPath)
+    }
+  }
+  
   fileprivate func dispatchPrelinkIfNeeded() {
     guard let prelink = prelink,
       let identifier = self.currentPost?.id else {
