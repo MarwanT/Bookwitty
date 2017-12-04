@@ -404,7 +404,7 @@ extension RichBookViewController {
 
 //MARK: - URL Handling
 extension RichBookViewController {
-  fileprivate func getInfo(for book: Book) {
+  fileprivate func getInfo(for book: Book, closure:  (() -> ())? = nil) {
     
     guard let url = book.canonicalURL  else {
       return
@@ -412,6 +412,7 @@ extension RichBookViewController {
     
     IFramely.shared.loadResponseFor(url: url, closure: { (success: Bool, response: Response?) in
       if success {
+        closure?()
         DispatchQueue.main.async {
           self.delegate?.richBookViewController(self, didSelect: book, with: response)
         }
@@ -427,7 +428,11 @@ extension RichBookViewController: RichContentBookNodeDelegate {
     let book = viewModel.resourceForIndex(indexPath: indexPath) as? Book else {
       return
     }
-    self.getInfo(for: book)
+
+    node.buttonState = .loading
+    self.getInfo(for: book) {
+      node.buttonState = .normal
+    }
   }
 }
 
