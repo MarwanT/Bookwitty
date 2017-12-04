@@ -67,7 +67,7 @@ class ContentEditorViewModel  {
     }
   }
 
-  func preparePostForPublish() {
+  func preparePostForPublish(with defaultValue:(title: String, description: String?, imageURL: String?)? = nil) {
     self.currentPost.status = PublishAPI.PublishStatus.public.rawValue
   }
   
