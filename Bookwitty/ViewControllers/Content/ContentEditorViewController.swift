@@ -403,6 +403,7 @@ extension ContentEditorViewController {
     case saveDraft
     case discardPost
     case goBack
+    case nonNeeded
   }
 
   fileprivate func presentConfirmSaveOrDiscardActionSheet(_ closure : @escaping (_ option: ConfirmationOption, _ success: Bool) -> ()) {
