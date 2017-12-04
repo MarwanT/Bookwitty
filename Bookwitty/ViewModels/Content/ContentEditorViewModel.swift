@@ -92,7 +92,7 @@ class ContentEditorViewModel  {
     })
   }
   
-  private func updateContentLocally(_ completion:((_ success: Bool) -> Void)?)  {
+  private func updateContentLocally(_ completion:((_ success: Bool) -> Void)? = nil)  {
     guard let post = self.currentPost as? Text else {
       completion?(false)
       return
