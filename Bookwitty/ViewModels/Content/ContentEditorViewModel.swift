@@ -8,6 +8,7 @@
 
 import UIKit
 import Moya
+import SwiftyJSON
 
 class ContentEditorViewModel  {
   var linkedTags: [Tag] = []
@@ -91,6 +92,38 @@ class ContentEditorViewModel  {
     })
   }
   
+  private func updateContentLocally(_ completion:((_ success: Bool) -> Void)? = nil)  {
+    guard let post = self.currentPost as? Text else {
+      completion?(false)
+      return
+    }
+    
+    if let serialized = post.serializeData(options:  [.IncludeID, .OmitNullValues]) {
+      let json = JSON(serialized)
+      do {
+      if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+        let dataPath = documentsDirectory.appendingPathComponent("content-editor")
+        try FileManager.default.createDirectory(atPath: dataPath.path, withIntermediateDirectories: true, attributes: nil)
+        if let jsonString = json.rawString() {
+          try jsonString.write(to: dataPath.appendingPathComponent("temp-draft").appendingPathExtension("txt"), atomically: true, encoding: .utf8)
+          self.latestHashValue = self.currentPost.hash
+          completion?(true)
+        }
+      }
+    } catch let error {
+      completion?(false)
+      print(error)
+      }
+    }
+  }
+  
+  private func deleteLocalDraft() throws {
+    if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+      let dataPath = documentsDirectory.appendingPathComponent("content-editor").appendingPathComponent("temp-draft").appendingPathExtension("txt")
+      try FileManager.default.removeItem(at: dataPath)
+    }
+  }
+  
   fileprivate func dispatchPrelinkIfNeeded() {
     guard let prelink = prelink,
       let identifier = self.currentPost?.id else {
@@ -123,9 +156,7 @@ class ContentEditorViewModel  {
     } else {
       self.dispatchPrelinkIfNeeded()
       if newHashValue != latestHashValue {
-        self.updateContent(with: { success in
-          completion?(.update, success)
-        })
+        self.updateContentLocally()
       } else {
         completion?(.noChanges, true) // no Change
       }
