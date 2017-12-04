@@ -63,7 +63,6 @@ extension RichEditorView {
       runJS("RE.setContent('')")
       return
     }
-    self.html = ""
     runJS("RE.setContent(\'\(html)\')")
   }
   
