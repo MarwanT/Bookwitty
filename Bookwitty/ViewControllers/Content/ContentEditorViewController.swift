@@ -800,6 +800,11 @@ extension ContentEditorViewController: PenNameViewControllerDelegate {
 
 //MARK: - RichEditorDelegate implementation
 extension ContentEditorViewController: RichEditorDelegate {
+  func richEditor(_ editor: RichEditorView, shouldInteractWith url: URL) -> Bool {
+    //Always disable url interaction
+    return false
+  }
+
   func richEditor(_ editor: RichEditorView, contentDidChange content: String) {
   
     self.viewModel.currentPost.body = editor.getContent()
