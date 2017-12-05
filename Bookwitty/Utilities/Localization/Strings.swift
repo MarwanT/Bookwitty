@@ -1089,6 +1089,10 @@ class Strings {
     return localizedString(key: "what_are_your_thoughts")
   }
   
+  static func what_is_your_post_about() -> String {
+    return localizedString(key: "what_is_your_post_about")
+  }
+
   static func width() -> String {
     return localizedString(key: "width")
   }

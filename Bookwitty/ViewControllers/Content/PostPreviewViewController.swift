@@ -85,6 +85,8 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
     penNameNode.penNameSummary = values.penName
     penNameNode.penNamePictureUrl = values.url?.absoluteString
     descriptionNode.contentText = values.shortDescription
+    descriptionNode.placeholder = values.shortDescription ?? Strings.what_is_your_post_about()
+
     let imageUrl = values.imageUrl
     coverNode.url = imageUrl
     shouldShowCover = imageUrl != nil
@@ -110,13 +112,17 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
     attributes[NSForegroundColorAttributeName] = grayedTextColor
     doneBarButtonItem.setTitleTextAttributes(attributes, for: .disabled)
   }
+
+  fileprivate func resignResponders() {
+    _ = titleNode.resignFirstResponder()
+    _ = descriptionNode.resignFirstResponder()
+  }
 }
 
 //MARK: - Actions
 extension PostPreviewViewController {
   @objc fileprivate func doneBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
-    _ = titleNode.resignFirstResponder()
-    _ = descriptionNode.resignFirstResponder()
+    resignResponders()
     self.viewModel.candidatePost.imageUrl = self.coverNode.url
     DispatchQueue.main.async {
       self.delegate?.postPreview(viewController: self, didFinishPreviewing: self.viewModel.candidatePost)
@@ -228,7 +234,7 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
         }
       })
     default:
-      break
+      resignResponders()
     }
   }
 
@@ -303,7 +309,7 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
       iconNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.defaultButtonColor())
       iconNode.style.preferredSize = CGSize(width: 25.0, height: 25.0)
       iconNode.contentMode = UIViewContentMode.scaleAspectFit
-      iconNode.image = #imageLiteral(resourceName: "gallery")
+      iconNode.image = #imageLiteral(resourceName: "title")
       iconNode.clipsToBounds = true
 
       let stackLayoutSpec = ASStackLayoutSpec(direction: .horizontal,
@@ -318,9 +324,7 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
   }
 
   fileprivate func presentImagePicker() {
-
-    _ = titleNode.resignFirstResponder()
-    _ = descriptionNode.resignFirstResponder()
+    resignResponders()
 
     let imagePickerController = UIImagePickerController()
     imagePickerController.delegate = self
