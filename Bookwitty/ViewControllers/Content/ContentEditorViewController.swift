@@ -686,11 +686,7 @@ extension ContentEditorViewController {
   func publishYourPost(_ completion: ((_ success: Bool) -> Void)? = nil) {
     self.viewModel.preparePostForPublish()
     self.viewModel.updateContent() { success in
-      if success {
-        completion?(success)
-      } else {
-        //TODO: Tell the User
-      }
+      completion?(success)
     }
   }
 }
@@ -728,6 +724,8 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
           viewController.dismiss(animated: false, completion: {
             self.dismiss(animated: true, completion: nil)
           })
+        } else {
+          //TODO: Show the user an error alert
         }
       }
     case .saveAsDraft:
