@@ -86,15 +86,32 @@ extension PublishAPI {
     return dictionary
   }
   static func updateContentParameters(title: String?, body: String?, imageURL: String?, shortDescription: String?, status: PublishStatus?) -> [String : Any]? {
+    
+    var attributes = [String : String]()
+    
+    if let title = title {
+      attributes["title"] = title
+    }
+    
+    if let body = body {
+      attributes["body"] = body
+    }
+    
+    if let shortDescription = shortDescription {
+      attributes["short-description"] = shortDescription
+    }
+    
+    if let imageURL = imageURL {
+      attributes["cover-image-url"] = imageURL
+    }
+    
+    if let status = status {
+      attributes["status"] = status.rawValue
+    }
+    
     let dictionary = [
       "data" : [
-        "attributes" : [
-          "title" : title,
-          "body" : body,
-          "short-description": shortDescription,
-          "cover-image-url": imageURL,
-          "status": status?.rawValue,
-        ]
+        "attributes" : attributes
       ]
     ]
     return dictionary

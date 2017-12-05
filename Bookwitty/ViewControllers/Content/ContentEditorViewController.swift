@@ -683,11 +683,11 @@ extension ContentEditorViewController {
     self.navigationController?.present(navigationController, animated: true, completion: nil)
   }
   
-  func publishYourPost() {
+  func publishYourPost(_ completion: ((_ success: Bool) -> Void)? = nil) {
     self.viewModel.preparePostForPublish()
-    self.viewModel.dispatchContent() { _, success in
+    self.viewModel.updateContent() { success in
       if success {
-        self.dismiss(animated: true, completion: nil)
+        completion?(success)
       } else {
         //TODO: Tell the User
       }
@@ -723,7 +723,13 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
       viewController.dismiss(animated: true, completion: nil)
       self.presentPostPreviewViewController()
     case .publishYourPost:
-      self.publishYourPost()
+      self.publishYourPost() { success in
+        if success {
+          viewController.dismiss(animated: false, completion: {
+            self.dismiss(animated: true, completion: nil)
+          })
+        }
+      }
     case .saveAsDraft:
       self.savePostAsDraft({ (success: Bool) in
         if success {
