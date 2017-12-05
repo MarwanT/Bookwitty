@@ -109,6 +109,9 @@ class ContentEditorViewModel  {
         
         return
       }
+
+      try? self.deleteLocalDraft()
+
       //Workaround due to the API default behavior
       let imageUrlValue = self.currentPost.imageUrl
       self.set(candidatePost)

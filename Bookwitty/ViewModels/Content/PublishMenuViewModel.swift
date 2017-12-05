@@ -80,8 +80,14 @@ class PublishMenuViewModel {
     
     switch section {
     case .penName:
-      let penNames =  UserManager.shared.signedInUser.penNames ?? []
-      return penNames.count > 1 ? 1 : 0
+      /*
+       * Discussion
+       * Disable the pen name selection temporarily
+       * This is due to non existing api
+       */
+      //let penNames =  UserManager.shared.signedInUser.penNames ?? []
+      //return penNames.count > 1 ? 1 : 0
+      return 0
     case .link:
       return 2
     case .preview:

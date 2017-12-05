@@ -41,7 +41,7 @@
                                 <rect key="frame" x="8" y="29" width="359" height="17"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="04b-Ug-WhV">
                                 <rect key="frame" x="0.0" y="63" width="375" height="604"/>
