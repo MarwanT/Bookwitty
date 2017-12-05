@@ -592,7 +592,7 @@ extension ContentEditorViewController: RichBookViewControllerDelegate {
     guard let response = response else {
       return
     }
-    self.editorView.generateLinkPreview(type: "link", title: response.title, description: response.shortDescription, url: response.url, imageUrl: response.thumbnails?.first?.url, html: response.html)
+    self.editorView.generateLinkPreview(type: "book", title: response.title, description: response.shortDescription, url: response.url, imageUrl: response.thumbnails?.first?.url, html: response.html)
   }
 }
 
