@@ -71,6 +71,7 @@
 "delete" = "Delete";
 "delete_post_confirmation_message" = "Are you sure you want to delete this post ?";
 "delete_post_success_message" = "Your post has been deleted";
+"discard_post" = "Discard Post";
 "discover" = "Discover";
 "discover_banner_message" = "Check back here anytime to find the best stories from the community.";
 "dismiss" = "Dismiss";
@@ -79,6 +80,7 @@
 "drafts" = "Drafts";
 "edit" = "Edit";
 "edit_pen_name" = "Edit pen name";
+"editing_not_yet_supported" = "Editing this type of content is not yet supported here, you can still edit it on the website";
 "editions" = "Editions";
 "email" = "Email";
 "email_already_registered" = "The email address you have entered is already registered!";
@@ -215,6 +217,8 @@
 "reset_password" = "Reset password";
 "reset_password_text" = "You will receive an email with instructions on how to reset your password in a few minutes.";
 "save_as_draft" = "Save as draft";
+"save_draft" = "Save Draft";
+"save_this_post_draft" = "Save this Post as a Draft ?";
 "search_placeholder" = "Search";
 "see_whats_happening_on_bookwitty" = "See what's happening on Bookwitty";
 "settings" = "Settings";
@@ -254,6 +258,7 @@
 "unknown_format" = "Unknown format";
 "unlink_author" = "Unlink Author";
 "unlink_topic" = "Unlink Topic";
+"untitled" = "Untitled";
 "update_now" = "Update now";
 "user" = "User";
 "user_not_signed_in_alert_message" = "You need to be signed in to complete this action";

@@ -13,6 +13,7 @@ import SwiftyJSON
 class ContentEditorViewModel  {
   var linkedTags: [Tag] = []
   var linkedPages: [ModelCommonProperties] = []
+  private(set) var originalHashValue: Int = 0
   private(set) var latestHashValue: Int = 0
   private(set) var currentRequest: Cancellable?
   
@@ -24,6 +25,14 @@ class ContentEditorViewModel  {
   }
   
   var currentPost: CandidatePost!
+
+  var needsRemoteSync: Bool {
+    guard self.latestHashValue == self.currentPost.hash else {
+      return true
+    }
+
+    return self.originalHashValue != self.latestHashValue
+  }
   
   func initialize(with candidatPost: CandidatePost, prelink: String? = nil) -> Void {
     self.currentPost = candidatPost
@@ -42,6 +51,7 @@ class ContentEditorViewModel  {
   
   func set(_ currentPost: CandidatePost) {
     self.currentPost = currentPost
+    self.originalHashValue = currentPost.hash
     self.latestHashValue = currentPost.hash
   }
 
@@ -68,7 +78,7 @@ class ContentEditorViewModel  {
     }
     self.resetPreviousRequest()
     //WORKAROUND: the API doesn't create a content unless we send a title
-    let contentTile = self.currentPost.title.isEmptyOrNil() ? "Untitled" : self.currentPost.title
+    let contentTile = self.currentPost.title.isEmptyOrNil() ? Strings.untitled() : self.currentPost.title
     self.currentRequest = PublishAPI.createContent(title: contentTile, body: self.currentPost.body) { (success, candidatePost, error) in
       defer { self.currentRequest = nil; completion?(success) }
       
@@ -84,7 +94,7 @@ class ContentEditorViewModel  {
     }
   }
   
-  fileprivate func updateContent(with completion:((_ success: Bool) -> Void)? = nil) {
+  func updateContent(with completion:((_ success: Bool) -> Void)? = nil) {
     guard let currentPost = self.currentPost, let id = currentPost.id else {
       return
     }
@@ -194,6 +204,18 @@ class ContentEditorViewModel  {
         (success, error) in
         completion(success, policy.link)
       })
+    }
+  }
+
+  func deletePost(_ closure: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+    guard let identifier = self.currentPost.id else {
+        closure(true, nil)
+        return
+    }
+
+    _ = PublishAPI.removeContent(contentIdentifier: identifier) { (success, error) in
+      try? self.deleteLocalDraft()
+      closure(success, error)
     }
   }
 }

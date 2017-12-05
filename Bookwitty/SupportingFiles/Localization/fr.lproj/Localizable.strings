@@ -71,6 +71,7 @@
 "delete" = "Supprimer";
 "delete_post_confirmation_message" = "Êtes-vous sur de vouloir supprimer cette publication ?";
 "delete_post_success_message" = "Votre publication a été supprimée";
+"discard_post" = "Discard Post";
 "discover" = "Découvrir";
 "discover_banner_message" = "Chaque jour, retrouvez ici les meilleurs articles de la communauté Bookwitty";
 "dismiss" = "Dismiss";
@@ -79,6 +80,7 @@
 "drafts" = "Brouillons";
 "edit" = "Edit";
 "edit_pen_name" = "Modifier votre pseudo";
+"editing_not_yet_supported" = "Editing this type of content is not yet supported here, you can still edit it on the website";
 "editions" = "Éditions";
 "email" = "E-mail";
 "email_already_registered" = "L'e-mail que vous avez indiqué est déjà enregistré chez nous";
@@ -215,6 +217,8 @@
 "reset_password" = "Réinitialiser mon mot de passe";
 "reset_password_text" = "Dans quelques instants, vous recevrez un e-mail pour réinitialiser votre mot de passe.";
 "save_as_draft" = "Save as draft";
+"save_draft" = "Save Draft";
+"save_this_post_draft" = "Save this Post as a Draft ?";
 "search_placeholder" = "Rechercher ";
 "see_whats_happening_on_bookwitty" = "Préparez-vous à faire des découvertes ";
 "settings" = "Paramètres ";
@@ -254,6 +258,7 @@
 "unknown_format" = "Format de produit inconnu";
 "unlink_author" = "Unlink Author";
 "unlink_topic" = "Unlink Topic";
+"untitled" = "Untitled";
 "update_now" = "Mettre à jour";
 "user" = "Utilisateur";
 "user_not_signed_in_alert_message" = "Vous devez être connecté pour effectuer cette action";

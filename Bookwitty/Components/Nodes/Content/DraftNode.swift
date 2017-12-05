@@ -25,7 +25,7 @@ class DraftNode: ASCellNode {
       if let title = title {
         if title.isEmpty {
           text = AttributedStringBuilder(fontDynamicType: .subheadline)
-            .append(text: "Untitled")
+            .append(text: Strings.untitled())
             .attributedString
         } else {
           text = AttributedStringBuilder(fontDynamicType: .subheadline)

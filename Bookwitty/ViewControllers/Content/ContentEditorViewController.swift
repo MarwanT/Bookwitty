@@ -9,6 +9,7 @@
 import UIKit
 import RichEditorView
 import MobileEditor
+import SwiftLoader
 
 class ContentEditorViewController: UIViewController {
   
@@ -119,6 +120,11 @@ class ContentEditorViewController: UIViewController {
     navigationItem.leftBarButtonItems = leftBarButtonItems
     navigationItem.rightBarButtonItems = rightBarButtonItems
   }
+
+  func resignResponders() {
+    _ = self.titleTextField.resignFirstResponder()
+    _ = self.editorView.endEditing(true)
+  }
   
   // MARK: - Navigation items actions
   @objc private func undoButtonTouchUpInside(_ sender: UIButton) {
@@ -130,8 +136,18 @@ class ContentEditorViewController: UIViewController {
   }
   
   @objc private func closeBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
-    self.timer.invalidate()
-    self.dismiss(animated: true, completion: nil)
+    self.resignResponders()
+    presentConfirmSaveOrDiscardActionSheet { (option: ContentEditorViewController.ConfirmationOption, success: Bool) in
+      switch option {
+      case .saveDraft where success: fallthrough
+      case .discardPost where success: fallthrough
+      case .nonNeeded:
+        self.timer.invalidate()
+        self.dismiss(animated: true, completion: nil)
+      default:
+        break
+      }
+    }
   }
   
   @objc private func draftsBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
@@ -382,6 +398,115 @@ class ContentEditorViewController: UIViewController {
   }
 }
 
+//MARK: - Save Action Sheet
+extension ContentEditorViewController {
+  enum ConfirmationOption {
+    case saveDraft
+    case discardPost
+    case goBack
+    case nonNeeded
+  }
+
+  fileprivate func presentConfirmSaveOrDiscardActionSheet(_ closure : @escaping (_ option: ConfirmationOption, _ success: Bool) -> ()) {
+
+    guard let currentPost = self.viewModel.currentPost, currentPost.id != nil else {
+      closure(.nonNeeded, true)
+      return
+    }
+
+    guard self.viewModel.needsRemoteSync else {
+      closure(.nonNeeded, true)
+      return
+    }
+
+    let alertController = UIAlertController(title: Strings.save_this_post_draft(), message: nil, preferredStyle: .actionSheet)
+
+    let saveDraft = UIAlertAction(title: Strings.save_draft(), style: .default, handler: {
+      _ in
+      self.savePostAsDraft({
+        (success: Bool) in
+        closure(.saveDraft, success)
+      })
+    })
+
+    let discardPost = UIAlertAction(title: Strings.discard_post(), style: .destructive, handler: {
+      _ in
+      self.discardPost({
+        (success: Bool) in
+        closure(.discardPost, success)
+      })
+    })
+
+    let goBack = UIAlertAction(title: Strings.go_back(), style: .cancel, handler: {
+      _ in
+      closure(.goBack, true)
+    })
+
+    alertController.addAction(saveDraft)
+    alertController.addAction(discardPost)
+    alertController.addAction(goBack)
+
+    navigationController?.present(alertController, animated: true, completion: nil)
+  }
+
+  fileprivate func showRetryAlert(with title: String?, message: String?, closure: ((_ retry: Bool) -> ())?) {
+    let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    let tryAgainAction = UIAlertAction(title: Strings.try_again(), style: .default, handler: {
+      _ in
+      closure?(true)
+    })
+
+    let cancelAction = UIAlertAction(title: Strings.cancel(), style: .cancel, handler: {
+      _ in
+      closure?(false)
+    })
+
+    alertController.addAction(tryAgainAction)
+    alertController.addAction(cancelAction)
+    navigationController?.present(alertController, animated: true, completion: nil)
+  }
+
+  fileprivate func discardPost(_ closure: @escaping (Bool) -> ()) {
+    SwiftLoader.show(animated: true)
+    self.viewModel.deletePost {
+      (success: Bool, error: BookwittyAPIError?) in
+      SwiftLoader.hide()
+      if success {
+        closure(success)
+      } else {
+        self.showRetryAlert(with: Strings.error(), message: Strings.some_thing_wrong_error(), closure: {
+          (retry: Bool) in
+          if retry {
+            self.discardPost(closure)
+          } else {
+            closure(false)
+          }
+        })
+      }
+    }
+  }
+
+  fileprivate func savePostAsDraft(_ closure: @escaping (Bool) -> ()) {
+    SwiftLoader.show(animated: true)
+    self.viewModel.updateContent {
+      (success: Bool) in
+      SwiftLoader.hide()
+      if success {
+        closure(success)
+      } else {
+        self.showRetryAlert(with: Strings.error(), message: Strings.some_thing_wrong_error(), closure: {
+          (retry: Bool) in
+          if retry {
+            self.savePostAsDraft(closure)
+          } else {
+            closure(false)
+          }
+        })
+      }
+    }
+  }
+}
+
 //MARK: - RichEditorToolbarDelegate Implementation
 extension ContentEditorViewController: RichEditorToolbarDelegate {
   
@@ -440,9 +565,19 @@ extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePi
 //MARK: - DraftsViewControllerDelegate Implementation
 extension ContentEditorViewController: DraftsViewControllerDelegate {
   func drafts(viewController: DraftsViewController, didRequestEdit draft: CandidatePost) {
-    self.viewModel.set(draft)
-    self.loadUIFromPost()
-    self.navigationController?.dismiss(animated: true, completion: nil)
+    self.navigationController?.dismiss(animated: true, completion: { 
+      self.presentConfirmSaveOrDiscardActionSheet { (option: ContentEditorViewController.ConfirmationOption, success: Bool) in
+        switch option {
+        case .saveDraft where success: fallthrough
+        case .discardPost where success: fallthrough
+        case .nonNeeded:
+          self.viewModel.set(draft)
+          self.loadUIFromPost()
+        default:
+          break
+        }
+      }
+    })
   }
 
   func draftsViewControllerRequestClose(_ viewController: DraftsViewController) {
@@ -590,13 +725,14 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
     case .publishYourPost:
       self.publishYourPost()
     case .saveAsDraft:
-      self.saveAsDraft() { success in
+      self.savePostAsDraft({ (success: Bool) in
         if success {
-          viewController.dismiss(animated: true, completion: nil)
-        } else {
-          //TODO: show the user an error.
+          self.resignResponders()
+          viewController.dismiss(animated: false, completion: {
+            self.dismiss(animated: true, completion: nil)
+          })
         }
-      }
+      })
     case .goBack:
       viewController.dismiss(animated: true, completion: nil)
     }

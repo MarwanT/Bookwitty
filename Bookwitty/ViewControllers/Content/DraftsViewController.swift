@@ -197,8 +197,7 @@ extension DraftsViewController: ASTableDataSource, ASTableDelegate {
     tableNode.deselectRow(at: indexPath, animated: true)
 
     guard viewModel.values(for: indexPath.row).editable else {
-      let supported: String = "Editing this type of content is not yet supported here, you can still edit it on the website"
-      self.showAlertWith(title: "", message: supported)
+      self.showAlertWith(title: "", message: Strings.editing_not_yet_supported())
       return
     }
 

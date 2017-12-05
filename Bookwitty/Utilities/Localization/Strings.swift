@@ -269,6 +269,10 @@ class Strings {
     return localizedString(key: "delete_post_success_message")
   }
 
+  static func discard_post() -> String {
+    return localizedString(key: "discard_post")
+  }
+
   static func discover() -> String {
     return localizedString(key: "discover")
   }
@@ -299,6 +303,10 @@ class Strings {
 
   static func edit_pen_name() -> String {
     return localizedString(key: "edit_pen_name")
+  }
+
+  static func editing_not_yet_supported() -> String {
+    return localizedString(key: "editing_not_yet_supported")
   }
   
   static func editions() -> String {
@@ -841,6 +849,14 @@ class Strings {
     return localizedString(key: "save_as_draft")
   }
   
+  static func save_draft() -> String {
+    return localizedString(key: "save_draft")
+  }
+
+  static func save_this_post_draft() -> String {
+    return localizedString(key: "save_this_post_draft")
+  }
+
   static func search_placeholder() -> String {
     return localizedString(key: "search_placeholder")
   }
@@ -995,6 +1011,10 @@ class Strings {
 
   static func unlink_author() -> String {
     return localizedString(key: "unlink_author")
+  }
+
+  static func untitled() -> String {
+    return localizedString(key: "untitled")
   }
 
   static func update_now() -> String {
