@@ -230,6 +230,7 @@ extension DraftsViewController: ASTableDataSource, ASTableDelegate {
   }
 
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {    
+    tableView.setEditing(false, animated: true)
     self.showDeleteConfirmationAlert {
       (confirmed: Bool) in
       guard confirmed else { return }
