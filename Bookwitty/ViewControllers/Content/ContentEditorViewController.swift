@@ -123,7 +123,10 @@ class ContentEditorViewController: UIViewController {
     stackView.addArrangedSubview(undoButton)
     stackView.addArrangedSubview(redoButton)
     
-    navigationItem.titleView = stackView
+    let titleView = UIView(frame: .init(x: 0, y: 0, width: 44.0 + 5.0 + 44.0, height: 44.0))
+    titleView.addSubview(stackView)
+    stackView.bindFrameToSuperviewBounds()
+    navigationItem.titleView = titleView
     
     let leftBarButtonItems = [closeBarButtonItem, draftsBarButtonItem]
     let rightBarButtonItems = [nextBarButtonItem, plusBarButtonItem]
