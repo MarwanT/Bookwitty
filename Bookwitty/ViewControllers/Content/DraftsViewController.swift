@@ -82,6 +82,19 @@ class DraftsViewController: ASViewController<ASTableNode> {
       }
     }
   }
+
+  fileprivate func showDeleteConfirmationAlert(completion: @escaping (_ confirmed: Bool)->()) {
+    let message = Strings.delete_draft_confirmation_message()
+    let alert = UIAlertController(title: nil, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    alert.addAction(UIAlertAction(title: Strings.delete(), style: .destructive, handler: { (action: UIAlertAction) in
+      completion(true)
+    }))
+
+    alert.addAction(UIAlertAction(title: Strings.cancel(), style: .cancel, handler: { (action: UIAlertAction) in
+      completion(false)
+    }))
+    self.present(alert, animated: true, completion: nil)
+  }
 }
 
 //MARK: - Actions
