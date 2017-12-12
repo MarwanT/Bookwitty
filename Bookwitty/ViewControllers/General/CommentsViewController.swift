@@ -61,7 +61,7 @@ extension CommentsViewController: CommentsNodeDelegate {
       break
     case .writeComment(let commentManager):
       CommentComposerViewController.show(from: self, commentsManager: commentManager, delegate: self)
-    case .commentAction(let comment, let action, let resource):
+    case .commentAction(let commentsManager, let comment, let action):
       switch action {
       case .wit:
         commentsNode.wit(comment: comment, completion: {
@@ -74,8 +74,6 @@ extension CommentsViewController: CommentsNodeDelegate {
           didFinishAction?(success)
         })
       case .reply:
-        let commentsManager = CommentsManager()
-        commentsManager.initialize(resource: resource, comment: comment)
         CommentComposerViewController.show(from: self, commentsManager: commentsManager, delegate: self)
       default:
         break

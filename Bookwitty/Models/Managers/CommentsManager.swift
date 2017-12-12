@@ -233,7 +233,7 @@ extension CommentsManager {
       self.remove(comment)
       NotificationCenter.default.post(
         name: CommentsManager.notificationName(for: postIdentifier),
-        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.remove, resource: resource), comment))
+        object: (CommentsNode.Action.commentAction(commentsManager: self, comment: comment, action: CardActionBarNode.Action.remove), comment))
     })
   }
   
@@ -273,7 +273,7 @@ extension CommentsManager {
       self.wit(comment)
       NotificationCenter.default.post(
         name: CommentsManager.notificationName(for: postIdentifier),
-        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.wit, resource: resource), comment))
+        object: (CommentsNode.Action.commentAction(commentsManager: self, comment: comment, action: CardActionBarNode.Action.wit), comment))
     })
   }
   
@@ -313,7 +313,7 @@ extension CommentsManager {
       self.unwit(comment)
       NotificationCenter.default.post(
         name: CommentsManager.notificationName(for: postIdentifier),
-        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.unwit, resource: resource), comment))
+        object: (CommentsNode.Action.commentAction(commentsManager: self, comment: comment, action: CardActionBarNode.Action.unwit), comment))
     })
   }
 }

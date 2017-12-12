@@ -315,7 +315,7 @@ extension CardDetailsViewController: CommentsNodeDelegate {
       pushCommentsViewController(with: commentsManager)
     case .writeComment(let commentsManager):
       CommentComposerViewController.show(from: self, commentsManager: commentsManager, delegate: self)
-    case .commentAction(let comment, let action, let resource):
+    case .commentAction(let commentsManager, let comment, let action):
       switch action {
       case .wit:
         commentsNode.wit(comment: comment, completion: {
@@ -328,8 +328,6 @@ extension CardDetailsViewController: CommentsNodeDelegate {
           didFinishAction?(success)
         })
       case .reply:
-        let commentsManager = CommentsManager()
-        commentsManager.initialize(resource: resource, comment: comment)
         CommentComposerViewController.show(from: self, commentsManager: commentsManager, delegate: self)
       default:
         break

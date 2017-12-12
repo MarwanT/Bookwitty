@@ -435,7 +435,7 @@ extension CommentsNode {
     case viewRepliesForComment(comment: Comment, resource: ModelCommonProperties)
     case viewAllComments(commentsManager: CommentsManager)
     case writeComment(commentsManager: CommentsManager)
-    case commentAction(comment: Comment, action: CardActionBarNode.Action, resource: ModelCommonProperties)
+    case commentAction(commentsManager: CommentsManager, comment: Comment, action: CardActionBarNode.Action)
   }
 }
 
@@ -449,12 +449,12 @@ extension CommentsNode: CommentTreeNodeDelegate {
       return
     }
     
-    guard let resource = viewModel.resource else {
+    guard let commentsManager = viewModel.commentsManager, let resource = viewModel.resource else {
       didFinishAction?(false)
       return
     }
     
-    delegate?.commentsNode(self, reactFor: .commentAction(comment: comment, action: action, resource: resource), didFinishAction: didFinishAction)
+    delegate?.commentsNode(self, reactFor: .commentAction(commentsManager: commentsManager, comment: comment, action: action), didFinishAction: didFinishAction)
 
     //MARK: [Analytics] Event
     let analyticsAction: Analytics.Action
