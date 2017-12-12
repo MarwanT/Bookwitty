@@ -229,13 +229,17 @@ extension DraftsViewController: ASTableDataSource, ASTableDelegate {
     return Strings.delete()
   }
 
-  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-    viewModel.deleteDraft(at: indexPath.row) { (success: Bool, error: BookwittyAPIError?) in
-      guard success else {
-        return
-      }
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {    
+    self.showDeleteConfirmationAlert {
+      (confirmed: Bool) in
+      guard confirmed else { return }
+      self.viewModel.deleteDraft(at: indexPath.row) { (success: Bool, error: BookwittyAPIError?) in
+        guard success else {
+          return
+        }
 
-      self.tableNode.deleteRows(at: [indexPath], with: .automatic)
+        self.tableNode.deleteRows(at: [indexPath], with: .automatic)
+      }
     }
   }
 
