@@ -9,7 +9,7 @@
 import Foundation
 
 class CommentsViewModel {
-  fileprivate var commentsManager: CommentsManager?
+  fileprivate(set) var commentsManager: CommentsManager?
   
   var displayMode: CommentsNode.DisplayMode = .normal
   
@@ -91,11 +91,6 @@ extension CommentsViewModel {
     default:
       return commentsManager?.comment(at: indexPath.item)
     }
-  }
-  
-  /// Sends a clone of the comment manager held in this instance
-  func commentsManagerClone() -> CommentsManager? {
-    return commentsManager?.clone()
   }
   
   /// If the comments displayed are replies of a certain comment then the

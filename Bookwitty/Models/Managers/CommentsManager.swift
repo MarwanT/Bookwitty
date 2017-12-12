@@ -195,12 +195,9 @@ extension CommentsManager {
       }
       
       // Do additional logic here if necessary
-      guard let commentsMangerClone = self.clone() else {
-        return
-      }
       NotificationCenter.default.post(
         name: CommentsManager.notificationName(for: postIdentifier),
-        object: (CommentsNode.Action.writeComment(commentsManager: commentsMangerClone), comment))
+        object: (CommentsNode.Action.writeComment(commentsManager: self), comment))
     })
   }
   

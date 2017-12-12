@@ -351,7 +351,7 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
     collectionNode.deselectItem(at: indexPath, animated: true)
     
     if viewCommentsDisclosureNode === collectionNode.nodeForItem(at: indexPath) {
-      if let commentsManager = viewModel.commentsManagerClone() {
+      if let commentsManager = viewModel.commentsManager {
         delegate?.commentsNode(self, reactFor: .viewAllComments(commentsManager: commentsManager), didFinishAction: nil)
 
         //MARK: [Analytics] Event
@@ -563,7 +563,7 @@ extension CommentsNode: WriteCommentNodeDelegate {
       return
     }
     
-    guard let commentsManager = viewModel.commentsManagerClone() else {
+    guard let commentsManager = viewModel.commentsManager else {
       return
     }
 
