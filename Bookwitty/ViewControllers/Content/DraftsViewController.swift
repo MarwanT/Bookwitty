@@ -7,6 +7,7 @@
 //
 
 import AsyncDisplayKit
+import SwiftLoader
 
 protocol DraftsViewControllerDelegate: class {
   func drafts(viewController: DraftsViewController, didRequestEdit draft: CandidatePost)
@@ -234,7 +235,10 @@ extension DraftsViewController: ASTableDataSource, ASTableDelegate {
     self.showDeleteConfirmationAlert {
       (confirmed: Bool) in
       guard confirmed else { return }
+
+      SwiftLoader.show(animated: true)
       self.viewModel.deleteDraft(at: indexPath.row) { (success: Bool, error: BookwittyAPIError?) in
+        SwiftLoader.hide()
         guard success else {
           return
         }
