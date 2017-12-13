@@ -96,7 +96,11 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
                                 style: UIBarButtonItemStyle.plain,
                                 target: self,
                                 action: #selector(self.add(_:)))
-      add.tintColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+      let redColor = ThemeManager.shared.currentTheme.colorNumber19()
+      add.setTitleTextAttributes([
+        NSFontAttributeName: FontDynamicType.caption1.font,
+        NSForegroundColorAttributeName : redColor], for: UIControlState.normal)
+
       navigationItem.rightBarButtonItem = add
       
     case .view:
