@@ -865,6 +865,7 @@ extension ContentEditorViewController: RichEditorDelegate {
   func richEditorDidLoad(_ editor: RichEditorView) {
     self.isEditorLoaded = true
     editor.focus()
+    self.loadUIFromPost()
   }
   
   func richEditorTookFocus(_ editor: RichEditorView) {
