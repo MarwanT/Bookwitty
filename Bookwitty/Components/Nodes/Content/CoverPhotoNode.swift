@@ -23,6 +23,8 @@ class CoverPhotoNode: ASCellNode {
   let photoButton: ASButtonNode
   let deleteButton: ASButtonNode
 
+  fileprivate let loaderNode = LoaderNode()
+
   weak var delegate: CoverPhotoNodeDelegate?
 
   var image: UIImage? {
