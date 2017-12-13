@@ -22,7 +22,6 @@ class AccountViewController: UIViewController {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
-    self.title = Strings.account()
     initializeComponents()
     applyTheme()
     fillUserInformation()
