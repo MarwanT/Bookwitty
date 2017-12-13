@@ -236,18 +236,28 @@ class ContentEditorViewController: UIViewController {
   }
   
   func showAddLinkAlertView(with link:String?) {
-    
     let alertController = UIAlertController(title: Strings.addLink(), message: "", preferredStyle: .alert)
-    alertController.addTextField(configurationHandler: {(_ textField: UITextField) -> Void in
-      textField.placeholder = "http://"
-      textField.text = link
-    })
     
     let confirmAction = UIAlertAction(title: Strings.ok(), style: .default, handler: {(_ action: UIAlertAction) -> Void in
       if let alertTextField = alertController.textFields?.first, alertTextField.text != nil, let link = alertTextField.text {
-      self.editorView.insertLink(link, title: "")
+        self.editorView.insertLink(link, title: "")
       }
     })
+    
+    alertController.addTextField(configurationHandler: {(_ textField: UITextField) -> Void in
+      textField.placeholder = "http://"
+      
+      NotificationCenter.default.addObserver(forName: NSNotification.Name.UITextFieldTextDidChange, object: textField, queue: .main) { _ in
+        
+        let text = textField.text ?? ""
+        let isEmpty = text.characters.count == 0 && link != nil
+        let isURL = text.isValidURL
+        
+        confirmAction.isEnabled = isEmpty || isURL
+      }
+      textField.text = link
+    })
+    
     alertController.addAction(confirmAction)
     
     let cancelAction = UIAlertAction(title: Strings.cancel(), style: .cancel, handler: nil)
