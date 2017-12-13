@@ -53,6 +53,11 @@ class CoverPhotoNode: ASCellNode {
     automaticallyManagesSubnodes = true
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
     imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
+    imageNode.automaticallyManagesSubnodes = true
+    imageNode.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
+      let centerLayoutSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: .minimumXY, child: self.loaderNode)
+      return centerLayoutSpec
+    }
 
     photoButton.backgroundColor = ThemeManager.shared.currentTheme.defaultButtonColor()
     photoButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(ThemeManager.shared.currentTheme.defaultBackgroundColor())
