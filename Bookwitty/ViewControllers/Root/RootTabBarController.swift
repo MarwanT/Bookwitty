@@ -92,7 +92,7 @@ class RootTabBarController: UITabBarController {
       image: nil,
       tag:4)
     settingsViewController.viewController.tabBarItem = UITabBarItem(
-      title: Strings.me(),
+      title: Strings.me().uppercased(),
       image: #imageLiteral(resourceName: "person"),
       tag:4)
     
