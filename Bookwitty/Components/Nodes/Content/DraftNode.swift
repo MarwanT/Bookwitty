@@ -55,6 +55,7 @@ class DraftNode: ASCellNode {
 
   fileprivate func setupNode() {
     automaticallyManagesSubnodes = true
+    titleNode.maximumNumberOfLines = 1
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
