@@ -79,6 +79,7 @@ class ContentEditorViewModel  {
 
   fileprivate func createContent(with completion:((_ success: Bool) -> Void)? = nil) {
     guard let body = self.currentPost.body, !body.isEmpty else {
+      completion?(false)
       return
     }
     self.resetPreviousRequest()
@@ -101,6 +102,7 @@ class ContentEditorViewModel  {
   
   func updateContent(with completion:((_ success: Bool) -> Void)? = nil) {
     guard let currentPost = self.currentPost, let id = currentPost.id else {
+      completion?(false)
       return
     }
     self.resetPreviousRequest()
@@ -139,6 +141,8 @@ class ContentEditorViewModel  {
             try jsonString.write(to: dataPath.appendingPathComponent("temp-draft").appendingPathExtension("txt"), atomically: true, encoding: .utf8)
             self.latestHashValue = self.currentPost.hash
             completion?(true)
+          } else {
+            completion?(false)
           }
         }
       } catch {
@@ -186,7 +190,9 @@ class ContentEditorViewModel  {
     } else {
       self.dispatchPrelinkIfNeeded()
       if newHashValue != latestHashValue {
-        self.updateContentLocally()
+        self.updateContentLocally({ (success) in
+          completion?(.update, success)
+        })
       } else {
         completion?(.noChanges, true) // no Change
       }
