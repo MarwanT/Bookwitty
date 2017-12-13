@@ -66,7 +66,7 @@ class DraftNode: ASCellNode {
     let verticalStackLayoutSpec = ASStackLayoutSpec(direction: .vertical,
                                                     spacing: 0.0,
                                                     justifyContent: .spaceBetween,
-                                                    alignItems: .start,
+                                                    alignItems: .stretch,
                                                     children: [titleInsetLayoutSpec, descriptionInsetLayoutSpec, separatorNode])
 
     verticalStackLayoutSpec.style.flexShrink = 1.0
