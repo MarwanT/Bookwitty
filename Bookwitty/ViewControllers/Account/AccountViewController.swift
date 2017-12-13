@@ -235,7 +235,8 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
 //MARK: - Localizable implementation
 extension AccountViewController: Localizable {
   func applyLocalization() {
-    title = Strings.account()
+    navigationItem.title = Strings.me()
+    tabBarItem.title = Strings.me().uppercased()
     viewModel.fillSectionTitles()
     tableView.reloadData()
   }
