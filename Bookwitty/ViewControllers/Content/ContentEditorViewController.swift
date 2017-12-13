@@ -17,6 +17,7 @@ class ContentEditorViewController: UIViewController {
   @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
   
   @IBOutlet weak var editorView: RichEditorView!
+  fileprivate var isEditorLoaded: Bool = false
 
   @IBOutlet weak var titleTextField: UITextField!
 
@@ -861,6 +862,7 @@ extension ContentEditorViewController: RichEditorDelegate {
   }
   
   func richEditorDidLoad(_ editor: RichEditorView) {
+    self.isEditorLoaded = true
     editor.focus()
   }
   
