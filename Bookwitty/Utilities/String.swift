@@ -61,6 +61,13 @@ extension String {
     let plainData = data(using: .utf8)
     return plainData?.base64EncodedString()
   }
+  
+  var isValidURL: Bool {
+    
+    let regex = "(http:\\/\\/|https:\\/\\/)?w{3}\\.[^\\s]*\\.[a-zA-Z]{2,3}"
+    let predicate = NSPredicate(format: "SELF MATCHES %@", regex)
+    return predicate.evaluate(with: self)
+  }
 }
 
 //Adds a failable init that mirrors the Int? given
