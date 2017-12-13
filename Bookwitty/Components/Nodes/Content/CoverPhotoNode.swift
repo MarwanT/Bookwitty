@@ -116,3 +116,14 @@ extension CoverPhotoNode {
     delegate?.coverPhoto(node: self, didRequest: .delete)
   }
 }
+
+extension CoverPhotoNode: ASNetworkImageNodeDelegate {
+  func imageNodeDidStartFetchingData(_ imageNode: ASNetworkImageNode) {
+    loaderNode.updateLoaderVisibility(show: true)
+  }
+
+  func imageNode(_ imageNode: ASNetworkImageNode, didLoad image: UIImage) {
+    loaderNode.updateLoaderVisibility(show: false)
+  }
+}
+
