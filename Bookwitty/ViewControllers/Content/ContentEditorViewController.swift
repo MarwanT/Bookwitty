@@ -44,7 +44,6 @@ class ContentEditorViewController: UIViewController {
    
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.editorView.delegate = self
     initializeComponents()
     loadNavigationBarButtons()
     addKeyboardNotifications()
@@ -280,6 +279,7 @@ class ContentEditorViewController: UIViewController {
     if let editor = bundle.url(forResource: "editor", withExtension: "html") {
       self.editorView.webView.loadRequest(URLRequest(url: editor))
     }
+    self.editorView.delegate = self
   }
   
   @objc private func tick() {
