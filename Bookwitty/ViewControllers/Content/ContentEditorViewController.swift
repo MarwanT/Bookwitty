@@ -857,7 +857,8 @@ extension ContentEditorViewController: RichEditorDelegate {
   }
 
   func richEditor(_ editor: RichEditorView, contentDidChange content: String) {
-  
+    guard self.isEditorLoaded else { return }
+
     self.viewModel.currentPost.body = editor.getContent()
   }
   
