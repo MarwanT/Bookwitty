@@ -70,12 +70,6 @@ class CommentsManager {
     return nextPageURL != nil
   }
   
-  func clone() -> CommentsManager? {
-    let manager = CommentsManager()
-    manager.initialize(resource: resource, comment: parentComment, comments: comments, nextPageURL: nextPageURL)
-    return manager
-  }
-  
   func comment(for identifier: String) -> Comment? {
     return comments.filter({ $0.id == identifier }).first
   }
