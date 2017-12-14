@@ -11,14 +11,21 @@ import Foundation
 class CommentsViewModel {
   fileprivate(set) var commentsManager: CommentsManager?
   
+  var parentComment: Comment? {
+    return commentsManager?.parentComment
+  }
+  
   var displayMode: CommentsNode.DisplayMode = .normal
   
   var postId: String? {
     return commentsManager?.postIdentifier
   }
   
-  func initialize(with manager: CommentsManager) {
-    commentsManager = manager
+  func initialize(with resource: ModelCommonProperties, parentComment: Comment?) {
+    // TODO: Change when centralizing the comments data
+    let newManager = CommentsManager()
+    newManager.initialize(resource: resource, parentComment: parentComment)
+    commentsManager = newManager
   }
   
   var numberOfSection: Int {
@@ -114,17 +121,21 @@ extension CommentsViewModel {
   var resource: ModelCommonProperties? {
     return commentsManager?.resource
   }
+  
+  var resourceExcerpt: String? {
+    return commentsManager?.resourceExcerpt
+  }
 }
 
 // MARK: - Related methods
 extension CommentsViewModel {
-  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+  func publishComment(content: String?, parentComment: Comment?, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
     guard let commentsManager = commentsManager else {
       completion(false, nil)
       return
     }
     
-    commentsManager.publishComment(content: content, parentCommentId: parentCommentId, completion: {
+    commentsManager.publishComment(content: content, parentComment: parentComment, completion: {
       (success, comment, error) in
       completion(success, error)
     })

@@ -103,8 +103,8 @@ class CommentsNode: ASCellNode {
     }
   }
   
-  func initialize(with manager: CommentsManager) {
-    viewModel.initialize(with: manager)
+  func initialize(with resource: ModelCommonProperties, parentComment: Comment? = nil) {
+    viewModel.initialize(with: resource, parentComment: parentComment)
     registerNotification()
   }
   
@@ -228,12 +228,15 @@ class CommentsNode: ASCellNode {
 // MARK: - Notification
 extension CommentsNode {
   func handleNotification(_ notification: Notification) {
-    guard let (action, comment) = notification.object as? CommentsManager.CommentNotificationObject else {
+    guard let (notificationAction, comment) = notification.object as? CommentsManager.CommentNotificationObject else {
       return
     }
     
-    switch action {
+    switch notificationAction {
     case .commentAction:
+      guard case .commentAction(let comment, let action, _, _) = notificationAction else {
+        return
+      }
       viewModel.updateData(with: comment)
       updateCollectionNode()
     case .writeComment:
@@ -351,14 +354,11 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
     collectionNode.deselectItem(at: indexPath, animated: true)
     
     if viewCommentsDisclosureNode === collectionNode.nodeForItem(at: indexPath) {
-      if let commentsManager = viewModel.commentsManager {
-        delegate?.commentsNode(self, reactFor: .viewAllComments(commentsManager: commentsManager), didFinishAction: nil)
+      if let resource = viewModel.resource {
+        let parentComment = viewModel.parentComment
+        delegate?.commentsNode(self, reactFor: .viewAllComments(resource: resource, parentComment: parentComment), didFinishAction: nil)
 
         //MARK: [Analytics] Event
-        guard let postId = commentsManager.postIdentifier,
-          let resource = DataManager.shared.fetchResource(with: postId) as? ModelCommonProperties
-          else { return }
-
         let category: Analytics.Category
         switch resource.registeredResourceType {
         case Image.resourceType:
@@ -432,10 +432,10 @@ extension CommentsNode {
 // MARK: - Actions Declaration
 extension CommentsNode {
   enum Action {
-    case viewRepliesForComment(comment: Comment, resource: ModelCommonProperties)
-    case viewAllComments(commentsManager: CommentsManager)
-    case writeComment(commentsManager: CommentsManager)
-    case commentAction(commentsManager: CommentsManager, comment: Comment, action: CardActionBarNode.Action)
+    case viewReplies(resource: ModelCommonProperties, parentComment: Comment)
+    case viewAllComments(resource: ModelCommonProperties, parentComment: Comment?)
+    case writeComment(resource: ModelCommonProperties, parentComment: Comment?)
+    case commentAction(comment: Comment, action: CardActionBarNode.Action, resource: ModelCommonProperties, parentComment: Comment?)
   }
 }
 
@@ -449,12 +449,13 @@ extension CommentsNode: CommentTreeNodeDelegate {
       return
     }
     
-    guard let commentsManager = viewModel.commentsManager, let resource = viewModel.resource else {
+    guard let resource = viewModel.resource else {
       didFinishAction?(false)
       return
     }
     
-    delegate?.commentsNode(self, reactFor: .commentAction(commentsManager: commentsManager, comment: comment, action: action), didFinishAction: didFinishAction)
+    let parentComment = viewModel.parentComment
+    delegate?.commentsNode(self, reactFor: .commentAction(comment: comment, action: action, resource: resource, parentComment: parentComment), didFinishAction: didFinishAction)
 
     //MARK: [Analytics] Event
     let analyticsAction: Analytics.Action
@@ -515,7 +516,7 @@ extension CommentsNode: CommentTreeNodeDelegate {
       return
     }
     
-    delegate?.commentsNode(self, reactFor: .viewRepliesForComment(comment: comment, resource: resource), didFinishAction: nil)
+    delegate?.commentsNode(self, reactFor: .viewReplies(resource: resource, parentComment: comment), didFinishAction: nil)
 
     //MARK: [Analytics] Event
     let category: Analytics.Category
@@ -563,15 +564,12 @@ extension CommentsNode: WriteCommentNodeDelegate {
       return
     }
     
-    guard let commentsManager = viewModel.commentsManager else {
-      return
-    }
-
-    delegate?.commentsNode(self, reactFor: .writeComment(commentsManager: commentsManager), didFinishAction: nil)
-
     guard let resource = viewModel.resource else {
       return
     }
+
+    let parentComment = viewModel.parentComment
+    delegate?.commentsNode(self, reactFor: .writeComment(resource: resource, parentComment: parentComment), didFinishAction: nil)
     
     //MARK: [Analytics] Event
     let category: Analytics.Category
@@ -612,12 +610,10 @@ extension CommentsNode: WriteCommentNodeDelegate {
 
 // MARK: - Display Helpers
 extension CommentsNode {
-  static func concatenate(with node: ASDisplayNode, resource: ModelCommonProperties?) -> (wrapperNode: ASDisplayNode, commentsNode: CommentsNode) {
+  static func concatenate(with node: ASDisplayNode, resource: ModelCommonProperties) -> (wrapperNode: ASDisplayNode, commentsNode: CommentsNode) {
     let commentsNode = CommentsNode()
     commentsNode.displayMode = .compact
-    let commentsManager = CommentsManager()
-    commentsManager.initialize(resource: resource)
-    commentsNode.initialize(with: commentsManager)
+    commentsNode.initialize(with: resource)
     commentsNode.reloadData()
     
     let containerNode = ASDisplayNode()
@@ -631,8 +627,8 @@ extension CommentsNode {
 
 // MARK: - Comment intences related methods
 extension CommentsNode {
-  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
-    viewModel.publishComment(content: content, parentCommentId: parentCommentId) {
+  func publishComment(content: String?, parentComment: Comment?, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+    viewModel.publishComment(content: content, parentComment: parentComment) {
       (success, error) in
       completion(success, error)
     }

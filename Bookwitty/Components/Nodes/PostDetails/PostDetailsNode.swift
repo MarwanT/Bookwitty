@@ -238,9 +238,7 @@ class PostDetailsNode: ASScrollNode {
   }
   
   func loadComments(for resource: ModelCommonProperties) {
-    let commentsManager = CommentsManager()
-    commentsManager.initialize(resource: resource)
-    commentsNode.initialize(with: commentsManager)
+    commentsNode.initialize(with: resource)
     commentsNode.reloadData()
   }
 
@@ -430,8 +428,8 @@ extension PostDetailsNode: CommentsNodeDelegate {
 
 // MARK: - Comment related methods
 extension PostDetailsNode {
-  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
-    commentsNode.publishComment(content: content, parentCommentId: parentCommentId) {
+  func publishComment(content: String?, parentComment: Comment?, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+    commentsNode.publishComment(content: content, parentComment: parentComment) {
       (success, error) in
       completion(success, error)
     }

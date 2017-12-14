@@ -22,13 +22,9 @@ class CommentsManager {
   
   /// The loaded comments are replies for the comment provided
   /// if available, otherwise the comments are the post main comments
-  func initialize(resource: ModelCommonProperties?, comment: Comment? = nil, comments: [Comment]? = nil, nextPageURL: URL? = nil) {
+  func initialize(resource: ModelCommonProperties?, parentComment: Comment?) {
     self.resource = resource
-    self.parentComment = comment
-    if let comments = comments {
-      self.comments = comments
-    }
-    self.nextPageURL = nextPageURL
+    self.parentComment = parentComment
   }
   
   var resourceExcerpt: String? {
@@ -167,8 +163,13 @@ extension CommentsManager {
     })
   }
   
-  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ comment: Comment?, _ error: CommentsManager.Error?) -> Void) {
-    guard let postIdentifier = resource?.id else {
+  func publishComment(content: String?, parentComment: Comment?, completion: @escaping (_ success: Bool, _ comment: Comment?, _ error: CommentsManager.Error?) -> Void) {
+    guard let resource = resource else {
+      completion(false, nil, CommentsManager.Error.missingResource)
+      return
+    }
+    
+    guard let postIdentifier = resource.id else {
       completion(false, nil, CommentsManager.Error.missingPostId)
       return
     }
@@ -178,7 +179,7 @@ extension CommentsManager {
       return
     }
     
-    _ = CommentAPI.createComment(postIdentifier: postIdentifier, commentMessage: content, parentCommentIdentifier: parentCommentId, completion: {
+    _ = CommentAPI.createComment(postIdentifier: postIdentifier, commentMessage: content, parentCommentIdentifier: parentComment?.id, completion: {
       (success, comment, error) in
       defer {
         completion(success, comment, CommentsManager.Error.api(error))
@@ -191,7 +192,7 @@ extension CommentsManager {
       // Do additional logic here if necessary
       NotificationCenter.default.post(
         name: CommentsManager.notificationName(for: postIdentifier),
-        object: (CommentsNode.Action.writeComment(commentsManager: self), comment))
+        object: (CommentsNode.Action.writeComment(resource: resource, parentComment: parentComment), comment))
     })
   }
   
@@ -227,7 +228,7 @@ extension CommentsManager {
       self.remove(comment)
       NotificationCenter.default.post(
         name: CommentsManager.notificationName(for: postIdentifier),
-        object: (CommentsNode.Action.commentAction(commentsManager: self, comment: comment, action: CardActionBarNode.Action.remove), comment))
+        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.remove, resource: resource, parentComment: nil), comment))
     })
   }
   
@@ -267,7 +268,7 @@ extension CommentsManager {
       self.wit(comment)
       NotificationCenter.default.post(
         name: CommentsManager.notificationName(for: postIdentifier),
-        object: (CommentsNode.Action.commentAction(commentsManager: self, comment: comment, action: CardActionBarNode.Action.wit), comment))
+        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.wit, resource: resource, parentComment: nil), comment))
     })
   }
   
@@ -307,7 +308,7 @@ extension CommentsManager {
       self.unwit(comment)
       NotificationCenter.default.post(
         name: CommentsManager.notificationName(for: postIdentifier),
-        object: (CommentsNode.Action.commentAction(commentsManager: self, comment: comment, action: CardActionBarNode.Action.unwit), comment))
+        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.unwit, resource: resource, parentComment: nil), comment))
     })
   }
 }

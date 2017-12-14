@@ -425,13 +425,13 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
 
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action, didFinishAction: ((Bool) -> ())?) {
     switch action {
-    case .viewRepliesForComment(let comment, let postId):
+    case .viewReplies:
       break
-    case .viewAllComments(let commentsManager):
-      pushCommentsViewController(with: commentsManager)
-    case .writeComment(let commentsManager):
-      CommentComposerViewController.show(from: self, commentsManager: commentsManager, delegate: self)
-    case .commentAction(let commentsManager, let comment, let action):
+    case .viewAllComments(let resource, _):
+      pushCommentsViewController(with: resource)
+    case .writeComment(let resource, let parentComment):
+      CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentComment: parentComment)
+    case .commentAction(let comment, let action, let resource, let parentComment):
       switch action {
       case .wit:
         postDetailsNode.wit(comment: comment, completion: {
@@ -444,7 +444,7 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
           didFinishAction?(success)
         })
       case .reply:
-        CommentComposerViewController.show(from: self, commentsManager: commentsManager, delegate: self)
+        CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentComment: parentComment)
       default:
         break
       }
@@ -928,9 +928,9 @@ extension PostDetailsViewController {
     }
   }
   
-  func pushCommentsViewController(with commentsManager: CommentsManager) {
+  func pushCommentsViewController(with resource: ModelCommonProperties) {
     let commentsVC = CommentsViewController()
-    commentsVC.initialize(with: commentsManager)
+    commentsVC.initialize(with: resource)
     self.navigationController?.pushViewController(commentsVC, animated: true)
   }
 }

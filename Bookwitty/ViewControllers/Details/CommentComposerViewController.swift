@@ -62,8 +62,8 @@ class CommentComposerViewController: UIViewController {
     super.updateViewConstraints()
   }
   
-  func initialize(with commentsManager: CommentsManager) {
-    viewModel.initialize(with: commentsManager)
+  func initialize(with resource: ModelCommonProperties, parentComment: Comment?) {
+    viewModel.initialize(with: resource, parentComment: parentComment)
   }
   
   private func initialize() {
@@ -251,9 +251,9 @@ extension CommentComposerViewController: UITextViewDelegate {
 
 // MARK: -
 extension CommentComposerViewController {
-  class func show(from viewController: UIViewController, commentsManager: CommentsManager, delegate: CommentComposerViewControllerDelegate?) {
+  class func show(from viewController: UIViewController, delegate: CommentComposerViewControllerDelegate?, resource: ModelCommonProperties, parentComment: Comment?) {
     let composeCommentVC = Storyboard.Details.instantiate(CommentComposerViewController.self)
-    composeCommentVC.initialize(with: commentsManager)
+    composeCommentVC.initialize(with: resource, parentComment: parentComment)
     composeCommentVC.delegate = delegate
     
     let navigationController = UINavigationController(rootViewController: composeCommentVC)
