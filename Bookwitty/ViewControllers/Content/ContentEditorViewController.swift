@@ -437,14 +437,23 @@ extension ContentEditorViewController {
 
     let alertController = UIAlertController(title: Strings.save_this_post_draft(), message: nil, preferredStyle: .actionSheet)
 
-    let saveDraft = UIAlertAction(title: Strings.save_draft(), style: .default, handler: {
-      _ in
-      self.savePostAsDraft({
-        (success: Bool) in
-        closure(.saveDraft, success)
+    if self.mode.isEditing {
+      let discardChanges = UIAlertAction(title: Strings.discard_changes(), style: .default, handler: {
+        _ in
+        self.dismiss(animated: true, completion: nil)
       })
-    })
-
+      alertController.addAction(discardChanges)
+      
+    } else {
+      let saveDraft = UIAlertAction(title: Strings.save_draft(), style: .default, handler: {
+        _ in
+        self.savePostAsDraft({
+          (success: Bool) in
+          closure(.saveDraft, success)
+        })
+      })
+      alertController.addAction(saveDraft)
+    }
     let discardPost = UIAlertAction(title: Strings.discard_post(), style: .destructive, handler: {
       _ in
       self.discardPost({
@@ -458,7 +467,6 @@ extension ContentEditorViewController {
       closure(.goBack, true)
     })
 
-    alertController.addAction(saveDraft)
     alertController.addAction(discardPost)
     alertController.addAction(goBack)
 
