@@ -22,9 +22,10 @@ class PublishMenuViewModel {
     return self.linkedPages
   }
   
-  func initialize(with linkedTags: [Tag], linkedPages: [ModelCommonProperties]) {
+  func initialize(with linkedTags: [Tag], linkedPages: [ModelCommonProperties], isEditing: Bool) {
     self.linkedTags = linkedTags
     self.linkedPages = linkedPages
+    self.isEditing = isEditing
   }
   
   var penName: PenName? = UserManager.shared.defaultPenName
