@@ -403,7 +403,7 @@ extension BookwittyAPI: TargetType {
       if !includes.contains("pen-name") {
         includes.append("pen-name")
       }
-      return include
+      return includes
     case .batchPenNames:
       return []
     case .absolute, .removeComment, .uploadPolicy, .uploadMultipart:
