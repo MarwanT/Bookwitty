@@ -313,6 +313,9 @@ extension UIViewController {
 extension UIViewController {
   func presentContentEditor(with post: CandidatePost, prelink: String? = nil) {
     let editorController = Storyboard.Content.instantiate(ContentEditorViewController.self)
+    if PublishAPI.PublishStatus.public.rawValue == post.status {
+      editorController.mode = .edit
+    }
     editorController.viewModel.initialize(with: post, prelink: prelink)
     let navigationController = UINavigationController(rootViewController: editorController)
     self.present(navigationController, animated: true, completion: nil)
