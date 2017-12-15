@@ -120,6 +120,23 @@ struct ContentAPI {
       success = statusCode == successStatusCode
     })
   }
+
+  static func linkedTags(to contentIdentifier: String, closure: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let successStatusCode = 200
+    return signedAPIRequest(target: .linkedTags(contentIdentifier: contentIdentifier), completion: {
+      (data, statusCode, response, error) in
+      var success: Bool = false
+      var error: BookwittyAPIError? = nil
+      defer {
+        closure(success, error)
+      }
+      guard data != nil, let statusCode = statusCode else {
+        error = BookwittyAPIError.invalidStatusCode
+        return
+      }
+      success = statusCode == successStatusCode
+    })
+  }
 }
 
 extension ContentAPI {
