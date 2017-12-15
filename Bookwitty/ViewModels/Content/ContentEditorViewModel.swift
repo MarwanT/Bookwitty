@@ -16,7 +16,9 @@ class ContentEditorViewModel  {
   private(set) var originalHashValue: Int = 0
   private(set) var latestHashValue: Int = 0
   private(set) var currentRequest: Cancellable?
-  
+  var publishable: Bool {
+    return self.prelink == nil && self.currentPost.id != nil && !self.hasPendingUploadingRequest
+  }
   private var pendingUploadRequests: [String] = []
   
   fileprivate var prelink: String?
