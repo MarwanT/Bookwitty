@@ -59,8 +59,13 @@ class PublishMenuViewModel {
       return (item.localizedString, item.image)
     case 1:
       //Draft
-      let item = PublishMenuViewController.Item.saveAsDraft
-      return (item.localizedString, item.image)
+      if isEditing {
+        let item = PublishMenuViewController.Item.goBack
+        return (item.localizedString, item.image)
+      } else {
+        let item = PublishMenuViewController.Item.saveAsDraft
+        return (item.localizedString, item.image)
+      }
     case 2:
       //Cancel
       let item = PublishMenuViewController.Item.goBack
