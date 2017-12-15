@@ -74,6 +74,7 @@ public enum BookwittyAPI {
   case removeTag(contentIdentifier: String, tagIdentifier: String)
   case linkContent(contentIdentifier: String, pageIdentifier: String)
   case unlinkContent(contentIdentifier: String, pageIdentifier: String)
+  case linkedTags(contentIdentifier: String)
 }
 
 // MARK: - Target Type
@@ -224,6 +225,8 @@ extension BookwittyAPI: TargetType {
       path = "/content/\(contentIdentifier)/relationships/topics"
     case .removeContent(let contentIdentifier):
       path = "/content/\(contentIdentifier)"
+    case .linkedTags(let contentIdentifier):
+      path = "/content/\(contentIdentifier)/tags"
     case .uploadMultipart:
       /*
       * Uploading to Amazon S3 servers, 
@@ -239,7 +242,7 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .oAuth, .refreshToken, .resendAccountConfirmation, .createPenName, .createContent, .linkTag, .linkContent:
       return .post
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .search, .autocomplete, .penNames, .comments, .replies, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent, .votes, .preferredFormats:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .search, .autocomplete, .penNames, .comments, .replies, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent, .votes, .preferredFormats, .linkedTags:
       return .get
     case .register, .batch, .updatePreference, .wit, .follow, .resetPassword, .followPenName, .uploadPolicy, .uploadMultipart, .batchPenNames, .createComment, .witComment, .dimComment, .report, .reportPenName:
       return .post
@@ -329,7 +332,7 @@ extension BookwittyAPI: TargetType {
       return UploadAPI.uploadPolicyParameters(file: file, fileType: fileType, assetType: assetType)
     case .editions(_, let formats):
       return ContentAPI.editionsFilterParameters(formats: formats)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment, .dimComment, .undimComment, .preferredFormats, .report, .reportPenName, .removeComment, .removeContent:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment, .dimComment, .undimComment, .preferredFormats, .report, .reportPenName, .removeComment, .removeContent, .linkedTags:
       return nil
     }
   }
