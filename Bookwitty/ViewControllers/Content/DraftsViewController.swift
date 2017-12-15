@@ -215,11 +215,17 @@ extension DraftsViewController: ASTableDataSource, ASTableDelegate {
       return
     }
 
-    guard let candidate = self.viewModel.resource(at: indexPath.row) as? CandidatePost else {
+    guard let candidate = self.viewModel.resource(at: indexPath.row) as? CandidatePost,
+    let identifier = candidate.id else {
       return
     }
-    
-    delegate?.drafts(viewController: self, didRequestEdit: candidate)
+
+    SwiftLoader.show(animated: true)
+    viewModel.loadLatestVersionOfPost(with: identifier) {
+      (success: Bool, post: ModelResource?, error: BookwittyAPIError?) in
+      SwiftLoader.hide()
+      self.delegate?.drafts(viewController: self, didRequestEdit: candidate)
+    }
   }
 
   func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
