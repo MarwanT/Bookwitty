@@ -12,6 +12,7 @@ class PublishMenuViewModel {
   private var linkedTags: [Tag] = []
   private var linkedPages: [ModelCommonProperties] = []
   private(set) var contentIdentifier: String!
+  private(set) var isEditing: Bool = false
   
   var getTags: [Tag] {
     return self.linkedTags
