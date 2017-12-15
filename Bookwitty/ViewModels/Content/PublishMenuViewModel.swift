@@ -94,7 +94,7 @@ class PublishMenuViewModel {
     case .preview:
       return 1
     case .publish:
-      return 3
+      return self.isEditing ? 2 : 3
     }
   }
   
