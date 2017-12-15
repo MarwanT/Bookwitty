@@ -71,6 +71,7 @@
 "delete" = "Supprimer";
 "delete_post_confirmation_message" = "Êtes-vous sur de vouloir supprimer cette publication ?";
 "delete_post_success_message" = "Votre publication a été supprimée";
+"discard_changes" = "Discard Changes";
 "discard_post" = "Discard Post";
 "discover" = "Découvrir";
 "discover_banner_message" = "Chaque jour, retrouvez ici les meilleurs articles de la communauté Bookwitty";

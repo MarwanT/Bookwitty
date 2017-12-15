@@ -71,6 +71,7 @@
 "delete" = "Delete";
 "delete_post_confirmation_message" = "Are you sure you want to delete this post ?";
 "delete_post_success_message" = "Your post has been deleted";
+"discard_changes" = "Discard Changes";
 "discard_post" = "Discard Post";
 "discover" = "Discover";
 "discover_banner_message" = "Check back here anytime to find the best stories from the community.";
