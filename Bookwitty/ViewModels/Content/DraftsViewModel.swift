@@ -47,6 +47,13 @@ final class DraftsViewModel {
     }
   }
 
+  func loadLatestVersionOfPost(with identifier: String, closure: @escaping (_ success: Bool, _ resource: ModelResource?, _ error: BookwittyAPIError?) -> Void) {
+    _ = GeneralAPI.content(of: identifier, include: nil) {
+      (success: Bool, post: Text?, error: BookwittyAPIError?) in
+      closure(success, post as? ModelResource, error)
+    }
+  }
+
   func resource(at index: Int) -> ModelResource? {
     guard index >= 0, index < drafts.count else {
       return nil
