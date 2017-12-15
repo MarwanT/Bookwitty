@@ -11,6 +11,7 @@ import UIKit
 class PublishMenuViewModel {
   private var linkedTags: [Tag] = []
   private var linkedPages: [ModelCommonProperties] = []
+
   private(set) var contentIdentifier: String!
   private(set) var isEditing: Bool = false
   
@@ -22,7 +23,8 @@ class PublishMenuViewModel {
     return self.linkedPages
   }
   
-  func initialize(with linkedTags: [Tag], linkedPages: [ModelCommonProperties], isEditing: Bool) {
+  func initialize(with contentIdentifier: String?, linkedTags: [Tag], linkedPages: [ModelCommonProperties], isEditing: Bool) {
+    self.contentIdentifier = contentIdentifier
     self.linkedTags = linkedTags
     self.linkedPages = linkedPages
     self.isEditing = isEditing
