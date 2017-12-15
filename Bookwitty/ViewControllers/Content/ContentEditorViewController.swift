@@ -31,6 +31,22 @@ class ContentEditorViewController: UIViewController {
     case noChanges
   }
   
+  enum Mode {
+    case new
+    case edit
+    
+    var isEditing: Bool {
+      switch self {
+      case .new:
+        return false
+      case .edit:
+        return true
+      }
+    }
+  }
+  
+  var mode: Mode = .new
+   
   override func viewDidLoad() {
     super.viewDidLoad()
     self.editorView.delegate = self
