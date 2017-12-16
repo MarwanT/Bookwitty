@@ -94,12 +94,12 @@ class RichContentMenuViewController: UIViewController {
     self.dismiss(animated: true, completion: nil)
   }
   
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
     
     let when = DispatchTime.now() + 0.2
     DispatchQueue.main.asyncAfter(deadline: when) {
-      UIView.animate(withDuration: 0.300) {
+      UIView.animate(withDuration: 0.250) {
         self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber20().withAlphaComponent(0.5)
         
       }
