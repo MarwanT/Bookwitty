@@ -36,12 +36,7 @@ class ContentEditorViewController: UIViewController {
     case edit
     
     var isEditing: Bool {
-      switch self {
-      case .new:
-        return false
-      case .edit:
-        return true
-      }
+      return self == .edit
     }
   }
   
