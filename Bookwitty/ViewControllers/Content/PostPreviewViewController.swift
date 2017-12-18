@@ -350,11 +350,8 @@ extension PostPreviewViewController: EditableTextNodeDelegate {
 
 extension PostPreviewViewController: LimitedEditableTextNodeDelegate {
   func limitedEditableTextNodeDidFinishEditing(textNode: LimitedEditableTextNode) {
-    
     let shortDescription = textNode.contentText
-    if !shortDescription.isEmptyOrNil() {
-      viewModel.candidatePost.shortDescription = shortDescription
-    }
+    viewModel.candidatePost.shortDescription = shortDescription.isEmptyOrNil() ? nil : shortDescription
   }
 }
 
