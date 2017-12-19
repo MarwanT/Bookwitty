@@ -37,4 +37,16 @@ class CommentRegistryItem {
     }
     return registryId == commentIdentifier
   }
+  
+  /// This method flattens all the comments into one dimentional registry items array
+  static func generateRegistry(from comments: [Comment]) -> [CommentRegistryItem] {
+    var registry = [CommentRegistryItem]()
+    comments.forEach { (comment) in
+      registry.append(CommentRegistryItem(comment))
+      if let commentReplies = comment.replies {
+        registry.append(contentsOf: generateRegistry(from: commentReplies))
+      }
+    }
+    return registry
+  }
 }
