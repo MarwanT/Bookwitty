@@ -11,20 +11,14 @@ import Moya
 
 class CommentsManager {
   private(set) var resource: ModelCommonProperties?
-  private(set) var parentComment: Comment?
   
-  fileprivate var comments = [Comment]()
+  fileprivate var commentsRegistry = [CommentRegistryItem]()
   fileprivate var nextPageURL: URL?
-  
-  fileprivate var cancellableRequest: Cancellable?
   
   var isFetchingData = false
   
-  /// The loaded comments are replies for the comment provided
-  /// if available, otherwise the comments are the post main comments
-  func initialize(resource: ModelCommonProperties?, parentComment: Comment?) {
+  func initialize(resource: ModelCommonProperties?) {
     self.resource = resource
-    self.parentComment = parentComment
   }
   
   var resourceExcerpt: String? {
@@ -35,10 +29,6 @@ class CommentsManager {
     return resource?.id
   }
   
-  var numberOfComments: Int {
-    return comments.count
-  }
-  
   var totalNumberOfComments: Int {
     return resource?.counts?.comments ?? 0
   }
@@ -47,123 +37,246 @@ class CommentsManager {
     return resource?.counts?.commenters ?? 0
   }
   
-  func comment(at index: Int) -> Comment? {
-    guard index < comments.count else {
-      return nil
-    }
-    return comments[index]
-  }
-  
-  func updateData(with updatedComment: Comment) {
-    guard let index = comments.index(where: { $0.id == updatedComment.id }) else {
-      return
-    }
-    comments.remove(at: index)
-    comments.insert(updatedComment, at: index)
-  }
-  
   var hasNextPage: Bool {
     return nextPageURL != nil
   }
+}
+
+// MARK: - APIS
+extension CommentsManager {
+  func numberOfComments(parentCommentIdentifier: String? = nil) -> Int {
+    return commentsIDs(parentCommentIdentifier: parentCommentIdentifier).count
+  }
   
-  func comment(for identifier: String) -> Comment? {
-    return comments.filter({ $0.id == identifier }).first
+  func commentsIDs(parentCommentIdentifier: String? = nil) -> [String] {
+    return commentsRegistry.filter({ $0.parentCommentIdentifier == parentCommentIdentifier }).flatMap({ $0.commentIdentifier })
+  }
+  
+  func comment(with commentIdentifier: String) -> Comment? {
+    return commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first?.comment
   }
 }
 
-// MARK: Network Calls
+// MARK: - REGISTRY GETTERS
 extension CommentsManager {
-  func loadComments(completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
-    guard postIdentifier != nil else {
-      completion(false, CommentsManager.Error.missingPostId)
-      return
+  fileprivate func commentRegistryItem(for comment: Comment) -> CommentRegistryItem? {
+    guard let index = commentsRegistry.index(where: { $0.isRegistry(for: comment) }) else {
+      return nil
     }
-    
-    if parentComment == nil {
-      loadCommentsForPost(completion: completion)
+    return commentsRegistry[index]
+  }
+  
+  fileprivate func commentRegistryItem(for commentIdentifier: String) -> CommentRegistryItem? {
+    guard let index = commentsRegistry.index(where: { $0.isRegistry(for: commentIdentifier) }) else {
+      return nil
+    }
+    return commentsRegistry[index]
+  }
+}
+
+// MARK: - REGISTRY MODIFIERS
+extension CommentsManager {
+  fileprivate func clearRegistry() {
+    commentsRegistry.removeAll()
+  }
+  
+  /// If there is no registry for a comment in the array, then a new one is created
+  /// Otherwise the already present registry is Updated
+  fileprivate func updateRegistry(with comments: [Comment], pageURL: URL? = nil, ignoreNilPageURLS: Bool = true) {
+    comments.forEach { comment in
+      _ = updateRegistry(with: comment, pageURL: pageURL, ignoreNilPageURLS: ignoreNilPageURLS)
+    }
+  }
+  
+  /// If there is no registry for a comment in the array, then a new one is created
+  /// Otherwise the already present registry is Updated
+  fileprivate func updateRegistry(with comment: Comment, pageURL: URL? = nil, ignoreNilPageURLS: Bool = true) -> CommentRegistryItem? {
+    let updatedRegistry: CommentRegistryItem?
+    if let commentRegistryItem = commentRegistryItem(for: comment) {
+      commentRegistryItem.comment = comment
+      if !ignoreNilPageURLS {
+        commentRegistryItem.pageURL = pageURL
+      } else if let pageURL = pageURL {
+        commentRegistryItem.pageURL = pageURL
+      }
+      updatedRegistry = commentRegistryItem
     } else {
-      loadCommentReplies(completion: completion)
+      let commentRegistry = CommentRegistryItem.generateRegistry(from: [comment])
+      if !ignoreNilPageURLS {
+        commentRegistry.forEach({ $0.pageURL = pageURL })
+      } else if let pageURL = pageURL {
+        commentRegistry.forEach({ $0.pageURL = pageURL })
+      }
+      commentsRegistry.append(contentsOf: commentRegistry)
+      updatedRegistry = commentRegistryItem(for: comment)
     }
+    return updatedRegistry
   }
   
-  private func loadCommentsForPost(completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
-    guard !isFetchingData, let postIdentifier = postIdentifier else {
+  private func removeRegistry(for commentIdentifier: String) {
+    guard let index = commentsRegistry.index(where: { $0.commentIdentifier == commentIdentifier }) else {
+      return
+    }
+    commentsRegistry.remove(at: index)
+  }
+  
+  fileprivate func removeRegistry(for commentIdentifiers: [String], removeReplies: Bool = true) {
+    commentIdentifiers.forEach({ commentIdentifier in
+      if removeReplies {
+        let repliesIDs = commentsRegistry.filter({ $0.parentCommentIdentifier == commentIdentifier }).flatMap({ $0.commentIdentifier })
+        if repliesIDs.count > 0 {
+          removeRegistry(for: repliesIDs, removeReplies: removeReplies)
+        }
+      }
+      removeRegistry(for: commentIdentifier)
+    })
+  }
+  
+  fileprivate func witComment(with commentIdentifier: String) {
+    guard let registry = commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first else {
+      return
+    }
+    registry.comment?.wit = true
+  }
+  
+  fileprivate func unwitComment(with commentIdentifier: String) {
+    guard let registry = commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first else {
+      return
+    }
+    registry.comment?.wit = false
+  }
+}
+
+// MARK: - Network Calls
+extension CommentsManager {
+  func loadComments(completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) -> Cancellable? {
+    guard !isFetchingData else {
+      completion(false, CommentsManager.Error.isOccupied)
+      return nil
+    }
+    
+    guard let postIdentifier = postIdentifier else {
       completion(false, CommentsManager.Error.missingPostId)
-      return
+      return nil
     }
     
     isFetchingData = true
-    cancellableRequest?.cancel()
-    cancellableRequest = CommentAPI.comments(postIdentifier: postIdentifier, completion: {
+    return CommentAPI.comments(postIdentifier: postIdentifier, completion: {
       (success, comments, next, error) in
       defer {
         self.isFetchingData = false
-        self.cancellableRequest = nil
         completion(success, CommentsManager.Error.api(error))
       }
       
-      self.comments.removeAll()
+      self.clearRegistry()
       if let comments = comments {
-        self.comments.append(contentsOf: comments)
+        self.updateRegistry(with: comments)
+      }
+  
+      self.nextPageURL = next
+    })
+  }
+  
+  func loadReplies(for parentCommentIdentifier: String, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) -> Cancellable? {
+    guard !isFetchingData else {
+      completion(false, CommentsManager.Error.isOccupied)
+      return nil
+    }
+    
+    isFetchingData = true
+    return CommentAPI.commentReplies(identifier: parentCommentIdentifier, completion: {
+      (success, comments, next, error) in
+      var completionError: CommentsManager.Error?
+      defer {
+        self.isFetchingData = false
+        completion(success, completionError ?? CommentsManager.Error.api(error))
+      }
+      
+      guard let registryItem = self.commentRegistryItem(for: parentCommentIdentifier) else {
+        completionError = CommentsManager.Error.unidentified
+        return
+      }
+      
+      // Update the next URL for the comment
+      registryItem.nextPageURL = next
+      
+      // Update the registry with the fetched comments
+      if let comments = comments {
+        self.updateRegistry(with: comments)
       }
       
       self.nextPageURL = next
     })
   }
-  
-  private func loadCommentReplies(completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
-    guard !isFetchingData, let commentIdentifier = parentComment?.id else {
+
+  /*
+   One Key Factor to take into consideration, before calling this method the
+   `loadComments(completion:...)` method should be called
+   */
+  func loadMoreComments(completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) -> Cancellable? {
+    guard !isFetchingData else {
+      completion(false, CommentsManager.Error.isOccupied)
+      return nil
+    }
+    
+    guard let url = nextPageURL else {
       completion(false, CommentsManager.Error.unidentified)
-      return
+      return nil
     }
     
     isFetchingData = true
-    cancellableRequest?.cancel()
-    cancellableRequest = CommentAPI.commentReplies(identifier: commentIdentifier, completion: {
-      (success, comments, next, error) in
-      defer {
-        self.isFetchingData = false
-        self.cancellableRequest = nil
-        completion(success, CommentsManager.Error.api(error))
-      }
-      
-      self.comments.removeAll()
-      if let comments = comments {
-        self.comments.append(contentsOf: comments)
-      }
-      
-      self.nextPageURL = next
-    })
-  }
-  
-  func loadMore(completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
-    guard !isFetchingData, let url = nextPageURL else {
-      completion(false, CommentsManager.Error.unidentified)
-      return
-    }
-    
-    isFetchingData = true
-    cancellableRequest?.cancel()
-    cancellableRequest = GeneralAPI.nextPage(nextPage: url, completion: {
+    return GeneralAPI.nextPage(nextPage: url, completion: {
       (success, resources, url, error) in
       defer {
         self.isFetchingData = false
-        self.cancellableRequest = nil
         completion(success, CommentsManager.Error.api(error))
       }
       
       guard success, let comments = resources as? [Comment] else {
         return
       }
-
-      comments.forEach({ $0.parentId = self.parentComment?.id })
-
-      self.comments.append(contentsOf: comments)
+      self.updateRegistry(with: comments, pageURL: url)
       self.nextPageURL = url
     })
   }
   
-  func publishComment(content: String?, parentComment: Comment?, completion: @escaping (_ success: Bool, _ comment: Comment?, _ error: CommentsManager.Error?) -> Void) {
+  /*
+   One Key Factor to take into consideration, before calling this method the
+   `loadReplie(for: Comment, completion:...)` method should be called
+   */
+  func loadMoreReplies(for parentCommentIdentifier: String, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) -> Cancellable? {
+    guard !isFetchingData else {
+      completion(false, CommentsManager.Error.isOccupied)
+      return nil
+    }
+    
+    guard let commentRegistry = commentRegistryItem(for: parentCommentIdentifier),
+      let url = commentRegistry.nextPageURL else {
+      completion(false, CommentsManager.Error.unidentified)
+      return nil
+    }
+    
+    isFetchingData = true
+    return GeneralAPI.nextPage(nextPage: url, completion: {
+      (success, resources, url, error) in
+      defer {
+        self.isFetchingData = false
+        completion(success, CommentsManager.Error.api(error))
+      }
+      
+      guard success, let comments = resources as? [Comment] else {
+        return
+      }
+      // Set the parent ID for fetched replies
+      comments.forEach({ $0.parentId = parentCommentIdentifier })
+      // Add the replies to the Registry
+      self.updateRegistry(with: comments, pageURL: url)
+      // Update the nextPageURL for the parent comment
+      commentRegistry.nextPageURL = url
+    })
+  }
+  
+  func publishComment(content: String?, parentCommentIdentifier: String?, completion: @escaping (_ success: Bool, _ comment: Comment?, _ error: CommentsManager.Error?) -> Void) {
     guard let resource = resource else {
       completion(false, nil, CommentsManager.Error.missingResource)
       return
@@ -179,24 +292,20 @@ extension CommentsManager {
       return
     }
     
-    _ = CommentAPI.createComment(postIdentifier: postIdentifier, commentMessage: content, parentCommentIdentifier: parentComment?.id, completion: {
+    _ = CommentAPI.createComment(postIdentifier: postIdentifier, commentMessage: content, parentCommentIdentifier: parentCommentIdentifier, completion: {
       (success, comment, error) in
       defer {
         completion(success, comment, CommentsManager.Error.api(error))
       }
       
-      guard success else {
+      guard success, let comment = comment else {
         return
       }
-      
-      // Do additional logic here if necessary
-      NotificationCenter.default.post(
-        name: CommentsManager.notificationName(for: postIdentifier),
-        object: (CommentsNode.Action.writeComment(resource: resource, parentComment: parentComment), comment))
+      _ = self.updateRegistry(with: comment)
     })
   }
   
-  func removeComment(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+  func removeComment(commentIdentifier: String, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
     guard let resource = self.resource else {
       completion(false, CommentsManager.Error.missingResource)
       return
@@ -207,12 +316,7 @@ extension CommentsManager {
       return
     }
     
-    guard let commentId = comment.id else {
-      completion(false, CommentsManager.Error.unidentified)
-      return
-    }
-    
-    _ = CommentAPI.removeComment(commentIdentifier: commentId, completion: {
+    _ = CommentAPI.removeComment(commentIdentifier: commentIdentifier, completion: {
       (success, commentId, error) in
       var responseError: CommentsManager.Error? = CommentsManager.Error.api(error)
       defer {
@@ -220,19 +324,14 @@ extension CommentsManager {
       }
       
       // Do additional logic here if necessary
-      guard let comment = self.comment(for: commentId) else {
-        responseError = CommentsManager.Error.unidentified
+      guard success else {
         return
       }
-      
-      self.remove(comment)
-      NotificationCenter.default.post(
-        name: CommentsManager.notificationName(for: postIdentifier),
-        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.remove, resource: resource, parentComment: nil), comment))
+      self.removeRegistry(for: [commentIdentifier])
     })
   }
   
-  func wit(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+  func wit(commentIdentifier: String, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
     guard let resource = self.resource else {
       completion(false, CommentsManager.Error.missingResource)
       return
@@ -243,12 +342,7 @@ extension CommentsManager {
       return
     }
     
-    guard let commentId = comment.id else {
-      completion(false, CommentsManager.Error.unidentified)
-      return
-    }
-    
-    _ = CommentAPI.wit(commentIdentifier: commentId, completion: {
+    _ = CommentAPI.wit(commentIdentifier: commentIdentifier, completion: {
       (success, commentId, error) in
       var responseError: CommentsManager.Error? = CommentsManager.Error.api(error)
       defer {
@@ -259,20 +353,11 @@ extension CommentsManager {
         return
       }
       
-      // Do additional logic here if necessary
-      guard let comment = self.comment(for: commentId) else {
-        responseError = CommentsManager.Error.unidentified
-        return
-      }
-      
-      self.wit(comment)
-      NotificationCenter.default.post(
-        name: CommentsManager.notificationName(for: postIdentifier),
-        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.wit, resource: resource, parentComment: nil), comment))
+      self.witComment(with: commentIdentifier)
     })
   }
   
-  func unwit(comment: Comment, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+  func unwit(commentIdentifier: String, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
     guard let resource = self.resource else {
       completion(false, CommentsManager.Error.missingResource)
       return
@@ -283,12 +368,7 @@ extension CommentsManager {
       return
     }
     
-    guard let commentId = comment.id else {
-      completion(false, CommentsManager.Error.unidentified)
-      return
-    }
-    
-    _ = CommentAPI.unwit(commentIdentifier: commentId, completion: {
+    _ = CommentAPI.unwit(commentIdentifier: commentIdentifier, completion: {
       (success, commentId, error) in
       var responseError: CommentsManager.Error? = CommentsManager.Error.api(error)
       defer {
@@ -299,44 +379,12 @@ extension CommentsManager {
         return
       }
       
-      // Do additional logic here if necessary
-      guard let comment = self.comment(for: commentId) else {
-        responseError = CommentsManager.Error.unidentified
+      guard success else {
         return
       }
       
-      self.unwit(comment)
-      NotificationCenter.default.post(
-        name: CommentsManager.notificationName(for: postIdentifier),
-        object: (CommentsNode.Action.commentAction(comment: comment, action: CardActionBarNode.Action.unwit, resource: resource, parentComment: nil), comment))
+      self.unwitComment(with: commentIdentifier)
     })
-  }
-}
-
-//MARK: - Update After Action Implementations
-extension CommentsManager {
-  fileprivate func wit(_ resource: ModelResource) {
-    var actionableRes = resource as? ModelCommonActions
-    actionableRes?.wit = true
-  }
-  
-  fileprivate func unwit(_ resource: ModelResource) {
-    var actionableRes = resource as? ModelCommonActions
-    actionableRes?.wit = false
-  }
-  
-  fileprivate func follow(_ resource: ModelResource) {
-    var actionableRes = resource as? ModelCommonActions
-    actionableRes?.isFollowing = true
-  }
-  
-  fileprivate func unfollow(_ resource: ModelResource) {
-    var actionableRes = resource as? ModelCommonActions
-    actionableRes?.isFollowing = false
-  }
-  
-  fileprivate func remove(_ resource: ModelResource) {
-    // TODO: Implement the remove comment
   }
 }
 
@@ -348,12 +396,14 @@ extension CommentsManager {
     case missingPostId
     case unidentified
     case missingResource
+    case isOccupied
+    case managerConfiguration
     
     var title: String? {
       switch self {
       case .publishEmptyComment:
         return Strings.publishEmptyCommentErrorTitle()
-      case .api, .missingPostId, .unidentified, .missingResource:
+      case .api, .missingPostId, .unidentified, .missingResource, .isOccupied, .managerConfiguration:
         return Strings.publishCommentGeneralErrorTitle()
       }
     }
@@ -362,7 +412,7 @@ extension CommentsManager {
       switch self {
       case .publishEmptyComment:
         return Strings.publishEmptyCommentErrorMessage()
-      case .api, .missingPostId, .unidentified, .missingResource:
+      case .api, .missingPostId, .unidentified, .missingResource, .isOccupied, .managerConfiguration:
         return Strings.publishCommentGeneralErrorMessage()
       }
     }

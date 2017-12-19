@@ -103,8 +103,8 @@ class CommentsNode: ASCellNode {
     }
   }
   
-  func initialize(with resource: ModelCommonProperties, parentComment: Comment? = nil) {
-    viewModel.initialize(with: resource, parentComment: parentComment)
+  func initialize(with resource: ModelCommonProperties, parentCommentIdentifier: String? = nil) {
+    viewModel.initialize(with: resource, parentCommentIdentifier: parentCommentIdentifier)
     registerNotification()
   }
   
@@ -147,7 +147,7 @@ class CommentsNode: ASCellNode {
   
   func reloadData() {
     shouldShowLoader = true
-    viewModel.loadComments { (success, error) in
+    viewModel.load { (success, error) in
       self.shouldShowLoader = false
     }
   }
@@ -234,10 +234,11 @@ extension CommentsNode {
     
     switch notificationAction {
     case .commentAction:
-      guard case .commentAction(let comment, let action, _, _) = notificationAction else {
+      guard case .commentAction(let commentIdentifier, let action, _, _) = notificationAction else {
         return
       }
-      viewModel.updateData(with: comment)
+      // TODO: handle updates
+      viewModel.refreshData()
       updateCollectionNode()
     case .writeComment:
       reloadData()
@@ -355,8 +356,8 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
     
     if viewCommentsDisclosureNode === collectionNode.nodeForItem(at: indexPath) {
       if let resource = viewModel.resource {
-        let parentComment = viewModel.parentComment
-        delegate?.commentsNode(self, reactFor: .viewAllComments(resource: resource, parentComment: parentComment), didFinishAction: nil)
+        let parentCommentIdentifier = viewModel.parentCommentIdentifier
+        delegate?.commentsNode(self, reactFor: .viewAllComments(resource: resource, parentCommentIdentifier: parentCommentIdentifier), didFinishAction: nil)
 
         //MARK: [Analytics] Event
         let category: Analytics.Category
@@ -432,10 +433,10 @@ extension CommentsNode {
 // MARK: - Actions Declaration
 extension CommentsNode {
   enum Action {
-    case viewReplies(resource: ModelCommonProperties, parentComment: Comment)
-    case viewAllComments(resource: ModelCommonProperties, parentComment: Comment?)
-    case writeComment(resource: ModelCommonProperties, parentComment: Comment?)
-    case commentAction(comment: Comment, action: CardActionBarNode.Action, resource: ModelCommonProperties, parentComment: Comment?)
+    case viewReplies(resource: ModelCommonProperties, parentCommentIdentifier: String)
+    case viewAllComments(resource: ModelCommonProperties, parentCommentIdentifier: String?)
+    case writeComment(resource: ModelCommonProperties, parentCommentIdentifier: String?)
+    case commentAction(commentIdentifier: String, action: CardActionBarNode.Action, resource: ModelCommonProperties, parentCommentIdentifier: String?)
   }
 }
 
@@ -449,13 +450,13 @@ extension CommentsNode: CommentTreeNodeDelegate {
       return
     }
     
-    guard let resource = viewModel.resource else {
+    guard let resource = viewModel.resource, let commentIdentifier = comment.id else {
       didFinishAction?(false)
       return
     }
     
-    let parentComment = viewModel.parentComment
-    delegate?.commentsNode(self, reactFor: .commentAction(comment: comment, action: action, resource: resource, parentComment: parentComment), didFinishAction: didFinishAction)
+    let parentCommentIdentifier = viewModel.parentCommentIdentifier
+    delegate?.commentsNode(self, reactFor: .commentAction(commentIdentifier: commentIdentifier, action: action, resource: resource, parentCommentIdentifier: parentCommentIdentifier), didFinishAction: didFinishAction)
 
     //MARK: [Analytics] Event
     let analyticsAction: Analytics.Action
@@ -512,11 +513,11 @@ extension CommentsNode: CommentTreeNodeDelegate {
   }
   
   func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, comment: Comment) {
-    guard let resource = viewModel.resource else {
+    guard let resource = viewModel.resource, let parentCommentIdentifier = comment.id else {
       return
     }
     
-    delegate?.commentsNode(self, reactFor: .viewReplies(resource: resource, parentComment: comment), didFinishAction: nil)
+    delegate?.commentsNode(self, reactFor: .viewReplies(resource: resource, parentCommentIdentifier: parentCommentIdentifier), didFinishAction: nil)
 
     //MARK: [Analytics] Event
     let category: Analytics.Category
@@ -568,8 +569,8 @@ extension CommentsNode: WriteCommentNodeDelegate {
       return
     }
 
-    let parentComment = viewModel.parentComment
-    delegate?.commentsNode(self, reactFor: .writeComment(resource: resource, parentComment: parentComment), didFinishAction: nil)
+    let parentCommentIdentifier = viewModel.parentCommentIdentifier
+    delegate?.commentsNode(self, reactFor: .writeComment(resource: resource, parentCommentIdentifier: parentCommentIdentifier), didFinishAction: nil)
     
     //MARK: [Analytics] Event
     let category: Analytics.Category
@@ -627,22 +628,22 @@ extension CommentsNode {
 
 // MARK: - Comment intences related methods
 extension CommentsNode {
-  func publishComment(content: String?, parentComment: Comment?, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
-    viewModel.publishComment(content: content, parentComment: parentComment) {
+  func publishComment(content: String?, parentCommentIdentifier: String?, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+    viewModel.publishComment(content: content, parentCommentIdentifier: parentCommentIdentifier) {
       (success, error) in
       completion(success, error)
     }
   }
   
-  func wit(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
-    viewModel.wit(comment: comment) {
+  func wit(commentIdentifier: String, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
+    viewModel.wit(commentIdentifier: commentIdentifier) {
       (success, error) in
       completion?(success, error)
     }
   }
   
-  func unwit(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
-    viewModel.unwit(comment: comment) {
+  func unwit(commentIdentifier: String, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
+    viewModel.unwit(commentIdentifier: commentIdentifier) {
       (success, error) in
       completion?(success, error)
     }

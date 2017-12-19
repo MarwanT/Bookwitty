@@ -429,22 +429,22 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
       break
     case .viewAllComments(let resource, _):
       pushCommentsViewController(with: resource)
-    case .writeComment(let resource, let parentComment):
-      CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentComment: parentComment)
-    case .commentAction(let comment, let action, let resource, let parentComment):
+    case .writeComment(let resource, let parentCommentIdentifier):
+      CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: parentCommentIdentifier)
+    case .commentAction(let commentIdentifier, let action, let resource, let parentCommentIdentifier):
       switch action {
       case .wit:
-        postDetailsNode.wit(comment: comment, completion: {
+        postDetailsNode.wit(commentIdentifier: commentIdentifier, completion: {
           (success: Bool, _) in
           didFinishAction?(success)
         })
       case .unwit:
-        postDetailsNode.unwit(comment: comment, completion: {
+        postDetailsNode.unwit(commentIdentifier: commentIdentifier, completion: {
           (success: Bool, _) in
           didFinishAction?(success)
         })
       case .reply:
-        CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentComment: parentComment)
+        CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: commentIdentifier)
       default:
         break
       }

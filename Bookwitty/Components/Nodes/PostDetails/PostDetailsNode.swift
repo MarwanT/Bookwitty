@@ -428,22 +428,22 @@ extension PostDetailsNode: CommentsNodeDelegate {
 
 // MARK: - Comment related methods
 extension PostDetailsNode {
-  func publishComment(content: String?, parentComment: Comment?, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
-    commentsNode.publishComment(content: content, parentComment: parentComment) {
+  func publishComment(content: String?, parentCommentIdentifier: String?, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+    commentsNode.publishComment(content: content, parentCommentIdentifier: parentCommentIdentifier) {
       (success, error) in
       completion(success, error)
     }
   }
   
-  func wit(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
-    commentsNode.wit(comment: comment) {
+  func wit(commentIdentifier: String, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
+    commentsNode.wit(commentIdentifier: commentIdentifier) {
       (success, error) in
       completion?(success, error)
     }
   }
   
-  func unwit(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
-    commentsNode.unwit(comment: comment) {
+  func unwit(commentIdentifier: String, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
+    commentsNode.unwit(commentIdentifier: commentIdentifier) {
       (success, error) in
       completion?(success, error)
     }

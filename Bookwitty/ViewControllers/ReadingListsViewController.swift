@@ -258,7 +258,7 @@ extension ReadingListsViewController: BaseCardPostNodeDelegate {
       pushCommentsViewController(for: resource)
       analyticsAction = .ViewTopComment
     case .publishComment:
-      CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentComment: nil)
+      CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: nil)
       analyticsAction = .AddComment
     }
 

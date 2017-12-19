@@ -19,8 +19,8 @@ class CommentsViewController: ASViewController<ASDisplayNode> {
     commentsNode.delegate = self
   }
   
-  func initialize(with resource: ModelCommonProperties, parentComment: Comment? = nil) {
-    commentsNode.initialize(with: resource, parentComment: parentComment)
+  func initialize(with resource: ModelCommonProperties, parentCommentIdentifier: String? = nil) {
+    commentsNode.initialize(with: resource, parentCommentIdentifier: parentCommentIdentifier)
     viewModel = commentsNode.viewModel
     title = viewModel?.resourceExcerpt
     if isViewLoaded {
@@ -43,9 +43,9 @@ class CommentsViewController: ASViewController<ASDisplayNode> {
     commentsNode.reloadData()
   }
   
-  fileprivate func pushCommentsViewControllerForReplies(resource: ModelCommonProperties, parentComment: Comment) {
+  fileprivate func pushCommentsViewControllerForReplies(resource: ModelCommonProperties, parentCommentIdentifier: String) {
     let commentsViewController = CommentsViewController()
-    commentsViewController.initialize(with: resource, parentComment: parentComment)
+    commentsViewController.initialize(with: resource, parentCommentIdentifier: parentCommentIdentifier)
     self.navigationController?.pushViewController(commentsViewController, animated: true)
   }
 }
@@ -55,26 +55,26 @@ extension CommentsViewController: CommentsNodeDelegate {
 
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action, didFinishAction: ((Bool) -> ())?) {
     switch action {
-    case .viewReplies(let resource, let comment):
-      pushCommentsViewControllerForReplies(resource: resource, parentComment: comment)
+    case .viewReplies(let resource, let parentCommentIdentifier):
+      pushCommentsViewControllerForReplies(resource: resource, parentCommentIdentifier: parentCommentIdentifier)
     case .viewAllComments:
       break
-    case .writeComment(let resource, let parentComment):
-      CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentComment: parentComment)
-    case .commentAction(let comment, let action, let resource, let parentComment):
+    case .writeComment(let resource, let parentCommentIdentifier):
+      CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: parentCommentIdentifier)
+    case .commentAction(let commentIdentifier, let action, let resource, let parentCommentIdentifier):
       switch action {
       case .wit:
-        commentsNode.wit(comment: comment, completion: {
+        commentsNode.wit(commentIdentifier: commentIdentifier, completion: {
           (success: Bool, _) in
           didFinishAction?(success)
         })
       case .unwit:
-        commentsNode.unwit(comment: comment, completion: {
+        commentsNode.unwit(commentIdentifier: commentIdentifier, completion: {
           (success: Bool, _) in
           didFinishAction?(success)
         })
       case .reply:
-        CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentComment: parentComment)
+        CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: parentCommentIdentifier)
       default:
         break
       }
