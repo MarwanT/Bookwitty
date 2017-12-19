@@ -23,4 +23,18 @@ class CommentRegistryItem {
   init(_ comment: Comment? = nil) {
     self.comment = comment
   }
+  
+  func isRegistry(for commentIdentifier: String?) -> Bool {
+    guard let registryId = self.commentIdentifier, let commentIdentifier = commentIdentifier else {
+      return false
+    }
+    return registryId == commentIdentifier
+  }
+  
+  func isRegistry(for comment: Comment) -> Bool {
+    guard let registryId = self.commentIdentifier, let commentIdentifier = comment.id else {
+      return false
+    }
+    return registryId == commentIdentifier
+  }
 }
