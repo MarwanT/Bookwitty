@@ -19,4 +19,8 @@ class CommentRegistryItem {
   var parentCommentIdentifier: String? {
     return comment?.parentId
   }
+  
+  init(_ comment: Comment? = nil) {
+    self.comment = comment
+  }
 }
