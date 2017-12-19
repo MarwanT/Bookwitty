@@ -9,4 +9,14 @@
 import Foundation
 
 class CommentRegistryItem {
+  var comment: Comment?
+  var pageURL: URL?
+  var nextPageURL: URL?
+  
+  var commentIdentifier: String? {
+    return comment?.id
+  }
+  var parentCommentIdentifier: String? {
+    return comment?.parentId
+  }
 }
