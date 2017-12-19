@@ -335,6 +335,9 @@ extension PenNameAPI {
 
     var dictionary = [String : Any]()
     dictionary["filter[status]"] = status.rawValue
+    if status == .draft {
+      dictionary["page[size]"] = 30
+    }
     return dictionary
   }
 }
