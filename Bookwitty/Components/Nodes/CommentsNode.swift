@@ -442,7 +442,7 @@ extension CommentsNode {
 
 // MARK: - Comment tree delegate
 extension CommentsNode: CommentTreeNodeDelegate {
-  func commentTreeDidPerformAction(_ commentTreeNode: CommentTreeNode, comment: Comment, action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
+  func commentTreeDidPerformAction(_ commentTreeNode: CommentTreeNode, commentIdentifier: String, action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
     guard UserManager.shared.isSignedIn else {
       //If user is not signed In post notification and do not fall through
       didFinishAction?(false)
@@ -450,7 +450,7 @@ extension CommentsNode: CommentTreeNodeDelegate {
       return
     }
     
-    guard let resource = viewModel.resource, let commentIdentifier = comment.id else {
+    guard let resource = viewModel.resource else {
       didFinishAction?(false)
       return
     }
@@ -512,12 +512,12 @@ extension CommentsNode: CommentTreeNodeDelegate {
     Analytics.shared.send(event: event)
   }
   
-  func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, comment: Comment) {
-    guard let resource = viewModel.resource, let parentCommentIdentifier = comment.id else {
+  func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, commentIdentifier: String) {
+    guard let resource = viewModel.resource else {
       return
     }
     
-    delegate?.commentsNode(self, reactFor: .viewReplies(resource: resource, parentCommentIdentifier: parentCommentIdentifier), didFinishAction: nil)
+    delegate?.commentsNode(self, reactFor: .viewReplies(resource: resource, parentCommentIdentifier: commentIdentifier), didFinishAction: nil)
 
     //MARK: [Analytics] Event
     let category: Analytics.Category

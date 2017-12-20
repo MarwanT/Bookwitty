@@ -9,8 +9,8 @@
 import AsyncDisplayKit
 
 protocol CommentTreeNodeDelegate: class {
-  func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, comment: Comment)
-  func commentTreeDidPerformAction(_ commentTreeNode: CommentTreeNode, comment: Comment, action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?)
+  func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, commentIdentifier: String)
+  func commentTreeDidPerformAction(_ commentTreeNode: CommentTreeNode, commentIdentifier: String, action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?)
 }
 
 class CommentTreeNode: ASCellNode {
@@ -292,10 +292,10 @@ extension CommentTreeNode: CommentNodeDelegate {
       }
     }
     
-    guard let comment = targetComment else {
+    guard let commentIdentifier = targetComment?.id else {
       return
     }
-    delegate?.commentTreeDidPerformAction(self, comment: comment, action: action, forSender: sender, didFinishAction: didFinishAction)
+    delegate?.commentTreeDidPerformAction(self, commentIdentifier: commentIdentifier, action: action, forSender: sender, didFinishAction: didFinishAction)
   }
   
   func commentNodeUpdateLayout(_ node: CommentNode, forExpandedState state: DynamicCommentMessageNode.DynamicMode) {
@@ -309,9 +309,9 @@ extension CommentTreeNode: CommentNodeDelegate {
 // MARK: - Disclosure node delegate
 extension CommentTreeNode: DisclosureNodeDelegate {
   func disclosureNodeDidTap(disclosureNode: DisclosureNode, selected: Bool) {
-    guard let comment = comment else {
+    guard let commentIdentifier = comment?.id else {
       return
     }
-    delegate?.commentTreeDidTapViewReplies(self, comment: comment)
+    delegate?.commentTreeDidTapViewReplies(self, commentIdentifier: commentIdentifier)
   }
 }
