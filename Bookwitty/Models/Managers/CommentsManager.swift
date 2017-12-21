@@ -12,6 +12,8 @@ import Moya
 typealias CommentInfo = (id: String, avatarURL: URL?, fullName: String?, message: String?, isWitted: Bool, numberOfWits: Int?, createdAt: Date?, numberOfReplies: Int)
 
 class CommentsManager {
+  fileprivate static var managersPool = NSPointerArray.weakObjects()
+  
   private(set) var resource: ModelCommonProperties?
   
   fileprivate var commentsRegistry = [CommentRegistryItem]()
@@ -19,7 +21,9 @@ class CommentsManager {
   
   var isFetchingData = false
   
-  func initialize(resource: ModelCommonProperties?) {
+  fileprivate init() {}
+  
+  fileprivate func initialize(resource: ModelCommonProperties?) {
     self.resource = resource
   }
   
@@ -433,6 +437,24 @@ extension CommentsManager {
   }
 }
 
+// MARK: - MANAGERS MANAGEMENT
+                                    //****\\
+extension CommentsManager {
+  static func manager(resource: ModelCommonProperties) -> CommentsManager {
+    // Clear the managers pool
+    managersPool.compact()
+    
+    // Retrieve or create manager for the given resource
+    guard let managers = managersPool.allObjects as? [CommentsManager],
+      let manager =  managers.filter({ $0.resource?.id == resource.id }).first else {
+        let newManager = CommentsManager()
+        newManager.initialize(resource: resource)
+        managersPool.addObject(newManager)
+        return newManager
+    }
+    return manager
+  }
+}
 
 //MARK: - Comment
                                     //****\\

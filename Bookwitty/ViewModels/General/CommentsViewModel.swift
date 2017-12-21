@@ -24,10 +24,7 @@ class CommentsViewModel {
   }
   
   func initialize(with resource: ModelCommonProperties, parentCommentIdentifier: String?) {
-    // TODO: Change when centralizing the comments data
-    let newManager = CommentsManager()
-    newManager.initialize(resource: resource)
-    self.commentsManager = newManager
+    self.commentsManager = CommentsManager.manager(resource: resource)
     self.parentCommentIdentifier = parentCommentIdentifier
   }
   
