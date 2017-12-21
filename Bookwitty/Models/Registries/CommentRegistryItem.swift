@@ -43,7 +43,7 @@ class CommentRegistryItem {
     var registry = [CommentRegistryItem]()
     comments.forEach { (comment) in
       registry.append(CommentRegistryItem(comment))
-      if let commentReplies = comment.replies {
+      if let commentReplies = comment.replies, commentReplies.count > 0 {
         registry.append(contentsOf: generateRegistry(from: commentReplies))
       }
     }
