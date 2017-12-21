@@ -435,6 +435,24 @@ extension CommentsManager {
   }
 }
 
+// MARK: - MANAGERS MANAGEMENT
+                                    //****\\
+extension CommentsManager {
+  static func manager(resource: ModelCommonProperties) -> CommentsManager {
+    // Clear the managers pool
+    managersPool.compact()
+    
+    // Retrieve or create manager for the given resource
+    guard let managers = managersPool.allObjects as? [CommentsManager],
+      let manager =  managers.filter({ $0.resource?.id == resource.id }).first else {
+        let newManager = CommentsManager()
+        newManager.initialize(resource: resource)
+        managersPool.addObject(newManager)
+        return newManager
+    }
+    return manager
+  }
+}
 
 //MARK: - Comment
                                     //****\\
