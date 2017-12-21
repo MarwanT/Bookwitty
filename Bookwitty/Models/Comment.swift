@@ -21,7 +21,13 @@ class Comment: Resource {
   @objc
   private var repliesCollection: LinkedResourceCollection?
   lazy var replies: [Comment]? = {
-    return self.repliesCollection?.resources as? [Comment]
+    guard let replyComments = self.repliesCollection?.resources as? [Comment] else {
+      return nil
+    }
+    replyComments.forEach({
+      $0.parentId = self.id
+    })
+    return replyComments
   }()
   
   override class var resourceType: ResourceType {
