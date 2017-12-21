@@ -34,6 +34,16 @@ class CommentTreeNode: ASCellNode {
   }
   var replyCommentsIdentifiers: [String]
   
+  /**
+   Holding the comments node in an array turned to be required
+   For the highlight mechanism to function
+   Otherwise when the comments tree node re-layout itself
+   the freshly created comments nodes in `layoutSpecThatFits` still have
+   no supernode, and insertin the highlighted node behind it will
+   lead to a failure
+   */
+  fileprivate var replyCommentsNodes: [CommentNode]
+  
   var configuration = Configuration() {
     didSet {
       setNeedsLayout()
@@ -57,6 +67,7 @@ class CommentTreeNode: ASCellNode {
     commentNode = CommentNode()
     viewRepliesDisclosureNode = DisclosureNode()
     replyCommentsIdentifiers = []
+    replyCommentsNodes = []
     super.init()
     initializeNode()
   }
@@ -64,6 +75,7 @@ class CommentTreeNode: ASCellNode {
   func initialize(with mode: DisplayMode) {
     self.mode = mode
     refreshCommentNodeMode()
+    refreshReplyCommentNodes()
   }
   
   private func initializeNode() {
@@ -96,31 +108,18 @@ class CommentTreeNode: ASCellNode {
     switch mode {
     case .normal:
       if !isReply, hasReplies {
-        if let replyCommentsInformation = delegate?.commentTreeRepliesInfo(self, commentIdentifier: commentIdentifier).prefix(configuration.maximumRepliesDisplayed) {
-          replyCommentsIdentifiers = replyCommentsInformation.map({ $0.id })
-          for replyInfo in replyCommentsInformation {
-            elements.append(separator())
-            let replyCommentNode = CommentNode()
-            replyCommentNode.mode = .reply
-            replyCommentNode.delegate = self
-            replyCommentNode.imageURL = replyInfo.avatarURL
-            replyCommentNode.fullName = replyInfo.fullName
-            replyCommentNode.message = replyInfo.message
-            replyCommentNode.setWitValue(
-              witted: replyInfo.isWitted,
-              numberOfWits: replyInfo.numberOfWits)
-            replyCommentNode.date = replyInfo.createdAt
-            let replyCommentInsets = ASInsetLayoutSpec(
-              insets: configuration.replyCommentIndentation, child: replyCommentNode)
-            elements.append(replyCommentInsets)
-          }
-          
-          if hasAdditionalReplies {
-            elements.append(separator())
-            let disclosureNodeInsets = ASInsetLayoutSpec(
-              insets: configuration.disclosureNodeInsets, child: viewRepliesDisclosureNode)
-            elements.append(disclosureNodeInsets)
-          }
+        for replyCommentNode in replyCommentsNodes {
+          elements.append(separator())
+          let replyCommentInsets = ASInsetLayoutSpec(
+            insets: configuration.replyCommentIndentation, child: replyCommentNode)
+          elements.append(replyCommentInsets)
+        }
+        
+        if hasAdditionalReplies {
+          elements.append(separator())
+          let disclosureNodeInsets = ASInsetLayoutSpec(
+            insets: configuration.disclosureNodeInsets, child: viewRepliesDisclosureNode)
+          elements.append(disclosureNodeInsets)
         }
       }
     case .parentOnly, .minimal:
@@ -160,12 +159,40 @@ class CommentTreeNode: ASCellNode {
       witted: commentInfo.isWitted,
       numberOfWits: commentInfo.numberOfWits)
     commentNode.date = commentInfo.createdAt
+    refreshReplyCommentNodes()
     refreshCommentNodeMode()
     setNeedsLayout()
   }
   
   fileprivate func refreshCommentNodeMode() {
     commentNode.mode = (mode == .minimal) ? .minimal : (isReply ? .reply : .normal)
+    setNeedsLayout()
+  }
+  
+  fileprivate func refreshReplyCommentNodes() {
+    replyCommentsIdentifiers.removeAll()
+    replyCommentsNodes.removeAll()
+    switch mode {
+    case .normal:
+      if let replyCommentsInformation = delegate?.commentTreeRepliesInfo(self, commentIdentifier: commentIdentifier).prefix(configuration.maximumRepliesDisplayed) {
+        replyCommentsIdentifiers = replyCommentsInformation.map({ $0.id })
+        for replyInfo in replyCommentsInformation {
+          let replyCommentNode = CommentNode()
+          replyCommentNode.mode = .reply
+          replyCommentNode.delegate = self
+          replyCommentNode.imageURL = replyInfo.avatarURL
+          replyCommentNode.fullName = replyInfo.fullName
+          replyCommentNode.message = replyInfo.message
+          replyCommentNode.setWitValue(
+            witted: replyInfo.isWitted,
+            numberOfWits: replyInfo.numberOfWits)
+          replyCommentNode.date = replyInfo.createdAt
+          replyCommentsNodes.append(replyCommentNode)
+        }
+      }
+    default:
+      return
+    }
     setNeedsLayout()
   }
   
