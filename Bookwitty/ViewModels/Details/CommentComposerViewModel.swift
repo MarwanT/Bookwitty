@@ -13,9 +13,7 @@ final class CommentComposerViewModel {
   fileprivate(set) var parentCommentIdentifier: String?
   
   func initialize(with resource: ModelCommonProperties, parentCommentIdentifier: String?) {
-    let commentsManager = CommentsManager()
-    commentsManager.initialize(resource: resource)
-    self.commentsManager = commentsManager
+    self.commentsManager = CommentsManager.manager(resource: resource)
     self.parentCommentIdentifier = parentCommentIdentifier
   }
   
