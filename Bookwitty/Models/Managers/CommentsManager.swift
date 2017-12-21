@@ -12,6 +12,8 @@ import Moya
 typealias CommentInfo = (id: String, avatarURL: URL?, fullName: String?, message: String?, isWitted: Bool, numberOfWits: Int?, createdAt: Date?, numberOfReplies: Int)
 
 class CommentsManager {
+  fileprivate static var managersPool = NSPointerArray.weakObjects()
+  
   private(set) var resource: ModelCommonProperties?
   
   fileprivate var commentsRegistry = [CommentRegistryItem]()
