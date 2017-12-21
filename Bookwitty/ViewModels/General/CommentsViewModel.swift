@@ -165,7 +165,7 @@ extension CommentsViewModel {
 
 // MARK: - Utilities
 extension CommentsViewModel {
-  func comment(for indexPath: IndexPath) -> Comment? {
+  func commentInfo(for indexPath: IndexPath) -> CommentInfo? {
     guard let section = CommentsNode.Section(rawValue: indexPath.section) else {
       return nil
     }
@@ -174,13 +174,26 @@ extension CommentsViewModel {
     case .parentComment:
       // The parent ID is unraped here because it is basically impossible
       // To reach this code if the parent ID is nil
-      return commentsManager?.comment(with: parentCommentIdentifier!)
+      let comment = commentsManager?.comment(with: parentCommentIdentifier!)
+      return comment?.info()
     case .read:
       fallthrough
     default:
       let commentIdentifier = commentsIDs[indexPath.item]
-      return commentsManager?.comment(with: commentIdentifier)
+      return commentsManager?.comment(with: commentIdentifier)?.info()
     }
+  }
+  
+  func commentInfo(forCommentWithIdentifier id: String) -> CommentInfo? {
+    return commentsManager?.comment(with: id)?.info()
+  }
+  
+  func repliesInfo(forParentCommentIdentifier identifier: String) -> [CommentInfo] {
+    return commentsManager?.replies(forParentCommentIdentifier: identifier).flatMap({ $0.info() }) ?? []
+  }
+  
+  func parentIdentifier(for commentIdentifier: String) -> String? {
+    return commentsManager?.comment(with: commentIdentifier)?.parentId
   }
   
   var displayedTotalNumberOfComments: String {
