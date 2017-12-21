@@ -425,7 +425,7 @@ extension ContentEditorViewController {
 
   fileprivate func presentConfirmSaveOrDiscardActionSheet(_ closure : @escaping (_ option: ConfirmationOption, _ success: Bool) -> ()) {
 
-    guard let currentPost = self.viewModel.currentPost, currentPost.id != nil else {
+    guard let currentPost = self.viewModel.currentPost else {
       closure(.nonNeeded, true)
       return
     }
