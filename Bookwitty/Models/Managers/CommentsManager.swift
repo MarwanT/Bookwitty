@@ -57,6 +57,10 @@ extension CommentsManager {
   func comment(with commentIdentifier: String) -> Comment? {
     return commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first?.comment
   }
+  
+  func replies(forParentCommentIdentifier identifier: String) -> [Comment] {
+    return commentsRegistry.filter({ $0.parentCommentIdentifier == identifier }).flatMap({ $0.comment })
+  }
 }
 
 // MARK: - REGISTRY GETTERS
