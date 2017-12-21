@@ -137,6 +137,11 @@ class ContentEditorViewController: UIViewController {
     _ = self.editorView.endEditing(true)
   }
   
+  func dismiss() {
+    self.timer.invalidate()
+    self.dismiss(animated: true, completion: nil)
+  }
+  
   // MARK: - Navigation items actions
   @objc private func undoButtonTouchUpInside(_ sender: UIButton) {
     self.editorView.undo()
