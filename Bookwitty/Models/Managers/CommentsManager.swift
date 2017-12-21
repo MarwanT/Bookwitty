@@ -21,7 +21,9 @@ class CommentsManager {
   
   var isFetchingData = false
   
-  func initialize(resource: ModelCommonProperties?) {
+  fileprivate init() {}
+  
+  fileprivate func initialize(resource: ModelCommonProperties?) {
     self.resource = resource
   }
   
