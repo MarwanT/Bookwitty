@@ -9,19 +9,40 @@
 import AsyncDisplayKit
 
 protocol CommentTreeNodeDelegate: class {
-  func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, comment: Comment)
-  func commentTreeDidPerformAction(_ commentTreeNode: CommentTreeNode, comment: Comment, action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?)
+  func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, commentIdentifier: String)
+  func commentTreeDidPerformAction(_ commentTreeNode: CommentTreeNode, commentIdentifier: String, action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?)
+  func commentTreeParentIdentifier(_ node: CommentTreeNode, commentIdentifier: String) -> String?
+  func commentTreeInfo(_ node: CommentTreeNode, commentIdentifier: String) -> CommentInfo?
+  func commentTreeRepliesCount(_ node: CommentTreeNode, commentIdentifier: String) -> Int
+  func commentTreeRepliesInfo(_ node: CommentTreeNode, commentIdentifier: String) -> [CommentInfo]
 }
 
 class CommentTreeNode: ASCellNode {
   let commentNode: CommentNode
-  var repliesCommentNodes: [CommentNode]
   let viewRepliesDisclosureNode: DisclosureNode
   fileprivate var highlightNode: HighlightNode?
   
   var commentNodeThatNeedsHighlight: ASDisplayNode?
   
   fileprivate(set) var mode: DisplayMode = .normal
+  
+  var commentIdentifier: String! {
+    didSet {
+      refreshCommentNode()
+      refreshDisclosureNodeText()
+    }
+  }
+  var replyCommentsIdentifiers: [String]
+  
+  /**
+   Holding the comments node in an array turned to be required
+   For the highlight mechanism to function
+   Otherwise when the comments tree node re-layout itself
+   the freshly created comments nodes in `layoutSpecThatFits` still have
+   no supernode, and insertin the highlighted node behind it will
+   lead to a failure
+   */
+  fileprivate var replyCommentsNodes: [CommentNode]
   
   var configuration = Configuration() {
     didSet {
@@ -45,7 +66,8 @@ class CommentTreeNode: ASCellNode {
   override init() {
     commentNode = CommentNode()
     viewRepliesDisclosureNode = DisclosureNode()
-    repliesCommentNodes = []
+    replyCommentsIdentifiers = []
+    replyCommentsNodes = []
     super.init()
     initializeNode()
   }
@@ -53,7 +75,7 @@ class CommentTreeNode: ASCellNode {
   func initialize(with mode: DisplayMode) {
     self.mode = mode
     refreshCommentNodeMode()
-    refreshRepliesCommentNodes()
+    refreshReplyCommentNodes()
   }
   
   private func initializeNode() {
@@ -86,7 +108,7 @@ class CommentTreeNode: ASCellNode {
     switch mode {
     case .normal:
       if !isReply, hasReplies {
-        for replyCommentNode in repliesCommentNodes {
+        for replyCommentNode in replyCommentsNodes {
           elements.append(separator())
           let replyCommentInsets = ASInsetLayoutSpec(
             insets: configuration.replyCommentIndentation, child: replyCommentNode)
@@ -127,15 +149,17 @@ class CommentTreeNode: ASCellNode {
   }
   
   func refreshCommentNode() {
-    commentNode.imageURL = URL(string: comment?.penName?.avatarUrl ?? "")
-    commentNode.fullName = comment?.penName?.name
-    commentNode.message = comment?.body
-    commentNode.setWitValue(witted: comment?.isWitted ?? false,
-                            numberOfWits: comment?.counts?.wits)
-    if let createDate = comment?.createdAt as Date? {
-      commentNode.date = createDate
+    guard let commentInfo = delegate?.commentTreeInfo(self, commentIdentifier: commentIdentifier) else {
+      return
     }
-    refreshRepliesCommentNodes()
+    commentNode.imageURL = commentInfo.avatarURL
+    commentNode.fullName = commentInfo.fullName
+    commentNode.message = commentInfo.message
+    commentNode.setWitValue(
+      witted: commentInfo.isWitted,
+      numberOfWits: commentInfo.numberOfWits)
+    commentNode.date = commentInfo.createdAt
+    refreshReplyCommentNodes()
     refreshCommentNodeMode()
     setNeedsLayout()
   }
@@ -145,24 +169,25 @@ class CommentTreeNode: ASCellNode {
     setNeedsLayout()
   }
   
-  fileprivate func refreshRepliesCommentNodes() {
-    repliesCommentNodes.removeAll()
+  fileprivate func refreshReplyCommentNodes() {
+    replyCommentsIdentifiers.removeAll()
+    replyCommentsNodes.removeAll()
     switch mode {
     case .normal:
-      if let repliesComments = comment?.replies?.prefix(configuration.maximumRepliesDisplayed) {
-        for replyComment in repliesComments {
+      if let replyCommentsInformation = delegate?.commentTreeRepliesInfo(self, commentIdentifier: commentIdentifier).prefix(configuration.maximumRepliesDisplayed) {
+        replyCommentsIdentifiers = replyCommentsInformation.map({ $0.id })
+        for replyInfo in replyCommentsInformation {
           let replyCommentNode = CommentNode()
           replyCommentNode.mode = .reply
           replyCommentNode.delegate = self
-          replyCommentNode.imageURL = URL(string: replyComment.penName?.avatarUrl ?? "")
-          replyCommentNode.fullName = replyComment.penName?.name
-          replyCommentNode.message = replyComment.body
-          replyCommentNode.setWitValue(witted: replyComment.isWitted,
-                                       numberOfWits: replyComment.counts?.wits)
-          if let createDate = replyComment.createdAt as Date? {
-            replyCommentNode.date = createDate
-          }
-          repliesCommentNodes.append(replyCommentNode)
+          replyCommentNode.imageURL = replyInfo.avatarURL
+          replyCommentNode.fullName = replyInfo.fullName
+          replyCommentNode.message = replyInfo.message
+          replyCommentNode.setWitValue(
+            witted: replyInfo.isWitted,
+            numberOfWits: replyInfo.numberOfWits)
+          replyCommentNode.date = replyInfo.createdAt
+          replyCommentsNodes.append(replyCommentNode)
         }
       }
     default:
@@ -172,35 +197,31 @@ class CommentTreeNode: ASCellNode {
   }
   
   func refreshDisclosureNodeText() {
-    viewRepliesDisclosureNode.text = Strings.view_all_replies(number: comment?.counts?.children ?? 0)
+    viewRepliesDisclosureNode.text = Strings.view_all_replies(number: repliesCount)
     setNeedsLayout()
   }
   
   //MARK: APIs
   //==========
-  var comment: Comment? {
-    didSet {
-      refreshCommentNode()
-      refreshDisclosureNodeText()
-    }
-  }
-  
   var hasReplies: Bool {
-    return (comment?.counts?.children ?? 0) > 0
+    return repliesCount > 0
   }
   
   /// Additional replies are not displayed
   var hasAdditionalReplies: Bool {
-    let repliesCount = comment?.counts?.children ?? 0
     return repliesCount > configuration.maximumRepliesDisplayed
   }
   
   var isReply: Bool {
-    return !(comment?.parentId.isEmptyOrNil() ?? true)
+    return !(delegate?.commentTreeParentIdentifier(self, commentIdentifier: commentIdentifier) ?? "").isEmptyOrNil()
   }
   
   //MARK: HELPERS
   //=============
+  fileprivate var repliesCount: Int {
+    return delegate?.commentTreeRepliesCount(self, commentIdentifier: commentIdentifier) ?? 0
+  }
+  
   fileprivate func handleHighlightOperation() {
     if let nodeNeedsHighlight = self.commentNodeThatNeedsHighlight {
       self.commentNodeThatNeedsHighlight = nil
@@ -281,21 +302,21 @@ extension CommentTreeNode: CommentNodeDelegate {
   func commentNode(_ node: CommentNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
     // Detect the comment responsible for the action for it could be the parent
     // Comment or any of the replies that are visible within the commentTreeNode
-    var targetComment: Comment?
-    if node === commentNode {
-      targetComment = comment
-    } else {
-      for (index, replyCommentNode) in repliesCommentNodes.enumerated() {
-        if node === replyCommentNode, let replies = comment?.replies, index < replies.count {
-          targetComment = replies[index]
-        }
-      }
-    }
-    
-    guard let comment = targetComment else {
-      return
-    }
-    delegate?.commentTreeDidPerformAction(self, comment: comment, action: action, forSender: sender, didFinishAction: didFinishAction)
+//    var targetComment: Comment?
+//    if node === commentNode {
+//      targetComment = comment
+//    } else {
+//      for (index, replyCommentNode) in repliesCommentNodes.enumerated() {
+//        if node === replyCommentNode, let replies = comment?.replies, index < replies.count {
+//          targetComment = replies[index]
+//        }
+//      }
+//    }
+//
+//    guard let commentIdentifier = targetComment?.id else {
+//      return
+//    }
+//    delegate?.commentTreeDidPerformAction(self, commentIdentifier: commentIdentifier, action: action, forSender: sender, didFinishAction: didFinishAction)
   }
   
   func commentNodeUpdateLayout(_ node: CommentNode, forExpandedState state: DynamicCommentMessageNode.DynamicMode) {
@@ -309,9 +330,6 @@ extension CommentTreeNode: CommentNodeDelegate {
 // MARK: - Disclosure node delegate
 extension CommentTreeNode: DisclosureNodeDelegate {
   func disclosureNodeDidTap(disclosureNode: DisclosureNode, selected: Bool) {
-    guard let comment = comment else {
-      return
-    }
-    delegate?.commentTreeDidTapViewReplies(self, comment: comment)
+    delegate?.commentTreeDidTapViewReplies(self, commentIdentifier: commentIdentifier)
   }
 }

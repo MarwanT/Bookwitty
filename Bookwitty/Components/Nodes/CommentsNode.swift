@@ -271,13 +271,13 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
         countCell.text = self.viewModel.displayedTotalNumberOfComments
         return countCell
       case Section.parentComment.rawValue:
-        guard let comment = self.viewModel.comment(for: indexPath) else {
+        guard let commentInfo = self.viewModel.commentInfo(for: indexPath) else {
           return ASCellNode()
         }
         let commentTreeNode = CommentTreeNode()
         commentTreeNode.initialize(with: CommentTreeNode.DisplayMode.parentOnly)
         commentTreeNode.delegate = self
-        commentTreeNode.comment = comment
+        commentTreeNode.commentIdentifier = commentInfo.id
         return commentTreeNode
       case Section.header.rawValue:
         let externalInsets = UIEdgeInsets(
@@ -298,13 +298,13 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
         writeCommentNode.delegate = self
         return writeCommentNode
       case Section.read.rawValue:
-        guard let comment = self.viewModel.comment(for: indexPath) else {
+        guard let commentInfo = self.viewModel.commentInfo(for: indexPath) else {
           return ASCellNode()
         }
         let commentTreeNode = CommentTreeNode()
         commentTreeNode.initialize(with: self.displayMode == .compact ? .minimal : .normal)
         commentTreeNode.delegate = self
-        commentTreeNode.comment = comment
+        commentTreeNode.commentIdentifier = commentInfo.id
         commentTreeNode.isReplyTree = self.viewModel.isDisplayingACommentReplies
         return commentTreeNode
       case Section.activityIndicator.rawValue:
@@ -442,7 +442,7 @@ extension CommentsNode {
 
 // MARK: - Comment tree delegate
 extension CommentsNode: CommentTreeNodeDelegate {
-  func commentTreeDidPerformAction(_ commentTreeNode: CommentTreeNode, comment: Comment, action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
+  func commentTreeDidPerformAction(_ commentTreeNode: CommentTreeNode, commentIdentifier: String, action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
     guard UserManager.shared.isSignedIn else {
       //If user is not signed In post notification and do not fall through
       didFinishAction?(false)
@@ -450,7 +450,7 @@ extension CommentsNode: CommentTreeNodeDelegate {
       return
     }
     
-    guard let resource = viewModel.resource, let commentIdentifier = comment.id else {
+    guard let resource = viewModel.resource else {
       didFinishAction?(false)
       return
     }
@@ -512,12 +512,12 @@ extension CommentsNode: CommentTreeNodeDelegate {
     Analytics.shared.send(event: event)
   }
   
-  func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, comment: Comment) {
-    guard let resource = viewModel.resource, let parentCommentIdentifier = comment.id else {
+  func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, commentIdentifier: String) {
+    guard let resource = viewModel.resource else {
       return
     }
     
-    delegate?.commentsNode(self, reactFor: .viewReplies(resource: resource, parentCommentIdentifier: parentCommentIdentifier), didFinishAction: nil)
+    delegate?.commentsNode(self, reactFor: .viewReplies(resource: resource, parentCommentIdentifier: commentIdentifier), didFinishAction: nil)
 
     //MARK: [Analytics] Event
     let category: Analytics.Category
@@ -553,6 +553,22 @@ extension CommentsNode: CommentTreeNodeDelegate {
                                                  action: .ViewAllReplies,
                                                  name: name)
     Analytics.shared.send(event: event)
+  }
+
+  func commentTreeParentIdentifier(_ node: CommentTreeNode, commentIdentifier: String) -> String? {
+    return viewModel.parentIdentifier(for: commentIdentifier)
+  }
+  
+  func commentTreeInfo(_ node: CommentTreeNode, commentIdentifier: String) -> CommentInfo? {
+    return viewModel.commentInfo(forCommentWithIdentifier: commentIdentifier)
+  }
+  
+  func commentTreeRepliesCount(_ node: CommentTreeNode, commentIdentifier: String) -> Int {
+    return viewModel.commentInfo(forCommentWithIdentifier: commentIdentifier)?.numberOfReplies ?? 0
+  }
+  
+  func commentTreeRepliesInfo(_ node: CommentTreeNode, commentIdentifier: String) -> [CommentInfo] {
+    return viewModel.repliesInfo(forParentCommentIdentifier: commentIdentifier)
   }
 }
 

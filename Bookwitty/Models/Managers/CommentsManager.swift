@@ -9,6 +9,8 @@
 import Foundation
 import Moya
 
+typealias CommentInfo = (id: String, avatarURL: URL?, fullName: String?, message: String?, isWitted: Bool, numberOfWits: Int?, createdAt: Date?, numberOfReplies: Int)
+
 class CommentsManager {
   private(set) var resource: ModelCommonProperties?
   
@@ -54,6 +56,10 @@ extension CommentsManager {
   
   func comment(with commentIdentifier: String) -> Comment? {
     return commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first?.comment
+  }
+  
+  func replies(forParentCommentIdentifier identifier: String) -> [Comment] {
+    return commentsRegistry.filter({ $0.parentCommentIdentifier == identifier }).flatMap({ $0.comment })
   }
 }
 
@@ -424,5 +430,24 @@ extension CommentsManager {
   typealias CommentNotificationObject = (action: CommentsNode.Action, comment: Comment)
   class func notificationName(for identifier: String) -> Notification.Name {
     return Notification.Name("comments-updates-for-id:\(identifier)") 
+  }
+}
+
+
+//MARK: - Comment
+                                    //****\\
+extension Comment {
+  func info() -> CommentInfo? {
+    guard let identifier = id else {
+      return nil
+    }
+    return (id: identifier,
+            avatarURL: URL(string: penName?.avatarUrl ?? ""),
+            fullName: penName?.name,
+            message: body,
+            isWitted: isWitted,
+            numberOfWits: counts?.wits,
+            createdAt: createdAt as? Date,
+            numberOfReplies: counts?.children ?? 0)
   }
 }
