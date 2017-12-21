@@ -428,3 +428,22 @@ extension CommentsManager {
     return Notification.Name("comments-updates-for-id:\(identifier)") 
   }
 }
+
+
+//MARK: - Comment
+                                    //****\\
+extension Comment {
+  func info() -> CommentInfo? {
+    guard let identifier = id else {
+      return nil
+    }
+    return (id: identifier,
+            avatarURL: URL(string: penName?.avatarUrl ?? ""),
+            fullName: penName?.name,
+            message: body,
+            isWitted: isWitted,
+            numberOfWits: counts?.wits,
+            createdAt: createdAt as? Date,
+            numberOfReplies: counts?.children ?? 0)
+  }
+}
