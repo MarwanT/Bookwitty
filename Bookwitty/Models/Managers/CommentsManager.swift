@@ -9,6 +9,8 @@
 import Foundation
 import Moya
 
+typealias CommentInfo = (id: String, avatarURL: URL?, fullName: String?, message: String?, isWitted: Bool, numberOfWits: Int?, createdAt: Date?, numberOfReplies: Int)
+
 class CommentsManager {
   private(set) var resource: ModelCommonProperties?
   
