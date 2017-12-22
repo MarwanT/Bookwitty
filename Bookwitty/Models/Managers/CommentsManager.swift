@@ -194,6 +194,16 @@ extension CommentsManager {
   }
   
   func loadReplies(for parentCommentIdentifier: String, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) -> Cancellable? {
+    guard var registry = commentRegistryItem(for: parentCommentIdentifier) else {
+      completion(false, CommentsManager.Error.unidentified)
+      return nil
+    }
+    
+    guard !registry.isLoaded else {
+      completion(true, nil)
+      return nil
+    }
+    
     return CommentAPI.commentReplies(identifier: parentCommentIdentifier, completion: {
       (success, comments, next, error) in
       var completionError: CommentsManager.Error?
@@ -201,13 +211,11 @@ extension CommentsManager {
         completion(success, completionError ?? CommentsManager.Error.api(error))
       }
       
-      guard let registryItem = self.commentRegistryItem(for: parentCommentIdentifier) else {
-        completionError = CommentsManager.Error.unidentified
-        return
-      }
+      // Set the loaded flag
+      registry.isLoaded = success
       
       // Update the next URL for the comment
-      registryItem.nextPageURL = next
+      registry.nextPageURL = next
       
       // Update the registry with the fetched comments
       if let comments = comments {
