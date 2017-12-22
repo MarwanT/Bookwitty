@@ -40,10 +40,6 @@ class CommentsManager {
   var totalNumberOfCommentors: Int {
     return resource?.counts?.commenters ?? 0
   }
-  
-  var hasNextPage: Bool {
-    return nextPageURL != nil
-  }
 }
 
 // MARK: - APIS
@@ -62,6 +58,17 @@ extension CommentsManager {
   
   func replies(forParentCommentIdentifier identifier: String) -> [Comment] {
     return commentsRegistry.filter({ $0.parentCommentIdentifier == identifier }).flatMap({ $0.comment })
+  }
+  
+  func hasNextPage(commentIdentifier: String?) -> Bool {
+    if let commentIdentifier = commentIdentifier {
+      guard let registry = commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first else {
+        return false
+      }
+      return registry.nextPageURL != nil
+    } else {
+      return nextPageURL != nil
+    }
   }
 }
 

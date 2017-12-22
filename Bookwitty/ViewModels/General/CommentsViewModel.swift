@@ -63,7 +63,7 @@ class CommentsViewModel {
   }
   
   var hasNextPage: Bool {
-    return commentsManager?.hasNextPage ?? false
+    return commentsManager?.hasNextPage(commentIdentifier: parentCommentIdentifier) ?? false
   }
   
   var isDisplayingACommentReplies: Bool {
