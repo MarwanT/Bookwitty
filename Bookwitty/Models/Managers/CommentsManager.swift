@@ -166,6 +166,11 @@ extension CommentsManager {
 // MARK: - Network Calls
 extension CommentsManager {
   func loadComments(completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) -> Cancellable? {
+    guard !isLoaded else {
+      completion(true, nil)
+      return nil
+    }
+    
     guard let postIdentifier = postIdentifier else {
       completion(false, CommentsManager.Error.missingPostId)
       return nil
@@ -176,6 +181,8 @@ extension CommentsManager {
       defer {
         completion(success, CommentsManager.Error.api(error))
       }
+      
+      self.isLoaded = success
       
       self.clearRegistry()
       if let comments = comments {
