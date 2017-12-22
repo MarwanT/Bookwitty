@@ -103,8 +103,8 @@ class CommentsNode: ASCellNode {
     }
   }
   
-  func initialize(with manager: CommentsManager) {
-    viewModel.initialize(with: manager)
+  func initialize(with resource: ModelCommonProperties, parentCommentIdentifier: String? = nil) {
+    viewModel.initialize(with: resource, parentCommentIdentifier: parentCommentIdentifier)
     registerNotification()
   }
   
@@ -147,7 +147,7 @@ class CommentsNode: ASCellNode {
   
   func reloadData() {
     shouldShowLoader = true
-    viewModel.loadComments { (success, error) in
+    viewModel.load { (success, error) in
       self.shouldShowLoader = false
     }
   }
@@ -228,13 +228,17 @@ class CommentsNode: ASCellNode {
 // MARK: - Notification
 extension CommentsNode {
   func handleNotification(_ notification: Notification) {
-    guard let (action, comment) = notification.object as? CommentsManager.CommentNotificationObject else {
+    guard let (notificationAction, comment) = notification.object as? CommentsManager.CommentNotificationObject else {
       return
     }
     
-    switch action {
+    switch notificationAction {
     case .commentAction:
-      viewModel.updateData(with: comment)
+      guard case .commentAction(let commentIdentifier, let action, _, _) = notificationAction else {
+        return
+      }
+      // TODO: handle updates
+      viewModel.refreshData()
       updateCollectionNode()
     case .writeComment:
       reloadData()
@@ -267,13 +271,13 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
         countCell.text = self.viewModel.displayedTotalNumberOfComments
         return countCell
       case Section.parentComment.rawValue:
-        guard let comment = self.viewModel.comment(for: indexPath) else {
+        guard let commentInfo = self.viewModel.commentInfo(for: indexPath) else {
           return ASCellNode()
         }
         let commentTreeNode = CommentTreeNode()
         commentTreeNode.initialize(with: CommentTreeNode.DisplayMode.parentOnly)
         commentTreeNode.delegate = self
-        commentTreeNode.comment = comment
+        commentTreeNode.commentIdentifier = commentInfo.id
         return commentTreeNode
       case Section.header.rawValue:
         let externalInsets = UIEdgeInsets(
@@ -294,13 +298,13 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
         writeCommentNode.delegate = self
         return writeCommentNode
       case Section.read.rawValue:
-        guard let comment = self.viewModel.comment(for: indexPath) else {
+        guard let commentInfo = self.viewModel.commentInfo(for: indexPath) else {
           return ASCellNode()
         }
         let commentTreeNode = CommentTreeNode()
         commentTreeNode.initialize(with: self.displayMode == .compact ? .minimal : .normal)
         commentTreeNode.delegate = self
-        commentTreeNode.comment = comment
+        commentTreeNode.commentIdentifier = commentInfo.id
         commentTreeNode.isReplyTree = self.viewModel.isDisplayingACommentReplies
         return commentTreeNode
       case Section.activityIndicator.rawValue:
@@ -351,14 +355,11 @@ extension CommentsNode: ASCollectionDelegate, ASCollectionDataSource {
     collectionNode.deselectItem(at: indexPath, animated: true)
     
     if viewCommentsDisclosureNode === collectionNode.nodeForItem(at: indexPath) {
-      if let commentsManager = viewModel.commentsManagerClone() {
-        delegate?.commentsNode(self, reactFor: .viewAllComments(commentsManager: commentsManager), didFinishAction: nil)
+      if let resource = viewModel.resource {
+        let parentCommentIdentifier = viewModel.parentCommentIdentifier
+        delegate?.commentsNode(self, reactFor: .viewAllComments(resource: resource, parentCommentIdentifier: parentCommentIdentifier), didFinishAction: nil)
 
         //MARK: [Analytics] Event
-        guard let postId = commentsManager.postIdentifier,
-          let resource = DataManager.shared.fetchResource(with: postId) as? ModelCommonProperties
-          else { return }
-
         let category: Analytics.Category
         switch resource.registeredResourceType {
         case Image.resourceType:
@@ -432,16 +433,16 @@ extension CommentsNode {
 // MARK: - Actions Declaration
 extension CommentsNode {
   enum Action {
-    case viewRepliesForComment(comment: Comment, resource: ModelCommonProperties)
-    case viewAllComments(commentsManager: CommentsManager)
-    case writeComment(commentsManager: CommentsManager)
-    case commentAction(comment: Comment, action: CardActionBarNode.Action, resource: ModelCommonProperties)
+    case viewReplies(resource: ModelCommonProperties, parentCommentIdentifier: String)
+    case viewAllComments(resource: ModelCommonProperties, parentCommentIdentifier: String?)
+    case writeComment(resource: ModelCommonProperties, parentCommentIdentifier: String?)
+    case commentAction(commentIdentifier: String, action: CardActionBarNode.Action, resource: ModelCommonProperties, parentCommentIdentifier: String?)
   }
 }
 
 // MARK: - Comment tree delegate
 extension CommentsNode: CommentTreeNodeDelegate {
-  func commentTreeDidPerformAction(_ commentTreeNode: CommentTreeNode, comment: Comment, action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
+  func commentTreeDidPerformAction(_ commentTreeNode: CommentTreeNode, commentIdentifier: String, action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
     guard UserManager.shared.isSignedIn else {
       //If user is not signed In post notification and do not fall through
       didFinishAction?(false)
@@ -454,7 +455,8 @@ extension CommentsNode: CommentTreeNodeDelegate {
       return
     }
     
-    delegate?.commentsNode(self, reactFor: .commentAction(comment: comment, action: action, resource: resource), didFinishAction: didFinishAction)
+    let parentCommentIdentifier = viewModel.parentCommentIdentifier
+    delegate?.commentsNode(self, reactFor: .commentAction(commentIdentifier: commentIdentifier, action: action, resource: resource, parentCommentIdentifier: parentCommentIdentifier), didFinishAction: didFinishAction)
 
     //MARK: [Analytics] Event
     let analyticsAction: Analytics.Action
@@ -510,12 +512,12 @@ extension CommentsNode: CommentTreeNodeDelegate {
     Analytics.shared.send(event: event)
   }
   
-  func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, comment: Comment) {
+  func commentTreeDidTapViewReplies(_ commentTreeNode: CommentTreeNode, commentIdentifier: String) {
     guard let resource = viewModel.resource else {
       return
     }
     
-    delegate?.commentsNode(self, reactFor: .viewRepliesForComment(comment: comment, resource: resource), didFinishAction: nil)
+    delegate?.commentsNode(self, reactFor: .viewReplies(resource: resource, parentCommentIdentifier: commentIdentifier), didFinishAction: nil)
 
     //MARK: [Analytics] Event
     let category: Analytics.Category
@@ -552,6 +554,22 @@ extension CommentsNode: CommentTreeNodeDelegate {
                                                  name: name)
     Analytics.shared.send(event: event)
   }
+
+  func commentTreeParentIdentifier(_ node: CommentTreeNode, commentIdentifier: String) -> String? {
+    return viewModel.parentIdentifier(for: commentIdentifier)
+  }
+  
+  func commentTreeInfo(_ node: CommentTreeNode, commentIdentifier: String) -> CommentInfo? {
+    return viewModel.commentInfo(forCommentWithIdentifier: commentIdentifier)
+  }
+  
+  func commentTreeRepliesCount(_ node: CommentTreeNode, commentIdentifier: String) -> Int {
+    return viewModel.commentInfo(forCommentWithIdentifier: commentIdentifier)?.numberOfReplies ?? 0
+  }
+  
+  func commentTreeRepliesInfo(_ node: CommentTreeNode, commentIdentifier: String) -> [CommentInfo] {
+    return viewModel.repliesInfo(forParentCommentIdentifier: commentIdentifier)
+  }
 }
 
 // MARK: - Write comment node delegate
@@ -563,15 +581,12 @@ extension CommentsNode: WriteCommentNodeDelegate {
       return
     }
     
-    guard let commentsManager = viewModel.commentsManagerClone() else {
-      return
-    }
-
-    delegate?.commentsNode(self, reactFor: .writeComment(commentsManager: commentsManager), didFinishAction: nil)
-
     guard let resource = viewModel.resource else {
       return
     }
+
+    let parentCommentIdentifier = viewModel.parentCommentIdentifier
+    delegate?.commentsNode(self, reactFor: .writeComment(resource: resource, parentCommentIdentifier: parentCommentIdentifier), didFinishAction: nil)
     
     //MARK: [Analytics] Event
     let category: Analytics.Category
@@ -612,12 +627,10 @@ extension CommentsNode: WriteCommentNodeDelegate {
 
 // MARK: - Display Helpers
 extension CommentsNode {
-  static func concatenate(with node: ASDisplayNode, resource: ModelCommonProperties?) -> (wrapperNode: ASDisplayNode, commentsNode: CommentsNode) {
+  static func concatenate(with node: ASDisplayNode, resource: ModelCommonProperties) -> (wrapperNode: ASDisplayNode, commentsNode: CommentsNode) {
     let commentsNode = CommentsNode()
     commentsNode.displayMode = .compact
-    let commentsManager = CommentsManager()
-    commentsManager.initialize(resource: resource)
-    commentsNode.initialize(with: commentsManager)
+    commentsNode.initialize(with: resource)
     commentsNode.reloadData()
     
     let containerNode = ASDisplayNode()
@@ -631,22 +644,22 @@ extension CommentsNode {
 
 // MARK: - Comment intences related methods
 extension CommentsNode {
-  func publishComment(content: String?, parentCommentId: String?, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
-    viewModel.publishComment(content: content, parentCommentId: parentCommentId) {
+  func publishComment(content: String?, parentCommentIdentifier: String?, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+    viewModel.publishComment(content: content, parentCommentIdentifier: parentCommentIdentifier) {
       (success, error) in
       completion(success, error)
     }
   }
   
-  func wit(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
-    viewModel.wit(comment: comment) {
+  func wit(commentIdentifier: String, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
+    viewModel.wit(commentIdentifier: commentIdentifier) {
       (success, error) in
       completion?(success, error)
     }
   }
   
-  func unwit(comment: Comment, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
-    viewModel.unwit(comment: comment) {
+  func unwit(commentIdentifier: String, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
+    viewModel.unwit(commentIdentifier: commentIdentifier) {
       (success, error) in
       completion?(success, error)
     }

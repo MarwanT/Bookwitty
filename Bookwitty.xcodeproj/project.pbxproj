@@ -145,9 +145,11 @@
 		595C4F0F1E3F8C9200BE3942 /* PasswordInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595C4F0E1E3F8C9200BE3942 /* PasswordInputField.swift */; };
 		595C4F111E3F9DA400BE3942 /* InformativeInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595C4F101E3F9DA400BE3942 /* InformativeInputField.swift */; };
 		595F21D71F057E7700DC4AFC /* PreferredFormatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595F21D61F057E7700DC4AFC /* PreferredFormatTableViewCell.swift */; };
+		59629D0A1FE9283900AEC627 /* CommentRegistryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59629D091FE9283800AEC627 /* CommentRegistryItem.swift */; };
 		596562E41E79EF9E00B93920 /* MisfortuneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596562E31E79EF9E00B93920 /* MisfortuneNode.swift */; };
 		5967E4581E4107EF0067093F /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5967E4571E4107EF0067093F /* NotificationView.xib */; };
 		5967E45A1E410A850067093F /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5967E4591E410A850067093F /* NotificationView.swift */; };
+		596CAAAA1FEC0D1C00C27B79 /* NSPointerArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596CAAA91FEC0D1C00C27B79 /* NSPointerArray.swift */; };
 		596FAD741E2E53AC0064F967 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596FAD731E2E53AC0064F967 /* Environment.swift */; };
 		597B8E2D1E37F6BC00C7811B /* Image+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597B8E2C1E37F6BC00C7811B /* Image+Utils.swift */; };
 		597B8E361E3954B200C7811B /* Georgia.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 597B8E301E3954B200C7811B /* Georgia.ttf */; };
@@ -460,9 +462,11 @@
 		595C4F0E1E3F8C9200BE3942 /* PasswordInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordInputField.swift; sourceTree = "<group>"; };
 		595C4F101E3F9DA400BE3942 /* InformativeInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformativeInputField.swift; sourceTree = "<group>"; };
 		595F21D61F057E7700DC4AFC /* PreferredFormatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferredFormatTableViewCell.swift; sourceTree = "<group>"; };
+		59629D091FE9283800AEC627 /* CommentRegistryItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentRegistryItem.swift; sourceTree = "<group>"; };
 		596562E31E79EF9E00B93920 /* MisfortuneNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MisfortuneNode.swift; sourceTree = "<group>"; };
 		5967E4571E4107EF0067093F /* NotificationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationView.xib; sourceTree = "<group>"; };
 		5967E4591E410A850067093F /* NotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
+		596CAAA91FEC0D1C00C27B79 /* NSPointerArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSPointerArray.swift; sourceTree = "<group>"; };
 		596FAD731E2E53AC0064F967 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		597B8E2C1E37F6BC00C7811B /* Image+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Image+Utils.swift"; sourceTree = "<group>"; };
 		597B8E301E3954B200C7811B /* Georgia.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Georgia.ttf; sourceTree = "<group>"; };
@@ -942,6 +946,7 @@
 				5903394B1E9E6719004ED1C3 /* Utilities.swift */,
 				59E21D371EC5B0F500AF7D67 /* Device.swift */,
 				59956E091EFDAC9C004DA794 /* BookFormatMapper.swift */,
+				596CAAA91FEC0D1C00C27B79 /* NSPointerArray.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1494,6 +1499,7 @@
 			isa = PBXGroup;
 			children = (
 				F440FD791ECB005F00AEBF96 /* BookTypeRegistry.swift */,
+				59629D091FE9283800AEC627 /* CommentRegistryItem.swift */,
 			);
 			path = Registries;
 			sourceTree = "<group>";
@@ -1879,6 +1885,7 @@
 				56320C911EA748FB00642934 /* TopicCardPostCellNode.swift in Sources */,
 				5903EB241FCDBE090002B91D /* ASWitButton.swift in Sources */,
 				56A623B61EA0C02D00D930A7 /* DataManager.swift in Sources */,
+				59629D0A1FE9283900AEC627 /* CommentRegistryItem.swift in Sources */,
 				F4670AFB1E54669300159F4F /* ReadingListBookNode.swift in Sources */,
 				F4207B941E58466A00216A2E /* PenNameSelectionNode.swift in Sources */,
 				595C4F111E3F9DA400BE3942 /* InformativeInputField.swift in Sources */,
@@ -1982,6 +1989,7 @@
 				5929C2711E5B25BC006E08F8 /* CuratedCollection.swift in Sources */,
 				59591F1D1E6DAF5D005592B8 /* BookDetailsAboutNode.swift in Sources */,
 				F400CDC61E7AD48D00B7EF26 /* SearchViewController.swift in Sources */,
+				596CAAAA1FEC0D1C00C27B79 /* NSPointerArray.swift in Sources */,
 				56320C8B1EA748FB00642934 /* CardPostInfoNode.swift in Sources */,
 				F48278BB1E4B21CA003D82F2 /* RootTabBarController.swift in Sources */,
 				F420B6A61E43D05E001F34CD /* PenNameViewModel.swift in Sources */,

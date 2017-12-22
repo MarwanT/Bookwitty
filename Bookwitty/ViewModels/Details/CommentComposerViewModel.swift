@@ -10,9 +10,11 @@ import Foundation
 
 final class CommentComposerViewModel {
   fileprivate(set) var commentsManager: CommentsManager?
+  fileprivate(set) var parentCommentIdentifier: String?
   
-  func initialize(with commentsManager: CommentsManager) {
-    self.commentsManager = commentsManager
+  func initialize(with resource: ModelCommonProperties, parentCommentIdentifier: String?) {
+    self.commentsManager = CommentsManager.manager(resource: resource)
+    self.parentCommentIdentifier = parentCommentIdentifier
   }
   
   var resource: ModelCommonProperties? {
@@ -41,7 +43,7 @@ final class CommentComposerViewModel {
       return
     }
     
-    commentsManager.publishComment(content: text, parentCommentId: commentsManager.parentComment?.id) {
+    commentsManager.publishComment(content: text, parentCommentIdentifier: parentCommentIdentifier) {
       (success, comment, error) in
       completion(success, comment, error)
     }

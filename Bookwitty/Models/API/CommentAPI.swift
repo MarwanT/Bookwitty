@@ -105,6 +105,7 @@ struct CommentAPI {
       // Parse Data
       if let data = data, let newComment = Comment.parseData(data: data) {
         comment = newComment
+        comment?.parentId = parentCommentIdentifier
         success = true
       } else {
         completionError = BookwittyAPIError.failToParseData
