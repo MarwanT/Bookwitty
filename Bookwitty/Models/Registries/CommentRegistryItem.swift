@@ -13,6 +13,13 @@ class CommentRegistryItem {
   var pageURL: URL?
   var nextPageURL: URL?
   
+  /**
+   This flag is updated in the comments manager. When the first page of a
+   comment is loaded this flag is set tot true to prevent another
+   fetch if that same comment comments were requested
+   */
+  var isLoaded: Bool = false
+  
   var commentIdentifier: String? {
     return comment?.id
   }
