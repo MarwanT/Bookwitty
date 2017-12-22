@@ -18,6 +18,7 @@ class CommentsManager {
   
   fileprivate var commentsRegistry = [CommentRegistryItem]()
   fileprivate var nextPageURL: URL?
+  fileprivate var isLoaded: Bool = false
   
   fileprivate init() {}
   
