@@ -19,6 +19,8 @@ class CommentsViewModel {
   
   var displayMode: CommentsNode.DisplayMode = .normal
   
+  var isFetchingData: Bool = false
+  
   var postId: String? {
     return commentsManager?.postIdentifier
   }
@@ -60,12 +62,8 @@ class CommentsViewModel {
     }
   }
   
-  var isFetchingData: Bool {
-    return commentsManager?.isFetchingData ?? false
-  }
-  
   var hasNextPage: Bool {
-    return commentsManager?.hasNextPage ?? false
+    return commentsManager?.hasNextPage(commentIdentifier: parentCommentIdentifier) ?? false
   }
   
   var isDisplayingACommentReplies: Bool {
@@ -97,9 +95,11 @@ extension CommentsViewModel {
       return
     }
     
+    isFetchingData = true
     cancellableRequest?.cancel()
     cancellableRequest = commentsManager.loadComments(completion: {
       (success, error) in
+      self.isFetchingData = false
       self.cancellableRequest = nil
       if success {
         self.refreshData()
@@ -114,9 +114,11 @@ extension CommentsViewModel {
       return
     }
     
+    isFetchingData = true
     cancellableRequest?.cancel()
     cancellableRequest = commentsManager.loadReplies(for: parentCommentIdentifier, completion: {
       (success, error) in
+      self.isFetchingData = false
       self.cancellableRequest = nil
       if success {
         self.refreshData()
@@ -131,9 +133,11 @@ extension CommentsViewModel {
       return
     }
     
+    isFetchingData = true
     cancellableRequest?.cancel()
     cancellableRequest = commentsManager.loadMoreComments(completion: {
       (success, error) in
+      self.isFetchingData = false
       self.cancellableRequest = nil
       if success {
         self.refreshData()
@@ -148,9 +152,11 @@ extension CommentsViewModel {
       return
     }
     
+    isFetchingData = true
     cancellableRequest?.cancel()
     cancellableRequest = commentsManager.loadMoreReplies(for: parentCommentIdentifier, completion: {
       (success, error) in
+      self.isFetchingData = false
       self.cancellableRequest = nil
       if success {
         self.refreshData()
