@@ -19,8 +19,6 @@ class CommentsManager {
   fileprivate var commentsRegistry = [CommentRegistryItem]()
   fileprivate var nextPageURL: URL?
   
-  var isFetchingData = false
-  
   fileprivate init() {}
   
   fileprivate func initialize(resource: ModelCommonProperties?) {
@@ -160,21 +158,14 @@ extension CommentsManager {
 // MARK: - Network Calls
 extension CommentsManager {
   func loadComments(completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) -> Cancellable? {
-    guard !isFetchingData else {
-      completion(false, CommentsManager.Error.isOccupied)
-      return nil
-    }
-    
     guard let postIdentifier = postIdentifier else {
       completion(false, CommentsManager.Error.missingPostId)
       return nil
     }
     
-    isFetchingData = true
     return CommentAPI.comments(postIdentifier: postIdentifier, completion: {
       (success, comments, next, error) in
       defer {
-        self.isFetchingData = false
         completion(success, CommentsManager.Error.api(error))
       }
       
@@ -188,17 +179,10 @@ extension CommentsManager {
   }
   
   func loadReplies(for parentCommentIdentifier: String, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) -> Cancellable? {
-    guard !isFetchingData else {
-      completion(false, CommentsManager.Error.isOccupied)
-      return nil
-    }
-    
-    isFetchingData = true
     return CommentAPI.commentReplies(identifier: parentCommentIdentifier, completion: {
       (success, comments, next, error) in
       var completionError: CommentsManager.Error?
       defer {
-        self.isFetchingData = false
         completion(success, completionError ?? CommentsManager.Error.api(error))
       }
       
@@ -224,21 +208,14 @@ extension CommentsManager {
    `loadComments(completion:...)` method should be called
    */
   func loadMoreComments(completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) -> Cancellable? {
-    guard !isFetchingData else {
-      completion(false, CommentsManager.Error.isOccupied)
-      return nil
-    }
-    
     guard let url = nextPageURL else {
       completion(false, CommentsManager.Error.unidentified)
       return nil
     }
     
-    isFetchingData = true
     return GeneralAPI.nextPage(nextPage: url, completion: {
       (success, resources, url, error) in
       defer {
-        self.isFetchingData = false
         completion(success, CommentsManager.Error.api(error))
       }
       
@@ -255,22 +232,15 @@ extension CommentsManager {
    `loadReplie(for: Comment, completion:...)` method should be called
    */
   func loadMoreReplies(for parentCommentIdentifier: String, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) -> Cancellable? {
-    guard !isFetchingData else {
-      completion(false, CommentsManager.Error.isOccupied)
-      return nil
-    }
-    
     guard let commentRegistry = commentRegistryItem(for: parentCommentIdentifier),
       let url = commentRegistry.nextPageURL else {
       completion(false, CommentsManager.Error.unidentified)
       return nil
     }
     
-    isFetchingData = true
     return GeneralAPI.nextPage(nextPage: url, completion: {
       (success, resources, url, error) in
       defer {
-        self.isFetchingData = false
         completion(success, CommentsManager.Error.api(error))
       }
       
