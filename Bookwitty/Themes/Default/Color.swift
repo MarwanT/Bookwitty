@@ -99,9 +99,9 @@ extension UIColor {
     return UIColor(red: 72/255, green: 98/255, blue: 163/255, alpha: 1)
   }
   
-  /// Style Guide #18 : #d9d9d9 - separation lines and cards outline
+  /// Style Guide #18 : #bcbcbc - separation lines and cards outline
   static var bwGainsboro: UIColor {
-    return UIColor(red: 217/255, green: 217/255, blue: 217/255, alpha: 1)
+    return UIColor(red: 188.0/255.0, green: 188.0/255.0, blue: 188.0/255.0, alpha: 1.0)
   }
   
   /// Style Guide #19 : #ed0037 - Primary CTA color (editorial)
