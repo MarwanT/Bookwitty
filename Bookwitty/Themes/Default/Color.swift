@@ -114,9 +114,9 @@ extension UIColor {
     return UIColor(red: 38/255, green: 38/255, blue: 38/255, alpha: 1)
   }
   
-  /// Style Guide #21 : #20CF24 - Validation Color
+  /// Style Guide #21 : #00cc00 - Validation Color
   static var bwLimeGreen: UIColor {
-    return UIColor(red: 32/255, green: 207/255, blue: 36/255, alpha: 1)
+    return UIColor(red: 0.0, green: 204.0/255, blue: 0.0, alpha: 1.0)
   }
   
   /// Style Guide #22 : #ff6b00 - Primary CTA color (e-marketing)
