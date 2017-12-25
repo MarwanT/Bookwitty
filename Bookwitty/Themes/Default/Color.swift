@@ -59,9 +59,9 @@ extension UIColor {
     return UIColor(red: 234/255, green: 242/255, blue: 250/255, alpha: 1)
   }
   
-  /// Style Guide #10 : #82b5dc - Button outlines and title verticle lines
+  /// Style Guide #10 : #8eb5dc - Button outlines and title verticle lines
   static var bwJordyBlue: UIColor {
-    return UIColor(red: 130/255, green: 181/255, blue: 220/255, alpha: 1)
+    return UIColor(red: 142.0/255.0, green: 181.0/255.0, blue: 220.0/255.0, alpha: 1.0)
   }
   
   /// Style Guide #11 : #e9e6f1 - Illustration and titles background
