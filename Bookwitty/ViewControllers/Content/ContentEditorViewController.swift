@@ -273,7 +273,7 @@ class ContentEditorViewController: UIViewController {
   }
   
   private func setupEditorToolbar() {
-    let toolbar = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 45.0))
+    let toolbar = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 43.0))
     toolbar.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
     editorView.inputAccessoryView = toolbar
 
