@@ -139,9 +139,9 @@ extension UIColor {
     return UIColor(red: 255/255, green: 88/255, blue: 0, alpha: 1)
   }
   
-  /// Style Guide #24 Error Color : #a20009 - Error color
+  /// Style Guide #24 Error Color : #ff0000 - Error color
   static var bwSangria: UIColor {
-    return UIColor(red: 162/255, green: 0, blue: 9/255, alpha: 1)
+    return UIColor(red: 162.0/255.0, green: 0.0, blue: 9.0/255.0, alpha: 1.0)
   }
   
   /// Style Guide #25 Tag Color : #4f80be - Error color
