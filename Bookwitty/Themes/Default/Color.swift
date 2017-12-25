@@ -14,6 +14,11 @@ extension UIColor {
     return UIColor(red: 248/255, green: 245/255, blue: 240/255, alpha: 1)
   }
   
+  /// Style Guide #01|Beige Background : #e0d3c6 - Error color
+  static var bwBeige: UIColor {
+    return UIColor(red: 224.0/255.0, green: 211.0/255.0, blue: 198.0/255, alpha: 1.0)
+  }
+  
   /// Style Guide #2 : #f1ebe2 - Screen Backgrounds
   static var bwWhiteLinen: UIColor {
     return UIColor(red: 241/255, green: 235/255, blue: 226/255, alpha: 1)
