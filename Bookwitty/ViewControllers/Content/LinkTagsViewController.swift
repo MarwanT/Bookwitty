@@ -201,7 +201,7 @@ extension LinkTagsViewController: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     cell.textLabel?.text = self.viewModel.values(forRowAt: indexPath)
-    cell.textLabel?.font = FontDynamicType.caption1.font
+    cell.textLabel?.font = FontDynamicType.footnote.font
     cell.detailTextLabel?.text = ""
   }
   
