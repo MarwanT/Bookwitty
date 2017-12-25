@@ -143,6 +143,11 @@ extension UIColor {
   static var bwSangria: UIColor {
     return UIColor(red: 162/255, green: 0, blue: 9/255, alpha: 1)
   }
+  
+  /// Style Guide #25 Tag Color : #4f80be - Error color
+  static var bwTagBlue: UIColor {
+    return UIColor(red: 79.0/255.0, green: 128.0/255.0, blue: 190.0/255.0, alpha: 1)
+  }
 
   /// Design Comments on Book Formats Table View Header Background
   static var bwOrangeLight: UIColor {
