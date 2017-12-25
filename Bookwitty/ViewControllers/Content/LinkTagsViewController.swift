@@ -47,6 +47,11 @@ class LinkTagsViewController: UIViewController {
 
     tagsView.addTags(self.viewModel.selectedTags.flatMap { $0.title } )
     
+    tagsView.selectedColor = ThemeManager.shared.currentTheme.colorNumber25()
+    tagsView.tintColor = ThemeManager.shared.currentTheme.colorNumber9()
+    tagsView.textColor = ThemeManager.shared.currentTheme.colorNumber20()
+    tagsView.selectedTextColor = ThemeManager.shared.currentTheme.colorNumber23()
+
     tagsView.onVerifyTag = { [weak self] field, candidate in
       guard let strongSelf = self else {
         return false
