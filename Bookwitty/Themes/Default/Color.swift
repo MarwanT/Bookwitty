@@ -84,9 +84,9 @@ extension UIColor {
     return UIColor(red: 250/255, green: 178/255, blue: 195/255, alpha: 1)
   }
   
-  /// Style Guide #15 : #999999 - All gray text + icons
+  /// Style Guide #15 : #888888 - All gray text + icons
   static var bwNobel: UIColor {
-    return UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+    return UIColor(red: 136.0/255.0, green: 136.0/255.0, blue: 136.0/255.0, alpha: 1.0)
   }
   
   /// Style Guide #16 : #55acee - Twitter Color
