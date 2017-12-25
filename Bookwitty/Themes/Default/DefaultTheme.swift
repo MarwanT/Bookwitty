@@ -121,6 +121,9 @@ extension DefaultTheme {
   func colorNumber24() -> UIColor {
     return UIColor.bwSangria
   }
+  func colorNumber25() -> UIColor {
+    return UIColor.bwTagBlue
+  }
   
   func colorNumber19Highlighted() -> UIColor {
     return UIColor.bwRubyHighlighted
