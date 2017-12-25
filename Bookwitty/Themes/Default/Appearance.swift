@@ -39,6 +39,7 @@ protocol ThemeColor {
   func colorNumber22() -> UIColor
   func colorNumber23() -> UIColor
   func colorNumber24() -> UIColor
+  func colorNumber25() -> UIColor
   
   func colorNumber19Highlighted() -> UIColor
   func colorNumber22Highlighted() -> UIColor
