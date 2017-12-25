@@ -24,7 +24,7 @@ final class LinkPagesViewModel {
   }
   
   init() {
-    self.filter.types = [Topic.resourceType]
+    self.filter.types = [Topic.resourceType, Author.resourceType]
   }
   
   func initialize(with contentIdentifier: String, linkedPages: [ModelCommonProperties]) {
