@@ -17,6 +17,7 @@ class ContentEditorViewController: UIViewController {
   @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
   
   @IBOutlet weak var editorView: RichEditorView!
+  fileprivate var isEditorLoaded: Bool = false
 
   @IBOutlet weak var titleTextField: UITextField!
 
@@ -44,7 +45,6 @@ class ContentEditorViewController: UIViewController {
    
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.editorView.delegate = self
     initializeComponents()
     loadNavigationBarButtons()
     addKeyboardNotifications()
@@ -280,6 +280,7 @@ class ContentEditorViewController: UIViewController {
     if let editor = bundle.url(forResource: "editor", withExtension: "html") {
       self.editorView.webView.loadRequest(URLRequest(url: editor))
     }
+    self.editorView.delegate = self
   }
   
   @objc private func tick() {
@@ -856,12 +857,15 @@ extension ContentEditorViewController: RichEditorDelegate {
   }
 
   func richEditor(_ editor: RichEditorView, contentDidChange content: String) {
-  
+    guard self.isEditorLoaded else { return }
+
     self.viewModel.currentPost.body = editor.getContent()
   }
   
   func richEditorDidLoad(_ editor: RichEditorView) {
+    self.isEditorLoaded = true
     editor.focus()
+    self.loadUIFromPost()
   }
   
   func richEditorTookFocus(_ editor: RichEditorView) {
