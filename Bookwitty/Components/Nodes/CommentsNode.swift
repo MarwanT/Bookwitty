@@ -228,7 +228,7 @@ class CommentsNode: ASCellNode {
 // MARK: - Notification
 extension CommentsNode {
   func handleNotification(_ notification: Notification) {
-    guard let (notificationAction, comment) = notification.object as? CommentsManager.CommentNotificationObject else {
+    guard let (notificationAction, commentIdentifier) = notification.object as? CommentsManager.CommentNotificationObject else {
       return
     }
     
