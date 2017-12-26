@@ -302,21 +302,21 @@ extension CommentTreeNode: CommentNodeDelegate {
   func commentNode(_ node: CommentNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
     // Detect the comment responsible for the action for it could be the parent
     // Comment or any of the replies that are visible within the commentTreeNode
-//    var targetComment: Comment?
-//    if node === commentNode {
-//      targetComment = comment
-//    } else {
-//      for (index, replyCommentNode) in repliesCommentNodes.enumerated() {
-//        if node === replyCommentNode, let replies = comment?.replies, index < replies.count {
-//          targetComment = replies[index]
-//        }
-//      }
-//    }
-//
-//    guard let commentIdentifier = targetComment?.id else {
-//      return
-//    }
-//    delegate?.commentTreeDidPerformAction(self, commentIdentifier: commentIdentifier, action: action, forSender: sender, didFinishAction: didFinishAction)
+    var targetCommentID: String?
+    if node === commentNode {
+      targetCommentID = commentIdentifier
+    } else {
+      for (index, replyCommentNode) in replyCommentsNodes.enumerated() {
+        if node === replyCommentNode, index < replyCommentsIdentifiers.count {
+          targetCommentID = replyCommentsIdentifiers[index]
+        }
+      }
+    }
+
+    guard let commentIdentifier = targetCommentID else {
+      return
+    }
+    delegate?.commentTreeDidPerformAction(self, commentIdentifier: commentIdentifier, action: action, forSender: sender, didFinishAction: didFinishAction)
   }
   
   func commentNodeUpdateLayout(_ node: CommentNode, forExpandedState state: DynamicCommentMessageNode.DynamicMode) {
