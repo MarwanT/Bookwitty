@@ -7,6 +7,7 @@
 //
 
 import AsyncDisplayKit
+import SwiftLoader
 
 protocol DraftsViewControllerDelegate: class {
   func drafts(viewController: DraftsViewController, didRequestEdit draft: CandidatePost)
@@ -81,6 +82,19 @@ class DraftsViewController: ASViewController<ASTableNode> {
         self.refreshController.endRefreshing()
       }
     }
+  }
+
+  fileprivate func showDeleteConfirmationAlert(completion: @escaping (_ confirmed: Bool)->()) {
+    let message = Strings.delete_draft_confirmation_message()
+    let alert = UIAlertController(title: nil, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    alert.addAction(UIAlertAction(title: Strings.delete(), style: .destructive, handler: { (action: UIAlertAction) in
+      completion(true)
+    }))
+
+    alert.addAction(UIAlertAction(title: Strings.cancel(), style: .cancel, handler: { (action: UIAlertAction) in
+      completion(false)
+    }))
+    self.present(alert, animated: true, completion: nil)
   }
 }
 
@@ -216,13 +230,21 @@ extension DraftsViewController: ASTableDataSource, ASTableDelegate {
     return Strings.delete()
   }
 
-  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-    viewModel.deleteDraft(at: indexPath.row) { (success: Bool, error: BookwittyAPIError?) in
-      guard success else {
-        return
-      }
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {    
+    tableView.setEditing(false, animated: true)
+    self.showDeleteConfirmationAlert {
+      (confirmed: Bool) in
+      guard confirmed else { return }
 
-      self.tableNode.deleteRows(at: [indexPath], with: .automatic)
+      SwiftLoader.show(animated: true)
+      self.viewModel.deleteDraft(at: indexPath.row) { (success: Bool, error: BookwittyAPIError?) in
+        SwiftLoader.hide()
+        guard success else {
+          return
+        }
+
+        self.tableNode.deleteRows(at: [indexPath], with: .automatic)
+      }
     }
   }
 
