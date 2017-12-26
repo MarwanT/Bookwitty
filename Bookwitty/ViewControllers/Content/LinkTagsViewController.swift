@@ -87,14 +87,20 @@ class LinkTagsViewController: UIViewController {
 
       } else {
         //Create (user hit return)
-        let linkedTags = strongSelf.viewModel.selectedTags.flatMap { $0.title }
-        let allTags = linkedTags + [text]
+        let linkedTags = strongSelf.viewModel.selectedTags
+        let allTags = linkedTags + [text].map {
+          let tag = Tag()
+          tag.title = $0
+          return tag
+        }
+        strongSelf.viewModel.selectedTags = allTags
         //TODO: change .draft value below to a proper status value
-        _ = TagAPI.replaceTags(for: strongSelf.viewModel.contentIdentifier, with: allTags, status: .draft, completion: { (success, post, error) in
+        _ = TagAPI.replaceTags(for: strongSelf.viewModel.contentIdentifier, with: allTags.flatMap { $0.title }, status: .draft, completion: { (success, post, error) in
           guard success, let post = post, let tags = post.tags else {
             return
           }
-
+          //Previously we were setting the tags on success 
+          //After BMA-1683 we asked to consider the tag is linked
           strongSelf.viewModel.selectedTags = tags
         })
       }
