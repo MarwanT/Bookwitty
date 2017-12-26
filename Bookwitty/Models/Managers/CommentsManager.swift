@@ -106,7 +106,7 @@ extension CommentsManager {
   
   /// If there is no registry for a comment in the array, then a new one is created
   /// Otherwise the already present registry is Updated
-  fileprivate func updateRegistry(with comment: Comment, pageURL: URL? = nil, ignoreNilPageURLS: Bool = true) -> CommentRegistryItem? {
+  fileprivate func updateRegistry(with comment: Comment, addFromBeginning: Bool = false, pageURL: URL? = nil, ignoreNilPageURLS: Bool = true) -> CommentRegistryItem? {
     let updatedRegistry: CommentRegistryItem?
     if let commentRegistryItem = commentRegistryItem(for: comment) {
       commentRegistryItem.comment = comment
@@ -123,7 +123,16 @@ extension CommentsManager {
       } else if let pageURL = pageURL {
         commentRegistry.forEach({ $0.pageURL = pageURL })
       }
-      commentsRegistry.append(contentsOf: commentRegistry)
+      
+      if addFromBeginning {
+        /**
+         If the added comment is a main comment then add it at the beginning
+         of the registry.
+         */
+        commentsRegistry.insert(contentsOf: commentRegistry, at: 0)
+      } else {
+        commentsRegistry.append(contentsOf: commentRegistry)
+      }
       updatedRegistry = commentRegistryItem(for: comment)
     }
     return updatedRegistry
@@ -334,7 +343,7 @@ extension CommentsManager {
       guard success, let comment = comment else {
         return
       }
-      _ = self.updateRegistry(with: comment)
+      _ = self.updateRegistry(with: comment, addFromBeginning: true)
     })
   }
   
