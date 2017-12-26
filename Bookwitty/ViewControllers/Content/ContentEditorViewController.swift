@@ -409,7 +409,7 @@ class ContentEditorViewController: UIViewController {
     let imagePickerController = UIImagePickerController()
     imagePickerController.delegate = self
     imagePickerController.sourceType = source
-    imagePickerController.allowsEditing = true
+    imagePickerController.allowsEditing = false
     self.navigationController?.present(imagePickerController, animated: true, completion: nil)
   }
 
