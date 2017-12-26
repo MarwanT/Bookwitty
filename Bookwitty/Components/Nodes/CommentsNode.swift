@@ -457,7 +457,7 @@ extension CommentsNode: CommentTreeNodeDelegate {
       return
     }
     
-    let parentCommentIdentifier = viewModel.parentCommentIdentifier
+    let parentCommentIdentifier = viewModel.parentIdentifier(forCommentWithIdentifier: commentIdentifier, action: action)
     delegate?.commentsNode(self, reactFor: .commentAction(commentIdentifier: commentIdentifier, action: action, resource: resource, parentCommentIdentifier: parentCommentIdentifier), didFinishAction: didFinishAction)
 
     //MARK: [Analytics] Event

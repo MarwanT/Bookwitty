@@ -199,6 +199,15 @@ extension CommentsViewModel {
     return commentsManager?.comment(with: commentIdentifier)?.parentId
   }
   
+  func parentIdentifier(forCommentWithIdentifier identifier: String, action: CardActionBarNode.Action) -> String? {
+    switch action {
+    case .reply:
+      return identifier
+    default:
+      return commentsManager?.comment(with: identifier)?.parentId
+    }
+  }
+  
   var displayedTotalNumberOfComments: String {
     return "\(totalNumberOfComments ?? 0)" + " " + Strings.comments().lowercased()
   }
