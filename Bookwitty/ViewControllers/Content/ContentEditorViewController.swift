@@ -602,16 +602,10 @@ extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePi
     guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
       return
     }
-    self.navigationController?.dismiss(animated: true, completion: nil)
-    let id = self.editorView.generatePhotoWrapper()
-    self.viewModel.addUploadRequest(id)
-    self.loadNavigationBarButtons()
-    viewModel.upload(image: image) { (success: Bool, link: String?) in
-      guard let link = link, let Url = URL(string: link) else { return }
-      self.editorView.generate(photo: Url, alt: "Image", wrapperId: id)
-      self.viewModel.removeUploadRequest(id)
-      self.loadNavigationBarButtons()
-    }
+
+    let imageCropper = CropViewController(with: image)
+    imageCropper.delegate = self
+    picker.present(imageCropper, animated:true)
   }
 }
 
