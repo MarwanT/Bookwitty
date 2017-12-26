@@ -237,9 +237,12 @@ extension CommentsNode {
       guard case .commentAction(let commentIdentifier, let action, _, _) = notificationAction else {
         return
       }
-      // TODO: handle updates
-      viewModel.refreshData()
-      updateCollectionNode()
+      switch action {
+      case .wit, .unwit:
+        updateCollectionNode()
+      default:
+        break
+      }
     case .writeComment:
       reloadData()
     default:
