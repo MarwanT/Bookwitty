@@ -205,14 +205,13 @@ class CommentsNode: ASCellNode {
   }
   
   func updateCollectionNode(updateLoaderNode: Bool = false) {
-    var reloadableSections: [Int] = [Section.read.rawValue, Section.viewAllComments.rawValue]
+    var reloadableSections: [Int] = [Section.parentComment.rawValue, Section.read.rawValue, Section.viewAllComments.rawValue]
     if updateLoaderNode {
       reloadableSections.append(Section.activityIndicator.rawValue)
     }
     
     let mutableIndexSet = NSMutableIndexSet()
     reloadableSections.forEach({ mutableIndexSet.add($0) })
-    
     DispatchQueue.main.async {
       self.collectionNode.reloadSections(mutableIndexSet as IndexSet)
     }
