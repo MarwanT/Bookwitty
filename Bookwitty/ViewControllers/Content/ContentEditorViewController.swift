@@ -17,6 +17,7 @@ class ContentEditorViewController: UIViewController {
   @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
   
   @IBOutlet weak var editorView: RichEditorView!
+  fileprivate var isEditorLoaded: Bool = false
 
   @IBOutlet weak var titleTextField: UITextField!
 
@@ -44,7 +45,6 @@ class ContentEditorViewController: UIViewController {
    
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.editorView.delegate = self
     initializeComponents()
     loadNavigationBarButtons()
     addKeyboardNotifications()
@@ -123,7 +123,10 @@ class ContentEditorViewController: UIViewController {
     stackView.addArrangedSubview(undoButton)
     stackView.addArrangedSubview(redoButton)
     
-    navigationItem.titleView = stackView
+    let titleView = UIView(frame: .init(x: 0, y: 0, width: 44.0 + 5.0 + 44.0, height: 44.0))
+    titleView.addSubview(stackView)
+    stackView.bindFrameToSuperviewBounds()
+    navigationItem.titleView = titleView
     
     let leftBarButtonItems = [closeBarButtonItem, draftsBarButtonItem]
     let rightBarButtonItems = [nextBarButtonItem, plusBarButtonItem]
@@ -233,18 +236,28 @@ class ContentEditorViewController: UIViewController {
   }
   
   func showAddLinkAlertView(with link:String?) {
-    
     let alertController = UIAlertController(title: Strings.addLink(), message: "", preferredStyle: .alert)
-    alertController.addTextField(configurationHandler: {(_ textField: UITextField) -> Void in
-      textField.placeholder = "http://"
-      textField.text = link
-    })
     
     let confirmAction = UIAlertAction(title: Strings.ok(), style: .default, handler: {(_ action: UIAlertAction) -> Void in
       if let alertTextField = alertController.textFields?.first, alertTextField.text != nil, let link = alertTextField.text {
-      self.editorView.insertLink(link, title: "")
+        self.editorView.insertLink(link, title: "")
       }
     })
+    
+    alertController.addTextField(configurationHandler: {(_ textField: UITextField) -> Void in
+      textField.placeholder = "http://"
+      
+      NotificationCenter.default.addObserver(forName: NSNotification.Name.UITextFieldTextDidChange, object: textField, queue: .main) { _ in
+        
+        let text = textField.text ?? ""
+        let isEmpty = text.characters.count == 0 && link != nil
+        let isURL = text.isValidURL
+        
+        confirmAction.isEnabled = isEmpty || isURL
+      }
+      textField.text = link
+    })
+    
     alertController.addAction(confirmAction)
     
     let cancelAction = UIAlertAction(title: Strings.cancel(), style: .cancel, handler: nil)
@@ -267,6 +280,7 @@ class ContentEditorViewController: UIViewController {
     if let editor = bundle.url(forResource: "editor", withExtension: "html") {
       self.editorView.webView.loadRequest(URLRequest(url: editor))
     }
+    self.editorView.delegate = self
   }
   
   @objc private func tick() {
@@ -395,7 +409,7 @@ class ContentEditorViewController: UIViewController {
     let imagePickerController = UIImagePickerController()
     imagePickerController.delegate = self
     imagePickerController.sourceType = source
-    imagePickerController.allowsEditing = true
+    imagePickerController.allowsEditing = false
     self.navigationController?.present(imagePickerController, animated: true, completion: nil)
   }
 
@@ -585,19 +599,13 @@ extension ContentEditorViewController : RichContentMenuViewControllerDelegate {
 extension ContentEditorViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
     
-    guard let image = info[UIImagePickerControllerEditedImage] as? UIImage else {
+    guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
       return
     }
-    self.navigationController?.dismiss(animated: true, completion: nil)
-    let id = self.editorView.generatePhotoWrapper()
-    self.viewModel.addUploadRequest(id)
-    self.loadNavigationBarButtons()
-    viewModel.upload(image: image) { (success: Bool, link: String?) in
-      guard let link = link, let Url = URL(string: link) else { return }
-      self.editorView.generate(photo: Url, alt: "Image", wrapperId: id)
-      self.viewModel.removeUploadRequest(id)
-      self.loadNavigationBarButtons()
-    }
+
+    let imageCropper = CropViewController(with: image)
+    imageCropper.delegate = self
+    picker.present(imageCropper, animated:true)
   }
 }
 
@@ -835,6 +843,26 @@ extension ContentEditorViewController: PenNameViewControllerDelegate {
   }
 }
 
+
+//MARK: - CropViewControllerDelegate Implementatio
+extension ContentEditorViewController: CropViewControllerDelegate {
+  func crop(_ viewController: CropViewController, didFinishWith croppedImage: UIImage) {
+    
+    let image = croppedImage
+    self.navigationController?.dismiss(animated: true, completion: nil)
+    let id = self.editorView.generatePhotoWrapper()
+    self.viewModel.addUploadRequest(id)
+    self.loadNavigationBarButtons()
+    viewModel.upload(image: image) { (success: Bool, link: String?) in
+      guard let link = link, let Url = URL(string: link) else { return }
+      self.editorView.generate(photo: Url, alt: "Image", wrapperId: id)
+      self.viewModel.removeUploadRequest(id)
+      self.loadNavigationBarButtons()
+    }
+
+  }
+}
+
 //MARK: - RichEditorDelegate implementation
 extension ContentEditorViewController: RichEditorDelegate {
   func richEditor(_ editor: RichEditorView, shouldInteractWith url: URL) -> Bool {
@@ -843,12 +871,15 @@ extension ContentEditorViewController: RichEditorDelegate {
   }
 
   func richEditor(_ editor: RichEditorView, contentDidChange content: String) {
-  
+    guard self.isEditorLoaded else { return }
+
     self.viewModel.currentPost.body = editor.getContent()
   }
   
   func richEditorDidLoad(_ editor: RichEditorView) {
+    self.isEditorLoaded = true
     editor.focus()
+    self.loadUIFromPost()
   }
   
   func richEditorTookFocus(_ editor: RichEditorView) {

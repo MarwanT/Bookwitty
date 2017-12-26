@@ -69,6 +69,7 @@
 "customer_service" = "Service client";
 "customize_your_posts_card" = "Customize your post's card.";
 "delete" = "Supprimer";
+"delete_draft_confirmation_message" = "Are you sure you want to delete this draft ?";
 "delete_post_confirmation_message" = "Êtes-vous sur de vouloir supprimer cette publication ?";
 "delete_post_success_message" = "Votre publication a été supprimée";
 "discard_changes" = "Discard Changes";

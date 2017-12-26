@@ -261,6 +261,10 @@ class Strings {
     return localizedString(key: "delete")
   }
   
+  static func delete_draft_confirmation_message() -> String {
+    return localizedString(key: "delete_draft_confirmation_message")
+  }
+
   static func delete_post_confirmation_message() -> String {
     return localizedString(key: "delete_post_confirmation_message")
   }
