@@ -12,6 +12,7 @@ class PublishMenuViewModel {
   private var linkedTags: [Tag] = []
   private var linkedPages: [ModelCommonProperties] = []
   private(set) var contentIdentifier: String!
+  private(set) var isEditing: Bool = false
   
   var getTags: [Tag] {
     return self.linkedTags
@@ -21,9 +22,10 @@ class PublishMenuViewModel {
     return self.linkedPages
   }
   
-  func initialize(with linkedTags: [Tag], linkedPages: [ModelCommonProperties]) {
+  func initialize(with linkedTags: [Tag], linkedPages: [ModelCommonProperties], isEditing: Bool) {
     self.linkedTags = linkedTags
     self.linkedPages = linkedPages
+    self.isEditing = isEditing
   }
   
   var penName: PenName? = UserManager.shared.defaultPenName
@@ -58,8 +60,13 @@ class PublishMenuViewModel {
       return (item.localizedString, item.image)
     case 1:
       //Draft
-      let item = PublishMenuViewController.Item.saveAsDraft
-      return (item.localizedString, item.image)
+      if isEditing {
+        let item = PublishMenuViewController.Item.goBack
+        return (item.localizedString, item.image)
+      } else {
+        let item = PublishMenuViewController.Item.saveAsDraft
+        return (item.localizedString, item.image)
+      }
     case 2:
       //Cancel
       let item = PublishMenuViewController.Item.goBack
@@ -93,7 +100,7 @@ class PublishMenuViewModel {
     case .preview:
       return 1
     case .publish:
-      return 3
+      return self.isEditing ? 2 : 3
     }
   }
   

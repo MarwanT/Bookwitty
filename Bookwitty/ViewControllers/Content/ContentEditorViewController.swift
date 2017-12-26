@@ -31,6 +31,17 @@ class ContentEditorViewController: UIViewController {
     case noChanges
   }
   
+  enum Mode {
+    case new
+    case edit
+    
+    var isEditing: Bool {
+      return self == .edit
+    }
+  }
+  
+  var mode: Mode = .new
+   
   override func viewDidLoad() {
     super.viewDidLoad()
     self.editorView.delegate = self
@@ -170,7 +181,7 @@ class ContentEditorViewController: UIViewController {
     
     let publishMenuViewController = Storyboard.Content.instantiate(PublishMenuViewController.self)
     publishMenuViewController.delegate = self
-    publishMenuViewController.viewModel.initialize(with: self.viewModel.linkedTags, linkedPages: self.viewModel.linkedPages)
+    publishMenuViewController.viewModel.initialize(with: self.viewModel.linkedTags, linkedPages: self.viewModel.linkedPages, isEditing: self.mode.isEditing)
     self.definesPresentationContext = true
     publishMenuViewController.view.backgroundColor = .clear
     publishMenuViewController.modalPresentationStyle = .overCurrentContext
@@ -421,14 +432,23 @@ extension ContentEditorViewController {
 
     let alertController = UIAlertController(title: Strings.save_this_post_draft(), message: nil, preferredStyle: .actionSheet)
 
-    let saveDraft = UIAlertAction(title: Strings.save_draft(), style: .default, handler: {
-      _ in
-      self.savePostAsDraft({
-        (success: Bool) in
-        closure(.saveDraft, success)
+    if self.mode.isEditing {
+      let discardChanges = UIAlertAction(title: Strings.discard_changes(), style: .default, handler: {
+        _ in
+        self.dismiss(animated: true, completion: nil)
       })
-    })
-
+      alertController.addAction(discardChanges)
+      
+    } else {
+      let saveDraft = UIAlertAction(title: Strings.save_draft(), style: .default, handler: {
+        _ in
+        self.savePostAsDraft({
+          (success: Bool) in
+          closure(.saveDraft, success)
+        })
+      })
+      alertController.addAction(saveDraft)
+    }
     let discardPost = UIAlertAction(title: Strings.discard_post(), style: .destructive, handler: {
       _ in
       self.discardPost({
@@ -442,7 +462,6 @@ extension ContentEditorViewController {
       closure(.goBack, true)
     })
 
-    alertController.addAction(saveDraft)
     alertController.addAction(discardPost)
     alertController.addAction(goBack)
 

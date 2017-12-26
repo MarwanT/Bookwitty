@@ -269,6 +269,10 @@ class Strings {
     return localizedString(key: "delete_post_success_message")
   }
 
+  static func discard_changes() -> String {
+    return localizedString(key: "discard_changes")
+  }
+  
   static func discard_post() -> String {
     return localizedString(key: "discard_post")
   }
