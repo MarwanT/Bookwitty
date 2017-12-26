@@ -849,6 +849,26 @@ extension ContentEditorViewController: PenNameViewControllerDelegate {
   }
 }
 
+
+//MARK: - CropViewControllerDelegate Implementatio
+extension ContentEditorViewController: CropViewControllerDelegate {
+  func crop(_ viewController: CropViewController, didFinishWith croppedImage: UIImage) {
+    
+    let image = croppedImage
+    self.navigationController?.dismiss(animated: true, completion: nil)
+    let id = self.editorView.generatePhotoWrapper()
+    self.viewModel.addUploadRequest(id)
+    self.loadNavigationBarButtons()
+    viewModel.upload(image: image) { (success: Bool, link: String?) in
+      guard let link = link, let Url = URL(string: link) else { return }
+      self.editorView.generate(photo: Url, alt: "Image", wrapperId: id)
+      self.viewModel.removeUploadRequest(id)
+      self.loadNavigationBarButtons()
+    }
+
+  }
+}
+
 //MARK: - RichEditorDelegate implementation
 extension ContentEditorViewController: RichEditorDelegate {
   func richEditor(_ editor: RichEditorView, shouldInteractWith url: URL) -> Bool {
