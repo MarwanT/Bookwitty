@@ -22,7 +22,6 @@ class AccountViewController: UIViewController {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
-    self.title = Strings.account()
     initializeComponents()
     applyTheme()
     fillUserInformation()
@@ -236,7 +235,8 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
 //MARK: - Localizable implementation
 extension AccountViewController: Localizable {
   func applyLocalization() {
-    title = Strings.account()
+    navigationItem.title = Strings.account()
+    tabBarItem.title = Strings.me().uppercased()
     viewModel.fillSectionTitles()
     tableView.reloadData()
   }
