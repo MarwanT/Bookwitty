@@ -171,10 +171,25 @@ extension CommentsManager {
   }
   
   fileprivate func unwitComment(with commentIdentifier: String) {
-    guard let registry = commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first else {
-      return
+    guard let resource = resource,
+      let resourceIdentifier = resource.id,
+      let registry = commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first,
+      let commentIdentifier = registry.commentIdentifier else {
+        return
     }
     registry.comment?.wit = false
+    
+    NotificationCenter.default.post(
+      name: CommentsManager.notificationName(for: resourceIdentifier),
+      object: (
+        action: CommentsNode.Action.commentAction(
+          commentIdentifier: commentIdentifier,
+          action: CardActionBarNode.Action.unwit,
+          resource: resource,
+          parentCommentIdentifier: registry.parentCommentIdentifier),
+        commentIdentifier: commentIdentifier
+      )
+    )
   }
 }
 
