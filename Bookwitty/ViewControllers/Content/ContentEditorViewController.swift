@@ -137,6 +137,11 @@ class ContentEditorViewController: UIViewController {
     _ = self.editorView.endEditing(true)
   }
   
+  func dismiss() {
+    self.timer.invalidate()
+    self.dismiss(animated: true, completion: nil)
+  }
+  
   // MARK: - Navigation items actions
   @objc private func undoButtonTouchUpInside(_ sender: UIButton) {
     self.editorView.undo()
@@ -148,6 +153,21 @@ class ContentEditorViewController: UIViewController {
   
   @objc private func closeBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
     self.resignResponders()
+    
+    let title = self.titleTextField.text ?? ""
+    let body = self.editorView.getContent()
+    
+    guard title.characters.count > 0 && body.characters.count > 0  else {
+      
+      if self.viewModel.currentPost.id != nil {
+        self.viewModel.deletePost() { _, _ in }
+      } else {
+        try? self.viewModel.deleteLocalDraft()
+      }
+      dismiss()
+      return
+    }
+    
     presentConfirmSaveOrDiscardActionSheet { (option: ContentEditorViewController.ConfirmationOption, success: Bool) in
       switch option {
       case .saveDraft where success: fallthrough
@@ -420,7 +440,7 @@ extension ContentEditorViewController {
 
   fileprivate func presentConfirmSaveOrDiscardActionSheet(_ closure : @escaping (_ option: ConfirmationOption, _ success: Bool) -> ()) {
 
-    guard let currentPost = self.viewModel.currentPost, currentPost.id != nil else {
+    guard let currentPost = self.viewModel.currentPost else {
       closure(.nonNeeded, true)
       return
     }

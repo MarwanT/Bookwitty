@@ -151,7 +151,7 @@ class ContentEditorViewModel  {
     }
   }
   
-  private func deleteLocalDraft() throws {
+  func deleteLocalDraft() throws {
     if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
       let dataPath = documentsDirectory.appendingPathComponent("content-editor").appendingPathComponent("temp-draft").appendingPathExtension("txt")
       try FileManager.default.removeItem(at: dataPath)
