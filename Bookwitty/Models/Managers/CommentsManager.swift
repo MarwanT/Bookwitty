@@ -149,10 +149,25 @@ extension CommentsManager {
   }
   
   fileprivate func witComment(with commentIdentifier: String) {
-    guard let registry = commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first else {
+    guard let resource = resource,
+      let resourceIdentifier = resource.id,
+      let registry = commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first,
+      let commentIdentifier = registry.commentIdentifier else {
       return
     }
     registry.comment?.wit = true
+    
+    NotificationCenter.default.post(
+      name: CommentsManager.notificationName(for: resourceIdentifier),
+      object: (
+        action: CommentsNode.Action.commentAction(
+          commentIdentifier: commentIdentifier,
+          action: CardActionBarNode.Action.wit,
+          resource: resource,
+          parentCommentIdentifier: registry.parentCommentIdentifier),
+        commentIdentifier: commentIdentifier
+      )
+    )
   }
   
   fileprivate func unwitComment(with commentIdentifier: String) {
