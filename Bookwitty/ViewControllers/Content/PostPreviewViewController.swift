@@ -89,7 +89,7 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
 
     let imageUrl = values.imageUrl
     coverNode.url = imageUrl
-    shouldShowCover = imageUrl != nil
+    shouldShowCover = !imageUrl.isEmptyOrNil()
     shouldShowTitle = !values.title.isEmptyOrNil()
   }
 
