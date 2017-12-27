@@ -57,6 +57,22 @@ class ContentEditorViewModel  {
     self.latestHashValue = currentPost.hash
   }
 
+  func getLinkedTags() {
+    
+    guard let id = self.currentPost.id else {
+      return
+    }
+    
+    _ = ContentAPI.linkedTags(to: id) { (success, tags, error) in
+      guard success else {
+        return
+      }
+      
+      self.currentPost.tags = tags
+      self.linkedTags = tags ?? []
+    }
+  }
+  
   var getCurrentPost: CandidatePost {
     return self.currentPost
   }
