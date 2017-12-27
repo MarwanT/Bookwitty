@@ -344,6 +344,17 @@ extension CommentsManager {
         return
       }
       _ = self.updateRegistry(with: comment, addFromBeginning: true)
+      
+      // Send notification
+      NotificationCenter.default.post(
+        name: CommentsManager.notificationName(for: postIdentifier),
+        object: (
+          action: CommentsNode.Action.writeComment(
+            resource: resource,
+            parentCommentIdentifier: comment.parentId),
+          commentIdentifier: comment.id!
+        )
+      )
     })
   }
   
