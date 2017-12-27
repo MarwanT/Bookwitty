@@ -73,6 +73,26 @@ class ContentEditorViewModel  {
     }
   }
   
+  func getLinkedPages() {
+    
+    guard let id = self.currentPost.id else {
+      return
+    }
+    // [ModelResource]?
+    _ = ContentAPI.linkedPages(to: id) { (success, pages, _, error) in
+      
+      guard success else {
+        return
+      }
+      
+      guard let pages = pages else {
+        return
+      }
+      
+      self.linkedPages = pages.flatMap { $0 as? ModelCommonProperties }
+    }
+  }
+  
   var getCurrentPost: CandidatePost {
     return self.currentPost
   }
