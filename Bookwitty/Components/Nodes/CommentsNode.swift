@@ -256,7 +256,14 @@ extension CommentsNode {
           collectionNode.reloadData()
         }
       case .removeComment(let index):
-        break
+        switch displayMode {
+        case .normal:
+          collectionNode.deleteItems(at: [
+            IndexPath(row: index, section: Section.read.rawValue)]
+          )
+        case .compact:
+          collectionNode.reloadData()
+        }
       case .updateTree(let index):
         break
       }
