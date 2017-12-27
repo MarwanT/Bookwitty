@@ -669,3 +669,10 @@ extension CommentsNode {
     }
   }
 }
+
+// MARK: - Comments Listing Update Type
+enum CommentsListingUpdateType {
+  case addComment(index: Int)
+  case removeComment(index: Int)
+  case updateTree(index: Int)
+}
