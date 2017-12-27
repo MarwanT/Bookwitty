@@ -51,7 +51,7 @@ class CommentsViewModel {
     case CommentsNode.Section.read.rawValue:
       var itemsNumber = commentsIDs.count
       if case displayMode = CommentsNode.DisplayMode.compact {
-        itemsNumber = min(itemsNumber, 1)
+        itemsNumber = min(itemsNumber, CommentsNode.DisplayMode.maximumCompactLines)
       }
       return itemsNumber
     case CommentsNode.Section.viewAllComments.rawValue:

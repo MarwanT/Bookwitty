@@ -429,6 +429,8 @@ extension CommentsNode {
   enum DisplayMode {
     case normal
     case compact
+    
+    static let maximumCompactLines: Int = 1
   }
 }
 
