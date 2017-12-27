@@ -121,19 +121,29 @@ struct ContentAPI {
     })
   }
 
-  static func linkedTags(to contentIdentifier: String, closure: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  static func linkedTags(to contentIdentifier: String, closure: @escaping (_ success: Bool, _ tags: [Tag]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let successStatusCode = 200
     return signedAPIRequest(target: .linkedTags(contentIdentifier: contentIdentifier), completion: {
       (data, statusCode, response, error) in
       var success: Bool = false
       var error: BookwittyAPIError? = nil
+      var tags: [Tag]? = nil
+     
       defer {
-        closure(success, error)
+        closure(success, tags, error)
       }
-      guard data != nil, let statusCode = statusCode else {
+      
+      guard let statusCode = statusCode else {
         error = BookwittyAPIError.invalidStatusCode
         return
       }
+      
+      guard let data = data, let values = Parser.parseDataArray(data: data), let tagResources = values.resources as? [Tag] else {
+        error = BookwittyAPIError.failToParseData
+        return
+      }
+      
+      tags = tagResources
       success = statusCode == successStatusCode
     })
   }
