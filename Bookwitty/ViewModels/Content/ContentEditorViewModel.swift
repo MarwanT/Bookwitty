@@ -55,6 +55,10 @@ class ContentEditorViewModel  {
     self.currentPost = currentPost
     self.originalHashValue = currentPost.hash
     self.latestHashValue = currentPost.hash
+    
+    //check if we have linked tags/topics
+    self.getLinkedTags()
+    self.getLinkedPages()
   }
 
   func getLinkedTags() {
