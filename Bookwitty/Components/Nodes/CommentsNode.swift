@@ -232,18 +232,34 @@ extension CommentsNode {
     }
     
     switch notificationAction {
-    case .commentAction:
-      guard case .commentAction(let commentIdentifier, let action, _, _) = notificationAction else {
-        return
-      }
+    case .commentAction(_, let action, _, _):
       switch action {
       case .wit, .unwit:
         updateCollectionNode()
       default:
         break
       }
-    case .writeComment:
-      reloadData()
+    case .writeComment(let resource, let parentCommentIdentifier):
+      guard let dataChange = viewModel.dataChanges(relativeToCommentWith: commentIdentifier, commentParentIdentifier: parentCommentIdentifier) else {
+        return
+      }
+      viewModel.refreshData()
+
+      switch dataChange {
+      case .addComment(let index):
+        switch displayMode {
+        case .normal:
+          collectionNode.insertItems(at: [
+            IndexPath(row: index, section: Section.read.rawValue)]
+          )
+        case .compact:
+          collectionNode.reloadData()
+        }
+      case .removeComment(let index):
+        break
+      case .updateTree(let index):
+        break
+      }
     default:
       break
     }
