@@ -217,6 +217,13 @@ class CommentsNode: ASCellNode {
     }
   }
   
+  func reloadCount() {
+    let mutableIndexSet = NSMutableIndexSet(index: Section.count.rawValue)
+    DispatchQueue.main.async {
+      self.collectionNode.reloadSections(mutableIndexSet as IndexSet)
+    }
+  }
+  
   func updateNodeHeight() {
     if case DisplayMode.compact = displayMode {
       style.height = ASDimensionMake(contentSize.height)
