@@ -57,6 +57,7 @@
 "current_password" = "Mot de passe actuel";
 "current_password_is_empty_error" = "Vous n'avez pas entré votre mot de passe";
 "customer_service" = "Service client";
+"delete" = "Supprimer";
 "discover" = "Découvrir";
 "discover_banner_message" = "Chaque jour, retrouvez ici les meilleurs articles de la communauté Bookwitty";
 "dismiss" = "Dismiss";

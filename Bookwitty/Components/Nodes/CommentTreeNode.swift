@@ -216,8 +216,66 @@ class CommentTreeNode: ASCellNode {
     return !(delegate?.commentTreeParentIdentifier(self, commentIdentifier: commentIdentifier) ?? "").isEmptyOrNil()
   }
   
+  func updateTreeForChangesInComment(with identifier: String) {
+    guard let newReplyCommentsInfo = delegate?.commentTreeRepliesInfo(self, commentIdentifier: self.commentIdentifier) else {
+      return
+    }
+    let newReplyCommentsIdentifiers = newReplyCommentsInfo.map({ $0.id })
+
+    let isInOldIdentifiersArray = replyCommentsIdentifiers.contains(identifier)
+    let isInNewIdentifiersArray = newReplyCommentsIdentifiers.contains(identifier)
+    
+    if !isInOldIdentifiersArray, isInNewIdentifiersArray {
+      // Add new Comment
+      let index = newReplyCommentsIdentifiers.index(of: identifier)!
+      addComment(identifier: identifier, at: index)
+    } else if isInOldIdentifiersArray, !isInNewIdentifiersArray {
+      // Remove Comment
+      let index = replyCommentsIdentifiers.index(of: identifier)!
+      removeComment(identifier: identifier, at: index)
+    }
+  }
+  
   //MARK: HELPERS
   //=============
+  fileprivate func addComment(identifier: String, at index: Int) {
+    guard let commentInfo = delegate?.commentTreeInfo(self, commentIdentifier: identifier) else {
+      return
+    }
+    
+    let replyCommentNode = CommentNode()
+    replyCommentNode.mode = .reply
+    replyCommentNode.delegate = self
+    replyCommentNode.imageURL = commentInfo.avatarURL
+    replyCommentNode.fullName = commentInfo.fullName
+    replyCommentNode.message = commentInfo.message
+    replyCommentNode.setWitValue(
+      witted: commentInfo.isWitted,
+      numberOfWits: commentInfo.numberOfWits)
+    replyCommentNode.date = commentInfo.createdAt
+    replyCommentsNodes.insert(replyCommentNode, at: 0)
+    replyCommentsIdentifiers.insert(identifier, at: index)
+    setNeedsLayout()
+    
+    if replyCommentsNodes.count > configuration.maximumRepliesDisplayed {
+      guard let lastCommentIdentifier = replyCommentsIdentifiers.last,
+        let indexOfLastCommentIdentifier = replyCommentsIdentifiers.index(of: lastCommentIdentifier) else {
+          fatalError("CommentTreeNode: Trying to remove a comment")
+      }
+      removeComment(identifier: lastCommentIdentifier, at: indexOfLastCommentIdentifier)
+    }
+    
+    refreshDisclosureNodeText()
+  }
+  
+  fileprivate func removeComment(identifier: String, at index: Int) {
+    replyCommentsNodes.remove(at: index)
+    replyCommentsIdentifiers.remove(at: index)
+    setNeedsLayout()
+    
+    refreshDisclosureNodeText()
+  }
+  
   fileprivate var repliesCount: Int {
     return delegate?.commentTreeRepliesCount(self, commentIdentifier: commentIdentifier) ?? 0
   }
@@ -302,21 +360,21 @@ extension CommentTreeNode: CommentNodeDelegate {
   func commentNode(_ node: CommentNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((Bool) -> ())?) {
     // Detect the comment responsible for the action for it could be the parent
     // Comment or any of the replies that are visible within the commentTreeNode
-//    var targetComment: Comment?
-//    if node === commentNode {
-//      targetComment = comment
-//    } else {
-//      for (index, replyCommentNode) in repliesCommentNodes.enumerated() {
-//        if node === replyCommentNode, let replies = comment?.replies, index < replies.count {
-//          targetComment = replies[index]
-//        }
-//      }
-//    }
-//
-//    guard let commentIdentifier = targetComment?.id else {
-//      return
-//    }
-//    delegate?.commentTreeDidPerformAction(self, commentIdentifier: commentIdentifier, action: action, forSender: sender, didFinishAction: didFinishAction)
+    var targetCommentID: String?
+    if node === commentNode {
+      targetCommentID = commentIdentifier
+    } else {
+      for (index, replyCommentNode) in replyCommentsNodes.enumerated() {
+        if node === replyCommentNode, index < replyCommentsIdentifiers.count {
+          targetCommentID = replyCommentsIdentifiers[index]
+        }
+      }
+    }
+
+    guard let commentIdentifier = targetCommentID else {
+      return
+    }
+    delegate?.commentTreeDidPerformAction(self, commentIdentifier: commentIdentifier, action: action, forSender: sender, didFinishAction: didFinishAction)
   }
   
   func commentNodeUpdateLayout(_ node: CommentNode, forExpandedState state: DynamicCommentMessageNode.DynamicMode) {

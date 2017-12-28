@@ -38,6 +38,29 @@ class CommentsViewModel {
     commentsIDs = commentsManager?.commentsIDs(parentCommentIdentifier: parentCommentIdentifier) ?? []
   }
   
+  func dataChanges(relativeToCommentWith identifier: String, commentParentIdentifier: String?) -> CommentsListingUpdateType? {
+    let newCommentsIDs = commentsManager?.commentsIDs(parentCommentIdentifier: parentCommentIdentifier) ?? []
+    
+    let isInNewIdentifiersArray = newCommentsIDs.contains(identifier)
+    let isInOldIdentifiersArray = commentsIDs.contains(identifier)
+    
+    if !isInOldIdentifiersArray && isInNewIdentifiersArray {
+      let index = newCommentsIDs.index(of: identifier)!
+      return .addComment(index: index)
+    } else if isInOldIdentifiersArray && !isInNewIdentifiersArray {
+      let index = commentsIDs.index(of: identifier)!
+      return .removeComment(index: index)
+    } else if !isInOldIdentifiersArray && !isInNewIdentifiersArray {
+      guard let commentParentIdentifier = commentParentIdentifier else {
+        return nil
+      }
+      let index = commentsIDs.index(of: commentParentIdentifier)!
+      return .updateTree(index: index)
+    }
+    
+    return nil
+  }
+  
   func numberOfItems(in section: Int) -> Int {
     switch section {
     case CommentsNode.Section.count.rawValue:
@@ -51,7 +74,7 @@ class CommentsViewModel {
     case CommentsNode.Section.read.rawValue:
       var itemsNumber = commentsIDs.count
       if case displayMode = CommentsNode.DisplayMode.compact {
-        itemsNumber = min(itemsNumber, 1)
+        itemsNumber = min(itemsNumber, CommentsNode.DisplayMode.maximumCompactLines)
       }
       return itemsNumber
     case CommentsNode.Section.viewAllComments.rawValue:
@@ -199,6 +222,54 @@ extension CommentsViewModel {
     return commentsManager?.comment(with: commentIdentifier)?.parentId
   }
   
+  func parentIdentifier(forCommentWithIdentifier identifier: String, action: CardActionBarNode.Action) -> String? {
+    switch action {
+    case .reply:
+      return identifier
+    default:
+      return commentsManager?.comment(with: identifier)?.parentId
+    }
+  }
+  
+  func actions(forComment identifier: String) -> [CardActionBarNode.Action] {
+    var actions = [CardActionBarNode.Action]()
+    guard let comment = self.commentsManager?.comment(with: identifier) else {
+      return actions
+    }
+    
+    // Wit/Unwit Actions
+    if comment.isWitted {
+      actions.append(.unwit)
+    } else {
+      actions.append(.wit)
+    }
+    // Reply Action
+    if comment.parentId == nil {
+      actions.append(.reply)
+    }
+    // Remove Action
+    if let penName = comment.penName, UserManager.shared.isMy(penName: penName) {
+      actions.append(.remove)
+    }
+    
+    return actions
+  }
+  
+  func string(for action: CardActionBarNode.Action) -> String? {
+    switch action {
+    case .wit:
+      return Strings.wit_it()
+    case .unwit:
+      return Strings.witted()
+    case .reply:
+      return Strings.reply()
+    case .remove:
+      return Strings.delete()
+    default:
+      return nil
+    }
+  }
+  
   var displayedTotalNumberOfComments: String {
     return "\(totalNumberOfComments ?? 0)" + " " + Strings.comments().lowercased()
   }
@@ -236,6 +307,18 @@ extension CommentsViewModel {
       (success, comment, error) in
       completion(success, error)
     })
+  }
+  
+  func removeComment(commentIdentifier: String, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+    guard let commentsManager = commentsManager else {
+      completion(false, nil)
+      return
+    }
+    
+    commentsManager.removeComment(commentIdentifier: commentIdentifier) {
+      (success, error) in
+      completion(success, error)
+    }
   }
   
   func wit(commentIdentifier: String, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {

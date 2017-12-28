@@ -167,6 +167,49 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
       }
     })
   }
+  
+  // Comments related
+  fileprivate func displayActionSheet(forComment identifier: String) {
+    let availableActionsForComment = postDetailsNode.commentsNode.viewModel.actions(forComment: identifier)
+    guard availableActionsForComment.count > 0 else {
+        return
+    }
+    
+    let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    
+    for action in availableActionsForComment {
+      guard let actionTitle = postDetailsNode.commentsNode.viewModel.string(for: action) else { continue }
+      let actionButton = UIAlertAction(title: actionTitle, style: .default, handler: { [action] (actionButton) in
+        self.perform(action: action, onComment: identifier)
+      })
+      alertController.addAction(actionButton)
+    }
+    alertController.addAction(UIAlertAction(title: Strings.cancel(), style: UIAlertActionStyle.cancel, handler: nil))
+    present(alertController, animated: true, completion: nil)
+  }
+  
+  // TODO: Set a common method that perform comment action
+  // And remove redundancy present in CommentsNodeDelegate implementation methods
+  // TODO: Move the perform actions to "comments node"
+  fileprivate func perform(action: CardActionBarNode.Action, onComment identifier: String) {
+    guard let resource = postDetailsNode.commentsNode.viewModel.resource else {
+      return
+    }
+    
+    switch action {
+    case .wit:
+      postDetailsNode.wit(commentIdentifier: identifier, completion: nil)
+    case .unwit:
+      postDetailsNode.unwit(commentIdentifier: identifier, completion: nil)
+    case .reply:
+      let parentCommentIdentifier = postDetailsNode.commentsNode.viewModel.parentIdentifier(forCommentWithIdentifier: identifier, action: action)
+      CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: parentCommentIdentifier)
+    case .remove:
+      postDetailsNode.removeComment(commentIdentifier: identifier, completion: nil)
+    default:
+      break
+    }
+  }
 }
 
 extension PostDetailsViewController: ASCollectionDataSource, ASCollectionDelegate {
@@ -426,11 +469,13 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action, didFinishAction: ((Bool) -> ())?) {
     switch action {
     case .viewReplies:
-      break
+      didFinishAction?(true)
     case .viewAllComments(let resource, _):
       pushCommentsViewController(with: resource)
+      didFinishAction?(true)
     case .writeComment(let resource, let parentCommentIdentifier):
       CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: parentCommentIdentifier)
+      didFinishAction?(true)
     case .commentAction(let commentIdentifier, let action, let resource, let parentCommentIdentifier):
       switch action {
       case .wit:
@@ -445,8 +490,12 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
         })
       case .reply:
         CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: commentIdentifier)
+        didFinishAction?(true)
+      case .more:
+        displayActionSheet(forComment: commentIdentifier)
+        didFinishAction?(true)
       default:
-        break
+        didFinishAction?(true)
       }
     }
   }

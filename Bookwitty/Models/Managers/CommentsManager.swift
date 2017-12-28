@@ -106,7 +106,7 @@ extension CommentsManager {
   
   /// If there is no registry for a comment in the array, then a new one is created
   /// Otherwise the already present registry is Updated
-  fileprivate func updateRegistry(with comment: Comment, pageURL: URL? = nil, ignoreNilPageURLS: Bool = true) -> CommentRegistryItem? {
+  fileprivate func updateRegistry(with comment: Comment, addFromBeginning: Bool = false, pageURL: URL? = nil, ignoreNilPageURLS: Bool = true) -> CommentRegistryItem? {
     let updatedRegistry: CommentRegistryItem?
     if let commentRegistryItem = commentRegistryItem(for: comment) {
       commentRegistryItem.comment = comment
@@ -123,7 +123,16 @@ extension CommentsManager {
       } else if let pageURL = pageURL {
         commentRegistry.forEach({ $0.pageURL = pageURL })
       }
-      commentsRegistry.append(contentsOf: commentRegistry)
+      
+      if addFromBeginning {
+        /**
+         If the added comment is a main comment then add it at the beginning
+         of the registry.
+         */
+        commentsRegistry.insert(contentsOf: commentRegistry, at: 0)
+      } else {
+        commentsRegistry.append(contentsOf: commentRegistry)
+      }
       updatedRegistry = commentRegistryItem(for: comment)
     }
     return updatedRegistry
@@ -149,17 +158,47 @@ extension CommentsManager {
   }
   
   fileprivate func witComment(with commentIdentifier: String) {
-    guard let registry = commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first else {
+    guard let resource = resource,
+      let resourceIdentifier = resource.id,
+      let registry = commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first,
+      let commentIdentifier = registry.commentIdentifier else {
       return
     }
     registry.comment?.wit = true
+    
+    NotificationCenter.default.post(
+      name: CommentsManager.notificationName(for: resourceIdentifier),
+      object: (
+        action: CommentsNode.Action.commentAction(
+          commentIdentifier: commentIdentifier,
+          action: CardActionBarNode.Action.wit,
+          resource: resource,
+          parentCommentIdentifier: registry.parentCommentIdentifier),
+        commentIdentifier: commentIdentifier
+      )
+    )
   }
   
   fileprivate func unwitComment(with commentIdentifier: String) {
-    guard let registry = commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first else {
-      return
+    guard let resource = resource,
+      let resourceIdentifier = resource.id,
+      let registry = commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first,
+      let commentIdentifier = registry.commentIdentifier else {
+        return
     }
     registry.comment?.wit = false
+    
+    NotificationCenter.default.post(
+      name: CommentsManager.notificationName(for: resourceIdentifier),
+      object: (
+        action: CommentsNode.Action.commentAction(
+          commentIdentifier: commentIdentifier,
+          action: CardActionBarNode.Action.unwit,
+          resource: resource,
+          parentCommentIdentifier: registry.parentCommentIdentifier),
+        commentIdentifier: commentIdentifier
+      )
+    )
   }
 }
 
@@ -304,7 +343,18 @@ extension CommentsManager {
       guard success, let comment = comment else {
         return
       }
-      _ = self.updateRegistry(with: comment)
+      _ = self.updateRegistry(with: comment, addFromBeginning: true)
+      
+      // Send notification
+      NotificationCenter.default.post(
+        name: CommentsManager.notificationName(for: postIdentifier),
+        object: (
+          action: CommentsNode.Action.writeComment(
+            resource: resource,
+            parentCommentIdentifier: comment.parentId),
+          commentIdentifier: comment.id!
+        )
+      )
     })
   }
   
@@ -327,10 +377,19 @@ extension CommentsManager {
       }
       
       // Do additional logic here if necessary
-      guard success else {
+      guard success, let comment = self.comment(with: commentIdentifier) else {
         return
       }
       self.removeRegistry(for: [commentIdentifier])
+      
+      // Send notification
+      NotificationCenter.default.post(
+        name: CommentsManager.notificationName(for: postIdentifier),
+        object: (
+          action: CommentsNode.Action.commentAction(
+            commentIdentifier: commentIdentifier, action: .remove,
+            resource: resource, parentCommentIdentifier: comment.parentId),
+          commentIdentifier: comment.id!))
     })
   }
   
@@ -424,7 +483,7 @@ extension CommentsManager {
 
 // MARK: - Notifications related
 extension CommentsManager {
-  typealias CommentNotificationObject = (action: CommentsNode.Action, comment: Comment)
+  typealias CommentNotificationObject = (action: CommentsNode.Action, commentIdentifier: String)
   class func notificationName(for identifier: String) -> Notification.Name {
     return Notification.Name("comments-updates-for-id:\(identifier)") 
   }
