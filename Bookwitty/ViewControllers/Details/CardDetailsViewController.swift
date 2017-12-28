@@ -141,11 +141,35 @@ class CardDetailsViewController: GenericNodeViewController {
     for action in availableActionsForComment {
       guard let actionTitle = commentsNode?.viewModel.string(for: action) else { continue }
       let actionButton = UIAlertAction(title: actionTitle, style: .default, handler: { [action] (actionButton) in
+        self.perform(action: action, onComment: identifier)
       })
       alertController.addAction(actionButton)
     }
     alertController.addAction(UIAlertAction(title: Strings.cancel(), style: UIAlertActionStyle.cancel, handler: nil))
     present(alertController, animated: true, completion: nil)
+  }
+  
+  // TODO: Set a common method that perform comment action
+  // And remove redundancy present in CommentsNodeDelegate implementation methods
+  // TODO: Move the perform actions to "comments node"
+  fileprivate func perform(action: CardActionBarNode.Action, onComment identifier: String) {
+    guard let resource = commentsNode?.viewModel.resource else {
+      return
+    }
+    
+    switch action {
+    case .wit:
+      commentsNode?.wit(commentIdentifier: identifier, completion: nil)
+    case .unwit:
+      commentsNode?.unwit(commentIdentifier: identifier, completion: nil)
+    case .reply:
+      let parentCommentIdentifier = commentsNode?.viewModel.parentIdentifier(forCommentWithIdentifier: identifier, action: action)
+      CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: parentCommentIdentifier)
+    case .remove:
+      commentsNode?.removeComment(commentIdentifier: identifier, completion: nil)
+    default:
+      break
+    }
   }
 }
 
