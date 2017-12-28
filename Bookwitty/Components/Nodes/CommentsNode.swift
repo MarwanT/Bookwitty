@@ -265,7 +265,10 @@ extension CommentsNode {
           collectionNode.reloadData()
         }
       case .updateTree(let index):
-        break
+        guard let treeNode = collectionNode.nodeForItem(at: IndexPath(row: index, section: Section.read.rawValue)) as? CommentTreeNode else {
+          return
+        }
+        treeNode.updateTreeForChangesInComment(with: commentIdentifier)
       }
     default:
       break
