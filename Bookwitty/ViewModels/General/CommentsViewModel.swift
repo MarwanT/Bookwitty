@@ -270,6 +270,18 @@ extension CommentsViewModel {
     })
   }
   
+  func removeComment(commentIdentifier: String, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
+    guard let commentsManager = commentsManager else {
+      completion(false, nil)
+      return
+    }
+    
+    commentsManager.removeComment(commentIdentifier: commentIdentifier) {
+      (success, error) in
+      completion(success, error)
+    }
+  }
+  
   func wit(commentIdentifier: String, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
     guard let commentsManager = commentsManager else {
       completion(false, nil)
