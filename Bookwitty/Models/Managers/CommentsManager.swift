@@ -345,6 +345,9 @@ extension CommentsManager {
       }
       _ = self.updateRegistry(with: comment, addFromBeginning: true)
       
+      // Update the Count
+      self.increaseCountForAdded(comment: comment)
+      
       // Send notification
       NotificationCenter.default.post(
         name: CommentsManager.notificationName(for: postIdentifier),
@@ -380,6 +383,11 @@ extension CommentsManager {
       guard success, let comment = self.comment(with: commentIdentifier) else {
         return
       }
+      
+      // Update the Count
+      self.decreaseCountForRemoved(comment: comment)
+      
+      // Remove the comment registry
       self.removeRegistry(for: [commentIdentifier])
       
       // Send notification
@@ -447,6 +455,29 @@ extension CommentsManager {
       
       self.unwitComment(with: commentIdentifier)
     })
+  }
+}
+
+// MARK: - HELPERS
+extension CommentsManager {
+  fileprivate func increaseCountForAdded(comment: Comment) {
+    resource?.counts?.comments = (resource?.counts?.comments ?? 0) + 1
+    if let parentIdentifier = comment.parentId {
+      guard let parentComment = self.comment(with: parentIdentifier) else {
+        return
+      }
+      parentComment.counts?.children = (parentComment.counts?.children ?? 0) + 1
+    }
+  }
+  
+  fileprivate func decreaseCountForRemoved(comment: Comment) {
+    resource?.counts?.comments = (resource?.counts?.comments ?? 1) - 1
+    if let parentIdentifier = comment.parentId {
+      guard let parentComment = self.comment(with: parentIdentifier) else {
+        return
+      }
+      parentComment.counts?.children = (parentComment.counts?.children ?? 1) - 1
+    }
   }
 }
 

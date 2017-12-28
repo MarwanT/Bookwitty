@@ -153,7 +153,7 @@ class CommentsNode: ASCellNode {
   }
   
   fileprivate func loadNextPage(completion: @escaping (_ success: Bool) -> Void) {
-    guard !viewModel.isFetchingData, viewModel.hasNextPage else {
+    guard displayMode != .compact, !viewModel.isFetchingData, viewModel.hasNextPage else {
       completion(false)
       return
     }
@@ -205,7 +205,7 @@ class CommentsNode: ASCellNode {
   }
   
   func updateCollectionNode(updateLoaderNode: Bool = false) {
-    var reloadableSections: [Int] = [Section.parentComment.rawValue, Section.read.rawValue, Section.viewAllComments.rawValue]
+    var reloadableSections: [Int] = [Section.count.rawValue, Section.parentComment.rawValue, Section.read.rawValue, Section.viewAllComments.rawValue]
     if updateLoaderNode {
       reloadableSections.append(Section.activityIndicator.rawValue)
     }
@@ -691,7 +691,7 @@ extension CommentsNode {
   }
 }
 
-// MARK: - Comment intences related methods
+// MARK: - Comment instences related methods
 extension CommentsNode {
   func publishComment(content: String?, parentCommentIdentifier: String?, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
     viewModel.publishComment(content: content, parentCommentIdentifier: parentCommentIdentifier) {

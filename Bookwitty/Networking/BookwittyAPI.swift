@@ -345,7 +345,7 @@ extension BookwittyAPI: TargetType {
     switch self {
     case .user, .register:
       return [PenName.resourceType]
-    case .batch, .search, .discover, .penNameContent, .penNameFollowing, .posts:
+    case .batch, .search, .discover, .penNameContent, .penNameFollowing, .posts, .createComment:
       return ["pen-name"]
     case .comments, .replies:
       return ["pen-name", "children", "children.pen-name"]
