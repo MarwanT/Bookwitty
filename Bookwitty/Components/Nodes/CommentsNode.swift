@@ -217,9 +217,47 @@ class CommentsNode: ASCellNode {
     }
   }
   
+  func reloadCount() {
+    let mutableIndexSet = NSMutableIndexSet(index: Section.count.rawValue)
+    DispatchQueue.main.async {
+      self.collectionNode.reloadSections(mutableIndexSet as IndexSet)
+    }
+  }
+  
   func updateNodeHeight() {
     if case DisplayMode.compact = displayMode {
       style.height = ASDimensionMake(contentSize.height)
+    }
+  }
+  
+  func updateCollectionNodeForDataChanges(_ dataChange: CommentsListingUpdateType, commentIdentifier: String) {
+    switch dataChange {
+    case .addComment(let index):
+      switch displayMode {
+      case .normal:
+        collectionNode.insertItems(at: [
+          IndexPath(row: index, section: Section.read.rawValue)]
+        )
+        reloadCount()
+      case .compact:
+        collectionNode.reloadData()
+      }
+    case .removeComment(let index):
+      switch displayMode {
+      case .normal:
+        collectionNode.deleteItems(at: [
+          IndexPath(row: index, section: Section.read.rawValue)]
+        )
+        reloadCount()
+      case .compact:
+        collectionNode.reloadData()
+      }
+    case .updateTree(let index):
+      guard let treeNode = collectionNode.nodeForItem(at: IndexPath(row: index, section: Section.read.rawValue)) as? CommentTreeNode else {
+        return
+      }
+      treeNode.updateTreeForChangesInComment(with: commentIdentifier)
+      reloadCount()
     }
   }
 }
@@ -232,44 +270,25 @@ extension CommentsNode {
     }
     
     switch notificationAction {
-    case .commentAction(_, let action, _, _):
+    case .commentAction(_, let action, _, let parentCommentIdentifier):
       switch action {
       case .wit, .unwit:
         updateCollectionNode()
+      case .remove:
+        guard let dataChange = viewModel.dataChanges(relativeToCommentWith: commentIdentifier, commentParentIdentifier: parentCommentIdentifier) else {
+          return
+        }
+        viewModel.refreshData()
+        updateCollectionNodeForDataChanges(dataChange, commentIdentifier: commentIdentifier)
       default:
         break
       }
-    case .writeComment(let resource, let parentCommentIdentifier):
+    case .writeComment(_, let parentCommentIdentifier):
       guard let dataChange = viewModel.dataChanges(relativeToCommentWith: commentIdentifier, commentParentIdentifier: parentCommentIdentifier) else {
         return
       }
       viewModel.refreshData()
-
-      switch dataChange {
-      case .addComment(let index):
-        switch displayMode {
-        case .normal:
-          collectionNode.insertItems(at: [
-            IndexPath(row: index, section: Section.read.rawValue)]
-          )
-        case .compact:
-          collectionNode.reloadData()
-        }
-      case .removeComment(let index):
-        switch displayMode {
-        case .normal:
-          collectionNode.deleteItems(at: [
-            IndexPath(row: index, section: Section.read.rawValue)]
-          )
-        case .compact:
-          collectionNode.reloadData()
-        }
-      case .updateTree(let index):
-        guard let treeNode = collectionNode.nodeForItem(at: IndexPath(row: index, section: Section.read.rawValue)) as? CommentTreeNode else {
-          return
-        }
-        treeNode.updateTreeForChangesInComment(with: commentIdentifier)
-      }
+      updateCollectionNodeForDataChanges(dataChange, commentIdentifier: commentIdentifier)
     default:
       break
     }
@@ -678,6 +697,13 @@ extension CommentsNode {
     viewModel.publishComment(content: content, parentCommentIdentifier: parentCommentIdentifier) {
       (success, error) in
       completion(success, error)
+    }
+  }
+  
+  func removeComment(commentIdentifier: String, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
+    viewModel.removeComment(commentIdentifier: commentIdentifier) {
+      (success, error) in
+      completion?(success, error)
     }
   }
   

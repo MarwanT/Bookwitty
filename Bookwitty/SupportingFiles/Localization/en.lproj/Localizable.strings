@@ -57,6 +57,7 @@
 "current_password" = "Current Password";
 "current_password_is_empty_error" = "Current password was left empty!";
 "customer_service" = "Customer Service";
+"delete" = "Delete";
 "discover" = "Discover";
 "discover_banner_message" = "Check back here anytime to find the best stories from the community.";
 "dismiss" = "Dismiss";

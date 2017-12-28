@@ -48,6 +48,48 @@ class CommentsViewController: ASViewController<ASDisplayNode> {
     commentsViewController.initialize(with: resource, parentCommentIdentifier: parentCommentIdentifier)
     self.navigationController?.pushViewController(commentsViewController, animated: true)
   }
+  
+  fileprivate func displayActionSheet(forComment identifier: String) {
+    guard let availableActionsForComment = viewModel?.actions(forComment: identifier),
+      availableActionsForComment.count > 0 else {
+        return
+    }
+    
+    let alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+    
+    for action in availableActionsForComment {
+      guard let actionTitle = viewModel?.string(for: action) else { continue }
+      let actionButton = UIAlertAction(title: actionTitle, style: .default, handler: { [action] (actionButton) in
+        self.perform(action: action, onComment: identifier)
+      })
+      alertController.addAction(actionButton)
+    }
+    alertController.addAction(UIAlertAction(title: Strings.cancel(), style: UIAlertActionStyle.cancel, handler: nil))
+    present(alertController, animated: true, completion: nil)
+  }
+  
+  // TODO: Set a common method that perform comment action
+  // And remove redundancy present in CommentsNodeDelegate implementation methods
+  // TODO: Move the perform actions to "comments node"
+  fileprivate func perform(action: CardActionBarNode.Action, onComment identifier: String) {
+    guard let resource = commentsNode.viewModel.resource else {
+      return
+    }
+    
+    switch action {
+    case .wit:
+      commentsNode.wit(commentIdentifier: identifier, completion: nil)
+    case .unwit:
+      commentsNode.unwit(commentIdentifier: identifier, completion: nil)
+    case .reply:
+      let parentCommentIdentifier = commentsNode.viewModel.parentIdentifier(forCommentWithIdentifier: identifier, action: action)
+      CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: parentCommentIdentifier)
+    case .remove:
+      commentsNode.removeComment(commentIdentifier: identifier, completion: nil)
+    default:
+      break
+    }
+  }
 }
 
 // MARK: - Comments node delegate
@@ -57,10 +99,12 @@ extension CommentsViewController: CommentsNodeDelegate {
     switch action {
     case .viewReplies(let resource, let parentCommentIdentifier):
       pushCommentsViewControllerForReplies(resource: resource, parentCommentIdentifier: parentCommentIdentifier)
+      didFinishAction?(true)
     case .viewAllComments:
-      break
+      didFinishAction?(true)
     case .writeComment(let resource, let parentCommentIdentifier):
       CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: parentCommentIdentifier)
+      didFinishAction?(true)
     case .commentAction(let commentIdentifier, let action, let resource, let parentCommentIdentifier):
       switch action {
       case .wit:
@@ -75,8 +119,12 @@ extension CommentsViewController: CommentsNodeDelegate {
         })
       case .reply:
         CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: parentCommentIdentifier)
+        didFinishAction?(true)
+      case .more:
+        displayActionSheet(forComment: commentIdentifier)
+        didFinishAction?(true)
       default:
-        break
+        didFinishAction?(true)
       }
     }
   }

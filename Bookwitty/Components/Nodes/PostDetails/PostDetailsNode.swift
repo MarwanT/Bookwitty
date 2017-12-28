@@ -81,7 +81,7 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let relatedPostsBottomSeparator: SeparatorNode
   fileprivate let relatedPostsNodeLoader: LoaderNode
   fileprivate let bannerImageNode: ASImageNode
-  fileprivate let commentsNode: CommentsNode
+  let commentsNode: CommentsNode
 
   let headerNode: PostDetailsHeaderNode
   let postItemsNode: PostDetailsItemNode
@@ -432,6 +432,13 @@ extension PostDetailsNode {
     commentsNode.publishComment(content: content, parentCommentIdentifier: parentCommentIdentifier) {
       (success, error) in
       completion(success, error)
+    }
+  }
+  
+  func removeComment(commentIdentifier: String, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
+    commentsNode.removeComment(commentIdentifier: commentIdentifier) {
+      (success, error) in
+      completion?(success, error)
     }
   }
   

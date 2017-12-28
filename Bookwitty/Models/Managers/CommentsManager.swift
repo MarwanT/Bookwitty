@@ -377,10 +377,19 @@ extension CommentsManager {
       }
       
       // Do additional logic here if necessary
-      guard success else {
+      guard success, let comment = self.comment(with: commentIdentifier) else {
         return
       }
       self.removeRegistry(for: [commentIdentifier])
+      
+      // Send notification
+      NotificationCenter.default.post(
+        name: CommentsManager.notificationName(for: postIdentifier),
+        object: (
+          action: CommentsNode.Action.commentAction(
+            commentIdentifier: commentIdentifier, action: .remove,
+            resource: resource, parentCommentIdentifier: comment.parentId),
+          commentIdentifier: comment.id!))
     })
   }
   
