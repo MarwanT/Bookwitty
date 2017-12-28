@@ -48,6 +48,24 @@ class CommentsViewController: ASViewController<ASDisplayNode> {
     commentsViewController.initialize(with: resource, parentCommentIdentifier: parentCommentIdentifier)
     self.navigationController?.pushViewController(commentsViewController, animated: true)
   }
+  
+  fileprivate func displayActionSheet(forComment identifier: String) {
+    guard let availableActionsForComment = viewModel?.actions(forComment: identifier),
+      availableActionsForComment.count > 0 else {
+        return
+    }
+    
+    let alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+    
+    for action in availableActionsForComment {
+      guard let actionTitle = viewModel?.string(for: action) else { continue }
+      let actionButton = UIAlertAction(title: actionTitle, style: .default, handler: { [action] (actionButton) in
+      })
+      alertController.addAction(actionButton)
+    }
+    alertController.addAction(UIAlertAction(title: Strings.cancel(), style: UIAlertActionStyle.cancel, handler: nil))
+    present(alertController, animated: true, completion: nil)
+  }
 }
 
 // MARK: - Comments node delegate
@@ -77,6 +95,9 @@ extension CommentsViewController: CommentsNodeDelegate {
         })
       case .reply:
         CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: parentCommentIdentifier)
+        didFinishAction?(true)
+      case .more:
+        displayActionSheet(forComment: commentIdentifier)
         didFinishAction?(true)
       default:
         didFinishAction?(true)

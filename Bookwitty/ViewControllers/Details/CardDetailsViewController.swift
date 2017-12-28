@@ -129,6 +129,24 @@ class CardDetailsViewController: GenericNodeViewController {
 
     Analytics.shared.send(screenName: name)
   }
+  
+  fileprivate func displayActionSheet(forComment identifier: String) {
+    guard let availableActionsForComment = commentsNode?.viewModel.actions(forComment: identifier),
+      availableActionsForComment.count > 0 else {
+        return
+    }
+    
+    let alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+    
+    for action in availableActionsForComment {
+      guard let actionTitle = commentsNode?.viewModel.string(for: action) else { continue }
+      let actionButton = UIAlertAction(title: actionTitle, style: .default, handler: { [action] (actionButton) in
+      })
+      alertController.addAction(actionButton)
+    }
+    alertController.addAction(UIAlertAction(title: Strings.cancel(), style: UIAlertActionStyle.cancel, handler: nil))
+    present(alertController, animated: true, completion: nil)
+  }
 }
 
 // MARK - BaseCardPostNode Delegate
@@ -331,6 +349,9 @@ extension CardDetailsViewController: CommentsNodeDelegate {
         })
       case .reply:
         CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: parentCommentIdentifier)
+        didFinishAction?(true)
+      case .more:
+        displayActionSheet(forComment: commentIdentifier)
         didFinishAction?(true)
       default:
         didFinishAction?(true)

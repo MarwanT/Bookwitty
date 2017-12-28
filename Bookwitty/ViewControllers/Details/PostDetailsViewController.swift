@@ -167,6 +167,25 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
       }
     })
   }
+  
+  // Comments related
+  fileprivate func displayActionSheet(forComment identifier: String) {
+    let availableActionsForComment = postDetailsNode.commentsNode.viewModel.actions(forComment: identifier)
+    guard availableActionsForComment.count > 0 else {
+        return
+    }
+    
+    let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    
+    for action in availableActionsForComment {
+      guard let actionTitle = postDetailsNode.commentsNode.viewModel.string(for: action) else { continue }
+      let actionButton = UIAlertAction(title: actionTitle, style: .default, handler: { [action] (actionButton) in
+      })
+      alertController.addAction(actionButton)
+    }
+    alertController.addAction(UIAlertAction(title: Strings.cancel(), style: UIAlertActionStyle.cancel, handler: nil))
+    present(alertController, animated: true, completion: nil)
+  }
 }
 
 extension PostDetailsViewController: ASCollectionDataSource, ASCollectionDelegate {
@@ -447,6 +466,9 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
         })
       case .reply:
         CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: commentIdentifier)
+        didFinishAction?(true)
+      case .more:
+        displayActionSheet(forComment: commentIdentifier)
         didFinishAction?(true)
       default:
         didFinishAction?(true)
