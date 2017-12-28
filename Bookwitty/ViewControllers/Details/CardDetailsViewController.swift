@@ -372,7 +372,7 @@ extension CardDetailsViewController: CommentsNodeDelegate {
           didFinishAction?(success)
         })
       case .reply:
-        CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: parentCommentIdentifier)
+        CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: commentIdentifier)
         didFinishAction?(true)
       case .more:
         displayActionSheet(forComment: commentIdentifier)
