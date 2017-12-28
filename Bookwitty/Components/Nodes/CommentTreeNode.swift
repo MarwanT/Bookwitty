@@ -216,6 +216,26 @@ class CommentTreeNode: ASCellNode {
     return !(delegate?.commentTreeParentIdentifier(self, commentIdentifier: commentIdentifier) ?? "").isEmptyOrNil()
   }
   
+  func updateTreeForChangesInComment(with identifier: String) {
+    guard let newReplyCommentsInfo = delegate?.commentTreeRepliesInfo(self, commentIdentifier: self.commentIdentifier) else {
+      return
+    }
+    let newReplyCommentsIdentifiers = newReplyCommentsInfo.map({ $0.id })
+
+    let isInOldIdentifiersArray = replyCommentsIdentifiers.contains(identifier)
+    let isInNewIdentifiersArray = newReplyCommentsIdentifiers.contains(identifier)
+    
+    if !isInOldIdentifiersArray, isInNewIdentifiersArray {
+      // Add new Comment
+      let index = newReplyCommentsIdentifiers.index(of: identifier)!
+      addComment(identifier: identifier, at: index)
+    } else if isInOldIdentifiersArray, !isInNewIdentifiersArray {
+      // Remove Comment
+      let index = replyCommentsIdentifiers.index(of: identifier)!
+      removeComment(identifier: identifier, at: index)
+    }
+  }
+  
   //MARK: HELPERS
   //=============
   fileprivate func addComment(identifier: String, at index: Int) {
