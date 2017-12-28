@@ -205,7 +205,7 @@ class CommentsNode: ASCellNode {
   }
   
   func updateCollectionNode(updateLoaderNode: Bool = false) {
-    var reloadableSections: [Int] = [Section.parentComment.rawValue, Section.read.rawValue, Section.viewAllComments.rawValue]
+    var reloadableSections: [Int] = [Section.count.rawValue, Section.parentComment.rawValue, Section.read.rawValue, Section.viewAllComments.rawValue]
     if updateLoaderNode {
       reloadableSections.append(Section.activityIndicator.rawValue)
     }
