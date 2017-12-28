@@ -88,14 +88,20 @@ class CommentNode: ASCellNode {
     let titleDateSpec = ASStackLayoutSpec(
       direction: .vertical, spacing: configuration.titleDateVerticalSpace,
       justifyContent: .start, alignItems: .start, children: [fullNameNode, dateNode])
+    let titleDateInsetSpec = ASInsetLayoutSpec(insets: configuration.titleDateInsets, child: titleDateSpec)
+    titleDateInsetSpec.style.flexShrink = 1.0
+    titleDateInsetSpec.style.flexGrow = 1.0
+    
     let imageNodeInsetSpec = ASInsetLayoutSpec(
       insets: configuration.imageNodeInsets, child: imageNode)
     let leftSideHeaderSpec = ASStackLayoutSpec(
       direction: .horizontal, spacing: 0, justifyContent: .start,
-      alignItems: .center, children: [
+      alignItems: .start, children: [
         imageNodeInsetSpec,
-        titleDateSpec,
+        titleDateInsetSpec,
       ])
+    leftSideHeaderSpec.style.flexGrow = 1.0
+    leftSideHeaderSpec.style.flexShrink = 1.0
     headerStackElements.append(leftSideHeaderSpec)
     
     // Add Actions if needed
@@ -105,7 +111,7 @@ class CommentNode: ASCellNode {
         alignItems: .start, children: [witButton, ASLayoutSpec.spacer(width: 5), moreButton])
       let actionSpecInsets = ASInsetLayoutSpec(
         insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -10), child: actionsSpec)
-      headerStackElements.append(ASLayoutSpec.spacer(flexGrow: 1.0))
+      headerStackElements.append(ASLayoutSpec.spacer(width: 5))
       headerStackElements.append(actionSpecInsets)
     }
    
@@ -227,6 +233,7 @@ extension CommentNode {
     var imageBorderWidth: CGFloat = 0.0
     var imageBorderColor: UIColor? = nil
     var imageNodeInsets = UIEdgeInsetsMake(0, 0, 0, Configuration.subnodesSpace)
+    var titleDateInsets = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
     var bodyInsetTop: CGFloat = Configuration.subnodesSpace - 5
     var titleDateVerticalSpace: CGFloat = 5
     var imageReservedHorizontalSpace: CGFloat {
