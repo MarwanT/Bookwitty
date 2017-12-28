@@ -106,6 +106,8 @@ struct CommentAPI {
       if let data = data, let newComment = Comment.parseData(data: data) {
         comment = newComment
         comment?.parentId = parentCommentIdentifier
+        // The pen name is set explicitly here because the API does not get it back
+        comment?.penName = UserManager.shared.defaultPenName
         success = true
       } else {
         completionError = BookwittyAPIError.failToParseData
