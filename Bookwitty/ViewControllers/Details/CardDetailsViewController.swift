@@ -310,11 +310,13 @@ extension CardDetailsViewController: CommentsNodeDelegate {
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action, didFinishAction: ((Bool) -> ())?) {
     switch action {
     case .viewReplies:
-      break
+      didFinishAction?(true)
     case .viewAllComments(let resource, _):
       pushCommentsViewController(with: resource)
+      didFinishAction?(true)
     case .writeComment(let resource, let parentCommentIdentifier):
       CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: parentCommentIdentifier)
+      didFinishAction?(true)
     case .commentAction(let commentIdentifier, let action, let resource, let parentCommentIdentifier):
       switch action {
       case .wit:
@@ -329,8 +331,9 @@ extension CardDetailsViewController: CommentsNodeDelegate {
         })
       case .reply:
         CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: parentCommentIdentifier)
+        didFinishAction?(true)
       default:
-        break
+        didFinishAction?(true)
       }
     }
   }
