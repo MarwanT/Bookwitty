@@ -218,6 +218,39 @@ class CommentTreeNode: ASCellNode {
   
   //MARK: HELPERS
   //=============
+  fileprivate func addComment(identifier: String, at index: Int) {
+    guard let commentInfo = delegate?.commentTreeInfo(self, commentIdentifier: identifier) else {
+      return
+    }
+    
+    let replyCommentNode = CommentNode()
+    replyCommentNode.mode = .reply
+    replyCommentNode.delegate = self
+    replyCommentNode.imageURL = commentInfo.avatarURL
+    replyCommentNode.fullName = commentInfo.fullName
+    replyCommentNode.message = commentInfo.message
+    replyCommentNode.setWitValue(
+      witted: commentInfo.isWitted,
+      numberOfWits: commentInfo.numberOfWits)
+    replyCommentNode.date = commentInfo.createdAt
+    replyCommentsNodes.insert(replyCommentNode, at: 0)
+    replyCommentsIdentifiers.insert(identifier, at: index)
+    setNeedsLayout()
+    
+    if replyCommentsNodes.count > configuration.maximumRepliesDisplayed {
+      guard let lastCommentIdentifier = replyCommentsIdentifiers.last,
+        let indexOfLastCommentIdentifier = replyCommentsIdentifiers.index(of: lastCommentIdentifier) else {
+          fatalError("CommentTreeNode: Trying to remove a comment")
+      }
+      removeComment(identifier: lastCommentIdentifier, at: indexOfLastCommentIdentifier)
+    }
+    
+    refreshDisclosureNodeText()
+  }
+  
+  fileprivate func removeComment(identifier: String, at index: Int) {
+  }
+  
   fileprivate var repliesCount: Int {
     return delegate?.commentTreeRepliesCount(self, commentIdentifier: commentIdentifier) ?? 0
   }
