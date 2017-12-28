@@ -51,7 +51,7 @@ class CommentCompactNode: ASCellNode {
 
     self.style.preferredSize = CGSize(width: 45.0, height: 60.0)
 
-    messageNode.maxNumberOfLines = 2
+    messageNode.maxNumberOfLines = 1
 
     overlayNode.addTarget(self, action: #selector(nodeTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
