@@ -231,6 +231,30 @@ extension CommentsViewModel {
     }
   }
   
+  func actions(forComment identifier: String) -> [CardActionBarNode.Action] {
+    var actions = [CardActionBarNode.Action]()
+    guard let comment = self.commentsManager?.comment(with: identifier) else {
+      return actions
+    }
+    
+    // Wit/Unwit Actions
+    if comment.isWitted {
+      actions.append(.unwit)
+    } else {
+      actions.append(.wit)
+    }
+    // Reply Action
+    if comment.parentId == nil {
+      actions.append(.reply)
+    }
+    // Remove Action
+    if let penName = comment.penName, UserManager.shared.isMy(penName: penName) {
+      actions.append(.remove)
+    }
+    
+    return actions
+  }
+  
   var displayedTotalNumberOfComments: String {
     return "\(totalNumberOfComments ?? 0)" + " " + Strings.comments().lowercased()
   }
