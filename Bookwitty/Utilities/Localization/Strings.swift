@@ -213,6 +213,10 @@ class Strings {
     return localizedString(key: "customer_service")
   }
   
+  static func delete() -> String {
+    return localizedString(key: "delete")
+  }
+  
   static func discover() -> String {
     return localizedString(key: "discover")
   }
