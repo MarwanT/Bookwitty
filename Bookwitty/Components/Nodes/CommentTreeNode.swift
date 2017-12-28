@@ -249,6 +249,11 @@ class CommentTreeNode: ASCellNode {
   }
   
   fileprivate func removeComment(identifier: String, at index: Int) {
+    replyCommentsNodes.remove(at: index)
+    replyCommentsIdentifiers.remove(at: index)
+    setNeedsLayout()
+    
+    refreshDisclosureNodeText()
   }
   
   fileprivate var repliesCount: Int {
