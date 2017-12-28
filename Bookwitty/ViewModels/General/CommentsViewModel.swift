@@ -38,6 +38,29 @@ class CommentsViewModel {
     commentsIDs = commentsManager?.commentsIDs(parentCommentIdentifier: parentCommentIdentifier) ?? []
   }
   
+  func dataChanges(relativeToCommentWith identifier: String, commentParentIdentifier: String?) -> CommentsListingUpdateType? {
+    let newCommentsIDs = commentsManager?.commentsIDs(parentCommentIdentifier: parentCommentIdentifier) ?? []
+    
+    let isInNewIdentifiersArray = newCommentsIDs.contains(identifier)
+    let isInOldIdentifiersArray = commentsIDs.contains(identifier)
+    
+    if !isInOldIdentifiersArray && isInNewIdentifiersArray {
+      let index = newCommentsIDs.index(of: identifier)!
+      return .addComment(index: index)
+    } else if isInOldIdentifiersArray && !isInNewIdentifiersArray {
+      let index = commentsIDs.index(of: identifier)!
+      return .removeComment(index: index)
+    } else if !isInOldIdentifiersArray && !isInNewIdentifiersArray {
+      guard let commentParentIdentifier = commentParentIdentifier else {
+        return nil
+      }
+      let index = commentsIDs.index(of: commentParentIdentifier)!
+      return .updateTree(index: index)
+    }
+    
+    return nil
+  }
+  
   func numberOfItems(in section: Int) -> Int {
     switch section {
     case CommentsNode.Section.count.rawValue:
