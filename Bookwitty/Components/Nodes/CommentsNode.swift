@@ -153,7 +153,7 @@ class CommentsNode: ASCellNode {
   }
   
   fileprivate func loadNextPage(completion: @escaping (_ success: Bool) -> Void) {
-    guard !viewModel.isFetchingData, viewModel.hasNextPage else {
+    guard displayMode != .compact, !viewModel.isFetchingData, viewModel.hasNextPage else {
       completion(false)
       return
     }
