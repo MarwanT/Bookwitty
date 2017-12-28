@@ -255,6 +255,21 @@ extension CommentsViewModel {
     return actions
   }
   
+  func string(for action: CardActionBarNode.Action) -> String? {
+    switch action {
+    case .wit:
+      return Strings.wit_it()
+    case .unwit:
+      return Strings.witted()
+    case .reply:
+      return Strings.reply()
+    case .remove:
+      return Strings.delete()
+    default:
+      return nil
+    }
+  }
+  
   var displayedTotalNumberOfComments: String {
     return "\(totalNumberOfComments ?? 0)" + " " + Strings.comments().lowercased()
   }
