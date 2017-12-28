@@ -216,7 +216,9 @@ class CommentNode: ASCellNode {
   }
   
   func moreButtonTouchUpInside(_ sender: ASButtonNode) {
-    
+    delegate?.commentNode(
+      self, didRequestAction: CardActionBarNode.Action.more,
+      forSender: sender, didFinishAction: nil)
   }
 }
 
