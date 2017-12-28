@@ -681,6 +681,13 @@ extension CommentsNode {
     }
   }
   
+  func removeComment(commentIdentifier: String, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
+    viewModel.removeComment(commentIdentifier: commentIdentifier) {
+      (success, error) in
+      completion?(success, error)
+    }
+  }
+  
   func wit(commentIdentifier: String, completion: ((_ success: Bool, _ error: CommentsManager.Error?) -> Void)?) {
     viewModel.wit(commentIdentifier: commentIdentifier) {
       (success, error) in
