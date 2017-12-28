@@ -21,6 +21,7 @@ class CommentNode: ASCellNode {
   fileprivate let messageNode: DynamicCommentMessageNode
   fileprivate let replyButton: ASButtonNode
   fileprivate let witButton: ASWitButton
+  fileprivate let moreButton: ASButtonNode
   
   var mode = DisplayMode.normal {
     didSet {
@@ -44,6 +45,7 @@ class CommentNode: ASCellNode {
     messageNode = DynamicCommentMessageNode()
     replyButton = ASButtonNode()
     witButton = ASWitButton()
+    moreButton = ASButtonNode()
     super.init()
     setupNode()
     applyTheme()
@@ -67,6 +69,14 @@ class CommentNode: ASCellNode {
     witButton.delegate = self
     witButton.configuration.height = 27.0
     witButton.configuration.font = FontDynamicType.footnote.font
+    
+    let iconTintColor: UIColor = ThemeManager.shared.currentTheme.colorNumber15()
+    moreButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(iconTintColor)
+    moreButton.style.preferredSize = configuration.iconSize
+    moreButton.setImage(#imageLiteral(resourceName: "threeDots"), for: .normal)
+    moreButton.addTarget(
+      self, action: #selector(moreButtonTouchUpInside(_:)),
+      forControlEvents: .touchUpInside)
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -92,9 +102,11 @@ class CommentNode: ASCellNode {
     if mode != .minimal {
       let actionsSpec = ASStackLayoutSpec(
         direction: .horizontal, spacing: 0, justifyContent: .end,
-        alignItems: .start, children: [witButton])
+        alignItems: .start, children: [witButton, ASLayoutSpec.spacer(width: 5), moreButton])
+      let actionSpecInsets = ASInsetLayoutSpec(
+        insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -10), child: actionsSpec)
       headerStackElements.append(ASLayoutSpec.spacer(flexGrow: 1.0))
-      headerStackElements.append(actionsSpec)
+      headerStackElements.append(actionSpecInsets)
     }
    
     let headerSpec = ASStackLayoutSpec(
@@ -196,6 +208,10 @@ class CommentNode: ASCellNode {
       self, didRequestAction: CardActionBarNode.Action.reply,
       forSender: sender, didFinishAction: nil)
   }
+  
+  func moreButtonTouchUpInside(_ sender: ASButtonNode) {
+    
+  }
 }
 
 // MARK: Configuration declaration
@@ -207,6 +223,7 @@ extension CommentNode {
     var dateColor: UIColor = ThemeManager.shared.currentTheme.colorNumber15()
     var replyButtonTextColor: UIColor = ThemeManager.shared.currentTheme.defaultButtonColor()
     var imageSize: CGSize = CGSize(width: 45.0, height: 45.0)
+    var iconSize: CGSize = CGSize(width: 40.0, height: 27.0)
     var imageBorderWidth: CGFloat = 0.0
     var imageBorderColor: UIColor? = nil
     var imageNodeInsets = UIEdgeInsetsMake(0, 0, 0, Configuration.subnodesSpace)
