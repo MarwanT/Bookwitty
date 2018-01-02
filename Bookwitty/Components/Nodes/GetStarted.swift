@@ -27,6 +27,8 @@ class GetStarted: ASDisplayNode {
     }
   }
   
+  lazy var genericViewController: UIViewController = self.viewController(title: Strings.account())
+  
   override init() {
     super.init()
     initializeComponents()
