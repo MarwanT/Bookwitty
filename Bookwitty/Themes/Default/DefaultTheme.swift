@@ -50,7 +50,7 @@ final class DefaultTheme: Theme {
 // MARK: - Colors
 extension DefaultTheme {
   func colorNumber1() -> UIColor {
-    return UIColor.bwFloralWhite
+    return UIColor.bwBeige
   }
   func colorNumber2() -> UIColor {
     return UIColor.bwWhiteLinen
