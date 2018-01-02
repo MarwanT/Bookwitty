@@ -265,20 +265,30 @@ extension RichLinkPreviewViewController {
   }
 
   fileprivate func fillVideoPreview(with response: Response) {
-    if let imageUrl = response.thumbnails?.first?.url {
-      videoImageView.sd_setImage(with: imageUrl) { (image: UIImage?, _, _, _) in
-        guard let image = image else {
-          return
-        }
-        let ratio = self.videoImageView.frame.width / image.size.width
-        let height = image.size.height * ratio
-        self.videoPreviewHeightConstraint.constant = height
-        self.contentHeightConstraint.constant = 5 + height + 5
-        }
-    } else {
+    
+    func imageIsNotAvailable() {
       videoImageView.image = #imageLiteral(resourceName: "videoPlaceholder")
       videoImageView.tintColor = ThemeManager.shared.currentTheme.colorNumber15()
+      videoImageView.contentMode = .scaleAspectFill
+      videoPlayView.isHidden = true
+      videoPreview.isHidden = false
     }
+    
+    if let imageUrl = response.thumbnails?.first?.url {
+      
+      videoImageView.sd_setImage(with: imageUrl) { [weak videoPlayView] (image: UIImage?, _, _, _) in
+        guard let _ = image else {
+          imageIsNotAvailable()
+          return
+        }
+        videoPlayView?.isHidden = false
+      }
+    } else {
+      imageIsNotAvailable()
+    }
+    videoTitleLabel.text = response.title
+    videoDescriptionLabel.text = response.shortDescription
+    videoHostLabel.text = response.site
     videoPreview.isHidden = false
   }
 
