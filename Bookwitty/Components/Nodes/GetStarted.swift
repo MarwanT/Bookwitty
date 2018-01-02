@@ -214,3 +214,18 @@ extension GetStarted {
       name: AppNotification.shouldDisplayRegistration, object: nil)
   }
 }
+
+extension GetStarted: Localizable {
+  func applyLocalization() {
+    self.genericViewController.title = Strings.account()
+  }
+  
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+  
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
+  }
+}
