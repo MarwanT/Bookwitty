@@ -293,13 +293,23 @@ extension RichLinkPreviewViewController {
   }
 
   fileprivate func fillAudioPreview(with response: Response) {
+    
+    func imageIsNotAvailable() {
+      audioImageView.image = #imageLiteral(resourceName: "audioPlaceholder")
+    }
+    
     if let imageUrl = response.thumbnails?.first?.url {
-      audioImageView.sd_setImage(with: imageUrl)
+      audioImageView.sd_setImage(with: imageUrl) { (image: UIImage?, _, _, _) in
+        guard let _ = image else {
+          imageIsNotAvailable()
+          return
+        }
+      }
       audioTitleLabel.text = response.title
       audioDescriptionLabel.text = response.shortDescription
       audioHostLabel.text = response.embedUrl?.host
     } else {
-      audioImageView.image = #imageLiteral(resourceName: "audioPlaceholder")
+      imageIsNotAvailable()
     }
     
     audioPreview.isHidden = false
