@@ -179,7 +179,10 @@ extension RichLinkPreviewViewController: Themeable {
     videoPlayView.image = #imageLiteral(resourceName: "play")
     videoPlayView.tintColor = ThemeManager.shared.currentTheme.colorNumber23().withAlphaComponent(0.9)
     videoPlayView.contentMode = .scaleAspectFit
-
+    videoTitleLabel.textColor = ThemeManager.shared.currentTheme.colorNumber23()
+    videoDescriptionLabel.textColor = ThemeManager.shared.currentTheme.colorNumber23()
+    videoHostLabel.textColor = ThemeManager.shared.currentTheme.colorNumber23()
+    
     //Audio Preview
     audioPreview.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
     audioPreview.layer.borderColor = ThemeManager.shared.currentTheme.defaultSeparatorColor().cgColor
