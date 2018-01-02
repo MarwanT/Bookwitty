@@ -354,7 +354,7 @@ extension RegisterViewController: TTTAttributedLabelDelegate {
 
 extension RegisterViewController: Themeable {
   func applyTheme() {
-    self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
+    self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
     continueButton.setTitle(Strings.continue(), for: .normal)
     ThemeManager.shared.currentTheme.stylePrimaryButton(button: continueButton)
     stackViewBackgroundView.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()

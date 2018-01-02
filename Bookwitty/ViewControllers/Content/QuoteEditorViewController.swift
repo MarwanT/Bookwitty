@@ -128,7 +128,7 @@ extension QuoteEditorViewController: Localizable {
 //MARK: - Themable implementation
 extension QuoteEditorViewController: Themeable {
   func applyTheme() {
-    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
+    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
 
     view.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
     quoteTextView.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()

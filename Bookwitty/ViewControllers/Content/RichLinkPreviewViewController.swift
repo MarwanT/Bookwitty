@@ -176,7 +176,7 @@ class RichLinkPreviewViewController: UIViewController {
 //MARK: - Themable implementation
 extension RichLinkPreviewViewController: Themeable {
   func applyTheme() {
-    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
+    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
 
     view.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
     textView.textContainerInset = ThemeManager.shared.currentTheme.defaultLayoutMargin()
