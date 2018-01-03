@@ -192,7 +192,7 @@ class ContentEditorViewController: UIViewController {
     
     let publishMenuViewController = Storyboard.Content.instantiate(PublishMenuViewController.self)
     publishMenuViewController.delegate = self
-    publishMenuViewController.viewModel.initialize(with: self.viewModel.linkedTags, linkedPages: self.viewModel.linkedPages, isEditing: self.mode.isEditing)
+    publishMenuViewController.viewModel.initialize(with: self.viewModel.currentPost.id, linkedTags: self.viewModel.linkedTags, linkedPages: self.viewModel.linkedPages, isEditing: self.mode.isEditing)
     self.definesPresentationContext = true
     publishMenuViewController.view.backgroundColor = .clear
     publishMenuViewController.modalPresentationStyle = .overCurrentContext

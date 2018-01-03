@@ -120,6 +120,39 @@ struct ContentAPI {
       success = statusCode == successStatusCode
     })
   }
+
+  static func linkedTags(to contentIdentifier: String, closure: @escaping (_ success: Bool, _ tags: [Tag]?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let successStatusCode = 200
+    return signedAPIRequest(target: .linkedTags(contentIdentifier: contentIdentifier), completion: {
+      (data, statusCode, response, error) in
+      var success: Bool = false
+      var error: BookwittyAPIError? = nil
+      var tags: [Tag]? = nil
+     
+      defer {
+        closure(success, tags, error)
+      }
+      
+      guard let statusCode = statusCode else {
+        error = BookwittyAPIError.invalidStatusCode
+        return
+      }
+      
+      guard let data = data, let values = Parser.parseDataArray(data: data), let tagResources = values.resources as? [Tag] else {
+        error = BookwittyAPIError.failToParseData
+        return
+      }
+      
+      tags = tagResources
+      success = statusCode == successStatusCode
+    })
+  }
+
+  static func linkedPages(to contentIdentifier: String, closure: @escaping (_ success: Bool, _ pages: [ModelResource]?, _ next: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    return GeneralAPI.postsLinkedContent(contentIdentifier: contentIdentifier, type: [Topic.resourceType]) { (success: Bool, pages: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
+      closure(success, pages, next, error)
+    }
+  }
 }
 
 extension ContentAPI {
