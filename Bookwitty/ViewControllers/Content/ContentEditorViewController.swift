@@ -25,7 +25,11 @@ class ContentEditorViewController: UIViewController {
   
   private var timer: Timer!
   var toolbarButtons: [ContentEditorOption:SelectedImageView] = [:]
-  
+  var hasContent: Bool {
+    let title = self.titleTextField.text ?? ""
+    let body = self.editorView.getContent()
+    return title.characters.count > 0 && body.characters.count > 0
+  }
   enum DispatchStatus {
     case create
     case update
@@ -157,27 +161,12 @@ class ContentEditorViewController: UIViewController {
   @objc private func closeBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
     self.resignResponders()
     
-    let title = self.titleTextField.text ?? ""
-    let body = self.editorView.getContent()
-    
-    guard title.characters.count > 0 && body.characters.count > 0  else {
-      
-      if self.viewModel.currentPost.id != nil {
-        self.viewModel.deletePost() { _, _ in }
-      } else {
-        try? self.viewModel.deleteLocalDraft()
-      }
-      dismiss()
-      return
-    }
-    
     presentConfirmSaveOrDiscardActionSheet { (option: ContentEditorViewController.ConfirmationOption, success: Bool) in
       switch option {
       case .saveDraft where success: fallthrough
       case .discardPost where success: fallthrough
       case .nonNeeded:
-        self.timer.invalidate()
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss()
       default:
         break
       }
@@ -185,7 +174,6 @@ class ContentEditorViewController: UIViewController {
   }
   
   @objc private func draftsBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
-    self.viewModel.dispatchContent()
     self.presentDraftsViewController()
   }
   
@@ -459,6 +447,16 @@ extension ContentEditorViewController {
       return
     }
 
+    guard self.hasContent else {
+      if self.viewModel.currentPost.id != nil {
+        self.viewModel.deletePost() { _, _ in }
+      } else {
+        try? self.viewModel.deleteLocalDraft()
+      }
+      closure(.nonNeeded, true)
+      return
+    }
+    
     guard self.viewModel.needsRemoteSync else {
       closure(.nonNeeded, true)
       return
