@@ -25,7 +25,11 @@ class ContentEditorViewController: UIViewController {
   
   private var timer: Timer!
   var toolbarButtons: [ContentEditorOption:SelectedImageView] = [:]
-  
+  var hasContent: Bool {
+    let title = self.titleTextField.text ?? ""
+    let body = self.editorView.getContent()
+    return title.characters.count > 0 && body.characters.count > 0
+  }
   enum DispatchStatus {
     case create
     case update
