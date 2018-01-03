@@ -461,6 +461,16 @@ extension ContentEditorViewController {
       return
     }
 
+    guard self.hasContent else {
+      if self.viewModel.currentPost.id != nil {
+        self.viewModel.deletePost() { _, _ in }
+      } else {
+        try? self.viewModel.deleteLocalDraft()
+      }
+      closure(.nonNeeded, true)
+      return
+    }
+    
     guard self.viewModel.needsRemoteSync else {
       closure(.nonNeeded, true)
       return
