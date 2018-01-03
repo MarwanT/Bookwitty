@@ -180,8 +180,7 @@ class ContentEditorViewController: UIViewController {
       case .saveDraft where success: fallthrough
       case .discardPost where success: fallthrough
       case .nonNeeded:
-        self.timer.invalidate()
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss()
       default:
         break
       }
