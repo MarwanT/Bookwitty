@@ -158,7 +158,7 @@ class RootTabBarController: UITabBarController {
     } else {
       let getStartedNode = GetStarted()
       getStartedNode.getStartedText = Strings.get_started_newsfeed_text()
-      viewController = getStartedNode.viewController()
+      viewController = getStartedNode.genericViewController
       hideNavigationBar = false
     }
     
@@ -178,7 +178,7 @@ class RootTabBarController: UITabBarController {
     } else {
       let getStartedNode = GetStarted()
       getStartedNode.getStartedText = Strings.get_started_account_text()
-      viewController = getStartedNode.viewController()
+      viewController = getStartedNode.genericViewController
       hideNavigationBar = false
     }
 

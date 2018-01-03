@@ -27,6 +27,8 @@ class GetStarted: ASDisplayNode {
     }
   }
   
+  lazy var genericViewController: UIViewController = self.viewController(title: Strings.account())
+  
   override init() {
     super.init()
     initializeComponents()
@@ -210,5 +212,20 @@ extension GetStarted {
   @objc fileprivate func registerNodeTouchUpInside(_ sender: ASControlNode) {
     NotificationCenter.default.post(
       name: AppNotification.shouldDisplayRegistration, object: nil)
+  }
+}
+
+extension GetStarted: Localizable {
+  func applyLocalization() {
+    self.genericViewController.title = Strings.account()
+  }
+  
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+  
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }

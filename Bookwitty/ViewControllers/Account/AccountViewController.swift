@@ -22,11 +22,12 @@ class AccountViewController: UIViewController {
     super.viewDidLoad()
 
     // Do any additional setup after loading the view.
+    self.title = Strings.account()
     initializeComponents()
     applyTheme()
     fillUserInformation()
     addObservers()
-
+    self.tabBarItem.title = Strings.me().uppercased()
     navigationItem.backBarButtonItem = UIBarButtonItem.back
 
     //MARK: [Analytics] Screen Name
