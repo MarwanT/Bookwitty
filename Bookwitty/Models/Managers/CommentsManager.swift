@@ -471,12 +471,12 @@ extension CommentsManager {
   }
   
   fileprivate func decreaseCountForRemoved(comment: Comment) {
-    resource?.counts?.comments = (resource?.counts?.comments ?? 1) - 1
+    resource?.counts?.comments = (resource?.counts?.comments ?? 1) - ((comment.counts?.children ?? 0) + 1)
     if let parentIdentifier = comment.parentId {
       guard let parentComment = self.comment(with: parentIdentifier) else {
         return
       }
-      parentComment.counts?.children = (parentComment.counts?.children ?? 1) - 1
+      parentComment.counts?.children = (parentComment.counts?.children ?? 1) - ((comment.counts?.children ?? 0) + 1)
     }
   }
 }
