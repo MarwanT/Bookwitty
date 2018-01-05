@@ -1907,6 +1907,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Bookwitty/Pods-Bookwitty-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AKImageCropperView/AKImageCropperView.framework",
 				"${BUILT_PRODUCTS_DIR}/ALCameraViewController/ALCameraViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AsyncDisplayKit/AsyncDisplayKit.framework",
@@ -1946,6 +1947,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AKImageCropperView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ALCameraViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AsyncDisplayKit.framework",
