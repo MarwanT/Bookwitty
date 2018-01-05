@@ -332,7 +332,7 @@ extension BookwittyAPI: TargetType {
       return UploadAPI.uploadPolicyParameters(file: file, fileType: fileType, assetType: assetType)
     case .editions(_, let formats):
       return ContentAPI.editionsFilterParameters(formats: formats)
-    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .penNameContent, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment, .dimComment, .undimComment, .preferredFormats, .report, .reportPenName, .removeComment, .removeContent, .linkedTags:
+    case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .penNames, .wit, .unwit, .absolute, .discover, .onBoarding, .follow, .unfollow, .content, .followers, .penNameFollowers, .penNameFollowing, .unfollowPenName, .followPenName, .status, .resendAccountConfirmation, .penName, .uploadMultipart, .comments, .replies, .witComment, .unwitComment, .dimComment, .undimComment, .preferredFormats, .report, .reportPenName, .removeComment, .removeContent, .linkedTags:
       return nil
     }
   }
