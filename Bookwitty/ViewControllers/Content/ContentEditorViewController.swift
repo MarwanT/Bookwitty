@@ -235,14 +235,6 @@ class ContentEditorViewController: UIViewController {
     alertController.addTextField(configurationHandler: {(_ textField: UITextField) -> Void in
       textField.placeholder = "http://"
       
-      NotificationCenter.default.addObserver(forName: NSNotification.Name.UITextFieldTextDidChange, object: textField, queue: .main) { _ in
-        
-        let text = textField.text ?? ""
-        let isEmpty = text.characters.count == 0 && link != nil
-        let isURL = text.isValidURL
-        
-        confirmAction.isEnabled = isEmpty || isURL
-      }
       textField.text = link
     })
     
