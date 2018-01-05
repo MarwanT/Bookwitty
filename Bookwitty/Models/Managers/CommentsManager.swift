@@ -9,8 +9,6 @@
 import Foundation
 import Moya
 
-typealias CommentInfo = (id: String, avatarURL: URL?, fullName: String?, message: String?, isWitted: Bool, numberOfWits: Int?, createdAt: Date?, numberOfReplies: Int)
-
 class CommentsManager {
   fileprivate static var managersPool = NSPointerArray.weakObjects()
   
@@ -536,23 +534,5 @@ extension CommentsManager {
         return newManager
     }
     return manager
-  }
-}
-
-//MARK: - Comment
-                                    //****\\
-extension Comment {
-  func info() -> CommentInfo? {
-    guard let identifier = id else {
-      return nil
-    }
-    return (id: identifier,
-            avatarURL: URL(string: penName?.avatarUrl ?? ""),
-            fullName: penName?.name,
-            message: body,
-            isWitted: isWitted,
-            numberOfWits: counts?.wits,
-            createdAt: createdAt as? Date,
-            numberOfReplies: counts?.children ?? 0)
   }
 }
