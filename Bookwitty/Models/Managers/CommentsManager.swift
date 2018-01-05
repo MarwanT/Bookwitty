@@ -52,7 +52,7 @@ extension CommentsManager {
   }
   
   func comment(with commentIdentifier: String) -> Comment? {
-    return commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first?.comment
+    return commentsRegistry.first(where: { $0.commentIdentifier == commentIdentifier })?.comment
   }
   
   func replies(forParentCommentIdentifier identifier: String) -> [Comment] {
@@ -61,7 +61,7 @@ extension CommentsManager {
   
   func hasNextPage(commentIdentifier: String?) -> Bool {
     if let commentIdentifier = commentIdentifier {
-      guard let registry = commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first else {
+      guard let registry = commentsRegistry.first(where: { $0.commentIdentifier == commentIdentifier }) else {
         return false
       }
       return registry.nextPageURL != nil
@@ -158,7 +158,7 @@ extension CommentsManager {
   fileprivate func witComment(with commentIdentifier: String) {
     guard let resource = resource,
       let resourceIdentifier = resource.id,
-      let registry = commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first,
+      let registry = commentsRegistry.first(where: { $0.commentIdentifier == commentIdentifier }),
       let commentIdentifier = registry.commentIdentifier else {
       return
     }
@@ -180,7 +180,7 @@ extension CommentsManager {
   fileprivate func unwitComment(with commentIdentifier: String) {
     guard let resource = resource,
       let resourceIdentifier = resource.id,
-      let registry = commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first,
+      let registry = commentsRegistry.first(where: { $0.commentIdentifier == commentIdentifier }),
       let commentIdentifier = registry.commentIdentifier else {
         return
     }
@@ -527,7 +527,7 @@ extension CommentsManager {
     
     // Retrieve or create manager for the given resource
     guard let managers = managersPool.allObjects as? [CommentsManager],
-      let manager =  managers.filter({ $0.resource?.id == resource.id }).first else {
+      let manager =  managers.first(where: { $0.resource?.id == resource.id }) else {
         let newManager = CommentsManager()
         newManager.initialize(resource: resource)
         managersPool.addObject(newManager)
