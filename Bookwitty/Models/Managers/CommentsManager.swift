@@ -9,8 +9,6 @@
 import Foundation
 import Moya
 
-typealias CommentInfo = (id: String, avatarURL: URL?, fullName: String?, message: String?, isWitted: Bool, numberOfWits: Int?, createdAt: Date?, numberOfReplies: Int)
-
 class CommentsManager {
   fileprivate static var managersPool = NSPointerArray.weakObjects()
   
@@ -54,7 +52,7 @@ extension CommentsManager {
   }
   
   func comment(with commentIdentifier: String) -> Comment? {
-    return commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first?.comment
+    return commentsRegistry.first(where: { $0.commentIdentifier == commentIdentifier })?.comment
   }
   
   func replies(forParentCommentIdentifier identifier: String) -> [Comment] {
@@ -63,7 +61,7 @@ extension CommentsManager {
   
   func hasNextPage(commentIdentifier: String?) -> Bool {
     if let commentIdentifier = commentIdentifier {
-      guard let registry = commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first else {
+      guard let registry = commentsRegistry.first(where: { $0.commentIdentifier == commentIdentifier }) else {
         return false
       }
       return registry.nextPageURL != nil
@@ -160,7 +158,7 @@ extension CommentsManager {
   fileprivate func witComment(with commentIdentifier: String) {
     guard let resource = resource,
       let resourceIdentifier = resource.id,
-      let registry = commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first,
+      let registry = commentsRegistry.first(where: { $0.commentIdentifier == commentIdentifier }),
       let commentIdentifier = registry.commentIdentifier else {
       return
     }
@@ -182,7 +180,7 @@ extension CommentsManager {
   fileprivate func unwitComment(with commentIdentifier: String) {
     guard let resource = resource,
       let resourceIdentifier = resource.id,
-      let registry = commentsRegistry.filter({ $0.commentIdentifier == commentIdentifier }).first,
+      let registry = commentsRegistry.first(where: { $0.commentIdentifier == commentIdentifier }),
       let commentIdentifier = registry.commentIdentifier else {
         return
     }
@@ -340,7 +338,8 @@ extension CommentsManager {
         completion(success, comment, CommentsManager.Error.api(error))
       }
       
-      guard success, let comment = comment else {
+      guard success, let comment = comment,
+        let commentIdentifier = comment.id else {
         return
       }
       _ = self.updateRegistry(with: comment, addFromBeginning: true)
@@ -355,7 +354,7 @@ extension CommentsManager {
           action: CommentsNode.Action.writeComment(
             resource: resource,
             parentCommentIdentifier: comment.parentId),
-          commentIdentifier: comment.id!
+          commentIdentifier: commentIdentifier
         )
       )
     })
@@ -397,7 +396,7 @@ extension CommentsManager {
           action: CommentsNode.Action.commentAction(
             commentIdentifier: commentIdentifier, action: .remove,
             resource: resource, parentCommentIdentifier: comment.parentId),
-          commentIdentifier: comment.id!))
+          commentIdentifier: commentIdentifier))
     })
   }
   
@@ -529,30 +528,12 @@ extension CommentsManager {
     
     // Retrieve or create manager for the given resource
     guard let managers = managersPool.allObjects as? [CommentsManager],
-      let manager =  managers.filter({ $0.resource?.id == resource.id }).first else {
+      let manager =  managers.first(where: { $0.resource?.id == resource.id }) else {
         let newManager = CommentsManager()
         newManager.initialize(resource: resource)
         managersPool.addObject(newManager)
         return newManager
     }
     return manager
-  }
-}
-
-//MARK: - Comment
-                                    //****\\
-extension Comment {
-  func info() -> CommentInfo? {
-    guard let identifier = id else {
-      return nil
-    }
-    return (id: identifier,
-            avatarURL: URL(string: penName?.avatarUrl ?? ""),
-            fullName: penName?.name,
-            message: body,
-            isWitted: isWitted,
-            numberOfWits: counts?.wits,
-            createdAt: createdAt as? Date,
-            numberOfReplies: counts?.children ?? 0)
   }
 }
