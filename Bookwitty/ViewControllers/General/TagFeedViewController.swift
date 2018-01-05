@@ -544,18 +544,17 @@ extension TagFeedViewController: BaseCardPostNodeDelegate {
 
   func cardNode(card: BaseCardPostNode, didRequestAction action: BaseCardPostNode.Action, from: ASDisplayNode) {
     guard let indexPath = collectionNode.indexPath(for: card),
-      let resource = viewModel.resourceForIndex(index: indexPath.item),
-      let postId = resource.id else {
+      let resource = viewModel.resourceForIndex(index: indexPath.item) as? ModelCommonProperties else {
         return
     }
 
     let analyticsAction: Analytics.Action
     switch(action) {
     case .listComments:
-      pushCommentsViewController(for: resource as? ModelCommonProperties)
+      pushCommentsViewController(for: resource)
       analyticsAction = .ViewTopComment
     case .publishComment:
-      CommentComposerViewController.show(from: self, delegate: self, postId: postId, parentCommentId: nil)
+      CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: nil)
       analyticsAction = .AddComment
     }
 
@@ -588,7 +587,7 @@ extension TagFeedViewController: BaseCardPostNodeDelegate {
       category = .Default
     }
 
-    let name: String = (resource as? ModelCommonProperties)?.title ?? ""
+    let name: String = resource.title ?? ""
     let event: Analytics.Event = Analytics.Event(category: category,
                                                  action: analyticsAction,
                                                  name: name)
@@ -605,37 +604,25 @@ extension TagFeedViewController: CommentComposerViewControllerDelegate {
   func commentComposerCancel(_ viewController: CommentComposerViewController) {
     dismiss(animated: true, completion: nil)
   }
-
-  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, postId: String?, parentCommentId: String?) {
-    guard let postId = postId else {
-      _ = viewController.becomeFirstResponder()
-      return
-    }
-
+  
+  func commentComposerWillBeginPublishingComment(_ viewController: CommentComposerViewController) {
     SwiftLoader.show(animated: true)
-    let commentManager = CommentsManager()
-    commentManager.initialize(postIdentifier: postId)
-    commentManager.publishComment(content: content, parentCommentId: nil) {
-      (success: Bool, comment: Comment?, error: CommentsManager.Error?) in
-      SwiftLoader.hide()
-      guard success else {
-        guard let error = error else { return }
-        self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
-          _ in
-          _ = viewController.becomeFirstResponder()
-        })
-        return
-      }
-
-      if let resource = DataManager.shared.fetchResource(with: postId), let comment = comment {
-        var topComments = (resource as? ModelCommonProperties)?.topComments ?? []
-        topComments.append(comment)
-        (resource as? ModelCommonProperties)?.topComments = topComments
-        DataManager.shared.update(resource: resource)
-      }
-
+  }
+  
+  func commentComposerDidFinishPublishingComment(_ viewController: CommentComposerViewController, success: Bool, comment: Comment?, resource: ModelCommonProperties?) {
+    SwiftLoader.hide()
+    
+    if success {
       self.dismiss(animated: true, completion: nil)
     }
-    dismiss(animated: true, completion: nil)
+    
+    if let resource = resource, let comment = comment {
+      var topComments = resource.topComments ?? []
+      topComments.append(comment)
+      resource.topComments = topComments
+      if let castedResource = resource as? ModelResource {
+        DataManager.shared.update(resource: castedResource)
+      }
+    }
   }
 }

@@ -105,9 +105,37 @@ struct CommentAPI {
       // Parse Data
       if let data = data, let newComment = Comment.parseData(data: data) {
         comment = newComment
+        comment?.parentId = parentCommentIdentifier
+        // The pen name is set explicitly here because the API does not get it back
+        comment?.penName = UserManager.shared.defaultPenName
         success = true
       } else {
         completionError = BookwittyAPIError.failToParseData
+      }
+    })
+  }
+  
+  public static func removeComment(commentIdentifier: String, completion: @escaping (_ success: Bool, _ commentIdentifier: String, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let removeCommentsSuccessStatusCode = 204
+    
+    return signedAPIRequest(target: .removeComment(commentId: commentIdentifier), completion: {
+      (data, statusCode, response, error) in
+      DispatchQueue.global(qos: .background).async {
+        var success: Bool = false
+        var commentIdentifier = commentIdentifier
+        var error: BookwittyAPIError? = error
+        defer {
+          DispatchQueue.main.async {
+            completion(success, commentIdentifier, error)
+          }
+        }
+        
+        guard statusCode == removeCommentsSuccessStatusCode else {
+          error = BookwittyAPIError.invalidStatusCode
+          return
+        }
+        
+        success  = true
       }
     })
   }

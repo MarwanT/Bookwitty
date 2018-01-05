@@ -57,6 +57,7 @@
 "current_password" = "Current Password";
 "current_password_is_empty_error" = "Current password was left empty!";
 "customer_service" = "Customer Service";
+"delete" = "Delete";
 "discover" = "Discover";
 "discover_banner_message" = "Check back here anytime to find the best stories from the community.";
 "dismiss" = "Dismiss";
@@ -100,6 +101,7 @@
 "hide_formats_and_editions" = "Hide formats and editions";
 "image" = "Image";
 "imprint" = "Publisher";
+"in_response_to" = "In response to:";
 "in_stock" = "In stock";
 "interests" = "Interests";
 "isbn10" = "ISBN-10";
@@ -118,6 +120,7 @@
 "latest" = "Latest";
 "link" = "Link";
 "list_price" = "List price";
+"more" = "More";
 "most_popular" = "Most popular";
 "my_interests" = "My interests";
 "my_orders" = "My Orders";
@@ -236,6 +239,7 @@
 "width" = "Width";
 "wit_it" = "Wit";
 "witted" = "Witted";
+"write_a_comment" = "Write a comment";
 "yes_this_is_spam" = "Yes, this is spam";
 "yesterday" = "Yesterday";
 "you" = "You";
@@ -267,6 +271,7 @@
 "f_others_find_witty" = "and %d others find this witty";
 "f_view_all_replies" = "View all %d replies";
 "f_view_formats_and_editions" = "View all %d formats and editions";
+"f_wits" = "2 wits";
 
 /**
  Discussion:

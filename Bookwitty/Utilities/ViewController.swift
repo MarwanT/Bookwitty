@@ -73,15 +73,13 @@ extension UIViewController {
   }
 
   func pushCommentsViewController(for resource: ModelCommonProperties?) {
-    guard let identifier = resource?.id else {
+    guard let resource = resource else {
       return
     }
 
-    let commentsManager = CommentsManager()
-    commentsManager.initialize(postIdentifier: identifier)
-
     let commentsVC = CommentsViewController()
-    commentsVC.initialize(with: commentsManager)
+    commentsVC.initialize(with: resource)
+    commentsVC.hidesBottomBarWhenPushed = true
     self.navigationController?.pushViewController(commentsVC, animated: true)
   }
 

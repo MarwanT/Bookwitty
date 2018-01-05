@@ -57,6 +57,7 @@
 "current_password" = "Mot de passe actuel";
 "current_password_is_empty_error" = "Vous n'avez pas entré votre mot de passe";
 "customer_service" = "Service client";
+"delete" = "Supprimer";
 "discover" = "Découvrir";
 "discover_banner_message" = "Chaque jour, retrouvez ici les meilleurs articles de la communauté Bookwitty";
 "dismiss" = "Dismiss";
@@ -100,6 +101,7 @@
 "hide_formats_and_editions" = "Cacher les formats et les éditions";
 "image" = "Image";
 "imprint" = "Éditeur";
+"in_response_to" = "En reponse à:";
 "in_stock" = "Disponible";
 "interests" = "Intérêts";
 "isbn10" = "ISBN-10";
@@ -118,6 +120,7 @@
 "latest" = "Nouveautés";
 "link" = "Lien";
 "list_price" = "Prix conseillé";
+"more" = "Plus";
 "most_popular" = "Les plus populaires";
 "my_interests" = "Mes intérêts";
 "my_orders" = "Mes commandes";
@@ -236,6 +239,7 @@
 "width" = "Largeur";
 "wit_it" = "Wit";
 "witted" = "Witté";
+"write_a_comment" = "Écrire un commentaire";
 "yes_this_is_spam" = "Yes, this is spam";
 "yesterday" = "Hier";
 "you" = "Vous";
@@ -267,6 +271,7 @@
 "f_others_find_witty" = "et %d autres personnes avez witté ceci";
 "f_view_all_replies" = "Voir les %d réponses";
 "f_view_formats_and_editions" = "Voir les %d éditions";
+"f_wits" = "2 wits";
 
 /**
  Discussion:

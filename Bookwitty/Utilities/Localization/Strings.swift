@@ -213,6 +213,10 @@ class Strings {
     return localizedString(key: "customer_service")
   }
   
+  static func delete() -> String {
+    return localizedString(key: "delete")
+  }
+  
   static func discover() -> String {
     return localizedString(key: "discover")
   }
@@ -385,6 +389,10 @@ class Strings {
     return localizedString(key: "imprint")
   }
   
+  static func in_response_to() -> String {
+    return localizedString(key: "in_response_to")
+  }
+  
   static func in_stock() -> String {
     return localizedString(key: "in_stock")
   }
@@ -455,6 +463,10 @@ class Strings {
   
   static func list_price() -> String {
     return localizedString(key: "list_price")
+  }
+  
+  static func more() -> String {
+    return localizedString(key: "more")
   }
   
   static func most_popular() -> String {
@@ -921,6 +933,10 @@ class Strings {
     return localizedString(key: "wit_it")
   }
   
+  static func write_a_comment() -> String {
+    return localizedString(key: "write_a_comment")
+  }
+  
   static func witted() -> String {
     return localizedString(key: "witted")
   }
@@ -1022,10 +1038,15 @@ class Strings {
     return localizedString(key: "f_number_of_years_ago", formatVariables: number)
   }
   
+  static func wits(_ number: Int) -> String {
+    return localizedString(key: "f_wits", formatVariables: number)
+  }
+  
 
   private static func othersFindThisWitty(witters: Int) -> String {
     return localizedString(key: "f_others_find_witty", formatVariables: witters)
   }
+  
 
   /**
    Discussion:

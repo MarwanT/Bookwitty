@@ -142,10 +142,10 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
   }
   
   func loadComments() {
-    guard let id = viewModel.resource.id else {
+    guard let resource = viewModel.resource as? ModelCommonProperties else {
       return
     }
-    postDetailsNode.loadComments(with: id)
+    postDetailsNode.loadComments(for: resource)
   }
 
   func loadRelatedBooks() {
@@ -166,6 +166,49 @@ class PostDetailsViewController: ASViewController<PostDetailsNode> {
         self.postDetailsNode.loadRelatedCards()
       }
     })
+  }
+  
+  // Comments related
+  fileprivate func displayActionSheet(forComment identifier: String) {
+    let availableActionsForComment = postDetailsNode.commentsNode.viewModel.actions(forComment: identifier)
+    guard availableActionsForComment.count > 0 else {
+        return
+    }
+    
+    let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    
+    for action in availableActionsForComment {
+      guard let actionTitle = postDetailsNode.commentsNode.viewModel.string(for: action) else { continue }
+      let actionButton = UIAlertAction(title: actionTitle, style: .default, handler: { [action] (actionButton) in
+        self.perform(action: action, onComment: identifier)
+      })
+      alertController.addAction(actionButton)
+    }
+    alertController.addAction(UIAlertAction(title: Strings.cancel(), style: UIAlertActionStyle.cancel, handler: nil))
+    present(alertController, animated: true, completion: nil)
+  }
+  
+  // TODO: Set a common method that perform comment action
+  // And remove redundancy present in CommentsNodeDelegate implementation methods
+  // TODO: Move the perform actions to "comments node"
+  fileprivate func perform(action: CardActionBarNode.Action, onComment identifier: String) {
+    guard let resource = postDetailsNode.commentsNode.viewModel.resource else {
+      return
+    }
+    
+    switch action {
+    case .wit:
+      postDetailsNode.wit(commentIdentifier: identifier, completion: nil)
+    case .unwit:
+      postDetailsNode.unwit(commentIdentifier: identifier, completion: nil)
+    case .reply:
+      let parentCommentIdentifier = postDetailsNode.commentsNode.viewModel.parentIdentifier(forCommentWithIdentifier: identifier, action: action)
+      CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: parentCommentIdentifier)
+    case .remove:
+      postDetailsNode.removeComment(commentIdentifier: identifier, completion: nil)
+    default:
+      break
+    }
   }
 }
 
@@ -425,28 +468,34 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
 
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action, didFinishAction: ((Bool) -> ())?) {
     switch action {
-    case .viewRepliesForComment(let comment, let postId):
-      break
-    case .viewAllComments(let commentsManager):
-      pushCommentsViewController(with: commentsManager)
-    case .writeComment(let parentCommentIdentifier, _):
-      CommentComposerViewController.show(from: self, delegate: self, postId: nil, parentCommentId: parentCommentIdentifier)
-    case .commentAction(let comment, let action):
+    case .viewReplies:
+      didFinishAction?(true)
+    case .viewAllComments(let resource, _):
+      pushCommentsViewController(with: resource)
+      didFinishAction?(true)
+    case .writeComment(let resource, let parentCommentIdentifier):
+      CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: parentCommentIdentifier)
+      didFinishAction?(true)
+    case .commentAction(let commentIdentifier, let action, let resource, let parentCommentIdentifier):
       switch action {
       case .wit:
-        postDetailsNode.wit(comment: comment, completion: {
+        postDetailsNode.wit(commentIdentifier: commentIdentifier, completion: {
           (success: Bool, _) in
           didFinishAction?(success)
         })
       case .unwit:
-        postDetailsNode.unwit(comment: comment, completion: {
+        postDetailsNode.unwit(commentIdentifier: commentIdentifier, completion: {
           (success: Bool, _) in
           didFinishAction?(success)
         })
       case .reply:
-        CommentComposerViewController.show(from: self, delegate: self, postId: nil, parentCommentId: comment.id)
+        CommentComposerViewController.show(from: self, delegate: self, resource: resource, parentCommentIdentifier: commentIdentifier)
+        didFinishAction?(true)
+      case .more:
+        displayActionSheet(forComment: commentIdentifier)
+        didFinishAction?(true)
       default:
-        break
+        didFinishAction?(true)
       }
     }
   }
@@ -928,9 +977,9 @@ extension PostDetailsViewController {
     }
   }
   
-  func pushCommentsViewController(with commentsManager: CommentsManager) {
+  func pushCommentsViewController(with resource: ModelCommonProperties) {
     let commentsVC = CommentsViewController()
-    commentsVC.initialize(with: commentsManager)
+    commentsVC.initialize(with: resource)
     self.navigationController?.pushViewController(commentsVC, animated: true)
   }
 }
@@ -1139,22 +1188,13 @@ extension PostDetailsViewController: CommentComposerViewControllerDelegate {
     dismiss(animated: true, completion: nil)
   }
   
-  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, postId: String?, parentCommentId: String?) {
+  func commentComposerWillBeginPublishingComment(_ viewController: CommentComposerViewController) {
     SwiftLoader.show(animated: true)
-    postDetailsNode.publishComment(content: content, parentCommentId: parentCommentId) {
-      (success, error) in
-      SwiftLoader.hide()
-      guard success else {
-        if let error = error {
-          self.showAlertWith(title: error.title ?? "", message: error.message ?? "", handler: {
-            (_) in
-            // Restart editing the comment
-            _ = viewController.becomeFirstResponder()
-          })
-        }
-        return
-      }
-      
+  }
+  
+  func commentComposerDidFinishPublishingComment(_ viewController: CommentComposerViewController, success: Bool, comment: Comment?, resource: ModelCommonProperties?) {
+    SwiftLoader.hide()
+    if success {
       self.dismiss(animated: true, completion: nil)
     }
   }

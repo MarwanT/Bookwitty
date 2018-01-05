@@ -10,16 +10,26 @@ import UIKit
 
 protocol CommentComposerViewControllerDelegate: class {
   func commentComposerCancel(_ viewController: CommentComposerViewController)
-  func commentComposerPublish(_ viewController: CommentComposerViewController, content: String?, postId: String?, parentCommentId: String?)
+  func commentComposerWillBeginPublishingComment(_ viewController: CommentComposerViewController)
+  func commentComposerDidFinishPublishingComment(_ viewController: CommentComposerViewController, success: Bool, comment: Comment?, resource: ModelCommonProperties?)
 }
 
 class CommentComposerViewController: UIViewController {
+  @IBOutlet weak var resourcePresenterLabel: UILabel!
+  @IBOutlet weak var resourceTitleLabel: UILabel!
+  @IBOutlet weak var imageView: UIImageView!
   @IBOutlet weak var textView: UITextView!
   @IBOutlet weak var contentView: UIView!
+  @IBOutlet weak var separatorView: UIView!
   @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
+  @IBOutlet weak var separatorTopConstraint: NSLayoutConstraint!
+  @IBOutlet weak var separatorBottomConstraint: NSLayoutConstraint!
+  @IBOutlet weak var textViewLeadingToImageViewTrailingConstraint: NSLayoutConstraint!
+  @IBOutlet weak var resourceTitleLabelTopConstraint: NSLayoutConstraint!
   
-  fileprivate var parentCommentId: String?
-  fileprivate var postId: String?
+  fileprivate let textViewPlaceholderLabel = UILabel()
+  
+  fileprivate var viewModel = CommentComposerViewModel()
   
   weak var delegate: CommentComposerViewControllerDelegate?
   
@@ -27,6 +37,8 @@ class CommentComposerViewController: UIViewController {
     super.viewDidLoad()
     
     applyTheme()
+    initialize()
+    setupContent()
     setupNavigationItems()
     addKeyboardNotifications()
   }
@@ -36,15 +48,46 @@ class CommentComposerViewController: UIViewController {
     textView.becomeFirstResponder()
   }
   
-  func initialize(with postId: String?, parentCommentId: String?) {
-    self.postId = postId
-    self.parentCommentId = parentCommentId
+  override func updateViewConstraints() {
+    separatorTopConstraint.constant = 15
+    separatorBottomConstraint.constant = 15
+    textViewLeadingToImageViewTrailingConstraint.constant = 10
+    resourceTitleLabelTopConstraint.constant = 2
+    
+    let insets = textView.textContainerInset
+    textViewPlaceholderLabel.translatesAutoresizingMaskIntoConstraints = false
+    textViewPlaceholderLabel.topAnchor.constraint(equalTo: textView.topAnchor, constant: 0).isActive = true
+    textViewPlaceholderLabel.leftAnchor.constraint(equalTo: textView.leftAnchor, constant: insets.left + 5).isActive = true
+    
+    super.updateViewConstraints()
+  }
+  
+  func initialize(with resource: ModelCommonProperties, parentCommentIdentifier: String?) {
+    viewModel.initialize(with: resource, parentCommentIdentifier: parentCommentIdentifier)
+  }
+  
+  private func initialize() {
+    textView.addSubview(textViewPlaceholderLabel)
+    textViewPlaceholderLabel.text = Strings.write_a_comment()
+    textView.delegate = self
+    textViewPlaceholderLabel.constrainHeight(toView: imageView, predicate: "0")
+  }
+  
+  private func setupContent() {
+    resourcePresenterLabel.text = viewModel.resourceTitlePresenterText
+    resourceTitleLabel.text = viewModel.resourceExcerpt
+    imageView.sd_setImage(
+      with: viewModel.penNameImageURL,
+      placeholderImage: ThemeManager.shared.currentTheme.penNamePlaceholder)
+    updateTextViewContentInsetIfNeeded()
   }
   
   private func setupNavigationItems() {
     let leftBarButton = UIBarButtonItem(title: Strings.cancel(), style: .plain, target: self, action: #selector(didTapCancel(_:)))
-    let rightBarButton = UIBarButtonItem(title: Strings.publish(), style: .plain, target: self, action: #selector(didTapPublish(_:)))
-    rightBarButton.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
+    let rightBarButton = UIBarButtonItem(title: Strings.post(), style: .plain, target: self, action: #selector(didTapPublish(_:)))
+    let leftBarButtonColor = ThemeManager.shared.currentTheme.colorNumber19()
+    leftBarButton.tintColor = leftBarButtonColor
+    leftBarButton.setTitleTextAttributes([NSForegroundColorAttributeName: leftBarButtonColor], for: .normal)
     self.navigationItem.leftBarButtonItem = leftBarButton
     self.navigationItem.rightBarButtonItem = rightBarButton
   }
@@ -91,10 +134,12 @@ class CommentComposerViewController: UIViewController {
   
   func didTapPublish(_ sender: Any) {
     dismissKeyboard()
-    delegate?.commentComposerPublish(self, content: textView.text, postId: postId, parentCommentId: parentCommentId)
+    guard publishComment() else {
+      return
+    }
 
     //MARK: [Analytics] Event
-    guard let resource = (DataManager.shared.fetchResource(with: postId ?? "") as? ModelCommonProperties) else { return }
+    guard let resource = viewModel.resource else { return }
     let category: Analytics.Category
     switch resource.registeredResourceType {
     case Image.resourceType:
@@ -130,6 +175,25 @@ class CommentComposerViewController: UIViewController {
     Analytics.shared.send(event: event)
   }
   
+  func publishComment() -> Bool {
+    guard let text = textView.text, !text.isEmpty else {
+      return false
+    }
+    
+    delegate?.commentComposerWillBeginPublishingComment(self)
+    viewModel.publishComment(text: text) { (success, comment, error) in
+      if !success, let error = error {
+        self.showAlertWith(
+        title: error.title ?? "", message: error.message ?? "") { _ in
+          _ = self.becomeFirstResponder()
+        }
+      }
+      self.delegate?.commentComposerDidFinishPublishingComment(
+        self, success: success, comment: comment, resource: self.viewModel.resource)
+    }
+    return true
+  }
+  
   // MARK: - Helpers
   func dismissKeyboard() {
     textView.resignFirstResponder()
@@ -139,18 +203,57 @@ class CommentComposerViewController: UIViewController {
 // MARK: - Themeable protocol
 extension CommentComposerViewController: Themeable {
   func applyTheme() {
-    contentView.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
-    textView.textContainerInset = ThemeManager.shared.currentTheme.defaultTextViewInsets()
-    textView.layer.cornerRadius = ThemeManager.shared.currentTheme.defaultCornerRadius()
+    let theme = ThemeManager.shared.currentTheme
+    contentView.layoutMargins = UIEdgeInsets(top: 15, left: 17, bottom: 10, right: 17)
+    textView.textContainerInset = UIEdgeInsets.zero
+    textView.layer.cornerRadius = theme.defaultCornerRadius()
     textView.font = FontDynamicType.body.font
+    resourcePresenterLabel.font = FontDynamicType.caption2.font
+    resourceTitleLabel.font = FontDynamicType.caption1.font
+    textView.textColor = theme.defaultTextColor()
+    resourcePresenterLabel.textColor = theme.defaultGrayedTextColor()
+    resourceTitleLabel.textColor = theme.defaultTextColor()
+    separatorView.backgroundColor = theme.defaultSeparatorColor()
+    imageView.setRoundedCornersWithRadius(imageView.frame.height/2, width: 0, color: nil)
+    textViewPlaceholderLabel.textColor = theme.defaultGrayedTextColor()
+    textViewPlaceholderLabel.font = FontDynamicType.caption1.font
+  }
+}
+
+// MARK: - Text View Delegate
+extension CommentComposerViewController: UITextViewDelegate {
+  public func textViewDidChange(_ textView: UITextView) {
+    updateTextViewContentInsetIfNeeded()
+    
+    let count = textView.text.count
+    let alpha: CGFloat = count == 0 ? 1.0 : 0.0
+    textViewPlaceholderLabel.alpha = alpha
+  }
+  
+  fileprivate func updateTextViewContentInsetIfNeeded() {
+    var topInsetValue: CGFloat = 12
+    if let font = textView.font {
+      let numberOfLines = floor(textView.contentSize.height / font.lineHeight)
+      if numberOfLines > 1 {
+        if textView.textContainerInset.top != 0 {
+          textView.textContainerInset.top = 0
+        }
+      } else {
+        if textView.textContainerInset.top != topInsetValue {
+          textView.textContainerInset.top = topInsetValue
+        }
+      }
+    } else {
+      textView.textContainerInset.top = topInsetValue
+    }
   }
 }
 
 // MARK: -
 extension CommentComposerViewController {
-  class func show(from viewController: UIViewController, delegate: CommentComposerViewControllerDelegate?, postId: String?, parentCommentId: String?) {
+  class func show(from viewController: UIViewController, delegate: CommentComposerViewControllerDelegate?, resource: ModelCommonProperties, parentCommentIdentifier: String?) {
     let composeCommentVC = Storyboard.Details.instantiate(CommentComposerViewController.self)
-    composeCommentVC.initialize(with: postId, parentCommentId: parentCommentId)
+    composeCommentVC.initialize(with: resource, parentCommentIdentifier: parentCommentIdentifier)
     composeCommentVC.delegate = delegate
     
     let navigationController = UINavigationController(rootViewController: composeCommentVC)

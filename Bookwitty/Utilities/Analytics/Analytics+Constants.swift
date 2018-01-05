@@ -133,6 +133,7 @@ extension Analytics {
     case AddComment
     case PublishComment
     case ReplyToComment
+    case RemoveComment
     //
     case Share
     //
@@ -236,6 +237,8 @@ extension Analytics {
         return "Publish Comment"
       case .ReplyToComment:
         return "Reply To Comment"
+      case .RemoveComment:
+        return "Remove Comment"
       case .Share:
         return "Share"
       case .SelectPenName:
@@ -440,6 +443,8 @@ extension Analytics.Action {
       return .ReplyToComment
     case .more:
       return .Report
+    case .remove:
+      return .RemoveComment
     }
   }
 }
