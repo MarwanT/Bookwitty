@@ -218,9 +218,9 @@ class CommentsNode: ASCellNode {
   }
   
   func reloadCount() {
-    let mutableIndexSet = NSMutableIndexSet(index: Section.count.rawValue)
+    let mutableIndexSet = IndexSet(integer: Section.count.rawValue)
     DispatchQueue.main.async {
-      self.collectionNode.reloadSections(mutableIndexSet as IndexSet)
+      self.collectionNode.reloadSections(mutableIndexSet)
     }
   }
   
