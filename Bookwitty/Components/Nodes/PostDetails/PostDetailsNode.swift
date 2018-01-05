@@ -154,10 +154,6 @@ class PostDetailsNode: ASScrollNode {
     }
   }
 
-  var commentNodeManagerClone: CommentsManager? {
-    return self.commentsNode.viewModel.commentsManagerClone()
-  }
-
   override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
     headerNode = PostDetailsHeaderNode()
     descriptionNode = DTAttributedTextContentNode()

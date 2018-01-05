@@ -1335,11 +1335,11 @@ extension PostDetailsViewController: ActionBarNodeDelegate {
   }
 
   func actionBar(node: ActionBarNode, secondaryButtonTouchUpInside button: ASButtonNode) {
-    guard let commentsManager = postDetailsNode.commentNodeManagerClone else {
+    guard let resource = viewModel.resource as? ModelCommonProperties else {
       return
     }
 
-    pushCommentsViewController(with: commentsManager)
+    pushCommentsViewController(with: resource)
   }
 
   func actionBar(node: ActionBarNode, moreButtonTouchUpInside button: ASButtonNode){
