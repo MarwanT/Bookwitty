@@ -691,7 +691,7 @@ extension CommentsNode {
   }
 }
 
-// MARK: - Comment instences related methods
+// MARK: - Comment instances related methods
 extension CommentsNode {
   func publishComment(content: String?, parentCommentIdentifier: String?, completion: @escaping (_ success: Bool, _ error: CommentsManager.Error?) -> Void) {
     viewModel.publishComment(content: content, parentCommentIdentifier: parentCommentIdentifier) {
