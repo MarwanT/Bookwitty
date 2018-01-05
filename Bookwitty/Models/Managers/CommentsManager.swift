@@ -338,7 +338,8 @@ extension CommentsManager {
         completion(success, comment, CommentsManager.Error.api(error))
       }
       
-      guard success, let comment = comment else {
+      guard success, let comment = comment,
+        let commentIdentifier = comment.id else {
         return
       }
       _ = self.updateRegistry(with: comment, addFromBeginning: true)
@@ -353,7 +354,7 @@ extension CommentsManager {
           action: CommentsNode.Action.writeComment(
             resource: resource,
             parentCommentIdentifier: comment.parentId),
-          commentIdentifier: comment.id!
+          commentIdentifier: commentIdentifier
         )
       )
     })
@@ -395,7 +396,7 @@ extension CommentsManager {
           action: CommentsNode.Action.commentAction(
             commentIdentifier: commentIdentifier, action: .remove,
             resource: resource, parentCommentIdentifier: comment.parentId),
-          commentIdentifier: comment.id!))
+          commentIdentifier: commentIdentifier))
     })
   }
   

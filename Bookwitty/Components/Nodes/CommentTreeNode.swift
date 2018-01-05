@@ -227,11 +227,15 @@ class CommentTreeNode: ASCellNode {
     
     if !isInOldIdentifiersArray, isInNewIdentifiersArray {
       // Add new Comment
-      let index = newReplyCommentsIdentifiers.index(of: identifier)!
+      guard let index = newReplyCommentsIdentifiers.index(of: identifier) else {
+        return
+      }
       addComment(identifier: identifier, at: index)
     } else if isInOldIdentifiersArray, !isInNewIdentifiersArray {
       // Remove Comment
-      let index = replyCommentsIdentifiers.index(of: identifier)!
+      guard let index = replyCommentsIdentifiers.index(of: identifier) else {
+        return
+      }
       removeComment(identifier: identifier, at: index)
     }
   }
