@@ -14,8 +14,8 @@ PODS:
   - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
-  - BrightFutures (5.1.0):
-    - Result (~> 3.0)
+  - BrightFutures (5.2.0):
+    - Result (~> 3.2)
   - Crashlytics (3.8.4):
     - Fabric (~> 1.6.3)
   - DTCoreText (1.6.21):
@@ -29,11 +29,11 @@ PODS:
     - DTFoundation/DTAnimatedGIF (~> 1.7.5)
     - DTFoundation/DTHTMLParser (~> 1.7.5)
     - DTFoundation/UIKit (~> 1.7.5)
-  - DTFoundation/Core (1.7.12)
-  - DTFoundation/DTAnimatedGIF (1.7.12)
-  - DTFoundation/DTHTMLParser (1.7.12):
+  - DTFoundation/Core (1.7.13)
+  - DTFoundation/DTAnimatedGIF (1.7.13)
+  - DTFoundation/DTHTMLParser (1.7.13):
     - DTFoundation/Core
-  - DTFoundation/UIKit (1.7.12):
+  - DTFoundation/UIKit (1.7.13):
     - DTFoundation/Core
   - EMCCountryPickerController (1.3.4)
   - Fabric (1.6.11)
@@ -56,30 +56,8 @@ PODS:
     - FBSDKCoreKit
   - FBSDKShareKit (4.29.0):
     - FBSDKCoreKit
-  - FirebaseAnalytics (3.6.0):
-    - FirebaseCore (~> 3.4)
-    - FirebaseInstanceID (~> 1.0)
-    - GoogleInterchangeUtilities (~> 1.2)
-    - GoogleSymbolUtilities (~> 1.1)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseCore (3.4.7):
-    - GoogleInterchangeUtilities (~> 1.2)
-    - GoogleSymbolUtilities (~> 1.1)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseInstanceID (1.0.8)
   - FLKAutoLayout (1.0.0)
-  - Google/Analytics (3.0.3):
-    - Google/Core
-    - GoogleAnalytics (~> 3.12)
-  - Google/Core (3.0.3):
-    - FirebaseAnalytics (~> 3.2)
   - GoogleAnalytics (3.17.0)
-  - GoogleInterchangeUtilities (1.2.2):
-    - GoogleSymbolUtilities (~> 1.1)
-  - GoogleSymbolUtilities (1.1.2)
-  - GoogleToolboxForMac/Defines (2.1.1)
-  - GoogleToolboxForMac/NSData+zlib (2.1.1):
-    - GoogleToolboxForMac/Defines (= 2.1.1)
   - GSImageViewerController (1.2.1)
   - Keys (1.0.0)
   - Moya (8.0.5):
@@ -102,7 +80,7 @@ PODS:
     - PINCache (= 3.0.1-beta.4)
     - PINRemoteImage/Core
   - ReachabilitySwift (3)
-  - Result (3.1.0)
+  - Result (3.2.4)
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
@@ -129,7 +107,7 @@ DEPENDENCIES:
   - FacebookLogin (= 0.3.0)
   - FacebookShare (= 0.3.0)
   - FLKAutoLayout (= 1.0.0)
-  - Google/Analytics (= 3.0.3)
+  - GoogleAnalytics (= 3.17.0)
   - GSImageViewerController (= 1.2.1)
   - Keys (from `Pods/CocoaPodsKeys`)
   - Moya (= 8.0.5)
@@ -179,10 +157,10 @@ SPEC CHECKSUMS:
   ALCameraViewController: 4a513b8d5ecfdb3f34c50b1d469c373aae1ec7b4
   AsyncDisplayKit: 1585f6cd0531ae9b30476f5912f577b73ebcb0e4
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
-  BrightFutures: 62aafb1a63520eda91c9286bf4be33e58e043938
+  BrightFutures: 8681dbb9fa831b69b6e7dc4a498b9e081d5daeb5
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   DTCoreText: e5d688cffc9f6a61eddd1a4f94e2046851230de3
-  DTFoundation: 26a164ef510877387906fb92bff524a792db4bf8
+  DTFoundation: f03be9fd786f11e505bb8fc44e2a3732bf0917df
   EMCCountryPickerController: 053b7e420dcb662c1436340cb856282af5a038be
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   FacebookCore: 3ffa190a3f1f96cec0e44d3fc221bc322c595ffa
@@ -191,15 +169,8 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: 6f139173dc63a1deaff4430a55f2fe5bb222d2af
   FBSDKLoginKit: 56a057ca6822535ea0faa25f57a7c41edb697fd4
   FBSDKShareKit: 18a2cd118aef11dd657fe7e8b64bae5c719088b2
-  FirebaseAnalytics: 9c67af0ebeb8d2146c9b4ea2616439affa947b58
-  FirebaseCore: 46afaf2c2e0419ea7d3acfb08cf26a461a75fe85
-  FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
   FLKAutoLayout: 106b14dbae09d32c6730190f4e78a959759ba4a4
-  Google: cd92fab98f800f509da88c1e0c570275713bc9d5
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
-  GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
-  GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
-  GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GSImageViewerController: 73e84498743987560d24814828baa8f307e0e206
   Keys: 9c35bf00f612ee1d48556f4a4b9b4551e224e90f
   Moya: c37eec09a098ba9991b5a963b291fc5704bdb9ef
@@ -207,7 +178,7 @@ SPEC CHECKSUMS:
   PINOperation: ac23db44796d4a564ecf9b5ea7163510f579b71d
   PINRemoteImage: c4f9f16932840c597f32e69dd288e10e111a1929
   ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
-  Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
+  Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   Segmentio: f85114993e305bd9c522952eef8c2c4db732fd17
   Spine: 9a5076f732897dc67c0303b4b3d871cfee903efa
@@ -219,6 +190,6 @@ SPEC CHECKSUMS:
   UIImageViewAlignedSwift: e57cc89b4738a82ffad1b76e8ab01f898215bbfb
   Version: 31221742495765fc798d08eae45de3c936dce0db
 
-PODFILE CHECKSUM: 03c3eab8c77849c5a66698425e9b827af2f12add
+PODFILE CHECKSUM: 0dc083f87c90ea546bf1d22536d237306d55b576
 
 COCOAPODS: 1.3.1

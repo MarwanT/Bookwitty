@@ -9,7 +9,9 @@
 #ifndef Bookwitty_Bridging_Header_h
 #define Bookwitty_Bridging_Header_h
 
-#import <Google/Analytics.h>
+#import <GAI.h>
+#import <GAIDictionaryBuilder.h>
+#import <GAIFields.h>
 #import <AsyncDisplayKit/AsyncDisplayKit.h>
 #import <DTCoreText/DTCoreText.h>
 

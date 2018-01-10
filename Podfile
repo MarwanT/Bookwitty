@@ -21,7 +21,7 @@ target 'Bookwitty' do
   pod 'Moya', '8.0.5'
   pod 'Fabric', '1.6.11'
   pod 'Crashlytics', '3.8.4'
-  pod 'Google/Analytics', '3.0.3'
+  pod 'GoogleAnalytics', '3.17.0'
   pod 'FacebookCore', '0.3.0'
   pod 'FacebookLogin', '0.3.0'
   pod 'FacebookShare', '0.3.0'
@@ -46,7 +46,7 @@ target 'Bookwitty' do
   target 'BookwittyTests' do
     inherit! :search_paths
     # Pods for testing
-    pod 'Google/Analytics', '3.0.3'
+    pod 'GoogleAnalytics', '3.17.0'
   end
 
 end
