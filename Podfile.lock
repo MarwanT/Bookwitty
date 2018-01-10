@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.2.0)
+  - Alamofire (4.6.0)
   - ALCameraViewController (1.2.7)
   - AsyncDisplayKit (2.2):
     - AsyncDisplayKit/PINRemoteImage (= 2.2)
@@ -82,11 +82,11 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - GSImageViewerController (1.2.1)
   - Keys (1.0.0)
-  - Moya (8.0.0):
-    - Moya/Core (= 8.0.0)
-  - Moya/Core (8.0.0):
-    - Alamofire (~> 4.2.0)
-    - Result (~> 3.1.0)
+  - Moya (8.0.5):
+    - Moya/Core (= 8.0.5)
+  - Moya/Core (8.0.5):
+    - Alamofire (~> 4.1)
+    - Result (~> 3.0)
   - PINCache (3.0.1-beta.4):
     - PINCache/Arc-exception-safe (= 3.0.1-beta.4)
     - PINCache/Core (= 3.0.1-beta.4)
@@ -132,7 +132,7 @@ DEPENDENCIES:
   - Google/Analytics (= 3.0.3)
   - GSImageViewerController (= 1.2.1)
   - Keys (from `Pods/CocoaPodsKeys`)
-  - Moya (= 8.0.0)
+  - Moya (= 8.0.5)
   - ReachabilitySwift (= 3)
   - SDWebImage (= 4.0.0)
   - Segmentio (= 2.1.2)
@@ -175,7 +175,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/opwoco/Version
 
 SPEC CHECKSUMS:
-  Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
+  Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
   ALCameraViewController: 4a513b8d5ecfdb3f34c50b1d469c373aae1ec7b4
   AsyncDisplayKit: 1585f6cd0531ae9b30476f5912f577b73ebcb0e4
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
@@ -202,7 +202,7 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GSImageViewerController: 73e84498743987560d24814828baa8f307e0e206
   Keys: 9c35bf00f612ee1d48556f4a4b9b4551e224e90f
-  Moya: 850a166ab8241bd1c1cea6dbe012e3a2ad62944a
+  Moya: c37eec09a098ba9991b5a963b291fc5704bdb9ef
   PINCache: a89c8f609232afac77128557bd12c861844423d7
   PINOperation: ac23db44796d4a564ecf9b5ea7163510f579b71d
   PINRemoteImage: c4f9f16932840c597f32e69dd288e10e111a1929
@@ -219,6 +219,6 @@ SPEC CHECKSUMS:
   UIImageViewAlignedSwift: e57cc89b4738a82ffad1b76e8ab01f898215bbfb
   Version: 31221742495765fc798d08eae45de3c936dce0db
 
-PODFILE CHECKSUM: 86b3ccf8a52ccff806c5ac4e6b31cf4edc1e3688
+PODFILE CHECKSUM: b485716f8d6542f4cd22b727e2d39dce23669759
 
 COCOAPODS: 1.3.1

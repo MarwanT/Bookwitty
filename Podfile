@@ -18,7 +18,7 @@ target 'Bookwitty' do
   }
 
   # Pods for Bookwitty
-  pod 'Moya', '8.0.0'
+  pod 'Moya', '8.0.5'
   pod 'Fabric', '1.6.11'
   pod 'Crashlytics', '3.8.4'
   pod 'Google/Analytics', '3.0.3'
