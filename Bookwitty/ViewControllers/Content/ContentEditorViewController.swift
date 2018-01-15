@@ -49,6 +49,7 @@ class ContentEditorViewController: UIViewController {
    
   override func viewDidLoad() {
     super.viewDidLoad()
+    applyTheme()
     initializeComponents()
     loadNavigationBarButtons()
     addKeyboardNotifications()
@@ -906,5 +907,11 @@ extension ContentEditorViewController: RichEditorDelegate {
       self.set(option: .link, selected: editingItems.contains("link"), isEnabled: editingItems.contains("isRange"))
       self.set(option: .unorderedList, selected: editingItems.contains("unorderedList"))
     }
+  }
+}
+
+//MARK: - Themeable
+extension ContentEditorViewController: Themeable {
+  func applyTheme() {
   }
 }
