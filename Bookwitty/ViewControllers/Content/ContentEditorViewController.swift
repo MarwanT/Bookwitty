@@ -66,25 +66,16 @@ class ContentEditorViewController: UIViewController {
   
   fileprivate func loadNavigationBarButtons() {
     navigationItem.backBarButtonItem = UIBarButtonItem.back
-    let redColor = ThemeManager.shared.currentTheme.colorNumber19()
     
     let closeBarButtonItem = UIBarButtonItem(title: Strings.close(),
                                 style: UIBarButtonItemStyle.plain,
                                 target: self,
                                 action: #selector(self.closeBarButtonTouchUpInside(_:)))
     
-    closeBarButtonItem.setTitleTextAttributes([
-      NSFontAttributeName: FontDynamicType.caption1.font,
-      NSForegroundColorAttributeName : redColor], for: UIControlState.normal)
-    
     let draftsBarButtonItem = UIBarButtonItem(title: Strings.drafts(),
                                  style: UIBarButtonItemStyle.plain,
                                  target: self,
                                  action: #selector(self.draftsBarButtonTouchUpInside(_:)))
-    
-    draftsBarButtonItem.setTitleTextAttributes([
-      NSFontAttributeName: FontDynamicType.caption1.font,
-      NSForegroundColorAttributeName : redColor], for: UIControlState.normal)
     
     let imageSize = CGSize(width: 32.0, height: 32.0)
     
