@@ -913,5 +913,6 @@ extension ContentEditorViewController: RichEditorDelegate {
 //MARK: - Themeable
 extension ContentEditorViewController: Themeable {
   func applyTheme() {
+    titleTextField.font = FontDynamicType.title4.font
   }
 }
