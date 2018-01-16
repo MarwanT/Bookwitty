@@ -100,7 +100,7 @@ class PenNameViewController: UIViewController {
 
   func prefillData() {
     penNameInputField.textField.text = viewModel.penDisplayName()
-    biographyTextView.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.label)
+    biographyTextView.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.label2)
       .append(text: viewModel.penBiography(), color: ThemeManager.shared.currentTheme.defaultTextColor())
       .attributedString
     if let avatarUrl = viewModel.penAvatarUrl(), let url = URL(string: avatarUrl) {
