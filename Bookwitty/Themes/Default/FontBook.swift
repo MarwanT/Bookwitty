@@ -233,18 +233,18 @@ extension FontDynamicType {
       UIContentSizeCategory.extraSmall: 10
     ],
     FontDynamicType.label2.rawValue : [
-      UIContentSizeCategory.accessibilityExtraExtraExtraLarge: 16,
-      UIContentSizeCategory.accessibilityExtraExtraLarge: 16,
-      UIContentSizeCategory.accessibilityExtraLarge: 16,
-      UIContentSizeCategory.accessibilityLarge: 16,
-      UIContentSizeCategory.accessibilityMedium: 16,
-      UIContentSizeCategory.extraExtraExtraLarge: 16,
-      UIContentSizeCategory.extraExtraLarge: 14,
-      UIContentSizeCategory.extraLarge: 12,
-      UIContentSizeCategory.large: 10,
-      UIContentSizeCategory.medium: 9,
-      UIContentSizeCategory.small: 8,
-      UIContentSizeCategory.extraSmall: 7
+      UIContentSizeCategory.accessibilityExtraExtraExtraLarge: 17,
+      UIContentSizeCategory.accessibilityExtraExtraLarge: 17,
+      UIContentSizeCategory.accessibilityExtraLarge: 17,
+      UIContentSizeCategory.accessibilityLarge: 17,
+      UIContentSizeCategory.accessibilityMedium: 17,
+      UIContentSizeCategory.extraExtraExtraLarge: 17,
+      UIContentSizeCategory.extraExtraLarge: 15,
+      UIContentSizeCategory.extraLarge: 13,
+      UIContentSizeCategory.large: 11,
+      UIContentSizeCategory.medium: 10,
+      UIContentSizeCategory.small: 9,
+      UIContentSizeCategory.extraSmall: 8
     ],
     FontDynamicType.quote.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: 29,
