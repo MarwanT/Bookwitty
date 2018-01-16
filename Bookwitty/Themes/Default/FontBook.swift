@@ -66,7 +66,7 @@ enum FontDynamicType: String {
     case (FontDynamicType.caption2, _):
       selectedFont = Font.ubuntuRegular
     case (FontDynamicType.label2, _):
-      selectedFont = Font.ubuntuMedium
+      selectedFont = Font.ubuntuRegular
     case (FontDynamicType.quote, _):
       selectedFont = Font.volkhovBoldItalic
     }
