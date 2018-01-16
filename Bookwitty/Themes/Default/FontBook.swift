@@ -19,7 +19,7 @@ enum FontDynamicType: String {
   case footnote = "footnote"
   case caption1 = "caption1"
   case caption2 = "caption2"
-  case label = "label"
+  case label2 = "label2"
   case quote = "quote"
   
   
@@ -65,7 +65,7 @@ enum FontDynamicType: String {
       selectedFont = Font.ubuntuRegular
     case (FontDynamicType.caption2, _):
       selectedFont = Font.ubuntuRegular
-    case (FontDynamicType.label, _):
+    case (FontDynamicType.label2, _):
       selectedFont = Font.ubuntuMedium
     case (FontDynamicType.quote, _):
       selectedFont = Font.volkhovBoldItalic
@@ -232,7 +232,7 @@ extension FontDynamicType {
       UIContentSizeCategory.small: 11,
       UIContentSizeCategory.extraSmall: 10
     ],
-    FontDynamicType.label.rawValue : [
+    FontDynamicType.label2.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: 16,
       UIContentSizeCategory.accessibilityExtraExtraLarge: 16,
       UIContentSizeCategory.accessibilityExtraLarge: 16,
@@ -419,7 +419,7 @@ extension FontDynamicType {
       UIContentSizeCategory.small: .regular,
       UIContentSizeCategory.extraSmall: .regular
     ],
-    FontDynamicType.label.rawValue : [
+    FontDynamicType.label2.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: .regular,
       UIContentSizeCategory.accessibilityExtraExtraLarge: .regular,
       UIContentSizeCategory.accessibilityExtraLarge: .regular,

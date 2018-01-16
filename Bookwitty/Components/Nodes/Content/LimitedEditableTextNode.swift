@@ -61,7 +61,7 @@ class LimitedEditableTextNode: ASCellNode {
     didSet {
       let characters = String(numberOfCharactersLeft)
       let color = numberOfCharactersLeft > 0 ? ThemeManager.shared.currentTheme.defaultGrayedTextColor() : ThemeManager.shared.currentTheme.colorNumber19()
-      charactersLeftNode.attributedText = AttributedStringBuilder(fontDynamicType: .label)
+      charactersLeftNode.attributedText = AttributedStringBuilder(fontDynamicType: .label2)
         .append(text: characters, color: color)
         .applyParagraphStyling(alignment: .right)
         .attributedString

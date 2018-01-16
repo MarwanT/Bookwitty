@@ -350,7 +350,7 @@ extension DefaultTheme {
   }
   
   func styleLabel(label: UILabel) {
-    label.font = FontDynamicType.label.font
+    label.font = FontDynamicType.label2.font
     label.textColor = defaultTextColor()
   }
 }
