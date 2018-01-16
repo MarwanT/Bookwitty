@@ -24,6 +24,7 @@ enum FontDynamicType: String {
   case label2 = "label2"
   case quote = "quote"
   case body2 = "body2"
+  case body3 = "body3"
   
   
   var font: UIFont {
@@ -57,6 +58,8 @@ enum FontDynamicType: String {
     case (FontDynamicType.body, _):
       selectedFont = Font.georgiaRegular
     case (FontDynamicType.body2, _):
+      selectedFont = Font.georgiaRegular
+    case (FontDynamicType.body3, _):
       selectedFont = Font.georgiaRegular
     case (FontDynamicType.headline, _):
       selectedFont = Font.ubuntuMedium
@@ -170,6 +173,20 @@ extension FontDynamicType {
       UIContentSizeCategory.medium: 15,
       UIContentSizeCategory.small: 14,
       UIContentSizeCategory.extraSmall: 13
+    ],
+    FontDynamicType.body3.rawValue: [
+      UIContentSizeCategory.accessibilityExtraExtraExtraLarge: 19,
+      UIContentSizeCategory.accessibilityExtraExtraLarge: 19,
+      UIContentSizeCategory.accessibilityExtraLarge: 19,
+      UIContentSizeCategory.accessibilityLarge: 19,
+      UIContentSizeCategory.accessibilityMedium: 19,
+      UIContentSizeCategory.extraExtraExtraLarge: 19,
+      UIContentSizeCategory.extraExtraLarge: 17,
+      UIContentSizeCategory.extraLarge: 15,
+      UIContentSizeCategory.large: 13,
+      UIContentSizeCategory.medium: 12,
+      UIContentSizeCategory.small: 11,
+      UIContentSizeCategory.extraSmall: 10
     ],
     FontDynamicType.headline.rawValue : [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: 29,
@@ -387,6 +404,20 @@ extension FontDynamicType {
       UIContentSizeCategory.extraSmall: .regular
     ],
     FontDynamicType.body2.rawValue: [
+      UIContentSizeCategory.accessibilityExtraExtraExtraLarge: .regular,
+      UIContentSizeCategory.accessibilityExtraExtraLarge: .regular,
+      UIContentSizeCategory.accessibilityExtraLarge: .regular,
+      UIContentSizeCategory.accessibilityLarge: .regular,
+      UIContentSizeCategory.accessibilityMedium: .regular,
+      UIContentSizeCategory.extraExtraExtraLarge: .regular,
+      UIContentSizeCategory.extraExtraLarge: .regular,
+      UIContentSizeCategory.extraLarge: .regular,
+      UIContentSizeCategory.large: .regular,
+      UIContentSizeCategory.medium: .regular,
+      UIContentSizeCategory.small: .regular,
+      UIContentSizeCategory.extraSmall: .regular
+    ],
+    FontDynamicType.body3.rawValue: [
       UIContentSizeCategory.accessibilityExtraExtraExtraLarge: .regular,
       UIContentSizeCategory.accessibilityExtraExtraLarge: .regular,
       UIContentSizeCategory.accessibilityExtraLarge: .regular,
