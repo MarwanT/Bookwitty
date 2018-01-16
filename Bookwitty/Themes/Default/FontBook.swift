@@ -14,6 +14,8 @@ enum FontDynamicType: String {
   case title4 = "title4"
   case title5 = "title5"
   case body = "body"
+  case body2 = "body2"
+  case body3 = "body3"
   case headline = "headline"
   case callout = "callout"
   case subheadline = "subheadline"
@@ -24,8 +26,6 @@ enum FontDynamicType: String {
   case label1 = "label1"
   case label2 = "label2"
   case quote = "quote"
-  case body2 = "body2"
-  case body3 = "body3"
   
   
   var font: UIFont {
