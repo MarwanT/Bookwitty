@@ -218,6 +218,9 @@ extension RichLinkPreviewViewController: Themeable {
     videoPlayView.image = #imageLiteral(resourceName: "play")
     videoPlayView.tintColor = theme.colorNumber23().withAlphaComponent(0.9)
     videoPlayView.contentMode = .scaleAspectFit
+    videoTitleLabel.font = FontDynamicType.title4.font
+    videoDescriptionLabel.font = FontDynamicType.body2.font
+    videoHostLabel.font = FontDynamicType.caption2.font
     videoTitleLabel.textColor = theme.colorNumber23()
     videoDescriptionLabel.textColor = theme.colorNumber23()
     videoHostLabel.textColor = theme.colorNumber23()
