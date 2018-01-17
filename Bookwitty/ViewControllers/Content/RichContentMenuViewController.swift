@@ -108,9 +108,10 @@ class RichContentMenuViewController: UIViewController {
   }
   
   private func initializeComponents() {
+    let theme = ThemeManager.shared.currentTheme
     
-    let attributedString = AttributedStringBuilder(fontDynamicType: .caption1)
-      .append(text: Strings.insert(), color: ThemeManager.shared.currentTheme.colorNumber13())
+    let attributedString = AttributedStringBuilder(fontDynamicType: .subheadline)
+      .append(text: Strings.insert(), color: theme.colorNumber13())
       .attributedString
     
     self.insert.attributedText = attributedString
