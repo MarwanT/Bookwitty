@@ -229,9 +229,12 @@ extension RichLinkPreviewViewController: Themeable {
     audioPreview.layoutMargins = theme.defaultLayoutMargin()
     audioPreview.layer.borderColor = theme.defaultSeparatorColor().cgColor
     audioPreview.layer.borderWidth = 1.0
-    audioTitleLabel.font = FontDynamicType.title1.font
-    audioDescriptionLabel.font = FontDynamicType.body.font
+    audioTitleLabel.font = FontDynamicType.footnote.font
+    audioDescriptionLabel.font = FontDynamicType.body2.font
     audioHostLabel.font = FontDynamicType.caption2.font
+    audioTitleLabel.textColor = theme.defaultTextColor()
+    audioDescriptionLabel.textColor = theme.defaultTextColor()
+    audioHostLabel.textColor = theme.defaultTextColor()
     
     //Error Preview
     errorPreview.layer.borderColor = theme.defaultButtonColor().cgColor
