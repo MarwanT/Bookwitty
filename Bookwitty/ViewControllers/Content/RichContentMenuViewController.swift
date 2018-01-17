@@ -163,6 +163,10 @@ extension RichContentMenuViewController : UITableViewDelegate {
     }
     self.delegate?.richContentMenuViewController(self, didSelect: item)
   }
+  
+  func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    return 0.01 // To remove the separator after the last cell
+  }
 }
 
 extension RichContentMenuViewController: UIGestureRecognizerDelegate {
