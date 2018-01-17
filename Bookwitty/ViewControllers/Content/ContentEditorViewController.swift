@@ -20,7 +20,9 @@ class ContentEditorViewController: UIViewController {
   fileprivate var isEditorLoaded: Bool = false
 
   @IBOutlet weak var titleTextField: UITextField!
-
+  @IBOutlet weak var topTitleSeparator: UIView!
+  @IBOutlet weak var bottomTitleSeparator: UIView!
+  
   let viewModel = ContentEditorViewModel()
   
   private var timer: Timer!
