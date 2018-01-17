@@ -917,6 +917,7 @@ extension ContentEditorViewController: Themeable {
   func applyTheme() {
     let theme = ThemeManager.shared.currentTheme
     titleTextField.font = FontDynamicType.title4.font
+    titleTextField.textColor = theme.defaultTextColor()
     topTitleSeparator.backgroundColor = theme.defaultSeparatorColor()
     bottomTitleSeparator.backgroundColor = theme.defaultSeparatorColor()
   }
