@@ -18,6 +18,7 @@ class RichContentMenuViewController: UIViewController {
   @IBOutlet weak var tableViewHeightContraint: NSLayoutConstraint!
   @IBOutlet weak var insert: UILabel!
   @IBOutlet weak var cancel: UIButton!
+  @IBOutlet weak var bottomHeaderSeparator: UIView!
   enum Item: Int {
     case imageCamera = 0
     case imageLibrary
