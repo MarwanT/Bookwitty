@@ -13,9 +13,18 @@ class RichMenuCellTableViewCell: UITableViewCell {
   static let identifier = "RichMenuCellTableViewCellReuseIdentifier"
   @IBOutlet weak var menuImageView: UIImageView!
   @IBOutlet weak var menuLabel: UILabel!
+  
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    applyTheme()
+  }
 }
 
 extension RichMenuCellTableViewCell: Themeable {
   func applyTheme() {
+    let theme = ThemeManager.shared.currentTheme
+    menuLabel.font = FontDynamicType.caption1.font
+    menuLabel.textColor = theme.defaultTextColor()
+    menuImageView.tintColor = theme.colorNumber20()
   }
 }
