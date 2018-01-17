@@ -116,10 +116,11 @@ class RichContentMenuViewController: UIViewController {
     
     self.insert.attributedText = attributedString
     self.tableView.register(UINib(nibName: "RichMenuCellTableViewCell", bundle: nil), forCellReuseIdentifier: RichMenuCellTableViewCell.identifier)
-    self.tableView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
+    self.tableView.tintColor = theme.colorNumber20()
     self.tableView.isScrollEnabled = false
     self.tableViewHeightContraint.constant = self.height * CGFloat(self.viewModel.numberOfRows())
-    cancel.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
+    self.tableView.separatorColor = theme.defaultSeparatorColor()
+    cancel.tintColor = theme.colorNumber20()
   }
   
   @IBAction func cancelButtonTouchUpInside(_ sender: UIButton) {
