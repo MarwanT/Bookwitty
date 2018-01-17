@@ -168,3 +168,8 @@ extension RichContentMenuViewController: UIGestureRecognizerDelegate {
     return touch.view == self.view
   }
 }
+
+extension RichContentMenuViewController: Themeable {
+  func applyTheme() {
+  }
+}
