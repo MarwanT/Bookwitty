@@ -171,6 +171,7 @@
 "ok" = "Ok";
 "onboarding_view_header_title" = "Following People and Topics is how you fill up your home feed with interesting reads.";
 "ooops" = "Oops";
+"optional" = "optional";
 "or_check_your_settings" = "or check your •settings•";
 "our_selection_for_you" = "Books you might like";
 "out_of_stock" = "Out of stock";
@@ -241,6 +242,7 @@
 "terms_of_use_and_privacy_policy" = "By tapping Sign up : you agree to the\n•Terms of Use• and •Privacy Policy•";
 "text" = "Text";
 "thank_you_for_report" = "Thank you for your report";
+"title" = "Title";
 "topic" = "Topic";
 "topics" = "Topics";
 "topics_to_follow" = "Topics to Follow";

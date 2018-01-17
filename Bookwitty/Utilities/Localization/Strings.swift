@@ -673,6 +673,10 @@ class Strings {
     return localizedString(key: "ooops")
   }
   
+  static func optional() -> String {
+    return localizedString(key: "optional")
+  }
+  
   static func or_check_your_settings() -> String {
     return localizedString(key: "or_check_your_settings")
   }
@@ -943,6 +947,10 @@ class Strings {
   
   static func thank_you_for_report() -> String {
     return localizedString(key: "thank_you_for_report")
+  }
+  
+  static func title() -> String {
+    return localizedString(key: "title")
   }
 
   static func topic() -> String {
