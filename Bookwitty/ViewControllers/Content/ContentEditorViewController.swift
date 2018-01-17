@@ -247,6 +247,10 @@ class ContentEditorViewController: UIViewController {
 
   // MARK: - RichEditor
   private func initializeComponents() {
+    // Title Placeholder
+    titleTextField.attributedPlaceholder = NSAttributedString(
+      string: "\(Strings.title()) (\(Strings.optional()))",
+      attributes: [NSForegroundColorAttributeName : ThemeManager.shared.currentTheme.defaultGrayedTextColor()])
     editorView.placeholder = Strings.write_here()
     setupEditorToolbar()
     setupContentEditorHtml()
