@@ -176,19 +176,22 @@ class RichLinkPreviewViewController: UIViewController {
 //MARK: - Themable implementation
 extension RichLinkPreviewViewController: Themeable {
   func applyTheme() {
-    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
-
-    view.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
-    textView.textContainerInset = ThemeManager.shared.currentTheme.defaultLayoutMargin()
+    let theme = ThemeManager.shared.currentTheme
     
-    textViewPlaceholderLabel.font = FontDynamicType.caption1.font
-    textViewPlaceholderLabel.textColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
+    view.backgroundColor = theme.colorNumber2()
 
-    separators.forEach({ $0.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()})
+    view.layoutMargins = theme.defaultLayoutMargin()
+    
+    textView.textContainerInset = theme.defaultLayoutMargin()
+
+    textViewPlaceholderLabel.font = FontDynamicType.caption1.font
+    textViewPlaceholderLabel.textColor = theme.defaultGrayedTextColor()
+
+    separators.forEach({ $0.backgroundColor = theme.defaultSeparatorColor()})
 
     //Link Preview
-    linkPreview.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
-    linkPreview.layer.borderColor = ThemeManager.shared.currentTheme.defaultSeparatorColor().cgColor
+    linkPreview.layoutMargins = theme.defaultLayoutMargin()
+    linkPreview.layer.borderColor = theme.defaultSeparatorColor().cgColor
     linkPreview.layer.borderWidth = 1.0
 
     linkTitleLabel.font = FontDynamicType.title1.font
@@ -196,26 +199,26 @@ extension RichLinkPreviewViewController: Themeable {
     linkHostLabel.font = FontDynamicType.caption2.font
 
     //Video Preview
-    videoPreview.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
-    videoPreview.layer.borderColor = ThemeManager.shared.currentTheme.defaultSeparatorColor().cgColor
+    videoPreview.layoutMargins = theme.defaultLayoutMargin()
+    videoPreview.layer.borderColor = theme.defaultSeparatorColor().cgColor
     videoPreview.layer.borderWidth = 1.0
     videoPlayView.image = #imageLiteral(resourceName: "play")
-    videoPlayView.tintColor = ThemeManager.shared.currentTheme.colorNumber23().withAlphaComponent(0.9)
+    videoPlayView.tintColor = theme.colorNumber23().withAlphaComponent(0.9)
     videoPlayView.contentMode = .scaleAspectFit
-    videoTitleLabel.textColor = ThemeManager.shared.currentTheme.colorNumber23()
-    videoDescriptionLabel.textColor = ThemeManager.shared.currentTheme.colorNumber23()
-    videoHostLabel.textColor = ThemeManager.shared.currentTheme.colorNumber23()
+    videoTitleLabel.textColor = theme.colorNumber23()
+    videoDescriptionLabel.textColor = theme.colorNumber23()
+    videoHostLabel.textColor = theme.colorNumber23()
     
     //Audio Preview
-    audioPreview.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
-    audioPreview.layer.borderColor = ThemeManager.shared.currentTheme.defaultSeparatorColor().cgColor
+    audioPreview.layoutMargins = theme.defaultLayoutMargin()
+    audioPreview.layer.borderColor = theme.defaultSeparatorColor().cgColor
     audioPreview.layer.borderWidth = 1.0
     audioTitleLabel.font = FontDynamicType.title1.font
     audioDescriptionLabel.font = FontDynamicType.body.font
     audioHostLabel.font = FontDynamicType.caption2.font
     
     //Error Preview
-    errorPreview.layer.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
+    errorPreview.layer.borderColor = theme.defaultButtonColor().cgColor
     errorPreview.layer.borderWidth = 1.0
 
   }
