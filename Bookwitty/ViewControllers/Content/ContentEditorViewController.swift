@@ -282,7 +282,7 @@ class ContentEditorViewController: UIViewController {
     let onePixelView = UIView()
     onePixelView.translatesAutoresizingMaskIntoConstraints = false
     onePixelView.addHeightConstraint(1)
-    onePixelView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber18()
+    onePixelView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     verticalStackView.distribution = .fillProportionally
     verticalStackView.addArrangedSubview(onePixelView)
     verticalStackView.addArrangedSubview(stackView)
