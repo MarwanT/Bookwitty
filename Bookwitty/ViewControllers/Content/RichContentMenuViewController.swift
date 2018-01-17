@@ -121,6 +121,7 @@ class RichContentMenuViewController: UIViewController {
     self.tableViewHeightContraint.constant = self.height * CGFloat(self.viewModel.numberOfRows())
     self.tableView.separatorColor = theme.defaultSeparatorColor()
     self.tableView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    self.tableView.separatorInset = UIEdgeInsets(top: 0, left: 42, bottom: 0, right: 0)
     cancel.tintColor = theme.colorNumber20()
   }
   
