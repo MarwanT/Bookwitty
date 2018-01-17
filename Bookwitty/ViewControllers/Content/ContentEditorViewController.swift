@@ -915,6 +915,9 @@ extension ContentEditorViewController: RichEditorDelegate {
 //MARK: - Themeable
 extension ContentEditorViewController: Themeable {
   func applyTheme() {
+    let theme = ThemeManager.shared.currentTheme
     titleTextField.font = FontDynamicType.title4.font
+    topTitleSeparator.backgroundColor = theme.defaultSeparatorColor()
+    bottomTitleSeparator.backgroundColor = theme.defaultSeparatorColor()
   }
 }
