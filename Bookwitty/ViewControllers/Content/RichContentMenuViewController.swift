@@ -171,5 +171,7 @@ extension RichContentMenuViewController: UIGestureRecognizerDelegate {
 
 extension RichContentMenuViewController: Themeable {
   func applyTheme() {
+    let theme = ThemeManager.shared.currentTheme
+    bottomHeaderSeparator.backgroundColor = theme.defaultSeparatorColor()
   }
 }
