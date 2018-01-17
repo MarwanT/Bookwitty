@@ -14,3 +14,8 @@ class RichMenuCellTableViewCell: UITableViewCell {
   @IBOutlet weak var menuImageView: UIImageView!
   @IBOutlet weak var menuLabel: UILabel!
 }
+
+extension RichMenuCellTableViewCell: Themeable {
+  func applyTheme() {
+  }
+}
