@@ -191,6 +191,8 @@ extension RichLinkPreviewViewController: Themeable {
     view.layoutMargins = theme.defaultLayoutMargin()
     
     textView.textContainerInset = theme.defaultLayoutMargin()
+    textView.textColor = theme.defaultTextColor()
+    textView.font = FontDynamicType.caption1.font
 
     textViewPlaceholderLabel.font = FontDynamicType.caption1.font
     textViewPlaceholderLabel.textColor = theme.defaultGrayedTextColor()
