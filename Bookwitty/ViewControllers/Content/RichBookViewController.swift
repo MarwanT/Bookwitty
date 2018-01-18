@@ -113,6 +113,7 @@ final class RichBookViewController: ASViewController<ASDisplayNode> {
     self.hideNavigationShadowImage()
     loadNavigationBarButtons()
     applyLocalization()
+    applyTheme()
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -462,5 +463,10 @@ extension RichBookViewController: BookDetailsViewControllerDelegate {
   func bookDetails(viewController: BookDetailsViewController, didSelect book: Book) {
     _ = self.navigationController?.popViewController(animated: true)
     self.getInfo(for: book)
+  }
+}
+
+extension RichBookViewController: Themeable {
+  func applyTheme() {
   }
 }
