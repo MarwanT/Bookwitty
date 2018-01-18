@@ -119,11 +119,7 @@ class PublishMenuViewController: UIViewController {
     self.tableView.reloadData()
     self.tableView.layoutIfNeeded()
     
-    let attributedString = AttributedStringBuilder(fontDynamicType: .caption1)
-      .append(text: Strings.publish(), color: ThemeManager.shared.currentTheme.colorNumber13())
-      .attributedString
-    
-    self.publishLabel.attributedText = attributedString
+    self.publishLabel.text = Strings.publish()
     self.tableView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
     self.tableView.isScrollEnabled = false
     cancelButton.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
@@ -299,5 +295,8 @@ extension PublishMenuViewController: UIGestureRecognizerDelegate {
 
 extension PublishMenuViewController: Themeable {
   func applyTheme() {
+    let theme = ThemeManager.shared.currentTheme
+    publishLabel.textColor = theme.colorNumber13()
+    publishLabel.font = FontDynamicType.subheadline.font
   }
 }
