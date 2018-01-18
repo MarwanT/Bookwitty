@@ -122,6 +122,7 @@ class PublishMenuViewController: UIViewController {
     self.publishLabel.text = Strings.publish()
     self.tableView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
     self.tableView.isScrollEnabled = false
+    self.tableView.separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     cancelButton.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
     self.tableViewHeightConstraint.constant = tableView.contentSize.height
   }
@@ -298,5 +299,6 @@ extension PublishMenuViewController: Themeable {
     let theme = ThemeManager.shared.currentTheme
     publishLabel.textColor = theme.colorNumber13()
     publishLabel.font = FontDynamicType.subheadline.font
+    bottomHeaderSeparator.backgroundColor = theme.defaultSeparatorColor()
   }
 }
