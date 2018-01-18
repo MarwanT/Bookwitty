@@ -240,6 +240,7 @@ extension RichLinkPreviewViewController: Themeable {
     errorPreview.layer.borderColor = theme.defaultButtonColor().cgColor
     errorPreview.layer.borderWidth = 1.0
 
+    self.navigationController?.navigationBar.barTintColor = theme.colorNumber2()
   }
 }
 
