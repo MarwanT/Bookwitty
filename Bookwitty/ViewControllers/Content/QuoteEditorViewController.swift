@@ -146,13 +146,13 @@ extension QuoteEditorViewController: Themeable {
     quoteTextView.font = FontDynamicType.title4.font
     quoteTextView.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
 
-    authorTextView.font = FontDynamicType.caption1.font
+    authorTextView.font = FontDynamicType.caption2.font
     authorTextView.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
 
     quotePlaceholderLabel.font = FontDynamicType.title4.font
     quotePlaceholderLabel.textColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
 
-    authorPlaceholderLabel.font = FontDynamicType.caption1.font
+    authorPlaceholderLabel.font = FontDynamicType.caption2.font
     authorPlaceholderLabel.textColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
   }
 }
