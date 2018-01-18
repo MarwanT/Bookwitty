@@ -36,6 +36,8 @@ class LinkPagesViewController: UIViewController {
   }
   
   private func initializeComponents() {
+    let theme = ThemeManager.shared.currentTheme
+    
     let doneButton = UIBarButtonItem(title: Strings.done(), style: .plain, target: self, action: #selector(doneButtonTouchUpInside(_:)))
     doneButton.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
     self.navigationItem.rightBarButtonItem = doneButton
@@ -48,6 +50,13 @@ class LinkPagesViewController: UIViewController {
     tagsView.beginEditing() // becomeFirstResponder
 
     tagsView.addTags(self.viewModel.getSelectedPages.flatMap { $0.title } )
+    
+    tagsView.tintColor = theme.colorNumber9()
+    tagsView.textColor = theme.colorNumber20()
+    tagsView.selectedColor = theme.colorNumber25()
+    tagsView.selectedTextColor = theme.colorNumber23()
+    tagsView.font = FontDynamicType.caption3.font
+    tagsView.padding.left = 0
 
     tagsView.onVerifyTag = { [weak self] field, candidate in
       guard let strongSelf = self else {

@@ -15,10 +15,23 @@ class ChipsTableViewCell: UITableViewCell {
   static let identifier = "ChipsTableViewCellReuseableIdentifier"
   override func awakeFromNib() {
     super.awakeFromNib()
+    applyTheme()
     tagsView.readOnly = true
   }
   
   func setTags(_ tags:[String])  {
     tags.forEach { tagsView.addTag($0) }
+  }
+}
+
+extension ChipsTableViewCell: Themeable {
+  func applyTheme() {
+    let theme = ThemeManager.shared.currentTheme
+    tagsView.tintColor = theme.colorNumber9()
+    tagsView.textColor = theme.colorNumber20()
+    tagsView.selectedColor = theme.colorNumber25()
+    tagsView.selectedTextColor = theme.colorNumber23()
+    tagsView.font = FontDynamicType.caption3.font
+    tagsView.padding.left = 0
   }
 }

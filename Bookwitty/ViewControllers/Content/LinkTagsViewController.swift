@@ -36,6 +36,8 @@ class LinkTagsViewController: UIViewController {
   }
   
   private func initializeComponents() {
+    let theme = ThemeManager.shared.currentTheme
+    
     let doneButton = UIBarButtonItem(title: Strings.done(), style: .plain, target: self, action: #selector(doneButtonTouchUpInside(_:)))
     doneButton.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
     self.navigationItem.rightBarButtonItem = doneButton
@@ -47,10 +49,12 @@ class LinkTagsViewController: UIViewController {
 
     tagsView.addTags(self.viewModel.selectedTags.flatMap { $0.title } )
     
-    tagsView.selectedColor = ThemeManager.shared.currentTheme.colorNumber25()
-    tagsView.tintColor = ThemeManager.shared.currentTheme.colorNumber9()
-    tagsView.textColor = ThemeManager.shared.currentTheme.colorNumber20()
-    tagsView.selectedTextColor = ThemeManager.shared.currentTheme.colorNumber23()
+    tagsView.tintColor = theme.colorNumber9()
+    tagsView.textColor = theme.colorNumber20()
+    tagsView.selectedColor = theme.colorNumber25()
+    tagsView.selectedTextColor = theme.colorNumber23()
+    tagsView.font = FontDynamicType.caption3.font
+    tagsView.padding.left = 0
 
     tagsView.onVerifyTag = { [weak self] field, candidate in
       guard let strongSelf = self else {
