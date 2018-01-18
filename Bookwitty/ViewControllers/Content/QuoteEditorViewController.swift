@@ -131,11 +131,15 @@ extension QuoteEditorViewController: Themeable {
     view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
 
     view.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
-    quoteTextView.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
-    authorTextView.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
+    
+    var layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
+    layoutMargins.left = layoutMargins.left - 4
+    
+    quoteTextView.layoutMargins = layoutMargins
+    authorTextView.layoutMargins = layoutMargins
 
-    quoteTextView.textContainerInset = ThemeManager.shared.currentTheme.defaultLayoutMargin()
-    authorTextView.textContainerInset = ThemeManager.shared.currentTheme.defaultLayoutMargin()
+    quoteTextView.textContainerInset = layoutMargins
+    authorTextView.textContainerInset = layoutMargins
 
     separators.forEach({ $0.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()})
 
