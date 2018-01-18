@@ -109,7 +109,6 @@ final class RichBookViewController: ASViewController<ASDisplayNode> {
     observeLanguageChanges()
     collectionNode.dataSource = self
     collectionNode.delegate = self
-    self.view.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     self.hideNavigationShadowImage()
     loadNavigationBarButtons()
     applyLocalization()
@@ -468,5 +467,10 @@ extension RichBookViewController: BookDetailsViewControllerDelegate {
 
 extension RichBookViewController: Themeable {
   func applyTheme() {
+    let theme = ThemeManager.shared.currentTheme
+    node.backgroundColor = theme.colorNumber2()
+    collectionNode.backgroundColor = theme.colorNumber2()
+    navigationController?.navigationBar.barTintColor = theme.colorNumber2()
+    searchNode.configuration.textFieldColor = theme.colorNumber23()
   }
 }
