@@ -14,6 +14,14 @@ class SearchNode: ASCellNode {
 
   var searchBarDelegate: UISearchBarDelegate?
   fileprivate var searchBar: UISearchBar?
+  
+  var configuration = Configuration() {
+    didSet {
+      if isNodeLoaded {
+        applyTheme()
+      }
+    }
+  }
 
   convenience override init() {
     self.init(viewBlock: { () -> UIView in
@@ -50,10 +58,20 @@ extension SearchNode: Themeable {
     searchBar?.searchBarStyle = .minimal
     searchBar?.barTintColor = .clear
 
-    searchBar?.setTextColor(color: ThemeManager.shared.currentTheme.defaultTextColor())
-    searchBar?.setTextFieldColor(color: ThemeManager.shared.currentTheme.colorNumber18().withAlphaComponent(0.7))
-    searchBar?.setPlaceholderTextColor(color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
-    searchBar?.setSearchImageColor(color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
-    searchBar?.setTextFieldClearButtonColor(color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+    searchBar?.setTextColor(color: configuration.textColor)
+    searchBar?.setPlaceholderTextColor(color: configuration.placeholderTextColor)
+    searchBar?.setSearchImageColor(color: configuration.searchImageColor)
+    searchBar?.setTextFieldClearButtonColor(color: configuration.textFieldClearButtonColor)
+    searchBar?.setTextFieldColor(color: UIColor.white)
+  }
+}
+
+extension SearchNode {
+  struct Configuration {
+    var textColor = ThemeManager.shared.currentTheme.defaultTextColor()
+    var textFieldColor = ThemeManager.shared.currentTheme.colorNumber23()
+    var placeholderTextColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
+    var searchImageColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
+    var textFieldClearButtonColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
   }
 }
