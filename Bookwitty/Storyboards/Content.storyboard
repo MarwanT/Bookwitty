@@ -188,6 +188,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bottomHeaderSeparator" destination="hIX-BW-7jc" id="SBT-kZ-aQQ"/>
                         <outlet property="cancelButton" destination="az3-76-zAc" id="GQ9-FH-VuT"/>
                         <outlet property="publishLabel" destination="FDO-Be-fSh" id="RrP-Mn-Swa"/>
                         <outlet property="tableView" destination="PmJ-QI-0gm" id="ZaU-qY-vex"/>
