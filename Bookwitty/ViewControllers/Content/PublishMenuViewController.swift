@@ -81,6 +81,7 @@ class PublishMenuViewController: UIViewController {
   let viewModel = PublishMenuViewModel()
   override func viewDidLoad() {
     super.viewDidLoad()
+    applyTheme()
     initializeComponents()
     // Do any additional setup after loading the view.
     addTapGesture()
@@ -293,5 +294,10 @@ extension PublishMenuViewController.Item {
 extension PublishMenuViewController: UIGestureRecognizerDelegate {
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
     return touch.view == self.view
+  }
+}
+
+extension PublishMenuViewController: Themeable {
+  func applyTheme() {
   }
 }
