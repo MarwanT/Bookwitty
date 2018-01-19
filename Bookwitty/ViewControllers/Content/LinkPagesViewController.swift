@@ -227,10 +227,15 @@ extension LinkPagesViewController: UITableViewDataSource, UITableViewDelegate {
   }
   
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    let theme = ThemeManager.shared.currentTheme
     let page = self.viewModel.values(for: indexPath.row).page
     cell.textLabel?.text = page?.title
     cell.textLabel?.font = FontDynamicType.caption1.font
+    cell.textLabel?.textColor = theme.defaultTextColor()
+    cell.detailTextLabel?.font = FontDynamicType.caption3.font
     cell.detailTextLabel?.text = ""
+    cell.detailTextLabel?.textColor = theme.defaultGrayedTextColor()
+    cell.indentationWidth = 39
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -240,5 +245,9 @@ extension LinkPagesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     self.viewTopicViewController(with: page)
     tableView.reloadData()
+  }
+  
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 43
   }
 }
