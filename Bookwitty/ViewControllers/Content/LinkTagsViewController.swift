@@ -201,7 +201,9 @@ extension LinkTagsViewController: Localizable {
 extension LinkTagsViewController: Themeable {
   
   func applyTheme() {
-    self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+    let theme = ThemeManager.shared.currentTheme
+    self.view.backgroundColor = theme.colorNumber2()
+    self.navigationController?.navigationBar.barTintColor = theme.colorNumber2()
   }
 }
 
