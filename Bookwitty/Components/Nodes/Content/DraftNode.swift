@@ -11,6 +11,8 @@ import AsyncDisplayKit
 class DraftNode: ASCellNode {
   fileprivate let titleNode: ASTextNode
   fileprivate let descriptionNode: ASTextNode
+  
+  fileprivate var configuration = Configuration()
 
   override init() {
     titleNode = ASTextNode()
@@ -24,17 +26,17 @@ class DraftNode: ASCellNode {
       var text: NSAttributedString? = nil
       if let title = title {
         if title.isEmpty {
-          text = AttributedStringBuilder(fontDynamicType: .subheadline)
+          text = AttributedStringBuilder(fontDynamicType: .footnote)
             .append(text: Strings.untitled())
             .attributedString
         } else {
-          text = AttributedStringBuilder(fontDynamicType: .subheadline)
+          text = AttributedStringBuilder(fontDynamicType: .footnote)
             .append(text: title)
             .attributedString
         }
       }
       titleNode.attributedText = text
-      titleNode.setNeedsLayout()
+      setNeedsLayout()
     }
   }
 
@@ -43,7 +45,7 @@ class DraftNode: ASCellNode {
       var text: NSAttributedString? = nil
       if let updatedAt = updatedAt {
         let lastEditedString = Strings.last_edited() + " " 
-        text = AttributedStringBuilder(fontDynamicType: .caption2)
+        text = AttributedStringBuilder(fontDynamicType: .caption3)
           .append(text: lastEditedString, color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
           .append(text: updatedAt.formatted(format: "MMM.dd"), color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
           .attributedString
@@ -56,28 +58,31 @@ class DraftNode: ASCellNode {
   fileprivate func setupNode() {
     automaticallyManagesSubnodes = true
     titleNode.maximumNumberOfLines = 1
+    style.height = ASDimensionMake(43)
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    let titleInsetLayoutSpec = ASInsetLayoutSpec(insets: textEdgeInset(), child: titleNode)
-    let descriptionInsetLayoutSpec = ASInsetLayoutSpec(insets: textEdgeInset(), child: descriptionNode)
-    let separatorNode = SeparatorNode()
+    let descriptionInsetLayoutSpec = ASInsetLayoutSpec(insets: configuration.descriptionEdgeInset, child: descriptionNode)
 
-    let verticalStackLayoutSpec = ASStackLayoutSpec(direction: .vertical,
-                                                    spacing: 0.0,
-                                                    justifyContent: .spaceBetween,
-                                                    alignItems: .stretch,
-                                                    children: [titleInsetLayoutSpec, descriptionInsetLayoutSpec, separatorNode])
-
+    let verticalStackLayoutSpec = ASStackLayoutSpec(
+      direction: .vertical,
+      spacing: 0.0,
+      justifyContent: .center,
+      alignItems: .stretch,
+      children: [titleNode, descriptionInsetLayoutSpec])
     verticalStackLayoutSpec.style.flexShrink = 1.0
+    
+    let layoutSpec = ASInsetLayoutSpec(insets: configuration.layoutMargins, child: verticalStackLayoutSpec)
 
-    return verticalStackLayoutSpec
+    return layoutSpec
   }
 }
 
 extension DraftNode {
-  fileprivate func textEdgeInset() -> UIEdgeInsets {
-    let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
-    return UIEdgeInsets(top: 5.0, left: internalMargin, bottom: 5.0, right: internalMargin)
+  fileprivate struct Configuration {
+    var descriptionEdgeInset: UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0, bottom: 0, right: 0)
+    var layoutMargins = UIEdgeInsets(
+      top: 0, left: ThemeManager.shared.currentTheme.cardInternalMargin(),
+      bottom: 0, right: ThemeManager.shared.currentTheme.cardInternalMargin())
   }
 }
