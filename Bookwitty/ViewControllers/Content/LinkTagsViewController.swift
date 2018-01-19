@@ -45,6 +45,10 @@ class LinkTagsViewController: UIViewController {
       for: UIControlState.normal)
     self.navigationItem.rightBarButtonItem = doneButton
     
+    self.tableView.tableFooterView = UIView()
+    self.tableView.backgroundColor = .clear
+    self.tableView.separatorInset = UIEdgeInsets.zero
+    self.tableView.separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     self.separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
 
     tagsView.delimiter = "\n"
