@@ -125,7 +125,9 @@ extension DraftsViewController {
 
 extension DraftsViewController: Themeable {
   func applyTheme() {
-    tableNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+    let theme = ThemeManager.shared.currentTheme
+    tableNode.backgroundColor = theme.colorNumber2()
+    tableNode.view.separatorColor = theme.defaultSeparatorColor()
   }
 }
 
