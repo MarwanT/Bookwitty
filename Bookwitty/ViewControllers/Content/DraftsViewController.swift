@@ -65,11 +65,6 @@ class DraftsViewController: ASViewController<ASTableNode> {
                                            action: #selector(closeBarButtonTouchUpInside(_:)))
 
     navigationItem.leftBarButtonItem = closeBarButtonItem
-
-    var attributes = closeBarButtonItem.titleTextAttributes(for: .normal) ?? [:]
-    let defaultTextColor = ThemeManager.shared.currentTheme.defaultButtonColor()
-    attributes[NSForegroundColorAttributeName] = defaultTextColor
-    closeBarButtonItem.setTitleTextAttributes(attributes, for: .normal)
   }
 
   fileprivate func loadDrafts() {
