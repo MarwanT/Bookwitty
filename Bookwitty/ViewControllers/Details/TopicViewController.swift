@@ -120,7 +120,7 @@ class TopicViewController: ASViewController<ASDisplayNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeComponents()
-    loadNavigationBarButtons()
+    loadNavigationItems()
 
     applyLocalization()
     addObservers()
@@ -156,6 +156,22 @@ class TopicViewController: ASViewController<ASDisplayNode> {
     actionBarNode.action = .follow
   }
   
+  private func loadNavigationItems() {
+    loadNavigationBar()
+    loadNavigationBarButtons()
+  }
+  
+  private func loadNavigationBar() {
+    let theme = ThemeManager.shared.currentTheme
+    switch self.navigationItemMode {
+    case .action(_):
+      navigationController?.navigationBar.barTintColor = theme.colorNumber2()
+    default:
+      // Falls back to the default styling
+      break
+    }
+  }
+  
   private func loadNavigationBarButtons() {
   
     func setupShareNavigationItem() {
@@ -170,12 +186,15 @@ class TopicViewController: ASViewController<ASDisplayNode> {
     func setupRightNavigationItem(with action: PageAction) {
 
       var title: String = ""
+      var font: UIFont = FontDynamicType.caption1.font
       if let resourceType = viewModel.resourceType {
         switch resourceType {
         case Topic.resourceType:
           title = action == .link ? Strings.link_topic() : Strings.unlink_topic()
+          font = FontDynamicType.footnote.font
         case Author.resourceType:
           title = action == .link ? Strings.link_author() : Strings.unlink_author()
+          font = FontDynamicType.footnote.font
         case Book.resourceType: fallthrough
         default: break
         }
@@ -184,7 +203,7 @@ class TopicViewController: ASViewController<ASDisplayNode> {
       let actionButton = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(TopicViewController.linkUnlinkTouchUpInside(_ :)))
       navigationController?.navigationBar.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
       actionButton.setTitleTextAttributes([
-        NSFontAttributeName: FontDynamicType.caption1.font,
+        NSFontAttributeName: font,
         NSForegroundColorAttributeName : ThemeManager.shared.currentTheme.colorNumber19()], for: UIControlState.normal)
       
 
