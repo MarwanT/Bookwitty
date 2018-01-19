@@ -44,6 +44,8 @@ class LinkPagesViewController: UIViewController {
     self.navigationItem.backBarButtonItem = .back
     self.tableView.tableFooterView = UIView()
     self.tableView.backgroundColor = .clear
+    self.tableView.separatorInset = UIEdgeInsets.zero
+    self.tableView.separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     self.separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
 
     tagsView.delimiter = "\n"
