@@ -88,9 +88,17 @@ class QuoteEditorViewController: UIViewController {
   }
 
   fileprivate func setTextAppearanceState(of barButtonItem: UIBarButtonItem) -> Void {
+    let theme = ThemeManager.shared.currentTheme
+    let defaultColor = theme.colorNumber20()
+    let defaultActionColor = theme.defaultButtonColor()
+    
+    let isActionButton = barButtonItem === navigationItem.rightBarButtonItem
     var attributes = barButtonItem.titleTextAttributes(for: .normal) ?? [:]
-    let defaultTextColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+    let defaultTextColor = isActionButton ? defaultActionColor : defaultColor
     attributes[NSForegroundColorAttributeName] = defaultTextColor
+    if isActionButton {
+      attributes[NSFontAttributeName] = FontDynamicType.footnote.font
+    }
     barButtonItem.setTitleTextAttributes(attributes, for: .normal)
 
     let grayedTextColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
@@ -128,6 +136,8 @@ extension QuoteEditorViewController: Localizable {
 //MARK: - Themable implementation
 extension QuoteEditorViewController: Themeable {
   func applyTheme() {
+    navigationController?.navigationBar.barTintColor = ThemeManager.shared.currentTheme.colorNumber2()
+    
     view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
 
     view.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
