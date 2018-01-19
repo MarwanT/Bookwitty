@@ -218,9 +218,14 @@ extension LinkTagsViewController: UITableViewDataSource, UITableViewDelegate {
   }
   
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    let theme = ThemeManager.shared.currentTheme
     cell.textLabel?.text = self.viewModel.values(forRowAt: indexPath)
-    cell.textLabel?.font = FontDynamicType.footnote.font
+    cell.textLabel?.font = FontDynamicType.caption1.font
+    cell.textLabel?.textColor = theme.defaultTextColor()
+    cell.detailTextLabel?.font = FontDynamicType.caption3.font
     cell.detailTextLabel?.text = ""
+    cell.detailTextLabel?.textColor = theme.defaultGrayedTextColor()
+    cell.indentationWidth = 39
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -231,5 +236,9 @@ extension LinkTagsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     self.viewModel.resetTags()
     tableView.reloadData()
+  }
+  
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 43
   }
 }
