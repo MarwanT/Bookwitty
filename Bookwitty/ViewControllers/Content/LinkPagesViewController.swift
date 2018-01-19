@@ -39,7 +39,10 @@ class LinkPagesViewController: UIViewController {
     let theme = ThemeManager.shared.currentTheme
     
     let doneButton = UIBarButtonItem(title: Strings.done(), style: .plain, target: self, action: #selector(doneButtonTouchUpInside(_:)))
-    doneButton.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
+    doneButton.setTitleTextAttributes(
+      [ NSFontAttributeName: FontDynamicType.footnote.font,
+        NSForegroundColorAttributeName : theme.colorNumber19()],
+      for: UIControlState.normal)
     self.navigationItem.rightBarButtonItem = doneButton
     self.navigationItem.backBarButtonItem = .back
     self.tableView.tableFooterView = UIView()
