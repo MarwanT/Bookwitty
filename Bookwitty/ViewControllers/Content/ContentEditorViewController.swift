@@ -907,7 +907,9 @@ extension ContentEditorViewController: RichEditorDelegate {
       self.set(option: .header, selected: editingItems.contains("h2"))
       self.set(option: .bold, selected: editingItems.contains("bold"))
       self.set(option: .italic, selected: editingItems.contains("italic"))
-      self.set(option: .link, selected: editingItems.contains("link"), isEnabled: editingItems.contains("isRange"))
+      let isLink = editingItems.contains("link")
+      let isRange = editingItems.contains("isRange");
+      self.set(option: .link, selected: isLink, isEnabled: (isLink || isRange))
       self.set(option: .unorderedList, selected: editingItems.contains("unorderedList"))
     }
   }
