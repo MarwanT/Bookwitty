@@ -67,9 +67,11 @@ class RichLinkPreviewViewController: UIViewController {
 
     // Do any additional setup after loading the view.
     initializeComponents()
+    applyLocalization()
     applyTheme()
     setupNavigationBarButtons()
     addKeyboardNotifications()
+    observeLanguageChanges()
     self.textView.becomeFirstResponder()
   }
 
@@ -97,15 +99,6 @@ class RichLinkPreviewViewController: UIViewController {
     errorLabel.text = nil
 
     viewModel.response = nil
-
-    switch self.mode {
-    case .link:
-      title = Strings.link()
-    case .video:
-      title = Strings.video()
-    case .audio:
-      title = Strings.audio()
-    }
   }
 
   fileprivate func setupNavigationBarButtons() {
@@ -195,6 +188,29 @@ extension RichLinkPreviewViewController: Themeable {
     errorPreview.layer.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
     errorPreview.layer.borderWidth = 1.0
 
+  }
+}
+
+//MARK: - Localizable implementation
+extension RichLinkPreviewViewController: Localizable {
+  func applyLocalization() {
+    switch self.mode {
+    case .link:
+      title = Strings.link()
+    case .video:
+      title = Strings.video()
+    case .audio:
+      title = Strings.audio()
+    }
+  }
+  
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+  
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }
 
