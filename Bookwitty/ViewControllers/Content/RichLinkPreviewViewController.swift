@@ -62,6 +62,10 @@ class RichLinkPreviewViewController: UIViewController {
 
   var delegate: RichLinkPreviewViewControllerDelegate?
 
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
 
