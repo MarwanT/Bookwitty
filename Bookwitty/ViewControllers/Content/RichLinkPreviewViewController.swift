@@ -19,6 +19,17 @@ class RichLinkPreviewViewController: UIViewController {
     case link
     case video
     case audio
+    
+    var placeholderText: String {
+      switch self {
+      case .audio:
+        return Strings.audio_link() + " (" + Strings.type_or_paste_url() + ")"
+      case .link:
+        return Strings.link() + " (" + Strings.type_or_paste_url() + ")"
+      case .video:
+        return Strings.video_link() + " (" + Strings.type_or_paste_url() + ")"
+      }
+    }
   }
 
   @IBOutlet var scrollView: UIScrollView!
