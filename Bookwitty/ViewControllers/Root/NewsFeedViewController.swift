@@ -222,7 +222,7 @@ extension NewsFeedViewController: PenNameSelectionNodeDelegate {
 extension NewsFeedViewController {
   func addObservers() {
     NotificationCenter.default.addObserver(self, selector:
-      #selector(refreshData(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
+      #selector(authenticationStatusChangedAction(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
 
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
@@ -250,7 +250,7 @@ extension NewsFeedViewController {
     }
   }
 
-  func refreshData(_ notification: Notification) {
+  func authenticationStatusChangedAction(_ notification: Notification) {
     if !UserManager.shared.isSignedIn {
       signOutAction()
     }
