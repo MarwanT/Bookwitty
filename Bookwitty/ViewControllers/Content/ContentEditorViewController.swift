@@ -777,6 +777,7 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
       self.publishYourPost() { success in
         if success {
           viewController.dismiss(animated: false, completion: {
+            NotificationCenter.default.post(name: AppNotification.shouldRefreshData, object: nil)
             self.dismiss(animated: true, completion: nil)
           })
         } else {
