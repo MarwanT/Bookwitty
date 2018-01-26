@@ -233,7 +233,17 @@ extension NewsFeedViewController {
     observeLanguageChanges()
   }
 
+  /**
+   !!!! -
+   Wrap the following logic with a check on the view controller if it is visible
+   or not. If it wasn't only reset the data and update the collection Node,
+   because when the view will appear the data will be fetched again.
+   If the view is visible already when this method is triggered, then
+   fetching the data should happen here, resetting it is not enough.
+   */
   func refreshData(_ notification: Notification) {
+    viewModel.resetData()
+    updateCollection(orReloadAll: true)
   }
 
   func updatedResources(_ notification: NSNotification) {
