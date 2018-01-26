@@ -222,6 +222,9 @@ extension NewsFeedViewController: PenNameSelectionNodeDelegate {
 extension NewsFeedViewController {
   func addObservers() {
     NotificationCenter.default.addObserver(self, selector:
+      #selector(self.refreshData(_:)), name: AppNotification.shouldRefreshData, object: nil)
+    
+    NotificationCenter.default.addObserver(self, selector:
       #selector(authenticationStatusChangedAction(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
 
     NotificationCenter.default.addObserver(self, selector:
@@ -230,6 +233,8 @@ extension NewsFeedViewController {
     observeLanguageChanges()
   }
 
+  func refreshData(_ notification: Notification) {
+  }
 
   func updatedResources(_ notification: NSNotification) {
     let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.cards.rawValue })
