@@ -25,6 +25,7 @@
 "apply" = "Appliquer";
 "article" = "Article";
 "audio" = "Audio";
+"audio_link" = "Audio Link";
 "author" = "Auteur";
 "bag" = "Panier";
 "biography" = "Biographie";
@@ -258,6 +259,7 @@
 "tutorial_third_page_description" = "Nous sommes tous experts des sujets qui nous passionnent. Partagez votre savoir.";
 "tutorial_third_page_title" = "Partagez vos idées";
 "its_done" = "C'est fait";
+"type_or_paste_url" = "Type or paste a URL";
 "types" = "Types";
 "unknown_format" = "Format de produit inconnu";
 "unlink_author" = "Unlink Author";
@@ -268,6 +270,7 @@
 "user_not_signed_in_alert_message" = "Vous devez être connecté pour effectuer cette action";
 "user_not_signed_in_alert_title" = "Vous n'êtes pas connecté";
 "video" = "Vidéo";
+"video_link" = "Video Link";
 "view_all" = "Voir tout";
 "view_all_books" = "Voir tous les livres";
 "view_all_categories" = "Livres par catégories";

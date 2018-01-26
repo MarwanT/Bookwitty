@@ -84,6 +84,10 @@ class Strings {
   static func audio() -> String {
     return localizedString(key: "audio")
   }
+  
+  static func audio_link() -> String {
+    return localizedString(key: "audio_link")
+  }
 
   static func author() -> String {
     return localizedString(key: "author")
@@ -1016,6 +1020,10 @@ class Strings {
   static func its_done() -> String {
     return localizedString(key: "its_done")
   }
+  
+  static func type_or_paste_url() -> String {
+    return localizedString(key: "type_or_paste_url")
+  }
 
   static func types() -> String {
     return localizedString(key: "types")
@@ -1051,6 +1059,10 @@ class Strings {
   
   static func video() -> String {
     return localizedString(key: "video")
+  }
+  
+  static func video_link() -> String {
+    return localizedString(key: "video_link")
   }
   
   static func view_all() -> String {
