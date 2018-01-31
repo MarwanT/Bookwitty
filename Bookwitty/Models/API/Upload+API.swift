@@ -16,7 +16,7 @@ public struct UploadAPI {
 
   public enum AssetType: String {
     case profile = "profile"
-    case content = "content"
+    case feature = "feature"
     case inline = "inline"
   }
 
