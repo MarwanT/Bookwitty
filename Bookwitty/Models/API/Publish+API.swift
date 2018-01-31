@@ -34,9 +34,9 @@ public struct PublishAPI {
     })
   }
 
-  static func updateContent(id: String, title: String?, body: String?, imageURL: String?, shortDescription: String?, status: PublishStatus? = .draft, completion: @escaping (_ success: Bool, _ candidatePost: CandidatePost?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  static func updateContent(id: String, title: String?, body: String?, imageIdentifier: String?, shortDescription: String?, status: PublishStatus? = .draft, completion: @escaping (_ success: Bool, _ candidatePost: CandidatePost?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     let successStatusCode: Int = 200
-    return signedAPIRequest(target: BookwittyAPI.updateContent(id: id, title: title, body: body, imageURL: imageURL, shortDescription: shortDescription, status: status), completion: { (data, statusCode, response, error) in
+    return signedAPIRequest(target: BookwittyAPI.updateContent(id: id, title: title, body: body, imageIdentifier: imageIdentifier, shortDescription: shortDescription, status: status), completion: { (data, statusCode, response, error) in
       var success: Bool = false
       var error: BookwittyAPIError? = nil
       var post: CandidatePost? = nil
@@ -85,7 +85,7 @@ extension PublishAPI {
     ]
     return dictionary
   }
-  static func updateContentParameters(title: String?, body: String?, imageURL: String?, shortDescription: String?, status: PublishStatus?) -> [String : Any]? {
+  static func updateContentParameters(title: String?, body: String?, imageIdentifier: String?, shortDescription: String?, status: PublishStatus?) -> [String : Any]? {
     
     var attributes = [String : String]()
     
@@ -101,8 +101,8 @@ extension PublishAPI {
       attributes["short-description"] = shortDescription
     }
     
-    if let imageURL = imageURL {
-      attributes["cover-image-url"] = imageURL
+    if let imageIdentifier = imageIdentifier {
+      attributes["cover-image-url"] = imageIdentifier
     }
     
     if let status = status {

@@ -147,10 +147,9 @@ class ContentEditorViewModel  {
     }
     self.resetPreviousRequest()
     let status = PublishAPI.PublishStatus(rawValue: self.currentPost.status ?? "") ?? PublishAPI.PublishStatus.draft
-    self.currentRequest = PublishAPI.updateContent(id: id, title: currentPost.title, body: currentPost.body, imageURL: currentPost.imageUrl, shortDescription: currentPost.shortDescription, status: status, completion: { (success, candidatePost, error) in
+    self.currentRequest = PublishAPI.updateContent(id: id, title: currentPost.title, body: currentPost.body, imageIdentifier: nil, shortDescription: currentPost.shortDescription, status: status, completion: { (success, candidatePost, error) in
       defer { self.currentRequest = nil; completion?(success) }
       guard success, let candidatePost = candidatePost else {
-        
         return
       }
 
