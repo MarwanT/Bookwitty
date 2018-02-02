@@ -7,6 +7,7 @@
 //
 
 import AsyncDisplayKit
+import SwiftLoader
 
 protocol PostPreviewViewControllerDelegate: class {
   //TODO: Modify signature, Replace `Any` with the correct model once there
@@ -391,8 +392,11 @@ extension PostPreviewViewController: UINavigationControllerDelegate, UIImagePick
       return
     }
 
+    SwiftLoader.show(animated: true)
     viewModel.upload(image: image) {
       (success: Bool, imageIdentifier: String?, imageURL: String?) in
+      SwiftLoader.hide()
+      
       guard success else {
         //TODO: should we alert the user ?
         self.navigationController?.dismiss(animated: true, completion: nil)
