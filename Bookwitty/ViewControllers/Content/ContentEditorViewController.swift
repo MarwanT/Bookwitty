@@ -774,7 +774,9 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
       viewController.dismiss(animated: true, completion: nil)
       self.presentPostPreviewViewController()
     case .publishYourPost:
+      SwiftLoader.show(animated: true)
       self.publishYourPost() { success in
+        SwiftLoader.hide()
         if success {
           viewController.dismiss(animated: false, completion: {
             NotificationCenter.default.post(name: AppNotification.shouldRefreshData, object: nil)
