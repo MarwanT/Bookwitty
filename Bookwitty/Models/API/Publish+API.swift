@@ -87,7 +87,8 @@ extension PublishAPI {
   }
   static func updateContentParameters(title: String?, body: String?, imageIdentifier: String?, shortDescription: String?, status: PublishStatus?) -> [String : Any]? {
     
-    var attributes = [String : String]()
+    var attributes = [String : Any]()
+    var metaData = [String : String]()
     
     if let title = title {
       attributes["title"] = title
@@ -102,11 +103,15 @@ extension PublishAPI {
     }
     
     if let imageIdentifier = imageIdentifier {
-      attributes["cover-image-url"] = imageIdentifier
+      metaData["image-id"] = imageIdentifier
     }
     
     if let status = status {
       attributes["status"] = status.rawValue
+    }
+    
+    if metaData.count > 0 {
+      attributes["meta"] = metaData
     }
     
     let dictionary = [
