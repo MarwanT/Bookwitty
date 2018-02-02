@@ -392,16 +392,16 @@ extension PostPreviewViewController: UINavigationControllerDelegate, UIImagePick
     }
 
     viewModel.upload(image: image) {
-      (success: Bool, url: String?) in
+      (success: Bool, imageIdentifier: String?, imageURL: String?) in
       guard success else {
         //TODO: should we alert the user ?
         self.navigationController?.dismiss(animated: true, completion: nil)
         return
       }
       
-      self.viewModel.candidatePost.imageUrl = url
+      self.viewModel.candidatePost.imageUrl = imageURL
       self.shouldShowCover = true
-      self.coverNode.url = url
+      self.coverNode.url = imageURL
       self.collectionNode.reloadData()
 
       self.navigationController?.dismiss(animated: true, completion: nil)
