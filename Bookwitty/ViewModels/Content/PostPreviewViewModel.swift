@@ -43,7 +43,15 @@ final class PostPreviewViewModel {
       let parameters: [String : String] = (policy.form as? [String : String]) ?? [:]
       _ = UtilitiesAPI.upload(url: url, paramters: parameters, multipart: (data: data, name: "file"), completion: {
         (success, error) in
-        completion(success, policy.uuid, policy.link)
+        guard success, let identifier = self.candidatePost.id else {
+          completion(success, nil, nil)
+          return
+        }
+        
+        _ = PublishAPI.updateContent(id: identifier, title: nil, body: nil, imageIdentifier: policy.uuid, shortDescription: nil, completion: {
+          (success, post, error) in
+          completion(success, policy.uuid, policy.link)
+        })
       })
     }
   }
