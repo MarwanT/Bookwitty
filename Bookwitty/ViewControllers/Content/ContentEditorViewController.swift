@@ -787,7 +787,9 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
         }
       }
     case .saveAsDraft:
+      SwiftLoader.show(animated: true)
       self.savePostAsDraft({ (success: Bool) in
+        SwiftLoader.hide()
         if success {
           self.resignResponders()
           viewController.dismiss(animated: false, completion: {
