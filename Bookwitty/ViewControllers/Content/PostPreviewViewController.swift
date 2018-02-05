@@ -64,12 +64,11 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
     applyTheme()
     setupNavigationBarButtons()
     addKeyboardNotifications()
+    applyLocalization()
+    observeLanguageChanges()
   }
 
   fileprivate func initializeComponents() {
-
-    title = Strings.post_preview()
-
     flowLayout.minimumInteritemSpacing = 0
     flowLayout.minimumLineSpacing = 0
 
@@ -116,6 +115,22 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
   fileprivate func resignResponders() {
     _ = titleNode.resignFirstResponder()
     _ = descriptionNode.resignFirstResponder()
+  }
+}
+
+//MARK: - Localizable implementation
+extension PostPreviewViewController: Localizable {
+  func applyLocalization() {
+    title = Strings.post_preview()
+  }
+  
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+  
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }
 

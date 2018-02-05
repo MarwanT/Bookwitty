@@ -22,12 +22,17 @@ class LinkPagesViewController: UIViewController {
   
   var delegate: LinkPagesViewControllerDelegate?
   
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     self.initializeComponents()
     self.addKeyboardNotifications()
     self.applyTheme()
-    self.title = Strings.topic()
+    self.applyLocalization()
+    self.observeLanguageChanges()
   }
   
   private func initializeComponents() {
@@ -126,6 +131,22 @@ class LinkPagesViewController: UIViewController {
     UIView.animate(withDuration: 0.44) {
       self.view.layoutSubviews()
     }
+  }
+}
+
+//MARK: - Localizable implementation
+extension LinkPagesViewController: Localizable {
+  func applyLocalization() {
+    self.title = Strings.topic()
+  }
+  
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+  
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }
 

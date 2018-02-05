@@ -21,13 +21,18 @@ class LinkTagsViewController: UIViewController {
   @IBOutlet weak var separatorView: UIView!
   weak var delegate: LinkTagsViewControllerDelegate?
   let viewModel = LinkTagsViewModel()
+  
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     applyTheme()
     self.addKeyboardNotifications()
     self.initializeComponents()
-
-    self.title = Strings.tags()
+    self.applyLocalization()
+    self.observeLanguageChanges()
   }
   
   private func initializeComponents() {
@@ -158,6 +163,22 @@ class LinkTagsViewController: UIViewController {
     UIView.animate(withDuration: 0.44) {
       self.view.layoutSubviews()
     }
+  }
+}
+
+//MARK: - Localizable implementation
+extension LinkTagsViewController: Localizable {
+  func applyLocalization() {
+    self.title = Strings.tags()
+  }
+  
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+  
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }
 

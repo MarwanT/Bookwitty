@@ -100,13 +100,19 @@ final class RichBookViewController: ASViewController<ASDisplayNode> {
     fatalError("init(coder:) has not been implemented")
   }
   
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
+    observeLanguageChanges()
     collectionNode.dataSource = self
     collectionNode.delegate = self
     self.view.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     self.hideNavigationShadowImage()
     loadNavigationBarButtons()
+    applyLocalization()
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -399,6 +405,22 @@ extension RichBookViewController {
         }
       }, completion: completionBlock)
     }
+  }
+}
+
+//MARK: - Localizable implementation
+extension RichBookViewController: Localizable {
+  func applyLocalization() {
+    navigationItem.title = Strings.book()
+  }
+
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }
 

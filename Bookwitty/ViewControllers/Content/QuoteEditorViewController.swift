@@ -25,6 +25,10 @@ class QuoteEditorViewController: UIViewController {
   fileprivate let viewModel = QuoteEditorViewModel()
 
   var delegate: QuoteEditorViewControllerDelegate?
+  
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -33,6 +37,8 @@ class QuoteEditorViewController: UIViewController {
     initializeComponents()
     applyTheme()
     setupNavigationBarButtons()
+    applyLocalization()
+    observeLanguageChanges()
     self.quoteTextView.becomeFirstResponder()
   }
 
@@ -51,8 +57,6 @@ class QuoteEditorViewController: UIViewController {
   }
 
   fileprivate func initializeComponents() {
-    title = Strings.quote()
-
     quoteTextView.addSubview(quotePlaceholderLabel)
     quotePlaceholderLabel.text = Strings.quote()
     quoteTextView.delegate = self
@@ -102,6 +106,22 @@ class QuoteEditorViewController: UIViewController {
     let quote: String = quoteTextView.text
     let author: String? = authorTextView.text.isEmpty ? nil : authorTextView.text
     delegate?.quoteEditor(viewController: self, didRequestAdd: quote, with: author)
+  }
+}
+
+//MARK: - Localizable implementation
+extension QuoteEditorViewController: Localizable {
+  func applyLocalization() {
+    title = Strings.quote()
+  }
+  
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+  
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }
 

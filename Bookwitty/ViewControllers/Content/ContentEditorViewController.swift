@@ -247,9 +247,10 @@ class ContentEditorViewController: UIViewController {
 
   // MARK: - RichEditor
   private func initializeComponents() {
-    editorView.placeholder = Strings.write_here()
+    applyLocalization()
     setupEditorToolbar()
     setupContentEditorHtml()
+    observeLanguageChanges()
     self.timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(ContentEditorViewController.tick), userInfo: nil, repeats: true)
     self.timer.tolerance = 0.5
   }
@@ -420,6 +421,29 @@ class ContentEditorViewController: UIViewController {
     controller.delegate = self
     let navigationController = UINavigationController(rootViewController: controller)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
+  }
+}
+
+//MARK: - Localizable implementation
+extension ContentEditorViewController: Localizable {
+  func applyLocalization() {
+    // Title Placeholder
+    titleTextField.attributedPlaceholder = NSAttributedString(
+      string: "\(Strings.title()) (\(Strings.optional()))",
+      attributes: [NSForegroundColorAttributeName : ThemeManager.shared.currentTheme.defaultGrayedTextColor()])
+    // Editor placeholder
+    editorView.placeholder = Strings.write_here()
+    // Navigation buttons
+    loadNavigationBarButtons()
+  }
+  
+  fileprivate func observeLanguageChanges() {
+    NotificationCenter.default.addObserver(self, selector: #selector(languageValueChanged(notification:)), name: Localization.Notifications.Name.languageValueChanged, object: nil)
+  }
+  
+  @objc
+  fileprivate func languageValueChanged(notification: Notification) {
+    applyLocalization()
   }
 }
 

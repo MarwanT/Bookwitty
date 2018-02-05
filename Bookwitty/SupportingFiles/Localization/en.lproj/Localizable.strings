@@ -25,6 +25,7 @@
 "apply" = "Apply";
 "article" = "Article";
 "audio" = "Audio";
+"audio_link" = "Audio Link";
 "author" = "Author";
 "bag" = "Bag";
 "biography" = "Biography";
@@ -171,6 +172,7 @@
 "ok" = "Ok";
 "onboarding_view_header_title" = "Following People and Topics is how you fill up your home feed with interesting reads.";
 "ooops" = "Oops";
+"optional" = "optional";
 "or_check_your_settings" = "or check your •settings•";
 "our_selection_for_you" = "Books you might like";
 "out_of_stock" = "Out of stock";
@@ -241,6 +243,7 @@
 "terms_of_use_and_privacy_policy" = "By tapping Sign up : you agree to the\n•Terms of Use• and •Privacy Policy•";
 "text" = "Text";
 "thank_you_for_report" = "Thank you for your report";
+"title" = "Title";
 "topic" = "Topic";
 "topics" = "Topics";
 "topics_to_follow" = "Topics to Follow";
@@ -256,6 +259,7 @@
 "tutorial_third_page_description" = "Everyone has knowledge, expertise or a topic they are passionate about.\nWrite about it.";
 "tutorial_third_page_title" = "Share Your Own Ideas";
 "its_done" = "It's Done";
+"type_or_paste_url" = "Type or paste a URL";
 "types" = "Types";
 "unknown_format" = "Unknown format";
 "unlink_author" = "Unlink Author";
@@ -266,6 +270,7 @@
 "user_not_signed_in_alert_message" = "You need to be signed in to complete this action";
 "user_not_signed_in_alert_title" = "You are not signed in";
 "video" = "Video";
+"video_link" = "Video Link";
 "view_all" = "View All";
 "view_all_books" = "View All Books";
 "view_all_categories" = "Browse by Categories";

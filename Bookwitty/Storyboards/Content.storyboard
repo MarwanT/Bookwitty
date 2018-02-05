@@ -37,8 +37,8 @@
                                     <constraint firstAttribute="height" constant="1" id="KQg-c6-HKH"/>
                                 </constraints>
                             </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title (optional)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kte-j8-eG9">
-                                <rect key="frame" x="8" y="23" width="359" height="31"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kte-j8-eG9">
+                                <rect key="frame" x="8" y="21" width="359" height="43"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="JyI-xA-KiI"/>
                                 </constraints>

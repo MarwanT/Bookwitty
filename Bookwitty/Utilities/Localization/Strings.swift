@@ -84,6 +84,10 @@ class Strings {
   static func audio() -> String {
     return localizedString(key: "audio")
   }
+  
+  static func audio_link() -> String {
+    return localizedString(key: "audio_link")
+  }
 
   static func author() -> String {
     return localizedString(key: "author")
@@ -673,6 +677,10 @@ class Strings {
     return localizedString(key: "ooops")
   }
   
+  static func optional() -> String {
+    return localizedString(key: "optional")
+  }
+  
   static func or_check_your_settings() -> String {
     return localizedString(key: "or_check_your_settings")
   }
@@ -944,6 +952,10 @@ class Strings {
   static func thank_you_for_report() -> String {
     return localizedString(key: "thank_you_for_report")
   }
+  
+  static func title() -> String {
+    return localizedString(key: "title")
+  }
 
   static func topic() -> String {
     return localizedString(key: "topic")
@@ -1008,6 +1020,10 @@ class Strings {
   static func its_done() -> String {
     return localizedString(key: "its_done")
   }
+  
+  static func type_or_paste_url() -> String {
+    return localizedString(key: "type_or_paste_url")
+  }
 
   static func types() -> String {
     return localizedString(key: "types")
@@ -1043,6 +1059,10 @@ class Strings {
   
   static func video() -> String {
     return localizedString(key: "video")
+  }
+  
+  static func video_link() -> String {
+    return localizedString(key: "video_link")
   }
   
   static func view_all() -> String {
