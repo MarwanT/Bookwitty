@@ -67,6 +67,8 @@ class RichLinkPreviewViewController: UIViewController {
   @IBOutlet var errorLabel: UILabel!
 
   @IBOutlet var scrollViewBottomLayoutConstraint: NSLayoutConstraint!
+  
+  fileprivate let textViewPlaceholderLabel = UILabel()
 
   fileprivate let viewModel = RichLinkPreviewViewModel()
   var mode: Mode = .link
@@ -89,10 +91,20 @@ class RichLinkPreviewViewController: UIViewController {
     observeLanguageChanges()
     self.textView.becomeFirstResponder()
   }
+  
+  override func updateViewConstraints() {
+    let insets = textView.textContainerInset
+    textViewPlaceholderLabel.translatesAutoresizingMaskIntoConstraints = false
+    textViewPlaceholderLabel.topAnchor.constraint(equalTo: textView.topAnchor, constant: insets.top).isActive = true
+    textViewPlaceholderLabel.leftAnchor.constraint(equalTo: textView.leftAnchor, constant: insets.left + 5).isActive = true
+    super.updateViewConstraints()
+  }
 
   fileprivate func initializeComponents() {
     var tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapGestureHandler(_:)))
     view.addGestureRecognizer(tapGesture)
+    
+    textView.addSubview(textViewPlaceholderLabel)
 
     linkPreview.isHidden = true
     linkTitleLabel.text = nil
@@ -168,6 +180,9 @@ extension RichLinkPreviewViewController: Themeable {
 
     view.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
     textView.textContainerInset = ThemeManager.shared.currentTheme.defaultLayoutMargin()
+    
+    textViewPlaceholderLabel.font = FontDynamicType.caption1.font
+    textViewPlaceholderLabel.textColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
 
     separators.forEach({ $0.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()})
 
@@ -217,6 +232,8 @@ extension RichLinkPreviewViewController: Localizable {
     case .audio:
       title = Strings.audio()
     }
+    
+    textViewPlaceholderLabel.text = self.mode.placeholderText
   }
   
   fileprivate func observeLanguageChanges() {
@@ -404,6 +421,10 @@ extension RichLinkPreviewViewController: UITextViewDelegate {
     self.perform(#selector(getUrlInfo), with: nil, afterDelay: 0.5)
 
     self.perform(#selector(setTextViewScrollEnabled), with: nil, afterDelay: 0.02)
+    
+    let count = textView.text.count
+    let alpha: CGFloat = count == 0 ? 1.0 : 0.0
+    textViewPlaceholderLabel.alpha = alpha
   }
 
   @objc fileprivate func setTextViewScrollEnabled() {
