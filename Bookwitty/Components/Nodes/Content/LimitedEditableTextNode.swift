@@ -26,7 +26,7 @@ class LimitedEditableTextNode: ASCellNode {
   var placeholder: String? {
     didSet {
       if let placeholder = placeholder {
-        self.textNode.attributedPlaceholderText = AttributedStringBuilder(fontDynamicType: FontDynamicType.body)
+        self.textNode.attributedPlaceholderText = AttributedStringBuilder(fontDynamicType: FontDynamicType.body2)
           .append(text: placeholder, color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
           .attributedString
       } else {
@@ -61,7 +61,7 @@ class LimitedEditableTextNode: ASCellNode {
     didSet {
       let characters = String(numberOfCharactersLeft)
       let color = numberOfCharactersLeft > 0 ? ThemeManager.shared.currentTheme.defaultGrayedTextColor() : ThemeManager.shared.currentTheme.colorNumber19()
-      charactersLeftNode.attributedText = AttributedStringBuilder(fontDynamicType: .label)
+      charactersLeftNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
         .append(text: characters, color: color)
         .applyParagraphStyling(alignment: .right)
         .attributedString
@@ -103,7 +103,7 @@ class LimitedEditableTextNode: ASCellNode {
 
 extension LimitedEditableTextNode: Themeable {
   func applyTheme() {
-    textNode.textView.font = FontDynamicType.body.font
+    textNode.textView.font = FontDynamicType.body2.font
     textNode.textView.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
   }

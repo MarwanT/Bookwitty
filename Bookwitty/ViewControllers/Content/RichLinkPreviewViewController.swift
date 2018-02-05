@@ -150,9 +150,17 @@ class RichLinkPreviewViewController: UIViewController {
   }
 
   fileprivate func setTextAppearanceState(of barButtonItem: UIBarButtonItem) -> Void {
+    let theme = ThemeManager.shared.currentTheme
+    let defaultColor = theme.colorNumber20()
+    let defaultActionColor = theme.defaultButtonColor()
+    
+    let isActionButton = barButtonItem === navigationItem.rightBarButtonItem
     var attributes = barButtonItem.titleTextAttributes(for: .normal) ?? [:]
-    let defaultTextColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+    let defaultTextColor = isActionButton ? defaultActionColor : defaultColor
     attributes[NSForegroundColorAttributeName] = defaultTextColor
+    if isActionButton {
+      attributes[NSFontAttributeName] = FontDynamicType.footnote.font
+    }
     barButtonItem.setTitleTextAttributes(attributes, for: .normal)
 
     let grayedTextColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
@@ -176,48 +184,63 @@ class RichLinkPreviewViewController: UIViewController {
 //MARK: - Themable implementation
 extension RichLinkPreviewViewController: Themeable {
   func applyTheme() {
-    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
-
-    view.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
-    textView.textContainerInset = ThemeManager.shared.currentTheme.defaultLayoutMargin()
+    let theme = ThemeManager.shared.currentTheme
     
-    textViewPlaceholderLabel.font = FontDynamicType.caption1.font
-    textViewPlaceholderLabel.textColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
+    view.backgroundColor = theme.colorNumber2()
 
-    separators.forEach({ $0.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()})
+    view.layoutMargins = theme.defaultLayoutMargin()
+    
+    textView.textContainerInset = theme.defaultLayoutMargin()
+    textView.textColor = theme.defaultTextColor()
+    textView.font = FontDynamicType.caption1.font
+
+    textViewPlaceholderLabel.font = FontDynamicType.caption1.font
+    textViewPlaceholderLabel.textColor = theme.defaultGrayedTextColor()
+
+    separators.forEach({ $0.backgroundColor = theme.defaultSeparatorColor()})
 
     //Link Preview
-    linkPreview.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
-    linkPreview.layer.borderColor = ThemeManager.shared.currentTheme.defaultSeparatorColor().cgColor
+    linkPreview.layoutMargins = theme.defaultLayoutMargin()
+    linkPreview.layer.borderColor = theme.defaultSeparatorColor().cgColor
     linkPreview.layer.borderWidth = 1.0
 
-    linkTitleLabel.font = FontDynamicType.title1.font
-    linkDescriptionLabel.font = FontDynamicType.body.font
+    linkTitleLabel.font = FontDynamicType.title4.font
+    linkDescriptionLabel.font = FontDynamicType.body2.font
     linkHostLabel.font = FontDynamicType.caption2.font
+    linkTitleLabel.textColor = theme.defaultTextColor()
+    linkDescriptionLabel.textColor = theme.defaultTextColor()
+    linkHostLabel.textColor = theme.defaultTextColor()
 
     //Video Preview
-    videoPreview.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
-    videoPreview.layer.borderColor = ThemeManager.shared.currentTheme.defaultSeparatorColor().cgColor
+    videoPreview.layoutMargins = theme.defaultLayoutMargin()
+    videoPreview.layer.borderColor = theme.defaultSeparatorColor().cgColor
     videoPreview.layer.borderWidth = 1.0
     videoPlayView.image = #imageLiteral(resourceName: "play")
-    videoPlayView.tintColor = ThemeManager.shared.currentTheme.colorNumber23().withAlphaComponent(0.9)
+    videoPlayView.tintColor = theme.colorNumber23().withAlphaComponent(0.9)
     videoPlayView.contentMode = .scaleAspectFit
-    videoTitleLabel.textColor = ThemeManager.shared.currentTheme.colorNumber23()
-    videoDescriptionLabel.textColor = ThemeManager.shared.currentTheme.colorNumber23()
-    videoHostLabel.textColor = ThemeManager.shared.currentTheme.colorNumber23()
+    videoTitleLabel.font = FontDynamicType.title4.font
+    videoDescriptionLabel.font = FontDynamicType.body2.font
+    videoHostLabel.font = FontDynamicType.caption2.font
+    videoTitleLabel.textColor = theme.colorNumber23()
+    videoDescriptionLabel.textColor = theme.colorNumber23()
+    videoHostLabel.textColor = theme.colorNumber23()
     
     //Audio Preview
-    audioPreview.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
-    audioPreview.layer.borderColor = ThemeManager.shared.currentTheme.defaultSeparatorColor().cgColor
+    audioPreview.layoutMargins = theme.defaultLayoutMargin()
+    audioPreview.layer.borderColor = theme.defaultSeparatorColor().cgColor
     audioPreview.layer.borderWidth = 1.0
-    audioTitleLabel.font = FontDynamicType.title1.font
-    audioDescriptionLabel.font = FontDynamicType.body.font
+    audioTitleLabel.font = FontDynamicType.footnote.font
+    audioDescriptionLabel.font = FontDynamicType.body2.font
     audioHostLabel.font = FontDynamicType.caption2.font
+    audioTitleLabel.textColor = theme.defaultTextColor()
+    audioDescriptionLabel.textColor = theme.defaultTextColor()
+    audioHostLabel.textColor = theme.defaultTextColor()
     
     //Error Preview
-    errorPreview.layer.borderColor = ThemeManager.shared.currentTheme.defaultButtonColor().cgColor
+    errorPreview.layer.borderColor = theme.defaultButtonColor().cgColor
     errorPreview.layer.borderWidth = 1.0
 
+    self.navigationController?.navigationBar.barTintColor = theme.colorNumber2()
   }
 }
 

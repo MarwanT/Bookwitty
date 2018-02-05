@@ -270,7 +270,7 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
     node.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
       let textNode = ASTextNode()
       textNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
-        .append(text: Strings.customize_your_posts_card(), color: ThemeManager.shared.currentTheme.defaultTextColor())
+        .append(text: Strings.customize_your_posts_card(), color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
         .attributedString
       let centerSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: .minimumXY, child: textNode)
       return centerSpec
@@ -285,7 +285,7 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
     node.style.height = ASDimension(unit: .points, value: 45.0)
     node.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
       let textNode = ASTextNode()
-      textNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+      textNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption1)
         .append(text: Strings.add_an_image(), color: ThemeManager.shared.currentTheme.defaultButtonColor())
         .attributedString
 
@@ -315,7 +315,7 @@ extension PostPreviewViewController: ASCollectionDataSource, ASCollectionDelegat
     node.style.height = ASDimension(unit: .points, value: 45.0)
     node.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
       let textNode = ASTextNode()
-      textNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+      textNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption1)
         .append(text: Strings.add_a_title(), color: ThemeManager.shared.currentTheme.defaultButtonColor())
         .attributedString
 

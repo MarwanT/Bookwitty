@@ -36,10 +36,19 @@ class LinkTagsViewController: UIViewController {
   }
   
   private func initializeComponents() {
+    let theme = ThemeManager.shared.currentTheme
+    
     let doneButton = UIBarButtonItem(title: Strings.done(), style: .plain, target: self, action: #selector(doneButtonTouchUpInside(_:)))
-    doneButton.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
+    doneButton.setTitleTextAttributes(
+      [ NSFontAttributeName: FontDynamicType.footnote.font,
+        NSForegroundColorAttributeName : theme.colorNumber19()],
+      for: UIControlState.normal)
     self.navigationItem.rightBarButtonItem = doneButton
     
+    self.tableView.tableFooterView = UIView()
+    self.tableView.backgroundColor = .clear
+    self.tableView.separatorInset = UIEdgeInsets.zero
+    self.tableView.separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     self.separatorView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
 
     tagsView.delimiter = "\n"
@@ -47,6 +56,13 @@ class LinkTagsViewController: UIViewController {
 
     tagsView.addTags(self.viewModel.selectedTags.flatMap { $0.title } )
     
+    tagsView.tintColor = theme.colorNumber9()
+    tagsView.textColor = theme.colorNumber20()
+    tagsView.selectedColor = theme.colorNumber25()
+    tagsView.selectedTextColor = theme.colorNumber23()
+    tagsView.font = FontDynamicType.caption3.font
+    tagsView.padding.left = 0
+
     tagsView.onVerifyTag = { [weak self] field, candidate in
       guard let strongSelf = self else {
         return false
@@ -185,7 +201,9 @@ extension LinkTagsViewController: Localizable {
 extension LinkTagsViewController: Themeable {
   
   func applyTheme() {
-    self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+    let theme = ThemeManager.shared.currentTheme
+    self.view.backgroundColor = theme.colorNumber2()
+    self.navigationController?.navigationBar.barTintColor = theme.colorNumber2()
   }
 }
 
@@ -200,9 +218,14 @@ extension LinkTagsViewController: UITableViewDataSource, UITableViewDelegate {
   }
   
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    let theme = ThemeManager.shared.currentTheme
     cell.textLabel?.text = self.viewModel.values(forRowAt: indexPath)
     cell.textLabel?.font = FontDynamicType.caption1.font
+    cell.textLabel?.textColor = theme.defaultTextColor()
+    cell.detailTextLabel?.font = FontDynamicType.caption3.font
     cell.detailTextLabel?.text = ""
+    cell.detailTextLabel?.textColor = theme.defaultGrayedTextColor()
+    cell.indentationWidth = 39
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -213,5 +236,9 @@ extension LinkTagsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     self.viewModel.resetTags()
     tableView.reloadData()
+  }
+  
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 43
   }
 }

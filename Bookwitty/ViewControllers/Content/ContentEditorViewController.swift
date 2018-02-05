@@ -20,7 +20,9 @@ class ContentEditorViewController: UIViewController {
   fileprivate var isEditorLoaded: Bool = false
 
   @IBOutlet weak var titleTextField: UITextField!
-
+  @IBOutlet weak var topTitleSeparator: UIView!
+  @IBOutlet weak var bottomTitleSeparator: UIView!
+  
   let viewModel = ContentEditorViewModel()
   
   private var timer: Timer!
@@ -49,6 +51,7 @@ class ContentEditorViewController: UIViewController {
    
   override func viewDidLoad() {
     super.viewDidLoad()
+    applyTheme()
     initializeComponents()
     loadNavigationBarButtons()
     addKeyboardNotifications()
@@ -66,25 +69,16 @@ class ContentEditorViewController: UIViewController {
   
   fileprivate func loadNavigationBarButtons() {
     navigationItem.backBarButtonItem = UIBarButtonItem.back
-    let redColor = ThemeManager.shared.currentTheme.colorNumber19()
     
     let closeBarButtonItem = UIBarButtonItem(title: Strings.close(),
                                 style: UIBarButtonItemStyle.plain,
                                 target: self,
                                 action: #selector(self.closeBarButtonTouchUpInside(_:)))
     
-    closeBarButtonItem.setTitleTextAttributes([
-      NSFontAttributeName: FontDynamicType.caption1.font,
-      NSForegroundColorAttributeName : redColor], for: UIControlState.normal)
-    
     let draftsBarButtonItem = UIBarButtonItem(title: Strings.drafts(),
                                  style: UIBarButtonItemStyle.plain,
                                  target: self,
                                  action: #selector(self.draftsBarButtonTouchUpInside(_:)))
-    
-    draftsBarButtonItem.setTitleTextAttributes([
-      NSFontAttributeName: FontDynamicType.caption1.font,
-      NSForegroundColorAttributeName : redColor], for: UIControlState.normal)
     
     let imageSize = CGSize(width: 32.0, height: 32.0)
     
@@ -273,7 +267,7 @@ class ContentEditorViewController: UIViewController {
   }
   
   private func setupEditorToolbar() {
-    let toolbar = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 45.0))
+    let toolbar = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 43.0))
     toolbar.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
     editorView.inputAccessoryView = toolbar
 
@@ -288,7 +282,7 @@ class ContentEditorViewController: UIViewController {
     let onePixelView = UIView()
     onePixelView.translatesAutoresizingMaskIntoConstraints = false
     onePixelView.addHeightConstraint(1)
-    onePixelView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber18()
+    onePixelView.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     verticalStackView.distribution = .fillProportionally
     verticalStackView.addArrangedSubview(onePixelView)
     verticalStackView.addArrangedSubview(stackView)
@@ -915,5 +909,16 @@ extension ContentEditorViewController: RichEditorDelegate {
       self.set(option: .link, selected: editingItems.contains("link"), isEnabled: editingItems.contains("isRange"))
       self.set(option: .unorderedList, selected: editingItems.contains("unorderedList"))
     }
+  }
+}
+
+//MARK: - Themeable
+extension ContentEditorViewController: Themeable {
+  func applyTheme() {
+    let theme = ThemeManager.shared.currentTheme
+    titleTextField.font = FontDynamicType.title4.font
+    titleTextField.textColor = theme.defaultTextColor()
+    topTitleSeparator.backgroundColor = theme.defaultSeparatorColor()
+    bottomTitleSeparator.backgroundColor = theme.defaultSeparatorColor()
   }
 }

@@ -18,6 +18,7 @@ class RichContentMenuViewController: UIViewController {
   @IBOutlet weak var tableViewHeightContraint: NSLayoutConstraint!
   @IBOutlet weak var insert: UILabel!
   @IBOutlet weak var cancel: UIButton!
+  @IBOutlet weak var bottomHeaderSeparator: UIView!
   enum Item: Int {
     case imageCamera = 0
     case imageLibrary
@@ -68,7 +69,7 @@ class RichContentMenuViewController: UIViewController {
     }
   }
   
-  let height: CGFloat = 50.0
+  let height: CGFloat = 43.0
   
   weak var delegate: RichContentMenuViewControllerDelegate?
   
@@ -107,17 +108,21 @@ class RichContentMenuViewController: UIViewController {
   }
   
   private func initializeComponents() {
+    let theme = ThemeManager.shared.currentTheme
     
-    let attributedString = AttributedStringBuilder(fontDynamicType: .caption1)
-      .append(text: Strings.insert(), color: ThemeManager.shared.currentTheme.colorNumber13())
+    let attributedString = AttributedStringBuilder(fontDynamicType: .subheadline)
+      .append(text: Strings.insert(), color: theme.colorNumber13())
       .attributedString
     
     self.insert.attributedText = attributedString
     self.tableView.register(UINib(nibName: "RichMenuCellTableViewCell", bundle: nil), forCellReuseIdentifier: RichMenuCellTableViewCell.identifier)
-    self.tableView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
+    self.tableView.tintColor = theme.colorNumber20()
     self.tableView.isScrollEnabled = false
     self.tableViewHeightContraint.constant = self.height * CGFloat(self.viewModel.numberOfRows())
-    cancel.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
+    self.tableView.separatorColor = theme.defaultSeparatorColor()
+    self.tableView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    self.tableView.separatorInset = UIEdgeInsets(top: 0, left: 42, bottom: 0, right: 0)
+    cancel.tintColor = theme.colorNumber20()
   }
   
   @IBAction func cancelButtonTouchUpInside(_ sender: UIButton) {
@@ -160,10 +165,21 @@ extension RichContentMenuViewController : UITableViewDelegate {
     }
     self.delegate?.richContentMenuViewController(self, didSelect: item)
   }
+  
+  func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    return 0.01 // To remove the separator after the last cell
+  }
 }
 
 extension RichContentMenuViewController: UIGestureRecognizerDelegate {
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
     return touch.view == self.view
+  }
+}
+
+extension RichContentMenuViewController: Themeable {
+  func applyTheme() {
+    let theme = ThemeManager.shared.currentTheme
+    bottomHeaderSeparator.backgroundColor = theme.defaultSeparatorColor()
   }
 }

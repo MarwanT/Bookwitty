@@ -9,6 +9,17 @@
 import Foundation
 
 public extension UIImage {
+  class func roundedImage(image: UIImage, cornerRadius: Int) -> UIImage? {
+    let rect = CGRect(origin:CGPoint(x: 0, y: 0), size: image.size)
+    UIGraphicsBeginImageContextWithOptions(rect.size, false, 1)
+    UIBezierPath(
+      roundedRect: rect,
+      cornerRadius: CGFloat(cornerRadius)
+      ).addClip()
+    image.draw(in: rect)
+    return UIGraphicsGetImageFromCurrentImageContext()
+  }
+  
   public convenience init?(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
     let rect = CGRect(origin: .zero, size: size)
     UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)

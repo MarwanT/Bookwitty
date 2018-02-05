@@ -212,7 +212,7 @@ class SignInViewController: UIViewController {
 
 extension SignInViewController: Themeable {
   func applyTheme() {
-    self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
+    self.view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
     signInButton.setTitle(Strings.sign_in(), for: .normal)
     ThemeManager.shared.currentTheme.stylePrimaryButton(button: signInButton)
     stackViewBackgroundView.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()

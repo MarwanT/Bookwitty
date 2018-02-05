@@ -19,6 +19,8 @@ class PublishMenuViewController: UIViewController {
   @IBOutlet weak var cancelButton: UIButton!
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var publishLabel: UILabel!
+  @IBOutlet weak var bottomHeaderSeparator: UIView!
+  
   enum Section: Int {
     case penName = 0
     case link
@@ -79,6 +81,7 @@ class PublishMenuViewController: UIViewController {
   let viewModel = PublishMenuViewModel()
   override func viewDidLoad() {
     super.viewDidLoad()
+    applyTheme()
     initializeComponents()
     // Do any additional setup after loading the view.
     addTapGesture()
@@ -116,13 +119,11 @@ class PublishMenuViewController: UIViewController {
     self.tableView.reloadData()
     self.tableView.layoutIfNeeded()
     
-    let attributedString = AttributedStringBuilder(fontDynamicType: .caption1)
-      .append(text: Strings.publish(), color: ThemeManager.shared.currentTheme.colorNumber13())
-      .attributedString
-    
-    self.publishLabel.attributedText = attributedString
+    self.publishLabel.text = Strings.publish()
     self.tableView.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
     self.tableView.isScrollEnabled = false
+    self.tableView.separatorInset = UIEdgeInsets.zero
+    self.tableView.separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     cancelButton.tintColor = ThemeManager.shared.currentTheme.colorNumber20()
     self.tableViewHeightConstraint.constant = tableView.contentSize.height
   }
@@ -218,8 +219,10 @@ extension PublishMenuViewController: UITableViewDataSource {
       cell.contentView.backgroundColor = ThemeManager.shared.currentTheme.colorNumber19()
       cell.textLabel?.backgroundColor = ThemeManager.shared.currentTheme.colorNumber19()
       cell.textLabel?.textColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+      cell.textLabel?.font = FontDynamicType.subheadline.font
+    } else {
+      cell.textLabel?.font = FontDynamicType.caption1.font
     }
-    cell.textLabel?.font = FontDynamicType.caption1.font
   }
   
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -291,5 +294,14 @@ extension PublishMenuViewController.Item {
 extension PublishMenuViewController: UIGestureRecognizerDelegate {
   func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
     return touch.view == self.view
+  }
+}
+
+extension PublishMenuViewController: Themeable {
+  func applyTheme() {
+    let theme = ThemeManager.shared.currentTheme
+    publishLabel.textColor = theme.colorNumber13()
+    publishLabel.font = FontDynamicType.subheadline.font
+    bottomHeaderSeparator.backgroundColor = theme.defaultSeparatorColor()
   }
 }

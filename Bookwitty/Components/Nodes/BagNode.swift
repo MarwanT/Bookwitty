@@ -83,7 +83,7 @@ extension BagNode {
   struct Configuration {
     fileprivate let shopOnlineButtonTitleColor = ThemeManager.shared.currentTheme.colorNumber23()
     fileprivate let defaultTextColor = ThemeManager.shared.currentTheme.defaultTextColor()
-    fileprivate let backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
+    fileprivate let backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
     fileprivate let edgeInsets = UIEdgeInsets(
       top: 0, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: 0, right: ThemeManager.shared.currentTheme.generalExternalMargin())

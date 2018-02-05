@@ -15,7 +15,7 @@ class SectionTitleHeaderView: UITableViewHeaderFooterView {
   static let minimumHeight: CGFloat = 60
   
   struct Configuration {
-    var verticalBarColor: UIColor? = ThemeManager.shared.currentTheme.colorNumber1()
+    var verticalBarColor: UIColor? = ThemeManager.shared.currentTheme.colorNumber2()
     var horizontalBarColor: UIColor? = ThemeManager.shared.currentTheme.colorNumber2()
   }
   

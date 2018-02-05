@@ -65,11 +65,6 @@ class DraftsViewController: ASViewController<ASTableNode> {
                                            action: #selector(closeBarButtonTouchUpInside(_:)))
 
     navigationItem.leftBarButtonItem = closeBarButtonItem
-
-    var attributes = closeBarButtonItem.titleTextAttributes(for: .normal) ?? [:]
-    let defaultTextColor = ThemeManager.shared.currentTheme.defaultButtonColor()
-    attributes[NSForegroundColorAttributeName] = defaultTextColor
-    closeBarButtonItem.setTitleTextAttributes(attributes, for: .normal)
   }
 
   fileprivate func loadDrafts() {
@@ -130,7 +125,9 @@ extension DraftsViewController {
 
 extension DraftsViewController: Themeable {
   func applyTheme() {
-    tableNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+    let theme = ThemeManager.shared.currentTheme
+    tableNode.backgroundColor = theme.colorNumber2()
+    tableNode.view.separatorColor = theme.defaultSeparatorColor()
   }
 }
 

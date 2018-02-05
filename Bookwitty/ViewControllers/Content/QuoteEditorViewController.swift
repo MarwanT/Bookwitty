@@ -88,9 +88,17 @@ class QuoteEditorViewController: UIViewController {
   }
 
   fileprivate func setTextAppearanceState(of barButtonItem: UIBarButtonItem) -> Void {
+    let theme = ThemeManager.shared.currentTheme
+    let defaultColor = theme.colorNumber20()
+    let defaultActionColor = theme.defaultButtonColor()
+    
+    let isActionButton = barButtonItem === navigationItem.rightBarButtonItem
     var attributes = barButtonItem.titleTextAttributes(for: .normal) ?? [:]
-    let defaultTextColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+    let defaultTextColor = isActionButton ? defaultActionColor : defaultColor
     attributes[NSForegroundColorAttributeName] = defaultTextColor
+    if isActionButton {
+      attributes[NSFontAttributeName] = FontDynamicType.footnote.font
+    }
     barButtonItem.setTitleTextAttributes(attributes, for: .normal)
 
     let grayedTextColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
@@ -128,27 +136,33 @@ extension QuoteEditorViewController: Localizable {
 //MARK: - Themable implementation
 extension QuoteEditorViewController: Themeable {
   func applyTheme() {
-    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
+    navigationController?.navigationBar.barTintColor = ThemeManager.shared.currentTheme.colorNumber2()
+    
+    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
 
     view.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
-    quoteTextView.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
-    authorTextView.layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
+    
+    var layoutMargins = ThemeManager.shared.currentTheme.defaultLayoutMargin()
+    layoutMargins.left = layoutMargins.left - 4
+    
+    quoteTextView.layoutMargins = layoutMargins
+    authorTextView.layoutMargins = layoutMargins
 
-    quoteTextView.textContainerInset = ThemeManager.shared.currentTheme.defaultLayoutMargin()
-    authorTextView.textContainerInset = ThemeManager.shared.currentTheme.defaultLayoutMargin()
+    quoteTextView.textContainerInset = layoutMargins
+    authorTextView.textContainerInset = layoutMargins
 
     separators.forEach({ $0.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()})
 
     quoteTextView.font = FontDynamicType.title4.font
     quoteTextView.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
 
-    authorTextView.font = FontDynamicType.caption1.font
+    authorTextView.font = FontDynamicType.caption2.font
     authorTextView.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
 
     quotePlaceholderLabel.font = FontDynamicType.title4.font
     quotePlaceholderLabel.textColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
 
-    authorPlaceholderLabel.font = FontDynamicType.caption1.font
+    authorPlaceholderLabel.font = FontDynamicType.caption2.font
     authorPlaceholderLabel.textColor = ThemeManager.shared.currentTheme.defaultGrayedTextColor()
   }
 }
