@@ -9,6 +9,8 @@
 import Foundation
 
 final class PostPreviewViewModel {
+  fileprivate var maximumImageDataCount: Int = 12582912
+  
   var candidatePost: CandidatePost!
   var defaultValues: (title: String, description: String?, image: String?)!
   
