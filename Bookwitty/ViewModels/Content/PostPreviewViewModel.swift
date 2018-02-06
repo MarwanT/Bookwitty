@@ -57,4 +57,16 @@ final class PostPreviewViewModel {
       })
     }
   }
+  
+  private func generateCandidateImage(for image: UIImage, completion: @escaping (UIImage?) -> Void) {
+    let resizingOperation = ImageResizingOperation(image: image, resizingCriteria: .maximumDataCount(maximumImageDataCount))
+    resizingOperation.completionBlock = {
+      completion(resizingOperation.image)
+    }
+    
+    let queue = OperationQueue()
+    queue.name = "Resizing Image Queue"
+    queue.qualityOfService = QualityOfService.userInitiated
+    queue.addOperation(resizingOperation)
+  }
 }
