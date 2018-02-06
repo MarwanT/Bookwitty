@@ -89,6 +89,10 @@ extension UIImage {
     return newImage!
   }
   
+  func resize(maximumDataCount: Int, scale: CGFloat = 0.75) -> UIImage? {
+    return UIImage.resize(image: self, maximumDataCount: maximumDataCount, scale: scale)
+  }
+  
   static func resize(image: UIImage, maximumDataCount: Int, scale: CGFloat) -> UIImage? {
     guard let data = image.dataForPNGRepresentation() else {
       return nil
