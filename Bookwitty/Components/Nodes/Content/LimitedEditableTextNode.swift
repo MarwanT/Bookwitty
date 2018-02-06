@@ -19,8 +19,13 @@ class LimitedEditableTextNode: ASCellNode {
   weak var delegate: LimitedEditableTextNodeDelegate?
 
   var contentText: String? {
-    get { return textNode.textView.text }
-    set { textNode.textView.text = newValue }
+    get {
+      return textNode.textView.text
+    }
+    set {
+      textNode.textView.text = newValue
+      refreshNumberOfCharactersLeft(for: newValue ?? "")
+    }
   }
 
   var placeholder: String? {
@@ -73,7 +78,6 @@ class LimitedEditableTextNode: ASCellNode {
     super.didLoad()
     applyTheme()
     textNode.delegate = self
-    numberOfCharactersLeft = hardCharactersLimit
   }
   
   override func resignFirstResponder() -> Bool {
@@ -99,6 +103,11 @@ class LimitedEditableTextNode: ASCellNode {
       bottom: ThemeManager.shared.currentTheme.generalExternalMargin(),
       right: ThemeManager.shared.currentTheme.generalExternalMargin())
   }
+  
+  // MARK: - Helpers
+  fileprivate func refreshNumberOfCharactersLeft(for text: String) {
+    self.numberOfCharactersLeft = self.softCharactersLimit - text.count
+  }
 }
 
 extension LimitedEditableTextNode: Themeable {
@@ -116,7 +125,7 @@ extension LimitedEditableTextNode: ASEditableTextNodeDelegate {
   }
 
   func editableTextNodeDidUpdateText(_ editableTextNode: ASEditableTextNode) {
-    self.numberOfCharactersLeft = self.softCharactersLimit - editableTextNode.textView.text.characters.count
+    refreshNumberOfCharactersLeft(for: editableTextNode.textView.text)
   }
 
   func editableTextNodeDidFinishEditing(_ editableTextNode: ASEditableTextNode) {
