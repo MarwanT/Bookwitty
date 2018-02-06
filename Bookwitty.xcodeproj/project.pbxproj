@@ -192,6 +192,7 @@
 		595C4F111E3F9DA400BE3942 /* InformativeInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595C4F101E3F9DA400BE3942 /* InformativeInputField.swift */; };
 		595F21D71F057E7700DC4AFC /* PreferredFormatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595F21D61F057E7700DC4AFC /* PreferredFormatTableViewCell.swift */; };
 		59629D0A1FE9283900AEC627 /* CommentRegistryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59629D091FE9283800AEC627 /* CommentRegistryItem.swift */; };
+		59634F862029BA300038CC39 /* ImageResizingOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59634F852029BA2F0038CC39 /* ImageResizingOperation.swift */; };
 		596562E41E79EF9E00B93920 /* MisfortuneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596562E31E79EF9E00B93920 /* MisfortuneNode.swift */; };
 		5967E4581E4107EF0067093F /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5967E4571E4107EF0067093F /* NotificationView.xib */; };
 		5967E45A1E410A850067093F /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5967E4591E410A850067093F /* NotificationView.swift */; };
@@ -556,6 +557,7 @@
 		595C4F101E3F9DA400BE3942 /* InformativeInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformativeInputField.swift; sourceTree = "<group>"; };
 		595F21D61F057E7700DC4AFC /* PreferredFormatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferredFormatTableViewCell.swift; sourceTree = "<group>"; };
 		59629D091FE9283800AEC627 /* CommentRegistryItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentRegistryItem.swift; sourceTree = "<group>"; };
+		59634F852029BA2F0038CC39 /* ImageResizingOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageResizingOperation.swift; sourceTree = "<group>"; };
 		596562E31E79EF9E00B93920 /* MisfortuneNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MisfortuneNode.swift; sourceTree = "<group>"; };
 		5967E4571E4107EF0067093F /* NotificationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationView.xib; sourceTree = "<group>"; };
 		5967E4591E410A850067093F /* NotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
@@ -1135,6 +1137,7 @@
 				0FF723BF1F74F3E400891FFE /* UIView+Autolayout.swift */,
 				0FA81A1E1F9DDB1D006D9DB6 /* NavigationController.swift */,
 				0FFFFC181FB5BC50006F0810 /* SelectedImageView.swift */,
+				59634F852029BA2F0038CC39 /* ImageResizingOperation.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -2112,6 +2115,7 @@
 				F458C5F61E5B25D900AFD0FC /* Newsfeed+API.swift in Sources */,
 				F496DE021E65BF56007E22B1 /* DiscoverViewController.swift in Sources */,
 				59DA47631E3B7A9B00BA90A5 /* IntroductionViewController.swift in Sources */,
+				59634F862029BA300038CC39 /* ImageResizingOperation.swift in Sources */,
 				F4A426391E562BAC0090CD51 /* Link.swift in Sources */,
 				59871F1A1E78ADFB000A86CD /* PostsViewController.swift in Sources */,
 				592ABB2E1E5C4E4A00975E83 /* Category+API.swift in Sources */,
