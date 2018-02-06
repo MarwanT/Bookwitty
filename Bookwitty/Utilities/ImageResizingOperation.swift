@@ -10,3 +10,9 @@ import UIKit
 class ImageResizingOperation: Operation {
   
 }
+
+extension ImageResizingOperation {
+  enum ResizingCriteria {
+    case maximumDataCount(Int)
+  }
+}
