@@ -363,6 +363,20 @@ class ContentEditorViewController: UIViewController {
 
 // MARK: - The Presenters
 extension ContentEditorViewController {
+  enum Destination {
+    case richContentMenu
+    case publishMenu
+    case imagePicker(UIImagePickerControllerSourceType)
+    case richBook
+    case drafts
+    case richLink(RichLinkPreviewViewController.Mode)
+    case quoteEditor
+    case selectPenName
+    case tags
+    case linkTopics
+    case postPreview
+  }
+  
   // MARK: Navigation Toolbar Actions Handling
   fileprivate func  presentRichContentMenuViewController() {
     let richContentMenuViewController = Storyboard.Content.instantiate(RichContentMenuViewController.self)
