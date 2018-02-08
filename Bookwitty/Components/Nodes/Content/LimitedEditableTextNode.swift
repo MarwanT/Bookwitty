@@ -23,10 +23,11 @@ class LimitedEditableTextNode: ASCellNode {
       return textNode.attributedText?.string
     }
     set {
-      if let value = newValue {
-      textNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.body2)
-        .append(text: value, color: ThemeManager.shared.currentTheme.defaultTextColor())
-        .attributedString
+      if let substring = newValue?.suffix(hardCharactersLimit) {
+        let value = String(substring)
+        textNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.body2)
+          .append(text: value, color: ThemeManager.shared.currentTheme.defaultTextColor())
+          .attributedString
       } else {
         textNode.attributedText = nil
       }
