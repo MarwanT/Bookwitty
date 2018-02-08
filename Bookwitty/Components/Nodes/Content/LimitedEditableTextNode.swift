@@ -37,9 +37,10 @@ class LimitedEditableTextNode: ASCellNode {
 
   var placeholder: String? {
     didSet {
-      if let placeholder = placeholder {
+      if let placeholder = placeholder?.suffix(hardCharactersLimit) {
+        let value = String(placeholder)
         self.textNode.attributedPlaceholderText = AttributedStringBuilder(fontDynamicType: FontDynamicType.body2)
-          .append(text: placeholder, color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+          .append(text: value, color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
           .attributedString
       } else {
         self.textNode.attributedPlaceholderText = nil
