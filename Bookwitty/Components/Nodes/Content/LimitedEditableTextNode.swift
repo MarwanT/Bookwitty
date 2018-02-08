@@ -63,6 +63,10 @@ class LimitedEditableTextNode: ASCellNode {
 
     charactersLeftNode.style.flexGrow = 1.0
     charactersLeftNode.style.flexShrink = 1.0
+    
+    textNode.delegate = self
+    
+    applyTheme()
   }
 
   var hardCharactersLimit: Int = 200
@@ -78,12 +82,6 @@ class LimitedEditableTextNode: ASCellNode {
         .attributedString
       charactersLeftNode.setNeedsLayout()
     }
-  }
-
-  override func didLoad() {
-    super.didLoad()
-    applyTheme()
-    textNode.delegate = self
   }
   
   override func resignFirstResponder() -> Bool {
