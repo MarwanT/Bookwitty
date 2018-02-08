@@ -80,7 +80,7 @@ extension RichEditorView {
   }
   
   func hasFocus() -> Bool {
-    let responder = runJS("document.activeElement.id=='editor'")
+    let responder = runJS("RE.hasFocus();")
     return responder == "true"
   }
   
