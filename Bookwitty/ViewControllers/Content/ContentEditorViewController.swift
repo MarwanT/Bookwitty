@@ -168,15 +168,15 @@ class ContentEditorViewController: UIViewController {
   }
   
   @objc private func draftsBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
-    self.presentDraftsViewController()
+    self.present(.drafts)
   }
   
   @objc private func plusBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
-    self.presentRichContentMenuViewController()
+    self.present(.richContentMenu)
   }
   
   @objc private func nextBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
-    self.presentPublishMenuViewController()
+    self.present(.publishMenu)
   }
   
   @objc private func toggleEnableState(of barButtonItem: UIBarButtonItem) -> Void {
@@ -691,19 +691,19 @@ extension ContentEditorViewController : RichContentMenuViewControllerDelegate {
     richContentMenuViewController.dismiss(animated: true, completion: nil)
     switch item {
     case .imageCamera:
-      self.presentImagePicker(with: .camera)
+      self.present(.imagePicker(.camera))
     case .imageLibrary:
-      self.presentImagePicker(with: .photoLibrary)
+      self.present(.imagePicker(.photoLibrary))
     case .link:
-      self.presentRichLinkViewController(with: .link)
+      self.present(.richLink(.link))
     case .book:
-      self.presentRichBookViewController()
+      self.present(.richBook)
     case .video:
-      self.presentRichLinkViewController(with: .video)
+      self.present(.richLink(.video))
     case .audio:
-      self.presentRichLinkViewController(with: .audio)
+      self.present(.richLink(.audio))
     case .quote:
-      self.presentQuoteEditorViewController()
+      self.present(.quoteEditor)
     }
   }
 }
@@ -813,16 +813,16 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
     switch item {
     case .penName:
       viewController.dismiss(animated: true, completion: nil)
-      self.presentSelectPenNameViewController()
+      self.present(.selectPenName)
     case .linkTopics:
       viewController.dismiss(animated: true, completion: nil)
-      self.presentLinkTopicsViewController()
+      self.present(.linkTopics)
     case .addTags:
       viewController.dismiss(animated: true, completion: nil)
-      self.presentTagsViewController()
+      self.present(.tags)
     case .postPreview:
       viewController.dismiss(animated: true, completion: nil)
-      self.presentPostPreviewViewController()
+      self.present(.postPreview)
     case .publishYourPost:
       SwiftLoader.show(animated: true)
       self.publishYourPost() { success in
@@ -857,7 +857,7 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
 extension ContentEditorViewController: SelectPenNameViewControllerDelegate {
   func selectPenName(controller: SelectPenNameViewController, didSelect penName: PenName?) {
     controller.dismiss(animated: true) {
-      self.presentPublishMenuViewController()
+      self.present(.publishMenu)
     }
     //TODO: Empty Implementation
   }
@@ -867,7 +867,7 @@ extension ContentEditorViewController: LinkTagsViewControllerDelegate {
   func linkTags(viewController: LinkTagsViewController, didLink tags:[Tag]) {
     self.viewModel.linkedTags = tags
     viewController.dismiss(animated: true) {
-      self.presentPublishMenuViewController()
+      self.present(.publishMenu)
     }
   }
 }
@@ -876,8 +876,8 @@ extension ContentEditorViewController: LinkTagsViewControllerDelegate {
 extension ContentEditorViewController: LinkPagesViewControllerDelegate {
   func linkPages(viewController: LinkPagesViewController, didLink pages: [ModelCommonProperties]) {
     self.viewModel.linkedPages = pages
-    viewController.dismiss(animated: true) { 
-      self.presentPublishMenuViewController()
+    viewController.dismiss(animated: true) {
+      self.present(.publishMenu)
     }
   }
 }
@@ -886,7 +886,7 @@ extension ContentEditorViewController: LinkPagesViewControllerDelegate {
 extension ContentEditorViewController: PostPreviewViewControllerDelegate {
   func postPreview(viewController: PostPreviewViewController, didFinishPreviewing post: CandidatePost) {
     viewController.dismiss(animated: true) {
-      self.presentPublishMenuViewController()
+      self.present(.publishMenu)
     }
     self.loadUIFromPost()
     self.viewModel.dispatchContent()
