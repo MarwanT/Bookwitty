@@ -88,4 +88,33 @@ extension UIImage {
     UIGraphicsEndImageContext()
     return newImage!
   }
+  
+  func resize(maximumDataCount: Int, scale: CGFloat = 0.75) -> UIImage? {
+    return UIImage.resize(image: self, maximumDataCount: maximumDataCount, scale: scale)
+  }
+  
+  static func resize(image: UIImage, maximumDataCount: Int, scale: CGFloat) -> UIImage? {
+    guard let data = image.dataForPNGRepresentation() else {
+      return nil
+    }
+    guard data.count > maximumDataCount else {
+      return image
+    }
+    
+    guard let ciImage = CIImage(image: image) else {
+      return nil
+    }
+    let filter = CIFilter(name: "CILanczosScaleTransform")!
+    filter.setValue(ciImage, forKey: "inputImage")
+    filter.setValue(scale, forKey: "inputScale")
+    filter.setValue(1.0, forKey: "inputAspectRatio")
+    let context = CIContext(options: [kCIContextUseSoftwareRenderer : false])
+    guard let outputImage = filter.value(forKey: "outputImage") as? CIImage,
+      let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+      return nil
+    }
+    let scaledImage = UIImage(cgImage: cgImage)
+    
+    return resize(image: scaledImage, maximumDataCount: maximumDataCount, scale: scale)
+  }
 }
