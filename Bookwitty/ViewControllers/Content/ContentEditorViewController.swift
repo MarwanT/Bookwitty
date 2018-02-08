@@ -378,6 +378,10 @@ extension ContentEditorViewController {
   }
   
   fileprivate func present(_ destination: Destination) {
+    // Backing up the editor range is necessary for avoiding the
+    // Weird behavior when resuming editing
+    editorView.backupRange()
+    
     switch destination {
     case .richContentMenu:
       presentRichContentMenuViewController()
