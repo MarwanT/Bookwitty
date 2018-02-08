@@ -83,6 +83,10 @@ extension RichEditorView {
     let responder = runJS("document.activeElement.id=='editor'")
     return responder == "true"
   }
+  
+  func backupRange() {
+    runJS("RE.backupRange();")
+  }
 }
 
 extension RichEditorView {
