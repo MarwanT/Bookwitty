@@ -377,6 +377,33 @@ extension ContentEditorViewController {
     case postPreview
   }
   
+  fileprivate func present(_ destination: Destination) {
+    switch destination {
+    case .richContentMenu:
+      presentRichContentMenuViewController()
+    case .publishMenu:
+      presentPublishMenuViewController()
+    case .imagePicker(let imagePickerControllerSourceType):
+      presentImagePicker(with: imagePickerControllerSourceType)
+    case .richBook:
+      presentRichBookViewController()
+    case .drafts:
+      presentDraftsViewController()
+    case .richLink(let richLinkPreviewMode):
+      presentRichLinkViewController(with: richLinkPreviewMode)
+    case .quoteEditor:
+      presentQuoteEditorViewController()
+    case .selectPenName:
+      presentSelectPenNameViewController()
+    case .tags:
+      presentTagsViewController()
+    case .linkTopics:
+      presentLinkTopicsViewController()
+    case .postPreview:
+      presentPostPreviewViewController()
+    }
+  }
+  
   // MARK: Navigation Toolbar Actions Handling
   fileprivate func  presentRichContentMenuViewController() {
     let richContentMenuViewController = Storyboard.Content.instantiate(RichContentMenuViewController.self)
