@@ -172,26 +172,7 @@ class ContentEditorViewController: UIViewController {
   }
   
   @objc private func plusBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
-    let richContentMenuViewController = Storyboard.Content.instantiate(RichContentMenuViewController.self)
-    richContentMenuViewController.delegate = self
-    self.definesPresentationContext = true
-    richContentMenuViewController.view.backgroundColor = .clear
-    richContentMenuViewController.modalPresentationStyle = .overCurrentContext
-    
-    self.navigationController?.present(richContentMenuViewController, animated: true, completion: nil)
-  }
-  
-  fileprivate func presentPublishMenuViewController() {
-    self.viewModel.dispatchContent()
-    
-    let publishMenuViewController = Storyboard.Content.instantiate(PublishMenuViewController.self)
-    publishMenuViewController.delegate = self
-    publishMenuViewController.viewModel.initialize(with: self.viewModel.currentPost.id, linkedTags: self.viewModel.linkedTags, linkedPages: self.viewModel.linkedPages, isEditing: self.mode.isEditing)
-    self.definesPresentationContext = true
-    publishMenuViewController.view.backgroundColor = .clear
-    publishMenuViewController.modalPresentationStyle = .overCurrentContext
-    
-    self.navigationController?.present(publishMenuViewController, animated: true, completion: nil)
+    self.presentRichContentMenuViewController()
   }
   
   @objc private func nextBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
@@ -378,8 +359,35 @@ class ContentEditorViewController: UIViewController {
       self.view.layoutSubviews()
     }
   }
+}
+
+// MARK: - The Presenters
+extension ContentEditorViewController {
+  // MARK: Navigation Toolbar Actions Handling
+  fileprivate func  presentRichContentMenuViewController() {
+    let richContentMenuViewController = Storyboard.Content.instantiate(RichContentMenuViewController.self)
+    richContentMenuViewController.delegate = self
+    self.definesPresentationContext = true
+    richContentMenuViewController.view.backgroundColor = .clear
+    richContentMenuViewController.modalPresentationStyle = .overCurrentContext
+    
+    self.navigationController?.present(richContentMenuViewController, animated: true, completion: nil)
+  }
   
-  // MARK: - User Import Action(s) Handling
+  fileprivate func presentPublishMenuViewController() {
+    self.viewModel.dispatchContent()
+    
+    let publishMenuViewController = Storyboard.Content.instantiate(PublishMenuViewController.self)
+    publishMenuViewController.delegate = self
+    publishMenuViewController.viewModel.initialize(with: self.viewModel.currentPost.id, linkedTags: self.viewModel.linkedTags, linkedPages: self.viewModel.linkedPages, isEditing: self.mode.isEditing)
+    self.definesPresentationContext = true
+    publishMenuViewController.view.backgroundColor = .clear
+    publishMenuViewController.modalPresentationStyle = .overCurrentContext
+    
+    self.navigationController?.present(publishMenuViewController, animated: true, completion: nil)
+  }
+  
+  // MARK: User Import Action(s) Handling
   func presentImagePicker(with source: UIImagePickerControllerSourceType) {
     let imagePickerController = UIImagePickerController()
     imagePickerController.delegate = self
@@ -387,21 +395,21 @@ class ContentEditorViewController: UIViewController {
     imagePickerController.allowsEditing = false
     self.navigationController?.present(imagePickerController, animated: true, completion: nil)
   }
-
+  
   func presentRichBookViewController() {
     let richBookViewController = RichBookViewController()
     richBookViewController.delegate = self
     let navigationController = UINavigationController(rootViewController: richBookViewController)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
   }
-
+  
   func presentDraftsViewController() {
     let controller = DraftsViewController()
     controller.delegate = self
     let navigationController = UINavigationController(rootViewController: controller)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
   }
-
+  
   func presentRichLinkViewController(with mode: RichLinkPreviewViewController.Mode) {
     let controller = Storyboard.Content.instantiate(RichLinkPreviewViewController.self)
     controller.mode = mode
@@ -409,11 +417,66 @@ class ContentEditorViewController: UIViewController {
     let navigationController = UINavigationController(rootViewController: controller)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
   }
-
+  
   fileprivate func presentQuoteEditorViewController() {
     let controller = Storyboard.Content.instantiate(QuoteEditorViewController.self)
     controller.delegate = self
     let navigationController = UINavigationController(rootViewController: controller)
+    self.navigationController?.present(navigationController, animated: true, completion: nil)
+  }
+  
+  // MARK: Publishing Actions Handling
+  func presentSelectPenNameViewController() {
+    guard let currentPost = self.viewModel.currentPost, let currentPostId = currentPost.id else {
+      return
+    }
+    
+    let selectPenNameViewController = Storyboard.Account.instantiate(SelectPenNameViewController.self)
+    selectPenNameViewController.viewModel.preselect(penName: currentPost.penName)
+    selectPenNameViewController.delegate = self
+    let navigationController = UINavigationController(rootViewController: selectPenNameViewController)
+    self.navigationController?.present(navigationController, animated: true, completion: nil)
+  }
+  
+  func presentTagsViewController() {
+    guard let currentPost = self.viewModel.currentPost, let currentPostId = currentPost.id else {
+      return
+    }
+    
+    let linkTagsViewController = Storyboard.Content.instantiate(LinkTagsViewController.self)
+    linkTagsViewController.viewModel.initialize(with: currentPostId, linkedTags: self.viewModel.linkedTags)
+    linkTagsViewController.delegate = self
+    let navigationController = UINavigationController(rootViewController: linkTagsViewController)
+    self.navigationController?.present(navigationController, animated: true, completion: nil)
+  }
+  
+  func presentLinkTopicsViewController() {
+    guard let currentPost = self.viewModel.currentPost, let currentPostId = currentPost.id else {
+      return
+    }
+    
+    let linkTopicsViewController = Storyboard.Content.instantiate(LinkPagesViewController.self)
+    linkTopicsViewController.viewModel.initialize(with: currentPostId, linkedPages: self.viewModel.linkedPages)
+    linkTopicsViewController.delegate = self
+    let navigationController = UINavigationController(rootViewController: linkTopicsViewController)
+    self.navigationController?.present(navigationController, animated: true, completion: nil)
+  }
+  
+  func presentPostPreviewViewController() {
+    guard let currentPost = self.viewModel.currentPost else {
+      return
+    }
+    
+    let defaultValues = self.editorView.getDefaults()
+    
+    let title = currentPost.title ?? defaultValues.title
+    let description = currentPost.shortDescription ?? defaultValues.description
+    let imageURL = currentPost.imageUrl ?? defaultValues.imageURL
+    
+    let postPreviewViewController = PostPreviewViewController()
+    postPreviewViewController.viewModel.initialize(with: self.viewModel.currentPost, and: (title, description, imageURL))
+    postPreviewViewController.delegate = self
+    let navigationController = UINavigationController(rootViewController: postPreviewViewController)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
   }
 }
@@ -684,60 +747,6 @@ extension ContentEditorViewController: QuoteEditorViewControllerDelegate {
 }
 
 extension ContentEditorViewController {
-  func presentSelectPenNameViewController() {
-    guard let currentPost = self.viewModel.currentPost, let currentPostId = currentPost.id else {
-      return
-    }
-
-    let selectPenNameViewController = Storyboard.Account.instantiate(SelectPenNameViewController.self)
-    selectPenNameViewController.viewModel.preselect(penName: currentPost.penName)
-    selectPenNameViewController.delegate = self
-    let navigationController = UINavigationController(rootViewController: selectPenNameViewController)
-    self.navigationController?.present(navigationController, animated: true, completion: nil)
-  }
-
-  func presentTagsViewController() {
-    guard let currentPost = self.viewModel.currentPost, let currentPostId = currentPost.id else {
-      return
-    }
-    
-    let linkTagsViewController = Storyboard.Content.instantiate(LinkTagsViewController.self)
-    linkTagsViewController.viewModel.initialize(with: currentPostId, linkedTags: self.viewModel.linkedTags)
-    linkTagsViewController.delegate = self
-    let navigationController = UINavigationController(rootViewController: linkTagsViewController)
-    self.navigationController?.present(navigationController, animated: true, completion: nil)
-  }
-
-  func presentLinkTopicsViewController() {
-    guard let currentPost = self.viewModel.currentPost, let currentPostId = currentPost.id else {
-      return
-    }
-    
-    let linkTopicsViewController = Storyboard.Content.instantiate(LinkPagesViewController.self)
-    linkTopicsViewController.viewModel.initialize(with: currentPostId, linkedPages: self.viewModel.linkedPages)
-    linkTopicsViewController.delegate = self
-    let navigationController = UINavigationController(rootViewController: linkTopicsViewController)
-    self.navigationController?.present(navigationController, animated: true, completion: nil)
-  }
-  
-  func presentPostPreviewViewController() {
-    guard let currentPost = self.viewModel.currentPost else {
-      return
-    }
-    
-    let defaultValues = self.editorView.getDefaults()
-
-    let title = currentPost.title ?? defaultValues.title
-    let description = currentPost.shortDescription ?? defaultValues.description
-    let imageURL = currentPost.imageUrl ?? defaultValues.imageURL
-
-    let postPreviewViewController = PostPreviewViewController()
-    postPreviewViewController.viewModel.initialize(with: self.viewModel.currentPost, and: (title, description, imageURL))
-    postPreviewViewController.delegate = self
-    let navigationController = UINavigationController(rootViewController: postPreviewViewController)
-    self.navigationController?.present(navigationController, animated: true, completion: nil)
-  }
-  
   func publishYourPost(_ completion: ((_ success: Bool) -> Void)? = nil) {
     self.viewModel.preparePostForPublish()
     self.viewModel.updateContent() { success in
