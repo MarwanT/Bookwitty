@@ -57,8 +57,7 @@ class LimitedEditableTextNode: ASCellNode {
 
   fileprivate func setupNode() {
     automaticallyManagesSubnodes = true
-    textNode.style.height = ASDimension(unit: .points, value: 80.0)
-    textNode.maximumLinesToDisplay = 3
+    textNode.style.minHeight = ASDimension(unit: .points, value: 80.0)
 
     textNode.style.flexGrow = 1.0
     textNode.style.flexShrink = 1.0
