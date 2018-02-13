@@ -222,6 +222,7 @@
 "reset_password_text" = "Dans quelques instants, vous recevrez un e-mail pour réinitialiser votre mot de passe.";
 "save_as_draft" = "Save as draft";
 "save_draft" = "Save Draft";
+"save_post_changes" = "Save Post changes ?";
 "save_this_post_draft" = "Save this Post as a Draft ?";
 "search_placeholder" = "Rechercher ";
 "see_whats_happening_on_bookwitty" = "Préparez-vous à faire des découvertes ";

@@ -222,6 +222,7 @@
 "reset_password_text" = "You will receive an email with instructions on how to reset your password in a few minutes.";
 "save_as_draft" = "Save as draft";
 "save_draft" = "Save Draft";
+"save_post_changes" = "Save Post changes ?";
 "save_this_post_draft" = "Save this Post as a Draft ?";
 "search_placeholder" = "Search";
 "see_whats_happening_on_bookwitty" = "See what's happening on Bookwitty";
