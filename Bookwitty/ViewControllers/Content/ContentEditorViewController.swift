@@ -580,9 +580,9 @@ extension ContentEditorViewController {
       return
     }
 
-    let alertController = UIAlertController(title: Strings.save_this_post_draft(), message: nil, preferredStyle: .actionSheet)
-
+    let alertController: UIAlertController
     if self.mode.isEditing {
+      alertController = UIAlertController(title: Strings.save_post_changes(), message: nil, preferredStyle: .actionSheet)
       let discardChanges = UIAlertAction(title: Strings.discard_changes(), style: .default, handler: {
         _ in
         self.dismiss(animated: true, completion: nil)
@@ -590,6 +590,7 @@ extension ContentEditorViewController {
       alertController.addAction(discardChanges)
       
     } else {
+      alertController = UIAlertController(title: Strings.save_this_post_draft(), message: nil, preferredStyle: .actionSheet)
       let saveDraft = UIAlertAction(title: Strings.save_draft(), style: .default, handler: {
         _ in
         self.savePostAsDraft({
