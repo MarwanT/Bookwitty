@@ -27,10 +27,11 @@ class ContentEditorViewController: UIViewController {
   
   private var timer: Timer!
   var toolbarButtons: [ContentEditorOption:SelectedImageView] = [:]
-  var hasContent: Bool {
-    let title = self.titleTextField.text ?? ""
-    let body = self.editorView.getContent()
-    return title.characters.count > 0 && body.characters.count > 0
+  func hasContent(completion: @escaping (Bool) -> Void) {
+    self.editorView.getContent { (body) in
+      let title = self.titleTextField.text ?? ""
+      completion(title.count > 0 && body.count > 0)
+    }
   }
   enum DispatchStatus {
     case create
@@ -87,7 +88,9 @@ class ContentEditorViewController: UIViewController {
                                target: self,
                                action: #selector(self.plusBarButtonTouchUpInside(_:)))
     
-    plusBarButtonItem.isEnabled = self.editorView.hasFocus()
+    self.editorView.hasFocus { (has) in
+      plusBarButtonItem.isEnabled = has
+    }
 
     let nextBarButtonItem = UIBarButtonItem(title: Strings.next(),
                                style: UIBarButtonItemStyle.plain,
@@ -222,10 +225,10 @@ class ContentEditorViewController: UIViewController {
 
   // MARK: - RichEditor
   private func initializeComponents() {
-    applyLocalization()
     setupEditorToolbar()
     setupContentEditorHtml()
     observeLanguageChanges()
+    applyLocalization()
     self.timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(ContentEditorViewController.tick), userInfo: nil, repeats: true)
     self.timer.tolerance = 0.5
   }
@@ -234,7 +237,7 @@ class ContentEditorViewController: UIViewController {
     let bundle = Bundle(for: MobileEditor.self)
     bundle.load()
     if let editor = bundle.url(forResource: "editor", withExtension: "html") {
-      self.editorView.webView.loadRequest(URLRequest(url: editor))
+        self.editorView.webView.load(URLRequest(url: editor))
     }
     self.editorView.delegate = self
   }
@@ -287,8 +290,9 @@ class ContentEditorViewController: UIViewController {
       self.editorView.unorderedList()
     case .link:
       if isSelected {
-        let previousLink = self.editorView.selectedHref()
-        self.showAddLinkAlertView(with: previousLink)
+        self.editorView.selectedHref(completion: { (_ previousLink: String) in
+          self.showAddLinkAlertView(with: previousLink)
+        })
       } else {
         self.showAddLinkAlertView(with: nil)
       }
@@ -512,17 +516,27 @@ extension ContentEditorViewController {
       return
     }
     
-    let defaultValues = self.editorView.getDefaults()
+    var title: String = ""
+    var description: String? = currentPost.shortDescription
+    var imageURL: String? = currentPost.imageUrl
     
-    let title = currentPost.title ?? defaultValues.title
-    let description = currentPost.shortDescription ?? defaultValues.description
-    let imageURL = currentPost.imageUrl ?? defaultValues.imageURL
+    let group = DispatchGroup()
     
-    let postPreviewViewController = PostPreviewViewController()
-    postPreviewViewController.viewModel.initialize(with: self.viewModel.currentPost, and: (title, description, imageURL))
-    postPreviewViewController.delegate = self
-    let navigationController = UINavigationController(rootViewController: postPreviewViewController)
-    self.navigationController?.present(navigationController, animated: true, completion: nil)
+    group.enter()
+    self.editorView.getDefaults { (_ defaultTitle: String, _ defaultDescription: String?, _ defaultImageURL: String?) in
+      title = currentPost.title ?? defaultTitle
+      description = description ?? defaultDescription
+      imageURL = imageURL ?? defaultImageURL
+      group.leave()
+    }
+    
+    group.notify(queue: DispatchQueue.main) {
+      let postPreviewViewController = PostPreviewViewController()
+      postPreviewViewController.viewModel.initialize(with: self.viewModel.currentPost, and: (title, description, imageURL))
+      postPreviewViewController.delegate = self
+      let navigationController = UINavigationController(rootViewController: postPreviewViewController)
+      self.navigationController?.present(navigationController, animated: true, completion: nil)
+    }
   }
 }
 
@@ -534,7 +548,7 @@ extension ContentEditorViewController: Localizable {
       string: "\(Strings.title()) (\(Strings.optional()))",
       attributes: [NSForegroundColorAttributeName : ThemeManager.shared.currentTheme.defaultGrayedTextColor()])
     // Editor placeholder
-    editorView.placeholder = Strings.write_here()
+    editorView.set(placeholder: Strings.write_here(), completion: nil)
     // Navigation buttons
     loadNavigationBarButtons()
   }
@@ -559,64 +573,74 @@ extension ContentEditorViewController {
   }
 
   fileprivate func presentConfirmSaveOrDiscardActionSheet(_ closure : @escaping (_ option: ConfirmationOption, _ success: Bool) -> ()) {
-
-    guard let currentPost = self.viewModel.currentPost else {
-      closure(.nonNeeded, true)
-      return
-    }
-
-    guard self.hasContent else {
-      if self.viewModel.currentPost.id != nil {
-        self.viewModel.deletePost() { _, _ in }
-      } else {
-        try? self.viewModel.deleteLocalDraft()
-      }
-      closure(.nonNeeded, true)
-      return
+    var hasContent = false
+    
+    let group = DispatchGroup()
+    group.enter()
+    self.hasContent { (has) in
+      hasContent = has
+      group.leave()
     }
     
-    guard self.viewModel.needsRemoteSync else {
-      closure(.nonNeeded, true)
-      return
-    }
-
-    let alertController: UIAlertController
-    if self.mode.isEditing {
-      alertController = UIAlertController(title: Strings.save_post_changes(), message: nil, preferredStyle: .actionSheet)
-      let discardChanges = UIAlertAction(title: Strings.discard_changes(), style: .default, handler: {
-        _ in
-        self.dismiss(animated: true, completion: nil)
-      })
-      alertController.addAction(discardChanges)
+    group.notify(queue: DispatchQueue.main) {
+      guard let _ = self.viewModel.currentPost else {
+        closure(.nonNeeded, true)
+        return
+      }
       
-    } else {
-      alertController = UIAlertController(title: Strings.save_this_post_draft(), message: nil, preferredStyle: .actionSheet)
-      let saveDraft = UIAlertAction(title: Strings.save_draft(), style: .default, handler: {
+      guard hasContent else {
+        if self.viewModel.currentPost.id != nil {
+          self.viewModel.deletePost() { _, _ in }
+        } else {
+          try? self.viewModel.deleteLocalDraft()
+        }
+        closure(.nonNeeded, true)
+        return
+      }
+      
+      guard self.viewModel.needsRemoteSync else {
+        closure(.nonNeeded, true)
+        return
+      }
+      
+      let alertController: UIAlertController
+      if self.mode.isEditing {
+        alertController = UIAlertController(title: Strings.save_post_changes(), message: nil, preferredStyle: .actionSheet)
+        let discardChanges = UIAlertAction(title: Strings.discard_changes(), style: .default, handler: {
+          _ in
+          self.dismiss(animated: true, completion: nil)
+        })
+        alertController.addAction(discardChanges)
+        
+      } else {
+        alertController = UIAlertController(title: Strings.save_this_post_draft(), message: nil, preferredStyle: .actionSheet)
+        let saveDraft = UIAlertAction(title: Strings.save_draft(), style: .default, handler: {
+          _ in
+          self.savePostAsDraft({
+            (success: Bool) in
+            closure(.saveDraft, success)
+          })
+        })
+        alertController.addAction(saveDraft)
+      }
+      let discardPost = UIAlertAction(title: Strings.discard_post(), style: .destructive, handler: {
         _ in
-        self.savePostAsDraft({
+        self.discardPost({
           (success: Bool) in
-          closure(.saveDraft, success)
+          closure(.discardPost, success)
         })
       })
-      alertController.addAction(saveDraft)
-    }
-    let discardPost = UIAlertAction(title: Strings.discard_post(), style: .destructive, handler: {
-      _ in
-      self.discardPost({
-        (success: Bool) in
-        closure(.discardPost, success)
+      
+      let goBack = UIAlertAction(title: Strings.go_back(), style: .cancel, handler: {
+        _ in
+        closure(.goBack, true)
       })
-    })
-
-    let goBack = UIAlertAction(title: Strings.go_back(), style: .cancel, handler: {
-      _ in
-      closure(.goBack, true)
-    })
-
-    alertController.addAction(discardPost)
-    alertController.addAction(goBack)
-
-    navigationController?.present(alertController, animated: true, completion: nil)
+      
+      alertController.addAction(discardPost)
+      alertController.addAction(goBack)
+      
+      self.navigationController?.present(alertController, animated: true, completion: nil)
+    }
   }
 
   fileprivate func showRetryAlert(with title: String?, message: String?, closure: ((_ retry: Bool) -> ())?) {
@@ -918,16 +942,17 @@ extension ContentEditorViewController: CropViewControllerDelegate {
     
     let image = croppedImage
     self.navigationController?.dismiss(animated: true, completion: nil)
-    let id = self.editorView.generatePhotoWrapper()
-    self.viewModel.addUploadRequest(id)
-    self.loadNavigationBarButtons()
-    viewModel.upload(image: image) { (success: Bool, link: String?) in
-      guard let link = link, let Url = URL(string: link) else { return }
-      self.editorView.generate(photo: Url, alt: "Image", wrapperId: id)
-      self.viewModel.removeUploadRequest(id)
+    
+    self.editorView.generatePhotoWrapper() { id in
+      self.viewModel.addUploadRequest(id)
       self.loadNavigationBarButtons()
+      self.viewModel.upload(image: image) { (success: Bool, link: String?) in
+        guard let link = link, let Url = URL(string: link) else { return }
+        self.editorView.generate(photo: Url, alt: "Image", wrapperId: id)
+        self.viewModel.removeUploadRequest(id)
+        self.loadNavigationBarButtons()
+      }
     }
-
   }
 }
 
@@ -940,8 +965,9 @@ extension ContentEditorViewController: RichEditorDelegate {
 
   func richEditor(_ editor: RichEditorView, contentDidChange content: String) {
     guard self.isEditorLoaded else { return }
-
-    self.viewModel.currentPost.body = editor.getContent()
+    editor.getContent { (body) in
+      self.viewModel.currentPost.body = body
+    }
   }
   
   func richEditorDidLoad(_ editor: RichEditorView) {
@@ -961,15 +987,15 @@ extension ContentEditorViewController: RichEditorDelegate {
   func richEditor(_ editor: RichEditorView, handle action: String) {
     
     if action == "selectionchange" {
-      let editingItems = self.editorView.enabledCommands()
-      
-      self.set(option: .header, selected: editingItems.contains("h2"))
-      self.set(option: .bold, selected: editingItems.contains("bold"))
-      self.set(option: .italic, selected: editingItems.contains("italic"))
-      let isLink = editingItems.contains("link")
-      let isRange = editingItems.contains("isRange");
-      self.set(option: .link, selected: isLink, isEnabled: (isLink || isRange))
-      self.set(option: .unorderedList, selected: editingItems.contains("unorderedList"))
+      self.editorView.enabledCommands(completion: { (editingItems) in
+        self.set(option: .header, selected: editingItems.contains("h2"))
+        self.set(option: .bold, selected: editingItems.contains("bold"))
+        self.set(option: .italic, selected: editingItems.contains("italic"))
+        let isLink = editingItems.contains("link")
+        let isRange = editingItems.contains("isRange");
+        self.set(option: .link, selected: isLink, isEnabled: (isLink || isRange))
+        self.set(option: .unorderedList, selected: editingItems.contains("unorderedList"))
+      })
     }
   }
 }

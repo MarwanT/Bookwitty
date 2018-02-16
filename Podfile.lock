@@ -118,7 +118,7 @@ DEPENDENCIES:
   - MobileEditor (from `git@gitlab.help-counter.com:ios-libraries/ContentEditor.git`)
   - Moya (= 8.0.5)
   - ReachabilitySwift (= 3)
-  - RichEditorView (= 4.0.0)
+  - RichEditorView (from `git@github.com:Keeward/RichEditorView.git`, branch `web-kit`)
   - SDWebImage (= 4.0.0)
   - Segmentio (= 2.1.2)
   - Spine (from `https://github.com/Keeward/Spine.git`, tag `0.3.2`)
@@ -140,6 +140,9 @@ EXTERNAL SOURCES:
   MobileEditor:
     :git: git@gitlab.help-counter.com:ios-libraries/ContentEditor.git
     :submodules: true
+  RichEditorView:
+    :branch: web-kit
+    :git: git@github.com:Keeward/RichEditorView.git
   Spine:
     :git: https://github.com/Keeward/Spine.git
     :tag: 0.3.2
@@ -159,6 +162,9 @@ CHECKOUT OPTIONS:
     :commit: 1dcfd1350c277d03d81a144e1fbd6197b885f3f8
     :git: git@gitlab.help-counter.com:ios-libraries/ContentEditor.git
     :submodules: true
+  RichEditorView:
+    :commit: c732167faa73c32cfa077b4c437f8d5ecb8a496a
+    :git: git@github.com:Keeward/RichEditorView.git
   Spine:
     :git: https://github.com/Keeward/Spine.git
     :tag: 0.3.2
@@ -201,7 +207,7 @@ SPEC CHECKSUMS:
   PINRemoteImage: c4f9f16932840c597f32e69dd288e10e111a1929
   ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
-  RichEditorView: e5990b1a092539559def9df135e064b29ab97e68
+  RichEditorView: dd8359f7e33230d942e300be8efbd0602868c822
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   Segmentio: f85114993e305bd9c522952eef8c2c4db732fd17
   Spine: 9a5076f732897dc67c0303b4b3d871cfee903efa
@@ -214,6 +220,6 @@ SPEC CHECKSUMS:
   Version: 31221742495765fc798d08eae45de3c936dce0db
   WSTagsField: 93e5176092bdd3d48bdf02817aad04dcb2631aac
 
-PODFILE CHECKSUM: 143c620ea49463c0df4eac75baac68a1a881fbb6
+PODFILE CHECKSUM: f17490fea1f16b5f038435525cf66fb512db6c0c
 
 COCOAPODS: 1.3.1
