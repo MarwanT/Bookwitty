@@ -44,7 +44,7 @@ target 'Bookwitty' do
   pod 'GSImageViewerController', '1.2.1'
   pod 'RichEditorView', :git => 'git@github.com:Keeward/RichEditorView.git', :branch => 'web-kit'
   pod 'WSTagsField', :git => 'https://github.com/Keeward/WSTagsField.git'
-  pod 'MobileEditor', :git => 'git@gitlab.help-counter.com:ios-libraries/ContentEditor.git', :submodules => true
+  pod 'MobileEditor', :git => 'git@gitlab.help-counter.com:ios-libraries/ContentEditor.git', :branch => 'tinymce', :submodules => true
   pod 'AKImageCropperView', '2.0.0'
 
   target 'BookwittyTests' do
