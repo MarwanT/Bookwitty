@@ -58,6 +58,31 @@ final class LinkTagsViewModel {
     return fetchedTags.filter { $0.title == title }.count > 0
   }
 }
+
+// Mark: - Data Helpers
+extension LinkTagsViewModel {
+  func autocomplete(with text: String?, completion: @escaping (_ success: Bool) -> Void) {
+    guard let text = text, text.count > 0 else {
+      completion(false)
+      return
+    }
+    
+    //Perform request
+    self.filter.query = text
+    _ = SearchAPI.autocomplete(filter: filter, page: nil) {
+      (success, tags, _, _, error) in
+      guard success, let tags = tags as? [Tag] else {
+        self.resetTags()
+        completion(false)
+        return
+      }
+      
+      self.set(tags)
+      completion(true)
+    }
+  }
+}
+
 // Mark: - TableView helper
 extension LinkTagsViewModel {
   func numberOfItemsInSection(section: Int) -> Int {

@@ -132,18 +132,10 @@ class LinkTagsViewController: UIViewController {
   }
 
   @objc private func reload(with text: String?) {
-    guard let text = text, text.characters.count > 0 else {
-      return
-    }
-    
-    self.viewModel.filter.query = text
-    //Perform request
-    _ = SearchAPI.autocomplete(filter: self.viewModel.filter, page: nil) { (success, tags, _, _, error) in
-      guard success, let tags = tags as? [Tag] else {
-        self.viewModel.resetTags()
+    viewModel.autocomplete(with: text) { (success) in
+      guard success else {
         return
       }
-      self.viewModel.set(tags)
       self.tableView.reloadData()
     }
   }
