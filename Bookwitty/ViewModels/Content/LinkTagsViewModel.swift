@@ -26,19 +26,9 @@ final class LinkTagsViewModel {
     self.selectedTags = linkedTags
   }
   
-  func tag(with title: String) -> Tag? {
-    return self.selectedTags.filter { $0.title == title }.first
-  }
-  
   func append(_ tag: Tag) {
     if !selectedTags.contains(tag) {
       selectedTags.append(tag)
-    }
-  }
-  
-  func removeTag(with title: String) {
-    if let index = selectedTags.index(where: { $0 == self.tag(with: title) }) {
-      selectedTags.remove(at: index)
     }
   }
   
@@ -54,8 +44,8 @@ final class LinkTagsViewModel {
     return fetchedTags[index]
   }
   
-  func hasTag(with title: String) -> Bool {
-    return fetchedTags.filter { $0.title == title }.count > 0
+  func tag(withTitle title: String) -> Tag? {
+    return fetchedTags.first(where: { $0.title == title })
   }
 }
 
@@ -80,6 +70,72 @@ extension LinkTagsViewModel {
       self.set(tags)
       completion(true)
     }
+  }
+  
+  func addTagg(withTitle title: String, completion: ((_ success: Bool) -> Void)?) {
+    if let tag = self.tag(withTitle: title) {
+      link(tag: tag, completion: completion)
+    } else {
+      //Create (user hit return)
+      let newTag = Tag()
+      newTag.title = title
+      let allTags = selectedTags + [newTag]
+      replace(with: allTags, completion: completion)
+    }
+  }
+  
+  func link(tag: Tag, completion: ((_ success: Bool) -> Void)?) {
+    guard let tagID = tag.id else {
+      completion?(false)
+      return
+    }
+    
+    _ = TagAPI.linkTag(for: self.contentIdentifier, with: tagID, completion: { (success, error) in
+      defer {
+        completion?(success)
+      }
+      
+      guard success else {
+        //TODO: if we get `no more tags are allowed error` we should set viewModel.canLink = false
+        return
+      }
+    })
+  }
+  
+  func replace(with tags: [Tag], completion: ((_ success: Bool) -> Void)?) {
+    self.selectedTags = tags
+    //TODO: change .draft value below to a proper status value
+    _ = TagAPI.replaceTags(for: contentIdentifier, with: tags.flatMap { $0.title }, status: .draft, completion: {
+      [weak self] (success, post, error) in
+      guard let strongSelf = self else { return }
+      
+      guard success, let post = post, let tags = post.tags else {
+        completion?(false)
+        return
+      }
+      //Previously we were setting the tags on success
+      //After BMA-1683 we asked to consider the tag is linked
+      strongSelf.selectedTags = tags
+    })
+  }
+  
+  func unLink(withTitle: String, completion: ((_ success: Bool) -> Void)?) {
+    guard let tag = self.tag(withTitle: withTitle), let tagID = tag.id else {
+      completion?(false)
+      return
+    }
+    
+    selectedTags = selectedTags.filter { $0.id != tagID }
+    _ = TagAPI.removeTag(for: contentIdentifier, with: tagID, completion: {
+      (success, error) in
+      defer {
+        completion?(success)
+      }
+      
+      guard success else {
+        return
+      }
+    })
   }
 }
 
