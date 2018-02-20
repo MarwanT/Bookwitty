@@ -176,14 +176,20 @@ class SearchViewController: ASViewController<ASCollectionNode> {
   private func updatedResources(_ notification: NSNotification) {
     let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems
 
-    guard let identifiers = notification.object as? [String],
-      identifiers.count > 0,
-      visibleItemsIndexPaths.count > 0 else {
+    let updateKey = DataManager.Notifications.Key.Update
+    let deleteKey = DataManager.Notifications.Key.Delete
+
+    guard let dictionary = notification.object as? [String : [String]] else {
         return
     }
 
-    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
-    updateCollectionNodes(indexPathForAffectedItems: indexPathForAffectedItems)
+    if let deletedIdentifiers = dictionary[deleteKey], deletedIdentifiers.count > 0 {
+      deletedIdentifiers.forEach({ viewModel.deleteResource(with: $0) })
+      collectionNode.reloadData()
+    } else if let updatedIdentifiers = dictionary[updateKey], updatedIdentifiers.count > 0, visibleItemsIndexPaths.count > 0 {
+      let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: updatedIdentifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+      updateCollectionNodes(indexPathForAffectedItems: indexPathForAffectedItems)
+    }
   }
 
   fileprivate func pushFilterViewController() {
@@ -399,7 +405,9 @@ extension SearchViewController: BaseCardPostNodeDelegate {
     case .more:
       guard let resource = viewModel.resourceForIndex(indexPath: indexPath),
         let identifier = resource.id else { return }
-      self.showMoreActionSheet(identifier: identifier, actions: [.report(.content)], completion: { (success: Bool) in
+
+      let actions: [MoreAction] = MoreAction.actions(for: resource as? ModelCommonProperties)
+      self.showMoreActionSheet(identifier: identifier, actions: actions, completion: { (success: Bool, action: MoreAction) in
         didFinishAction?(success)
       })
     default:

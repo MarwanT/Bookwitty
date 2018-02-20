@@ -159,6 +159,11 @@ extension Image: ModelCommonProperties {
 }
 
 extension Author: ModelCommonProperties {
+
+  var title: String? {
+    return self.name
+  }
+
   var isWitted: Bool {
     guard let vote = vote else {
       return false

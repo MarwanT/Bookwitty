@@ -40,7 +40,7 @@ class OnBoardingCellSectionNode: ASCellNode {
     separator.style.height = ASDimensionMake(1.0)
     separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
 
-    backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
+    backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

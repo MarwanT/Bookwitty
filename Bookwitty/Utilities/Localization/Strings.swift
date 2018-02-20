@@ -37,6 +37,26 @@ class Strings {
     return localizedString(key: "account_needs_confirmation_alert_title")
   }
   
+  static func add() -> String {
+    return localizedString(key: "add")
+  }
+  
+  static func addLink() -> String {
+    return localizedString(key: "add_a_link")
+  }
+  
+  static func add_a_title() -> String {
+    return localizedString(key: "add_a_title")
+  }
+
+  static func add_an_image() -> String {
+    return localizedString(key: "add_an_image")
+  }
+
+  static func add_tags() -> String {
+    return localizedString(key: "add_tags")
+  }
+  
   static func address_book() -> String {
     return localizedString(key: "address_book")
   }
@@ -63,6 +83,10 @@ class Strings {
 
   static func audio() -> String {
     return localizedString(key: "audio")
+  }
+  
+  static func audio_link() -> String {
+    return localizedString(key: "audio_link")
   }
 
   static func author() -> String {
@@ -157,6 +181,10 @@ class Strings {
     return localizedString(key: "clear_profile_photo")
   }
   
+  static func close() -> String {
+    return localizedString(key: "close")
+  }
+  
   static func comments() -> String {
     return localizedString(key: "comments")
   }
@@ -171,6 +199,18 @@ class Strings {
 
   static func `continue`() -> String {
     return localizedString(key: "continue")
+  }
+
+  static func continue_email() -> String {
+    return localizedString(key: "continue_email")
+  }
+
+  static func continue_facebook() -> String {
+    return localizedString(key: "continue_facebook")
+  }
+
+  static func continue_google() -> String {
+    return localizedString(key: "continue_google")
   }
   
   static func contributors() -> String {
@@ -197,6 +237,10 @@ class Strings {
     return localizedString(key: "country_region")
   }
   
+  static func create_your_account() -> String {
+    return localizedString(key: "create_your_account")
+  }
+
   static func create_new_pen_name() -> String {
     return localizedString(key: "create_new_pen_name")
   }
@@ -213,10 +257,34 @@ class Strings {
     return localizedString(key: "customer_service")
   }
   
+  static func customize_your_posts_card() -> String {
+    return localizedString(key: "customize_your_posts_card")
+  }
+
   static func delete() -> String {
     return localizedString(key: "delete")
   }
   
+  static func delete_draft_confirmation_message() -> String {
+    return localizedString(key: "delete_draft_confirmation_message")
+  }
+
+  static func delete_post_confirmation_message() -> String {
+    return localizedString(key: "delete_post_confirmation_message")
+  }
+
+  static func delete_post_success_message() -> String {
+    return localizedString(key: "delete_post_success_message")
+  }
+
+  static func discard_changes() -> String {
+    return localizedString(key: "discard_changes")
+  }
+  
+  static func discard_post() -> String {
+    return localizedString(key: "discard_post")
+  }
+
   static func discover() -> String {
     return localizedString(key: "discover")
   }
@@ -241,8 +309,16 @@ class Strings {
     return localizedString(key: "drafts")
   }
   
+  static func edit() -> String {
+    return localizedString(key: "edit")
+  }
+
   static func edit_pen_name() -> String {
     return localizedString(key: "edit_pen_name")
+  }
+
+  static func editing_not_yet_supported() -> String {
+    return localizedString(key: "editing_not_yet_supported")
   }
   
   static func editions() -> String {
@@ -297,6 +373,10 @@ class Strings {
     return localizedString(key: "enter_your_pen_name")
   }
   
+  static func error() -> String {
+    return localizedString(key: "error")
+  }
+
   static func error_loading_data() -> String {
     return localizedString(key: "error_loading_data")
   }
@@ -368,6 +448,18 @@ class Strings {
   static func get_started() -> String {
     return localizedString(key: "get_started")
   }
+
+  static func get_started_account_text() -> String {
+    return localizedString(key: "get_started_account_text")
+  }
+
+  static func get_started_newsfeed_text() -> String {
+    return localizedString(key: "get_started_newsfeed_text")
+  }
+  
+  static func go_back() -> String {
+    return localizedString(key: "go_back")
+  }
   
   static func height() -> String {
     return localizedString(key: "height")
@@ -385,6 +477,14 @@ class Strings {
     return localizedString(key: "image")
   }
   
+  static func imageFromCamera() -> String {
+    return localizedString(key: "image_from_camera")
+  }
+  
+  static func imageFromPhotoLibrary() -> String {
+    return localizedString(key: "image_from_photo_library")
+  }
+  
   static func imprint() -> String {
     return localizedString(key: "imprint")
   }
@@ -397,10 +497,18 @@ class Strings {
     return localizedString(key: "in_stock")
   }
   
+  static func insert() -> String {
+    return localizedString(key: "insert")
+  }
+  
   static func interests() -> String {
     return localizedString(key: "interests")
   }
   
+  static func invalid_url() -> String {
+    return localizedString(key: "invalid_url")
+  }
+
   static func isbn10() -> String {
     return localizedString(key: "isbn10")
   }
@@ -433,6 +541,10 @@ class Strings {
     return localizedString(key: "language_of_text")
   }
   
+  static func last_edited() -> String {
+    return localizedString(key: "last_edited")
+  }
+
   static func last_month() -> String {
     return localizedString(key: "last_month")
   }
@@ -461,8 +573,28 @@ class Strings {
     return localizedString(key: "link")
   }
   
+  static func link_author() -> String {
+    return localizedString(key: "link_author")
+  }
+
+  static func link_topic() -> String {
+    return localizedString(key: "link_topic")
+  }
+  
+  static func unlink_topic() -> String {
+    return localizedString(key: "unlink_topic")
+  }
+
+  static func link_topics() -> String {
+    return localizedString(key: "link_topics")
+  }
+  
   static func list_price() -> String {
     return localizedString(key: "list_price")
+  }
+  
+  static func me() -> String {
+    return localizedString(key: "me")
   }
   
   static func more() -> String {
@@ -504,6 +636,10 @@ class Strings {
   static func newsletter() -> String {
     return localizedString(key: "newsletter")
   }
+  
+  static func next() -> String {
+    return localizedString(key: "next")
+  }
 
   static func no_forget_it() -> String {
     return localizedString(key: "no_forget_it")
@@ -539,6 +675,10 @@ class Strings {
   
   static func ooops() -> String {
     return localizedString(key: "ooops")
+  }
+  
+  static func optional() -> String {
+    return localizedString(key: "optional")
   }
   
   static func or_check_your_settings() -> String {
@@ -617,6 +757,10 @@ class Strings {
     return localizedString(key: "post")
   }
   
+  static func post_preview() -> String {
+    return localizedString(key: "post_preview")
+  }
+  
   static func posts() -> String {
     return localizedString(key: "posts")
   }
@@ -655,6 +799,10 @@ class Strings {
   
   static func publishEmptyCommentErrorTitle() -> String {
     return localizedString(key: "publish_empty_comment_error_title")
+  }
+  
+  static func publish_your_post() -> String {
+    return localizedString(key: "publish_your_post")
   }
   
   static func publisher() -> String {
@@ -713,6 +861,22 @@ class Strings {
     return localizedString(key: "reset_password_text")
   }
   
+  static func save_as_draft() -> String {
+    return localizedString(key: "save_as_draft")
+  }
+  
+  static func save_draft() -> String {
+    return localizedString(key: "save_draft")
+  }
+  
+  static func save_post_changes() -> String {
+    return localizedString(key: "save_post_changes")
+  }
+
+  static func save_this_post_draft() -> String {
+    return localizedString(key: "save_this_post_draft")
+  }
+
   static func search_placeholder() -> String {
     return localizedString(key: "search_placeholder")
   }
@@ -773,6 +937,10 @@ class Strings {
     return localizedString(key: "subtitle")
   }
   
+  static func tags() -> String {
+    return localizedString(key: "tags")
+  }
+  
   static func take_Profile_photo() -> String {
     return localizedString(key: "take_Profile_photo")
   }
@@ -788,9 +956,17 @@ class Strings {
   static func thank_you_for_report() -> String {
     return localizedString(key: "thank_you_for_report")
   }
+  
+  static func title() -> String {
+    return localizedString(key: "title")
+  }
 
   static func topic() -> String {
     return localizedString(key: "topic")
+  }
+  
+  static func topics() -> String {
+    return localizedString(key: "topics")
   }
   
   static func topics_to_follow() -> String {
@@ -845,12 +1021,28 @@ class Strings {
     return localizedString(key: "tutorial_third_page_title")
   }
 
+  static func its_done() -> String {
+    return localizedString(key: "its_done")
+  }
+  
+  static func type_or_paste_url() -> String {
+    return localizedString(key: "type_or_paste_url")
+  }
+
   static func types() -> String {
     return localizedString(key: "types")
   }
   
   static func unknown_format() -> String {
     return localizedString(key: "unknown_format")
+  }
+
+  static func unlink_author() -> String {
+    return localizedString(key: "unlink_author")
+  }
+
+  static func untitled() -> String {
+    return localizedString(key: "untitled")
   }
 
   static func update_now() -> String {
@@ -871,6 +1063,10 @@ class Strings {
   
   static func video() -> String {
     return localizedString(key: "video")
+  }
+  
+  static func video_link() -> String {
+    return localizedString(key: "video_link")
   }
   
   static func view_all() -> String {
@@ -925,6 +1121,10 @@ class Strings {
     return localizedString(key: "what_are_your_thoughts")
   }
   
+  static func what_is_your_post_about() -> String {
+    return localizedString(key: "what_is_your_post_about")
+  }
+
   static func width() -> String {
     return localizedString(key: "width")
   }
@@ -939,6 +1139,10 @@ class Strings {
   
   static func witted() -> String {
     return localizedString(key: "witted")
+  }
+  
+  static func write_here() -> String {
+    return localizedString(key: "write_here")
   }
   
   static func yes_this_is_spam() -> String {

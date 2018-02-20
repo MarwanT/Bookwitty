@@ -75,28 +75,9 @@ class BookStoreViewController: UIViewController {
 
   private func addObservers() {
     observeLanguageChanges()
-
-    NotificationCenter.default.addObserver(self, selector:
-      #selector(self.authenticationStatusChanged(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
-  }
-
-  @objc private func authenticationStatusChanged(_: Notification) {
-    initializeNavigationItems()
   }
 
   private func initializeNavigationItems() {
-    if !UserManager.shared.isSignedIn {
-      navigationItem.leftBarButtonItems = nil
-    } else {
-      let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
-        UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
-      leftNegativeSpacer.width = -10
-      let settingsBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "person"), style:
-        UIBarButtonItemStyle.plain, target: self, action:
-        #selector(self.settingsButtonTap(_:)))
-      navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
-    }
-    
     let rightNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
       UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
     rightNegativeSpacer.width = -10
@@ -381,12 +362,6 @@ class BookStoreViewController: UIViewController {
 
 // MARK: - Action
 extension BookStoreViewController {
-  func settingsButtonTap(_ sender: UIBarButtonItem) {
-    let settingsVC = Storyboard.Account.instantiate(AccountViewController.self)
-    settingsVC.hidesBottomBarWhenPushed = true
-    self.navigationController?.pushViewController(settingsVC, animated: true)
-  }
-
   func searchButtonTap(_ sender: UIBarButtonItem) {
     let searchVC = SearchViewController()
     searchVC.hidesBottomBarWhenPushed = true

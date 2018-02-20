@@ -9,6 +9,17 @@
 import Foundation
 
 public extension UIImage {
+  class func roundedImage(image: UIImage, cornerRadius: Int) -> UIImage? {
+    let rect = CGRect(origin:CGPoint(x: 0, y: 0), size: image.size)
+    UIGraphicsBeginImageContextWithOptions(rect.size, false, 1)
+    UIBezierPath(
+      roundedRect: rect,
+      cornerRadius: CGFloat(cornerRadius)
+      ).addClip()
+    image.draw(in: rect)
+    return UIGraphicsGetImageFromCurrentImageContext()
+  }
+  
   public convenience init?(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
     let rect = CGRect(origin: .zero, size: size)
     UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
@@ -57,7 +68,7 @@ extension UIImage {
     scaledImageRect.origin.x = 0
     scaledImageRect.origin.y = 0
 
-    UIGraphicsBeginImageContextWithOptions(size, false, 0)
+    UIGraphicsBeginImageContextWithOptions(scaledImageRect.size, false, 0)
 
     self.draw(in: scaledImageRect)
 
@@ -76,5 +87,34 @@ extension UIImage {
     let newImage = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
     return newImage!
+  }
+  
+  func resize(maximumDataCount: Int, scale: CGFloat = 0.75) -> UIImage? {
+    return UIImage.resize(image: self, maximumDataCount: maximumDataCount, scale: scale)
+  }
+  
+  static func resize(image: UIImage, maximumDataCount: Int, scale: CGFloat) -> UIImage? {
+    guard let data = image.dataForPNGRepresentation() else {
+      return nil
+    }
+    guard data.count > maximumDataCount else {
+      return image
+    }
+    
+    guard let ciImage = CIImage(image: image) else {
+      return nil
+    }
+    let filter = CIFilter(name: "CILanczosScaleTransform")!
+    filter.setValue(ciImage, forKey: "inputImage")
+    filter.setValue(scale, forKey: "inputScale")
+    filter.setValue(1.0, forKey: "inputAspectRatio")
+    let context = CIContext(options: [kCIContextUseSoftwareRenderer : false])
+    guard let outputImage = filter.value(forKey: "outputImage") as? CIImage,
+      let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+      return nil
+    }
+    let scaledImage = UIImage(cgImage: cgImage)
+    
+    return resize(image: scaledImage, maximumDataCount: maximumDataCount, scale: scale)
   }
 }

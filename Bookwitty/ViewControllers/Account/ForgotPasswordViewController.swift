@@ -90,7 +90,7 @@ class ForgotPasswordViewController: UIViewController {
 //MARK: - Themable implementation
 extension ForgotPasswordViewController: Themeable {
   func applyTheme() {
-    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber1()
+    view.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
 
     stackView.isLayoutMarginsRelativeArrangement = true
     stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)

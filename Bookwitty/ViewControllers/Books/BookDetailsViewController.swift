@@ -12,13 +12,23 @@ import Spine
 import GSImageViewerController
 import SwiftLoader
 
+protocol BookDetailsViewControllerDelegate: class {
+  func bookDetails(viewController: BookDetailsViewController, didSelect book: Book)
+}
 class BookDetailsViewController: ASViewController<ASCollectionNode> {
+  enum Mode {
+    case view
+    case select
+  }
+  
   let viewModel = BookDetailsViewModel()
   
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
   
   let loaderNode = LoaderNode()
+  var mode: Mode = .view
+  weak var delegate: BookDetailsViewControllerDelegate?
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -80,12 +90,31 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
   }
   
   private func loadNavigationBarButtons() {
-    let shareButton = UIBarButtonItem(
-      image: #imageLiteral(resourceName: "shareOutside"),
-      style: UIBarButtonItemStyle.plain,
-      target: self,
-      action: #selector(shareOutsideButton(_:)))
-    navigationItem.rightBarButtonItem = shareButton
+    switch self.mode {
+    case .select:
+      let add = UIBarButtonItem(title: Strings.add(),
+                                style: UIBarButtonItemStyle.plain,
+                                target: self,
+                                action: #selector(self.add(_:)))
+      let redColor = ThemeManager.shared.currentTheme.colorNumber19()
+      add.setTitleTextAttributes([
+        NSFontAttributeName: FontDynamicType.caption1.font,
+        NSForegroundColorAttributeName : redColor], for: UIControlState.normal)
+
+      navigationItem.rightBarButtonItem = add
+      
+    case .view:
+      let shareButton = UIBarButtonItem(
+        image: #imageLiteral(resourceName: "shareOutside"),
+        style: UIBarButtonItemStyle.plain,
+        target: self,
+        action: #selector(shareOutsideButton(_:)))
+      navigationItem.rightBarButtonItem = shareButton
+    }
+  }
+  
+  @objc func add(_ sender: UIBarButtonItem) {
+    self.delegate?.bookDetails(viewController: self, didSelect: self.viewModel.book)
   }
   
   func showBottomLoader(reloadSection: Bool = false) {
@@ -114,17 +143,23 @@ class BookDetailsViewController: ASViewController<ASCollectionNode> {
       ($0.section == BookDetailsViewModel.Section.recommendedReadingLists.rawValue
         || $0.section == BookDetailsViewModel.Section.relatedTopics.rawValue)
     })
-    
-    guard let identifiers = notification.object as? [String],
-      identifiers.count > 0,
-      visibleItemsIndexPaths.count > 0 else {
+
+    let updateKey = DataManager.Notifications.Key.Update
+    let deleteKey = DataManager.Notifications.Key.Delete
+
+    guard let dictionary = notification.object as? [String : [String]] else {
         return
     }
 
-    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
-    collectionNode.performBatchUpdates({
-      collectionNode.reloadItems(at: indexPathForAffectedItems)
-    }, completion: nil)
+    if let deletedIdentifiers = dictionary[deleteKey], deletedIdentifiers.count > 0 {
+      deletedIdentifiers.forEach({ viewModel.deleteResource(with: $0) })
+      collectionNode.reloadData()
+    } else if let updatedIdentifiers = dictionary[updateKey], updatedIdentifiers.count > 0, visibleItemsIndexPaths.count > 0 {
+      let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: updatedIdentifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+      collectionNode.performBatchUpdates({
+        collectionNode.reloadItems(at: indexPathForAffectedItems)
+      }, completion: nil)
+    }
   }
 
 }
@@ -502,7 +537,9 @@ extension BookDetailsViewController: BaseCardPostNodeDelegate {
     case .more:
       guard let resource = viewModel.resource(at: indexPath),
         let identifier = resource.id else { return }
-      self.showMoreActionSheet(identifier: identifier, actions: [.report(.content)], completion: { (success: Bool) in
+
+      let actions: [MoreAction] = MoreAction.actions(for: resource as? ModelCommonProperties)
+      self.showMoreActionSheet(identifier: identifier, actions: actions, completion: { (success: Bool, action: MoreAction) in
         didFinishAction?(success)
       })
     default:

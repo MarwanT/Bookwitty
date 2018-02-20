@@ -17,6 +17,10 @@ class UploadPolicy: Resource {
   var uuid: String? {
     return asset?["uuid"] as? String
   }
+  
+  var link: String? {
+    return asset?["preview_url"] as? String
+  }
 
   override class var resourceType: ResourceType {
     return "upload-policies"

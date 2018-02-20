@@ -27,7 +27,7 @@ class AccountViewController: UIViewController {
     applyTheme()
     fillUserInformation()
     addObservers()
-
+    self.tabBarItem.title = Strings.me().uppercased()
     navigationItem.backBarButtonItem = UIBarButtonItem.back
 
     //MARK: [Analytics] Screen Name
@@ -236,7 +236,8 @@ extension AccountViewController: UITableViewDataSource, UITableViewDelegate {
 //MARK: - Localizable implementation
 extension AccountViewController: Localizable {
   func applyLocalization() {
-    title = Strings.account()
+    navigationItem.title = Strings.account()
+    tabBarItem.title = Strings.me().uppercased()
     viewModel.fillSectionTitles()
     tableView.reloadData()
   }

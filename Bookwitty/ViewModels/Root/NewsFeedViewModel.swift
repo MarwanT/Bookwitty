@@ -97,6 +97,11 @@ final class NewsFeedViewModel {
       completionBlock(success)
     }
   }
+  
+  func resetData() {
+    data = []
+    nextPage = nil
+  }
 
   func loadNewsfeed(completionBlock: @escaping (_ success: Bool) -> ()) {
     if let cancellableRequest = cancellableRequest {
@@ -237,6 +242,12 @@ final class NewsFeedViewModel {
       }
       return resourcesIdentifiers.contains(identifier)
     })
+  }
+
+  func deleteResource(with identifier: String) {
+    if let index = data.index(where: { $0 == identifier }) {
+      data.remove(at: index)
+    }
   }
 }
 

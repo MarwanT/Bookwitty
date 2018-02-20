@@ -82,7 +82,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     addObservers()
-    initializeNavigationItems()
 
     collectionNode.delegate = self
     collectionNode.dataSource = self
@@ -132,21 +131,6 @@ class NewsFeedViewController: ASViewController<ASCollectionNode> {
       self.pullToRefresher.beginRefreshing()
       collectionView.contentOffset = offset
     }
-  }
-
-  fileprivate func initializeNavigationItems() {
-    if !UserManager.shared.isSignedIn {
-      navigationItem.leftBarButtonItems = nil
-      return
-    }
-
-    let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
-      UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
-    leftNegativeSpacer.width = -10
-    let settingsBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "person"), style:
-      UIBarButtonItemStyle.plain, target: self, action:
-      #selector(self.settingsButtonTap(_:)))
-    navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
   }
   
   func refreshViewControllerData() {
@@ -238,7 +222,10 @@ extension NewsFeedViewController: PenNameSelectionNodeDelegate {
 extension NewsFeedViewController {
   func addObservers() {
     NotificationCenter.default.addObserver(self, selector:
-      #selector(refreshData(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
+      #selector(self.refreshData(_:)), name: AppNotification.shouldRefreshData, object: nil)
+    
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(authenticationStatusChangedAction(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
 
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
@@ -246,23 +233,40 @@ extension NewsFeedViewController {
     observeLanguageChanges()
   }
 
+  /**
+   !!!! -
+   Wrap the following logic with a check on the view controller if it is visible
+   or not. If it wasn't only reset the data and update the collection Node,
+   because when the view will appear the data will be fetched again.
+   If the view is visible already when this method is triggered, then
+   fetching the data should happen here, resetting it is not enough.
+   */
+  func refreshData(_ notification: Notification) {
+    viewModel.resetData()
+    updateCollection(orReloadAll: true)
+  }
+
   func updatedResources(_ notification: NSNotification) {
     let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.cards.rawValue })
 
-    guard let identifiers = notification.object as? [String],
-      identifiers.count > 0,
-      visibleItemsIndexPaths.count > 0 else {
+    let updateKey = DataManager.Notifications.Key.Update
+    let deleteKey = DataManager.Notifications.Key.Delete
+
+    guard let dictionary = notification.object as? [String : [String]] else {
       return
     }
 
-    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
-    updateCollectionNodes(indexPathForAffectedItems: indexPathForAffectedItems)
+    if let deletedIdentifiers = dictionary[deleteKey], deletedIdentifiers.count > 0 {
+      deletedIdentifiers.forEach({ viewModel.deleteResource(with: $0) })
+      collectionNode.reloadData()
+    } else if let updatedIdentifiers = dictionary[updateKey], updatedIdentifiers.count > 0, visibleItemsIndexPaths.count > 0 {
+      let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(resourcesIdentifiers: updatedIdentifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+      updateCollectionNodes(indexPathForAffectedItems: indexPathForAffectedItems)
+    }
   }
 
-  func refreshData(_ notification: Notification) {
-    if UserManager.shared.isSignedIn {
-      initializeNavigationItems()
-    } else {
+  func authenticationStatusChangedAction(_ notification: Notification) {
+    if !UserManager.shared.isSignedIn {
       signOutAction()
     }
   }
@@ -284,15 +288,6 @@ extension NewsFeedViewController {
 extension NewsFeedViewController: Themeable {
   func applyTheme() {
     collectionNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
-  }
-}
-
-// MARK: - Action
-extension NewsFeedViewController {
-  func settingsButtonTap(_ sender: UIBarButtonItem) {
-    let settingsVC = Storyboard.Account.instantiate(AccountViewController.self)
-    settingsVC.hidesBottomBarWhenPushed = true
-    self.navigationController?.pushViewController(settingsVC, animated: true)
   }
 }
 
@@ -543,7 +538,9 @@ extension NewsFeedViewController: BaseCardPostNodeDelegate {
     case .more:
       guard let resource = viewModel.resourceForIndex(index: index),
         let identifier = resource.id else { return }
-      self.showMoreActionSheet(identifier: identifier, actions: [.report(.content)], completion: { (success: Bool) in
+      
+      let actions: [MoreAction] = MoreAction.actions(for: resource as? ModelCommonProperties)
+      self.showMoreActionSheet(identifier: identifier, actions: actions, completion: { (success: Bool, action: MoreAction) in
         didFinishAction?(success)
       })
     default:

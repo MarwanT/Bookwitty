@@ -77,10 +77,13 @@ class CardDetailsViewController: GenericNodeViewController {
   }
 
   func updatedResources(_ notification: NSNotification) {
+    let updateKey = DataManager.Notifications.Key.Update
+    let deleteKey = DataManager.Notifications.Key.Delete
+
     guard let resourceId = viewModel.resource.id,
-      let identifiers = notification.object as? [String],
-      identifiers.count > 0,
-      identifiers.contains( where: { $0 == resourceId } ) else {
+      let dictionary = notification.object as? [String : [String]],
+      let updatedIdentifiers = dictionary[updateKey], updatedIdentifiers.count > 0,
+      updatedIdentifiers.contains( where: { $0 == resourceId } ) else {
         return
     }
 
@@ -270,7 +273,9 @@ extension CardDetailsViewController: BaseCardPostNodeDelegate {
     case .more:
       guard let resource = viewModel.resource as? ModelCommonProperties,
         let identifier = resource.id else { return }
-      self.showMoreActionSheet(identifier: identifier, actions: [.report(.content)], completion: { (success: Bool) in
+
+      let actions: [MoreAction] = MoreAction.actions(for: resource as? ModelCommonProperties)
+      self.showMoreActionSheet(identifier: identifier, actions: actions, completion: { (success: Bool, action: MoreAction) in
         didFinishAction?(success)
       })
     default:

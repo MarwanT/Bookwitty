@@ -30,17 +30,13 @@ extension UISearchBar {
   }
 
   func setTextFieldColor(color: UIColor) {
-
-    if let textField = getViewElement(type: UITextField.self) {
-      switch searchBarStyle {
-      case .minimal:
-        textField.layer.backgroundColor = color.cgColor
-        textField.layer.cornerRadius = 6
-
-      case .prominent, .default:
-        textField.backgroundColor = color
-      }
+    var searchFieldImage: UIImage? = color.image(size: CGSize(width: 28.0, height: 12.0))
+    if searchFieldImage != nil {
+      searchFieldImage = UIImage.roundedImage(image: searchFieldImage!, cornerRadius: 4)
     }
+    
+    setSearchFieldBackgroundImage(searchFieldImage, for: UIControlState.normal)
+    searchTextPositionAdjustment = UIOffset(horizontal: 8.0, vertical: 0)
   }
 
   func setPlaceholderTextColor(color: UIColor) {

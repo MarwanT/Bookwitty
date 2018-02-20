@@ -38,6 +38,38 @@ extension String {
   }
 }
 
+extension String {
+  /// Returns a newly created string with no spaces or new lines.
+  var trimmed: String {
+    return trimmingCharacters(in: .whitespacesAndNewlines)
+  }
+  
+  /// String with no spaces or new lines in beginning and end.
+  mutating func trim() {
+    self = self.trimmed
+  }
+}
+
+extension String {
+  
+  /// String encoded in base64 (if applicable).
+  ///
+  ///		"Hello World!".base64Encoded -> Optional("SGVsbG8gV29ybGQh")
+  ///
+  public var base64Encoded: String? {
+    // https://github.com/Reza-Rg/Base64-Swift-Extension/blob/master/Base64.swift
+    let plainData = data(using: .utf8)
+    return plainData?.base64EncodedString()
+  }
+  
+  var isValidURL: Bool {
+    
+    let regex = "(http:\\/\\/|https:\\/\\/)?w{3}\\.[^\\s]*\\.[a-zA-Z]{2,3}"
+    let predicate = NSPredicate(format: "SELF MATCHES %@", regex)
+    return predicate.evaluate(with: self)
+  }
+}
+
 //Adds a failable init that mirrors the Int? given
 extension String {
   init?(counting: Int?) {

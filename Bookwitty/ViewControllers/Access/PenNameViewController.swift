@@ -10,6 +10,10 @@ import UIKit
 import ALCameraViewController
 import SwiftLoader
 
+protocol PenNameViewControllerDelegate: class {
+  func penName(viewController: PenNameViewController, didFinish: PenNameViewController.Mode, with penName: PenName?)
+}
+
 class PenNameViewController: UIViewController {
 
   enum Mode {
@@ -36,6 +40,8 @@ class PenNameViewController: UIViewController {
   var didEditImage: Bool = false
   var candidateImageId: String?
   var mode: Mode = .New
+
+  weak var delegate: PenNameViewControllerDelegate?
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -94,7 +100,7 @@ class PenNameViewController: UIViewController {
 
   func prefillData() {
     penNameInputField.textField.text = viewModel.penDisplayName()
-    biographyTextView.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.label)
+    biographyTextView.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.label2)
       .append(text: viewModel.penBiography(), color: ThemeManager.shared.currentTheme.defaultTextColor())
       .attributedString
     if let avatarUrl = viewModel.penAvatarUrl(), let url = URL(string: avatarUrl) {
@@ -148,12 +154,14 @@ class PenNameViewController: UIViewController {
     let biography = biographyTextView.text
 
     self.viewModel.createPenName(name: name, biography: biography, avatarId: imageId) {
-      (success: Bool, error: BookwittyAPIError?) in
+      (success: Bool, penName: PenName?, error: BookwittyAPIError?) in
       self.hideLoader()
-      guard success else {
+      guard success, let penName = penName else {
         self.handleError(error: error)
         return
       }
+
+      self.delegate?.penName(viewController: self, didFinish: self.mode, with: penName)
       _ = self.navigationController?.popViewController(animated: true)
     }
   }
@@ -186,6 +194,7 @@ class PenNameViewController: UIViewController {
       self.updatePenNameProfile(imageId: imageId, completion: { (success: Bool) in
         self.hideLoader()
         if success {
+          self.delegate?.penName(viewController: self, didFinish: self.mode, with: self.viewModel.penName)
           if UserManager.shared.shouldDisplayOnboarding {
             self.pushOnboardingViewController()
           } else {

@@ -32,11 +32,11 @@ final class PenNameViewModel {
     self.user = user
   }
 
-  func createPenName(name: String, biography: String?, avatarId: String?, completion: ((Bool, BookwittyAPIError?)->())?) {
+  func createPenName(name: String, biography: String?, avatarId: String?, completion: ((Bool, PenName?, BookwittyAPIError?)->())?) {
     _ = PenNameAPI.createPenName(name: name, biography: biography, avatarId: avatarId, avatarUrl: nil, facebookUrl: nil, tumblrUrl: nil, googlePlusUrl: nil, twitterUrl: nil, instagramUrl: nil, pinterestUrl: nil, youtubeUrl: nil, linkedinUrl: nil, wordpressUrl: nil, websiteUrl: nil) {
       (success: Bool, penName: PenName?, error: BookwittyAPIError?) in
       defer {
-        completion?(success, error)
+        completion?(success, penName, error)
       }
 
       if let penName = penName {

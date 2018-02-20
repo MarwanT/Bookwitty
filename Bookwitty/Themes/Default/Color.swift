@@ -9,9 +9,9 @@
 import Foundation
 
 extension UIColor {
-  /// Style Guide #1 : #f8f5f0
-  static var bwFloralWhite: UIColor {
-    return UIColor(red: 248/255, green: 245/255, blue: 240/255, alpha: 1)
+  /// Style Guide #01|Beige Background : #e0d3c6 - Error color
+  static var bwBeige: UIColor {
+    return UIColor(red: 224.0/255.0, green: 211.0/255.0, blue: 198.0/255, alpha: 1.0)
   }
   
   /// Style Guide #2 : #f1ebe2 - Screen Backgrounds
@@ -54,9 +54,9 @@ extension UIColor {
     return UIColor(red: 234/255, green: 242/255, blue: 250/255, alpha: 1)
   }
   
-  /// Style Guide #10 : #82b5dc - Button outlines and title verticle lines
+  /// Style Guide #10 : #8eb5dc - Button outlines and title verticle lines
   static var bwJordyBlue: UIColor {
-    return UIColor(red: 130/255, green: 181/255, blue: 220/255, alpha: 1)
+    return UIColor(red: 142.0/255.0, green: 181.0/255.0, blue: 220.0/255.0, alpha: 1.0)
   }
   
   /// Style Guide #11 : #e9e6f1 - Illustration and titles background
@@ -79,9 +79,9 @@ extension UIColor {
     return UIColor(red: 250/255, green: 178/255, blue: 195/255, alpha: 1)
   }
   
-  /// Style Guide #15 : #999999 - All gray text + icons
+  /// Style Guide #15 : #888888 - All gray text + icons
   static var bwNobel: UIColor {
-    return UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1)
+    return UIColor(red: 136.0/255.0, green: 136.0/255.0, blue: 136.0/255.0, alpha: 1.0)
   }
   
   /// Style Guide #16 : #55acee - Twitter Color
@@ -94,9 +94,9 @@ extension UIColor {
     return UIColor(red: 72/255, green: 98/255, blue: 163/255, alpha: 1)
   }
   
-  /// Style Guide #18 : #d9d9d9 - separation lines and cards outline
+  /// Style Guide #18 : #bcbcbc - separation lines and cards outline
   static var bwGainsboro: UIColor {
-    return UIColor(red: 217/255, green: 217/255, blue: 217/255, alpha: 1)
+    return UIColor(red: 188.0/255.0, green: 188.0/255.0, blue: 188.0/255.0, alpha: 1.0)
   }
   
   /// Style Guide #19 : #ed0037 - Primary CTA color (editorial)
@@ -109,9 +109,9 @@ extension UIColor {
     return UIColor(red: 38/255, green: 38/255, blue: 38/255, alpha: 1)
   }
   
-  /// Style Guide #21 : #20CF24 - Validation Color
+  /// Style Guide #21 : #00cc00 - Validation Color
   static var bwLimeGreen: UIColor {
-    return UIColor(red: 32/255, green: 207/255, blue: 36/255, alpha: 1)
+    return UIColor(red: 0.0, green: 204.0/255, blue: 0.0, alpha: 1.0)
   }
   
   /// Style Guide #22 : #ff6b00 - Primary CTA color (e-marketing)
@@ -134,9 +134,14 @@ extension UIColor {
     return UIColor(red: 255/255, green: 88/255, blue: 0, alpha: 1)
   }
   
-  /// Style Guide #24 Error Color : #a20009 - Error color
+  /// Style Guide #24 Error Color : #ff0000 - Error color
   static var bwSangria: UIColor {
-    return UIColor(red: 162/255, green: 0, blue: 9/255, alpha: 1)
+    return UIColor(red: 162.0/255.0, green: 0.0, blue: 9.0/255.0, alpha: 1.0)
+  }
+  
+  /// Style Guide #25 Tag Color : #4f80be - Error color
+  static var bwTagBlue: UIColor {
+    return UIColor(red: 79.0/255.0, green: 128.0/255.0, blue: 190.0/255.0, alpha: 1)
   }
 
   /// Design Comments on Book Formats Table View Header Background

@@ -50,7 +50,7 @@ final class DefaultTheme: Theme {
 // MARK: - Colors
 extension DefaultTheme {
   func colorNumber1() -> UIColor {
-    return UIColor.bwFloralWhite
+    return UIColor.bwBeige
   }
   func colorNumber2() -> UIColor {
     return UIColor.bwWhiteLinen
@@ -120,6 +120,9 @@ extension DefaultTheme {
   }
   func colorNumber24() -> UIColor {
     return UIColor.bwSangria
+  }
+  func colorNumber25() -> UIColor {
+    return UIColor.bwTagBlue
   }
   
   func colorNumber19Highlighted() -> UIColor {
@@ -347,7 +350,7 @@ extension DefaultTheme {
   }
   
   func styleLabel(label: UILabel) {
-    label.font = FontDynamicType.label.font
+    label.font = FontDynamicType.label2.font
     label.textColor = defaultTextColor()
   }
 }

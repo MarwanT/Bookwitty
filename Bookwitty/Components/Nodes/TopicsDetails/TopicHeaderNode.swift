@@ -10,7 +10,6 @@ import UIKit
 import AsyncDisplayKit
 
 protocol TopicHeaderNodeDelegate: class {
-  func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ButtonWithLoader)
   func topicHeader(node: TopicHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
 }
 
@@ -25,7 +24,6 @@ class TopicHeaderNode: ASCellNode {
   private var thumbnailImageNode: ASNetworkImageNode
   private var titleNode: ASTextNode
   private var topicStatsNode: ASTextNode
-  private var actionButton: ButtonWithLoader
   private var contributorsNode: ContributorsNode
 
   weak var delegate: TopicHeaderNodeDelegate?
@@ -35,13 +33,11 @@ class TopicHeaderNode: ASCellNode {
     thumbnailImageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
     topicStatsNode = ASTextNode()
-    actionButton = ButtonWithLoader()
     contributorsNode = ContributorsNode()
     super.init()
     addSubnode(coverImageNode)
     addSubnode(titleNode)
     addSubnode(topicStatsNode)
-    addSubnode(actionButton)
     addSubnode(contributorsNode)
     addSubnode(thumbnailImageNode)
     setupNode()
@@ -56,21 +52,6 @@ class TopicHeaderNode: ASCellNode {
 
     titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
     topicStatsNode.truncationMode = NSLineBreakMode.byTruncatingTail
-
-    let buttonFont = FontDynamicType.subheadline.font
-    let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()
-    let selectedTextColor = ThemeManager.shared.currentTheme.colorNumber23()
-    actionButton.setupSelectionButton(defaultBackgroundColor: ThemeManager.shared.currentTheme.defaultBackgroundColor(),
-                                      selectedBackgroundColor: ThemeManager.shared.currentTheme.defaultButtonColor(),
-                                      borderStroke: true,
-                                      borderColor: ThemeManager.shared.currentTheme.defaultButtonColor(),
-                                      borderWidth: 2.0,
-                                      cornerRadius: 2.0)
-    actionButton.setTitle(title: Strings.follow(), with: buttonFont, with: textColor, for: .normal)
-    actionButton.setTitle(title: Strings.following(), with: buttonFont, with: selectedTextColor, for: .selected)
-    actionButton.state = self.following ? .selected : .normal
-    actionButton.style.height = ASDimensionMake(buttonSize.height)
-    actionButton.delegate = self
 
     coverImageNode.delegate = self
     thumbnailImageNode.delegate = self
@@ -101,12 +82,6 @@ class TopicHeaderNode: ASCellNode {
         thumbnailImageNode.url = URL(string: thumbnailImageUrl)
         setNeedsLayout()
       }
-    }
-  }
-
-  var following: Bool = false {
-    didSet {
-      actionButton.state = following ? .selected : .normal
     }
   }
 
@@ -170,8 +145,6 @@ class TopicHeaderNode: ASCellNode {
       statsAndActionNodes.append(spacer(width: internalMargin))
     }
 
-    statsAndActionNodes.append(actionButton)
-
     let statsAndActionHorizontalSpec = ASStackLayoutSpec(direction: .horizontal,
                                                 spacing: 0,
                                                 justifyContent: .end,
@@ -201,17 +174,7 @@ class TopicHeaderNode: ASCellNode {
 }
 
 //Actions
-extension TopicHeaderNode: ButtonWithLoaderDelegate {
-  func buttonTouchUpInside(buttonWithLoader: ButtonWithLoader) {
-    guard UserManager.shared.isSignedIn else {
-      //If user is not signed In post notification and do not fall through
-      NotificationCenter.default.post( name: AppNotification.callToAction, object: CallToAction.follow)
-      return
-    }
-
-    delegate?.topicHeader(node: self, actionButtonTouchUpInside: buttonWithLoader)
-  }
-
+extension TopicHeaderNode {
   @objc
   fileprivate func imageNodeTouchUpInside(sender: ASNetworkImageNode) {
     guard let image = sender.image else {

@@ -11,7 +11,16 @@ import AsyncDisplayKit
 import GSImageViewerController
 import SwiftLoader
 
-class TopicViewController: ASViewController<ASCollectionNode> {
+enum PageAction {
+  case link
+  case unlink
+}
+
+protocol TopicViewControllerDelegate: class {
+  func topic(viewController: TopicViewController, didRequest action: PageAction, for page: ModelCommonProperties)
+}
+
+class TopicViewController: ASViewController<ASDisplayNode> {
 
   enum LoadingStatus {
     case none
@@ -25,17 +34,25 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     case relatedData
     case activityIndicator
   }
-
+  
+  enum NavigationItemMode {
+    case view
+    case action(PageAction)
+  }
+  
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let segmentedNodeHeight: CGFloat = 45.0
 
+  fileprivate let controllerNode: ASDisplayNode
   fileprivate let collectionNode: ASCollectionNode
 
   fileprivate var headerNode: TopicHeaderNode
   fileprivate var segmentedNode: SegmentedControlNode
   fileprivate let loaderNode: LoaderNode
   fileprivate var flowLayout: UICollectionViewFlowLayout
+
+  fileprivate let actionBarNode: ActionBarNode
 
   fileprivate var normal: [Category] = [.latest(index: 0), .relatedBooks(index: 1), .followers(index: 2) ]
   fileprivate var book: [Category] = [.latest(index: 0), .editions(index: 1), .relatedBooks(index: 2), .followers(index: 3)]
@@ -46,7 +63,8 @@ class TopicViewController: ASViewController<ASCollectionNode> {
 
   fileprivate var loadingStatus: LoadingStatus = .none
 
-
+  var navigationItemMode: NavigationItemMode = .view
+  weak var delegate: TopicViewControllerDelegate?
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -55,10 +73,22 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     headerNode = TopicHeaderNode()
     segmentedNode = SegmentedControlNode()
     loaderNode = LoaderNode()
+    actionBarNode = ActionBarNode()
 
     flowLayout = UICollectionViewFlowLayout()
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
-    super.init(node: collectionNode)
+    controllerNode = ASDisplayNode()
+
+    super.init(node: controllerNode)
+    controllerNode.automaticallyManagesSubnodes = true
+
+    controllerNode.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
+      self.collectionNode.style.maxSize = constrainedSize.max
+      let wrapperLayoutSpec = ASWrapperLayoutSpec(layoutElement: self.collectionNode)
+      let absoluteLayoutSpec = ASAbsoluteLayoutSpec(sizing: .default, children: [self.actionBarNode])
+      let overlayLayoutSpec = ASOverlayLayoutSpec(child: wrapperLayoutSpec, overlay: absoluteLayoutSpec)
+      return overlayLayoutSpec
+    }
   }
   
   func initialize(with resource: ModelCommonProperties?) {
@@ -90,7 +120,7 @@ class TopicViewController: ASViewController<ASCollectionNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeComponents()
-    loadNavigationBarButtons()
+    loadNavigationItems()
 
     applyLocalization()
     addObservers()
@@ -112,15 +142,80 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     flowLayout.sectionHeadersPinToVisibleBounds = true
 
     viewModel.callback = self.callback(for:)
+
+    var insets = UIEdgeInsets.zero
+    insets.bottom = actionBarNode.calculatedSize.height
+    collectionNode.view.contentInset = insets
+    collectionNode.view.scrollIndicatorInsets = insets
+
+    var position = actionBarNode.style.layoutPosition
+    position.y = collectionNode.calculatedSize.height + 50.0
+    actionBarNode.style.layoutPosition = position
+
+    actionBarNode.delegate = self
+    actionBarNode.action = .follow
+  }
+  
+  private func loadNavigationItems() {
+    loadNavigationBar()
+    loadNavigationBarButtons()
+  }
+  
+  private func loadNavigationBar() {
+    let theme = ThemeManager.shared.currentTheme
+    switch self.navigationItemMode {
+    case .action(_):
+      navigationController?.navigationBar.barTintColor = theme.colorNumber2()
+    default:
+      // Falls back to the default styling
+      break
+    }
   }
   
   private func loadNavigationBarButtons() {
-    let shareButton = UIBarButtonItem(
-      image: #imageLiteral(resourceName: "shareOutside"),
-      style: UIBarButtonItemStyle.plain,
-      target: self,
-      action: #selector(shareOutsideButton(_:)))
-    navigationItem.rightBarButtonItem = shareButton
+  
+    func setupShareNavigationItem() {
+      let shareButton = UIBarButtonItem(
+        image: #imageLiteral(resourceName: "shareOutside"),
+        style: UIBarButtonItemStyle.plain,
+        target: self,
+        action: #selector(shareOutsideButton(_:)))
+      navigationItem.rightBarButtonItem = shareButton
+    }
+    
+    func setupRightNavigationItem(with action: PageAction) {
+
+      var title: String = ""
+      var font: UIFont = FontDynamicType.caption1.font
+      if let resourceType = viewModel.resourceType {
+        switch resourceType {
+        case Topic.resourceType:
+          title = action == .link ? Strings.link_topic() : Strings.unlink_topic()
+          font = FontDynamicType.footnote.font
+        case Author.resourceType:
+          title = action == .link ? Strings.link_author() : Strings.unlink_author()
+          font = FontDynamicType.footnote.font
+        case Book.resourceType: fallthrough
+        default: break
+        }
+      }
+
+      let actionButton = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(TopicViewController.linkUnlinkTouchUpInside(_ :)))
+      navigationController?.navigationBar.tintColor = ThemeManager.shared.currentTheme.colorNumber19()
+      actionButton.setTitleTextAttributes([
+        NSFontAttributeName: font,
+        NSForegroundColorAttributeName : ThemeManager.shared.currentTheme.colorNumber19()], for: UIControlState.normal)
+      
+
+      navigationItem.rightBarButtonItem = actionButton
+    }
+    
+    switch self.navigationItemMode {
+    case .view:
+      setupShareNavigationItem()
+    case .action(let action):
+      setupRightNavigationItem(with: action)
+    }
   }
 
   fileprivate func fillHeaderNode() {
@@ -129,10 +224,11 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     headerNode.topicTitle = values.title
     headerNode.coverImageUrl = values.coverImageUrl
     headerNode.thumbnailImageUrl = values.thumbnailImageUrl
-    headerNode.following = values.following
 
     headerNode.setTopicStatistics(numberOfFollowers: Int(values.stats.followers ?? ""), numberOfPosts: Int(values.stats.posts ?? ""))
     headerNode.setContributorsValues(numberOfContributors: values.contributors.count, imageUrls: values.contributors.imageUrls)
+
+    actionBarNode.actionButtonSelected = values.following
   }
 
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
@@ -193,6 +289,18 @@ class TopicViewController: ASViewController<ASCollectionNode> {
     presentShareSheet(shareContent: sharingContent)
   }
 
+  func linkUnlinkTouchUpInside(_ sender: UIBarButtonItem) {
+    if let page = self.viewModel.resource {
+      switch self.navigationItemMode {
+      case .action(let action):
+        self.delegate?.topic(viewController: self, didRequest: action, for: page)
+
+      default:
+        break
+      }
+    }
+  }
+  
   func loadData() {
     setLoading(status: TopicViewController.LoadingStatus.loading)
     self.updateCollection(relatedDataSection: true, loaderSection: true)
@@ -218,34 +326,45 @@ extension TopicViewController {
   func updatedResources(_ notification: Notification) {
     let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.header.rawValue || $0.section == Section.relatedData.rawValue })
 
-    guard let identifiers = notification.object as? [String],
-      identifiers.count > 0,
-      visibleItemsIndexPaths.count > 0 else {
+    let updateKey = DataManager.Notifications.Key.Update
+    let deleteKey = DataManager.Notifications.Key.Delete
+
+    guard let dictionary = notification.object as? [String : [String]] else {
         return
     }
 
-    if let id = viewModel.resource?.id {
-      let found = identifiers.contains(id)
-      if found {
+    if let deletedIdentifiers = dictionary[deleteKey], deletedIdentifiers.count > 0 {
+      if let resourceId = viewModel.resource?.id, deletedIdentifiers.contains(where: { $0 == resourceId }) {
+        _ = self.navigationController?.popViewController(animated: true)
+      } else {
+        deletedIdentifiers.forEach({ viewModel.deleteResource(with: $0) })
         viewModel.updateResourceIfNeeded()
       }
-    }
+    } else if let updatedIdentifiers = dictionary[updateKey], updatedIdentifiers.count > 0, visibleItemsIndexPaths.count > 0 {
 
-    var indexPathForAffectedItems = visibleItemsIndexPaths.filter({
-      indexPath in
-      guard let resourceIdentifier = resourceIdentifierForIndex(indexPath: indexPath) else {
-        return false
+      if let id = viewModel.resource?.id {
+        let found = updatedIdentifiers.contains(id)
+        if found {
+          viewModel.updateResourceIfNeeded()
+        }
       }
-      return identifiers.contains(resourceIdentifier)
-    })
 
-    if let index = indexPathForAffectedItems.index(where: { $0.section == Section.header.rawValue }) {
-      //Note: Fill Header manually and remove index from indexPathForAffectedItems to bypass auto-reload-collection-animation issue
-      self.fillHeaderNode()
-      indexPathForAffectedItems.remove(at: index)
-    }
-    if indexPathForAffectedItems.count > 0 {
-      updateCollectionNodes(indexPathForAffectedItems: indexPathForAffectedItems)
+      var indexPathForAffectedItems = visibleItemsIndexPaths.filter({
+        indexPath in
+        guard let resourceIdentifier = resourceIdentifierForIndex(indexPath: indexPath) else {
+          return false
+        }
+        return updatedIdentifiers.contains(resourceIdentifier)
+      })
+
+      if let index = indexPathForAffectedItems.index(where: { $0.section == Section.header.rawValue }) {
+        //Note: Fill Header manually and remove index from indexPathForAffectedItems to bypass auto-reload-collection-animation issue
+        self.fillHeaderNode()
+        indexPathForAffectedItems.remove(at: index)
+      }
+      if indexPathForAffectedItems.count > 0 {
+        updateCollectionNodes(indexPathForAffectedItems: indexPathForAffectedItems)
+      }
     }
   }
   
@@ -346,20 +465,21 @@ extension TopicViewController {
   }
 }
 
-extension TopicViewController: TopicHeaderNodeDelegate {
-  func topicHeader(node: TopicHeaderNode, actionButtonTouchUpInside button: ButtonWithLoader) {
+//MARK: - ActionBarNodeDelegate implementation
+extension TopicViewController: ActionBarNodeDelegate {
+  func actionBar(node: ActionBarNode, actionButtonTouchUpInside button: ButtonWithLoader) {
     button.state = .loading
     if button.isSelected {
       viewModel.unfollowContent(completionBlock: { (success: Bool) in
         if success {
-          node.following = false
+          node.actionButtonSelected = false
         }
         button.state = success ? .normal : .selected
       })
     } else {
       viewModel.followContent(completionBlock: { (success: Bool) in
         if success {
-          node.following = true
+          node.actionButtonSelected = true
         }
         button.state = success ? .selected : .normal
       })
@@ -391,6 +511,28 @@ extension TopicViewController: TopicHeaderNodeDelegate {
     Analytics.shared.send(event: event)
   }
 
+  func actionBar(node: ActionBarNode, secondaryButtonTouchUpInside button: ASButtonNode) {
+    guard let identifier = viewModel.identifier else {
+      return
+    }
+    self.presentContentEditor(with: Text(), prelink: identifier)
+  }
+
+  func actionBar(node: ActionBarNode, moreButtonTouchUpInside button: ASButtonNode){
+    guard let resource = viewModel.resource,
+      let identifier = resource.id else {
+        return
+    }
+
+    let actions: [MoreAction] = MoreAction.actions(for: resource)
+    self.showMoreActionSheet(identifier: identifier, actions: actions, completion: {
+      (success: Bool, action: MoreAction) in
+
+    })
+  }
+}
+
+extension TopicViewController: TopicHeaderNodeDelegate {
   func topicHeader(node: TopicHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
     let imageInfo = GSImageInfo(image: image, imageMode: .aspectFit, imageHD: nil)
     let transitionInfo = GSTransitionInfo(fromView: imageNode.view)
@@ -441,12 +583,14 @@ extension TopicViewController: PenNameFollowNodeDelegate {
   func penName(node: PenNameFollowNode, moreButtonTouchUpInside button: ASButtonNode?) {
     
     guard let indexPath = collectionNode.indexPath(for: node),
-      let identifier = viewModel.follower(at: indexPath.row)?.id else {
+      let resource = viewModel.follower(at: indexPath.row),
+      let identifier = resource.id else {
         return
     }
-    
-    self.showMoreActionSheet(identifier: identifier, actions: [.report(.penName)], completion: {
-      (success: Bool) in
+
+    let actions: [MoreAction] = MoreAction.actions(for: resource as? ModelCommonProperties)
+    self.showMoreActionSheet(identifier: identifier, actions: actions, completion: {
+      (success: Bool, action: MoreAction) in
 
     })
   }
@@ -935,7 +1079,9 @@ extension TopicViewController: BaseCardPostNodeDelegate {
     case .more:
       guard let resource = resource as? ModelCommonProperties,
         let identifier = resource.id else { return }
-      self.showMoreActionSheet(identifier: identifier, actions: [.report(.content)], completion: { (success: Bool) in
+
+      let actions: [MoreAction] = MoreAction.actions(for: resource as? ModelCommonProperties)
+      self.showMoreActionSheet(identifier: identifier, actions: actions, completion: { (success: Bool, action: MoreAction) in
         didFinishAction?(success)
       })
     default:
@@ -1251,6 +1397,26 @@ extension TopicViewController {
       bookDetailsViewController.initialize(with: resource)
       navigationController?.pushViewController(bookDetailsViewController, animated: true)
     }
+  }
+}
+
+//MARK: - Action Bar
+extension TopicViewController {
+
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    var position = actionBarNode.style.layoutPosition
+    let actionBarHeight = actionBarNode.configuration.height
+
+    var deltaHeight = scrollView.contentSize.height - scrollView.frame.size.height //the remaining part of the scroll area
+    deltaHeight = deltaHeight < headerNode.calculatedSize.height ? deltaHeight : 0 //only consider it if it's positive
+    let scrollContentWithoutHeaderHeight = scrollView.contentSize.height - headerNode.calculatedSize.height - deltaHeight
+
+    let initialOffset = min(headerNode.calculatedSize.height, scrollContentWithoutHeaderHeight)
+    let value = scrollView.contentOffset.y >= initialOffset ? actionBarHeight : 0
+
+    position.y = scrollView.frame.size.height - value
+    actionBarNode.style.layoutPosition = position
+    controllerNode.transitionLayout(withAnimation: true, shouldMeasureAsync: false, measurementCompletion: nil)
   }
 }
 

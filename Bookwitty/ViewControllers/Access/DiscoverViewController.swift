@@ -79,9 +79,6 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
     addObservers()
 
     navigationItem.backBarButtonItem = UIBarButtonItem.back
-
-    NotificationCenter.default.addObserver(self, selector:
-      #selector(self.authenticationStatusChanged(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -160,22 +157,7 @@ class DiscoverViewController: ASViewController<ASDisplayNode> {
     pagesTitleHeaderNode.setTitle(title: Strings.pages_you_may_be_interested_in(), verticalBarColor: ThemeManager.shared.currentTheme.colorNumber6(), horizontalBarColor: ThemeManager.shared.currentTheme.colorNumber5())
   }
 
-  @objc private func authenticationStatusChanged(_: Notification) {
-    initializeNavigationItems()
-  }
-
   private func initializeNavigationItems() {
-    if !UserManager.shared.isSignedIn {
-      navigationItem.leftBarButtonItems = nil
-    } else {
-      let leftNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
-        UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
-      leftNegativeSpacer.width = -10
-      let settingsBarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "person"), style:
-        UIBarButtonItemStyle.plain, target: self, action:
-        #selector(self.settingsButtonTap(_:)))
-      navigationItem.leftBarButtonItems = [leftNegativeSpacer, settingsBarButton]
-    }
 
     let rightNegativeSpacer = UIBarButtonItem(barButtonSystemItem:
       UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
@@ -287,12 +269,6 @@ extension DiscoverViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - Action
 extension DiscoverViewController {
-  func settingsButtonTap(_ sender: UIBarButtonItem) {
-    let settingsVC = Storyboard.Account.instantiate(AccountViewController.self)
-    settingsVC.hidesBottomBarWhenPushed = true
-    self.navigationController?.pushViewController(settingsVC, animated: true)
-  }
-
   func searchButtonTap(_ sender: UIBarButtonItem) {
     let searchVC = SearchViewController()
     searchVC.hidesBottomBarWhenPushed = true
@@ -624,7 +600,9 @@ extension DiscoverViewController: BaseCardPostNodeDelegate {
     case .more:
       guard let resource = viewModel.resourceForIndex(for: activeSegment, index: index),
         let identifier = resource.id else { return }
-      self.showMoreActionSheet(identifier: identifier, actions: [.report(.content)], completion: { (success: Bool) in
+
+      let actions: [MoreAction] = MoreAction.actions(for: resource as? ModelCommonProperties)
+      self.showMoreActionSheet(identifier: identifier, actions: actions, completion: { (success: Bool, action: MoreAction) in
         didFinishAction?(success)
       })
     default:
@@ -1003,15 +981,21 @@ extension DiscoverViewController {
   fileprivate func updatedResources(_ notification: NSNotification) {
     let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.cards.rawValue })
 
-    guard let identifiers = notification.object as? [String],
-      identifiers.count > 0,
-      visibleItemsIndexPaths.count > 0 else {
+    let updateKey = DataManager.Notifications.Key.Update
+    let deleteKey = DataManager.Notifications.Key.Delete
+
+    guard let dictionary = notification.object as? [String : [String]] else {
         return
     }
 
-    let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(for: activeSegment, resourcesIdentifiers: identifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
-    if indexPathForAffectedItems.count > 0 {
-      updateCollectionNodes(indexPathForAffectedItems: indexPathForAffectedItems)
+    if let deletedIdentifiers = dictionary[deleteKey], deletedIdentifiers.count > 0 {
+      deletedIdentifiers.forEach({ viewModel.deleteResource(with: $0) })
+      collectionNode.reloadData()
+    } else if let updatedIdentifiers = dictionary[updateKey], updatedIdentifiers.count > 0, visibleItemsIndexPaths.count > 0 {
+      let indexPathForAffectedItems = viewModel.indexPathForAffectedItems(for: activeSegment, resourcesIdentifiers: updatedIdentifiers, visibleItemsIndexPaths: visibleItemsIndexPaths)
+      if indexPathForAffectedItems.count > 0 {
+        updateCollectionNodes(indexPathForAffectedItems: indexPathForAffectedItems)
+      }
     }
   }
 }

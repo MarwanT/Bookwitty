@@ -79,6 +79,12 @@ final class PostsViewModel {
       return resourcesIdentifiers.contains(identifier)
     })
   }
+
+  func deleteResource(with identifier: String) {
+    if let index = posts.index(where: { $0 == identifier }) {
+      posts.remove(at: index)
+    }
+  }
 }
 
 // MARK: - APIs
