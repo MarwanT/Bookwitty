@@ -20,6 +20,12 @@ class UserManager {
   static let shared = UserManager()
   
   /**
+   A session related variable just to indicate whether the user did
+   open Onboarding for this session.
+   */
+  var didOpenOnboarding: Bool = false
+
+  /**
    Currently the user object is signed in on sign in. If the user object 
    failed to be retrieved then the sign in would be considered as a failure
    
