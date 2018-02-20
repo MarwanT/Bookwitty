@@ -93,8 +93,8 @@ extension LinkTagsViewModel {
       completion?(false)
       return
     }
-    
-    _ = TagAPI.linkTag(for: self.contentIdentifier, with: tagID, completion: { (success, error) in
+    let tagTitle = tag.title ?? ""
+    _ = TagAPI.linkTag(for: self.contentIdentifier, tagIdentifier: tagID, tagTitle: tagTitle, completion: { (success, error) in
       defer {
         completion?(success)
       }
