@@ -145,6 +145,13 @@ final class EmailSettingsViewModel {
         }
         completion(GeneralSettings.sharedInstance.shouldSendNewsletter)
       })
+    case 3: //wits
+      updateUserEmailWitsPreference(value: "\(!newValue)", completion: { (success: Bool) in
+        if success {
+          GeneralSettings.sharedInstance.shouldSendWitsEmail = newValue
+        }
+        completion(GeneralSettings.sharedInstance.shouldSendWitsEmail)
+      })
     default:
       break
     }
@@ -169,6 +176,13 @@ extension EmailSettingsViewModel {
 
   fileprivate func updateUserEmailNewsletterPreference(value: String, completion: @escaping ((Bool)->())) {
     _ = UserAPI.updateUser(preference: User.Preference.emailNewsletter, value: value) {
+      (success: Bool, error: BookwittyAPIError?) in
+      completion(success)
+    }
+  }
+
+  fileprivate func updateUserEmailWitsPreference(value: String, completion: @escaping ((Bool)->())) {
+    _ = UserAPI.updateUser(preference: User.Preference.emailNotificationWits, value: value) {
       (success: Bool, error: BookwittyAPIError?) in
       completion(success)
     }
