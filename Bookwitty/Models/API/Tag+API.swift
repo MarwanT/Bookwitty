@@ -11,7 +11,7 @@ import Moya
 public struct TagAPI {
   
   static func linkTag(for contentIdentifier: String, tagIdentifier: String, tagTitle: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
-    let successStatusCode = 204
+    let successStatusCode = 201
     return signedAPIRequest(target: .linkTag(contentIdentifier: contentIdentifier, tagIdentifier: tagIdentifier, tagTitle: tagTitle), completion: { (data, statusCode, response, error) in
         var success: Bool = false
         var error: BookwittyAPIError? = nil
