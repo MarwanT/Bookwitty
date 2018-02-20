@@ -84,47 +84,15 @@ class LinkTagsViewController: UIViewController {
       guard let strongSelf = self else {
         return
       }
-      strongSelf.viewModel.selectedTags = strongSelf.viewModel.selectedTags.filter { !($0.title == tag.text) }
-      _ = TagAPI.removeTag(for: strongSelf.viewModel.contentIdentifier, with: tag.text, completion: { (success, error) in
-        guard success else {
-          return
-        }
-      })
+      strongSelf.viewModel.unLink(withTitle: tag.text, completion: nil)
     }
     
-    tagsView.onDidAddTag = { [weak self] _, tag in
+    tagsView.onDidAddTag = { [weak self] _, wsTag in
       //TODO: Handle error
       guard let strongSelf = self else {
         return
       }
-      let text = tag.text
-      if strongSelf.viewModel.hasTag(with: text) {
-        _ = TagAPI.linkTag(for: strongSelf.viewModel.contentIdentifier, with: text, completion: { (success, error) in
-          guard success else {
-            //TODO: if we get `no more tags are allowed error` we should set viewModel.canLink = false
-            return
-          }
-        })
-
-      } else {
-        //Create (user hit return)
-        let linkedTags = strongSelf.viewModel.selectedTags
-        let allTags = linkedTags + [text].map {
-          let tag = Tag()
-          tag.title = $0
-          return tag
-        }
-        strongSelf.viewModel.selectedTags = allTags
-        //TODO: change .draft value below to a proper status value
-        _ = TagAPI.replaceTags(for: strongSelf.viewModel.contentIdentifier, with: allTags.flatMap { $0.title }, status: .draft, completion: { (success, post, error) in
-          guard success, let post = post, let tags = post.tags else {
-            return
-          }
-          //Previously we were setting the tags on success 
-          //After BMA-1683 we asked to consider the tag is linked
-          strongSelf.viewModel.selectedTags = tags
-        })
-      }
+      strongSelf.viewModel.addTagg(withTitle: wsTag.text, completion: nil)
     }
     
     tableView.tableFooterView = UIView() //Hacky
@@ -132,18 +100,10 @@ class LinkTagsViewController: UIViewController {
   }
 
   @objc private func reload(with text: String?) {
-    guard let text = text, text.characters.count > 0 else {
-      return
-    }
-    
-    self.viewModel.filter.query = text
-    //Perform request
-    _ = SearchAPI.autocomplete(filter: self.viewModel.filter, page: nil) { (success, tags, _, _, error) in
-      guard success, let tags = tags as? [Tag] else {
-        self.viewModel.resetTags()
+    viewModel.autocomplete(with: text) { (success) in
+      guard success else {
         return
       }
-      self.viewModel.set(tags)
       self.tableView.reloadData()
     }
   }
