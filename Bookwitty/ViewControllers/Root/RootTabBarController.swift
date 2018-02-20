@@ -329,7 +329,11 @@ extension RootTabBarController {
   }
   
   func signIn(notification: Notification) {
-    showRootViewController()
+    if(UserManager.shared.shouldDisplayOnboarding) {
+      presentedViewController?.dismiss(animated: true)
+    } else {
+      showRootViewController()
+    }
   }
   
   func register(notification: Notification) {
