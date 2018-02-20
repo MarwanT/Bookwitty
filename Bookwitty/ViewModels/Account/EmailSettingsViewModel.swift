@@ -26,6 +26,13 @@ final class EmailSettingsViewModel {
     sectionTitles = [""]
   }
 
+  private func loadUserPreferences() {
+    GeneralSettings.sharedInstance.shouldSendWitsEmail = UserManager.shared.signedInUser.emailNotificationsWits
+    GeneralSettings.sharedInstance.shouldSendFollowersEmail = UserManager.shared.signedInUser.emailNotificationsFollower
+    GeneralSettings.sharedInstance.shouldSendCommentsEmail = UserManager.shared.signedInUser.emailNotificationsComments
+    GeneralSettings.sharedInstance.shouldSendNewsletter = UserManager.shared.signedInUser.emailNewsletter
+  }
+
   /*
    * General table view functions
    */
