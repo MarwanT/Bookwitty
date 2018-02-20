@@ -518,6 +518,7 @@ extension ContentEditorViewController {
     
     var title: String = ""
     var description: String? = currentPost.shortDescription
+    var fallbackDescription: String?
     var imageURL: String? = currentPost.imageUrl
     
     let group = DispatchGroup()
@@ -526,13 +527,14 @@ extension ContentEditorViewController {
     self.editorView.getDefaults { (_ defaultTitle: String, _ defaultDescription: String?, _ defaultImageURL: String?) in
       title = currentPost.title ?? defaultTitle
       description = description ?? defaultDescription
+      fallbackDescription = defaultDescription
       imageURL = imageURL ?? defaultImageURL
       group.leave()
     }
     
     group.notify(queue: DispatchQueue.main) {
       let postPreviewViewController = PostPreviewViewController()
-      postPreviewViewController.viewModel.initialize(with: self.viewModel.currentPost, and: (title, description, imageURL))
+      postPreviewViewController.initialize(with: self.viewModel.currentPost, and: (title, description, fallbackDescription, imageURL))
       postPreviewViewController.delegate = self
       let navigationController = UINavigationController(rootViewController: postPreviewViewController)
       self.navigationController?.present(navigationController, animated: true, completion: nil)

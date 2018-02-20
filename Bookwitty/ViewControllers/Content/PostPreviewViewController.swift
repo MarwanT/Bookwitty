@@ -57,6 +57,10 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+  
+  func initialize(with post: CandidatePost, and defaultValues: PostPreviewDefaultValues) {
+    self.viewModel.initialize(with: post, and: defaultValues)
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -85,7 +89,7 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
     penNameNode.penNameSummary = values.penName
     penNameNode.penNamePictureUrl = values.url?.absoluteString
     descriptionNode.contentText = values.shortDescription
-    descriptionNode.placeholder = values.shortDescription ?? Strings.what_is_your_post_about()
+    descriptionNode.placeholder = values.fallbackDescription ?? Strings.what_is_your_post_about()
 
     let imageUrl = values.imageUrl
     coverNode.url = imageUrl
