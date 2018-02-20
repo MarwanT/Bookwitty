@@ -46,7 +46,7 @@ final class EmailSettingsViewModel {
     switch section {
     case Sections.Email.rawValue:
       //comments, followers, newsletter
-      numberOfRows = 3
+      numberOfRows = 4
     default:
       break
     }
@@ -79,6 +79,9 @@ final class EmailSettingsViewModel {
     case 2: //newsletter
       let sendNewsletter = GeneralSettings.sharedInstance.shouldSendNewsletter
       return (Strings.newsletter(), sendNewsletter)
+    case 3: //wits
+      let sendEmailNotification = GeneralSettings.sharedInstance.shouldSendWitsEmail
+      return (Strings.wits(), sendEmailNotification)
     default:
       return ("", "")
     }
@@ -102,6 +105,8 @@ final class EmailSettingsViewModel {
     case 1: //followers
       return .Switch
     case 2: //newsletter
+      return .Switch
+    case 3: //wits
       return .Switch
     default:
       return .None
