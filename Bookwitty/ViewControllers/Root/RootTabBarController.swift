@@ -43,9 +43,6 @@ class RootTabBarController: UITabBarController {
         presentPenNameViewController(user: UserManager.shared.signedInUser)
       } else if UserManager.shared.shouldDisplayOnboarding {
         presentOnboardingViewController()
-      } else {
-        NotificationCenter.default.post(
-          name: AppNotification.shouldRefreshData, object: nil)
       }
     }
   }

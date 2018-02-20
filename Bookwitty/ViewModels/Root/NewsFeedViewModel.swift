@@ -97,6 +97,11 @@ final class NewsFeedViewModel {
       completionBlock(success)
     }
   }
+  
+  func resetData() {
+    data = []
+    nextPage = nil
+  }
 
   func loadNewsfeed(completionBlock: @escaping (_ success: Bool) -> ()) {
     if let cancellableRequest = cancellableRequest {

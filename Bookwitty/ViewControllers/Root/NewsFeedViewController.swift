@@ -222,7 +222,10 @@ extension NewsFeedViewController: PenNameSelectionNodeDelegate {
 extension NewsFeedViewController {
   func addObservers() {
     NotificationCenter.default.addObserver(self, selector:
-      #selector(refreshData(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
+      #selector(self.refreshData(_:)), name: AppNotification.shouldRefreshData, object: nil)
+    
+    NotificationCenter.default.addObserver(self, selector:
+      #selector(authenticationStatusChangedAction(_:)), name: AppNotification.authenticationStatusChanged, object: nil)
 
     NotificationCenter.default.addObserver(self, selector:
       #selector(self.updatedResources(_:)), name: DataManager.Notifications.Name.UpdateResource, object: nil)
@@ -230,6 +233,18 @@ extension NewsFeedViewController {
     observeLanguageChanges()
   }
 
+  /**
+   !!!! -
+   Wrap the following logic with a check on the view controller if it is visible
+   or not. If it wasn't only reset the data and update the collection Node,
+   because when the view will appear the data will be fetched again.
+   If the view is visible already when this method is triggered, then
+   fetching the data should happen here, resetting it is not enough.
+   */
+  func refreshData(_ notification: Notification) {
+    viewModel.resetData()
+    updateCollection(orReloadAll: true)
+  }
 
   func updatedResources(_ notification: NSNotification) {
     let visibleItemsIndexPaths = collectionNode.indexPathsForVisibleItems.filter({ $0.section == Section.cards.rawValue })
@@ -250,7 +265,7 @@ extension NewsFeedViewController {
     }
   }
 
-  func refreshData(_ notification: Notification) {
+  func authenticationStatusChangedAction(_ notification: Notification) {
     if !UserManager.shared.isSignedIn {
       signOutAction()
     }
