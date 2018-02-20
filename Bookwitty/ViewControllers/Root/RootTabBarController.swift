@@ -325,6 +325,7 @@ extension RootTabBarController {
 
     AccessToken.shared.deleteToken()
     UserManager.shared.deleteSignedInUser()
+    UserManager.shared.didOpenOnboarding = false
     refreshTabBarViewController()
   }
   
