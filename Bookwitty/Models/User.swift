@@ -110,6 +110,19 @@ extension User {
     //Negated because the preferences are unsub
     return !(notification.lowercased() == "true")
   }
+
+  var emailNotificationsWits: Bool {
+    guard let preferences = self.preferences else {
+      return false
+    }
+
+    guard let notification = preferences[Preference.emailNotificationWits.rawValue] as? String else {
+      return false
+    }
+
+    //Negated because the preferences are unsub
+    return !(notification.lowercased() == "true")
+  }
 }
 
 // MARK: - Parser
