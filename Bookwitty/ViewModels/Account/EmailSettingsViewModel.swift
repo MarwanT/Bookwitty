@@ -160,6 +160,12 @@ final class EmailSettingsViewModel {
 
 //MARK: - API Handlers
 extension EmailSettingsViewModel {
+  fileprivate func fetchUser(completion: @escaping ((Bool)->())) {
+    _ = UserAPI.user { (success, _, _) in
+      completion(success)
+    }
+  }
+
   fileprivate func updateUserEmailCommentsPreference(value: String, completion: @escaping ((Bool)->())) {
     _ = UserAPI.updateUser(preference: User.Preference.emailNotificationComments, value: value) {
       (success: Bool, error: BookwittyAPIError?) in
