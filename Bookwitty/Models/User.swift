@@ -21,7 +21,7 @@ class User: Resource {
   var language: String? = nil
   var badges: [String: Any]? = nil
   var preferences: [String: Any]? = nil
-
+  var onboardCompleteAt: NSDate? = nil
 
   /* Discussion
   * Only ussed to verify password update
@@ -56,6 +56,7 @@ class User: Resource {
       "password": Attribute().serializeAs("password"),
       "currentPassword": Attribute().serializeAs("current-password"),
       "language": Attribute().serializeAs("language"),
+      "onboardCompleteAt": DateAttribute().serializeAs("onboard-complete-at"),
       "preferences" : PreferencesAttribute().serializeAs("preferences"),
       "penNamesCollection" : ToManyRelationship(PenName.self).serializeAs("pen-names")
       ])
