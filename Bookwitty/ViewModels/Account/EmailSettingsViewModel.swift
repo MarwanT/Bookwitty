@@ -24,6 +24,7 @@ final class EmailSettingsViewModel {
 
   init () {
     sectionTitles = [""]
+    loadUserPreferences()
   }
 
   public func syncPreferences(completion: @escaping ((Bool)->())) {
