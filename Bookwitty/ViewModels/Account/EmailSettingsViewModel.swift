@@ -26,6 +26,15 @@ final class EmailSettingsViewModel {
     sectionTitles = [""]
   }
 
+  public func syncPreferences(completion: @escaping ((Bool)->())) {
+    fetchUser { (success) in
+      if (success) {
+        self.loadUserPreferences()
+      }
+      completion(success)
+    }
+  }
+
   private func loadUserPreferences() {
     GeneralSettings.sharedInstance.shouldSendWitsEmail = UserManager.shared.signedInUser.emailNotificationsWits
     GeneralSettings.sharedInstance.shouldSendFollowersEmail = UserManager.shared.signedInUser.emailNotificationsFollower
