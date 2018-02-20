@@ -67,7 +67,7 @@ public enum BookwittyAPI {
   case report(identifier: String)
   case reportPenName(identifier: String)
   case createContent(title: String?, body: String?, status: PublishAPI.PublishStatus)
-  case updateContent(id: String, title: String?, body: String?, imageURL: String?, shortDescription: String? , status: PublishAPI.PublishStatus?)
+  case updateContent(id: String, title: String?, body: String?, imageIdentifier: String?, shortDescription: String? , status: PublishAPI.PublishStatus?)
   case removeContent(contentIdentifier: String)
   case replaceTags(contentIdentifier: String, tags: [String]?, status: PublishAPI.PublishStatus?)
   case linkTag(contentIdentifier: String, tagIdentifier: String)
@@ -294,8 +294,8 @@ extension BookwittyAPI: TargetType {
       return TagAPI.linkTagParameters(tagIdentifier)
     case .createContent(let title, let body, let status):
       return PublishAPI.createContentParameters(title: title, body: body, status: status)
-    case .updateContent(_, let title, let body, let imageURL, let shortDescription, let status):
-      return PublishAPI.updateContentParameters(title: title, body: body, imageURL: imageURL, shortDescription: shortDescription, status: status)
+    case .updateContent(_, let title, let body, let imageIdentifier, let shortDescription, let status):
+      return PublishAPI.updateContentParameters(title: title, body: body, imageIdentifier: imageIdentifier, shortDescription: shortDescription, status: status)
     case .batch(let identifiers):
       return UserAPI.batchPostBody(identifiers: identifiers)
     case .batchPenNames(let identifiers):

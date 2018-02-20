@@ -15,9 +15,11 @@ public struct UploadAPI {
   }
 
   public enum AssetType: String {
-    case profile = "profile"
-    case content = "content"
-    case inline = "inline"
+    case profile = "profile"    // For a pen name profile picture
+    case feature = "feature"    // The big image at the top of an article and cards
+    case inline = "inline"      // For an image embedded in the content editor
+    case author = "author"      // A bio profile picture
+    case media = "media"        // For an image post type
   }
 
   static func uploadPolicy(file: (name: String, size: Int), fileType: FileType, assetType: AssetType, completion: @escaping (_ success: Bool, _ policy: UploadPolicy?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {

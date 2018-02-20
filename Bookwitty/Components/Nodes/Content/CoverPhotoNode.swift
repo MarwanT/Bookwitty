@@ -53,7 +53,7 @@ class CoverPhotoNode: ASCellNode {
     automaticallyManagesSubnodes = true
     imageNode.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
     imageNode.animatedImageRunLoopMode = RunLoopMode.defaultRunLoopMode.rawValue
-    imageNode.contentMode = .scaleAspectFit
+    imageNode.contentMode = .scaleAspectFill
     imageNode.delegate = self
 
     imageNode.automaticallyManagesSubnodes = true
