@@ -8,24 +8,27 @@
 
 import Foundation
 
+typealias PostPreviewDefaultValues = (title: String, description: String?, fallbackDescription: String?, image: String?)
+
 final class PostPreviewViewModel {
   fileprivate var maximumImageDataCount: Int = 12582912
   
   var candidatePost: CandidatePost!
-  var defaultValues: (title: String, description: String?, image: String?)!
+  var defaultValues: PostPreviewDefaultValues!
   
-  func initialize(with post: CandidatePost, and defaultValues:(title: String, description: String?, image: String?)) {
+  func initialize(with post: CandidatePost, and defaultValues: PostPreviewDefaultValues) {
     self.candidatePost = post
     self.defaultValues = defaultValues
   }
   
-  func postValues() -> (title: String?, shortDescription: String?, penName: String?, url: URL?, imageUrl: String?) {
+  func postValues() -> (title: String?, shortDescription: String?, fallbackDescription: String?, penName: String?, url: URL?, imageUrl: String?) {
     let title = candidatePost.title ?? defaultValues.title
     let shortDescription = candidatePost.shortDescription ?? defaultValues.description
+    let fallbackDescription = defaultValues.fallbackDescription
     let penName = candidatePost.penName?.name
     let url = candidatePost.penName?.url
     let imageUrl = candidatePost.imageUrl ?? defaultValues.image
-    return (title, shortDescription, penName, url, imageUrl)
+    return (title, shortDescription, fallbackDescription, penName, url, imageUrl)
   }
 
   func upload(image: UIImage?, completion: @escaping (_ success: Bool, _ imageIdentifier: String?, _ imageLink: String?) -> Void) {

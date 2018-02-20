@@ -19,15 +19,28 @@ class LimitedEditableTextNode: ASCellNode {
   weak var delegate: LimitedEditableTextNodeDelegate?
 
   var contentText: String? {
-    get { return textNode.textView.text }
-    set { textNode.textView.text = newValue }
+    get {
+      return textNode.attributedText?.string
+    }
+    set {
+      if let substring = newValue?.suffix(hardCharactersLimit) {
+        let value = String(substring)
+        textNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.body2)
+          .append(text: value, color: ThemeManager.shared.currentTheme.defaultTextColor())
+          .attributedString
+      } else {
+        textNode.attributedText = nil
+      }
+      refreshNumberOfCharactersLeft(for: newValue ?? "")
+    }
   }
 
   var placeholder: String? {
     didSet {
-      if let placeholder = placeholder {
+      if let placeholder = placeholder?.suffix(hardCharactersLimit) {
+        let value = String(placeholder)
         self.textNode.attributedPlaceholderText = AttributedStringBuilder(fontDynamicType: FontDynamicType.body2)
-          .append(text: placeholder, color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+          .append(text: value, color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
           .attributedString
       } else {
         self.textNode.attributedPlaceholderText = nil
@@ -44,14 +57,17 @@ class LimitedEditableTextNode: ASCellNode {
 
   fileprivate func setupNode() {
     automaticallyManagesSubnodes = true
-    textNode.style.height = ASDimension(unit: .points, value: 80.0)
-    textNode.maximumLinesToDisplay = 3
+    textNode.style.minHeight = ASDimension(unit: .points, value: 80.0)
 
     textNode.style.flexGrow = 1.0
     textNode.style.flexShrink = 1.0
 
     charactersLeftNode.style.flexGrow = 1.0
     charactersLeftNode.style.flexShrink = 1.0
+    
+    textNode.delegate = self
+    
+    applyTheme()
   }
 
   var hardCharactersLimit: Int = 200
@@ -67,13 +83,6 @@ class LimitedEditableTextNode: ASCellNode {
         .attributedString
       charactersLeftNode.setNeedsLayout()
     }
-  }
-
-  override func didLoad() {
-    super.didLoad()
-    applyTheme()
-    textNode.delegate = self
-    numberOfCharactersLeft = hardCharactersLimit
   }
   
   override func resignFirstResponder() -> Bool {
@@ -99,24 +108,27 @@ class LimitedEditableTextNode: ASCellNode {
       bottom: ThemeManager.shared.currentTheme.generalExternalMargin(),
       right: ThemeManager.shared.currentTheme.generalExternalMargin())
   }
+  
+  // MARK: - Helpers
+  fileprivate func refreshNumberOfCharactersLeft(for text: String) {
+    self.numberOfCharactersLeft = self.softCharactersLimit - text.count
+  }
 }
 
 extension LimitedEditableTextNode: Themeable {
   func applyTheme() {
-    textNode.textView.font = FontDynamicType.body2.font
-    textNode.textView.textColor = ThemeManager.shared.currentTheme.defaultTextColor()
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
   }
 }
 
 extension LimitedEditableTextNode: ASEditableTextNodeDelegate {
   func editableTextNode(_ editableTextNode: ASEditableTextNode, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-    let newLength =  editableTextNode.textView.text.characters.count + text.characters.count - range.length
+    let newLength =  (editableTextNode.attributedText?.string ?? "").count + text.count - range.length
     return newLength <= self.hardCharactersLimit
   }
 
   func editableTextNodeDidUpdateText(_ editableTextNode: ASEditableTextNode) {
-    self.numberOfCharactersLeft = self.softCharactersLimit - editableTextNode.textView.text.characters.count
+    refreshNumberOfCharactersLeft(for: editableTextNode.attributedText?.string ?? "")
   }
 
   func editableTextNodeDidFinishEditing(_ editableTextNode: ASEditableTextNode) {
