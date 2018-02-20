@@ -59,12 +59,7 @@ class UserManager {
   }
   
   var shouldDisplayOnboarding: Bool {
-    get {
-      return UserDefaults.standard.bool(forKey: Key.ShouldDisplayOnboarding)
-    }
-    set {
-      UserDefaults.standard.set(newValue, forKey: Key.ShouldDisplayOnboarding)
-    }
+    return isSignedIn && !isOnboarded && !didOpenOnboarding
   }
 
   var penNames: [PenName]? {
