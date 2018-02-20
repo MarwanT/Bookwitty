@@ -44,8 +44,12 @@ final class LinkTagsViewModel {
     return fetchedTags[index]
   }
   
-  func tag(withTitle title: String) -> Tag? {
+  func fetchedTag(withTitle title: String) -> Tag? {
     return fetchedTags.first(where: { $0.title == title })
+  }
+  
+  func selectedTag(withTitle title: String) -> Tag? {
+    return selectedTags.first(where: { $0.title == title })
   }
 }
 
@@ -73,7 +77,7 @@ extension LinkTagsViewModel {
   }
   
   func addTagg(withTitle title: String, completion: ((_ success: Bool) -> Void)?) {
-    if let tag = self.tag(withTitle: title) {
+    if let tag = self.fetchedTag(withTitle: title) {
       link(tag: tag, completion: completion)
     } else {
       //Create (user hit return)
@@ -120,7 +124,7 @@ extension LinkTagsViewModel {
   }
   
   func unLink(withTitle: String, completion: ((_ success: Bool) -> Void)?) {
-    guard let tag = self.tag(withTitle: withTitle), let tagID = tag.id else {
+    guard let tag = self.selectedTag(withTitle: withTitle), let tagID = tag.id else {
       completion?(false)
       return
     }
