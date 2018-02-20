@@ -868,6 +868,10 @@ class Strings {
   static func save_draft() -> String {
     return localizedString(key: "save_draft")
   }
+  
+  static func save_post_changes() -> String {
+    return localizedString(key: "save_post_changes")
+  }
 
   static func save_this_post_draft() -> String {
     return localizedString(key: "save_this_post_draft")

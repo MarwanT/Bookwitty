@@ -70,7 +70,7 @@ public enum BookwittyAPI {
   case updateContent(id: String, title: String?, body: String?, imageIdentifier: String?, shortDescription: String? , status: PublishAPI.PublishStatus?)
   case removeContent(contentIdentifier: String)
   case replaceTags(contentIdentifier: String, tags: [String]?, status: PublishAPI.PublishStatus?)
-  case linkTag(contentIdentifier: String, tagIdentifier: String)
+  case linkTag(contentIdentifier: String, tagIdentifier: String, tagTitle: String)
   case removeTag(contentIdentifier: String, tagIdentifier: String)
   case linkContent(contentIdentifier: String, pageIdentifier: String)
   case unlinkContent(contentIdentifier: String, pageIdentifier: String)
@@ -215,7 +215,7 @@ extension BookwittyAPI: TargetType {
       path = "/upload_policies"
     case .replaceTags(let contentIdentifier, _, _):
       path = "/content/\(contentIdentifier)"
-    case .linkTag(let contentIdentifier, _):
+    case .linkTag(let contentIdentifier, _, _):
       path = "/content/\(contentIdentifier)/relationships/tags"
     case .removeTag(let contentIdentifier, _):
       path = "/content/\(contentIdentifier)/relationships/tags"
@@ -290,8 +290,8 @@ extension BookwittyAPI: TargetType {
       return TagAPI.replaceTagsParameters(tags: tags, status: status)
     case .removeTag(_, let tagIdentifier):
       return TagAPI.removeTagParameters(tagIdentifier)
-    case .linkTag(_, let tagIdentifier):
-      return TagAPI.linkTagParameters(tagIdentifier)
+    case .linkTag(_, let tagIdentifier, let tagTitle):
+      return TagAPI.linkTagParameters(tagIdentifier, title: tagTitle)
     case .createContent(let title, let body, let status):
       return PublishAPI.createContentParameters(title: title, body: body, status: status)
     case .updateContent(_, let title, let body, let imageIdentifier, let shortDescription, let status):

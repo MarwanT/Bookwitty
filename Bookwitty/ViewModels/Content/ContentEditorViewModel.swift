@@ -37,7 +37,7 @@ class ContentEditorViewModel  {
   }
   
   func initialize(with candidatPost: CandidatePost, prelink: String? = nil) -> Void {
-    self.currentPost = candidatPost
+    self.set(candidatPost)
     self.prelink = prelink
   }
   
