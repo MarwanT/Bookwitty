@@ -22,6 +22,14 @@ class EmailSettingsViewController: UIViewController {
     applyTheme()
   }
 
+  fileprivate func syncUserPreferences() {
+    viewModel.syncPreferences { (success) in
+      if (success) {
+        self.tableView.reloadData()
+      }
+    }
+  }
+
   fileprivate func initializeComponents() {
     tableView.register(DisclosureTableViewCell.nib, forCellReuseIdentifier: DisclosureTableViewCell.identifier)
     tableView.register(TableViewSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: TableViewSectionHeaderView.reuseIdentifier)
