@@ -35,7 +35,6 @@ public class GeneralSettings {
     let defaultValues: [String : Any] = [
       Keys.PreferredLanguage : defaultLanguage,
       Keys.SendUsageData : true,
-      Keys.SendEmailNotifications : true,
       Keys.SendCommentsEmail : true,
       Keys.SendFollowersEmail : true,
       Keys.SendNewsletter : true,
@@ -48,7 +47,6 @@ public class GeneralSettings {
 
     defaults.register(defaults: defaultValues)
     shouldSendUsageData = defaults.bool(forKey: Keys.SendUsageData)
-    shouldSendEmailNotifications = defaults.bool(forKey: Keys.SendEmailNotifications)
     shouldSendCommentsEmail = defaults.bool(forKey: Keys.SendCommentsEmail)
     shouldSendFollowersEmail = defaults.bool(forKey: Keys.SendFollowersEmail)
     shouldSendNewsletter = defaults.bool(forKey: Keys.SendNewsletter)
@@ -66,12 +64,6 @@ public class GeneralSettings {
       NotificationCenter.default.post(
         name: GeneralSettings.Notifications.sendUsageDataValueChanged,
         object: self.shouldSendUsageData)
-    }
-  }
-
-  public var shouldSendEmailNotifications: Bool {
-    didSet {
-      defaults.set(self.shouldSendEmailNotifications, forKey: Keys.SendEmailNotifications)
     }
   }
 
