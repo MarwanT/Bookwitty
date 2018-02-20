@@ -179,6 +179,17 @@ extension OnBoardingViewModel {
       dictionary = self.createDataModelDictionary(with: resources, from: items)
     })
   }
+
+  func completeOnBoarding() {
+    guard let identifier = UserManager.shared.signedInUser.id else {
+      return
+    }
+    
+    UserManager.shared.didOpenOnboarding = true
+
+    _ = UserAPI.updateUser(identifier: identifier, completeOnboarding: true) { (_, _, _) in
+    }
+  }
 }
 
 // MARK: - Utility Helpers
