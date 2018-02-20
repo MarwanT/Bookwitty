@@ -44,7 +44,11 @@ class UserManager {
   var isSignedIn: Bool {
     return AccessToken.shared.hasToken && AccessToken.shared.hasRefreshToken && signedInUser != nil
   }
-  
+
+  var isOnboarded: Bool {
+    return signedInUser != nil && signedInUser.onboardCompleteAt != nil
+  }
+
   var shouldEditPenName: Bool {
     get {
       return UserDefaults.standard.bool(forKey: Key.ShouldEditPenName) 
