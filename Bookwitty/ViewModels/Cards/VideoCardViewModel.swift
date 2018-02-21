@@ -47,9 +47,9 @@ class VideoCardViewModel: CardViewModelProtocol {
     }
   }
 
-  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, topComment: Comment?, comments: String?, tags: [String]?, properties: (url: URL?, thumbnail: String?), wit: (is: Bool, count: Int, info: String?)), reported: Bool) {
+  func values() -> (infoNode: Bool, postInfo: CardPostInfoNodeData?, content: (title: String?, description: String?, topComment: Comment?, comments: String?, tags: [String]?, properties: (url: URL?, thumbnail: String?), wit: (is: Bool, count: Int, info: String?)), reported: Reported) {
     guard let resource = resource else {
-      return (false, nil, content: (nil, nil, nil, nil, nil, properties: (nil, nil), wit: (false, 0, nil)), false)
+      return (false, nil, content: (nil, nil, nil, nil, nil, properties: (nil, nil), wit: (false, 0, nil)), .not)
     }
 
     let cardPostInfoData: CardPostInfoNodeData?
@@ -70,7 +70,7 @@ class VideoCardViewModel: CardViewModelProtocol {
     let tags = resource.tags?.flatMap({ $0.title })
     let properties = (self.videoProperties.url, self.videoProperties.thumbnail)
     let wit = (is: resource.isWitted, count: resource.counts?.wits ?? 0, resource.witters)
-    let reported: Bool = DataManager.shared.isReported(resource as? ModelResource)
+    let reported: Reported = DataManager.shared.isReported(resource as? ModelResource)
 
     return (infoNode, cardPostInfoData, content: (title, description, topComment, comments, tags, properties, wit: wit), reported: reported)
   }

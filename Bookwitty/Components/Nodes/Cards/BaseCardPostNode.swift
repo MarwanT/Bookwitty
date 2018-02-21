@@ -153,7 +153,7 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     }
   }
 
-  var reported: Bool = false {
+  var reported: Reported = .not {
     didSet {
       setNeedsLayout()
     }
@@ -265,8 +265,12 @@ extension BaseCardPostNode {
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
 
-    if reported {
-      return reportedLayoutSpecs()
+    switch reported {
+    case .locally:
+      return reportedLocallyLayoutSpecs()
+    case .remotely:
+      return reportedRemotelyLayoutSpecs()
+    default: break
     }
 
     let backgroundInset = externalInset()
@@ -340,8 +344,12 @@ extension BaseCardPostNode {
     return layoutSpec
   }
 
+  private func reportedRemotelyLayoutSpecs() -> ASLayoutSpec {
+    //Note: Reported resources returned from the api will not be displayed, so we return an empty layout spec
+    return ASLayoutSpec()
+  }
 
-  private func reportedLayoutSpecs() -> ASLayoutSpec {
+  private func reportedLocallyLayoutSpecs() -> ASLayoutSpec {
     let backgroundInset = externalInset()
     let backgroundNodeInset = ASInsetLayoutSpec(insets: backgroundInset, child: backgroundNode)
 
@@ -353,10 +361,12 @@ extension BaseCardPostNode {
     detailsNode.maximumNumberOfLines = 1
     detailsNode.truncationMode = NSLineBreakMode.byTruncatingTail
 
+    //TODO: localize
     let title = "Thank you for your report."
     titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
       .append(text: title, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
 
+    //TODO: localize
     let details = "You won't see this post in the future."
     detailsNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
       .append(text: details, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString

@@ -112,11 +112,13 @@ class DataManager {
   }
 
   //MARK: - Reported Resource
-  func isReported(_ resource: ModelResource?) -> Bool {
-    guard let identifier = resource?.id else {
-      return false
+  func isReported(_ resource: ModelResource?) -> Reported {
+    guard let identifier = resource?.id,
+      let reportedResource = (resource as? ModelCommonProperties)?.isReported, reportedResource else {
+        return .not
     }
-    return reported.contains(identifier)
+
+    return reported.contains(identifier) ? .locally : .remotely
   }
 
   func deleteResource(with identifier: String) {

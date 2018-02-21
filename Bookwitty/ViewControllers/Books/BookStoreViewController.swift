@@ -560,7 +560,7 @@ extension BookStoreViewController: DisclosureViewDelegate {
 extension BookStoreViewController {
   func actionForCard(resource: ModelResource?) {
     guard let resource = resource,
-      !DataManager.shared.isReported(resource) else {
+      DataManager.shared.isReported(resource) == .not else {
       return
     }
 
