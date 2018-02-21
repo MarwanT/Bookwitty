@@ -164,6 +164,10 @@ extension DataManager {
       return
     }
     reported.append(identifier)
+
+    if let resource = resource as? ModelCommonProperties {
+      resource.isReported = true
+    }
   }
 }
 
