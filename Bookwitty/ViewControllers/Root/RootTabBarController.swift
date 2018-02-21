@@ -325,11 +325,16 @@ extension RootTabBarController {
 
     AccessToken.shared.deleteToken()
     UserManager.shared.deleteSignedInUser()
+    UserManager.shared.didOpenOnboarding = false
     refreshTabBarViewController()
   }
   
   func signIn(notification: Notification) {
-    showRootViewController()
+    if(UserManager.shared.shouldDisplayOnboarding) {
+      presentedViewController?.dismiss(animated: true)
+    } else {
+      showRootViewController()
+    }
   }
   
   func register(notification: Notification) {

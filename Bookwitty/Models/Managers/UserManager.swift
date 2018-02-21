@@ -20,6 +20,12 @@ class UserManager {
   static let shared = UserManager()
   
   /**
+   A session related variable just to indicate whether the user did
+   open Onboarding for this session.
+   */
+  var didOpenOnboarding: Bool = false
+
+  /**
    Currently the user object is signed in on sign in. If the user object 
    failed to be retrieved then the sign in would be considered as a failure
    
@@ -38,7 +44,11 @@ class UserManager {
   var isSignedIn: Bool {
     return AccessToken.shared.hasToken && AccessToken.shared.hasRefreshToken && signedInUser != nil
   }
-  
+
+  var isOnboarded: Bool {
+    return signedInUser != nil && signedInUser.onboardCompleteAt != nil
+  }
+
   var shouldEditPenName: Bool {
     get {
       return UserDefaults.standard.bool(forKey: Key.ShouldEditPenName) 
@@ -49,12 +59,7 @@ class UserManager {
   }
   
   var shouldDisplayOnboarding: Bool {
-    get {
-      return UserDefaults.standard.bool(forKey: Key.ShouldDisplayOnboarding)
-    }
-    set {
-      UserDefaults.standard.set(newValue, forKey: Key.ShouldDisplayOnboarding)
-    }
+    return isSignedIn && !isOnboarded && !didOpenOnboarding
   }
 
   var penNames: [PenName]? {

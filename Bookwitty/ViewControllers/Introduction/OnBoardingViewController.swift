@@ -49,7 +49,7 @@ class OnBoardingViewController: ASViewController<OnBoardingControllerNode> {
 
 extension OnBoardingViewController: OnBoardingControllerDelegate {
   func continueButtonTouchUpInside(_ sender: Any?) {
-    UserManager.shared.shouldDisplayOnboarding = false
+    viewModel.completeOnBoarding()
     NotificationCenter.default.post(
       name: AppNotification.didFinishBoarding,
       object: nil)

@@ -222,7 +222,6 @@ class RegisterViewController: UIViewController {
       self.hideLoader()
       let successBlock = {
         UserManager.shared.shouldEditPenName = true
-        UserManager.shared.shouldDisplayOnboarding = true
         NotificationCenter.default.post(name: AppNotification.registrationSuccess, object: user)
       }
       let failBlock = { (message: String) in
