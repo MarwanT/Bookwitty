@@ -9,6 +9,12 @@
 import Foundation
 import AsyncDisplayKit
 
+enum Reported {
+  case not
+  case locally
+  case remotely
+}
+
 protocol CardViewModelProtocol: class {
   var resource: ModelCommonProperties? { get set }
 }
