@@ -23,7 +23,8 @@ protocol ModelCommonProperties: class {
   var canonicalURL: URL? { get }
   var counts: Counts? { get set }
   var topComments: [Comment]? { get set }
-
+  var isReported: Bool? { get set }
+  
   var registeredResourceType: ResourceType { get }
   var penName: PenName? { get set }
   var contributors: [PenName]? { get set }
@@ -457,4 +458,12 @@ extension Comment: ModelCommonProperties {
   var tagsRelations: [ResourceIdentifier]? {
     return nil
   }
+
+  var isReported: Bool? {
+    get {
+      return nil
+    }
+    set { /* Not a valid property of model */ }
+  }
+
 }
