@@ -26,6 +26,17 @@ class Audio: Resource {
   var counts: Counts?
 
   @objc
+  private var reportedAsSpam: NSNumber?
+  var isReported: Bool? {
+    get {
+      return ((reportedAsSpam?.intValue ?? 0) == 1)
+    }
+    set {
+      reportedAsSpam = NSNumber(value: newValue ?? false)
+    }
+  }
+  
+  @objc
   private var topVotesCollection: LinkedResourceCollection?
   lazy var topVotes: [Vote]? = {
     return self.topVotesCollection?.resources as? [Vote]
@@ -62,6 +73,7 @@ class Audio: Resource {
       "shortDescription": Attribute().serializeAs("short-description"),
       "title": Attribute().serializeAs("title"),
       "type": Attribute().serializeAs("type"),
+      "reportedAsSpam": BooleanAttribute().serializeAs("reported-as-spam"),
       "media": MediaAttribute().serializeAs("media"),
       "counts" : CountsAttribute().serializeAs("counts"),
       "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name"),

@@ -30,6 +30,17 @@ class Book: Resource {
   var productFormats: [String]?
 
   @objc
+  private var reportedAsSpam: NSNumber?
+  var isReported: Bool? {
+    get {
+      return ((reportedAsSpam?.intValue ?? 0) == 1)
+    }
+    set {
+      reportedAsSpam = NSNumber(value: newValue ?? false)
+    }
+  }
+  
+  @objc
   private var followingNumber: NSNumber?
   var following: Bool {
     get {
@@ -71,6 +82,7 @@ class Book: Resource {
       "coverImageUrl" : Attribute().serializeAs("cover-image-url"),
       "counts" : CountsAttribute().serializeAs("counts"),
       "followingNumber": Attribute().serializeAs("following"),
+      "reportedAsSpam": BooleanAttribute().serializeAs("reported-as-spam"),
       "contributorsCollection" : ToManyRelationship(PenName.self).serializeAs("contributors"),
       "productDetails" : ProductDetailsAttribute().serializeAs("product-details"),
       "supplierInformation" : SupplierInformationAttribute().serializeAs("supplier-information"),

@@ -27,6 +27,17 @@ class PenName: Resource {
   var counts: Counts?
 
   @objc
+  private var reportedAsSpam: NSNumber?
+  var isReported: Bool? {
+    get {
+      return ((reportedAsSpam?.intValue ?? 0) == 1)
+    }
+    set {
+      reportedAsSpam = NSNumber(value: newValue ?? false)
+    }
+  }
+  
+  @objc
   private var followingNumber: NSNumber?
   var following: Bool {
     get {
@@ -58,6 +69,7 @@ class PenName: Resource {
       "wordpressUrl": Attribute().serializeAs("wordpress-url"),
       "websiteUrl": Attribute().serializeAs("website-url"),
       "followingNumber": Attribute().serializeAs("following"),
+      "reportedAsSpam": BooleanAttribute().serializeAs("reported-as-spam"),
       "counts" : CountsAttribute().serializeAs("counts")
       ])
   }
