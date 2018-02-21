@@ -277,6 +277,9 @@ extension CardDetailsViewController: BaseCardPostNodeDelegate {
       let actions: [MoreAction] = MoreAction.actions(for: resource as? ModelCommonProperties)
       self.showMoreActionSheet(identifier: identifier, actions: actions, completion: { (success: Bool, action: MoreAction) in
         didFinishAction?(success)
+        if case MoreAction.report(.content) = action {
+          self.navigationController?.popViewController(animated: true)
+        }
       })
     default:
       break
