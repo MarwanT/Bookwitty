@@ -20,6 +20,15 @@ class EmailSettingsViewController: UIViewController {
     // Do any additional setup after loading the view.
     initializeComponents()
     applyTheme()
+    syncUserPreferences()
+  }
+
+  fileprivate func syncUserPreferences() {
+    viewModel.syncPreferences { (success) in
+      if (success) {
+        self.tableView.reloadData()
+      }
+    }
   }
 
   fileprivate func initializeComponents() {

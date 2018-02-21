@@ -1136,7 +1136,11 @@ class Strings {
   static func write_a_comment() -> String {
     return localizedString(key: "write_a_comment")
   }
-  
+
+  static func wits() -> String {
+    return localizedString(key: "wits")
+  }
+
   static func witted() -> String {
     return localizedString(key: "witted")
   }

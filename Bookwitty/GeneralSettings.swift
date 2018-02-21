@@ -18,6 +18,7 @@ public class GeneralSettings {
     public static let SendNewsletter = "SendNewsletter"
     public static let SendCommentsEmail = "SendCommentsEmail"
     public static let SendFollowersEmail = "SendFollowersEmail"
+    public static let SendWitsEmail = "SendWitsEmail"
     public static let ShouldShowIntroduction = "ShouldShowIntroduction"
     public static let PreferredLanguage = "PreferredLanguage"
     public static let ShouldDisplayNewsFeedIntroductoryBanner = "ShouldDisplayNewsFeedIntroductoryBanner"
@@ -34,10 +35,10 @@ public class GeneralSettings {
     let defaultValues: [String : Any] = [
       Keys.PreferredLanguage : defaultLanguage,
       Keys.SendUsageData : true,
-      Keys.SendEmailNotifications : true,
       Keys.SendCommentsEmail : true,
       Keys.SendFollowersEmail : true,
       Keys.SendNewsletter : true,
+      Keys.SendWitsEmail : true,
       Keys.ShouldShowIntroduction : true,
       Keys.ShouldDisplayNewsFeedIntroductoryBanner : true,
       Keys.ShouldDisplayDiscoverIntroductoryBanner : true,
@@ -46,10 +47,10 @@ public class GeneralSettings {
 
     defaults.register(defaults: defaultValues)
     shouldSendUsageData = defaults.bool(forKey: Keys.SendUsageData)
-    shouldSendEmailNotifications = defaults.bool(forKey: Keys.SendEmailNotifications)
     shouldSendCommentsEmail = defaults.bool(forKey: Keys.SendCommentsEmail)
     shouldSendFollowersEmail = defaults.bool(forKey: Keys.SendFollowersEmail)
     shouldSendNewsletter = defaults.bool(forKey: Keys.SendNewsletter)
+    shouldSendWitsEmail = defaults.bool(forKey: Keys.SendWitsEmail)
     shouldShowIntroduction = defaults.bool(forKey: Keys.ShouldShowIntroduction)
     preferredLanguage = defaults.string(forKey: Keys.PreferredLanguage) ?? Localization.Language.English.rawValue
     shouldDisplayNewsFeedIntroductoryBanner = defaults.bool(forKey: Keys.ShouldDisplayNewsFeedIntroductoryBanner)
@@ -63,12 +64,6 @@ public class GeneralSettings {
       NotificationCenter.default.post(
         name: GeneralSettings.Notifications.sendUsageDataValueChanged,
         object: self.shouldSendUsageData)
-    }
-  }
-
-  public var shouldSendEmailNotifications: Bool {
-    didSet {
-      defaults.set(self.shouldSendEmailNotifications, forKey: Keys.SendEmailNotifications)
     }
   }
 
@@ -89,7 +84,13 @@ public class GeneralSettings {
       defaults.set(self.shouldSendNewsletter, forKey: Keys.SendNewsletter)
     }
   }
- 
+
+  public var shouldSendWitsEmail: Bool {
+    didSet {
+      defaults.set(self.shouldSendWitsEmail, forKey: Keys.SendWitsEmail)
+    }
+  }
+
   public var shouldShowIntroduction: Bool {
     didSet {
       defaults.set(self.shouldShowIntroduction, forKey: Keys.ShouldShowIntroduction)

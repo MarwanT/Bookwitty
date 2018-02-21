@@ -91,8 +91,6 @@ class UserManager {
     let userDictionary = user.serializeData(options: [.IncludeID, .OmitNullValues, .IncludeToOne, .IncludeToMany])
     let penNamesArray = user.penNames?.map({ $0.serializeData(options: [.IncludeID, .OmitNullValues, .IncludeToOne, .IncludeToMany]) })
     
-    GeneralSettings.sharedInstance.shouldSendNewsletter = user.emailNewsletter
-    GeneralSettings.sharedInstance.shouldSendEmailNotifications = user.emailNotifications
 
     UserDefaults.standard.set(userDictionary, forKey: Key.SignedInUser)
     UserDefaults.standard.set(penNamesArray, forKey: Key.SignedInUserPenNames)

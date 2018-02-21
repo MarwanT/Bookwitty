@@ -85,13 +85,38 @@ extension User {
     return !(newsletter.lowercased() == "true")
   }
 
-  //One for both email values, they are combined as one
-  var emailNotifications: Bool {
+  var emailNotificationsFollower: Bool {
     guard let preferences = self.preferences else {
       return false
     }
 
     guard let notification = preferences[Preference.emailNotificationFollowers.rawValue] as? String else {
+      return false
+    }
+
+    //Negated because the preferences are unsub
+    return !(notification.lowercased() == "true")
+  }
+
+  var emailNotificationsComments: Bool {
+    guard let preferences = self.preferences else {
+      return false
+    }
+
+    guard let notification = preferences[Preference.emailNotificationComments.rawValue] as? String else {
+      return false
+    }
+
+    //Negated because the preferences are unsub
+    return !(notification.lowercased() == "true")
+  }
+
+  var emailNotificationsWits: Bool {
+    guard let preferences = self.preferences else {
+      return false
+    }
+
+    guard let notification = preferences[Preference.emailNotificationWits.rawValue] as? String else {
       return false
     }
 
@@ -109,6 +134,7 @@ extension User {
   enum Preference: String {
     case emailNotificationFollowers = "unsub-email-notification-followers"
     case emailNotificationComments = "unsub-email-notification-comments"
+    case emailNotificationWits = "unsub-email-notification-votes"
     case emailNewsletter = "unsub-email-newsletter"
   }
 }
