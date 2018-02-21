@@ -527,7 +527,9 @@ extension TopicViewController: ActionBarNodeDelegate {
     let actions: [MoreAction] = MoreAction.actions(for: resource)
     self.showMoreActionSheet(identifier: identifier, actions: actions, completion: {
       (success: Bool, action: MoreAction) in
-
+      if case MoreAction.report(.content) = action {
+        self.navigationController?.popViewController(animated: true)
+      }
     })
   }
 }
