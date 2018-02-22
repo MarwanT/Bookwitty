@@ -109,6 +109,7 @@ class CommentCompactNode: ASCellNode {
 
 extension CommentCompactNode: DTAttributedTextContentNodeDelegate {
   func attributedTextContentNode(node: ASCellNode, button: DTLinkButton, didTapOnLink link: URL) {
+    WebViewController.present(url: link)
   }
 
   func attributedTextContentNodeNeedsLayout(node: ASCellNode) {
