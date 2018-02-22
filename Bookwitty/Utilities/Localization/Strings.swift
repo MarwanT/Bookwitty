@@ -281,6 +281,10 @@ class Strings {
     return localizedString(key: "discard_changes")
   }
   
+  static func discard_changes_confirmation_question() -> String {
+    return localizedString(key: "discard_changes_confirmation_question")
+  }
+  
   static func discard_post() -> String {
     return localizedString(key: "discard_post")
   }
@@ -867,6 +871,10 @@ class Strings {
   
   static func save_draft() -> String {
     return localizedString(key: "save_draft")
+  }
+  
+  static func save_draft_changes() -> String {
+    return localizedString(key: "save_draft_changes")
   }
   
   static func save_post_changes() -> String {
