@@ -45,13 +45,8 @@ class CommentCompactNode: ASCellNode {
     fullNameNode.style.flexShrink = 1.0
 
     messageNode.backgroundColor = UIColor.clear
-
-    messageNode.style.flexGrow = 1.0
-    messageNode.style.flexShrink = 1.0
-
-    self.style.preferredSize = CGSize(width: 45.0, height: 60.0)
-
-    messageNode.maxNumberOfLines = 1
+    messageNode.width = UIScreen.main.bounds.width
+    messageNode.maxNumberOfLines = 2
 
     overlayNode.addTarget(self, action: #selector(nodeTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
