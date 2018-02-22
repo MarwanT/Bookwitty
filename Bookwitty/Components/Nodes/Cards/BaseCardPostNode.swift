@@ -102,7 +102,6 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
   fileprivate let actionBarNode: CardActionBarNode
   fileprivate let backgroundNode: ASDisplayNode
   fileprivate let separatorNode: ASDisplayNode
-  fileprivate let commentsSummaryNode: ASTextNode
 
   fileprivate let tagCollectionNode: TagCollectionNode
 
@@ -115,10 +114,6 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     }
   }
   var shouldShowTagsNode: Bool = false
-
-  fileprivate var shouldShowCommentSummaryNode: Bool {
-    return !articleCommentsSummary.isEmptyOrNil()
-  }
 
   weak var tapDelegate: ItemNodeTapDelegate?
   weak var delegate: BaseCardPostNodeDelegate?
@@ -144,15 +139,6 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     }
   }
 
-  var articleCommentsSummary: String? {
-    didSet {
-      if let articleCommentsSummary = articleCommentsSummary {
-        commentsSummaryNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
-          .append(text: articleCommentsSummary, color: ThemeManager.shared.currentTheme.colorNumber15()).attributedString
-      }
-    }
-  }
-
   var reported: Reported = .not {
     didSet {
       setNeedsLayout()
@@ -165,7 +151,6 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     actionBarNode = CardActionBarNode()
     backgroundNode = ASDisplayNode()
     separatorNode = ASDisplayNode()
-    commentsSummaryNode = ASTextNode()
     topCommentNode = CommentCompactNode()
     writeCommentNode = WriteCommentNode()
     tagCollectionNode = TagCollectionNode()
@@ -386,19 +371,6 @@ extension BaseCardPostNode {
     let layoutSpec = ASBackgroundLayoutSpec(child: insetLayoutSpec, background: backgroundNodeInset)
 
     return layoutSpec
-  }
-
-  private func commentSummaryLayoutSpecs() -> ASStackLayoutSpec {
-    let contentSideInsets = internalInset().left
-    let commentSummarySideSpace = shouldShowCommentSummaryNode ? contentSideInsets : 0
-    let commentSummaryInset = ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: commentSummarySideSpace, bottom: 0, right: commentSummarySideSpace), child: commentsSummaryNode)
-
-    let commentSummaryVerticalStack = ASStackLayoutSpec(direction: .vertical,
-                                                        spacing: 0,
-                                                        justifyContent: .start,
-                                                        alignItems: .stretch,
-                                                        children: [spacer(height: contentSpacing), commentSummaryInset, spacer(height: contentSpacing)])
-    return commentSummaryVerticalStack
   }
 
   /**
