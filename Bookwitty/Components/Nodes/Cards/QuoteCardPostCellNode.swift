@@ -127,7 +127,6 @@ extension QuoteCardPostCellNode: QuoteCardViewModelDelegate {
     if let quote = values.content.quote {
       node.articleQuote = "“ \(quote) ”"
     }
-    articleCommentsSummary = values.content.comments
     setWitValue(witted: values.content.wit.is)
     actionInfoValue = values.content.wit.info
     topComment = values.content.topComment

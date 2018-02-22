@@ -236,7 +236,6 @@ extension TopicCardPostCellNode: TopicCardViewModelDelegate {
     node.imageUrl = values.content.image.cover
     node.subImageUrl = values.content.image.thumbnail
     node.setTopicStatistics(numberOfPosts: values.content.statistics.posts, numberOfBooks: values.content.statistics.relatedBooks, numberOfFollowers: values.content.statistics.followers)
-    articleCommentsSummary = values.content.comments
     setFollowingValue(following: values.content.following)
     setWitValue(witted: values.content.wit.is)
     actionInfoValue = values.content.wit.info

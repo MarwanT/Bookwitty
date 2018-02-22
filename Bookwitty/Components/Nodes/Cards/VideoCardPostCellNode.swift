@@ -222,7 +222,6 @@ extension VideoCardPostCellNode: VideoCardViewModelDelegate {
     node.articleDescription = values.content.description
     node.videoUrl = values.content.properties.url
     node.imageUrl = values.content.properties.thumbnail
-    articleCommentsSummary = values.content.comments
     setWitValue(witted: values.content.wit.is)
     actionInfoValue = values.content.wit.info
     topComment = values.content.topComment
