@@ -47,6 +47,7 @@ class CommentCompactNode: ASCellNode {
     messageNode.backgroundColor = UIColor.clear
     messageNode.width = UIScreen.main.bounds.width
     messageNode.maxNumberOfLines = 2
+    messageNode.delegate = self
 
     overlayNode.addTarget(self, action: #selector(nodeTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
@@ -106,6 +107,15 @@ class CommentCompactNode: ASCellNode {
 
   var messageInset: UIEdgeInsets {
     return UIEdgeInsets(top: 5.0, left: 5.0, bottom: 2.0, right: 5.0)
+  }
+}
+
+extension CommentCompactNode: DTAttributedTextContentNodeDelegate {
+  func attributedTextContentNode(node: ASCellNode, button: DTLinkButton, didTapOnLink link: URL) {
+  }
+
+  func attributedTextContentNodeNeedsLayout(node: ASCellNode) {
+    self.setNeedsLayout()
   }
 }
 
