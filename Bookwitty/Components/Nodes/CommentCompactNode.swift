@@ -74,10 +74,7 @@ class CommentCompactNode: ASCellNode {
     fullNameNode.attributedText = fullNameAttributedString
     fullNameNode.setNeedsLayout()
 
-    let commentAttributedString = messageNode.htmlAttributedString(text: message, fontDynamicType: .body, color: ThemeManager.shared.currentTheme.defaultTextColor())
-      ?? NSAttributedString(string: message)
-
-    messageNode.set(attributedString: commentAttributedString)
+    messageNode.htmlString(text: message, fontDynamicType: .body, color: ThemeManager.shared.currentTheme.defaultTextColor())
     messageNode.setNeedsLayout()
   }
 
