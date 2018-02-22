@@ -161,7 +161,7 @@ class ContentEditorViewController: UIViewController {
     presentConfirmSaveOrDiscardActionSheet { (option: ContentEditorViewController.ConfirmationOption, success: Bool) in
       switch option {
       case .saveDraft where success: fallthrough
-      case .discardPost where success: fallthrough
+      case .discardChanges where success: fallthrough
       case .nonNeeded:
         self.dismiss()
       default:
@@ -569,7 +569,7 @@ extension ContentEditorViewController: Localizable {
 extension ContentEditorViewController {
   enum ConfirmationOption {
     case saveDraft
-    case discardPost
+    case discardChanges
     case goBack
     case nonNeeded
   }
@@ -605,32 +605,25 @@ extension ContentEditorViewController {
         return
       }
       
-      let alertController: UIAlertController
+      let alertTitle = self.mode.isEditing ? Strings.discard_changes_confirmation_question() : Strings.save_draft_changes()
+      let alertController = UIAlertController(title: alertTitle, message: nil, preferredStyle: .actionSheet)
+      
       if self.mode.isEditing {
-        alertController = UIAlertController(title: Strings.save_post_changes(), message: nil, preferredStyle: .actionSheet)
-        let discardChanges = UIAlertAction(title: Strings.discard_changes(), style: .default, handler: {
-          _ in
-          self.dismiss(animated: true, completion: nil)
-        })
-        alertController.addAction(discardChanges)
-        
+        // Editing a published post
       } else {
-        alertController = UIAlertController(title: Strings.save_this_post_draft(), message: nil, preferredStyle: .actionSheet)
-        let saveDraft = UIAlertAction(title: Strings.save_draft(), style: .default, handler: {
-          _ in
-          self.savePostAsDraft({
-            (success: Bool) in
+        // Editing a draft
+        let saveDraft = UIAlertAction(
+          title: Strings.save_draft(), style: .default, handler: { _ in
+          self.savePostAsDraft({ (success: Bool) in
             closure(.saveDraft, success)
           })
         })
         alertController.addAction(saveDraft)
       }
-      let discardPost = UIAlertAction(title: Strings.discard_post(), style: .destructive, handler: {
-        _ in
-        self.discardPost({
-          (success: Bool) in
-          closure(.discardPost, success)
-        })
+      
+      let discardPost = UIAlertAction(
+        title: Strings.discard_changes(), style: .destructive, handler: { _ in
+        closure(.discardChanges, true)
       })
       
       let goBack = UIAlertAction(title: Strings.go_back(), style: .cancel, handler: {
@@ -759,7 +752,7 @@ extension ContentEditorViewController: DraftsViewControllerDelegate {
       self.presentConfirmSaveOrDiscardActionSheet { (option: ContentEditorViewController.ConfirmationOption, success: Bool) in
         switch option {
         case .saveDraft where success: fallthrough
-        case .discardPost where success: fallthrough
+        case .discardChanges where success: fallthrough
         case .nonNeeded:
           self.viewModel.set(draft)
           self.loadUIFromPost()

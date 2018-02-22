@@ -74,6 +74,7 @@
 "delete_post_confirmation_message" = "Êtes-vous sur de vouloir supprimer cette publication ?";
 "delete_post_success_message" = "Votre publication a été supprimée";
 "discard_changes" = "Discard Changes";
+"discard_changes_confirmation_question" = "Are you sure you want to discard your changes?";
 "discard_post" = "Discard Post";
 "discover" = "Découvrir";
 "discover_banner_message" = "Chaque jour, retrouvez ici les meilleurs articles de la communauté Bookwitty";
@@ -222,6 +223,7 @@
 "reset_password_text" = "Dans quelques instants, vous recevrez un e-mail pour réinitialiser votre mot de passe.";
 "save_as_draft" = "Save as draft";
 "save_draft" = "Save Draft";
+"save_draft_changes" = "Save draft changes?";
 "save_post_changes" = "Save Post changes ?";
 "save_this_post_draft" = "Save this Post as a Draft ?";
 "search_placeholder" = "Rechercher ";
