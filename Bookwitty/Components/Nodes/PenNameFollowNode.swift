@@ -111,6 +111,7 @@ class PenNameFollowNode: ASCellNode {
     nameNode.maximumNumberOfLines = 1
 
     biographyNode.maxCharacter = enlarged ? 120 : -1
+    biographyNode.nodeDelegate = enlarged ? self : nil
     biographyNode.maximumNumberOfLines = enlarged ? 100 : 3
     biographyNode.autoChange = enlarged
     biographyNode.truncationMode = NSLineBreakMode.byTruncatingTail
@@ -216,6 +217,12 @@ class PenNameFollowNode: ASCellNode {
                                          children: showBottomSeparator ? [insetSpec, separatorNodeInset] : [insetSpec])
 
     return parentVerticalSpec
+  }
+}
+
+extension PenNameFollowNode : CharacterLimitedTextNodeDelegate {
+  func characterLimitedTextNodeDidTap(_ node: CharacterLimitedTextNode) {
+    //Toggle is happening now do anything if needed
   }
 }
 
