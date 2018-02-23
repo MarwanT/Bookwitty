@@ -26,7 +26,7 @@ class PenNameFollowNode: ASCellNode {
 
   private var imageNode: ASNetworkImageNode
   private var nameNode: ASTextNode
-  private var biographyNode: ASTextNode
+  private var biographyNode: CharacterLimitedTextNode
   private var actionButton: ButtonWithLoader
   private var moreButton: ASButtonNode
   private let separatorNode: ASDisplayNode
@@ -38,7 +38,7 @@ class PenNameFollowNode: ASCellNode {
   private override init() {
     imageNode = ASNetworkImageNode()
     nameNode = ASTextNode()
-    biographyNode = ASTextNode()
+    biographyNode = CharacterLimitedTextNode()
     actionButton = ButtonWithLoader()
     moreButton = ASButtonNode()
     separatorNode = ASDisplayNode()
@@ -71,11 +71,7 @@ class PenNameFollowNode: ASCellNode {
 
   var biography: String? {
     didSet {
-      if let biography = biography {
-        biographyNode.attributedText = AttributedStringBuilder(fontDynamicType: enlarged ? .caption1 : .caption2)
-          .append(text: biography, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
-        setNeedsLayout()
-      }
+      setBiography(biography: biography)
     }
   }
 
@@ -113,10 +109,14 @@ class PenNameFollowNode: ASCellNode {
     imageNode.animatedImagePaused = true
 
     nameNode.maximumNumberOfLines = 1
-    biographyNode.maximumNumberOfLines = enlarged ? 5 : 3
+
+    biographyNode.maxCharacter = enlarged ? 120 : -1
+    biographyNode.maximumNumberOfLines = enlarged ? 100 : 3
+    biographyNode.autoChange = enlarged
+    biographyNode.truncationMode = NSLineBreakMode.byTruncatingTail
 
     nameNode.truncationMode = NSLineBreakMode.byTruncatingTail
-    biographyNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
 
     let buttonFont = FontDynamicType.subheadline.font
     let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()
@@ -149,6 +149,11 @@ class PenNameFollowNode: ASCellNode {
     separatorNode.style.flexGrow = 1
     separatorNode.isLayerBacked = true
     separatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
+  }
+
+  private func setBiography(biography: String?) {
+    biographyNode.setString(text: biography, fontDynamicType: enlarged ? .caption1 : .caption2, color: ThemeManager.shared.currentTheme.defaultTextColor())
+    setNeedsLayout()
   }
 
   func updateMode(disabled: Bool) {
