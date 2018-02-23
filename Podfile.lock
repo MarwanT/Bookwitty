@@ -164,7 +164,7 @@ CHECKOUT OPTIONS:
     :git: git@gitlab.help-counter.com:ios-libraries/ContentEditor.git
     :submodules: true
   RichEditorView:
-    :commit: c732167faa73c32cfa077b4c437f8d5ecb8a496a
+    :commit: 8f381942ecda5b77800f73f4204febca5052ed66
     :git: git@github.com:Keeward/RichEditorView.git
   Spine:
     :git: https://github.com/Keeward/Spine.git
