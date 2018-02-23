@@ -11,7 +11,7 @@ import Foundation
 typealias PostPreviewDefaultValues = (title: String, description: String?, fallbackDescription: String?, image: String?)
 
 final class PostPreviewViewModel {
-  fileprivate var maximumImageDataCount: Int = 12582912
+  fileprivate var maximumImageDataCount: Int = 3145728
   
   var candidatePost: CandidatePost!
   var defaultValues: PostPreviewDefaultValues!
