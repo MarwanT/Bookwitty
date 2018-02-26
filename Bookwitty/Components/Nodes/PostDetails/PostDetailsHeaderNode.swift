@@ -22,7 +22,7 @@ class PostDetailsHeaderNode: ASCellNode {
 
   fileprivate let imageNode: ASNetworkImageNode
   fileprivate let textNode: ASTextNode
-  let profileBarNode: PenNameFollowNode
+  let profileBarNode: CompactPenNameNode
   fileprivate let actionInfoNode: ASTextNode
   fileprivate let separator: ASDisplayNode
   fileprivate let bottomSeparator: ASDisplayNode
@@ -41,20 +41,13 @@ class PostDetailsHeaderNode: ASCellNode {
   }
   var date: String? {
     didSet {
-      profileBarNode.biography = date
+      profileBarNode.date = date
     }
   }
   var penName: PenName? {
     didSet {
       profileBarNode.penName = penName?.name
       profileBarNode.imageUrl = penName?.avatarUrl
-      profileBarNode.following = penName?.following ?? false
-      var sowMoreButton = true
-      if let penName = penName {
-         sowMoreButton = !UserManager.shared.isMy(penName: penName)
-      }
-
-      profileBarNode.showMoreButton = sowMoreButton
     }
   }
 
@@ -74,7 +67,7 @@ class PostDetailsHeaderNode: ASCellNode {
   override init() {
     imageNode = ASNetworkImageNode()
     textNode = ASTextNode()
-    profileBarNode = PenNameFollowNode(largePadding: true)
+    profileBarNode = CompactPenNameNode()
     actionInfoNode = ASTextNode()
     separator = ASDisplayNode()
     bottomSeparator = ASDisplayNode()
