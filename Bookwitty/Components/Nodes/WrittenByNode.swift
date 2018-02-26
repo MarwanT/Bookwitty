@@ -7,3 +7,8 @@
 //
 
 import Foundation
+import AsyncDisplayKit
+
+class WrittenByNode: ASCellNode {
+
+}
