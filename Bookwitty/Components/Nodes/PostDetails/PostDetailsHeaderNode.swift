@@ -135,7 +135,9 @@ class PostDetailsHeaderNode: ASCellNode {
                     textInsetSpec, ASLayoutSpec.spacer(height: contentSpacing)]
     } else {
       nodesArray = [imageNode, ASLayoutSpec.spacer(height: contentSpacing),
-                    textInsetSpec, profileBarNode]
+                    textInsetSpec, ASLayoutSpec.spacer(height: contentSpacing),
+                    profileBarNode, ASLayoutSpec.spacer(height: contentSpacing),
+                    ASInsetLayoutSpec(insets: sidesEdgeInset(), child: profileNodeSeparator)]
     }
 
     if actionNodes.count > 0 {
