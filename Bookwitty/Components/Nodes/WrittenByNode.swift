@@ -23,5 +23,6 @@ class WrittenByNode: ASCellNode {
     biographyNode = ASTextNode()
     followButton = ButtonWithLoader()
     super.init()
+    automaticallyManagesSubnodes = true
   }
 }
