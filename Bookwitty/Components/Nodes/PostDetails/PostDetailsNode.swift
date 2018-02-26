@@ -108,7 +108,12 @@ class PostDetailsNode: ASScrollNode {
   }
   var penName: PenName? {
     didSet {
+      //Set the Header data
       headerNode.penName = penName
+      //Set the Written By data
+      updateWrittenBy(penName: penName)
+
+      setNeedsLayout()
     }
   }
 
@@ -290,6 +295,24 @@ class PostDetailsNode: ASScrollNode {
     
     commentsNode.displayMode = .compact
     commentsNode.delegate = self
+  }
+
+  private func updateWrittenBy(penName: PenName?) {
+    var postInfoData: CardPostInfoNodeData? = nil
+    var biography: String? = nil
+    var following: Bool = false
+    if let penName = penName {
+      let name = penName.name ?? ""
+      let followers = penName.counts?.followers ?? 0
+      let imageUrl = penName.avatarUrl ?? ""
+      postInfoData = CardPostInfoNodeData(name, Strings.followers(number: followers), imageUrl)
+      biography = penName.biography
+      following = penName.following
+    }
+    //Set the WrittenBy Section data
+    writtenByNode.postInfoData = postInfoData
+    writtenByNode.biography = biography
+    writtenByNode.following = following
   }
 
   func setBannerImage() {
