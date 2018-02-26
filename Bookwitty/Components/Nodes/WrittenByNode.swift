@@ -101,3 +101,23 @@ extension WrittenByNode : ButtonWithLoaderDelegate {
       delegate?.writtenByNode(node: self, followButtonTouchUpInside: buttonWithLoader)
   }
 }
+
+//MARK: - Helper Functions
+extension WrittenByNode {
+  fileprivate func topStackInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0.0, left: internalMargin,
+                        bottom: 0.0, right: internalMargin)
+  }
+
+  fileprivate func bottomStackInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0.0,
+                        left: internalMargin + userProfileImageDimension + externalMargin,
+                        bottom: 0.0,
+                        right: internalMargin)
+  }
+
+  fileprivate func outerStackInset() -> UIEdgeInsets {
+    return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0,
+                        right: 0.0)
+  }
+}
