@@ -24,5 +24,15 @@ class WrittenByNode: ASCellNode {
     followButton = ButtonWithLoader()
     super.init()
     automaticallyManagesSubnodes = true
+    setup()
+  }
+
+  private func setup() {
+    //TODO: Setup the node
+  }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    //TODO: layout elements
+    return ASStackLayoutSpec.vertical()
   }
 }
