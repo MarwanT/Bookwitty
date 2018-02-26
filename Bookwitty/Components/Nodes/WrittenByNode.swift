@@ -14,7 +14,11 @@ protocol WrittenByNodeDelegate: class {
 }
 
 class WrittenByNode: ASCellNode {
-  private let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
+  fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+  fileprivate let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
+  fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
+  fileprivate let userProfileImageDimension: CGFloat = 45.0
   let titleNode: ASTextNode
   let titleSeparatorNode: ASDisplayNode
   let headerNode: CardPostInfoNode
