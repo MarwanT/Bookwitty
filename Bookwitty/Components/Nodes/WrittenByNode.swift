@@ -26,6 +26,12 @@ class WrittenByNode: ASCellNode {
     }
   }
 
+  var following: Bool = false {
+    didSet {
+      followButton.state = self.following ? .selected : .normal
+    }
+  }
+
   override init() {
     titleNode = ASTextNode()
     titleSeparatorNode = ASDisplayNode()
