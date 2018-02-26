@@ -388,6 +388,11 @@ extension ContentEditorViewController {
     // Weird behavior when resuming editing
     editorView.backupRange()
     
+    // Resign the editor as responder for in most cases, upon showing another
+    // vc on top of this one, when we come back to this vc on top
+    // the keyboard is dismissed but the toolbar is still visible
+    resignResponders()
+    
     switch destination {
     case .richContentMenu:
       presentRichContentMenuViewController()
