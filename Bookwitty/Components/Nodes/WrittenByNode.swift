@@ -80,7 +80,7 @@ class WrittenByNode: ASCellNode {
     titleSeparatorNode.isLayerBacked = true
     titleSeparatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
 
-    titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title4)
+    titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title3)
       .append(text: Strings.written_by(), color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
 
   }
