@@ -9,6 +9,10 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol WrittenByNodeDelegate: class {
+  func writtenByNode(node: WrittenByNode, followButtonTouchUpInside button: ButtonWithLoader)
+}
+
 class WrittenByNode: ASCellNode {
   private let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
   let titleNode: ASTextNode
