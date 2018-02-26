@@ -25,6 +25,7 @@ class PostDetailsHeaderNode: ASCellNode {
   let profileBarNode: CompactPenNameNode
   fileprivate let actionInfoNode: ASTextNode
   fileprivate let separator: ASDisplayNode
+  fileprivate let profileNodeSeparator: ASDisplayNode
   fileprivate let bottomSeparator: ASDisplayNode
 
   var delegate: PostDetailsHeaderNodeDelegate?
@@ -71,6 +72,7 @@ class PostDetailsHeaderNode: ASCellNode {
     actionInfoNode = ASTextNode()
     separator = ASDisplayNode()
     bottomSeparator = ASDisplayNode()
+    profileNodeSeparator = ASDisplayNode()
     super.init()
     automaticallyManagesSubnodes = true
     initializeNode()
@@ -89,6 +91,8 @@ class PostDetailsHeaderNode: ASCellNode {
     separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     bottomSeparator.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 1.0)
     bottomSeparator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    profileNodeSeparator.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 1.0)
+    profileNodeSeparator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
 
     //Post Iamge
     imageNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 250.0)
