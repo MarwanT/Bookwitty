@@ -45,6 +45,7 @@ class PostDetailsHeaderNode: ASCellNode {
       profileBarNode.date = date
     }
   }
+
   var penName: PenName? {
     didSet {
       profileBarNode.penName = penName?.name
