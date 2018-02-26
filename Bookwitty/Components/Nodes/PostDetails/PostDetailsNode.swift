@@ -75,6 +75,7 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let relatedPostsBottomSeparator: SeparatorNode
   fileprivate let relatedPostsNodeLoader: LoaderNode
   fileprivate let bannerImageNode: ASImageNode
+  fileprivate let writtenByNode: WrittenByNode
   let commentsNode: CommentsNode
 
   let headerNode: PostDetailsHeaderNode
@@ -183,6 +184,7 @@ class PostDetailsNode: ASScrollNode {
     relatedBooksNodeLoader = LoaderNode()
     bannerImageNode = ASImageNode()
     commentsNode = CommentsNode()
+    writtenByNode = WrittenByNode()
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
@@ -215,6 +217,7 @@ class PostDetailsNode: ASScrollNode {
     relatedBooksNodeLoader = LoaderNode()
     bannerImageNode = ASImageNode()
     commentsNode = CommentsNode()
+    writtenByNode = WrittenByNode()
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
