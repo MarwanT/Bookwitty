@@ -154,6 +154,9 @@ class PostDetailsNode: ASScrollNode {
       }
     }
   }
+  var hasPenName: Bool {
+    return penName != nil
+  }
 
   override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
     headerNode = PostDetailsHeaderNode()
