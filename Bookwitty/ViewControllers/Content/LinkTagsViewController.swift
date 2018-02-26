@@ -35,6 +35,11 @@ class LinkTagsViewController: UIViewController {
     self.observeLanguageChanges()
   }
   
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    self.view.endEditing(true)
+  }
+  
   private func initializeComponents() {
     let theme = ThemeManager.shared.currentTheme
     
