@@ -37,6 +37,8 @@ class WrittenByNode: ASCellNode {
     }
   }
 
+  weak var delegate: WrittenByNodeDelegate?
+
   override init() {
     titleNode = ASTextNode()
     titleSeparatorNode = ASDisplayNode()
