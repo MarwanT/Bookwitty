@@ -10,5 +10,10 @@ import Foundation
 import AsyncDisplayKit
 
 class WrittenByNode: ASCellNode {
+  let titleNode: ASTextNode
+  let titleSeparatorNode: ASDisplayNode
+  let headerNode: CardPostInfoNode
+  let biographyNode: ASTextNode
+  let followButton: ButtonWithLoader
 
 }
