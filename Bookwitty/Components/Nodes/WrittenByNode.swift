@@ -68,6 +68,11 @@ class WrittenByNode: ASCellNode {
     followButton.style.height = ASDimensionMake(buttonSize.height)
     followButton.delegate = self
 
+    titleSeparatorNode.style.height = ASDimensionMake(1)
+    titleSeparatorNode.style.flexGrow = 1
+    titleSeparatorNode.isLayerBacked = true
+    titleSeparatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
+
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
