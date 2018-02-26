@@ -66,10 +66,19 @@ class WrittenByNode: ASCellNode {
     followButton.setTitle(title: Strings.following(), with: buttonFont, with: selectedTextColor, for: .selected)
     followButton.state = self.following ? .selected : .normal
     followButton.style.height = ASDimensionMake(buttonSize.height)
+    followButton.delegate = self
+
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     //TODO: layout elements
     return ASStackLayoutSpec.vertical()
+  }
+}
+
+//MARK" - ButtonWithLoader Delegate Implementation
+extension WrittenByNode : ButtonWithLoaderDelegate {
+  func buttonTouchUpInside(buttonWithLoader: ButtonWithLoader) {
+      delegate?.writtenByNode(node: self, followButtonTouchUpInside: buttonWithLoader)
   }
 }
