@@ -150,7 +150,7 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
   let headLineNode: ASTextNode
   let subheadLineNode: ASTextNode
   let captionNode: ASTextNode
-  let bodyNode: DTAttributedLabelNode
+  let bodyNode: CharacterLimitedTextNode
   let separator: ASDisplayNode
   let button: ASButtonNode
 
@@ -200,8 +200,14 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
   }
   var body: String? {
     didSet {
-      bodyNode.htmlString(text: body, fontDynamicType: .body)
-      setNeedsLayout()
+      if let body = body {
+        let bodyFromHtml = AttributedStringBuilder(fontDynamicType: FontDynamicType.body)
+        .append(text: body, fromHtml: true).attributedString.string
+        
+        bodyNode.setString(text: bodyFromHtml,
+                                fontDynamicType: .body,
+                                color: ThemeManager.shared.currentTheme.defaultTextColor())
+      }
     }
   }
   var buttonTitle: String? {
@@ -223,7 +229,7 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
     headLineNode = ASTextNode()
     subheadLineNode = ASTextNode()
     captionNode = ASTextNode()
-    bodyNode = DTAttributedLabelNode()
+    bodyNode = CharacterLimitedTextNode()
     separator = ASDisplayNode()
     button = ASButtonNode()
     super.init()
