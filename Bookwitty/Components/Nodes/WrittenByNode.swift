@@ -37,6 +37,13 @@ class WrittenByNode: ASCellNode {
     }
   }
 
+  var postInfoData: CardPostInfoNodeData? {
+    didSet {
+      headerNode.data = postInfoData
+      setNeedsLayout()
+    }
+  }
+
   weak var delegate: WrittenByNodeDelegate?
 
   override init() {
