@@ -80,6 +80,9 @@ class WrittenByNode: ASCellNode {
     titleSeparatorNode.isLayerBacked = true
     titleSeparatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
 
+    titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title4)
+      .append(text: Strings.written_by(), color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
