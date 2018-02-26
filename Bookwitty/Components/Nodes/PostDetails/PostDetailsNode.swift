@@ -53,6 +53,7 @@ protocol PostDetailsNodeDelegate: class {
 class PostDetailsNode: ASScrollNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+  fileprivate let sectionSpacing = ThemeManager.shared.currentTheme.sectionSpacing()
   fileprivate let horizontalCollectionNodeHeight: CGFloat = RelatedBooksMinimalCellNode.cellHeight
 
 
@@ -327,11 +328,6 @@ class PostDetailsNode: ASScrollNode {
     vStackSpec.children = [headerNode, ASLayoutSpec.spacer(height: contentSpacing),
                            descriptionInsetSpec, ASLayoutSpec.spacer(height: contentSpacing)]
 
-    if self.tags?.count ?? 0 > 0 {
-      let tagNodes: [ASLayoutElement] = [tagCollectionInsetSpec, ASLayoutSpec.spacer(height: contentSpacing)]
-      vStackSpec.children?.append(contentsOf: tagNodes)
-    }
-
     vStackSpec.children?.append(separatorInsetSpec)
 
     postItemsNodeLoader.updateLoaderVisibility(show: showPostsLoader)
@@ -353,7 +349,19 @@ class PostDetailsNode: ASScrollNode {
       vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
       vStackSpec.children?.append(conculsionInsetSpec)
     }
-    
+
+    if self.tags?.count ?? 0 > 0 {
+      let tagNodes: [ASLayoutElement] = [tagCollectionInsetSpec]
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(contentsOf: tagNodes)
+    }
+
+    if hasPenName {
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: sectionSpacing/2))
+      vStackSpec.children?.append(writtenByNode)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: sectionSpacing/2))
+    }
+
     if showCommentNode {
       let commentsWrapper = wrapNode(node: commentsNode, width: constrainedSize.max.width)
       vStackSpec.children?.append(commentsWrapper)
