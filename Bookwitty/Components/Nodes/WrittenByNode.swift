@@ -16,4 +16,12 @@ class WrittenByNode: ASCellNode {
   let biographyNode: ASTextNode
   let followButton: ButtonWithLoader
 
+  override init() {
+    titleNode = ASTextNode()
+    titleSeparatorNode = ASDisplayNode()
+    headerNode = CardPostInfoNode()
+    biographyNode = ASTextNode()
+    followButton = ButtonWithLoader()
+    super.init()
+  }
 }
