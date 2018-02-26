@@ -126,6 +126,11 @@ final class RichBookViewController: ASViewController<ASDisplayNode> {
     self.searchNode.becomeFirstResponder()
   }
   
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    self.view.endEditing(true)
+  }
+  
   private func loadNavigationBarButtons() {
     navigationItem.backBarButtonItem = UIBarButtonItem.back
     
