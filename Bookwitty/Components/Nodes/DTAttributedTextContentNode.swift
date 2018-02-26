@@ -174,6 +174,7 @@ extension DTAttributedLabelNode: DTAttributedTextContentViewDelegate {
     let size = attributedTextContentView.suggestedFrameSizeToFitEntireStringConstrainted(toWidth: style.preferredSize.width)
     let newSize = attributedTextContentView.sizeThatFits(size)
     style.preferredSize = newSize
+    computedHeight = newSize.height
     setNeedsLayout()
     delegate?.attributedTextContentNodeNeedsLayout(node: self)
   }
@@ -199,6 +200,9 @@ extension DTAttributedLabelNode: DTAttributedTextContentViewDelegate {
  * 
  * Use Only width and maxNumberOfLines to adjus the size of the node
  * Note: Using style.* will have no effect
+ * Use: .maxNumberOfLines for max lines and Height
+ * Use: .width for max width
+ * Note: You can not use the height directly
  **/
 
 class DTAttributedLabelNode: ASCellNode {
@@ -213,13 +217,19 @@ class DTAttributedLabelNode: ASCellNode {
   }
   var width: CGFloat = 0.0 {
     didSet {
-      style.preferredSize = CGSize(width: width, height: maxHeight)
+      style.preferredSize = CGSize(width: width, height: height)
     }
+  }
+
+  fileprivate var computedHeight: CGFloat = 0.0
+  
+  private var height: CGFloat {
+    return computedHeight == 0.0 ? maxHeight : computedHeight
   }
   private var maxHeight: CGFloat = 0.0 {
     didSet {
       //Height will be updated [shrinked if needed] when html is ready
-      style.preferredSize = CGSize(width: width, height: maxHeight)
+      style.preferredSize = CGSize(width: width, height: height)
     }
   }
   private var fontLineHeight: CGFloat = FontDynamicType.body.font.lineHeight

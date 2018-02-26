@@ -252,7 +252,6 @@ extension LinkCardPostCellNode: LinkCardViewModelDelegate {
     node.articleDescription = values.content.description
     node.imageNode.url = URL(string: values.content.imageUrl ?? "")
     node.linkUrl = values.content.linkUrl
-    articleCommentsSummary = values.content.comments
     setWitValue(witted: values.content.wit.is)
     actionInfoValue = values.content.wit.info
     topComment = values.content.topComment

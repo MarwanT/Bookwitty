@@ -216,7 +216,6 @@ extension ReadingListCardPostCellNode: ReadingListCardViewModelDelegate {
     node.articleTitle = values.content.title
     node.articleDescription = values.content.description
     node.setTopicStatistics(numberOfPosts: values.content.statistics.posts, numberOfBooks: values.content.statistics.relatedBooks, numberOfFollowers: values.content.statistics.followers)
-    articleCommentsSummary = values.content.comments
     setWitValue(witted: values.content.wit.is)
     actionInfoValue = values.content.wit.info
     topComment = values.content.topComment

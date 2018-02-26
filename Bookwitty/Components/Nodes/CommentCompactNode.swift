@@ -45,13 +45,9 @@ class CommentCompactNode: ASCellNode {
     fullNameNode.style.flexShrink = 1.0
 
     messageNode.backgroundColor = UIColor.clear
-
-    messageNode.style.flexGrow = 1.0
-    messageNode.style.flexShrink = 1.0
-
-    self.style.preferredSize = CGSize(width: 45.0, height: 60.0)
-
-    messageNode.maxNumberOfLines = 1
+    messageNode.width = UIScreen.main.bounds.width
+    messageNode.maxNumberOfLines = 2
+    messageNode.delegate = self
 
     overlayNode.addTarget(self, action: #selector(nodeTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
@@ -78,10 +74,7 @@ class CommentCompactNode: ASCellNode {
     fullNameNode.attributedText = fullNameAttributedString
     fullNameNode.setNeedsLayout()
 
-    let commentAttributedString = messageNode.htmlAttributedString(text: message, fontDynamicType: .body, color: ThemeManager.shared.currentTheme.defaultTextColor())
-      ?? NSAttributedString(string: message)
-
-    messageNode.set(attributedString: commentAttributedString)
+    messageNode.htmlString(text: message, fontDynamicType: .body, color: ThemeManager.shared.currentTheme.defaultTextColor())
     messageNode.setNeedsLayout()
   }
 
@@ -111,6 +104,16 @@ class CommentCompactNode: ASCellNode {
 
   var messageInset: UIEdgeInsets {
     return UIEdgeInsets(top: 5.0, left: 5.0, bottom: 2.0, right: 5.0)
+  }
+}
+
+extension CommentCompactNode: DTAttributedTextContentNodeDelegate {
+  func attributedTextContentNode(node: ASCellNode, button: DTLinkButton, didTapOnLink link: URL) {
+    WebViewController.present(url: link)
+  }
+
+  func attributedTextContentNodeNeedsLayout(node: ASCellNode) {
+    self.setNeedsLayout()
   }
 }
 
