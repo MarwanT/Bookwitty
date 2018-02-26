@@ -90,8 +90,39 @@ class WrittenByNode: ASCellNode {
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-    //TODO: layout elements
-    return ASStackLayoutSpec.vertical()
+    //TOP
+    let topVStack = ASStackLayoutSpec(direction: .vertical,
+                                      spacing: 0.0,
+                                      justifyContent: .start,
+                                      alignItems: .stretch,
+                                      children: [titleNode])
+    let topVStackInset = ASInsetLayoutSpec(insets: topStackInset(), child: topVStack)
+
+    //BOTOM
+    let bottomVStaskChildren: [ASLayoutElement] = [biographyNode, followButton]
+    let bottomVStack = ASStackLayoutSpec(direction: .vertical,
+                                         spacing: contentSpacing,
+                                         justifyContent: .start,
+                                         alignItems: .stretch,
+                                         children: bottomVStaskChildren)
+    let bottomVStackInset = ASInsetLayoutSpec(insets: bottomStackInset(),
+                                              child: bottomVStack)
+
+    //OUTTER SHELL
+    let outerVStaskChildren: [ASLayoutElement] = [topVStackInset,
+                                                   ASLayoutSpec.spacer(height: externalMargin),
+                                                   titleSeparatorNode,
+                                                   ASLayoutSpec.spacer(height: externalMargin/2),
+                                                   headerNode,
+                                                   bottomVStackInset]
+    let outerVStack = ASStackLayoutSpec(direction: .vertical,
+                                         spacing: 0.0,
+                                         justifyContent: .start,
+                                         alignItems: .stretch,
+                                         children: outerVStaskChildren)
+
+    return ASInsetLayoutSpec(insets: outerStackInset(),
+                             child: outerVStack)
   }
 }
 
