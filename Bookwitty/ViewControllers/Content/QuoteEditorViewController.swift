@@ -41,6 +41,11 @@ class QuoteEditorViewController: UIViewController {
     observeLanguageChanges()
     self.quoteTextView.becomeFirstResponder()
   }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    self.view.endEditing(true)
+  }
 
   override func updateViewConstraints() {
     var insets = quoteTextView.textContainerInset
