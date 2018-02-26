@@ -274,8 +274,8 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
     imageNode.contentMode = .scaleToFill
 
     //Body Setup
-    bodyNode.delegate = self
     bodyNode.maxCharacter = 120
+    bodyNode.nodeDelegate = self
     bodyNode.maximumNumberOfLines = 0
     bodyNode.truncationMode = NSLineBreakMode.byTruncatingTail
 
@@ -359,5 +359,11 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
     outerVStackChildren.append(separator)
     outerMostVStack.children = outerVStackChildren
     return ASInsetLayoutSpec(insets: UIEdgeInsets(top: largeVerticalSpacing, left: internalMargin, bottom: 0, right: internalMargin), child: outerMostVStack)
+  }
+}
+
+extension PostDetailItemNode : CharacterLimitedTextNodeDelegate {
+  func characterLimitedTextNodeDidTap(_ node: CharacterLimitedTextNode) {
+    //Toggle is happening now do anything if needed
   }
 }
