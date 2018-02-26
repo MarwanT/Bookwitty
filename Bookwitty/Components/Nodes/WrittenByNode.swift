@@ -126,10 +126,10 @@ class WrittenByNode: ASCellNode {
   }
 }
 
-//MARK" - ButtonWithLoader Delegate Implementation
+//MARK: - ButtonWithLoader Delegate Implementation
 extension WrittenByNode : ButtonWithLoaderDelegate {
   func buttonTouchUpInside(buttonWithLoader: ButtonWithLoader) {
-      delegate?.writtenByNode(node: self, followButtonTouchUpInside: buttonWithLoader)
+    delegate?.writtenByNode(node: self, followButtonTouchUpInside: buttonWithLoader)
   }
 }
 
