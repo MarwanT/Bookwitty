@@ -23,6 +23,17 @@ class Topic: Resource {
   var counts: Counts?
 
   @objc
+  private var reportedAsSpam: NSNumber?
+  var isReported: Bool? {
+    get {
+      return ((reportedAsSpam?.intValue ?? 0) == 1)
+    }
+    set {
+      reportedAsSpam = NSNumber(value: newValue ?? false)
+    }
+  }
+
+  @objc
   private var topCommentsCollection: LinkedResourceCollection?
   lazy var topComments: [Comment]? = {
     return self.topCommentsCollection?.resources as? [Comment]
@@ -65,6 +76,7 @@ class Topic: Resource {
       "counts" : CountsAttribute().serializeAs("counts"),
       "title": Attribute().serializeAs("title"),
       "followingNumber": Attribute().serializeAs("following"),
+      "reportedAsSpam": BooleanAttribute().serializeAs("reported-as-spam"),
       "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name"),
       "contributorsCollection" : ToManyRelationship(PenName.self).serializeAs("contributors"),
       "topCommentsCollection" : ToManyRelationship(Comment.self).serializeAs("top-comments")

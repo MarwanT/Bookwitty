@@ -25,6 +25,17 @@ class Author: Resource {
   var penName: PenName?
   var vote: String?
   var counts: Counts?
+
+  @objc
+  private var reportedAsSpam: NSNumber?
+  var isReported: Bool? {
+    get {
+      return ((reportedAsSpam?.intValue ?? 0) == 1)
+    }
+    set {
+      reportedAsSpam = NSNumber(value: newValue ?? false)
+    }
+  }
   
   @objc
   private var followingNumber: NSNumber?
@@ -67,6 +78,7 @@ class Author: Resource {
       "shortDescription": Attribute().serializeAs("short-description"),
       "profileImageUrl": Attribute().serializeAs("profile-image-url"),
       "followingNumber": Attribute().serializeAs("following"),
+      "reportedAsSpam": BooleanAttribute().serializeAs("reported-as-spam"),
       "type": Attribute().serializeAs("type"),
       "contributorsCollection" : ToManyRelationship(PenName.self).serializeAs("contributors"),
       "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name")

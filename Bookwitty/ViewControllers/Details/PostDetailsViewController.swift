@@ -1051,7 +1051,7 @@ extension PostDetailsViewController {
 extension PostDetailsViewController {
   func actionForCard(resource: ModelResource?) {
     guard let resource = resource,
-      !DataManager.shared.isReported(resource) else {
+      DataManager.shared.isReported(resource) == .not else {
       return
     }
     let registeredType = resource.registeredResourceType
@@ -1347,6 +1347,10 @@ extension PostDetailsViewController: ActionBarNodeDelegate {
       let identifier = resource.id else { return }
 
     let actions: [MoreAction] = MoreAction.actions(for: resource)
-    self.showMoreActionSheet(identifier: identifier, actions: actions, completion: {_ in})
+    self.showMoreActionSheet(identifier: identifier, actions: actions, completion: { (success: Bool, action: MoreAction) in
+      if case MoreAction.report(.content) = action {
+        self.navigationController?.popViewController(animated: true)
+      }
+    })
   }
 }

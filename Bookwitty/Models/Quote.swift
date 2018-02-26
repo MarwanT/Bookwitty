@@ -24,6 +24,17 @@ class Quote: Resource {
   var counts: Counts?
 
   @objc
+  private var reportedAsSpam: NSNumber?
+  var isReported: Bool? {
+    get {
+      return ((reportedAsSpam?.intValue ?? 0) == 1)
+    }
+    set {
+      reportedAsSpam = NSNumber(value: newValue ?? false)
+    }
+  }
+  
+  @objc
   private var topVotesCollection: LinkedResourceCollection?
   lazy var topVotes: [Vote]? = {
     return self.topVotesCollection?.resources as? [Vote]
@@ -61,6 +72,7 @@ class Quote: Resource {
       "title": Attribute().serializeAs("title"),
       "type": Attribute().serializeAs("type"),
       "author": Attribute().serializeAs("author"),
+      "reportedAsSpam": BooleanAttribute().serializeAs("reported-as-spam"),
       "counts" : CountsAttribute().serializeAs("counts"),
       "penName" : ToOneRelationship(PenName.self).serializeAs("pen-name"),
       "topVotesCollection" : ToManyRelationship(PenName.self).serializeAs("top-votes"),

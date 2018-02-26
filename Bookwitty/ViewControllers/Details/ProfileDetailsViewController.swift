@@ -214,12 +214,15 @@ extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
     
     let penNameIdentifier: String
     let penNameResource: PenName
+    let shouldPopController: Bool
+
     if penNameHeaderNode === node {
       guard let identifier = viewModel.penName.id else {
         return
       }
       penNameIdentifier = identifier
       penNameResource = viewModel.penName
+      shouldPopController = true
     } else {
       guard let indexPath = collectionNode.indexPath(for: node),
         let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment),
@@ -229,12 +232,15 @@ extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
       }
       penNameIdentifier = identifier
       penNameResource = penName
+      shouldPopController = false
     }
 
     let actions: [MoreAction] = MoreAction.actions(for: penNameResource as? ModelCommonProperties)
     self.showMoreActionSheet(identifier: penNameIdentifier, actions: actions, completion: {
       (success: Bool, action: MoreAction) in
-
+      if case MoreAction.report(.penName) = action, shouldPopController {
+        self.navigationController?.popViewController(animated: true)
+      }
     })
   }
 }
@@ -642,7 +648,7 @@ extension ProfileDetailsViewController {
 
   fileprivate func actionForCard(resource: ModelResource?) {
     guard let resource = resource,
-      !DataManager.shared.isReported(resource) else {
+      DataManager.shared.isReported(resource) == .not else {
       return
     }
     let registeredType = resource.registeredResourceType
