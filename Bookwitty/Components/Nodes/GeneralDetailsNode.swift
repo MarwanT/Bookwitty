@@ -42,7 +42,7 @@ class GeneralDetailsNode: ASCellNode {
   func initializeNode() {
     automaticallyManagesSubnodes = true
     
-    headerNode.setTitle(title: section, verticalBarColor: configuration.headerVerticalBarColor, horizontalBarColor: configuration.headerHorizontalBarColor)
+    headerNode.setTitle(title: section, colorSet: configuration.colorSet)
 
     descriptionTextNode.delegate = self
     descriptionTextNode.width = UIScreen.main.bounds.width - (configuration.descriptionTextEdgeInsets.left + configuration.descriptionTextEdgeInsets.right)
@@ -103,7 +103,7 @@ class GeneralDetailsNode: ASCellNode {
 
     descriptionTextNode.maxNumberOfLines = dispayMode == .compact ? Int(configuration.compactMaximumNumberOfLines) : 100
     descriptionTextNode.htmlString(text: text, fontDynamicType: FontDynamicType.body)
-    headerNode.setTitle(title: section, verticalBarColor: configuration.headerVerticalBarColor, horizontalBarColor: configuration.headerHorizontalBarColor)
+    headerNode.setTitle(title: section, verticalBarColor: configuration.colorSet.shades.dark, horizontalBarColor: configuration.colorSet.shades.light)
     setNeedsLayout()
   }
 }
@@ -111,8 +111,6 @@ class GeneralDetailsNode: ASCellNode {
 extension GeneralDetailsNode {
   struct Configuration {
     fileprivate let defaultTextColor = ThemeManager.shared.currentTheme.defaultTextColor()
-    fileprivate let headerVerticalBarColor = ThemeManager.shared.currentTheme.colorNumber6()
-    fileprivate let headerHorizontalBarColor = ThemeManager.shared.currentTheme.colorNumber5()
     fileprivate let compactMaximumNumberOfLines: UInt = 6
     fileprivate var externalEdgeInsets = UIEdgeInsets.zero
     fileprivate let descriptionTextEdgeInsets = UIEdgeInsets(
@@ -122,6 +120,7 @@ extension GeneralDetailsNode {
     fileprivate let topSeparatorEdgeInsets = UIEdgeInsets(
       top: 0, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: 0, right: 0)
+    var colorSet: SectionTitleHeaderNode.ColorSet = .yellow
   }
   
   enum DisplayMode {
