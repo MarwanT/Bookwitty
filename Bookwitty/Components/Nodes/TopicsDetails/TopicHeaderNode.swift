@@ -23,6 +23,7 @@ class TopicHeaderNode: ASCellNode {
   private var coverImageNode: ASNetworkImageNode
   private var thumbnailImageNode: ASNetworkImageNode
   private var titleNode: ASTextNode
+  private var descriptionNode: CharacterLimitedTextNode
   private var topicStatsNode: ASTextNode
   private var contributorsNode: ContributorsNode
 
@@ -32,6 +33,7 @@ class TopicHeaderNode: ASCellNode {
     coverImageNode = ASNetworkImageNode()
     thumbnailImageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
+    descriptionNode = CharacterLimitedTextNode()
     topicStatsNode = ASTextNode()
     contributorsNode = ContributorsNode()
     super.init()
