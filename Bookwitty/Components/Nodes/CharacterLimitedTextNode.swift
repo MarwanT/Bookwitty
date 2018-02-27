@@ -48,7 +48,7 @@ class CharacterLimitedTextNode: ASTextNode {
     self.originalText = text
     self.fontDynamicType = fontDynamicType
     self.color = color
-    let processedText = (mode == .collapsed && autoChange) ? getProcessedText(for: text) : text
+    let processedText = (mode == .collapsed || autoChange) ? getProcessedText(for: text) : text
 
     let finalStr = attributedString(text: processedText ?? "", fontDynamicType: self.fontDynamicType,
                                     color: self.color)
@@ -57,7 +57,7 @@ class CharacterLimitedTextNode: ASTextNode {
 
   private func attributedString(text: String, fontDynamicType: FontDynamicType? = nil,
                                 color: UIColor =  ThemeManager.shared.currentTheme.defaultTextColor()) -> NSAttributedString? {
-    let addMore = autoChange && (mode == .collapsed) && shouldTruncate(text: self.originalText ?? "", maxCharacter: maxCharacter)
+    let addMore = (mode == .collapsed) && shouldTruncate(text: self.originalText ?? "", maxCharacter: maxCharacter)
     let attributedString = AttributedStringBuilder(fontDynamicType: fontDynamicType ?? FontDynamicType.caption1)
       .append(text: text, color: color)
       .append(text: addMore ?  "..." : "")
@@ -69,10 +69,10 @@ class CharacterLimitedTextNode: ASTextNode {
   // MARK: Actions
   //==============
   func didTapNode(_ sender: ASTextNode) {
-    if shouldTruncate(text: originalText ?? "", maxCharacter: maxCharacter) {
+    if autoChange && shouldTruncate(text: originalText ?? "", maxCharacter: maxCharacter) {
       toggle()
-      nodeDelegate?.characterLimitedTextNodeDidTap(self)
     }
+    nodeDelegate?.characterLimitedTextNodeDidTap(self)
   }
 
   // MARK: Helpers
