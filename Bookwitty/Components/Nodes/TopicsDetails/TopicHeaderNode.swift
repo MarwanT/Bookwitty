@@ -152,7 +152,9 @@ class TopicHeaderNode: ASCellNode {
 
     let titleNodeInset = ASInsetLayoutSpec(insets: sideInset(), child: titleNode)
     if isValid(topicTitle) {
+      nodesArray.append(ASLayoutSpec.spacer(height: internalMargin))
       nodesArray.append(titleNodeInset)
+      nodesArray.append(ASLayoutSpec.spacer(height: externalMargin/2))
     }
 
     var statsAndActionNodes: [ASLayoutElement] = []
@@ -171,6 +173,7 @@ class TopicHeaderNode: ASCellNode {
 
     let horizontalSpecInset = ASInsetLayoutSpec(insets: sideInset(), child: statsAndActionHorizontalSpec)
     nodesArray.append(horizontalSpecInset)
+    nodesArray.append(ASLayoutSpec.spacer(height: externalMargin))
 
     let count = contributorsNode.imagesUrls?.count ?? 0
     let text = contributorsNode.numberOfContributors
@@ -186,12 +189,13 @@ class TopicHeaderNode: ASCellNode {
       contributorsNode.style.width = ASDimensionMake(constrainedSize.max.width)
       contributorsNode.style.height = ASDimensionMake(45.0)
       nodesArray.append(contributorsNode)
+      nodesArray.append(ASLayoutSpec.spacer(height: count != 0 ? externalMargin : 0.0))
     }
 
     //Height is zero since the `ASStackLayoutSpec` will add the internalMargin as spacing between the items
     nodesArray.append(spacer(height: 0.0))
     let verticalStack = ASStackLayoutSpec(direction: .vertical,
-                                          spacing: internalMargin,
+                                          spacing: 0.0,
                                           justifyContent: .start,
                                           alignItems: .stretch,
                                           children: nodesArray)
