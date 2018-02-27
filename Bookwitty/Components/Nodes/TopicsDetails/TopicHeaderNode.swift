@@ -15,6 +15,7 @@ protocol TopicHeaderNodeDelegate: class {
 
 class TopicHeaderNode: ASCellNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let imageHeight: CGFloat = 200.0
   fileprivate let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
@@ -173,7 +174,15 @@ class TopicHeaderNode: ASCellNode {
 
     let count = contributorsNode.imagesUrls?.count ?? 0
     let text = contributorsNode.numberOfContributors
-    if count != 0 || isValid(text){
+    let showContributors = count != 0 || isValid(text)
+
+    if isValid(description) {
+      let descriptionNodeSpecInset = ASInsetLayoutSpec(insets: sideInset(), child: descriptionNode)
+      nodesArray.append(descriptionNodeSpecInset)
+      nodesArray.append(ASLayoutSpec.spacer(height: count != 0 ? externalMargin : externalMargin/2))
+    }
+
+    if showContributors {
       contributorsNode.style.width = ASDimensionMake(constrainedSize.max.width)
       contributorsNode.style.height = ASDimensionMake(45.0)
       nodesArray.append(contributorsNode)
