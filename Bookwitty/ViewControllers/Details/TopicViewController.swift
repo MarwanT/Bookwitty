@@ -628,6 +628,10 @@ extension TopicViewController: PenNameFollowNodeDelegate {
 
     })
   }
+
+  func penName(node: PenNameFollowNode, requestToViewFullBiography biography: String?, from biographyNode: CharacterLimitedTextNode) {
+    //No need to do anything
+  }
 }
 
 

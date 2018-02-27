@@ -243,6 +243,10 @@ extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
       }
     })
   }
+
+  func penName(node: PenNameFollowNode, requestToViewFullBiography biography: String?, from biographyNode: CharacterLimitedTextNode) {
+    //TODO: Open the biography details view
+  }
 }
 
 extension ProfileDetailsViewController: ASCollectionDelegate {
