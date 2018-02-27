@@ -56,6 +56,22 @@ class TopicHeaderNode: ASCellNode {
     descriptionNode.mode = .collapsed
     descriptionNode.truncationMode = NSLineBreakMode.byTruncatingTail
 
+    let buttonFont = FontDynamicType.subheadline.font
+    let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+    let selectedTextColor = ThemeManager.shared.currentTheme.colorNumber23()
+
+    followButton.setupSelectionButton(defaultBackgroundColor: ThemeManager.shared.currentTheme.defaultBackgroundColor(),
+                                      selectedBackgroundColor: ThemeManager.shared.currentTheme.defaultButtonColor(),
+                                      borderStroke: true,
+                                      borderColor: ThemeManager.shared.currentTheme.defaultButtonColor(),
+                                      borderWidth: 2.0,
+                                      cornerRadius: 2.0)
+
+    followButton.setTitle(title: Strings.follow(), with: buttonFont, with: textColor, for: .normal)
+    followButton.setTitle(title: Strings.following(), with: buttonFont, with: selectedTextColor, for: .selected)
+    followButton.state = self.following ? .selected : .normal
+    followButton.style.height = ASDimensionMake(buttonSize.height)
+
     titleNode.maximumNumberOfLines = 4
     topicStatsNode.maximumNumberOfLines = 1
 
