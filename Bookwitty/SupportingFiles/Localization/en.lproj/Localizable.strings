@@ -105,7 +105,9 @@
 "enter_your_password" = "Enter your password";
 "enter_your_pen_name" = "Enter your pen name";
 "error" = "Error";
+"error_adding_tag" = "There was an error adding the tag. Please try again later.";
 "error_loading_data" = "Error Loading Data";
+"error_removing_tag" = "There was an error removing the tag. Please try again later.";
 "fail_to_refresh_token_alert_message" = "It seems that your session expired and you need to sign in again";
 "fail_to_refresh_token_alert_title" = "Please sign in again";
 "filter" = "Filter";
@@ -158,6 +160,7 @@
 "link_topic" = "Link Topic";
 "link_topics" = "Link Topics";
 "list_price" = "List price";
+"maximum_number_of_tags_reached" = "You have reached the maximum number of tags. Please remove one of the tags before adding another one again.";
 "me" = "Me";
 "more" = "More";
 "most_popular" = "Most popular";

@@ -404,9 +404,17 @@ class Strings {
   static func error() -> String {
     return localizedString(key: "error")
   }
+  
+  static func error_adding_tag() -> String {
+    return localizedString(key: "error_adding_tag")
+  }
 
   static func error_loading_data() -> String {
     return localizedString(key: "error_loading_data")
+  }
+  
+  static func error_removing_tag() -> String {
+    return localizedString(key: "error_removing_tag")
   }
   
   static func fail_to_refresh_token_alert_message() -> String {
@@ -619,6 +627,10 @@ class Strings {
   
   static func list_price() -> String {
     return localizedString(key: "list_price")
+  }
+  
+  static func maximum_number_of_tags_reached() -> String {
+    return localizedString(key: "maximum_number_of_tags_reached")
   }
   
   static func me() -> String {
