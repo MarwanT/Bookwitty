@@ -76,7 +76,7 @@ class TopicHeaderNode: ASCellNode {
   var topicDesription: String? {
     didSet {
       if let topicDesription = topicDesription {
-        descriptionNode.setString(text: topicDesription,
+        descriptionNode.setString(text: topicDesription.components(separatedBy: .newlines).joined(),
                                   fontDynamicType: .body2,
                                   moreFontDynamicType: .footnote,
                                   color: ThemeManager.shared.currentTheme.colorNumber20())
