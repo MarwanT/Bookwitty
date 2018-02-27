@@ -245,7 +245,16 @@ extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
   }
 
   func penName(node: PenNameFollowNode, requestToViewFullBiography biography: String?, from biographyNode: CharacterLimitedTextNode) {
-    //TODO: Open the biography details view
+    let externalInsets = UIEdgeInsets(
+      top: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      left: 0, bottom: 0, right: 0)
+    let node = GeneralDetailsNode(externalInsets: externalInsets)
+    node.configuration.colorSet = .purple
+
+    node.setText(aboutText: viewModel.penName.biography ?? "", sectionTitle: Strings.biography(), displayMode: .expanded)
+    let genericViewController = GenericNodeViewController(node: node, title: "")
+    self.navigationController?.pushViewController(genericViewController, animated: true)
+
   }
 }
 
