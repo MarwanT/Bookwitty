@@ -10,10 +10,10 @@ import AsyncDisplayKit
 import DTCoreText
 
 protocol BookDetailsAboutNodeDelegate: class {
-  func aboutNodeDidTapViewDescription(aboutNode: BookDetailsAboutNode)
+  func aboutNodeDidTapViewDescription(aboutNode: GeneralDetailsNode)
 }
 
-class BookDetailsAboutNode: ASCellNode {
+class GeneralDetailsNode: ASCellNode {
   fileprivate let headerNode: SectionTitleHeaderNode
   fileprivate let descriptionTextNode: DTAttributedLabelNode
   fileprivate let viewDescription: DisclosureNode
@@ -108,7 +108,7 @@ class BookDetailsAboutNode: ASCellNode {
   }
 }
 
-extension BookDetailsAboutNode {
+extension GeneralDetailsNode {
   struct Configuration {
     fileprivate let defaultTextColor = ThemeManager.shared.currentTheme.defaultTextColor()
     fileprivate let headerVerticalBarColor = ThemeManager.shared.currentTheme.colorNumber6()
@@ -131,13 +131,13 @@ extension BookDetailsAboutNode {
 }
 
 
-extension BookDetailsAboutNode: DisclosureNodeDelegate {
+extension GeneralDetailsNode: DisclosureNodeDelegate {
   func disclosureNodeDidTap(disclosureNode: DisclosureNode, selected: Bool) {
     delegate?.aboutNodeDidTapViewDescription(aboutNode: self)
   }
 }
 
-extension BookDetailsAboutNode: DTAttributedTextContentNodeDelegate {
+extension GeneralDetailsNode: DTAttributedTextContentNodeDelegate {
   func attributedTextContentNode(node: ASCellNode, button: DTLinkButton, didTapOnLink link: URL) {
     WebViewController.present(url: link)
   }
