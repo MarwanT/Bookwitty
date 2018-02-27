@@ -12,6 +12,7 @@ import AsyncDisplayKit
 protocol TopicHeaderNodeDelegate: class {
   func topicHeader(node: TopicHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
   func topicHeader(node: TopicHeaderNode, requestToViewFullDescription description: String?, from descriptionNode: CharacterLimitedTextNode)
+  func topicHeader(node: TopicHeaderNode, requestToFollowPenName button: ButtonWithLoader)
 }
 
 class TopicHeaderNode: ASCellNode {

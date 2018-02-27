@@ -553,6 +553,26 @@ extension TopicViewController: TopicHeaderNodeDelegate {
     let genericViewController = GenericNodeViewController(node: node, title: "")
     self.navigationController?.pushViewController(genericViewController, animated: true)
   }
+
+  func topicHeader(node: TopicHeaderNode, requestToFollowPenName button: ButtonWithLoader) {
+    guard let resource = viewModel.resource as? ModelResource else {
+      return
+    }
+    button.state = .loading
+    if button.isSelected {
+      viewModel.unfollow(resource: resource, completionBlock: {
+        (success: Bool) in
+        node.following = !success
+        button.state = success ? .normal : .selected
+      })
+    } else {
+      viewModel.unfollow(resource: resource, completionBlock: {
+        (success: Bool) in
+        node.following = success
+        button.state = success ? .selected : .normal
+      })
+    }
+  }
 }
 
 extension TopicViewController: PenNameFollowNodeDelegate {
