@@ -92,6 +92,9 @@ class TopicHeaderNode: ASCellNode {
     titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
     topicStatsNode.truncationMode = NSLineBreakMode.byTruncatingTail
 
+    titleNode.style.flexGrow = 1.0
+    titleNode.style.flexShrink = 1.0
+    
     coverImageNode.delegate = self
     thumbnailImageNode.delegate = self
   }
@@ -183,8 +186,13 @@ class TopicHeaderNode: ASCellNode {
 
     nodesArray.append(imageOverlayLayoutSpec)
 
-    let titleNodeInset = ASInsetLayoutSpec(insets: sideInset(), child: titleNode)
     if isValid(topicTitle) {
+      let titleHStack = ASStackLayoutSpec(direction: ASStackLayoutDirection.horizontal,
+                                               spacing: internalMargin,
+                                               justifyContent: .spaceBetween,
+                                               alignItems: .stretch,
+                                               children: [titleNode, followButton])
+      let titleNodeInset = ASInsetLayoutSpec(insets: sideInset(), child: titleHStack)
       nodesArray.append(ASLayoutSpec.spacer(height: internalMargin))
       nodesArray.append(titleNodeInset)
       nodesArray.append(ASLayoutSpec.spacer(height: externalMargin/2))
