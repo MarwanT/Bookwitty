@@ -549,7 +549,8 @@ extension TopicViewController: TopicHeaderNodeDelegate {
       left: 0, bottom: 0, right: 0)
     //TODO: Rename BookDetailsAboutNode
     let node = GeneralDetailsNode(externalInsets: externalInsets)
-    node.setText(aboutText: viewModel.resource?.shortDescription ?? "", sectionTitle: viewModel.resourceTitle ?? "",displayMode: .expanded)
+    node.configuration.colorSet = .purple
+    node.setText(aboutText: viewModel.resource?.shortDescription ?? "", sectionTitle: viewModel.resourceTitle ?? "", displayMode: .expanded)
     let genericViewController = GenericNodeViewController(node: node, title: "")
     self.navigationController?.pushViewController(genericViewController, animated: true)
   }
