@@ -28,6 +28,7 @@ class TopicHeaderNode: ASCellNode {
   private var descriptionNode: CharacterLimitedTextNode
   private var topicStatsNode: ASTextNode
   private var contributorsNode: ContributorsNode
+  private var followButton: ButtonWithLoader
 
   weak var delegate: TopicHeaderNodeDelegate?
 
@@ -38,6 +39,7 @@ class TopicHeaderNode: ASCellNode {
     descriptionNode = CharacterLimitedTextNode()
     topicStatsNode = ASTextNode()
     contributorsNode = ContributorsNode()
+    followButton = ButtonWithLoader()
     super.init()
     automaticallyManagesSubnodes = true
     setupNode()
