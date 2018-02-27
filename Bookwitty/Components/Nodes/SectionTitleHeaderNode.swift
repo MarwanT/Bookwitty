@@ -124,4 +124,25 @@ extension SectionTitleHeaderNode {
     fileprivate var horizontalBarEdgeInsets = UIEdgeInsets(top: 0, left: 80 - 8, bottom: 0, right: 0)
     fileprivate var titleEdgeInsets = UIEdgeInsets(top: 10, left: 25, bottom: 10, right: 0)
   }
+
+  enum ColorSet {
+    case yellow
+    case blue
+    case orange
+    case purple
+
+    var shades: (dark: UIColor, light: UIColor) {
+      let theme = ThemeManager.shared.currentTheme
+      switch self {
+      case .blue:
+        return (theme.colorNumber10(), theme.colorNumber9())
+      case .orange:
+        return (theme.colorNumber4(), theme.colorNumber3())
+      case .yellow:
+        return (theme.colorNumber6(), theme.colorNumber5())
+      case .purple:
+        return (theme.colorNumber12(), theme.colorNumber11())
+      }
+    }
+  }
 }
