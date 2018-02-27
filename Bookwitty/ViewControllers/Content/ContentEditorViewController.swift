@@ -991,6 +991,13 @@ extension ContentEditorViewController: RichEditorDelegate {
         self.set(option: .link, selected: isLink, isEnabled: (isLink || isRange))
         self.set(option: .unorderedList, selected: editingItems.contains("unorderedList"))
       })
+    } else if action.hasPrefix("removewrapper:") {
+      guard let range = action.range(of: "removewrapper:") else {
+        return
+      }
+      let wrapperId = action.substring(from: range.upperBound)
+      self.viewModel.removeUploadRequest(wrapperId)
+      self.loadNavigationBarButtons()
     }
   }
 }
