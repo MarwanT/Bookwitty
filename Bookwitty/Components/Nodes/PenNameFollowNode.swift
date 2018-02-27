@@ -110,11 +110,14 @@ class PenNameFollowNode: ASCellNode {
 
     nameNode.maximumNumberOfLines = 1
 
-    biographyNode.maxCharacter = enlarged ? 120 : -1
+    biographyNode.maxCharacter = enlarged ? 120 : 1000
     biographyNode.nodeDelegate = enlarged ? self : nil
-    biographyNode.maximumNumberOfLines = enlarged ? 100 : 3
-    biographyNode.autoChange = enlarged
+    biographyNode.maximumNumberOfLines = enlarged ? 0 : 3
+    biographyNode.autoChange = false
     biographyNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    if enlarged {
+      biographyNode.mode = .collapsed
+    }
 
     nameNode.truncationMode = NSLineBreakMode.byTruncatingTail
 
