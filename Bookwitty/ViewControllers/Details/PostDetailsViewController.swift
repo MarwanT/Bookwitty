@@ -95,7 +95,6 @@ class PostDetailsViewController: ASViewController<ASDisplayNode> {
     postDetailsNode.penName = viewModel.penName
     postDetailsNode.actionInfoValue = viewModel.actionInfoValue
     postDetailsNode.conculsion = viewModel.conculsion
-    postDetailsNode.headerNode.profileBarNode.updateMode(disabled: viewModel.isMyPenName())
 
     postDetailsNode.tags = viewModel.tags
 
@@ -924,29 +923,12 @@ extension PostDetailsViewController: BaseCardPostNodeDelegate {
 }
 
 // Mark: - Pen Name Header
-extension PostDetailsViewController: PenNameFollowNodeDelegate {
-  func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
+extension PostDetailsViewController: CompactPenNameNodeDelegate {
+  func penName(node: CompactPenNameNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
     penName(node: node, actionPenNameFollowTouchUpInside: imageNode)
   }
 
-  func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader) {
-    button.state = .loading
-    if button.isSelected {
-      viewModel.unfollowPostPenName(completionBlock: {
-        (success: Bool) in
-        node.following = !success
-        button.state = success ? .normal : .selected
-      })
-    } else {
-      viewModel.followPostPenName(completionBlock: {
-        (success: Bool) in
-        node.following = success
-        button.state = success ? .selected : .normal
-      })
-    }
-  }
-
-  func penName(node: PenNameFollowNode, actionPenNameFollowTouchUpInside button: Any?) {
+  func penName(node: CompactPenNameNode, actionPenNameFollowTouchUpInside button: Any?) {
     if let penName = viewModel.penName {
       pushProfileViewController(penName: penName)
 
@@ -956,20 +938,6 @@ extension PostDetailsViewController: PenNameFollowNodeDelegate {
                                                    name: penName.name ?? "")
       Analytics.shared.send(event: event)
     }
-  }
-
-  func penName(node: PenNameFollowNode, moreButtonTouchUpInside button: ASButtonNode?) {
-    
-    guard let penName = viewModel.penName,
-      let identifier = penName.id else {
-        return
-    }
-
-    let actions: [MoreAction] = MoreAction.actions(for: penName as? ModelCommonProperties)
-    self.showMoreActionSheet(identifier: identifier, actions: actions, completion: {
-      (success: Bool, action: MoreAction) in
-
-    })
   }
 }
 

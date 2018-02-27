@@ -1156,7 +1156,11 @@ class Strings {
   static func write_here() -> String {
     return localizedString(key: "write_here")
   }
-  
+
+  static func written_by() -> String {
+    return localizedString(key: "written_by")
+  }
+
   static func yes_this_is_spam() -> String {
     return localizedString(key: "yes_this_is_spam")
   }

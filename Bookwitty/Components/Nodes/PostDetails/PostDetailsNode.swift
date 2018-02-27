@@ -53,6 +53,7 @@ protocol PostDetailsNodeDelegate: class {
 class PostDetailsNode: ASScrollNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+  fileprivate let sectionSpacing = ThemeManager.shared.currentTheme.sectionSpacing()
   fileprivate let horizontalCollectionNodeHeight: CGFloat = RelatedBooksMinimalCellNode.cellHeight
 
 
@@ -75,6 +76,7 @@ class PostDetailsNode: ASScrollNode {
   fileprivate let relatedPostsBottomSeparator: SeparatorNode
   fileprivate let relatedPostsNodeLoader: LoaderNode
   fileprivate let bannerImageNode: ASImageNode
+  fileprivate let writtenByNode: WrittenByNode
   let commentsNode: CommentsNode
 
   let headerNode: PostDetailsHeaderNode
@@ -106,7 +108,12 @@ class PostDetailsNode: ASScrollNode {
   }
   var penName: PenName? {
     didSet {
+      //Set the Header data
       headerNode.penName = penName
+      //Set the Written By data
+      updateWrittenBy(penName: penName)
+
+      setNeedsLayout()
     }
   }
 
@@ -153,6 +160,9 @@ class PostDetailsNode: ASScrollNode {
       }
     }
   }
+  var hasPenName: Bool {
+    return penName != nil
+  }
 
   override init(viewBlock: @escaping ASDisplayNodeViewBlock, didLoad didLoadBlock: ASDisplayNodeDidLoadBlock? = nil) {
     headerNode = PostDetailsHeaderNode()
@@ -183,6 +193,7 @@ class PostDetailsNode: ASScrollNode {
     relatedBooksNodeLoader = LoaderNode()
     bannerImageNode = ASImageNode()
     commentsNode = CommentsNode()
+    writtenByNode = WrittenByNode()
     super.init(viewBlock: viewBlock, didLoad: didLoadBlock)
   }
 
@@ -215,6 +226,7 @@ class PostDetailsNode: ASScrollNode {
     relatedBooksNodeLoader = LoaderNode()
     bannerImageNode = ASImageNode()
     commentsNode = CommentsNode()
+    writtenByNode = WrittenByNode()
     super.init()
     automaticallyManagesSubnodes = true
     automaticallyManagesContentSize = true
@@ -285,6 +297,24 @@ class PostDetailsNode: ASScrollNode {
     commentsNode.delegate = self
   }
 
+  private func updateWrittenBy(penName: PenName?) {
+    var postInfoData: CardPostInfoNodeData? = nil
+    var biography: String? = nil
+    var following: Bool = false
+    if let penName = penName {
+      let name = penName.name ?? ""
+      let followers = penName.counts?.followers ?? 0
+      let imageUrl = penName.avatarUrl ?? ""
+      postInfoData = CardPostInfoNodeData(name, Strings.followers(number: followers), imageUrl)
+      biography = penName.biography
+      following = penName.following
+    }
+    //Set the WrittenBy Section data
+    writtenByNode.postInfoData = postInfoData
+    writtenByNode.biography = biography
+    writtenByNode.following = following
+  }
+
   func setBannerImage() {
     switch GeneralSettings.sharedInstance.preferredLanguage {
     case Localization.Language.French.rawValue:
@@ -321,11 +351,6 @@ class PostDetailsNode: ASScrollNode {
     vStackSpec.children = [headerNode, ASLayoutSpec.spacer(height: contentSpacing),
                            descriptionInsetSpec, ASLayoutSpec.spacer(height: contentSpacing)]
 
-    if self.tags?.count ?? 0 > 0 {
-      let tagNodes: [ASLayoutElement] = [tagCollectionInsetSpec, ASLayoutSpec.spacer(height: contentSpacing)]
-      vStackSpec.children?.append(contentsOf: tagNodes)
-    }
-
     vStackSpec.children?.append(separatorInsetSpec)
 
     postItemsNodeLoader.updateLoaderVisibility(show: showPostsLoader)
@@ -347,7 +372,19 @@ class PostDetailsNode: ASScrollNode {
       vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
       vStackSpec.children?.append(conculsionInsetSpec)
     }
-    
+
+    if self.tags?.count ?? 0 > 0 {
+      let tagNodes: [ASLayoutElement] = [tagCollectionInsetSpec]
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: contentSpacing))
+      vStackSpec.children?.append(contentsOf: tagNodes)
+    }
+
+    if hasPenName {
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: sectionSpacing/2))
+      vStackSpec.children?.append(writtenByNode)
+      vStackSpec.children?.append(ASLayoutSpec.spacer(height: sectionSpacing/2))
+    }
+
     if showCommentNode {
       let commentsWrapper = wrapNode(node: commentsNode, width: constrainedSize.max.width)
       vStackSpec.children?.append(commentsWrapper)

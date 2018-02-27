@@ -22,9 +22,10 @@ class PostDetailsHeaderNode: ASCellNode {
 
   fileprivate let imageNode: ASNetworkImageNode
   fileprivate let textNode: ASTextNode
-  let profileBarNode: PenNameFollowNode
+  let profileBarNode: CompactPenNameNode
   fileprivate let actionInfoNode: ASTextNode
   fileprivate let separator: ASDisplayNode
+  fileprivate let profileNodeSeparator: ASDisplayNode
   fileprivate let bottomSeparator: ASDisplayNode
 
   var delegate: PostDetailsHeaderNodeDelegate?
@@ -41,20 +42,14 @@ class PostDetailsHeaderNode: ASCellNode {
   }
   var date: String? {
     didSet {
-      profileBarNode.biography = date
+      profileBarNode.date = date
     }
   }
+
   var penName: PenName? {
     didSet {
       profileBarNode.penName = penName?.name
       profileBarNode.imageUrl = penName?.avatarUrl
-      profileBarNode.following = penName?.following ?? false
-      var sowMoreButton = true
-      if let penName = penName {
-         sowMoreButton = !UserManager.shared.isMy(penName: penName)
-      }
-
-      profileBarNode.showMoreButton = sowMoreButton
     }
   }
 
@@ -74,10 +69,11 @@ class PostDetailsHeaderNode: ASCellNode {
   override init() {
     imageNode = ASNetworkImageNode()
     textNode = ASTextNode()
-    profileBarNode = PenNameFollowNode(largePadding: true)
+    profileBarNode = CompactPenNameNode()
     actionInfoNode = ASTextNode()
     separator = ASDisplayNode()
     bottomSeparator = ASDisplayNode()
+    profileNodeSeparator = ASDisplayNode()
     super.init()
     automaticallyManagesSubnodes = true
     initializeNode()
@@ -96,6 +92,8 @@ class PostDetailsHeaderNode: ASCellNode {
     separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     bottomSeparator.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 1.0)
     bottomSeparator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    profileNodeSeparator.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 1.0)
+    profileNodeSeparator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
 
     //Post Iamge
     imageNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width, height: 250.0)
@@ -138,7 +136,9 @@ class PostDetailsHeaderNode: ASCellNode {
                     textInsetSpec, ASLayoutSpec.spacer(height: contentSpacing)]
     } else {
       nodesArray = [imageNode, ASLayoutSpec.spacer(height: contentSpacing),
-                    textInsetSpec, profileBarNode]
+                    textInsetSpec, ASLayoutSpec.spacer(height: contentSpacing),
+                    profileBarNode, ASLayoutSpec.spacer(height: contentSpacing),
+                    ASInsetLayoutSpec(insets: sidesEdgeInset(), child: profileNodeSeparator)]
     }
 
     if actionNodes.count > 0 {

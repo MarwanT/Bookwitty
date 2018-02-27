@@ -355,6 +355,8 @@
 		F4A426391E562BAC0090CD51 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A426381E562BAC0090CD51 /* Link.swift */; };
 		F4AAADAD1E93F2230073EA50 /* ButtonWithLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AAADAC1E93F2230073EA50 /* ButtonWithLoader.swift */; };
 		F4AD7D4E20400AE400D12FDD /* CharacterLimitedTextNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AD7D4D20400AE400D12FDD /* CharacterLimitedTextNode.swift */; };
+		F4AD7D5020407CF200D12FDD /* CompactPenNameNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AD7D4F20407CF200D12FDD /* CompactPenNameNode.swift */; };
+		F4AD7D522043E57800D12FDD /* WrittenByNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AD7D512043E57800D12FDD /* WrittenByNode.swift */; };
 		F4CBAFA21E8044FF00FD1AFB /* MediaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CBAFA11E8044FF00FD1AFB /* MediaModel.swift */; };
 		F4CDDD371E60263800474CAA /* RotatingImageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CDDD361E60263800474CAA /* RotatingImageNode.swift */; };
 		F4EAEE3A1E6B1128006429B7 /* LayoutSpec+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EAEE391E6B1128006429B7 /* LayoutSpec+Utils.swift */; };
@@ -729,6 +731,8 @@
 		F4A426381E562BAC0090CD51 /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
 		F4AAADAC1E93F2230073EA50 /* ButtonWithLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonWithLoader.swift; sourceTree = "<group>"; };
 		F4AD7D4D20400AE400D12FDD /* CharacterLimitedTextNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterLimitedTextNode.swift; sourceTree = "<group>"; };
+		F4AD7D4F20407CF200D12FDD /* CompactPenNameNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactPenNameNode.swift; sourceTree = "<group>"; };
+		F4AD7D512043E57800D12FDD /* WrittenByNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrittenByNode.swift; sourceTree = "<group>"; };
 		F4CBAFA11E8044FF00FD1AFB /* MediaModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaModel.swift; sourceTree = "<group>"; };
 		F4CDDD361E60263800474CAA /* RotatingImageNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RotatingImageNode.swift; sourceTree = "<group>"; };
 		F4EAEE391E6B1128006429B7 /* LayoutSpec+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LayoutSpec+Utils.swift"; sourceTree = "<group>"; };
@@ -1193,8 +1197,10 @@
 				F4AD7D4D20400AE400D12FDD /* CharacterLimitedTextNode.swift */,
 				F46F3F961EC5A39D002C9718 /* DiscoverNode.swift */,
 				F46F3F981EC996BE002C9718 /* PageCellNode.swift */,
+				F4AD7D512043E57800D12FDD /* WrittenByNode.swift */,
 				F458C5F11E5AFD4300AFD0FC /* PenNameDisplayNode.swift */,
 				F458C5F31E5AFEAA00AFD0FC /* PenNameCellNode.swift */,
+				F4AD7D4F20407CF200D12FDD /* CompactPenNameNode.swift */,
 				F4CDDD361E60263800474CAA /* RotatingImageNode.swift */,
 				F4AAADAC1E93F2230073EA50 /* ButtonWithLoader.swift */,
 				F407004F1E55992000DA48A4 /* ReadingListBooksNode.swift */,
@@ -2269,6 +2275,7 @@
 				563482BD1ED5BD61005428BF /* Facet.swift in Sources */,
 				F4A4262B1E5617A30090CD51 /* PageAuthor.swift in Sources */,
 				F40700501E55992000DA48A4 /* ReadingListBooksNode.swift in Sources */,
+				F4AD7D522043E57800D12FDD /* WrittenByNode.swift in Sources */,
 				563B89D41F8BC6E30004664E /* EditableTextNode.swift in Sources */,
 				F4737D3F1EA0FE240065617D /* ModelCommonActions.swift in Sources */,
 				F4EAEE3A1E6B1128006429B7 /* LayoutSpec+Utils.swift in Sources */,
@@ -2298,6 +2305,7 @@
 				F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */,
 				59591F1B1E6D7E7A005592B8 /* DisclosureNode.swift in Sources */,
 				567B3C041ED4310600E02E16 /* SearchFiltersViewController.swift in Sources */,
+				F4AD7D5020407CF200D12FDD /* CompactPenNameNode.swift in Sources */,
 				598D84DD1FB34D8B00D5E438 /* DynamicCommentMessageNode.swift in Sources */,
 				F488D2791E44EB46003A7BD4 /* PenName.swift in Sources */,
 				59DBA6651E732D3F0049B427 /* Models+Utilities.swift in Sources */,
