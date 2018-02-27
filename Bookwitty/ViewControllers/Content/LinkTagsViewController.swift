@@ -126,7 +126,7 @@ class LinkTagsViewController: UIViewController {
   func keyboardWillShow(_ notification: NSNotification) {
     if let value = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
       let frame = value.cgRectValue
-      self.tableViewBottomConstraintToSuperview.constant = -frame.height
+      self.tableViewBottomConstraintToSuperview.constant = frame.height
     }
     
     UIView.animate(withDuration: 0.44) {
