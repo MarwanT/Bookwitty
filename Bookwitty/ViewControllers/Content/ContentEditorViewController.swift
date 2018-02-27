@@ -220,6 +220,8 @@ class ContentEditorViewController: UIViewController {
     
     let cancelAction = UIAlertAction(title: Strings.cancel(), style: .cancel, handler: nil)
     alertController.addAction(cancelAction)
+
+    editorView.backupRange()
     present(alertController, animated: true, completion: nil)
   }
 
