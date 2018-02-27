@@ -544,7 +544,14 @@ extension TopicViewController: TopicHeaderNodeDelegate {
   }
 
   func topicHeader(node: TopicHeaderNode, requestToViewFullDescription description: String?, from descriptionNode: CharacterLimitedTextNode) {
-    //TODO: Implement
+    let externalInsets = UIEdgeInsets(
+      top: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      left: 0, bottom: 0, right: 0)
+    //TODO: Rename BookDetailsAboutNode
+    let node = BookDetailsAboutNode(externalInsets: externalInsets)
+    node.setText(aboutText: viewModel.resource?.shortDescription ?? "", sectionTitle: viewModel.resourceTitle ?? "",displayMode: .expanded)
+    let genericViewController = GenericNodeViewController(node: node, title: "")
+    self.navigationController?.pushViewController(genericViewController, animated: true)
   }
 }
 
