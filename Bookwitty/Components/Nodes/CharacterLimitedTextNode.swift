@@ -33,7 +33,7 @@ class CharacterLimitedTextNode: ASTextNode {
   private var color: UIColor = ThemeManager.shared.currentTheme.defaultTextColor()
   private var htmlImageWidth: CGFloat = UIScreen.main.bounds.width
 
-  private var mode: Mode = .collapsed {
+  var mode: Mode = .collapsed {
     didSet {
       self.setString(text: originalText, fontDynamicType: fontDynamicType, color: color)
     }
