@@ -547,7 +547,6 @@ extension TopicViewController: TopicHeaderNodeDelegate {
     let externalInsets = UIEdgeInsets(
       top: ThemeManager.shared.currentTheme.generalExternalMargin(),
       left: 0, bottom: 0, right: 0)
-    //TODO: Rename BookDetailsAboutNode
     let node = GeneralDetailsNode(externalInsets: externalInsets)
     node.configuration.colorSet = .purple
     node.setText(aboutText: viewModel.resource?.shortDescription ?? "", sectionTitle: viewModel.resourceTitle ?? "", displayMode: .expanded)
