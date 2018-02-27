@@ -30,6 +30,20 @@ class TopicHeaderNode: ASCellNode {
   private var contributorsNode: ContributorsNode
   private var followButton: ButtonWithLoader
 
+  var following: Bool = false {
+    didSet {
+      followButton.state = self.following ? .selected : .normal
+    }
+  }
+
+  private var disabled: Bool = true {
+    didSet {
+      followButton.isHidden = disabled
+      followButton.isEnabled = !disabled
+      setNeedsLayout()
+    }
+  }
+
   weak var delegate: TopicHeaderNodeDelegate?
 
   override init() {
