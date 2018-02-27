@@ -44,24 +44,25 @@ class CharacterLimitedTextNode: ASTextNode {
     self.addTarget(self, action: #selector(didTapNode(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
   }
 
-  func setString(text: String?, fontDynamicType: FontDynamicType?, color: UIColor) {
+  func setString(text: String?, fontDynamicType: FontDynamicType?, moreFontDynamicType: FontDynamicType? = nil, color: UIColor) {
     self.originalText = text
     self.fontDynamicType = fontDynamicType
     self.color = color
     let processedText = (mode == .collapsed || autoChange) ? getProcessedText(for: text) : text
 
     let finalStr = attributedString(text: processedText ?? "", fontDynamicType: self.fontDynamicType,
-                                    color: self.color)
+                                    color: self.color, moreFontDynamicType: moreFontDynamicType)
     self.attributedText = finalStr
   }
 
   private func attributedString(text: String, fontDynamicType: FontDynamicType? = nil,
-                                color: UIColor =  ThemeManager.shared.currentTheme.defaultTextColor()) -> NSAttributedString? {
+                                color: UIColor =  ThemeManager.shared.currentTheme.defaultTextColor(),
+                                moreFontDynamicType: FontDynamicType? = nil) -> NSAttributedString? {
     let addMore = (mode == .collapsed) && shouldTruncate(text: self.originalText ?? "", maxCharacter: maxCharacter)
     let attributedString = AttributedStringBuilder(fontDynamicType: fontDynamicType ?? FontDynamicType.caption1)
       .append(text: text, color: color)
       .append(text: addMore ?  "..." : "")
-      .append(text: addMore ? Strings.more() : "", color: ThemeManager.shared.currentTheme.colorNumber19())
+      .append(text: addMore ? Strings.more() : "", fontDynamicType: moreFontDynamicType, color: ThemeManager.shared.currentTheme.colorNumber19())
       .attributedString
     return attributedString
   }
