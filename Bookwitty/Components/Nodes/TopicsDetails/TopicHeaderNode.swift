@@ -72,6 +72,18 @@ class TopicHeaderNode: ASCellNode {
     }
   }
 
+  var topicDesription: String? {
+    didSet {
+      if let topicDesription = topicDesription {
+        descriptionNode.setString(text: topicDesription,
+                                  fontDynamicType: .body2,
+                                  moreFontDynamicType: .footnote,
+                                  color: ThemeManager.shared.currentTheme.colorNumber20())
+        setNeedsLayout()
+      }
+    }
+  }
+
   var coverImageUrl: String? {
     didSet {
       if let imageUrl = coverImageUrl {

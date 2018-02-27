@@ -222,6 +222,7 @@ class TopicViewController: ASViewController<ASDisplayNode> {
     let values = viewModel.valuesForHeader()
 
     headerNode.topicTitle = values.title
+    headerNode.topicDesription = values.description
     headerNode.coverImageUrl = values.coverImageUrl
     headerNode.thumbnailImageUrl = values.thumbnailImageUrl
 
