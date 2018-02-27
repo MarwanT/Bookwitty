@@ -9,8 +9,8 @@
 import AsyncDisplayKit
 import DTCoreText
 
-protocol BookDetailsAboutNodeDelegate: class {
-  func aboutNodeDidTapViewDescription(aboutNode: GeneralDetailsNode)
+protocol GeneralDetailsNodeDelegate: class {
+  func generalDetailsNodeDidTapViewDescription(node: GeneralDetailsNode)
 }
 
 class GeneralDetailsNode: ASCellNode {
@@ -20,7 +20,7 @@ class GeneralDetailsNode: ASCellNode {
   fileprivate let topSeparator: ASDisplayNode
   fileprivate let bottomSeparator: ASDisplayNode
   
-  weak var delegate: BookDetailsAboutNodeDelegate?
+  weak var delegate: GeneralDetailsNodeDelegate?
   
   var configuration = Configuration()
   
@@ -133,7 +133,7 @@ extension GeneralDetailsNode {
 
 extension GeneralDetailsNode: DisclosureNodeDelegate {
   func disclosureNodeDidTap(disclosureNode: DisclosureNode, selected: Bool) {
-    delegate?.aboutNodeDidTapViewDescription(aboutNode: self)
+    delegate?.generalDetailsNodeDidTapViewDescription(node: self)
   }
 }
 

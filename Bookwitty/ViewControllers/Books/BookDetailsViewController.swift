@@ -392,9 +392,9 @@ extension BookDetailsViewController {
 }
 
 // MARK: - Book details about node
-extension BookDetailsViewController: BookDetailsAboutNodeDelegate {
-  func aboutNodeDidTapViewDescription(aboutNode: GeneralDetailsNode) {
-    guard let description = aboutNode.about else {
+extension BookDetailsViewController: GeneralDetailsNodeDelegate {
+  func generalDetailsNodeDidTapViewDescription(node: GeneralDetailsNode) {
+    guard let description = node.about else {
       return
     }
     perform(action: .viewDescription(description))
