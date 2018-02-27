@@ -150,7 +150,7 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
   let headLineNode: ASTextNode
   let subheadLineNode: ASTextNode
   let captionNode: ASTextNode
-  let bodyNode: DTAttributedLabelNode
+  let bodyNode: CharacterLimitedTextNode
   let separator: ASDisplayNode
   let button: ASButtonNode
 
@@ -200,8 +200,14 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
   }
   var body: String? {
     didSet {
-      bodyNode.htmlString(text: body, fontDynamicType: .body)
-      setNeedsLayout()
+      if let body = body {
+        let bodyFromHtml = AttributedStringBuilder(fontDynamicType: FontDynamicType.body)
+        .append(text: body, fromHtml: true).attributedString.string
+        
+        bodyNode.setString(text: bodyFromHtml,
+                                fontDynamicType: .body,
+                                color: ThemeManager.shared.currentTheme.defaultTextColor())
+      }
     }
   }
   var buttonTitle: String? {
@@ -223,7 +229,7 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
     headLineNode = ASTextNode()
     subheadLineNode = ASTextNode()
     captionNode = ASTextNode()
-    bodyNode = DTAttributedLabelNode()
+    bodyNode = CharacterLimitedTextNode()
     separator = ASDisplayNode()
     button = ASButtonNode()
     super.init()
@@ -268,12 +274,11 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
     imageNode.contentMode = .scaleToFill
 
     //Body Setup
-    bodyNode.delegate = self
+    bodyNode.maxCharacter = 120
+    bodyNode.nodeDelegate = self
+    bodyNode.maximumNumberOfLines = 0
+    bodyNode.truncationMode = NSLineBreakMode.byTruncatingTail
 
-    bodyNode.width = UIScreen.main.bounds.width - (internalMargin*2)
-    //bodyNode.style.minHeight  = ASDimensionMake(25.0)
-    //bodyNode.style.preferredSize = CGSize(width: UIScreen.main.bounds.width - (internalMargin*2), height: 25.0)
-    bodyNode.maxNumberOfLines = 7
     //HeadLine Setup
     headLineNode.maximumNumberOfLines = 3
     //subheadLine Setup
@@ -354,5 +359,11 @@ class PostDetailItemNode: ASCellNode, NodeTapProtocol {
     outerVStackChildren.append(separator)
     outerMostVStack.children = outerVStackChildren
     return ASInsetLayoutSpec(insets: UIEdgeInsets(top: largeVerticalSpacing, left: internalMargin, bottom: 0, right: internalMargin), child: outerMostVStack)
+  }
+}
+
+extension PostDetailItemNode : CharacterLimitedTextNodeDelegate {
+  func characterLimitedTextNodeDidTap(_ node: CharacterLimitedTextNode) {
+    //Toggle is happening now do anything if needed
   }
 }
