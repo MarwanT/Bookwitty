@@ -26,6 +26,7 @@ class BookDetailsAboutNode: ASCellNode {
   
   private var dispayMode: DisplayMode = .compact
   private(set) var about: String?
+  private(set) var section: String?
 
   init(externalInsets: UIEdgeInsets = UIEdgeInsets.zero) {
     configuration.externalEdgeInsets = externalInsets
@@ -41,7 +42,7 @@ class BookDetailsAboutNode: ASCellNode {
   func initializeNode() {
     automaticallyManagesSubnodes = true
     
-    headerNode.setTitle(title: Strings.about_this_book(), verticalBarColor: configuration.headerVerticalBarColor, horizontalBarColor: configuration.headerHorizontalBarColor)
+    headerNode.setTitle(title: section, verticalBarColor: configuration.headerVerticalBarColor, horizontalBarColor: configuration.headerHorizontalBarColor)
 
     descriptionTextNode.delegate = self
     descriptionTextNode.width = UIScreen.main.bounds.width - (configuration.descriptionTextEdgeInsets.left + configuration.descriptionTextEdgeInsets.right)
@@ -95,12 +96,14 @@ class BookDetailsAboutNode: ASCellNode {
     return nodeInsets
   }
 
-  func setText(aboutText text: String?, displayMode mode: DisplayMode = .compact) {
+  func setText(aboutText text: String?, sectionTitle section: String = Strings.about_this_book(), displayMode mode: DisplayMode = .compact) {
     self.dispayMode = mode
     self.about = text
+    self.section = section
 
     descriptionTextNode.maxNumberOfLines = dispayMode == .compact ? Int(configuration.compactMaximumNumberOfLines) : 100
     descriptionTextNode.htmlString(text: text, fontDynamicType: FontDynamicType.body)
+    headerNode.setTitle(title: section, verticalBarColor: configuration.headerVerticalBarColor, horizontalBarColor: configuration.headerHorizontalBarColor)
     setNeedsLayout()
   }
 }
