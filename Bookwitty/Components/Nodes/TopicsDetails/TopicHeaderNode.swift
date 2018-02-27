@@ -86,6 +86,7 @@ class TopicHeaderNode: ASCellNode {
     followButton.setTitle(title: Strings.following(), with: buttonFont, with: selectedTextColor, for: .selected)
     followButton.state = self.following ? .selected : .normal
     followButton.style.height = ASDimensionMake(buttonSize.height)
+    followButton.delegate = self
 
     titleNode.maximumNumberOfLines = 4
     topicStatsNode.maximumNumberOfLines = 1
@@ -289,5 +290,18 @@ extension TopicHeaderNode: CharacterLimitedTextNodeDelegate {
   func characterLimitedTextNodeDidTap(_ node: CharacterLimitedTextNode) {
     //Did tap on characterLimited text node
     delegate?.topicHeader(node: self, requestToViewFullDescription: description, from: node)
+  }
+}
+
+//Actions
+extension TopicHeaderNode: ButtonWithLoaderDelegate {
+  func buttonTouchUpInside(buttonWithLoader: ButtonWithLoader) {
+    guard UserManager.shared.isSignedIn else {
+      //If user is not signed In post notification and do not fall through
+      NotificationCenter.default.post( name: AppNotification.callToAction, object: CallToAction.follow)
+      return
+    }
+
+    delegate?.topicHeader(node: self, requestToFollowPenName: buttonWithLoader)
   }
 }
