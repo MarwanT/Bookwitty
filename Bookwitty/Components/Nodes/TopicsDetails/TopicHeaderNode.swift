@@ -35,11 +35,7 @@ class TopicHeaderNode: ASCellNode {
     topicStatsNode = ASTextNode()
     contributorsNode = ContributorsNode()
     super.init()
-    addSubnode(coverImageNode)
-    addSubnode(titleNode)
-    addSubnode(topicStatsNode)
-    addSubnode(contributorsNode)
-    addSubnode(thumbnailImageNode)
+    automaticallyManagesSubnodes = true
     setupNode()
   }
 
