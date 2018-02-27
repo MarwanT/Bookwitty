@@ -46,6 +46,7 @@ class TopicHeaderNode: ASCellNode {
     thumbnailImageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
 
     descriptionNode.maxCharacter = 140
+    descriptionNode.nodeDelegate = self
     descriptionNode.maximumNumberOfLines = 0
     descriptionNode.autoChange = false
     descriptionNode.mode = .collapsed
@@ -214,5 +215,11 @@ extension TopicHeaderNode {
 
   fileprivate func isValid(_ value: String?) -> Bool {
     return !value.isEmptyOrNil()
+  }
+}
+
+extension TopicHeaderNode: CharacterLimitedTextNodeDelegate {
+  func characterLimitedTextNodeDidTap(_ node: CharacterLimitedTextNode) {
+    //Did tap on characterLimited text node
   }
 }
