@@ -86,7 +86,13 @@ class SectionTitleHeaderNode: ASCellNode {
     self.verticalBarColor = verticalBarColor ?? configuration.verticalBarColor
     self.horizontalBarColor = horizontalBarColor ?? configuration.horizontalBarColor
   }
-  
+
+  func setTitle(title: String?, colorSet: ColorSet? = nil) {
+    self.title = title
+    self.verticalBarColor = colorSet?.shades.dark ?? configuration.verticalBarColor
+    self.horizontalBarColor = colorSet?.shades.light ?? configuration.horizontalBarColor
+  }
+
   private var title: String?  {
     didSet {
       titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .callout)
