@@ -542,6 +542,10 @@ extension TopicViewController: TopicHeaderNodeDelegate {
     let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
     present(imageViewer, animated: true, completion: nil)
   }
+
+  func topicHeader(node: TopicHeaderNode, requestToViewFullDescription description: String?, from descriptionNode: CharacterLimitedTextNode) {
+    //TODO: Implement
+  }
 }
 
 extension TopicViewController: PenNameFollowNodeDelegate {

@@ -11,6 +11,7 @@ import AsyncDisplayKit
 
 protocol TopicHeaderNodeDelegate: class {
   func topicHeader(node: TopicHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
+  func topicHeader(node: TopicHeaderNode, requestToViewFullDescription description: String?, from descriptionNode: CharacterLimitedTextNode)
 }
 
 class TopicHeaderNode: ASCellNode {
@@ -246,5 +247,6 @@ extension TopicHeaderNode {
 extension TopicHeaderNode: CharacterLimitedTextNodeDelegate {
   func characterLimitedTextNodeDidTap(_ node: CharacterLimitedTextNode) {
     //Did tap on characterLimited text node
+    delegate?.topicHeader(node: self, requestToViewFullDescription: description, from: node)
   }
 }
