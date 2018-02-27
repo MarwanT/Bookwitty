@@ -45,6 +45,12 @@ class TopicHeaderNode: ASCellNode {
     coverImageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
     thumbnailImageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
 
+    descriptionNode.maxCharacter = 140
+    descriptionNode.maximumNumberOfLines = 0
+    descriptionNode.autoChange = false
+    descriptionNode.mode = .collapsed
+    descriptionNode.truncationMode = NSLineBreakMode.byTruncatingTail
+
     titleNode.maximumNumberOfLines = 4
     topicStatsNode.maximumNumberOfLines = 1
 
