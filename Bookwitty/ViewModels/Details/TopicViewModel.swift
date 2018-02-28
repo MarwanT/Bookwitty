@@ -32,16 +32,20 @@ final class TopicViewModel {
 
   fileprivate var latest: [String] = []
   fileprivate var latestNextUrl: URL? = nil
+  fileprivate var latestMisfortuneNodeMode: MisfortuneNode.Mode?
 
   fileprivate var editions: [String] = []
   fileprivate var editionsNextUrl: URL? = nil
+  fileprivate var editionsMisfortuneNodeMode: MisfortuneNode.Mode?
 
   fileprivate var relatedBooks: [String] = []
   fileprivate var relatedBooksNextUrl: URL? = nil
+  fileprivate var relatedBooksMisfortuneNodeMode: MisfortuneNode.Mode?
 
   fileprivate var followers: [String] = []
   fileprivate var followersNextUrl: URL? = nil
-  
+  fileprivate var followersMisfortuneNodeMode: MisfortuneNode.Mode?
+
   var bookRegistry: BookTypeRegistry = BookTypeRegistry()
 
   func initialize(with resource: ModelCommonProperties?) {
