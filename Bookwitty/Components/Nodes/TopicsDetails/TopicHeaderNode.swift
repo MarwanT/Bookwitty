@@ -37,7 +37,7 @@ class TopicHeaderNode: ASCellNode {
     }
   }
 
-  private var disabled: Bool = true {
+  var disabled: Bool = true {
     didSet {
       followButton.isHidden = disabled
       followButton.isEnabled = !disabled
