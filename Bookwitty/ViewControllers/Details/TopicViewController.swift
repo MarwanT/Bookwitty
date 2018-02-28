@@ -34,6 +34,10 @@ class TopicViewController: ASViewController<ASDisplayNode> {
     case relatedData
     case misfortune
     case activityIndicator
+
+    static var count: Int {
+      return 4
+    }
   }
   
   enum NavigationItemMode {
