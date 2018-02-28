@@ -51,7 +51,7 @@ class TopicViewController: ASViewController<ASDisplayNode> {
   fileprivate var segmentedNode: SegmentedControlNode
   fileprivate let loaderNode: LoaderNode
   fileprivate var flowLayout: UICollectionViewFlowLayout
-
+  fileprivate let misfortuneNode: MisfortuneNode
   fileprivate let actionBarNode: ActionBarNode
 
   fileprivate var normal: [Category] = [.latest(index: 0), .relatedBooks(index: 1), .followers(index: 2) ]
@@ -78,6 +78,10 @@ class TopicViewController: ASViewController<ASDisplayNode> {
     flowLayout = UICollectionViewFlowLayout()
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     controllerNode = ASDisplayNode()
+
+    misfortuneNode = MisfortuneNode(mode: MisfortuneNode.Mode.empty)
+    misfortuneNode.style.height = ASDimensionMake(1.0)
+    misfortuneNode.style.width = ASDimensionMake(1.0)
 
     super.init(node: controllerNode)
     controllerNode.automaticallyManagesSubnodes = true
