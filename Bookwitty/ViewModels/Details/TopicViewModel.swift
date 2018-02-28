@@ -278,6 +278,39 @@ final class TopicViewModel {
   }
 }
 
+//MARK: - Misfortune Mode
+extension TopicViewModel {
+  func getMisfortuneNodeMode(for category: TopicViewController.Category) -> MisfortuneNode.Mode? {
+    switch category {
+    case .editions:
+      return editionsMisfortuneNodeMode;
+    case .followers:
+      return followersMisfortuneNodeMode;
+    case .latest:
+      return latestMisfortuneNodeMode;
+    case .relatedBooks:
+      return relatedBooksMisfortuneNodeMode;
+    default:
+      return nil
+    }
+  }
+
+  private func updateMisfortuneNodeMode(for category: TopicViewController.Category, mode: MisfortuneNode.Mode?) {
+    switch category {
+    case .editions:
+      editionsMisfortuneNodeMode = mode
+    case .followers:
+      followersMisfortuneNodeMode = mode
+    case .latest:
+      latestMisfortuneNodeMode = mode
+    case .relatedBooks:
+      relatedBooksMisfortuneNodeMode = mode
+    default:
+      return
+    }
+  }
+}
+
 //MARK: - Latest
 extension TopicViewModel {
   var hasNextLatest: Bool {
