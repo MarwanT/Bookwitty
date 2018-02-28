@@ -309,6 +309,20 @@ extension TopicViewModel {
       return
     }
   }
+
+  fileprivate func updateMisfortuneMode(category: TopicViewController.Category, isEmpty: Bool?, error: BookwittyAPIError?) {
+    let misfortuneNodeMode: MisfortuneNode.Mode?
+
+    if let isReachable = AppManager.shared.reachability?.isReachable, !isReachable {
+      misfortuneNodeMode = MisfortuneNode.Mode.noInternet
+    } else if let _ = error {
+      misfortuneNodeMode = MisfortuneNode.Mode.somethingWrong
+    } else {
+      misfortuneNodeMode = (isEmpty ?? false) ? MisfortuneNode.Mode.empty : nil
+    }
+
+    updateMisfortuneNodeMode(for: category, mode: misfortuneNodeMode)
+  }
 }
 
 //MARK: - Latest
