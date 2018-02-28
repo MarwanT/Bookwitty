@@ -70,6 +70,15 @@ class TopicViewController: ASViewController<ASDisplayNode> {
 
   var navigationItemMode: NavigationItemMode = .view
   weak var delegate: TopicViewControllerDelegate?
+
+  var shouldDisplayMisfortuneNode: Bool {
+    guard let misfortuneMode = viewModel.getMisfortuneNodeMode(for: self.category(withIndex: segmentedNode.selectedIndex)), loadingStatus == .none else {
+      return false
+    }
+    misfortuneNode.mode = misfortuneMode
+    return true
+  }
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
