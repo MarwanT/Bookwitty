@@ -83,18 +83,18 @@ final class RichBookViewController: ASViewController<ASDisplayNode> {
     super.init(node: controllerNode)
 
     controllerNode.automaticallyManagesSubnodes = true
-    controllerNode.layoutSpecBlock = { [weak self] (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
-      var separatorNodeInsetSpec: ASLayoutElement?
-      if let separatorNode = self?.separatorNode {
-        separatorNodeInsetSpec = ASInsetLayoutSpec(
-        insets: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0), child: separatorNode)
-      }
-      
-      let nodes = [self?.searchNode, separatorNodeInsetSpec, self?.collectionNode]
+    controllerNode.layoutSpecBlock = { [searchNode, separatorNode, collectionNode] (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
+      let searchNodeInsetSpec: ASLayoutElement = ASInsetLayoutSpec(
+        insets: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10), child: searchNode)
+
+      let separatorNodeInsetSpec: ASLayoutElement = ASInsetLayoutSpec(
+        insets: UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0), child: separatorNode)
+
+      let nodes: [ASLayoutElement] = [searchNodeInsetSpec, separatorNodeInsetSpec, collectionNode]
       let verticalStackSpec = ASStackLayoutSpec(direction: .vertical, spacing: 0,
                                                 justifyContent: .start,
                                                 alignItems: .stretch,
-                                                children: nodes.flatMap({ return $0 }))
+                                                children: nodes)
       return verticalStackSpec
     }
 
