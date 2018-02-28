@@ -367,6 +367,9 @@ extension TopicViewModel {
       defer {
         completion(success, category)
       }
+
+      self.updateMisfortuneMode(category: category, isEmpty: resources?.isEmpty, error: error)
+
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
         self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.topicLatest)
@@ -435,6 +438,9 @@ extension TopicViewModel {
       defer {
         completion(success, category)
       }
+
+      self.updateMisfortuneMode(category: category, isEmpty: resources?.isEmpty, error: error)
+
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
         let resourcesIds: [String] = resources.flatMap({ $0.id })
@@ -501,6 +507,9 @@ extension TopicViewModel {
       defer {
         completion(success, category)
       }
+
+      self.updateMisfortuneMode(category: category, isEmpty: resources?.isEmpty, error: error)
+
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
         self.relatedBooks.removeAll()
@@ -575,6 +584,9 @@ extension TopicViewModel {
       defer {
         completion(success, category)
       }
+
+      self.updateMisfortuneMode(category: category, isEmpty: penNames?.isEmpty, error: error)
+
       if let penNames = penNames, success {
         DataManager.shared.update(resources: penNames)
         let followersIds: [String] = penNames.flatMap({ $0.id })
