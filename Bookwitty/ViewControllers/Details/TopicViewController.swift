@@ -674,6 +674,9 @@ extension TopicViewController: UICollectionViewDelegateFlowLayout {
     guard section == Section.relatedData.rawValue else {
       return UIEdgeInsets.zero
     }
+    guard section == Section.misfortune.rawValue else {
+      return UIEdgeInsets.zero
+    }
 
     return UIEdgeInsets(top: 5.0, left: 0.0, bottom: 0.0, right: 0.0)
   }
@@ -681,7 +684,7 @@ extension TopicViewController: UICollectionViewDelegateFlowLayout {
 
 extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
   func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
-    return 3
+    return Section.count
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
@@ -692,6 +695,10 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
 
     if section == Section.activityIndicator.rawValue {
       return loadingStatus != .none ? 1 : 0
+    }
+
+    if section == Section.misfortune.rawValue {
+      return shouldDisplayMisfortuneNode ? 1 : 0
     }
 
     var contentNumberOfRows: Int
@@ -723,6 +730,12 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
     if indexPath.section == Section.activityIndicator.rawValue {
       return {
         return self.loaderNode
+      }
+    }
+
+    if indexPath.section == Section.misfortune.rawValue {
+      return {
+        return self.misfortuneNode
       }
     }
 
@@ -1536,6 +1549,8 @@ extension TopicViewController {
       })
     } else {
       collectionNode.performBatch(animated: false, updates: {
+        collectionNode.reloadSections(IndexSet(integer: Section.misfortune.rawValue))
+        
         if loaderSection {
           collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
         }
