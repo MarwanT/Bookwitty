@@ -32,6 +32,7 @@ class TopicViewController: ASViewController<ASDisplayNode> {
   enum Section: Int {
     case header = 0
     case relatedData
+    case misfortune
     case activityIndicator
   }
   
