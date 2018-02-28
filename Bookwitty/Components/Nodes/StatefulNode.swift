@@ -21,5 +21,6 @@ class StatefulNode: ASCellNode {
     illustrationNode = ASImageNode()
     misfortuneNode = MisfortuneNode(mode: MisfortuneNode.Mode.empty)
     super.init()
+    automaticallyManagesSubnodes = true
   }
 }
