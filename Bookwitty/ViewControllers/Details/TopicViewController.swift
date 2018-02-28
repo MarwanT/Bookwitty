@@ -94,6 +94,14 @@ class TopicViewController: ASViewController<ASDisplayNode> {
       return overlayLayoutSpec
     }
   }
+
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    let navHeight: CGFloat = navigationController?.navigationBar.frame.size.height ?? 44.0
+    misfortuneNode.style.height = ASDimensionMake(collectionNode.frame.height - segmentedNodeHeight - navHeight)
+    misfortuneNode.style.width = ASDimensionMake(collectionNode.frame.width)
+    misfortuneNode.setNeedsLayout()
+  }
   
   func initialize(with resource: ModelCommonProperties?) {
     viewModel.initialize(with: resource)
