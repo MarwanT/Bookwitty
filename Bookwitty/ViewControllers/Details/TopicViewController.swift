@@ -651,7 +651,7 @@ extension TopicViewController: PenNameFollowNodeDelegate {
         return
     }
 
-    let actions: [MoreAction] = MoreAction.actions(for: resource as? ModelCommonProperties)
+    let actions: [MoreAction] = MoreAction.actions(for: resource)
     self.showMoreActionSheet(identifier: identifier, actions: actions, completion: {
       (success: Bool, action: MoreAction) in
 
@@ -1160,7 +1160,7 @@ extension TopicViewController: BaseCardPostNodeDelegate {
       guard let resource = resource as? ModelCommonProperties,
         let identifier = resource.id else { return }
 
-      let actions: [MoreAction] = MoreAction.actions(for: resource as? ModelCommonProperties)
+      let actions: [MoreAction] = MoreAction.actions(for: resource)
       self.showMoreActionSheet(identifier: identifier, actions: actions, completion: { (success: Bool, action: MoreAction) in
         didFinishAction?(success)
       })
