@@ -16,6 +16,7 @@
 "add" = "Add";
 "add_a_link" = "Add a Link";
 "add_a_title" = "Add a title";
+"add_a_post" = "Add a post";
 "add_an_image" = "Add an image";
 "add_tags" = "Add Tags";
 "address_book" = "Address Book";
@@ -27,11 +28,16 @@
 "audio" = "Audio";
 "audio_link" = "Audio Link";
 "author" = "Author";
+"author_no_posts" = "This author has no posts yet!";
+"author_no_followers" = "This author has no followers yet, be the first!";
+"author_no_related_books" = "There are no related books for this author.";
 "bag" = "Bag";
 "biography" = "Biography";
 "book" = "Book";
 "book_categories" = "Book Categories";
 "book_details" = "Book Details";
+"book_no_followers" = "This book has no followers yet, Be the first!";
+"book_no_posts" = "This book has no posts yet!";
 "book_recommended_in_reading_lists" = "Book recommended in reading lists";
 "books" = "Books";
 "books_you_may_be_interested_in" = "Books you may be interested in";
@@ -241,6 +247,7 @@
 "something_wrong_error_title" = "Something's wrong!";
 "something_wrong_in_credentials" = "This email and password combination could not be found";
 "subtitle" = "Subtitle";
+"suggest_a_book" = "Suggest a book";
 "tags" = "Tags";
 "take_Profile_photo" = "Take profile photo";
 "terms_of_use_and_privacy_policy" = "By tapping Sign up : you agree to the\n•Terms of Use• and •Privacy Policy•";
@@ -251,6 +258,9 @@
 "topics" = "Topics";
 "topics_to_follow" = "Topics to Follow";
 "try_again" = "Try again";
+"topic_no_followers" = "This topic has no followers. Be the first.";
+"topic_no_posts" = "There are no posts on this topic.";
+"topic_no_related_books" = "There are no related books for this topic.";
 "tutorial_fifth_page_description" = "Sign up to be a part of this vibrant community.";
 "tutorial_fifth_page_title" = "Join The Fun";
 "tutorial_first_page_description" = "";
