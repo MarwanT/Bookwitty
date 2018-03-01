@@ -10,10 +10,11 @@ import Foundation
 import AsyncDisplayKit
 
 class StatefulNode: ASCellNode {
-  let captionNode: ASTextNode
-  let actionNode: ASTextNode
-  let illustrationNode: ASImageNode
-  let misfortuneNode: MisfortuneNode
+  fileprivate let captionNode: ASTextNode
+  fileprivate let actionNode: ASTextNode
+  fileprivate let illustrationNode: ASImageNode
+  fileprivate let colorNode: ASDisplayNode
+  fileprivate let misfortuneNode: MisfortuneNode
 
   override init() {
     captionNode = ASTextNode()
