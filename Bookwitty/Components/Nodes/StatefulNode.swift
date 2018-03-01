@@ -37,3 +37,13 @@ class StatefulNode: ASCellNode {
     illustrationNode.contentMode = UIViewContentMode.scaleAspectFit
   }
 }
+
+//MARK: - Helpers
+extension StatefulNode {
+  fileprivate func sideInsets() -> UIEdgeInsets {
+    return UIEdgeInsets( top: 0.0,
+                         left: ThemeManager.shared.currentTheme.generalExternalMargin(),
+                         bottom: 0.0,
+                         right: ThemeManager.shared.currentTheme.generalExternalMargin())
+  }
+}
