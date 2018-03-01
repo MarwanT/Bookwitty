@@ -64,4 +64,57 @@ extension StatefulNode {
     case book
     case none
   }
+
+  fileprivate var captionText: String {
+    switch (mode, category) {
+    case (.topic, .latest):
+      return Strings.topic_no_posts()
+    case (.topic, .followers):
+      return Strings.topic_no_followers()
+    case (.topic, .relatedBooks):
+      return Strings.topic_no_related_books()
+    case (.book, .latest):
+      return Strings.book_no_posts()
+    case (.book, .followers):
+      return Strings.book_no_followers()
+    case (.author, .latest):
+      return Strings.author_no_posts()
+    case (.author, .relatedBooks):
+      return Strings.author_no_related_books()
+    case (.author, .followers):
+      return Strings.author_no_followers()
+    default: break
+    }
+    return Strings.empty_error_title()
+  }
+
+  fileprivate var actionText: String? {
+    switch (mode, category) {
+    case (_, .latest):
+      return Strings.add_a_post().uppercased()
+    case (_, .relatedBooks):
+      return Strings.suggest_a_book().uppercased()
+    default: break
+    }
+    return nil
+  }
+
+  fileprivate var image: UIImage? {
+    guard case .empty = misfortuneMode else {
+      return nil
+    }
+
+    switch category {
+    case .latest:
+      return #imageLiteral(resourceName: "illustrationErrorTopicEmptyLatest")
+    case .relatedBooks:
+      return #imageLiteral(resourceName: "illustrationErrorTopicEmptyRelatedbooks")
+    case .editions:
+      return #imageLiteral(resourceName: "illustrationErrorTopicEmptyAuthor")
+    case .followers:
+      return #imageLiteral(resourceName: "illustrationErrorTopicEmptyFollowers")
+    case .none:
+      return nil
+    }
+  }
 }
