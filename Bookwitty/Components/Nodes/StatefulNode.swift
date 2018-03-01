@@ -40,6 +40,25 @@ class StatefulNode: ASCellNode {
     colorNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
     illustrationNode.contentMode = UIViewContentMode.scaleAspectFit
   }
+
+  func updateState(category: Category, mode: Mode, misfortuneMode: MisfortuneNode.Mode?) {
+    self.category = category
+    self.mode = mode
+    self.misfortuneMode = misfortuneMode ?? .none
+    self.misfortuneNode.mode = self.misfortuneMode
+
+    captionNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption3)
+      .append(text: captionText, color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+      .attributedString
+
+    actionNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+      .append(text: actionText ?? "", color: ThemeManager.shared.currentTheme.colorNumber19())
+      .attributedString
+
+    illustrationNode.image = image
+
+    setNeedsLayout()
+  }
 }
 
 //MARK: - Helpers
