@@ -352,7 +352,7 @@ extension MisfortuneNode {
       case .noInternet:
         return #imageLiteral(resourceName: "illustrationErrorNoInternet")
       case .noResultsFound:
-        return #imageLiteral(resourceName: "illustrationErrorEmptyContent")
+        return #imageLiteral(resourceName: "illustrationErrorNoResult")
       case .somethingWrong:
         return #imageLiteral(resourceName: "illustrationErrorSomethingsWrong")
       case .appNeedsUpdate:
@@ -465,7 +465,7 @@ extension MisfortuneNode {
       case .noInternet:
         return ThemeManager.shared.currentTheme.colorNumber3()
       case .noResultsFound:
-        return ThemeManager.shared.currentTheme.colorNumber7()
+        return ThemeManager.shared.currentTheme.colorNumber5()
       case .somethingWrong:
         return ThemeManager.shared.currentTheme.colorNumber9()
       case .appNeedsUpdate:
