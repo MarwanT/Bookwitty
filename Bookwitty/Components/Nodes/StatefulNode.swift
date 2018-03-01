@@ -59,6 +59,21 @@ class StatefulNode: ASCellNode {
 
     setNeedsLayout()
   }
+
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    if case .none = misfortuneMode {
+      return noNodeLayoutSpec(constrainedSize)
+    }
+
+    switch (misfortuneMode, mode, category) {
+    case (.empty, _, _):
+      //".empty" Misfortune State with any Mode and Category
+      return topicVariantsLayoutSpec(constrainedSize)
+    case (_, _, _):
+      //Anything but not the ".empty" Misfortune State
+      return misfortuneNodeLayoutSpec(constrainedSize)
+    }
+  }
 }
 
 //MARK: - Layout Spec Creators
