@@ -55,13 +55,6 @@ class LinkPagesViewController: UIViewController {
     tagsView.beginEditing() // becomeFirstResponder
 
     tagsView.addTags(self.viewModel.getSelectedPages.flatMap { $0.title } )
-    
-    tagsView.tintColor = theme.colorNumber9()
-    tagsView.textColor = theme.colorNumber20()
-    tagsView.selectedColor = theme.colorNumber25()
-    tagsView.selectedTextColor = theme.colorNumber23()
-    tagsView.font = FontDynamicType.caption3.font
-    tagsView.padding.left = 0
 
     tagsView.onVerifyTag = { [weak self] field, candidate in
       guard let strongSelf = self else {
@@ -169,6 +162,14 @@ extension LinkPagesViewController: Themeable {
     let theme = ThemeManager.shared.currentTheme
     self.view.backgroundColor = theme.colorNumber2()
     self.navigationController?.navigationBar.barTintColor = theme.colorNumber2()
+
+    tagsView.tintColor = theme.colorNumber9()
+    tagsView.textColor = theme.colorNumber20()
+    tagsView.selectedColor = theme.colorNumber25()
+    tagsView.selectedTextColor = theme.colorNumber23()
+    tagsView.font = FontDynamicType.caption1.font
+    tagsView.padding.left = 0
+    tagsView.padding.bottom = 0
   }
 }
 
