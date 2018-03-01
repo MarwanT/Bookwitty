@@ -86,7 +86,13 @@ class SectionTitleHeaderNode: ASCellNode {
     self.verticalBarColor = verticalBarColor ?? configuration.verticalBarColor
     self.horizontalBarColor = horizontalBarColor ?? configuration.horizontalBarColor
   }
-  
+
+  func setTitle(title: String?, colorSet: ColorSet? = nil) {
+    self.title = title
+    self.verticalBarColor = colorSet?.shades.dark ?? configuration.verticalBarColor
+    self.horizontalBarColor = colorSet?.shades.light ?? configuration.horizontalBarColor
+  }
+
   private var title: String?  {
     didSet {
       titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .callout)
@@ -123,5 +129,26 @@ extension SectionTitleHeaderNode {
     fileprivate var verticalBarEdgeInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
     fileprivate var horizontalBarEdgeInsets = UIEdgeInsets(top: 0, left: 80 - 8, bottom: 0, right: 0)
     fileprivate var titleEdgeInsets = UIEdgeInsets(top: 10, left: 25, bottom: 10, right: 0)
+  }
+
+  enum ColorSet {
+    case yellow
+    case blue
+    case orange
+    case purple
+
+    var shades: (dark: UIColor, light: UIColor) {
+      let theme = ThemeManager.shared.currentTheme
+      switch self {
+      case .blue:
+        return (theme.colorNumber10(), theme.colorNumber9())
+      case .orange:
+        return (theme.colorNumber4(), theme.colorNumber3())
+      case .yellow:
+        return (theme.colorNumber6(), theme.colorNumber5())
+      case .purple:
+        return (theme.colorNumber12(), theme.colorNumber11())
+      }
+    }
   }
 }

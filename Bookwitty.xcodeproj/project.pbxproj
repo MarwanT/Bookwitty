@@ -179,7 +179,7 @@
 		594F4EA81E423B8600A947FA /* AppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EA71E423B8600A947FA /* AppNotification.swift */; };
 		594F4EAF1E440A4900A947FA /* User+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594F4EAE1E440A4900A947FA /* User+API.swift */; };
 		59591F1B1E6D7E7A005592B8 /* DisclosureNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59591F1A1E6D7E7A005592B8 /* DisclosureNode.swift */; };
-		59591F1D1E6DAF5D005592B8 /* BookDetailsAboutNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59591F1C1E6DAF5D005592B8 /* BookDetailsAboutNode.swift */; };
+		59591F1D1E6DAF5D005592B8 /* GeneralDetailsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59591F1C1E6DAF5D005592B8 /* GeneralDetailsNode.swift */; };
 		59591F1F1E6EB065005592B8 /* BookDetailsInformationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59591F1E1E6EB065005592B8 /* BookDetailsInformationNode.swift */; };
 		59591F231E6EE3FE005592B8 /* DetailsInfoCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59591F221E6EE3FE005592B8 /* DetailsInfoCellNode.swift */; };
 		59591F251E6F01C7005592B8 /* DisclosureNodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59591F241E6F01C7005592B8 /* DisclosureNodeCell.swift */; };
@@ -547,7 +547,7 @@
 		594F4EA71E423B8600A947FA /* AppNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNotification.swift; sourceTree = "<group>"; };
 		594F4EAE1E440A4900A947FA /* User+API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+API.swift"; sourceTree = "<group>"; };
 		59591F1A1E6D7E7A005592B8 /* DisclosureNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisclosureNode.swift; sourceTree = "<group>"; };
-		59591F1C1E6DAF5D005592B8 /* BookDetailsAboutNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsAboutNode.swift; sourceTree = "<group>"; };
+		59591F1C1E6DAF5D005592B8 /* GeneralDetailsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralDetailsNode.swift; sourceTree = "<group>"; };
 		59591F1E1E6EB065005592B8 /* BookDetailsInformationNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsInformationNode.swift; sourceTree = "<group>"; };
 		59591F221E6EE3FE005592B8 /* DetailsInfoCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsInfoCellNode.swift; sourceTree = "<group>"; };
 		59591F241E6F01C7005592B8 /* DisclosureNodeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisclosureNodeCell.swift; sourceTree = "<group>"; };
@@ -1194,6 +1194,7 @@
 				59049B121E81E44400EDF796 /* JoinUsNode.swift */,
 				F41F3AB61E6785CB004622D3 /* LoaderNode.swift */,
 				F4207B931E58466A00216A2E /* PenNameSelectionNode.swift */,
+				59591F1C1E6DAF5D005592B8 /* GeneralDetailsNode.swift */,
 				F4AD7D4D20400AE400D12FDD /* CharacterLimitedTextNode.swift */,
 				F46F3F961EC5A39D002C9718 /* DiscoverNode.swift */,
 				F46F3F981EC996BE002C9718 /* PageCellNode.swift */,
@@ -1566,7 +1567,6 @@
 				59EC5BA11E6C5987006E1CB9 /* BookDetailsHeaderNode.swift */,
 				59EC5BA31E6C5987006E1CB9 /* BookDetailsPricesNode.swift */,
 				59EC5BA41E6C5987006E1CB9 /* BookDetailsStockNode.swift */,
-				59591F1C1E6DAF5D005592B8 /* BookDetailsAboutNode.swift */,
 				59591F1E1E6EB065005592B8 /* BookDetailsInformationNode.swift */,
 			);
 			path = BookDetails;
@@ -2323,7 +2323,7 @@
 				594F4EA81E423B8600A947FA /* AppNotification.swift in Sources */,
 				F442CF871E65832000F59913 /* Date+Utils.swift in Sources */,
 				5929C2711E5B25BC006E08F8 /* CuratedCollection.swift in Sources */,
-				59591F1D1E6DAF5D005592B8 /* BookDetailsAboutNode.swift in Sources */,
+				59591F1D1E6DAF5D005592B8 /* GeneralDetailsNode.swift in Sources */,
 				F400CDC61E7AD48D00B7EF26 /* SearchViewController.swift in Sources */,
 				596CAAAA1FEC0D1C00C27B79 /* NSPointerArray.swift in Sources */,
 				56320C8B1EA748FB00642934 /* CardPostInfoNode.swift in Sources */,

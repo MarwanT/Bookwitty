@@ -306,7 +306,7 @@ extension BookDetailsViewController {
     let externalInsets = UIEdgeInsets(
       top: ThemeManager.shared.currentTheme.generalExternalMargin(),
       left: 0, bottom: 0, right: 0)
-    let node = BookDetailsAboutNode(externalInsets: externalInsets)
+    let node = GeneralDetailsNode(externalInsets: externalInsets)
     node.setText(aboutText: description, displayMode: .expanded)
     let genericViewController = GenericNodeViewController(node: node, title: viewModel.book.title)
     self.navigationController?.pushViewController(genericViewController, animated: true)
@@ -392,9 +392,9 @@ extension BookDetailsViewController {
 }
 
 // MARK: - Book details about node
-extension BookDetailsViewController: BookDetailsAboutNodeDelegate {
-  func aboutNodeDidTapViewDescription(aboutNode: BookDetailsAboutNode) {
-    guard let description = aboutNode.about else {
+extension BookDetailsViewController: GeneralDetailsNodeDelegate {
+  func generalDetailsNodeDidTapViewDescription(node: GeneralDetailsNode) {
+    guard let description = node.about else {
       return
     }
     perform(action: .viewDescription(description))

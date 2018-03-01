@@ -222,6 +222,7 @@ class TopicViewController: ASViewController<ASDisplayNode> {
     let values = viewModel.valuesForHeader()
 
     headerNode.topicTitle = values.title
+    headerNode.topicDesription = values.description
     headerNode.coverImageUrl = values.coverImageUrl
     headerNode.thumbnailImageUrl = values.thumbnailImageUrl
 
@@ -540,6 +541,17 @@ extension TopicViewController: TopicHeaderNodeDelegate {
     let transitionInfo = GSTransitionInfo(fromView: imageNode.view)
     let imageViewer = GSImageViewerController(imageInfo: imageInfo, transitionInfo: transitionInfo)
     present(imageViewer, animated: true, completion: nil)
+  }
+
+  func topicHeader(node: TopicHeaderNode, requestToViewFullDescription description: String?, from descriptionNode: CharacterLimitedTextNode) {
+    let externalInsets = UIEdgeInsets(
+      top: ThemeManager.shared.currentTheme.generalExternalMargin(),
+      left: 0, bottom: 0, right: 0)
+    let node = GeneralDetailsNode(externalInsets: externalInsets)
+    node.configuration.colorSet = .purple
+    node.setText(aboutText: viewModel.resource?.shortDescription ?? "", sectionTitle: viewModel.resourceTitle ?? "", displayMode: .expanded)
+    let genericViewController = GenericNodeViewController(node: node, title: "")
+    self.navigationController?.pushViewController(genericViewController, animated: true)
   }
 }
 

@@ -11,10 +11,12 @@ import AsyncDisplayKit
 
 protocol TopicHeaderNodeDelegate: class {
   func topicHeader(node: TopicHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
+  func topicHeader(node: TopicHeaderNode, requestToViewFullDescription description: String?, from descriptionNode: CharacterLimitedTextNode)
 }
 
 class TopicHeaderNode: ASCellNode {
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
   fileprivate let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   fileprivate let imageHeight: CGFloat = 200.0
   fileprivate let buttonSize: CGSize = CGSize(width: 36.0, height: 36.0)
@@ -23,6 +25,7 @@ class TopicHeaderNode: ASCellNode {
   private var coverImageNode: ASNetworkImageNode
   private var thumbnailImageNode: ASNetworkImageNode
   private var titleNode: ASTextNode
+  private var descriptionNode: CharacterLimitedTextNode
   private var topicStatsNode: ASTextNode
   private var contributorsNode: ContributorsNode
 
@@ -32,20 +35,24 @@ class TopicHeaderNode: ASCellNode {
     coverImageNode = ASNetworkImageNode()
     thumbnailImageNode = ASNetworkImageNode()
     titleNode = ASTextNode()
+    descriptionNode = CharacterLimitedTextNode()
     topicStatsNode = ASTextNode()
     contributorsNode = ContributorsNode()
     super.init()
-    addSubnode(coverImageNode)
-    addSubnode(titleNode)
-    addSubnode(topicStatsNode)
-    addSubnode(contributorsNode)
-    addSubnode(thumbnailImageNode)
+    automaticallyManagesSubnodes = true
     setupNode()
   }
 
   private func setupNode() {
     coverImageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
     thumbnailImageNode.placeholderColor = ASDisplayNodeDefaultPlaceholderColor()
+
+    descriptionNode.maxCharacter = 140
+    descriptionNode.nodeDelegate = self
+    descriptionNode.maximumNumberOfLines = 0
+    descriptionNode.autoChange = false
+    descriptionNode.mode = .collapsed
+    descriptionNode.truncationMode = NSLineBreakMode.byTruncatingTail
 
     titleNode.maximumNumberOfLines = 4
     topicStatsNode.maximumNumberOfLines = 1
@@ -62,6 +69,18 @@ class TopicHeaderNode: ASCellNode {
       if let topicTitle = topicTitle {
         titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title1)
           .append(text: topicTitle, color: ThemeManager.shared.currentTheme.colorNumber20()).attributedString
+        setNeedsLayout()
+      }
+    }
+  }
+
+  var topicDesription: String? {
+    didSet {
+      if let topicDesription = topicDesription {
+        descriptionNode.setString(text: topicDesription.components(separatedBy: .newlines).joined(),
+                                  fontDynamicType: .body2,
+                                  moreFontDynamicType: .footnote,
+                                  color: ThemeManager.shared.currentTheme.colorNumber20())
         setNeedsLayout()
       }
     }
@@ -134,7 +153,9 @@ class TopicHeaderNode: ASCellNode {
 
     let titleNodeInset = ASInsetLayoutSpec(insets: sideInset(), child: titleNode)
     if isValid(topicTitle) {
+      nodesArray.append(ASLayoutSpec.spacer(height: internalMargin))
       nodesArray.append(titleNodeInset)
+      nodesArray.append(ASLayoutSpec.spacer(height: externalMargin/2))
     }
 
     var statsAndActionNodes: [ASLayoutElement] = []
@@ -153,19 +174,29 @@ class TopicHeaderNode: ASCellNode {
 
     let horizontalSpecInset = ASInsetLayoutSpec(insets: sideInset(), child: statsAndActionHorizontalSpec)
     nodesArray.append(horizontalSpecInset)
+    nodesArray.append(ASLayoutSpec.spacer(height: externalMargin))
 
     let count = contributorsNode.imagesUrls?.count ?? 0
     let text = contributorsNode.numberOfContributors
-    if count != 0 || isValid(text){
+    let showContributors = count != 0 || isValid(text)
+
+    if isValid(description) {
+      let descriptionNodeSpecInset = ASInsetLayoutSpec(insets: sideInset(), child: descriptionNode)
+      nodesArray.append(descriptionNodeSpecInset)
+      nodesArray.append(ASLayoutSpec.spacer(height: count != 0 ? externalMargin : externalMargin/2))
+    }
+
+    if showContributors {
       contributorsNode.style.width = ASDimensionMake(constrainedSize.max.width)
       contributorsNode.style.height = ASDimensionMake(45.0)
       nodesArray.append(contributorsNode)
+      nodesArray.append(ASLayoutSpec.spacer(height: count != 0 ? externalMargin : 0.0))
     }
 
     //Height is zero since the `ASStackLayoutSpec` will add the internalMargin as spacing between the items
     nodesArray.append(spacer(height: 0.0))
     let verticalStack = ASStackLayoutSpec(direction: .vertical,
-                                          spacing: internalMargin,
+                                          spacing: 0.0,
                                           justifyContent: .start,
                                           alignItems: .stretch,
                                           children: nodesArray)
@@ -210,5 +241,12 @@ extension TopicHeaderNode {
 
   fileprivate func isValid(_ value: String?) -> Bool {
     return !value.isEmptyOrNil()
+  }
+}
+
+extension TopicHeaderNode: CharacterLimitedTextNodeDelegate {
+  func characterLimitedTextNodeDidTap(_ node: CharacterLimitedTextNode) {
+    //Did tap on characterLimited text node
+    delegate?.topicHeader(node: self, requestToViewFullDescription: description, from: node)
   }
 }
