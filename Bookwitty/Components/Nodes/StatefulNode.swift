@@ -47,3 +47,21 @@ extension StatefulNode {
                          right: ThemeManager.shared.currentTheme.generalExternalMargin())
   }
 }
+
+//MARK: State Valuation
+extension StatefulNode {
+  enum Category {
+    case latest
+    case relatedBooks
+    case followers
+    case editions
+    case none
+  }
+
+  enum Mode {
+    case topic
+    case author
+    case book
+    case none
+  }
+}
