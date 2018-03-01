@@ -16,6 +16,10 @@ class StatefulNode: ASCellNode {
   fileprivate let colorNode: ASDisplayNode
   fileprivate let misfortuneNode: MisfortuneNode
 
+  fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
+  fileprivate let sectionMargin = ThemeManager.shared.currentTheme.sectionSpacing()
+  fileprivate let imageBackgroudColorHeightPercent: CGFloat = 0.65
+
   override init() {
     captionNode = ASTextNode()
     actionNode = ASTextNode()
