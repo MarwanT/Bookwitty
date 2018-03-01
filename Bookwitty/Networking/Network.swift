@@ -19,6 +19,7 @@ public enum BookwittyAPIError: Swift.Error {
   case requestMapping(MoyaError)
   case refreshToken
   case emailAlreadyExists
+  case maxTagsAllowed
   case invalidStatusCode
   case failToRetrieveDictionary
   case failToParseData
