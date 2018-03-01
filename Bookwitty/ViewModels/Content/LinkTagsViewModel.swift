@@ -77,33 +77,10 @@ extension LinkTagsViewModel {
   }
   
   func addTagg(withTitle title: String, completion: ((_ success: Bool) -> Void)?) {
-    if let tag = self.fetchedTag(withTitle: title) {
-      link(tag: tag, completion: completion)
-    } else {
-      //Create (user hit return)
-      let newTag = Tag()
-      newTag.title = title
-      let allTags = selectedTags + [newTag]
-      replace(with: allTags, completion: completion)
-    }
-  }
-  
-  func link(tag: Tag, completion: ((_ success: Bool) -> Void)?) {
-    guard let tagID = tag.id else {
-      completion?(false)
-      return
-    }
-    let tagTitle = tag.title ?? ""
-    _ = TagAPI.linkTag(for: self.contentIdentifier, tagIdentifier: tagID, tagTitle: tagTitle, completion: { (success, error) in
-      defer {
-        completion?(success)
-      }
-      
-      guard success else {
-        //TODO: if we get `no more tags are allowed error` we should set viewModel.canLink = false
-        return
-      }
-    })
+    let newTag = Tag()
+    newTag.title = title
+    let allTags = selectedTags + [newTag]
+    replace(with: allTags, completion: completion)
   }
   
   func replace(with tags: [Tag], completion: ((_ success: Bool) -> Void)?) {
