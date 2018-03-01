@@ -295,6 +295,23 @@ extension TopicViewModel {
     }
   }
 
+  fileprivate func getStatefulNodeMode() -> StatefulNode.Mode {
+    guard let resource = resource else {
+      return .none
+    }
+
+    switch resource.registeredResourceType {
+    case Author.resourceType:
+      return .author
+    case Book.resourceType:
+      return .book
+    case Topic.resourceType:
+      return .topic
+    default:
+      return .none
+    }
+  }
+
   private func updateMisfortuneNodeMode(for category: TopicViewController.Category, mode: MisfortuneNode.Mode?) {
     switch category {
     case .editions:
