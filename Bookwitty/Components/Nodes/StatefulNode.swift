@@ -20,6 +20,7 @@ class StatefulNode: ASCellNode {
     captionNode = ASTextNode()
     actionNode = ASTextNode()
     illustrationNode = ASImageNode()
+    colorNode = ASDisplayNode()
     misfortuneNode = MisfortuneNode(mode: MisfortuneNode.Mode.empty)
     super.init()
     automaticallyManagesSubnodes = true
