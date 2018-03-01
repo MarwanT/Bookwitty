@@ -220,6 +220,8 @@ class ContentEditorViewController: UIViewController {
     
     let cancelAction = UIAlertAction(title: Strings.cancel(), style: .cancel, handler: nil)
     alertController.addAction(cancelAction)
+
+    editorView.backupRange()
     present(alertController, animated: true, completion: nil)
   }
 
@@ -991,6 +993,13 @@ extension ContentEditorViewController: RichEditorDelegate {
         self.set(option: .link, selected: isLink, isEnabled: (isLink || isRange))
         self.set(option: .unorderedList, selected: editingItems.contains("unorderedList"))
       })
+    } else if action.hasPrefix("removewrapper:") {
+      guard let range = action.range(of: "removewrapper:") else {
+        return
+      }
+      let wrapperId = action.substring(from: range.upperBound)
+      self.viewModel.removeUploadRequest(wrapperId)
+      self.loadNavigationBarButtons()
     }
   }
 }
