@@ -32,19 +32,19 @@ final class TopicViewModel {
 
   fileprivate var latest: [String] = []
   fileprivate var latestNextUrl: URL? = nil
-  fileprivate var latestMisfortuneNodeMode: MisfortuneNode.Mode?
+  fileprivate var latestStatefulNodeStates: (StatefulNode.Mode, StatefulNode.Category, MisfortuneNode.Mode) = (.none, .none, .none)
 
   fileprivate var editions: [String] = []
   fileprivate var editionsNextUrl: URL? = nil
-  fileprivate var editionsMisfortuneNodeMode: MisfortuneNode.Mode?
+  fileprivate var editionsStatefulNodeStates: (StatefulNode.Mode, StatefulNode.Category, MisfortuneNode.Mode) = (.none, .none, .none)
 
   fileprivate var relatedBooks: [String] = []
   fileprivate var relatedBooksNextUrl: URL? = nil
-  fileprivate var relatedBooksMisfortuneNodeMode: MisfortuneNode.Mode?
+  fileprivate var relatedBooksStatefulNodeStates: (StatefulNode.Mode, StatefulNode.Category, MisfortuneNode.Mode) = (.none, .none, .none)
 
   fileprivate var followers: [String] = []
   fileprivate var followersNextUrl: URL? = nil
-  fileprivate var followersMisfortuneNodeMode: MisfortuneNode.Mode?
+  fileprivate var followersStatefulNodeStates: (StatefulNode.Mode, StatefulNode.Category, MisfortuneNode.Mode) = (.none, .none, .none)
 
   var bookRegistry: BookTypeRegistry = BookTypeRegistry()
 
@@ -278,20 +278,21 @@ final class TopicViewModel {
   }
 }
 
-//MARK: - Misfortune Mode
+//MARK: - Stateful Mode
 extension TopicViewModel {
-  func getMisfortuneNodeMode(for category: TopicViewController.Category) -> MisfortuneNode.Mode? {
+  func getStatefulStates(for category: TopicViewController.Category) ->
+    (mode: StatefulNode.Mode, category: StatefulNode.Category, state: MisfortuneNode.Mode) {
     switch category {
     case .editions:
-      return editionsMisfortuneNodeMode;
+      return editionsStatefulNodeStates
     case .followers:
-      return followersMisfortuneNodeMode;
+      return followersStatefulNodeStates
     case .latest:
-      return latestMisfortuneNodeMode;
+      return latestStatefulNodeStates
     case .relatedBooks:
-      return relatedBooksMisfortuneNodeMode;
+      return relatedBooksStatefulNodeStates
     default:
-      return nil
+      return (.none, .none, .none)
     }
   }
 
@@ -312,33 +313,35 @@ extension TopicViewModel {
     }
   }
 
-  private func updateMisfortuneNodeMode(for category: TopicViewController.Category, mode: MisfortuneNode.Mode?) {
+  fileprivate func updateStatefulNodeStates(for category: TopicViewController.Category, mode: MisfortuneNode.Mode) {
+    let statefulMode = getStatefulNodeMode()
+
     switch category {
     case .editions:
-      editionsMisfortuneNodeMode = mode
+      editionsStatefulNodeStates = (statefulMode, StatefulNode.Category.editions, mode)
     case .followers:
-      followersMisfortuneNodeMode = mode
+      followersStatefulNodeStates = (statefulMode, StatefulNode.Category.followers, mode)
     case .latest:
-      latestMisfortuneNodeMode = mode
+      latestStatefulNodeStates = (statefulMode, StatefulNode.Category.latest, mode)
     case .relatedBooks:
-      relatedBooksMisfortuneNodeMode = mode
+      relatedBooksStatefulNodeStates = (statefulMode, StatefulNode.Category.relatedBooks, mode)
     default:
       return
     }
   }
 
   fileprivate func updateMisfortuneMode(category: TopicViewController.Category, isEmpty: Bool?, error: BookwittyAPIError?) {
-    let misfortuneNodeMode: MisfortuneNode.Mode?
+    let misfortuneNodeMode: MisfortuneNode.Mode
 
     if let isReachable = AppManager.shared.reachability?.isReachable, !isReachable {
       misfortuneNodeMode = MisfortuneNode.Mode.noInternet
     } else if let _ = error {
       misfortuneNodeMode = MisfortuneNode.Mode.somethingWrong
     } else {
-      misfortuneNodeMode = (isEmpty ?? false) ? MisfortuneNode.Mode.empty : nil
+      misfortuneNodeMode = (isEmpty ?? false) ? MisfortuneNode.Mode.empty : .none
     }
 
-    updateMisfortuneNodeMode(for: category, mode: misfortuneNodeMode)
+    updateStatefulNodeStates(for: category, mode: misfortuneNodeMode)
   }
 }
 

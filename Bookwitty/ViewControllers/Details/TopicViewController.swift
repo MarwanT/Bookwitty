@@ -56,7 +56,7 @@ class TopicViewController: ASViewController<ASDisplayNode> {
   fileprivate var segmentedNode: SegmentedControlNode
   fileprivate let loaderNode: LoaderNode
   fileprivate var flowLayout: UICollectionViewFlowLayout
-  fileprivate let misfortuneNode: MisfortuneNode
+  fileprivate let statefulNode: StatefulNode
   fileprivate let actionBarNode: ActionBarNode
 
   fileprivate var normal: [Category] = [.latest(index: 0), .relatedBooks(index: 1), .followers(index: 2) ]
@@ -72,10 +72,19 @@ class TopicViewController: ASViewController<ASDisplayNode> {
   weak var delegate: TopicViewControllerDelegate?
 
   var shouldDisplayMisfortuneNode: Bool {
-    guard let misfortuneMode = viewModel.getMisfortuneNodeMode(for: self.category(withIndex: segmentedNode.selectedIndex)), loadingStatus == .none else {
+    let misfortuneMode = viewModel.getStatefulStates(for: self.category(withIndex: segmentedNode.selectedIndex))
+    statefulNode.updateState(category: misfortuneMode.category, mode: misfortuneMode.mode, misfortuneMode: misfortuneMode.state)
+
+    if case (.none, .none, .none) = misfortuneMode {
       return false
     }
-    misfortuneNode.mode = misfortuneMode
+    guard case .none = loadingStatus else {
+      return false
+    }
+    if case .none = misfortuneMode.state {
+      return false
+    }
+
     return true
   }
 
@@ -93,9 +102,9 @@ class TopicViewController: ASViewController<ASDisplayNode> {
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     controllerNode = ASDisplayNode()
 
-    misfortuneNode = MisfortuneNode(mode: MisfortuneNode.Mode.empty)
-    misfortuneNode.style.height = ASDimensionMake(1.0)
-    misfortuneNode.style.width = ASDimensionMake(1.0)
+    statefulNode = StatefulNode()
+    statefulNode.style.height = ASDimensionMake(1.0)
+    statefulNode.style.width = ASDimensionMake(1.0)
 
     super.init(node: controllerNode)
     controllerNode.automaticallyManagesSubnodes = true
@@ -112,9 +121,9 @@ class TopicViewController: ASViewController<ASDisplayNode> {
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     let navHeight: CGFloat = navigationController?.navigationBar.frame.size.height ?? 44.0
-    misfortuneNode.style.height = ASDimensionMake(collectionNode.frame.height - segmentedNodeHeight - navHeight)
-    misfortuneNode.style.width = ASDimensionMake(collectionNode.frame.width)
-    misfortuneNode.setNeedsLayout()
+    statefulNode.style.height = ASDimensionMake(collectionNode.frame.height - segmentedNodeHeight - navHeight)
+    statefulNode.style.width = ASDimensionMake(collectionNode.frame.width)
+    statefulNode.setNeedsLayout()
   }
   
   func initialize(with resource: ModelCommonProperties?) {
@@ -735,7 +744,7 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
 
     if indexPath.section == Section.misfortune.rawValue {
       return {
-        return self.misfortuneNode
+        return self.statefulNode
       }
     }
 
