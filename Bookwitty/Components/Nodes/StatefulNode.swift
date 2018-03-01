@@ -28,5 +28,12 @@ class StatefulNode: ASCellNode {
     misfortuneNode = MisfortuneNode(mode: MisfortuneNode.Mode.empty)
     super.init()
     automaticallyManagesSubnodes = true
+    setup()
+  }
+
+  private func setup() {
+    backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+    colorNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+    illustrationNode.contentMode = UIViewContentMode.scaleAspectFit
   }
 }
