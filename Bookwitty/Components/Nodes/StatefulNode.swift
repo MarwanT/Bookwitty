@@ -61,6 +61,45 @@ class StatefulNode: ASCellNode {
   }
 }
 
+//MARK: - Layout Spec Creators
+extension StatefulNode {
+  fileprivate func noNodeLayoutSpec(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let noSpec = ASLayoutSpec()
+    noSpec.style.preferredSize = CGSize(width: 0.0, height: 0.0)
+    return noSpec
+  }
+
+  fileprivate func misfortuneNodeLayoutSpec(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+      return ASWrapperLayoutSpec(layoutElement: misfortuneNode)
+  }
+
+  fileprivate func topicVariantsLayoutSpec(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    let captionInsetSpec = ASInsetLayoutSpec(insets: sideInsets(), child: captionNode)
+    let actionInsetSpec = ASInsetLayoutSpec(insets: sideInsets(), child: actionNode)
+
+    let vStack = ASStackLayoutSpec(direction: .vertical,
+                                   spacing: internalMargin,
+                                   justifyContent: .start,
+                                   alignItems: .center,
+                                   children: [ASLayoutSpec.spacer(height: sectionMargin),
+                                              captionInsetSpec,
+                                              actionInsetSpec])
+
+    //Update Color Node height with the percentage needed
+    colorNode.style.height = ASDimensionMake(constrainedSize.max.height * imageBackgroudColorHeightPercent)
+    colorNode.style.width = ASDimensionMake(constrainedSize.max.width)
+
+    let colorBgLayoutSpec = ASStackLayoutSpec(direction: .vertical,
+                                       spacing: 0.0,
+                                       justifyContent: .start,
+                                       alignItems: .stretch,
+                                       children: [colorNode, ASLayoutSpec.spacer(flexGrow: 1)])
+
+    let mainLayoutSpec = ASBackgroundLayoutSpec(child: vStack, background: illustrationNode)
+    return ASOverlayLayoutSpec(child: colorBgLayoutSpec, overlay: mainLayoutSpec)
+  }
+}
+
 //MARK: - Helpers
 extension StatefulNode {
   fileprivate func sideInsets() -> UIEdgeInsets {
