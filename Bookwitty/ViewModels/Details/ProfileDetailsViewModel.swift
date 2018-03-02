@@ -21,6 +21,10 @@ class ProfileDetailsViewModel {
   var cancellableRequest: Cancellable?
   var bookRegistry: BookTypeRegistry = BookTypeRegistry()
 
+  fileprivate var latestStatefulNodeStates: (StatefulNode.Mode, StatefulNode.Category, MisfortuneNode.Mode) = (.none, .none, .none)
+  fileprivate var followingStatefulNodeStates: (StatefulNode.Mode, StatefulNode.Category, MisfortuneNode.Mode) = (.none, .none, .none)
+  fileprivate var followersStatefulNodeStates: (StatefulNode.Mode, StatefulNode.Category, MisfortuneNode.Mode) = (.none, .none, .none)
+
   init(penName: PenName) {
     self.penName = penName
   }
