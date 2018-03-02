@@ -28,6 +28,8 @@ class StatefulNode: ASCellNode {
   fileprivate var mode: Mode = .none
   fileprivate var misfortuneMode: MisfortuneNode.Mode = .none
 
+  var delegate: StatefulNodeDelegate?
+
   override init() {
     captionNode = ASTextNode()
     actionNode = ASTextNode()
