@@ -10,7 +10,7 @@ import UIKit
 import AsyncDisplayKit
 
 class SearchNode: ASCellNode {
-  static let cellHeight: CGFloat = 44.0
+  static let cellHeight: CGFloat = 35.0
 
   var searchBarDelegate: UISearchBarDelegate?
   fileprivate var searchBar: UISearchBar?
@@ -34,6 +34,7 @@ class SearchNode: ASCellNode {
   override func didLoad() {
     self.searchBar = self.view as? UISearchBar
     self.searchBar?.delegate = searchBarDelegate
+    self.searchBar?.layer.cornerRadius = 10
     applyTheme()
   }
   
@@ -56,7 +57,8 @@ extension SearchNode: Themeable {
     searchBar?.placeholder = Strings.search_placeholder()
     searchBar?.showsCancelButton = false
     searchBar?.searchBarStyle = .minimal
-    searchBar?.barTintColor = .clear
+    searchBar?.barTintColor = ThemeManager.shared.currentTheme.colorNumber23()
+    searchBar?.backgroundColor = ThemeManager.shared.currentTheme.colorNumber23()
 
     searchBar?.setTextColor(color: configuration.textColor)
     searchBar?.setPlaceholderTextColor(color: configuration.placeholderTextColor)
