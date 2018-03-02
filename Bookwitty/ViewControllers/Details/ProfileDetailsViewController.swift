@@ -69,6 +69,14 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     super.init(node: collectionNode)
   }
 
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    let navHeight: CGFloat = navigationController?.navigationBar.frame.size.height ?? 44.0
+    statefulNode.style.height = ASDimensionMake(collectionNode.frame.height - segmentedNode.frame.height - navHeight)
+    statefulNode.style.width = ASDimensionMake(collectionNode.frame.width)
+    statefulNode.setNeedsLayout()
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     initializeComponents()
