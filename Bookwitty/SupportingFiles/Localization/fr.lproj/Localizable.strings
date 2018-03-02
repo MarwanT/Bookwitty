@@ -190,6 +190,9 @@
 "pen_name_error_could_not_create" = "Il y a eu un problème, pseudo n'a pu être créé";
 "pen_name_error_was_already_taken" = "Désolés, ce nom est déjà pris";
 "pen_name_max_number_of_characters_thirty_six" = "Votre nom ne peut pas excéder 36 caractères";
+"pen_name_no_followers" = "This pen-name has no followers yet, be the first!";
+"pen_name_no_following" = "There are no related books for this topic.";
+"pen_name_no_posts" = "This pen-name has no posts yet!";
 "pen_names" = "Pseudos";
 "pen_names_to_follow" = "Des contributeurs que vous pouvez suivre";
 "please_fill_required_field" = "Veuillez remplir les champs obligatoires";

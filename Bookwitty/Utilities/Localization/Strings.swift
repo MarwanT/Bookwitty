@@ -773,6 +773,18 @@ class Strings {
     return localizedString(key: "pen_name_max_number_of_characters_thirty_six")
   }
 
+  static func pen_name_no_followers() -> String {
+    return localizedString(key: "pen_name_no_followers")
+  }
+
+  static func pen_name_no_following() -> String {
+    return localizedString(key: "pen_name_no_following")
+  }
+
+  static func pen_name_no_posts() -> String {
+    return localizedString(key: "pen_name_no_posts")
+  }
+
   static func pen_names() -> String {
     return localizedString(key: "pen_names")
   }
