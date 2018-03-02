@@ -168,10 +168,21 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     guard let url = viewModel.penName.canonicalURL else {
       return
     }
+    share(title: viewModel.penName.name ?? "", url: url)
   }
 
   func moreButton(_ sender: Any?) {
     openMoreActionSheet(for: viewModel.penName, shouldPopController: true)
+  }
+
+  fileprivate func share(title: String, url: URL) {
+    presentShareSheet(shareContent: [title, url])
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                 action: .Share,
+                                                 name: title)
+    Analytics.shared.send(event: event)
   }
 
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
