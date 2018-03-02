@@ -228,7 +228,8 @@ class TopicViewController: ASViewController<ASDisplayNode> {
 
     headerNode.setTopicStatistics(numberOfFollowers: Int(values.stats.followers ?? ""), numberOfPosts: Int(values.stats.posts ?? ""))
     headerNode.setContributorsValues(numberOfContributors: values.contributors.count, imageUrls: values.contributors.imageUrls)
-
+    headerNode.following = values.following
+    headerNode.disabled = values.isMyPenName
     actionBarNode.actionButtonSelected = values.following
   }
 
@@ -627,6 +628,10 @@ extension TopicViewController: PenNameFollowNodeDelegate {
       (success: Bool, action: MoreAction) in
 
     })
+  }
+
+  func penName(node: PenNameFollowNode, requestToViewFullBiography biography: String?, from biographyNode: CharacterLimitedTextNode) {
+    //No need to do anything
   }
 }
 
