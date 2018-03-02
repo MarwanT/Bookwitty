@@ -107,6 +107,7 @@ class TopicViewController: ASViewController<ASDisplayNode> {
     statefulNode.style.width = ASDimensionMake(1.0)
 
     super.init(node: controllerNode)
+    statefulNode.delegate = self
     controllerNode.automaticallyManagesSubnodes = true
 
     controllerNode.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
@@ -350,6 +351,13 @@ class TopicViewController: ASViewController<ASDisplayNode> {
         self.updateCollection(relatedDataSection: true, loaderSection: true)
       }
     }
+  }
+}
+
+//MARK: - StatefulNode Delegate Implementation
+extension TopicViewController: StatefulNodeDelegate {
+  func statefulNodeDidPerformAction(node: StatefulNode, statefulAction: StatefulNode.Action?, misfortuneAction: MisfortuneNode.Action?) {
+    //TODO: Handle actions
   }
 }
 
