@@ -190,6 +190,12 @@ extension StatefulNode {
       return Strings.author_no_related_books()
     case (.author, .followers):
       return Strings.author_no_followers()
+    case (.penname, .latest):
+      return Strings.pen_name_no_posts()
+    case (.penname, .followers):
+      return Strings.pen_name_no_followers()
+    case (.penname, .following):
+      return Strings.pen_name_no_following()
     default: break
     }
     return Strings.empty_error_title()
