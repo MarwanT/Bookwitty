@@ -15,6 +15,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   let flowLayout: UICollectionViewFlowLayout
   let collectionNode: ASCollectionNode
   let penNameHeaderNode: PenNameFollowNode
+  fileprivate let statefulNode: StatefulNode
   fileprivate var segmentedNode: SegmentedControlNode
 
   fileprivate var viewModel: ProfileDetailsViewModel!
@@ -61,7 +62,10 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
     activeSegment = segments[0]
     penNameHeaderNode = PenNameFollowNode(enlarged: true)
-
+    //Initialize statefulNode
+    statefulNode = StatefulNode()
+    statefulNode.style.height = ASDimensionMake(1.0)
+    statefulNode.style.width = ASDimensionMake(1.0)
     super.init(node: collectionNode)
   }
 
