@@ -47,6 +47,7 @@ class StatefulNode: ASCellNode {
     illustrationNode.contentMode = UIViewContentMode.scaleAspectFit
 
     actionNode.addTarget(self, action: #selector(actionButtonTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
+    misfortuneNode.delegate = self
   }
 
   func updateState(category: Category, mode: Mode, misfortuneMode: MisfortuneNode.Mode?) {
@@ -88,6 +89,13 @@ class StatefulNode: ASCellNode {
 extension StatefulNode {
   func actionButtonTouchUpInside(_ sender: Any) {
     delegate?.statefulNodeDidPerformAction(node: self, statefulAction: action, misfortuneAction: nil)
+  }
+}
+
+// MARK: - Misfortune Delegate Implementation
+extension StatefulNode: MisfortuneNodeDelegate {
+  func misfortuneNodeDidPerformAction(node: MisfortuneNode, action: MisfortuneNode.Action?) {
+    delegate?.statefulNodeDidPerformAction(node: self, statefulAction: nil, misfortuneAction: misfortuneNode.mode.action)
   }
 }
 
