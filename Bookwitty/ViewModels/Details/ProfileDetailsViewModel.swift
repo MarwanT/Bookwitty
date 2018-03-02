@@ -121,16 +121,16 @@ extension ProfileDetailsViewModel {
   func fetchData(for segment: ProfileDetailsViewController.Segment, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
     switch segment {
     case .latest:
-      fetchContent(completion: completion)
+      fetchContent(segment: segment, completion: completion)
     case .followers:
-      fetchFollowers(completion: completion)
+      fetchFollowers(segment: segment, completion: completion)
     case .following:
-      fetchFollowing(completion: completion)
+      fetchFollowing(segment: segment, completion: completion)
     default: return
     }
   }
 
-  func fetchContent(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+  func fetchContent(segment: ProfileDetailsViewController.Segment, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
     guard let id = penName.id else {
       completion(false, nil)
       return
@@ -154,7 +154,7 @@ extension ProfileDetailsViewModel {
     }
   }
 
-  func fetchFollowers(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+  func fetchFollowers(segment: ProfileDetailsViewController.Segment, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
     guard let id = penName.id else {
       completion(false, nil)
       return
@@ -176,7 +176,7 @@ extension ProfileDetailsViewModel {
     }
   }
 
-  func fetchFollowing(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+  func fetchFollowing(segment: ProfileDetailsViewController.Segment, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
     guard let id = penName.id else {
       completion(false, nil)
       return
