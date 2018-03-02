@@ -84,6 +84,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     statefulNode.style.height = ASDimensionMake(1.0)
     statefulNode.style.width = ASDimensionMake(1.0)
     super.init(node: collectionNode)
+    statefulNode.delegate = self
   }
 
   override func viewDidAppear(_ animated: Bool) {
@@ -182,6 +183,32 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   }
 }
 
+//MARK: - StatefulNode Delegate Implementation
+extension ProfileDetailsViewController: StatefulNodeDelegate {
+  func statefulNodeDidPerformAction(node: StatefulNode, statefulAction: StatefulNode.Action?, misfortuneAction: MisfortuneNode.Action?) {
+    if let statefulAction = statefulAction {
+      handleStatefulAction(action: statefulAction)
+    } else if let misfortuneAction = misfortuneAction {
+      handleMisfortuneAction(action: misfortuneAction)
+    }
+  }
+
+  private func handleStatefulAction(action: StatefulNode.Action) {
+    //Do nothing
+  }
+
+  private func handleMisfortuneAction(action: MisfortuneNode.Action) {
+    switch action {
+    case .tryAgain:
+      reloadPenName()
+      loadData()
+    case .settings:
+      AppDelegate.openSettings()
+    default:
+      break
+    }
+  }
+}
 
 extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
   func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
