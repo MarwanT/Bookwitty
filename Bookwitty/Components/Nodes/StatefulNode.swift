@@ -9,6 +9,10 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol StatefulNodeDelegate {
+  func statefulNodeDidPerformAction(node: StatefulNode, statefulAction: StatefulNode.Action?, misfortuneAction: MisfortuneNode.Action?)
+}
+
 class StatefulNode: ASCellNode {
   fileprivate let captionNode: ASTextNode
   fileprivate let actionNode: ASTextNode
