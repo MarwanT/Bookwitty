@@ -168,6 +168,7 @@ extension StatefulNode {
     case topic
     case author
     case book
+    case penname
     case none
   }
 
@@ -196,6 +197,8 @@ extension StatefulNode {
 
   fileprivate var actionText: String? {
     switch (mode, category) {
+    case (.penname, .latest), (.book, .latest):
+        return nil
     case (_, .latest):
       return Strings.add_a_post().uppercased()
     case (_, .relatedBooks):
