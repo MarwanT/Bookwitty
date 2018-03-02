@@ -199,4 +199,17 @@ extension StatefulNode {
       return nil
     }
   }
+
+  fileprivate var action: Action? {
+    switch (mode, category) {
+    case (.topic, .latest):
+      return .addAPost
+    case (.author, .latest):
+      return .addAPost
+    case(_, .relatedBooks):
+      return .suggestABook
+    default:
+      return nil
+    }
+  }
 }
