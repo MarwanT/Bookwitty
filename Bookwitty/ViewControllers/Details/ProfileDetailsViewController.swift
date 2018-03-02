@@ -356,7 +356,10 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
     if section == Section.activityIndicator.rawValue {
       return shouldShowLoader ? 1 : 0
-    } else {
+    } else if section == Section.misfortune.rawValue {
+      return shouldDisplayMisfortuneNode ? 1 : 0
+    }
+    else {
       return viewModel.numberOfItemsInSection(section: section, segment: activeSegment)
     }
   }
@@ -370,6 +373,7 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
         case Section.segmentedControl.rawValue : return self.segmentedNode
         case Section.profileInfo.rawValue: return self.penNameHeaderNode
         case Section.activityIndicator.rawValue : return self.loaderNode
+        case Section.misfortune.rawValue : return self.statefulNode
         default: return ASCellNode()
         }
       }
@@ -848,9 +852,10 @@ extension ProfileDetailsViewController {
     case segmentedControl
     case cells
     case activityIndicator
+    case misfortune
 
     static var numberOfSections: Int {
-      return 4
+      return 5
     }
   }
 
@@ -966,6 +971,8 @@ extension ProfileDetailsViewController {
       })
     } else {
       collectionNode.performBatchUpdates({
+        collectionNode.reloadSections(IndexSet(integer: Section.misfortune.rawValue))
+
         if loaderSection {
           collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
         }
