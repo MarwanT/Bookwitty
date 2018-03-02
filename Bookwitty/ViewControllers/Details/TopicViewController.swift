@@ -357,7 +357,19 @@ class TopicViewController: ASViewController<ASDisplayNode> {
 //MARK: - StatefulNode Delegate Implementation
 extension TopicViewController: StatefulNodeDelegate {
   func statefulNodeDidPerformAction(node: StatefulNode, statefulAction: StatefulNode.Action?, misfortuneAction: MisfortuneNode.Action?) {
-    //TODO: Handle actions
+    if let statefulAction = statefulAction {
+      handleStatefulAction(action: statefulAction)
+    } else if let misfortuneAction = misfortuneAction {
+      handleMisfortuneAction(action: misfortuneAction)
+    }
+  }
+
+  private func handleStatefulAction(action: StatefulNode.Action) {
+    //TODO: Implement
+  }
+
+  private func handleMisfortuneAction(action: MisfortuneNode.Action) {
+    //TODO: Implement
   }
 }
 
