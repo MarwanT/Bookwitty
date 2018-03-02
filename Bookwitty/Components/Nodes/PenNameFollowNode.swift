@@ -13,6 +13,7 @@ protocol PenNameFollowNodeDelegate: class {
   func penName(node: PenNameFollowNode, actionButtonTouchUpInside button: ButtonWithLoader)
   func penName(node: PenNameFollowNode, actionPenNameFollowTouchUpInside button: Any?)
   func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
+  func penName(node: PenNameFollowNode, requestToViewFullBiography biography: String?, from biographyNode: CharacterLimitedTextNode)
   func penName(node: PenNameFollowNode, moreButtonTouchUpInside button: ASButtonNode?)
 }
 
@@ -110,11 +111,14 @@ class PenNameFollowNode: ASCellNode {
 
     nameNode.maximumNumberOfLines = 1
 
-    biographyNode.maxCharacter = enlarged ? 120 : -1
+    biographyNode.maxCharacter = enlarged ? 120 : 1000
     biographyNode.nodeDelegate = enlarged ? self : nil
-    biographyNode.maximumNumberOfLines = enlarged ? 100 : 3
-    biographyNode.autoChange = enlarged
+    biographyNode.maximumNumberOfLines = enlarged ? 0 : 3
+    biographyNode.autoChange = false
     biographyNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    if enlarged {
+      biographyNode.mode = .collapsed
+    }
 
     nameNode.truncationMode = NSLineBreakMode.byTruncatingTail
 
@@ -222,7 +226,7 @@ class PenNameFollowNode: ASCellNode {
 
 extension PenNameFollowNode : CharacterLimitedTextNodeDelegate {
   func characterLimitedTextNodeDidTap(_ node: CharacterLimitedTextNode) {
-    //Toggle is happening now do anything if needed
+    delegate?.penName(node: self, requestToViewFullBiography: biography, from: node)
   }
 }
 

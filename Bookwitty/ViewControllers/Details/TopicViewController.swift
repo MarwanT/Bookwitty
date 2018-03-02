@@ -228,7 +228,8 @@ class TopicViewController: ASViewController<ASDisplayNode> {
 
     headerNode.setTopicStatistics(numberOfFollowers: Int(values.stats.followers ?? ""), numberOfPosts: Int(values.stats.posts ?? ""))
     headerNode.setContributorsValues(numberOfContributors: values.contributors.count, imageUrls: values.contributors.imageUrls)
-
+    headerNode.following = values.following
+    headerNode.disabled = values.isMyPenName
     actionBarNode.actionButtonSelected = values.following
   }
 
@@ -553,6 +554,26 @@ extension TopicViewController: TopicHeaderNodeDelegate {
     let genericViewController = GenericNodeViewController(node: node, title: "")
     self.navigationController?.pushViewController(genericViewController, animated: true)
   }
+
+  func topicHeader(node: TopicHeaderNode, requestToFollowPenName button: ButtonWithLoader) {
+    guard let resource = viewModel.resource as? ModelResource else {
+      return
+    }
+    button.state = .loading
+    if button.isSelected {
+      viewModel.unfollow(resource: resource, completionBlock: {
+        (success: Bool) in
+        node.following = !success
+        button.state = success ? .normal : .selected
+      })
+    } else {
+      viewModel.unfollow(resource: resource, completionBlock: {
+        (success: Bool) in
+        node.following = success
+        button.state = success ? .selected : .normal
+      })
+    }
+  }
 }
 
 extension TopicViewController: PenNameFollowNodeDelegate {
@@ -607,6 +628,10 @@ extension TopicViewController: PenNameFollowNodeDelegate {
       (success: Bool, action: MoreAction) in
 
     })
+  }
+
+  func penName(node: PenNameFollowNode, requestToViewFullBiography biography: String?, from biographyNode: CharacterLimitedTextNode) {
+    //No need to do anything
   }
 }
 

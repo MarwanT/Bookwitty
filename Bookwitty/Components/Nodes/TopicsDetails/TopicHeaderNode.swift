@@ -12,6 +12,7 @@ import AsyncDisplayKit
 protocol TopicHeaderNodeDelegate: class {
   func topicHeader(node: TopicHeaderNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
   func topicHeader(node: TopicHeaderNode, requestToViewFullDescription description: String?, from descriptionNode: CharacterLimitedTextNode)
+  func topicHeader(node: TopicHeaderNode, requestToFollowPenName button: ButtonWithLoader)
 }
 
 class TopicHeaderNode: ASCellNode {
@@ -28,6 +29,21 @@ class TopicHeaderNode: ASCellNode {
   private var descriptionNode: CharacterLimitedTextNode
   private var topicStatsNode: ASTextNode
   private var contributorsNode: ContributorsNode
+  private var followButton: ButtonWithLoader
+
+  var following: Bool = false {
+    didSet {
+      followButton.state = self.following ? .selected : .normal
+    }
+  }
+
+  var disabled: Bool = true {
+    didSet {
+      followButton.isHidden = disabled
+      followButton.isEnabled = !disabled
+      setNeedsLayout()
+    }
+  }
 
   weak var delegate: TopicHeaderNodeDelegate?
 
@@ -38,6 +54,7 @@ class TopicHeaderNode: ASCellNode {
     descriptionNode = CharacterLimitedTextNode()
     topicStatsNode = ASTextNode()
     contributorsNode = ContributorsNode()
+    followButton = ButtonWithLoader()
     super.init()
     automaticallyManagesSubnodes = true
     setupNode()
@@ -54,12 +71,32 @@ class TopicHeaderNode: ASCellNode {
     descriptionNode.mode = .collapsed
     descriptionNode.truncationMode = NSLineBreakMode.byTruncatingTail
 
+    let buttonFont = FontDynamicType.subheadline.font
+    let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+    let selectedTextColor = ThemeManager.shared.currentTheme.colorNumber23()
+
+    followButton.setupSelectionButton(defaultBackgroundColor: ThemeManager.shared.currentTheme.defaultBackgroundColor(),
+                                      selectedBackgroundColor: ThemeManager.shared.currentTheme.defaultButtonColor(),
+                                      borderStroke: true,
+                                      borderColor: ThemeManager.shared.currentTheme.defaultButtonColor(),
+                                      borderWidth: 2.0,
+                                      cornerRadius: 2.0)
+
+    followButton.setTitle(title: Strings.follow(), with: buttonFont, with: textColor, for: .normal)
+    followButton.setTitle(title: Strings.following(), with: buttonFont, with: selectedTextColor, for: .selected)
+    followButton.state = self.following ? .selected : .normal
+    followButton.style.height = ASDimensionMake(buttonSize.height)
+    followButton.delegate = self
+
     titleNode.maximumNumberOfLines = 4
     topicStatsNode.maximumNumberOfLines = 1
 
     titleNode.truncationMode = NSLineBreakMode.byTruncatingTail
     topicStatsNode.truncationMode = NSLineBreakMode.byTruncatingTail
 
+    titleNode.style.flexGrow = 1.0
+    titleNode.style.flexShrink = 1.0
+    
     coverImageNode.delegate = self
     thumbnailImageNode.delegate = self
   }
@@ -151,8 +188,13 @@ class TopicHeaderNode: ASCellNode {
 
     nodesArray.append(imageOverlayLayoutSpec)
 
-    let titleNodeInset = ASInsetLayoutSpec(insets: sideInset(), child: titleNode)
     if isValid(topicTitle) {
+      let titleHStack = ASStackLayoutSpec(direction: ASStackLayoutDirection.horizontal,
+                                               spacing: internalMargin,
+                                               justifyContent: .spaceBetween,
+                                               alignItems: .stretch,
+                                               children: [titleNode, followButton])
+      let titleNodeInset = ASInsetLayoutSpec(insets: sideInset(), child: titleHStack)
       nodesArray.append(ASLayoutSpec.spacer(height: internalMargin))
       nodesArray.append(titleNodeInset)
       nodesArray.append(ASLayoutSpec.spacer(height: externalMargin/2))
@@ -248,5 +290,18 @@ extension TopicHeaderNode: CharacterLimitedTextNodeDelegate {
   func characterLimitedTextNodeDidTap(_ node: CharacterLimitedTextNode) {
     //Did tap on characterLimited text node
     delegate?.topicHeader(node: self, requestToViewFullDescription: description, from: node)
+  }
+}
+
+//Actions
+extension TopicHeaderNode: ButtonWithLoaderDelegate {
+  func buttonTouchUpInside(buttonWithLoader: ButtonWithLoader) {
+    guard UserManager.shared.isSignedIn else {
+      //If user is not signed In post notification and do not fall through
+      NotificationCenter.default.post( name: AppNotification.callToAction, object: CallToAction.follow)
+      return
+    }
+
+    delegate?.topicHeader(node: self, requestToFollowPenName: buttonWithLoader)
   }
 }

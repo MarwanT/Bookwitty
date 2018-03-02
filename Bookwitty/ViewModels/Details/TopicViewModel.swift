@@ -181,9 +181,10 @@ final class TopicViewModel {
     return DataManager.shared.fetchResource(with: id)
   }
 
-  func valuesForHeader() -> (identifier: String?, title: String?, following: Bool, thumbnailImageUrl: String?, coverImageUrl: String?, stats: (followers: String?, posts: String?), contributors: (count: String?, imageUrls: [String]?), description: String?) {
+  func valuesForHeader() -> (identifier: String?, title: String?, following: Bool, thumbnailImageUrl: String?, coverImageUrl: String?, stats: (followers: String?, posts: String?), contributors: (count: String?, imageUrls: [String]?), description: String?, isMyPenName: Bool) {
     guard let resource = resource else {
-      return (nil, nil, false, nil, nil, stats: (nil, nil), contributors: (nil, nil), nil)
+      return (nil, nil, false, nil, nil, stats: (nil, nil),
+              contributors: (nil, nil), nil, false)
     }
     
     let identifier = resource.id
@@ -200,8 +201,12 @@ final class TopicViewModel {
     
     let stats: (String?, String?) = (followers, posts)
     let contributorsValues: (String?, [String]?) = (contributors, contributorsImages)
+    let isMine = isMyPenName(resource.penName)
 
-    return (identifier: identifier, title: title, following: following, thumbnailImageUrl: thumbnail, coverImageUrl: cover, stats: stats, contributors: contributorsValues, description: description)
+    return (identifier: identifier, title: title, following: following,
+            thumbnailImageUrl: thumbnail, coverImageUrl: cover, stats: stats,
+            contributors: contributorsValues, description: description,
+            isMyPenName: isMine)
   }
 
   private func getTopicContent() {
