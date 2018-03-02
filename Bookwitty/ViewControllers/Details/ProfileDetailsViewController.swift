@@ -119,6 +119,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     collectionNode.dataSource = self
     collectionNode.delegate = self
 
+    loadNavigationBarButtons()
     initializeHeader()
     reloadPenName()
 
@@ -139,6 +140,37 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     //show more button in the header because we added it in the top navigation bar
     penNameHeaderNode.delegate = self
     penNameHeaderNode.updateMode(disabled: viewModel.isMyPenName())
+  }
+
+  private func loadNavigationBarButtons() {
+    var items: [UIBarButtonItem] = []
+
+    let shareButton = UIBarButtonItem(
+      image: #imageLiteral(resourceName: "shareOutside"),
+      style: UIBarButtonItemStyle.plain,
+      target: self,
+      action: #selector(shareButton(_:)))
+
+    if !viewModel.isMyPenName() {
+      let moreButton = UIBarButtonItem(
+        image: #imageLiteral(resourceName: "threeDots"),
+        style: UIBarButtonItemStyle.plain,
+        target: self,
+        action: #selector(moreButton(_:)))
+      items.append(moreButton)
+    }
+
+    items.append(shareButton)
+    navigationItem.rightBarButtonItems = items
+  }
+
+  func shareButton(_ sender: Any?) {
+    guard let url = viewModel.penName.canonicalURL else {
+      return
+    }
+  }
+
+  func moreButton(_ sender: Any?) {
   }
 
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
