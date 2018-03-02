@@ -64,7 +64,9 @@ class PenNameFollowNode: ASCellNode {
     didSet {
       if let penName = penName {
         nameNode.attributedText = AttributedStringBuilder(fontDynamicType: enlarged ? .subheadline : .footnote)
-          .append(text: penName, color: ThemeManager.shared.currentTheme.defaultButtonColor()).attributedString
+          .append(text: penName,
+                  color: enlarged ? ThemeManager.shared.currentTheme.defaultTextColor() : ThemeManager.shared.currentTheme.defaultButtonColor())
+          .attributedString
         setNeedsLayout()
       }
     }
