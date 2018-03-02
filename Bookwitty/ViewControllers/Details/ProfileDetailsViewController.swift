@@ -264,7 +264,7 @@ extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
       shouldPopController = false
     }
 
-    let actions: [MoreAction] = MoreAction.actions(for: penNameResource as? ModelCommonProperties)
+    let actions: [MoreAction] = MoreAction.actions(for: penNameResource)
     self.showMoreActionSheet(identifier: penNameIdentifier, actions: actions, completion: {
       (success: Bool, action: MoreAction) in
       if case MoreAction.report(.penName) = action, shouldPopController {
