@@ -78,7 +78,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     loaderNode = LoaderNode()
     loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
     activeSegment = segments[0]
-    penNameHeaderNode = PenNameFollowNode(enlarged: true)
+    penNameHeaderNode = PenNameFollowNode(asHeader: true)
     //Initialize statefulNode
     statefulNode = StatefulNode()
     statefulNode.style.height = ASDimensionMake(1.0)
