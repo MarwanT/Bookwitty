@@ -9,6 +9,10 @@
 import Foundation
 import AsyncDisplayKit
 
+protocol StatefulNodeDelegate {
+  func statefulNodeDidPerformAction(node: StatefulNode, statefulAction: StatefulNode.Action?, misfortuneAction: MisfortuneNode.Action?)
+}
+
 class StatefulNode: ASCellNode {
   fileprivate let captionNode: ASTextNode
   fileprivate let actionNode: ASTextNode
@@ -23,6 +27,8 @@ class StatefulNode: ASCellNode {
   fileprivate var category: Category = .none
   fileprivate var mode: Mode = .none
   fileprivate var misfortuneMode: MisfortuneNode.Mode = .none
+
+  var delegate: StatefulNodeDelegate?
 
   override init() {
     captionNode = ASTextNode()
@@ -39,6 +45,9 @@ class StatefulNode: ASCellNode {
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     colorNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
     illustrationNode.contentMode = UIViewContentMode.scaleAspectFit
+
+    actionNode.addTarget(self, action: #selector(actionButtonTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
+    misfortuneNode.delegate = self
   }
 
   func updateState(category: Category, mode: Mode, misfortuneMode: MisfortuneNode.Mode?) {
@@ -73,6 +82,20 @@ class StatefulNode: ASCellNode {
       //Anything but not the ".empty" Misfortune State
       return misfortuneNodeLayoutSpec(constrainedSize)
     }
+  }
+}
+
+// MARK: - Actions
+extension StatefulNode {
+  func actionButtonTouchUpInside(_ sender: Any) {
+    delegate?.statefulNodeDidPerformAction(node: self, statefulAction: action, misfortuneAction: nil)
+  }
+}
+
+// MARK: - Misfortune Delegate Implementation
+extension StatefulNode: MisfortuneNodeDelegate {
+  func misfortuneNodeDidPerformAction(node: MisfortuneNode, action: MisfortuneNode.Action?) {
+    delegate?.statefulNodeDidPerformAction(node: self, statefulAction: nil, misfortuneAction: misfortuneNode.mode.action)
   }
 }
 
@@ -127,6 +150,11 @@ extension StatefulNode {
 
 //MARK: State Valuation
 extension StatefulNode {
+  enum Action {
+    case suggestABook
+    case addAPost
+  }
+
   enum Category {
     case latest
     case relatedBooks
@@ -191,6 +219,19 @@ extension StatefulNode {
     case .followers:
       return #imageLiteral(resourceName: "illustrationErrorTopicEmptyFollowers")
     case .none:
+      return nil
+    }
+  }
+
+  fileprivate var action: Action? {
+    switch (mode, category) {
+    case (.topic, .latest):
+      return .addAPost
+    case (.author, .latest):
+      return .addAPost
+    case(_, .relatedBooks):
+      return .suggestABook
+    default:
       return nil
     }
   }

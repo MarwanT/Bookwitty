@@ -107,6 +107,7 @@ class TopicViewController: ASViewController<ASDisplayNode> {
     statefulNode.style.width = ASDimensionMake(1.0)
 
     super.init(node: controllerNode)
+    statefulNode.delegate = self
     controllerNode.automaticallyManagesSubnodes = true
 
     controllerNode.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
@@ -349,6 +350,42 @@ class TopicViewController: ASViewController<ASDisplayNode> {
         self.setLoading(status: TopicViewController.LoadingStatus.none)
         self.updateCollection(relatedDataSection: true, loaderSection: true)
       }
+    }
+  }
+}
+
+//MARK: - StatefulNode Delegate Implementation
+extension TopicViewController: StatefulNodeDelegate {
+  func statefulNodeDidPerformAction(node: StatefulNode, statefulAction: StatefulNode.Action?, misfortuneAction: MisfortuneNode.Action?) {
+    if let statefulAction = statefulAction {
+      handleStatefulAction(action: statefulAction)
+    } else if let misfortuneAction = misfortuneAction {
+      handleMisfortuneAction(action: misfortuneAction)
+    }
+  }
+
+  private func handleStatefulAction(action: StatefulNode.Action) {
+    switch action {
+    case .addAPost:
+      guard let identifier = viewModel.identifier else {
+        return
+      }
+      self.presentContentEditor(with: Text(), prelink: identifier)
+    case .suggestABook:
+      //Functionality Not Available yet
+      break
+    }
+  }
+
+  private func handleMisfortuneAction(action: MisfortuneNode.Action) {
+    switch action {
+    case .tryAgain:
+      viewModel.reload()
+      loadData()
+    case .settings:
+      AppDelegate.openSettings()
+    default:
+      break
     }
   }
 }
