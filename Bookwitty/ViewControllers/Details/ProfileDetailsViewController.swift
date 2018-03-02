@@ -135,7 +135,8 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     penNameHeaderNode.penName = viewModel.penName.name
     penNameHeaderNode.following = viewModel.penName.following
     penNameHeaderNode.imageUrl = viewModel.penName.avatarUrl
-    penNameHeaderNode.showMoreButton = !viewModel.isMyPenName()
+    penNameHeaderNode.showMoreButton = false // Intentionally disable the
+    //show more button in the header because we added it in the top navigation bar
     penNameHeaderNode.delegate = self
     penNameHeaderNode.updateMode(disabled: viewModel.isMyPenName())
   }
