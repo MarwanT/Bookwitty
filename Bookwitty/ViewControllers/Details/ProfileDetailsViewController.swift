@@ -38,6 +38,23 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     return (loadingStatus != .none)
   }
 
+  var shouldDisplayMisfortuneNode: Bool {
+    let misfortuneMode = viewModel.getStatefulStates(for: activeSegment)
+    statefulNode.updateState(category: misfortuneMode.category, mode: misfortuneMode.mode, misfortuneMode: misfortuneMode.state)
+
+    if case (.none, .none, .none) = misfortuneMode {
+      return false
+    }
+    guard case .none = loadingStatus else {
+      return false
+    }
+    if case .none = misfortuneMode.state {
+      return false
+    }
+
+    return true
+  }
+
   class func create(with viewModel: ProfileDetailsViewModel) -> ProfileDetailsViewController {
     let profileVC = ProfileDetailsViewController()
     profileVC.viewModel = viewModel
