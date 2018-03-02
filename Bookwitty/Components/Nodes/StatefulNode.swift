@@ -45,6 +45,8 @@ class StatefulNode: ASCellNode {
     backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     colorNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
     illustrationNode.contentMode = UIViewContentMode.scaleAspectFit
+
+    actionNode.addTarget(self, action: #selector(actionButtonTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
   }
 
   func updateState(category: Category, mode: Mode, misfortuneMode: MisfortuneNode.Mode?) {
@@ -79,6 +81,13 @@ class StatefulNode: ASCellNode {
       //Anything but not the ".empty" Misfortune State
       return misfortuneNodeLayoutSpec(constrainedSize)
     }
+  }
+}
+
+// MARK: - Actions
+extension StatefulNode {
+  func actionButtonTouchUpInside(_ sender: Any) {
+    delegate?.statefulNodeDidPerformAction(node: self, statefulAction: action, misfortuneAction: nil)
   }
 }
 
