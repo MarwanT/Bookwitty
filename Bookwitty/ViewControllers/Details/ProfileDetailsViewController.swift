@@ -171,6 +171,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   }
 
   func moreButton(_ sender: Any?) {
+    openMoreActionSheet(for: viewModel.penName, shouldPopController: true)
   }
 
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
@@ -300,37 +301,28 @@ extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
   }
 
   func penName(node: PenNameFollowNode, moreButtonTouchUpInside button: ASButtonNode?) {
-    
-    let penNameIdentifier: String
+
     let penNameResource: PenName
     let shouldPopController: Bool
 
     if penNameHeaderNode === node {
-      guard let identifier = viewModel.penName.id else {
+      guard let _ = viewModel.penName.id else {
         return
       }
-      penNameIdentifier = identifier
       penNameResource = viewModel.penName
       shouldPopController = true
     } else {
       guard let indexPath = collectionNode.indexPath(for: node),
         let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment),
         let penName = resource as? PenName,
-        let identifier = penName.id else {
+        let _ = penName.id else {
           return
       }
-      penNameIdentifier = identifier
       penNameResource = penName
       shouldPopController = false
     }
 
-    let actions: [MoreAction] = MoreAction.actions(for: penNameResource)
-    self.showMoreActionSheet(identifier: penNameIdentifier, actions: actions, completion: {
-      (success: Bool, action: MoreAction) in
-      if case MoreAction.report(.penName) = action, shouldPopController {
-        self.navigationController?.popViewController(animated: true)
-      }
-    })
+    openMoreActionSheet(for: penNameResource, shouldPopController: shouldPopController)
   }
 
   func penName(node: PenNameFollowNode, requestToViewFullBiography biography: String?, from biographyNode: CharacterLimitedTextNode) {
@@ -344,6 +336,20 @@ extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
     let genericViewController = GenericNodeViewController(node: node, title: "")
     self.navigationController?.pushViewController(genericViewController, animated: true)
 
+  }
+
+  fileprivate func openMoreActionSheet(for penName: PenName, shouldPopController: Bool) {
+    guard let penNameIdentifier = penName.id else {
+      return
+    }
+
+    let actions: [MoreAction] = MoreAction.actions(for: penName)
+    self.showMoreActionSheet(identifier: penNameIdentifier, actions: actions, completion: {
+      (success: Bool, action: MoreAction) in
+      if case MoreAction.report(.penName) = action, shouldPopController {
+        self.navigationController?.popViewController(animated: true)
+      }
+    })
   }
 }
 
