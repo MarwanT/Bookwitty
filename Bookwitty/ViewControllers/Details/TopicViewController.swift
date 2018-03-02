@@ -365,11 +365,28 @@ extension TopicViewController: StatefulNodeDelegate {
   }
 
   private func handleStatefulAction(action: StatefulNode.Action) {
-    //TODO: Implement
+    switch action {
+    case .addAPost:
+      guard let identifier = viewModel.identifier else {
+        return
+      }
+      self.presentContentEditor(with: Text(), prelink: identifier)
+    case .suggestABook:
+      //Functionality Not Available yet
+      break
+    }
   }
 
   private func handleMisfortuneAction(action: MisfortuneNode.Action) {
-    //TODO: Implement
+    switch action {
+    case .tryAgain:
+      viewModel.reload()
+      loadData()
+    case .settings:
+      AppDelegate.openSettings()
+    default:
+      break
+    }
   }
 }
 
