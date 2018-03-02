@@ -159,6 +159,7 @@ extension StatefulNode {
     case latest
     case relatedBooks
     case followers
+    case following
     case editions
     case none
   }
@@ -217,6 +218,8 @@ extension StatefulNode {
     case .editions:
       return #imageLiteral(resourceName: "illustrationErrorTopicEmptyAuthor")
     case .followers:
+      return #imageLiteral(resourceName: "illustrationErrorTopicEmptyFollowers")
+    case .following:
       return #imageLiteral(resourceName: "illustrationErrorTopicEmptyFollowers")
     case .none:
       return nil
