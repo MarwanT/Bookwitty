@@ -127,6 +127,11 @@ extension StatefulNode {
 
 //MARK: State Valuation
 extension StatefulNode {
+  enum Action {
+    case suggestABook
+    case addAPost
+  }
+
   enum Category {
     case latest
     case relatedBooks
