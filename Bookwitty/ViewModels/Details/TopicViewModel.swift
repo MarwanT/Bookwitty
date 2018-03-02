@@ -53,6 +53,13 @@ final class TopicViewModel {
     initiateContentCalls()
   }
 
+  func reload() {
+    guard let _ = resource else {
+      return
+    }
+    initiateContentCalls()
+  }
+
   var identifier: String? {
     return resource?.id
   }
