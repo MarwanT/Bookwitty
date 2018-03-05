@@ -28,8 +28,10 @@ class WrittenByNode: ASCellNode {
   var biography: String? {
     didSet {
       if let biography = biography {
-        biographyNode.attributedText = AttributedStringBuilder(fontDynamicType: .body3)
-          .append(text: biography, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+        biographyNode.setString(text: biography,
+                                fontDynamicType: .body3,
+                                moreFontDynamicType: .title5,
+                                color: ThemeManager.shared.currentTheme.defaultTextColor())
         setNeedsLayout()
       }
     }
