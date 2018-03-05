@@ -92,6 +92,11 @@ class RichLinkPreviewViewController: UIViewController {
     self.textView.becomeFirstResponder()
   }
   
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    self.view.endEditing(true)
+  }
+  
   override func updateViewConstraints() {
     let insets = textView.textContainerInset
     textViewPlaceholderLabel.translatesAutoresizingMaskIntoConstraints = false
