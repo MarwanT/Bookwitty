@@ -36,9 +36,15 @@ class PostDetailsViewModel {
   var date: NSDate? {
     return (resource as? ModelCommonProperties)?.createdAt
   }
+  var resourcePenNameId: String? {
+    return penNameFromResource(resource: resource)?.id
+  }
   var penName: PenName? {
     get {
-      return penNameFromResource(resource: resource)
+      guard let resourcePenNameId = resourcePenNameId else {
+        return penNameFromResource(resource: resource)
+      }
+      return (DataManager.shared.fetchResource(with: resourcePenNameId) as? PenName) ?? penNameFromResource(resource: resource)
     }
     set {
       setPenNameFromResource(resource: resource, penName: newValue)

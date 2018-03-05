@@ -1204,6 +1204,8 @@ extension PostDetailsViewController {
     let updateKey = DataManager.Notifications.Key.Update
     let deleteKey = DataManager.Notifications.Key.Delete
 
+    postDetailsNode.penName = viewModel.penName
+
     guard let resourceId = viewModel.resource.id,
       let dictionary = notification.object as? [String : [String]] else {
         return
