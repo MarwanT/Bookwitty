@@ -329,6 +329,10 @@ class PostDetailsNode: ASScrollNode {
     writtenByNode.following = following
   }
 
+  func hideFollow(hideFollow: Bool) {
+    writtenByNode.hideFollow = hideFollow
+  }
+
   func setBannerImage() {
     switch GeneralSettings.sharedInstance.preferredLanguage {
     case Localization.Language.French.rawValue:

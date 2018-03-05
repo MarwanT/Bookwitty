@@ -97,6 +97,7 @@ class PostDetailsViewController: ASViewController<ASDisplayNode> {
     postDetailsNode.conculsion = viewModel.conculsion
 
     postDetailsNode.tags = viewModel.tags
+    postDetailsNode.hideFollow(hideFollow: viewModel.isMyPenName())
 
     //The action bar should not show the comment button
     //This VC contains a comment section at the bottom
