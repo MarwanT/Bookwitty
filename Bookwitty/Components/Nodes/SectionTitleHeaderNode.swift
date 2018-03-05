@@ -136,6 +136,7 @@ extension SectionTitleHeaderNode {
     case blue
     case orange
     case purple
+    case green
 
     var shades: (dark: UIColor, light: UIColor) {
       let theme = ThemeManager.shared.currentTheme
@@ -148,6 +149,8 @@ extension SectionTitleHeaderNode {
         return (theme.colorNumber6(), theme.colorNumber5())
       case .purple:
         return (theme.colorNumber12(), theme.colorNumber11())
+      case .green:
+        return (theme.colorNumber8(), theme.colorNumber7())
       }
     }
   }
