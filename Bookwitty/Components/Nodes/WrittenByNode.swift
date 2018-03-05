@@ -22,7 +22,7 @@ class WrittenByNode: ASCellNode {
   let titleNode: ASTextNode
   let titleSeparatorNode: ASDisplayNode
   let headerNode: CardPostInfoNode
-  let biographyNode: ASTextNode
+  let biographyNode: CharacterLimitedTextNode
   let followButton: ButtonWithLoader
 
   var biography: String? {
@@ -54,7 +54,7 @@ class WrittenByNode: ASCellNode {
     titleNode = ASTextNode()
     titleSeparatorNode = ASDisplayNode()
     headerNode = CardPostInfoNode()
-    biographyNode = ASTextNode()
+    biographyNode = CharacterLimitedTextNode()
     followButton = ButtonWithLoader()
     super.init()
     automaticallyManagesSubnodes = true
@@ -87,6 +87,12 @@ class WrittenByNode: ASCellNode {
     titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .callout)
       .append(text: Strings.written_by(), color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
 
+    biographyNode.maxCharacter = 140
+    biographyNode.nodeDelegate = self
+    biographyNode.maximumNumberOfLines = 0
+    biographyNode.autoChange = false
+    biographyNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    biographyNode.mode = .collapsed
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -123,6 +129,13 @@ class WrittenByNode: ASCellNode {
 
     return ASInsetLayoutSpec(insets: outerStackInset(),
                              child: outerVStack)
+  }
+}
+
+//MARK: - CharacterLimitedTextNode Delegate Implementation
+extension WrittenByNode:  CharacterLimitedTextNodeDelegate {
+  func characterLimitedTextNodeDidTap(_ node: CharacterLimitedTextNode) {
+    delegate?.writtenByNode(touchUpInside: self)
   }
 }
 
