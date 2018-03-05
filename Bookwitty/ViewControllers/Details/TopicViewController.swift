@@ -143,17 +143,19 @@ class TopicViewController: ASViewController<ASDisplayNode> {
 
     viewModel.callback = self.callback(for:)
 
-    var insets = UIEdgeInsets.zero
-    insets.bottom = actionBarNode.calculatedSize.height
-    collectionNode.view.contentInset = insets
-    collectionNode.view.scrollIndicatorInsets = insets
-
     var position = actionBarNode.style.layoutPosition
     position.y = collectionNode.calculatedSize.height + 50.0
     actionBarNode.style.layoutPosition = position
 
     actionBarNode.delegate = self
     actionBarNode.action = .follow
+
+    if case .view = navigationItemMode {
+      var insets = UIEdgeInsets.zero
+      insets.bottom = actionBarNode.calculatedSize.height
+      collectionNode.view.contentInset = insets
+      collectionNode.view.scrollIndicatorInsets = insets
+    }
   }
   
   private func loadNavigationItems() {
@@ -1443,6 +1445,10 @@ extension TopicViewController {
 extension TopicViewController {
 
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    guard case .view = navigationItemMode else {
+      return
+    }
+    
     var position = actionBarNode.style.layoutPosition
     let actionBarHeight = actionBarNode.configuration.height
 
