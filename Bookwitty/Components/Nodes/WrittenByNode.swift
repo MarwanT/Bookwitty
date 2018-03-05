@@ -84,7 +84,7 @@ class WrittenByNode: ASCellNode {
     titleSeparatorNode.isLayerBacked = true
     titleSeparatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
 
-    titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title3)
+    titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .callout)
       .append(text: Strings.written_by(), color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
 
   }
@@ -99,7 +99,7 @@ class WrittenByNode: ASCellNode {
     let topVStackInset = ASInsetLayoutSpec(insets: topStackInset(), child: topVStack)
 
     //BOTOM
-    let bottomVStaskChildren: [ASLayoutElement] = [biographyNode, followButton]
+    let bottomVStaskChildren: [ASLayoutElement] = biography.isEmptyOrNil() ? [followButton] : [biographyNode, followButton]
     let bottomVStack = ASStackLayoutSpec(direction: .vertical,
                                          spacing: contentSpacing,
                                          justifyContent: .start,
