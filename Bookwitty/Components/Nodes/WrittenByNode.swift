@@ -97,12 +97,21 @@ class WrittenByNode: ASCellNode {
     titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .callout)
       .append(text: Strings.written_by(), color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
 
+    //Add touchUpInside
+    titleNode.addTarget(self, action: #selector(titleNodeTouchUpInside) , forControlEvents: .touchUpInside)
+
+    headerNode.delegate = self
+
     biographyNode.maxCharacter = 140
     biographyNode.nodeDelegate = self
     biographyNode.maximumNumberOfLines = 0
     biographyNode.autoChange = false
     biographyNode.truncationMode = NSLineBreakMode.byTruncatingTail
     biographyNode.mode = .collapsed
+  }
+
+  func titleNodeTouchUpInside() {
+    delegate?.writtenByNode(touchUpInside: self)
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -152,6 +161,13 @@ class WrittenByNode: ASCellNode {
 //MARK: - CharacterLimitedTextNode Delegate Implementation
 extension WrittenByNode:  CharacterLimitedTextNodeDelegate {
   func characterLimitedTextNodeDidTap(_ node: CharacterLimitedTextNode) {
+    delegate?.writtenByNode(touchUpInside: self)
+  }
+}
+
+//MARK: - CardPostInfoNode Delegate Implementation
+extension WrittenByNode: CardPostInfoNodeDelegate {
+  func cardInfoNode(cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
     delegate?.writtenByNode(touchUpInside: self)
   }
 }
