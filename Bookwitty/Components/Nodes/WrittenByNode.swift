@@ -43,6 +43,13 @@ class WrittenByNode: ASCellNode {
     }
   }
 
+  var hideFollow: Bool = false {
+    didSet {
+      followButton.isHidden = hideFollow
+      followButton.isEnabled = !hideFollow
+    }
+  }
+
   var postInfoData: CardPostInfoNodeData? {
     didSet {
       headerNode.data = postInfoData
@@ -107,12 +114,19 @@ class WrittenByNode: ASCellNode {
     let topVStackInset = ASInsetLayoutSpec(insets: topStackInset(), child: topVStack)
 
     //BOTOM
-    let bottomVStaskChildren: [ASLayoutElement] = biography.isEmptyOrNil() ? [followButton] : [biographyNode, followButton]
+    var bottomVStackChildren: [ASLayoutElement] = []
+    if !biography.isEmptyOrNil() {
+      bottomVStackChildren.append(biographyNode)
+    }
+    if !hideFollow {
+      bottomVStackChildren.append(followButton)
+    }
+
     let bottomVStack = ASStackLayoutSpec(direction: .vertical,
                                          spacing: contentSpacing,
                                          justifyContent: .start,
                                          alignItems: .stretch,
-                                         children: bottomVStaskChildren)
+                                         children: bottomVStackChildren)
     let bottomVStackInset = ASInsetLayoutSpec(insets: bottomStackInset(),
                                               child: bottomVStack)
 
