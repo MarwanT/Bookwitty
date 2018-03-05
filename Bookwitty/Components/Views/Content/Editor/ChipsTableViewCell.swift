@@ -29,10 +29,10 @@ class ChipsTableViewCell: UITableViewCell {
 extension ChipsTableViewCell: Themeable {
   func applyTheme() {
     let theme = ThemeManager.shared.currentTheme
-    tagsView.tintColor = theme.colorNumber9()
-    tagsView.textColor = theme.colorNumber20()
-    tagsView.selectedColor = theme.colorNumber25()
-    tagsView.selectedTextColor = theme.colorNumber23()
+    tagsView.tintColor = configuration.tagsTintColor
+    tagsView.textColor = configuration.tagsTextColor
+    tagsView.selectedColor = configuration.tagsSelectedColor
+    tagsView.selectedTextColor = configuration.tagsSelectedTextColor
     tagsView.font = FontDynamicType.caption3.font
     tagsView.padding.left = 0
   }
