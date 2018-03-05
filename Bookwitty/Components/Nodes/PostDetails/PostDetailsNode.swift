@@ -48,6 +48,19 @@ protocol PostDetailsNodeDelegate: class {
   func postDetails(node: PostDetailsNode, didRequestActionInfo fromNode: ASTextNode)
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action, didFinishAction: ((_ success: Bool) -> ())?)
   func postDetails(node: PostDetailsNode, didSelectTagAt index: Int)
+  func postDetails(node: PostDetailsNode, writtenByNode: WrittenByNode, followButtonTouchUpInside button: ButtonWithLoader)
+  func postDetails(node: PostDetailsNode, touchUpInside writtenByNode: WrittenByNode)
+}
+
+//MARK: - WrittenByNode Delegate Implementation
+extension PostDetailsNode: WrittenByNodeDelegate {
+  func writtenByNode(node: WrittenByNode, followButtonTouchUpInside button: ButtonWithLoader) {
+    delegate?.postDetails(node: self, writtenByNode: node, followButtonTouchUpInside: button)
+  }
+
+  func writtenByNode(touchUpInside node: WrittenByNode) {
+     delegate?.postDetails(node: self, touchUpInside: node)
+  }
 }
 
 class PostDetailsNode: ASScrollNode {
@@ -295,6 +308,8 @@ class PostDetailsNode: ASScrollNode {
     
     commentsNode.displayMode = .compact
     commentsNode.delegate = self
+
+    writtenByNode.delegate = self
   }
 
   private func updateWrittenBy(penName: PenName?) {

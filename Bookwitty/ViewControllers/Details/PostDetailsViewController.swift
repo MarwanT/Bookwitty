@@ -297,6 +297,35 @@ extension PostDetailsViewController {
 }
 
 extension PostDetailsViewController: PostDetailsNodeDelegate {
+  func postDetails(node: PostDetailsNode, writtenByNode: WrittenByNode, followButtonTouchUpInside button: ButtonWithLoader) {
+    button.state = .loading
+    if button.isSelected {
+      viewModel.unfollowPostPenName(completionBlock: {
+        (success: Bool) in
+        writtenByNode.following = !success
+        button.state = success ? .normal : .selected
+      })
+    } else {
+      viewModel.followPostPenName(completionBlock: {
+        (success: Bool) in
+        writtenByNode.following = success
+        button.state = success ? .selected : .normal
+      })
+    }
+  }
+
+  func postDetails(node: PostDetailsNode, touchUpInside writtenByNode: WrittenByNode) {
+    if let penName = viewModel.penName {
+      pushProfileViewController(penName: penName)
+
+      //MARK: [Analytics] Event
+      let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                   action: .GoToDetails,
+                                                   name: penName.name ?? "")
+      Analytics.shared.send(event: event)
+    }
+  }
+
   func bannerTapAction(url: URL?) {
       WebViewController.present(url: url)
   }
