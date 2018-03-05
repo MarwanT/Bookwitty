@@ -36,7 +36,7 @@ class ReadingListCardPostCellNode: BaseCardPostNode {
 }
 
 class ReadingListCardContentNode: ASDisplayNode {
-  fileprivate let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
+  fileprivate let externalMargin: CGFloat = 0.0
   fileprivate let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   fileprivate let collectionImageSize: CGSize = CGSize(width: 60, height: 100)
 

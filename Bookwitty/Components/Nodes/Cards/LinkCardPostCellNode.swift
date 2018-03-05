@@ -47,7 +47,7 @@ protocol LinkCardPostContentDelegate {
 }
 
 class LinkCardPostContentNode: ASDisplayNode {
-  private let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
+  private let externalMargin: CGFloat = 0.0
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   private let playIconSize = CGSize(width: 120, height: 120)
