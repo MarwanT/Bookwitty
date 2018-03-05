@@ -11,6 +11,7 @@ import AsyncDisplayKit
 
 protocol WrittenByNodeDelegate: class {
   func writtenByNode(node: WrittenByNode, followButtonTouchUpInside button: ButtonWithLoader)
+  func writtenByNode(touchUpInside node: WrittenByNode)
 }
 
 class WrittenByNode: ASCellNode {
