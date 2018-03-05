@@ -18,11 +18,11 @@ class ChipsTableViewCell: UITableViewCell {
   override func awakeFromNib() {
     super.awakeFromNib()
     applyTheme()
-    tagsView.readOnly = true
+    tagsView.moreTagConfiguration = (maximumTags: configuration.maximumTags, moreTagTitle: configuration.moreTagTitle, moreTagColors: (fill: configuration.moreTagBackgroundColor, border: configuration.moreTagBorderColor, text: configuration.moreTagTextColor))
   }
   
   func setTags(_ tags:[String])  {
-    tags.forEach { tagsView.addTag($0) }
+    tagsView.addTags(tags)
   }
 }
 
