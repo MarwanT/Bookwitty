@@ -159,7 +159,7 @@ class PenNameFollowNode: ASCellNode {
   }
 
   private func setBiography(biography: String?) {
-    biographyNode.setString(text: biography, fontDynamicType: asHeader ? .caption1 : .caption2, color: ThemeManager.shared.currentTheme.defaultTextColor())
+    biographyNode.setString(text: biography, fontDynamicType: .caption2, color: ThemeManager.shared.currentTheme.defaultTextColor())
     setNeedsLayout()
   }
 
