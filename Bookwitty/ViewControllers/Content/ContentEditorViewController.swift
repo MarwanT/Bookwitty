@@ -384,37 +384,53 @@ extension ContentEditorViewController {
   }
   
   fileprivate func present(_ destination: Destination) {
-    // Backing up the editor range is necessary for avoiding the
-    // Weird behavior when resuming editing
-    editorView.backupRange()
+    /**
+     Backing up the editor range is necessary for avoiding the
+     Weird behavior when resuming editing
+     */
     
-    // Resign the editor as responder for in most cases, upon showing another
-    // vc on top of this one, when we come back to this vc on top
-    // the keyboard is dismissed but the toolbar is still visible
-    resignResponders()
+    /**
+     Resign the editor as responder for in most cases, upon showing another
+     vc on top of this one, when we come back to this vc on top
+     the keyboard is dismissed but the toolbar is still visible
+     */
     
     switch destination {
     case .richContentMenu:
+      editorView.backupRange()
+      resignResponders()
       presentRichContentMenuViewController()
     case .publishMenu:
+      editorView.backupRange()
+      resignResponders()
       presentPublishMenuViewController()
     case .imagePicker(let imagePickerControllerSourceType):
+      resignResponders()
       presentImagePicker(with: imagePickerControllerSourceType)
     case .richBook:
+      resignResponders()
       presentRichBookViewController()
     case .drafts:
+      editorView.backupRange()
+      resignResponders()
       presentDraftsViewController()
     case .richLink(let richLinkPreviewMode):
+      resignResponders()
       presentRichLinkViewController(with: richLinkPreviewMode)
     case .quoteEditor:
+      resignResponders()
       presentQuoteEditorViewController()
     case .selectPenName:
+      resignResponders()
       presentSelectPenNameViewController()
     case .tags:
+      resignResponders()
       presentTagsViewController()
     case .linkTopics:
+      resignResponders()
       presentLinkTopicsViewController()
     case .postPreview:
+      resignResponders()
       presentPostPreviewViewController()
     }
   }
