@@ -15,6 +15,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   let flowLayout: UICollectionViewFlowLayout
   let collectionNode: ASCollectionNode
   let penNameHeaderNode: PenNameFollowNode
+  fileprivate let statefulNode: StatefulNode
   fileprivate var segmentedNode: SegmentedControlNode
 
   fileprivate var viewModel: ProfileDetailsViewModel!
@@ -35,6 +36,23 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   }
   var shouldShowLoader: Bool {
     return (loadingStatus != .none)
+  }
+
+  var shouldDisplayMisfortuneNode: Bool {
+    let misfortuneMode = viewModel.getStatefulStates(for: activeSegment)
+    statefulNode.updateState(category: misfortuneMode.category, mode: misfortuneMode.mode, misfortuneMode: misfortuneMode.state)
+
+    if case (.none, .none, .none) = misfortuneMode {
+      return false
+    }
+    guard case .none = loadingStatus else {
+      return false
+    }
+    if case .none = misfortuneMode.state {
+      return false
+    }
+
+    return true
   }
 
   class func create(with viewModel: ProfileDetailsViewModel) -> ProfileDetailsViewController {
@@ -61,8 +79,20 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
     activeSegment = segments[0]
     penNameHeaderNode = PenNameFollowNode(enlarged: true)
-
+    //Initialize statefulNode
+    statefulNode = StatefulNode()
+    statefulNode.style.height = ASDimensionMake(1.0)
+    statefulNode.style.width = ASDimensionMake(1.0)
     super.init(node: collectionNode)
+    statefulNode.delegate = self
+  }
+
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    let navHeight: CGFloat = navigationController?.navigationBar.frame.size.height ?? 44.0
+    statefulNode.style.height = ASDimensionMake(collectionNode.frame.height - segmentedNode.frame.height - navHeight)
+    statefulNode.style.width = ASDimensionMake(collectionNode.frame.width)
+    statefulNode.setNeedsLayout()
   }
 
   override func viewDidLoad() {
@@ -153,6 +183,32 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
   }
 }
 
+//MARK: - StatefulNode Delegate Implementation
+extension ProfileDetailsViewController: StatefulNodeDelegate {
+  func statefulNodeDidPerformAction(node: StatefulNode, statefulAction: StatefulNode.Action?, misfortuneAction: MisfortuneNode.Action?) {
+    if let statefulAction = statefulAction {
+      handleStatefulAction(action: statefulAction)
+    } else if let misfortuneAction = misfortuneAction {
+      handleMisfortuneAction(action: misfortuneAction)
+    }
+  }
+
+  private func handleStatefulAction(action: StatefulNode.Action) {
+    //Do nothing
+  }
+
+  private func handleMisfortuneAction(action: MisfortuneNode.Action) {
+    switch action {
+    case .tryAgain:
+      reloadPenName()
+      loadData()
+    case .settings:
+      AppDelegate.openSettings()
+    default:
+      break
+    }
+  }
+}
 
 extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
   func penName(node: PenNameFollowNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode) {
@@ -235,7 +291,7 @@ extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
       shouldPopController = false
     }
 
-    let actions: [MoreAction] = MoreAction.actions(for: penNameResource as? ModelCommonProperties)
+    let actions: [MoreAction] = MoreAction.actions(for: penNameResource)
     self.showMoreActionSheet(identifier: penNameIdentifier, actions: actions, completion: {
       (success: Bool, action: MoreAction) in
       if case MoreAction.report(.penName) = action, shouldPopController {
@@ -327,7 +383,10 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
     if section == Section.activityIndicator.rawValue {
       return shouldShowLoader ? 1 : 0
-    } else {
+    } else if section == Section.misfortune.rawValue {
+      return shouldDisplayMisfortuneNode ? 1 : 0
+    }
+    else {
       return viewModel.numberOfItemsInSection(section: section, segment: activeSegment)
     }
   }
@@ -341,6 +400,7 @@ extension ProfileDetailsViewController: ASCollectionDataSource {
         case Section.segmentedControl.rawValue : return self.segmentedNode
         case Section.profileInfo.rawValue: return self.penNameHeaderNode
         case Section.activityIndicator.rawValue : return self.loaderNode
+        case Section.misfortune.rawValue : return self.statefulNode
         default: return ASCellNode()
         }
       }
@@ -819,9 +879,10 @@ extension ProfileDetailsViewController {
     case segmentedControl
     case cells
     case activityIndicator
+    case misfortune
 
     static var numberOfSections: Int {
-      return 4
+      return 5
     }
   }
 
@@ -937,6 +998,8 @@ extension ProfileDetailsViewController {
       })
     } else {
       collectionNode.performBatchUpdates({
+        collectionNode.reloadSections(IndexSet(integer: Section.misfortune.rawValue))
+
         if loaderSection {
           collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
         }

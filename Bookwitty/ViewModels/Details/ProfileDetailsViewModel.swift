@@ -21,6 +21,10 @@ class ProfileDetailsViewModel {
   var cancellableRequest: Cancellable?
   var bookRegistry: BookTypeRegistry = BookTypeRegistry()
 
+  fileprivate var latestStatefulNodeStates: (StatefulNode.Mode, StatefulNode.Category, MisfortuneNode.Mode) = (.none, .none, .none)
+  fileprivate var followingStatefulNodeStates: (StatefulNode.Mode, StatefulNode.Category, MisfortuneNode.Mode) = (.none, .none, .none)
+  fileprivate var followersStatefulNodeStates: (StatefulNode.Mode, StatefulNode.Category, MisfortuneNode.Mode) = (.none, .none, .none)
+
   init(penName: PenName) {
     self.penName = penName
   }
@@ -117,16 +121,16 @@ extension ProfileDetailsViewModel {
   func fetchData(for segment: ProfileDetailsViewController.Segment, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
     switch segment {
     case .latest:
-      fetchContent(completion: completion)
+      fetchContent(segment: segment, completion: completion)
     case .followers:
-      fetchFollowers(completion: completion)
+      fetchFollowers(segment: segment, completion: completion)
     case .following:
-      fetchFollowing(completion: completion)
+      fetchFollowing(segment: segment, completion: completion)
     default: return
     }
   }
 
-  func fetchContent(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+  func fetchContent(segment: ProfileDetailsViewController.Segment, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
     guard let id = penName.id else {
       completion(false, nil)
       return
@@ -140,6 +144,9 @@ extension ProfileDetailsViewModel {
         self.latestNextPage = nextUrl
         completion(success, error)
       }
+
+      self.updateMisfortuneMode(segment: segment, isEmpty: resources?.isEmpty, error: error)
+
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
         self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.profileLatest)
@@ -150,7 +157,7 @@ extension ProfileDetailsViewModel {
     }
   }
 
-  func fetchFollowers(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+  func fetchFollowers(segment: ProfileDetailsViewController.Segment, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
     guard let id = penName.id else {
       completion(false, nil)
       return
@@ -164,6 +171,9 @@ extension ProfileDetailsViewModel {
         self.followersNextPage = nextUrl
         completion(success, error)
       }
+
+      self.updateMisfortuneMode(segment: segment, isEmpty: resources?.isEmpty, error: error)
+
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
         self.followers.removeAll(keepingCapacity: false)
@@ -172,7 +182,7 @@ extension ProfileDetailsViewModel {
     }
   }
 
-  func fetchFollowing(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
+  func fetchFollowing(segment: ProfileDetailsViewController.Segment, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
     guard let id = penName.id else {
       completion(false, nil)
       return
@@ -186,6 +196,9 @@ extension ProfileDetailsViewModel {
         self.followingNextPage = nextUrl
         completion(success, error)
       }
+
+      self.updateMisfortuneMode(segment: segment, isEmpty: resources?.isEmpty, error: error)
+
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
         self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.profileFollowing)
@@ -286,6 +299,57 @@ extension ProfileDetailsViewModel {
 
   func isMyPenName(_ penName: PenName) -> Bool {
     return UserManager.shared.isMy(penName: penName)
+  }
+}
+
+//MARK: - Stateful Mode
+extension ProfileDetailsViewModel {
+  func getStatefulStates(for segment: ProfileDetailsViewController.Segment) ->
+
+    (mode: StatefulNode.Mode, category: StatefulNode.Category, state: MisfortuneNode.Mode) {
+      switch segment {
+      case .followers:
+        return followersStatefulNodeStates
+      case .latest:
+        return latestStatefulNodeStates
+      case .following:
+        return followingStatefulNodeStates
+      default:
+        return (.none, .none, .none)
+      }
+  }
+
+  fileprivate func getStatefulNodeMode() -> StatefulNode.Mode {
+    return .penname
+  }
+
+  fileprivate func updateStatefulNodeStates(for segment: ProfileDetailsViewController.Segment, mode: MisfortuneNode.Mode) {
+    let statefulMode = getStatefulNodeMode()
+
+    switch segment {
+    case .followers:
+      followersStatefulNodeStates = (statefulMode, StatefulNode.Category.followers, mode)
+    case .latest:
+      latestStatefulNodeStates = (statefulMode, StatefulNode.Category.latest, mode)
+    case .following:
+      followingStatefulNodeStates = (statefulMode, StatefulNode.Category.relatedBooks, mode)
+    default:
+      return
+    }
+  }
+
+  fileprivate func updateMisfortuneMode(segment: ProfileDetailsViewController.Segment, isEmpty: Bool?, error: BookwittyAPIError?) {
+    let misfortuneNodeMode: MisfortuneNode.Mode
+
+    if let isReachable = AppManager.shared.reachability?.isReachable, !isReachable {
+      misfortuneNodeMode = MisfortuneNode.Mode.noInternet
+    } else if let _ = error {
+      misfortuneNodeMode = MisfortuneNode.Mode.somethingWrong
+    } else {
+      misfortuneNodeMode = (isEmpty ?? false) ? MisfortuneNode.Mode.empty : .none
+    }
+
+    updateStatefulNodeStates(for: segment, mode: misfortuneNodeMode)
   }
 }
 

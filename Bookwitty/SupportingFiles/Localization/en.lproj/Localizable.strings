@@ -196,6 +196,9 @@
 "pen_name_error_could_not_create" = "Something went wrong, could not create Penname!";
 "pen_name_error_was_already_taken" = "Ooops, Penname was already taken!";
 "pen_name_max_number_of_characters_thirty_six" = "Penname can not be more than 36 characters long";
+"pen_name_no_followers" = "This pen-name has no followers yet, be the first!";
+"pen_name_no_following" = "There are no related books for this topic.";
+"pen_name_no_posts" = "This pen-name has no posts yet!";
 "pen_names" = "Pen Names";
 "pen_names_to_follow" = "Pennames To Follow";
 "please_fill_required_field" = "Please fill the required fields";

@@ -159,6 +159,7 @@ extension StatefulNode {
     case latest
     case relatedBooks
     case followers
+    case following
     case editions
     case none
   }
@@ -167,6 +168,7 @@ extension StatefulNode {
     case topic
     case author
     case book
+    case penname
     case none
   }
 
@@ -188,6 +190,12 @@ extension StatefulNode {
       return Strings.author_no_related_books()
     case (.author, .followers):
       return Strings.author_no_followers()
+    case (.penname, .latest):
+      return Strings.pen_name_no_posts()
+    case (.penname, .followers):
+      return Strings.pen_name_no_followers()
+    case (.penname, .following):
+      return Strings.pen_name_no_following()
     default: break
     }
     return Strings.empty_error_title()
@@ -195,6 +203,8 @@ extension StatefulNode {
 
   fileprivate var actionText: String? {
     switch (mode, category) {
+    case (.penname, .latest), (.book, .latest):
+        return nil
     case (_, .latest):
       return Strings.add_a_post().uppercased()
     case (_, .relatedBooks):
@@ -217,6 +227,8 @@ extension StatefulNode {
     case .editions:
       return #imageLiteral(resourceName: "illustrationErrorTopicEmptyAuthor")
     case .followers:
+      return #imageLiteral(resourceName: "illustrationErrorTopicEmptyFollowers")
+    case .following:
       return #imageLiteral(resourceName: "illustrationErrorTopicEmptyFollowers")
     case .none:
       return nil
