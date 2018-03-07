@@ -102,6 +102,8 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
   fileprivate let actionBarNode: CardActionBarNode
   fileprivate let backgroundNode: ASDisplayNode
   fileprivate let separatorNode: ASDisplayNode
+  fileprivate let topSeparatorNode: ASDisplayNode
+  fileprivate let bottomSeparatorNode: ASDisplayNode
 
   fileprivate let tagCollectionNode: TagCollectionNode
 
@@ -154,6 +156,8 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     topCommentNode = CommentCompactNode()
     writeCommentNode = WriteCommentNode()
     tagCollectionNode = TagCollectionNode()
+    topSeparatorNode = ASDisplayNode()
+    bottomSeparatorNode = ASDisplayNode()
     super.init()
     setupCellNode()
   }
@@ -212,6 +216,10 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     
     separatorNode.style.height = ASDimensionMake(1)
     separatorNode.style.flexGrow = 1
+    topSeparatorNode.style.height = ASDimensionMake(1)
+    topSeparatorNode.style.flexGrow = 1
+    bottomSeparatorNode.style.height = ASDimensionMake(1)
+    bottomSeparatorNode.style.flexGrow = 1
 
     writeCommentNode.style.preferredSize = CGSize(width: 35.0, height: 35.0)
     writeCommentNode.configuration.imageSize = CGSize(width: 30.0, height: 30.0)
@@ -236,12 +244,11 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
 
   private func setupCardTheme() {
     backgroundNode.clipsToBounds = true
-    backgroundNode.borderWidth = 1.0
-    backgroundNode.borderColor = ThemeManager.shared.currentTheme.colorNumber18().cgColor
-    backgroundNode.cornerRadius = 4.0
     backgroundNode.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     //Separator
     separatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
+    topSeparatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
+    bottomSeparatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
   }
 }
 
@@ -276,6 +283,8 @@ extension BaseCardPostNode {
     verticalStack.alignItems = .stretch
     verticalStack.children = []
 
+    verticalStack.children?.append(topSeparatorNode)
+
     if (shouldShowInfoNode && !forceHideInfoNode) {
       verticalStack.children?.append(infoNodeInset)
     }
@@ -308,7 +317,7 @@ extension BaseCardPostNode {
       commentSeparator.style.flexGrow = 1
       commentSeparator.isLayerBacked = true
       commentSeparator.backgroundColor = ThemeManager.shared.currentTheme.colorNumber18()
-      let commentSeparatorNodeInset = ASInsetLayoutSpec(insets: actionBarInset(), child: commentSeparator)
+      let commentSeparatorNodeInset = ASInsetLayoutSpec(insets: commentActionBarSeparatorInset(), child: commentSeparator)
       verticalStack.children?.append(commentSeparatorNodeInset)
 
       if shouldShowTopCommentNode {
@@ -322,11 +331,13 @@ extension BaseCardPostNode {
       }
     }
 
+    verticalStack.children?.append(bottomSeparatorNode)
+    
     //Note: If we used children or background properties instead of init -> Order would be important,
     //insetForVerticalLayout must be added before backgroundNode
     let layoutSpec = ASBackgroundLayoutSpec(child: verticalStack, background: backgroundNodeInset)
 
-    return layoutSpec
+    return ASInsetLayoutSpec(insets: UIEdgeInsets(top: externalMargin/2, left: 0.0, bottom: externalMargin/2, right: 0.0), child: layoutSpec)
   }
 
   private func reportedRemotelyLayoutSpecs() -> ASLayoutSpec {
@@ -385,7 +396,7 @@ extension BaseCardPostNode {
    *  This in turn will add space before the first card and after the last card.
    */
   private func externalInset() -> UIEdgeInsets {
-    return UIEdgeInsets(top: externalMargin/2, left: externalMargin, bottom: externalMargin/2, right: externalMargin)
+    return UIEdgeInsets.zero
   }
 
   /**
@@ -412,6 +423,14 @@ extension BaseCardPostNode {
     let externalInset = self.externalInset()
     return UIEdgeInsets(top: 0,
                         left: externalInset.left,
+                        bottom: 0,
+                        right: externalInset.right + internalMargin)
+  }
+
+  private func commentActionBarSeparatorInset() -> UIEdgeInsets {
+    let externalInset = self.externalInset()
+    return UIEdgeInsets(top: 0,
+                        left: externalInset.left + internalMargin,
                         bottom: 0,
                         right: externalInset.right + internalMargin)
   }

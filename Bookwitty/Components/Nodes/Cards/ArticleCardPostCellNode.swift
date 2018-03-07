@@ -36,7 +36,7 @@ class ArticleCardPostCellNode: BaseCardPostNode {
 }
 
 class ArticleCardContentNode: ASDisplayNode {
-  private let externalMargin = ThemeManager.shared.currentTheme.cardExternalMargin()
+  private let externalMargin: CGFloat = 0.0
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
   
