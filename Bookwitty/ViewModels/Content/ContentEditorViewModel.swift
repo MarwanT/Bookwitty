@@ -140,14 +140,19 @@ class ContentEditorViewModel  {
     }
   }
   
-  func updateContent(with completion:((_ success: Bool) -> Void)? = nil) {
+  func updateContent(with defaultValues: (title: String, description: String?, imageURL: String?), completion: ((_ success: Bool) -> Void)? = nil) {
     guard let currentPost = self.currentPost, let id = currentPost.id else {
       completion?(false)
       return
     }
+
+    let title = currentPost.title ?? defaultValues.title
+    let shortDescription = currentPost.shortDescription ?? defaultValues.description
+    let imageURL = currentPost.imageUrl ?? defaultValues.imageURL
+
     self.resetPreviousRequest()
     let status = PublishAPI.PublishStatus(rawValue: self.currentPost.status ?? "") ?? PublishAPI.PublishStatus.draft
-    self.currentRequest = PublishAPI.updateContent(id: id, title: currentPost.title, body: currentPost.body, imageIdentifier: nil, shortDescription: currentPost.shortDescription, status: status, completion: { (success, candidatePost, error) in
+    self.currentRequest = PublishAPI.updateContent(id: id, title: title, body: currentPost.body, imageIdentifier: imageURL, shortDescription: shortDescription, status: status, completion: { (success, candidatePost, error) in
       defer { self.currentRequest = nil; completion?(success) }
       guard success, let candidatePost = candidatePost else {
         return
