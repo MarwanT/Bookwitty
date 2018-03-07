@@ -43,11 +43,23 @@ protocol PostDetailsNodeDelegate: class {
   func hasRelatedPosts() -> Bool
   func hasRelatedBooks() -> Bool
   func hasContentItems() -> Bool
-  func cardActionBarNode(cardActionBar: CardActionBarNode, didRequestAction action: CardActionBarNode.Action, forSender sender: ASButtonNode, didFinishAction: ((_ success: Bool) -> ())?)
   func postDetails(node: PostDetailsNode, requestToViewImage image: UIImage, from imageNode: ASNetworkImageNode)
   func postDetails(node: PostDetailsNode, didRequestActionInfo fromNode: ASTextNode)
   func commentsNode(_ commentsNode: CommentsNode, reactFor action: CommentsNode.Action, didFinishAction: ((_ success: Bool) -> ())?)
   func postDetails(node: PostDetailsNode, didSelectTagAt index: Int)
+  func postDetails(node: PostDetailsNode, writtenByNode: WrittenByNode, followButtonTouchUpInside button: ButtonWithLoader)
+  func postDetails(node: PostDetailsNode, touchUpInside writtenByNode: WrittenByNode)
+}
+
+//MARK: - WrittenByNode Delegate Implementation
+extension PostDetailsNode: WrittenByNodeDelegate {
+  func writtenByNode(node: WrittenByNode, followButtonTouchUpInside button: ButtonWithLoader) {
+    delegate?.postDetails(node: self, writtenByNode: node, followButtonTouchUpInside: button)
+  }
+
+  func writtenByNode(touchUpInside node: WrittenByNode) {
+     delegate?.postDetails(node: self, touchUpInside: node)
+  }
 }
 
 class PostDetailsNode: ASScrollNode {
@@ -295,6 +307,8 @@ class PostDetailsNode: ASScrollNode {
     
     commentsNode.displayMode = .compact
     commentsNode.delegate = self
+
+    writtenByNode.delegate = self
   }
 
   private func updateWrittenBy(penName: PenName?) {
@@ -313,6 +327,10 @@ class PostDetailsNode: ASScrollNode {
     writtenByNode.postInfoData = postInfoData
     writtenByNode.biography = biography
     writtenByNode.following = following
+  }
+
+  func hideFollow(hideFollow: Bool) {
+    writtenByNode.hideFollow = hideFollow
   }
 
   func setBannerImage() {

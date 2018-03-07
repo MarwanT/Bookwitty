@@ -29,6 +29,9 @@ class PenNameFollowNode: ASCellNode {
   private var nameNode: ASTextNode
   private var biographyNode: CharacterLimitedTextNode
   private var actionButton: ButtonWithLoader
+  /**
+   The more is related to the Menu '3-dotted Icon'
+  */
   private var moreButton: ASButtonNode
   private let separatorNode: ASDisplayNode
   private var asHeader: Bool = false
@@ -93,6 +96,9 @@ class PenNameFollowNode: ASCellNode {
     }
   }
 
+  /**
+   The more is related to the Menu '3-dotted Icon'
+   */
   var showMoreButton: Bool = true {
     didSet {
       setNeedsLayout()
@@ -159,7 +165,7 @@ class PenNameFollowNode: ASCellNode {
   }
 
   private func setBiography(biography: String?) {
-    biographyNode.setString(text: biography, fontDynamicType: asHeader ? .caption1 : .caption2, color: ThemeManager.shared.currentTheme.defaultTextColor())
+    biographyNode.setString(text: biography, fontDynamicType: .caption2, color: ThemeManager.shared.currentTheme.defaultTextColor())
     setNeedsLayout()
   }
 

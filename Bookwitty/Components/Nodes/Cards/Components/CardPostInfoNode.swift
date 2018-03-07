@@ -102,7 +102,9 @@ class CardPostInfoNode: ASDisplayNode {
     }
 
     if !data.date.isEmpty {
-      postDateTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2).append(text: data.date).attributedString
+      postDateTextNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+        .append(text: data.date, color: ThemeManager.shared.currentTheme.defaultGrayedTextColor())
+        .attributedString
     }
 
     if let imageUrl = data.imageUrl, !imageUrl.isEmpty {

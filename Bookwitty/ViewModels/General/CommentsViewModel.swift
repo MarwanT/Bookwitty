@@ -79,7 +79,7 @@ class CommentsViewModel {
       return itemsNumber
     case CommentsNode.Section.viewAllComments.rawValue:
       let isCompactMode = displayMode == CommentsNode.DisplayMode.compact
-      return (isCompactMode && !isFetchingData) ? 1 : 0
+      return (isCompactMode && !isFetchingData && !commentsIDs.isEmpty) ? 1 : 0
     default:
       return 0
     }

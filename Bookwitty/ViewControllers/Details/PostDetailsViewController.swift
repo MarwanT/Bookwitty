@@ -97,6 +97,7 @@ class PostDetailsViewController: ASViewController<ASDisplayNode> {
     postDetailsNode.conculsion = viewModel.conculsion
 
     postDetailsNode.tags = viewModel.tags
+    postDetailsNode.hideFollow(hideFollow: viewModel.isMyPenName())
 
     //The action bar should not show the comment button
     //This VC contains a comment section at the bottom
@@ -297,6 +298,35 @@ extension PostDetailsViewController {
 }
 
 extension PostDetailsViewController: PostDetailsNodeDelegate {
+  func postDetails(node: PostDetailsNode, writtenByNode: WrittenByNode, followButtonTouchUpInside button: ButtonWithLoader) {
+    button.state = .loading
+    if button.isSelected {
+      viewModel.unfollowPostPenName(completionBlock: {
+        (success: Bool) in
+        writtenByNode.following = !success
+        button.state = success ? .normal : .selected
+      })
+    } else {
+      viewModel.followPostPenName(completionBlock: {
+        (success: Bool) in
+        writtenByNode.following = success
+        button.state = success ? .selected : .normal
+      })
+    }
+  }
+
+  func postDetails(node: PostDetailsNode, touchUpInside writtenByNode: WrittenByNode) {
+    if let penName = viewModel.penName {
+      pushProfileViewController(penName: penName)
+
+      //MARK: [Analytics] Event
+      let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                   action: .GoToDetails,
+                                                   name: penName.name ?? "")
+      Analytics.shared.send(event: event)
+    }
+  }
+
   func bannerTapAction(url: URL?) {
       WebViewController.present(url: url)
   }
@@ -1173,6 +1203,8 @@ extension PostDetailsViewController {
   fileprivate func updatedResources(_ notification: NSNotification) {
     let updateKey = DataManager.Notifications.Key.Update
     let deleteKey = DataManager.Notifications.Key.Delete
+
+    postDetailsNode.penName = viewModel.penName
 
     guard let resourceId = viewModel.resource.id,
       let dictionary = notification.object as? [String : [String]] else {

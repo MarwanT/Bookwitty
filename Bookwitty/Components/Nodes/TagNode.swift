@@ -24,7 +24,7 @@ class TagNode: ASCellNode {
   private func setupNode() {
     automaticallyManagesSubnodes = true
 
-    backgroundNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber15()
+    backgroundNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber9()
     backgroundNode.cornerRadius = 4
     backgroundNode.isLayerBacked = true
   }
@@ -32,8 +32,8 @@ class TagNode: ASCellNode {
   var tag: String? {
     didSet {
       if let tag = tag {
-        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
-          .append(text: tag, color: ThemeManager.shared.currentTheme.colorNumber23())
+        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption3)
+          .append(text: tag, color: ThemeManager.shared.currentTheme.defaultTextColor())
           .attributedString
       } else {
         titleNode.attributedText = nil

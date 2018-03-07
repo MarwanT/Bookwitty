@@ -11,6 +11,7 @@ import AsyncDisplayKit
 
 protocol WrittenByNodeDelegate: class {
   func writtenByNode(node: WrittenByNode, followButtonTouchUpInside button: ButtonWithLoader)
+  func writtenByNode(touchUpInside node: WrittenByNode)
 }
 
 class WrittenByNode: ASCellNode {
@@ -22,14 +23,16 @@ class WrittenByNode: ASCellNode {
   let titleNode: ASTextNode
   let titleSeparatorNode: ASDisplayNode
   let headerNode: CardPostInfoNode
-  let biographyNode: ASTextNode
+  let biographyNode: CharacterLimitedTextNode
   let followButton: ButtonWithLoader
 
   var biography: String? {
     didSet {
       if let biography = biography {
-        biographyNode.attributedText = AttributedStringBuilder(fontDynamicType: .body3)
-          .append(text: biography, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
+        biographyNode.setString(text: biography,
+                                fontDynamicType: .body3,
+                                moreFontDynamicType: .title5,
+                                color: ThemeManager.shared.currentTheme.defaultTextColor())
         setNeedsLayout()
       }
     }
@@ -38,6 +41,13 @@ class WrittenByNode: ASCellNode {
   var following: Bool = false {
     didSet {
       followButton.state = self.following ? .selected : .normal
+    }
+  }
+
+  var hideFollow: Bool = false {
+    didSet {
+      followButton.isHidden = hideFollow
+      followButton.isEnabled = !hideFollow
     }
   }
 
@@ -54,7 +64,7 @@ class WrittenByNode: ASCellNode {
     titleNode = ASTextNode()
     titleSeparatorNode = ASDisplayNode()
     headerNode = CardPostInfoNode()
-    biographyNode = ASTextNode()
+    biographyNode = CharacterLimitedTextNode()
     followButton = ButtonWithLoader()
     super.init()
     automaticallyManagesSubnodes = true
@@ -84,9 +94,24 @@ class WrittenByNode: ASCellNode {
     titleSeparatorNode.isLayerBacked = true
     titleSeparatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
 
-    titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .title3)
+    titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .callout)
       .append(text: Strings.written_by(), color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
 
+    //Add touchUpInside
+    titleNode.addTarget(self, action: #selector(titleNodeTouchUpInside) , forControlEvents: .touchUpInside)
+
+    headerNode.delegate = self
+
+    biographyNode.maxCharacter = 140
+    biographyNode.nodeDelegate = self
+    biographyNode.maximumNumberOfLines = 0
+    biographyNode.autoChange = false
+    biographyNode.truncationMode = NSLineBreakMode.byTruncatingTail
+    biographyNode.mode = .collapsed
+  }
+
+  func titleNodeTouchUpInside() {
+    delegate?.writtenByNode(touchUpInside: self)
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -99,12 +124,19 @@ class WrittenByNode: ASCellNode {
     let topVStackInset = ASInsetLayoutSpec(insets: topStackInset(), child: topVStack)
 
     //BOTOM
-    let bottomVStaskChildren: [ASLayoutElement] = [biographyNode, followButton]
+    var bottomVStackChildren: [ASLayoutElement] = []
+    if !biography.isEmptyOrNil() {
+      bottomVStackChildren.append(biographyNode)
+    }
+    if !hideFollow {
+      bottomVStackChildren.append(followButton)
+    }
+
     let bottomVStack = ASStackLayoutSpec(direction: .vertical,
                                          spacing: contentSpacing,
                                          justifyContent: .start,
                                          alignItems: .stretch,
-                                         children: bottomVStaskChildren)
+                                         children: bottomVStackChildren)
     let bottomVStackInset = ASInsetLayoutSpec(insets: bottomStackInset(),
                                               child: bottomVStack)
 
@@ -123,6 +155,20 @@ class WrittenByNode: ASCellNode {
 
     return ASInsetLayoutSpec(insets: outerStackInset(),
                              child: outerVStack)
+  }
+}
+
+//MARK: - CharacterLimitedTextNode Delegate Implementation
+extension WrittenByNode:  CharacterLimitedTextNodeDelegate {
+  func characterLimitedTextNodeDidTap(_ node: CharacterLimitedTextNode) {
+    delegate?.writtenByNode(touchUpInside: self)
+  }
+}
+
+//MARK: - CardPostInfoNode Delegate Implementation
+extension WrittenByNode: CardPostInfoNodeDelegate {
+  func cardInfoNode(cardPostInfoNode: CardPostInfoNode, didRequestAction action: CardPostInfoNode.Action, forSender sender: Any) {
+    delegate?.writtenByNode(touchUpInside: self)
   }
 }
 
