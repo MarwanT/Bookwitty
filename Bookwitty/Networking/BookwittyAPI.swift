@@ -264,14 +264,13 @@ extension BookwittyAPI: TargetType {
           "username": credentials.username,
           "password":  credentials.password,
           "grant_type": "password",
-          "scopes": "author content imposter email profile update_self"
+          "scope": "author content imposter email profile social update_self"
         ]
       } else {
         params = [
           "client_id": AppKeys.shared.apiKey,
           "client_secret": AppKeys.shared.apiSecret,
           "grant_type": "client_credentials",
-          "scopes": "author content imposter email profile update_self"
         ]
       }
       return params
