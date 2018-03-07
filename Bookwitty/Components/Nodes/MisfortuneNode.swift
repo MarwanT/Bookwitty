@@ -74,6 +74,12 @@ class MisfortuneNode: ASCellNode {
   }
   
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    if case .none = mode {
+      let noSpec = ASLayoutSpec()
+      noSpec.style.preferredSize = CGSize(width: 1.0, height: 1.0)
+      return noSpec
+    }
+
     // TOP PART OF THE NODE
     //----------------------
     let imageBackgroundForegroundInset = ASInsetLayoutSpec(
@@ -284,6 +290,7 @@ extension MisfortuneNode {
     case somethingWrong
     case noResultsFound
     case appNeedsUpdate(URL?)
+    case none
     
     // Visibility
     var actionButtonVisible: Bool {
@@ -298,6 +305,8 @@ extension MisfortuneNode {
         return true
       case .appNeedsUpdate:
         return true
+      case .none:
+        return false
       }
     }
     
@@ -313,6 +322,8 @@ extension MisfortuneNode {
         return Action.tryAgain
       case .appNeedsUpdate:
         return Action.updateApp
+      case .none:
+        return nil
       }
     }
     
@@ -328,6 +339,8 @@ extension MisfortuneNode {
         return true
       case .appNeedsUpdate:
         return false
+      case .none:
+        return false
       }
     }
     
@@ -339,12 +352,14 @@ extension MisfortuneNode {
       case .noInternet:
         return #imageLiteral(resourceName: "illustrationErrorNoInternet")
       case .noResultsFound:
-        return #imageLiteral(resourceName: "illustrationErrorEmptyContent")
+        return #imageLiteral(resourceName: "illustrationErrorNoResult")
       case .somethingWrong:
         return #imageLiteral(resourceName: "illustrationErrorSomethingsWrong")
       case .appNeedsUpdate:
         // TODO: Update with right Data
         return #imageLiteral(resourceName: "illustrationErrorEmptyContent")
+      case .none:
+        return UIImage()
       }
     }
     
@@ -361,6 +376,8 @@ extension MisfortuneNode {
         return 20
       case .appNeedsUpdate:
         return 20
+      case .none:
+        return 0
       }
     }
     
@@ -377,6 +394,8 @@ extension MisfortuneNode {
         return Strings.something_wrong_error_title()
       case .appNeedsUpdate:
         return Strings.new_version_available_title()
+      case .none:
+        return ""
       }
     }
     var descriptionText: String {
@@ -391,6 +410,8 @@ extension MisfortuneNode {
         return Strings.something_wrong_error_description()
       case .appNeedsUpdate:
         return Strings.new_version_available_description()
+      case .none:
+        return ""
       }
     }
     var actionButtonText: String {
@@ -405,6 +426,8 @@ extension MisfortuneNode {
         return Strings.try_again()
       case .appNeedsUpdate:
         return Strings.update_now()
+      case .none:
+        return ""
       }
     }
     var settingsAttributedText: NSMutableAttributedString {
@@ -431,6 +454,8 @@ extension MisfortuneNode {
         return ThemeManager.shared.currentTheme.colorNumber10()
       case .appNeedsUpdate:
         return ThemeManager.shared.currentTheme.colorNumber8()
+      case .none:
+        return ThemeManager.shared.currentTheme.colorNumber1()
       }
     }
     var backgroundColor: UIColor {
@@ -440,11 +465,13 @@ extension MisfortuneNode {
       case .noInternet:
         return ThemeManager.shared.currentTheme.colorNumber3()
       case .noResultsFound:
-        return ThemeManager.shared.currentTheme.colorNumber7()
+        return ThemeManager.shared.currentTheme.colorNumber5()
       case .somethingWrong:
         return ThemeManager.shared.currentTheme.colorNumber9()
       case .appNeedsUpdate:
         return ThemeManager.shared.currentTheme.colorNumber7()
+      case .none:
+        return ThemeManager.shared.currentTheme.colorNumber1()
       }
     }
   }

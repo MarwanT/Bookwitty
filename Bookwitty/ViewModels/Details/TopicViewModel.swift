@@ -32,20 +32,31 @@ final class TopicViewModel {
 
   fileprivate var latest: [String] = []
   fileprivate var latestNextUrl: URL? = nil
+  fileprivate var latestStatefulNodeStates: (StatefulNode.Mode, StatefulNode.Category, MisfortuneNode.Mode) = (.none, .none, .none)
 
   fileprivate var editions: [String] = []
   fileprivate var editionsNextUrl: URL? = nil
+  fileprivate var editionsStatefulNodeStates: (StatefulNode.Mode, StatefulNode.Category, MisfortuneNode.Mode) = (.none, .none, .none)
 
   fileprivate var relatedBooks: [String] = []
   fileprivate var relatedBooksNextUrl: URL? = nil
+  fileprivate var relatedBooksStatefulNodeStates: (StatefulNode.Mode, StatefulNode.Category, MisfortuneNode.Mode) = (.none, .none, .none)
 
   fileprivate var followers: [String] = []
   fileprivate var followersNextUrl: URL? = nil
-  
+  fileprivate var followersStatefulNodeStates: (StatefulNode.Mode, StatefulNode.Category, MisfortuneNode.Mode) = (.none, .none, .none)
+
   var bookRegistry: BookTypeRegistry = BookTypeRegistry()
 
   func initialize(with resource: ModelCommonProperties?) {
     self.resource = resource
+    initiateContentCalls()
+  }
+
+  func reload() {
+    guard let _ = resource else {
+      return
+    }
     initiateContentCalls()
   }
 
@@ -274,6 +285,73 @@ final class TopicViewModel {
   }
 }
 
+//MARK: - Stateful Mode
+extension TopicViewModel {
+  func getStatefulStates(for category: TopicViewController.Category) ->
+    (mode: StatefulNode.Mode, category: StatefulNode.Category, state: MisfortuneNode.Mode) {
+    switch category {
+    case .editions:
+      return editionsStatefulNodeStates
+    case .followers:
+      return followersStatefulNodeStates
+    case .latest:
+      return latestStatefulNodeStates
+    case .relatedBooks:
+      return relatedBooksStatefulNodeStates
+    default:
+      return (.none, .none, .none)
+    }
+  }
+
+  fileprivate func getStatefulNodeMode() -> StatefulNode.Mode {
+    guard let resource = resource else {
+      return .none
+    }
+
+    switch resource.registeredResourceType {
+    case Author.resourceType:
+      return .author
+    case Book.resourceType:
+      return .book
+    case Topic.resourceType:
+      return .topic
+    default:
+      return .none
+    }
+  }
+
+  fileprivate func updateStatefulNodeStates(for category: TopicViewController.Category, mode: MisfortuneNode.Mode) {
+    let statefulMode = getStatefulNodeMode()
+
+    switch category {
+    case .editions:
+      editionsStatefulNodeStates = (statefulMode, StatefulNode.Category.editions, mode)
+    case .followers:
+      followersStatefulNodeStates = (statefulMode, StatefulNode.Category.followers, mode)
+    case .latest:
+      latestStatefulNodeStates = (statefulMode, StatefulNode.Category.latest, mode)
+    case .relatedBooks:
+      relatedBooksStatefulNodeStates = (statefulMode, StatefulNode.Category.relatedBooks, mode)
+    default:
+      return
+    }
+  }
+
+  fileprivate func updateMisfortuneMode(category: TopicViewController.Category, isEmpty: Bool?, error: BookwittyAPIError?) {
+    let misfortuneNodeMode: MisfortuneNode.Mode
+
+    if let isReachable = AppManager.shared.reachability?.isReachable, !isReachable {
+      misfortuneNodeMode = MisfortuneNode.Mode.noInternet
+    } else if let _ = error {
+      misfortuneNodeMode = MisfortuneNode.Mode.somethingWrong
+    } else {
+      misfortuneNodeMode = (isEmpty ?? false) ? MisfortuneNode.Mode.empty : .none
+    }
+
+    updateStatefulNodeStates(for: category, mode: misfortuneNodeMode)
+  }
+}
+
 //MARK: - Latest
 extension TopicViewModel {
   var hasNextLatest: Bool {
@@ -316,6 +394,9 @@ extension TopicViewModel {
       defer {
         completion(success, category)
       }
+
+      self.updateMisfortuneMode(category: category, isEmpty: resources?.isEmpty, error: error)
+
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
         self.bookRegistry.update(resources: resources, section: BookTypeRegistry.Section.topicLatest)
@@ -384,6 +465,9 @@ extension TopicViewModel {
       defer {
         completion(success, category)
       }
+
+      self.updateMisfortuneMode(category: category, isEmpty: resources?.isEmpty, error: error)
+
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
         let resourcesIds: [String] = resources.flatMap({ $0.id })
@@ -450,6 +534,9 @@ extension TopicViewModel {
       defer {
         completion(success, category)
       }
+
+      self.updateMisfortuneMode(category: category, isEmpty: resources?.isEmpty, error: error)
+
       if let resources = resources, success {
         DataManager.shared.update(resources: resources)
         self.relatedBooks.removeAll()
@@ -524,6 +611,9 @@ extension TopicViewModel {
       defer {
         completion(success, category)
       }
+
+      self.updateMisfortuneMode(category: category, isEmpty: penNames?.isEmpty, error: error)
+
       if let penNames = penNames, success {
         DataManager.shared.update(resources: penNames)
         let followersIds: [String] = penNames.flatMap({ $0.id })

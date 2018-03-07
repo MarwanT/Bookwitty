@@ -360,6 +360,7 @@
 		F4CBAFA21E8044FF00FD1AFB /* MediaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CBAFA11E8044FF00FD1AFB /* MediaModel.swift */; };
 		F4CDDD371E60263800474CAA /* RotatingImageNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CDDD361E60263800474CAA /* RotatingImageNode.swift */; };
 		F4EAEE3A1E6B1128006429B7 /* LayoutSpec+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EAEE391E6B1128006429B7 /* LayoutSpec+Utils.swift */; };
+		F4FBC5282046EB4D00246990 /* StatefulNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FBC5272046EB4D00246990 /* StatefulNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -736,6 +737,7 @@
 		F4CBAFA11E8044FF00FD1AFB /* MediaModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaModel.swift; sourceTree = "<group>"; };
 		F4CDDD361E60263800474CAA /* RotatingImageNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RotatingImageNode.swift; sourceTree = "<group>"; };
 		F4EAEE391E6B1128006429B7 /* LayoutSpec+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LayoutSpec+Utils.swift"; sourceTree = "<group>"; };
+		F4FBC5272046EB4D00246990 /* StatefulNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulNode.swift; sourceTree = "<group>"; };
 		F51280CA021D07F160F13471 /* Pods-BookwittyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BookwittyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BookwittyTests/Pods-BookwittyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1226,6 +1228,7 @@
 				56E87D331E6EFFCA00AF6CFD /* BookNode.swift */,
 				59C048811E735C4500CADE38 /* BagNode.swift */,
 				596562E31E79EF9E00B93920 /* MisfortuneNode.swift */,
+				F4FBC5272046EB4D00246990 /* StatefulNode.swift */,
 				5988FCFB1EA4AC100045F82B /* TTTAttributedLabelNode.swift */,
 				59CF3F811ECF3332002A5821 /* IntroductoryBanner.swift */,
 				562A996B1ED8683000382ADD /* FilterCellNode.swift */,
@@ -2297,6 +2300,7 @@
 				0FAA016A1F7A41A30011FDBA /* RichBookViewController.swift in Sources */,
 				561724021F8FAD6000CD979E /* PostPreviewViewModel.swift in Sources */,
 				F420B6A21E43C570001F34CD /* User.swift in Sources */,
+				F4FBC5282046EB4D00246990 /* StatefulNode.swift in Sources */,
 				59591F251E6F01C7005592B8 /* DisclosureNodeCell.swift in Sources */,
 				56320C901EA748FB00642934 /* ReadingListCardPostCellNode.swift in Sources */,
 				5644F21A1E55A2F100B7D8E7 /* SettingsViewController.swift in Sources */,

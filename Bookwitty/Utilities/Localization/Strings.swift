@@ -49,6 +49,10 @@ class Strings {
     return localizedString(key: "add_a_title")
   }
 
+  static func add_a_post() -> String {
+    return localizedString(key: "add_a_post")
+  }
+
   static func add_an_image() -> String {
     return localizedString(key: "add_an_image")
   }
@@ -92,7 +96,19 @@ class Strings {
   static func author() -> String {
     return localizedString(key: "author")
   }
-  
+
+  static func author_no_posts() -> String {
+    return localizedString(key: "author_no_posts")
+  }
+
+  static func author_no_followers() -> String {
+    return localizedString(key: "author_no_followers")
+  }
+
+  static func author_no_related_books() -> String {
+    return localizedString(key: "author_no_related_books")
+  }
+
   static func bag() -> String {
     return localizedString(key: "bag")
   }
@@ -112,7 +128,15 @@ class Strings {
   static func book_details() -> String {
     return localizedString(key: "book_details")
   }
-  
+
+  static func book_no_followers() -> String {
+    return localizedString(key: "book_no_followers")
+  }
+
+  static func book_no_posts() -> String {
+    return localizedString(key: "book_no_posts")
+  }
+
   static func book_recommended_in_reading_lists() -> String {
     return localizedString(key: "book_recommended_in_reading_lists")
   }
@@ -944,7 +968,11 @@ class Strings {
   static func subtitle() -> String {
     return localizedString(key: "subtitle")
   }
-  
+
+  static func suggest_a_book() -> String {
+    return localizedString(key: "suggest_a_book")
+  }
+
   static func tags() -> String {
     return localizedString(key: "tags")
   }
@@ -988,7 +1016,19 @@ class Strings {
   static func try_again() -> String {
     return localizedString(key: "try_again")
   }
-  
+
+  static func topic_no_followers() -> String {
+    return localizedString(key: "topic_no_followers")
+  }
+
+  static func topic_no_posts() -> String {
+    return localizedString(key: "topic_no_posts")
+  }
+
+  static func topic_no_related_books() -> String {
+    return localizedString(key: "topic_no_related_books")
+  }
+
   static func tutorial_fifth_page_description() -> String {
     return localizedString(key: "tutorial_fifth_page_description")
   }

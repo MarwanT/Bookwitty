@@ -32,7 +32,12 @@ class TopicViewController: ASViewController<ASDisplayNode> {
   enum Section: Int {
     case header = 0
     case relatedData
+    case misfortune
     case activityIndicator
+
+    static var count: Int {
+      return 4
+    }
   }
   
   enum NavigationItemMode {
@@ -51,7 +56,7 @@ class TopicViewController: ASViewController<ASDisplayNode> {
   fileprivate var segmentedNode: SegmentedControlNode
   fileprivate let loaderNode: LoaderNode
   fileprivate var flowLayout: UICollectionViewFlowLayout
-
+  fileprivate let statefulNode: StatefulNode
   fileprivate let actionBarNode: ActionBarNode
 
   fileprivate var normal: [Category] = [.latest(index: 0), .relatedBooks(index: 1), .followers(index: 2) ]
@@ -65,6 +70,24 @@ class TopicViewController: ASViewController<ASDisplayNode> {
 
   var navigationItemMode: NavigationItemMode = .view
   weak var delegate: TopicViewControllerDelegate?
+
+  var shouldDisplayMisfortuneNode: Bool {
+    let misfortuneMode = viewModel.getStatefulStates(for: self.category(withIndex: segmentedNode.selectedIndex))
+    statefulNode.updateState(category: misfortuneMode.category, mode: misfortuneMode.mode, misfortuneMode: misfortuneMode.state)
+
+    if case (.none, .none, .none) = misfortuneMode {
+      return false
+    }
+    guard case .none = loadingStatus else {
+      return false
+    }
+    if case .none = misfortuneMode.state {
+      return false
+    }
+
+    return true
+  }
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -79,7 +102,12 @@ class TopicViewController: ASViewController<ASDisplayNode> {
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     controllerNode = ASDisplayNode()
 
+    statefulNode = StatefulNode()
+    statefulNode.style.height = ASDimensionMake(1.0)
+    statefulNode.style.width = ASDimensionMake(1.0)
+
     super.init(node: controllerNode)
+    statefulNode.delegate = self
     controllerNode.automaticallyManagesSubnodes = true
 
     controllerNode.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
@@ -89,6 +117,14 @@ class TopicViewController: ASViewController<ASDisplayNode> {
       let overlayLayoutSpec = ASOverlayLayoutSpec(child: wrapperLayoutSpec, overlay: absoluteLayoutSpec)
       return overlayLayoutSpec
     }
+  }
+
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    let navHeight: CGFloat = navigationController?.navigationBar.frame.size.height ?? 44.0
+    statefulNode.style.height = ASDimensionMake(collectionNode.frame.height - segmentedNodeHeight - navHeight)
+    statefulNode.style.width = ASDimensionMake(collectionNode.frame.width)
+    statefulNode.setNeedsLayout()
   }
   
   func initialize(with resource: ModelCommonProperties?) {
@@ -314,6 +350,42 @@ class TopicViewController: ASViewController<ASDisplayNode> {
         self.setLoading(status: TopicViewController.LoadingStatus.none)
         self.updateCollection(relatedDataSection: true, loaderSection: true)
       }
+    }
+  }
+}
+
+//MARK: - StatefulNode Delegate Implementation
+extension TopicViewController: StatefulNodeDelegate {
+  func statefulNodeDidPerformAction(node: StatefulNode, statefulAction: StatefulNode.Action?, misfortuneAction: MisfortuneNode.Action?) {
+    if let statefulAction = statefulAction {
+      handleStatefulAction(action: statefulAction)
+    } else if let misfortuneAction = misfortuneAction {
+      handleMisfortuneAction(action: misfortuneAction)
+    }
+  }
+
+  private func handleStatefulAction(action: StatefulNode.Action) {
+    switch action {
+    case .addAPost:
+      guard let identifier = viewModel.identifier else {
+        return
+      }
+      self.presentContentEditor(with: Text(), prelink: identifier)
+    case .suggestABook:
+      //Functionality Not Available yet
+      break
+    }
+  }
+
+  private func handleMisfortuneAction(action: MisfortuneNode.Action) {
+    switch action {
+    case .tryAgain:
+      viewModel.reload()
+      loadData()
+    case .settings:
+      AppDelegate.openSettings()
+    default:
+      break
     }
   }
 }
@@ -625,7 +697,7 @@ extension TopicViewController: PenNameFollowNodeDelegate {
         return
     }
 
-    let actions: [MoreAction] = MoreAction.actions(for: resource as? ModelCommonProperties)
+    let actions: [MoreAction] = MoreAction.actions(for: resource)
     self.showMoreActionSheet(identifier: identifier, actions: actions, completion: {
       (success: Bool, action: MoreAction) in
 
@@ -648,6 +720,9 @@ extension TopicViewController: UICollectionViewDelegateFlowLayout {
     guard section == Section.relatedData.rawValue else {
       return UIEdgeInsets.zero
     }
+    guard section == Section.misfortune.rawValue else {
+      return UIEdgeInsets.zero
+    }
 
     return UIEdgeInsets(top: 5.0, left: 0.0, bottom: 0.0, right: 0.0)
   }
@@ -655,7 +730,7 @@ extension TopicViewController: UICollectionViewDelegateFlowLayout {
 
 extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
   func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
-    return 3
+    return Section.count
   }
 
   func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
@@ -666,6 +741,10 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
 
     if section == Section.activityIndicator.rawValue {
       return loadingStatus != .none ? 1 : 0
+    }
+
+    if section == Section.misfortune.rawValue {
+      return shouldDisplayMisfortuneNode ? 1 : 0
     }
 
     var contentNumberOfRows: Int
@@ -697,6 +776,12 @@ extension TopicViewController: ASCollectionDataSource, ASCollectionDelegate {
     if indexPath.section == Section.activityIndicator.rawValue {
       return {
         return self.loaderNode
+      }
+    }
+
+    if indexPath.section == Section.misfortune.rawValue {
+      return {
+        return self.statefulNode
       }
     }
 
@@ -1121,7 +1206,7 @@ extension TopicViewController: BaseCardPostNodeDelegate {
       guard let resource = resource as? ModelCommonProperties,
         let identifier = resource.id else { return }
 
-      let actions: [MoreAction] = MoreAction.actions(for: resource as? ModelCommonProperties)
+      let actions: [MoreAction] = MoreAction.actions(for: resource)
       self.showMoreActionSheet(identifier: identifier, actions: actions, completion: { (success: Bool, action: MoreAction) in
         didFinishAction?(success)
       })
@@ -1510,6 +1595,8 @@ extension TopicViewController {
       })
     } else {
       collectionNode.performBatch(animated: false, updates: {
+        collectionNode.reloadSections(IndexSet(integer: Section.misfortune.rawValue))
+        
         if loaderSection {
           collectionNode.reloadSections(IndexSet(integer: Section.activityIndicator.rawValue))
         }
