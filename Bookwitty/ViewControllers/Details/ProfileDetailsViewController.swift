@@ -78,7 +78,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     loaderNode = LoaderNode()
     loaderNode.style.width = ASDimensionMake(UIScreen.main.bounds.width)
     activeSegment = segments[0]
-    penNameHeaderNode = PenNameFollowNode(enlarged: true)
+    penNameHeaderNode = PenNameFollowNode(asHeader: true)
     //Initialize statefulNode
     statefulNode = StatefulNode()
     statefulNode.style.height = ASDimensionMake(1.0)
@@ -119,6 +119,7 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     collectionNode.dataSource = self
     collectionNode.delegate = self
 
+    loadNavigationBarButtons()
     initializeHeader()
     reloadPenName()
 
@@ -135,9 +136,53 @@ class ProfileDetailsViewController: ASViewController<ASCollectionNode> {
     penNameHeaderNode.penName = viewModel.penName.name
     penNameHeaderNode.following = viewModel.penName.following
     penNameHeaderNode.imageUrl = viewModel.penName.avatarUrl
-    penNameHeaderNode.showMoreButton = !viewModel.isMyPenName()
+    penNameHeaderNode.showMoreButton = false // Intentionally disable the
+    //show more button in the header because we added it in the top navigation bar
     penNameHeaderNode.delegate = self
     penNameHeaderNode.updateMode(disabled: viewModel.isMyPenName())
+  }
+
+  private func loadNavigationBarButtons() {
+    var items: [UIBarButtonItem] = []
+
+    let shareButton = UIBarButtonItem(
+      image: #imageLiteral(resourceName: "shareOutside"),
+      style: UIBarButtonItemStyle.plain,
+      target: self,
+      action: #selector(shareButton(_:)))
+
+    if !viewModel.isMyPenName() {
+      let moreButton = UIBarButtonItem(
+        image: #imageLiteral(resourceName: "threeDots"),
+        style: UIBarButtonItemStyle.plain,
+        target: self,
+        action: #selector(moreButton(_:)))
+      items.append(moreButton)
+    }
+
+    items.append(shareButton)
+    navigationItem.rightBarButtonItems = items
+  }
+
+  func shareButton(_ sender: Any?) {
+    guard let url = viewModel.penName.canonicalURL else {
+      return
+    }
+    share(title: viewModel.penName.name ?? "", url: url)
+  }
+
+  func moreButton(_ sender: Any?) {
+    openMoreActionSheet(for: viewModel.penName, shouldPopController: true)
+  }
+
+  fileprivate func share(title: String, url: URL) {
+    presentShareSheet(shareContent: [title, url])
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .PenName,
+                                                 action: .Share,
+                                                 name: title)
+    Analytics.shared.send(event: event)
   }
 
   private func segmentedNode(segmentedControlNode: SegmentedControlNode, didSelectSegmentIndex index: Int) {
@@ -267,37 +312,28 @@ extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
   }
 
   func penName(node: PenNameFollowNode, moreButtonTouchUpInside button: ASButtonNode?) {
-    
-    let penNameIdentifier: String
+
     let penNameResource: PenName
     let shouldPopController: Bool
 
     if penNameHeaderNode === node {
-      guard let identifier = viewModel.penName.id else {
+      guard let _ = viewModel.penName.id else {
         return
       }
-      penNameIdentifier = identifier
       penNameResource = viewModel.penName
       shouldPopController = true
     } else {
       guard let indexPath = collectionNode.indexPath(for: node),
         let resource = viewModel.resourceForIndex(indexPath: indexPath, segment: activeSegment),
         let penName = resource as? PenName,
-        let identifier = penName.id else {
+        let _ = penName.id else {
           return
       }
-      penNameIdentifier = identifier
       penNameResource = penName
       shouldPopController = false
     }
 
-    let actions: [MoreAction] = MoreAction.actions(for: penNameResource)
-    self.showMoreActionSheet(identifier: penNameIdentifier, actions: actions, completion: {
-      (success: Bool, action: MoreAction) in
-      if case MoreAction.report(.penName) = action, shouldPopController {
-        self.navigationController?.popViewController(animated: true)
-      }
-    })
+    openMoreActionSheet(for: penNameResource, shouldPopController: shouldPopController)
   }
 
   func penName(node: PenNameFollowNode, requestToViewFullBiography biography: String?, from biographyNode: CharacterLimitedTextNode) {
@@ -311,6 +347,20 @@ extension ProfileDetailsViewController: PenNameFollowNodeDelegate {
     let genericViewController = GenericNodeViewController(node: node, title: "")
     self.navigationController?.pushViewController(genericViewController, animated: true)
 
+  }
+
+  fileprivate func openMoreActionSheet(for penName: PenName, shouldPopController: Bool) {
+    guard let penNameIdentifier = penName.id else {
+      return
+    }
+
+    let actions: [MoreAction] = MoreAction.actions(for: penName)
+    self.showMoreActionSheet(identifier: penNameIdentifier, actions: actions, completion: {
+      (success: Bool, action: MoreAction) in
+      if case MoreAction.report(.penName) = action, shouldPopController {
+        self.navigationController?.popViewController(animated: true)
+      }
+    })
   }
 }
 

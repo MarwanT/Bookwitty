@@ -31,7 +31,7 @@ class PenNameFollowNode: ASCellNode {
   private var actionButton: ButtonWithLoader
   private var moreButton: ASButtonNode
   private let separatorNode: ASDisplayNode
-  private var enlarged: Bool = false
+  private var asHeader: Bool = false
   fileprivate var largePadding: Bool = false
 
   weak var delegate: PenNameFollowNodeDelegate?
@@ -52,9 +52,9 @@ class PenNameFollowNode: ASCellNode {
     addSubnode(separatorNode)
   }
 
-  convenience init(enlarged: Bool = false, largePadding: Bool = false) {
+  convenience init(asHeader: Bool = false, largePadding: Bool = false) {
     self.init()
-    self.enlarged = enlarged
+    self.asHeader = asHeader
     self.largePadding = largePadding
     setupNode()
   }
@@ -63,8 +63,10 @@ class PenNameFollowNode: ASCellNode {
   var penName: String? {
     didSet {
       if let penName = penName {
-        nameNode.attributedText = AttributedStringBuilder(fontDynamicType: enlarged ? .subheadline : .footnote)
-          .append(text: penName, color: ThemeManager.shared.currentTheme.defaultButtonColor()).attributedString
+        nameNode.attributedText = AttributedStringBuilder(fontDynamicType: asHeader ? .subheadline : .footnote)
+          .append(text: penName,
+                  color: asHeader ? ThemeManager.shared.currentTheme.defaultTextColor() : ThemeManager.shared.currentTheme.defaultButtonColor())
+          .attributedString
         setNeedsLayout()
       }
     }
@@ -111,12 +113,12 @@ class PenNameFollowNode: ASCellNode {
 
     nameNode.maximumNumberOfLines = 1
 
-    biographyNode.maxCharacter = enlarged ? 120 : 1000
-    biographyNode.nodeDelegate = enlarged ? self : nil
-    biographyNode.maximumNumberOfLines = enlarged ? 0 : 3
+    biographyNode.maxCharacter = asHeader ? 120 : 1000
+    biographyNode.nodeDelegate = asHeader ? self : nil
+    biographyNode.maximumNumberOfLines = asHeader ? 0 : 3
     biographyNode.autoChange = false
     biographyNode.truncationMode = NSLineBreakMode.byTruncatingTail
-    if enlarged {
+    if asHeader {
       biographyNode.mode = .collapsed
     }
 
@@ -143,7 +145,7 @@ class PenNameFollowNode: ASCellNode {
     moreButton.setImage(#imageLiteral(resourceName: "threeDots"), for: .normal)
     moreButton.style.preferredSize = iconSize
 
-    imageNode.style.preferredSize = enlarged ? largeImageSize : imageSize
+    imageNode.style.preferredSize = asHeader ? largeImageSize : imageSize
 
     nameNode.addTarget(self, action: #selector(actionPenNameFollowTouchUpInside(_:)), forControlEvents: ASControlNodeEvent.touchUpInside)
     imageNode.addTarget(self, action: #selector(imageNodeTouchUpInside(sender:)), forControlEvents: ASControlNodeEvent.touchUpInside)
@@ -157,7 +159,7 @@ class PenNameFollowNode: ASCellNode {
   }
 
   private func setBiography(biography: String?) {
-    biographyNode.setString(text: biography, fontDynamicType: enlarged ? .caption1 : .caption2, color: ThemeManager.shared.currentTheme.defaultTextColor())
+    biographyNode.setString(text: biography, fontDynamicType: asHeader ? .caption1 : .caption2, color: ThemeManager.shared.currentTheme.defaultTextColor())
     setNeedsLayout()
   }
 
