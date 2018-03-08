@@ -527,19 +527,13 @@ extension ContentEditorViewController {
     var description: String? = currentPost.shortDescription
     var fallbackDescription: String?
     var imageURL: String? = currentPost.imageUrl
-    
-    let group = DispatchGroup()
-    
-    group.enter()
+
     self.editorView.getDefaults { (_ defaultTitle: String, _ defaultDescription: String?, _ defaultImageURL: String?) in
       title = currentPost.title ?? defaultTitle
       description = description ?? defaultDescription
       fallbackDescription = defaultDescription
       imageURL = imageURL ?? defaultImageURL
-      group.leave()
-    }
-    
-    group.notify(queue: DispatchQueue.main) {
+
       let postPreviewViewController = PostPreviewViewController()
       postPreviewViewController.initialize(with: self.viewModel.currentPost, and: (title, description, fallbackDescription, imageURL))
       postPreviewViewController.delegate = self
@@ -684,20 +678,23 @@ extension ContentEditorViewController {
 
   fileprivate func savePostAsDraft(_ closure: @escaping (Bool) -> ()) {
     SwiftLoader.show(animated: true)
-    self.viewModel.updateContent {
-      (success: Bool) in
-      SwiftLoader.hide()
-      if success {
-        closure(success)
-      } else {
-        self.showRetryAlert(with: Strings.error(), message: Strings.some_thing_wrong_error(), closure: {
-          (retry: Bool) in
-          if retry {
-            self.savePostAsDraft(closure)
-          } else {
-            closure(false)
-          }
-        })
+    self.editorView.getDefaults { (_ defaultTitle: String, _ defaultDescription: String?, _ defaultImageURL: String?) in
+      let defaultValues = (defaultTitle, defaultDescription, defaultImageURL)
+      self.viewModel.updateContent(with: defaultValues) {
+        (success: Bool) in
+        SwiftLoader.hide()
+        if success {
+          closure(success)
+        } else {
+          self.showRetryAlert(with: Strings.error(), message: Strings.some_thing_wrong_error(), closure: {
+            (retry: Bool) in
+            if retry {
+              self.savePostAsDraft(closure)
+            } else {
+              closure(false)
+            }
+          })
+        }
       }
     }
   }
@@ -821,8 +818,11 @@ extension ContentEditorViewController: QuoteEditorViewControllerDelegate {
 extension ContentEditorViewController {
   func publishYourPost(_ completion: ((_ success: Bool) -> Void)? = nil) {
     self.viewModel.preparePostForPublish()
-    self.viewModel.updateContent() { success in
-      completion?(success)
+    self.editorView.getDefaults { (_ defaultTitle: String, _ defaultDescription: String?, _ defaultImageURL: String?) in
+      let defaultValues = (defaultTitle, defaultDescription, defaultImageURL)
+      self.viewModel.updateContent(with: defaultValues) { success in
+        completion?(success)
+      }
     }
   }
 }
