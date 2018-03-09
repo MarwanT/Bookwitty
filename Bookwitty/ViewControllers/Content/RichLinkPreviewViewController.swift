@@ -179,7 +179,7 @@ class RichLinkPreviewViewController: UIViewController {
 
   @objc fileprivate func addBarButtonTouchUpInside(_ sender: UIBarButtonItem) {
     guard let response = viewModel.response,
-    let url = URL(string: textView.text) else {
+    let url = URL(string: textView.text.trimmed) else {
       return
     }
     delegate?.richLinkPreview(viewController: self, didRequestLinkAdd: url, with: response)
@@ -285,7 +285,7 @@ extension RichLinkPreviewViewController {
       return
     }
 
-    guard let url = URL(string: textView.text) else {
+    guard  let url = URL(string: textView.text.trimmed) else {
       fillError()
       return
     }
