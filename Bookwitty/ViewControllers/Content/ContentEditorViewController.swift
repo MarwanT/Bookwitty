@@ -12,9 +12,8 @@ import MobileEditor
 import SwiftLoader
 
 class ContentEditorViewController: UIViewController {
-  
-  @IBOutlet weak var contentView: UIView!
-  @IBOutlet weak var contentViewBottomConstraintToSuperview: NSLayoutConstraint!
+
+  @IBOutlet weak var editorViewBottomConstraintToSuperview: NSLayoutConstraint!
   
   @IBOutlet weak var editorView: RichEditorView!
   fileprivate var isEditorLoaded: Bool = false
@@ -351,7 +350,7 @@ class ContentEditorViewController: UIViewController {
   func keyboardWillShow(_ notification: NSNotification) {
     if let value = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
       let frame = value.cgRectValue
-      contentViewBottomConstraintToSuperview.constant = frame.height
+      editorViewBottomConstraintToSuperview.constant = frame.height
     }
     
     UIView.animate(withDuration: 0.44) {
@@ -360,7 +359,7 @@ class ContentEditorViewController: UIViewController {
   }
   
   func keyboardWillHide(_ notification: NSNotification) {
-    contentViewBottomConstraintToSuperview.constant = 0
+    editorViewBottomConstraintToSuperview.constant = 0
     UIView.animate(withDuration: 0.44) {
       self.view.layoutSubviews()
     }
