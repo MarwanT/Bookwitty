@@ -161,7 +161,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/Keeward/EMCCountryPickerController
     :tag: 1.4.0
   MobileEditor:
-    :commit: 30d56eddb910a94c2d548ca6ddeed6cff582ea74
+    :commit: 2edc7e3d0337bc9833c6bfd8321370e8d1d97b3d
     :git: git@gitlab.help-counter.com:ios-libraries/ContentEditor.git
     :submodules: true
   RichEditorView:
