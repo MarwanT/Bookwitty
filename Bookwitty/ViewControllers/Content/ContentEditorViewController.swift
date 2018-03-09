@@ -354,6 +354,7 @@ class ContentEditorViewController: UIViewController {
     }
     
     UIView.animate(withDuration: 0.44) {
+      self.editorView.setNeedsUpdateConstraints()
       self.view.layoutSubviews()
     }
   }
@@ -361,6 +362,7 @@ class ContentEditorViewController: UIViewController {
   func keyboardWillHide(_ notification: NSNotification) {
     editorViewBottomConstraintToSuperview.constant = 0
     UIView.animate(withDuration: 0.44) {
+      self.editorView.setNeedsUpdateConstraints()
       self.view.layoutSubviews()
     }
   }
