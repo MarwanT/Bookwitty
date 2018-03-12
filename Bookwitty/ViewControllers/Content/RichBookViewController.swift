@@ -443,7 +443,13 @@ extension RichBookViewController {
       return
     }
     
-    IFramely.shared.loadResponseFor(url: url, closure: { (success: Bool, response: Response?) in
+    var stringURL = url.absoluteString.replacingOccurrences(of: "dev.bookwitty.space", with: "www.bookwitty.com")
+    stringURL = stringURL.replacingOccurrences(of: "staging.bookwitty.space", with: "www.bookwitty.com")
+    guard let urlProduction = URL(string: stringURL) else {
+      return
+    }
+    
+    IFramely.shared.loadResponseFor(url: urlProduction, closure: { (success: Bool, response: Response?) in
       if success {
         closure?()
         DispatchQueue.main.async {
