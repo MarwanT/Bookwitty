@@ -89,6 +89,12 @@ extension RichEditorView {
     }
   }
   
+  func isEmpty(completion: @escaping (Bool) -> Void) {
+    runJS("RE.isEmpty();") { (jsResult) in
+      completion(jsResult == "1")
+    }
+  }
+  
   func backupRange() {
     runJS("RE.backupRange();", completion: nil)
   }
