@@ -84,4 +84,12 @@ extension UIView {
     separator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
     return separator
   }
+  
+  var containsFirstResponder: Bool {
+    if isFirstResponder { return true }
+    for view in subviews {
+      if view.containsFirstResponder { return true }
+    }
+    return false
+  }
 }
