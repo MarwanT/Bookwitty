@@ -52,11 +52,12 @@ class ContentEditorViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     applyTheme()
-    initializeComponents()
+    setupTitleTextField()
+    initializeRichEditorEcosystem()
     loadNavigationBarButtons()
     addKeyboardNotifications()
-    self.editorView.clipsToBounds = true
-    self.titleTextField.addTarget(self, action: #selector(ContentEditorViewController.textChanged(_:)), for: .editingChanged)
+    observeLanguageChanges()
+    applyLocalization()
   }
   
   @objc private func textChanged(_ sender: UITextField) {
@@ -225,11 +226,12 @@ class ContentEditorViewController: UIViewController {
   }
 
   // MARK: - RichEditor
-  private func initializeComponents() {
+  private func initializeRichEditorEcosystem() {
     setupEditorToolbar()
     setupContentEditorHtml()
-    observeLanguageChanges()
-    applyLocalization()
+    
+    self.editorView.clipsToBounds = true
+    
     self.timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(ContentEditorViewController.tick), userInfo: nil, repeats: true)
     self.timer.tolerance = 0.5
   }
@@ -249,6 +251,10 @@ class ContentEditorViewController: UIViewController {
           self.loadNavigationBarButtons()
       }
     }
+  }
+  
+  private func setupTitleTextField() {
+    self.titleTextField.addTarget(self, action: #selector(ContentEditorViewController.textChanged(_:)), for: .editingChanged)
   }
   
   private func setupEditorToolbar() {
