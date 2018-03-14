@@ -24,6 +24,8 @@ class ContentEditorViewController: UIViewController {
   
   let viewModel = ContentEditorViewModel()
   
+  fileprivate var shouldBackupRange: Bool = false
+  
   private var timer: Timer!
   var toolbarButtons: [ContentEditorOption:SelectedImageView] = [:]
   func hasContent(completion: @escaping (Bool) -> Void) {
@@ -146,6 +148,15 @@ class ContentEditorViewController: UIViewController {
     self.dismiss(animated: true, completion: nil)
   }
   
+  func backupRangeIfNeeded() {
+    guard shouldBackupRange else {
+      return
+    }
+    
+    shouldBackupRange = false
+    editorView.backupRange()
+  }
+  
   // MARK: - Navigation items actions
   @objc private func undoButtonTouchUpInside(_ sender: UIButton) {
     self.editorView.undo()
@@ -221,7 +232,8 @@ class ContentEditorViewController: UIViewController {
     let cancelAction = UIAlertAction(title: Strings.cancel(), style: .cancel, handler: nil)
     alertController.addAction(cancelAction)
 
-    editorView.backupRange()
+    backupRangeIfNeeded()
+    resignResponders()
     present(alertController, animated: true, completion: nil)
   }
 
@@ -359,6 +371,10 @@ class ContentEditorViewController: UIViewController {
       editorViewBottomConstraintToSuperview.constant = frame.height
     }
     
+    if editorView.containsFirstResponder {
+      shouldBackupRange = true
+    }
+    
     UIView.animate(withDuration: 0.44) {
       self.editorView.setNeedsUpdateConstraints()
       self.view.layoutSubviews()
@@ -396,48 +412,38 @@ extension ContentEditorViewController {
      Weird behavior when resuming editing
      */
     
+    backupRangeIfNeeded()
+    
     /**
      Resign the editor as responder for in most cases, upon showing another
      vc on top of this one, when we come back to this vc on top
      the keyboard is dismissed but the toolbar is still visible
      */
     
+    resignResponders()
+    
     switch destination {
     case .richContentMenu:
-      editorView.backupRange()
-      resignResponders()
       presentRichContentMenuViewController()
     case .publishMenu:
-      editorView.backupRange()
-      resignResponders()
       presentPublishMenuViewController()
     case .imagePicker(let imagePickerControllerSourceType):
-      resignResponders()
       presentImagePicker(with: imagePickerControllerSourceType)
     case .richBook:
-      resignResponders()
       presentRichBookViewController()
     case .drafts:
-      editorView.backupRange()
-      resignResponders()
       presentDraftsViewController()
     case .richLink(let richLinkPreviewMode):
-      resignResponders()
       presentRichLinkViewController(with: richLinkPreviewMode)
     case .quoteEditor:
-      resignResponders()
       presentQuoteEditorViewController()
     case .selectPenName:
-      resignResponders()
       presentSelectPenNameViewController()
     case .tags:
-      resignResponders()
       presentTagsViewController()
     case .linkTopics:
-      resignResponders()
       presentLinkTopicsViewController()
     case .postPreview:
-      resignResponders()
       presentPostPreviewViewController()
     }
   }
