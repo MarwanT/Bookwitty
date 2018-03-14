@@ -162,6 +162,11 @@ class ContentEditorViewController: UIViewController {
     editorView.backupRange()
   }
   
+  func didTapOnTextFieldInterceptor(_ sender: Any?) {
+    backupRangeIfNeeded()
+    titleTextField.becomeFirstResponder()
+  }
+  
   // MARK: - Navigation items actions
   @objc private func undoButtonTouchUpInside(_ sender: UIButton) {
     self.editorView.undo()
@@ -272,6 +277,9 @@ class ContentEditorViewController: UIViewController {
   
   private func setupTitleTextField() {
     self.titleTextField.addTarget(self, action: #selector(ContentEditorViewController.textChanged(_:)), for: .editingChanged)
+    
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapOnTextFieldInterceptor(_:)))
+    self.titleTextFieldInspectorView.addGestureRecognizer(tapGesture)
   }
   
   private func setupEditorToolbar() {
