@@ -50,6 +50,10 @@ class ContentEditorViewController: UIViewController {
   }
   
   var mode: Mode = .new
+  
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
    
   override func viewDidLoad() {
     super.viewDidLoad()
