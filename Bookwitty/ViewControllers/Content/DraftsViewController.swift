@@ -38,6 +38,10 @@ class DraftsViewController: ASViewController<ASTableNode> {
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+  
+  func exclude(_ identifier: String?) {
+    viewModel.exclude(identifier)
+  }
 
   override func viewDidLoad() {
     super.viewDidLoad()

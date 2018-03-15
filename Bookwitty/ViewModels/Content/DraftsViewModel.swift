@@ -12,6 +12,10 @@ final class DraftsViewModel {
   fileprivate var drafts: [ModelResource] = []
   fileprivate var excludedDraftIdentifier: String?
   fileprivate var nextPage: URL?
+  
+  func exclude(_ identifier: String?) {
+    self.excludedDraftIdentifier = identifier
+  }
 
   func loadDrafts(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
     guard let id = UserManager.shared.defaultPenName?.id else {
