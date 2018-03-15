@@ -510,6 +510,7 @@ extension ContentEditorViewController {
   func presentDraftsViewController() {
     let controller = DraftsViewController()
     controller.delegate = self
+    controller.exclude(self.viewModel.currentPost.id)
     let navigationController = UINavigationController(rootViewController: controller)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
   }
