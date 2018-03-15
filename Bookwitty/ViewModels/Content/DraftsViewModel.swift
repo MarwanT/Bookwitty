@@ -10,6 +10,7 @@ import Foundation
 
 final class DraftsViewModel {
   fileprivate var drafts: [ModelResource] = []
+  fileprivate var excludedDraftIdentifier: String?
   fileprivate var nextPage: URL?
 
   func loadDrafts(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
