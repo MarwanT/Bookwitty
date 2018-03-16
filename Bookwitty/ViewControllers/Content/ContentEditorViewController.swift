@@ -155,7 +155,7 @@ class ContentEditorViewController: UIViewController {
   }
   
   func dismiss() {
-    self.timer.invalidate()
+    self.stopTimer()
     self.dismiss(animated: true, completion: nil)
   }
   
@@ -252,16 +252,23 @@ class ContentEditorViewController: UIViewController {
     resignResponders()
     present(alertController, animated: true, completion: nil)
   }
+  
+  // MARK: - Timer
+  func startTimer() {
+    self.timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(ContentEditorViewController.tick), userInfo: nil, repeats: true)
+    self.timer.tolerance = 0.5
+  }
+  
+  func stopTimer() {
+    self.timer.invalidate()
+  }
 
   // MARK: - RichEditor
   private func initializeRichEditorEcosystem() {
     setupEditorToolbar()
     setupContentEditorHtml()
-    
+    startTimer()
     self.editorView.clipsToBounds = true
-    
-    self.timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(ContentEditorViewController.tick), userInfo: nil, repeats: true)
-    self.timer.tolerance = 0.5
   }
   
   func setupContentEditorHtml() {
@@ -655,6 +662,9 @@ extension ContentEditorViewController {
         return
       }
       
+      // Pause Timer
+      self.stopTimer()
+      
       let alertTitle = self.mode.isEditing ? Strings.discard_changes_confirmation_question() : Strings.save_draft_changes()
       let alertController = UIAlertController(title: alertTitle, message: nil, preferredStyle: .actionSheet)
       
@@ -664,20 +674,23 @@ extension ContentEditorViewController {
         // Editing a draft
         let saveDraft = UIAlertAction(
           title: Strings.save_draft(), style: .default, handler: { _ in
-          self.savePostAsDraft({ (success: Bool) in
-            closure(.saveDraft, success)
-          })
+            self.startTimer()
+            self.savePostAsDraft({ (success: Bool) in
+              closure(.saveDraft, success)
+            })
         })
         alertController.addAction(saveDraft)
       }
       
       let discardPost = UIAlertAction(
         title: Strings.discard_changes(), style: .destructive, handler: { _ in
-        closure(.discardChanges, true)
+          self.startTimer()
+          closure(.discardChanges, true)
       })
       
       let goBack = UIAlertAction(title: Strings.go_back(), style: .cancel, handler: {
         _ in
+        self.startTimer()
         closure(.goBack, true)
       })
       
