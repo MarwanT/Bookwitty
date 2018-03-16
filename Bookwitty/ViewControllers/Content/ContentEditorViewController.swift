@@ -19,6 +19,12 @@ class ContentEditorViewController: UIViewController {
   fileprivate var isEditorLoaded: Bool = false
 
   @IBOutlet weak var titleTextField: UITextField!
+  /**
+   The **titleTextFieldInspectorView** is a layer of top of the **titleTextField**
+   This solution was implemented because we needed a way to trigger a **backupRange**
+   for the **editorView** before it looses focus, and the focus is taken by the
+   **titleTextField** itself.
+   */
   @IBOutlet weak var titleTextFieldInspectorView: UIView!
   @IBOutlet weak var topTitleSeparator: UIView!
   @IBOutlet weak var bottomTitleSeparator: UIView!
