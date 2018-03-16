@@ -19,10 +19,19 @@ class ContentEditorViewController: UIViewController {
   fileprivate var isEditorLoaded: Bool = false
 
   @IBOutlet weak var titleTextField: UITextField!
+  /**
+   The **titleTextFieldInspectorView** is a layer of top of the **titleTextField**
+   This solution was implemented because we needed a way to trigger a **backupRange**
+   for the **editorView** before it looses focus, and the focus is taken by the
+   **titleTextField** itself.
+   */
+  @IBOutlet weak var titleTextFieldInspectorView: UIView!
   @IBOutlet weak var topTitleSeparator: UIView!
   @IBOutlet weak var bottomTitleSeparator: UIView!
   
   let viewModel = ContentEditorViewModel()
+  
+  fileprivate var shouldBackupRange: Bool = false
   
   private var timer: Timer!
   var toolbarButtons: [ContentEditorOption:SelectedImageView] = [:]
@@ -48,15 +57,20 @@ class ContentEditorViewController: UIViewController {
   }
   
   var mode: Mode = .new
+  
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
    
   override func viewDidLoad() {
     super.viewDidLoad()
     applyTheme()
-    initializeComponents()
+    setupTitleTextField()
+    initializeRichEditorEcosystem()
     loadNavigationBarButtons()
     addKeyboardNotifications()
-    self.editorView.clipsToBounds = true
-    self.titleTextField.addTarget(self, action: #selector(ContentEditorViewController.textChanged(_:)), for: .editingChanged)
+    observeLanguageChanges()
+    applyLocalization()
   }
   
   @objc private func textChanged(_ sender: UITextField) {
@@ -145,6 +159,20 @@ class ContentEditorViewController: UIViewController {
     self.dismiss(animated: true, completion: nil)
   }
   
+  func backupRangeIfNeeded() {
+    guard shouldBackupRange else {
+      return
+    }
+    
+    shouldBackupRange = false
+    editorView.backupRange()
+  }
+  
+  func didTapOnTextFieldInterceptor(_ sender: Any?) {
+    backupRangeIfNeeded()
+    titleTextField.becomeFirstResponder()
+  }
+  
   // MARK: - Navigation items actions
   @objc private func undoButtonTouchUpInside(_ sender: UIButton) {
     self.editorView.undo()
@@ -220,16 +248,18 @@ class ContentEditorViewController: UIViewController {
     let cancelAction = UIAlertAction(title: Strings.cancel(), style: .cancel, handler: nil)
     alertController.addAction(cancelAction)
 
-    editorView.backupRange()
+    backupRangeIfNeeded()
+    resignResponders()
     present(alertController, animated: true, completion: nil)
   }
 
   // MARK: - RichEditor
-  private func initializeComponents() {
+  private func initializeRichEditorEcosystem() {
     setupEditorToolbar()
     setupContentEditorHtml()
-    observeLanguageChanges()
-    applyLocalization()
+    
+    self.editorView.clipsToBounds = true
+    
     self.timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(ContentEditorViewController.tick), userInfo: nil, repeats: true)
     self.timer.tolerance = 0.5
   }
@@ -249,6 +279,13 @@ class ContentEditorViewController: UIViewController {
           self.loadNavigationBarButtons()
       }
     }
+  }
+  
+  private func setupTitleTextField() {
+    self.titleTextField.addTarget(self, action: #selector(ContentEditorViewController.textChanged(_:)), for: .editingChanged)
+    
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapOnTextFieldInterceptor(_:)))
+    self.titleTextFieldInspectorView.addGestureRecognizer(tapGesture)
   }
   
   private func setupEditorToolbar() {
@@ -353,6 +390,10 @@ class ContentEditorViewController: UIViewController {
       editorViewBottomConstraintToSuperview.constant = frame.height
     }
     
+    if editorView.containsFirstResponder {
+      shouldBackupRange = true
+    }
+    
     UIView.animate(withDuration: 0.44) {
       self.editorView.setNeedsUpdateConstraints()
       self.view.layoutSubviews()
@@ -390,48 +431,38 @@ extension ContentEditorViewController {
      Weird behavior when resuming editing
      */
     
+    backupRangeIfNeeded()
+    
     /**
      Resign the editor as responder for in most cases, upon showing another
      vc on top of this one, when we come back to this vc on top
      the keyboard is dismissed but the toolbar is still visible
      */
     
+    resignResponders()
+    
     switch destination {
     case .richContentMenu:
-      editorView.backupRange()
-      resignResponders()
       presentRichContentMenuViewController()
     case .publishMenu:
-      editorView.backupRange()
-      resignResponders()
       presentPublishMenuViewController()
     case .imagePicker(let imagePickerControllerSourceType):
-      resignResponders()
       presentImagePicker(with: imagePickerControllerSourceType)
     case .richBook:
-      resignResponders()
       presentRichBookViewController()
     case .drafts:
-      editorView.backupRange()
-      resignResponders()
       presentDraftsViewController()
     case .richLink(let richLinkPreviewMode):
-      resignResponders()
       presentRichLinkViewController(with: richLinkPreviewMode)
     case .quoteEditor:
-      resignResponders()
       presentQuoteEditorViewController()
     case .selectPenName:
-      resignResponders()
       presentSelectPenNameViewController()
     case .tags:
-      resignResponders()
       presentTagsViewController()
     case .linkTopics:
-      resignResponders()
       presentLinkTopicsViewController()
     case .postPreview:
-      resignResponders()
       presentPostPreviewViewController()
     }
   }
