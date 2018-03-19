@@ -28,6 +28,10 @@ class ContentEditorViewModel  {
   
   var currentPost: CandidatePost!
 
+  var needsLocalSync: Bool {
+    return self.latestHashValue != self.currentPost.hash
+  }
+  
   var needsRemoteSync: Bool {
     guard self.latestHashValue == self.currentPost.hash else {
       return true
