@@ -154,6 +154,12 @@ class ContentEditorViewController: UIViewController {
     _ = self.editorView.endEditing(true)
   }
   
+  fileprivate func dispatchContent(_ completion:((_ created: ContentEditorViewController.DispatchStatus, _ success: Bool) -> Void)? = nil) {
+    self.hasContent { (has) in
+      self.viewModel.dispatchContent(hasContent: has, completion)
+    }
+  }
+  
   func dismiss() {
     self.stopTimer()
     self.dismiss(animated: true, completion: nil)
@@ -281,7 +287,7 @@ class ContentEditorViewController: UIViewController {
   }
   
   @objc private func tick() {
-    self.viewModel.dispatchContent() { [unowned self] status, success in
+    self.dispatchContent() { [unowned self] status, success in
         if success {
           self.loadNavigationBarButtons()
       }
@@ -486,7 +492,7 @@ extension ContentEditorViewController {
   }
   
   fileprivate func presentPublishMenuViewController() {
-    self.viewModel.dispatchContent()
+    self.dispatchContent()
     
     let publishMenuViewController = Storyboard.Content.instantiate(PublishMenuViewController.self)
     publishMenuViewController.delegate = self
@@ -892,7 +898,7 @@ extension ContentEditorViewController {
 extension ContentEditorViewController {
   func saveAsDraft(_ completion:((_ success:Bool) -> Void)?) {
     //Ask the content editor for the body.
-    self.viewModel.dispatchContent() { _ , success in
+    self.dispatchContent { _, success in
       completion?(success)
     }
   }
@@ -982,7 +988,7 @@ extension ContentEditorViewController: PostPreviewViewControllerDelegate {
       self.present(.publishMenu)
     }
     self.loadUIFromPost()
-    self.viewModel.dispatchContent()
+    self.dispatchContent()
   }
 }
 
