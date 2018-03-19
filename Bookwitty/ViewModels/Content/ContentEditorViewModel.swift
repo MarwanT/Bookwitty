@@ -33,7 +33,7 @@ class ContentEditorViewModel  {
   }
   
   var needsRemoteSync: Bool {
-    guard self.latestHashValue == self.currentPost.hash else {
+    guard !needsLocalSync else {
       return true
     }
 
