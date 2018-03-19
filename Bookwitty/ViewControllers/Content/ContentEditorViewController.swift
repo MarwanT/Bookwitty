@@ -36,9 +36,9 @@ class ContentEditorViewController: UIViewController {
   private var timer: Timer!
   var toolbarButtons: [ContentEditorOption:SelectedImageView] = [:]
   func hasContent(completion: @escaping (Bool) -> Void) {
-    self.editorView.getContent { (body) in
+    self.editorView.isEmpty { (empty) in
       let title = self.titleTextField.text ?? ""
-      completion(title.count > 0 && body.count > 0)
+      completion(title.count > 0 || !empty)
     }
   }
   enum DispatchStatus {
