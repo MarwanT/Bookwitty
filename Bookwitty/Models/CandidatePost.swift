@@ -38,6 +38,10 @@ extension CandidatePost {
   }
   
   var hash: Int {
+    guard let _ = id else {
+      return NSNotFound
+    }
+    
     let titleHash = title?.hashValue ?? 0
     let bodyHash = body?.hashValue ?? 0
     let shortDescriptionHash = shortDescription?.hashValue ?? 0
