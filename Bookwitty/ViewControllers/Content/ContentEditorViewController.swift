@@ -653,6 +653,7 @@ extension ContentEditorViewController {
         return
       }
       
+      // The flag `needsRemoteSync` also checks if `needsLocalSync`
       guard self.viewModel.needsRemoteSync else {
         closure(.nonNeeded, true)
         return
@@ -661,6 +662,7 @@ extension ContentEditorViewController {
       // Stop Timer for the alert controller will be displayed
       self.stopTimer()
       
+      // Prepare and Display the Confirmation Alert Controller
       let alertTitle = self.mode.isEditing ? Strings.discard_changes_confirmation_question() : Strings.save_draft_changes()
       let alertController = UIAlertController(title: alertTitle, message: nil, preferredStyle: .actionSheet)
       
