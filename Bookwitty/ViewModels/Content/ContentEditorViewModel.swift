@@ -254,9 +254,6 @@ class ContentEditorViewModel  {
 
   func dispatchContent(hasContent: Bool, _ completion:((_ created: ContentEditorViewController.DispatchStatus, _ success: Bool) -> Void)? = nil) {
     
-    let newHashValue = self.currentPost.hash
-    let latestHashValue = self.latestHashValue
-    
     if self.currentPost.id == nil {
       if hasContent {
         self.createContent(with: { success in
@@ -267,7 +264,7 @@ class ContentEditorViewModel  {
       }
     } else {
       self.dispatchPrelinkIfNeeded()
-      if newHashValue != latestHashValue {
+      if needsLocalSync {
         self.updateContentLocally({ (success) in
           completion?(.update, success)
         })
