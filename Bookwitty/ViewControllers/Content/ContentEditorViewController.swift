@@ -649,11 +649,6 @@ extension ContentEditorViewController {
     
     group.notify(queue: DispatchQueue.main) {
       guard hasContent else {
-        if self.viewModel.currentPost.id != nil {
-          self.viewModel.deletePost() { _, _ in }
-        } else {
-          try? self.viewModel.deleteLocalDraft()
-        }
         closure(.nonNeeded, true)
         return
       }
