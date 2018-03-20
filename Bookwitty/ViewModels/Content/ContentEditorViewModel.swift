@@ -147,6 +147,16 @@ class ContentEditorViewModel  {
     }
   }
   
+  func discardAndSynchronize(completion: ((_ success: Bool) -> Void)? = nil) {
+    if isNewlyCreated {
+      deletePost { (success: Bool, error: BookwittyAPIError?) in
+        completion?(success)
+      }
+    } else {
+      completion?(true)
+    }
+  }
+  
   func saveAndSynchronize(with defaultValues: (title: String, description: String?, imageURL: String?), completion: ((_ success: Bool) -> Void)? = nil) {
     // Create the post if not created
     if self.currentPost.id == nil {

@@ -679,9 +679,11 @@ extension ContentEditorViewController {
         alertController.addAction(saveDraft)
       }
       
-      let discardPost = UIAlertAction(
+      let discardChanges = UIAlertAction(
         title: Strings.discard_changes(), style: .destructive, handler: { _ in
-          closure(.discardChanges, true)
+          self.discardChanges({ (success: Bool) in
+            closure(.discardChanges, true)
+          })
       })
       
       let goBack = UIAlertAction(title: Strings.go_back(), style: .cancel, handler: {
@@ -690,7 +692,7 @@ extension ContentEditorViewController {
         closure(.goBack, true)
       })
       
-      alertController.addAction(discardPost)
+      alertController.addAction(discardChanges)
       alertController.addAction(goBack)
       
       self.navigationController?.present(alertController, animated: true, completion: nil)
@@ -714,10 +716,10 @@ extension ContentEditorViewController {
     navigationController?.present(alertController, animated: true, completion: nil)
   }
 
-  fileprivate func discardPost(_ closure: @escaping (Bool) -> ()) {
+  fileprivate func discardChanges(_ closure: @escaping (Bool) -> ()) {
     SwiftLoader.show(animated: true)
-    self.viewModel.deletePost {
-      (success: Bool, error: BookwittyAPIError?) in
+    self.viewModel.discardAndSynchronize {
+      (success: Bool) in
       SwiftLoader.hide()
       if success {
         closure(success)
@@ -725,7 +727,7 @@ extension ContentEditorViewController {
         self.showRetryAlert(with: Strings.error(), message: Strings.some_thing_wrong_error(), closure: {
           (retry: Bool) in
           if retry {
-            self.discardPost(closure)
+            self.discardChanges(closure)
           } else {
             closure(false)
           }
