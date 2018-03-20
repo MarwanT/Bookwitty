@@ -668,7 +668,7 @@ extension ContentEditorViewController {
         return
       }
       
-      // Pause Timer
+      // Stop Timer for the alert controller will be displayed
       self.stopTimer()
       
       let alertTitle = self.mode.isEditing ? Strings.discard_changes_confirmation_question() : Strings.save_draft_changes()
@@ -680,7 +680,6 @@ extension ContentEditorViewController {
         // Editing a draft
         let saveDraft = UIAlertAction(
           title: Strings.save_draft(), style: .default, handler: { _ in
-            self.startTimer()
             self.savePostAsDraft({ (success: Bool) in
               closure(.saveDraft, success)
             })
@@ -690,7 +689,6 @@ extension ContentEditorViewController {
       
       let discardPost = UIAlertAction(
         title: Strings.discard_changes(), style: .destructive, handler: { _ in
-          self.startTimer()
           closure(.discardChanges, true)
       })
       
