@@ -147,6 +147,19 @@ class ContentEditorViewModel  {
     }
   }
   
+  func saveAndSynchronize(with defaultValues: (title: String, description: String?, imageURL: String?), completion: ((_ success: Bool) -> Void)? = nil) {
+    // Create the post if not created
+    if self.currentPost.id == nil {
+      self.createContent(with: { success in
+        completion?(success)
+      })
+    } else {
+      self.updateContent(with: defaultValues) { success in
+        completion?(success)
+      }
+    }
+  }
+  
   func updateContent(with defaultValues: (title: String, description: String?, imageURL: String?), completion: ((_ success: Bool) -> Void)? = nil) {
     guard let currentPost = self.currentPost, let id = currentPost.id else {
       completion?(false)

@@ -738,7 +738,7 @@ extension ContentEditorViewController {
     SwiftLoader.show(animated: true)
     self.editorView.getDefaults { (_ defaultTitle: String, _ defaultDescription: String?, _ defaultImageURL: String?) in
       let defaultValues = (defaultTitle, defaultDescription, defaultImageURL)
-      self.viewModel.updateContent(with: defaultValues) {
+      self.viewModel.saveAndSynchronize(with: defaultValues) {
         (success: Bool) in
         SwiftLoader.hide()
         if success {
