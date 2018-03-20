@@ -648,11 +648,6 @@ extension ContentEditorViewController {
     }
     
     group.notify(queue: DispatchQueue.main) {
-      guard let _ = self.viewModel.currentPost else {
-        closure(.nonNeeded, true)
-        return
-      }
-      
       guard hasContent else {
         if self.viewModel.currentPost.id != nil {
           self.viewModel.deletePost() { _, _ in }
