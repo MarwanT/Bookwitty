@@ -59,10 +59,12 @@ class ContentEditorViewModel  {
     }
   }
   
-  func set(_ currentPost: CandidatePost) {
+  func set(_ currentPost: CandidatePost, clean: Bool = true) {
     self.currentPost = currentPost
-    self.originalHashValue = currentPost.hash
     self.latestHashValue = currentPost.hash
+    if clean {
+      self.originalHashValue = currentPost.hash
+    }
     
     //check if we have linked tags/topics
     self.getLinkedTags()
