@@ -27,6 +27,10 @@ class ContentEditorViewModel  {
   }
   
   var currentPost: CandidatePost!
+  
+  var isNewlyCreated: Bool {
+    return self.originalHashValue == NSNotFound
+  }
 
   var needsLocalSync: Bool {
     return self.latestHashValue != self.currentPost.hash
