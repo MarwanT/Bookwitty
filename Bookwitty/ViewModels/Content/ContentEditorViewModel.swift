@@ -140,7 +140,7 @@ class ContentEditorViewModel  {
       }
       //Workaround due to the API default behavior
       let imageUrlValue = self.currentPost.imageUrl
-      self.set(candidatePost)
+      self.set(candidatePost, clean: false)
       if imageUrlValue == nil {
        self.currentPost.imageUrl = nil
       }
