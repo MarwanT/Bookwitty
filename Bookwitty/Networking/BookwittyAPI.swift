@@ -264,13 +264,14 @@ extension BookwittyAPI: TargetType {
           "username": credentials.username,
           "password":  credentials.password,
           "grant_type": "password",
-          "scope": "author content imposter email profile social update_self"
+          "scope": "author content imposter email profile social update_self",
         ]
       } else {
         params = [
           "client_id": AppKeys.shared.apiKey,
           "client_secret": AppKeys.shared.apiSecret,
           "grant_type": "client_credentials",
+          "scope": "content",
         ]
       }
       return params
@@ -279,7 +280,8 @@ extension BookwittyAPI: TargetType {
         "client_id": AppKeys.shared.apiKey,
         "client_secret": AppKeys.shared.apiSecret,
         "refresh_token": refreshToken,
-        "grant_type": "refresh_token"
+        "grant_type": "refresh_token",
+        "scope": "author content imposter email profile social update_self",
       ]
     case .unlinkContent(_, let pageIdentifier):
       return ContentAPI.unlinkContentParameters(pageIdentifier)
