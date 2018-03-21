@@ -154,8 +154,14 @@ class ContentEditorViewController: UIViewController {
     _ = self.editorView.endEditing(true)
   }
   
+  fileprivate func dispatchContent(_ completion:((_ created: ContentEditorViewController.DispatchStatus, _ success: Bool) -> Void)? = nil) {
+    self.hasContent { (has) in
+      self.viewModel.dispatchContent(hasContent: has, completion)
+    }
+  }
+  
   func dismiss() {
-    self.timer.invalidate()
+    self.stopTimer()
     self.dismiss(animated: true, completion: nil)
   }
   
@@ -252,16 +258,23 @@ class ContentEditorViewController: UIViewController {
     resignResponders()
     present(alertController, animated: true, completion: nil)
   }
+  
+  // MARK: - Timer
+  func startTimer() {
+    self.timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(ContentEditorViewController.tick), userInfo: nil, repeats: true)
+    self.timer.tolerance = 0.5
+  }
+  
+  func stopTimer() {
+    self.timer.invalidate()
+  }
 
   // MARK: - RichEditor
   private func initializeRichEditorEcosystem() {
     setupEditorToolbar()
     setupContentEditorHtml()
-    
+    startTimer()
     self.editorView.clipsToBounds = true
-    
-    self.timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(ContentEditorViewController.tick), userInfo: nil, repeats: true)
-    self.timer.tolerance = 0.5
   }
   
   func setupContentEditorHtml() {
@@ -274,7 +287,7 @@ class ContentEditorViewController: UIViewController {
   }
   
   @objc private func tick() {
-    self.viewModel.dispatchContent() { [unowned self] status, success in
+    self.dispatchContent() { [unowned self] status, success in
         if success {
           self.loadNavigationBarButtons()
       }
@@ -479,7 +492,7 @@ extension ContentEditorViewController {
   }
   
   fileprivate func presentPublishMenuViewController() {
-    self.viewModel.dispatchContent()
+    self.dispatchContent()
     
     let publishMenuViewController = Storyboard.Content.instantiate(PublishMenuViewController.self)
     publishMenuViewController.delegate = self
@@ -510,6 +523,7 @@ extension ContentEditorViewController {
   func presentDraftsViewController() {
     let controller = DraftsViewController()
     controller.delegate = self
+    controller.exclude(self.viewModel.currentPost.id)
     let navigationController = UINavigationController(rootViewController: controller)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
   }
@@ -634,26 +648,21 @@ extension ContentEditorViewController {
     }
     
     group.notify(queue: DispatchQueue.main) {
-      guard let _ = self.viewModel.currentPost else {
-        closure(.nonNeeded, true)
-        return
-      }
-      
       guard hasContent else {
-        if self.viewModel.currentPost.id != nil {
-          self.viewModel.deletePost() { _, _ in }
-        } else {
-          try? self.viewModel.deleteLocalDraft()
-        }
         closure(.nonNeeded, true)
         return
       }
       
+      // The flag `needsRemoteSync` also checks if `needsLocalSync`
       guard self.viewModel.needsRemoteSync else {
         closure(.nonNeeded, true)
         return
       }
       
+      // Stop Timer for the alert controller will be displayed
+      self.stopTimer()
+      
+      // Prepare and Display the Confirmation Alert Controller
       let alertTitle = self.mode.isEditing ? Strings.discard_changes_confirmation_question() : Strings.save_draft_changes()
       let alertController = UIAlertController(title: alertTitle, message: nil, preferredStyle: .actionSheet)
       
@@ -663,24 +672,27 @@ extension ContentEditorViewController {
         // Editing a draft
         let saveDraft = UIAlertAction(
           title: Strings.save_draft(), style: .default, handler: { _ in
-          self.savePostAsDraft({ (success: Bool) in
-            closure(.saveDraft, success)
-          })
+            self.savePostAsDraft({ (success: Bool) in
+              closure(.saveDraft, success)
+            })
         })
         alertController.addAction(saveDraft)
       }
       
-      let discardPost = UIAlertAction(
+      let discardChanges = UIAlertAction(
         title: Strings.discard_changes(), style: .destructive, handler: { _ in
-        closure(.discardChanges, true)
+          self.discardChanges({ (success: Bool) in
+            closure(.discardChanges, true)
+          })
       })
       
       let goBack = UIAlertAction(title: Strings.go_back(), style: .cancel, handler: {
         _ in
+        self.startTimer()
         closure(.goBack, true)
       })
       
-      alertController.addAction(discardPost)
+      alertController.addAction(discardChanges)
       alertController.addAction(goBack)
       
       self.navigationController?.present(alertController, animated: true, completion: nil)
@@ -704,10 +716,10 @@ extension ContentEditorViewController {
     navigationController?.present(alertController, animated: true, completion: nil)
   }
 
-  fileprivate func discardPost(_ closure: @escaping (Bool) -> ()) {
+  fileprivate func discardChanges(_ closure: @escaping (Bool) -> ()) {
     SwiftLoader.show(animated: true)
-    self.viewModel.deletePost {
-      (success: Bool, error: BookwittyAPIError?) in
+    self.viewModel.discardAndSynchronize {
+      (success: Bool) in
       SwiftLoader.hide()
       if success {
         closure(success)
@@ -715,7 +727,7 @@ extension ContentEditorViewController {
         self.showRetryAlert(with: Strings.error(), message: Strings.some_thing_wrong_error(), closure: {
           (retry: Bool) in
           if retry {
-            self.discardPost(closure)
+            self.discardChanges(closure)
           } else {
             closure(false)
           }
@@ -728,7 +740,7 @@ extension ContentEditorViewController {
     SwiftLoader.show(animated: true)
     self.editorView.getDefaults { (_ defaultTitle: String, _ defaultDescription: String?, _ defaultImageURL: String?) in
       let defaultValues = (defaultTitle, defaultDescription, defaultImageURL)
-      self.viewModel.updateContent(with: defaultValues) {
+      self.viewModel.saveAndSynchronize(with: defaultValues) {
         (success: Bool) in
         SwiftLoader.hide()
         if success {
@@ -878,7 +890,7 @@ extension ContentEditorViewController {
 extension ContentEditorViewController {
   func saveAsDraft(_ completion:((_ success:Bool) -> Void)?) {
     //Ask the content editor for the body.
-    self.viewModel.dispatchContent() { _ , success in
+    self.dispatchContent { _, success in
       completion?(success)
     }
   }
@@ -968,7 +980,7 @@ extension ContentEditorViewController: PostPreviewViewControllerDelegate {
       self.present(.publishMenu)
     }
     self.loadUIFromPost()
-    self.viewModel.dispatchContent()
+    self.dispatchContent()
   }
 }
 

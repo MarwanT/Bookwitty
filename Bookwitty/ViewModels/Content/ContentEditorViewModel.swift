@@ -27,9 +27,17 @@ class ContentEditorViewModel  {
   }
   
   var currentPost: CandidatePost!
+  
+  var isNewlyCreated: Bool {
+    return self.originalHashValue == NSNotFound
+  }
 
+  var needsLocalSync: Bool {
+    return self.latestHashValue != self.currentPost.hash
+  }
+  
   var needsRemoteSync: Bool {
-    guard self.latestHashValue == self.currentPost.hash else {
+    guard !needsLocalSync else {
       return true
     }
 
@@ -51,10 +59,12 @@ class ContentEditorViewModel  {
     }
   }
   
-  func set(_ currentPost: CandidatePost) {
+  func set(_ currentPost: CandidatePost, clean: Bool = true) {
     self.currentPost = currentPost
-    self.originalHashValue = currentPost.hash
     self.latestHashValue = currentPost.hash
+    if clean {
+      self.originalHashValue = currentPost.hash
+    }
     
     //check if we have linked tags/topics
     self.getLinkedTags()
@@ -118,14 +128,11 @@ class ContentEditorViewModel  {
   
 
   fileprivate func createContent(with completion:((_ success: Bool) -> Void)? = nil) {
-    guard let body = self.currentPost.body, !body.isEmpty else {
-      completion?(false)
-      return
-    }
     self.resetPreviousRequest()
     //WORKAROUND: the API doesn't create a content unless we send a title
     let contentTile = self.currentPost.title.isEmptyOrNil() ? Strings.untitled() : self.currentPost.title
-    self.currentRequest = PublishAPI.createContent(title: contentTile, body: self.currentPost.body) { (success, candidatePost, error) in
+    let contentBody = self.currentPost.body ?? ""
+    self.currentRequest = PublishAPI.createContent(title: contentTile, body: contentBody) { (success, candidatePost, error) in
       defer { self.currentRequest = nil; completion?(success) }
       
       guard success, let candidatePost = candidatePost else {
@@ -133,9 +140,32 @@ class ContentEditorViewModel  {
       }
       //Workaround due to the API default behavior
       let imageUrlValue = self.currentPost.imageUrl
-      self.set(candidatePost)
+      self.set(candidatePost, clean: false)
       if imageUrlValue == nil {
        self.currentPost.imageUrl = nil
+      }
+    }
+  }
+  
+  func discardAndSynchronize(completion: ((_ success: Bool) -> Void)? = nil) {
+    if isNewlyCreated {
+      deletePost { (success: Bool, error: BookwittyAPIError?) in
+        completion?(success)
+      }
+    } else {
+      completion?(true)
+    }
+  }
+  
+  func saveAndSynchronize(with defaultValues: (title: String, description: String?, imageURL: String?), completion: ((_ success: Bool) -> Void)? = nil) {
+    // Create the post if not created
+    if self.currentPost.id == nil {
+      self.createContent(with: { success in
+        completion?(success)
+      })
+    } else {
+      self.updateContent(with: defaultValues) { success in
+        completion?(success)
       }
     }
   }
@@ -222,18 +252,19 @@ class ContentEditorViewModel  {
     })
   }
 
-  func dispatchContent(with completion:((_ created: ContentEditorViewController.DispatchStatus, _ success: Bool) -> Void)? = nil) {
-    
-    let newHashValue = self.currentPost.hash
-    let latestHashValue = self.latestHashValue
+  func dispatchContent(hasContent: Bool, _ completion:((_ created: ContentEditorViewController.DispatchStatus, _ success: Bool) -> Void)? = nil) {
     
     if self.currentPost.id == nil {
-      self.createContent(with: { success in
-        completion?(.create, success)
-      })
+      if hasContent {
+        self.createContent(with: { success in
+          completion?(.create, success)
+        })
+      } else {
+        completion?(.noChanges, true) // no Change
+      }
     } else {
       self.dispatchPrelinkIfNeeded()
-      if newHashValue != latestHashValue {
+      if needsLocalSync {
         self.updateContentLocally({ (success) in
           completion?(.update, success)
         })

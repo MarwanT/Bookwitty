@@ -10,7 +10,12 @@ import Foundation
 
 final class DraftsViewModel {
   fileprivate var drafts: [ModelResource] = []
+  fileprivate var excludedDraftIdentifier: String?
   fileprivate var nextPage: URL?
+  
+  func exclude(_ identifier: String?) {
+    self.excludedDraftIdentifier = identifier
+  }
 
   func loadDrafts(completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) {
     guard let id = UserManager.shared.defaultPenName?.id else {
@@ -20,7 +25,7 @@ final class DraftsViewModel {
 
     _ = PenNameAPI.penNameContent(identifier: id, status: .draft) {
       (success, resources, nextUrl, error) in
-      self.drafts = resources ?? []
+      self.drafts = resources?.filter({ $0.id != self.excludedDraftIdentifier }) ?? []
       self.nextPage = nextUrl
       completion(success, error)
     }
@@ -94,7 +99,7 @@ extension DraftsViewModel {
       (success: Bool, resources: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
 
       self.nextPage = next
-      self.drafts += resources ?? []
+      self.drafts += resources?.filter({ $0.id != self.excludedDraftIdentifier }) ?? []
       closure?(success)
     }
   }
