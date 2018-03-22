@@ -295,6 +295,7 @@ class ContentEditorViewController: UIViewController {
   }
   
   private func setupTitleTextField() {
+    self.titleTextField.delegate = self
     self.titleTextField.addTarget(self, action: #selector(ContentEditorViewController.textChanged(_:)), for: .editingChanged)
     
     let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapOnTextFieldInterceptor(_:)))
@@ -1066,6 +1067,20 @@ extension ContentEditorViewController: RichEditorDelegate {
       self.viewModel.removeUploadRequest(wrapperId)
       self.loadNavigationBarButtons()
     }
+  }
+}
+
+/**
+ The title text field inspector view is hidden when the text field starts
+ editing so we are able to launch the UIMenu
+ */
+extension ContentEditorViewController: UITextFieldDelegate {
+  func textFieldDidBeginEditing(_ textField: UITextField) {
+    titleTextFieldInspectorView.isHidden = true
+  }
+  
+  func textFieldDidEndEditing(_ textField: UITextField) {
+    titleTextFieldInspectorView.isHidden = false
   }
 }
 
