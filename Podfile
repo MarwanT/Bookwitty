@@ -46,6 +46,7 @@ target 'Bookwitty' do
   pod 'WSTagsField', :git => 'https://github.com/Keeward/WSTagsField.git', :branch => 'more-tag'
   pod 'MobileEditor', :git => 'git@gitlab.help-counter.com:ios-libraries/ContentEditor.git', :branch => 'tinymce', :submodules => true
   pod 'AKImageCropperView', '2.0.0'
+  pod 'GoogleSignIn', '4.1.2'
 
   target 'BookwittyTests' do
     inherit! :search_paths
