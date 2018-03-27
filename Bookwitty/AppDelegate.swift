@@ -11,6 +11,7 @@ import Fabric
 import Crashlytics
 import FacebookCore
 import SwiftLoader
+import GoogleSignIn
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -42,6 +43,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     AppManager.shared.checkAppStatus()
 
+    // Initialize sign-in
+    //Note: this 'googleClientIdentifier' also exists in reverse in the info.plist as a url-type
+    GIDSignIn.sharedInstance().clientID = Environment.current.googleClientIdentifier
+    GIDSignIn.sharedInstance().delegate = self
+
     return true
   }
 
@@ -69,7 +75,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-    let handled = SDKApplicationDelegate.shared.application(app, open: url, options: options)
+    var handled = SDKApplicationDelegate.shared.application(app, open: url, options: options)
+
+    if !handled {
+      handled = GIDSignIn.sharedInstance()
+        .handle(url,
+                sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
+                annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+    }
+
     return handled
   }
 }
@@ -99,5 +113,24 @@ extension AppDelegate {
     if UIApplication.shared.canOpenURL(settingsUrl) {
       UIApplication.shared.openURL(settingsUrl)
     }
+  }
+}
+
+extension AppDelegate: GIDSignInDelegate {
+  func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
+            withError error: Error!) {
+    if let _ = error {
+      //TODO: handle google sign in error
+    } else {
+      //TODO: Perform any operations on signed in user here.
+      let _ = user.authentication.idToken
+      // We just need the tokenId (named also 'assertion')
+      //TODO: Send the tokenId/assertion to the OAuth API with the needed updates
+    }
+  }
+
+  func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!,
+            withError error: Error!) {
+    // TODO: Perform any operations when the user disconnects from app here.
   }
 }
