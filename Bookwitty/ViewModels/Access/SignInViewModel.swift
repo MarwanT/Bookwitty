@@ -43,7 +43,7 @@ final class SignInViewModel {
         return
       }
       
-      self.request = UserAPI.user(completion: { (success, user, error) in
+      self.request = UserAPI.user(completion: { (success, user, _, error) in
         var success = success
         var error = error
         defer {

@@ -36,6 +36,7 @@ class UserManager {
       guard let user = signedInUser else {
         return
       }
+      user.oneTimeToken = nil
       saveSignedInUser(user: user)
       notifyUpdate(user: true)
     }

@@ -19,6 +19,7 @@ class User: Resource {
   var createdAt: String? = nil
   var updatedAt: String? = nil
   var language: String? = nil
+  var oneTimeToken: String? = nil
   var badges: [String: Any]? = nil
   var preferences: [String: Any]? = nil
   var onboardCompleteAt: NSDate? = nil
@@ -57,13 +58,13 @@ class User: Resource {
       "password": Attribute().serializeAs("password"),
       "currentPassword": Attribute().serializeAs("current-password"),
       "language": Attribute().serializeAs("language"),
+      "oneTimeToken" : Attribute().serializeAs("ott-token"),
       "onboardComplete": BooleanAttribute().serializeAs("onboard-complete"),
       "onboardCompleteAt": DateAttribute().serializeAs("onboard-complete-at"),
       "preferences" : PreferencesAttribute().serializeAs("preferences"),
       "penNamesCollection" : ToManyRelationship(PenName.self).serializeAs("pen-names")
       ])
   }
-
 }
 
 // MARK: - Utils

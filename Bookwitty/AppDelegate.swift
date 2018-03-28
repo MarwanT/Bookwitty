@@ -151,7 +151,7 @@ extension AppDelegate: GIDSignInDelegate {
         return
       }
 
-      _ = UserAPI.user(completion: { (success, user, error) in
+      _ = UserAPI.user(completion: { (success, user, oneTimeToken, error) in
         var success = success
         var error = error
         defer {

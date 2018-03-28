@@ -178,7 +178,7 @@ final class EmailSettingsViewModel {
 //MARK: - API Handlers
 extension EmailSettingsViewModel {
   fileprivate func fetchUser(completion: @escaping ((Bool)->())) {
-    _ = UserAPI.user { (success, _, _) in
+    _ = UserAPI.user { (success, _, _, _) in
       completion(success)
     }
   }
