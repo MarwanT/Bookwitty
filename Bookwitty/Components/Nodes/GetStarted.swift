@@ -149,9 +149,11 @@ class GetStarted: ASDisplayNode {
                                               spacing: 0.0,
                                               justifyContent: .center,
                                               alignItems: .center,
-                                              children: [iconNode, textNode])
+                                              children: [iconNode,
+                                                         ASLayoutSpec.spacer(width: 10),
+                                                         textNode])
       
-      let margin = UIEdgeInsets(top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
+      let margin = UIEdgeInsets(top: 5.0, left: 20.0, bottom: 5.0, right: 20.0)
       let insetLayoutSpec = ASInsetLayoutSpec(insets: margin, child: horizontalStack)
       return insetLayoutSpec
     }
@@ -190,7 +192,7 @@ extension GetStarted {
   struct Configuration {
     let backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
     let margin: CGFloat = ThemeManager.shared.currentTheme.cardInternalMargin()
-    let iconSize: CGSize = CGSize(width: 40.0, height: 40.0)
+    let iconSize: CGSize = CGSize(width: 20.0, height: 20.0)
     let iconTintColor = ThemeManager.shared.currentTheme.colorNumber2()
     let vInset: CGFloat = 50.0
   }
