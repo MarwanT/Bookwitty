@@ -356,9 +356,13 @@ extension RootTabBarController {
   }
 
   func showRootViewController() {
-    self.dismiss(animated: true,completion: {
+    if presentedViewController != nil {
+      self.dismiss(animated: true,completion: {
+        self.refreshTabBarViewController()
+      })
+    } else {
       self.refreshTabBarViewController()
-    })
+    }
   }
 
   func presentRegisterViewController() {

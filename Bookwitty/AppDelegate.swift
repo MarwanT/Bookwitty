@@ -117,22 +117,30 @@ extension AppDelegate {
   }
 }
 
+// MARK: - Google Sign In Delegate Handler
 extension AppDelegate: GIDSignInDelegate {
   func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
             withError error: Error!) {
-    if let _ = error {
+    if let error = error {
       //TODO: handle google sign in error
     } else {
-      //TODO: Perform any operations on signed in user here.
-      let _ = user.authentication.idToken
+      SwiftLoader.show(animated: true)
+      let token = user.authentication.idToken
+      googleSignIn(token: token!, completion: { (success, error) in
+        SwiftLoader.hide()
+        if success {
+          NotificationCenter.default.post(name: AppNotification.didSignIn, object: nil)
+        } else {
+          //TODO: Show error alert could not sign in
+        }
+      })
       // We just need the tokenId (named also 'assertion')
-      //TODO: Send the tokenId/assertion to the OAuth API with the needed updates
     }
   }
 
   func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!,
             withError error: Error!) {
-    // TODO: Perform any operations when the user disconnects from app here.
+    //Perform any needed operation when the user disconnects from app here.
   }
 
   func googleSignIn(token: String, completion: @escaping (_ success: Bool, _ error: Error?) -> ()) {
