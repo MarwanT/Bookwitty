@@ -26,7 +26,7 @@ class TagCardPostCellNode: BaseCardPostNode {
     viewModel = TagCardViewModel()
     super.init()
     shouldHandleTopComments = true
-    //TODO: Set View model delegate
+    viewModel.delegate = self
   }
 
   convenience init(shouldShowInfoNode: Bool) {
@@ -127,5 +127,18 @@ class TagCardPostContentNode: ASDisplayNode {
                                                     children: verticalParentNodes)
 
     return ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), child: verticalParentStackSpec)
+  }
+}
+
+//MARK: - TagCardViewModelDelegate implementation
+extension TagCardPostCellNode : TagCardViewModelDelegate {
+  func resourceUpdated(viewModel: TagCardViewModel) {
+    let values = viewModel.values()
+    setup(forFollowingMode: true)
+    setFollowingValue(following: values.following)
+    node.title = values.title
+    node.followersCount = String(counting: values.followers)
+    shouldHandleTopComments = false
+    reported = values.reported
   }
 }
