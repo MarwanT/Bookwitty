@@ -178,11 +178,16 @@ class ContentEditorViewModel  {
 
     let title = currentPost.title ?? defaultValues.title
     let shortDescription = currentPost.shortDescription ?? defaultValues.description
-    let imageURL = currentPost.imageUrl ?? defaultValues.imageURL
+    
+    /**
+     TODO: Check if the post have no image set yet and send it with the API call
+     Currently not implemented because it has erroneous behavior
+     starting from the default image ID returned by the JS
+     */
 
     self.resetPreviousRequest()
     let status = PublishAPI.PublishStatus(rawValue: self.currentPost.status ?? "") ?? PublishAPI.PublishStatus.draft
-    self.currentRequest = PublishAPI.updateContent(id: id, title: title, body: currentPost.body, imageIdentifier: imageURL, shortDescription: shortDescription, status: status, completion: { (success, candidatePost, error) in
+    self.currentRequest = PublishAPI.updateContent(id: id, title: title, body: currentPost.body, imageIdentifier: nil, shortDescription: shortDescription, status: status, completion: { (success, candidatePost, error) in
       defer { self.currentRequest = nil; completion?(success) }
       guard success, let candidatePost = candidatePost else {
         return
