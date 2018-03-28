@@ -848,16 +848,23 @@ extension ContentEditorViewController: RichLinkPreviewViewControllerDelegate {
   func richLinkPreview(viewController: RichLinkPreviewViewController, didRequestLinkAdd: URL, with response: Response) {
     viewController.navigationController?.dismiss(animated: true, completion: nil)
     var mode: String = ""
+    var imageURL = response.thumbnails?.first?.url
+    
     switch viewController.mode {
     case .link:
       mode = "link"
     case .audio:
       mode = "audio"
+      /**
+       The image returned for the audio response is missing the scheme
+       so it needs to be added
+       */
+      imageURL = imageURL?.withHTTPS
     case .video:
       mode = "video"
     }
     
-    self.editorView.generateLinkPreview(type: mode, title: response.title, description: response.shortDescription, url: response.url, imageUrl: response.thumbnails?.first?.url, html: response.html)
+    self.editorView.generateLinkPreview(type: mode, title: response.title, description: response.shortDescription, url: response.url, imageUrl: imageURL, html: response.html)
   }
 
   func richLinkPreviewViewControllerDidCancel(_ viewController: RichLinkPreviewViewController) {
