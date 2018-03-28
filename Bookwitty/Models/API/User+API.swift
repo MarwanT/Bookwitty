@@ -11,9 +11,23 @@ import Moya
 import Spine
 
 struct UserAPI {
-  public static func signIn(withUsername username: String, password: String, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  enum AuthPlatfrom {
+    case bookwitty(username: String, password: String)
+    case google(token: String)
+  }
+
+  public static func signIn(with platform: AuthPlatfrom, completion: @escaping (_ success: Bool, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+    let target: BookwittyAPI
+
+    switch platform {
+    case .bookwitty(let username, let password):
+      target = BookwittyAPI.oAuth(credentials: (username: username, password: password))
+    case .google(let token):
+      target = BookwittyAPI.googleSignIn(token: token)
+    }
+
     return apiRequest(
-    target: BookwittyAPI.oAuth(credentials: (username: username, password: password))) {
+    target: target) {
       (data, statusCode, response, error) in
       // Ensure the completion block is always called
       var success: Bool = false
