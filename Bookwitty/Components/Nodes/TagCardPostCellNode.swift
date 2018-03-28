@@ -16,15 +16,14 @@ class TagCardPostCellNode: BaseCardPostNode {
   override var contentShouldExtendBorders: Bool { return false }
   override var contentNode: ASDisplayNode { return node }
 
-  //TODO: define the view model
+  let viewModel: TagCardViewModel
   override var baseViewModel: CardViewModelProtocol? {
-    //TODO: return view model
-    return nil
+    return viewModel
   }
 
   override init() {
     node = TagCardPostContentNode()
-    //TODO: Initialize View model
+    viewModel = TagCardViewModel()
     super.init()
     shouldHandleTopComments = true
     //TODO: Set View model delegate
