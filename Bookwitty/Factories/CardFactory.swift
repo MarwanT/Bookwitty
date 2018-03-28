@@ -34,9 +34,18 @@ class CardFactory {
       return createLinkCard()
     case Book.resourceType:
       return createBookCard()
+    case Tag.resourceType:
+      return createTagCard()
     default:
       return nil
     }
+  }
+}
+
+// MARK: - Tag Card
+extension  CardFactory {
+  fileprivate class func createTagCard() -> TagCardPostCellNode? {
+    return TagCardPostCellNode()
   }
 }
 
