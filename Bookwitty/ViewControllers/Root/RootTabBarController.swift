@@ -107,7 +107,7 @@ class RootTabBarController: UITabBarController {
     settingsViewController.viewController.navigationController?.setNavigationBarHidden(settingsViewController.hideNavigationBar, animated: true)
     
     // Set Default select tab index
-    self.selectedIndex = 0
+    self.selectedIndex = UserManager.shared.isSignedIn ? 0 : 1
   }
   
   private func addObservers() {
