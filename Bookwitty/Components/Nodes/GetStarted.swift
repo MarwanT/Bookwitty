@@ -7,6 +7,7 @@
 //
 
 import AsyncDisplayKit
+import GoogleSignIn
 
 class GetStarted: ASDisplayNode {
 
@@ -31,6 +32,7 @@ class GetStarted: ASDisplayNode {
   
   override init() {
     super.init()
+    GIDSignIn.sharedInstance().uiDelegate = self
     initializeComponents()
     applyTheme()
   }
@@ -48,14 +50,15 @@ class GetStarted: ASDisplayNode {
     wrapperSpec.style.preferredSize = constrainedSize.max
     wrapperSpec.style.flexGrow = 1.0
 
-    let buttonTextColor = ThemeManager.shared.currentTheme.colorNumber2()
-    let buttonBackgroundColor = ThemeManager.shared.currentTheme.defaultButtonColor()
-    let iconTintColor = ThemeManager.shared.currentTheme.colorNumber2()
+    let theme = ThemeManager.shared.currentTheme
+    let buttonTextColor = theme.colorNumber2()
+    let buttonBackgroundColor = theme.defaultButtonColor()
+    let iconTintColor = theme.colorNumber2()
     let iconSize = configuration.iconSize
 
-    let googleButtonNode = createButtonNode(text: Strings.continue_google(), textColor: buttonTextColor, backgroundColor: buttonBackgroundColor, icon: #imageLiteral(resourceName: "comment"), iconSize: iconSize, iconTintColor: iconTintColor)
-    let faecbookButtonNode = createButtonNode(text: Strings.continue_facebook(), textColor: buttonTextColor, backgroundColor: buttonBackgroundColor, icon: #imageLiteral(resourceName: "comment"), iconSize: iconSize, iconTintColor: iconTintColor)
-    let emailButtonNode = createButtonNode(text: Strings.continue_email(), textColor: buttonTextColor, backgroundColor: buttonBackgroundColor, icon: #imageLiteral(resourceName: "comment"), iconSize: iconSize, iconTintColor: iconTintColor)
+    let googleButtonNode = createButtonNode(text: Strings.continue_google(), textColor: buttonTextColor, backgroundColor: buttonBackgroundColor, icon:#imageLiteral(resourceName: "google"), iconSize: iconSize, iconTintColor: iconTintColor)
+    let faecbookButtonNode = createButtonNode(text: Strings.continue_facebook(), textColor: buttonTextColor, backgroundColor: theme.colorNumber17(), icon:#imageLiteral(resourceName: "facebook"), iconSize: iconSize, iconTintColor: iconTintColor)
+    let emailButtonNode = createButtonNode(text: Strings.continue_email(), textColor: buttonTextColor, backgroundColor: theme.colorNumber13(), icon: #imageLiteral(resourceName: "email"), iconSize: iconSize, iconTintColor: iconTintColor)
 
     googleButtonNode.addTarget(self, action: #selector(self.continueWithGoogleTouchUpInside(_:)), forControlEvents: .touchUpInside)
     faecbookButtonNode.addTarget(self, action: #selector(self.continueWithFacebookTouchUpInside(_:)), forControlEvents: .touchUpInside)
@@ -140,6 +143,7 @@ class GetStarted: ASDisplayNode {
 
       let iconNode = ASImageNode()
       iconNode.image = icon
+      iconNode.contentMode = UIViewContentMode.scaleAspectFit
       iconNode.style.preferredSize = iconSize
       iconNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(iconTintColor)
 
@@ -147,9 +151,11 @@ class GetStarted: ASDisplayNode {
                                               spacing: 0.0,
                                               justifyContent: .center,
                                               alignItems: .center,
-                                              children: [iconNode, textNode])
+                                              children: [iconNode,
+                                                         ASLayoutSpec.spacer(width: 10),
+                                                         textNode])
       
-      let margin = UIEdgeInsets(top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
+      let margin = UIEdgeInsets(top: 5.0, left: 20.0, bottom: 5.0, right: 20.0)
       let insetLayoutSpec = ASInsetLayoutSpec(insets: margin, child: horizontalStack)
       return insetLayoutSpec
     }
@@ -188,7 +194,7 @@ extension GetStarted {
   struct Configuration {
     let backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
     let margin: CGFloat = ThemeManager.shared.currentTheme.cardInternalMargin()
-    let iconSize: CGSize = CGSize(width: 40.0, height: 40.0)
+    let iconSize: CGSize = CGSize(width: 20.0, height: 20.0)
     let iconTintColor = ThemeManager.shared.currentTheme.colorNumber2()
     let vInset: CGFloat = 50.0
   }
@@ -197,7 +203,7 @@ extension GetStarted {
 //MARK: - Actions
 extension GetStarted {
   @objc fileprivate func continueWithGoogleTouchUpInside(_ sender: ASControlNode) {
-    //TODO: Empty Implementation
+    GIDSignIn.sharedInstance().signIn()
   }
 
   @objc fileprivate func continueWithFacebookTouchUpInside(_ sender: ASControlNode) {
@@ -227,5 +233,25 @@ extension GetStarted: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+  }
+}
+
+extension GetStarted: GIDSignInUIDelegate {
+  // Stop the UIActivityIndicatorView animation that was started when the user
+  // pressed the Sign In button
+  func sign(inWillDispatch signIn: GIDSignIn!, error: Error!) {
+    //TODO: Show loader if needed
+  }
+
+  // Present a view that prompts the user to sign in with Google
+  func sign(_ signIn: GIDSignIn!,
+            present viewController: UIViewController!) {
+    self.genericViewController.present(viewController, animated: true, completion: nil)
+  }
+
+  // Dismiss the "Sign in with Google" view
+  func sign(_ signIn: GIDSignIn!,
+            dismiss viewController: UIViewController!) {
+    viewController.dismiss(animated: true, completion: nil)
   }
 }

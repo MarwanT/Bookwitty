@@ -46,7 +46,7 @@ class BookwittyAPITests: XCTestCase {
     let excep = expectation(description: "...")
     
     _ = UserAPI.signIn(
-      withUsername: "danny.hajj@keeward.com", password: "qwerty1234") {
+      with: .bookwitty(username: "danny.hajj@keeward.com", password: "qwerty1234")) {
         (success, error) in
         XCTAssertTrue(success)
         XCTAssertNil(error)

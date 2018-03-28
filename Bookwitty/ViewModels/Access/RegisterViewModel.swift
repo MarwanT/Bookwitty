@@ -60,7 +60,7 @@ final class RegisterViewModel {
         return
       }
       
-      self.request = UserAPI.signIn(withUsername: email, password: password, completion: { (success, error) in
+      self.request = UserAPI.signIn(with: .bookwitty(username: email, password: password), completion: { (success, error) in
         self.request = nil
         var error = BookwittyAPIError.failToSignIn
         if !success {

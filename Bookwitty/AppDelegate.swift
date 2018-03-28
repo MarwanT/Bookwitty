@@ -11,6 +11,7 @@ import Fabric
 import Crashlytics
 import FacebookCore
 import SwiftLoader
+import GoogleSignIn
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -42,6 +43,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     AppManager.shared.checkAppStatus()
 
+    // Initialize sign-in
+    //Note: this 'googleClientIdentifier' also exists in reverse in the info.plist as a url-type
+    GIDSignIn.sharedInstance().clientID = Environment.current.googleClientIdentifier
+    GIDSignIn.sharedInstance().serverClientID = Environment.current.googleServerIdentifier
+    GIDSignIn.sharedInstance().delegate = self
+
     return true
   }
 
@@ -69,7 +76,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-    let handled = SDKApplicationDelegate.shared.application(app, open: url, options: options)
+    var handled = SDKApplicationDelegate.shared.application(app, open: url, options: options)
+
+    if !handled {
+      handled = GIDSignIn.sharedInstance()
+        .handle(url,
+                sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
+                annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+    }
+
     return handled
   }
 }
@@ -99,5 +114,57 @@ extension AppDelegate {
     if UIApplication.shared.canOpenURL(settingsUrl) {
       UIApplication.shared.openURL(settingsUrl)
     }
+  }
+}
+
+// MARK: - Google Sign In Delegate Handler
+extension AppDelegate: GIDSignInDelegate {
+  func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
+            withError error: Error!) {
+    if let error = error {
+      //TODO: handle google sign in error
+    } else {
+      SwiftLoader.show(animated: true)
+      let token = user.authentication.idToken
+      googleSignIn(token: token!, completion: { (success, error) in
+        SwiftLoader.hide()
+        if success {
+          NotificationCenter.default.post(name: AppNotification.didSignIn, object: nil)
+        } else {
+          //TODO: Show error alert could not sign in
+        }
+      })
+      // We just need the tokenId (named also 'assertion')
+    }
+  }
+
+  func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!,
+            withError error: Error!) {
+    //Perform any needed operation when the user disconnects from app here.
+  }
+
+  func googleSignIn(token: String, completion: @escaping (_ success: Bool, _ error: Error?) -> ()) {
+    _ = UserAPI.signIn(with: .google(token: token), completion: {
+      (success, error) in
+      guard success else {
+        completion(success, error)
+        return
+      }
+
+      _ = UserAPI.user(completion: { (success, user, error) in
+        var success = success
+        var error = error
+        defer {
+          completion(success, error)
+        }
+
+        guard user != nil, success else {
+          success = false
+          return
+        }
+
+        success = true
+      })
+    })
   }
 }

@@ -35,7 +35,7 @@ final class SignInViewModel {
       request.cancel()
     }
     
-    request = UserAPI.signIn(withUsername: username, password: password, completion: {
+    request = UserAPI.signIn(with: .bookwitty(username: username, password: password), completion: {
       (success, error) in
       guard success else {
         self.request = nil

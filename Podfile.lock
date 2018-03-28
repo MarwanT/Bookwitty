@@ -59,7 +59,27 @@ PODS:
     - FBSDKCoreKit
   - FLKAutoLayout (1.0.0)
   - GoogleAnalytics (3.17.0)
+  - GoogleSignIn (4.1.2):
+    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
+    - GoogleToolboxForMac/NSString+URLArguments (~> 2.1)
+    - GTMOAuth2 (~> 1.0)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - GoogleToolboxForMac/DebugUtils (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/Defines (2.1.3)
+  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.3):
+    - GoogleToolboxForMac/DebugUtils (= 2.1.3)
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)
+  - GoogleToolboxForMac/NSString+URLArguments (2.1.3)
   - GSImageViewerController (1.2.1)
+  - GTMOAuth2 (1.1.6):
+    - GTMSessionFetcher (~> 1.1)
+  - GTMSessionFetcher (1.1.13):
+    - GTMSessionFetcher/Full (= 1.1.13)
+  - GTMSessionFetcher/Core (1.1.13)
+  - GTMSessionFetcher/Full (1.1.13):
+    - GTMSessionFetcher/Core (= 1.1.13)
   - Keys (1.0.0)
   - MobileEditor (0.9.1)
   - Moya (8.0.5):
@@ -113,6 +133,7 @@ DEPENDENCIES:
   - FacebookShare (= 0.3.0)
   - FLKAutoLayout (= 1.0.0)
   - GoogleAnalytics (= 3.17.0)
+  - GoogleSignIn (= 4.1.2)
   - GSImageViewerController (= 1.2.1)
   - Keys (from `Pods/CocoaPodsKeys`)
   - MobileEditor (from `git@gitlab.help-counter.com:ios-libraries/ContentEditor.git`, branch `tinymce`)
@@ -200,7 +221,11 @@ SPEC CHECKSUMS:
   FBSDKShareKit: 18a2cd118aef11dd657fe7e8b64bae5c719088b2
   FLKAutoLayout: 106b14dbae09d32c6730190f4e78a959759ba4a4
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
+  GoogleSignIn: d9ef55b10f0aa401a5de2747f59b725e4b9732ac
+  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   GSImageViewerController: 73e84498743987560d24814828baa8f307e0e206
+  GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
+  GTMSessionFetcher: 5bb1eae636127de695590f50e7d248483eb891e6
   Keys: 9c35bf00f612ee1d48556f4a4b9b4551e224e90f
   MobileEditor: 8a9c8f3b751c3fbf99f87e081e0fbcabfe5847dc
   Moya: c37eec09a098ba9991b5a963b291fc5704bdb9ef
@@ -222,6 +247,6 @@ SPEC CHECKSUMS:
   Version: 31221742495765fc798d08eae45de3c936dce0db
   WSTagsField: d73f2fbeacabedb192359eab8a8b5062211beea9
 
-PODFILE CHECKSUM: f350403a623ffcc55a4c7367b5e4bdbfd51af161
+PODFILE CHECKSUM: c68676d243054620617764e9aca134f3826859db
 
 COCOAPODS: 1.3.1

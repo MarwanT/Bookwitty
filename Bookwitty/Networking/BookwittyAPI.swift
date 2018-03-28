@@ -14,6 +14,7 @@ import Moya
 
 public enum BookwittyAPI {
   case oAuth(credentials: (username: String, password: String)?)
+  case googleSignIn(token: String)
   case refreshToken(refreshToken: String)
   case allAddresses
   case register(firstName: String, lastName: String, email: String, dateOfBirthISO8601: String?, countryISO3166: String, password: String, language: String)
@@ -109,7 +110,7 @@ extension BookwittyAPI: TargetType {
     var path = ""
     
     switch self {
-    case .oAuth, .refreshToken:
+    case .oAuth, .refreshToken, .googleSignIn:
       apiBasePath = ""
       apiVersion = ""
       path = "/oauth/token"
@@ -240,7 +241,7 @@ extension BookwittyAPI: TargetType {
   
   public var method: Moya.Method {
     switch self {
-    case .oAuth, .refreshToken, .resendAccountConfirmation, .createPenName, .createContent, .linkTag, .linkContent:
+    case .oAuth, .refreshToken, .resendAccountConfirmation, .createPenName, .createContent, .linkTag, .linkContent, .googleSignIn:
       return .post
     case .allAddresses, .user, .bookStore, .categoryCuratedContent, .newsFeed, .search, .autocomplete, .penNames, .comments, .replies, .absolute, .discover, .onBoarding, .content, .followers, .posts, .editions, .penNameContent, .penNameFollowers, .penNameFollowing, .status, .penName, .postsContent, .postsLinkedContent, .votes, .preferredFormats, .linkedTags:
       return .get
@@ -275,6 +276,15 @@ extension BookwittyAPI: TargetType {
         ]
       }
       return params
+    case .googleSignIn(let token):
+      return [
+        "client_id": AppKeys.shared.apiKey,
+        "client_secret": AppKeys.shared.apiSecret,
+        "grant_type": "assertion",
+        "provider": "google",
+        "assertion": token,
+        "scope": "author content imposter email profile social update_self",
+      ]
     case .refreshToken(let refreshToken):
       return [
         "client_id": AppKeys.shared.apiKey,
