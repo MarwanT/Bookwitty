@@ -149,7 +149,7 @@ struct ContentAPI {
   }
 
   static func linkedPages(to contentIdentifier: String, closure: @escaping (_ success: Bool, _ pages: [ModelResource]?, _ next: URL?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
-    return GeneralAPI.postsLinkedContent(contentIdentifier: contentIdentifier, type: [Topic.resourceType]) { (success: Bool, pages: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
+    return GeneralAPI.postsLinkedContent(contentIdentifier: contentIdentifier, type: [Topic.resourceType, Author.resourceType]) { (success: Bool, pages: [ModelResource]?, next: URL?, error: BookwittyAPIError?) in
       closure(success, pages, next, error)
     }
   }
