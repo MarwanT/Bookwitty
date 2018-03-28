@@ -48,9 +48,10 @@ class GetStarted: ASDisplayNode {
     wrapperSpec.style.preferredSize = constrainedSize.max
     wrapperSpec.style.flexGrow = 1.0
 
-    let buttonTextColor = ThemeManager.shared.currentTheme.colorNumber2()
-    let buttonBackgroundColor = ThemeManager.shared.currentTheme.defaultButtonColor()
-    let iconTintColor = ThemeManager.shared.currentTheme.colorNumber2()
+    let theme = ThemeManager.shared.currentTheme
+    let buttonTextColor = theme.colorNumber2()
+    let buttonBackgroundColor = theme.defaultButtonColor()
+    let iconTintColor = theme.colorNumber2()
     let iconSize = configuration.iconSize
 
     let googleButtonNode = createButtonNode(text: Strings.continue_google(), textColor: buttonTextColor, backgroundColor: buttonBackgroundColor, icon: #imageLiteral(resourceName: "comment"), iconSize: iconSize, iconTintColor: iconTintColor)
