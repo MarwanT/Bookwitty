@@ -467,3 +467,73 @@ extension Comment: ModelCommonProperties {
   }
 
 }
+
+extension Tag: ModelCommonProperties {
+  var createdAt: NSDate? {
+    return nil
+  }
+
+  var updatedAt: NSDate? {
+    return nil
+  }
+
+  var thumbnailImageUrl: String? {
+    return nil
+  }
+
+  var coverImageUrl: String? {
+    return nil
+  }
+
+  var shortDescription: String? {
+    return nil
+  }
+
+  var vote: String? {
+    return nil
+  }
+
+  var isWitted: Bool {
+    return false
+  }
+
+  var counts: Counts? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
+  }
+
+  var topComments: [Comment]? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
+  }
+
+  var isReported: Bool? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
+  }
+
+  var penName: PenName? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
+  }
+
+  var contributors: [PenName]? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
+  }
+
+  var topVotes: [Vote]? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
+  }
+
+  var tags: [Tag]? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
+  }
+
+  var tagsRelations: [ResourceIdentifier]? {
+    get { return nil }
+    set { /* Not a valid property of model */ }
+  }
+}
