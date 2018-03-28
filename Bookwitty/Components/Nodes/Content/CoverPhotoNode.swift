@@ -10,6 +10,7 @@ import AsyncDisplayKit
 
 protocol CoverPhotoNodeDelegate: class {
   func coverPhoto(node: CoverPhotoNode, didRequest action: CoverPhotoNode.Action)
+  func coverPhotoFailedToLoadImage(node: CoverPhotoNode)
 }
 
 class CoverPhotoNode: ASCellNode {
@@ -127,6 +128,10 @@ extension CoverPhotoNode: ASNetworkImageNodeDelegate {
 
   func imageNode(_ imageNode: ASNetworkImageNode, didLoad image: UIImage) {
     loaderNode.updateLoaderVisibility(show: false)
+  }
+  
+  func imageNode(_ imageNode: ASNetworkImageNode, didFailWithError error: Error) {
+    delegate?.coverPhotoFailedToLoadImage(node: self)
   }
 }
 
