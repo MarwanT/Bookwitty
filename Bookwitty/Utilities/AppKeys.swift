@@ -17,6 +17,7 @@ internal final class AppKeys {
   let googleAnalyticsIdentifier: String
   let iframelyKey: String
   let googleClientIdentifier: String
+  let googleServerIdentifier: String
   
   static let shared = AppKeys()
   
@@ -28,6 +29,7 @@ internal final class AppKeys {
     self.googleAnalyticsIdentifier = keys.bookwittyGoogleAnalyticsIdentifier
     self.iframelyKey = keys.bookwittyIFramelyKey
     self.googleClientIdentifier = keys.bookwittyGoogleClientId
+    self.googleServerIdentifier = keys.bookwittyGoogleServerId
   }
   
   private convenience init() {

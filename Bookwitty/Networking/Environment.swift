@@ -23,6 +23,7 @@ struct Environment {
   let baseURL: URL
   let googleAnalyticsIdentifier: String
   let googleClientIdentifier: String
+  let googleServerIdentifier: String
   
   private init() {
     type = EnvironmentType(rawValue: AppKeys.shared.environmentString) ?? .mockServer
@@ -32,6 +33,7 @@ struct Environment {
       googleAnalyticsIdentifier = AppKeys.shared.googleAnalyticsIdentifier
       //Note: this also exists in reverse in the info.plist as a url-type
       googleClientIdentifier = AppKeys.shared.googleClientIdentifier
+      googleServerIdentifier = AppKeys.shared.googleServerIdentifier
     }
   }
 

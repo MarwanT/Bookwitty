@@ -46,6 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Initialize sign-in
     //Note: this 'googleClientIdentifier' also exists in reverse in the info.plist as a url-type
     GIDSignIn.sharedInstance().clientID = Environment.current.googleClientIdentifier
+    GIDSignIn.sharedInstance().serverClientID = Environment.current.googleServerIdentifier
     GIDSignIn.sharedInstance().delegate = self
 
     return true
