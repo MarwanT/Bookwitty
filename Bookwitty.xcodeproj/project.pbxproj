@@ -346,6 +346,7 @@
 		F49AE93E1E47CFEA0031B355 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49AE93D1E47CFEA0031B355 /* Parser.swift */; };
 		F49AF6B31E81E5B40045F604 /* CallToAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49AF6B21E81E5B40045F604 /* CallToAction.swift */; };
 		F49E29BC206BE7C700A993D1 /* TagCardPostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E29BB206BE7C700A993D1 /* TagCardPostCellNode.swift */; };
+		F49E29BE206BEDB400A993D1 /* TagCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E29BD206BEDB400A993D1 /* TagCardViewModel.swift */; };
 		F4A426271E560ED00090CD51 /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A426261E560ED00090CD51 /* Author.swift */; };
 		F4A4262B1E5617A30090CD51 /* PageAuthor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A4262A1E5617A30090CD51 /* PageAuthor.swift */; };
 		F4A4262D1E5619E10090CD51 /* ReadingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A4262C1E5619E10090CD51 /* ReadingList.swift */; };
@@ -725,6 +726,7 @@
 		F49AE93D1E47CFEA0031B355 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		F49AF6B21E81E5B40045F604 /* CallToAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallToAction.swift; sourceTree = "<group>"; };
 		F49E29BB206BE7C700A993D1 /* TagCardPostCellNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCardPostCellNode.swift; sourceTree = "<group>"; };
+		F49E29BD206BEDB400A993D1 /* TagCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCardViewModel.swift; sourceTree = "<group>"; };
 		F4A426261E560ED00090CD51 /* Author.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Author.swift; sourceTree = "<group>"; };
 		F4A4262A1E5617A30090CD51 /* PageAuthor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageAuthor.swift; sourceTree = "<group>"; };
 		F4A4262C1E5619E10090CD51 /* ReadingList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingList.swift; sourceTree = "<group>"; };
@@ -1002,6 +1004,7 @@
 				5639A4071EA5359600528D6F /* VideoCardViewModel.swift */,
 				561229E01EA5E440004CE079 /* TopicCardViewModel.swift */,
 				561229E21EA5FA5D004CE079 /* ProfileCardViewModel.swift */,
+				F49E29BD206BEDB400A993D1 /* TagCardViewModel.swift */,
 				561229E41EA60423004CE079 /* BookCardViewModel.swift */,
 				561229E61EA628E9004CE079 /* QuoteCardViewModel.swift */,
 				561229E81EA65451004CE079 /* LinkCardViewModel.swift */,
@@ -2131,6 +2134,7 @@
 				56D36E821E6DAB3400791098 /* PenNameFollowNode.swift in Sources */,
 				F417B1D31E71C3D400B0FAFE /* PostDetailsNode.swift in Sources */,
 				5947C2A81E37B3D1003BF12A /* ViewController.swift in Sources */,
+				F49E29BE206BEDB400A993D1 /* TagCardViewModel.swift in Sources */,
 				0FF723CA1F755B0100891FFE /* RichContentMenuViewModel.swift in Sources */,
 				59DCFD811E967BE700C94D21 /* ProductDetails.swift in Sources */,
 				594290181E522D980006B2F1 /* BannerView.swift in Sources */,
