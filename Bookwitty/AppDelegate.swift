@@ -134,4 +134,29 @@ extension AppDelegate: GIDSignInDelegate {
             withError error: Error!) {
     // TODO: Perform any operations when the user disconnects from app here.
   }
+
+  func googleSignIn(token: String, completion: @escaping (_ success: Bool, _ error: Error?) -> ()) {
+    _ = UserAPI.signIn(with: .google(token: token), completion: {
+      (success, error) in
+      guard success else {
+        completion(success, error)
+        return
+      }
+
+      _ = UserAPI.user(completion: { (success, user, error) in
+        var success = success
+        var error = error
+        defer {
+          completion(success, error)
+        }
+
+        guard user != nil, success else {
+          success = false
+          return
+        }
+
+        success = true
+      })
+    })
+  }
 }
