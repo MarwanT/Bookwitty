@@ -7,6 +7,7 @@
 //
 
 import AsyncDisplayKit
+import GoogleSignIn
 
 class GetStarted: ASDisplayNode {
 
@@ -31,6 +32,7 @@ class GetStarted: ASDisplayNode {
   
   override init() {
     super.init()
+    GIDSignIn.sharedInstance().uiDelegate = self
     initializeComponents()
     applyTheme()
   }
@@ -201,7 +203,7 @@ extension GetStarted {
 //MARK: - Actions
 extension GetStarted {
   @objc fileprivate func continueWithGoogleTouchUpInside(_ sender: ASControlNode) {
-    //TODO: Empty Implementation
+    GIDSignIn.sharedInstance().signIn()
   }
 
   @objc fileprivate func continueWithFacebookTouchUpInside(_ sender: ASControlNode) {
@@ -231,5 +233,25 @@ extension GetStarted: Localizable {
   @objc
   fileprivate func languageValueChanged(notification: Notification) {
     applyLocalization()
+  }
+}
+
+extension GetStarted: GIDSignInUIDelegate {
+  // Stop the UIActivityIndicatorView animation that was started when the user
+  // pressed the Sign In button
+  func sign(inWillDispatch signIn: GIDSignIn!, error: Error!) {
+    //TODO: Show loader if needed
+  }
+
+  // Present a view that prompts the user to sign in with Google
+  func sign(_ signIn: GIDSignIn!,
+            present viewController: UIViewController!) {
+    self.genericViewController.present(viewController, animated: true, completion: nil)
+  }
+
+  // Dismiss the "Sign in with Google" view
+  func sign(_ signIn: GIDSignIn!,
+            dismiss viewController: UIViewController!) {
+    viewController.dismiss(animated: true, completion: nil)
   }
 }
