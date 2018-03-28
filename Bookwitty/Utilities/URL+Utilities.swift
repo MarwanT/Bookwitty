@@ -8,3 +8,10 @@
 
 import Foundation
 
+extension URL {
+  var withHTTPS: URL? {
+    var components = URLComponents(url: self, resolvingAgainstBaseURL: true)
+    components?.scheme = "https"
+    return components?.url
+  }
+}
