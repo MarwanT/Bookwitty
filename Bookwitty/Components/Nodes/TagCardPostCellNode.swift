@@ -10,7 +10,7 @@ import Foundation
 import AsyncDisplayKit
 
 class TagCardPostCellNode: BaseCardPostNode {
-  let node: ASDisplayNode
+  let node: TagCardPostContentNode
   var showsInfoNode: Bool = false
   override var shouldShowInfoNode: Bool { return showsInfoNode }
   override var contentShouldExtendBorders: Bool { return false }
@@ -23,7 +23,7 @@ class TagCardPostCellNode: BaseCardPostNode {
   }
 
   override init() {
-    node = ASDisplayNode()
+    node = TagCardPostContentNode()
     //TODO: Initialize View model
     super.init()
     shouldHandleTopComments = true
