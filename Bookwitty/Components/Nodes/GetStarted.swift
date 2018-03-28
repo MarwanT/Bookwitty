@@ -141,6 +141,7 @@ class GetStarted: ASDisplayNode {
 
       let iconNode = ASImageNode()
       iconNode.image = icon
+      iconNode.contentMode = UIViewContentMode.scaleAspectFit
       iconNode.style.preferredSize = iconSize
       iconNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(iconTintColor)
 
