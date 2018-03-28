@@ -879,8 +879,8 @@ extension ContentEditorViewController: QuoteEditorViewControllerDelegate {
 extension ContentEditorViewController {
   func publishYourPost(_ completion: ((_ success: Bool) -> Void)? = nil) {
     self.viewModel.preparePostForPublish()
-    self.editorView.getDefaults { (_ defaultTitle: String, _ defaultDescription: String?, _ defaultImageURL: String?) in
-      let defaultValues = (defaultTitle, defaultDescription, defaultImageURL)
+    self.editorView.getDefaults { (_ defaultTitle: String, _ defaultDescription: String?, _ defaultImageIdentifier: String?) in
+      let defaultValues = (defaultTitle, defaultDescription, defaultImageIdentifier)
       self.viewModel.updateContent(with: defaultValues) { success in
         completion?(success)
       }
