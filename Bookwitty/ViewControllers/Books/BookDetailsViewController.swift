@@ -320,7 +320,28 @@ extension BookDetailsViewController {
   }
   
   fileprivate func buyThisBook(bookTitle: String, url: URL) {
-    WebViewController.present(url: url)
+    _ = UserAPI.user { [bookTitle, url] (success: Bool, _, oneTimeToken: String?, _) in
+      var newUrl = url
+      if success {
+        if let oneTimeToken = oneTimeToken, var components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+          var queryItems = components.queryItems ?? []
+          queryItems.append(URLQueryItem(name: "ott_token", value: oneTimeToken))
+          components.queryItems = queryItems
+          let componentsUrl: URL? = try? components.asURL()
+          newUrl = componentsUrl ?? url
+        }
+
+        WebViewController.present(url: newUrl)
+
+        //MARK: [Analytics] Event
+        let event: Analytics.Event = Analytics.Event(category: .BookProduct,
+                                                     action: .BuyThisBook,
+                                                     name: bookTitle)
+        Analytics.shared.send(event: event)
+      } else {
+        WebViewController.present(url: newUrl)
+      }
+    }
 
     //MARK: [Analytics] Event
     let event: Analytics.Event = Analytics.Event(category: .BookProduct,
