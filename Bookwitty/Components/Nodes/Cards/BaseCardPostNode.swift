@@ -221,7 +221,7 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     bottomSeparatorNode.style.height = ASDimensionMake(1)
     bottomSeparatorNode.style.flexGrow = 1
 
-    writeCommentNode.style.preferredSize = CGSize(width: 35.0, height: 35.0)
+    writeCommentNode.style.preferredSize = CGSize(width: 35.0, height: 50.0)
     writeCommentNode.configuration.imageSize = CGSize(width: 30.0, height: 30.0)
     writeCommentNode.configuration.externalInsets = UIEdgeInsets.zero
     writeCommentNode.configuration.internalInsets = UIEdgeInsets.zero
