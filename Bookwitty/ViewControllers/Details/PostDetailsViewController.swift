@@ -328,7 +328,10 @@ extension PostDetailsViewController: PostDetailsNodeDelegate {
   }
 
   func bannerTapAction(url: URL?) {
-      WebViewController.present(url: url)
+    guard let safeURL = url else {
+      return
+    }
+    WebViewController.present(url: safeURL)
   }
 
   func shouldShowPostDetailsAllPosts() {
