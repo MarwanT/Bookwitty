@@ -879,8 +879,8 @@ extension ContentEditorViewController: QuoteEditorViewControllerDelegate {
 extension ContentEditorViewController {
   func publishYourPost(_ completion: ((_ success: Bool) -> Void)? = nil) {
     self.viewModel.preparePostForPublish()
-    self.editorView.getDefaults { (_ defaultTitle: String, _ defaultDescription: String?, _ defaultImageURL: String?) in
-      let defaultValues = (defaultTitle, defaultDescription, defaultImageURL)
+    self.editorView.getDefaults { (_ defaultTitle: String, _ defaultDescription: String?, _ defaultImageIdentifier: String?) in
+      let defaultValues = (defaultTitle, defaultDescription, defaultImageIdentifier)
       self.viewModel.updateContent(with: defaultValues) { success in
         completion?(success)
       }
@@ -1009,9 +1009,10 @@ extension ContentEditorViewController: CropViewControllerDelegate {
     self.editorView.generatePhotoWrapper() { id in
       self.viewModel.addUploadRequest(id)
       self.loadNavigationBarButtons()
-      self.viewModel.upload(image: image) { (success: Bool, link: String?) in
-        guard let link = link, let Url = URL(string: link) else { return }
-        self.editorView.generate(photo: Url, alt: "Image", wrapperId: id)
+      self.viewModel.upload(image: image) { (success: Bool, imageIdentifier: String?, imageURL: URL?) in
+        guard success, let imageIdentifier = imageIdentifier, let imageURL = imageURL else { return }
+        // TODO: Send the editor the image id so he keeps reference of it
+        self.editorView.generate(photo: imageURL, alt: "Image", wrapperId: id)
         self.viewModel.removeUploadRequest(id)
         self.loadNavigationBarButtons()
       }

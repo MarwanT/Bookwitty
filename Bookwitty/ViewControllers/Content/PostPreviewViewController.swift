@@ -387,6 +387,11 @@ extension PostPreviewViewController: CoverPhotoNodeDelegate {
       collectionNode.reloadData()
     }
   }
+  
+  func coverPhotoFailedToLoadImage(node: CoverPhotoNode) {
+    // TODO: To figure out the UX to be applied on failure
+    print("Fail To Load Image")
+  }
 }
 
 //MARK: - UIImagePickerControllerDelegate & UINavigationControllerDelegate implementation

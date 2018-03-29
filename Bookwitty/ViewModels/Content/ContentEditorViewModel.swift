@@ -157,7 +157,7 @@ class ContentEditorViewModel  {
     }
   }
   
-  func saveAndSynchronize(with defaultValues: (title: String, description: String?, imageURL: String?), completion: ((_ success: Bool) -> Void)? = nil) {
+  func saveAndSynchronize(with defaultValues: (title: String, description: String?, imageIdentifier: String?), completion: ((_ success: Bool) -> Void)? = nil) {
     // Create the post if not created
     if self.currentPost.id == nil {
       self.createContent(with: { success in
@@ -170,7 +170,7 @@ class ContentEditorViewModel  {
     }
   }
   
-  func updateContent(with defaultValues: (title: String, description: String?, imageURL: String?), completion: ((_ success: Bool) -> Void)? = nil) {
+  func updateContent(with defaultValues: (title: String, description: String?, imageIdentifier: String?), completion: ((_ success: Bool) -> Void)? = nil) {
     guard let currentPost = self.currentPost, let id = currentPost.id else {
       completion?(false)
       return
@@ -178,11 +178,16 @@ class ContentEditorViewModel  {
 
     let title = currentPost.title ?? defaultValues.title
     let shortDescription = currentPost.shortDescription ?? defaultValues.description
-    let imageURL = currentPost.imageUrl ?? defaultValues.imageURL
+    
+    /**
+     TODO: Check if the post have no image set yet and send it with the API call
+     Currently not implemented because it has erroneous behavior
+     starting from the default image ID returned by the JS
+     */
 
     self.resetPreviousRequest()
     let status = PublishAPI.PublishStatus(rawValue: self.currentPost.status ?? "") ?? PublishAPI.PublishStatus.draft
-    self.currentRequest = PublishAPI.updateContent(id: id, title: title, body: currentPost.body, imageIdentifier: imageURL, shortDescription: shortDescription, status: status, completion: { (success, candidatePost, error) in
+    self.currentRequest = PublishAPI.updateContent(id: id, title: title, body: currentPost.body, imageIdentifier: nil, shortDescription: shortDescription, status: status, completion: { (success, candidatePost, error) in
       defer { self.currentRequest = nil; completion?(success) }
       guard success, let candidatePost = candidatePost else {
         return
@@ -274,25 +279,32 @@ class ContentEditorViewModel  {
     }
   }
   
-  func upload(image: UIImage?, completion: @escaping (_ success: Bool, _ imageId: String?) -> Void) {
+  func upload(image: UIImage?, completion: @escaping (_ success: Bool, _ imageIdentifier: String?, _ imageURL: URL?) -> Void) {
     guard let image = image, let data = image.dataForPNGRepresentation() else {
-      completion(false, nil)
+      completion(false, nil, nil)
       return
     }
     
     let fileName = UUID().uuidString
-    _ = UploadAPI.uploadPolicy(file: (fileName, size: data.count), fileType: UploadAPI.FileType.image, assetType: UploadAPI.AssetType.inline) {
+    _ = UploadAPI.uploadPolicy(
+    file: (fileName, size: data.count),
+    fileType: UploadAPI.FileType.image,
+    assetType: UploadAPI.AssetType.inline) {
       (success, policy, error) in
-      guard success, let policy = policy, let url = URL(string: policy.uploadUrl ?? "") else {
-        completion(false, nil)
+      guard success,
+        let policy = policy,
+        let imageIdentifier = policy.uuid,
+        let imageURL = URL(string: policy.link ?? ""),
+        let uploadURL = URL(string: policy.uploadUrl ?? "") else {
+        completion(false, nil, nil)
         return
       }
       
       let parameters: [String : String] = (policy.form as? [String : String]) ?? [:]
-      _ = UtilitiesAPI.upload(url: url, paramters: parameters, multipart: (data: data, name: "file"), completion: {
+      _ = UtilitiesAPI.upload(url: uploadURL, paramters: parameters, multipart: (data: data, name: "file")) {
         (success, error) in
-        completion(success, policy.link)
-      })
+        completion(success, imageIdentifier, imageURL)
+      }
     }
   }
 
