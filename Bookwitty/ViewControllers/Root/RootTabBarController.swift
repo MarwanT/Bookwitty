@@ -6,8 +6,9 @@
 //  Copyright © 2017 Keeward. All rights reserved.
 //
 
-import Foundation
 import FLKAutoLayout
+import Foundation
+import GoogleSignIn
 
 class RootTabBarController: UITabBarController {
   let viewModel = RootTabBarViewModel()
@@ -327,6 +328,9 @@ extension RootTabBarController {
     UserManager.shared.deleteSignedInUser()
     UserManager.shared.didOpenOnboarding = false
     refreshTabBarViewController()
+    
+    // Sign Out from Google
+    GIDSignIn.sharedInstance().signOut()
   }
   
   func signIn(notification: Notification) {
