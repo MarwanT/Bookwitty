@@ -246,9 +246,9 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     backgroundNode.clipsToBounds = true
     backgroundNode.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     //Separator
-    separatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
-    topSeparatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
-    bottomSeparatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
+    separatorNode.backgroundColor  = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    topSeparatorNode.backgroundColor  = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    bottomSeparatorNode.backgroundColor  = ThemeManager.shared.currentTheme.defaultSeparatorColor()
   }
 }
 
@@ -316,7 +316,7 @@ extension BaseCardPostNode {
       commentSeparator.style.height = ASDimensionMake(1)
       commentSeparator.style.flexGrow = 1
       commentSeparator.isLayerBacked = true
-      commentSeparator.backgroundColor = ThemeManager.shared.currentTheme.colorNumber18()
+      commentSeparator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
       let commentSeparatorNodeInset = ASInsetLayoutSpec(insets: commentActionBarSeparatorInset(), child: commentSeparator)
       verticalStack.children?.append(commentSeparatorNodeInset)
 
