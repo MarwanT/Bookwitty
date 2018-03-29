@@ -144,6 +144,7 @@
 		590E30021EDC1A68006C6D5C /* CommentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590E30011EDC1A68006C6D5C /* CommentNode.swift */; };
 		59139E041E895CDA002022F6 /* Volkhov-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59139E021E895CCD002022F6 /* Volkhov-Bold.ttf */; };
 		59139E051E895CDC002022F6 /* Volkhov-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59139E031E895CCD002022F6 /* Volkhov-BoldItalic.ttf */; };
+		5919A771206BE8C200576008 /* URL+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5919A770206BE8C200576008 /* URL+Utilities.swift */; };
 		591E15561E70E381008CA78A /* SectionSubtitleHeaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591E15551E70E381008CA78A /* SectionSubtitleHeaderNode.swift */; };
 		591E15581E70FE37008CA78A /* GenericNodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591E15571E70FE37008CA78A /* GenericNodeViewController.swift */; };
 		592974BF1E5F57AE0083A4C2 /* ModelCommonProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592974BE1E5F57AE0083A4C2 /* ModelCommonProperties.swift */; };
@@ -513,6 +514,7 @@
 		590E30011EDC1A68006C6D5C /* CommentNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentNode.swift; sourceTree = "<group>"; };
 		59139E021E895CCD002022F6 /* Volkhov-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Volkhov-Bold.ttf"; sourceTree = "<group>"; };
 		59139E031E895CCD002022F6 /* Volkhov-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Volkhov-BoldItalic.ttf"; sourceTree = "<group>"; };
+		5919A770206BE8C200576008 /* URL+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Utilities.swift"; sourceTree = "<group>"; };
 		591E15551E70E381008CA78A /* SectionSubtitleHeaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionSubtitleHeaderNode.swift; sourceTree = "<group>"; };
 		591E15571E70FE37008CA78A /* GenericNodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericNodeViewController.swift; sourceTree = "<group>"; };
 		592974BE1E5F57AE0083A4C2 /* ModelCommonProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelCommonProperties.swift; sourceTree = "<group>"; };
@@ -1146,6 +1148,7 @@
 				0FA81A1E1F9DDB1D006D9DB6 /* NavigationController.swift */,
 				0FFFFC181FB5BC50006F0810 /* SelectedImageView.swift */,
 				59634F852029BA2F0038CC39 /* ImageResizingOperation.swift */,
+				5919A770206BE8C200576008 /* URL+Utilities.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -2317,6 +2320,7 @@
 				56D5F73D1E5B7D0000F6A164 /* PenName+API.swift in Sources */,
 				F41D52A01E40EB060021A4AE /* RegisterViewController.swift in Sources */,
 				59591F1B1E6D7E7A005592B8 /* DisclosureNode.swift in Sources */,
+				5919A771206BE8C200576008 /* URL+Utilities.swift in Sources */,
 				567B3C041ED4310600E02E16 /* SearchFiltersViewController.swift in Sources */,
 				F4AD7D5020407CF200D12FDD /* CompactPenNameNode.swift in Sources */,
 				598D84DD1FB34D8B00D5E438 /* DynamicCommentMessageNode.swift in Sources */,

@@ -374,7 +374,7 @@ extension RichLinkPreviewViewController {
       audioImageView.image = #imageLiteral(resourceName: "audioPlaceholder")
     }
     
-    if let imageUrl = response.thumbnails?.first?.url {
+    if var imageUrl = response.thumbnails?.first?.url?.withHTTPS {
       audioImageView.sd_setImage(with: imageUrl) { (image: UIImage?, _, _, _) in
         guard let _ = image else {
           imageIsNotAvailable()
