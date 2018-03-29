@@ -103,7 +103,7 @@ struct UserAPI {
     }
   }
   
-  public static func user(completion: @escaping (_ success: Bool, _ user: User?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
+  public static func user(completion: @escaping (_ success: Bool, _ user: User?, _ oneTimeToken: String?, _ error: BookwittyAPIError?) -> Void) -> Cancellable? {
     
     let successStatusCode = 200
     
@@ -111,9 +111,10 @@ struct UserAPI {
       (data, statusCode, response, error) in
       var success: Bool = false
       var user: User? = nil
+      var oneTimeToken: String? = nil
       var error: BookwittyAPIError? = error
       defer {
-        completion(success, user, error)
+        completion(success, user, oneTimeToken, error)
       }
       
       // If status code != success then break
@@ -125,6 +126,7 @@ struct UserAPI {
       if let data = data {
         user = User.parseData(data: data)
         success = user != nil
+        oneTimeToken = user?.oneTimeToken
 
         if let user = user {
           UserManager.shared.signedInUser = user
