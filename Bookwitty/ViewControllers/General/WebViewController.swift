@@ -21,9 +21,12 @@ class WebViewController {
     presenterViewController.present(safariVC, animated: true, completion: nil)
   }
 
-  public static func present(url: URL!, inViewController: UIViewController? = nil) {
+  public static func present(url: URL, inViewController: UIViewController? = nil) {
+    guard let safeURL = url.withHTTPS else {
+      return
+    }
     let presenterViewController: UIViewController = inViewController != nil ? inViewController! : rootViewController
-    let safariVC = SFSafariViewController(url: url)
+    let safariVC = SFSafariViewController(url: safeURL)
     safariVC.modalPresentationStyle = .overCurrentContext
     safariVC.modalTransitionStyle = .coverVertical
     if #available(iOS 10.0, *) {
