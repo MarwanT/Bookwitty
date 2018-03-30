@@ -35,6 +35,8 @@ class CommentCompactNode: ASCellNode {
 
   fileprivate func setupNode() {
     automaticallyManagesSubnodes = true
+    
+    style.minHeight = ASDimensionMake(50)
 
     imageNode.style.preferredSize = CGSize(width: 30.0, height: 30.0)
     imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0.0, nil)
