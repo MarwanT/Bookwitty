@@ -85,9 +85,6 @@ class CommentComposerViewController: UIViewController {
   private func setupNavigationItems() {
     let leftBarButton = UIBarButtonItem(title: Strings.cancel(), style: .plain, target: self, action: #selector(didTapCancel(_:)))
     let rightBarButton = UIBarButtonItem(title: Strings.post(), style: .plain, target: self, action: #selector(didTapPublish(_:)))
-    let leftBarButtonColor = ThemeManager.shared.currentTheme.colorNumber19()
-    leftBarButton.tintColor = leftBarButtonColor
-    leftBarButton.setTitleTextAttributes([NSForegroundColorAttributeName: leftBarButtonColor], for: .normal)
     self.navigationItem.leftBarButtonItem = leftBarButton
     self.navigationItem.rightBarButtonItem = rightBarButton
   }
