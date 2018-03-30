@@ -230,7 +230,7 @@ extension CommentNode {
     var defaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor()
     var dateColor: UIColor = ThemeManager.shared.currentTheme.colorNumber15()
     var replyButtonTextColor: UIColor = ThemeManager.shared.currentTheme.defaultButtonColor()
-    var imageSize: CGSize = CGSize(width: 45.0, height: 45.0)
+    var imageSize: CGSize = CGSize(width: 40.0, height: 40.0)
     var iconSize: CGSize = CGSize(width: 40.0, height: 27.0)
     var imageBorderWidth: CGFloat = 0.0
     var imageBorderColor: UIColor? = nil
