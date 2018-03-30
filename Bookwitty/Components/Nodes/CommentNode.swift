@@ -176,7 +176,7 @@ class CommentNode: ASCellNode {
   
   var fullName: String? {
     didSet {
-      fullNameNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
+      fullNameNode.attributedText = AttributedStringBuilder(fontDynamicType:FontDynamicType.Reference.type18)
         .append(text: fullName ?? "", color: configuration.nameColor).attributedString
       fullNameNode.setNeedsLayout()
       setNeedsLayout()
@@ -185,7 +185,7 @@ class CommentNode: ASCellNode {
   
   var date: Date? {
     didSet {
-      dateNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+      dateNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.Reference.type11)
         .append(text: date?.relativelyFormatted() ?? "", color: configuration.dateColor).attributedString
       setNeedsLayout()
     }
@@ -193,7 +193,7 @@ class CommentNode: ASCellNode {
   
   var message: String? {
     didSet {
-      messageNode.htmlString(text: message, fontDynamicType: FontDynamicType.body)
+      messageNode.htmlString(text: message, fontDynamicType: FontDynamicType.Reference.type17)
       messageNode.setNeedsLayout()
     }
   }
