@@ -56,7 +56,7 @@ class CommentComposerViewController: UIViewController {
     
     let insets = textView.textContainerInset
     textViewPlaceholderLabel.translatesAutoresizingMaskIntoConstraints = false
-    textViewPlaceholderLabel.topAnchor.constraint(equalTo: textView.topAnchor, constant: 0).isActive = true
+    textViewPlaceholderLabel.topAnchor.constraint(equalTo: textView.topAnchor, constant: -2.5).isActive = true
     textViewPlaceholderLabel.leftAnchor.constraint(equalTo: textView.leftAnchor, constant: insets.left + 5).isActive = true
     
     super.updateViewConstraints()
