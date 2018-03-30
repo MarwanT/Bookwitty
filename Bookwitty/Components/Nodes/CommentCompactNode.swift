@@ -67,14 +67,14 @@ class CommentCompactNode: ASCellNode {
       return
     }
 
-    let fullNameAttributedString = AttributedStringBuilder(fontDynamicType: .footnote)
+    let fullNameAttributedString = AttributedStringBuilder(fontDynamicType: FontDynamicType.Reference.type18)
       .append(text: fullName, color: ThemeManager.shared.currentTheme.defaultTextColor())
       .attributedString
 
     fullNameNode.attributedText = fullNameAttributedString
     fullNameNode.setNeedsLayout()
 
-    messageNode.htmlString(text: message, fontDynamicType: .body, color: ThemeManager.shared.currentTheme.defaultTextColor())
+    messageNode.htmlString(text: message, fontDynamicType: FontDynamicType.Reference.type17, color: ThemeManager.shared.currentTheme.defaultTextColor())
     messageNode.setNeedsLayout()
   }
 
