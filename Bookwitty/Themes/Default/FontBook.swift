@@ -27,6 +27,44 @@ enum FontDynamicType: String {
   case label2 = "label2"
   case quote = "quote"
   
+  struct Reference {
+    /// title1
+    static let type1: FontDynamicType = .title1
+    /// title2
+    static let type2: FontDynamicType = .title2
+    /// title3
+    static let type3: FontDynamicType = .title3
+    /// body
+    static let type4: FontDynamicType = .body
+    /// headline
+    static let type5: FontDynamicType = .headline
+    /// callout
+    static let type6: FontDynamicType = .callout
+    /// subheadline
+    static let type7: FontDynamicType = .subheadline
+    /// footnote
+    static let type8: FontDynamicType = .footnote
+    /// caption1
+    static let type9: FontDynamicType = .caption1
+    /// caption2
+    static let type10: FontDynamicType = .caption2
+    /// caption3
+    static let type11: FontDynamicType = .caption3
+    /// title4
+    static let type12: FontDynamicType = .title4
+    /// quote
+    static let type13: FontDynamicType = .quote
+    /// label1
+    static let type14: FontDynamicType = .label1
+    /// label2
+    static let type15: FontDynamicType = .label2
+    /// body2
+    static let type16: FontDynamicType = .body2
+    /// body3
+    static let type17: FontDynamicType = .body3
+    /// title5
+    static let type18: FontDynamicType = .title5
+  }
   
   var font: UIFont {
     
