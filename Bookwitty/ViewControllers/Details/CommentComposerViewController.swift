@@ -204,16 +204,16 @@ extension CommentComposerViewController: Themeable {
     contentView.layoutMargins = UIEdgeInsets(top: 15, left: 17, bottom: 10, right: 17)
     textView.textContainerInset = UIEdgeInsets.zero
     textView.layer.cornerRadius = theme.defaultCornerRadius()
-    textView.font = FontDynamicType.body.font
-    resourcePresenterLabel.font = FontDynamicType.caption2.font
-    resourceTitleLabel.font = FontDynamicType.caption1.font
+    textView.font = FontDynamicType.Reference.type17.font
+    resourcePresenterLabel.font = FontDynamicType.Reference.type10.font
+    resourceTitleLabel.font = FontDynamicType.Reference.type9.font
     textView.textColor = theme.defaultTextColor()
     resourcePresenterLabel.textColor = theme.defaultGrayedTextColor()
     resourceTitleLabel.textColor = theme.defaultTextColor()
     separatorView.backgroundColor = theme.defaultSeparatorColor()
     imageView.setRoundedCornersWithRadius(imageView.frame.height/2, width: 0, color: nil)
     textViewPlaceholderLabel.textColor = theme.defaultGrayedTextColor()
-    textViewPlaceholderLabel.font = FontDynamicType.caption1.font
+    textViewPlaceholderLabel.font = FontDynamicType.Reference.type17.font
   }
 }
 
