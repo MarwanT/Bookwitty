@@ -120,7 +120,7 @@ class BookStoreViewController: UIViewController {
     // View All Categories View
     viewAllCategories.configuration.style = .highlighted
     viewAllCategories.delegate = self
-    viewAllCategories.constrainHeight("45")
+    viewAllCategories.constrainHeight("48")
     
     // Bookwitty Suggests View
     bookwittySuggestsTableView.separatorColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
@@ -145,12 +145,12 @@ class BookStoreViewController: UIViewController {
     // View All Books
     viewAllBooksView.configuration.style = .highlighted
     viewAllBooksView.delegate = self
-    viewAllBooksView.constrainHeight("45")
+    viewAllBooksView.constrainHeight("48")
     
     // View All Selections
     viewAllSelectionsView.configuration.style = .highlighted
     viewAllSelectionsView.delegate = self
-    viewAllSelectionsView.constrainHeight("45")
+    viewAllSelectionsView.constrainHeight("48")
   }
   
   private func viewModelLoadedDataBlock() -> (_ finished: Bool) -> Void {
