@@ -199,7 +199,7 @@ extension WriteCommentNode {
       borderWidth = 1
       placeholderText = Strings.what_are_your_thoughts()
       displayTopSeparator = false
-      imageSize = CGSize(width: 45.0, height: 45.0)
+      imageSize = CGSize(width: 40.0, height: 40.0)
       textColor = theme.defaultTextColor()
       placeholderTextColor = theme.defaultGrayedTextColor()
       borderRadius = theme.defaultCornerRadius()
