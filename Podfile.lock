@@ -2,6 +2,7 @@ PODS:
   - AKImageCropperView (2.0.0)
   - Alamofire (4.6.0)
   - ALCameraViewController (1.2.7)
+  - AlignedCollectionViewFlowLayout (1.1.2)
   - AsyncDisplayKit (2.2):
     - AsyncDisplayKit/PINRemoteImage (= 2.2)
   - AsyncDisplayKit/Core (2.2)
@@ -123,6 +124,7 @@ PODS:
 DEPENDENCIES:
   - AKImageCropperView (= 2.0.0)
   - ALCameraViewController (= 1.2.7)
+  - AlignedCollectionViewFlowLayout (= 1.1.2)
   - AsyncDisplayKit (= 2.2)
   - Crashlytics (= 3.8.4)
   - DTCoreText (= 1.6.21)
@@ -205,6 +207,7 @@ SPEC CHECKSUMS:
   AKImageCropperView: 9c80fd45512daa69426161ad51c248655c1b5182
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
   ALCameraViewController: 4a513b8d5ecfdb3f34c50b1d469c373aae1ec7b4
+  AlignedCollectionViewFlowLayout: ee2ef451e741ec08f8e0967d828001e2f051c20a
   AsyncDisplayKit: 1585f6cd0531ae9b30476f5912f577b73ebcb0e4
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   BrightFutures: 8681dbb9fa831b69b6e7dc4a498b9e081d5daeb5
@@ -247,6 +250,6 @@ SPEC CHECKSUMS:
   Version: 31221742495765fc798d08eae45de3c936dce0db
   WSTagsField: d73f2fbeacabedb192359eab8a8b5062211beea9
 
-PODFILE CHECKSUM: c68676d243054620617764e9aca134f3826859db
+PODFILE CHECKSUM: 0512d0f57b29f87c610374b5b2d8a1a1d8d0c9af
 
 COCOAPODS: 1.3.1

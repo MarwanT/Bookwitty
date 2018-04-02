@@ -18,6 +18,7 @@ target 'Bookwitty' do
   }
 
   # Pods for Bookwitty
+  pod 'AlignedCollectionViewFlowLayout', '1.1.2'
   pod 'Moya', '8.0.5'
   pod 'Fabric', '1.6.11'
   pod 'Crashlytics', '3.8.4'
