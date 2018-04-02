@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlignedCollectionViewFlowLayout
 import AsyncDisplayKit
 
 protocol TagCollectionNodeDelegate {
@@ -27,7 +28,7 @@ class TagCollectionNode: ASCellNode {
   override init() {
     tags = []
     imageNode = ASImageNode()
-    flowLayout = UICollectionViewFlowLayout()
+    flowLayout = AlignedCollectionViewFlowLayout(horizontalAlignment: .left, verticalAlignment: .center)
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     super.init()
     setupNode()
