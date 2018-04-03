@@ -29,7 +29,7 @@ class ActionBarNode: ASCellNode {
   var actionLabelText: String? {
     didSet {
       if let actionLabelText = actionLabelText {
-        actionLabel.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1)
+        actionLabel.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.Reference.type9)
           .append(text: actionLabelText, color: ThemeManager.shared.currentTheme.defaultButtonColor()).attributedString
       } else {
         actionLabel.attributedText = nil
@@ -41,7 +41,7 @@ class ActionBarNode: ASCellNode {
   var secondaryLabelText: String? {
     didSet {
       if let actionLabelText = actionLabelText {
-        secondaryLabel.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.caption1)
+        secondaryLabel.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.Reference.type9)
           .append(text: actionLabelText, color: ThemeManager.shared.currentTheme.defaultTextColor()).attributedString
       } else {
         secondaryLabel.attributedText = nil
