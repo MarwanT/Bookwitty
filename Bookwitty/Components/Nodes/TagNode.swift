@@ -50,7 +50,7 @@ class TagNode: ASCellNode {
   }
 
   var tagPadding: UIEdgeInsets {
-    return UIEdgeInsets(top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
+    return UIEdgeInsets(top: 8.0, left: 10.0, bottom: 8.0, right: 10.0)
   }
 
   var tagMargin: UIEdgeInsets {
