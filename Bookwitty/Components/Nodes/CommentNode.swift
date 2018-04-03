@@ -68,7 +68,6 @@ class CommentNode: ASCellNode {
     
     witButton.delegate = self
     witButton.configuration.height = 27.0
-    witButton.configuration.font = FontDynamicType.footnote.font
     
     let iconTintColor: UIColor = ThemeManager.shared.currentTheme.colorNumber15()
     moreButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(iconTintColor)
@@ -176,7 +175,7 @@ class CommentNode: ASCellNode {
   
   var fullName: String? {
     didSet {
-      fullNameNode.attributedText = AttributedStringBuilder(fontDynamicType: .footnote)
+      fullNameNode.attributedText = AttributedStringBuilder(fontDynamicType:FontDynamicType.Reference.type18)
         .append(text: fullName ?? "", color: configuration.nameColor).attributedString
       fullNameNode.setNeedsLayout()
       setNeedsLayout()
@@ -185,7 +184,7 @@ class CommentNode: ASCellNode {
   
   var date: Date? {
     didSet {
-      dateNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption2)
+      dateNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.Reference.type11)
         .append(text: date?.relativelyFormatted() ?? "", color: configuration.dateColor).attributedString
       setNeedsLayout()
     }
@@ -193,7 +192,7 @@ class CommentNode: ASCellNode {
   
   var message: String? {
     didSet {
-      messageNode.htmlString(text: message, fontDynamicType: FontDynamicType.body)
+      messageNode.htmlString(text: message, fontDynamicType: FontDynamicType.Reference.type17)
       messageNode.setNeedsLayout()
     }
   }
@@ -230,7 +229,7 @@ extension CommentNode {
     var defaultTextColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor()
     var dateColor: UIColor = ThemeManager.shared.currentTheme.colorNumber15()
     var replyButtonTextColor: UIColor = ThemeManager.shared.currentTheme.defaultButtonColor()
-    var imageSize: CGSize = CGSize(width: 45.0, height: 45.0)
+    var imageSize: CGSize = CGSize(width: 40.0, height: 40.0)
     var iconSize: CGSize = CGSize(width: 40.0, height: 27.0)
     var imageBorderWidth: CGFloat = 0.0
     var imageBorderColor: UIColor? = nil

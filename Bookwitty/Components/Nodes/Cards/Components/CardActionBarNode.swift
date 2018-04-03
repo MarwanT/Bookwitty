@@ -90,7 +90,7 @@ class CardActionBarNode: ASCellNode {
   private func initializeNode() {
     automaticallyManagesSubnodes = true
     
-    let imageTintColor: UIColor = ThemeManager.shared.currentTheme.colorNumber15()
+    let imageTintColor: UIColor = ThemeManager.shared.currentTheme.colorNumber20()
 
     //Note: Had a Problem with the selected and highlighted states of the button images
     commentButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(imageTintColor)
@@ -115,7 +115,7 @@ class CardActionBarNode: ASCellNode {
   }
 
   private func setupFollowButtonStyling() {
-    let buttonFont = FontDynamicType.subheadline.font
+    let buttonFont = FontDynamicType.Reference.type8.font
 
     let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultBackgroundColor())
     let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()
@@ -136,7 +136,7 @@ class CardActionBarNode: ASCellNode {
   }
 
   private func setupWitButtonStyling() {
-    let buttonFont = FontDynamicType.subheadline.font
+    let buttonFont = FontDynamicType.Reference.type8.font
 
     let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultBackgroundColor())
     let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()

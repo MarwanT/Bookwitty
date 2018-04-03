@@ -221,7 +221,7 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     bottomSeparatorNode.style.height = ASDimensionMake(1)
     bottomSeparatorNode.style.flexGrow = 1
 
-    writeCommentNode.style.preferredSize = CGSize(width: 35.0, height: 35.0)
+    writeCommentNode.style.preferredSize = CGSize(width: 35.0, height: 50.0)
     writeCommentNode.configuration.imageSize = CGSize(width: 30.0, height: 30.0)
     writeCommentNode.configuration.externalInsets = UIEdgeInsets.zero
     writeCommentNode.configuration.internalInsets = UIEdgeInsets.zero
@@ -246,9 +246,9 @@ class BaseCardPostNode: ASCellNode, NodeTapProtocol {
     backgroundNode.clipsToBounds = true
     backgroundNode.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
     //Separator
-    separatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
-    topSeparatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
-    bottomSeparatorNode.backgroundColor  = ThemeManager.shared.currentTheme.colorNumber18()
+    separatorNode.backgroundColor  = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    topSeparatorNode.backgroundColor  = ThemeManager.shared.currentTheme.defaultSeparatorColor()
+    bottomSeparatorNode.backgroundColor  = ThemeManager.shared.currentTheme.defaultSeparatorColor()
   }
 }
 
@@ -316,7 +316,7 @@ extension BaseCardPostNode {
       commentSeparator.style.height = ASDimensionMake(1)
       commentSeparator.style.flexGrow = 1
       commentSeparator.isLayerBacked = true
-      commentSeparator.backgroundColor = ThemeManager.shared.currentTheme.colorNumber18()
+      commentSeparator.backgroundColor = ThemeManager.shared.currentTheme.defaultSeparatorColor()
       let commentSeparatorNodeInset = ASInsetLayoutSpec(insets: commentActionBarSeparatorInset(), child: commentSeparator)
       verticalStack.children?.append(commentSeparatorNodeInset)
 

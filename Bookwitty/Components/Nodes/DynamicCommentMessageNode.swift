@@ -301,7 +301,7 @@ extension DynamicCommentMessageNode {
         handyAttributedString.append(
           NSAttributedString(string: "...\(Strings.more().uppercased())", attributes:
             [
-              NSFontAttributeName : FontDynamicType.footnote.font,
+              NSFontAttributeName : FontDynamicType.Reference.type17.font,
               NSForegroundColorAttributeName : ThemeManager.shared.currentTheme.defaultTextColor()
             ]
           )
@@ -310,7 +310,7 @@ extension DynamicCommentMessageNode {
         handyAttributedString.append(
           NSAttributedString(string: "\(Strings.wits(numberOfWits))", attributes:
             [
-              NSFontAttributeName : FontDynamicType.caption1.font,
+              NSFontAttributeName : FontDynamicType.Reference.type10.font,
               NSForegroundColorAttributeName : ThemeManager.shared.currentTheme.colorNumber15()
             ]
           )
@@ -341,7 +341,7 @@ extension DynamicCommentMessageNode {
 extension DynamicCommentMessageNode {
   struct Configuration {
     fileprivate var defaultTextColor = ThemeManager.shared.currentTheme.defaultTextColor()
-    fileprivate var truncationString = AttributedStringBuilder(fontDynamicType: .body)
+    fileprivate var truncationString = AttributedStringBuilder(fontDynamicType: FontDynamicType.Reference.type17)
       .append(text: "...").attributedString
     fileprivate var fontBook: FontDynamicType = .body
     var numberOfLines: Int = 10000
