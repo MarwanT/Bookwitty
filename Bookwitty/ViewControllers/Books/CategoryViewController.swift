@@ -194,7 +194,7 @@ class CategoryViewController: UIViewController {
     let canDisplayViewAllSubcategories = viewSubcategories.superview == nil
     if viewModel.hasSubcategories && canDisplayViewAllSubcategories {
       addSeparator(leftMargin)
-      viewSubcategories.constrainHeight("45")
+      viewSubcategories.constrainHeight("48")
       stackView.addArrangedSubview(viewSubcategories)
       viewSubcategories.alignLeading("0", trailing: "0", toView: stackView)
       addSeparator()
@@ -402,7 +402,7 @@ extension CategoryViewController: UITableViewDataSource, UITableViewDelegate {
     topSeparator.alignLeading("\(leftMargin)", trailing: "0", toView: containerView)
     viewAllBooksView.constrainTopSpace(toView: topSeparator, predicate: "0")
     viewAllBooksView.alignLeading("0", trailing: "0", toView: containerView)
-    viewAllBooksView.constrainHeight("45")
+    viewAllBooksView.constrainHeight("48")
     
     return containerView
   }

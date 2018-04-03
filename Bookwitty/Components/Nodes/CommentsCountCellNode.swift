@@ -65,7 +65,7 @@ extension CommentsCountCellNode {
       left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: ThemeManager.shared.currentTheme.generalExternalMargin() - 8,
       right: ThemeManager.shared.currentTheme.generalExternalMargin())
-    var fontBookSelected: FontDynamicType = .subheadline
+    var fontBookSelected = FontDynamicType.Reference.type8
     var textColor: UIColor = ThemeManager.shared.currentTheme.defaultTextColor()
   }
 }

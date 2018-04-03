@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlignedCollectionViewFlowLayout
 import AsyncDisplayKit
 
 protocol TagCollectionNodeDelegate {
@@ -21,13 +22,15 @@ class TagCollectionNode: ASCellNode {
   let imageNode: ASImageNode
   let collectionNode: ASCollectionNode
   let flowLayout: UICollectionViewFlowLayout
+  
+  var deselectAutomatically: Bool = true
 
   var delegate: TagCollectionNodeDelegate?
 
   override init() {
     tags = []
     imageNode = ASImageNode()
-    flowLayout = UICollectionViewFlowLayout()
+    flowLayout = AlignedCollectionViewFlowLayout(horizontalAlignment: .left, verticalAlignment: .center)
     collectionNode = ASCollectionNode(collectionViewLayout: flowLayout)
     super.init()
     setupNode()
@@ -97,5 +100,10 @@ extension TagCollectionNode: ASCollectionDataSource, ASCollectionDelegate {
 
   func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
     delegate?.tagCollection(node: self, didSelectItemAt: indexPath.item)
+    if deselectAutomatically {
+      DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+        collectionNode.deselectItem(at: indexPath, animated: false)
+      }
+    }
   }
 }

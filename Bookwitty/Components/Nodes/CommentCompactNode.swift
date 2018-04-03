@@ -35,6 +35,8 @@ class CommentCompactNode: ASCellNode {
 
   fileprivate func setupNode() {
     automaticallyManagesSubnodes = true
+    
+    style.minHeight = ASDimensionMake(50)
 
     imageNode.style.preferredSize = CGSize(width: 30.0, height: 30.0)
     imageNode.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0.0, nil)
@@ -67,21 +69,21 @@ class CommentCompactNode: ASCellNode {
       return
     }
 
-    let fullNameAttributedString = AttributedStringBuilder(fontDynamicType: .footnote)
+    let fullNameAttributedString = AttributedStringBuilder(fontDynamicType: FontDynamicType.Reference.type18)
       .append(text: fullName, color: ThemeManager.shared.currentTheme.defaultTextColor())
       .attributedString
 
     fullNameNode.attributedText = fullNameAttributedString
     fullNameNode.setNeedsLayout()
 
-    messageNode.htmlString(text: message, fontDynamicType: .body, color: ThemeManager.shared.currentTheme.defaultTextColor())
+    messageNode.htmlString(text: message, fontDynamicType: FontDynamicType.Reference.type17, color: ThemeManager.shared.currentTheme.defaultTextColor())
     messageNode.setNeedsLayout()
   }
 
   override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
     let imageNodeInsetSpec = ASInsetLayoutSpec(insets: imageInset, child: imageNode)
 
-    let fullNameNodeInsetSpec = ASInsetLayoutSpec(insets: messageInset, child: fullNameNode)
+    let fullNameNodeInsetSpec = ASInsetLayoutSpec(insets: fullNameInset, child: fullNameNode)
     fullNameNodeInsetSpec.style.flexGrow = 1.0
     fullNameNodeInsetSpec.style.flexShrink = 1.0
 
@@ -101,9 +103,13 @@ class CommentCompactNode: ASCellNode {
   var imageInset: UIEdgeInsets {
     return UIEdgeInsets(top: 5.0, left: 5.0, bottom: 5.0, right: 5.0)
   }
+  
+  var fullNameInset: UIEdgeInsets {
+    return UIEdgeInsets(top: 5.0, left: 5.0, bottom: 0, right: 5.0)
+  }
 
   var messageInset: UIEdgeInsets {
-    return UIEdgeInsets(top: 5.0, left: 5.0, bottom: 2.0, right: 5.0)
+    return UIEdgeInsets(top: 2.0, left: 5.0, bottom: 2.0, right: 5.0)
   }
 }
 

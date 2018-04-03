@@ -60,6 +60,8 @@ class CommentsNode: ASCellNode {
     
     composerPlaceholder.delegate = self
     composerPlaceholder.configuration.displayTopSeparator = true
+    composerPlaceholder.configuration.internalInsets.top = 0
+    composerPlaceholder.configuration.internalInsets.bottom = 0
     composerPlaceholder.backgroundColor = UIColor.white
     
     var disclosureNodeConfiguration = DisclosureNodeCell.Configuration()

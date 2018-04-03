@@ -34,8 +34,8 @@ class CommentsViewController: ASViewController<ASDisplayNode> {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    applyTheme()
     reloadData()
-
     navigationItem.backBarButtonItem = UIBarButtonItem.back
   }
   
@@ -145,5 +145,13 @@ extension CommentsViewController: CommentComposerViewControllerDelegate {
     if success {
       self.dismiss(animated: true, completion: nil)
     }
+  }
+}
+
+extension CommentsViewController: Themeable {
+  func applyTheme() {
+    self.navigationController?.navigationBar.titleTextAttributes = [
+      NSFontAttributeName: FontDynamicType.Reference.type18.font
+    ]
   }
 }

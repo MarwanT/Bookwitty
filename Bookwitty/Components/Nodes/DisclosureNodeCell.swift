@@ -152,7 +152,7 @@ extension DisclosureNodeCell {
   }
   
   struct Configuration {
-    static var nodeHeight: CGFloat = 45.0
+    static var nodeHeight: CGFloat = 48.0
     var nodeEdgeInsets = UIEdgeInsets(
       top: 0, left: ThemeManager.shared.currentTheme.generalExternalMargin(),
       bottom: 0, right: 0)

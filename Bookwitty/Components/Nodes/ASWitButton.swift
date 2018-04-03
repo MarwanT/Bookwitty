@@ -87,7 +87,7 @@ extension ASWitButton {
     let theme = ThemeManager.shared.currentTheme
     switch displayMode {
     case .lightWeight:
-      let buttonFont = configuration.font
+      let buttonFont = configuration.lightFont
       let textColor = theme.defaultGrayedTextColor()
       let selectedTextColor = theme.defaultButtonColor()
       
@@ -96,12 +96,13 @@ extension ASWitButton {
       
       setTitle(Strings.wit_it(), with: buttonFont, with: textColor, for: .normal)
       setTitle(Strings.witted(), with: buttonFont, with: selectedTextColor, for: .selected)
-      contentHorizontalAlignment = ASHorizontalAlignment.right
+      contentHorizontalAlignment = ASHorizontalAlignment.middle
+      contentEdgeInsets = UIEdgeInsets(top: -3, left: 0, bottom: 0, right: 0)
       
       cornerRadius = 0
       borderWidth = 0
     case .heavyWeight:
-      let buttonFont = configuration.font
+      let buttonFont = configuration.heavyFont
       let buttonBackgroundImage = theme.defaultBackgroundColor().image()
       let selectedButtonBackgroundImage = theme.defaultButtonColor().image()
       let textColor = theme.defaultButtonColor()
@@ -137,7 +138,8 @@ extension ASWitButton {
                                    //****\\
 extension ASWitButton {
   struct Configuration {
-    var font = FontDynamicType.subheadline.font
+    fileprivate var lightFont = FontDynamicType.Reference.type18.font
+    fileprivate var heavyFont = FontDynamicType.Reference.type8.font
     var height: CGFloat = 45.0
   }
 }
