@@ -147,7 +147,7 @@ extension ActionBarNode: Themeable {
   fileprivate func styleActionButton() {
     actionButton.style.height = ASDimensionMake(configuration.buttonSize.height)
 
-    let buttonFont = FontDynamicType.subheadline.font
+    let buttonFont = FontDynamicType.Reference.type8.font
     let buttonColor = ThemeManager.shared.currentTheme.defaultButtonColor()
     let backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
 

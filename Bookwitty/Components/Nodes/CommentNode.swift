@@ -68,7 +68,6 @@ class CommentNode: ASCellNode {
     
     witButton.delegate = self
     witButton.configuration.height = 27.0
-    witButton.configuration.font = FontDynamicType.footnote.font
     
     let iconTintColor: UIColor = ThemeManager.shared.currentTheme.colorNumber15()
     moreButton.imageNode.imageModificationBlock = ASImageNodeTintColorModificationBlock(iconTintColor)
