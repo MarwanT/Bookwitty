@@ -115,7 +115,7 @@ class CardActionBarNode: ASCellNode {
   }
 
   private func setupFollowButtonStyling() {
-    let buttonFont = FontDynamicType.subheadline.font
+    let buttonFont = FontDynamicType.Reference.type8.font
 
     let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultBackgroundColor())
     let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()
@@ -136,7 +136,7 @@ class CardActionBarNode: ASCellNode {
   }
 
   private func setupWitButtonStyling() {
-    let buttonFont = FontDynamicType.subheadline.font
+    let buttonFont = FontDynamicType.Reference.type8.font
 
     let buttonBackgroundImage = UIImage(color: ThemeManager.shared.currentTheme.defaultBackgroundColor())
     let textColor = ThemeManager.shared.currentTheme.defaultButtonColor()
