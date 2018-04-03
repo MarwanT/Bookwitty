@@ -89,7 +89,7 @@ class GetStarted: ASDisplayNode {
     verticalStackSpec.style.flexShrink = 1.0
 
     let vInset: CGFloat = configuration.vInset
-    let hInset = (1.0 / 3.0 * constrainedSize.max.width) / 2.0
+    let hInset = (1.0 / 4.0 * constrainedSize.max.width) / 2.0
     let insets = UIEdgeInsets(top: vInset, left: hInset, bottom: vInset, right: hInset)
     let insetLayoutSpec = ASInsetLayoutSpec(insets: insets, child: verticalStackSpec)
 
