@@ -31,14 +31,7 @@ class TagNode: ASCellNode {
 
   var tag: String? {
     didSet {
-      if let tag = tag {
-        titleNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption3)
-          .append(text: tag, color: ThemeManager.shared.currentTheme.defaultTextColor())
-          .attributedString
-      } else {
-        titleNode.attributedText = nil
-      }
-      titleNode.setNeedsLayout()
+      refreshTitleNode()
     }
   }
 
@@ -55,5 +48,35 @@ class TagNode: ASCellNode {
 
   var tagMargin: UIEdgeInsets {
     return UIEdgeInsets(top: 5.0, left: 5.0, bottom: 5.0, right: 5.0)
+  }
+  
+  // Change styling on selection
+  override func __setSelected(fromUIKit selected: Bool) {
+    super.__setSelected(fromUIKit: selected)
+    refreshBackgroud()
+    refreshTitleNode()
+  }
+  
+  // MARK: - HELPER METHODS
+  private func refreshBackgroud() {
+    if isSelected {
+      backgroundNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber25()
+    } else {
+      backgroundNode.backgroundColor = ThemeManager.shared.currentTheme.colorNumber9()
+    }
+    setNeedsLayout()
+  }
+  
+  private func refreshTitleNode() {
+    if isSelected {
+      titleNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.Reference.type11)
+        .append(text: tag ?? "", color: ThemeManager.shared.currentTheme.colorNumber23())
+        .attributedString
+    } else {
+      titleNode.attributedText = AttributedStringBuilder(fontDynamicType: FontDynamicType.Reference.type11)
+        .append(text: tag ?? "", color: ThemeManager.shared.currentTheme.colorNumber20())
+        .attributedString
+    }
+    setNeedsLayout()
   }
 }
