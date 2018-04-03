@@ -39,6 +39,7 @@ class ArticleCardContentNode: ASDisplayNode {
   private let externalMargin: CGFloat = 0.0
   private let internalMargin = ThemeManager.shared.currentTheme.cardInternalMargin()
   private let contentSpacing = ThemeManager.shared.currentTheme.contentSpacing()
+  private let titleDescriptionSpace: CGFloat = 5
   
   var imageNode: ASNetworkImageNode
   var titleNode: ASTextNode
@@ -145,9 +146,9 @@ class ArticleCardContentNode: ASDisplayNode {
 
     let nodesArray: [ASLayoutElement]
     if (hasImage) {
-      nodesArray = [imageInsetLayoutSpec, spacer(height: internalMargin), titleInsetLayoutSpec, spacer(height: internalMargin), descriptionInsetLayoutSpec]
+      nodesArray = [imageInsetLayoutSpec, spacer(height: internalMargin), titleInsetLayoutSpec, spacer(height: titleDescriptionSpace), descriptionInsetLayoutSpec]
     } else {
-      nodesArray = [titleInsetLayoutSpec, spacer(height: internalMargin), descriptionInsetLayoutSpec]
+      nodesArray = [titleInsetLayoutSpec, spacer(height: titleDescriptionSpace), descriptionInsetLayoutSpec]
     }
 
     let verticalStack = ASStackLayoutSpec(direction: .vertical,
