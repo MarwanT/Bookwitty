@@ -96,7 +96,7 @@ extension ASWitButton {
       
       setTitle(Strings.wit_it(), with: buttonFont, with: textColor, for: .normal)
       setTitle(Strings.witted(), with: buttonFont, with: selectedTextColor, for: .selected)
-      contentHorizontalAlignment = ASHorizontalAlignment.right
+      contentHorizontalAlignment = ASHorizontalAlignment.middle
       
       cornerRadius = 0
       borderWidth = 0
