@@ -25,4 +25,18 @@ class ErrorManager {
     
     return (false, nil)
   }
+  
+  func maxTagsAllowed(data: Data) -> (hasError: Bool, error: AppError?) {
+    guard let errors = AppError.appErrors(for: data), errors.count > 0 else {
+      return (false, nil)
+    }
+    
+    for error in errors {
+      if let code = error.code, code == "tag_count_exceeded" {
+        return (true, error)
+      }
+    }
+    
+    return (false, nil)
+  }
 }

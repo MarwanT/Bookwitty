@@ -78,19 +78,34 @@ class LinkTagsViewController: UIViewController {
     tagsView.onShouldReturn = { _ in
       return false
     }
-    tagsView.onDidRemoveTag = { [weak self] _, tag in
-      guard let strongSelf = self else {
-        return
-      }
-      strongSelf.viewModel.unLink(withTitle: tag.text, completion: nil)
+    tagsView.onDidRemoveTag = { _, tag in
+      self.viewModel.unLink(withTitle: tag.text, completion: {
+        [weak self] (success) in
+        guard let strongSelf = self else { return }
+        
+        guard success else {
+          strongSelf.showFailToRemoveTagAlert()
+          strongSelf.tagsView.addTag(tag)
+          return
+        }
+      })
     }
     
-    tagsView.onDidAddTag = { [weak self] _, wsTag in
-      //TODO: Handle error
-      guard let strongSelf = self else {
-        return
-      }
-      strongSelf.viewModel.addTagg(withTitle: wsTag.text, completion: nil)
+    tagsView.onDidAddTag = { _, wsTag in
+      self.viewModel.addTagg(withTitle: wsTag.text, completion: {
+        [weak self] (success) in
+        guard let strongSelf = self else { return }
+        
+        guard success else {
+          if strongSelf.viewModel.canLink {
+            strongSelf.showMaximumTagsReachedAlert()
+          } else {
+            strongSelf.showFailToAddTagAlert()
+          }
+          strongSelf.tagsView.removeTag(wsTag)
+          return
+        }
+      })
     }
     
     tableView.tableFooterView = UIView() //Hacky
@@ -206,5 +221,38 @@ extension LinkTagsViewController: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return 43
+  }
+}
+
+// MARK: - Error handling
+extension LinkTagsViewController {
+  fileprivate func showMaximumTagsReachedAlert() {
+    let alertController = UIAlertController(
+      title: Strings.ooops(),
+      message: Strings.maximum_number_of_tags_reached(),
+      preferredStyle: .alert)
+    alertController.addAction(
+      UIAlertAction(title: Strings.ok(), style: .cancel, handler: nil))
+    self.present(alertController, animated: true, completion: nil)
+  }
+  
+  fileprivate func showFailToAddTagAlert() {
+    let alertController = UIAlertController(
+      title: Strings.ooops(),
+      message: Strings.error_adding_tag(),
+      preferredStyle: .alert)
+    alertController.addAction(
+      UIAlertAction(title: Strings.ok(), style: .cancel, handler: nil))
+    self.present(alertController, animated: true, completion: nil)
+  }
+  
+  fileprivate func showFailToRemoveTagAlert() {
+    let alertController = UIAlertController(
+      title: Strings.ooops(),
+      message: Strings.error_removing_tag(),
+      preferredStyle: .alert)
+    alertController.addAction(
+      UIAlertAction(title: Strings.ok(), style: .cancel, handler: nil))
+    self.present(alertController, animated: true, completion: nil)
   }
 }

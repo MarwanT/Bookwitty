@@ -91,12 +91,22 @@ extension LinkTagsViewModel {
       guard let strongSelf = self else { return }
       
       guard success, let post = post, let tags = post.tags else {
+        if let error = error {
+          switch error {
+          case .maxTagsAllowed:
+            strongSelf.canLink = false
+          default: break
+          }
+        }
+        
         completion?(false)
         return
       }
       //Previously we were setting the tags on success
       //After BMA-1683 we asked to consider the tag is linked
       strongSelf.selectedTags = tags
+      
+      completion?(true)
     })
   }
   
@@ -116,6 +126,8 @@ extension LinkTagsViewModel {
       guard success else {
         return
       }
+      
+      self.canLink = true
     })
   }
 }
