@@ -11,19 +11,18 @@ import SafariServices
 
 class WebViewController {
   public static func present(url: String, inViewController: UIViewController? = nil) {
-    let presenterViewController: UIViewController = inViewController != nil ? inViewController! : rootViewController
-    let safariVC = SFSafariViewController(url: URL(string: url)!)
-    safariVC.modalPresentationStyle = .overCurrentContext
-    safariVC.modalTransitionStyle = .coverVertical
-    if #available(iOS 10.0, *) {
-      safariVC.preferredControlTintColor = ThemeManager.shared.currentTheme.defaultButtonColor()
+    guard let safeURL  = URL(string: url) else {
+      return
     }
-    presenterViewController.present(safariVC, animated: true, completion: nil)
+    present(url: safeURL)
   }
 
-  public static func present(url: URL!, inViewController: UIViewController? = nil) {
+  public static func present(url: URL, inViewController: UIViewController? = nil) {
+    guard let safeURL = url.withHTTPS else {
+      return
+    }
     let presenterViewController: UIViewController = inViewController != nil ? inViewController! : rootViewController
-    let safariVC = SFSafariViewController(url: url)
+    let safariVC = SFSafariViewController(url: safeURL)
     safariVC.modalPresentationStyle = .overCurrentContext
     safariVC.modalTransitionStyle = .coverVertical
     if #available(iOS 10.0, *) {
