@@ -450,31 +450,7 @@ extension RootTabBarController {
   }
 
   fileprivate func dispalyUserNotSignedInAlert(cta: CallToAction?) {
-    let alertController = UIAlertController(
-      title: Strings.user_not_signed_in_alert_title(),
-      message: Strings.user_not_signed_in_alert_message(),
-      preferredStyle: .actionSheet)
-    let signInAction = UIAlertAction(
-      title: Strings.sign_in(),
-      style: UIAlertActionStyle.default) { _ in
-        //TODO: handle Action
-        self.presentSignInViewController()
-    }
-
-    let registerAction = UIAlertAction(
-      title: Strings.register(),
-      style: UIAlertActionStyle.default) { _ in
-        //TODO: handle Action
-        self.presentRegisterViewController()
-    }
-
-    let neutralAction = UIAlertAction(
-      title: Strings.account_needs_confirmation_alert_dismiss_button_title(),
-      style: UIAlertActionStyle.cancel, handler: nil)
-    alertController.addAction(signInAction)
-    alertController.addAction(registerAction)
-    alertController.addAction(neutralAction)
-    present(alertController, animated: true, completion: nil)
+    self.presentCallToActionViewController()
   }
 
   fileprivate func displayServerBusyAlert() {
