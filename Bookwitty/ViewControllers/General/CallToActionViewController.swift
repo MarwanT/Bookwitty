@@ -54,6 +54,50 @@ class CallToActionViewController: ASViewController<ASDisplayNode> {
     emailButtonNode = createButtonNode(text: Strings.continue_email(), textColor: buttonTextColor, backgroundColor: theme.colorNumber13(), icon: #imageLiteral(resourceName: "email"), iconSize: buttonIconSize, iconTintColor: iconTintColor)
 
     controllerNode.automaticallyManagesSubnodes = true
+    controllerNode.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
+      self.backgroundNode.style.maxSize = constrainedSize.max
+      self.backgroundNode.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+      let backgroundNodeLayoutSpec = ASWrapperLayoutSpec(layoutElement: self.backgroundNode)
+
+      self.alertNode.backgroundColor = ThemeManager.shared.currentTheme.defaultBackgroundColor()
+
+      let vInset: CGFloat = constrainedSize.max.height / 8.0
+      let hInset = (1.0 / 5.0 * constrainedSize.max.width) / 2.0
+      let alertInsets = UIEdgeInsets(top: vInset, left: hInset, bottom: vInset, right: hInset)
+
+      let insetLayoutSpec = ASInsetLayoutSpec(insets: alertInsets, child: self.alertNode)
+
+      let loginStackSpec = ASStackLayoutSpec(direction: .vertical,
+                                             spacing: self.configuration.margin,
+                                             justifyContent: .center,
+                                             alignItems: .stretch,
+                                             children: [self.googleButtonNode, self.facebookButtonNode, self.emailButtonNode])
+
+      loginStackSpec.style.flexShrink = 1.0
+
+      let iconCenterLayoutSpec = ASCenterLayoutSpec(centeringOptions: .XY, sizingOptions: .minimumXY, child: self.iconNode)
+
+      var children: [ASLayoutElement] = []
+      children.append(iconCenterLayoutSpec)
+      children.append(self.textNode)
+      children.append(loginStackSpec)
+      children.append(self.registerNode)
+      children.append(self.closeNode)
+
+      let verticalStackSpec = ASStackLayoutSpec(direction: .vertical,
+                                                spacing: self.configuration.margin,
+                                                justifyContent: .spaceAround,
+                                                alignItems: .stretch,
+                                                children: children)
+
+      let componentsInsetLayoutSpec = ASInsetLayoutSpec(insets: alertInsets, child: verticalStackSpec)
+      let componentsInset = UIEdgeInsets(top: self.configuration.vInset, left: self.configuration.margin, bottom: self.configuration.margin, right: self.configuration.margin)
+      let componentsInnerInsetLayoutSpec = ASInsetLayoutSpec(insets: componentsInset, child: componentsInsetLayoutSpec)
+
+      let foregroundNodeLayoutSpec = ASOverlayLayoutSpec(child: insetLayoutSpec, overlay: componentsInnerInsetLayoutSpec)
+      let backgroundLayoutSpec = ASBackgroundLayoutSpec(child: foregroundNodeLayoutSpec, background: backgroundNodeLayoutSpec)
+      return backgroundLayoutSpec
+    }
   }
 
   override func viewDidLoad() {
