@@ -12,6 +12,17 @@ class CallToActionViewController: ASViewController<ASDisplayNode> {
 
   fileprivate let controllerNode = ASDisplayNode()
 
+  fileprivate let backgroundNode = ASDisplayNode()
+  fileprivate let alertNode = ASDisplayNode()
+
+  fileprivate var iconNode = ASImageNode()
+
+  fileprivate var textNode: ASDisplayNode!
+  fileprivate var googleButtonNode: ASControlNode!
+  fileprivate var facebookButtonNode: ASControlNode!
+  fileprivate var emailButtonNode: ASControlNode!
+  fileprivate var registerNode: ASControlNode!
+  fileprivate var closeNode: ASControlNode!
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
