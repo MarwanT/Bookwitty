@@ -104,6 +104,8 @@ class CallToActionViewController: ASViewController<ASDisplayNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    GIDSignIn.sharedInstance().uiDelegate = self
+
     backgroundNode.addTarget(self, action: #selector(self.closeNodeTouchUpInside(_:)), forControlEvents: .touchUpInside)
 
     googleButtonNode.addTarget(self, action: #selector(self.continueWithGoogleTouchUpInside(_:)), forControlEvents: .touchUpInside)
@@ -196,7 +198,7 @@ class CallToActionViewController: ASViewController<ASDisplayNode> {
 //MARK: - Actions
 extension CallToActionViewController {
   @objc fileprivate func continueWithGoogleTouchUpInside(_ sender: ASControlNode) {
-    //TODO: Empty Implementation
+    GIDSignIn.sharedInstance().signIn()
   }
 
   @objc fileprivate func continueWithFacebookTouchUpInside(_ sender: ASControlNode) {
