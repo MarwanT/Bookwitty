@@ -12,7 +12,7 @@ class CallToActionViewController: ASViewController<ASDisplayNode> {
 
   fileprivate let controllerNode = ASDisplayNode()
 
-  fileprivate let backgroundNode = ASDisplayNode()
+  fileprivate let backgroundNode = ASControlNode()
   fileprivate let alertNode = ASDisplayNode()
 
   fileprivate var iconNode = ASImageNode()
@@ -102,6 +102,8 @@ class CallToActionViewController: ASViewController<ASDisplayNode> {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    backgroundNode.addTarget(self, action: #selector(self.closeNodeTouchUpInside(_:)), forControlEvents: .touchUpInside)
 
     googleButtonNode.addTarget(self, action: #selector(self.continueWithGoogleTouchUpInside(_:)), forControlEvents: .touchUpInside)
     facebookButtonNode.addTarget(self, action: #selector(self.continueWithFacebookTouchUpInside(_:)), forControlEvents: .touchUpInside)
