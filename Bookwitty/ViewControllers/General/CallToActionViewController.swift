@@ -23,6 +23,13 @@ class CallToActionViewController: ASViewController<ASDisplayNode> {
   fileprivate var emailButtonNode: ASControlNode!
   fileprivate var registerNode: ASControlNode!
   fileprivate var closeNode: ASControlNode!
+
+  var configuration = Configuration() {
+    didSet {
+      self.node.setNeedsLayout()
+    }
+  }
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -113,5 +120,16 @@ class CallToActionViewController: ASViewController<ASDisplayNode> {
       return insetLayoutSpec
     }
     return node
+  }
+}
+
+extension CallToActionViewController {
+  struct Configuration {
+    let backgroundColor = ThemeManager.shared.currentTheme.colorNumber2()
+    let margin: CGFloat = ThemeManager.shared.currentTheme.cardInternalMargin()
+    let iconSize: CGSize = CGSize(width: 50.0, height: 50.0)
+    let buttonIconSize: CGSize = CGSize(width: 20.0, height: 20.0)
+    let buttonIconTintColor = ThemeManager.shared.currentTheme.colorNumber2()
+    let vInset: CGFloat = 50.0
   }
 }
