@@ -213,7 +213,10 @@ extension CallToActionViewController {
   }
 
   @objc fileprivate func registerNodeTouchUpInside(_ sender: ASControlNode) {
-    //TODO: Empty Implementation
+    self.dismiss(animated: true) {
+      NotificationCenter.default.post(
+        name: AppNotification.shouldDisplayRegistration, object: nil)
+    }
   }
 
   @objc fileprivate func closeNodeTouchUpInside(_ sender: ASControlNode) {
