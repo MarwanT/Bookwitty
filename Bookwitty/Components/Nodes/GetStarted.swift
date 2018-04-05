@@ -169,7 +169,7 @@ class GetStarted: ASDisplayNode {
     node.layoutSpecBlock = { (node: ASDisplayNode, constrainedSize: ASSizeRange) -> ASLayoutSpec in
       let textNode = ASTextNode()
       textNode.attributedText = AttributedStringBuilder(fontDynamicType: .caption1)
-        .append(text: Strings.create_your_account(), color: ThemeManager.shared.currentTheme.defaultButtonColor())
+        .append(text: Strings.create_your_account_using_email(), color: ThemeManager.shared.currentTheme.defaultButtonColor())
         .applyParagraphStyling(alignment: .center)
         .attributedString
 
