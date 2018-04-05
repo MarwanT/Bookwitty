@@ -36,6 +36,24 @@ class CallToActionViewController: ASViewController<ASDisplayNode> {
 
   init() {
     super.init(node: controllerNode)
+
+    iconNode.style.preferredSize = configuration.iconSize
+    iconNode.image = #imageLiteral(resourceName: "bookwittyClear")
+
+    textNode = createTextNode()
+    registerNode = createActionNode(with: Strings.create_your_account(), fontType: .caption1)
+    closeNode = createActionNode(with: Strings.close(), fontType: .caption2)
+
+    let theme = ThemeManager.shared.currentTheme
+    let buttonTextColor = theme.colorNumber2()
+    let iconTintColor = theme.colorNumber2()
+    let buttonIconSize = configuration.buttonIconSize
+
+    googleButtonNode = createButtonNode(text: Strings.continue_google(), textColor: buttonTextColor, backgroundColor: theme.defaultButtonColor(), icon:#imageLiteral(resourceName: "google"), iconSize: buttonIconSize, iconTintColor: iconTintColor)
+    facebookButtonNode = createButtonNode(text: Strings.continue_facebook(), textColor: buttonTextColor, backgroundColor: theme.colorNumber17(), icon:#imageLiteral(resourceName: "facebook"), iconSize: buttonIconSize, iconTintColor: iconTintColor)
+    emailButtonNode = createButtonNode(text: Strings.continue_email(), textColor: buttonTextColor, backgroundColor: theme.colorNumber13(), icon: #imageLiteral(resourceName: "email"), iconSize: buttonIconSize, iconTintColor: iconTintColor)
+
+    controllerNode.automaticallyManagesSubnodes = true
   }
 
   override func viewDidLoad() {
