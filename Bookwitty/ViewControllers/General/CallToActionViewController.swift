@@ -103,7 +103,12 @@ class CallToActionViewController: ASViewController<ASDisplayNode> {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    // Do any additional setup after loading the view.
+    googleButtonNode.addTarget(self, action: #selector(self.continueWithGoogleTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    facebookButtonNode.addTarget(self, action: #selector(self.continueWithFacebookTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    emailButtonNode.addTarget(self, action: #selector(self.continueWithEmailTouchUpInside(_:)), forControlEvents: .touchUpInside)
+
+    registerNode.addTarget(self, action: #selector(self.registerNodeTouchUpInside(_:)), forControlEvents: .touchUpInside)
+    closeNode.addTarget(self, action: #selector(self.closeNodeTouchUpInside(_:)), forControlEvents: .touchUpInside)
   }
 
   fileprivate func createTextNode() -> ASDisplayNode? {
@@ -182,6 +187,29 @@ class CallToActionViewController: ASViewController<ASDisplayNode> {
       return insetLayoutSpec
     }
     return node
+  }
+}
+
+//MARK: - Actions
+extension CallToActionViewController {
+  @objc fileprivate func continueWithGoogleTouchUpInside(_ sender: ASControlNode) {
+    //TODO: Empty Implementation
+  }
+
+  @objc fileprivate func continueWithFacebookTouchUpInside(_ sender: ASControlNode) {
+    //TODO: Empty Implementation
+  }
+
+  @objc fileprivate func continueWithEmailTouchUpInside(_ sender: ASControlNode) {
+    //TODO: Empty Implementation
+  }
+
+  @objc fileprivate func registerNodeTouchUpInside(_ sender: ASControlNode) {
+    //TODO: Empty Implementation
+  }
+
+  @objc fileprivate func closeNodeTouchUpInside(_ sender: ASControlNode) {
+    //TODO: Empty Implementation
   }
 }
 
