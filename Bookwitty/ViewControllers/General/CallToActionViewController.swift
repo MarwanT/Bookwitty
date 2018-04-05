@@ -211,7 +211,7 @@ extension CallToActionViewController {
   }
 
   @objc fileprivate func closeNodeTouchUpInside(_ sender: ASControlNode) {
-    //TODO: Empty Implementation
+    self.dismiss(animated: true, completion: nil)
   }
 }
 
