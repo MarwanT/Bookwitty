@@ -322,6 +322,16 @@ extension UIViewController {
   }
 }
 
+extension UIViewController {
+  func presentCallToActionViewController() {
+    let viewController = CallToActionViewController()
+    viewController.modalPresentationStyle = .custom
+    viewController.modalTransitionStyle = .crossDissolve
+    self.definesPresentationContext = true
+    self.present(viewController, animated: true, completion: nil)
+  }
+}
+
 extension UIViewController.MoreAction: Equatable {
   static func ==(lhs: UIViewController.MoreAction, rhs: UIViewController.MoreAction) -> Bool {
     switch (lhs, rhs) {
