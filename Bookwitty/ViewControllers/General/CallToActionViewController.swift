@@ -7,6 +7,7 @@
 //
 
 import AsyncDisplayKit
+import GoogleSignIn
 
 class CallToActionViewController: ASViewController<ASDisplayNode> {
 
@@ -225,3 +226,25 @@ extension CallToActionViewController {
     let vInset: CGFloat = 50.0
   }
 }
+
+//MARK: - GIDSignInUIDelegate Implementation
+extension CallToActionViewController: GIDSignInUIDelegate {
+  // Stop the UIActivityIndicatorView animation that was started when the user
+  // pressed the Sign In button
+  func sign(inWillDispatch signIn: GIDSignIn!, error: Error!) {
+    //TODO: Show loader if needed
+  }
+
+  // Present a view that prompts the user to sign in with Google
+  func sign(_ signIn: GIDSignIn!,
+            present viewController: UIViewController!) {
+    present(viewController, animated: true, completion: nil)
+  }
+
+  // Dismiss the "Sign in with Google" view
+  func sign(_ signIn: GIDSignIn!,
+            dismiss viewController: UIViewController!) {
+    viewController.dismiss(animated: true, completion: nil)
+  }
+}
+
