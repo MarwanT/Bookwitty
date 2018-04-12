@@ -494,18 +494,18 @@ extension CommentsManager {
     var title: String? {
       switch self {
       case .publishEmptyComment:
-        return Strings.publishEmptyCommentErrorTitle()
+        return Strings.publish_empty_comment_error_title()
       case .api, .missingPostId, .unidentified, .missingResource, .isOccupied, .managerConfiguration:
-        return Strings.publishCommentGeneralErrorTitle()
+        return Strings.publish_comment_general_error_title()
       }
     }
     
     var message: String? {
       switch self {
       case .publishEmptyComment:
-        return Strings.publishEmptyCommentErrorMessage()
+        return Strings.publish_empty_comment_error_message()
       case .api, .missingPostId, .unidentified, .missingResource, .isOccupied, .managerConfiguration:
-        return Strings.publishCommentGeneralErrorMessage()
+        return Strings.publish_comment_general_error_message()
       }
     }
   }
