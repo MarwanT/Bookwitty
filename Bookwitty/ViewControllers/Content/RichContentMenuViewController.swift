@@ -32,9 +32,9 @@ class RichContentMenuViewController: UIViewController {
       
       switch self {
       case .imageCamera:
-        return Strings.imageFromCamera()
+        return Strings.image_from_camera()
       case .imageLibrary:
-        return Strings.imageFromPhotoLibrary()
+        return Strings.image_from_photo_library()
       case .link:
         return Strings.link()
       case .book:

@@ -235,7 +235,7 @@ class ContentEditorViewController: UIViewController {
   }
   
   func showAddLinkAlertView(with link:String?) {
-    let alertController = UIAlertController(title: Strings.addLink(), message: "", preferredStyle: .alert)
+    let alertController = UIAlertController(title: Strings.add_link(), message: "", preferredStyle: .alert)
     
     let confirmAction = UIAlertAction(title: Strings.ok(), style: .default, handler: {(_ action: UIAlertAction) -> Void in
       if let alertTextField = alertController.textFields?.first, alertTextField.text != nil, let link = alertTextField.text {
