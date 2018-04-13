@@ -396,6 +396,16 @@ extension Analytics {
     static let BooksListing = ScreenName(name: "Books Listing")
     static let UserProfile = ScreenName(name: "User Profile")
     static let PenNameList = ScreenName(name: "Pen Name List")
+    static let SignedOutView = ScreenName(name: "Signed Out View")
+    static let ContentEditor = ScreenName(name: "Content Editor")
+    static let InsertRichLink = ScreenName(name: "Insert Rich Link")
+    static let InsertBook = ScreenName(name: "Insert Book")
+    static let InsertQuote = ScreenName(name: "Insert Quote")
+    static let Drafts = ScreenName(name: "Drafts")
+    static let PublishMenu = ScreenName(name: "Publish Menu")
+    static let PostPreview = ScreenName(name: "Post Preview")
+    static let LinkTopic = ScreenName(name: "Link Topic")
+    static let AddTags = ScreenName(name: "Add Tags")
 
     //Use in switch cases default clause
     static let Default = ScreenName(name: "[DEFAULT]")
