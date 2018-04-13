@@ -71,6 +71,9 @@ class ContentEditorViewController: UIViewController {
     addKeyboardNotifications()
     observeLanguageChanges()
     applyLocalization()
+    
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.ContentEditor)
   }
   
   @objc private func textChanged(_ sender: UITextField) {

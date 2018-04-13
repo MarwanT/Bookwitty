@@ -33,6 +33,9 @@ class LinkTagsViewController: UIViewController {
     self.initializeComponents()
     self.applyLocalization()
     self.observeLanguageChanges()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.AddTags)
   }
   
   override func viewWillDisappear(_ animated: Bool) {

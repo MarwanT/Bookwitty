@@ -53,6 +53,9 @@ class DraftsViewController: ASViewController<ASTableNode> {
 
     tableNode.view.addSubview(refreshController)
     refreshController.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.Drafts)
   }
 
   fileprivate func initializeComponents() {

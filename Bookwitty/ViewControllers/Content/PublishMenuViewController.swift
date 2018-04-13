@@ -85,6 +85,9 @@ class PublishMenuViewController: UIViewController {
     initializeComponents()
     // Do any additional setup after loading the view.
     addTapGesture()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.PublishMenu)
   }
   
   private func addTapGesture() {
