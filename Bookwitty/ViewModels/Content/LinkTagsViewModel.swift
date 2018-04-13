@@ -93,17 +93,23 @@ extension LinkTagsViewModel {
       completion?(false)
       return
     }
-    let tagTitle = tag.title ?? ""
-    _ = TagAPI.linkTag(for: self.contentIdentifier, tagIdentifier: tagID, tagTitle: tagTitle, completion: { (success, error) in
-      defer {
-        completion?(success)
-      }
-      
-      guard success else {
-        //TODO: if we get `no more tags are allowed error` we should set viewModel.canLink = false
-        return
-      }
-    })
+
+    /* Discussion
+     * Using Repalce temporarly, uncomment linkTag when API works correctly
+     */
+    let tags = self.selectedTags + [tag]
+    self.replace(with: tags, completion: completion)
+//    let tagTitle = tag.title ?? ""
+//    _ = TagAPI.linkTag(for: self.contentIdentifier, tagIdentifier: tagID, tagTitle: tagTitle, completion: { (success, error) in
+//      defer {
+//        completion?(success)
+//      }
+//
+//      guard success else {
+//        //TODO: if we get `no more tags are allowed error` we should set viewModel.canLink = false
+//        return
+//      }
+//    })
   }
   
   func replace(with tags: [Tag], completion: ((_ success: Bool) -> Void)?) {
@@ -128,18 +134,24 @@ extension LinkTagsViewModel {
       completion?(false)
       return
     }
+
+    /* Discussion
+     * Using Repalce temporarly, uncomment unlinkTag when API works correctly
+     */
+    let tags = self.selectedTags.filter { $0.id != tagID }
+    self.replace(with: tags, completion: completion)
     
-    selectedTags = selectedTags.filter { $0.id != tagID }
-    _ = TagAPI.removeTag(for: contentIdentifier, with: tagID, completion: {
-      (success, error) in
-      defer {
-        completion?(success)
-      }
-      
-      guard success else {
-        return
-      }
-    })
+//    selectedTags = selectedTags.filter { $0.id != tagID }
+//    _ = TagAPI.removeTag(for: contentIdentifier, with: tagID, completion: {
+//      (success, error) in
+//      defer {
+//        completion?(success)
+//      }
+//
+//      guard success else {
+//        return
+//      }
+//    })
   }
 }
 
