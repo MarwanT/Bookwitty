@@ -85,15 +85,15 @@ class LinkTagsViewController: UIViewController {
       guard let strongSelf = self else {
         return
       }
-      strongSelf.viewModel.unLink(withTitle: tag.text, completion: nil)
+      strongSelf.remove(tag: tag.text)
     }
     
-    tagsView.onDidAddTag = { [weak self] _, wsTag in
+    tagsView.onDidAddTag = { [weak self] _, tag in
       //TODO: Handle error
       guard let strongSelf = self else {
         return
       }
-      strongSelf.viewModel.addTagg(withTitle: wsTag.text, completion: nil)
+      strongSelf.add(tag: tag.text)
     }
     
     tableView.tableFooterView = UIView() //Hacky
@@ -111,6 +111,14 @@ class LinkTagsViewController: UIViewController {
 
   @objc private func doneButtonTouchUpInside(_ sender:UIBarButtonItem) {
     self.delegate?.linkTags(viewController: self, didLink: self.viewModel.selectedTags)
+  }
+
+  fileprivate func add(tag: String) {
+    viewModel.addTagg(withTitle: tag, completion: nil)
+  }
+
+  fileprivate func remove(tag: String) {
+    viewModel.unLink(withTitle: tag, completion: nil)
   }
   
   // MARK: - Keyboard Handling
