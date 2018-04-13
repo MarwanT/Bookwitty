@@ -321,7 +321,14 @@ extension RichBookViewController: ASCollectionDelegate {
     bookDetailsViewController.mode = .select
     bookDetailsViewController.delegate = self
     bookDetailsViewController.initialize(with: resource)
-    navigationController?.pushViewController(bookDetailsViewController, animated: true)    
+    navigationController?.pushViewController(bookDetailsViewController, animated: true)
+
+    //MARK: [Analytics] Event
+    let name: String = resource.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: .GoToBook,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
   
   public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {

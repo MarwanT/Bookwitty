@@ -230,6 +230,11 @@ extension DraftsViewController: ASTableDataSource, ASTableDelegate {
       SwiftLoader.hide()
       self.delegate?.drafts(viewController: self, didRequestEdit: candidate)
     }
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: .LoadDraft)
+    Analytics.shared.send(event: event)
   }
 
   func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
@@ -256,6 +261,11 @@ extension DraftsViewController: ASTableDataSource, ASTableDelegate {
         self.tableNode.deleteRows(at: [indexPath], with: .automatic)
       }
     }
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: .DeleteDraft)
+    Analytics.shared.send(event: event)
   }
 
   func shouldBatchFetch(for tableNode: ASTableNode) -> Bool {

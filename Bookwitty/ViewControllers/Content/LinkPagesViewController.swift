@@ -187,6 +187,11 @@ extension LinkPagesViewController {
       topicViewController.navigationItemMode = .action(.link)
     }
     navigationController?.pushViewController(topicViewController, animated: true)
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: .GoToTopicDetails)
+    Analytics.shared.send(event: event)
   }
 }
 
@@ -204,6 +209,13 @@ extension LinkPagesViewController: TopicViewControllerDelegate {
           return
         }
       })
+
+      //MARK: [Analytics] Event
+      let name: String = page.title ?? ""
+      let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                   action: .LinkTopic,
+                                                   name: name)
+      Analytics.shared.send(event: event)
     case .unlink:
       self.viewModel.unselect(page)
       guard let pageIdentifier = page.id else {
@@ -217,6 +229,13 @@ extension LinkPagesViewController: TopicViewControllerDelegate {
       if let title = page.title {
         self.tagsView.removeTag(title)
       }
+
+      //MARK: [Analytics] Event
+      let name: String = page.title ?? ""
+      let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                   action: .UnlinkTopic,
+                                                   name: name)
+      Analytics.shared.send(event: event)
     }
     self.viewModel.setPages([])
     self.tableView.reloadData()

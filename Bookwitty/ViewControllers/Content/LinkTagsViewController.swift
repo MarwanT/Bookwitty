@@ -120,10 +120,24 @@ class LinkTagsViewController: UIViewController {
         self.showMaximumTagsReachedAlert()
       }
     }
+
+    //MARK: [Analytics] Event
+    let name: String = tag
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: .AddTag,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 
   fileprivate func remove(tag: String) {
     viewModel.unLink(withTitle: tag, completion: nil)
+
+    //MARK: [Analytics] Event
+    let name: String = tag
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: .RemoveTag,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
   
   // MARK: - Keyboard Handling

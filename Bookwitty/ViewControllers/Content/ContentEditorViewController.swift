@@ -204,6 +204,11 @@ class ContentEditorViewController: UIViewController {
         break
       }
     }
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: .CloseEditor)    
+    Analytics.shared.send(event: event)
   }
   
   @objc private func draftsBarButtonTouchUpInside(_ sender:UIBarButtonItem) {
@@ -493,6 +498,11 @@ extension ContentEditorViewController {
     richContentMenuViewController.modalPresentationStyle = .overCurrentContext
     
     self.navigationController?.present(richContentMenuViewController, animated: true, completion: nil)
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: .OpenInsertMenu)
+    Analytics.shared.send(event: event)
   }
   
   fileprivate func presentPublishMenuViewController() {
@@ -506,6 +516,11 @@ extension ContentEditorViewController {
     publishMenuViewController.modalPresentationStyle = .overCurrentContext
     
     self.navigationController?.present(publishMenuViewController, animated: true, completion: nil)
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: .OpenPublishMenu)
+    Analytics.shared.send(event: event)
   }
   
   // MARK: User Import Action(s) Handling
@@ -515,6 +530,13 @@ extension ContentEditorViewController {
     imagePickerController.sourceType = source
     imagePickerController.allowsEditing = false
     self.navigationController?.present(imagePickerController, animated: true, completion: nil)
+
+    //MARK: [Analytics] Event
+    let name: String = source == .camera ? "Camera" : "Gallery"
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: .InsertImage,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
   
   func presentRichBookViewController() {
@@ -530,6 +552,11 @@ extension ContentEditorViewController {
     controller.exclude(self.viewModel.currentPost.id)
     let navigationController = UINavigationController(rootViewController: controller)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: .OpenDrafts)
+    Analytics.shared.send(event: event)
   }
   
   func presentRichLinkViewController(with mode: RichLinkPreviewViewController.Mode) {
@@ -538,6 +565,22 @@ extension ContentEditorViewController {
     controller.delegate = self
     let navigationController = UINavigationController(rootViewController: controller)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
+
+
+    //MARK: [Analytics] Event
+    let action: Analytics.Action
+    switch mode {
+    case .link:
+      action = .AddLink
+    case .audio:
+      action = .AddAudio
+    case .video:
+      action = .AddVideo
+    }
+
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: action)
+    Analytics.shared.send(event: event)
   }
   
   fileprivate func presentQuoteEditorViewController() {
@@ -545,6 +588,11 @@ extension ContentEditorViewController {
     controller.delegate = self
     let navigationController = UINavigationController(rootViewController: controller)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: .InsertQuote)
+    Analytics.shared.send(event: event)
   }
   
   // MARK: Publishing Actions Handling
@@ -570,6 +618,11 @@ extension ContentEditorViewController {
     linkTagsViewController.delegate = self
     let navigationController = UINavigationController(rootViewController: linkTagsViewController)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: .GoToAddTags)
+    Analytics.shared.send(event: event)
   }
   
   func presentLinkTopicsViewController() {
@@ -582,6 +635,11 @@ extension ContentEditorViewController {
     linkTopicsViewController.delegate = self
     let navigationController = UINavigationController(rootViewController: linkTopicsViewController)
     self.navigationController?.present(navigationController, animated: true, completion: nil)
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: .GoToLinkTopic)
+    Analytics.shared.send(event: event)
   }
   
   func presentPostPreviewViewController() {
@@ -606,6 +664,11 @@ extension ContentEditorViewController {
       let navigationController = UINavigationController(rootViewController: postPreviewViewController)
       self.navigationController?.present(navigationController, animated: true, completion: nil)
     }
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: .GoToPostPreview)
+    Analytics.shared.send(event: event)
   }
 }
 
@@ -738,6 +801,11 @@ extension ContentEditorViewController {
         })
       }
     }
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: .DiscardPost)
+    Analytics.shared.send(event: event)
   }
 
   fileprivate func savePostAsDraft(_ closure: @escaping (Bool) -> ()) {
@@ -844,6 +912,13 @@ extension ContentEditorViewController: RichBookViewControllerDelegate {
       return
     }
     self.editorView.generateLinkPreview(type: "book", title: response.title, description: response.shortDescription, url: response.url, imageUrl: response.thumbnails?.first?.url, html: response.html)
+
+    //MARK: [Analytics] Event
+    let name: String = book.title ?? ""
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: .AddLink,
+                                                 name: name)
+    Analytics.shared.send(event: event)
   }
 }
 
@@ -852,12 +927,15 @@ extension ContentEditorViewController: RichLinkPreviewViewControllerDelegate {
     viewController.navigationController?.dismiss(animated: true, completion: nil)
     var mode: String = ""
     var imageURL = response.thumbnails?.first?.url
-    
+
+    let analyticsAction : Analytics.Action
     switch viewController.mode {
     case .link:
       mode = "link"
+      analyticsAction = .AddLink
     case .audio:
       mode = "audio"
+      analyticsAction = .AddAudio
       /**
        The image returned for the audio response is missing the scheme
        so it needs to be added
@@ -865,9 +943,15 @@ extension ContentEditorViewController: RichLinkPreviewViewControllerDelegate {
       imageURL = imageURL?.withHTTPS
     case .video:
       mode = "video"
+      analyticsAction = .AddVideo
     }
     
     self.editorView.generateLinkPreview(type: mode, title: response.title, description: response.shortDescription, url: response.url, imageUrl: imageURL, html: response.html)
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: analyticsAction)
+    Analytics.shared.send(event: event)
   }
 
   func richLinkPreviewViewControllerDidCancel(_ viewController: RichLinkPreviewViewController) {
@@ -879,6 +963,11 @@ extension ContentEditorViewController: QuoteEditorViewControllerDelegate {
   func quoteEditor(viewController: QuoteEditorViewController, didRequestAdd quote: String, with author: String?) {
     viewController.navigationController?.dismiss(animated: true, completion: nil)
     self.editorView.generate(quote: quote, author: author ?? "", citeText: "", citeUrl: "")
+
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: .AddQuote)
+    Analytics.shared.send(event: event)
   }
 
   func quoteEditorViewControllerDidCancel(_ viewController: QuoteEditorViewController) {
@@ -895,6 +984,11 @@ extension ContentEditorViewController {
         completion?(success)
       }
     }
+    
+    //MARK: [Analytics] Event
+    let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                 action: .PublishPost)
+    Analytics.shared.send(event: event)
   }
 }
 
@@ -949,6 +1043,11 @@ extension ContentEditorViewController: PublishMenuViewControllerDelegate {
           })
         }
       })
+
+      //MARK: [Analytics] Event
+      let event: Analytics.Event = Analytics.Event(category: .ContentCreation,
+                                                   action: .SaveDraft)
+      Analytics.shared.send(event: event)
     case .goBack:
       viewController.dismiss(animated: true, completion: nil)
     }
