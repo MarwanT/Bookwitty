@@ -55,6 +55,7 @@ extension Analytics {
     case Onboarding
     case PenNamesList
     case Tag
+    case ContentCreation
 
     //Use in switch cases default clause
     case Default
@@ -107,6 +108,8 @@ extension Analytics {
         return "Pen Names List"
       case .Tag:
         return "Tag"
+      case .ContentCreation:
+        return "Content Creation"
       case .Default:
         return "[DEFAULT]"
       }
