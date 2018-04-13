@@ -40,6 +40,9 @@ class QuoteEditorViewController: UIViewController {
     applyLocalization()
     observeLanguageChanges()
     self.quoteTextView.becomeFirstResponder()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.InsertQuote)
   }
   
   override func viewWillDisappear(_ animated: Bool) {

@@ -33,6 +33,9 @@ class LinkPagesViewController: UIViewController {
     self.applyTheme()
     self.applyLocalization()
     self.observeLanguageChanges()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.LinkTopic)
   }
   
   private func initializeComponents() {

@@ -71,6 +71,9 @@ class PostPreviewViewController: ASViewController<ASCollectionNode> {
     addKeyboardNotifications()
     applyLocalization()
     observeLanguageChanges()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.PostPreview)
   }
 
   fileprivate func initializeComponents() {

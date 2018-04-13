@@ -119,6 +119,9 @@ final class RichBookViewController: ASViewController<ASDisplayNode> {
     loadNavigationBarButtons()
     applyLocalization()
     applyTheme()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.InsertBook)
   }
   
   override func viewDidAppear(_ animated: Bool) {

@@ -55,6 +55,7 @@ extension Analytics {
     case Onboarding
     case PenNamesList
     case Tag
+    case ContentCreation
 
     //Use in switch cases default clause
     case Default
@@ -107,6 +108,8 @@ extension Analytics {
         return "Pen Names List"
       case .Tag:
         return "Tag"
+      case .ContentCreation:
+        return "Content Creation"
       case .Default:
         return "[DEFAULT]"
       }
@@ -194,6 +197,38 @@ extension Analytics {
     //
     case Report
     case ConfirmReport
+    //
+    case CloseEditor
+    case OpenDrafts
+    case OpenInsertMenu
+    case OpenPublishMenu
+    case InsertImage
+    case InsertLink
+    case InsertBook
+    case InsertVideo
+    case InsertAudio
+    case InsertQuote
+    case AddLink
+    case AddBook
+    case GoToBook
+    case AddVideo
+    case AddAudio
+    case AddQuote
+    case SaveDraft
+    case DiscardPost
+    case LoadDraft
+    case DeleteDraft
+    case GoToPostPreview
+    case GoToLinkTopic
+    case GoToAddTags
+    case PublishPost
+    case ChangePenName
+    case LinkTopic
+    case UnlinkTopic
+    case GoToTopicDetails
+    case AddTag
+    case RemoveTag
+    case GoToTagDetails
     //
     case Default
 
@@ -331,6 +366,68 @@ extension Analytics {
         return "Report"
       case .ConfirmReport:
         return "ConfirmReport"
+      case .CloseEditor:
+        return "Close Editor"
+      case .OpenDrafts:
+        return "Open Drafts"
+      case .OpenInsertMenu:
+        return "Open Insert Menu"
+      case .OpenPublishMenu:
+        return "Open Publish Menu"
+      case .InsertImage:
+        return "Insert Image"
+      case .InsertLink:
+        return "Insert Link"
+      case .InsertBook:
+        return "Insert Book"
+      case .InsertVideo:
+        return "Insert Video"
+      case .InsertAudio:
+        return "Insert Audio"
+      case .InsertQuote:
+        return "Insert Quote"
+      case .AddLink:
+        return "Add Link"
+      case .AddBook:
+        return "Add Book"
+      case .GoToBook:
+        return "Go To Book"
+      case .AddVideo:
+        return "Add Video"
+      case .AddAudio:
+        return "Add Audio"
+      case .AddQuote:
+        return "Add Quote"
+      case .SaveDraft:
+        return "Save Draft"
+      case .DiscardPost:
+        return "Discard Post"
+      case .LoadDraft:
+        return "Load Draft"
+      case .DeleteDraft:
+        return "Delete Draft"
+      case .GoToPostPreview:
+        return "Go To Post Preview"
+      case .GoToLinkTopic:
+        return "Go To Link Topic"
+      case .GoToAddTags:
+        return "Go To Add Tags"
+      case .PublishPost:
+        return "Publish Post"
+      case .ChangePenName:
+        return "Change Pen Name"
+      case .LinkTopic:
+        return "Link Topic"
+      case .UnlinkTopic:
+        return "Unlink Topic"
+      case .GoToTopicDetails:
+        return "Go To Topic Details"
+      case .AddTag:
+        return "Add Tag"
+      case .RemoveTag:
+        return "Remove Tag"
+      case .GoToTagDetails:
+        return "Go To Tag Details"
       case .Default:
         return "[DEFAULT]"
       }
@@ -396,6 +493,16 @@ extension Analytics {
     static let BooksListing = ScreenName(name: "Books Listing")
     static let UserProfile = ScreenName(name: "User Profile")
     static let PenNameList = ScreenName(name: "Pen Name List")
+    static let SignedOutView = ScreenName(name: "Signed Out View")
+    static let ContentEditor = ScreenName(name: "Content Editor")
+    static let InsertRichLink = ScreenName(name: "Insert Rich Link")
+    static let InsertBook = ScreenName(name: "Insert Book")
+    static let InsertQuote = ScreenName(name: "Insert Quote")
+    static let Drafts = ScreenName(name: "Drafts")
+    static let PublishMenu = ScreenName(name: "Publish Menu")
+    static let PostPreview = ScreenName(name: "Post Preview")
+    static let LinkTopic = ScreenName(name: "Link Topic")
+    static let AddTags = ScreenName(name: "Add Tags")
 
     //Use in switch cases default clause
     static let Default = ScreenName(name: "[DEFAULT]")

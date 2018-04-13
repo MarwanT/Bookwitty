@@ -90,6 +90,9 @@ class RichLinkPreviewViewController: UIViewController {
     addKeyboardNotifications()
     observeLanguageChanges()
     self.textView.becomeFirstResponder()
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.InsertRichLink)
   }
   
   override func viewWillDisappear(_ animated: Bool) {
