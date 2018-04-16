@@ -141,6 +141,8 @@ extension LinkTagsViewModel {
   }
   
   func unLink(withTitle: String, completion: ((_ success: Bool) -> Void)?) {
+    self.canLink = true
+    
     guard let tag = self.selectedTag(withTitle: withTitle), let tagID = tag.id else {
       completion?(false)
       return
