@@ -124,6 +124,7 @@ extension LinkTagsViewModel {
           switch error {
           case .maxTagsAllowed:
             strongSelf.canLink = false
+            strongSelf.selectedTags = Array(strongSelf.selectedTags.dropLast())
           default: break
           }
         }
