@@ -13,6 +13,7 @@ class AppError {
   var status: Int?
   var detail: String?
   var meta: [String: Any]?
+  var code: String?
 }
 
 extension AppError {
@@ -21,6 +22,7 @@ extension AppError {
     appError.status = jsonObject["status"].int
     appError.detail = jsonObject["detail"].string
     appError.meta = jsonObject["meta"].dictionaryObject
+    appError.code = jsonObject["code"].string
     return appError
   }
   
