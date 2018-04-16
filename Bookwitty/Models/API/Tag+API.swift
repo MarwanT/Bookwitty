@@ -35,10 +35,23 @@ public struct TagAPI {
       defer {
         completion(success, post, error)
       }
-      guard data != nil, let statusCode = statusCode else {
-        error = BookwittyAPIError.invalidStatusCode
+      
+      guard let statusCode = statusCode, statusCode == successStatusCode else {
+        guard let data = data else {
+          error = BookwittyAPIError.invalidStatusCode
+          return
+        }
+        if ErrorManager.shared.maxTagsAllowed(data: data).hasError {
+          error = BookwittyAPIError.maxTagsAllowed
+        }
         return
       }
+      
+      guard let data = data else {
+        error = BookwittyAPIError.undefined
+        return
+      }
+      
       success = statusCode == successStatusCode
       post = Text.parseData(data: data) as? CandidatePost
 
