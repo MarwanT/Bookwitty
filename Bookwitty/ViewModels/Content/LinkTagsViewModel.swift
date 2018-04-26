@@ -114,7 +114,6 @@ extension LinkTagsViewModel {
   
   func replace(with tags: [Tag], completion: ((_ success: Bool) -> Void)?) {
     self.selectedTags = tags
-    //TODO: change .draft value below to a proper status value
     _ = TagAPI.replaceTags(for: contentIdentifier, with: tags.flatMap { $0.title }, status: .draft, completion: {
       [weak self] (success, post, error) in
       guard let strongSelf = self else { return }
