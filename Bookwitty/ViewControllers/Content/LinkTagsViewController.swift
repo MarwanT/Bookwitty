@@ -116,6 +116,7 @@ class LinkTagsViewController: UIViewController {
   fileprivate func add(tag: String) {
     viewModel.addTagg(withTitle: tag) { success in
       if !success, !self.viewModel.canLink {
+        self.tagsView.removeTag(tag)
         self.showMaximumTagsReachedAlert()
       }
     }
