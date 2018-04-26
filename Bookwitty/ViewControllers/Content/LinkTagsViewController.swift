@@ -114,7 +114,12 @@ class LinkTagsViewController: UIViewController {
   }
 
   fileprivate func add(tag: String) {
-    viewModel.addTagg(withTitle: tag, completion: nil)
+    viewModel.addTagg(withTitle: tag) { success in
+      if !success, !self.viewModel.canLink {
+        self.tagsView.removeTag(tag)
+        self.showMaximumTagsReachedAlert()
+      }
+    }
   }
 
   fileprivate func remove(tag: String) {
@@ -217,5 +222,38 @@ extension LinkTagsViewController: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return 43
+  }
+}
+
+// MARK: - Error handling
+extension LinkTagsViewController {
+  fileprivate func showMaximumTagsReachedAlert() {
+    let alertController = UIAlertController(
+      title: Strings.ooops(),
+      message: Strings.maximum_number_of_tags_reached(),
+      preferredStyle: .alert)
+    alertController.addAction(
+      UIAlertAction(title: Strings.ok(), style: .cancel, handler: nil))
+    self.present(alertController, animated: true, completion: nil)
+  }
+  
+  fileprivate func showFailToAddTagAlert() {
+    let alertController = UIAlertController(
+      title: Strings.ooops(),
+      message: Strings.error_adding_tag(),
+      preferredStyle: .alert)
+    alertController.addAction(
+      UIAlertAction(title: Strings.ok(), style: .cancel, handler: nil))
+    self.present(alertController, animated: true, completion: nil)
+  }
+  
+  fileprivate func showFailToRemoveTagAlert() {
+    let alertController = UIAlertController(
+      title: Strings.ooops(),
+      message: Strings.error_removing_tag(),
+      preferredStyle: .alert)
+    alertController.addAction(
+      UIAlertAction(title: Strings.ok(), style: .cancel, handler: nil))
+    self.present(alertController, animated: true, completion: nil)
   }
 }

@@ -114,22 +114,34 @@ extension LinkTagsViewModel {
   
   func replace(with tags: [Tag], completion: ((_ success: Bool) -> Void)?) {
     self.selectedTags = tags
-    //TODO: change .draft value below to a proper status value
     _ = TagAPI.replaceTags(for: contentIdentifier, with: tags.flatMap { $0.title }, status: .draft, completion: {
       [weak self] (success, post, error) in
       guard let strongSelf = self else { return }
       
       guard success, let post = post, let tags = post.tags else {
+        if let error = error {
+          switch error {
+          case .maxTagsAllowed:
+            strongSelf.canLink = false
+            strongSelf.selectedTags = Array(strongSelf.selectedTags.dropLast())
+          default: break
+          }
+        }
+        
         completion?(false)
         return
       }
       //Previously we were setting the tags on success
       //After BMA-1683 we asked to consider the tag is linked
       strongSelf.selectedTags = tags
+      
+      completion?(true)
     })
   }
   
   func unLink(withTitle: String, completion: ((_ success: Bool) -> Void)?) {
+    self.canLink = true
+    
     guard let tag = self.selectedTag(withTitle: withTitle), let tagID = tag.id else {
       completion?(false)
       return
