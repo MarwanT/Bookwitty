@@ -114,6 +114,9 @@ class CallToActionViewController: ASViewController<ASDisplayNode> {
 
     registerNode.addTarget(self, action: #selector(self.registerNodeTouchUpInside(_:)), forControlEvents: .touchUpInside)
     closeNode.addTarget(self, action: #selector(self.closeNodeTouchUpInside(_:)), forControlEvents: .touchUpInside)
+
+    //MARK: [Analytics] Screen Name
+    Analytics.shared.send(screenName: Analytics.ScreenNames.SignedOutView)
   }
 
   fileprivate func createTextNode() -> ASDisplayNode? {
